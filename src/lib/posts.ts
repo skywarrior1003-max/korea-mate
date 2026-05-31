@@ -1,0 +1,106 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+const postsDirectory = path.join(process.cwd(), "src/content/posts");
+
+export interface PostData {
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  category: string;
+  tags: string[];
+  content: string;
+}
+
+function formatDate(dateVal: any): string {
+  if (dateVal instanceof Date) {
+    return dateVal.toISOString().split("T")[0];
+  }
+  if (typeof dateVal === "string") {
+    return dateVal;
+  }
+  return "";
+}
+
+export function getSortedPostsData(): PostData[] {
+  // Ensure the directory exists
+  if (!fs.existsSync(postsDirectory)) {
+    fs.mkdirSync(postsDirectory, { recursive: true });
+    // Write a default sample post
+    const samplePath = path.join(postsDirectory, "sample-post.md");
+    const sampleContent = `---
+title: "Top 5 Solo Friendly Spots in Seoul"
+date: 2026-05-31
+summary: "Traveling to Seoul alone? Don't worry! Here is a curated list of the best places to visit, eat, and enjoy by yourself without any hassle."
+category: "Tips"
+tags: ["Seoul", "Solo Travel", "Tips"]
+---
+
+Traveling to Korea alone can be an amazing experience. While Korea historically has a strong group dining and activity culture, many places are now becoming highly solo-friendly. Here are our top picks for solo travelers in Seoul:
+
+## 1. Gyeongbokgung Palace
+A beautiful place to walk and explore traditional Korean architecture at your own pace. Renting a Hanbok (traditional clothing) is highly recommended and actually grants you free admission!
+
+## 2. Gwangjang Market
+Great for street food! You can sit at individual stalls and enjoy food without feeling out of place. Be sure to try the mungbean pancakes (bindaetteok) and hand-torn noodle soup (kalguksu).
+
+## 3. Bukchon Hanok Village
+Wander through beautiful traditional alleys surrounded by preserved Korean homes. Remember to be quiet as this is a residential neighborhood.
+`;
+    fs.writeFileSync(samplePath, sampleContent, "utf8");
+  }
+
+  const fileNames = fs.readdirSync(postsDirectory);
+  const allPostsData = fileNames
+    .filter((fileName) => fileName.endsWith(".md"))
+    .map((fileName) => {
+      const slug = fileName.replace(/\.md$/, "");
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+      const matterResult = matter(fileContents);
+
+      return {
+        slug,
+        title: matterResult.data.title || "",
+        date: formatDate(matterResult.data.date),
+        summary: matterResult.data.summary || "",
+        category: matterResult.data.category || "",
+        tags: matterResult.data.tags || [],
+        content: matterResult.content,
+      };
+    });
+
+  // Sort posts by date
+  return allPostsData.sort((a, b) => {
+    if (a.date < b.date) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+}
+
+export function getPostData(slug: string): PostData | null {
+  try {
+    const fullPath = path.join(postsDirectory, `${slug}.md`);
+    if (!fs.existsSync(fullPath)) {
+      return null;
+    }
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const matterResult = matter(fileContents);
+
+    return {
+      slug,
+      title: matterResult.data.title || "",
+      date: formatDate(matterResult.data.date),
+      summary: matterResult.data.summary || "",
+      category: matterResult.data.category || "",
+      tags: matterResult.data.tags || [],
+      content: matterResult.content,
+    };
+  } catch (e) {
+    return null;
+  }
+}
