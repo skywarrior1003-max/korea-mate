@@ -110,6 +110,10 @@ export default function AboutPage() {
             </p>
           </section>
 
+          <hr className="border-[#FAF7F2]" />
+
+          <p className="text-sm text-[#8C6239]">Last updated: 2026-05-31</p>
+
         </div>
       </main>
 

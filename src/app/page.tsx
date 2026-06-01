@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
 
 interface LocalInfo {
   id: string;
@@ -82,7 +83,9 @@ export default function Home() {
       <div className="bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#C29D26] text-[#2C2520] py-3.5 px-4 text-center text-base sm:text-lg font-bold tracking-wide shadow-sm flex flex-col sm:flex-row items-center justify-center gap-3 transition-all">
         <span>📱 Stay connected in Korea — Get your eSIM before you land with 10% off</span>
         <a
-          href="#"
+          href="https://www.airalo.com/south-korea-esim"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center px-5 py-1.5 text-sm font-black uppercase tracking-wider bg-[#2C2520] text-[#FAF7F2] rounded-full hover:bg-black transition-colors duration-200"
         >
           Get eSIM Now
@@ -223,6 +226,10 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="max-w-4xl mx-auto w-full px-4 pt-12">
+        <AdBanner />
+      </div>
+
       {/* 5. Local Info Card Section - Enlarged Title and Cards text */}
       <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-24">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
@@ -261,6 +268,18 @@ export default function Home() {
                 key={item.id}
                 className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 group"
               >
+                <script
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                      "@context": "https://schema.org",
+                      "@type": "TouristAttraction",
+                      name: item.name,
+                      description: item.summary,
+                      location: { "@type": "Place", name: item.location },
+                    }),
+                  }}
+                />
                 <div className="p-8">
                   {/* Category & Location - Enlarged */}
                   <div className="flex items-center justify-between mb-5">

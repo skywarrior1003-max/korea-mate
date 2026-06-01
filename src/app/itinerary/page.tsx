@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { generateItinerary } from "@/lib/scheduler";
+import AdBanner from "@/components/AdBanner";
 
 interface Place {
   name: string;
@@ -133,6 +134,18 @@ function ItineraryResult() {
                   key={idx}
                   className="bg-white rounded-2xl border border-[#E6DFD5] p-6 sm:p-8 hover:shadow-md transition-shadow flex flex-col sm:flex-row justify-between gap-6"
                 >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "TouristAttraction",
+                        name: place.name,
+                        description: place.tips,
+                        location: { "@type": "Place", name: place.location },
+                      }),
+                    }}
+                  />
                   <div className="space-y-3 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-black uppercase bg-[#EAE3D2] text-[#8C6239] px-2.5 py-0.5 rounded-md">
@@ -177,6 +190,8 @@ function ItineraryResult() {
         ))}
       </div>
 
+      <AdBanner />
+
       {/* eSIM Banner at the bottom of the page */}
       <div className="bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#C29D26] rounded-3xl p-8 sm:p-10 shadow-xl border border-[#E6DFD5] text-[#2C2520] mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center sm:text-left">
@@ -188,7 +203,9 @@ function ItineraryResult() {
           </p>
         </div>
         <a
-          href="#"
+          href="https://www.airalo.com/south-korea-esim"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-all duration-200 shadow-md"
         >
           Get eSIM Now

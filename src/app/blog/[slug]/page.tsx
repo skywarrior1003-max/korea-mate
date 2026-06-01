@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import fs from "fs";
+import path from "path";
+import AdBanner from "@/components/AdBanner";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,7 +26,31 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${post.title} - KoreaMate Blog`,
     description: post.summary,
+    openGraph: {
+      title: `${post.title} - KoreaMate Blog`,
+      description: post.summary,
+      type: "article",
+    },
   };
+}
+
+function getAffiliateLink(postTitle: string): string {
+  try {
+    const localInfoPath = path.join(process.cwd(), "public/data/local-info.json");
+    const items: { name: string; affiliateLink: string }[] = JSON.parse(
+      fs.readFileSync(localInfoPath, "utf8")
+    );
+    const titleLower = postTitle.toLowerCase();
+    const match = items.find((item) =>
+      item.name && titleLower.includes(item.name.toLowerCase())
+    );
+    if (match && match.affiliateLink && match.affiliateLink !== "#") {
+      return match.affiliateLink;
+    }
+  } catch {
+    // fall through to default
+  }
+  return "https://visitkorea.or.kr";
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -33,6 +60,8 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) {
     notFound();
   }
+
+  const sourceLink = getAffiliateLink(post!.title);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
@@ -77,6 +106,20 @@ export default async function BlogPostPage({ params }: Props) {
           ← Back to Blog
         </Link>
 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post!.title,
+              datePublished: post!.date,
+              description: post!.summary,
+              author: { "@type": "Organization", name: "KoreaMate" },
+              publisher: { "@type": "Organization", name: "KoreaMate" },
+            }),
+          }}
+        />
         <article className="bg-white rounded-3xl border border-[#E6DFD5] p-8 sm:p-12 shadow-sm">
           {/* Metadata info */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -85,6 +128,9 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
             <span className="text-sm font-bold text-[#61554D]">
               📅 Published on {post.date}
+            </span>
+            <span className="text-sm font-bold text-[#61554D]">
+              🔄 Last updated: {post.date}
             </span>
           </div>
 
@@ -97,6 +143,8 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="prose prose-stone max-w-none prose-headings:font-black prose-headings:text-[#2C2520] prose-p:text-base sm:prose-p:text-lg prose-p:leading-relaxed prose-a:text-[#D4AF37] prose-strong:text-[#2C2520] prose-li:text-base sm:prose-li:text-lg prose-li:leading-relaxed pb-8 border-b border-[#E6DFD5]">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
           </div>
+
+          <AdBanner />
 
           {/* AI Disclosure Warning */}
           <div className="mt-8 bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-6 text-sm sm:text-base text-[#61554D] leading-relaxed">
@@ -113,6 +161,18 @@ export default async function BlogPostPage({ params }: Props) {
               visitkorea.or.kr
             </a>
             ). Please verify details through the original source before your trip.
+          </div>
+
+          {/* Original Source Link */}
+          <div className="mt-4 text-sm text-[#61554D]">
+            <a
+              href={sourceLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold underline hover:text-[#D4AF37]"
+            >
+              Original Source
+            </a>
           </div>
         </article>
       </main>

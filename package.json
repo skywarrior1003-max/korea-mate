@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "pages:build": "next build && wrangler pages functions build --outdir=functions-dist",
     "start": "next start",
     "lint": "eslint"
   },

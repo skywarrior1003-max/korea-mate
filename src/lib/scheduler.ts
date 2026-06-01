@@ -5,52 +5,75 @@ export async function generateItinerary(
   travelers: string,
   travelStyle: string
 ) {
-  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not configured in environment variables.");
+    throw new Error("GEMINI_API_KEY is not configured");
   }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const numDays =
+    Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
-  const prompt = `You are a Korea travel expert. Create a detailed day-by-day itinerary for a foreign traveler.
-City: ${city}, Dates: ${startDate} to ${endDate}, Travelers: ${travelers}, Style: ${travelStyle}
-For each place include: name, category, location, estimated time, tips for foreigners.
-Focus on: solo-friendly spots, places that accept foreign cards, English-friendly venues.
-Format the response as JSON with this structure:
-{ "days": [ { "date": "YYYY-MM-DD", "dayNumber": 1, "places": [ { "name": "Place Name", "category": "attraction/restaurant/event/accommodation", "location": "Area Name", "time": "10:00 AM", "duration": "2 hours", "tips": "Tip for foreigners", "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=..." } ] } ] }
-googleMapsUrl format: https://www.google.com/maps/search/?api=1&query=장소명+${city}+Korea
-Respond with JSON only. No other text.`;
+  const prompt = `You are an expert Korea travel planner for foreign visitors.
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [
+Create a detailed ${numDays}-day itinerary for ${city}, Korea.
+Travel dates: ${startDate} to ${endDate}
+Number of travelers: ${travelers}
+Travel style: ${travelStyle}
+
+Return ONLY a valid JSON object with this exact structure (no markdown, no extra text):
+{
+  "days": [
+    {
+      "date": "YYYY-MM-DD",
+      "dayNumber": 1,
+      "places": [
         {
-          parts: [
-            {
-              text: prompt,
-            },
-          ],
+          "name": "Place name in English",
+          "category": "Attraction | Restaurant | Cafe | Market | Museum | Park | Shopping | Experience",
+          "location": "District or neighborhood name",
+          "time": "HH:MM",
+          "duration": "X hours",
+          "tips": "Practical tip for foreign visitors (payment, language, transport, etc.)",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=ENCODED+PLACE+NAME+${city}+Korea"
+        }
+      ]
+    }
+  ]
+}
+
+Rules:
+- Include 4-5 places per day, ordered by time
+- Focus on real, well-known spots in ${city}
+- Tips must be practical for foreigners (Cash only, English menu available, T-money card needed, etc.)
+- googleMapsUrl must use proper URL encoding for spaces
+- Dates must follow the travel dates in order starting from ${startDate}`;
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.7,
         },
-      ],
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
-    }),
-  });
+      }),
+    }
+  );
 
   if (!response.ok) {
-    throw new Error(`Failed to generate itinerary: ${response.statusText}`);
+    throw new Error("Gemini API request failed");
   }
 
   const data = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error("Invalid response from Gemini API");
+  const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!rawText) {
+    throw new Error("Empty response from Gemini");
   }
 
-  return JSON.parse(text);
+  return JSON.parse(rawText);
 }

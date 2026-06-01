@@ -102,7 +102,9 @@ export default function SurvivalGuidePage() {
               </ul>
             </div>
             <a
-              href="#"
+              href="https://www.airalo.com/south-korea-esim"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-8 inline-flex items-center justify-center px-4 py-3 text-sm font-black uppercase tracking-wider bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-colors w-full text-center"
             >
               Get eSIM Now
