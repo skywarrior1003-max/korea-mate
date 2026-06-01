@@ -55,7 +55,7 @@ function ItineraryResult() {
       })
       .catch((err) => {
         console.error("Itinerary generation error:", err);
-        setError("Failed to generate itinerary. Please check if your GEMINI_API_KEY is configured correctly.");
+        setError(`Failed to generate itinerary: ${err.message}`);
         setLoading(false);
       });
   }, [city, startDate, endDate, travelers, travelStyle]);

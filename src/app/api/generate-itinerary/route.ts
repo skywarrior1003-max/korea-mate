@@ -1,14 +1,5 @@
-interface Env {
-  GEMINI_API_KEY: string;
-}
-
-interface RequestBody {
-  city: string;
-  startDate: string;
-  endDate: string;
-  travelers: string;
-  travelStyle: string;
-}
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash"];
 const MAX_RETRIES = 3;
@@ -32,52 +23,33 @@ async function callGemini(apiKey: string, model: string, prompt: string) {
   );
 
   if (!response.ok) {
-    const errBody = await response.json().catch(() => ({})) as { error?: { message?: string } };
-    const msg = errBody?.error?.message || response.statusText;
+    const errBody = await response.json().catch(() => ({}));
+    const msg = (errBody as { error?: { message?: string } })?.error?.message || response.statusText;
     throw new Error(`Gemini ${response.status}: ${msg}`);
   }
 
-  const data = await response.json() as {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-  };
+  const data = await response.json();
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!rawText) throw new Error("Empty response from Gemini");
   return JSON.parse(rawText);
 }
 
-export const onRequestPost: (context: { request: Request; env: Env }) => Promise<Response> = async ({
-  request,
-  env,
-}) => {
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-  };
-
-  const apiKey = env.GEMINI_API_KEY;
+export async function POST(request: NextRequest) {
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: "GEMINI_API_KEY is not configured" }), {
-      status: 500,
-      headers: corsHeaders,
-    });
+    return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
   }
 
-  let body: RequestBody;
+  let body: { city: string; startDate: string; endDate: string; travelers: string; travelStyle: string };
   try {
-    body = await request.json() as RequestBody;
+    body = await request.json();
   } catch {
-    return new Response(JSON.stringify({ error: "Invalid request body" }), {
-      status: 400,
-      headers: corsHeaders,
-    });
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
   const { city, startDate, endDate, travelers, travelStyle } = body;
   if (!city || !startDate || !endDate) {
-    return new Response(JSON.stringify({ error: "Missing required fields" }), {
-      status: 400,
-      headers: corsHeaders,
-    });
+    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
   const start = new Date(startDate);
@@ -125,7 +97,7 @@ Rules:
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
         const result = await callGemini(apiKey, model, prompt);
-        return new Response(JSON.stringify(result), { status: 200, headers: corsHeaders });
+        return NextResponse.json(result);
       } catch (err) {
         lastError = err as Error;
         const status = parseInt(lastError.message.match(/Gemini (\d+)/)?.[1] || "0");
@@ -141,8 +113,5 @@ Rules:
     }
   }
 
-  return new Response(JSON.stringify({ error: lastError.message }), {
-    status: 500,
-    headers: corsHeaders,
-  });
-};
+  return NextResponse.json({ error: lastError.message }, { status: 500 });
+}

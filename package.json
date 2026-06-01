@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "pages:build": "next build && wrangler pages functions build --outdir=functions-dist",
+    "build:static": "STATIC_EXPORT=true next build",
+    "deploy": "STATIC_EXPORT=true next build && npx wrangler pages deploy out --project-name=korea-mate",
     "start": "next start",
     "lint": "eslint"
   },
