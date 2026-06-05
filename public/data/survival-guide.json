@@ -1,0 +1,265 @@
+[
+  {
+    "id": "getting-around",
+    "title": "Getting Around Korea",
+    "subtitle": "Transport, Transit Cards & Navigation",
+    "icon": "🚇",
+    "pageSlug": "/survival-guide",
+    "description": "Korea's public transit is world-class — but only if you know how to use it. Foreigners consistently lose hours to wrong lines, missed exits, and app confusion. This guide fixes all of that.",
+    "contextTriggers": {
+      "triggerOnNewCity": true,
+      "triggerOnStages": ["Event-Day", "Pre-Event", "Early-Bird", "Post-Event"],
+      "triggerOnCategories": ["attraction"],
+      "triggerOnTags": ["#Concert", "#Festival", "#Pilgrimage"],
+      "triggerIfCashOnly": false
+    },
+    "tips": [
+      {
+        "id": "tip-ga-001",
+        "headline": "Get a T-Money card at any convenience store",
+        "body": "T-Money (₩4,000 blank card) works on all subway lines, buses, and taxis across Seoul, Busan, and Jeju. Load cash at any CU, GS25, or 7-Eleven machine. Tap-and-go — no fumbling for exact change.",
+        "urgency": "must-know",
+        "relatedAffiliateId": "aff-tmoney"
+      },
+      {
+        "id": "tip-ga-002",
+        "headline": "Use Naver Maps, not Google Maps — in Korea",
+        "body": "Google Maps lacks real-time Korean transit data. Naver Maps gives you live subway departure times, exit numbers, and walking routes. Download it before you land. Set language to English in settings.",
+        "urgency": "must-know",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-ga-003",
+        "headline": "Seoul to Busan: KTX in 2h 15min for ~$50",
+        "body": "KTX (Korea's bullet train) is the fastest way between Seoul and Busan. Book on the Korail website or at Seoul Station. Foreign credit cards accepted. Book at least 3 days ahead for concert-week trains.",
+        "urgency": "must-know",
+        "relatedAffiliateId": "aff-ktx"
+      },
+      {
+        "id": "tip-ga-004",
+        "headline": "Airport to Seoul: AREX takes exactly 43 minutes",
+        "body": "The All-stop AREX (₩4,150) stops at Hongik University Station — best for Hongdae/Mapo area hotels. The Direct Express (₩9,500) goes straight to Seoul Station in 43 min. Both accept T-Money and foreign cards.",
+        "urgency": "helpful",
+        "relatedAffiliateId": "aff-airport-transfer"
+      }
+    ],
+    "affiliates": [
+      {
+        "id": "aff-esim",
+        "name": "Korea eSIM — Airalo",
+        "tagline": "Stay connected from the moment you land",
+        "description": "Get a Korean data eSIM before departure. Activate in 2 minutes, no SIM swap needed. Works on all major Korean carriers (SKT, KT, LG). 10% off with KoreaMate link.",
+        "url": "https://www.airalo.com/south-korea-esim",
+        "partner": "Airalo",
+        "category": "connectivity",
+        "discountNote": "10% discount via KoreaMate partner link",
+        "ctaLabel": "Get Korea eSIM →",
+        "isPrimary": true
+      },
+      {
+        "id": "aff-tmoney",
+        "name": "T-Money Card — Klook",
+        "tagline": "Pre-loaded transit card, skip the machine queue",
+        "description": "Buy a pre-loaded T-Money card via Klook and pick it up at Incheon Airport upon arrival. No ATM, no convenience store line — just tap and ride.",
+        "url": "https://www.klook.com/en-US/activity/2339-t-money-card-seoul/",
+        "partner": "Klook",
+        "category": "transport",
+        "discountNote": null,
+        "ctaLabel": "Buy T-Money on Klook →",
+        "isPrimary": false
+      },
+      {
+        "id": "aff-airport-transfer",
+        "name": "Private Airport Transfer — KKday",
+        "tagline": "Driver meets you at arrivals, no confusion",
+        "description": "Skip the AREX confusion entirely. Private door-to-door transfer from Incheon Airport to your Seoul hotel. Fixed price, English-speaking driver, fits groups up to 4.",
+        "url": "https://www.kkday.com/en/product/1499",
+        "partner": "KKday",
+        "category": "transport",
+        "discountNote": null,
+        "ctaLabel": "Book Airport Transfer →",
+        "isPrimary": false
+      },
+      {
+        "id": "aff-ktx",
+        "name": "Seoul–Busan KTX Tickets",
+        "tagline": "Book your bullet train before concert week sells out",
+        "description": "KTX trains fill up fast during BTS concert weeks. Book Seoul–Busan KTX via Korail official or through Klook with English support. Round trip from ~$90.",
+        "url": "https://www.letskorail.com",
+        "partner": "Korail",
+        "category": "transport",
+        "discountNote": "Book 7+ days ahead for discounted KTX passes",
+        "ctaLabel": "Book KTX Tickets →",
+        "isPrimary": false
+      }
+    ]
+  },
+
+  {
+    "id": "payments",
+    "title": "Cash & Payments in Korea",
+    "subtitle": "Where Cards Work, Where They Don't",
+    "icon": "💳",
+    "pageSlug": "/survival-guide",
+    "description": "Korea is increasingly cashless — but traditional markets, street food, and some major tourist spots are still cash-only. Getting this wrong ruins your day. Here's exactly what to carry and where.",
+    "contextTriggers": {
+      "triggerOnNewCity": false,
+      "triggerOnStages": ["Pre-Event", "Event-Day"],
+      "triggerOnCategories": ["restaurant"],
+      "triggerOnTags": ["#CashOnly", "#TraditionalMarket", "#StreetFood"],
+      "triggerIfCashOnly": true
+    },
+    "tips": [
+      {
+        "id": "tip-pay-001",
+        "headline": "Withdraw cash at 7-Eleven or Post Office ATMs",
+        "body": "These two ATM networks accept almost all foreign cards (Visa, Mastercard, Maestro). Most Korean bank ATMs reject foreign cards. Recommended withdrawal: ₩100,000–200,000 per day for cash-heavy days.",
+        "urgency": "must-know",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-pay-002",
+        "headline": "Gwangjang Market, Myeongdong street stalls — cash only",
+        "body": "Traditional markets and street food vendors rarely accept cards. Even stalls that have POS machines sometimes 'don't work for foreign cards.' Always have ₩30,000–50,000 cash before entering any traditional market.",
+        "urgency": "must-know",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-pay-003",
+        "headline": "Wise or Revolut: lowest exchange rates in Korea",
+        "body": "Wise and Revolut both offer mid-market exchange rates with near-zero fees for KRW withdrawals. Far better than airport exchange booths (which charge 3–5% spread). Set up your Wise/Revolut account before departure.",
+        "urgency": "must-know",
+        "relatedAffiliateId": "aff-wise"
+      },
+      {
+        "id": "tip-pay-004",
+        "headline": "Tax refund: show your passport for VAT refund",
+        "body": "Non-Korean tourists get VAT refund (typically 10%) on purchases over ₩30,000 at registered stores. Look for the 'Tax Free' sticker. Get the refund at Incheon Airport before departure — bring all receipts and purchased items.",
+        "urgency": "helpful",
+        "relatedAffiliateId": null
+      }
+    ],
+    "affiliates": [
+      {
+        "id": "aff-wise",
+        "name": "Wise Multi-Currency Card",
+        "tagline": "Best exchange rate. No hidden fees.",
+        "description": "Open a free Wise account and get a debit card that converts to KRW at the real mid-market rate. No markup, no monthly fee. Works at Korean ATMs, restaurants, and convenience stores.",
+        "url": "https://wise.com/invite/",
+        "partner": "Wise",
+        "category": "payment",
+        "discountNote": "Fee-free first transfer up to $500",
+        "ctaLabel": "Get Wise Card Free →",
+        "isPrimary": true
+      },
+      {
+        "id": "aff-revolut",
+        "name": "Revolut — Zero-Fee KRW Spending",
+        "tagline": "Spend in Korean Won, pay in your currency",
+        "description": "Revolut's free tier gives you fee-free currency exchange up to $1,000/month at interbank rates. Perfect for covering your Korea trip spending without bank surcharges.",
+        "url": "https://revolut.com",
+        "partner": "Revolut",
+        "category": "payment",
+        "discountNote": "3 months Revolut Premium free via referral",
+        "ctaLabel": "Get Revolut →",
+        "isPrimary": false
+      },
+      {
+        "id": "aff-hana",
+        "name": "Hana Global Prepaid Card (Korea-issued)",
+        "tagline": "Korea's own foreigner-friendly prepaid card",
+        "description": "Issued by Hana Bank specifically for foreign visitors. Load KRW at any Hana ATM, use everywhere cards are accepted. Also doubles as a T-Money transit card. Available at Incheon Airport Hana Bank counters.",
+        "url": "https://www.hanacard.co.kr/global",
+        "partner": "Hana Bank",
+        "category": "payment",
+        "discountNote": null,
+        "ctaLabel": "Learn About Hana Card →",
+        "isPrimary": false
+      }
+    ]
+  },
+
+  {
+    "id": "solo-dining",
+    "title": "Solo Dining in Korea",
+    "subtitle": "Eat Alone, Eat Well — No Awkwardness",
+    "icon": "🍜",
+    "pageSlug": "/survival-guide",
+    "description": "Korea's food culture was built for groups — but solo travelers can eat like royalty with the right knowledge. From counter-seat ramen to one-person BBQ sets, here's your full solo dining playbook.",
+    "contextTriggers": {
+      "triggerOnNewCity": false,
+      "triggerOnStages": ["Pre-Event", "Post-Event", "Standalone"],
+      "triggerOnCategories": ["restaurant"],
+      "triggerOnTags": ["#SoloFriendly", "#StreetFood", "#FishMarket", "#TraditionalMarket"],
+      "triggerIfCashOnly": false
+    },
+    "tips": [
+      {
+        "id": "tip-sd-001",
+        "headline": "Look for '1인 가능' signs — it means solo is welcome",
+        "body": "'1인 가능' (il-in ga-neung) means 'one person OK.' Many Korean BBQ and hotpot restaurants that used to ban solos now post this sign. Look for it on the door or on Naver Map listings before choosing a restaurant.",
+        "urgency": "must-know",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-sd-002",
+        "headline": "Ramen shops and gimbap cafeterias: always solo-friendly",
+        "body": "Instant ramen shops (라면 가게), gimbap cafeterias (김밥 천국), and most noodle spots have counter seats designed for solo diners. These are also the cheapest meals in Korea — full meal under ₩8,000.",
+        "urgency": "must-know",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-sd-003",
+        "headline": "Use Naver Map English to check reviews and menus",
+        "body": "Naver Map (set to English) shows photos, menus with prices, and crowd levels in real time. Filter by '혼밥' (eating alone) in the review tags to find places where solo diners report a comfortable experience.",
+        "urgency": "helpful",
+        "relatedAffiliateId": null
+      },
+      {
+        "id": "tip-sd-004",
+        "headline": "Gwangjang and Jagalchi Markets: solo heaven",
+        "body": "Traditional markets are the best solo dining in Korea — sit at any ajumma's stall and point at what you want. No judgment, no menus, no language barrier. Budget ₩5,000–15,000 for a full market meal.",
+        "urgency": "helpful",
+        "relatedAffiliateId": "aff-catchtable"
+      }
+    ],
+    "affiliates": [
+      {
+        "id": "aff-catchtable",
+        "name": "CatchTable — Korea's #1 Restaurant Reservation App",
+        "tagline": "Reserve top Korean restaurants in English",
+        "description": "CatchTable is how Koreans book restaurants. The global version supports English and accepts foreign cards. Reserve at top Korean BBQ, omakase, and tasting menu spots that foreigners normally can't access.",
+        "url": "https://catchtable.co.kr",
+        "partner": "CatchTable",
+        "category": "dining",
+        "discountNote": null,
+        "ctaLabel": "Reserve via CatchTable →",
+        "isPrimary": true
+      },
+      {
+        "id": "aff-kkday-food-tour",
+        "name": "Myeongdong & Gwangjang Market Food Tour",
+        "tagline": "Skip the confusion — guided tasting with a local",
+        "description": "A 3-hour guided street food tour of Myeongdong and Gwangjang Market. Your local guide knows every stall, handles the ordering, and explains the culture. Perfect for first-time solo travelers who want to eat everything.",
+        "url": "https://www.kkday.com/en/product/3244",
+        "partner": "KKday",
+        "category": "dining",
+        "discountNote": null,
+        "ctaLabel": "Book Food Tour →",
+        "isPrimary": false
+      },
+      {
+        "id": "aff-airalo-dining",
+        "name": "Stay Connected to Find the Best Spots",
+        "tagline": "You need data to find great food in Korea",
+        "description": "Finding solo-friendly restaurants requires Naver Maps and real-time Google Translate for menus. Don't rely on café WiFi — get a reliable Korean eSIM so you can search, translate, and navigate anywhere.",
+        "url": "https://www.airalo.com/south-korea-esim",
+        "partner": "Airalo",
+        "category": "connectivity",
+        "discountNote": "10% off with KoreaMate partner link",
+        "ctaLabel": "Get Korea eSIM →",
+        "isPrimary": false
+      }
+    ]
+  }
+]

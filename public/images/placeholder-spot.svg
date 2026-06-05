@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8f0fe"/>
+      <stop offset="100%" stop-color="#dde8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bg)"/>
+  <!-- Mountain icon -->
+  <polygon points="200,80 140,170 260,170" fill="#c7d6f5"/>
+  <polygon points="240,110 195,170 285,170" fill="#a8bfef"/>
+  <!-- Sun -->
+  <circle cx="310" cy="100" r="22" fill="#fde68a" opacity="0.8"/>
+  <!-- Ground -->
+  <ellipse cx="200" cy="200" rx="90" ry="12" fill="#c7d6f5" opacity="0.5"/>
+  <!-- Text -->
+  <text x="200" y="240" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#9ca3af" text-anchor="middle">No Image Available</text>
+</svg>
