@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { EventItem } from "@/lib/cart";
+import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 
 // ── Stage 뱃지 색상 매핑 ──────────────────────────
 const STAGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
@@ -34,7 +35,15 @@ interface Props {
 }
 
 export default function EventCard({ event, onClick }: Props) {
-  const [imgError, setImgError] = useState(false);
+  const [imgError,    setImgError]    = useState(false);
+  const [favorited,   setFavorited]   = useState(false);
+
+  useEffect(() => {
+    setFavorited(isFavorited(event.id));
+    const handler = () => setFavorited(isFavorited(event.id));
+    window.addEventListener(FAVORITES_EVENT, handler);
+    return () => window.removeEventListener(FAVORITES_EVENT, handler);
+  }, [event.id]);
 
   const stage   = STAGE_STYLE[event.stage] ?? STAGE_STYLE["Standalone"];
   const transit = fastestTransit(event.transitFromAnchor);
@@ -77,10 +86,32 @@ export default function EventCard({ event, onClick }: Props) {
 
         {/* Anchor 뱃지 */}
         {event.isAnchor && (
-          <span className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-yellow-400 text-gray-900 shadow">
+          <span className="absolute top-3 right-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-yellow-400 text-gray-900 shadow">
             ⭐ Anchor
           </span>
         )}
+
+        {/* 찜하기 하트 버튼 */}
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={(e) => {
+            e.stopPropagation();
+            setFavorited(toggleFavorite(event.id));
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.stopPropagation();
+              setFavorited(toggleFavorite(event.id));
+            }
+          }}
+          aria-label={favorited ? "Remove from saved spots" : "Save this spot"}
+          className={`absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-base shadow-md cursor-pointer transition-all z-10 select-none ${
+            favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
+          }`}
+        >
+          {favorited ? "❤️" : "🤍"}
+        </span>
 
         {/* Stage 뱃지 (이미지 하단 왼쪽) */}
         <span

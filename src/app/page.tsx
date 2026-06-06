@@ -9,6 +9,7 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
 import type { EventItem } from "@/lib/cart";
+import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -293,10 +294,12 @@ function SpotSearchBar({
 // ═══════════════════════════════════════════════
 
 const EVENT_FILTERS = [
-  { key: "all",      label: "All"           },
-  { key: "busan",    label: "🏙️ Busan"      },
-  { key: "mega",     label: "🎤 Mega Event" },
-  { key: "activity", label: "🗺️ Activity"   },
+  { key: "all",      label: "All"              },
+  { key: "busan",    label: "🏙️ Busan"         },
+  { key: "mega",     label: "🎤 Mega Event"    },
+  { key: "food",     label: "🌟 Food & Drink"  },
+  { key: "activity", label: "🗺️ Activity"      },
+  { key: "saved",    label: "❤️ My Saved Spots" },
 ];
 
 const SPOT_CATEGORIES = [
@@ -331,6 +334,9 @@ export default function Home() {
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
   const [eventFilter,   setEventFilter]   = useState("busan");
+
+  // ── 찜한 스팟 (localStorage 동기화) ─────────────
+  const [savedIds, setSavedIds] = useState<string[]>([]);
 
   // ── 공용 모달 상태 (Trending + Explore 공유) ──
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -371,6 +377,14 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
+  // ── 찜 목록 localStorage 동기화 ───────────────
+  useEffect(() => {
+    setSavedIds(getFavorites());
+    const handler = () => setSavedIds(getFavorites());
+    window.addEventListener(FAVORITES_EVENT, handler);
+    return () => window.removeEventListener(FAVORITES_EVENT, handler);
+  }, []);
+
   // ── Trending 필터 — globalSearch 전용 (Explore와 완전 독립) ─
   const filteredEvents = useMemo(() => {
     let list = eventsData;
@@ -378,8 +392,12 @@ export default function Home() {
       list = list.filter((e) => e.city === "Busan");
     else if (eventFilter === "mega")
       list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
+    else if (eventFilter === "food")
+      list = list.filter((e) => e.type === "restaurant");
     else if (eventFilter === "activity")
       list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
+    else if (eventFilter === "saved")
+      list = list.filter((e) => savedIds.includes(e.id));
     const q = globalSearch.trim().toLowerCase();
     if (q) {
       list = list.filter((e) =>
@@ -391,7 +409,7 @@ export default function Home() {
       );
     }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [eventsData, eventFilter, globalSearch]); // globalSearch 변경 시 Trending 재계산
+  }, [eventsData, eventFilter, globalSearch, savedIds]); // savedIds 변경 시 재계산
 
   // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
   const filteredSpots = useMemo(() => {
@@ -526,7 +544,9 @@ export default function Home() {
               <div className="text-sm font-semibold text-gray-500">Foreign Visitors in 2026</div>
             </div>
             <div className="sm:px-8 py-8 sm:py-0">
-              <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">📍 200+</div>
+              <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">
+                📍 {eventsData.length > 0 ? `${eventsData.length}+` : "200+"}
+              </div>
               <div className="text-sm font-semibold text-gray-500">Verified Solo-friendly Spots</div>
             </div>
             <div className="sm:px-8 pt-8 sm:pt-0">
@@ -776,8 +796,12 @@ export default function Home() {
             </div>
           ) : filteredEvents.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-4xl mb-3">🎌</p>
-              <p className="text-gray-500 font-semibold">No events in this category yet.</p>
+              <p className="text-4xl mb-3">{eventFilter === "saved" ? "🤍" : "🎌"}</p>
+              <p className="text-gray-500 font-semibold">
+                {eventFilter === "saved"
+                  ? "No saved spots yet — tap the ❤️ on any card to save it here."
+                  : "No events in this category yet."}
+              </p>
             </div>
           ) : (
             <>
