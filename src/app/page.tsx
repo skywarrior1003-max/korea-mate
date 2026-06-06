@@ -416,23 +416,36 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
-      {/* ── eSIM 상단 배너 ──────────────────────────────────────── */}
+      {/* ── 상단 배너 — eSIM + Airport Transfer ────────────────── */}
       <div
-        className="py-3 px-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm"
+        className="py-2.5 px-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8 text-sm"
         style={{ backgroundColor: "#1a1f36" }}
       >
-        <span className="text-white font-medium">
-          📱 Stay connected in Korea — Get eSIM before you land
-        </span>
-        <a
-          href="https://www.airalo.com/south-korea-esim"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: "#f97316" }}
-        >
-          Get eSIM →
-        </a>
+        <div className="flex items-center gap-3">
+          <span className="text-white/80 font-medium">📱 Stay connected — Korea eSIM</span>
+          <a
+            href="https://www.airalo.com/south-korea-esim"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#f97316" }}
+          >
+            Get eSIM →
+          </a>
+        </div>
+        <div className="hidden sm:block w-px h-4 bg-white/20" />
+        <div className="flex items-center gap-3">
+          <span className="text-white/80 font-medium">✈️ Airport → Hotel transfer</span>
+          <a
+            href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#22c55e", color: "#fff" }}
+          >
+            Book Transfer →
+          </a>
+        </div>
       </div>
 
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
@@ -610,8 +623,17 @@ export default function Home() {
               Things Korea doesn&apos;t explain to tourists
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
+              {
+                icon: "✈️",
+                title: "Airport Limousine",
+                desc: "Private car from Incheon/Gimhae Airport straight to your hotel. No subway stress with luggage.",
+                href: "https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer",
+                cta: "Book Transfer →",
+                external: true,
+                highlight: true,
+              },
               {
                 icon: "📱",
                 title: "Stay Connected",
@@ -619,6 +641,7 @@ export default function Home() {
                 href: "https://www.airalo.com/south-korea-esim",
                 cta: "Get 10% Off eSIM →",
                 external: true,
+                highlight: false,
               },
               {
                 icon: "🚇",
@@ -627,6 +650,7 @@ export default function Home() {
                 href: "/survival-guide",
                 cta: "Read Guide →",
                 external: false,
+                highlight: false,
               },
               {
                 icon: "💳",
@@ -635,16 +659,26 @@ export default function Home() {
                 href: "/survival-guide",
                 cta: "Read Guide →",
                 external: false,
+                highlight: false,
               },
             ].map((card) => (
-              <div key={card.title} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col">
+              <div
+                key={card.title}
+                className={`rounded-2xl p-8 shadow-sm flex flex-col ${card.highlight ? "border-2 bg-white" : "bg-white border border-gray-100"}`}
+                style={card.highlight ? { borderColor: "#f97316" } : {}}
+              >
+                {card.highlight && (
+                  <span className="self-start mb-3 px-2.5 py-0.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest" style={{ backgroundColor: "#f97316" }}>
+                    🔥 MUST BOOK
+                  </span>
+                )}
                 <div className="text-4xl mb-4">{card.icon}</div>
                 <h3 className="text-xl font-black text-gray-900 mb-2">{card.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed mb-6 flex-1">{card.desc}</p>
                 {card.external ? (
                   <a href={card.href} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: "#f97316" }}>
+                    style={{ backgroundColor: card.highlight ? "#f97316" : "#f97316" }}>
                     {card.cta}
                   </a>
                 ) : (

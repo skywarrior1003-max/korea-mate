@@ -343,7 +343,7 @@ function ExploreBusanContent() {
   const [locationLoading, setLocationLoading]= useState(false);
   const [locationError,   setLocationError]  = useState<string | null>(null);
 
-  // Load additional spots from JSON
+  // Load additional spots from local-info.json
   useEffect(() => {
     fetch("/data/local-info.json")
       .then((r) => r.json())
@@ -351,7 +351,71 @@ function ExploreBusanContent() {
         const busanFromJson = data.filter((s) => s.city === "Busan");
         const hardcodedIds  = new Set(BUSAN_SPOTS.map((s) => s.id));
         const newOnes       = busanFromJson.filter((s) => !hardcodedIds.has(s.id));
-        setSpots([...BUSAN_SPOTS, ...newOnes]);
+        if (newOnes.length > 0) setSpots((prev) => [...prev, ...newOnes]);
+      })
+      .catch(() => {});
+  }, []);
+
+  // Also load Busan spots with GPS coordinates from events.json
+  useEffect(() => {
+    type EventSpot = {
+      id: string;
+      name: string;
+      spotCategory?: string;
+      type: string;
+      city: string;
+      district?: string;
+      address: string;
+      description: string;
+      whyItMatters?: string;
+      mapUrl: string;
+      recommendedDurationMinutes?: number;
+      bestTimeSlot?: string;
+      openingHours?: { open: string; close: string } | null;
+      tags?: string[];
+      relatedSurvivalGuides?: string[];
+      soloFriendly: boolean;
+      foreignCardAccepted: boolean;
+      cashOnly?: boolean;
+      image?: string | null;
+      lat?: number;
+      lng?: number;
+    };
+
+    fetch("/data/events.json")
+      .then((r) => r.json())
+      .then((data: EventSpot[]) => {
+        const geoSpots = data.filter(
+          (e) => e.city === "Busan" && e.lat != null && e.lng != null && e.spotCategory != null
+        );
+        setSpots((prev) => {
+          const existingNames = new Set(prev.map((s) => s.name.toLowerCase()));
+          const newOnes: LocalInfo[] = geoSpots
+            .filter((e) => !existingNames.has(e.name.toLowerCase()))
+            .map((e, idx) => ({
+              id: 3000 + idx,
+              name: e.name,
+              category: (e.spotCategory as LocalInfo["category"]) ?? "attraction",
+              city: e.city,
+              district: e.district,
+              address: e.address,
+              description: e.description,
+              whyItMatters: e.whyItMatters,
+              mapUrl: e.mapUrl,
+              durationMinutes: e.recommendedDurationMinutes ?? 90,
+              bestTimeSlot: e.bestTimeSlot ?? "anytime",
+              openingHours: e.openingHours ?? null,
+              tags: e.tags ?? [],
+              relatedSurvivalGuides: e.relatedSurvivalGuides ?? [],
+              soloFriendly: e.soloFriendly,
+              foreignCardAccepted: e.foreignCardAccepted,
+              cashOnly: e.cashOnly ?? false,
+              image: e.image ?? undefined,
+              lat: e.lat,
+              lng: e.lng,
+            }));
+          return newOnes.length > 0 ? [...prev, ...newOnes] : prev;
+        });
       })
       .catch(() => {});
   }, []);
