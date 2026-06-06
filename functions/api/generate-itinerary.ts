@@ -10,12 +10,20 @@ interface RequestBody {
   travelStyle: string;
 }
 
-const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash"];
+const MODELS = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"];
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function extractJson(raw: string): unknown {
+  const stripped = raw
+    .replace(/^```(?:json)?\s*/m, "")
+    .replace(/\s*```\s*$/m, "")
+    .trim();
+  return JSON.parse(stripped);
 }
 
 async function callGemini(apiKey: string, model: string, prompt: string) {
@@ -26,7 +34,7 @@ async function callGemini(apiKey: string, model: string, prompt: string) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.7 },
+        generationConfig: { temperature: 0.7 },
       }),
     }
   );
@@ -42,7 +50,7 @@ async function callGemini(apiKey: string, model: string, prompt: string) {
   };
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!rawText) throw new Error("Empty response from Gemini");
-  return JSON.parse(rawText);
+  return extractJson(rawText);
 }
 
 export const onRequestPost: (context: { request: Request; env: Env }) => Promise<Response> = async ({

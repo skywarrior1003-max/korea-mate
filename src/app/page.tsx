@@ -370,7 +370,7 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── Trending 필터 ─────────────────────────────
+  // ── Trending 필터 (통합 검색 spotSearch 반영) ─
   const filteredEvents = useMemo(() => {
     let list = eventsData;
     if (eventFilter === "busan")
@@ -379,8 +379,18 @@ export default function Home() {
       list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
     else if (eventFilter === "activity")
       list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
+    const q = spotSearch.trim().toLowerCase();
+    if (q) {
+      list = list.filter((e) =>
+        e.name.toLowerCase().includes(q) ||
+        e.description.toLowerCase().includes(q) ||
+        e.tags.some((t) => t.toLowerCase().includes(q)) ||
+        e.district.toLowerCase().includes(q) ||
+        e.city.toLowerCase().includes(q)
+      );
+    }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [eventsData, eventFilter]);
+  }, [eventsData, eventFilter, spotSearch]);
 
   // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
   const filteredSpots = useMemo(() => {
@@ -732,15 +742,28 @@ export default function Home() {
               <p className="text-gray-500 font-semibold">No events in this category yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  onClick={() => setSelectedEvent(event)}
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredEvents.slice(0, 9).map((event) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    onClick={() => setSelectedEvent(event)}
+                  />
+                ))}
+              </div>
+              {filteredEvents.length > 9 && (
+                <div className="text-center mt-10">
+                  <Link
+                    href={`/trending?filter=${eventFilter}${spotSearch ? `&q=${encodeURIComponent(spotSearch)}` : ""}`}
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: "#f97316" }}
+                  >
+                    View All {filteredEvents.length} Events →
+                  </Link>
+                </div>
+              )}
+            </>
           )}
           <p className="text-center text-xs text-gray-400 mt-8">
             Tap any card to see details and add it to your itinerary. Your picks appear in the bar below. ↓
@@ -748,19 +771,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          검색창 2 — Explore Korea 타이틀 바로 위
-      ══════════════════════════════════════════════════════════ */}
-      <div className="bg-gray-50 border-t border-gray-200 pt-10 pb-0 px-4">
-        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-          🔍 Search Busan Spots
-        </p>
-        <SpotSearchBar
-          value={spotSearch}
-          onChange={setSpotSearch}
-          placeholder="Search beaches, markets, trails, ARMY spots…"
-        />
-      </div>
+      {/* Explore Busan 구분선 */}
+      <div className="bg-gray-50 border-t border-gray-200" />
 
       {/* ══════════════════════════════════════════════════════════
           EXPLORE BUSAN 섹션
@@ -815,8 +827,9 @@ export default function Home() {
               </button>
             </div>
           ) : (
+            <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredSpots.map((item) => (
+              {filteredSpots.slice(0, 9).map((item) => (
                 /*
                  * onClick → toEventItem 어댑터 → selectedEvent → EventDetailModal 오픈
                  * 하단 카드 클릭 시 상세 모달 팝업 연동 (누락 버그 수정)
@@ -933,6 +946,18 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            {filteredSpots.length > 9 && (
+              <div className="text-center mt-10">
+                <Link
+                  href={`/explore-busan?category=${selectedCategory}${spotSearch ? `&q=${encodeURIComponent(spotSearch)}` : ""}`}
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: "#1a1f36" }}
+                >
+                  View All {filteredSpots.length} Spots →
+                </Link>
+              </div>
+            )}
+            </>
           )}
         </div>
       </section>
