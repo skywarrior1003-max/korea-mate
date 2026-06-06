@@ -8,15 +8,6 @@ import {
   isInCart,
 } from "@/lib/cart";
 
-// ── Stage 색상 ─────────────────────────────────
-const STAGE_STYLE: Record<string, { bg: string; text: string }> = {
-  "Early-Bird": { bg: "bg-violet-100", text: "text-violet-700" },
-  "Pre-Event":  { bg: "bg-blue-100",   text: "text-blue-700"   },
-  "Event-Day":  { bg: "bg-red-100",    text: "text-red-700"    },
-  "Post-Event": { bg: "bg-emerald-100",text: "text-emerald-700"},
-  "Standalone": { bg: "bg-gray-100",   text: "text-gray-600"   },
-};
-
 // koreanSurvivalScore 색상 + 라벨
 function scoreMeta(score: number) {
   if (score >= 85) return { color: "bg-emerald-500", label: "Very Foreigner-Friendly" };
@@ -77,7 +68,6 @@ export default function EventDetailModal({ event, onClose }: Props) {
     setInCart(false);
   }
 
-  const stage    = STAGE_STYLE[event.stage] ?? STAGE_STYLE["Standalone"];
   const scoreInfo = scoreMeta(event.koreanSurvivalScore);
   const transit  = event.transitFromAnchor;
 
@@ -144,10 +134,11 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* 이미지 하단 제목 */}
           <div className="absolute bottom-4 left-5 right-5">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${stage.bg} ${stage.text}`}>
+              {/* 분류용 배지 — 클릭 불가, cursor-default로 버튼 오해 방지 */}
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/15 text-white/80 capitalize backdrop-blur-sm cursor-default select-none">
                 {event.stage}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white capitalize backdrop-blur-sm">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/10 text-white/70 capitalize backdrop-blur-sm cursor-default select-none">
                 {event.type}
               </span>
             </div>

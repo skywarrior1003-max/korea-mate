@@ -21,6 +21,7 @@ interface LocalInfo {
   district?: string;
   address: string;
   description: string;
+  whyItMatters?: string;
   searchKeyword?: string;
   mapUrl: string;
   naverMapUrl?: string;
@@ -46,9 +47,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "attraction",
     city: "Busan",
     district: "Haeundae-gu",
-    address: "Haeundae-gu, Busan",
+    address: "Haeundae-gu, Busan — Nearest subway: Haeundae Station (Line 2, Exit 3/5)",
+    whyItMatters: "Korea's most iconic beach — the undisputed starting point of every Busan trip.",
     description:
-      "Korea's most famous beach. Great for walking, street food, and ocean views year-round. The stretch from Haeundae to Dalmaji Hill is unforgettable.",
+      "A 1.8km white-sand stretch in Haeundae-gu, open year-round. Street food stalls line the beachfront (tteokbokki, sundae, fish cake). The stretch from Haeundae to Dalmaji Hill offers a quieter, scenic walk. Sunrise views from the east end are exceptional. Free entry. Foreign cards accepted at most cafés and restaurants nearby.",
     mapUrl: "https://maps.google.com/?q=Haeundae+Beach+Busan",
     naverMapUrl:
       "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5",
@@ -67,9 +69,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "attraction",
     city: "Busan",
     district: "Saha-gu",
-    address: "Gamcheon 2-dong, Saha-gu, Busan",
+    address: "Gamcheon 2-dong, Saha-gu, Busan — Bus 1-1 or 2 from Toseong-dong terminal",
+    whyItMatters: "The most photogenic neighborhood in Busan — every painted staircase and alley is a photo opportunity.",
     description:
-      "Colorful hillside village with murals and art installations carved into a steep hillside. Called the 'Machu Picchu of Busan' — every alley is a photo opportunity.",
+      "A hillside maze of pastel houses, murals, and art installations built on a steep slope in Saha-gu. Open 09:00–18:00 daily (closed some Mondays). Entry map available at the visitor center for ₩2,000 (redeemable as café stamp). Wear comfortable shoes — the alleys are steep and uneven. No large vehicles; arrive by bus or taxi. Foreign cards accepted at the souvenir shops.",
     mapUrl: "https://maps.google.com/?q=Gamcheon+Culture+Village+Busan",
     naverMapUrl:
       "https://map.naver.com/v5/search/%EA%B0%90%EC%B2%9C%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84",
@@ -88,9 +91,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "restaurant",
     city: "Busan",
     district: "Jung-gu",
-    address: "52 Jagalchihaean-ro, Jung-gu, Busan",
+    address: "52 Jagalchihaean-ro, Jung-gu, Busan — Jagalchi Station (Line 1, Exit 10)",
+    whyItMatters: "The freshest seafood in Korea, cooked to order — this is the unmistakable taste of Busan.",
     description:
-      "Korea's largest seafood market. Pick live seafood from the ground floor and have it cooked upstairs. Solo dining completely welcome — point and eat.",
+      "Korea's largest seafood market, open since 1971. Ground floor vendors sell live fish, abalone, crab, and shellfish. Take your pick upstairs to a cooking booth — they'll prepare it in minutes. Solo dining is completely normal; just point at what you want. Open 07:00–21:00 daily. Mostly cash only; bring ₩20,000–₩40,000 for a full solo meal. The market is a 2-min walk from Jagalchi subway station.",
     mapUrl: "https://maps.google.com/?q=Jagalchi+Fish+Market+Busan",
     naverMapUrl:
       "https://map.naver.com/v5/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5",
@@ -110,9 +114,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "attraction",
     city: "Busan",
     district: "Suyeong-gu",
-    address: "Gwangalli 1-dong, Suyeong-gu, Busan",
+    address: "Gwangalli 1-dong, Suyeong-gu, Busan — Gwangan Station (Line 2, Exit 3) or Geumnyeonsan Station (Exit 7)",
+    whyItMatters: "Busan's trendiest beachfront — best at night when Gwangan Bridge illuminates the entire bay.",
     description:
-      "Busan's trendiest beach with stunning night views of Gwangan Bridge. Line the beachfront bars at sunset — the bridge lights up the entire bay.",
+      "A 1.4km sandy beach lined with independent cafés, bars, and seafood restaurants — hipper and less crowded than Haeundae. The landmark Gwangan Bridge (광안대교) stretches 7.4km across the bay and lights up nightly. Arrive at sunset and stay through the bridge lighting (around 20:00). Foreign cards accepted everywhere along the strip. The beach itself is free; parking is limited, so the subway is recommended.",
     mapUrl: "https://maps.google.com/?q=Gwangalli+Beach+Busan",
     naverMapUrl:
       "https://map.naver.com/v5/search/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5",
@@ -132,9 +137,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "nature",
     city: "Busan",
     district: "Yeonje-gu",
-    address: "Hwangnyeong-dong, Yeonje-gu, Busan (황령산, 연제구)",
+    address: "Hwangnyeong-dong, Yeonje-gu, Busan — Bus 41 or 42 to Hwangnyeongsan trailhead",
+    whyItMatters: "Busan's best free experience — a 40-min hike to a 360° city panorama consistently ranked #1 by foreign visitors.",
     description:
-      "Busan's #1 night view mountain. A 40-minute hike rewards you with a 360° panorama of glittering city lights, Gwangalli Bridge, and the dark ocean beyond. Foreign visitors consistently call it their most unforgettable Busan memory.",
+      "Hwangnyeongsan (황령산, 427m) sits at the geographic center of Busan, offering unobstructed 360° views of the city, Gwangalli Bridge, and the ocean. The summit is reached in about 40 minutes via the main trail. Go after 19:00 for the city-light panorama. Wear non-slip shoes; the trail is rocky after rain. Free entry, no facilities at the top — bring water. Bus 41 or 42 from Yeonsan-dong stops at the trailhead. No subway access; a taxi (₩5,000–₩8,000) is easiest.",
     mapUrl: "https://maps.google.com/?q=%ED%99%A9%EB%A0%B9%EC%82%B0+%EB%B6%80%EC%82%B0",
     naverMapUrl: "https://map.naver.com/v5/search/%ED%99%A9%EB%A0%B9%EC%82%B0",
     durationMinutes: 120,
@@ -153,9 +159,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "nature",
     city: "Busan",
     district: "Haeundae-gu",
-    address: "Jangsan, Haeundae-gu, Busan (장산, 해운대구)",
+    address: "Jangsan, Haeundae-gu, Busan — Jangsan Station (Line 2, Exit 7) → 15-min walk to trailhead",
+    whyItMatters: "Haeundae's hidden green lung — forest trails and streams just 15 minutes from the beach.",
     description:
-      "A beloved local trail inside Haeundae district — dense pine forest, cascading streams, and partial sea views through the tree canopy. Easy-to-medium difficulty. Perfect half-day escape from the beach crowds.",
+      "Jangsan (장산, 634m) is the highest peak in Haeundae-gu. Multiple trails range from easy valley walks (1hr round trip) to full summit routes (3hr). The valley path features small waterfalls and pine-scented air. The summit offers partial views of the East Sea on clear days. Free entry. Take Line 2 to Jangsan Station (Exit 7) and walk 15 minutes uphill to the main entrance. Bring water; no refreshment stands on the trail. Suitable for solo hikers — the trail is well-marked in Korean and partially in English.",
     mapUrl: "https://maps.google.com/?q=%EC%9E%A5%EC%82%B0+%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC+%EB%B6%80%EC%82%B0",
     naverMapUrl: "https://map.naver.com/v5/search/%EC%9E%A5%EC%82%B0%EB%93%B1%EC%82%B0%EB%A1%9C",
     durationMinutes: 180,
@@ -174,9 +181,10 @@ const BUSAN_SPOTS: LocalInfo[] = [
     category: "nature",
     city: "Busan",
     district: "Nam-gu",
-    address: "Igidae Park, Nam-gu, Busan (이기대공원, 남구)",
+    address: "Igidae Park entrance: 116 Igidae-ro, Nam-gu, Busan — Bus 27 or 131 to Igidae Park stop",
+    whyItMatters: "The most dramatic free coastal trail in Korea — 5km of sea cliffs, caves, and crashing waves.",
     description:
-      "A dramatic 5km cliff-edge coastal trail connecting Gwangalli to Oryukdo. Sea caves, ocean spray, wildflowers in spring, and sheer rock faces plunging into the sea. The most beautiful free trail in all of Korea.",
+      "Igidae (이기대) is a 4.7km coastal cliff trail in Nam-gu connecting Oryukdo Skywalk to Gwangalli Beach. The path runs along the edge of sheer sea cliffs with views across the bay toward Haeundae. Highlights include sea caves, tidal pools, and wildflowers (spring). Difficulty: easy-moderate. The trail is paved in sections and has wooden boardwalks along the cliff edges. Entrance near Oryukdo Skywalk: Bus 27 or 131 from Gwangalli or Namcheon Station. Free entry. Bring water — no vending facilities on the trail. Allow 2.5–3 hours for the full route.",
     mapUrl: "https://maps.google.com/?q=%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C+%EB%B6%80%EC%82%B0",
     naverMapUrl: "https://map.naver.com/v5/search/%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C",
     durationMinutes: 150,
@@ -214,7 +222,7 @@ function toEventItem(spot: LocalInfo): EventItem {
     address: spot.address,
     mapUrl: spot.mapUrl,
     description: spot.description,
-    whyItMatters: spot.description,
+    whyItMatters: spot.whyItMatters ?? spot.description.split(".")[0] + ".",
     recommendedDurationMinutes: spot.durationMinutes ?? 60,
     bestTimeSlot: spot.bestTimeSlot ?? "anytime",
     openingHours: spot.openingHours ?? null,
