@@ -315,9 +315,8 @@ export default function Home() {
   const [localInfoData, setLocalInfoData] = useState<LocalInfo[]>(BUSAN_SPOTS);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
-  // ── 검색 & 카테고리 ───────────────────────────
-  const [eventSearch,      setEventSearch]      = useState("");   // Trending 전용
-  const [spotSearch,       setSpotSearch]       = useState("");   // Explore Busan 전용
+  // ── 글로벌 통합 검색 (Trending + Explore 동시 필터링) ──
+  const [globalSearch,     setGlobalSearch]     = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // ── AI 플래너 폼 ──────────────────────────────
@@ -371,7 +370,7 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── Trending 필터 — eventSearch 전용 (Explore와 완전 독립) ─
+  // ── Trending 필터 — globalSearch 전용 (Explore와 완전 독립) ─
   const filteredEvents = useMemo(() => {
     let list = eventsData;
     if (eventFilter === "busan")
@@ -380,7 +379,7 @@ export default function Home() {
       list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
     else if (eventFilter === "activity")
       list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
-    const q = eventSearch.trim().toLowerCase();
+    const q = globalSearch.trim().toLowerCase();
     if (q) {
       list = list.filter((e) =>
         e.name.toLowerCase().includes(q) ||
@@ -391,11 +390,11 @@ export default function Home() {
       );
     }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [eventsData, eventFilter, eventSearch]);
+  }, [eventsData, eventFilter, globalSearch]); // globalSearch 변경 시 Trending 재계산
 
   // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
   const filteredSpots = useMemo(() => {
-    const q = spotSearch.trim().toLowerCase();
+    const q = globalSearch.trim().toLowerCase();
     return localInfoData
       .filter((s) => s.city === "Busan")
       .filter((s) => selectedCategory === "all" || s.category === selectedCategory)
@@ -408,7 +407,7 @@ export default function Home() {
           (s.district ?? "").toLowerCase().includes(q)
         );
       });
-  }, [localInfoData, selectedCategory, spotSearch]);
+  }, [localInfoData, selectedCategory, globalSearch]); // globalSearch 변경 시 Explore 재계산
 
   // ════════════════════════════════════════════════════════════════
   //  RENDER
@@ -715,13 +714,13 @@ export default function Home() {
           {/* ── 검색창 1: Trending 전용 ── 다크 헤더 ~ EventCard 그리드 사이 */}
           <div className="py-6">
             <SpotSearchBar
-              value={eventSearch}
-              onChange={setEventSearch}
-              placeholder="Search: BTS, fireworks, ARMY, pilgrimage, concert…"
+              value={globalSearch}
+              onChange={setGlobalSearch}
+              placeholder="Search anything — BTS, fireworks, beach, hiking… (filters all sections)"
             />
-            {eventSearch && (
+            {globalSearch && (
               <p className="text-center text-xs text-orange-500 font-semibold mt-3">
-                Filtering trending events for &ldquo;{eventSearch}&rdquo; ↓
+                Filtering trending events for &ldquo;{globalSearch}&rdquo; ↓
               </p>
             )}
           </div>
@@ -751,7 +750,7 @@ export default function Home() {
               {filteredEvents.length > 9 && (
                 <div className="text-center mt-10">
                   <Link
-                    href={`/trending?filter=${eventFilter}${eventSearch ? `&q=${encodeURIComponent(eventSearch)}` : ""}`}
+                    href={`/trending?filter=${eventFilter}${globalSearch ? `&q=${encodeURIComponent(globalSearch)}` : ""}`}
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
                     style={{ backgroundColor: "#f97316" }}
                   >
@@ -776,13 +775,13 @@ export default function Home() {
           🔍 Search Busan Spots
         </p>
         <SpotSearchBar
-          value={spotSearch}
-          onChange={setSpotSearch}
-          placeholder="Search beaches, markets, trails, ARMY spots…"
+          value={globalSearch}
+          onChange={setGlobalSearch}
+          placeholder="Search anything — BTS, beach, hiking, seafood… (filters all sections)"
         />
-        {spotSearch && (
+        {globalSearch && (
           <p className="text-center text-xs text-orange-500 font-semibold mt-3">
-            Filtering Busan spots for &ldquo;{spotSearch}&rdquo; ↓
+            Filtering Busan spots for &ldquo;{globalSearch}&rdquo; ↓
           </p>
         )}
       </div>
@@ -825,17 +824,17 @@ export default function Home() {
           </div>
 
           {/* 검색 결과 카운터 */}
-          {spotSearch && (
+          {globalSearch && (
             <p className="text-sm text-gray-500 mb-5 font-semibold">
-              {filteredSpots.length} result{filteredSpots.length !== 1 ? "s" : ""} for &ldquo;{spotSearch}&rdquo;
+              {filteredSpots.length} result{filteredSpots.length !== 1 ? "s" : ""} for &ldquo;{globalSearch}&rdquo;
             </p>
           )}
 
           {filteredSpots.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-4xl mb-3">🔍</p>
-              <p className="text-gray-600 font-semibold">No spots found for &ldquo;{spotSearch}&rdquo;</p>
-              <button onClick={() => setSpotSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">
+              <p className="text-gray-600 font-semibold">No spots found for &ldquo;{globalSearch}&rdquo;</p>
+              <button onClick={() => setGlobalSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">
                 Clear search
               </button>
             </div>
@@ -962,7 +961,7 @@ export default function Home() {
             {filteredSpots.length > 9 && (
               <div className="text-center mt-10">
                 <Link
-                  href={`/explore-busan?category=${selectedCategory}${spotSearch ? `&q=${encodeURIComponent(spotSearch)}` : ""}`}
+                  href={`/explore-busan?category=${selectedCategory}${globalSearch ? `&q=${encodeURIComponent(globalSearch)}` : ""}`}
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
                   style={{ backgroundColor: "#1a1f36" }}
                 >

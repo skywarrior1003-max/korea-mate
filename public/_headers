@@ -1,0 +1,13 @@
+# Cloudflare Pages — Cache Control
+# HTML pages: no-cache (always fetch latest deploy)
+# Static assets with content-hash: immutable cache
+
+/*
+  Cache-Control: no-cache, must-revalidate
+  Pragma: no-cache
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=86400
