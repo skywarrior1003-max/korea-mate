@@ -39,7 +39,7 @@ interface LocalInfo {
 }
 
 // ═══════════════════════════════════════════════
-//  HARDCODED BUSAN SPOTS — JSON 로딩 실패와 무관하게 항상 렌더링 보장
+//  HARDCODED BUSAN SPOTS
 // ═══════════════════════════════════════════════
 
 const BUSAN_SPOTS: LocalInfo[] = [
@@ -132,7 +132,6 @@ const BUSAN_SPOTS: LocalInfo[] = [
     foreignCardAccepted: true,
     image: "https://images.unsplash.com/photo-1583689397935-7de22f67e3c7?w=600",
   },
-  // ── Nature & Trails (사장님 직접 선정 3곳) ────
   {
     id: 13,
     name: "Hwangnyeongsan Night View Trail",
@@ -202,7 +201,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
 ];
 
 // ═══════════════════════════════════════════════
-//  LocalInfo → EventItem 어댑터 (Explore 카드 → 동일 모달 재사용)
+//  LocalInfo → EventItem 어댑터
 // ═══════════════════════════════════════════════
 
 function toEventItem(spot: LocalInfo): EventItem {
@@ -295,19 +294,43 @@ function SpotSearchBar({
 
 const EVENT_FILTERS = [
   { key: "all",      label: "All"              },
-  { key: "busan",    label: "🏙️ Busan"         },
   { key: "mega",     label: "🎤 Mega Event"    },
   { key: "food",     label: "🌟 Food & Drink"  },
-  { key: "activity", label: "🗺️ Activity"      },
+  { key: "activity", label: "🗺️ Attractions"   },
   { key: "saved",    label: "❤️ My Saved Spots" },
 ];
 
-const SPOT_CATEGORIES = [
-  { value: "all",        label: "All Spots"          },
-  { value: "attraction", label: "🏯 Attractions"     },
-  { value: "restaurant", label: "🍜 Food & Drink"    },
-  { value: "nature",     label: "🌿 Nature & Trails" },
-];
+// ═══════════════════════════════════════════════
+//  섹션 헤더 컴포넌트
+// ═══════════════════════════════════════════════
+
+function SectionHeader({
+  emoji,
+  title,
+  subtitle,
+  count,
+}: {
+  emoji: string;
+  title: string;
+  subtitle: string;
+  count?: number;
+}) {
+  return (
+    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
+      <div>
+        <h2 className="text-2xl sm:text-3xl font-black text-gray-900 flex items-center gap-2">
+          <span>{emoji}</span>
+          <span>{title}</span>
+          {count !== undefined && (
+            <span className="text-base font-bold text-gray-400 ml-1">({count})</span>
+          )}
+        </h2>
+        <p className="text-gray-500 mt-1 text-sm font-medium">{subtitle}</p>
+      </div>
+      <div className="h-px flex-1 mx-6 hidden sm:block" style={{ backgroundColor: "#f0f0f0" }} />
+    </div>
+  );
+}
 
 // ═══════════════════════════════════════════════
 //  PAGE COMPONENT
@@ -319,9 +342,9 @@ export default function Home() {
   const [localInfoData, setLocalInfoData] = useState<LocalInfo[]>(BUSAN_SPOTS);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
-  // ── 글로벌 통합 검색 (Trending + Explore 동시 필터링) ──
-  const [globalSearch,     setGlobalSearch]     = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  // ── 통합 검색 + 필터 ──────────────────────────
+  const [globalSearch, setGlobalSearch] = useState("");
+  const [eventFilter,  setEventFilter]  = useState("all");
 
   // ── AI 플래너 폼 ──────────────────────────────
   const [city,      setCity]      = useState("Busan");
@@ -330,15 +353,17 @@ export default function Home() {
   const [travelers, setTravelers] = useState("1");
   const [style,     setStyle]     = useState("Solo");
 
-  // ── Trending Events ───────────────────────────
+  // ── events.json 로드 ──────────────────────────
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
-  const [eventFilter,   setEventFilter]   = useState("busan");
 
-  // ── 찜한 스팟 (localStorage 동기화) ─────────────
+  // ── Section 4 더보기 카운트 ───────────────────
+  const [section4Count, setSection4Count] = useState(9);
+
+  // ── 찜한 스팟 ─────────────────────────────────
   const [savedIds, setSavedIds] = useState<string[]>([]);
 
-  // ── 공용 모달 상태 (Trending + Explore 공유) ──
+  // ── 모달 상태 ─────────────────────────────────
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   const router = useRouter();
@@ -353,23 +378,19 @@ export default function Home() {
     router.push(`/itinerary?${params.toString()}`);
   }
 
-  // ── JSON에서 추가 스팟 로드 (하드코딩 위에 병합) ─
+  // ── JSON 로드 ─────────────────────────────────
   useEffect(() => {
     fetch("/data/local-info.json")
       .then((r) => r.json())
       .then((data: LocalInfo[]) => {
-        // JSON 로드 성공 시 부산 스팟만 추출, 중복 id는 JSON 우선
         const busanFromJson = data.filter((s) => s.city === "Busan");
         const hardcodedIds = new Set(BUSAN_SPOTS.map((s) => s.id));
         const newOnes = busanFromJson.filter((s) => !hardcodedIds.has(s.id));
         setLocalInfoData([...BUSAN_SPOTS, ...newOnes]);
       })
-      .catch(() => {
-        // 실패해도 하드코딩 유지
-      });
+      .catch(() => {});
   }, []);
 
-  // ── Trending Events 로드 ──────────────────────
   useEffect(() => {
     fetch("/data/events.json")
       .then((r) => r.json())
@@ -377,7 +398,6 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── 찜 목록 localStorage 동기화 ───────────────
   useEffect(() => {
     setSavedIds(getFavorites());
     const handler = () => setSavedIds(getFavorites());
@@ -385,48 +405,61 @@ export default function Home() {
     return () => window.removeEventListener(FAVORITES_EVENT, handler);
   }, []);
 
-  // ── Trending 필터 — globalSearch 전용 (Explore와 완전 독립) ─
-  const filteredEvents = useMemo(() => {
-    let list = eventsData;
-    if (eventFilter === "busan")
-      list = list.filter((e) => e.city === "Busan");
-    else if (eventFilter === "mega")
-      list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
+  // ── 섹션별 데이터 (4-Section 모드) ───────────────────
+  const megaEvents = useMemo(
+    () => eventsData.filter((e) => ["event", "festival", "concert"].includes(e.type)),
+    [eventsData]
+  );
+
+  const michelinFood = useMemo(
+    () => eventsData.filter((e) => e.type === "restaurant"),
+    [eventsData]
+  );
+
+  const attractionSpots = useMemo(
+    () => localInfoData.filter((s) => s.city === "Busan" && ["attraction", "nature"].includes(s.category)),
+    [localInfoData]
+  );
+
+  // ── 통합 전체 아이템 (검색/필터 모드) ────────────────
+  const allItems = useMemo(
+    () => [
+      ...eventsData,
+      ...localInfoData.filter((s) => s.city === "Busan").map(toEventItem),
+    ],
+    [eventsData, localInfoData]
+  );
+
+  // ── 검색/필터 모드 판단 ───────────────────────────────
+  const isFilteringMode = useMemo(
+    () => globalSearch.trim() !== "" || eventFilter !== "all",
+    [globalSearch, eventFilter]
+  );
+
+  // ── 통합 검색 결과 ────────────────────────────────────
+  const filteredResults = useMemo(() => {
+    let list = allItems;
+    if (eventFilter === "mega")
+      list = list.filter((e) => ["event", "festival", "concert"].includes(e.type));
     else if (eventFilter === "food")
       list = list.filter((e) => e.type === "restaurant");
     else if (eventFilter === "activity")
-      list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
+      list = list.filter((e) => ["attraction", "nature", "pilgrimage", "permanent"].includes(e.type));
     else if (eventFilter === "saved")
       list = list.filter((e) => savedIds.includes(e.id));
+
     const q = globalSearch.trim().toLowerCase();
     if (q) {
       list = list.filter((e) =>
         e.name.toLowerCase().includes(q) ||
         e.description.toLowerCase().includes(q) ||
         e.tags.some((t) => t.toLowerCase().includes(q)) ||
-        e.district.toLowerCase().includes(q) ||
-        e.city.toLowerCase().includes(q)
+        e.city.toLowerCase().includes(q) ||
+        e.district.toLowerCase().includes(q)
       );
     }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [eventsData, eventFilter, globalSearch, savedIds]); // savedIds 변경 시 재계산
-
-  // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
-  const filteredSpots = useMemo(() => {
-    const q = globalSearch.trim().toLowerCase();
-    return localInfoData
-      .filter((s) => s.city === "Busan")
-      .filter((s) => selectedCategory === "all" || s.category === selectedCategory)
-      .filter((s) => {
-        if (!q) return true;
-        return (
-          s.name.toLowerCase().includes(q) ||
-          s.description.toLowerCase().includes(q) ||
-          (s.tags ?? []).some((t) => t.toLowerCase().includes(q)) ||
-          (s.district ?? "").toLowerCase().includes(q)
-        );
-      });
-  }, [localInfoData, selectedCategory, globalSearch]); // globalSearch 변경 시 Explore 재계산
+  }, [allItems, eventFilter, globalSearch, savedIds]);
 
   // ════════════════════════════════════════════════════════════════
   //  RENDER
@@ -434,7 +467,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
-      {/* ── 상단 배너 — eSIM + Airport Transfer ────────────────── */}
+      {/* ── 상단 상업 배너 ─────────────────────────────────────── */}
       <div
         className="py-2.5 px-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8 text-sm"
         style={{ backgroundColor: "#1a1f36" }}
@@ -496,7 +529,7 @@ export default function Home() {
       </header>
 
       {/* ══════════════════════════════════════════════════════════
-          HERO — "Don't Get Stuck in Korea" 주황 그래디언트 배너
+          HERO
       ══════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden py-24 sm:py-36" style={{ backgroundColor: "#1a1f36" }}>
         <div
@@ -519,7 +552,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => document.getElementById("trending-events")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-black text-white shadow-lg transition-opacity hover:opacity-90 cursor-pointer"
               style={{ backgroundColor: "#f97316" }}
             >
@@ -535,7 +568,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 신뢰 지표 3개 ────────────────────────────────────────── */}
+      {/* ── 신뢰 지표 ────────────────────────────────────────────── */}
       <section className="bg-white border-b border-gray-100 py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 text-center gap-8 sm:gap-0">
@@ -558,7 +591,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          AI 일정 생성 폼 — 핵심 정체성, 절대 수정 금지
+          AI 일정 생성 폼
       ══════════════════════════════════════════════════════════ */}
       <section id="planner" className="py-20" style={{ backgroundColor: "#faf8f3" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
@@ -698,7 +731,7 @@ export default function Home() {
                 {card.external ? (
                   <a href={card.href} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: card.highlight ? "#f97316" : "#f97316" }}>
+                    style={{ backgroundColor: "#f97316" }}>
                     {card.cta}
                   </a>
                 ) : (
@@ -714,99 +747,85 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          TRENDING EVENTS 섹션
+          메인 스팟 콘텐츠 — 4섹션 구획 / 검색 통합 모드
       ══════════════════════════════════════════════════════════ */}
-      <section id="trending-events" className="py-20 bg-white">
+      <section id="spots-main" className="py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* 헤더 카드 */}
-          <div
-            className="rounded-3xl px-8 py-10 mb-10 relative overflow-hidden"
-            style={{ backgroundColor: "#1a1f36" }}
-          >
-            <div
-              className="absolute inset-0 opacity-30 pointer-events-none"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 90% 50%, #f97316 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
-              }}
+          {/* ── 통합 검색창 + 필터 탭 ── */}
+          <div className="mb-10 text-center">
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2">
+              🇰🇷 Discover Busan
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Mega events · Michelin restaurants · Hidden attractions
+            </p>
+            <SpotSearchBar
+              value={globalSearch}
+              onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
+              placeholder="Search: BTS, beach, Michelin, fireworks, hiking…"
             />
-            <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-orange-400 border border-orange-400/30 bg-orange-400/10 mb-4 uppercase tracking-widest">
-                  🔥 Trending Now in Korea
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-2">
-                  Add to Your Itinerary
-                </h2>
-                <p className="text-white/60 text-base max-w-lg">
-                  BTS concerts, Busan fireworks, K-pop pilgrimages — pick what excites you and
-                  build your personalized trip in seconds.
-                </p>
-              </div>
-              <Link
-                href="/planner"
-                className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#f97316" }}
-              >
-                🗺️ Open My Planner →
-              </Link>
-            </div>
-            {/* 필터 탭 */}
-            <div className="relative flex flex-wrap gap-2 mt-8">
+            <div className="flex flex-wrap gap-2 justify-center mt-4">
               {EVENT_FILTERS.map((f) => (
                 <button
                   key={f.key}
-                  onClick={() => setEventFilter(f.key)}
-                  className="px-4 py-1.5 rounded-full text-sm font-bold transition-all border cursor-pointer"
+                  onClick={() => { setEventFilter(f.key); setGlobalSearch(""); }}
+                  className="px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer"
                   style={
                     eventFilter === f.key
                       ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
-                      : { backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.15)" }
+                      : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
                   }
                 >
                   {f.label}
-                  {eventFilter === f.key && (
-                    <span className="ml-1.5 text-xs opacity-80">{filteredEvents.length}</span>
+                  {eventFilter === f.key && eventFilter !== "all" && (
+                    <span className="ml-1.5 text-xs opacity-80">{filteredResults.length}</span>
                   )}
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* ── 검색창 1: Trending 전용 ── 다크 헤더 ~ EventCard 그리드 사이 */}
-          <div className="py-6">
-            <SpotSearchBar
-              value={globalSearch}
-              onChange={setGlobalSearch}
-              placeholder="Search anything — BTS, fireworks, beach, hiking… (filters all sections)"
-            />
-            {globalSearch && (
-              <p className="text-center text-xs text-orange-500 font-semibold mt-3">
-                Filtering trending events for &ldquo;{globalSearch}&rdquo; ↓
+            {isFilteringMode && (
+              <p className="text-xs text-gray-400 mt-3">
+                {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
+                {globalSearch ? ` for "${globalSearch}"` : ""}
+                {" · "}
+                <button
+                  onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
+                  className="text-orange-500 font-bold underline"
+                >
+                  Clear
+                </button>
               </p>
             )}
           </div>
 
-          {/* EventCard 그리드 */}
-          {eventsLoading ? (
-            <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
-              <p className="text-gray-500 font-medium">Loading trending events…</p>
-            </div>
-          ) : filteredEvents.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-4xl mb-3">{eventFilter === "saved" ? "🤍" : "🎌"}</p>
-              <p className="text-gray-500 font-semibold">
-                {eventFilter === "saved"
-                  ? "No saved spots yet — tap the ❤️ on any card to save it here."
-                  : "No events in this category yet."}
-              </p>
-            </div>
-          ) : (
-            <>
+          {/* ══════════════════════════════════════════
+              검색/필터 모드 — 통합 플랫 그리드
+          ══════════════════════════════════════════ */}
+          {isFilteringMode ? (
+            eventsLoading ? (
+              <div className="text-center py-20">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
+                <p className="text-gray-500 font-medium">Loading…</p>
+              </div>
+            ) : filteredResults.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-4xl mb-3">{eventFilter === "saved" ? "🤍" : "🔍"}</p>
+                <p className="text-gray-500 font-semibold text-lg">
+                  {eventFilter === "saved"
+                    ? "No saved spots yet — tap ❤️ on any card to save it here."
+                    : `No results for "${globalSearch}"`}
+                </p>
+                <button
+                  onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
+                  className="mt-4 text-sm text-orange-500 font-bold underline"
+                >
+                  Show all sections
+                </button>
+              </div>
+            ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredEvents.slice(0, 9).map((event) => (
+                {filteredResults.map((event) => (
                   <EventCard
                     key={event.id}
                     event={event}
@@ -814,230 +833,261 @@ export default function Home() {
                   />
                 ))}
               </div>
-              {filteredEvents.length > 9 && (
-                <div className="text-center mt-10">
-                  <Link
-                    href={`/trending?filter=${eventFilter}${globalSearch ? `&q=${encodeURIComponent(globalSearch)}` : ""}`}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: "#f97316" }}
-                  >
-                    View All {filteredEvents.length} Events →
-                  </Link>
-                </div>
-              )}
-            </>
-          )}
-          <p className="text-center text-xs text-gray-400 mt-8">
-            Tap any card to see details and add it to your itinerary. Your picks appear in the bar below. ↓
-          </p>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════
-          검색창 2 — Explore Busan 전용 독립 엔진
-          위치: Explore Busan 타이틀 & 카테고리 탭 바로 위
-      ══════════════════════════════════════════════════════════ */}
-      <div className="bg-gray-50 border-t border-gray-200 pt-10 pb-0 px-4">
-        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-          🔍 Search Busan Spots
-        </p>
-        <SpotSearchBar
-          value={globalSearch}
-          onChange={setGlobalSearch}
-          placeholder="Search anything — BTS, beach, hiking, seafood… (filters all sections)"
-        />
-        {globalSearch && (
-          <p className="text-center text-xs text-orange-500 font-semibold mt-3">
-            Filtering Busan spots for &ldquo;{globalSearch}&rdquo; ↓
-          </p>
-        )}
-      </div>
-
-      {/* ══════════════════════════════════════════════════════════
-          EXPLORE BUSAN 섹션
-          - 부산 전용 (서울/제주/경주 완전 배제)
-          - 카드 클릭 → EventDetailModal
-          - Google Maps + Naver Map 듀얼 버튼
-          - Nature & Trails 탭 포함
-      ══════════════════════════════════════════════════════════ */}
-      <section className="bg-gray-50 pt-8 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* 섹션 헤더 + 카테고리 탭 */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between pt-6 mb-8 gap-6">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Explore Busan</h2>
-              <p className="text-gray-500 mt-2 text-base">
-                Click any card for full details, Google Maps &amp; Naver Map directions
-              </p>
-            </div>
-            {/* 카테고리 탭 — Nature & Trails 포함 */}
-            <div className="flex flex-wrap gap-2">
-              {SPOT_CATEGORIES.map((cat) => (
-                <button
-                  key={cat.value}
-                  onClick={() => setSelectedCategory(cat.value)}
-                  className="px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer"
-                  style={
-                    selectedCategory === cat.value
-                      ? { backgroundColor: "#1a1f36", color: "white", borderColor: "#1a1f36" }
-                      : { backgroundColor: "white", color: "#6b7280", borderColor: "#e5e7eb" }
-                  }
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* 검색 결과 카운터 */}
-          {globalSearch && (
-            <p className="text-sm text-gray-500 mb-5 font-semibold">
-              {filteredSpots.length} result{filteredSpots.length !== 1 ? "s" : ""} for &ldquo;{globalSearch}&rdquo;
-            </p>
-          )}
-
-          {filteredSpots.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-4xl mb-3">🔍</p>
-              <p className="text-gray-600 font-semibold">No spots found for &ldquo;{globalSearch}&rdquo;</p>
-              <button onClick={() => setGlobalSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">
-                Clear search
-              </button>
-            </div>
+            )
           ) : (
-            <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredSpots.slice(0, 9).map((item) => (
-                /*
-                 * onClick → toEventItem 어댑터 → selectedEvent → EventDetailModal 오픈
-                 * 하단 카드 클릭 시 상세 모달 팝업 연동 (누락 버그 수정)
-                 */
+            /* ══════════════════════════════════════════
+                4섹션 구획 모드
+            ══════════════════════════════════════════ */
+            <div className="space-y-20">
+
+              {/* ── [Section 1] 공항 리무진 픽업 배너 ── */}
+              <div
+                className="rounded-3xl overflow-hidden relative shadow-xl"
+                style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
+              >
                 <div
-                  key={item.id}
-                  onClick={() => setSelectedEvent(toEventItem(item))}
-                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group"
-                >
-                  {/* 썸네일 */}
-                  <div className="h-48 overflow-hidden relative bg-gray-200">
-                    {item.image && !imgErrors[item.id] ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        unoptimized
-                        onError={() => setImgErrors((prev) => ({ ...prev, [item.id]: true }))}
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src="/images/placeholder-spot.svg"
-                        alt="No image"
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                    {/* 호버 오버레이 */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-                        View Details →
-                      </span>
-                    </div>
-                    {/* 카테고리 뱃지 */}
-                    <div className="absolute top-3 left-3">
-                      <span
-                        className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"
-                        style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}
-                      >
-                        {item.category === "nature" ? "🌿 Nature" : item.category}
-                      </span>
+                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 90% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
+                  }}
+                />
+                <div className="relative px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-8">
+                  <div className="text-center sm:text-left">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-green-400 border border-green-400/30 bg-green-400/10 mb-4 uppercase tracking-widest">
+                      🔥 Must Book First
+                    </span>
+                    <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
+                      ✈️ Airport → Hotel Transfer
+                    </h3>
+                    <p className="text-white/70 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
+                      Private limousine pickup from Gimhae/Incheon Airport, delivered straight to your hotel door.
+                      No subway stress. No language barrier. Fixed price, no meter running.
+                    </p>
+                    <div className="flex flex-wrap gap-3 mt-5">
+                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ English driver</span>
+                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ Fixed price</span>
+                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ 24/7 available</span>
                     </div>
                   </div>
-
-                  {/* 카드 본문 */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-semibold text-gray-400">
-                        📍 {item.district ?? item.city}
-                      </span>
-                      {item.durationMinutes && (
-                        <span className="text-xs font-semibold text-gray-400">
-                          🕐 {item.durationMinutes}min
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-base font-black text-gray-900 mb-2 leading-snug line-clamp-2">
-                      {item.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-3 leading-relaxed flex-1">
-                      {item.description}
-                    </p>
-
-                    {/* 실용 뱃지 */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {item.soloFriendly && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
-                          👤 Solo OK
-                        </span>
-                      )}
-                      {item.cashOnly && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
-                          💵 Cash Only
-                        </span>
-                      )}
-                      {item.foreignCardAccepted && !item.cashOnly && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                          💳 Card OK
-                        </span>
-                      )}
-                      {item.category === "nature" && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
-                          🆓 Free Entry
-                        </span>
-                      )}
-                    </div>
-
-                    {/* 듀얼 지도 버튼 — stopPropagation으로 카드 클릭과 분리 */}
-                    <div className="grid grid-cols-2 gap-2 mt-auto">
-                      <a
-                        href={item.mapUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors"
-                      >
-                        🗺️ Google Maps
-                      </a>
-                      <a
-                        href={
-                          item.naverMapUrl ??
-                          `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors"
-                      >
-                        🟢 Naver Map
-                      </a>
-                    </div>
+                  <div className="flex flex-col items-center gap-3 shrink-0">
+                    <a
+                      href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
+                      style={{ backgroundColor: "#22c55e", color: "#fff" }}
+                    >
+                      Book Transfer Now →
+                    </a>
+                    <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
                   </div>
                 </div>
-              ))}
-            </div>
-            {filteredSpots.length > 9 && (
-              <div className="text-center mt-10">
-                <Link
-                  href={`/explore-busan?category=${selectedCategory}${globalSearch ? `&q=${encodeURIComponent(globalSearch)}` : ""}`}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: "#1a1f36" }}
-                >
-                  View All {filteredSpots.length} Spots →
-                </Link>
               </div>
-            )}
-            </>
+
+              {/* ── [Section 2] Mega Event & K-POP 성지순례 ── */}
+              <div>
+                <SectionHeader
+                  emoji="🎤"
+                  title="Mega Events & K-POP Pilgrimage"
+                  subtitle="BTS birthplaces, live concerts, and festival season highlights"
+                  count={megaEvents.length}
+                />
+                {eventsLoading ? (
+                  <div className="text-center py-16">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                    <p className="text-gray-500 text-sm font-medium">Loading events…</p>
+                  </div>
+                ) : megaEvents.length === 0 ? (
+                  <p className="text-gray-400 font-medium py-10 text-center">No K-POP events available.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {megaEvents.slice(0, 9).map((event) => (
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                        onClick={() => setSelectedEvent(event)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── [Section 3] Michelin Guide 맛집 ── */}
+              <div>
+                <SectionHeader
+                  emoji="🌟"
+                  title="Michelin Guide Restaurants"
+                  subtitle="Busan's finest dining — from Bib Gourmand to starred establishments"
+                  count={michelinFood.length}
+                />
+                {eventsLoading ? (
+                  <div className="text-center py-16">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                    <p className="text-gray-500 text-sm font-medium">Loading restaurants…</p>
+                  </div>
+                ) : michelinFood.length === 0 ? (
+                  <p className="text-gray-400 font-medium py-10 text-center">No Michelin restaurants available.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {michelinFood.slice(0, 9).map((event) => (
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                        onClick={() => setSelectedEvent(event)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── [Section 4] Attractions & Nature ── */}
+              <div>
+                <SectionHeader
+                  emoji="🗺️"
+                  title="Attractions & Nature"
+                  subtitle="Beaches, coastal trails, and scenic viewpoints — all solo-traveler approved"
+                  count={attractionSpots.length}
+                />
+                {attractionSpots.length === 0 ? (
+                  <p className="text-gray-400 font-medium py-10 text-center">No attraction data available.</p>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {attractionSpots.slice(0, section4Count).map((item) => (
+                        <div
+                          key={item.id}
+                          onClick={() => setSelectedEvent(toEventItem(item))}
+                          className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                        >
+                          {/* 썸네일 */}
+                          <div className="h-48 overflow-hidden relative bg-gray-200">
+                            {item.image && !imgErrors[item.id] ? (
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                fill
+                                unoptimized
+                                onError={() => setImgErrors((prev) => ({ ...prev, [item.id]: true }))}
+                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              />
+                            ) : (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src="/images/placeholder-spot.svg"
+                                alt="No image"
+                                className="w-full h-full object-cover"
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
+                              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
+                                View Details →
+                              </span>
+                            </div>
+                            <div className="absolute top-3 left-3">
+                              <span
+                                className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"
+                                style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}
+                              >
+                                {item.category === "nature" ? "🌿 Nature" : "🏯 Attraction"}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* 카드 본문 */}
+                          <div className="p-5 flex flex-col flex-1">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-semibold text-gray-400">
+                                📍 {item.district ?? item.city}
+                              </span>
+                              {item.durationMinutes && (
+                                <span className="text-xs font-semibold text-gray-400">
+                                  🕐 {item.durationMinutes}min
+                                </span>
+                              )}
+                            </div>
+                            <h3 className="text-base font-black text-gray-900 mb-2 leading-snug line-clamp-2">
+                              {item.name}
+                            </h3>
+                            <p className="text-sm text-gray-500 mb-4 line-clamp-3 leading-relaxed flex-1">
+                              {item.description}
+                            </p>
+
+                            {/* 실용 뱃지 */}
+                            <div className="flex flex-wrap gap-1.5 mb-4">
+                              {item.soloFriendly && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                                  👤 Solo OK
+                                </span>
+                              )}
+                              {item.cashOnly && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
+                                  💵 Cash Only
+                                </span>
+                              )}
+                              {item.foreignCardAccepted && !item.cashOnly && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                                  💳 Card OK
+                                </span>
+                              )}
+                              {item.category === "nature" && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
+                                  🆓 Free Entry
+                                </span>
+                              )}
+                            </div>
+
+                            {/* 듀얼 지도 버튼 */}
+                            <div className="grid grid-cols-2 gap-2 mt-auto">
+                              <a
+                                href={item.mapUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors"
+                              >
+                                🗺️ Google Maps
+                              </a>
+                              <a
+                                href={
+                                  item.naverMapUrl ??
+                                  `https://map.naver.com/v5/search/${encodeURIComponent(item.name + " Busan Korea")}?lang=en`
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors"
+                              >
+                                💚 Naver Maps
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Load More 버튼 */}
+                    {section4Count < attractionSpots.length && (
+                      <div className="text-center mt-10">
+                        <button
+                          onClick={() => setSection4Count((c) => c + 9)}
+                          className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-black text-white shadow-md transition-all hover:opacity-90 hover:shadow-lg cursor-pointer"
+                          style={{ backgroundColor: "#1a1f36" }}
+                        >
+                          Load More Spots ➔
+                          <span className="text-xs font-bold opacity-70">
+                            ({attractionSpots.length - section4Count} more)
+                          </span>
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+
+            </div> // end 4-section space-y-20
           )}
+
         </div>
       </section>
 
@@ -1098,10 +1148,7 @@ export default function Home() {
       {/* CartDrawer 가림 방지 */}
       <div className="h-20" />
 
-      {/* ══════════════════════════════════════════════════════════
-          EventDetailModal — Trending + Explore Busan 공용 팝업
-          selectedEvent !== null 일 때만 렌더링
-      ══════════════════════════════════════════════════════════ */}
+      {/* ── EventDetailModal ─────────────────────────────────── */}
       {selectedEvent && (
         <EventDetailModal
           event={selectedEvent}
