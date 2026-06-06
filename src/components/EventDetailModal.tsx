@@ -164,24 +164,34 @@ export default function EventDetailModal({ event, onClose }: Props) {
         {/* ── 모달 콘텐츠 ── */}
         <div className="p-5 sm:p-6 space-y-5">
 
-          {/* Google Maps 버튼 — 모달 최상단 탐색 진입점 */}
-          <a
-            href={event.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl border-2 border-blue-100 bg-blue-50 hover:bg-blue-100 transition-colors group"
-          >
-            <span className="text-2xl shrink-0">🗺️</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-black text-blue-700 uppercase tracking-wide">
-                View on Google Maps
-              </p>
-              <p className="text-xs text-blue-500 truncate mt-0.5">{event.address}</p>
-            </div>
-            <span className="text-blue-400 text-base group-hover:translate-x-1 transition-transform shrink-0">
-              →
-            </span>
-          </a>
+          {/* 지도 듀얼 버튼 — Google Maps + Naver Map */}
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={event.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-3 rounded-2xl border-2 border-blue-100 bg-blue-50 hover:bg-blue-100 transition-colors"
+            >
+              <span className="text-xl shrink-0">🗺️</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-black text-blue-700 uppercase tracking-wide leading-tight">Google Maps</p>
+                <p className="text-[10px] text-blue-400 mt-0.5">Directions</p>
+              </div>
+            </a>
+            <a
+              href={`https://map.naver.com/v5/search/${encodeURIComponent(event.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-3 rounded-2xl border-2 border-green-100 bg-green-50 hover:bg-green-100 transition-colors"
+            >
+              <span className="text-xl shrink-0">🟢</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-black text-green-700 uppercase tracking-wide leading-tight">Naver Map</p>
+                <p className="text-[10px] text-green-500 mt-0.5">Korean transit</p>
+              </div>
+            </a>
+          </div>
+          <p className="text-[10px] text-gray-400 -mt-3 pl-1 truncate">📍 {event.address}</p>
 
           {/* Why It Matters */}
           <div

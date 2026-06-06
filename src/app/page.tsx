@@ -1,57 +1,153 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import AdBanner from "@/components/AdBanner";
-// ─ 단계 4 ~ 5 에서 만든 컴포넌트 통합 ─
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 
-// ── 기존 로컬 스팟 타입 ─────────────────────────
+// ── 로컬 스팟 타입 (local-info.json과 1:1) ─────────
 interface LocalInfo {
   id: number;
   name: string;
-  category: "attraction" | "restaurant" | "event" | "accommodation";
+  category: "attraction" | "restaurant" | "event" | "accommodation" | "nature";
   city: string;
+  district?: string;
   address: string;
   description: string;
   searchKeyword?: string;
   mapUrl: string;
+  naverMapUrl?: string;
+  durationMinutes?: number;
+  bestTimeSlot?: string;
+  openingHours?: { open: string; close: string } | null;
+  tags?: string[];
+  relatedSurvivalGuides?: string[];
   soloFriendly: boolean;
   foreignCardAccepted: boolean;
   cashOnly?: boolean;
   image?: string;
 }
 
-// ── Trending Events 필터 정의 ──────────────────
-// Mega Event: concert / festival / event  |  Activity: pilgrimage / permanent / logistics
+// ── LocalInfo → EventItem 어댑터 (Explore 카드 → 동일 모달 재사용) ─
+function toEventItem(spot: LocalInfo): EventItem {
+  return {
+    id: `local-${spot.id}`,
+    type: spot.category,
+    isAnchor: false,
+    journeyCluster: "busan-explore",
+    stage: "Standalone",
+    anchorEventId: null,
+    relatedSpotIds: [],
+    relatedSurvivalGuides: spot.relatedSurvivalGuides ?? [],
+    transitFromAnchor: null,
+    name: spot.name,
+    shortName: spot.name,
+    tags: spot.tags ?? [],
+    city: spot.city,
+    district: spot.district ?? "",
+    address: spot.address,
+    mapUrl: spot.mapUrl,
+    description: spot.description,
+    whyItMatters: spot.description,
+    recommendedDurationMinutes: spot.durationMinutes ?? 60,
+    bestTimeSlot: spot.bestTimeSlot ?? "anytime",
+    openingHours: spot.openingHours ?? null,
+    image: spot.image ?? null,
+    startDate: null,
+    endDate: null,
+    isTrending: false,
+    soloFriendly: spot.soloFriendly,
+    foreignCardAccepted: spot.foreignCardAccepted,
+    cashOnly: spot.cashOnly ?? false,
+    englishMenu: true,
+    barrierFree: true,
+    koreanSurvivalScore: 75,
+    notice: null,
+    commerce: {
+      affiliateType: null,
+      hasAffiliate: false,
+      affiliatePartner: null,
+      affiliateUrl: null,
+      hasMerchandise: false,
+      hasTicketing: false,
+      bookingUrl: null,
+    },
+  };
+}
+
+// ── Trending Events 필터 ───────────────────────────
 const EVENT_FILTERS = [
-  { key: "all",      label: "All"        },
-  { key: "busan",    label: "🏙️ Busan"   },
+  { key: "all",      label: "All"           },
+  { key: "busan",    label: "🏙️ Busan"      },
   { key: "mega",     label: "🎤 Mega Event" },
-  { key: "activity", label: "🗺️ Activity" },
+  { key: "activity", label: "🗺️ Activity"   },
 ];
 
+// ── Explore Korea 카테고리 필터 ───────────────────
+const SPOT_CATEGORIES = [
+  { value: "all",        label: "All Spots"        },
+  { value: "attraction", label: "🏯 Attractions"   },
+  { value: "restaurant", label: "🍜 Food & Drink"  },
+  { value: "nature",     label: "🌿 Nature & Trails"},
+];
+
+// ── 검색창 컴포넌트 (인라인) ─────────────────────
+function SpotSearchBar({
+  value,
+  onChange,
+  placeholder = "Search spots, food, trails…",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <div className="relative w-full max-w-2xl mx-auto">
+      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none">🔍</span>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full pl-11 pr-10 py-3.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
+      />
+      {value && (
+        <button
+          onClick={() => onChange("")}
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors text-xs font-bold"
+        >
+          ✕
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────
 export default function Home() {
 
-  // ── 로컬 스팟 상태 ──────────────────────────
+  // ── 로컬 스팟 상태 ────────────────────────────
   const [localInfoData,    setLocalInfoData]    = useState<LocalInfo[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [loading,          setLoading]          = useState<boolean>(true);
   const [spotImages,       setSpotImages]       = useState<Record<number, string | null>>({});
   const [imgErrors,        setImgErrors]        = useState<Record<number, boolean>>({});
 
-  // ── AI 플래너 폼 상태 ───────────────────────
-  const [city,      setCity]      = useState("Seoul");
+  // ── 검색창 상태 (2곳 공유) ────────────────────
+  const [spotSearch, setSpotSearch] = useState<string>("");
+
+  // ── AI 플래너 폼 상태 ─────────────────────────
+  const [city,      setCity]      = useState("Busan");
   const [startDate, setStartDate] = useState("");
   const [endDate,   setEndDate]   = useState("");
   const [travelers, setTravelers] = useState("1");
   const [style,     setStyle]     = useState("Solo");
 
-  // ── Trending Events 상태 ────────────────────
+  // ── Trending Events 상태 ──────────────────────
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState<boolean>(true);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -59,7 +155,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  // ── AI 일정 생성 ─────────────────────────────
+  // ── AI 일정 생성 ──────────────────────────────
   const handleGenerate = () => {
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
@@ -69,7 +165,7 @@ export default function Home() {
     router.push(`/itinerary?${params.toString()}`);
   };
 
-  // ── 로컬 스팟 데이터 로드 ──────────────────
+  // ── 로컬 스팟 데이터 로드 ─────────────────────
   useEffect(() => {
     fetch("/data/local-info.json")
       .then((r) => r.json())
@@ -77,7 +173,7 @@ export default function Home() {
       .catch(() => setLoading(false));
   }, []);
 
-  // ── 로컬 스팟 이미지 패치 ──────────────────
+  // ── 로컬 스팟 이미지 패치 ─────────────────────
   useEffect(() => {
     if (localInfoData.length === 0) return;
     const immediate: Record<number, string | null> = {};
@@ -104,7 +200,7 @@ export default function Home() {
     });
   }, [localInfoData]);
 
-  // ── Trending Events 데이터 로드 ────────────
+  // ── Trending Events 데이터 로드 ───────────────
   useEffect(() => {
     fetch("/data/events.json")
       .then((r) => r.json())
@@ -112,8 +208,8 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── 필터 적용 (isTrending 우선 정렬) ───────
-  const filteredEvents = (() => {
+  // ── Trending Events 필터 + 정렬 ───────────────
+  const filteredEvents = useMemo(() => {
     let list = eventsData;
     if (eventFilter === "busan")
       list = list.filter((e) => e.city === "Busan");
@@ -121,29 +217,31 @@ export default function Home() {
       list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
     else if (eventFilter === "activity")
       list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
-    // Trending 항목 상단 정렬
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  })();
+  }, [eventsData, eventFilter]);
 
-  // ── 로컬 스팟 카테고리 필터 ───────────────
-  const categories = [
-    { value: "all",        label: "All Spots"    },
-    { value: "attraction", label: "Attractions"  },
-    { value: "restaurant", label: "Restaurants"  },
-    { value: "event",      label: "Events"       },
-  ];
-  const filteredData =
-    selectedCategory === "all"
-      ? localInfoData
-      : localInfoData.filter((item) => item.category === selectedCategory);
+  // ── Explore Korea: 부산 전용 + 카테고리 + 검색 ─
+  const filteredData = useMemo(() => {
+    const q = spotSearch.trim().toLowerCase();
+    return localInfoData
+      .filter((item) => item.city === "Busan") // MVP: 부산 올인
+      .filter((item) => selectedCategory === "all" || item.category === selectedCategory)
+      .filter((item) => {
+        if (!q) return true;
+        return (
+          item.name.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          (item.tags ?? []).some((t) => t.toLowerCase().includes(q)) ||
+          (item.district ?? "").toLowerCase().includes(q)
+        );
+      });
+  }, [localInfoData, selectedCategory, spotSearch]);
 
-  // ─────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 1 · eSIM 배너 (상단 고정 알림)
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── eSIM 배너 ── */}
       <div
         className="py-3 px-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm"
         style={{ backgroundColor: "#1a1f36" }}
@@ -162,9 +260,7 @@ export default function Home() {
         </a>
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 2 · 네비게이션
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── 네비게이션 ── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
@@ -193,9 +289,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 3 · 히어로 (메인 헤드카피)
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── 히어로 ── */}
       <section className="relative overflow-hidden py-24 sm:py-36" style={{ backgroundColor: "#1a1f36" }}>
         <div
           className="absolute inset-0 opacity-20"
@@ -233,9 +327,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 4 · 신뢰 지표 (숫자 3개)
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── 신뢰 지표 ── */}
       <section className="bg-white border-b border-gray-100 py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 text-center gap-8 sm:gap-0">
@@ -256,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          Section 5 · AI 일정 생성 폼
+          AI 일정 생성 폼 — 절대 건드리지 않는 서비스 핵심 영역
       ══════════════════════════════════════════════════════════════ */}
       <section id="planner" className="py-20" style={{ backgroundColor: "#faf8f3" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
@@ -270,8 +362,8 @@ export default function Home() {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Where to? (City)</label>
                 <select value={city} onChange={(e) => setCity(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                  <option value="Seoul">Seoul</option>
                   <option value="Busan">Busan</option>
+                  <option value="Seoul">Seoul</option>
                   <option value="Jeju">Jeju Island</option>
                   <option value="Gyeongju">Gyeongju</option>
                 </select>
@@ -316,9 +408,7 @@ export default function Home() {
         <AdBanner />
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 6 · Essential Cards (여행 필수 정보 3가지)
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── Essential for Foreign Travelers ── */}
       <section className="py-20" style={{ backgroundColor: "#f0f4ff" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -372,21 +462,35 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          Section 7 · TRENDING EVENTS (핵심 신규 섹션)
-          - events.json 12개 로드
-          - EventCard 그리드
-          - EventDetailModal 연동
-          - CartDrawer 배지 실시간 반영
+          검색창 1 — Essential 섹션 하단 ~ Trending 타이틀 배너 사이
+      ══════════════════════════════════════════════════════════════ */}
+      <div className="bg-white border-t border-gray-100 py-8 px-4">
+        <div className="max-w-2xl mx-auto text-center mb-4">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Search Busan Spots & Events</p>
+        </div>
+        <SpotSearchBar
+          value={spotSearch}
+          onChange={setSpotSearch}
+          placeholder="Try: beach, hiking, ARMY, seafood, ZM-ILLENNIAL…"
+        />
+        {spotSearch && (
+          <p className="text-center text-xs text-gray-400 mt-2">
+            Showing results in Trending Events and Explore sections below ↓
+          </p>
+        )}
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          TRENDING EVENTS 섹션
       ══════════════════════════════════════════════════════════════ */}
       <section id="trending-events" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* 섹션 헤더 카드 (네이비 배경) */}
+          {/* 섹션 헤더 카드 */}
           <div
             className="rounded-3xl px-8 py-10 mb-10 relative overflow-hidden"
             style={{ backgroundColor: "#1a1f36" }}
           >
-            {/* 배경 그라디언트 효과 */}
             <div
               className="absolute inset-0 opacity-30 pointer-events-none"
               style={{
@@ -395,8 +499,6 @@ export default function Home() {
               }}
             />
             <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-
-              {/* 타이틀 */}
               <div>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-orange-400 border border-orange-400/30 bg-orange-400/10 mb-4 uppercase tracking-widest">
                   🔥 Trending Now in Korea
@@ -409,8 +511,6 @@ export default function Home() {
                   build your personalized trip in seconds.
                 </p>
               </div>
-
-              {/* 플래너 이동 버튼 */}
               <Link
                 href="/planner"
                 className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
@@ -435,9 +535,7 @@ export default function Home() {
                 >
                   {f.label}
                   {eventFilter === f.key && (
-                    <span className="ml-1.5 text-xs opacity-80">
-                      {filteredEvents.length}
-                    </span>
+                    <span className="ml-1.5 text-xs opacity-80">{filteredEvents.length}</span>
                   )}
                 </button>
               ))}
@@ -447,10 +545,7 @@ export default function Home() {
           {/* EventCard 그리드 */}
           {eventsLoading ? (
             <div className="text-center py-20">
-              <div
-                className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4"
-                style={{ borderColor: "#f97316" }}
-              />
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
               <p className="text-gray-500 font-medium">Loading trending events…</p>
             </div>
           ) : filteredEvents.length === 0 ? (
@@ -461,7 +556,6 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredEvents.map((event) => (
-                // EventCard 클릭 → selectedEvent 설정 → EventDetailModal 오픈
                 <EventCard
                   key={event.id}
                   event={event}
@@ -471,7 +565,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* 하단 안내 */}
           <p className="text-center text-xs text-gray-400 mt-8">
             Tap any card to see details and add it to your itinerary.
             Your picks will appear in the cart bar below. ↓
@@ -480,17 +573,38 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          Section 8 · Explore Korea (기존 로컬 스팟 카드)
+          검색창 2 — Explore Korea 타이틀 바로 위
       ══════════════════════════════════════════════════════════════ */}
-      <section className="bg-gray-50 py-20">
+      <div className="bg-gray-50 pt-10 pb-0 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-4">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Search Busan Spots</p>
+          </div>
+          <SpotSearchBar
+            value={spotSearch}
+            onChange={setSpotSearch}
+            placeholder="Search beaches, markets, trails, ARMY spots…"
+          />
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          EXPLORE KOREA (부산 전용, 클릭 → EventDetailModal)
+      ══════════════════════════════════════════════════════════════ */}
+      <section className="bg-gray-50 pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
+
+          {/* 섹션 헤더 */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6 pt-6">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Explore Korea</h2>
-              <p className="text-gray-500 mt-2 text-base">Verified local spots to explore worry-free</p>
+              <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Explore Busan</h2>
+              <p className="text-gray-500 mt-2 text-base">
+                Verified local spots — click any card for full details &amp; map directions
+              </p>
             </div>
+            {/* 카테고리 탭 (Nature & Trails 포함) */}
             <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
+              {SPOT_CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
@@ -507,17 +621,34 @@ export default function Home() {
             </div>
           </div>
 
+          {/* 검색 결과 수 표시 */}
+          {spotSearch && (
+            <p className="text-sm text-gray-500 mb-4 font-semibold">
+              {filteredData.length} result{filteredData.length !== 1 ? "s" : ""} for &ldquo;{spotSearch}&rdquo;
+            </p>
+          )}
+
           {loading ? (
             <div className="text-center py-16">
               <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
               <p className="text-gray-500 font-medium">Loading awesome local spots…</p>
             </div>
+          ) : filteredData.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-4xl mb-3">🔍</p>
+              <p className="text-gray-600 font-semibold">No spots found for &ldquo;{spotSearch}&rdquo;</p>
+              <button onClick={() => setSpotSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">
+                Clear search
+              </button>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredData.map((item) => (
+                // ── 클릭 → toEventItem 어댑터 → selectedEvent → EventDetailModal ──
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-all duration-300"
+                  onClick={() => setSelectedEvent(toEventItem(item))}
+                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-all duration-300 cursor-pointer group"
                 >
                   <div className="h-44 overflow-hidden relative bg-gray-200">
                     {!(item.id in spotImages) ? (
@@ -529,31 +660,53 @@ export default function Home() {
                         fill
                         unoptimized
                         onError={() => setImgErrors((prev) => ({ ...prev, [item.id]: true }))}
-                        className="object-cover transition-transform duration-300 hover:scale-105"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      // Rule 9: 이미지 로드 실패 시 SVG 플레이스홀더 표시
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src="/images/placeholder-spot.svg" alt="No image available" className="w-full h-full object-cover" />
                     )}
+                    {/* 호버 오버레이 힌트 */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-bold text-sm bg-black/50 px-3 py-1.5 rounded-full">
+                        View Details →
+                      </span>
+                    </div>
                   </div>
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md" style={{ backgroundColor: "#eff6ff", color: "#3b5bdb" }}>
+                      <span
+                        className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md"
+                        style={{ backgroundColor: "#eff6ff", color: "#3b5bdb" }}
+                      >
                         {item.category}
                       </span>
-                      <span className="text-xs font-medium text-gray-500">📍 {item.city}</span>
+                      <span className="text-xs font-medium text-gray-500">📍 {item.district ?? item.city}</span>
                     </div>
                     <h3 className="text-base font-black text-gray-900 mb-2 leading-snug line-clamp-2">{item.name}</h3>
                     <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed flex-1">{item.description}</p>
-                    <a
-                      href={item.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-bold text-gray-900 border border-gray-200 hover:border-gray-400 rounded-xl transition-all"
-                    >
-                      🗺️ View on Map →
-                    </a>
+
+                    {/* 듀얼 지도 버튼 */}
+                    <div className="grid grid-cols-2 gap-2 mt-auto">
+                      <a
+                        href={item.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-100 hover:bg-blue-100 rounded-xl transition-all"
+                      >
+                        🗺️ Google
+                      </a>
+                      <a
+                        href={item.naverMapUrl ?? `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-green-700 bg-green-50 border border-green-100 hover:bg-green-100 rounded-xl transition-all"
+                      >
+                        🟢 Naver
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -562,9 +715,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 9 · Survival Guide Preview
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── Survival Guide Preview ── */}
       <section className="py-20" style={{ backgroundColor: "#1a1f36" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -595,9 +746,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          Section 10 · 푸터
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ── 푸터 ── */}
       <footer className="py-12 px-4" style={{ backgroundColor: "#111827" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
@@ -620,14 +769,10 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* CartDrawer 가림 방지 하단 여백 */}
+      {/* CartDrawer 가림 방지 */}
       <div className="h-20" />
 
-      {/* ══════════════════════════════════════════════════════════════
-          EventDetailModal (z-50 오버레이)
-          selectedEvent 가 설정되면 렌더링,
-          onClose 호출 시 null 로 초기화 → 모달 사라짐
-      ══════════════════════════════════════════════════════════════ */}
+      {/* EventDetailModal — Trending + Explore 공용 */}
       {selectedEvent && (
         <EventDetailModal
           event={selectedEvent}

@@ -60,7 +60,7 @@ export interface EventItem {
   englishMenu: boolean;
   barrierFree: boolean;
   koreanSurvivalScore: number;
-  notice: string;
+  notice: string | null;
   commerce: CommerceInfo;
 }
 
