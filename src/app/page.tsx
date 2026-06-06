@@ -316,7 +316,8 @@ export default function Home() {
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
   // ── 검색 & 카테고리 ───────────────────────────
-  const [spotSearch,       setSpotSearch]       = useState("");
+  const [eventSearch,      setEventSearch]      = useState("");   // Trending 전용
+  const [spotSearch,       setSpotSearch]       = useState("");   // Explore Busan 전용
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // ── AI 플래너 폼 ──────────────────────────────
@@ -370,7 +371,7 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── Trending 필터 (통합 검색 spotSearch 반영) ─
+  // ── Trending 필터 — eventSearch 전용 (Explore와 완전 독립) ─
   const filteredEvents = useMemo(() => {
     let list = eventsData;
     if (eventFilter === "busan")
@@ -379,7 +380,7 @@ export default function Home() {
       list = list.filter((e) => ["concert", "festival", "event"].includes(e.type));
     else if (eventFilter === "activity")
       list = list.filter((e) => ["pilgrimage", "permanent", "logistics"].includes(e.type));
-    const q = spotSearch.trim().toLowerCase();
+    const q = eventSearch.trim().toLowerCase();
     if (q) {
       list = list.filter((e) =>
         e.name.toLowerCase().includes(q) ||
@@ -390,7 +391,7 @@ export default function Home() {
       );
     }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [eventsData, eventFilter, spotSearch]);
+  }, [eventsData, eventFilter, eventSearch]);
 
   // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
   const filteredSpots = useMemo(() => {
@@ -651,25 +652,6 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          검색창 1 — Essential 섹션 하단 ~ Trending 배너 사이
-      ══════════════════════════════════════════════════════════ */}
-      <div className="bg-white border-t border-b border-gray-100 py-8 px-4">
-        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-          🔍 Search Busan Events &amp; Spots
-        </p>
-        <SpotSearchBar
-          value={spotSearch}
-          onChange={setSpotSearch}
-          placeholder="Try: ARMY, beach, hiking, ZM-ILLENNIAL, seafood, fireworks…"
-        />
-        {spotSearch && (
-          <p className="text-center text-xs text-orange-500 font-semibold mt-3">
-            Filtering results below for &ldquo;{spotSearch}&rdquo; ↓
-          </p>
-        )}
-      </div>
-
-      {/* ══════════════════════════════════════════════════════════
           TRENDING EVENTS 섹션
       ══════════════════════════════════════════════════════════ */}
       <section id="trending-events" className="py-20 bg-white">
@@ -730,6 +712,20 @@ export default function Home() {
             </div>
           </div>
 
+          {/* ── 검색창 1: Trending 전용 ── 다크 헤더 ~ EventCard 그리드 사이 */}
+          <div className="py-6">
+            <SpotSearchBar
+              value={eventSearch}
+              onChange={setEventSearch}
+              placeholder="Search: BTS, fireworks, ARMY, pilgrimage, concert…"
+            />
+            {eventSearch && (
+              <p className="text-center text-xs text-orange-500 font-semibold mt-3">
+                Filtering trending events for &ldquo;{eventSearch}&rdquo; ↓
+              </p>
+            )}
+          </div>
+
           {/* EventCard 그리드 */}
           {eventsLoading ? (
             <div className="text-center py-20">
@@ -755,7 +751,7 @@ export default function Home() {
               {filteredEvents.length > 9 && (
                 <div className="text-center mt-10">
                   <Link
-                    href={`/trending?filter=${eventFilter}${spotSearch ? `&q=${encodeURIComponent(spotSearch)}` : ""}`}
+                    href={`/trending?filter=${eventFilter}${eventSearch ? `&q=${encodeURIComponent(eventSearch)}` : ""}`}
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-black text-white shadow-md transition-opacity hover:opacity-90"
                     style={{ backgroundColor: "#f97316" }}
                   >
@@ -771,8 +767,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Explore Busan 구분선 */}
-      <div className="bg-gray-50 border-t border-gray-200" />
+      {/* ══════════════════════════════════════════════════════════
+          검색창 2 — Explore Busan 전용 독립 엔진
+          위치: Explore Busan 타이틀 & 카테고리 탭 바로 위
+      ══════════════════════════════════════════════════════════ */}
+      <div className="bg-gray-50 border-t border-gray-200 pt-10 pb-0 px-4">
+        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+          🔍 Search Busan Spots
+        </p>
+        <SpotSearchBar
+          value={spotSearch}
+          onChange={setSpotSearch}
+          placeholder="Search beaches, markets, trails, ARMY spots…"
+        />
+        {spotSearch && (
+          <p className="text-center text-xs text-orange-500 font-semibold mt-3">
+            Filtering Busan spots for &ldquo;{spotSearch}&rdquo; ↓
+          </p>
+        )}
+      </div>
 
       {/* ══════════════════════════════════════════════════════════
           EXPLORE BUSAN 섹션
