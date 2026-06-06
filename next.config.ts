@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  ...(process.env.STATIC_EXPORT === "true" ? { output: "export" } : {}),
+  output: "export",
   images: {
     unoptimized: true,
     remotePatterns: [

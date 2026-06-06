@@ -9,7 +9,10 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 
-// ── 로컬 스팟 타입 (local-info.json과 1:1) ─────────
+// ═══════════════════════════════════════════════
+//  TYPES
+// ═══════════════════════════════════════════════
+
 interface LocalInfo {
   id: number;
   name: string;
@@ -32,7 +35,166 @@ interface LocalInfo {
   image?: string;
 }
 
-// ── LocalInfo → EventItem 어댑터 (Explore 카드 → 동일 모달 재사용) ─
+// ═══════════════════════════════════════════════
+//  HARDCODED BUSAN SPOTS — JSON 로딩 실패와 무관하게 항상 렌더링 보장
+// ═══════════════════════════════════════════════
+
+const BUSAN_SPOTS: LocalInfo[] = [
+  {
+    id: 6,
+    name: "Haeundae Beach",
+    category: "attraction",
+    city: "Busan",
+    district: "Haeundae-gu",
+    address: "Haeundae-gu, Busan",
+    description:
+      "Korea's most famous beach. Great for walking, street food, and ocean views year-round. The stretch from Haeundae to Dalmaji Hill is unforgettable.",
+    mapUrl: "https://maps.google.com/?q=Haeundae+Beach+Busan",
+    naverMapUrl:
+      "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5",
+    durationMinutes: 120,
+    bestTimeSlot: "afternoon",
+    openingHours: null,
+    tags: ["#Beach", "#Summer", "#Seafood", "#Sunrise", "#PhotoSpot"],
+    relatedSurvivalGuides: ["getting-around", "solo-dining"],
+    soloFriendly: true,
+    foreignCardAccepted: true,
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600",
+  },
+  {
+    id: 7,
+    name: "Gamcheon Culture Village",
+    category: "attraction",
+    city: "Busan",
+    district: "Saha-gu",
+    address: "Gamcheon 2-dong, Saha-gu, Busan",
+    description:
+      "Colorful hillside village with murals and art installations carved into a steep hillside. Called the 'Machu Picchu of Busan' — every alley is a photo opportunity.",
+    mapUrl: "https://maps.google.com/?q=Gamcheon+Culture+Village+Busan",
+    naverMapUrl:
+      "https://map.naver.com/v5/search/%EA%B0%90%EC%B2%9C%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84",
+    durationMinutes: 90,
+    bestTimeSlot: "morning",
+    openingHours: { open: "09:00", close: "18:00" },
+    tags: ["#ColorfulVillage", "#Art", "#Mural", "#PhotoSpot", "#BTS"],
+    relatedSurvivalGuides: ["getting-around"],
+    soloFriendly: true,
+    foreignCardAccepted: true,
+    image: "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=600",
+  },
+  {
+    id: 8,
+    name: "Jagalchi Fish Market",
+    category: "restaurant",
+    city: "Busan",
+    district: "Jung-gu",
+    address: "52 Jagalchihaean-ro, Jung-gu, Busan",
+    description:
+      "Korea's largest seafood market. Pick live seafood from the ground floor and have it cooked upstairs. Solo dining completely welcome — point and eat.",
+    mapUrl: "https://maps.google.com/?q=Jagalchi+Fish+Market+Busan",
+    naverMapUrl:
+      "https://map.naver.com/v5/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5",
+    durationMinutes: 60,
+    bestTimeSlot: "morning",
+    openingHours: { open: "07:00", close: "21:00" },
+    tags: ["#Seafood", "#FishMarket", "#LocalFood", "#SoloFriendly", "#CashOnly"],
+    relatedSurvivalGuides: ["payments", "solo-dining"],
+    soloFriendly: true,
+    foreignCardAccepted: false,
+    cashOnly: true,
+    image: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600",
+  },
+  {
+    id: 12,
+    name: "Gwangalli Beach & Bridge",
+    category: "attraction",
+    city: "Busan",
+    district: "Suyeong-gu",
+    address: "Gwangalli 1-dong, Suyeong-gu, Busan",
+    description:
+      "Busan's trendiest beach with stunning night views of Gwangan Bridge. Line the beachfront bars at sunset — the bridge lights up the entire bay.",
+    mapUrl: "https://maps.google.com/?q=Gwangalli+Beach+Busan",
+    naverMapUrl:
+      "https://map.naver.com/v5/search/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5",
+    durationMinutes: 90,
+    bestTimeSlot: "evening",
+    openingHours: null,
+    tags: ["#Beach", "#GwanganBridge", "#NightView", "#Seafood", "#PhotoSpot"],
+    relatedSurvivalGuides: ["getting-around"],
+    soloFriendly: true,
+    foreignCardAccepted: true,
+    image: "https://images.unsplash.com/photo-1583689397935-7de22f67e3c7?w=600",
+  },
+  // ── Nature & Trails (사장님 직접 선정 3곳) ────
+  {
+    id: 13,
+    name: "Hwangnyeongsan Night View Trail",
+    category: "nature",
+    city: "Busan",
+    district: "Yeonje-gu",
+    address: "Hwangnyeong-dong, Yeonje-gu, Busan (황령산, 연제구)",
+    description:
+      "Busan's #1 night view mountain. A 40-minute hike rewards you with a 360° panorama of glittering city lights, Gwangalli Bridge, and the dark ocean beyond. Foreign visitors consistently call it their most unforgettable Busan memory.",
+    mapUrl: "https://maps.google.com/?q=%ED%99%A9%EB%A0%B9%EC%82%B0+%EB%B6%80%EC%82%B0",
+    naverMapUrl: "https://map.naver.com/v5/search/%ED%99%A9%EB%A0%B9%EC%82%B0",
+    durationMinutes: 120,
+    bestTimeSlot: "evening",
+    openingHours: null,
+    tags: ["#NightView", "#Hiking", "#PhotoSpot", "#Busan", "#Free"],
+    relatedSurvivalGuides: ["getting-around"],
+    soloFriendly: true,
+    foreignCardAccepted: false,
+    cashOnly: false,
+    image: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=600",
+  },
+  {
+    id: 14,
+    name: "Jangsan Mountain Trail",
+    category: "nature",
+    city: "Busan",
+    district: "Haeundae-gu",
+    address: "Jangsan, Haeundae-gu, Busan (장산, 해운대구)",
+    description:
+      "A beloved local trail inside Haeundae district — dense pine forest, cascading streams, and partial sea views through the tree canopy. Easy-to-medium difficulty. Perfect half-day escape from the beach crowds.",
+    mapUrl: "https://maps.google.com/?q=%EC%9E%A5%EC%82%B0+%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC+%EB%B6%80%EC%82%B0",
+    naverMapUrl: "https://map.naver.com/v5/search/%EC%9E%A5%EC%82%B0%EB%93%B1%EC%82%B0%EB%A1%9C",
+    durationMinutes: 180,
+    bestTimeSlot: "morning",
+    openingHours: null,
+    tags: ["#Hiking", "#Forest", "#Stream", "#Haeundae", "#Free"],
+    relatedSurvivalGuides: ["getting-around"],
+    soloFriendly: true,
+    foreignCardAccepted: false,
+    cashOnly: false,
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600",
+  },
+  {
+    id: 15,
+    name: "Igidae Coastal Walk",
+    category: "nature",
+    city: "Busan",
+    district: "Nam-gu",
+    address: "Igidae Park, Nam-gu, Busan (이기대공원, 남구)",
+    description:
+      "A dramatic 5km cliff-edge coastal trail connecting Gwangalli to Oryukdo. Sea caves, ocean spray, wildflowers in spring, and sheer rock faces plunging into the sea. The most beautiful free trail in all of Korea.",
+    mapUrl: "https://maps.google.com/?q=%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C+%EB%B6%80%EC%82%B0",
+    naverMapUrl: "https://map.naver.com/v5/search/%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C",
+    durationMinutes: 150,
+    bestTimeSlot: "afternoon",
+    openingHours: null,
+    tags: ["#CoastalWalk", "#Cliffs", "#OceanView", "#Free", "#Oryukdo"],
+    relatedSurvivalGuides: ["getting-around"],
+    soloFriendly: true,
+    foreignCardAccepted: false,
+    cashOnly: false,
+    image: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600",
+  },
+];
+
+// ═══════════════════════════════════════════════
+//  LocalInfo → EventItem 어댑터 (Explore 카드 → 동일 모달 재사용)
+// ═══════════════════════════════════════════════
+
 function toEventItem(spot: LocalInfo): EventItem {
   return {
     id: `local-${spot.id}`,
@@ -79,27 +241,14 @@ function toEventItem(spot: LocalInfo): EventItem {
   };
 }
 
-// ── Trending Events 필터 ───────────────────────────
-const EVENT_FILTERS = [
-  { key: "all",      label: "All"           },
-  { key: "busan",    label: "🏙️ Busan"      },
-  { key: "mega",     label: "🎤 Mega Event" },
-  { key: "activity", label: "🗺️ Activity"   },
-];
+// ═══════════════════════════════════════════════
+//  검색창 컴포넌트
+// ═══════════════════════════════════════════════
 
-// ── Explore Korea 카테고리 필터 ───────────────────
-const SPOT_CATEGORIES = [
-  { value: "all",        label: "All Spots"        },
-  { value: "attraction", label: "🏯 Attractions"   },
-  { value: "restaurant", label: "🍜 Food & Drink"  },
-  { value: "nature",     label: "🌿 Nature & Trails"},
-];
-
-// ── 검색창 컴포넌트 (인라인) ─────────────────────
 function SpotSearchBar({
   value,
   onChange,
-  placeholder = "Search spots, food, trails…",
+  placeholder = "Search spots, beaches, hiking, ARMY…",
 }: {
   value: string;
   onChange: (v: string) => void;
@@ -107,18 +256,21 @@ function SpotSearchBar({
 }) {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none">🔍</span>
+      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-lg">
+        🔍
+      </span>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-11 pr-10 py-3.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
+        className="w-full pl-12 pr-11 py-4 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
       />
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors text-xs font-bold"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors text-xs font-bold"
+          aria-label="Clear search"
         >
           ✕
         </button>
@@ -127,80 +279,82 @@ function SpotSearchBar({
   );
 }
 
-// ─────────────────────────────────────────────────
+// ═══════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════
+
+const EVENT_FILTERS = [
+  { key: "all",      label: "All"           },
+  { key: "busan",    label: "🏙️ Busan"      },
+  { key: "mega",     label: "🎤 Mega Event" },
+  { key: "activity", label: "🗺️ Activity"   },
+];
+
+const SPOT_CATEGORIES = [
+  { value: "all",        label: "All Spots"          },
+  { value: "attraction", label: "🏯 Attractions"     },
+  { value: "restaurant", label: "🍜 Food & Drink"    },
+  { value: "nature",     label: "🌿 Nature & Trails" },
+];
+
+// ═══════════════════════════════════════════════
+//  PAGE COMPONENT
+// ═══════════════════════════════════════════════
+
 export default function Home() {
 
   // ── 로컬 스팟 상태 ────────────────────────────
-  const [localInfoData,    setLocalInfoData]    = useState<LocalInfo[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [loading,          setLoading]          = useState<boolean>(true);
-  const [spotImages,       setSpotImages]       = useState<Record<number, string | null>>({});
-  const [imgErrors,        setImgErrors]        = useState<Record<number, boolean>>({});
+  const [localInfoData, setLocalInfoData] = useState<LocalInfo[]>(BUSAN_SPOTS);
+  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
-  // ── 검색창 상태 (2곳 공유) ────────────────────
-  const [spotSearch, setSpotSearch] = useState<string>("");
+  // ── 검색 & 카테고리 ───────────────────────────
+  const [spotSearch,       setSpotSearch]       = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // ── AI 플래너 폼 상태 ─────────────────────────
+  // ── AI 플래너 폼 ──────────────────────────────
   const [city,      setCity]      = useState("Busan");
   const [startDate, setStartDate] = useState("");
   const [endDate,   setEndDate]   = useState("");
   const [travelers, setTravelers] = useState("1");
   const [style,     setStyle]     = useState("Solo");
 
-  // ── Trending Events 상태 ──────────────────────
+  // ── Trending Events ───────────────────────────
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
-  const [eventsLoading, setEventsLoading] = useState<boolean>(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [eventFilter,   setEventFilter]   = useState("busan");
+
+  // ── 공용 모달 상태 (Trending + Explore 공유) ──
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
-  const [eventFilter,   setEventFilter]   = useState<string>("busan");
 
   const router = useRouter();
 
   // ── AI 일정 생성 ──────────────────────────────
-  const handleGenerate = () => {
+  function handleGenerate() {
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
     }
     const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style });
     router.push(`/itinerary?${params.toString()}`);
-  };
+  }
 
-  // ── 로컬 스팟 데이터 로드 ─────────────────────
+  // ── JSON에서 추가 스팟 로드 (하드코딩 위에 병합) ─
   useEffect(() => {
     fetch("/data/local-info.json")
       .then((r) => r.json())
-      .then((data) => { setLocalInfoData(data); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then((data: LocalInfo[]) => {
+        // JSON 로드 성공 시 부산 스팟만 추출, 중복 id는 JSON 우선
+        const busanFromJson = data.filter((s) => s.city === "Busan");
+        const hardcodedIds = new Set(BUSAN_SPOTS.map((s) => s.id));
+        const newOnes = busanFromJson.filter((s) => !hardcodedIds.has(s.id));
+        setLocalInfoData([...BUSAN_SPOTS, ...newOnes]);
+      })
+      .catch(() => {
+        // 실패해도 하드코딩 유지
+      });
   }, []);
 
-  // ── 로컬 스팟 이미지 패치 ─────────────────────
-  useEffect(() => {
-    if (localInfoData.length === 0) return;
-    const immediate: Record<number, string | null> = {};
-    const needsApi: LocalInfo[] = [];
-    localInfoData.forEach((item) => {
-      if (item.image) { immediate[item.id] = item.image; }
-      else            { needsApi.push(item); }
-    });
-    setSpotImages(immediate);
-    if (needsApi.length === 0) return;
-    Promise.all(
-      needsApi.map((item) =>
-        fetch(`/api/spot-images?spotName=${encodeURIComponent(item.name)}${item.searchKeyword ? `&searchKeyword=${encodeURIComponent(item.searchKeyword)}` : ""}`)
-          .then((r) => r.json())
-          .then(({ imageUrl }: { imageUrl: string | null }) => ({ id: item.id, imageUrl }))
-          .catch(() => ({ id: item.id, imageUrl: null }))
-      )
-    ).then((results) => {
-      setSpotImages((prev) => {
-        const map = { ...prev };
-        results.forEach(({ id, imageUrl }) => { map[id] = imageUrl; });
-        return map;
-      });
-    });
-  }, [localInfoData]);
-
-  // ── Trending Events 데이터 로드 ───────────────
+  // ── Trending Events 로드 ──────────────────────
   useEffect(() => {
     fetch("/data/events.json")
       .then((r) => r.json())
@@ -208,7 +362,7 @@ export default function Home() {
       .catch(() => setEventsLoading(false));
   }, []);
 
-  // ── Trending Events 필터 + 정렬 ───────────────
+  // ── Trending 필터 ─────────────────────────────
   const filteredEvents = useMemo(() => {
     let list = eventsData;
     if (eventFilter === "busan")
@@ -220,28 +374,30 @@ export default function Home() {
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
   }, [eventsData, eventFilter]);
 
-  // ── Explore Korea: 부산 전용 + 카테고리 + 검색 ─
-  const filteredData = useMemo(() => {
+  // ── Explore 필터 (부산 전용 + 카테고리 + 검색) ─
+  const filteredSpots = useMemo(() => {
     const q = spotSearch.trim().toLowerCase();
     return localInfoData
-      .filter((item) => item.city === "Busan") // MVP: 부산 올인
-      .filter((item) => selectedCategory === "all" || item.category === selectedCategory)
-      .filter((item) => {
+      .filter((s) => s.city === "Busan")
+      .filter((s) => selectedCategory === "all" || s.category === selectedCategory)
+      .filter((s) => {
         if (!q) return true;
         return (
-          item.name.toLowerCase().includes(q) ||
-          item.description.toLowerCase().includes(q) ||
-          (item.tags ?? []).some((t) => t.toLowerCase().includes(q)) ||
-          (item.district ?? "").toLowerCase().includes(q)
+          s.name.toLowerCase().includes(q) ||
+          s.description.toLowerCase().includes(q) ||
+          (s.tags ?? []).some((t) => t.toLowerCase().includes(q)) ||
+          (s.district ?? "").toLowerCase().includes(q)
         );
       });
   }, [localInfoData, selectedCategory, spotSearch]);
 
-  // ─────────────────────────────────────────────
+  // ════════════════════════════════════════════════════════════════
+  //  RENDER
+  // ════════════════════════════════════════════════════════════════
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
-      {/* ── eSIM 배너 ── */}
+      {/* ── eSIM 상단 배너 ──────────────────────────────────────── */}
       <div
         className="py-3 px-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm"
         style={{ backgroundColor: "#1a1f36" }}
@@ -260,7 +416,7 @@ export default function Home() {
         </a>
       </div>
 
-      {/* ── 네비게이션 ── */}
+      {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
@@ -268,9 +424,9 @@ export default function Home() {
             Korea<span style={{ color: "#f97316" }}>Mate</span>
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
-            <Link href="/blog"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
+            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
-            <Link href="/about"         className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
+            <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
@@ -289,10 +445,12 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ── 히어로 ── */}
+      {/* ══════════════════════════════════════════════════════════
+          HERO — "Don't Get Stuck in Korea" 주황 그래디언트 배너
+      ══════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden py-24 sm:py-36" style={{ backgroundColor: "#1a1f36" }}>
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-25"
           style={{
             backgroundImage:
               "radial-gradient(circle at 15% 60%, #f97316 0%, transparent 45%), radial-gradient(circle at 85% 15%, #3b82f6 0%, transparent 40%)",
@@ -327,7 +485,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 신뢰 지표 ── */}
+      {/* ── 신뢰 지표 3개 ────────────────────────────────────────── */}
       <section className="bg-white border-b border-gray-100 py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 text-center gap-8 sm:gap-0">
@@ -347,14 +505,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          AI 일정 생성 폼 — 절대 건드리지 않는 서비스 핵심 영역
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════════════════
+          AI 일정 생성 폼 — 핵심 정체성, 절대 수정 금지
+      ══════════════════════════════════════════════════════════ */}
       <section id="planner" className="py-20" style={{ backgroundColor: "#faf8f3" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">✨ Plan Your Korea Trip with AI</h2>
-            <p className="text-base font-medium text-gray-500">Free • No signup required • Ready in 30 seconds</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
+              ✨ Plan Your Korea Trip with AI
+            </h2>
+            <p className="text-base font-medium text-gray-500">
+              Free • No signup required • Ready in 30 seconds
+            </p>
           </div>
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -394,9 +556,11 @@ export default function Home() {
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
               </div>
             </div>
-            <button onClick={handleGenerate}
+            <button
+              onClick={handleGenerate}
               className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#f97316" }}>
+              style={{ backgroundColor: "#f97316" }}
+            >
               ✨ Generate My Itinerary
             </button>
           </div>
@@ -408,31 +572,38 @@ export default function Home() {
         <AdBanner />
       </div>
 
-      {/* ── Essential for Foreign Travelers ── */}
-      <section className="py-20" style={{ backgroundColor: "#f0f4ff" }}>
+      {/* ── Essential for Foreign Travelers ─────────────────────── */}
+      <section id="essential" className="py-20" style={{ backgroundColor: "#f0f4ff" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Essential for Foreign Travelers</h2>
-            <p className="text-base font-medium text-gray-500">Things Korea doesn&apos;t explain to tourists</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
+              Essential for Foreign Travelers
+            </h2>
+            <p className="text-base font-medium text-gray-500">
+              Things Korea doesn&apos;t explain to tourists
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               {
-                icon: "📱", title: "Stay Connected",
+                icon: "📱",
+                title: "Stay Connected",
                 desc: "Get your Korea eSIM before landing. No registration hassle.",
                 href: "https://www.airalo.com/south-korea-esim",
                 cta: "Get 10% Off eSIM →",
                 external: true,
               },
               {
-                icon: "🚇", title: "Transport Card",
+                icon: "🚇",
+                title: "Transport Card",
                 desc: "How to get T-money card and load cash at convenience stores.",
                 href: "/survival-guide",
                 cta: "Read Guide →",
                 external: false,
               },
               {
-                icon: "💳", title: "Cash & Payments",
+                icon: "💳",
+                title: "Cash & Payments",
                 desc: "Where foreign cards work. Which places are cash-only.",
                 href: "/survival-guide",
                 cta: "Read Guide →",
@@ -461,32 +632,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          검색창 1 — Essential 섹션 하단 ~ Trending 타이틀 배너 사이
-      ══════════════════════════════════════════════════════════════ */}
-      <div className="bg-white border-t border-gray-100 py-8 px-4">
-        <div className="max-w-2xl mx-auto text-center mb-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Search Busan Spots & Events</p>
-        </div>
+      {/* ══════════════════════════════════════════════════════════
+          검색창 1 — Essential 섹션 하단 ~ Trending 배너 사이
+      ══════════════════════════════════════════════════════════ */}
+      <div className="bg-white border-t border-b border-gray-100 py-8 px-4">
+        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+          🔍 Search Busan Events &amp; Spots
+        </p>
         <SpotSearchBar
           value={spotSearch}
           onChange={setSpotSearch}
-          placeholder="Try: beach, hiking, ARMY, seafood, ZM-ILLENNIAL…"
+          placeholder="Try: ARMY, beach, hiking, ZM-ILLENNIAL, seafood, fireworks…"
         />
         {spotSearch && (
-          <p className="text-center text-xs text-gray-400 mt-2">
-            Showing results in Trending Events and Explore sections below ↓
+          <p className="text-center text-xs text-orange-500 font-semibold mt-3">
+            Filtering results below for &ldquo;{spotSearch}&rdquo; ↓
           </p>
         )}
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════════
           TRENDING EVENTS 섹션
-      ══════════════════════════════════════════════════════════════ */}
+      ══════════════════════════════════════════════════════════ */}
       <section id="trending-events" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* 섹션 헤더 카드 */}
+          {/* 헤더 카드 */}
           <div
             className="rounded-3xl px-8 py-10 mb-10 relative overflow-hidden"
             style={{ backgroundColor: "#1a1f36" }}
@@ -519,7 +690,6 @@ export default function Home() {
                 🗺️ Open My Planner →
               </Link>
             </div>
-
             {/* 필터 탭 */}
             <div className="relative flex flex-wrap gap-2 mt-8">
               {EVENT_FILTERS.map((f) => (
@@ -564,45 +734,45 @@ export default function Home() {
               ))}
             </div>
           )}
-
           <p className="text-center text-xs text-gray-400 mt-8">
-            Tap any card to see details and add it to your itinerary.
-            Your picks will appear in the cart bar below. ↓
+            Tap any card to see details and add it to your itinerary. Your picks appear in the bar below. ↓
           </p>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════════
           검색창 2 — Explore Korea 타이틀 바로 위
-      ══════════════════════════════════════════════════════════════ */}
-      <div className="bg-gray-50 pt-10 pb-0 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Search Busan Spots</p>
-          </div>
-          <SpotSearchBar
-            value={spotSearch}
-            onChange={setSpotSearch}
-            placeholder="Search beaches, markets, trails, ARMY spots…"
-          />
-        </div>
+      ══════════════════════════════════════════════════════════ */}
+      <div className="bg-gray-50 border-t border-gray-200 pt-10 pb-0 px-4">
+        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+          🔍 Search Busan Spots
+        </p>
+        <SpotSearchBar
+          value={spotSearch}
+          onChange={setSpotSearch}
+          placeholder="Search beaches, markets, trails, ARMY spots…"
+        />
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════
-          EXPLORE KOREA (부산 전용, 클릭 → EventDetailModal)
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════════════════
+          EXPLORE BUSAN 섹션
+          - 부산 전용 (서울/제주/경주 완전 배제)
+          - 카드 클릭 → EventDetailModal
+          - Google Maps + Naver Map 듀얼 버튼
+          - Nature & Trails 탭 포함
+      ══════════════════════════════════════════════════════════ */}
       <section className="bg-gray-50 pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* 섹션 헤더 */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6 pt-6">
+          {/* 섹션 헤더 + 카테고리 탭 */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between pt-6 mb-8 gap-6">
             <div>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900">Explore Busan</h2>
               <p className="text-gray-500 mt-2 text-base">
-                Verified local spots — click any card for full details &amp; map directions
+                Click any card for full details, Google Maps &amp; Naver Map directions
               </p>
             </div>
-            {/* 카테고리 탭 (Nature & Trails 포함) */}
+            {/* 카테고리 탭 — Nature & Trails 포함 */}
             <div className="flex flex-wrap gap-2">
               {SPOT_CATEGORIES.map((cat) => (
                 <button
@@ -621,19 +791,14 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 검색 결과 수 표시 */}
+          {/* 검색 결과 카운터 */}
           {spotSearch && (
-            <p className="text-sm text-gray-500 mb-4 font-semibold">
-              {filteredData.length} result{filteredData.length !== 1 ? "s" : ""} for &ldquo;{spotSearch}&rdquo;
+            <p className="text-sm text-gray-500 mb-5 font-semibold">
+              {filteredSpots.length} result{filteredSpots.length !== 1 ? "s" : ""} for &ldquo;{spotSearch}&rdquo;
             </p>
           )}
 
-          {loading ? (
-            <div className="text-center py-16">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
-              <p className="text-gray-500 font-medium">Loading awesome local spots…</p>
-            </div>
-          ) : filteredData.length === 0 ? (
+          {filteredSpots.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-4xl mb-3">🔍</p>
               <p className="text-gray-600 font-semibold">No spots found for &ldquo;{spotSearch}&rdquo;</p>
@@ -643,19 +808,21 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredData.map((item) => (
-                // ── 클릭 → toEventItem 어댑터 → selectedEvent → EventDetailModal ──
+              {filteredSpots.map((item) => (
+                /*
+                 * onClick → toEventItem 어댑터 → selectedEvent → EventDetailModal 오픈
+                 * 하단 카드 클릭 시 상세 모달 팝업 연동 (누락 버그 수정)
+                 */
                 <div
                   key={item.id}
                   onClick={() => setSelectedEvent(toEventItem(item))}
-                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group"
                 >
-                  <div className="h-44 overflow-hidden relative bg-gray-200">
-                    {!(item.id in spotImages) ? (
-                      <div className="w-full h-full bg-gray-200 animate-pulse" />
-                    ) : spotImages[item.id] && !imgErrors[item.id] ? (
+                  {/* 썸네일 */}
+                  <div className="h-48 overflow-hidden relative bg-gray-200">
+                    {item.image && !imgErrors[item.id] ? (
                       <Image
-                        src={spotImages[item.id] as string}
+                        src={item.image}
                         alt={item.name}
                         fill
                         unoptimized
@@ -664,47 +831,94 @@ export default function Home() {
                       />
                     ) : (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src="/images/placeholder-spot.svg" alt="No image available" className="w-full h-full object-cover" />
+                      <img
+                        src="/images/placeholder-spot.svg"
+                        alt="No image"
+                        className="w-full h-full object-cover"
+                      />
                     )}
-                    {/* 호버 오버레이 힌트 */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-bold text-sm bg-black/50 px-3 py-1.5 rounded-full">
+                    {/* 호버 오버레이 */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
                         View Details →
                       </span>
                     </div>
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center justify-between mb-3">
+                    {/* 카테고리 뱃지 */}
+                    <div className="absolute top-3 left-3">
                       <span
-                        className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md"
-                        style={{ backgroundColor: "#eff6ff", color: "#3b5bdb" }}
+                        className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide"
+                        style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}
                       >
-                        {item.category}
+                        {item.category === "nature" ? "🌿 Nature" : item.category}
                       </span>
-                      <span className="text-xs font-medium text-gray-500">📍 {item.district ?? item.city}</span>
                     </div>
-                    <h3 className="text-base font-black text-gray-900 mb-2 leading-snug line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed flex-1">{item.description}</p>
+                  </div>
 
-                    {/* 듀얼 지도 버튼 */}
+                  {/* 카드 본문 */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold text-gray-400">
+                        📍 {item.district ?? item.city}
+                      </span>
+                      {item.durationMinutes && (
+                        <span className="text-xs font-semibold text-gray-400">
+                          🕐 {item.durationMinutes}min
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-base font-black text-gray-900 mb-2 leading-snug line-clamp-2">
+                      {item.name}
+                    </h3>
+                    <p className="text-sm text-gray-500 mb-4 line-clamp-3 leading-relaxed flex-1">
+                      {item.description}
+                    </p>
+
+                    {/* 실용 뱃지 */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {item.soloFriendly && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                          👤 Solo OK
+                        </span>
+                      )}
+                      {item.cashOnly && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
+                          💵 Cash Only
+                        </span>
+                      )}
+                      {item.foreignCardAccepted && !item.cashOnly && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                          💳 Card OK
+                        </span>
+                      )}
+                      {item.category === "nature" && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
+                          🆓 Free Entry
+                        </span>
+                      )}
+                    </div>
+
+                    {/* 듀얼 지도 버튼 — stopPropagation으로 카드 클릭과 분리 */}
                     <div className="grid grid-cols-2 gap-2 mt-auto">
                       <a
                         href={item.mapUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-100 hover:bg-blue-100 rounded-xl transition-all"
+                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors"
                       >
-                        🗺️ Google
+                        🗺️ Google Maps
                       </a>
                       <a
-                        href={item.naverMapUrl ?? `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`}
+                        href={
+                          item.naverMapUrl ??
+                          `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-green-700 bg-green-50 border border-green-100 hover:bg-green-100 rounded-xl transition-all"
+                        className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors"
                       >
-                        🟢 Naver
+                        🟢 Naver Map
                       </a>
                     </div>
                   </div>
@@ -715,7 +929,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Survival Guide Preview ── */}
+      {/* ── Survival Guide Preview ──────────────────────────────── */}
       <section className="py-20" style={{ backgroundColor: "#1a1f36" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -724,9 +938,9 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
-              { icon: "🚇", title: "Getting Around", desc: "교통 완전 정복" },
-              { icon: "💳", title: "Payments",       desc: "결제/현금 가이드" },
-              { icon: "🍜", title: "Solo Dining",    desc: "1인 식당 찾기"  },
+              { icon: "🚇", title: "Getting Around", desc: "Subway, bus & T-money explained" },
+              { icon: "💳", title: "Payments",       desc: "Card vs. cash — know before you go" },
+              { icon: "🍜", title: "Solo Dining",    desc: "Eat alone without awkwardness"       },
             ].map((card) => (
               <Link
                 key={card.title}
@@ -746,7 +960,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 푸터 ── */}
+      {/* ── 푸터 ────────────────────────────────────────────────── */}
       <footer className="py-12 px-4" style={{ backgroundColor: "#111827" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
@@ -755,9 +969,9 @@ export default function Home() {
               Korea<span style={{ color: "#f97316" }}>Mate</span>
             </span>
             <div className="flex items-center gap-6">
-              <Link href="/blog"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>
+              <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>
               <Link href="/survival-guide" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Survival Guide</Link>
-              <Link href="/about"         className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">About</Link>
+              <Link href="/about"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">About</Link>
             </div>
             <p className="text-xs text-gray-500 text-center sm:text-right leading-relaxed">
               Data by Korea Tourism Organization<br />AI by Gemini
@@ -772,7 +986,10 @@ export default function Home() {
       {/* CartDrawer 가림 방지 */}
       <div className="h-20" />
 
-      {/* EventDetailModal — Trending + Explore 공용 */}
+      {/* ══════════════════════════════════════════════════════════
+          EventDetailModal — Trending + Explore Busan 공용 팝업
+          selectedEvent !== null 일 때만 렌더링
+      ══════════════════════════════════════════════════════════ */}
       {selectedEvent && (
         <EventDetailModal
           event={selectedEvent}
