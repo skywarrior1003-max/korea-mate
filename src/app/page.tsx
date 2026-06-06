@@ -7,6 +7,7 @@ import Image from "next/image";
 import AdBanner from "@/components/AdBanner";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
+import DatePicker from "@/components/DatePicker";
 import type { EventItem } from "@/lib/cart";
 
 // ═══════════════════════════════════════════════
@@ -560,13 +561,21 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Start Date</label>
-                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+                <DatePicker
+                  value={startDate}
+                  onChange={setStartDate}
+                  placeholder="Select start date"
+                  min={new Date().toISOString().split("T")[0]}
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">End Date</label>
-                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+                <DatePicker
+                  value={endDate}
+                  onChange={setEndDate}
+                  placeholder="Select end date"
+                  min={startDate || new Date().toISOString().split("T")[0]}
+                />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Number of Travelers</label>

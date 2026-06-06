@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import TimelineView from "@/components/TimelineView";
+import DatePicker from "@/components/DatePicker";
 import {
   getCart,
   CART_EVENT,
@@ -213,15 +214,14 @@ export default function PlannerPage() {
             </h2>
 
             {/* 여행 시작일 */}
-            <label className="block mb-3">
+            <div className="block mb-3">
               <span className="text-xs font-bold text-gray-500 block mb-1">Start Date (optional)</span>
-              <input
-                type="date"
+              <DatePicker
                 value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                onChange={setStartDate}
+                placeholder="Pick a start date"
               />
-            </label>
+            </div>
 
             {/* 여행 일수 */}
             <label className="block mb-4">
