@@ -257,13 +257,20 @@ function SpotSearchBar({
   value,
   onChange,
   placeholder = "Search spots, beaches, hiking, ARMY…",
+  highlighted = false,
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  highlighted?: boolean;
 }) {
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div
+      id="search-section"
+      className={`relative w-full max-w-2xl mx-auto transition-all duration-500 ${
+        highlighted ? "ring-4 ring-orange-400 ring-offset-4 rounded-2xl shadow-lg shadow-orange-100" : ""
+      }`}
+    >
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-lg">
         🔍
       </span>
@@ -292,11 +299,12 @@ function SpotSearchBar({
 // ═══════════════════════════════════════════════
 
 const EVENT_FILTERS = [
-  { key: "all",      label: "All"              },
-  { key: "mega",     label: "🎤 Mega Event"    },
-  { key: "food",     label: "🌟 Food & Drink"  },
-  { key: "activity", label: "🗺️ Attractions"   },
-  { key: "saved",    label: "❤️ My Saved Spots" },
+  { key: "all",      label: "All"                    },
+  { key: "kpop",     label: "🎤 K-POP / BTS"         },
+  { key: "nature",   label: "🗺️ Attractions & Nature" },
+  { key: "culture",  label: "🏛️ History & Culture"    },
+  { key: "michelin", label: "⭐ Michelin Guide"       },
+  { key: "saved",    label: "❤️ My Saved Spots"       },
 ];
 
 // ═══════════════════════════════════════════════
@@ -379,7 +387,8 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   // ── BTS 아리랑 가이드 모달 (가상 라우팅 포함) ────
-  const [showBTSGuide, setShowBTSGuide] = useState(false);
+  const [showBTSGuide,    setShowBTSGuide]    = useState(false);
+  const [searchHighlight, setSearchHighlight] = useState(false);
 
   // showBTSGuide 가 true 가 되면 history에 1엔트리 추가 + popstate 리스너 등록.
   // 뒤로가기 → popstate → false → 클린업(리스너 제거). URL 은 절대 건드리지 않음.
@@ -391,8 +400,15 @@ export default function Home() {
     return () => window.removeEventListener("popstate", handlePop);
   }, [showBTSGuide]);
 
-  function openBTSGuide()  { setShowBTSGuide(true);  }
-  function closeBTSGuide() { setShowBTSGuide(false); }
+  function openBTSGuide() { setShowBTSGuide(true); }
+  function closeBTSGuide() {
+    setShowBTSGuide(false);
+    setTimeout(() => {
+      document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setSearchHighlight(true);
+      setTimeout(() => setSearchHighlight(false), 2200);
+    }, 350);
+  }
 
   const router = useRouter();
 
@@ -435,12 +451,23 @@ export default function Home() {
 
   // ── 섹션별 데이터 (4-Section 모드) ───────────────────
   const megaEvents = useMemo(
-    () => eventsData.filter((e) => ["event", "festival", "concert"].includes(e.type)),
+    () => eventsData.filter((e) =>
+      ["event", "festival", "concert"].includes(e.type) ||
+      e.tags.some(t => ["bts", "k-pop", "kpop", "idol"].some(k => t.toLowerCase().includes(k)))
+    ),
     [eventsData]
   );
 
   const michelinFood = useMemo(
     () => eventsData.filter((e) => e.type === "restaurant"),
+    [eventsData]
+  );
+
+  const cultureEvents = useMemo(
+    () => eventsData.filter((e) =>
+      ["heritage", "museum", "cultural"].some(c => e.type.toLowerCase().includes(c)) ||
+      e.tags.some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
+    ),
     [eventsData]
   );
 
@@ -467,12 +494,20 @@ export default function Home() {
   // ── 통합 검색 결과 ────────────────────────────────────
   const filteredResults = useMemo(() => {
     let list = allItems;
-    if (eventFilter === "mega")
-      list = list.filter((e) => ["event", "festival", "concert"].includes(e.type));
-    else if (eventFilter === "food")
-      list = list.filter((e) => e.type === "restaurant");
-    else if (eventFilter === "activity")
+    if (eventFilter === "kpop")
+      list = list.filter((e) =>
+        ["event", "festival", "concert"].includes(e.type) ||
+        e.tags.some(t => ["bts", "k-pop", "kpop", "idol", "concert"].some(k => t.toLowerCase().includes(k)))
+      );
+    else if (eventFilter === "nature")
       list = list.filter((e) => ["attraction", "nature", "pilgrimage", "permanent"].includes(e.type));
+    else if (eventFilter === "culture")
+      list = list.filter((e) =>
+        ["heritage", "museum", "cultural"].some(c => e.type.toLowerCase().includes(c)) ||
+        e.tags.some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
+      );
+    else if (eventFilter === "michelin")
+      list = list.filter((e) => e.type === "restaurant");
     else if (eventFilter === "saved")
       list = list.filter((e) => savedIds.includes(e.id));
 
@@ -867,51 +902,63 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── 통합 검색창 + 필터 탭 ── */}
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2">
-              🇰🇷 Discover Busan
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              Mega events · Michelin restaurants · Hidden attractions
-            </p>
-            <SpotSearchBar
-              value={globalSearch}
-              onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
-              placeholder="Search: BTS, beach, Michelin, fireworks, hiking…"
-            />
-            <div className="flex flex-wrap gap-2 justify-center mt-4">
-              {EVENT_FILTERS.map((f) => (
-                <button
-                  key={f.key}
-                  onClick={() => { setEventFilter(f.key); setGlobalSearch(""); }}
-                  className="px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer"
-                  style={
-                    eventFilter === f.key
-                      ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
-                      : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
-                  }
-                >
-                  {f.label}
-                  {eventFilter === f.key && eventFilter !== "all" && (
-                    <span className="ml-1.5 text-xs opacity-80">{filteredResults.length}</span>
-                  )}
-                </button>
-              ))}
+          {/* ── 통합 검색창 + 필터 탭 (Sticky) ── */}
+          <div
+            id="search-filters-bar"
+            className="sticky top-16 z-20 bg-gray-50 pt-4 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 border-b border-gray-100 mb-8"
+          >
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-4">
+                <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
+                  🇰🇷 Discover Busan
+                </h2>
+                <p className="text-sm text-gray-500">
+                  K-POP pilgrimages · Michelin dining · Hidden nature spots
+                </p>
+              </div>
+              <SpotSearchBar
+                value={globalSearch}
+                onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
+                placeholder="Search: BTS, beach, Michelin, fireworks, hiking…"
+                highlighted={searchHighlight}
+              />
+              {/* 가로 스크롤 필터 칩 */}
+              <div
+                className="flex gap-2 mt-3 overflow-x-auto pb-1"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+              >
+                {EVENT_FILTERS.map((f) => (
+                  <button
+                    key={f.key}
+                    onClick={() => { setEventFilter(f.key); setGlobalSearch(""); }}
+                    className="shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
+                    style={
+                      eventFilter === f.key
+                        ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                        : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
+                    }
+                  >
+                    {f.label}
+                    {eventFilter === f.key && eventFilter !== "all" && (
+                      <span className="ml-1.5 text-xs opacity-80">{filteredResults.length}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+              {isFilteringMode && (
+                <p className="text-xs text-gray-400 mt-2">
+                  {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
+                  {globalSearch ? ` for "${globalSearch}"` : ""}
+                  {" · "}
+                  <button
+                    onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
+                    className="text-orange-500 font-bold underline"
+                  >
+                    Clear
+                  </button>
+                </p>
+              )}
             </div>
-            {isFilteringMode && (
-              <p className="text-xs text-gray-400 mt-3">
-                {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
-                {globalSearch ? ` for "${globalSearch}"` : ""}
-                {" · "}
-                <button
-                  onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
-                  className="text-orange-500 font-bold underline"
-                >
-                  Clear
-                </button>
-              </p>
-            )}
           </div>
 
           {/* ══════════════════════════════════════════
@@ -955,14 +1002,14 @@ export default function Home() {
             ══════════════════════════════════════════ */
             <div className="space-y-20">
 
-              {/* ── [Section 2] Mega Event & K-POP 성지순례 ── */}
+              {/* ── [Section 2] K-POP / BTS ── */}
               <div>
                 <SectionHeader
                   emoji="🎤"
-                  title="Mega Events & K-POP Pilgrimage"
-                  subtitle="BTS birthplaces, live concerts, and festival season highlights"
+                  title="K-POP / BTS Pilgrimage"
+                  subtitle="BTS birthplaces, ARIRANG live concerts, and festival season highlights"
                   count={megaEvents.length}
-                  onViewAll={() => { setEventFilter("mega"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onViewAll={() => { setEventFilter("kpop"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
@@ -984,14 +1031,43 @@ export default function Home() {
                 )}
               </div>
 
+              {/* ── [Section 2-B] History & Culture ── */}
+              {cultureEvents.length > 0 && (
+                <div>
+                  <SectionHeader
+                    emoji="🏛️"
+                    title="History & Culture"
+                    subtitle="Temples, palaces, heritage villages, and Korea's living traditions"
+                    count={cultureEvents.length}
+                    onViewAll={() => { setEventFilter("culture"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                  />
+                  {eventsLoading ? (
+                    <div className="text-center py-16">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                      <p className="text-gray-500 text-sm font-medium">Loading…</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {cultureEvents.slice(0, 6).map((event) => (
+                        <EventCard
+                          key={event.id}
+                          event={event}
+                          onClick={() => setSelectedEvent(event)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* ── [Section 3] Michelin Guide 맛집 ── */}
               <div>
                 <SectionHeader
-                  emoji="🌟"
+                  emoji="⭐"
                   title="Michelin Guide Restaurants"
                   subtitle="Busan's finest dining — from Bib Gourmand to starred establishments"
                   count={michelinFood.length}
-                  onViewAll={() => { setEventFilter("food"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onViewAll={() => { setEventFilter("michelin"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
@@ -1020,7 +1096,7 @@ export default function Home() {
                   title="Attractions & Nature"
                   subtitle="Beaches, coastal trails, and scenic viewpoints — all solo-traveler approved"
                   count={attractionSpots.length}
-                  onViewAll={() => { setEventFilter("activity"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onViewAll={() => { setEventFilter("nature"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                 />
                 {attractionSpots.length === 0 ? (
                   <p className="text-gray-400 font-medium py-10 text-center">No attraction data available.</p>

@@ -18,6 +18,7 @@ interface Place {
   duration: string;
   tips: string;
   googleMapsUrl: string;
+  slot?: string;
 }
 
 interface Day {
@@ -26,30 +27,93 @@ interface Day {
   places: Place[];
 }
 
+// ── 시간 슬롯 정의 ───────────────────────────────────────────
+const TIME_SLOTS = [
+  { key: "morning",   label: "Morning",   emoji: "☀️", range: "9AM–12PM" },
+  { key: "lunch",     label: "Lunch",     emoji: "🍽️", range: "12–2PM"   },
+  { key: "afternoon", label: "Afternoon", emoji: "⛅", range: "2–5PM"    },
+  { key: "evening",   label: "Evening",   emoji: "🌙", range: "5–9PM"    },
+] as const;
+
+// ── 영문명 → 네이버 한국어 키워드 매핑 ──────────────────────
+const NAVER_KEYWORD_MAP: Record<string, string> = {
+  "haeundae beach":          "해운대해수욕장",
+  "gamcheon culture village":"감천문화마을",
+  "jagalchi fish market":    "자갈치시장",
+  "jagalchi market":         "자갈치시장",
+  "gwangalli beach":         "광안리해수욕장",
+  "hwangnyeongsan":          "황령산전망대",
+  "hwangnyeongsan night view trail": "황령산전망대",
+  "jangsan mountain trail":  "장산등산로입구",
+  "jangsan mountain":        "장산등산로입구",
+  "igidae coastal walk":     "이기대해안산책로",
+  "igidae":                  "이기대해안산책로",
+  "haedong yonggungsa":      "해동용궁사",
+  "oryukdo skywalk":         "오륙도스카이워크",
+  "taejongdae":              "태종대",
+  "busan tower":             "부산타워",
+  "seomyeon":                "서면",
+  "nampo-dong":              "남포동",
+  "gyeongbokgung":           "경복궁",
+  "namsan tower":            "남산타워",
+  "n seoul tower":           "남산타워",
+  "myeongdong":              "명동",
+  "bukchon hanok village":   "북촌한옥마을",
+  "dongdaemun":              "동대문",
+  "hongdae":                 "홍대",
+  "itaewon":                 "이태원",
+  "insadong":                "인사동",
+  "changdeokgung":           "창덕궁",
+  "gwangjang market":        "광장시장",
+  "noryangjin fish market":  "노량진수산시장",
+};
+
+// ── time 문자열 → 슬롯 자동 배정 ─────────────────────────────
+function assignSlot(time: string): string {
+  const h = parseInt(time?.split(":")?.[0] ?? "12", 10);
+  if (isNaN(h) || h < 12) return "morning";
+  if (h < 14) return "lunch";
+  if (h < 17) return "afternoon";
+  return "evening";
+}
+
 // ── localStorage 캐시 키 빌더 ────────────────────────────────
 function cacheKey(city: string, sd: string, ed: string, t: string, s: string) {
   return `koreamate_itin_v2_${city}_${sd}_${ed}_${t}_${s}`;
 }
 
 // ── 카트 아이템 → Place 변환 ─────────────────────────────────
-function cartItemToPlace(item: CartItem, dayNumber: number): Place {
+function cartItemToPlace(item: CartItem, dayNumber: number, slot?: string): Place {
+  const slotTime: Record<string, string> = {
+    morning: "09:00", lunch: "12:30", afternoon: "14:30", evening: "18:00",
+  };
+  const defaultTime = slot ? (slotTime[slot] ?? "09:00") : (dayNumber === 1 ? "09:00" : "10:00");
   return {
     name: item.name,
     category: item.type,
     location: item.district || item.city,
-    time: dayNumber === 1 ? "09:00" : "10:00",
+    time: defaultTime,
     duration: `${item.recommendedDurationMinutes} min`,
     tips: item.whyItMatters || item.description.split(".")[0] + ".",
     googleMapsUrl: item.mapUrl,
+    slot: slot ?? assignSlot(defaultTime),
   };
 }
 
 // ── Naver Maps URL ────────────────────────────────────────────
 function buildNaverUrl(placeName: string, city: string): string {
-  // Extract Korean characters from name first
+  // 1순위: 영문명 → 한국어 키워드 매핑 테이블
+  const norm = placeName.toLowerCase().trim();
+  for (const [eng, kor] of Object.entries(NAVER_KEYWORD_MAP)) {
+    if (norm.includes(eng) || eng.includes(norm)) {
+      return `https://map.naver.com/v5/search/${encodeURIComponent(kor)}`;
+    }
+  }
+  // 2순위: 이름에 한국어 포함 → 직접 추출
   const korean = (placeName.match(/[가-힯ᄀ-ᇿ]+/g) ?? []).join("").trim();
   if (korean.length >= 2) return `https://map.naver.com/v5/search/${encodeURIComponent(korean)}`;
-  return `https://map.naver.com/v5/search/${encodeURIComponent(`${placeName} ${city} Korea`)}`;
+  // 3순위: 영문만 → 네이버보다 Google Maps 검색이 더 정확
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${placeName} ${city} Korea`)}`;
 }
 
 // ── 카테고리 이미지 ───────────────────────────────────────────
@@ -218,13 +282,16 @@ function ItineraryResult() {
   const travelers   = searchParams.get("travelers")   || "1";
   const travelStyle = searchParams.get("travelStyle") || "Solo";
 
-  const [days,         setDays]         = useState<Day[]>([]);
-  const [loading,      setLoading]      = useState(true);
-  const [error,        setError]        = useState<string | null>(null);
+  const [days,          setDays]          = useState<Day[]>([]);
+  const [loading,       setLoading]       = useState(true);
+  const [error,         setError]         = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
-  const [savedItems,   setSavedItems]   = useState<CartItem[]>([]);
-  const [showSaved,    setShowSaved]    = useState(false);
-  const [addToDay,     setAddToDay]     = useState<{ item: CartItem; dayNum: number } | null>(null);
+  const [savedItems,    setSavedItems]    = useState<CartItem[]>([]);
+  const [showSaved,     setShowSaved]     = useState(false);
+  const [addToDay,      setAddToDay]      = useState<{ item: CartItem; dayNum: number } | null>(null);
+  const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
+  const [addSlotPanel,  setAddSlotPanel]  = useState<{ dayNum: number; slot: string } | null>(null);
+  const [slotSearch,    setSlotSearch]    = useState("");
 
   const key = cacheKey(city, startDate, endDate, travelers, travelStyle);
 
@@ -296,7 +363,7 @@ function ItineraryResult() {
     );
   }
 
-  // ── 찜한 장소 → 특정 Day에 추가 ─────────────────────────────
+  // ── 찜한 장소 → 특정 Day에 추가 (상단 패널용) ──────────────
   function insertPlaceToDay(item: CartItem, dayNumber: number) {
     const newPlace = cartItemToPlace(item, dayNumber);
     setDays((prev) =>
@@ -307,6 +374,20 @@ function ItineraryResult() {
       )
     );
     setAddToDay(null);
+  }
+
+  // ── 찜한 장소 → 특정 슬롯에 추가 (인라인 [+] 버튼용) ───────
+  function insertPlaceToSlot(item: CartItem, dayNumber: number, slot: string) {
+    const newPlace = cartItemToPlace(item, dayNumber, slot);
+    setDays((prev) =>
+      prev.map((d) =>
+        d.dayNumber === dayNumber
+          ? { ...d, places: [...d.places, newPlace] }
+          : d
+      )
+    );
+    setAddSlotPanel(null);
+    setSlotSearch("");
   }
 
   // ── 일정 초기화 (재생성) ─────────────────────────────────────
@@ -383,6 +464,22 @@ function ItineraryResult() {
           >
             🔄 Regenerate
           </button>
+          {/* Compact / Full View 토글 */}
+          <div className="flex gap-1.5 p-1 border border-[#E6DFD5] rounded-xl bg-[#FAF7F2]">
+            {(["full", "compact"] as const).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={`flex-1 px-4 py-2 rounded-lg text-xs font-black transition-all ${
+                  viewMode === mode
+                    ? "bg-[#2C2520] text-[#FAF7F2] shadow-sm"
+                    : "text-[#8C6239] hover:text-[#2C2520]"
+                }`}
+              >
+                {mode === "compact" ? "⊟ Compact" : "⊞ Full View"}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -453,86 +550,217 @@ function ItineraryResult() {
         💡 Tap any card to see details &amp; maps · ✕ to remove a place · Changes auto-saved
       </p>
 
-      {/* 날짜별 일정 */}
-      <div className="space-y-12 mb-16">
-        {days.map((day) => (
-          <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-[#D4AF37]/30">
-            <div className="absolute -left-[11px] top-1.5 bg-[#FAF7F2] border-4 border-[#D4AF37] w-5 h-5 rounded-full z-10" />
-
-            <h2 className="text-2xl sm:text-3xl font-black text-[#2C2520] mb-6 flex items-center gap-3">
-              <span>Day {day.dayNumber}</span>
-              <span className="text-lg font-bold text-[#8C6239] bg-[#EAE3D2]/40 px-3 py-0.5 rounded-full">{day.date}</span>
-              <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
-            </h2>
-
-            {day.places.length === 0 ? (
-              <p className="text-sm text-[#8C6239] font-medium py-4 pl-2">No places yet — add from saved spots above.</p>
-            ) : (
-              <div className="grid grid-cols-1 gap-5">
-                {day.places.map((place, idx) => {
-                  const naverUrl = buildNaverUrl(place.name, city);
-                  const googleUrl = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
-
-                  return (
-                    <div
-                      key={idx}
-                      className="bg-white rounded-2xl border border-[#E6DFD5] p-6 sm:p-8 hover:shadow-lg hover:border-[#D4AF37]/40 transition-all group flex flex-col sm:flex-row justify-between gap-6 relative"
-                    >
-                      {/* 삭제 버튼 (우측 상단) */}
-                      <button
-                        onClick={() => deletePlace(day.dayNumber, idx)}
-                        className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-red-100 text-gray-400 hover:text-red-500 text-xs font-black transition-colors z-10"
-                        aria-label="Remove place"
-                        title="Remove this place"
-                      >✕</button>
-
-                      {/* 왼쪽: 정보 */}
-                      <div
-                        className="space-y-3 flex-1 cursor-pointer"
-                        onClick={() => setSelectedPlace(place)}
-                      >
-                        <div className="flex flex-wrap items-center gap-2 pr-8">
-                          <span
-                            className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
-                            style={{ backgroundColor: getCategoryColor(place.category) }}
-                          >{place.category}</span>
-                          <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
-                          <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
-                        </div>
-                        <h3 className="text-xl sm:text-2xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
-                          {place.name}
-                        </h3>
-                        <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-4">
-                          <p className="text-xs font-extrabold text-[#8C6239] uppercase tracking-wider mb-1">💡 Tips for Foreigners</p>
-                          <p className="text-sm text-[#61554D] leading-relaxed line-clamp-2">{place.tips}</p>
-                        </div>
-                        <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                          Click for full details + maps →
-                        </p>
-                      </div>
-
-                      {/* 오른쪽: 지도 버튼 */}
-                      <div
-                        className="flex sm:flex-col items-center gap-2 sm:justify-center shrink-0"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <a href={googleUrl} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-extrabold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-400 rounded-xl transition-all shadow-sm w-full sm:w-36">
-                          🗺️ Google Maps
-                        </a>
-                        <a href={naverUrl} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-extrabold bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400 rounded-xl transition-all shadow-sm w-full sm:w-36">
-                          💚 Naver Maps
-                        </a>
-                      </div>
-                    </div>
-                  );
-                })}
+      {/* ── Compact 보기: 7일 한눈에 요약 ── */}
+      {viewMode === "compact" ? (
+        <div className="space-y-2 mb-16">
+          {days.map((day) => (
+            <div
+              key={day.dayNumber}
+              className="bg-white rounded-2xl border border-[#E6DFD5] px-5 py-4 flex flex-wrap items-center gap-3 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
+              onClick={() => setViewMode("full")}
+            >
+              <div className="shrink-0 flex items-center gap-2">
+                <span className="text-sm font-black text-[#2C2520]">Day {day.dayNumber}</span>
+                <span className="text-xs text-[#8C6239] font-medium bg-[#EAE3D2]/50 px-2 py-0.5 rounded-md">{day.date}</span>
               </div>
-            )}
-          </div>
-        ))}
-      </div>
+              <div className="flex-1 flex flex-wrap gap-1.5 min-w-0">
+                {day.places.length === 0 ? (
+                  <span className="text-xs text-[#8C6239]/40 italic">No places — click to add</span>
+                ) : (
+                  day.places.map((p, i) => (
+                    <span key={i} className="inline-flex items-center px-2.5 py-0.5 bg-[#EAE3D2]/60 rounded-md text-xs font-semibold text-[#61554D]">
+                      {p.name}
+                    </span>
+                  ))
+                )}
+              </div>
+              <span className="shrink-0 text-xs font-bold text-[#8C6239]/60">
+                {day.places.length} place{day.places.length !== 1 ? "s" : ""} →
+              </span>
+            </div>
+          ))}
+          <p className="text-center text-xs text-[#8C6239]/50 mt-3">Click any day card to switch to Full View</p>
+        </div>
+      ) : (
+        /* ── Full View: 슬롯 구조 일정 ── */
+        <div className="space-y-12 mb-16">
+          {days.map((day) => {
+            const slotAssigned = day.places.map((p, i) => ({
+              place: p,
+              idx: i,
+              slot: p.slot ?? assignSlot(p.time),
+            }));
+
+            return (
+              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-[#D4AF37]/30">
+                <div className="absolute -left-[11px] top-1.5 bg-[#FAF7F2] border-4 border-[#D4AF37] w-5 h-5 rounded-full z-10" />
+                <h2 className="text-2xl sm:text-3xl font-black text-[#2C2520] mb-5 flex items-center gap-3 flex-wrap">
+                  <span>Day {day.dayNumber}</span>
+                  <span className="text-lg font-bold text-[#8C6239] bg-[#EAE3D2]/40 px-3 py-0.5 rounded-full">{day.date}</span>
+                  <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
+                </h2>
+
+                <div className="space-y-4">
+                  {TIME_SLOTS.map((ts) => {
+                    const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
+                    const isAddingHere = addSlotPanel?.dayNum === day.dayNumber && addSlotPanel?.slot === ts.key;
+                    const filteredSaved = slotSearch.trim()
+                      ? savedItems.filter(
+                          (i) =>
+                            i.name.toLowerCase().includes(slotSearch.toLowerCase()) ||
+                            i.city.toLowerCase().includes(slotSearch.toLowerCase())
+                        )
+                      : savedItems;
+
+                    return (
+                      <div key={ts.key} className="rounded-2xl border border-[#E6DFD5] overflow-hidden bg-white">
+                        {/* 슬롯 헤더 */}
+                        <div className="px-5 py-3 bg-[#EAE3D2]/25 border-b border-[#E6DFD5] flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="text-base">{ts.emoji}</span>
+                            <span className="text-sm font-black text-[#8C6239]">{ts.label}</span>
+                            <span className="text-xs text-[#8C6239]/50 font-medium hidden sm:inline">{ts.range}</span>
+                          </div>
+                          {slotItems.length > 0 && (
+                            <span className="text-xs text-[#8C6239]/60 font-semibold">
+                              {slotItems.length} place{slotItems.length !== 1 ? "s" : ""}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* 슬롯 내용 */}
+                        {slotItems.length > 0 ? (
+                          <div className="divide-y divide-[#E6DFD5]/50">
+                            {slotItems.map(({ place, idx }) => {
+                              const naverUrl = buildNaverUrl(place.name, city);
+                              const googleUrl =
+                                place.googleMapsUrl ||
+                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
+                              const naverIsGoogle = naverUrl.includes("google.com");
+
+                              return (
+                                <div
+                                  key={idx}
+                                  className="flex flex-col sm:flex-row justify-between gap-4 p-5 hover:bg-[#FAF7F2]/40 transition-colors group relative"
+                                >
+                                  <button
+                                    onClick={() => deletePlace(day.dayNumber, idx)}
+                                    className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-red-100 text-gray-400 hover:text-red-500 text-xs font-black transition-colors z-10"
+                                    aria-label="Remove place"
+                                  >✕</button>
+                                  <div
+                                    className="space-y-2 flex-1 cursor-pointer pr-8"
+                                    onClick={() => setSelectedPlace(place)}
+                                  >
+                                    <div className="flex flex-wrap items-center gap-2">
+                                      <span
+                                        className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
+                                        style={{ backgroundColor: getCategoryColor(place.category) }}
+                                      >{place.category}</span>
+                                      <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
+                                      <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
+                                      {place.name}
+                                    </h3>
+                                    <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3">
+                                      <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">{place.tips}</p>
+                                    </div>
+                                    <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                      Click for full details + maps →
+                                    </p>
+                                  </div>
+                                  <div className="flex sm:flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+                                    <a
+                                      href={googleUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-400 rounded-xl transition-all shadow-sm sm:w-32"
+                                    >🗺️ Google Maps</a>
+                                    <a
+                                      href={naverUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={`inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold rounded-xl transition-all shadow-sm sm:w-32 ${
+                                        naverIsGoogle
+                                          ? "bg-white hover:bg-blue-50 text-blue-600 border border-blue-100 hover:border-blue-300"
+                                          : "bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400"
+                                      }`}
+                                    >
+                                      {naverIsGoogle ? "🗺️ More Search" : "💚 Naver Maps"}
+                                    </a>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          /* 빈 슬롯: [+] 버튼 또는 미니 팝업 */
+                          <div className="p-4">
+                            {isAddingHere ? (
+                              <div className="bg-[#FAF7F2] rounded-xl p-4 border border-[#E6DFD5]">
+                                <div className="flex items-center justify-between mb-3">
+                                  <p className="text-xs font-black text-[#8C6239] uppercase tracking-wide">
+                                    Add to {ts.label}
+                                  </p>
+                                  <button
+                                    onClick={() => { setAddSlotPanel(null); setSlotSearch(""); }}
+                                    className="text-xs text-gray-400 hover:text-gray-600 font-bold px-2 py-0.5 rounded hover:bg-gray-100 transition-colors"
+                                  >✕ Cancel</button>
+                                </div>
+                                <input
+                                  type="text"
+                                  value={slotSearch}
+                                  onChange={(e) => setSlotSearch(e.target.value)}
+                                  placeholder="Search your saved spots…"
+                                  className="w-full px-3 py-2 rounded-lg border border-[#E6DFD5] text-xs font-semibold mb-2 focus:outline-none focus:border-[#D4AF37] bg-white"
+                                  autoFocus
+                                />
+                                {filteredSaved.length > 0 ? (
+                                  <div className="space-y-1 max-h-40 overflow-y-auto">
+                                    {filteredSaved.map((item) => (
+                                      <button
+                                        key={item.id}
+                                        onClick={() => insertPlaceToSlot(item, day.dayNumber, ts.key)}
+                                        className="w-full text-left px-3 py-2 rounded-lg text-xs font-bold hover:bg-[#EAE3D2] transition-colors flex items-center justify-between gap-2"
+                                      >
+                                        <span className="truncate">{item.name}</span>
+                                        <span className="text-[#8C6239] shrink-0 font-medium">{item.city} · {item.recommendedDurationMinutes}m</span>
+                                      </button>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p className="text-xs text-[#8C6239]/50 italic py-2 text-center">
+                                    {savedItems.length === 0
+                                      ? "No saved spots — save spots from the main page first."
+                                      : "No matches found."}
+                                  </p>
+                                )}
+                              </div>
+                            ) : (
+                              <button
+                                onClick={() => {
+                                  setSavedItems(getCart());
+                                  setAddSlotPanel({ dayNum: day.dayNumber, slot: ts.key });
+                                  setSlotSearch("");
+                                }}
+                                className="w-full py-3.5 flex items-center justify-center gap-2 text-xs font-bold text-[#8C6239]/50 hover:text-[#8C6239] hover:bg-[#FAF7F2] rounded-xl transition-all border-2 border-dashed border-[#E6DFD5] hover:border-[#D4AF37]/40"
+                              >
+                                <span className="text-sm font-black text-[#D4AF37]">+</span>
+                                Add a place to {ts.label.toLowerCase()}
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <AdBanner />
 

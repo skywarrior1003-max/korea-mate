@@ -1,0 +1,174 @@
+"use client";
+
+import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
+import EventCard from "@/components/EventCard";
+import EventDetailModal from "@/components/EventDetailModal";
+import type { EventItem } from "@/lib/cart";
+import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
+
+// ── 카테고리 필터 정의 ────────────────────────────────────────
+const FILTERS = [
+  { key: "all",      label: "All",                   emoji: "" },
+  { key: "kpop",     label: "K-POP / BTS",           emoji: "🎤" },
+  { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
+  { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
+  { key: "michelin", label: "Michelin Guide",        emoji: "⭐" },
+  { key: "saved",    label: "My Saved Spots",        emoji: "❤️" },
+];
+
+function matchFilter(e: EventItem, key: string, savedIds: string[]): boolean {
+  if (key === "all")     return true;
+  if (key === "kpop")    return ["event", "festival", "concert"].includes(e.type) || e.tags.some(t => ["bts","k-pop","kpop","idol"].some(k => t.toLowerCase().includes(k)));
+  if (key === "nature")  return ["attraction","nature","pilgrimage","permanent"].includes(e.type);
+  if (key === "culture") return ["heritage","museum","cultural"].some(c => e.type.toLowerCase().includes(c)) || e.tags.some(t => ["history","culture","temple","palace","heritage","tradition","shrine"].some(k => t.toLowerCase().includes(k)));
+  if (key === "michelin")return e.type === "restaurant";
+  if (key === "saved")   return savedIds.includes(e.id);
+  return true;
+}
+
+export default function AllSpotsPage() {
+  const [events,   setEvents]   = useState<EventItem[]>([]);
+  const [loading,  setLoading]  = useState(true);
+  const [filter,   setFilter]   = useState("all");
+  const [search,   setSearch]   = useState("");
+  const [selected, setSelected] = useState<EventItem | null>(null);
+  const [savedIds, setSavedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch("/data/events.json")
+      .then(r => r.json())
+      .then((data: EventItem[]) => { setEvents(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    setSavedIds(getFavorites());
+    const h = () => setSavedIds(getFavorites());
+    window.addEventListener(FAVORITES_EVENT, h);
+    return () => window.removeEventListener(FAVORITES_EVENT, h);
+  }, []);
+
+  const filtered = useMemo(() => {
+    let list = events.filter(e => matchFilter(e, filter, savedIds));
+    const q = search.trim().toLowerCase();
+    if (q) list = list.filter(e =>
+      e.name.toLowerCase().includes(q) ||
+      e.description.toLowerCase().includes(q) ||
+      e.city.toLowerCase().includes(q) ||
+      e.tags.some(t => t.toLowerCase().includes(q))
+    );
+    return list;
+  }, [events, filter, savedIds, search]);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
+
+      {/* 헤더 */}
+      <header className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
+          <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
+            <span className="text-2xl">🇰🇷</span>
+            Korea<span style={{ color: "#f97316" }}>Mate</span>
+          </Link>
+          <span className="text-gray-300 text-lg">/</span>
+          <h1 className="text-base font-black text-gray-700">All Spots</h1>
+        </div>
+      </header>
+
+      {/* Sticky 검색창 + 필터 칩 */}
+      <div className="sticky top-16 z-20 bg-gray-50 border-b border-gray-100 px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto space-y-3">
+          {/* 검색창 */}
+          <div className="relative max-w-2xl mx-auto">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">🔍</span>
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search spots, BTS, beach, Michelin, hiking…"
+              className="w-full pl-12 pr-10 py-3.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
+            />
+            {search && (
+              <button onClick={() => setSearch("")} className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-200 text-gray-500 text-xs font-bold flex items-center justify-center hover:bg-gray-300">✕</button>
+            )}
+          </div>
+          {/* 가로 스크롤 필터 칩 */}
+          <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+            {FILTERS.map(f => (
+              <button
+                key={f.key}
+                onClick={() => setFilter(f.key)}
+                className="shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
+                style={
+                  filter === f.key
+                    ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                    : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
+                }
+              >
+                {f.emoji && <span className="mr-1">{f.emoji}</span>}{f.label}
+                {filter === f.key && f.key !== "all" && (
+                  <span className="ml-1.5 text-xs opacity-80">{filtered.length}</span>
+                )}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400">
+            {loading ? "Loading…" : `${filtered.length} spot${filtered.length !== 1 ? "s" : ""}`}
+            {filter !== "all" && !loading && " · "}
+            {filter !== "all" && !loading && (
+              <button onClick={() => { setFilter("all"); setSearch(""); }} className="text-orange-500 font-bold underline">Show all</button>
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* 메인 콘텐츠 */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+        {loading ? (
+          <div className="text-center py-24">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-6" />
+            <p className="text-gray-500 font-semibold">Loading all spots…</p>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-24">
+            <p className="text-4xl mb-4">{filter === "saved" ? "🤍" : "🔍"}</p>
+            <p className="text-xl font-black text-gray-700 mb-2">
+              {filter === "saved" ? "No saved spots yet" : "No results found"}
+            </p>
+            <p className="text-gray-500 mb-6">
+              {filter === "saved" ? "Tap ❤️ on any card to save spots here." : `Try a different search or filter.`}
+            </p>
+            <button
+              onClick={() => { setFilter("all"); setSearch(""); }}
+              className="px-6 py-3 rounded-xl font-black text-white text-sm"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              Show All Spots
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {filtered.map(event => (
+              <EventCard
+                key={event.id}
+                event={event}
+                onClick={() => setSelected(event)}
+              />
+            ))}
+          </div>
+        )}
+      </main>
+
+      {/* 푸터 */}
+      <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400">
+        <Link href="/" className="text-orange-500 font-bold hover:underline">← Back to KoreaMate Home</Link>
+      </footer>
+
+      {/* 상세 모달 */}
+      {selected && (
+        <EventDetailModal event={selected} onClose={() => setSelected(null)} />
+      )}
+    </div>
+  );
+}

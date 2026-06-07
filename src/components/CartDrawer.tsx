@@ -9,7 +9,9 @@ import {
   getTotalDurationMinutes,
   CART_EVENT,
   type CartItem,
+  type EventItem,
 } from "@/lib/cart";
+import EventDetailModal from "@/components/EventDetailModal";
 
 // ── 유틸 함수들 ────────────────────────────────
 
@@ -42,9 +44,10 @@ const STAGE_DOT: Record<string, string> = {
 
 export default function CartDrawer() {
   const router = useRouter();
-  const [items, setItems]         = useState<CartItem[]>([]);
-  const [isExpanded, setExpanded] = useState(false);
-  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
+  const [items,        setItems]        = useState<CartItem[]>([]);
+  const [isExpanded,   setExpanded]     = useState(false);
+  const [imgErrors,    setImgErrors]    = useState<Record<string, boolean>>({});
+  const [selectedItem, setSelectedItem] = useState<CartItem | null>(null);
 
   // 장바구니 데이터 새로고침
   const refresh = useCallback(() => {
@@ -79,6 +82,7 @@ export default function CartDrawer() {
   }
 
   return (
+    <>
     <div className="fixed bottom-0 left-0 right-0 z-40 select-none">
 
       {/* ── 확장 패널 (접히면 max-h-0으로 숨김) ── */}
@@ -113,10 +117,11 @@ export default function CartDrawer() {
             {items.map((item) => (
               <li
                 key={item.id}
-                className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-3 px-5 py-3 hover:bg-orange-50/40 transition-colors cursor-pointer group"
+                onClick={() => setSelectedItem(item)}
               >
                 {/* 썸네일 */}
-                <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+                <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-gray-100 relative">
                   {item.image && !imgErrors[item.id] ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -125,7 +130,7 @@ export default function CartDrawer() {
                       onError={() =>
                         setImgErrors((prev) => ({ ...prev, [item.id]: true }))
                       }
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                     />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -139,7 +144,7 @@ export default function CartDrawer() {
 
                 {/* 이름 + 스테이지 */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-gray-900 truncate">
+                  <p className="text-sm font-bold text-gray-900 truncate group-hover:text-orange-600 transition-colors">
                     {item.shortName}
                   </p>
                   <div className="flex items-center gap-1.5 mt-0.5">
@@ -161,7 +166,7 @@ export default function CartDrawer() {
 
                 {/* 제거 버튼 */}
                 <button
-                  onClick={() => handleRemove(item.id)}
+                  onClick={(e) => { e.stopPropagation(); handleRemove(item.id); }}
                   className="w-7 h-7 flex items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors shrink-0 text-base font-bold"
                   aria-label={`Remove ${item.shortName}`}
                 >
@@ -245,5 +250,14 @@ export default function CartDrawer() {
 
       </div>
     </div>
+
+    {/* My Itinerary 카드 클릭 → 상세 모달 */}
+    {selectedItem && (
+      <EventDetailModal
+        event={selectedItem as unknown as EventItem}
+        onClose={() => setSelectedItem(null)}
+      />
+    )}
+  </>
   );
 }
