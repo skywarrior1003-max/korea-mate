@@ -301,9 +301,9 @@ function SpotSearchBar({
 const EVENT_FILTERS = [
   { key: "all",      label: "All"                    },
   { key: "kpop",     label: "🎤 K-POP / BTS"         },
+  { key: "michelin", label: "⭐ Michelin Guide"       },
   { key: "nature",   label: "🗺️ Attractions & Nature" },
   { key: "culture",  label: "🏛️ History & Culture"    },
-  { key: "michelin", label: "⭐ Michelin Guide"       },
   { key: "saved",    label: "❤️ My Saved Spots"       },
 ];
 

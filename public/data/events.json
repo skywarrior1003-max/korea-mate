@@ -6,12 +6,23 @@
     "journeyCluster": "bts-busan-2026",
     "stage": "Event-Day",
     "anchorEventId": null,
-    "relatedSpotIds": [12],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSpotIds": [
+      12
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "BTS World Tour 2026 — Busan Asiad Main Stadium",
     "shortName": "BTS Busan Concert",
-    "tags": ["#BTS", "#Concert", "#Busan", "#ARMY", "#WorldTour"],
+    "tags": [
+      "#BTS",
+      "#Concert",
+      "#Busan",
+      "#ARMY",
+      "#WorldTour"
+    ],
     "city": "Busan",
     "district": "Yeonje-gu",
     "address": "Asiad-daero, Yeonje-gu, Busan",
@@ -42,7 +53,6 @@
       "bookingUrl": "https://weverseshop.io"
     }
   },
-
   {
     "id": "evt-pre-001",
     "type": "pilgrimage",
@@ -51,7 +61,11 @@
     "stage": "Pre-Event",
     "anchorEventId": "evt-anchor-001",
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": {
       "distanceKm": 5.2,
       "walkMinutes": null,
@@ -61,7 +75,14 @@
     },
     "name": "ZM-ILLENNIAL (지밀레니얼) — Daeyeon-dong ARMY Pilgrimage",
     "shortName": "ZM-ILLENNIAL",
-    "tags": ["#BTS", "#JIMIN", "#Pilgrimage", "#ARMY", "#PreEvent", "#FanCafe"],
+    "tags": [
+      "#BTS",
+      "#JIMIN",
+      "#Pilgrimage",
+      "#ARMY",
+      "#PreEvent",
+      "#FanCafe"
+    ],
     "city": "Busan",
     "district": "Nam-gu",
     "address": "Daeyeon-dong, Nam-gu, Busan (대연동, 남구, 부산)",
@@ -70,7 +91,10 @@
     "whyItMatters": "This is where the ARMY pilgrimage begins. Every international JIMIN fan comes here first. Visit 1–2 days before the concert for maximum atmosphere and the best merch selection.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "21:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400",
     "startDate": null,
     "endDate": null,
@@ -92,7 +116,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "evt-pre-002",
     "type": "event",
@@ -101,7 +124,10 @@
     "stage": "Pre-Event",
     "anchorEventId": "evt-anchor-001",
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": {
       "distanceKm": 3.8,
       "walkMinutes": null,
@@ -111,7 +137,14 @@
     },
     "name": "BTS Official Merch Pop-Up — BIFF Square, Nampo",
     "shortName": "BTS Merch Pop-Up",
-    "tags": ["#BTS", "#Merchandise", "#PopUp", "#Nampo", "#ARMY", "#PreEvent"],
+    "tags": [
+      "#BTS",
+      "#Merchandise",
+      "#PopUp",
+      "#Nampo",
+      "#ARMY",
+      "#PreEvent"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "BIFF Square, Nampo-dong, Jung-gu, Busan",
@@ -120,7 +153,10 @@
     "whyItMatters": "Official concert MD sells out within hours. Arrive in Busan 2–3 days early and secure your goods.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "20:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400",
     "startDate": "2026-10-14",
     "endDate": "2026-10-18",
@@ -142,7 +178,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "evt-pre-003",
     "type": "pilgrimage",
@@ -150,8 +185,12 @@
     "journeyCluster": "bts-busan-2026",
     "stage": "Early-Bird",
     "anchorEventId": "evt-anchor-001",
-    "relatedSpotIds": [7],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSpotIds": [
+      7
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": {
       "distanceKm": 9.1,
       "walkMinutes": null,
@@ -161,7 +200,14 @@
     },
     "name": "Run BTS! Filming Trail — Gamcheon Culture Village",
     "shortName": "Gamcheon BTS Trail",
-    "tags": ["#BTS", "#RunBTS", "#Pilgrimage", "#Gamcheon", "#EarlyBird", "#PhotoSpot"],
+    "tags": [
+      "#BTS",
+      "#RunBTS",
+      "#Pilgrimage",
+      "#Gamcheon",
+      "#EarlyBird",
+      "#PhotoSpot"
+    ],
     "city": "Busan",
     "district": "Saha-gu",
     "address": "Gamcheon 2-dong, Saha-gu, Busan",
@@ -170,7 +216,10 @@
     "whyItMatters": "Early-bird fans have the rare chance to explore Gamcheon without the massive concert-week crowds.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=400",
     "startDate": null,
     "endDate": null,
@@ -192,7 +241,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "evt-day-001",
     "type": "logistics",
@@ -201,7 +249,10 @@
     "stage": "Event-Day",
     "anchorEventId": "evt-anchor-001",
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": {
       "distanceKm": 0.3,
       "walkMinutes": 5,
@@ -211,7 +262,13 @@
     },
     "name": "Concert Day Survival Kit — Luggage Storage & Fast Routes",
     "shortName": "Event-Day Logistics",
-    "tags": ["#EventDay", "#Logistics", "#LuggageStorage", "#Transport", "#Survival"],
+    "tags": [
+      "#EventDay",
+      "#Logistics",
+      "#LuggageStorage",
+      "#Transport",
+      "#Survival"
+    ],
     "city": "Busan",
     "district": "Yeonje-gu",
     "address": "Asiad Station (Metro Line 3), Yeonje-gu, Busan",
@@ -242,7 +299,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "evt-post-001",
     "type": "permanent",
@@ -250,8 +306,12 @@
     "journeyCluster": "bts-busan-2026",
     "stage": "Post-Event",
     "anchorEventId": "evt-anchor-001",
-    "relatedSpotIds": [12],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSpotIds": [
+      12
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": {
       "distanceKm": 6.4,
       "walkMinutes": null,
@@ -261,7 +321,14 @@
     },
     "name": "Gwangalli Post-Show Night Gathering",
     "shortName": "Gwangalli Afterparty",
-    "tags": ["#PostEvent", "#Gwangalli", "#NightView", "#Afterparty", "#Busan", "#ARMY"],
+    "tags": [
+      "#PostEvent",
+      "#Gwangalli",
+      "#NightView",
+      "#Afterparty",
+      "#Busan",
+      "#ARMY"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Gwangalli 1-dong, Suyeong-gu, Busan",
@@ -292,7 +359,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "evt-post-002",
     "type": "permanent",
@@ -300,8 +366,13 @@
     "journeyCluster": "bts-busan-2026",
     "stage": "Post-Event",
     "anchorEventId": "evt-anchor-001",
-    "relatedSpotIds": [6],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
+    "relatedSpotIds": [
+      6
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining"
+    ],
     "transitFromAnchor": {
       "distanceKm": 8.2,
       "walkMinutes": null,
@@ -311,7 +382,14 @@
     },
     "name": "Haeundae Sunrise & Recovery Walk",
     "shortName": "Haeundae Recovery",
-    "tags": ["#PostEvent", "#Haeundae", "#Sunrise", "#Recovery", "#Beach", "#Healing"],
+    "tags": [
+      "#PostEvent",
+      "#Haeundae",
+      "#Sunrise",
+      "#Recovery",
+      "#Beach",
+      "#Healing"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -342,139 +420,6 @@
       "bookingUrl": null
     }
   },
-
-  {
-    "id": "evt-seoul-001",
-    "type": "pilgrimage",
-    "isAnchor": false,
-    "journeyCluster": "bts-seoul-permanent",
-    "stage": "Pre-Event",
-    "anchorEventId": null,
-    "relatedSpotIds": [5],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
-    "transitFromAnchor": null,
-    "name": "HYBE Insight — Official BTS Museum",
-    "shortName": "HYBE Insight",
-    "tags": ["#BTS", "#HYBE", "#Museum", "#Kpop", "#Seoul", "#Pilgrimage"],
-    "city": "Seoul",
-    "district": "Yongsan",
-    "address": "20 Hangang-daero, Yongsan-gu, Seoul",
-    "mapUrl": "https://maps.google.com/?q=HYBE+Insight+Seoul",
-    "description": "The official BTS & HYBE Artists museum. Immersive exhibitions, rare behind-the-scenes content, exclusive on-site merchandise. Advance reservation is mandatory.",
-    "whyItMatters": "The single most important BTS pilgrimage site in Seoul. Non-negotiable for any ARMY visiting Korea.",
-    "recommendedDurationMinutes": 90,
-    "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "18:00" },
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400",
-    "startDate": null,
-    "endDate": null,
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": true,
-    "koreanSurvivalScore": 96,
-    "notice": "Advance reservation required. Book 2 weeks ahead. Closed Mondays.",
-    "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=hybe+insight",
-      "hasMerchandise": true,
-      "hasTicketing": true,
-      "bookingUrl": "https://insight.hybecorp.com"
-    }
-  },
-
-  {
-    "id": "evt-seoul-002",
-    "type": "pilgrimage",
-    "isAnchor": false,
-    "journeyCluster": "bts-seoul-permanent",
-    "stage": "Standalone",
-    "anchorEventId": null,
-    "relatedSpotIds": [5],
-    "relatedSurvivalGuides": ["getting-around"],
-    "transitFromAnchor": null,
-    "name": "BTS Love Lock Spot — N Seoul Tower",
-    "shortName": "BTS Love Locks",
-    "tags": ["#BTS", "#LoveLock", "#NSeoulTower", "#Namsan", "#Pilgrimage", "#Seoul"],
-    "city": "Seoul",
-    "district": "Yongsan",
-    "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul",
-    "mapUrl": "https://maps.google.com/?q=N+Seoul+Tower+Love+Lock",
-    "description": "The fence around N Seoul Tower holds thousands of padlocks left by BTS members and ARMY fans from every country. Add your own lock, find the ones left by members. Best at sunset.",
-    "whyItMatters": "A pilgrimage site, a photo spot, and a connection to BTS history — all in one.",
-    "recommendedDurationMinutes": 60,
-    "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "23:00" },
-    "image": "https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=400",
-    "startDate": null,
-    "endDate": null,
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": false,
-    "koreanSurvivalScore": 90,
-    "notice": "Cable car ₩9,500 round trip. Hiking trail free — ~25 min walk.",
-    "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/activity/9021-n-seoul-tower-observatory-ticket/",
-      "hasMerchandise": false,
-      "hasTicketing": false,
-      "bookingUrl": null
-    }
-  },
-
-  {
-    "id": "evt-seoul-003",
-    "type": "permanent",
-    "isAnchor": false,
-    "journeyCluster": "bts-seoul-permanent",
-    "stage": "Standalone",
-    "anchorEventId": null,
-    "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
-    "transitFromAnchor": null,
-    "name": "Hongdae K-Pop Street Live — Weekend Performances",
-    "shortName": "Hongdae K-Pop Live",
-    "tags": ["#Kpop", "#Hongdae", "#StreetPerformance", "#Nightlife", "#Seoul", "#Dance"],
-    "city": "Seoul",
-    "district": "Mapo-gu",
-    "address": "Hongik University St., Mapo-gu, Seoul",
-    "mapUrl": "https://maps.google.com/?q=Hongdae+Street+Seoul",
-    "description": "Every Friday and Saturday evening, Hongdae becomes a massive open-air K-pop stage. Future idols, dance crews, and indie bands perform for free. This is K-pop before the stadium.",
-    "whyItMatters": "Free K-pop at its most authentic — no tickets, no barriers, raw talent.",
-    "recommendedDurationMinutes": 120,
-    "bestTimeSlot": "evening",
-    "openingHours": { "open": "18:00", "close": "23:00" },
-    "image": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400",
-    "startDate": null,
-    "endDate": null,
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": true,
-    "koreanSurvivalScore": 86,
-    "notice": "Best Friday & Saturday 8–11 PM. Weather-dependent. Busiest near Exit 9.",
-    "commerce": {
-      "affiliateType": null,
-      "hasAffiliate": false,
-      "affiliatePartner": null,
-      "affiliateUrl": null,
-      "hasMerchandise": false,
-      "hasTicketing": false,
-      "bookingUrl": null
-    }
-  },
-
   {
     "id": "evt-fest-001",
     "type": "festival",
@@ -482,12 +427,22 @@
     "journeyCluster": null,
     "stage": "Standalone",
     "anchorEventId": null,
-    "relatedSpotIds": [12],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSpotIds": [
+      12
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Busan International Fireworks Festival 2026",
     "shortName": "Busan Fireworks",
-    "tags": ["#Festival", "#Fireworks", "#Busan", "#Gwangalli", "#NightEvent"],
+    "tags": [
+      "#Festival",
+      "#Fireworks",
+      "#Busan",
+      "#Gwangalli",
+      "#NightEvent"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Gwangalli Beach, Suyeong-gu, Busan",
@@ -518,51 +473,6 @@
       "bookingUrl": null
     }
   },
-
-  {
-    "id": "evt-deal-001",
-    "type": "event",
-    "isAnchor": false,
-    "journeyCluster": null,
-    "stage": "Standalone",
-    "anchorEventId": null,
-    "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["payments", "getting-around"],
-    "transitFromAnchor": null,
-    "name": "Korea Stay Sale Festa 2026 — Up to 60% Off Hotels",
-    "shortName": "Stay Sale Festa",
-    "tags": ["#HotelDeal", "#Budget", "#Accommodation", "#Government", "#KTO"],
-    "city": "Seoul",
-    "district": "Nationwide",
-    "address": "Participating hotels nationwide (Seoul, Busan, Jeju, Gyeongju)",
-    "mapUrl": "https://maps.google.com/?q=Seoul+Korea",
-    "description": "South Korea's government-backed hotel discount campaign. Partnered hotels offer up to 60% off for September. 4-star Seoul hotels can drop under $60/night.",
-    "whyItMatters": "Best time of year to book Korean hotels. Trip can flex to September to save $200+.",
-    "recommendedDurationMinutes": 0,
-    "bestTimeSlot": "anytime",
-    "openingHours": null,
-    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-    "startDate": "2026-09-01",
-    "endDate": "2026-09-30",
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": true,
-    "koreanSurvivalScore": 97,
-    "notice": "Book via KNTO official site or partnered OTAs. Limited rooms.",
-    "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Booking.com",
-      "affiliateUrl": "https://www.booking.com/country/kr.html",
-      "hasMerchandise": false,
-      "hasTicketing": false,
-      "bookingUrl": "https://knto.or.kr"
-    }
-  },
-
   {
     "id": "spot-busan-001",
     "type": "permanent",
@@ -572,11 +482,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Taejongdae Resort Park",
     "shortName": "Taejongdae",
-    "tags": ["#Taejongdae", "#Cliffs", "#Lighthouse", "#Nature", "#Busan", "#OceanView"],
+    "tags": [
+      "#Taejongdae",
+      "#Cliffs",
+      "#Lighthouse",
+      "#Nature",
+      "#Busan",
+      "#OceanView"
+    ],
     "city": "Busan",
     "district": "Yeongdo-gu",
     "address": "179 Jeonmang-ro, Yeongdo-gu, Busan — Bus 8 or 30 from Nampo-dong (45 min)",
@@ -585,7 +504,10 @@
     "whyItMatters": "The raw, untouched coastline here is unlike anything in central Busan — sheer cliffs meeting the open sea, with zero crowds on weekday mornings.",
     "recommendedDurationMinutes": 150,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400",
     "startDate": null,
     "endDate": null,
@@ -609,7 +531,6 @@
     "lat": 35.0467,
     "lng": 129.0817
   },
-
   {
     "id": "spot-busan-002",
     "type": "permanent",
@@ -619,11 +540,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Songdo Aerial Cable Car",
     "shortName": "Songdo Cable Car",
-    "tags": ["#CableCar", "#OceanView", "#Songdo", "#Busan", "#Attraction", "#Aerial"],
+    "tags": [
+      "#CableCar",
+      "#OceanView",
+      "#Songdo",
+      "#Busan",
+      "#Attraction",
+      "#Aerial"
+    ],
     "city": "Busan",
     "district": "Seo-gu",
     "address": "171 Songdo Haean-ro, Seo-gu, Busan — Bus 7 or 71 from Nampo-dong (25 min)",
@@ -632,7 +562,10 @@
     "whyItMatters": "The only place in Busan to fly above open ocean in a cable car — the glass-floor cabin view is genuinely spectacular.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "22:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400",
     "startDate": null,
     "endDate": null,
@@ -656,7 +589,6 @@
     "lat": 35.0866,
     "lng": 129.0141
   },
-
   {
     "id": "spot-busan-003",
     "type": "permanent",
@@ -666,11 +598,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Busan Tower & Yongdusan Park",
     "shortName": "Busan Tower",
-    "tags": ["#BusanTower", "#PanoramaView", "#NightView", "#Jung-gu", "#Landmark", "#Nampo"],
+    "tags": [
+      "#BusanTower",
+      "#PanoramaView",
+      "#NightView",
+      "#Jung-gu",
+      "#Landmark",
+      "#Nampo"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "120 Yongdusan-gil, Jung-gu, Busan — Nampo Station (Line 1, Exit 7) + escalator",
@@ -679,7 +620,10 @@
     "whyItMatters": "The most accessible city panorama in Busan — and the park below is a peaceful escape from the shopping crowds of Nampo-dong.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "22:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1474690870753-1b92efa1f2d8?w=400",
     "startDate": null,
     "endDate": null,
@@ -703,7 +647,6 @@
     "lat": 35.0985,
     "lng": 129.0321
   },
-
   {
     "id": "spot-busan-004",
     "type": "permanent",
@@ -713,11 +656,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Haedong Yonggungsa Temple",
     "shortName": "Haedong Temple",
-    "tags": ["#Temple", "#OceanTemple", "#Buddhist", "#Gijang", "#PhotoSpot", "#SpiritualSite"],
+    "tags": [
+      "#Temple",
+      "#OceanTemple",
+      "#Buddhist",
+      "#Gijang",
+      "#PhotoSpot",
+      "#SpiritualSite"
+    ],
     "city": "Busan",
     "district": "Gijang-gun",
     "address": "86 Yonggung-gil, Gijang-gun, Busan — Bus 181 or 100 from Haeundae (40 min)",
@@ -726,7 +678,10 @@
     "whyItMatters": "The sea-cliff setting makes this the most visually dramatic temple in all of Busan — arguably in all of Korea. Nothing else looks like this.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "05:00", "close": "20:00" },
+    "openingHours": {
+      "open": "05:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400",
     "startDate": null,
     "endDate": null,
@@ -750,7 +705,6 @@
     "lat": 35.1926,
     "lng": 129.2255
   },
-
   {
     "id": "spot-busan-005",
     "type": "permanent",
@@ -760,11 +714,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "Shinsegae Centum City & Spa Land",
     "shortName": "Centum City Spa",
-    "tags": ["#ShoppingMall", "#SpaLand", "#Centum", "#Luxury", "#Haeundae", "#Shopping"],
+    "tags": [
+      "#ShoppingMall",
+      "#SpaLand",
+      "#Centum",
+      "#Luxury",
+      "#Haeundae",
+      "#Shopping"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "35 Centumdong-ro, Haeundae-gu, Busan — Centum City Station (Line 2, Exit 12)",
@@ -773,7 +737,10 @@
     "whyItMatters": "Where locals come on rainy days: world-class spa + Korea's most impressive mall under one roof. The outdoor rooftop pool with city views is unmissable.",
     "recommendedDurationMinutes": 180,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:30", "close": "22:00" },
+    "openingHours": {
+      "open": "10:30",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
     "startDate": null,
     "endDate": null,
@@ -797,7 +764,6 @@
     "lat": 35.1692,
     "lng": 129.1312
   },
-
   {
     "id": "spot-busan-006",
     "type": "permanent",
@@ -807,11 +773,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "Seomyeon Food Street (서면 먹자골목)",
     "shortName": "Seomyeon Food St.",
-    "tags": ["#NightFood", "#Seomyeon", "#Dakgalbi", "#Busan", "#StreetFood", "#Nightlife"],
+    "tags": [
+      "#NightFood",
+      "#Seomyeon",
+      "#Dakgalbi",
+      "#Busan",
+      "#StreetFood",
+      "#Nightlife"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Seomyeon-ro, Busanjin-gu, Busan — Seomyeon Station (Line 1/2, Exit 1)",
@@ -820,7 +796,10 @@
     "whyItMatters": "Where Busan's young generation eats and drinks at night. Skip the tourist-facing restaurants — walk down the alleys to find the real experience.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "02:00" },
+    "openingHours": {
+      "open": "17:00",
+      "close": "02:00"
+    },
     "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400",
     "startDate": null,
     "endDate": null,
@@ -844,7 +823,6 @@
     "lat": 35.1572,
     "lng": 129.0581
   },
-
   {
     "id": "spot-busan-007",
     "type": "permanent",
@@ -854,11 +832,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "Gukje Market (국제시장)",
     "shortName": "Gukje Market",
-    "tags": ["#GukjeMarket", "#TraditionalMarket", "#Shopping", "#Souvenir", "#Nampo", "#LocalFood"],
+    "tags": [
+      "#GukjeMarket",
+      "#TraditionalMarket",
+      "#Shopping",
+      "#Souvenir",
+      "#Nampo",
+      "#LocalFood"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "Gukje-sijang 1-gil, Jung-gu, Busan — Nampo Station (Line 1, Exit 3), 5-min walk",
@@ -867,7 +855,10 @@
     "whyItMatters": "The historical heart of Busan's commerce — and the same market featured in the Korean film 'Ode to My Father'. Zero tourist-trap pricing.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "20:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=400",
     "startDate": null,
     "endDate": null,
@@ -891,7 +882,6 @@
     "lat": 35.0973,
     "lng": 129.0288
   },
-
   {
     "id": "spot-busan-008",
     "type": "permanent",
@@ -901,11 +891,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Dongbaek Island & APEC House",
     "shortName": "Dongbaek Island",
-    "tags": ["#DongbaekIsland", "#APEC", "#NatureWalk", "#Haeundae", "#OceanView", "#Photography"],
+    "tags": [
+      "#DongbaekIsland",
+      "#APEC",
+      "#NatureWalk",
+      "#Haeundae",
+      "#OceanView",
+      "#Photography"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Woo-dong, Haeundae-gu, Busan — Dongbaek Station (Line 2, Exit 1) or walk from Haeundae Beach",
@@ -935,10 +934,9 @@
       "hasTicketing": false,
       "bookingUrl": null
     },
-    "lat": 35.1530,
-    "lng": 129.1390
+    "lat": 35.153,
+    "lng": 129.139
   },
-
   {
     "id": "spot-busan-009",
     "type": "permanent",
@@ -948,11 +946,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "UN Memorial Cemetery",
     "shortName": "UN Cemetery",
-    "tags": ["#UNMemorial", "#History", "#Memorial", "#Nam-gu", "#Free", "#KoreanWar"],
+    "tags": [
+      "#UNMemorial",
+      "#History",
+      "#Memorial",
+      "#Nam-gu",
+      "#Free",
+      "#KoreanWar"
+    ],
     "city": "Busan",
     "district": "Nam-gu",
     "address": "93 Liancourt-ro, Nam-gu, Busan — Bus 68 or 131 to UN Memorial Cemetery stop",
@@ -961,8 +968,11 @@
     "whyItMatters": "An unexpectedly powerful and moving experience in the middle of a modern city — the scale of sacrifice becomes real here in a way that no museum can replicate.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "17:00" },
-    "image": "https://images.unsplash.com/photo-1574226516831-e1dff420e562?w=400",
+    "openingHours": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "image": "https://images.unsplash.com/photo-1648061348284-a7116a7c637b?w=400",
     "startDate": null,
     "endDate": null,
     "isTrending": false,
@@ -985,7 +995,6 @@
     "lat": 35.1308,
     "lng": 129.0918
   },
-
   {
     "id": "spot-busan-010",
     "type": "permanent",
@@ -995,11 +1004,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Oryukdo Skywalk",
     "shortName": "Oryukdo Skywalk",
-    "tags": ["#Oryukdo", "#Skywalk", "#GlassFloor", "#SeaCliff", "#Nam-gu", "#Free"],
+    "tags": [
+      "#Oryukdo",
+      "#Skywalk",
+      "#GlassFloor",
+      "#SeaCliff",
+      "#Nam-gu",
+      "#Free"
+    ],
     "city": "Busan",
     "district": "Nam-gu",
     "address": "170 Oryukdo-ro, Nam-gu, Busan — Bus 24 or 131 to Oryukdo Skywalk stop",
@@ -1008,7 +1026,10 @@
     "whyItMatters": "Five seconds on the glass floor over a 35m cliff tells you more about Busan's raw natural power than an hour of beach walking.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1530025809667-1f4bcff9e9ab?w=400",
     "startDate": null,
     "endDate": null,
@@ -1029,10 +1050,9 @@
       "hasTicketing": false,
       "bookingUrl": null
     },
-    "lat": 35.0840,
+    "lat": 35.084,
     "lng": 129.0912
   },
-
   {
     "id": "spot-busan-011",
     "type": "permanent",
@@ -1042,11 +1062,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "Dalmaji Hill Café Street",
     "shortName": "Dalmaji Cafés",
-    "tags": ["#Dalmaji", "#CaféStreet", "#OceanView", "#Haeundae", "#CoffeeShop", "#DateSpot"],
+    "tags": [
+      "#Dalmaji",
+      "#CaféStreet",
+      "#OceanView",
+      "#Haeundae",
+      "#CoffeeShop",
+      "#DateSpot"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Dalmaji-gil, Haeundae-gu, Busan — 20-min walk from Haeundae Beach (east end)",
@@ -1055,7 +1085,10 @@
     "whyItMatters": "Busan's most romantic stretch of road — every turn reveals a sea-view terrace. The crowd here is different from the beach: quieter, more local.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "22:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566a?w=400",
     "startDate": null,
     "endDate": null,
@@ -1076,10 +1109,9 @@
       "hasTicketing": false,
       "bookingUrl": null
     },
-    "lat": 35.1680,
-    "lng": 129.1750
+    "lat": 35.168,
+    "lng": 129.175
   },
-
   {
     "id": "spot-busan-012",
     "type": "permanent",
@@ -1089,11 +1121,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "Millak Raw Fish Center",
     "shortName": "Millak Fish Center",
-    "tags": ["#RawFish", "#Hoe", "#Sashimi", "#Millak", "#LocalSeafood", "#SuyeongBay"],
+    "tags": [
+      "#RawFish",
+      "#Hoe",
+      "#Sashimi",
+      "#Millak",
+      "#LocalSeafood",
+      "#SuyeongBay"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Millak-ro, Suyeong-gu, Busan — Walk 15 min from Gwangan Station (Line 2, Exit 5)",
@@ -1102,7 +1145,10 @@
     "whyItMatters": "Real Busan raw fish culture — locals argue Millak fish is fresher than Jagalchi because the vendors are smaller and turn over faster.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "23:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400",
     "startDate": null,
     "endDate": null,
@@ -1126,7 +1172,6 @@
     "lat": 35.1531,
     "lng": 129.1149
   },
-
   {
     "id": "spot-busan-013",
     "type": "permanent",
@@ -1136,11 +1181,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Busan Cinema Center (BIFF)",
     "shortName": "Busan Cinema Center",
-    "tags": ["#BIFF", "#CinemaCenter", "#Architecture", "#Centum", "#Haeundae", "#NightView"],
+    "tags": [
+      "#BIFF",
+      "#CinemaCenter",
+      "#Architecture",
+      "#Centum",
+      "#Haeundae",
+      "#NightView"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "120 Suyeong-ro, Haeundae-gu, Busan — Centum City Station (Line 2, Exit 7)",
@@ -1149,7 +1203,10 @@
     "whyItMatters": "The nightly LED light show on the world's longest cantilevered roof is free and genuinely spectacular — a piece of architectural performance art in the middle of Centum City.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "23:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400",
     "startDate": null,
     "endDate": null,
@@ -1173,7 +1230,6 @@
     "lat": 35.1711,
     "lng": 129.1343
   },
-
   {
     "id": "spot-busan-014",
     "type": "permanent",
@@ -1183,11 +1239,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "Choryang Ibagu-gil 168 Steps",
     "shortName": "Ibagu-gil Steps",
-    "tags": ["#Ibagu길", "#168Steps", "#Choryang", "#PortView", "#History", "#LocalHidden"],
+    "tags": [
+      "#Ibagu길",
+      "#168Steps",
+      "#Choryang",
+      "#PortView",
+      "#History",
+      "#LocalHidden"
+    ],
     "city": "Busan",
     "district": "Dong-gu",
     "address": "Ibagu-gil, Choryang-dong, Dong-gu, Busan — Busan Station (Exit 7), 10-min walk",
@@ -1220,7 +1285,6 @@
     "lat": 35.1088,
     "lng": 129.0326
   },
-
   {
     "id": "spot-busan-015",
     "type": "permanent",
@@ -1230,11 +1294,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "SEA LIFE Busan Aquarium",
     "shortName": "Busan Aquarium",
-    "tags": ["#Aquarium", "#SEALife", "#Haeundae", "#Family", "#Sharks", "#Underwater"],
+    "tags": [
+      "#Aquarium",
+      "#SEALife",
+      "#Haeundae",
+      "#Family",
+      "#Sharks",
+      "#Underwater"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "266 Haeundaehaebyeon-ro, Haeundae-gu, Busan — Haeundae Station (Line 2, Exit 5)",
@@ -1243,7 +1317,10 @@
     "whyItMatters": "Sharks swimming overhead while standing on a glass floor on the Haeundae beachfront — hard to beat for a morning activity before the beach crowd arrives.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "22:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?w=400",
     "startDate": null,
     "endDate": null,
@@ -1267,7 +1344,6 @@
     "lat": 35.1573,
     "lng": 129.1601
   },
-
   {
     "id": "michelin-busan-001",
     "type": "restaurant",
@@ -1276,11 +1352,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 굿모닝홍콩 — Hong Kong Style Dim Sum",
     "shortName": "🌟 굿모닝홍콩",
-    "tags": ["#Michelin", "#DimSum", "#HongKongStyle", "#Busan", "#Brunch"],
+    "tags": [
+      "#Michelin",
+      "#DimSum",
+      "#HongKongStyle",
+      "#Busan",
+      "#Brunch"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -1289,7 +1374,10 @@
     "whyItMatters": "Michelin-curated dim sum in Busan — the real Hong Kong experience without the flight.",
     "recommendedDurationMinutes": 75,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "21:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400",
     "startDate": null,
     "endDate": null,
@@ -1301,9 +1389,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 85,
     "notice": "Michelin Guide Busan selected. Weekends busy — arrive early.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-002",
     "type": "restaurant",
@@ -1312,11 +1407,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 금수복국 — Puffer Fish Soup",
     "shortName": "🌟 금수복국",
-    "tags": ["#Michelin", "#PufferFish", "#Bokguk", "#Busan", "#LocalSpecialty", "#Haeundae"],
+    "tags": [
+      "#Michelin",
+      "#PufferFish",
+      "#Bokguk",
+      "#Busan",
+      "#LocalSpecialty",
+      "#Haeundae"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -1325,7 +1430,10 @@
     "whyItMatters": "Puffer fish soup is Busan's quiet pride — Michelin agrees. This is the city's most underrated breakfast dish.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "21:00" },
+    "openingHours": {
+      "open": "07:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1547592180-85f173990554?w=400",
     "startDate": null,
     "endDate": null,
@@ -1337,9 +1445,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 78,
     "notice": "Michelin Guide Busan. Point at menu photos. Budget ₩12,000–₩18,000/bowl.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-003",
     "type": "restaurant",
@@ -1348,11 +1463,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 나가하마 만게츠 — Tonkotsu Ramen",
     "shortName": "🌟 나가하마 만게츠",
-    "tags": ["#Michelin", "#Ramen", "#Tonkotsu", "#Japanese", "#Busan", "#NightFood"],
+    "tags": [
+      "#Michelin",
+      "#Ramen",
+      "#Tonkotsu",
+      "#Japanese",
+      "#Busan",
+      "#NightFood"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Busanjin-gu, Busan",
@@ -1361,7 +1485,10 @@
     "whyItMatters": "Michelin-listed ramen in Korea — a rare honor. The Nagahama style served here is closer to Fukuoka than anything you'll find in Seoul.",
     "recommendedDurationMinutes": 45,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "11:30", "close": "22:00" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=400",
     "startDate": null,
     "endDate": null,
@@ -1373,9 +1500,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Michelin Guide Busan. Expect 15–20 min queue on weekends. Counter seating perfect for solo.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-004",
     "type": "restaurant",
@@ -1384,11 +1518,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 나막집 — Dwaeji Gukbap",
     "shortName": "🌟 나막집",
-    "tags": ["#Michelin", "#DwaejiGukbap", "#PorkSoup", "#Busan", "#LocalFood", "#NamGu"],
+    "tags": [
+      "#Michelin",
+      "#DwaejiGukbap",
+      "#PorkSoup",
+      "#Busan",
+      "#LocalFood",
+      "#NamGu"
+    ],
     "city": "Busan",
     "district": "Nam-gu",
     "address": "Nam-gu, Busan",
@@ -1397,7 +1541,10 @@
     "whyItMatters": "Dwaeji gukbap is Busan's soul food — and this is the version that made the Michelin Guide. Budget under ₩10,000 for the best meal in the city.",
     "recommendedDurationMinutes": 45,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "06:00", "close": "20:00" },
+    "openingHours": {
+      "open": "06:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400",
     "startDate": null,
     "endDate": null,
@@ -1409,9 +1556,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 72,
     "notice": "Michelin Guide Busan. Cash only. Budget ₩8,000–₩10,000. Just point to the menu — they'll bring gukbap automatically.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-005",
     "type": "restaurant",
@@ -1420,11 +1574,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 뉴러우멘관즈 — Taiwanese Beef Noodle",
     "shortName": "🌟 뉴러우멘관즈",
-    "tags": ["#Michelin", "#BeefNoodle", "#Taiwanese", "#ChineseFood", "#Busan", "#Haeundae"],
+    "tags": [
+      "#Michelin",
+      "#BeefNoodle",
+      "#Taiwanese",
+      "#ChineseFood",
+      "#Busan",
+      "#Haeundae"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -1433,7 +1596,10 @@
     "whyItMatters": "Taiwan-style beef noodles in Korea, Michelin-approved — this is the kind of cross-cultural culinary gem that defines modern Busan food culture.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "21:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400",
     "startDate": null,
     "endDate": null,
@@ -1445,9 +1611,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Michelin Guide Busan. English menu available. Budget ₩15,000–₩20,000.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-006",
     "type": "restaurant",
@@ -1456,11 +1629,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 담미옥 — Bib Gourmand Naengmyeon",
     "shortName": "🌟 담미옥 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#Naengmyeon", "#ColdNoodles", "#Busan", "#BusanjinGu"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#Naengmyeon",
+      "#ColdNoodles",
+      "#Busan",
+      "#BusanjinGu"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Busanjin-gu, Busan",
@@ -1469,7 +1651,10 @@
     "whyItMatters": "Michelin Bib Gourmand naengmyeon at a fraction of the cost of starred restaurants. The best value fine-dining experience in Busan.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "21:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
     "startDate": null,
     "endDate": null,
@@ -1481,9 +1666,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 80,
     "notice": "Michelin Bib Gourmand. Budget ₩10,000–₩14,000. Naengmyeon is served cold — Korean custom to eat quickly before it warms.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-007",
     "type": "restaurant",
@@ -1492,11 +1684,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 델리봉 — French Fine Dining",
     "shortName": "🌟 델리봉",
-    "tags": ["#Michelin", "#French", "#FineDining", "#Busan", "#YeonjeGu", "#WesternFood"],
+    "tags": [
+      "#Michelin",
+      "#French",
+      "#FineDining",
+      "#Busan",
+      "#YeonjeGu",
+      "#WesternFood"
+    ],
     "city": "Busan",
     "district": "Yeonje-gu",
     "address": "Yeonje-gu, Busan",
@@ -1505,7 +1707,10 @@
     "whyItMatters": "Michelin-selected French cuisine outside of Seoul — proof that Busan's fine dining scene has arrived on the world stage.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400",
     "startDate": null,
     "endDate": null,
@@ -1517,9 +1722,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Michelin Guide Busan. Reservation recommended. Budget ₩50,000–₩100,000/person.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-008",
     "type": "restaurant",
@@ -1528,11 +1740,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 동경밥상 — Bib Gourmand Eel Rice",
     "shortName": "🌟 동경밥상 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#Eel", "#Jangeo", "#Busan", "#SuyeongGu"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#Eel",
+      "#Jangeo",
+      "#Busan",
+      "#SuyeongGu"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -1541,7 +1762,10 @@
     "whyItMatters": "Michelin Bib Gourmand grilled eel in Suyeong — one of the most underrated Japanese-Korean culinary crossovers that Busan does brilliantly.",
     "recommendedDurationMinutes": 75,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:30", "close": "21:30" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "21:30"
+    },
     "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=400",
     "startDate": null,
     "endDate": null,
@@ -1553,9 +1777,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 79,
     "notice": "Michelin Bib Gourmand. Budget ₩15,000–₩22,000. Closed Tuesdays typically.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-009",
     "type": "restaurant",
@@ -1564,11 +1795,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 딤타오 — Cantonese Dim Sum",
     "shortName": "🌟 딤타오",
-    "tags": ["#Michelin", "#DimSum", "#Cantonese", "#Busan", "#Haeundae", "#Chinese"],
+    "tags": [
+      "#Michelin",
+      "#DimSum",
+      "#Cantonese",
+      "#Busan",
+      "#Haeundae",
+      "#Chinese"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -1577,7 +1817,10 @@
     "whyItMatters": "Michelin-curated Cantonese dim sum steps from Haeundae Beach — this is the kind of surprise that makes Busan one of Asia's most exciting food cities.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "21:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1496116218417-1a781b1b827f?w=400",
     "startDate": null,
     "endDate": null,
@@ -1589,9 +1832,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 86,
     "notice": "Michelin Guide Busan. English menu available. Budget ₩20,000–₩35,000. Weekends require reservations.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-010",
     "type": "restaurant",
@@ -1600,11 +1850,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 램지 — French Haute Cuisine",
     "shortName": "🌟 램지",
-    "tags": ["#Michelin", "#French", "#HauteCuisine", "#Busan", "#SuyeongGu", "#FineDining"],
+    "tags": [
+      "#Michelin",
+      "#French",
+      "#HauteCuisine",
+      "#Busan",
+      "#SuyeongGu",
+      "#FineDining"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -1613,7 +1873,10 @@
     "whyItMatters": "This is Busan's most ambitious French restaurant — Michelin validated, world-class in execution, and surprisingly accessible compared to Seoul equivalents.",
     "recommendedDurationMinutes": 150,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400",
     "startDate": null,
     "endDate": null,
@@ -1625,9 +1888,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Michelin Guide Busan. Reservation mandatory. Budget ₩100,000–₩200,000+/person for tasting menu.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-011",
     "type": "restaurant",
@@ -1636,11 +1906,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 레땅 — French Bistro",
     "shortName": "🌟 레땅",
-    "tags": ["#Michelin", "#French", "#Bistro", "#Busan", "#BusanjinGu", "#WineBar"],
+    "tags": [
+      "#Michelin",
+      "#French",
+      "#Bistro",
+      "#Busan",
+      "#BusanjinGu",
+      "#WineBar"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Busanjin-gu, Busan",
@@ -1649,7 +1928,10 @@
     "whyItMatters": "Michelin-listed French bistro near Seomyeon — excellent value for classic French cooking in the heart of Busan's most vibrant dining district.",
     "recommendedDurationMinutes": 105,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=400",
     "startDate": null,
     "endDate": null,
@@ -1661,9 +1943,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 87,
     "notice": "Michelin Guide Busan. Bar seating available for solo diners. Budget ₩40,000–₩80,000/person.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-012",
     "type": "restaurant",
@@ -1672,11 +1961,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 레썽스 — Modern French",
     "shortName": "🌟 레썽스",
-    "tags": ["#Michelin", "#French", "#ModernFrench", "#Busan", "#SuyeongGu", "#Creative"],
+    "tags": [
+      "#Michelin",
+      "#French",
+      "#ModernFrench",
+      "#Busan",
+      "#SuyeongGu",
+      "#Creative"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -1685,7 +1983,10 @@
     "whyItMatters": "Michelin-listed modern French in Suyeong — a rare convergence of French finesse and local Busan ingredients that you simply cannot find outside this city.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400",
     "startDate": null,
     "endDate": null,
@@ -1697,9 +1998,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Michelin Guide Busan. Reservation recommended for dinner. Budget ₩60,000–₩120,000/person.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-013",
     "type": "restaurant",
@@ -1708,11 +2016,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 르도헤 — Contemporary French",
     "shortName": "🌟 르도헤",
-    "tags": ["#Michelin", "#French", "#Contemporary", "#Busan", "#SuyeongGu", "#Tasting"],
+    "tags": [
+      "#Michelin",
+      "#French",
+      "#Contemporary",
+      "#Busan",
+      "#SuyeongGu",
+      "#Tasting"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -1721,7 +2038,10 @@
     "whyItMatters": "Michelin Guide Busan — the Suyeong-gu French dining corridor is one of Asia's best-kept culinary secrets, and this is one of its brightest stars.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400",
     "startDate": null,
     "endDate": null,
@@ -1733,9 +2053,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 87,
     "notice": "Michelin Guide Busan. Advance reservation required. Budget ₩70,000–₩130,000/person.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-001",
     "type": "event",
@@ -1744,11 +2071,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] BTS Jungkook's Hometown — Baekyang School Pilgrimage",
     "shortName": "🎤 정국 고향 코스",
-    "tags": ["#BTS", "#Jungkook", "#Pilgrimage", "#ARMY", "#Busan", "#Buk-gu", "#Hometown"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#Pilgrimage",
+      "#ARMY",
+      "#Busan",
+      "#Buk-gu",
+      "#Hometown"
+    ],
     "city": "Busan",
     "district": "Buk-gu",
     "address": "Baekyang Elementary: 12 Sangri-ro 18beon-gil, Buk-gu, Busan (Metro Line 3 Mandeok Station Exit 3, 10 min walk)",
@@ -1769,9 +2106,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 72,
     "notice": "Schools are active — please stay outside the gates and respect school hours. Best visited on weekends when students are absent.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-002",
     "type": "event",
@@ -1780,11 +2124,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 석불사 Temple — Jungkook's Scenic Route",
     "shortName": "🎤 석불사 (정국 코스)",
-    "tags": ["#BTS", "#Jungkook", "#Temple", "#Seokbulsa", "#Busan", "#Pilgrimage", "#Nature"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#Temple",
+      "#Seokbulsa",
+      "#Busan",
+      "#Pilgrimage",
+      "#Nature"
+    ],
     "city": "Busan",
     "district": "Buk-gu",
     "address": "143-79 Mandeok Gogae-gil, Buk-gu, Busan (Taxi from Mandeok Station Exit 1, 10 min)",
@@ -1793,8 +2147,11 @@
     "whyItMatters": "A hidden temple tucked into a cliff face — and a key stop on Jungkook's Busan hometown route. The view from here is one of Busan's best-kept secrets.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "18:00" },
-    "image": "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400",
+    "openingHours": {
+      "open": "07:00",
+      "close": "18:00"
+    },
+    "image": "https://images.unsplash.com/photo-1448523183439-d2ac62aca997?w=400",
     "startDate": null,
     "endDate": null,
     "isTrending": true,
@@ -1805,9 +2162,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 70,
     "notice": "Free entry. Taxi from Mandeok Station (₩6,000–₩8,000). Wear comfortable shoes — the path up is steep.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-003",
     "type": "event",
@@ -1816,11 +2180,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 만덕고개 누리길 전망데크 — Night City Panorama",
     "shortName": "🎤 만덕고개 야경 전망대",
-    "tags": ["#BTS", "#Jungkook", "#NightView", "#Panorama", "#Busan", "#Mandeok", "#PhotoSpot"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#NightView",
+      "#Panorama",
+      "#Busan",
+      "#Mandeok",
+      "#PhotoSpot"
+    ],
     "city": "Busan",
     "district": "Dongnae-gu",
     "address": "San 153-8 Oncheon-dong, Dongnae-gu, Busan (Metro Line 4 Minam Station Exit 11, taxi 12 min)",
@@ -1841,9 +2215,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 68,
     "notice": "No public transit — taxi from Minam Station recommended (₩7,000–₩10,000). Roadside parking available. Best 30 min after sunset.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-004",
     "type": "event",
@@ -1852,11 +2233,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 화명수목원 — Hwamyeong Arboretum Autumn Trail",
     "shortName": "🎤 화명수목원 (단풍 명소)",
-    "tags": ["#BTS", "#Jungkook", "#Arboretum", "#AutumnLeaves", "#Busan", "#BukGu", "#Nature"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#Arboretum",
+      "#AutumnLeaves",
+      "#Busan",
+      "#BukGu",
+      "#Nature"
+    ],
     "city": "Busan",
     "district": "Buk-gu",
     "address": "299 Sanseong-ro, Buk-gu, Busan (Metro Line 2 Hwamyeong Station Exit 6 → village bus Geumjeong-gu 1)",
@@ -1865,7 +2256,10 @@
     "whyItMatters": "Where Jungkook finds healing in Busan — a nature sanctuary that transforms into one of Korea's most photogenic autumn destinations come October.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=400",
     "startDate": null,
     "endDate": null,
@@ -1877,9 +2271,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 74,
     "notice": "Small entry fee ₩1,000–₩2,000. Best in mid-October for autumn foliage. Parking available.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-005",
     "type": "event",
@@ -1888,11 +2289,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 화명생태공원 — Hwamyeong Eco Park Riverside",
     "shortName": "🎤 화명생태공원",
-    "tags": ["#BTS", "#Jungkook", "#EcoPark", "#Riverside", "#Busan", "#Cycling", "#Cosmos"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#EcoPark",
+      "#Riverside",
+      "#Busan",
+      "#Cycling",
+      "#Cosmos"
+    ],
     "city": "Busan",
     "district": "Buk-gu",
     "address": "1718-17 Hwamyeong-dong, Buk-gu, Busan (Metro Line 2 Hwamyeong Station Exit 1, 10 min walk)",
@@ -1913,9 +2324,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 76,
     "notice": "Free entry. Bicycle rental available (₩3,000–₩5,000/hr). Cosmos in bloom: September–October. Pack a picnic.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-006",
     "type": "event",
@@ -1923,12 +2341,25 @@
     "journeyCluster": "bts-busan-gamcheon",
     "stage": "Standalone",
     "anchorEventId": null,
-    "relatedSpotIds": [7],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSpotIds": [
+      7
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 감천문화마을 — BTS Jungkook & Jimin Mural Spot",
     "shortName": "🎤 감천 BTS 벽화 성지",
-    "tags": ["#BTS", "#Jungkook", "#Jimin", "#Gamcheon", "#Mural", "#ARMY", "#PhotoSpot", "#Pilgrimage"],
+    "tags": [
+      "#BTS",
+      "#Jungkook",
+      "#Jimin",
+      "#Gamcheon",
+      "#Mural",
+      "#ARMY",
+      "#PhotoSpot",
+      "#Pilgrimage"
+    ],
     "city": "Busan",
     "district": "Saha-gu",
     "address": "Gamcheon 2-dong, Saha-gu, Busan (Metro Line 1 Toseong Station Exit 6 → village bus Saha 1-1)",
@@ -1937,7 +2368,10 @@
     "whyItMatters": "BTS meets Busan's most iconic neighborhood — the Jungkook & Jimin mural makes this pilgrimage site unmissable for any ARMY on a Busan trip.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=400",
     "startDate": null,
     "endDate": null,
@@ -1949,9 +2383,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 82,
     "notice": "₩2,000 trail map at entrance (redeemable as café stamp). The BTS mural is visible from the main path — ask locals '방탄 벽화 어디예요?' (Where is the BTS mural?). Wear comfortable shoes.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-bts-007",
     "type": "event",
@@ -1960,11 +2401,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 서동미로시장 맛나분식 — BTS Jimin's Favorite Snack Bar",
     "shortName": "🎤 지민 단골 맛나분식",
-    "tags": ["#BTS", "#Jimin", "#Pilgrimage", "#ARMY", "#StreetFood", "#Busan", "#Geumjeong"],
+    "tags": [
+      "#BTS",
+      "#Jimin",
+      "#Pilgrimage",
+      "#ARMY",
+      "#StreetFood",
+      "#Busan",
+      "#Geumjeong"
+    ],
     "city": "Busan",
     "district": "Geumjeong-gu",
     "address": "42-4 Seodong-sijang-gil, Geumjeong-gu, Busan (Metro Line 4 Seodong Station Exit 3, 14 min walk)",
@@ -1973,7 +2425,10 @@
     "whyItMatters": "Jimin's childhood flavors in one tiny market stall — ₩1,500 egg dumplings that taste like Busan itself. This is one of the most accessible and delicious K-POP pilgrimages in Korea.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "20:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=400",
     "startDate": null,
     "endDate": null,
@@ -1985,9 +2440,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 75,
     "notice": "Matna Bunsik: egg mandu ₩1,500, tteokbokki ₩1,000, gimbap ₩1,000. Cash only. Closes around 20:00. Tel: 051-522-9757. Open daily.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-001",
     "type": "festival",
@@ -1996,11 +2458,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP Festival] ONE Asia K-POP Concert Busan 2026",
     "shortName": "🎤 ONE Asia K-POP Busan",
-    "tags": ["#KPop", "#Concert", "#Busan", "#OneAsia", "#Idol", "#Festival", "#MegaEvent"],
+    "tags": [
+      "#KPop",
+      "#Concert",
+      "#Busan",
+      "#OneAsia",
+      "#Idol",
+      "#Festival",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Busan Asiad Main Stadium or Bexco Outdoor Stage, Haeundae-gu, Busan",
@@ -2009,7 +2482,10 @@
     "whyItMatters": "The biggest multi-artist K-POP concert in Busan — attending this is a bucket-list experience that combines the energy of every fandom in a single unforgettable night.",
     "recommendedDurationMinutes": 240,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "23:00" },
+    "openingHours": {
+      "open": "17:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400",
     "startDate": "2026-10-10",
     "endDate": "2026-10-11",
@@ -2031,7 +2507,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "mega-event-002",
     "type": "festival",
@@ -2039,12 +2514,24 @@
     "journeyCluster": "busan-mega-events",
     "stage": "Standalone",
     "anchorEventId": null,
-    "relatedSpotIds": [6],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSpotIds": [
+      6
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎪 [Festival] 부산바다축제 — Busan Sea Festival 2026",
     "shortName": "🎪 부산바다축제",
-    "tags": ["#Festival", "#SeaFestival", "#Busan", "#Haeundae", "#Summer", "#Beach", "#MegaEvent"],
+    "tags": [
+      "#Festival",
+      "#SeaFestival",
+      "#Busan",
+      "#Haeundae",
+      "#Summer",
+      "#Beach",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae Beach & Gwangalli Beach, Busan",
@@ -2065,9 +2552,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 92,
     "notice": "Free entry to most events. Main concerts require tickets. Extremely crowded on weekends — arrive before noon for beach access.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-003",
     "type": "festival",
@@ -2076,11 +2570,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎪 [Festival] 부산국제록페스티벌 — Busan International Rock Festival",
     "shortName": "🎪 부산 록 페스티벌",
-    "tags": ["#Festival", "#RockFestival", "#LiveMusic", "#Busan", "#Dadaepo", "#MegaEvent", "#Indie"],
+    "tags": [
+      "#Festival",
+      "#RockFestival",
+      "#LiveMusic",
+      "#Busan",
+      "#Dadaepo",
+      "#MegaEvent",
+      "#Indie"
+    ],
     "city": "Busan",
     "district": "Saha-gu",
     "address": "Dadaepo Beach, Saha-gu, Busan",
@@ -2089,8 +2594,11 @@
     "whyItMatters": "Asia's original outdoor rock festival — running since 1999. The combination of live music, ocean backdrop, and Korean festival food makes this a unique and unforgettable experience.",
     "recommendedDurationMinutes": 300,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "14:00", "close": "24:00" },
-    "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400",
+    "openingHours": {
+      "open": "14:00",
+      "close": "24:00"
+    },
+    "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400",
     "startDate": "2026-07-25",
     "endDate": "2026-07-26",
     "isTrending": true,
@@ -2111,7 +2619,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "mega-event-004",
     "type": "festival",
@@ -2120,11 +2627,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🏎️ [Event] 부산국제모터쇼 — Busan International Motor Show",
     "shortName": "🏎️ 부산 모터쇼",
-    "tags": ["#MotorShow", "#Cars", "#Busan", "#BEXCO", "#Exhibition", "#MegaEvent", "#Technology"],
+    "tags": [
+      "#MotorShow",
+      "#Cars",
+      "#Busan",
+      "#BEXCO",
+      "#Exhibition",
+      "#MegaEvent",
+      "#Technology"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "BEXCO Exhibition & Convention Center, 55 APEC-ro, Haeundae-gu, Busan",
@@ -2133,7 +2650,10 @@
     "whyItMatters": "One of Asia's top 5 motor shows — held in Busan's world-class BEXCO convention center. The scale and spectacle rival Tokyo and Shanghai.",
     "recommendedDurationMinutes": 180,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:30", "close": "18:00" },
+    "openingHours": {
+      "open": "09:30",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400",
     "startDate": "2026-06-05",
     "endDate": "2026-06-14",
@@ -2155,7 +2675,6 @@
       "bookingUrl": null
     }
   },
-
   {
     "id": "mega-event-005",
     "type": "festival",
@@ -2164,11 +2683,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎪 [Festival] 부산자갈치축제 — Jagalchi Culture Festival",
     "shortName": "🎪 자갈치 문화관광축제",
-    "tags": ["#Festival", "#Jagalchi", "#Seafood", "#Culture", "#Busan", "#Jung-gu", "#Traditional"],
+    "tags": [
+      "#Festival",
+      "#Jagalchi",
+      "#Seafood",
+      "#Culture",
+      "#Busan",
+      "#Jung-gu",
+      "#Traditional"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "Jagalchi Market & Nampo-dong waterfront, Jung-gu, Busan",
@@ -2189,9 +2718,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 78,
     "notice": "Free entry. Cash preferred. Budget ₩20,000–₩40,000 for a full seafood meal at festival prices. Jagalchi Station Line 1 Exit 10.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-014",
     "type": "restaurant",
@@ -2200,11 +2736,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 부일장어 — Grilled Freshwater Eel",
     "shortName": "🌟 부일장어",
-    "tags": ["#Michelin", "#GrilledEel", "#Jangeo", "#Busan", "#SuyeongGu", "#Charcoal"],
+    "tags": [
+      "#Michelin",
+      "#GrilledEel",
+      "#Jangeo",
+      "#Busan",
+      "#SuyeongGu",
+      "#Charcoal"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -2213,7 +2759,10 @@
     "whyItMatters": "Busan's Michelin-recognized eel specialist — the charcoal technique here is a world apart from the tourist-zone versions sold at Jagalchi.",
     "recommendedDurationMinutes": 75,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:30", "close": "21:00" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400",
     "startDate": null,
     "endDate": null,
@@ -2225,9 +2774,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 78,
     "notice": "Michelin Guide Busan. Budget ₩18,000–₩28,000. Order the jangeo dupbap (장어덮밥) for the best solo experience.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-015",
     "type": "restaurant",
@@ -2236,11 +2792,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 초원복집 — Spicy Puffer Fish Stew",
     "shortName": "🌟 초원복집",
-    "tags": ["#Michelin", "#PufferFish", "#Bokjjim", "#Busan", "#NamGu", "#Spicy"],
+    "tags": [
+      "#Michelin",
+      "#PufferFish",
+      "#Bokjjim",
+      "#Busan",
+      "#NamGu",
+      "#Spicy"
+    ],
     "city": "Busan",
     "district": "Nam-gu",
     "address": "Nam-gu, Busan",
@@ -2249,7 +2814,10 @@
     "whyItMatters": "Spicy braised puffer fish is Busan's secret variation that most tourists never encounter — Michelin-certified and unmissable for adventurous eaters.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "11:00", "close": "21:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400",
     "startDate": null,
     "endDate": null,
@@ -2261,9 +2829,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 70,
     "notice": "Michelin Guide Busan. Cash only. Minimum 2 portions. Budget ₩20,000–₩30,000/person. Point at the photo menu.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-016",
     "type": "restaurant",
@@ -2272,11 +2847,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 온천가 — Dongnae Wagyu Korean BBQ",
     "shortName": "🌟 온천가",
-    "tags": ["#Michelin", "#KoreanBBQ", "#Wagyu", "#Dongnae", "#Busan", "#Galbi"],
+    "tags": [
+      "#Michelin",
+      "#KoreanBBQ",
+      "#Wagyu",
+      "#Dongnae",
+      "#Busan",
+      "#Galbi"
+    ],
     "city": "Busan",
     "district": "Dongnae-gu",
     "address": "Dongnae-gu, Busan",
@@ -2285,7 +2870,10 @@
     "whyItMatters": "Michelin-certified galbi in Dongnae's spa district — combine with a visit to the hot springs for the ultimate Busan evening.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "23:00" },
+    "openingHours": {
+      "open": "17:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1544025162-d76538890a2a?w=400",
     "startDate": null,
     "endDate": null,
@@ -2297,9 +2885,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 80,
     "notice": "Michelin Guide Busan. Budget ₩35,000–₩60,000/person. Staff will grill for you if asked.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-017",
     "type": "restaurant",
@@ -2308,11 +2903,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 미진 — Bib Gourmand Mul Naengmyeon",
     "shortName": "🌟 미진 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#Naengmyeon", "#ColdNoodles", "#Busan", "#BusanjinGu"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#Naengmyeon",
+      "#ColdNoodles",
+      "#Busan",
+      "#BusanjinGu"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Busanjin-gu, Busan",
@@ -2321,7 +2925,10 @@
     "whyItMatters": "Michelin Bib Gourmand cold noodles — the best-value Michelin meal in Busan and the definitive version of Busan-style naengmyeon.",
     "recommendedDurationMinutes": 45,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "21:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1460306855393-a4a4a0c34af1?w=400",
     "startDate": null,
     "endDate": null,
@@ -2333,9 +2940,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 74,
     "notice": "Michelin Bib Gourmand. Cash only. Budget ₩10,000–₩13,000. Eat quickly before the broth warms — Korean custom.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-018",
     "type": "restaurant",
@@ -2344,11 +2958,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 청두 — Sichuan Mapo Tofu",
     "shortName": "🌟 청두",
-    "tags": ["#Michelin", "#Sichuan", "#MapoTofu", "#Chinese", "#Busan", "#HaeundaeGu", "#Spicy"],
+    "tags": [
+      "#Michelin",
+      "#Sichuan",
+      "#MapoTofu",
+      "#Chinese",
+      "#Busan",
+      "#HaeundaeGu",
+      "#Spicy"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -2357,7 +2981,10 @@
     "whyItMatters": "Michelin Guide Sichuan in Busan — the numbing heat of proper Sichuan peppercorn is a complete revelation compared to the Koreanized Chinese food sold elsewhere.",
     "recommendedDurationMinutes": 75,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "11:30", "close": "22:00" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400",
     "startDate": null,
     "endDate": null,
@@ -2369,9 +2996,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Michelin Guide Busan. English menu available. Budget ₩15,000–₩25,000. Warn staff of your spice tolerance — Sichuan heat is intense.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-019",
     "type": "restaurant",
@@ -2380,11 +3014,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 봄봄 — Modern Korean Omakase",
     "shortName": "🌟 봄봄",
-    "tags": ["#Michelin", "#Omakase", "#ModernKorean", "#Busan", "#HaeundaeGu", "#Tasting"],
+    "tags": [
+      "#Michelin",
+      "#Omakase",
+      "#ModernKorean",
+      "#Busan",
+      "#HaeundaeGu",
+      "#Tasting"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -2393,7 +3037,10 @@
     "whyItMatters": "The best modern Korean omakase in Busan — each course tells the story of the season and the chef's deep connection to Korean culinary heritage.",
     "recommendedDurationMinutes": 150,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
     "startDate": null,
     "endDate": null,
@@ -2405,9 +3052,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Michelin Guide Busan. Advance reservation essential — book 2–4 weeks ahead. Budget ₩80,000–₩150,000/person for full omakase.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-020",
     "type": "restaurant",
@@ -2416,11 +3070,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 낙원식당 — Temple Food Bib Gourmand",
     "shortName": "🌟 낙원식당 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#TempleFood", "#Vegan", "#Busan", "#GeumjeongGu"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#TempleFood",
+      "#Vegan",
+      "#Busan",
+      "#GeumjeongGu"
+    ],
     "city": "Busan",
     "district": "Geumjeong-gu",
     "address": "Geumjeong-gu, Busan",
@@ -2429,7 +3092,10 @@
     "whyItMatters": "Michelin Bib Gourmand temple cuisine near Geumjeongsanseong Fortress — the most thoughtful and spiritually grounded eating experience in Busan.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "17:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "17:00"
+    },
     "image": "https://images.unsplash.com/photo-1545670723-196ed0954986?w=400",
     "startDate": null,
     "endDate": null,
@@ -2441,9 +3107,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 74,
     "notice": "Michelin Bib Gourmand. Closes early — arrive by 15:00 for lunch service. Budget ₩10,000–₩15,000. Vegan and allergen-friendly.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-021",
     "type": "restaurant",
@@ -2452,11 +3125,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 밀다원 — French-Korean Patisserie",
     "shortName": "🌟 밀다원 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#Patisserie", "#Dessert", "#Busan", "#HaeundaeGu", "#Cafe"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#Patisserie",
+      "#Dessert",
+      "#Busan",
+      "#HaeundaeGu",
+      "#Cafe"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -2465,7 +3149,10 @@
     "whyItMatters": "Michelin-recognized Korean-French pastry in Haeundae — a completely unique dessert experience that showcases the creativity of Busan's new generation of pastry chefs.",
     "recommendedDurationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "20:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1484723091739-30990a9059ab?w=400",
     "startDate": null,
     "endDate": null,
@@ -2477,9 +3164,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 92,
     "notice": "Michelin Bib Gourmand. Budget ₩8,000–₩15,000 for coffee + pastry. Popular on weekends — arrive at opening for full selection.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-022",
     "type": "restaurant",
@@ -2488,11 +3182,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 자연별곡 — Farm-to-Table Korean",
     "shortName": "🌟 자연별곡",
-    "tags": ["#Michelin", "#FarmToTable", "#Korean", "#Busan", "#SuyeongGu", "#Seasonal"],
+    "tags": [
+      "#Michelin",
+      "#FarmToTable",
+      "#Korean",
+      "#Busan",
+      "#SuyeongGu",
+      "#Seasonal"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Suyeong-gu, Busan",
@@ -2501,7 +3204,10 @@
     "whyItMatters": "Michelin-listed farm-to-table Korean — the most ingredient-transparent restaurant in Busan, where provenance is part of every course.",
     "recommendedDurationMinutes": 105,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:30", "close": "21:00" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400",
     "startDate": null,
     "endDate": null,
@@ -2513,9 +3219,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 87,
     "notice": "Michelin Guide Busan. English menu available. Budget ₩30,000–₩55,000. Lunch menu offers the best value.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-023",
     "type": "restaurant",
@@ -2524,11 +3237,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining", "payments"],
+    "relatedSurvivalGuides": [
+      "solo-dining",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 한결 — 1-Star Seasonal Korean",
     "shortName": "🌟 한결 (1 Star)",
-    "tags": ["#Michelin", "#OneStar", "#Korean", "#Tasting", "#Busan", "#HaeundaeGu", "#Luxury"],
+    "tags": [
+      "#Michelin",
+      "#OneStar",
+      "#Korean",
+      "#Tasting",
+      "#Busan",
+      "#HaeundaeGu",
+      "#Luxury"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan",
@@ -2537,7 +3261,10 @@
     "whyItMatters": "One of only a handful of Michelin-starred Korean restaurants outside Seoul — and arguably the single most accomplished kitchen in all of Busan.",
     "recommendedDurationMinutes": 180,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "12:00", "close": "22:00" },
+    "openingHours": {
+      "open": "12:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=400",
     "startDate": null,
     "endDate": null,
@@ -2549,9 +3276,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 91,
     "notice": "Michelin 1 Star. Reservation required 3–4 weeks ahead. Budget ₩150,000–₩250,000+/person. Dress code: smart casual.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-024",
     "type": "restaurant",
@@ -2560,11 +3294,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 기와집 — Traditional Korean Hanjeongsik",
     "shortName": "🌟 기와집",
-    "tags": ["#Michelin", "#Hanjeongsik", "#TraditionalKorean", "#Busan", "#JungGu", "#BanchanFeast"],
+    "tags": [
+      "#Michelin",
+      "#Hanjeongsik",
+      "#TraditionalKorean",
+      "#Busan",
+      "#JungGu",
+      "#BanchanFeast"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "Jung-gu, Busan",
@@ -2573,7 +3316,10 @@
     "whyItMatters": "Michelin Guide hanjeongsik in Busan's historic heart — the most complete expression of Korean culinary heritage available to foreign visitors in a single sitting.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:30", "close": "21:00" },
+    "openingHours": {
+      "open": "11:30",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1583425423686-96c3ee53e4e7?w=400",
     "startDate": null,
     "endDate": null,
@@ -2585,9 +3331,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 80,
     "notice": "Michelin Guide Busan. Lunch set ₩30,000–₩45,000/person. Seating on floor cushions — remove shoes at entrance.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "michelin-busan-025",
     "type": "restaurant",
@@ -2596,11 +3349,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["solo-dining"],
+    "relatedSurvivalGuides": [
+      "solo-dining"
+    ],
     "transitFromAnchor": null,
     "name": "🌟 [Michelin Guide] 진진 — Peking Duck Bib Gourmand",
     "shortName": "🌟 진진 (Bib Gourmand)",
-    "tags": ["#Michelin", "#BibGourmand", "#PekingDuck", "#Chinese", "#Busan", "#SeoGu"],
+    "tags": [
+      "#Michelin",
+      "#BibGourmand",
+      "#PekingDuck",
+      "#Chinese",
+      "#Busan",
+      "#SeoGu"
+    ],
     "city": "Busan",
     "district": "Seo-gu",
     "address": "Seo-gu, Busan",
@@ -2609,7 +3371,10 @@
     "whyItMatters": "Michelin Bib Gourmand Peking duck — a rarity outside Beijing and Hong Kong, recognized in Busan. The skin crackle alone justifies the trip.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "11:00", "close": "22:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400",
     "startDate": null,
     "endDate": null,
@@ -2621,9 +3386,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 84,
     "notice": "Michelin Bib Gourmand. Order whole duck (₩50,000–₩70,000) — needs 24hr advance reservation. Half-duck available for 2 persons.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-001",
     "type": "event",
@@ -2632,11 +3404,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] BIFF Square K-POP Flash Mob Zone",
     "shortName": "🎤 BIFF 광장 K-POP 성지",
-    "tags": ["#KPop", "#FlashMob", "#BIFF", "#Nampo", "#Dance", "#Pilgrimage", "#Busan"],
+    "tags": [
+      "#KPop",
+      "#FlashMob",
+      "#BIFF",
+      "#Nampo",
+      "#Dance",
+      "#Pilgrimage",
+      "#Busan"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "BIFF Square, Nampo-dong, Jung-gu, Busan — Nampo Station (Line 1, Exit 7)",
@@ -2657,9 +3439,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Free. Best on concert-week evenings 19:00–22:00. Check BTS/idol fan Twitter for scheduled flash mob times.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-002",
     "type": "event",
@@ -2668,11 +3457,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] ATEEZ 영도 고향 투어 — Yeongdo Hometown Trail",
     "shortName": "🎤 ATEEZ 영도 성지순례",
-    "tags": ["#ATEEZ", "#Pilgrimage", "#Yeongdo", "#Busan", "#Hometown", "#KPop", "#Wooyoung"],
+    "tags": [
+      "#ATEEZ",
+      "#Pilgrimage",
+      "#Yeongdo",
+      "#Busan",
+      "#Hometown",
+      "#KPop",
+      "#Wooyoung"
+    ],
     "city": "Busan",
     "district": "Yeongdo-gu",
     "address": "Yeongdo-gu, Busan — Yeongdo Bridge (영도대교) area",
@@ -2693,9 +3492,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 72,
     "notice": "Yeongdo Bridge drawbridge raising: 14:00 daily (April–October). Free. Bus 66 or 88 from Nampo-dong.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-003",
     "type": "event",
@@ -2704,11 +3510,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 서면 아이돌 스타 카페 & MD 거리",
     "shortName": "🎤 서면 K-POP 스타 거리",
-    "tags": ["#KPop", "#IdolCafe", "#Seomyeon", "#Merch", "#Busan", "#FanCulture", "#StarCafe"],
+    "tags": [
+      "#KPop",
+      "#IdolCafe",
+      "#Seomyeon",
+      "#Merch",
+      "#Busan",
+      "#FanCulture",
+      "#StarCafe"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Seomyeon-ro, Busanjin-gu, Busan — Seomyeon Station (Line 1/2, Exit 1)",
@@ -2717,7 +3534,10 @@
     "whyItMatters": "The densest K-POP fan culture district outside Seoul — a one-stop destination for idol cafés, merch hunting, and meeting fellow international fans from across Asia.",
     "recommendedDurationMinutes": 120,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "22:00" },
+    "openingHours": {
+      "open": "11:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400",
     "startDate": null,
     "endDate": null,
@@ -2729,9 +3549,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Birthday café schedules on fan Twitter/Instagram. Budget ₩15,000–₩30,000 for café + photocard sets. Most shops accept foreign cards.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-004",
     "type": "event",
@@ -2740,11 +3567,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 해운대 K-드라마 촬영지 투어",
     "shortName": "🎤 해운대 드라마 성지",
-    "tags": ["#KDrama", "#FilmingLocation", "#Haeundae", "#Busan", "#KPop", "#Pilgrimage", "#Netflix"],
+    "tags": [
+      "#KDrama",
+      "#FilmingLocation",
+      "#Haeundae",
+      "#Busan",
+      "#KPop",
+      "#Pilgrimage",
+      "#Netflix"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae Beach & surroundings, Haeundae-gu, Busan — Haeundae Station (Line 2)",
@@ -2765,9 +3602,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 92,
     "notice": "Free. Download the 'Visit Busan' app for K-drama filming location maps. Golden hour (17:00–18:30) gives the best photo light.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-005",
     "type": "event",
@@ -2776,11 +3620,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 남포동 K-POP 앨범 & MD 지하상가",
     "shortName": "🎤 남포동 K-POP 지하상가",
-    "tags": ["#KPop", "#Albums", "#Underground", "#Nampo", "#Merch", "#BTS", "#Shopping"],
+    "tags": [
+      "#KPop",
+      "#Albums",
+      "#Underground",
+      "#Nampo",
+      "#Merch",
+      "#BTS",
+      "#Shopping"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "Underground Shopping Mall, Nampo-dong, Jung-gu, Busan — Nampo Station (Line 1)",
@@ -2789,7 +3644,10 @@
     "whyItMatters": "The cheapest and most varied K-POP shopping in Busan — international fans save significant money on albums and photocards compared to Seoul retail pricing.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "21:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
     "image": "https://images.unsplash.com/photo-1564121211835-e2c5e6912ef5?w=400",
     "startDate": null,
     "endDate": null,
@@ -2801,9 +3659,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 87,
     "notice": "Cash gets better deals on bulk photocard lots. Budget ₩30,000–₩80,000 for albums + photocards. Bring a tote bag — bags fill up fast.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-006",
     "type": "event",
@@ -2812,11 +3677,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 광안대교 아이유 뮤직비디오 성지",
     "shortName": "🎤 광안리 IU 뮤직비디오 성지",
-    "tags": ["#IU", "#MusicVideo", "#Gwangalli", "#Busan", "#Pilgrimage", "#NightView", "#KPop"],
+    "tags": [
+      "#IU",
+      "#MusicVideo",
+      "#Gwangalli",
+      "#Busan",
+      "#Pilgrimage",
+      "#NightView",
+      "#KPop"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Gwangalli Beach, Suyeong-gu, Busan — Gwangan Station (Line 2, Exit 3)",
@@ -2837,9 +3712,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Free. Best after 20:00 when bridge lights are fully on. GS25/CU stores on beach for drinks. 10-min walk from Gwangan Station.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-007",
     "type": "event",
@@ -2848,11 +3730,20 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 부산 K-POP 테마 방탈출 & 팬 체험관",
     "shortName": "🎤 K-POP 방탈출 부산",
-    "tags": ["#KPop", "#EscapeRoom", "#FanExperience", "#Busan", "#HaeundaeGu", "#Interactive"],
+    "tags": [
+      "#KPop",
+      "#EscapeRoom",
+      "#FanExperience",
+      "#Busan",
+      "#HaeundaeGu",
+      "#Interactive"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Haeundae-gu, Busan — Haeundae Station (Line 2)",
@@ -2861,7 +3752,10 @@
     "whyItMatters": "The most immersive K-POP fan experience in Busan — a fun, social activity that goes beyond shopping and provides memories you cannot get from simply visiting a filming location.",
     "recommendedDurationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "22:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=400",
     "startDate": null,
     "endDate": null,
@@ -2873,9 +3767,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 86,
     "notice": "Book escape room in advance online (₩20,000–₩28,000/person). English instructions available. Groups of 2–6 recommended.",
-    "commerce": { "affiliateType": "activity", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=kpop+escape+room+busan", "hasMerchandise": false, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "activity",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=kpop+escape+room+busan",
+      "hasMerchandise": false,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-008",
     "type": "event",
@@ -2884,11 +3785,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 부산 스트리트 댄스 배틀 — Nampo Underground Dance",
     "shortName": "🎤 남포 스트리트 댄스",
-    "tags": ["#KPop", "#StreetDance", "#Dance", "#Nampo", "#Busan", "#Underground", "#Performance"],
+    "tags": [
+      "#KPop",
+      "#StreetDance",
+      "#Dance",
+      "#Nampo",
+      "#Busan",
+      "#Underground",
+      "#Performance"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "Nampo-dong Street, Jung-gu, Busan — Nampo Station (Line 1, Exit 3)",
@@ -2909,9 +3820,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Free. Best Friday–Sunday 17:00–22:00. Dance battles intensify near major idol concert weeks. Show your appreciation — crews welcome applause.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-009",
     "type": "event",
@@ -2920,11 +3838,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 황령산 야경 투어 — Hwangnyeongsan Night View K-POP Photo Spot",
     "shortName": "🎤 황령산 야경 명소",
-    "tags": ["#KPop", "#NightView", "#Hwangnyeongsan", "#Busan", "#PhotoSpot", "#Panorama", "#BusanjanGu"],
+    "tags": [
+      "#KPop",
+      "#NightView",
+      "#Hwangnyeongsan",
+      "#Busan",
+      "#PhotoSpot",
+      "#Panorama",
+      "#BusanjanGu"
+    ],
     "city": "Busan",
     "district": "Busanjin-gu",
     "address": "Hwangnyeongsan Bongsupo Observatory, Busanjin-gu, Busan (Taxi from Seomyeon Station, 15 min)",
@@ -2945,9 +3873,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 72,
     "notice": "Taxi from Seomyeon ₩8,000–₩12,000. Road open until 24:00. Bring a warm layer — summit temperature is 5–8°C cooler than city. No public transit.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-010",
     "type": "event",
@@ -2956,11 +3891,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 부산 아이돌 루키 쇼케이스 — Rookie Idol Showcase",
     "shortName": "🎤 부산 루키 아이돌 쇼케이스",
-    "tags": ["#KPop", "#Rookie", "#Showcase", "#Busan", "#Idol", "#LivePerformance", "#Concert"],
+    "tags": [
+      "#KPop",
+      "#Rookie",
+      "#Showcase",
+      "#Busan",
+      "#Idol",
+      "#LivePerformance",
+      "#Concert"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Busan Cultural Center or Club Sharky, Haeundae-gu, Busan",
@@ -2969,7 +3915,10 @@
     "whyItMatters": "The chance to see the next generation of Korean idols before they sell out major arenas — intimate, affordable, and authentically Busan.",
     "recommendedDurationMinutes": 150,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "18:00", "close": "23:00" },
+    "openingHours": {
+      "open": "18:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
     "startDate": null,
     "endDate": null,
@@ -2981,9 +3930,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 83,
     "notice": "Book via Melon Ticket or Interpark. Foreign card accepted online. Check 2–3 weeks before visit for upcoming dates.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": false, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": false,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-011",
     "type": "event",
@@ -2992,11 +3948,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 부산 K-POP 팬 파레이드 — Fan Culture Parade Route",
     "shortName": "🎤 부산 K-POP 팬 퍼레이드",
-    "tags": ["#KPop", "#FanParade", "#ARMY", "#Busan", "#JungGu", "#Community", "#Fandom"],
+    "tags": [
+      "#KPop",
+      "#FanParade",
+      "#ARMY",
+      "#Busan",
+      "#JungGu",
+      "#Community",
+      "#Fandom"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "BIFF Square to Gukje Market, Jung-gu, Busan",
@@ -3017,9 +3983,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Free. Dates and routes announced on BTS ARMY official fan pages and WeVerse Community. Bring your fandom light stick.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "kpop-idol-012",
     "type": "event",
@@ -3028,11 +4001,23 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP] 부산 BTS→ATEEZ 대순례 코스 — Grand Busan K-POP Pilgrimage",
     "shortName": "🎤 부산 K-POP 대순례",
-    "tags": ["#BTS", "#ATEEZ", "#KPop", "#Pilgrimage", "#Busan", "#ARMY", "#ATINY", "#FullDay"],
+    "tags": [
+      "#BTS",
+      "#ATEEZ",
+      "#KPop",
+      "#Pilgrimage",
+      "#Busan",
+      "#ARMY",
+      "#ATINY",
+      "#FullDay"
+    ],
     "city": "Busan",
     "district": "Multiple",
     "address": "Starting point: Mandeok Station, Buk-gu (BTS Jungkook route) → ending at Yeongdo Bridge (ATEEZ Wooyoung route)",
@@ -3053,9 +4038,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 78,
     "notice": "Full-day tour — start by 09:00 at Mandeok Station. T-money card essential (₩10,000 budget for metro + buses). Download Naver Maps for navigation.",
-    "commerce": { "affiliateType": "activity", "hasAffiliate": true, "affiliatePartner": "KKday", "affiliateUrl": "https://www.kkday.com/en/search?q=busan+kpop+tour", "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "activity",
+      "hasAffiliate": true,
+      "affiliatePartner": "KKday",
+      "affiliateUrl": "https://www.kkday.com/en/search?q=busan+kpop+tour",
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-006",
     "type": "festival",
@@ -3064,11 +4056,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎪 [Festival] 부산 국제음식박람회 — Busan International Food Expo",
     "shortName": "🎪 부산 국제음식박람회",
-    "tags": ["#Festival", "#FoodExpo", "#International", "#Busan", "#BEXCO", "#Gourmet", "#MegaEvent"],
+    "tags": [
+      "#Festival",
+      "#FoodExpo",
+      "#International",
+      "#Busan",
+      "#BEXCO",
+      "#Gourmet",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "BEXCO Convention Center, 55 APEC-ro, Haeundae-gu, Busan",
@@ -3077,7 +4080,10 @@
     "whyItMatters": "The largest food industry gathering in southern Korea — a unique opportunity to taste the breadth of Korean and international cuisine under one roof.",
     "recommendedDurationMinutes": 240,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
     "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400",
     "startDate": "2026-05-14",
     "endDate": "2026-05-17",
@@ -3089,9 +4095,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Entry ₩15,000. BEXCO is at Centum City Station (Metro Line 2, Exit 12). Bring tote bags — tasting portions are generous.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": false, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": false,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-007",
     "type": "concert",
@@ -3100,11 +4113,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP Concert] Super Junior SuperShow 10 — Busan",
     "shortName": "🎤 SuperShow 10 Busan",
-    "tags": ["#SuperJunior", "#SuperShow", "#Concert", "#Busan", "#KPop", "#ELF", "#MegaEvent"],
+    "tags": [
+      "#SuperJunior",
+      "#SuperShow",
+      "#Concert",
+      "#Busan",
+      "#KPop",
+      "#ELF",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "BEXCO Outdoor Concert Stage or Sajik Baseball Stadium, Busan",
@@ -3113,7 +4137,10 @@
     "whyItMatters": "Witnessing the pioneers of K-POP's global expansion perform in the city that helped birth Korean pop culture is a bucket-list event for any fan of the genre.",
     "recommendedDurationMinutes": 210,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "23:00" },
+    "openingHours": {
+      "open": "17:00",
+      "close": "23:00"
+    },
     "image": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400",
     "startDate": "2026-11-07",
     "endDate": "2026-11-08",
@@ -3125,9 +4152,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Interpark. Foreign card accepted. Book 4–6 weeks in advance for best seats. Arrive 90 min early for MD line.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": true, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": true,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-008",
     "type": "festival",
@@ -3136,11 +4170,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎪 [Festival] 부산 비엔날레 — Busan Biennale Contemporary Art",
     "shortName": "🎪 부산 비엔날레",
-    "tags": ["#Biennale", "#ContemporaryArt", "#Art", "#Busan", "#MuDo", "#International", "#Festival"],
+    "tags": [
+      "#Biennale",
+      "#ContemporaryArt",
+      "#Art",
+      "#Busan",
+      "#MuDo",
+      "#International",
+      "#Festival"
+    ],
     "city": "Busan",
     "district": "Yeongdo-gu",
     "address": "Busan Museum of Art & MuDo Island, Busan",
@@ -3149,7 +4193,10 @@
     "whyItMatters": "Asia-tier contemporary art in Busan — the biennale transforms the city's industrial spaces and beaches into a world-class outdoor gallery every two years.",
     "recommendedDurationMinutes": 240,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "10:00", "close": "20:00" },
+    "openingHours": {
+      "open": "10:00",
+      "close": "20:00"
+    },
     "image": "https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=400",
     "startDate": "2026-09-03",
     "endDate": "2026-11-22",
@@ -3161,9 +4208,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 93,
     "notice": "Main exhibition ₩15,000. English audio guide available. Plan 3–4 hours minimum. Multiple venue map provided at the entrance.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-009",
     "type": "event",
@@ -3172,11 +4226,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🏃 [Event] 부산국제마라톤 — Busan International Marathon",
     "shortName": "🏃 부산 국제마라톤",
-    "tags": ["#Marathon", "#Running", "#Sports", "#Busan", "#Haeundae", "#International", "#MegaEvent"],
+    "tags": [
+      "#Marathon",
+      "#Running",
+      "#Sports",
+      "#Busan",
+      "#Haeundae",
+      "#International",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "Starting line: Haeundae Beach, Busan",
@@ -3197,9 +4261,16 @@
     "barrierFree": false,
     "koreanSurvivalScore": 90,
     "notice": "Registration via official Busan Marathon website. Entry fee ₩60,000–₩80,000 for full/half. Spectator access is free. Course closes 6 hours after start.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": false, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": false,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-010",
     "type": "festival",
@@ -3208,11 +4279,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎇 [Festival] 광안리 어방축제 — Gwangalli Eobang Festival",
     "shortName": "🎇 광안리 어방축제",
-    "tags": ["#Festival", "#Eobang", "#Gwangalli", "#FishingCulture", "#Busan", "#Traditional", "#SuyeongGu"],
+    "tags": [
+      "#Festival",
+      "#Eobang",
+      "#Gwangalli",
+      "#FishingCulture",
+      "#Busan",
+      "#Traditional",
+      "#SuyeongGu"
+    ],
     "city": "Busan",
     "district": "Suyeong-gu",
     "address": "Gwangalli Beach, Suyeong-gu, Busan",
@@ -3233,9 +4314,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 88,
     "notice": "Free entry. Lantern launch ceremony on the final evening — arrive by 19:00 for a good position on the beach. Gwangan Station (Metro Line 2, Exit 3).",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-011",
     "type": "concert",
@@ -3244,11 +4332,23 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎤 [K-POP Awards] 멜론 뮤직 어워드 부산 — Melon Music Awards",
     "shortName": "🎤 멜론 뮤직 어워드",
-    "tags": ["#MelonMusicAwards", "#MMA", "#KPop", "#Awards", "#Busan", "#Concert", "#Idol", "#MegaEvent"],
+    "tags": [
+      "#MelonMusicAwards",
+      "#MMA",
+      "#KPop",
+      "#Awards",
+      "#Busan",
+      "#Concert",
+      "#Idol",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Haeundae-gu",
     "address": "BEXCO Auditorium, Haeundae-gu, Busan",
@@ -3257,7 +4357,10 @@
     "whyItMatters": "Korea's biggest K-POP awards night in Busan — whether you have a ticket or not, the entire Haeundae district becomes an idol-saturated fan paradise for 48 hours.",
     "recommendedDurationMinutes": 300,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "24:00" },
+    "openingHours": {
+      "open": "17:00",
+      "close": "24:00"
+    },
     "image": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400",
     "startDate": "2026-11-27",
     "endDate": "2026-11-28",
@@ -3269,9 +4372,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Melon/Interpark — sell out in minutes. Watching outside BEXCO is free and equally electric. Arrive by 15:00 for good outside viewing position.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": true, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": true,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-012",
     "type": "festival",
@@ -3280,11 +4390,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🏄 [Festival] 송정 서핑페스타 — Songjeong Beach Surf Festival",
     "shortName": "🏄 송정 서핑페스타",
-    "tags": ["#Surfing", "#SurfFestival", "#Songjeong", "#Busan", "#Beach", "#Summer", "#GijangGun"],
+    "tags": [
+      "#Surfing",
+      "#SurfFestival",
+      "#Songjeong",
+      "#Busan",
+      "#Beach",
+      "#Summer",
+      "#GijangGun"
+    ],
     "city": "Busan",
     "district": "Gijang-gun",
     "address": "Songjeong Beach, Gijang-gun, Busan — Songjeong Station (Donghae Line)",
@@ -3305,9 +4425,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 87,
     "notice": "Surf lesson ₩30,000–₩45,000/2hr with board rental. Festival entry free. Donghai Line from Haeundae to Songjeong (15 min, ₩1,700).",
-    "commerce": { "affiliateType": "activity", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=busan+surf+lesson", "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "activity",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=busan+surf+lesson",
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-013",
     "type": "festival",
@@ -3316,11 +4443,21 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around"],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "transitFromAnchor": null,
     "name": "🎭 [Festival] 동래 민속예술축제 — Dongnae Folk Arts Festival",
     "shortName": "🎭 동래 민속예술축제",
-    "tags": ["#DongnaeKkorissum", "#FolkArts", "#Traditional", "#Busan", "#Dongnae", "#MaskDance", "#Culture"],
+    "tags": [
+      "#DongnaeKkorissum",
+      "#FolkArts",
+      "#Traditional",
+      "#Busan",
+      "#Dongnae",
+      "#MaskDance",
+      "#Culture"
+    ],
     "city": "Busan",
     "district": "Dongnae-gu",
     "address": "Dongnae-gu, Busan — Dongnae Station (Metro Line 1/4, Exit 2)",
@@ -3341,9 +4478,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 75,
     "notice": "Free entry. Dongnae Station (Metro Lines 1 & 4, Exit 2). The main Yaryu mask dance performance is on the final evening — arrive by 18:00.",
-    "commerce": { "affiliateType": null, "hasAffiliate": false, "affiliatePartner": null, "affiliateUrl": null, "hasMerchandise": false, "hasTicketing": false, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
+      "hasMerchandise": false,
+      "hasTicketing": false,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-014",
     "type": "festival",
@@ -3352,11 +4496,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🎩 [Festival] 부산 국제마술축제 — Busan International Magic Festival",
     "shortName": "🎩 부산 국제마술축제",
-    "tags": ["#MagicFestival", "#Magic", "#Illusion", "#Busan", "#Family", "#BIFF", "#International"],
+    "tags": [
+      "#MagicFestival",
+      "#Magic",
+      "#Illusion",
+      "#Busan",
+      "#Family",
+      "#BIFF",
+      "#International"
+    ],
     "city": "Busan",
     "district": "Jung-gu",
     "address": "BIFF Square & Nampo Culture Platform, Jung-gu, Busan",
@@ -3365,7 +4520,10 @@
     "whyItMatters": "The only international-caliber magic festival in Korea — world champion illusionists performing free outdoor shows in the heart of Busan's historic district is a genuinely unique cultural event.",
     "recommendedDurationMinutes": 180,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "15:00", "close": "22:00" },
+    "openingHours": {
+      "open": "15:00",
+      "close": "22:00"
+    },
     "image": "https://images.unsplash.com/photo-1515669097368-22e68427d265?w=400",
     "startDate": "2026-08-07",
     "endDate": "2026-08-11",
@@ -3377,9 +4535,16 @@
     "barrierFree": true,
     "koreanSurvivalScore": 92,
     "notice": "Outdoor shows free. Theater tickets ₩20,000–₩40,000 — book online in advance. Best street show time: 19:00–21:00.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": false, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": false,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   },
-
   {
     "id": "mega-event-015",
     "type": "concert",
@@ -3388,11 +4553,22 @@
     "stage": "Standalone",
     "anchorEventId": null,
     "relatedSpotIds": [],
-    "relatedSurvivalGuides": ["getting-around", "payments"],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "payments"
+    ],
     "transitFromAnchor": null,
     "name": "🌏 [K-POP Concert] Busan One K Global Concert 2026",
     "shortName": "🌏 Busan One K Concert",
-    "tags": ["#OneK", "#KPop", "#GlobalConcert", "#Busan", "#Charity", "#MultiArtist", "#MegaEvent"],
+    "tags": [
+      "#OneK",
+      "#KPop",
+      "#GlobalConcert",
+      "#Busan",
+      "#Charity",
+      "#MultiArtist",
+      "#MegaEvent"
+    ],
     "city": "Busan",
     "district": "Yeonje-gu",
     "address": "Busan Asiad Main Stadium, Yeonje-gu, Busan",
@@ -3401,7 +4577,10 @@
     "whyItMatters": "Korea's most inclusive K-POP mega-concert — 15+ idol groups, 50,000 fans, one Busan night. The ultimate K-POP festival experience that unites every fandom under one sky.",
     "recommendedDurationMinutes": 360,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "16:00", "close": "24:00" },
+    "openingHours": {
+      "open": "16:00",
+      "close": "24:00"
+    },
     "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
     "startDate": "2026-09-19",
     "endDate": "2026-09-19",
@@ -3413,6 +4592,14 @@
     "barrierFree": true,
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Melon Ticket or official One K website. Foreign card accepted. Budget ₩80,000–₩150,000. Arrive 3 hours early for best atmosphere.",
-    "commerce": { "affiliateType": "booking", "hasAffiliate": true, "affiliatePartner": "Klook", "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/", "hasMerchandise": true, "hasTicketing": true, "bookingUrl": null }
+    "commerce": {
+      "affiliateType": "booking",
+      "hasAffiliate": true,
+      "affiliatePartner": "Klook",
+      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "hasMerchandise": true,
+      "hasTicketing": true,
+      "bookingUrl": null
+    }
   }
 ]

@@ -11,9 +11,9 @@ import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 const FILTERS = [
   { key: "all",      label: "All",                   emoji: "" },
   { key: "kpop",     label: "K-POP / BTS",           emoji: "🎤" },
+  { key: "michelin", label: "Michelin Guide",        emoji: "⭐" },
   { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
   { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
-  { key: "michelin", label: "Michelin Guide",        emoji: "⭐" },
   { key: "saved",    label: "My Saved Spots",        emoji: "❤️" },
 ];
 
