@@ -9,6 +9,7 @@ import { getCart } from "@/lib/cart";
 import type { CartItem } from "@/lib/cart";
 import { readPlannerSnapshot, PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary } from "@/lib/supabase";
+import { getDeviceId } from "@/lib/deviceId";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -404,6 +405,7 @@ function ItineraryResult() {
         start_date: snapStartDate, end_date: snapEndDate,
         travelers: snapTravelers, travel_style: snapTravelStyle,
         days: snapDays,
+        device_id: getDeviceId(),
       });
       setSyncStatus(ok ? "saved" : "error");
       if (ok) setTimeout(() => setSyncStatus("idle"), 3000);

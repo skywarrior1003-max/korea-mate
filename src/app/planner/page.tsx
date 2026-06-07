@@ -18,6 +18,7 @@ import {
   type PlannerSnapshot,
 } from "@/lib/plannerStore";
 import { upsertPlannerSession, fetchPlannerSession } from "@/lib/supabase";
+import { getDeviceId } from "@/lib/deviceId";
 
 // ── 유틸 ────────────────────────────────────────
 function addDays(dateStr: string, days: number): string {
@@ -72,7 +73,7 @@ function PlannerContent() {
   const [numDays,      setNumDays]      = useState(3);
   const [startDate,    setStartDate]    = useState("");
   const [arrivalTimes, setArrivalTimes] = useState<string[]>(
-    Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+    Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
   );
   const [scheduled,    setScheduled]    = useState<ScheduledMap>({});
   const [activeDay,    setActiveDay]    = useState(0);
@@ -120,7 +121,7 @@ function PlannerContent() {
       setNumDays(record.num_days ?? 3);
       setStartDate(record.start_date ?? "");
       setArrivalTimes(
-        record.arrival_times ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+        record.arrival_times ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
       );
       // Supabase에서 전체 CartItem 데이터를 복원 (크로스 디바이스 공유 지원)
       setScheduled((record.scheduled as ScheduledMap) ?? {});
@@ -139,7 +140,7 @@ function PlannerContent() {
     setNumDays(snap.numDays ?? 3);
     setStartDate(snap.startDate ?? "");
     setArrivalTimes(
-      snap.arrivalTimes ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+      snap.arrivalTimes ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
     );
 
     const cart = getCart();
@@ -183,6 +184,7 @@ function PlannerContent() {
         start_date:    snapStartDate,
         arrival_times: snapArrivalTimes,
         scheduled:     snapScheduled,
+        device_id:     getDeviceId(),
       });
       setSyncStatus(ok ? "saved" : "error");
       if (ok) setTimeout(() => setSyncStatus("idle"), 3000);
@@ -412,13 +414,13 @@ function PlannerContent() {
               <input
                 type="range"
                 min={1}
-                max={7}
+                max={14}
                 value={numDays}
                 onChange={(e) => setNumDays(Number(e.target.value))}
                 className="w-full accent-orange-500"
               />
               <div className="flex justify-between text-[10px] text-gray-400 mt-0.5">
-                <span>1 day</span><span>7 days</span>
+                <span>1 day</span><span>14 days</span>
               </div>
             </label>
 

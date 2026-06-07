@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   getCart,
   removeFromCart,
@@ -98,12 +99,20 @@ export default function CartDrawer() {
 
           {/* 패널 헤더 */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
-            <h3 className="text-sm font-black text-gray-900">
-              My Itinerary
-              <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500 text-white">
-                {items.length}
-              </span>
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-black text-gray-900">
+                My Itinerary
+                <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500 text-white">
+                  {items.length}
+                </span>
+              </h3>
+              <Link
+                href="/my-trips"
+                className="text-xs font-bold text-orange-500 hover:text-orange-600 hover:underline transition-colors"
+              >
+                Archive →
+              </Link>
+            </div>
             <button
               onClick={handleClearAll}
               className="text-xs font-semibold text-red-400 hover:text-red-600 transition-colors px-2 py-1"
