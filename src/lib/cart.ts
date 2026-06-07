@@ -45,6 +45,8 @@ export interface EventItem {
   district: string;
   address: string;
   mapUrl: string;
+  naverMapUrl?: string;
+  naverSearchKeyword?: string;
   description: string;
   whyItMatters: string;
   recommendedDurationMinutes: number;
