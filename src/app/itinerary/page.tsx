@@ -8,6 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import { getCart } from "@/lib/cart";
 import type { CartItem } from "@/lib/cart";
 import { readPlannerSnapshot, PLANNER_EVENT } from "@/lib/plannerStore";
+import { upsertItinerary, fetchItinerary } from "@/lib/supabase";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -102,17 +103,14 @@ function cartItemToPlace(item: CartItem, dayNumber: number, slot?: string): Plac
 
 // ── Naver Maps URL ────────────────────────────────────────────
 function buildNaverUrl(placeName: string, city: string): string {
-  // 1순위: 영문명 → 한국어 키워드 매핑 테이블
   const norm = placeName.toLowerCase().trim();
   for (const [eng, kor] of Object.entries(NAVER_KEYWORD_MAP)) {
     if (norm.includes(eng) || eng.includes(norm)) {
       return `https://map.naver.com/v5/search/${encodeURIComponent(kor)}`;
     }
   }
-  // 2순위: 이름에 한국어 포함 → 직접 추출
   const korean = (placeName.match(/[가-힯ᄀ-ᇿ]+/g) ?? []).join("").trim();
   if (korean.length >= 2) return `https://map.naver.com/v5/search/${encodeURIComponent(korean)}`;
-  // 3순위: 영문만 → 네이버보다 Google Maps 검색이 더 정확
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${placeName} ${city} Korea`)}`;
 }
 
@@ -158,7 +156,7 @@ function getCategoryColor(category: string): string {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  PlaceModal — 뒤로가기 방지 포함
+//  PlaceModal
 // ══════════════════════════════════════════════════════════════
 interface ModalProps {
   place: Place;
@@ -184,12 +182,9 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
     document.body.style.overflow = "hidden";
-
-    // 모바일 뒤로가기 방지
     window.history.pushState({ koreamate_modal: true }, "");
     const handlePop = () => { onCloseRef.current(); };
     window.addEventListener("popstate", handlePop);
-
     return () => {
       window.removeEventListener("keydown", handler);
       window.removeEventListener("popstate", handlePop);
@@ -213,7 +208,6 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65 transition-colors backdrop-blur-sm font-bold text-base cursor-pointer z-10"
-            aria-label="Close modal"
           >✕</button>
           <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
             <span className="px-2.5 py-0.5 rounded-lg text-xs font-black uppercase tracking-wide text-white" style={{ backgroundColor: badgeColor }}>
@@ -230,20 +224,13 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
             <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "#f97316" }}>📍 {place.location}</p>
             <h2 className="text-2xl sm:text-3xl font-black text-[#2C2520] leading-tight">{place.name}</h2>
           </div>
-
           <div className="bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-5">
             <p className="text-xs font-black uppercase tracking-widest mb-2 text-[#8C6239]">💡 Tips for Foreigners</p>
             <p className="text-base text-[#61554D] leading-relaxed font-medium">{place.tips}</p>
           </div>
-
-          {/* Naver Maps 한국어 안내 */}
           <div className="bg-green-50 border border-green-200 rounded-xl p-4">
             <p className="text-xs font-bold text-green-700 mb-1">💡 If Naver Maps can&apos;t find it by English name, search in Korean directly.</p>
-            <p className="text-xs text-green-600">
-              Korean name search often works better than English for local spots.
-            </p>
           </div>
-
           <div className="grid grid-cols-2 gap-3">
             <a href={googleUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors">
@@ -254,7 +241,6 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
               💚 Naver Maps
             </a>
           </div>
-
           <button onClick={onClose}
             className="w-full py-3.5 rounded-xl text-sm font-black text-[#2C2520] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all cursor-pointer">
             Close
@@ -276,12 +262,26 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
 // ══════════════════════════════════════════════════════════════
 function ItineraryResult() {
   const searchParams = useSearchParams();
-  const city        = searchParams.get("city")        || "Seoul";
-  const startDate   = searchParams.get("startDate")   || "";
-  const endDate     = searchParams.get("endDate")     || "";
-  const travelers   = searchParams.get("travelers")   || "1";
-  const travelStyle = searchParams.get("travelStyle") || "Solo";
 
+  // ── URL 파라미터 (stable consts) ──────────────────────────
+  const shareId        = searchParams.get("id");
+  const paramCity        = searchParams.get("city")        || "Seoul";
+  const paramStartDate   = searchParams.get("startDate")   || "";
+  const paramEndDate     = searchParams.get("endDate")     || "";
+  const paramTravelers   = searchParams.get("travelers")   || "1";
+  const paramTravelStyle = searchParams.get("travelStyle") || "Solo";
+
+  // localStorage 캐시 키 (URL 기반, 불변)
+  const key = cacheKey(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle);
+
+  // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
+  const [city,        setCity]        = useState(paramCity);
+  const [startDate,   setStartDate]   = useState(paramStartDate);
+  const [endDate,     setEndDate]     = useState(paramEndDate);
+  const [travelers,   setTravelers]   = useState(paramTravelers);
+  const [travelStyle, setTravelStyle] = useState(paramTravelStyle);
+
+  // ── 핵심 상태 ─────────────────────────────────────────────
   const [days,          setDays]          = useState<Day[]>([]);
   const [loading,       setLoading]       = useState(true);
   const [error,         setError]         = useState<string | null>(null);
@@ -293,17 +293,61 @@ function ItineraryResult() {
   const [addSlotPanel,  setAddSlotPanel]  = useState<{ dayNum: number; slot: string } | null>(null);
   const [slotSearch,    setSlotSearch]    = useState("");
 
-  const key = cacheKey(city, startDate, endDate, travelers, travelStyle);
+  // ── Supabase 동기화 상태 ──────────────────────────────────
+  const [itinId,     setItinId]     = useState<string | null>(null);
+  const [syncStatus, setSyncStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [copied,     setCopied]     = useState(false);
+  const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── 저장된 일정 불러오기 / AI 생성 ──────────────────────────
+  // ── 플래너 뱃지용 ────────────────────────────────────────
+  const plannerMeta = readPlannerSnapshot();
+
+  // ══════════════════════════════════════════════════════════
+  //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
+  // ══════════════════════════════════════════════════════════
   useEffect(() => {
-    if (!startDate || !endDate) {
+    if (!shareId) return;
+    setLoading(true);
+    fetchItinerary(shareId).then(record => {
+      if (!record) {
+        setError("This shared itinerary could not be found. It may have been deleted.");
+        setLoading(false);
+        return;
+      }
+      setDays(record.days as Day[]);
+      setItinId(shareId);
+      setCity(record.city);
+      setStartDate(record.start_date);
+      setEndDate(record.end_date);
+      setTravelers(record.travelers);
+      setTravelStyle(record.travel_style);
+      setSyncStatus("saved");
+      setLoading(false);
+    });
+  }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ══════════════════════════════════════════════════════════
+  //  Effect 2: 일반 모드 → 로컬캐시 우선, 없으면 AI 생성
+  // ══════════════════════════════════════════════════════════
+  useEffect(() => {
+    if (shareId) return; // Effect 1이 처리
+    if (!paramStartDate || !paramEndDate) {
       setError("Please select travel dates.");
       setLoading(false);
       return;
     }
 
-    // 1: localStorage 캐시 우선
+    // UUID 생성 또는 복원
+    const idLocalKey = `koreamate_itin_id_${key}`;
+    let id: string | null = null;
+    try { id = localStorage.getItem(idLocalKey); } catch {}
+    if (!id) {
+      id = crypto.randomUUID();
+      try { localStorage.setItem(idLocalKey, id); } catch {}
+    }
+    setItinId(id);
+
+    // localStorage 캐시 우선
     try {
       const cached = localStorage.getItem(key);
       if (cached) {
@@ -316,43 +360,81 @@ function ItineraryResult() {
       }
     } catch { /* ignore */ }
 
-    // 2: AI 생성
+    // AI 생성
     setLoading(true);
     setError(null);
-    generateItinerary(city, startDate, endDate, travelers, travelStyle)
+    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
       .then((data) => {
         setDays(data.days);
         setLoading(false);
         try { localStorage.setItem(key, JSON.stringify(data.days)); } catch { /* ignore */ }
       })
       .catch((err) => {
-        console.error("Itinerary generation error:", err);
         setError(`Failed to generate itinerary: ${err.message}`);
         setLoading(false);
       });
-  }, [city, startDate, endDate, travelers, travelStyle, key]);
+  }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── 일정 변경 시 자동 저장 ────────────────────────────────
+  // ══════════════════════════════════════════════════════════
+  //  Effect 3: days 변경 → localStorage + Supabase 자동 동기화
+  // ══════════════════════════════════════════════════════════
   useEffect(() => {
-    if (days.length === 0) return;
-    try { localStorage.setItem(key, JSON.stringify(days)); } catch { /* ignore */ }
-  }, [days, key]);
+    if (days.length === 0 || !itinId) return;
 
-  // ── 찜한 장소 불러오기 + 플래너 변경 시 실시간 갱신 ───
-  useEffect(() => {
-    setSavedItems(getCart());
-  }, [showSaved]);
+    // localStorage 저장 (일반 모드만)
+    if (!shareId) {
+      try { localStorage.setItem(key, JSON.stringify(days)); } catch { /* ignore */ }
+    }
 
+    // Supabase 디바운스 동기화 (1.5s)
+    setSyncStatus("saving");
+    if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+
+    const snapId          = itinId;
+    const snapCity        = city;
+    const snapStartDate   = startDate;
+    const snapEndDate     = endDate;
+    const snapTravelers   = travelers;
+    const snapTravelStyle = travelStyle;
+    const snapDays        = days;
+
+    syncTimerRef.current = setTimeout(async () => {
+      const ok = await upsertItinerary({
+        id: snapId, city: snapCity,
+        start_date: snapStartDate, end_date: snapEndDate,
+        travelers: snapTravelers, travel_style: snapTravelStyle,
+        days: snapDays,
+      });
+      setSyncStatus(ok ? "saved" : "error");
+      if (ok) setTimeout(() => setSyncStatus("idle"), 3000);
+    }, 1500);
+
+    return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
+  }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── 찜한 장소 동기화 ────────────────────────────────────
+  useEffect(() => { setSavedItems(getCart()); }, [showSaved]);
   useEffect(() => {
     const refresh = () => setSavedItems(getCart());
     window.addEventListener(PLANNER_EVENT, refresh);
     return () => window.removeEventListener(PLANNER_EVENT, refresh);
   }, []);
 
-  // ── 플래너 저장 날짜 배지 (헤더용) ──────────────────
-  const plannerMeta = readPlannerSnapshot();
+  // ── 공유 링크 복사 ───────────────────────────────────────
+  async function handleCopyShareLink() {
+    if (!itinId) return;
+    const url = `${window.location.origin}/itinerary?id=${itinId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      // clipboard API 미지원 브라우저: prompt로 수동 복사 유도
+      window.prompt("Copy this link:", url);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }
 
-  // ── 장소 삭제 ───────────────────────────────────────────────
+  // ── 장소 삭제 ────────────────────────────────────────────
   function deletePlace(dayNumber: number, placeIndex: number) {
     setDays((prev) =>
       prev.map((d) =>
@@ -363,7 +445,7 @@ function ItineraryResult() {
     );
   }
 
-  // ── 찜한 장소 → 특정 Day에 추가 (상단 패널용) ──────────────
+  // ── 찜한 장소 → Day 추가 ────────────────────────────────
   function insertPlaceToDay(item: CartItem, dayNumber: number) {
     const newPlace = cartItemToPlace(item, dayNumber);
     setDays((prev) =>
@@ -376,7 +458,7 @@ function ItineraryResult() {
     setAddToDay(null);
   }
 
-  // ── 찜한 장소 → 특정 슬롯에 추가 (인라인 [+] 버튼용) ───────
+  // ── 찜한 장소 → 슬롯 추가 ───────────────────────────────
   function insertPlaceToSlot(item: CartItem, dayNumber: number, slot: string) {
     const newPlace = cartItemToPlace(item, dayNumber, slot);
     setDays((prev) =>
@@ -390,13 +472,18 @@ function ItineraryResult() {
     setSlotSearch("");
   }
 
-  // ── 일정 초기화 (재생성) ─────────────────────────────────────
+  // ── 일정 재생성 ──────────────────────────────────────────
   function resetItinerary() {
     try { localStorage.removeItem(key); } catch { /* ignore */ }
+    // 새 UUID → 재생성된 일정은 별도 Supabase 레코드
+    const newId = crypto.randomUUID();
+    try { localStorage.setItem(`koreamate_itin_id_${key}`, newId); } catch { /* ignore */ }
+    setItinId(newId);
+    setSyncStatus("idle");
     setDays([]);
     setLoading(true);
     setError(null);
-    generateItinerary(city, startDate, endDate, travelers, travelStyle)
+    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
       .then((data) => {
         setDays(data.days);
         setLoading(false);
@@ -408,14 +495,19 @@ function ItineraryResult() {
       });
   }
 
+  // ── 로딩 / 에러 화면 ────────────────────────────────────
   if (loading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#D4AF37] mb-8" />
-        <h2 className="text-3xl font-black text-[#2C2520] mb-3 animate-pulse">AI is planning your Korea trip...</h2>
-        <p className="text-lg text-[#61554D] max-w-md font-bold">
-          Analyzing spots in {city} for a {travelStyle.toLowerCase()} traveler. About 10 seconds!
-        </p>
+        <h2 className="text-3xl font-black text-[#2C2520] mb-3 animate-pulse">
+          {shareId ? "Loading shared itinerary..." : "AI is planning your Korea trip..."}
+        </h2>
+        {!shareId && (
+          <p className="text-lg text-[#61554D] max-w-md font-bold">
+            Analyzing spots in {paramCity} for a {paramTravelStyle.toLowerCase()} traveler. About 10 seconds!
+          </p>
+        )}
       </div>
     );
   }
@@ -436,7 +528,17 @@ function ItineraryResult() {
   return (
     <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-12">
 
-      {/* 헤더 카드 */}
+      {/* ── 공유 링크 뷰 배너 ── */}
+      {shareId && (
+        <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200">
+          <span className="text-lg">🔗</span>
+          <p className="text-sm font-bold text-blue-700 flex-1">
+            You&apos;re viewing a shared itinerary. Changes you make will sync back to this link.
+          </p>
+        </div>
+      )}
+
+      {/* ── 헤더 카드 ── */}
       <div className="bg-white rounded-3xl p-8 border border-[#E6DFD5] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -448,22 +550,53 @@ function ItineraryResult() {
                 🔗 Synced with My Planner · {plannerMeta.numDays}d
               </span>
             )}
+            {/* 동기화 상태 표시기 */}
+            {syncStatus === "saving" && (
+              <span className="text-xs font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-3 py-1 rounded-full animate-pulse">
+                ⟳ Syncing…
+              </span>
+            )}
+            {syncStatus === "saved" && (
+              <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                ☁️ Saved to cloud
+              </span>
+            )}
+            {syncStatus === "error" && (
+              <span className="text-xs font-bold text-red-500 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+                ⚠️ Sync failed
+              </span>
+            )}
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520] mt-3">Your {city} Itinerary</h1>
           <p className="text-[#61554D] mt-2 text-base font-bold">
             📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
           </p>
         </div>
+
         <div className="flex flex-col gap-2 w-full sm:w-auto">
+          {/* 공유 링크 복사 버튼 */}
+          <button
+            onClick={handleCopyShareLink}
+            disabled={!itinId}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all disabled:opacity-40 active:scale-95"
+            style={{ backgroundColor: "#D4AF37" }}
+          >
+            {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
+          </button>
+
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-[#FAF7F2] hover:bg-[#F3EEE3] text-[#2C2520] border border-[#E6DFD5] rounded-xl transition-all shadow-sm">
             ← Back to Home
           </Link>
-          <button
-            onClick={resetItinerary}
-            className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-[#8C6239] border border-[#E6DFD5] rounded-xl hover:bg-[#FAF7F2] transition-all"
-          >
-            🔄 Regenerate
-          </button>
+
+          {!shareId && (
+            <button
+              onClick={resetItinerary}
+              className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-[#8C6239] border border-[#E6DFD5] rounded-xl hover:bg-[#FAF7F2] transition-all"
+            >
+              🔄 Regenerate
+            </button>
+          )}
+
           {/* Compact / Full View 토글 */}
           <div className="flex gap-1.5 p-1 border border-[#E6DFD5] rounded-xl bg-[#FAF7F2]">
             {(["full", "compact"] as const).map((mode) => (
@@ -483,7 +616,7 @@ function ItineraryResult() {
         </div>
       </div>
 
-      {/* 찜한 장소 추가 패널 토글 */}
+      {/* ── 찜한 장소 추가 패널 ── */}
       <div className="mb-8">
         <button
           onClick={() => { setShowSaved((v) => !v); setSavedItems(getCart()); }}
@@ -509,10 +642,8 @@ function ItineraryResult() {
                   <p className="text-sm font-bold text-[#2C2520] truncate">{item.name}</p>
                   <p className="text-xs text-[#8C6239]">{item.city} · {item.recommendedDurationMinutes}min</p>
                 </div>
-                {/* Day 선택 버튼들 */}
                 <div className="flex flex-wrap gap-1.5 shrink-0">
                   {addToDay?.item.id === item.id ? (
-                    // Day 선택 상태
                     <>
                       {days.map((d) => (
                         <button
@@ -545,12 +676,11 @@ function ItineraryResult() {
         )}
       </div>
 
-      {/* 안내 텍스트 */}
       <p className="text-center text-sm text-[#8C6239] font-bold mb-8 bg-[#EAE3D2]/40 rounded-xl py-2.5">
-        💡 Tap any card to see details &amp; maps · ✕ to remove a place · Changes auto-saved
+        💡 Tap any card to see details &amp; maps · ✕ to remove a place · Changes auto-saved to cloud
       </p>
 
-      {/* ── Compact 보기: 7일 한눈에 요약 ── */}
+      {/* ── Compact 보기 ── */}
       {viewMode === "compact" ? (
         <div className="space-y-2 mb-16">
           {days.map((day) => (
@@ -582,7 +712,7 @@ function ItineraryResult() {
           <p className="text-center text-xs text-[#8C6239]/50 mt-3">Click any day card to switch to Full View</p>
         </div>
       ) : (
-        /* ── Full View: 슬롯 구조 일정 ── */
+        /* ── Full View ── */
         <div className="space-y-12 mb-16">
           {days.map((day) => {
             const slotAssigned = day.places.map((p, i) => ({
@@ -614,7 +744,6 @@ function ItineraryResult() {
 
                     return (
                       <div key={ts.key} className="rounded-2xl border border-[#E6DFD5] overflow-hidden bg-white">
-                        {/* 슬롯 헤더 */}
                         <div className="px-5 py-3 bg-[#EAE3D2]/25 border-b border-[#E6DFD5] flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="text-base">{ts.emoji}</span>
@@ -628,7 +757,6 @@ function ItineraryResult() {
                           )}
                         </div>
 
-                        {/* 슬롯 내용 */}
                         {slotItems.length > 0 ? (
                           <div className="divide-y divide-[#E6DFD5]/50">
                             {slotItems.map(({ place, idx }) => {
@@ -695,7 +823,6 @@ function ItineraryResult() {
                             })}
                           </div>
                         ) : (
-                          /* 빈 슬롯: [+] 버튼 또는 미니 팝업 */
                           <div className="p-4">
                             {isAddingHere ? (
                               <div className="bg-[#FAF7F2] rounded-xl p-4 border border-[#E6DFD5]">
@@ -776,7 +903,6 @@ function ItineraryResult() {
         </a>
       </div>
 
-      {/* 상세 모달 */}
       {selectedPlace && (
         <PlaceModal place={selectedPlace} city={city} onClose={() => setSelectedPlace(null)} />
       )}
@@ -803,7 +929,7 @@ export default function ItineraryPage() {
         fallback={
           <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#D4AF37] mb-8" />
-            <h2 className="text-3xl font-black text-[#2C2520] mb-3">AI is planning your Korea trip...</h2>
+            <h2 className="text-3xl font-black text-[#2C2520] mb-3">Loading itinerary…</h2>
           </div>
         }
       >

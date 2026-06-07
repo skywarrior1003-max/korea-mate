@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import TimelineView from "@/components/TimelineView";
 import DatePicker from "@/components/DatePicker";
@@ -16,9 +17,9 @@ import {
   PLANNER_EVENT,
   type PlannerSnapshot,
 } from "@/lib/plannerStore";
+import { upsertPlannerSession, fetchPlannerSession } from "@/lib/supabase";
 
 // ── 유틸 ────────────────────────────────────────
-/** 날짜 문자열에 n일을 더해 반환 */
 function addDays(dateStr: string, days: number): string {
   if (!dateStr) return "";
   const d = new Date(dateStr);
@@ -26,7 +27,6 @@ function addDays(dateStr: string, days: number): string {
   return d.toISOString().split("T")[0];
 }
 
-/** 분 → "Xh Ym" */
 function fmtDuration(mins: number): string {
   if (mins <= 0) return "0m";
   const h = Math.floor(mins / 60), m = mins % 60;
@@ -35,12 +35,11 @@ function fmtDuration(mins: number): string {
 
 // ── 타입 ────────────────────────────────────────
 interface TripDay {
-  label:       string;  // "Day 1"
-  date:        string;  // "2026-10-15"
-  arrivalTime: string;  // "14:00"
+  label:       string;
+  date:        string;
+  arrivalTime: string;
 }
 
-// scheduledByDay: { 0: [CartItem,...], 1: [...] }
 type ScheduledMap = Record<number, CartItem[]>;
 
 // ── localStorage 헬퍼 ────────────────────────────
@@ -59,11 +58,16 @@ function saveSnapshot(snap: PlannerSnapshot) {
   } catch { /* ignore */ }
 }
 
-// ── 컴포넌트 ─────────────────────────────────────
-export default function PlannerPage() {
+const PLANNER_SB_ID_KEY = "koreamate_planner_sb_id";
+
+// ══════════════════════════════════════════════════════════════
+//  실제 플래너 컨텐츠 (useSearchParams 사용 → Suspense 필요)
+// ══════════════════════════════════════════════════════════════
+function PlannerContent() {
+  const searchParams = useSearchParams();
+  const shareId = searchParams.get("id");
 
   // ── 장바구니 / 여행 설정 상태 ─────────────────
-  // 초기값은 항상 기본값 → hydration mismatch 방지
   const [cartItems,    setCartItems]    = useState<CartItem[]>([]);
   const [numDays,      setNumDays]      = useState(3);
   const [startDate,    setStartDate]    = useState("");
@@ -75,7 +79,14 @@ export default function PlannerPage() {
   const [dragOver,     setDragOver]     = useState<number | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
-  // autoSave 스킵 카운터 — restore 직후 빈 상태 덮어쓰기 방지
+  // ── Supabase 동기화 상태 ──────────────────────
+  const [plannerSbId,     setPlannerSbId]     = useState<string | null>(null);
+  const [syncStatus,      setSyncStatus]      = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [copied,          setCopied]          = useState(false);
+  const [isShareView,     setIsShareView]     = useState(false);
+  const syncTimerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // autoSave 스킵 카운터
   const skipSaveRef = useRef(0);
 
   // ── 장바구니 동기화 ───────────────────────────
@@ -86,12 +97,43 @@ export default function PlannerPage() {
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, [refreshCart]);
 
-  // ── localStorage 복원 (마운트 1회) — 반드시 auto-save 보다 앞에 선언 ─
+  // ── UUID 초기화 (일반 모드) ───────────────────
   useEffect(() => {
+    if (shareId) return;
+    let id: string | null = null;
+    try { id = localStorage.getItem(PLANNER_SB_ID_KEY); } catch {}
+    if (!id) {
+      id = crypto.randomUUID();
+      try { localStorage.setItem(PLANNER_SB_ID_KEY, id); } catch {}
+    }
+    setPlannerSbId(id);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── 공유 링크 로드 (?id=UUID) ─────────────────
+  useEffect(() => {
+    if (!shareId) return;
+    setIsShareView(true);
+    setPlannerSbId(shareId);
+    fetchPlannerSession(shareId).then(record => {
+      if (!record) return;
+      skipSaveRef.current = 1;
+      setNumDays(record.num_days ?? 3);
+      setStartDate(record.start_date ?? "");
+      setArrivalTimes(
+        record.arrival_times ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+      );
+      // Supabase에서 전체 CartItem 데이터를 복원 (크로스 디바이스 공유 지원)
+      setScheduled((record.scheduled as ScheduledMap) ?? {});
+      setSyncStatus("saved");
+    });
+  }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── localStorage 복원 (일반 모드, 마운트 1회) ─
+  useEffect(() => {
+    if (shareId) return;
     const snap = loadSnapshot();
     if (!snap) return;
 
-    // 복원할 항목이 있을 때만 auto-save를 1회 건너뜀
     skipSaveRef.current = 1;
 
     setNumDays(snap.numDays ?? 3);
@@ -110,17 +152,57 @@ export default function PlannerPage() {
     setScheduled(restored);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── auto-save: 복원 직후 1회 스킵 후 이후 변경마다 저장 ──
+  // ── auto-save: 변경마다 localStorage + Supabase 동기화 ──
   useEffect(() => {
     if (skipSaveRef.current > 0) { skipSaveRef.current--; return; }
-    const scheduledIds: Record<number, string[]> = {};
-    for (const [k, items] of Object.entries(scheduled)) {
-      scheduledIds[Number(k)] = items.map((x) => x.id);
-    }
-    saveSnapshot({ startDate, numDays, arrivalTimes, scheduledIds, updatedAt: Date.now() });
-  }, [scheduled, startDate, numDays, arrivalTimes]);
 
-  // ── 계산값 (useMemo — 의존값 변경 시에만 재계산) ─
+    // localStorage 저장 (공유 뷰에서는 자신의 플래너를 덮어쓰지 않음)
+    if (!isShareView) {
+      const scheduledIds: Record<number, string[]> = {};
+      for (const [k, items] of Object.entries(scheduled)) {
+        scheduledIds[Number(k)] = items.map((x) => x.id);
+      }
+      saveSnapshot({ startDate, numDays, arrivalTimes, scheduledIds, updatedAt: Date.now() });
+    }
+
+    // Supabase 디바운스 동기화 (1.5s)
+    if (!plannerSbId || isShareView) return;
+    setSyncStatus("saving");
+    if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+
+    const snapId           = plannerSbId;
+    const snapNumDays      = numDays;
+    const snapStartDate    = startDate;
+    const snapArrivalTimes = arrivalTimes;
+    const snapScheduled    = scheduled;
+
+    syncTimerRef.current = setTimeout(async () => {
+      const ok = await upsertPlannerSession({
+        id:            snapId,
+        num_days:      snapNumDays,
+        start_date:    snapStartDate,
+        arrival_times: snapArrivalTimes,
+        scheduled:     snapScheduled,
+      });
+      setSyncStatus(ok ? "saved" : "error");
+      if (ok) setTimeout(() => setSyncStatus("idle"), 3000);
+    }, 1500);
+  }, [scheduled, startDate, numDays, arrivalTimes]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── 공유 링크 복사 ───────────────────────────
+  async function handleCopyShareLink() {
+    if (!plannerSbId) return;
+    const url = `${window.location.origin}/planner?id=${plannerSbId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.prompt("Copy this link:", url);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }
+
+  // ── 계산값 ────────────────────────────────────
   const tripDays = useMemo<TripDay[]>(
     () => Array.from({ length: numDays }, (_, i) => ({
       label:       `Day ${i + 1}`,
@@ -150,7 +232,7 @@ export default function PlannerPage() {
     [todayItems]
   );
 
-  // ── 미배치 아이템 클릭: 모바일=activeDay에 즉시 추가, 데스크탑=모달 열기 ──
+  // ── 이벤트 핸들러 ────────────────────────────
   function handleUnscheduledClick(item: CartItem, isMobile: boolean) {
     if (isMobile) {
       setScheduled((prev) => {
@@ -163,7 +245,6 @@ export default function PlannerPage() {
     }
   }
 
-  // ── Drag & Drop ───────────────────────────────
   function handleDragStart(e: React.DragEvent, item: CartItem) {
     e.dataTransfer.setData("itemId", item.id);
     e.dataTransfer.effectAllowed = "move";
@@ -178,11 +259,9 @@ export default function PlannerPage() {
 
     setScheduled((prev) => {
       const next: ScheduledMap = {};
-      // 다른 날에서 제거
       for (const k in prev) {
         next[Number(k)] = prev[Number(k)].filter((x) => x.id !== id);
       }
-      // 대상 날에 추가 (중복 방지)
       const target = next[dayIdx] ?? [];
       if (target.some((x) => x.id === id)) return next;
       next[dayIdx] = [...target, item];
@@ -190,7 +269,6 @@ export default function PlannerPage() {
     });
   }
 
-  // 타임라인에서 제거 → 미배치 풀로 복귀
   function handleUnschedule(id: string) {
     setScheduled((prev) => {
       const next: ScheduledMap = {};
@@ -201,7 +279,6 @@ export default function PlannerPage() {
     });
   }
 
-  // 순서 위로 이동
   function handleMoveUp(id: string, dayIdx: number) {
     setScheduled((prev) => {
       const arr = [...(prev[dayIdx] ?? [])];
@@ -212,7 +289,6 @@ export default function PlannerPage() {
     });
   }
 
-  // 순서 아래로 이동
   function handleMoveDown(id: string, dayIdx: number) {
     setScheduled((prev) => {
       const arr = [...(prev[dayIdx] ?? [])];
@@ -223,7 +299,6 @@ export default function PlannerPage() {
     });
   }
 
-  // 도착시간 변경
   function setArrivalTime(idx: number, val: string) {
     setArrivalTimes((prev) => {
       const next = [...prev];
@@ -232,8 +307,9 @@ export default function PlannerPage() {
     });
   }
 
-  // ── 빈 장바구니 화면 ──────────────────────────
-  if (cartItems.length === 0) {
+  // ── 빈 장바구니 화면 (공유 뷰에서는 카트 없어도 일정 표시) ─
+  const hasAnything = cartItems.length > 0 || Object.values(scheduled).some(arr => arr.length > 0);
+  if (!hasAnything) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-4 bg-gray-50">
         <p className="text-5xl">🗺️</p>
@@ -252,7 +328,6 @@ export default function PlannerPage() {
     );
   }
 
-  // ── 메인 렌더 ────────────────────────────────
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
 
@@ -265,30 +340,62 @@ export default function PlannerPage() {
           <span>🇰🇷</span>
           Korea<span style={{ color: "#f97316" }}>Mate</span>
         </Link>
-        <h1 className="text-sm font-black text-white">My Planner</h1>
-        <Link
-          href="/"
-          className="text-xs font-semibold text-white/60 hover:text-white transition-colors"
-        >
-          ← Back
-        </Link>
+
+        <h1 className="text-sm font-black text-white">
+          {isShareView ? "Shared Planner" : "My Planner"}
+        </h1>
+
+        <div className="flex items-center gap-3">
+          {/* 동기화 상태 */}
+          {!isShareView && syncStatus === "saving" && (
+            <span className="text-[10px] font-bold text-yellow-300 animate-pulse">⟳ Saving…</span>
+          )}
+          {!isShareView && syncStatus === "saved" && (
+            <span className="text-[10px] font-bold text-emerald-400">☁️ Saved</span>
+          )}
+          {!isShareView && syncStatus === "error" && (
+            <span className="text-[10px] font-bold text-red-400">⚠️ Offline</span>
+          )}
+
+          {/* 공유 링크 버튼 */}
+          {!isShareView && (
+            <button
+              onClick={handleCopyShareLink}
+              disabled={!plannerSbId}
+              className="text-xs font-bold text-white/70 hover:text-white transition-colors flex items-center gap-1.5 disabled:opacity-40 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg"
+            >
+              {copied ? "✅ Copied!" : "🔗 Share"}
+            </button>
+          )}
+
+          <Link href="/" className="text-xs font-semibold text-white/60 hover:text-white transition-colors">
+            ← Back
+          </Link>
+        </div>
       </header>
 
-      {/* ── 바디: 좌/우 2컬럼 (모바일은 세로 스택) ── */}
+      {/* 공유 뷰 안내 배너 */}
+      {isShareView && (
+        <div className="bg-blue-50 border-b border-blue-200 px-5 py-3 flex items-center gap-3">
+          <span className="text-base">🔗</span>
+          <p className="text-xs font-bold text-blue-700">
+            You&apos;re viewing a shared planner. Your own planner data is not affected.
+          </p>
+        </div>
+      )}
+
+      {/* ── 바디 ── */}
       <div className="flex flex-col lg:flex-row flex-1 max-w-7xl mx-auto w-full gap-0 lg:gap-6 p-4 lg:p-6">
 
-        {/* ════════════════════════════════════════
-            왼쪽 패널 — 여행 설정 + 미배치 아이템
-        ════════════════════════════════════════ */}
+        {/* ── 왼쪽 패널 ── */}
         <aside className="w-full lg:w-80 shrink-0 flex flex-col gap-4">
 
-          {/* Trip Setup 카드 */}
+          {/* Trip Setup */}
           <div className="bg-white rounded-2xl shadow-sm p-5">
             <h2 className="text-sm font-black text-gray-900 mb-4 flex items-center gap-2">
               ✈️ Trip Setup
             </h2>
 
-            {/* 여행 시작일 */}
             <div className="block mb-3">
               <span className="text-xs font-bold text-gray-500 block mb-1">Start Date (optional)</span>
               <DatePicker
@@ -298,7 +405,6 @@ export default function PlannerPage() {
               />
             </div>
 
-            {/* 여행 일수 */}
             <label className="block mb-4">
               <span className="text-xs font-bold text-gray-500 block mb-1">
                 Number of Days: <strong className="text-gray-900">{numDays}</strong>
@@ -316,7 +422,6 @@ export default function PlannerPage() {
               </div>
             </label>
 
-            {/* 일별 도착 시각 */}
             <div className="space-y-2">
               <span className="text-xs font-bold text-gray-500">Arrival Time per Day</span>
               {tripDays.map((day, i) => (
@@ -339,82 +444,78 @@ export default function PlannerPage() {
           </div>
 
           {/* 미배치 이벤트 풀 */}
-          <div className="bg-white rounded-2xl shadow-sm p-5">
-            <h2 className="text-sm font-black text-gray-900 mb-1 flex items-center gap-2">
-              📦 Unscheduled
-              <span className="ml-auto px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-600">
-                {unscheduled.length}
-              </span>
-            </h2>
-            <p className="text-[10px] text-gray-400 mb-3">
-              Drag items onto a day to schedule them
-            </p>
-
-            {unscheduled.length === 0 ? (
-              <p className="text-xs text-emerald-600 font-semibold text-center py-4">
-                ✅ All events scheduled!
+          {!isShareView && (
+            <div className="bg-white rounded-2xl shadow-sm p-5">
+              <h2 className="text-sm font-black text-gray-900 mb-1 flex items-center gap-2">
+                📦 Unscheduled
+                <span className="ml-auto px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-600">
+                  {unscheduled.length}
+                </span>
+              </h2>
+              <p className="text-[10px] text-gray-400 mb-3">
+                Drag items onto a day to schedule them
               </p>
-            ) : (
-              <ul className="space-y-2">
-                {unscheduled.map((item) => (
-                  <li
-                    key={item.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, item)}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 bg-gray-50 cursor-grab active:cursor-grabbing hover:shadow-sm transition-shadow group"
-                  >
-                    {/* 썸네일 — 클릭 시 모달 */}
-                    <div
-                      className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-200 cursor-pointer"
-                      onClick={() => setSelectedEvent(item as unknown as EventItem)}
+
+              {unscheduled.length === 0 ? (
+                <p className="text-xs text-emerald-600 font-semibold text-center py-4">
+                  ✅ All events scheduled!
+                </p>
+              ) : (
+                <ul className="space-y-2">
+                  {unscheduled.map((item) => (
+                    <li
+                      key={item.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, item)}
+                      className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 bg-gray-50 cursor-grab active:cursor-grabbing hover:shadow-sm transition-shadow group"
                     >
-                      {item.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={item.image}
-                          alt={item.shortName}
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = "/images/placeholder-spot.svg";
-                          }}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src="/images/placeholder-spot.svg" alt="" className="w-full h-full object-cover" />
-                      )}
-                    </div>
+                      <div
+                        className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-200 cursor-pointer"
+                        onClick={() => setSelectedEvent(item as unknown as EventItem)}
+                      >
+                        {item.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={item.image}
+                            alt={item.shortName}
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = "/images/placeholder-spot.svg";
+                            }}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src="/images/placeholder-spot.svg" alt="" className="w-full h-full object-cover" />
+                        )}
+                      </div>
 
-                    {/* 정보 — 클릭 시 모달 */}
-                    <div
-                      className="flex-1 min-w-0 cursor-pointer"
-                      onClick={() => setSelectedEvent(item as unknown as EventItem)}
-                    >
-                      <p className="text-xs font-bold text-gray-900 truncate">{item.shortName}</p>
-                      <p className="text-[10px] text-gray-400 mt-0.5">
-                        {item.stage} · {item.recommendedDurationMinutes}min
-                      </p>
-                    </div>
+                      <div
+                        className="flex-1 min-w-0 cursor-pointer"
+                        onClick={() => setSelectedEvent(item as unknown as EventItem)}
+                      >
+                        <p className="text-xs font-bold text-gray-900 truncate">{item.shortName}</p>
+                        <p className="text-[10px] text-gray-400 mt-0.5">
+                          {item.stage} · {item.recommendedDurationMinutes}min
+                        </p>
+                      </div>
 
-                    {/* [+] 모바일 즉시 추가 버튼 */}
-                    <button
-                      onClick={() => handleUnscheduledClick(item, true)}
-                      title={`Add to Day ${activeDay + 1}`}
-                      className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-white text-xs font-black transition-colors hover:opacity-80 sm:hidden"
-                      style={{ backgroundColor: "#f97316" }}
-                    >+</button>
+                      <button
+                        onClick={() => handleUnscheduledClick(item, true)}
+                        title={`Add to Day ${activeDay + 1}`}
+                        className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-white text-xs font-black transition-colors hover:opacity-80 sm:hidden"
+                        style={{ backgroundColor: "#f97316" }}
+                      >+</button>
 
-                    {/* 드래그 핸들 (데스크탑) */}
-                    <span className="hidden sm:inline text-gray-300 text-base group-hover:text-gray-500 transition-colors">⠿</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+                      <span className="hidden sm:inline text-gray-300 text-base group-hover:text-gray-500 transition-colors">⠿</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </aside>
 
-        {/* ════════════════════════════════════════
-            오른쪽 패널 — Day 탭 + TimelineView
-        ════════════════════════════════════════ */}
+        {/* ── 오른쪽 패널 ── */}
         <main className="flex-1 flex flex-col gap-4 min-w-0">
 
           {/* Day 탭 */}
@@ -427,10 +528,7 @@ export default function PlannerPage() {
                   onClick={() => setActiveDay(i)}
                   className={`
                     shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-xs font-bold transition-all
-                    ${activeDay === i
-                      ? "text-white shadow-md"
-                      : "text-gray-500 hover:bg-gray-50"
-                    }
+                    ${activeDay === i ? "text-white shadow-md" : "text-gray-500 hover:bg-gray-50"}
                   `}
                   style={activeDay === i ? { backgroundColor: "#1a1f36" } : {}}
                 >
@@ -494,12 +592,10 @@ export default function PlannerPage() {
             />
           </div>
 
-          {/* 하단 여백 (CartDrawer 가림 방지) */}
           <div className="h-20" />
         </main>
       </div>
 
-      {/* ── EventDetailModal ────────────────────── */}
       {selectedEvent && (
         <EventDetailModal
           event={selectedEvent}
@@ -507,5 +603,23 @@ export default function PlannerPage() {
         />
       )}
     </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+//  페이지 진입점 — Suspense 래퍼
+// ══════════════════════════════════════════════════════════════
+export default function PlannerPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500" />
+          <p className="text-sm font-bold text-gray-500">Loading planner…</p>
+        </div>
+      }
+    >
+      <PlannerContent />
+    </Suspense>
   );
 }
