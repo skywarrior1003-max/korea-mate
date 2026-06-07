@@ -79,11 +79,6 @@ function assignSlot(time: string): string {
   return "evening";
 }
 
-// ── localStorage 캐시 키 빌더 ────────────────────────────────
-function cacheKey(city: string, sd: string, ed: string, t: string, s: string) {
-  return `koreamate_itin_v2_${city}_${sd}_${ed}_${t}_${s}`;
-}
-
 // ── 카트 아이템 → Place 변환 ─────────────────────────────────
 function cartItemToPlace(item: CartItem, dayNumber: number, slot?: string): Place {
   const slotTime: Record<string, string> = {
@@ -272,9 +267,6 @@ function ItineraryResult() {
   const paramTravelers   = searchParams.get("travelers")   || "1";
   const paramTravelStyle = searchParams.get("travelStyle") || "Solo";
 
-  // localStorage 캐시 키 (URL 기반, 불변)
-  const key = cacheKey(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle);
-
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
   const [startDate,   setStartDate]   = useState(paramStartDate);
@@ -328,7 +320,7 @@ function ItineraryResult() {
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ══════════════════════════════════════════════════════════
-  //  Effect 2: 일반 모드 → 로컬캐시 우선, 없으면 AI 생성
+  //  Effect 2: 일반 모드 → Supabase 우선, 없으면 AI 생성
   // ══════════════════════════════════════════════════════════
   useEffect(() => {
     if (shareId) return; // Effect 1이 처리
@@ -338,8 +330,18 @@ function ItineraryResult() {
       return;
     }
 
-    // UUID 생성 또는 복원
-    const idLocalKey = `koreamate_itin_id_${key}`;
+    // 낡은 v2 캐시 잔재 일회성 철거
+    try {
+      const toRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith("koreamate_itin_v2_") || k === "koreamate_planner_v1")) toRemove.push(k);
+      }
+      toRemove.forEach(k => localStorage.removeItem(k));
+    } catch { /* ignore */ }
+
+    // UUID 생성 또는 복원 (캐시 데이터 없이 ID만 보관)
+    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}`;
     let id: string | null = null;
     try { id = localStorage.getItem(idLocalKey); } catch {}
     if (!id) {
@@ -348,44 +350,28 @@ function ItineraryResult() {
     }
     setItinId(id);
 
-    // localStorage 캐시 우선
-    try {
-      const cached = localStorage.getItem(key);
-      if (cached) {
-        const parsed = JSON.parse(cached) as Day[];
-        if (parsed.length > 0) {
-          setDays(parsed);
-          setLoading(false);
-          return;
-        }
+    // Supabase 우선 로드
+    fetchItinerary(id).then(record => {
+      if (record && Array.isArray(record.days) && (record.days as Day[]).length > 0) {
+        setDays(record.days as Day[]);
+        setSyncStatus("saved");
+        setLoading(false);
+        return;
       }
-    } catch { /* ignore */ }
-
-    // AI 생성
-    setLoading(true);
-    setError(null);
-    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
-      .then((data) => {
-        setDays(data.days);
-        setLoading(false);
-        try { localStorage.setItem(key, JSON.stringify(data.days)); } catch { /* ignore */ }
-      })
-      .catch((err) => {
-        setError(`Failed to generate itinerary: ${err.message}`);
-        setLoading(false);
-      });
-  }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, key]); // eslint-disable-line react-hooks/exhaustive-deps
+      // Supabase에 없으면 AI 생성
+      setLoading(true);
+      setError(null);
+      generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
+        .then((data) => { setDays(data.days); setLoading(false); })
+        .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
+    });
+  }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ══════════════════════════════════════════════════════════
-  //  Effect 3: days 변경 → localStorage + Supabase 자동 동기화
+  //  Effect 3: days 변경 → Supabase 자동 동기화
   // ══════════════════════════════════════════════════════════
   useEffect(() => {
     if (days.length === 0 || !itinId) return;
-
-    // localStorage 저장 (일반 모드만)
-    if (!shareId) {
-      try { localStorage.setItem(key, JSON.stringify(days)); } catch { /* ignore */ }
-    }
 
     // Supabase 디바운스 동기화 (1.5s)
     setSyncStatus("saving");
@@ -476,25 +462,18 @@ function ItineraryResult() {
 
   // ── 일정 재생성 ──────────────────────────────────────────
   function resetItinerary() {
-    try { localStorage.removeItem(key); } catch { /* ignore */ }
     // 새 UUID → 재생성된 일정은 별도 Supabase 레코드
     const newId = crypto.randomUUID();
-    try { localStorage.setItem(`koreamate_itin_id_${key}`, newId); } catch { /* ignore */ }
+    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}`;
+    try { localStorage.setItem(idLocalKey, newId); } catch { /* ignore */ }
     setItinId(newId);
     setSyncStatus("idle");
     setDays([]);
     setLoading(true);
     setError(null);
     generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
-      .then((data) => {
-        setDays(data.days);
-        setLoading(false);
-        try { localStorage.setItem(key, JSON.stringify(data.days)); } catch { /* ignore */ }
-      })
-      .catch((err) => {
-        setError(`Failed to generate itinerary: ${err.message}`);
-        setLoading(false);
-      });
+      .then((data) => { setDays(data.days); setLoading(false); })
+      .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
   }
 
   // ── 로딩 / 에러 화면 ────────────────────────────────────

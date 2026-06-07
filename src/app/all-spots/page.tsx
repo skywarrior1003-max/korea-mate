@@ -36,6 +36,11 @@ export default function AllSpotsPage() {
   const [savedIds, setSavedIds] = useState<string[]>([]);
 
   useEffect(() => {
+    // ?filter= URL 파라미터로 초기 필터 설정 (View All 연동)
+    const params = new URLSearchParams(window.location.search);
+    const f = params.get("filter");
+    if (f && FILTERS.some(fi => fi.key === f)) setFilter(f);
+
     fetch("/data/events.json")
       .then(r => r.json())
       .then((data: EventItem[]) => { setEvents(data); setLoading(false); })

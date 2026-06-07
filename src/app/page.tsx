@@ -279,7 +279,7 @@ function SpotSearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-12 pr-11 py-4 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
+        className="w-full pl-12 pr-11 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
       />
       {value && (
         <button
@@ -365,6 +365,10 @@ export default function Home() {
   // ── 통합 검색 + 필터 ──────────────────────────
   const [globalSearch, setGlobalSearch] = useState("");
   const [eventFilter,  setEventFilter]  = useState("all");
+  const [currentPage,  setCurrentPage]  = useState(1);
+
+  // 필터/검색 변경 시 페이지 초기화
+  useEffect(() => { setCurrentPage(1); }, [eventFilter, globalSearch]);
 
   // ── AI 플래너 폼 ──────────────────────────────
   const [city,      setCity]      = useState("Busan");
@@ -377,8 +381,9 @@ export default function Home() {
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
 
-  // ── Section 4 더보기 카운트 ───────────────────
-  const [section4Count, setSection4Count] = useState(9);
+  // ── Section 4 페이지네이션 ───────────────────
+  const [section4Page, setSection4Page] = useState(1);
+  const S4_PER_PAGE = 9;
 
   // ── 찜한 스팟 ─────────────────────────────────
   const [savedIds, setSavedIds] = useState<string[]>([]);
@@ -523,6 +528,17 @@ export default function Home() {
     }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
   }, [allItems, eventFilter, globalSearch, savedIds]);
+
+  // ── 검색/필터 모드 페이지네이션 ──────────────────────────────
+  const ITEMS_PER_PAGE = 12;
+  const totalPages  = Math.max(1, Math.ceil(filteredResults.length / ITEMS_PER_PAGE));
+  const safePage    = Math.min(currentPage, totalPages);
+  const pageItems   = filteredResults.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
+
+  // ── Section 4 페이지네이션 계산 ───────────────────────────────
+  const s4SafePage   = Math.min(section4Page, Math.max(1, Math.ceil(attractionSpots.length / S4_PER_PAGE)));
+  const s4TotalPages = Math.max(1, Math.ceil(attractionSpots.length / S4_PER_PAGE));
+  const s4Items      = attractionSpots.slice((s4SafePage - 1) * S4_PER_PAGE, s4SafePage * S4_PER_PAGE);
 
   // ════════════════════════════════════════════════════════════════
   //  RENDER
@@ -902,62 +918,49 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── 통합 검색창 + 필터 탭 (Sticky) ── */}
+          {/* ── 통합 검색창 + 필터 탭 (Sticky 슬림) ── */}
           <div
             id="search-filters-bar"
-            className="sticky top-16 z-20 bg-gray-50 pt-4 pb-3 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 border-b border-gray-100 mb-8"
+            className="sticky top-16 z-20 bg-white border-b border-gray-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mb-6 py-2"
           >
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-4">
-                <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
-                  🇰🇷 Discover Busan
-                </h2>
-                <p className="text-sm text-gray-500">
-                  K-POP pilgrimages · Michelin dining · Hidden nature spots
-                </p>
-              </div>
+            <div className="max-w-7xl mx-auto space-y-1.5">
+              {/* 검색창 */}
               <SpotSearchBar
                 value={globalSearch}
                 onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
-                placeholder="Search: BTS, beach, Michelin, fireworks, hiking…"
+                placeholder="Search spots, BTS, Michelin, beach, hiking…"
                 highlighted={searchHighlight}
               />
-              {/* 가로 스크롤 필터 칩 */}
-              <div
-                className="flex gap-2 mt-3 overflow-x-auto pb-1"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
-              >
-                {EVENT_FILTERS.map((f) => (
-                  <button
-                    key={f.key}
-                    onClick={() => { setEventFilter(f.key); setGlobalSearch(""); }}
-                    className="shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
-                    style={
-                      eventFilter === f.key
-                        ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
-                        : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
-                    }
-                  >
-                    {f.label}
-                    {eventFilter === f.key && eventFilter !== "all" && (
-                      <span className="ml-1.5 text-xs opacity-80">{filteredResults.length}</span>
-                    )}
-                  </button>
-                ))}
+              {/* 필터 칩 + 결과 카운트 한 줄 */}
+              <div className="flex items-center gap-2">
+                <div
+                  className="flex gap-1.5 overflow-x-auto pb-0.5 flex-1"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+                >
+                  {EVENT_FILTERS.map((f) => (
+                    <button
+                      key={f.key}
+                      onClick={() => { setEventFilter(f.key); setGlobalSearch(""); }}
+                      className="shrink-0 px-3 py-1 rounded-full text-xs font-bold transition-all border cursor-pointer whitespace-nowrap"
+                      style={
+                        eventFilter === f.key
+                          ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                          : { backgroundColor: "#f9fafb", color: "#6b7280", borderColor: "#e5e7eb" }
+                      }
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+                {isFilteringMode && (
+                  <span className="text-[11px] text-gray-400 shrink-0 font-medium">
+                    {filteredResults.length} results ·{" "}
+                    <button onClick={() => { setGlobalSearch(""); setEventFilter("all"); }} className="text-orange-500 font-bold underline">
+                      Clear
+                    </button>
+                  </span>
+                )}
               </div>
-              {isFilteringMode && (
-                <p className="text-xs text-gray-400 mt-2">
-                  {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
-                  {globalSearch ? ` for "${globalSearch}"` : ""}
-                  {" · "}
-                  <button
-                    onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
-                    className="text-orange-500 font-bold underline"
-                  >
-                    Clear
-                  </button>
-                </p>
-              )}
             </div>
           </div>
 
@@ -986,15 +989,40 @@ export default function Home() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredResults.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    onClick={() => setSelectedEvent(event)}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {pageItems.map((event) => (
+                    <EventCard key={event.id} event={event} onClick={() => setSelectedEvent(event)} />
+                  ))}
+                </div>
+                {/* 페이지네이션 */}
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-1.5 mt-10 flex-wrap">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={safePage === 1}
+                      className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                    >← Prev</button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => (
+                      <button
+                        key={pg}
+                        onClick={() => setCurrentPage(pg)}
+                        className="w-9 h-9 rounded-lg text-sm font-black transition-all"
+                        style={
+                          pg === safePage
+                            ? { backgroundColor: "#f97316", color: "#fff" }
+                            : { backgroundColor: "#fff", color: "#6b7280", border: "1px solid #e5e7eb" }
+                        }
+                      >{pg}</button>
+                    ))}
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={safePage === totalPages}
+                      className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                    >Next →</button>
+                  </div>
+                )}
+              </>
             )
           ) : (
             /* ══════════════════════════════════════════
@@ -1009,7 +1037,7 @@ export default function Home() {
                   title="K-POP / BTS Pilgrimage"
                   subtitle="BTS birthplaces, ARIRANG live concerts, and festival season highlights"
                   count={megaEvents.length}
-                  onViewAll={() => { setEventFilter("kpop"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                  onViewAll={() => router.push("/all-spots?filter=kpop")}
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
@@ -1039,7 +1067,7 @@ export default function Home() {
                     title="History & Culture"
                     subtitle="Temples, palaces, heritage villages, and Korea's living traditions"
                     count={cultureEvents.length}
-                    onViewAll={() => { setEventFilter("culture"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                    onViewAll={() => router.push("/all-spots?filter=culture")}
                   />
                   {eventsLoading ? (
                     <div className="text-center py-16">
@@ -1067,7 +1095,7 @@ export default function Home() {
                   title="Michelin Guide Restaurants"
                   subtitle="Busan's finest dining — from Bib Gourmand to starred establishments"
                   count={michelinFood.length}
-                  onViewAll={() => { setEventFilter("michelin"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                  onViewAll={() => router.push("/all-spots?filter=michelin")}
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
@@ -1096,14 +1124,14 @@ export default function Home() {
                   title="Attractions & Nature"
                   subtitle="Beaches, coastal trails, and scenic viewpoints — all solo-traveler approved"
                   count={attractionSpots.length}
-                  onViewAll={() => { setEventFilter("nature"); document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                  onViewAll={() => router.push("/all-spots?filter=nature")}
                 />
                 {attractionSpots.length === 0 ? (
                   <p className="text-gray-400 font-medium py-10 text-center">No attraction data available.</p>
                 ) : (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {attractionSpots.slice(0, section4Count).map((item) => (
+                      {s4Items.map((item) => (
                         <div
                           key={item.id}
                           onClick={() => setSelectedEvent(toEventItem(item))}
@@ -1215,19 +1243,31 @@ export default function Home() {
                       ))}
                     </div>
 
-                    {/* Load More 버튼 */}
-                    {section4Count < attractionSpots.length && (
-                      <div className="text-center mt-10">
+                    {/* Section 4 페이지네이션 */}
+                    {s4TotalPages > 1 && (
+                      <div className="flex items-center justify-center gap-1.5 mt-10 flex-wrap">
                         <button
-                          onClick={() => setSection4Count((c) => c + 9)}
-                          className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-black text-white shadow-md transition-all hover:opacity-90 hover:shadow-lg cursor-pointer"
-                          style={{ backgroundColor: "#1a1f36" }}
-                        >
-                          Load More Spots ➔
-                          <span className="text-xs font-bold opacity-70">
-                            ({attractionSpots.length - section4Count} more)
-                          </span>
-                        </button>
+                          onClick={() => setSection4Page((p) => Math.max(1, p - 1))}
+                          disabled={s4SafePage === 1}
+                          className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                        >← Prev</button>
+                        {Array.from({ length: s4TotalPages }, (_, i) => i + 1).map((pg) => (
+                          <button
+                            key={pg}
+                            onClick={() => setSection4Page(pg)}
+                            className="w-9 h-9 rounded-lg text-sm font-black transition-all"
+                            style={
+                              pg === s4SafePage
+                                ? { backgroundColor: "#1a1f36", color: "#fff" }
+                                : { backgroundColor: "#fff", color: "#6b7280", border: "1px solid #e5e7eb" }
+                            }
+                          >{pg}</button>
+                        ))}
+                        <button
+                          onClick={() => setSection4Page((p) => Math.min(s4TotalPages, p + 1))}
+                          disabled={s4SafePage === s4TotalPages}
+                          className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                        >Next →</button>
                       </div>
                     )}
                   </>
