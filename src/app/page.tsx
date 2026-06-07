@@ -391,35 +391,6 @@ export default function Home() {
   // ── 모달 상태 ─────────────────────────────────
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
-  // ── BTS 아리랑 가이드 모달 (가상 라우팅 포함) ────
-  const [showBTSGuide,    setShowBTSGuide]    = useState(false);
-  const [btsClosing,      setBtsClosing]      = useState(false);
-  const [searchHighlight, setSearchHighlight] = useState(false);
-
-  // showBTSGuide 가 true 가 되면 history에 1엔트리 추가 + popstate 리스너 등록.
-  // 뒤로가기 → popstate → false → 클린업(리스너 제거). URL 은 절대 건드리지 않음.
-  useEffect(() => {
-    if (!showBTSGuide) return;
-    window.history.pushState({ btsModal: true }, "");
-    function handlePop() { setShowBTSGuide(false); }
-    window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, [showBTSGuide]);
-
-  function openBTSGuide() { setShowBTSGuide(true); }
-  function closeBTSGuide() {
-    setBtsClosing(true);
-    setTimeout(() => {
-      setShowBTSGuide(false);
-      setBtsClosing(false);
-      setTimeout(() => {
-        document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" });
-        setSearchHighlight(true);
-        setTimeout(() => setSearchHighlight(false), 2200);
-      }, 150);
-    }, 500);
-  }
-
   const router = useRouter();
 
   // ── AI 일정 생성 ──────────────────────────────
@@ -551,96 +522,6 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
-      {/* ── 상단 상업 배너 ─────────────────────────────────────── */}
-      <div
-        className="py-2 px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-8 text-sm"
-        style={{ backgroundColor: "#1a1f36" }}
-      >
-        {/* eSIM 행 — 모바일: full-width 양끝 정렬, 데스크탑: inline */}
-        <div className="flex items-center justify-between gap-3 w-full sm:w-auto">
-          <span className="text-white/80 font-medium text-xs sm:text-sm">📱 Stay connected — Korea eSIM</span>
-          <a
-            href="https://affiliate.klook.com/sl/KiT3U74"
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="shrink-0 inline-flex items-center px-4 py-2.5 sm:px-3 sm:py-1 rounded-full text-xs font-bold text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: "#f97316" }}
-          >
-            Get eSIM →
-          </a>
-        </div>
-        <div className="hidden sm:block w-px h-4 bg-white/20" />
-        {/* 공항 픽업 행 — 모바일: full-width 양끝 정렬, 데스크탑: inline */}
-        <div className="flex items-center justify-between gap-3 w-full sm:w-auto">
-          <span className="text-white/80 font-medium text-xs sm:text-sm">✈️ Airport → Hotel transfer</span>
-          <a
-            href="https://affiliate.klook.com/sl/21FkAvj"
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="shrink-0 inline-flex items-center px-4 py-2.5 sm:px-3 sm:py-1 rounded-full text-xs font-bold transition-opacity hover:opacity-90"
-            style={{ backgroundColor: "#22c55e", color: "#fff" }}
-          >
-            Book Transfer →
-          </a>
-        </div>
-      </div>
-
-      {/* ── BTS 아리랑 특별 배너 ────────────────────────────────── */}
-      <div
-        className="relative overflow-hidden cursor-pointer"
-        style={{ background: "linear-gradient(90deg, #1a0533 0%, #3b0764 40%, #4c0a8a 70%, #1a0533 100%)" }}
-        id="bts-guide"
-        onClick={openBTSGuide}
-      >
-        {/* 보라빛 글로우 애니메이션 레이어 */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.5) 0%, transparent 55%), radial-gradient(ellipse at 80% 50%, rgba(168,85,247,0.4) 0%, transparent 55%)",
-            animation: "btsPulse 3s ease-in-out infinite",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="text-2xl shrink-0 animate-bounce">💜</span>
-            <div className="min-w-0">
-              <p className="text-white font-black text-sm sm:text-base truncate">
-                BTS ARIRANG IN BUSAN — Jun 12–13, 2026
-              </p>
-              <p className="text-purple-300 text-xs font-medium hidden sm:block">
-                Stadium road closures · Line 3 express · Premium chauffeur routes
-              </p>
-            </div>
-          </div>
-          <span className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-white border border-purple-400/60 bg-purple-500/30 hover:bg-purple-500/50 transition-colors whitespace-nowrap">
-            🗺️ Transit Guide →
-          </span>
-        </div>
-        <style>{`
-          @keyframes btsPulse {
-            0%, 100% { opacity: 0.6; }
-            50%       { opacity: 1;   }
-          }
-          @keyframes btsOverlayIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-          }
-          @keyframes btsOverlayOut {
-            from { opacity: 1; }
-            to   { opacity: 0; }
-          }
-          @keyframes btsModalIn {
-            from { opacity: 0; transform: translateY(48px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes btsModalOut {
-            from { opacity: 1; transform: translateY(0); }
-            to   { opacity: 0; transform: translateY(48px); }
-          }
-        `}</style>
-      </div>
-
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -755,13 +636,36 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Where to? (City)</label>
-                <select value={city} onChange={(e) => setCity(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                  <option value="Busan">Busan</option>
-                  <option value="Seoul">Seoul</option>
-                  <option value="Jeju">Jeju Island</option>
-                  <option value="Gyeongju">Gyeongju</option>
-                </select>
+                <div className="w-full bg-gray-50 border border-gray-200 rounded-xl overflow-hidden divide-y divide-gray-100">
+                  {/* Busan — 활성 */}
+                  <button
+                    type="button"
+                    onClick={() => setCity("Busan")}
+                    className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
+                      city === "Busan"
+                        ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
+                        : "text-gray-900 hover:bg-gray-100"
+                    }`}
+                  >
+                    <span>🌊 Busan</span>
+                    {city === "Busan" && <span className="text-xs font-black text-orange-500">✓ Selected</span>}
+                  </button>
+                  {/* 미오픈 도시들 */}
+                  {[
+                    { value: "Seoul",    label: "🏙️ Seoul"       },
+                    { value: "Jeju",     label: "🏝️ Jeju Island"  },
+                    { value: "Gyeongju", label: "🏯 Gyeongju"     },
+                  ].map((c) => (
+                    <div
+                      key={c.value}
+                      title="Coming Soon"
+                      className="w-full flex items-center justify-between px-4 py-3 text-base font-semibold text-gray-300 bg-gray-50 cursor-not-allowed select-none"
+                    >
+                      <span>{c.label}</span>
+                      <span className="text-xs font-bold text-gray-300 flex items-center gap-1">🔒 Coming Soon</span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Travel Style</label>
@@ -956,7 +860,7 @@ export default function Home() {
                 value={globalSearch}
                 onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
                 placeholder="Search spots, BTS, Michelin, beach, hiking…"
-                highlighted={searchHighlight}
+                highlighted={false}
               />
               {/* 필터 칩 + 결과 카운트 한 줄 */}
               <div className="flex items-center gap-2">
@@ -1372,166 +1276,6 @@ export default function Home() {
         />
       )}
 
-      {/* ── BTS 아리랑 교통 가이드 모달 ───────────────────────── */}
-      {showBTSGuide && (
-        <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-          style={{
-            backgroundColor: "rgba(0,0,0,0.75)",
-            animation: btsClosing
-              ? "btsOverlayOut 0.5s ease-in-out forwards"
-              : "btsOverlayIn 0.5s ease-out",
-          }}
-          onClick={() => closeBTSGuide()}
-        >
-          <div
-            className="relative w-full sm:max-w-2xl max-h-[95dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl shadow-2xl"
-            style={{
-              background: "linear-gradient(160deg, #0f0020 0%, #1e0040 40%, #0a0020 100%)",
-              animation: btsClosing
-                ? "btsModalOut 0.5s ease-in-out forwards"
-                : "btsModalIn 0.5s cubic-bezier(0.22,1,0.36,1)",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* 헤더 */}
-            <div className="relative px-6 pt-8 pb-6">
-              <button
-                onClick={() => closeBTSGuide()}
-                className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors text-lg font-bold"
-              >✕</button>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-4xl">💜</span>
-                <div>
-                  <p className="text-xs font-black text-purple-400 uppercase tracking-widest">Special Transit Guide</p>
-                  <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                    BTS ARIRANG IN BUSAN
-                  </h2>
-                </div>
-              </div>
-              <p className="text-purple-300 text-sm font-semibold">
-                📅 June 12–13, 2026 · 부산아시아드주경기장 (Busan Asiad Main Stadium)
-              </p>
-            </div>
-
-            {/* 콘텐츠 */}
-            <div className="px-6 pb-8 space-y-5">
-
-              {/* 교통 통제 경보 */}
-              <div className="rounded-2xl bg-red-500/20 border border-red-400/40 p-5">
-                <p className="text-xs font-black text-red-400 uppercase tracking-widest mb-2">⚠️ Road Closure Alert</p>
-                <p className="text-white/90 text-sm leading-relaxed font-medium">
-                  All vehicle traffic within 2km of Busan Asiad Main Stadium will be closed from <strong className="text-red-300">12:00 to 24:00</strong> on both concert days. Private vehicles must park at <strong className="text-red-300">satellite lots (P4–P7)</strong> and use shuttle buses. DO NOT attempt to drive to the stadium.
-                </p>
-              </div>
-
-              {/* 도시철도 가이드 */}
-              <div className="rounded-2xl bg-purple-500/20 border border-purple-400/40 p-5">
-                <p className="text-xs font-black text-purple-400 uppercase tracking-widest mb-3">🚇 Subway — Fastest Option</p>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <span className="shrink-0 w-8 h-8 rounded-full bg-orange-500 text-white text-xs font-black flex items-center justify-center">3</span>
-                    <div>
-                      <p className="text-white font-black text-sm">Line 3 — Special Concert Schedule</p>
-                      <p className="text-purple-200 text-xs leading-relaxed">Headway reduced from 7 min → <strong className="text-yellow-300">4 min</strong> during concert hours. Last train extended to 01:30 AM after final encore.</p>
-                    </div>
-                  </div>
-                  <div className="bg-white/5 rounded-xl p-4">
-                    <p className="text-xs font-black text-purple-300 mb-2">🏟️ Recommended Station:</p>
-                    <p className="text-white font-black text-base">종합운동장역 (Sports Complex Stn.)</p>
-                    <p className="text-purple-200 text-sm mt-1">
-                      <strong className="text-yellow-300">Exit 9</strong> → Footbridge (고가다리) → Stadium North Gate
-                      <br /><span className="text-green-300">~8 min walk on elevated walkway. Covered, no hills.</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 프리미엄 리무진 옵션 */}
-              <div className="rounded-2xl bg-green-500/20 border border-green-400/40 p-5">
-                <p className="text-xs font-black text-green-400 uppercase tracking-widest mb-2">🚗 Premium Chauffeur Service</p>
-                <p className="text-white/90 text-sm leading-relaxed mb-3">
-                  Pre-booked private car drops you at the <strong className="text-green-300">Stadium VIP entrance (Gate 2)</strong>, bypassing all road closures via authorized routes. English-speaking driver. Fixed price, no surge pricing on concert day.
-                </p>
-                <a
-                  href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj"}
-                  target="_blank"
-                  rel="noopener noreferrer sponsored"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-white transition-colors"
-                  style={{ backgroundColor: "#22c55e" }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Book Premium Transfer →
-                </a>
-              </div>
-
-              {/* 콘서트 타임라인 */}
-              <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
-                <p className="text-xs font-black text-purple-300 uppercase tracking-widest mb-4">⏰ Day-of Timeline</p>
-                <div className="space-y-3">
-                  {[
-                    { time: "14:00", label: "Roads close — private vehicles banned near stadium" },
-                    { time: "16:00", label: "Merchandise booths open (arrive early for limited MD)" },
-                    { time: "17:30", label: "Gates open — recommended arrival via Exit 9 footbridge" },
-                    { time: "19:00", label: "Show starts" },
-                    { time: "22:30", label: "Estimated end — Metro Line 3 runs until 01:30 AM" },
-                  ].map((item) => (
-                    <div key={item.time} className="flex items-start gap-3">
-                      <span className="shrink-0 text-xs font-black text-yellow-300 w-12 pt-0.5">{item.time}</span>
-                      <p className="text-white/80 text-sm">{item.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* ARMY 팁 */}
-              <div className="rounded-2xl bg-purple-900/50 border border-purple-500/40 p-5">
-                <p className="text-xs font-black text-purple-300 uppercase tracking-widest mb-3">💜 ARMY Tips</p>
-                <ul className="space-y-2 text-sm text-white/80">
-                  <li>• Bring your <strong className="text-purple-300">Weverse App</strong> — e-ticket only, no print</li>
-                  <li>• <strong className="text-yellow-300">T-money card</strong> for subway. Cash for street vendors outside</li>
-                  <li>• Hotel near <strong className="text-green-300">Yeonje-gu or Haeundae</strong> — easiest return route</li>
-                  <li>• Post-concert: Gwangalli Beach (광안리) is ARMY gathering point</li>
-                </ul>
-              </div>
-
-              {/* 구글 지도 내비게이션 버튼 */}
-              <div className="rounded-2xl bg-white/5 border border-white/10 p-5 space-y-3">
-                <p className="text-xs font-black text-purple-300 uppercase tracking-widest">🗺️ Open in Maps</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=Busan+Asiad+Main+Stadium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-black text-white bg-blue-600 hover:bg-blue-500 transition-colors"
-                  >
-                    📍 Stadium Location
-                  </a>
-                  <a
-                    href="https://www.google.com/maps/dir/?api=1&origin=종합운동장역+9번출구+부산&destination=Busan+Asiad+Main+Stadium&travelmode=walking"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-black text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
-                  >
-                    🚶 Exit 9 → Stadium Walk
-                  </a>
-                </div>
-                <p className="text-xs text-white/40 text-center">종합운동장역 9번 출구 → 고가다리 → 북문 (~8분)</p>
-              </div>
-
-              <button
-                onClick={() => closeBTSGuide()}
-                className="w-full py-4 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#7c3aed" }}
-              >
-                Close Guide 💜
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

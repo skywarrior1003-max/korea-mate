@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   getCart,
@@ -44,7 +44,8 @@ const STAGE_DOT: Record<string, string> = {
 // ── 컴포넌트 ───────────────────────────────────
 
 export default function CartDrawer() {
-  const router = useRouter();
+  const router   = useRouter();
+  const pathname = usePathname();
   const [items,        setItems]        = useState<CartItem[]>([]);
   const [isExpanded,   setExpanded]     = useState(false);
   const [imgErrors,    setImgErrors]    = useState<Record<string, boolean>>({});
@@ -61,6 +62,9 @@ export default function CartDrawer() {
     window.addEventListener(CART_EVENT, refresh);
     return () => window.removeEventListener(CART_EVENT, refresh);
   }, [refresh]);
+
+  // 홈·itinerary·planner 화면에서는 하단 바 숨김
+  if (pathname === "/" || pathname === "/itinerary" || pathname === "/planner") return null;
 
   // 아이템 0개면 드로어 자체를 숨김
   if (items.length === 0) return null;
