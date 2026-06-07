@@ -54,7 +54,7 @@ export default function EventCard({ event, onClick }: Props) {
   return (
     <button
       onClick={onClick}
-      className="group relative w-full text-left rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      className="group relative w-full text-left rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 bg-white border border-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-400"
     >
       {/* ── 이미지 영역 ── */}
       <div className="relative h-48 w-full overflow-hidden bg-gray-100">

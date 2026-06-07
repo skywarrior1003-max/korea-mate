@@ -393,6 +393,7 @@ export default function Home() {
 
   // ── BTS 아리랑 가이드 모달 (가상 라우팅 포함) ────
   const [showBTSGuide,    setShowBTSGuide]    = useState(false);
+  const [btsClosing,      setBtsClosing]      = useState(false);
   const [searchHighlight, setSearchHighlight] = useState(false);
 
   // showBTSGuide 가 true 가 되면 history에 1엔트리 추가 + popstate 리스너 등록.
@@ -407,12 +408,16 @@ export default function Home() {
 
   function openBTSGuide() { setShowBTSGuide(true); }
   function closeBTSGuide() {
-    setShowBTSGuide(false);
+    setBtsClosing(true);
     setTimeout(() => {
-      document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      setSearchHighlight(true);
-      setTimeout(() => setSearchHighlight(false), 2200);
-    }, 700);
+      setShowBTSGuide(false);
+      setBtsClosing(false);
+      setTimeout(() => {
+        document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setSearchHighlight(true);
+        setTimeout(() => setSearchHighlight(false), 2200);
+      }, 150);
+    }, 500);
   }
 
   const router = useRouter();
@@ -616,6 +621,22 @@ export default function Home() {
           @keyframes btsPulse {
             0%, 100% { opacity: 0.6; }
             50%       { opacity: 1;   }
+          }
+          @keyframes btsOverlayIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
+          @keyframes btsOverlayOut {
+            from { opacity: 1; }
+            to   { opacity: 0; }
+          }
+          @keyframes btsModalIn {
+            from { opacity: 0; transform: translateY(48px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes btsModalOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(48px); }
           }
         `}</style>
       </div>
@@ -1141,7 +1162,7 @@ export default function Home() {
                         <div
                           key={item.id}
                           onClick={() => setSelectedEvent(toEventItem(item))}
-                          className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                          className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-500 cursor-pointer group"
                         >
                           {/* 썸네일 */}
                           <div className="h-48 overflow-hidden relative bg-gray-200">
@@ -1152,7 +1173,7 @@ export default function Home() {
                                 fill
                                 unoptimized
                                 onError={() => setImgErrors((prev) => ({ ...prev, [item.id]: true }))}
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                             ) : (
                               // eslint-disable-next-line @next/next/no-img-element
@@ -1162,8 +1183,8 @@ export default function Home() {
                                 className="w-full h-full object-cover"
                               />
                             )}
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
-                              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-500 flex items-center justify-center">
+                              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
                                 View Details →
                               </span>
                             </div>
@@ -1355,12 +1376,22 @@ export default function Home() {
       {showBTSGuide && (
         <div
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-          style={{ backgroundColor: "rgba(0,0,0,0.75)" }}
+          style={{
+            backgroundColor: "rgba(0,0,0,0.75)",
+            animation: btsClosing
+              ? "btsOverlayOut 0.5s ease-in-out forwards"
+              : "btsOverlayIn 0.5s ease-out",
+          }}
           onClick={() => closeBTSGuide()}
         >
           <div
             className="relative w-full sm:max-w-2xl max-h-[95dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl shadow-2xl"
-            style={{ background: "linear-gradient(160deg, #0f0020 0%, #1e0040 40%, #0a0020 100%)" }}
+            style={{
+              background: "linear-gradient(160deg, #0f0020 0%, #1e0040 40%, #0a0020 100%)",
+              animation: btsClosing
+                ? "btsModalOut 0.5s ease-in-out forwards"
+                : "btsModalIn 0.5s cubic-bezier(0.22,1,0.36,1)",
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* 헤더 */}
