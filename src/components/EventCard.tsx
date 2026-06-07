@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { EventItem } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
+import { getVerifiedImage } from "@/lib/placeImages";
 
 // ── Stage 뱃지 색상 매핑 ──────────────────────────
 const STAGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
@@ -50,6 +51,8 @@ export default function EventCard({ event, onClick }: Props) {
 
   const stage   = STAGE_STYLE[event.stage] ?? STAGE_STYLE["Standalone"];
   const transit = fastestTransit(event.transitFromAnchor);
+  // place_id(=event.id)로 레지스트리 우선 조회 → 1:1 검증 이미지 강제 매핑
+  const resolvedImage = getVerifiedImage(event.id, event.image);
 
   return (
     <button
@@ -59,11 +62,11 @@ export default function EventCard({ event, onClick }: Props) {
       {/* ── 이미지 영역 ── */}
       <div className="relative h-48 w-full overflow-hidden bg-gray-100">
 
-        {/* Rule 9: onError → placeholder */}
-        {event.image && !imgError ? (
+        {/* place_id 기반 1:1 검증 이미지 조회 (placeImages.ts 레지스트리) */}
+        {resolvedImage && !imgError ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={event.image}
+            src={resolvedImage}
             alt={event.name}
             onError={() => setImgError(true)}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

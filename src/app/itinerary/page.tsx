@@ -90,6 +90,34 @@ function buildNaverUrl(placeName: string, city: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${placeName} ${city} Korea`)}`;
 }
 
+// ── AI 빌드 단계 정의 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────
+const LOAD_PHASES = [
+  {
+    emoji: "🍽️",
+    label: "[Step 1] Matching Michelin & top restaurants in Busan...",
+    cards: [
+      { emoji: "⭐", name: "Michelin Guide", desc: "Busan's best restaurants sorted by your route", color: "#d97706" },
+      { emoji: "🏨", name: "Booking.com",    desc: "Top hotels auto-sorted near each day's spots",  color: "#003580" },
+    ],
+  },
+  {
+    emoji: "🏨",
+    label: "[Step 2] Curating best hotels & nearby accommodations...",
+    cards: [
+      { emoji: "🏨", name: "Booking.com",    desc: "Free cancellation options — Haeundae & Centum", color: "#003580" },
+      { emoji: "🎟️", name: "Viator Tours",   desc: "Day trips: Gamcheon, Taejongdae & more",        color: "#7c3aed" },
+    ],
+  },
+  {
+    emoji: "📱",
+    label: "[Step 3] Optimizing eSIM coverage & transport routes...",
+    cards: [
+      { emoji: "📱", name: "Korea eSIM",     desc: "Unlimited 5G data — active before you land",    color: "#f97316" },
+      { emoji: "✈️", name: "Airport Transfer",desc: "Fixed-price pickup from Gimhae Airport",        color: "#16a34a" },
+    ],
+  },
+] as const;
+
 // ── 카테고리 이미지 ───────────────────────────────────────────
 function getCategoryImage(category: string, name: string): string {
   const n = name.toLowerCase();
@@ -262,6 +290,8 @@ function ItineraryResult() {
   const [error,         setError]         = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
+  // ── 로딩 페이즈 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────────
+  const [loadPhase, setLoadPhase] = useState(0);
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
   const [itinId,      setItinId]      = useState<string | null>(null);
@@ -337,10 +367,10 @@ function ItineraryResult() {
         setLoading(false);
         return;
       }
-      // Supabase에 없으면 AI 생성
+      // Supabase에 없으면 AI 생성 (최소 2.5s 드웰 타임 보장)
       setLoading(true);
       setError(null);
-      generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
         .then((data) => { setDays(data.days); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
@@ -401,6 +431,29 @@ function ItineraryResult() {
     return () => window.removeEventListener(PLANNER_EVENT, read);
   }, []);
 
+  // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
+  useEffect(() => {
+    if (!loading || shareId) { setLoadPhase(0); return; }
+    const t1 = setTimeout(() => setLoadPhase(1), 1200);
+    const t2 = setTimeout(() => setLoadPhase(2), 2500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [loading, shareId]);
+
+  // ── AI 생성 + 최소 드웰 타임 보장 헬퍼 ──────────────────────
+  async function generateWithDwell(
+    city: string, sd: string, ed: string,
+    trav: string, tstyle: string,
+    startLoc?: string, arrTime?: string
+  ) {
+    const MIN_MS = 2500 + Math.random() * 1000; // 2.5~3.5s
+    const t0 = Date.now();
+    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime);
+    const elapsed = Date.now() - t0;
+    const wait = Math.max(0, MIN_MS - elapsed);
+    if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
+    return data;
+  }
+
   // ── 공유 링크 복사 ───────────────────────────────────────
   async function handleCopyShareLink() {
     if (!itinId) return;
@@ -426,24 +479,83 @@ function ItineraryResult() {
     setDays([]);
     setLoading(true);
     setError(null);
-    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+    generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
       .then((data) => { setDays(data.days); setLoading(false); })
       .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
   }
 
-  // ── 로딩 / 에러 화면 ────────────────────────────────────
+  // ── 로딩 화면 — 페이즈별 스켈레톤 + 제휴 카드 노출 ──────────
   if (loading) {
+    const phase = LOAD_PHASES[Math.min(loadPhase, LOAD_PHASES.length - 1)];
     return (
-      <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#D4AF37] mb-8" />
-        <h2 className="text-3xl font-black text-[#2C2520] mb-3 animate-pulse">
-          {shareId ? "Loading shared itinerary..." : "AI is planning your Korea trip..."}
-        </h2>
+      <div className="flex-1 flex flex-col items-center py-12 px-4 max-w-4xl mx-auto w-full">
+
+        {/* ── 페이즈 표시기 ── */}
+        <div className="text-center mb-8 w-full max-w-lg">
+          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#EAE3D2]/60 border border-[#E6DFD5] mb-4">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#D4AF37] shrink-0" />
+            <span className="text-sm font-black text-[#2C2520]">
+              {shareId ? "Loading shared itinerary…" : phase.label}
+            </span>
+          </div>
+          {!shareId && (
+            <div className="w-full bg-[#E6DFD5] rounded-full h-1.5 overflow-hidden">
+              <div
+                className="h-full bg-[#D4AF37] rounded-full transition-all duration-700 ease-out"
+                style={{ width: `${((loadPhase + 1) / LOAD_PHASES.length) * 100}%` }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ── 제휴 파트너 카드 (드웰 타임 중 자연스럽게 노출) ── */}
         {!shareId && (
-          <p className="text-lg text-[#61554D] max-w-md font-bold">
-            Analyzing spots in {paramCity} for a {paramTravelStyle.toLowerCase()} traveler. About 10 seconds!
-          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl mb-10">
+            {phase.cards.map((card) => (
+              <div
+                key={card.name}
+                className="bg-white rounded-2xl border border-[#E6DFD5] p-5 flex items-start gap-4 shadow-sm"
+                style={{ animation: "fadeInUp 0.4s ease-out" }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                  style={{ backgroundColor: card.color + "20" }}
+                >
+                  {card.emoji}
+                </div>
+                <div>
+                  <p className="text-sm font-black text-[#2C2520]">{card.name}</p>
+                  <p className="text-xs text-[#61554D] leading-relaxed mt-0.5">{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
+
+        {/* ── 스켈레톤 일정 카드 ── */}
+        <div className="w-full space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white rounded-2xl border border-[#E6DFD5] p-5 animate-pulse">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-6 h-6 rounded-full bg-[#EAE3D2]" />
+                <div className="h-5 bg-[#EAE3D2] rounded w-24" />
+                <div className="h-4 bg-[#EAE3D2] rounded w-16 ml-2" />
+              </div>
+              <div className="space-y-2.5">
+                <div className="h-3.5 bg-[#EAE3D2] rounded w-3/4" />
+                <div className="h-3.5 bg-[#EAE3D2] rounded w-1/2" />
+                <div className="h-3.5 bg-[#EAE3D2] rounded w-2/3" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <style>{`
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </div>
     );
   }
@@ -694,14 +806,14 @@ function ItineraryResult() {
                                       </a>
                                     </div>
                                   </div>
-                                  {/* ── 수익화 제휴 버튼 스트립 ── */}
+                                  {/* ── 수익화 제휴 버튼 스트립 (환경변수 기반) ── */}
                                   <div
                                     className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E6DFD5]/40"
                                     style={{ scrollbarWidth: "none" }}
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     <a
-                                      href="https://affiliate.klook.com/sl/KiT3U74"
+                                      href={process.env.NEXT_PUBLIC_KLOOK_ESIM_URL || "https://affiliate.klook.com/sl/KiT3U74"}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
@@ -710,7 +822,7 @@ function ItineraryResult() {
                                       📱 Get Korea eSIM
                                     </a>
                                     <a
-                                      href={`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city + " Korea")}&checkin=${startDate}&checkout=${endDate}`}
+                                      href={`${process.env.NEXT_PUBLIC_BOOKING_BUSAN_URL || "https://www.booking.com/searchresults.html?ss=Busan+Korea"}&checkin=${startDate}&checkout=${endDate}`}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
@@ -719,7 +831,7 @@ function ItineraryResult() {
                                       🏨 Book Hotels
                                     </a>
                                     <a
-                                      href="https://www.viator.com/en-KR/Korea/d4431-ttd/"
+                                      href={process.env.NEXT_PUBLIC_VIATOR_BUSAN_URL || "https://www.viator.com/en-KR/Korea/d4431-ttd/"}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
