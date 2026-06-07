@@ -5,8 +5,6 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import { generateItinerary } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
-import { getCart } from "@/lib/cart";
-import type { CartItem } from "@/lib/cart";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
@@ -77,24 +75,6 @@ function assignSlot(time: string): string {
   if (h < 14) return "lunch";
   if (h < 17) return "afternoon";
   return "evening";
-}
-
-// ── 카트 아이템 → Place 변환 ─────────────────────────────────
-function cartItemToPlace(item: CartItem, dayNumber: number, slot?: string): Place {
-  const slotTime: Record<string, string> = {
-    morning: "09:00", lunch: "12:30", afternoon: "14:30", evening: "18:00",
-  };
-  const defaultTime = slot ? (slotTime[slot] ?? "09:00") : (dayNumber === 1 ? "09:00" : "10:00");
-  return {
-    name: item.name,
-    category: item.type,
-    location: item.district || item.city,
-    time: defaultTime,
-    duration: `${item.recommendedDurationMinutes} min`,
-    tips: item.whyItMatters || item.description.split(".")[0] + ".",
-    googleMapsUrl: item.mapUrl,
-    slot: slot ?? assignSlot(defaultTime),
-  };
 }
 
 // ── Naver Maps URL ────────────────────────────────────────────
@@ -279,12 +259,7 @@ function ItineraryResult() {
   const [loading,       setLoading]       = useState(true);
   const [error,         setError]         = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
-  const [savedItems,    setSavedItems]    = useState<CartItem[]>([]);
-  const [showSaved,     setShowSaved]     = useState(false);
-  const [addToDay,      setAddToDay]      = useState<{ item: CartItem; dayNum: number } | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
-  const [addSlotPanel,  setAddSlotPanel]  = useState<{ dayNum: number; slot: string } | null>(null);
-  const [slotSearch,    setSlotSearch]    = useState("");
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
   const [itinId,      setItinId]      = useState<string | null>(null);
@@ -417,14 +392,6 @@ function ItineraryResult() {
     return () => window.removeEventListener(PLANNER_EVENT, read);
   }, []);
 
-  // ── 찜한 장소 동기화 ────────────────────────────────────
-  useEffect(() => { setSavedItems(getCart()); }, [showSaved]);
-  useEffect(() => {
-    const refresh = () => setSavedItems(getCart());
-    window.addEventListener(PLANNER_EVENT, refresh);
-    return () => window.removeEventListener(PLANNER_EVENT, refresh);
-  }, []);
-
   // ── 공유 링크 복사 ───────────────────────────────────────
   async function handleCopyShareLink() {
     if (!itinId) return;
@@ -437,44 +404,6 @@ function ItineraryResult() {
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
-  }
-
-  // ── 장소 삭제 ────────────────────────────────────────────
-  function deletePlace(dayNumber: number, placeIndex: number) {
-    setDays((prev) =>
-      prev.map((d) =>
-        d.dayNumber === dayNumber
-          ? { ...d, places: d.places.filter((_, i) => i !== placeIndex) }
-          : d
-      )
-    );
-  }
-
-  // ── 찜한 장소 → Day 추가 ────────────────────────────────
-  function insertPlaceToDay(item: CartItem, dayNumber: number) {
-    const newPlace = cartItemToPlace(item, dayNumber);
-    setDays((prev) =>
-      prev.map((d) =>
-        d.dayNumber === dayNumber
-          ? { ...d, places: [...d.places, newPlace] }
-          : d
-      )
-    );
-    setAddToDay(null);
-  }
-
-  // ── 찜한 장소 → 슬롯 추가 ───────────────────────────────
-  function insertPlaceToSlot(item: CartItem, dayNumber: number, slot: string) {
-    const newPlace = cartItemToPlace(item, dayNumber, slot);
-    setDays((prev) =>
-      prev.map((d) =>
-        d.dayNumber === dayNumber
-          ? { ...d, places: [...d.places, newPlace] }
-          : d
-      )
-    );
-    setAddSlotPanel(null);
-    setSlotSearch("");
   }
 
   // ── 일정 재생성 ──────────────────────────────────────────
@@ -587,6 +516,16 @@ function ItineraryResult() {
           </Link>
 
           {!shareId && (
+            <Link
+              href="/planner"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              ✏️ Edit This Trip
+            </Link>
+          )}
+
+          {!shareId && (
             <button
               onClick={resetItinerary}
               className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-[#8C6239] border border-[#E6DFD5] rounded-xl hover:bg-[#FAF7F2] transition-all"
@@ -614,68 +553,8 @@ function ItineraryResult() {
         </div>
       </div>
 
-      {/* ── 찜한 장소 추가 패널 ── */}
-      <div className="mb-8">
-        <button
-          onClick={() => { setShowSaved((v) => !v); setSavedItems(getCart()); }}
-          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl border-2 border-[#D4AF37]/40 bg-[#FAF7F2] hover:bg-[#F3EEE3] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">❤️</span>
-            <div className="text-left">
-              <p className="text-sm font-black text-[#2C2520]">My Saved Places</p>
-              <p className="text-xs text-[#8C6239] font-medium">
-                {savedItems.length > 0 ? `${savedItems.length} place${savedItems.length > 1 ? "s" : ""} saved — tap to add to any day` : "No saved places yet — save spots from the main page"}
-              </p>
-            </div>
-          </div>
-          <span className="text-[#D4AF37] font-bold text-lg">{showSaved ? "▲" : "▼"}</span>
-        </button>
-
-        {showSaved && savedItems.length > 0 && (
-          <div className="mt-3 bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden">
-            {savedItems.map((item) => (
-              <div key={item.id} className="flex items-center justify-between gap-3 px-5 py-4 border-b border-[#E6DFD5] last:border-b-0">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#2C2520] truncate">{item.name}</p>
-                  <p className="text-xs text-[#8C6239]">{item.city} · {item.recommendedDurationMinutes}min</p>
-                </div>
-                <div className="flex flex-wrap gap-1.5 shrink-0">
-                  {addToDay?.item.id === item.id ? (
-                    <>
-                      {days.map((d) => (
-                        <button
-                          key={d.dayNumber}
-                          onClick={() => insertPlaceToDay(item, d.dayNumber)}
-                          className="px-2.5 py-1.5 rounded-lg text-xs font-black text-white transition-colors"
-                          style={{ backgroundColor: "#D4AF37" }}
-                        >
-                          Day {d.dayNumber}
-                        </button>
-                      ))}
-                      <button
-                        onClick={() => setAddToDay(null)}
-                        className="px-2 py-1.5 rounded-lg text-xs font-bold text-gray-500 border border-gray-200 hover:bg-gray-50"
-                      >✕</button>
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => setAddToDay({ item, dayNum: 1 })}
-                      className="px-3 py-1.5 rounded-lg text-xs font-black text-white transition-colors"
-                      style={{ backgroundColor: "#2C2520" }}
-                    >
-                      + Add to Day
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
       <p className="text-center text-sm text-[#8C6239] font-bold mb-8 bg-[#EAE3D2]/40 rounded-xl py-2.5">
-        💡 Tap any card to see details &amp; maps · ✕ to remove a place · Changes auto-saved to cloud
+        💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit This Trip above
       </p>
 
       {/* ── Compact 보기 ── */}
@@ -731,14 +610,6 @@ function ItineraryResult() {
                 <div className="space-y-4">
                   {TIME_SLOTS.map((ts) => {
                     const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
-                    const isAddingHere = addSlotPanel?.dayNum === day.dayNumber && addSlotPanel?.slot === ts.key;
-                    const filteredSaved = slotSearch.trim()
-                      ? savedItems.filter(
-                          (i) =>
-                            i.name.toLowerCase().includes(slotSearch.toLowerCase()) ||
-                            i.city.toLowerCase().includes(slotSearch.toLowerCase())
-                        )
-                      : savedItems;
 
                     return (
                       <div key={ts.key} className="rounded-2xl border border-[#E6DFD5] overflow-hidden bg-white">
@@ -769,13 +640,8 @@ function ItineraryResult() {
                                   key={idx}
                                   className="flex flex-col sm:flex-row justify-between gap-4 p-5 hover:bg-[#FAF7F2]/40 transition-colors group relative"
                                 >
-                                  <button
-                                    onClick={() => deletePlace(day.dayNumber, idx)}
-                                    className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-red-100 text-gray-400 hover:text-red-500 text-xs font-black transition-colors z-10"
-                                    aria-label="Remove place"
-                                  >✕</button>
                                   <div
-                                    className="space-y-2 flex-1 cursor-pointer pr-8"
+                                    className="space-y-2 flex-1 cursor-pointer"
                                     onClick={() => setSelectedPlace(place)}
                                   >
                                     <div className="flex flex-wrap items-center gap-2">
@@ -821,60 +687,8 @@ function ItineraryResult() {
                             })}
                           </div>
                         ) : (
-                          <div className="p-4">
-                            {isAddingHere ? (
-                              <div className="bg-[#FAF7F2] rounded-xl p-4 border border-[#E6DFD5]">
-                                <div className="flex items-center justify-between mb-3">
-                                  <p className="text-xs font-black text-[#8C6239] uppercase tracking-wide">
-                                    Add to {ts.label}
-                                  </p>
-                                  <button
-                                    onClick={() => { setAddSlotPanel(null); setSlotSearch(""); }}
-                                    className="text-xs text-gray-400 hover:text-gray-600 font-bold px-2 py-0.5 rounded hover:bg-gray-100 transition-colors"
-                                  >✕ Cancel</button>
-                                </div>
-                                <input
-                                  type="text"
-                                  value={slotSearch}
-                                  onChange={(e) => setSlotSearch(e.target.value)}
-                                  placeholder="Search your saved spots…"
-                                  className="w-full px-3 py-2 rounded-lg border border-[#E6DFD5] text-xs font-semibold mb-2 focus:outline-none focus:border-[#D4AF37] bg-white"
-                                  autoFocus
-                                />
-                                {filteredSaved.length > 0 ? (
-                                  <div className="space-y-1 max-h-40 overflow-y-auto">
-                                    {filteredSaved.map((item) => (
-                                      <button
-                                        key={item.id}
-                                        onClick={() => insertPlaceToSlot(item, day.dayNumber, ts.key)}
-                                        className="w-full text-left px-3 py-2 rounded-lg text-xs font-bold hover:bg-[#EAE3D2] transition-colors flex items-center justify-between gap-2"
-                                      >
-                                        <span className="truncate">{item.name}</span>
-                                        <span className="text-[#8C6239] shrink-0 font-medium">{item.city} · {item.recommendedDurationMinutes}m</span>
-                                      </button>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  <p className="text-xs text-[#8C6239]/50 italic py-2 text-center">
-                                    {savedItems.length === 0
-                                      ? "No saved spots — save spots from the main page first."
-                                      : "No matches found."}
-                                  </p>
-                                )}
-                              </div>
-                            ) : (
-                              <button
-                                onClick={() => {
-                                  setSavedItems(getCart());
-                                  setAddSlotPanel({ dayNum: day.dayNumber, slot: ts.key });
-                                  setSlotSearch("");
-                                }}
-                                className="w-full py-3.5 flex items-center justify-center gap-2 text-xs font-bold text-[#8C6239]/50 hover:text-[#8C6239] hover:bg-[#FAF7F2] rounded-xl transition-all border-2 border-dashed border-[#E6DFD5] hover:border-[#D4AF37]/40"
-                              >
-                                <span className="text-sm font-black text-[#D4AF37]">+</span>
-                                Add a place to {ts.label.toLowerCase()}
-                              </button>
-                            )}
+                          <div className="p-4 text-center text-xs text-[#8C6239]/40 italic py-3">
+                            No places scheduled for {ts.label.toLowerCase()}
                           </div>
                         )}
                       </div>
