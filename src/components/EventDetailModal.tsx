@@ -159,7 +159,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
   const naverUrl     = buildNaverMapUrl(event);
   const koreanAddr   = extractKoreanAddress(event.address);
   const naverKeyword = getNaverDisplayKeyword(event);
-  const klookUrl     = process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer";
+  const klookUrl     = process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj";
   const cableCarUrl  = process.env.NEXT_PUBLIC_CABLE_CAR_URL || "https://www.klook.com/en-US/search-results/?query=busan+songdo+cable+car";
 
   const isCableCarRelated =

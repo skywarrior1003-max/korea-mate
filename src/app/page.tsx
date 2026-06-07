@@ -494,9 +494,9 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <span className="text-white/80 font-medium">📱 Stay connected — Korea eSIM</span>
           <a
-            href="https://www.airalo.com/south-korea-esim"
+            href="https://affiliate.klook.com/sl/KiT3U74"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer sponsored"
             className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#f97316" }}
           >
@@ -507,9 +507,9 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <span className="text-white/80 font-medium">✈️ Airport → Hotel transfer</span>
           <a
-            href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
+            href="https://affiliate.klook.com/sl/21FkAvj"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer sponsored"
             className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#22c55e", color: "#fff" }}
           >
@@ -740,7 +740,7 @@ export default function Home() {
                 icon: "✈️",
                 title: "Airport Limousine",
                 desc: "Private car from Incheon/Gimhae Airport straight to your hotel. No subway stress with luggage.",
-                href: "https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer",
+                href: "https://affiliate.klook.com/sl/21FkAvj",
                 cta: "Book Transfer →",
                 external: true,
                 highlight: true,
@@ -749,7 +749,7 @@ export default function Home() {
                 icon: "📱",
                 title: "Stay Connected",
                 desc: "Get your Korea eSIM before landing. No registration hassle.",
-                href: "https://www.airalo.com/south-korea-esim",
+                href: "https://affiliate.klook.com/sl/KiT3U74",
                 cta: "Get 10% Off eSIM →",
                 external: true,
                 highlight: false,
@@ -842,9 +842,9 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center gap-3 shrink-0">
                 <a
-                  href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
+                  href="https://affiliate.klook.com/sl/21FkAvj"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer sponsored"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
                   style={{ backgroundColor: "#22c55e", color: "#fff" }}
                 >
@@ -1289,7 +1289,7 @@ export default function Home() {
                   Pre-booked private car drops you at the <strong className="text-green-300">Stadium VIP entrance (Gate 2)</strong>, bypassing all road closures via authorized routes. English-speaking driver. Fixed price, no surge pricing on concert day.
                 </p>
                 <a
-                  href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"}
+                  href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj"}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-white transition-colors"
