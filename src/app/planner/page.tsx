@@ -4,11 +4,18 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import TimelineView from "@/components/TimelineView";
 import DatePicker from "@/components/DatePicker";
+import EventDetailModal from "@/components/EventDetailModal";
 import {
   getCart,
   CART_EVENT,
   type CartItem,
+  type EventItem,
 } from "@/lib/cart";
+import {
+  PLANNER_KEY,
+  PLANNER_EVENT,
+  type PlannerSnapshot,
+} from "@/lib/plannerStore";
 
 // ── 유틸 ────────────────────────────────────────
 /** 날짜 문자열에 n일을 더해 반환 */
@@ -36,19 +43,39 @@ interface TripDay {
 // scheduledByDay: { 0: [CartItem,...], 1: [...] }
 type ScheduledMap = Record<number, CartItem[]>;
 
+// ── localStorage 헬퍼 ────────────────────────────
+function loadSnapshot(): PlannerSnapshot | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(PLANNER_KEY);
+    return raw ? (JSON.parse(raw) as PlannerSnapshot) : null;
+  } catch { return null; }
+}
+
+function saveSnapshot(snap: PlannerSnapshot) {
+  try {
+    localStorage.setItem(PLANNER_KEY, JSON.stringify(snap));
+    window.dispatchEvent(new CustomEvent(PLANNER_EVENT));
+  } catch { /* ignore */ }
+}
+
 // ── 컴포넌트 ─────────────────────────────────────
 export default function PlannerPage() {
 
   // ── 장바구니 / 여행 설정 상태 ─────────────────
   const [cartItems,    setCartItems]    = useState<CartItem[]>([]);
-  const [numDays,      setNumDays]      = useState(3);
-  const [startDate,    setStartDate]    = useState("");
+
+  // localStorage 에서 복원하거나 기본값 사용
+  const initial = loadSnapshot();
+  const [numDays,      setNumDays]      = useState(initial?.numDays      ?? 3);
+  const [startDate,    setStartDate]    = useState(initial?.startDate    ?? "");
   const [arrivalTimes, setArrivalTimes] = useState<string[]>(
-    Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+    initial?.arrivalTimes ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
   );
   const [scheduled,    setScheduled]    = useState<ScheduledMap>({});
   const [activeDay,    setActiveDay]    = useState(0);
   const [dragOver,     setDragOver]     = useState<number | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   // ── 장바구니 동기화 ───────────────────────────
   const refreshCart = useCallback(() => setCartItems(getCart()), []);
@@ -57,6 +84,29 @@ export default function PlannerPage() {
     window.addEventListener(CART_EVENT, refreshCart);
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, [refreshCart]);
+
+  // ── localStorage 에서 scheduled 복원 ─────────
+  useEffect(() => {
+    const snap = loadSnapshot();
+    if (!snap || !snap.scheduledIds) return;
+    const cart = getCart();
+    const restored: ScheduledMap = {};
+    for (const [k, ids] of Object.entries(snap.scheduledIds)) {
+      restored[Number(k)] = ids
+        .map((id) => cart.find((c) => c.id === id))
+        .filter((x): x is CartItem => x !== null && x !== undefined);
+    }
+    setScheduled(restored);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── scheduled 변경 시 자동 저장 ──────────────
+  useEffect(() => {
+    const scheduledIds: Record<number, string[]> = {};
+    for (const [k, items] of Object.entries(scheduled)) {
+      scheduledIds[Number(k)] = items.map((x) => x.id);
+    }
+    saveSnapshot({ startDate, numDays, arrivalTimes, scheduledIds, updatedAt: Date.now() });
+  }, [scheduled, startDate, numDays, arrivalTimes]);
 
   // ── 계산값 (useMemo — 의존값 변경 시에만 재계산) ─
   const tripDays = useMemo<TripDay[]>(
@@ -87,6 +137,19 @@ export default function PlannerPage() {
     () => todayItems.reduce((s, x) => s + x.recommendedDurationMinutes + 20, 0) - (todayItems.length > 0 ? 20 : 0),
     [todayItems]
   );
+
+  // ── 미배치 아이템 클릭: 모바일=activeDay에 즉시 추가, 데스크탑=모달 열기 ──
+  function handleUnscheduledClick(item: CartItem, isMobile: boolean) {
+    if (isMobile) {
+      setScheduled((prev) => {
+        const target = prev[activeDay] ?? [];
+        if (target.some((x) => x.id === item.id)) return prev;
+        return { ...prev, [activeDay]: [...target, item] };
+      });
+    } else {
+      setSelectedEvent(item as unknown as EventItem);
+    }
+  }
 
   // ── Drag & Drop ───────────────────────────────
   function handleDragStart(e: React.DragEvent, item: CartItem) {
@@ -288,8 +351,11 @@ export default function PlannerPage() {
                     onDragStart={(e) => handleDragStart(e, item)}
                     className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 bg-gray-50 cursor-grab active:cursor-grabbing hover:shadow-sm transition-shadow group"
                   >
-                    {/* 썸네일 */}
-                    <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-200">
+                    {/* 썸네일 — 클릭 시 모달 */}
+                    <div
+                      className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-200 cursor-pointer"
+                      onClick={() => setSelectedEvent(item as unknown as EventItem)}
+                    >
                       {item.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -306,16 +372,27 @@ export default function PlannerPage() {
                       )}
                     </div>
 
-                    {/* 정보 */}
-                    <div className="flex-1 min-w-0">
+                    {/* 정보 — 클릭 시 모달 */}
+                    <div
+                      className="flex-1 min-w-0 cursor-pointer"
+                      onClick={() => setSelectedEvent(item as unknown as EventItem)}
+                    >
                       <p className="text-xs font-bold text-gray-900 truncate">{item.shortName}</p>
                       <p className="text-[10px] text-gray-400 mt-0.5">
                         {item.stage} · {item.recommendedDurationMinutes}min
                       </p>
                     </div>
 
-                    {/* 드래그 핸들 */}
-                    <span className="text-gray-300 text-base group-hover:text-gray-500 transition-colors">⠿</span>
+                    {/* [+] 모바일 즉시 추가 버튼 */}
+                    <button
+                      onClick={() => handleUnscheduledClick(item, true)}
+                      title={`Add to Day ${activeDay + 1}`}
+                      className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-white text-xs font-black transition-colors hover:opacity-80 sm:hidden"
+                      style={{ backgroundColor: "#f97316" }}
+                    >+</button>
+
+                    {/* 드래그 핸들 (데스크탑) */}
+                    <span className="hidden sm:inline text-gray-300 text-base group-hover:text-gray-500 transition-colors">⠿</span>
                   </li>
                 ))}
               </ul>
@@ -409,6 +486,14 @@ export default function PlannerPage() {
           <div className="h-20" />
         </main>
       </div>
+
+      {/* ── EventDetailModal ────────────────────── */}
+      {selectedEvent && (
+        <EventDetailModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   );
 }

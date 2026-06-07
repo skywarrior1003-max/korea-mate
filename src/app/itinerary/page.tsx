@@ -7,6 +7,7 @@ import { generateItinerary } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { getCart } from "@/lib/cart";
 import type { CartItem } from "@/lib/cart";
+import { readPlannerSnapshot, PLANNER_EVENT } from "@/lib/plannerStore";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -270,10 +271,19 @@ function ItineraryResult() {
     try { localStorage.setItem(key, JSON.stringify(days)); } catch { /* ignore */ }
   }, [days, key]);
 
-  // ── 찜한 장소 불러오기 ──────────────────────────────────
+  // ── 찜한 장소 불러오기 + 플래너 변경 시 실시간 갱신 ───
   useEffect(() => {
     setSavedItems(getCart());
   }, [showSaved]);
+
+  useEffect(() => {
+    const refresh = () => setSavedItems(getCart());
+    window.addEventListener(PLANNER_EVENT, refresh);
+    return () => window.removeEventListener(PLANNER_EVENT, refresh);
+  }, []);
+
+  // ── 플래너 저장 날짜 배지 (헤더용) ──────────────────
+  const plannerMeta = readPlannerSnapshot();
 
   // ── 장소 삭제 ───────────────────────────────────────────────
   function deletePlace(dayNumber: number, placeIndex: number) {
@@ -348,9 +358,16 @@ function ItineraryResult() {
       {/* 헤더 카드 */}
       <div className="bg-white rounded-3xl p-8 border border-[#E6DFD5] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
-          <span className="text-xs font-black bg-[#EAE3D2] text-[#8C6239] px-3 py-1 rounded-md uppercase tracking-wider">
-            {travelStyle} Trip
-          </span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-black bg-[#EAE3D2] text-[#8C6239] px-3 py-1 rounded-md uppercase tracking-wider">
+              {travelStyle} Trip
+            </span>
+            {plannerMeta && (
+              <span className="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-md flex items-center gap-1">
+                🔗 Synced with My Planner · {plannerMeta.numDays}d
+              </span>
+            )}
+          </div>
           <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520] mt-3">Your {city} Itinerary</h1>
           <p className="text-[#61554D] mt-2 text-base font-bold">
             📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
