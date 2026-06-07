@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import TimelineView from "@/components/TimelineView";
 import DatePicker from "@/components/DatePicker";
@@ -63,19 +63,20 @@ function saveSnapshot(snap: PlannerSnapshot) {
 export default function PlannerPage() {
 
   // ── 장바구니 / 여행 설정 상태 ─────────────────
+  // 초기값은 항상 기본값 → hydration mismatch 방지
   const [cartItems,    setCartItems]    = useState<CartItem[]>([]);
-
-  // localStorage 에서 복원하거나 기본값 사용
-  const initial = loadSnapshot();
-  const [numDays,      setNumDays]      = useState(initial?.numDays      ?? 3);
-  const [startDate,    setStartDate]    = useState(initial?.startDate    ?? "");
+  const [numDays,      setNumDays]      = useState(3);
+  const [startDate,    setStartDate]    = useState("");
   const [arrivalTimes, setArrivalTimes] = useState<string[]>(
-    initial?.arrivalTimes ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+    Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
   );
   const [scheduled,    setScheduled]    = useState<ScheduledMap>({});
   const [activeDay,    setActiveDay]    = useState(0);
   const [dragOver,     setDragOver]     = useState<number | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
+
+  // autoSave 스킵 카운터 — restore 직후 빈 상태 덮어쓰기 방지
+  const skipSaveRef = useRef(0);
 
   // ── 장바구니 동기화 ───────────────────────────
   const refreshCart = useCallback(() => setCartItems(getCart()), []);
@@ -85,22 +86,33 @@ export default function PlannerPage() {
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, [refreshCart]);
 
-  // ── localStorage 에서 scheduled 복원 ─────────
+  // ── localStorage 복원 (마운트 1회) — 반드시 auto-save 보다 앞에 선언 ─
   useEffect(() => {
     const snap = loadSnapshot();
-    if (!snap || !snap.scheduledIds) return;
+    if (!snap) return;
+
+    // 복원할 항목이 있을 때만 auto-save를 1회 건너뜀
+    skipSaveRef.current = 1;
+
+    setNumDays(snap.numDays ?? 3);
+    setStartDate(snap.startDate ?? "");
+    setArrivalTimes(
+      snap.arrivalTimes ?? Array.from({ length: 7 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+    );
+
     const cart = getCart();
     const restored: ScheduledMap = {};
-    for (const [k, ids] of Object.entries(snap.scheduledIds)) {
-      restored[Number(k)] = ids
+    for (const [k, ids] of Object.entries(snap.scheduledIds ?? {})) {
+      restored[Number(k)] = (ids as string[])
         .map((id) => cart.find((c) => c.id === id))
         .filter((x): x is CartItem => x !== null && x !== undefined);
     }
     setScheduled(restored);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── scheduled 변경 시 자동 저장 ──────────────
+  // ── auto-save: 복원 직후 1회 스킵 후 이후 변경마다 저장 ──
   useEffect(() => {
+    if (skipSaveRef.current > 0) { skipSaveRef.current--; return; }
     const scheduledIds: Record<number, string[]> = {};
     for (const [k, items] of Object.entries(scheduled)) {
       scheduledIds[Number(k)] = items.map((x) => x.id);

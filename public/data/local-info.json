@@ -12,9 +12,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B2%BD%EB%B3%B5%EA%B6%81",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#Palace", "#UNESCO", "#History", "#PhotoSpot", "#KDrama"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Palace",
+      "#UNESCO",
+      "#History",
+      "#PhotoSpot",
+      "#KDrama"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "image": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=400"
@@ -33,8 +44,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Hanok", "#PhotoSpot", "#TraditionalKorea", "#Architecture", "#KDrama"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Hanok",
+      "#PhotoSpot",
+      "#TraditionalKorea",
+      "#Architecture",
+      "#KDrama"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true
   },
@@ -51,9 +70,21 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%AA%85%EB%8F%99",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "22:00" },
-    "tags": ["#StreetFood", "#Shopping", "#KBeauty", "#Tteokbokki", "#CashOnly"],
-    "relatedSurvivalGuides": ["payments", "solo-dining"],
+    "openingHours": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#StreetFood",
+      "#Shopping",
+      "#KBeauty",
+      "#Tteokbokki",
+      "#CashOnly"
+    ],
+    "relatedSurvivalGuides": [
+      "payments",
+      "solo-dining"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -72,9 +103,21 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B4%91%EC%9E%A5%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "08:00", "close": "22:00" },
-    "tags": ["#TraditionalMarket", "#Bindaetteok", "#Yukhoe", "#SoloFriendly", "#CashOnly"],
-    "relatedSurvivalGuides": ["payments", "solo-dining"],
+    "openingHours": {
+      "open": "08:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#TraditionalMarket",
+      "#Bindaetteok",
+      "#Yukhoe",
+      "#SoloFriendly",
+      "#CashOnly"
+    ],
+    "relatedSurvivalGuides": [
+      "payments",
+      "solo-dining"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true
@@ -92,9 +135,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%82%A8%EC%82%B0%EC%84%9C%EC%9A%B8%ED%83%80%EC%9B%8C",
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "23:00" },
-    "tags": ["#NightView", "#BTS", "#LoveLock", "#Panorama", "#PhotoSpot"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "23:00"
+    },
+    "tags": [
+      "#NightView",
+      "#BTS",
+      "#LoveLock",
+      "#Panorama",
+      "#PhotoSpot"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "image": "https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=400"
@@ -113,8 +167,17 @@
     "durationMinutes": 120,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#Beach", "#Summer", "#Seafood", "#Sunrise", "#PhotoSpot"],
-    "relatedSurvivalGuides": ["getting-around", "solo-dining"],
+    "tags": [
+      "#Beach",
+      "#Summer",
+      "#Seafood",
+      "#Sunrise",
+      "#PhotoSpot"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around",
+      "solo-dining"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400"
@@ -132,9 +195,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B0%90%EC%B2%9C%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#ColorfulVillage", "#Art", "#Mural", "#BTS", "#PhotoSpot"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#ColorfulVillage",
+      "#Art",
+      "#Mural",
+      "#BTS",
+      "#PhotoSpot"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true
   },
@@ -151,9 +225,21 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "21:00" },
-    "tags": ["#Seafood", "#FishMarket", "#LocalFood", "#SoloFriendly", "#CashOnly"],
-    "relatedSurvivalGuides": ["payments", "solo-dining"],
+    "openingHours": {
+      "open": "07:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#Seafood",
+      "#FishMarket",
+      "#LocalFood",
+      "#SoloFriendly",
+      "#CashOnly"
+    ],
+    "relatedSurvivalGuides": [
+      "payments",
+      "solo-dining"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -172,9 +258,21 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%A0%9C%EC%A3%BC%EB%8F%99%EB%AC%B8%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "20:00" },
-    "tags": ["#Jeju", "#TraditionalMarket", "#BlackPork", "#Hallabong", "#LocalFood"],
-    "relatedSurvivalGuides": ["payments", "solo-dining"],
+    "openingHours": {
+      "open": "07:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#Jeju",
+      "#TraditionalMarket",
+      "#BlackPork",
+      "#Hallabong",
+      "#LocalFood"
+    ],
+    "relatedSurvivalGuides": [
+      "payments",
+      "solo-dining"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -193,9 +291,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%95%9C%EB%9D%BC%EC%82%B0",
     "durationMinutes": 300,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "06:00", "close": "13:00" },
-    "tags": ["#Hiking", "#Nature", "#UNESCO", "#Jeju", "#NationalPark"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "06:00",
+      "close": "13:00"
+    },
+    "tags": [
+      "#Hiking",
+      "#Nature",
+      "#UNESCO",
+      "#Jeju",
+      "#NationalPark"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true
@@ -213,9 +322,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%88%EA%B5%AD%EC%82%AC",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "18:00" },
-    "tags": ["#Temple", "#UNESCO", "#Buddhism", "#History", "#KDrama"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "07:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Temple",
+      "#UNESCO",
+      "#Buddhism",
+      "#History",
+      "#KDrama"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true
   },
@@ -233,8 +353,16 @@
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#Beach", "#GwanganBridge", "#NightView", "#Seafood", "#PhotoSpot"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Beach",
+      "#GwanganBridge",
+      "#NightView",
+      "#Seafood",
+      "#PhotoSpot"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true
   },
@@ -252,8 +380,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#NightView", "#Hiking", "#PhotoSpot", "#Busan", "#NatureFree"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#NightView",
+      "#Hiking",
+      "#PhotoSpot",
+      "#Busan",
+      "#NatureFree"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -273,8 +409,16 @@
     "durationMinutes": 180,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Hiking", "#Forest", "#Waterfall", "#Haeundae", "#NatureFree"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Hiking",
+      "#Forest",
+      "#Waterfall",
+      "#Haeundae",
+      "#NatureFree"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -294,8 +438,16 @@
     "durationMinutes": 150,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#CoastalWalk", "#Cliffs", "#OceanView", "#NatureFree", "#Oryukdo"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#CoastalWalk",
+      "#Cliffs",
+      "#OceanView",
+      "#NatureFree",
+      "#Oryukdo"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -311,13 +463,24 @@
     "address": "63 Yuwol-daero, Nam-gu, Busan (부산광역시 남구 유엔평화로 63)",
     "description": "The flagship civic museum tracing Busan's history from prehistoric times through the Goryeo and Joseon dynasties to the modern port era. Permanent galleries display bronze-age dolmens, celadon celadons, and wartime relics. The UN Memorial Cemetery garden next door adds a moving international dimension.",
     "whyItMatters": "Best single stop to understand Busan's 5,000-year arc — free admission, bilingual labels.",
-    "mapUrl": "https://maps.google.com/?q=%EB%B6%80%EC%82%B0%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "mapUrl": "https://maps.google.com/maps?q=35.1416,129.0842&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EB%B0%95%EB%AC%BC%EA%B4%80",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#Museum", "#History", "#FreeEntry", "#BusanHeritage", "#Korean"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Museum",
+      "#History",
+      "#FreeEntry",
+      "#BusanHeritage",
+      "#Korean"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -337,9 +500,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B3%B5%EC%B2%9C%EB%8F%99%EA%B3%A0%EB%B6%84%EA%B5%B0",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#Gaya", "#AncientTombs", "#Archaeology", "#FreeEntry", "#DongnaeHistory"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Gaya",
+      "#AncientTombs",
+      "#Archaeology",
+      "#FreeEntry",
+      "#DongnaeHistory"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -359,9 +533,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#ModernHistory", "#Colonial", "#Architecture", "#FreeEntry", "#JungGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#ModernHistory",
+      "#Colonial",
+      "#Architecture",
+      "#FreeEntry",
+      "#JungGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -377,13 +562,21 @@
     "address": "Yeongdo Bridge, Jung-gu / Yeongdo-gu, Busan (영도대교, 부산)",
     "description": "Korea's first drawbridge, built in 1934, still lifts its central span at 14:00 daily for a crowd-pleasing 15-minute spectacle. The bridge connects Jung-gu to Yeongdo Island and became famous in Korean War lore as a meeting point for separated families. The waterfront promenade on both sides is perfect for evening walks.",
     "whyItMatters": "Daily lift at 14:00 is one of Busan's most photographed moments — arrive 10 min early.",
-    "mapUrl": "https://maps.google.com/?q=%EC%98%81%EB%8F%84%EB%8C%80%EA%B5%90+%EB%B6%80%EC%82%B0",
+    "mapUrl": "https://maps.google.com/maps?q=35.0967,129.0339&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%98%81%EB%8F%84%EB%8C%80%EA%B5%90",
     "durationMinutes": 30,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#Drawbridge", "#KoreanWarHistory", "#Landmark", "#Yeongdo", "#Architecture"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Drawbridge",
+      "#KoreanWarHistory",
+      "#Landmark",
+      "#Yeongdo",
+      "#Architecture"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -404,8 +597,16 @@
     "durationMinutes": 30,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#NightView", "#Bridge", "#HarborView", "#CableStay", "#BusanSkyline"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#NightView",
+      "#Bridge",
+      "#HarborView",
+      "#CableStay",
+      "#BusanSkyline"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -426,8 +627,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Fortress", "#JoseonHistory", "#ImjinWar", "#Heritage", "#DongnaeGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Fortress",
+      "#JoseonHistory",
+      "#ImjinWar",
+      "#Heritage",
+      "#DongnaeGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -448,8 +657,16 @@
     "durationMinutes": 45,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Fortress", "#JapaneseHistory", "#PortView", "#FreeEntry", "#HiddenGem"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Fortress",
+      "#JapaneseHistory",
+      "#PortView",
+      "#FreeEntry",
+      "#HiddenGem"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -465,13 +682,24 @@
     "address": "73 Simingongwon-ro, Busanjin-gu, Busan (부산광역시 부산진구 시민공원로 73)",
     "description": "A 473,000 m² park built on the former U.S. military base Camp Hialeah. The grounds combine wetland ecology, cultural pavilions, forests, and a history museum documenting the base's 50-year presence. Cherry blossoms in spring and firefly events in summer draw massive local crowds.",
     "whyItMatters": "Busan's central park — huge open space in the city core, free, and culturally symbolic as reclaimed military land.",
-    "mapUrl": "https://maps.google.com/?q=%EB%B6%80%EC%82%B0%EC%8B%9C%EB%AF%BC%EA%B3%B5%EC%9B%90",
+    "mapUrl": "https://maps.google.com/maps?q=35.1679,129.0656&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EC%8B%9C%EB%AF%BC%EA%B3%B5%EC%9B%90",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "05:00", "close": "22:00" },
-    "tags": ["#Park", "#CherryBlossoms", "#FreeEntry", "#Wetlands", "#BusanjinGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "05:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#Park",
+      "#CherryBlossoms",
+      "#FreeEntry",
+      "#Wetlands",
+      "#BusanjinGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -492,8 +720,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#CherryBlossoms", "#Riverside", "#FreeEntry", "#Spring", "#Cycling"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#CherryBlossoms",
+      "#Riverside",
+      "#FreeEntry",
+      "#Spring",
+      "#Cycling"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -509,17 +745,25 @@
     "address": "Hineyeoul Cultural Village, Yeongdo-gu, Busan (흰여울문화마을, 영도구, 부산)",
     "description": "Cliffside lanes of pastel-painted cottages hanging above the Korea Strait on Yeongdo Island. The village was a Korean War refugee settlement; today artists occupy the studios and rooftop cafés peer out over the sea. The film 'Ode to My Father' was shot here. Steep alleys lead down to a natural swimming hole.",
     "whyItMatters": "Most atmospheric village in Busan — better than Gamcheon for authenticity and sea views.",
-    "mapUrl": "https://maps.google.com/?q=%ED%9D%B0%EC%97%AC%EC%9A%B8%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84",
+    "mapUrl": "https://maps.google.com/maps?q=35.0855,129.0186&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%9D%B0%EC%97%AC%EC%9A%B8%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#MuralVillage", "#Yeongdo", "#SeaView", "#KoreanWarHistory", "#Café"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#MuralVillage",
+      "#Yeongdo",
+      "#SeaView",
+      "#KoreanWarHistory",
+      "#Café"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400"
+    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400"
   },
   {
     "id": 26,
@@ -531,13 +775,24 @@
     "address": "58 Lowernam-ro 100beon-gil, Saha-gu, Busan (부산광역시 사하구 낙동남로 100번길 58)",
     "description": "A striking waterfront museum on Eulsukdo Island dedicated to contemporary and new media art. The permanent collection spans Korean and international artists, while the outdoor sculpture garden stretches to the Nakdong estuary. The building's geometric white form mirrors in the river at dusk.",
     "whyItMatters": "World-class contemporary art in a dramatic wetland setting — and it's free for permanent galleries.",
-    "mapUrl": "https://maps.google.com/?q=%EB%B6%80%EC%82%B0%ED%98%84%EB%8C%80%EB%AF%B8%EC%88%A0%EA%B4%80",
+    "mapUrl": "https://maps.google.com/maps?q=35.0978,128.8438&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%ED%98%84%EB%8C%80%EB%AF%B8%EC%88%A0%EA%B4%80",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "18:00" },
-    "tags": ["#ContemporaryArt", "#Museum", "#Eulsukdo", "#FreeEntry", "#SculptureGarden"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#ContemporaryArt",
+      "#Museum",
+      "#Eulsukdo",
+      "#FreeEntry",
+      "#SculptureGarden"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -557,9 +812,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%95%84%ED%99%89%EC%82%B0%EC%88%B2",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "17:00" },
-    "tags": ["#BambooForest", "#NatureWalk", "#GijangForest", "#Meditative", "#HiddenGem"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "17:00"
+    },
+    "tags": [
+      "#BambooForest",
+      "#NatureWalk",
+      "#GijangForest",
+      "#Meditative",
+      "#HiddenGem"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -580,8 +846,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#Beach", "#Sunset", "#MusicalFountain", "#FreeEntry", "#SahaGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Beach",
+      "#Sunset",
+      "#MusicalFountain",
+      "#FreeEntry",
+      "#SahaGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -597,13 +871,21 @@
     "address": "Jukseong-ri, Gijang-gun, Busan (기장군 죽성리 드림성당)",
     "description": "A small Spanish-style stone chapel built on a rocky sea outcrop for a Korean TV drama set in medieval Spain. The chapel has no religious function — it's pure cinematic scenery — but the backdrop of waves crashing against rocks below makes it one of Korea's most photographed spots. Best visited at golden hour.",
     "whyItMatters": "The most photogenic 'fake' landmark in Korea — the K-drama backdrop that became a real pilgrimage.",
-    "mapUrl": "https://maps.google.com/?q=%EA%B8%B0%EC%9E%A5+%EC%A3%BD%EC%84%B1%EB%93%9C%EB%A6%BC%EC%84%B1%EB%8B%B9",
+    "mapUrl": "https://maps.google.com/maps?q=35.2622,129.2311&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%A3%BD%EC%84%B1%EB%93%9C%EB%A6%BC%EC%84%B1%EB%8B%B9",
     "durationMinutes": 45,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#KDrama", "#PhotoSpot", "#Chapel", "#SeaView", "#GijangCoast"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#KDrama",
+      "#PhotoSpot",
+      "#Chapel",
+      "#SeaView",
+      "#GijangCoast"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -619,13 +901,21 @@
     "address": "Cheongsapo-ro, Haeundae-gu, Busan (해운대구 청사포로)",
     "description": "A small fishing village tucked between Haeundae and Dalmaji Hill where two red-and-white lighthouses stand at the end of a narrow pier. The Blueline Park sky train passes overhead on a clifftop track. Sea-view cafés perch on the rocks, and the morning catch is sold from boats moored at the dock.",
     "whyItMatters": "Photogenic fishing village with sky train, lighthouses, and some of Busan's best cliff-top cafés.",
-    "mapUrl": "https://maps.google.com/?q=%EC%B2%AD%EC%82%AC%ED%8F%AC+%ED%95%B4%EC%9A%B4%EB%8C%80",
+    "mapUrl": "https://maps.google.com/maps?q=35.1796,129.2102&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%B2%AD%EC%82%AC%ED%8F%AC",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#FishingVillage", "#Lighthouse", "#Café", "#SkyTrain", "#HaeundaeGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#FishingVillage",
+      "#Lighthouse",
+      "#Café",
+      "#SkyTrain",
+      "#HaeundaeGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -641,13 +931,21 @@
     "address": "BIFF Square, Nampo-dong, Jung-gu, Busan (남포동 BIFF광장, 중구, 부산)",
     "description": "The pedestrian heart of old Busan, paved with handprints of Korean cinema's greatest directors and stars. Every October the streets transform into the Busan International Film Festival's red-carpet zone. Year-round, street vendors sell ssiat hotteok (seed pancakes) and the old cinemas still project indie films.",
     "whyItMatters": "The Times Square of Korean cinema — even without BIFF season the street energy and hotteok are legendary.",
-    "mapUrl": "https://maps.google.com/?q=BIFF%EA%B4%91%EC%9E%A5+%EB%82%A8%ED%8F%AC%EB%8F%99",
+    "mapUrl": "https://maps.google.com/maps?q=35.0979,129.0306&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/BIFF%EA%B4%91%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#BIFF", "#FilmFestival", "#Nampo", "#StreetFood", "#Hotteok"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#BIFF",
+      "#FilmFestival",
+      "#Nampo",
+      "#StreetFood",
+      "#Hotteok"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -667,9 +965,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B5%AD%EC%A0%9C%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "19:00" },
-    "tags": ["#TraditionalMarket", "#KoreanWarHistory", "#Shopping", "#JungGu", "#LocalLife"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "19:00"
+    },
+    "tags": [
+      "#TraditionalMarket",
+      "#KoreanWarHistory",
+      "#Shopping",
+      "#JungGu",
+      "#LocalLife"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -690,8 +999,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#Marina", "#Yacht", "#Sunset", "#OryukdoView", "#NamGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Marina",
+      "#Yacht",
+      "#Sunset",
+      "#OryukdoView",
+      "#NamGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -711,9 +1028,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%95%B4%EC%96%91%EC%9E%90%EC%97%B0%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#NaturalHistory", "#Dinosaurs", "#Marine", "#Museum", "#FamilyFriendly"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#NaturalHistory",
+      "#Dinosaurs",
+      "#Marine",
+      "#Museum",
+      "#FamilyFriendly"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -733,9 +1061,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EB%AC%B8%ED%99%94%ED%9A%8C%EA%B4%80",
     "durationMinutes": 120,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "10:00", "close": "22:00" },
-    "tags": ["#ConcertHall", "#ClassicalMusic", "#SculptureGarden", "#BSO", "#NamGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#ConcertHall",
+      "#ClassicalMusic",
+      "#SculptureGarden",
+      "#BSO",
+      "#NamGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -756,8 +1095,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#FishingVillage", "#Haenyeo", "#SeaView", "#RockStacks", "#GijangCoast"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#FishingVillage",
+      "#Haenyeo",
+      "#SeaView",
+      "#RockStacks",
+      "#GijangCoast"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -777,9 +1124,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EC%8B%9C%EB%A6%BD%EB%AF%B8%EC%88%A0%EA%B4%80",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "20:00" },
-    "tags": ["#ArtMuseum", "#KoreanArt", "#Haeundae", "#SculptureGarden", "#FreeEvening"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#ArtMuseum",
+      "#KoreanArt",
+      "#Haeundae",
+      "#SculptureGarden",
+      "#FreeEvening"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -800,8 +1158,16 @@
     "durationMinutes": 30,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#NightView", "#Bridge", "#Yeongdo", "#HarborView", "#Free"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#NightView",
+      "#Bridge",
+      "#Yeongdo",
+      "#HarborView",
+      "#Free"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -822,8 +1188,16 @@
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Park", "#HikingTrail", "#CityView", "#FreeEntry", "#Spring"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Park",
+      "#HikingTrail",
+      "#CityView",
+      "#FreeEntry",
+      "#Spring"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -844,8 +1218,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "evening",
     "openingHours": null,
-    "tags": ["#Beach", "#NightLife", "#GwanganBridge", "#Fireworks", "#CaféStreet"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Beach",
+      "#NightLife",
+      "#GwanganBridge",
+      "#Fireworks",
+      "#CaféStreet"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -866,12 +1248,20 @@
     "durationMinutes": 240,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Mountain", "#Hiking", "#FortressWall", "#MakgeolliVillage", "#GeumjeongGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Mountain",
+      "#Hiking",
+      "#FortressWall",
+      "#MakgeolliVillage",
+      "#GeumjeongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
-    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400"
+    "image": "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400"
   },
   {
     "id": 42,
@@ -888,8 +1278,16 @@
     "durationMinutes": 150,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#CypressForest", "#ForestBathing", "#Hiking", "#Phytoncide", "#BusanjinGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#CypressForest",
+      "#ForestBathing",
+      "#Hiking",
+      "#Phytoncide",
+      "#BusanjinGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -909,9 +1307,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%9D%84%EC%88%99%EB%8F%84",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#Birdwatching", "#MigratoryBirds", "#Wetland", "#NakdongRiver", "#FreeEntry"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Birdwatching",
+      "#MigratoryBirds",
+      "#Wetland",
+      "#NakdongRiver",
+      "#FreeEntry"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -927,13 +1336,21 @@
     "address": "Amnam Park, Seo-gu, Busan (암남공원, 서구, 부산)",
     "description": "A forested headland on Busan's west side with dramatically carved sea caves at the base of the cliffs. The 3km loop trail winds through pine woods with alternating sea views. The natural swimming pools hidden in the rocks are stunning at low tide. One of Busan's least-visited but most beautiful coastal parks.",
     "whyItMatters": "The coast of the gods — natural rock arches, sea caves, and zero crowds on weekdays.",
-    "mapUrl": "https://maps.google.com/?q=%EC%95%94%EB%82%A8%EA%B3%B5%EC%9B%90+%EB%B6%80%EC%82%B0",
+    "mapUrl": "https://maps.google.com/maps?q=35.0605,129.0161&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%95%94%EB%82%A8%EA%B3%B5%EC%9B%90",
     "durationMinutes": 120,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#SeaCaves", "#CoastalForest", "#HikingTrail", "#HiddenBeach", "#SeoGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#SeaCaves",
+      "#CoastalForest",
+      "#HikingTrail",
+      "#HiddenBeach",
+      "#SeoGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -949,13 +1366,21 @@
     "address": "Morundae, Saha-gu, Busan (몰운대, 사하구, 부산)",
     "description": "A pine-forested headland whose name means 'place where clouds sink' — morning sea fog rolls in so thick the pine trees appear to float. The trail edges dramatic black basalt cliffs above the churning Korea Strait. The lighthouse at the tip is unmanned but photogenic. Largely unknown to tourists.",
     "whyItMatters": "Most atmospheric coastal walk in Busan — the sea fog creates scenes straight from a ink brush painting.",
-    "mapUrl": "https://maps.google.com/?q=%EB%AA%B0%EC%9A%B4%EB%8C%80+%EC%82%AC%ED%95%98%EA%B5%AC",
+    "mapUrl": "https://maps.google.com/maps?q=35.0395,128.9674&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%AA%B0%EC%9A%B4%EB%8C%80",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#SeaCliffs", "#SeaFog", "#PineForest", "#Lighthouse", "#HiddenGem"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#SeaCliffs",
+      "#SeaFog",
+      "#PineForest",
+      "#Lighthouse",
+      "#HiddenGem"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -976,8 +1401,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#Beach", "#Uncrowded", "#CleanWater", "#RailBike", "#GijangCoast"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Beach",
+      "#Uncrowded",
+      "#CleanWater",
+      "#RailBike",
+      "#GijangCoast"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -998,8 +1431,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Valley", "#StreamWading", "#Temple", "#Autumn", "#GeumjeongGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Valley",
+      "#StreamWading",
+      "#Temple",
+      "#Autumn",
+      "#GeumjeongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1020,8 +1461,16 @@
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#FishingHarbor", "#Sunrise", "#FreshSeafood", "#NakdongEstuary", "#SahaGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#FishingHarbor",
+      "#Sunrise",
+      "#FreshSeafood",
+      "#NakdongEstuary",
+      "#SahaGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1042,8 +1491,16 @@
     "durationMinutes": 180,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Island", "#Lighthouse", "#Octopus", "#KoreaStrait", "#GangseoGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Island",
+      "#Lighthouse",
+      "#Octopus",
+      "#KoreaStrait",
+      "#GangseoGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1064,8 +1521,16 @@
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#CoastalTrail", "#BasaltCliffs", "#TidePools", "#Osiria", "#GijangCoast"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#CoastalTrail",
+      "#BasaltCliffs",
+      "#TidePools",
+      "#Osiria",
+      "#GijangCoast"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1086,8 +1551,16 @@
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Anchovy", "#FishingHarbor", "#SeafoodFresh", "#GijangCoast", "#Festival"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Anchovy",
+      "#FishingHarbor",
+      "#SeafoodFresh",
+      "#GijangCoast",
+      "#Festival"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1103,13 +1576,24 @@
     "address": "Songdo Beach, Seo-gu, Busan (송도해수욕장, 서구, 부산)",
     "description": "Korea's first public beach (opened 1913) now features a transparent sea cable car suspended 86m above the water, a cliffside sky walk with glass-floor sections, and a newly restored beach promenade. The cable car runs from the beach to Amnam Park in 10 minutes. The cloud bridge walkway at night glows with LED lighting.",
     "whyItMatters": "Classic Busan beach + the most thrilling cable car ride in Korea — glass floors above the open sea.",
-    "mapUrl": "https://maps.google.com/?q=%EC%86%A1%EB%8F%84%ED%95%B4%EC%83%81%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4",
+    "mapUrl": "https://maps.google.com/maps?q=35.0761,129.0142&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%86%A1%EB%8F%84%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "21:00" },
-    "tags": ["#CableCar", "#SkyWalk", "#GlassFloor", "#Beach", "#SeoGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#CableCar",
+      "#SkyWalk",
+      "#GlassFloor",
+      "#Beach",
+      "#SeoGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -1130,12 +1614,20 @@
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#Rapeseed", "#Spring", "#YellowFlowers", "#Cycling", "#FreeEntry"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Rapeseed",
+      "#Spring",
+      "#YellowFlowers",
+      "#Cycling",
+      "#FreeEntry"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
-    "image": "https://images.unsplash.com/photo-1504883347609-f4e55f7c6ca9?w=400"
+    "image": "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=400"
   },
   {
     "id": 54,
@@ -1152,8 +1644,16 @@
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#PampasGrass", "#Autumn", "#RiverPark", "#Cycling", "#Camping"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#PampasGrass",
+      "#Autumn",
+      "#RiverPark",
+      "#Cycling",
+      "#Camping"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1169,13 +1669,24 @@
     "address": "250 Beomeosa-ro, Geumjeong-gu, Busan (부산광역시 금정구 범어사로 250)",
     "description": "A thousand-year-old Buddhist temple on the forested slope of Geumjeongsan, founded in 678 AD. The three-story stone pagoda and the ethereal pine grove behind the main hall are designated national treasures. Temple stay programs run year-round; meditation sessions are open to foreigners. The path from the bus stop through ancient gingko trees is magical in November.",
     "whyItMatters": "Busan's spiritual heart — a living temple with 1,300 years of continuous use and gorgeous autumn colour.",
-    "mapUrl": "https://maps.google.com/?q=%EB%B2%94%EC%96%B4%EC%82%AC+%EA%B8%88%EC%A0%95%EA%B5%AC",
+    "mapUrl": "https://maps.google.com/maps?q=35.277,129.0815&z=17",
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B2%94%EC%96%B4%EC%82%AC",
     "durationMinutes": 90,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "04:00", "close": "19:00" },
-    "tags": ["#BuddhistTemple", "#Heritage", "#ForestTemple", "#TempleStay", "#GeumjeongGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "04:00",
+      "close": "19:00"
+    },
+    "tags": [
+      "#BuddhistTemple",
+      "#Heritage",
+      "#ForestTemple",
+      "#TempleStay",
+      "#GeumjeongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1196,8 +1707,16 @@
     "durationMinutes": 150,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#HiddenTrail", "#Peninsula", "#WildCoast", "#SeaView", "#SahaGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#HiddenTrail",
+      "#Peninsula",
+      "#WildCoast",
+      "#SeaView",
+      "#SahaGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1218,8 +1737,16 @@
     "durationMinutes": 180,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#Mountain", "#ForestTrail", "#Reservoir", "#LocalFavorite", "#SeoGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Mountain",
+      "#ForestTrail",
+      "#Reservoir",
+      "#LocalFavorite",
+      "#SeoGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1239,9 +1766,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%82%99%EB%8F%99%EA%B0%95%ED%95%98%EA%B5%AC%EC%83%9D%ED%83%9C%EA%B3%B5%EC%9B%90",
     "durationMinutes": 120,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#Wetland", "#Birdwatching", "#BoatTour", "#Cycling", "#NakdongRiver"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#Wetland",
+      "#Birdwatching",
+      "#BoatTour",
+      "#Cycling",
+      "#NakdongRiver"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1262,8 +1800,16 @@
     "durationMinutes": 120,
     "bestTimeSlot": "morning",
     "openingHours": null,
-    "tags": ["#HarborView", "#CypressForest", "#HikingTrail", "#UrbanMountain", "#DongGu"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#HarborView",
+      "#CypressForest",
+      "#HikingTrail",
+      "#UrbanMountain",
+      "#DongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1284,8 +1830,16 @@
     "durationMinutes": 30,
     "bestTimeSlot": "afternoon",
     "openingHours": null,
-    "tags": ["#Observatory", "#GamcheonView", "#Sunset", "#PhotoSpot", "#FreeEntry"],
-    "relatedSurvivalGuides": ["getting-around"],
+    "tags": [
+      "#Observatory",
+      "#GamcheonView",
+      "#Sunset",
+      "#PhotoSpot",
+      "#FreeEntry"
+    ],
+    "relatedSurvivalGuides": [
+      "getting-around"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": false,
@@ -1305,9 +1859,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "08:00", "close": "22:00" },
-    "tags": ["#Sashimi", "#FreshFish", "#JagalchiMarket", "#KoreanSeafood", "#LocalFood"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "08:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#Sashimi",
+      "#FreshFish",
+      "#JagalchiMarket",
+      "#KoreanSeafood",
+      "#LocalFood"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1327,9 +1892,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%EC%95%94%EC%86%8C%EA%B0%88%EB%B9%84",
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "11:30", "close": "22:00" },
-    "tags": ["#Galbi", "#BeefRibs", "#KoreanBBQ", "#Haeundae", "#LocalFood"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "11:30",
+      "close": "22:00"
+    },
+    "tags": [
+      "#Galbi",
+      "#BeefRibs",
+      "#KoreanBBQ",
+      "#Haeundae",
+      "#LocalFood"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -1349,9 +1925,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%94%A8%EC%95%97%ED%98%B8%EB%96%A1+%EB%82%A8%ED%8F%AC%EB%8F%99",
     "durationMinutes": 15,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "20:00" },
-    "tags": ["#StreetFood", "#Hotteok", "#BIFFSquare", "#BusanSnack", "#SeedPancake"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#StreetFood",
+      "#Hotteok",
+      "#BIFFSquare",
+      "#BusanSnack",
+      "#SeedPancake"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1371,13 +1958,24 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%A0%84%EC%8B%9C%EC%9E%A5%EC%88%9C%EB%8C%80%EA%B5%AD%EB%B0%A5",
     "durationMinutes": 30,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "06:00", "close": "15:00" },
-    "tags": ["#SundaeGukbap", "#MarketFood", "#EarlyMorning", "#LocalBreakfast", "#BusanjinGu"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "06:00",
+      "close": "15:00"
+    },
+    "tags": [
+      "#SundaeGukbap",
+      "#MarketFood",
+      "#EarlyMorning",
+      "#LocalBreakfast",
+      "#BusanjinGu"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
-    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400"
+    "image": "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400"
   },
   {
     "id": 65,
@@ -1393,9 +1991,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%84%9C%EB%A9%B4%EC%A7%AC%EB%BD%95",
     "durationMinutes": 45,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "21:00" },
-    "tags": ["#Jjamppong", "#KoreanChinese", "#SeafoodNoodle", "#Spicy", "#Seomyeon"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#Jjamppong",
+      "#KoreanChinese",
+      "#SeafoodNoodle",
+      "#Spicy",
+      "#Seomyeon"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -1415,9 +2024,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B8%B0%EC%9E%A5%EB%8F%BC%EC%A7%80%EA%B5%AD%EB%B0%A5",
     "durationMinutes": 30,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "16:00" },
-    "tags": ["#PorkSoup", "#Gukbap", "#BusanFood", "#LocalBreakfast", "#GijangGun"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "07:00",
+      "close": "16:00"
+    },
+    "tags": [
+      "#PorkSoup",
+      "#Gukbap",
+      "#BusanFood",
+      "#LocalBreakfast",
+      "#GijangGun"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1437,9 +2057,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%AF%BC%EB%9D%BD%EC%88%98%EB%B3%80%EA%B3%B5%EC%9B%90",
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "18:00", "close": "02:00" },
-    "tags": ["#Pojangmacha", "#LateNight", "#LiveOctopus", "#GwanganView", "#Suyeong"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "18:00",
+      "close": "02:00"
+    },
+    "tags": [
+      "#Pojangmacha",
+      "#LateNight",
+      "#LiveOctopus",
+      "#GwanganView",
+      "#Suyeong"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1459,9 +2090,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%82%A8%ED%8F%AC%EB%8F%99%EC%96%B4%EB%AC%B5",
     "durationMinutes": 20,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "20:00" },
-    "tags": ["#FishCake", "#Eomuk", "#StreetFood", "#BusanSpecialty", "#NampoDong"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#FishCake",
+      "#Eomuk",
+      "#StreetFood",
+      "#BusanSpecialty",
+      "#NampoDong"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1481,9 +2123,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%97%B0%EC%82%B0%EB%8F%99%EC%88%9C%EB%8C%80%ED%83%80%EC%9A%B4",
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "01:00" },
-    "tags": ["#Sundae", "#Gopchang", "#Offal", "#NightMarket", "#YeonjeGu"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "17:00",
+      "close": "01:00"
+    },
+    "tags": [
+      "#Sundae",
+      "#Gopchang",
+      "#Offal",
+      "#NightMarket",
+      "#YeonjeGu"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1503,9 +2156,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B8%B0%EC%9E%A5%ED%95%B4%EB%AC%BC%ED%8C%8C%EC%A0%84",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "20:00" },
-    "tags": ["#Pajeon", "#SeafoodPancake", "#Makgeolli", "#GijangFood", "#TraditionalFood"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "11:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#Pajeon",
+      "#SeafoodPancake",
+      "#Makgeolli",
+      "#GijangFood",
+      "#TraditionalFood"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1525,9 +2189,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%8F%99%EB%9E%98%ED%8C%8C%EC%A0%84",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "20:00" },
-    "tags": ["#Pajeon", "#DongraeFood", "#RoyalCuisine", "#Heritage", "#TraditionalFood"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "11:00",
+      "close": "20:00"
+    },
+    "tags": [
+      "#Pajeon",
+      "#DongraeFood",
+      "#RoyalCuisine",
+      "#Heritage",
+      "#TraditionalFood"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1547,9 +2222,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EB%B0%80%EB%A9%B4",
     "durationMinutes": 30,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "21:00" },
-    "tags": ["#Milmyeon", "#ColdNoodles", "#BusanSpecialty", "#KoreanWarFood", "#Seomyeon"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#Milmyeon",
+      "#ColdNoodles",
+      "#BusanSpecialty",
+      "#KoreanWarFood",
+      "#Seomyeon"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1569,9 +2255,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%B4%88%EB%9F%89%EC%9D%B4%EB%B0%94%EA%B5%AC%EA%B8%B8",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "21:00" },
-    "tags": ["#Café", "#HeritageAlley", "#KoreanWarHistory", "#PortView", "#DongGu"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#Café",
+      "#HeritageAlley",
+      "#KoreanWarHistory",
+      "#PortView",
+      "#DongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -1591,9 +2288,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%88%98%EC%98%81%EA%B5%AC%EC%B9%B4%ED%8E%98",
     "durationMinutes": 90,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "10:00", "close": "22:00" },
-    "tags": ["#SpecialtyCoffee", "#Trendy", "#BreakfastCafe", "#NaturalWine", "#SuyeongGu"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "10:00",
+      "close": "22:00"
+    },
+    "tags": [
+      "#SpecialtyCoffee",
+      "#Trendy",
+      "#BreakfastCafe",
+      "#NaturalWine",
+      "#SuyeongGu"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": true,
     "cashOnly": false,
@@ -1613,9 +2321,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%EC%83%9D%EC%84%A0%EA%B5%AC%EC%9D%B4",
     "durationMinutes": 60,
     "bestTimeSlot": "morning",
-    "openingHours": { "open": "07:00", "close": "15:00" },
-    "tags": ["#GrilledFish", "#Mackerel", "#KoreanBreakfast", "#TraditionalFood", "#Haeundae"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "07:00",
+      "close": "15:00"
+    },
+    "tags": [
+      "#GrilledFish",
+      "#Mackerel",
+      "#KoreanBreakfast",
+      "#TraditionalFood",
+      "#Haeundae"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1635,13 +2354,24 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%84%9C%EB%A9%B4%ED%8F%AC%EC%9E%A5%EB%A7%88%EC%B0%A8",
     "durationMinutes": 60,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "18:00", "close": "03:00" },
-    "tags": ["#Pojangmacha", "#LateNight", "#StreetFood", "#Tteokbokki", "#Seomyeon"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "18:00",
+      "close": "03:00"
+    },
+    "tags": [
+      "#Pojangmacha",
+      "#LateNight",
+      "#StreetFood",
+      "#Tteokbokki",
+      "#Seomyeon"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
-    "image": "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=400"
+    "image": "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=400"
   },
   {
     "id": 77,
@@ -1657,9 +2387,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EC%98%81%EB%8F%84%ED%8F%AC%EC%B0%A8",
     "durationMinutes": 90,
     "bestTimeSlot": "evening",
-    "openingHours": { "open": "17:00", "close": "01:00" },
-    "tags": ["#Pojangmacha", "#RawFishSalad", "#HarborView", "#LateNight", "#Yeongdo"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "17:00",
+      "close": "01:00"
+    },
+    "tags": [
+      "#Pojangmacha",
+      "#RawFishSalad",
+      "#HarborView",
+      "#LateNight",
+      "#Yeongdo"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1679,9 +2420,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%EC%A0%84%ED%86%B5%EC%8B%9C%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "09:00", "close": "18:00" },
-    "tags": ["#TraditionalMarket", "#LocalFood", "#GalbiTang", "#Pajeon", "#Haeundae"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "tags": [
+      "#TraditionalMarket",
+      "#LocalFood",
+      "#GalbiTang",
+      "#Pajeon",
+      "#Haeundae"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": true,
     "foreignCardAccepted": false,
     "cashOnly": true,
@@ -1701,9 +2453,20 @@
     "naverMapUrl": "https://map.naver.com/v5/search/%EA%B8%B0%EC%9E%A5%EA%BD%83%EA%B2%8C%EC%9E%A5",
     "durationMinutes": 60,
     "bestTimeSlot": "afternoon",
-    "openingHours": { "open": "11:00", "close": "21:00" },
-    "tags": ["#Gejang", "#MarinatedCrab", "#BobDouk", "#Gijang", "#KoreanDelicacy"],
-    "relatedSurvivalGuides": ["food-guide"],
+    "openingHours": {
+      "open": "11:00",
+      "close": "21:00"
+    },
+    "tags": [
+      "#Gejang",
+      "#MarinatedCrab",
+      "#BobDouk",
+      "#Gijang",
+      "#KoreanDelicacy"
+    ],
+    "relatedSurvivalGuides": [
+      "food-guide"
+    ],
     "soloFriendly": false,
     "foreignCardAccepted": false,
     "cashOnly": true,

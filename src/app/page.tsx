@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -55,7 +55,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "A 1.8km white-sand stretch in Haeundae-gu, open year-round. Street food stalls line the beachfront (tteokbokki, sundae, fish cake). The stretch from Haeundae to Dalmaji Hill offers a quieter, scenic walk. Sunrise views from the east end are exceptional. Free entry. Foreign cards accepted at most cafés and restaurants nearby.",
     mapUrl: "https://maps.google.com/maps?q=35.15845,129.16027&z=17",
-    naverMapUrl: "https://map.naver.com/v5/search/해운대해수욕장?c=35.15845,129.16027,15,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/해운대해수욕장",
     durationMinutes: 120,
     bestTimeSlot: "afternoon",
     openingHours: null,
@@ -76,7 +76,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "A hillside maze of pastel houses, murals, and art installations built on a steep slope in Saha-gu. Open 09:00–18:00 daily (closed some Mondays). Entry map available at the visitor center for ₩2,000 (redeemable as café stamp). Wear comfortable shoes — the alleys are steep and uneven. No large vehicles; arrive by bus or taxi. Foreign cards accepted at the souvenir shops.",
     mapUrl: "https://maps.google.com/maps?q=35.09771,129.01268&z=17",
-    naverMapUrl: "https://map.naver.com/v5/search/감천문화마을?c=35.09771,129.01268,15,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/감천문화마을",
     durationMinutes: 90,
     bestTimeSlot: "morning",
     openingHours: { open: "09:00", close: "18:00" },
@@ -97,7 +97,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "Korea's largest seafood market, open since 1971. Ground floor vendors sell live fish, abalone, crab, and shellfish. Take your pick upstairs to a cooking booth — they'll prepare it in minutes. Solo dining is completely normal; just point at what you want. Open 07:00–21:00 daily. Mostly cash only; bring ₩20,000–₩40,000 for a full solo meal. The market is a 2-min walk from Jagalchi subway station.",
     mapUrl: "https://maps.google.com/maps?q=35.09734,129.03011&z=17",
-    naverMapUrl: "https://map.naver.com/v5/search/자갈치시장?c=35.09734,129.03011,15,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/자갈치시장",
     durationMinutes: 60,
     bestTimeSlot: "morning",
     openingHours: { open: "07:00", close: "21:00" },
@@ -119,7 +119,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "A 1.4km sandy beach lined with independent cafés, bars, and seafood restaurants — hipper and less crowded than Haeundae. The landmark Gwangan Bridge (광안대교) stretches 7.4km across the bay and lights up nightly. Arrive at sunset and stay through the bridge lighting (around 20:00). Foreign cards accepted everywhere along the strip. The beach itself is free; parking is limited, so the subway is recommended.",
     mapUrl: "https://maps.google.com/maps?q=35.15328,129.11867&z=17",
-    naverMapUrl: "https://map.naver.com/v5/search/광안리해수욕장?c=35.15328,129.11867,15,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/광안리해수욕장",
     durationMinutes: 90,
     bestTimeSlot: "evening",
     openingHours: null,
@@ -140,7 +140,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "Hwangnyeongsan (황령산, 427m) sits at the geographic center of Busan, offering unobstructed 360° views of the city, Gwangalli Bridge, and the ocean. The summit is reached in about 40 minutes via the main trail. Go after 19:00 for the city-light panorama. Wear non-slip shoes; the trail is rocky after rain. Free entry, no facilities at the top — bring water. Bus 41 or 42 from Yeonsan-dong stops at the trailhead. No subway access; a taxi (₩5,000–₩8,000) is easiest.",
     mapUrl: "https://maps.google.com/maps?q=35.16867,129.08802&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/황령산전망대?c=35.16867,129.08802,14,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/황령산전망대",
     durationMinutes: 120,
     bestTimeSlot: "evening",
     openingHours: null,
@@ -162,7 +162,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "Jangsan (장산, 634m) is the highest peak in Haeundae-gu. Multiple trails range from easy valley walks (1hr round trip) to full summit routes (3hr). The valley path features small waterfalls and pine-scented air. The summit offers partial views of the East Sea on clear days. Free entry. Take Line 2 to Jangsan Station (Exit 7) and walk 15 minutes uphill to the main entrance. Bring water; no refreshment stands on the trail. Suitable for solo hikers — the trail is well-marked in Korean and partially in English.",
     mapUrl: "https://maps.google.com/maps?q=35.20543,129.17343&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/장산등산로입구?c=35.20543,129.17343,14,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/장산등산로입구",
     durationMinutes: 180,
     bestTimeSlot: "morning",
     openingHours: null,
@@ -184,7 +184,7 @@ const BUSAN_SPOTS: LocalInfo[] = [
     description:
       "Igidae (이기대) is a 4.7km coastal cliff trail in Nam-gu connecting Oryukdo Skywalk to Gwangalli Beach. The path runs along the edge of sheer sea cliffs with views across the bay toward Haeundae. Highlights include sea caves, tidal pools, and wildflowers (spring). Difficulty: easy-moderate. The trail is paved in sections and has wooden boardwalks along the cliff edges. Entrance near Oryukdo Skywalk: Bus 27 or 131 from Gwangalli or Namcheon Station. Free entry. Bring water — no vending facilities on the trail. Allow 2.5–3 hours for the full route.",
     mapUrl: "https://maps.google.com/maps?q=35.11040,129.11945&z=15",
-    naverMapUrl: "https://map.naver.com/v5/search/이기대해안산책로?c=35.11040,129.11945,14,0,0,0,dh",
+    naverMapUrl: "https://map.naver.com/v5/search/이기대해안산책로",
     durationMinutes: 150,
     bestTimeSlot: "afternoon",
     openingHours: null,
@@ -380,38 +380,19 @@ export default function Home() {
 
   // ── BTS 아리랑 가이드 모달 (가상 라우팅 포함) ────
   const [showBTSGuide, setShowBTSGuide] = useState(false);
-  const btsOpenRef = useRef(false);
 
-  // URL에 ?modal=bts 가 있으면 자동 오픈, popstate 수신 시 닫기
+  // showBTSGuide 가 true 가 되면 history에 1엔트리 추가 + popstate 리스너 등록.
+  // 뒤로가기 → popstate → false → 클린업(리스너 제거). URL 은 절대 건드리지 않음.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.location.search.includes("modal=bts")) {
-      setShowBTSGuide(true);
-      btsOpenRef.current = true;
-    }
-    const handlePop = () => {
-      if (btsOpenRef.current) {
-        closeBTSGuide();
-        btsOpenRef.current = false;
-      }
-    };
+    if (!showBTSGuide) return;
+    window.history.pushState({ btsModal: true }, "");
+    function handlePop() { setShowBTSGuide(false); }
     window.addEventListener("popstate", handlePop);
     return () => window.removeEventListener("popstate", handlePop);
-  }, []);
+  }, [showBTSGuide]);
 
-  function openBTSGuide() {
-    setShowBTSGuide(true);
-    btsOpenRef.current = true;
-    window.history.pushState({ btsModal: true }, "", "?modal=bts");
-  }
-
-  function closeBTSGuide() {
-    closeBTSGuide();
-    btsOpenRef.current = false;
-    if (window.location.search.includes("modal=bts")) {
-      window.history.replaceState({}, "", window.location.pathname);
-    }
-  }
+  function openBTSGuide()  { setShowBTSGuide(true);  }
+  function closeBTSGuide() { setShowBTSGuide(false); }
 
   const router = useRouter();
 
