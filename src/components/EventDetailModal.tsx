@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
 import { addToCart, removeFromCart, isInCart } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
@@ -159,13 +160,14 @@ export default function EventDetailModal({ event, onClose }: Props) {
   const naverUrl     = buildNaverMapUrl(event);
   const koreanAddr   = extractKoreanAddress(event.address);
   const naverKeyword = getNaverDisplayKeyword(event);
-  const klookUrl     = process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj";
-  const cableCarUrl  = process.env.NEXT_PUBLIC_CABLE_CAR_URL || "https://www.klook.com/en-US/search-results/?query=busan+songdo+cable+car";
-
   const isCableCarRelated =
     event.name.toLowerCase().includes("cable") ||
     event.name.toLowerCase().includes("송도") ||
     event.tags.some((t) => t.toLowerCase().includes("cable"));
+
+  const showViator  = isViatorEligible(event.type);
+  const showBooking = isBookingEligible(event.type);
+  const showKlook   = isCableCarRelated || event.type === "transport";
 
   return (
     <div
@@ -401,59 +403,72 @@ export default function EventDetailModal({ event, onClose }: Props) {
             </div>
           )}
 
-          {/* 수익화 CTA — 프리미엄 차량 예약 */}
-          <div className="rounded-2xl overflow-hidden border-2 border-orange-200">
-            <div className="bg-gradient-to-r from-[#1a1f36] to-[#2d3a6b] px-5 py-4">
-              <p className="text-xs font-black text-orange-400 uppercase tracking-widest mb-1">✈️ Premium Service</p>
-              <p className="text-base font-black text-white">Book Chauffeur / Airport Transfer</p>
-              <p className="text-xs text-white/70 mt-1">Private car from Gimhae Airport → Hotel. English driver, fixed price.</p>
-            </div>
-            <a
-              href={klookUrl}
-              target="_blank"
-              rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between px-5 py-3.5 bg-orange-50 hover:bg-orange-100 transition-colors group"
-            >
-              <span className="text-sm font-bold text-orange-700">Book Premium Transfer →</span>
-              <span className="text-lg group-hover:translate-x-1 transition-transform">🚗</span>
-            </a>
-          </div>
+          {/* ── Affiliate CTAs — smart routing by event type ── */}
 
-          {/* 케이블카 예약 (관련 스팟에서만 노출) */}
-          {isCableCarRelated && (
+          {/* Tier 1 — Viator (tours / activities / attractions) */}
+          {showViator && (
             <a
-              href={cableCarUrl}
+              href={VIATOR.searchUrl(event.name)}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between w-full rounded-2xl px-5 py-4 bg-sky-50 border-2 border-sky-200 hover:bg-sky-100 transition-colors group"
+              className="flex items-center justify-between w-full rounded-2xl overflow-hidden border-2 border-emerald-200 bg-emerald-50 hover:bg-emerald-100 transition-colors group"
             >
-              <div>
-                <p className="text-xs font-bold text-sky-600 uppercase tracking-wider">🚡 Songdo Sky Capsule</p>
-                <p className="text-sm font-semibold text-gray-800 mt-0.5">Book Cable Car Experience →</p>
+              <div className="px-5 py-4">
+                <p className="text-xs font-black text-emerald-600 uppercase tracking-widest mb-0.5">🌿 Tours &amp; Experiences</p>
+                <p className="text-sm font-bold text-gray-800">Book this experience on Viator →</p>
+                <p className="text-xs text-gray-500 mt-0.5">English guides · Free cancellation · Best price guarantee</p>
               </div>
-              <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+              <span className="text-2xl pr-5 group-hover:translate-x-1 transition-transform">→</span>
             </a>
           )}
 
-          {/* 기존 제휴 CTA */}
-          {event.commerce.hasAffiliate && event.commerce.affiliateUrl && event.commerce.affiliatePartner && (
+          {/* Tier 2 — Booking.com (hotels near this spot) */}
+          {showBooking && (
             <a
-              href={event.commerce.affiliateUrl}
+              href={BOOKING.nearUrl(event.name)}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between w-full rounded-2xl px-5 py-4 border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors group"
+              className="flex items-center justify-between w-full rounded-2xl overflow-hidden border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 transition-colors group"
             >
-              <div>
-                <p className="text-xs font-bold text-orange-600 uppercase tracking-wider">Book via {event.commerce.affiliatePartner}</p>
-                <p className="text-sm font-semibold text-gray-800 mt-0.5">
-                  {event.commerce.affiliateType === "booking" ? "Reserve accommodation nearby →"
-                   : event.commerce.affiliateType === "activity" ? "Book this experience →"
-                   : event.commerce.affiliateType === "transport" ? "Get your transit card →"
-                   : "Explore partner deals →"}
-                </p>
+              <div className="px-5 py-4">
+                <p className="text-xs font-black text-blue-600 uppercase tracking-widest mb-0.5">🏨 Stay Nearby</p>
+                <p className="text-sm font-bold text-gray-800">Find hotels near this spot →</p>
+                <p className="text-xs text-gray-500 mt-0.5">Booking.com · No booking fees · Instant confirmation</p>
               </div>
-              <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+              <span className="text-2xl pr-5 group-hover:translate-x-1 transition-transform">→</span>
             </a>
+          )}
+
+          {/* Tier 3 — Klook (transport & cable car only) */}
+          {showKlook && (
+            isCableCarRelated ? (
+              <a
+                href={KLOOK.cableCarUrl}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="flex items-center justify-between w-full rounded-2xl px-5 py-4 bg-sky-50 border-2 border-sky-200 hover:bg-sky-100 transition-colors group"
+              >
+                <div>
+                  <p className="text-xs font-bold text-sky-600 uppercase tracking-wider">🚡 Songdo Sky Capsule</p>
+                  <p className="text-sm font-semibold text-gray-800 mt-0.5">Book Cable Car Experience →</p>
+                </div>
+                <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            ) : (
+              <a
+                href={KLOOK.transferUrl}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="flex items-center justify-between w-full rounded-2xl overflow-hidden border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors group"
+              >
+                <div className="px-5 py-4">
+                  <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">✈️ Airport Transfer</p>
+                  <p className="text-sm font-bold text-gray-800">Book Chauffeur / Airport Transfer →</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Private car · English driver · Fixed price</p>
+                </div>
+                <span className="text-2xl pr-5 group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            )
           )}
 
           {/* 티켓 구매 링크 */}
