@@ -7,7 +7,7 @@ import { generateItinerary } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { getCart } from "@/lib/cart";
 import type { CartItem } from "@/lib/cart";
-import { readPlannerSnapshot, PLANNER_EVENT } from "@/lib/plannerStore";
+import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 
@@ -287,13 +287,14 @@ function ItineraryResult() {
   const [slotSearch,    setSlotSearch]    = useState("");
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
-  const [itinId,     setItinId]     = useState<string | null>(null);
-  const [syncStatus, setSyncStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
-  const [copied,     setCopied]     = useState(false);
+  const [itinId,      setItinId]      = useState<string | null>(null);
+  const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [syncFading,  setSyncFading]  = useState(false);
+  const [copied,      setCopied]      = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── 플래너 뱃지용 ────────────────────────────────────────
-  const plannerMeta = readPlannerSnapshot();
+  // ── 플래너 뱃지 (koreamate_planner_meta 경량 키로 반응형 읽기) ─
+  const [plannerMeta, setPlannerMeta] = useState<{ numDays: number; startDate: string } | null>(null);
 
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
@@ -394,11 +395,27 @@ function ItineraryResult() {
         device_id: getDeviceId(),
       });
       setSyncStatus(ok ? "saved" : "error");
-      if (ok) setTimeout(() => setSyncStatus("idle"), 3000);
+      if (ok) {
+        setTimeout(() => setSyncFading(true), 2500);
+        setTimeout(() => { setSyncStatus("idle"); setSyncFading(false); }, 3000);
+      }
     }, 1500);
 
     return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
   }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── 플래너 메타 뱃지 (반응형) ────────────────────────────
+  useEffect(() => {
+    const read = () => {
+      try {
+        const raw = localStorage.getItem("koreamate_planner_meta");
+        setPlannerMeta(raw ? (JSON.parse(raw) as { numDays: number; startDate: string }) : null);
+      } catch { setPlannerMeta(null); }
+    };
+    read();
+    window.addEventListener(PLANNER_EVENT, read);
+    return () => window.removeEventListener(PLANNER_EVENT, read);
+  }, []);
 
   // ── 찜한 장소 동기화 ────────────────────────────────────
   useEffect(() => { setSavedItems(getCart()); }, [showSaved]);
@@ -538,7 +555,7 @@ function ItineraryResult() {
               </span>
             )}
             {syncStatus === "saved" && (
-              <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+              <span className={`text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full transition-opacity duration-500 ${syncFading ? "opacity-0" : "opacity-100"}`}>
                 ☁️ Saved to cloud
               </span>
             )}

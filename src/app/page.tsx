@@ -409,10 +409,10 @@ export default function Home() {
   function closeBTSGuide() {
     setShowBTSGuide(false);
     setTimeout(() => {
-      document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" });
       setSearchHighlight(true);
       setTimeout(() => setSearchHighlight(false), 2200);
-    }, 350);
+    }, 700);
   }
 
   const router = useRouter();
@@ -673,11 +673,11 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" })}
               className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-black text-white shadow-lg transition-opacity hover:opacity-90 cursor-pointer"
               style={{ backgroundColor: "#f97316" }}
             >
-              🔥 See Trending Events →
+              🔥 View Featured Events →
             </button>
             <Link
               href="/survival-guide"
@@ -911,7 +911,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
                   style={{ backgroundColor: "#22c55e", color: "#fff" }}
                 >
-                  Book Transfer Now →
+                  Explore Busan Trends →
                 </a>
                 <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
               </div>

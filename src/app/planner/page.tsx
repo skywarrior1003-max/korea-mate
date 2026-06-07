@@ -12,11 +12,7 @@ import {
   type CartItem,
   type EventItem,
 } from "@/lib/cart";
-import {
-  PLANNER_KEY,
-  PLANNER_EVENT,
-  type PlannerSnapshot,
-} from "@/lib/plannerStore";
+import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertPlannerSession, fetchPlannerSession } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 
@@ -42,22 +38,6 @@ interface TripDay {
 }
 
 type ScheduledMap = Record<number, CartItem[]>;
-
-// ── localStorage 헬퍼 ────────────────────────────
-function loadSnapshot(): PlannerSnapshot | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(PLANNER_KEY);
-    return raw ? (JSON.parse(raw) as PlannerSnapshot) : null;
-  } catch { return null; }
-}
-
-function saveSnapshot(snap: PlannerSnapshot) {
-  try {
-    localStorage.setItem(PLANNER_KEY, JSON.stringify(snap));
-    window.dispatchEvent(new CustomEvent(PLANNER_EVENT));
-  } catch { /* ignore */ }
-}
 
 const PLANNER_SB_ID_KEY = "koreamate_planner_sb_id";
 
@@ -98,18 +78,6 @@ function PlannerContent() {
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, [refreshCart]);
 
-  // ── UUID 초기화 (일반 모드) ───────────────────
-  useEffect(() => {
-    if (shareId) return;
-    let id: string | null = null;
-    try { id = localStorage.getItem(PLANNER_SB_ID_KEY); } catch {}
-    if (!id) {
-      id = crypto.randomUUID();
-      try { localStorage.setItem(PLANNER_SB_ID_KEY, id); } catch {}
-    }
-    setPlannerSbId(id);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   // ── 공유 링크 로드 (?id=UUID) ─────────────────
   useEffect(() => {
     if (!shareId) return;
@@ -123,47 +91,50 @@ function PlannerContent() {
       setArrivalTimes(
         record.arrival_times ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
       );
-      // Supabase에서 전체 CartItem 데이터를 복원 (크로스 디바이스 공유 지원)
       setScheduled((record.scheduled as ScheduledMap) ?? {});
       setSyncStatus("saved");
     });
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── localStorage 복원 (일반 모드, 마운트 1회) ─
+  // ── UUID 초기화 + Supabase 우선 복원 (일반 모드, 마운트 1회) ─
   useEffect(() => {
     if (shareId) return;
-    const snap = loadSnapshot();
-    if (!snap) return;
 
-    skipSaveRef.current = 1;
+    // 낡은 v1 캐시 일회성 철거
+    try { localStorage.removeItem("koreamate_planner_v1"); } catch {}
 
-    setNumDays(snap.numDays ?? 3);
-    setStartDate(snap.startDate ?? "");
-    setArrivalTimes(
-      snap.arrivalTimes ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
-    );
-
-    const cart = getCart();
-    const restored: ScheduledMap = {};
-    for (const [k, ids] of Object.entries(snap.scheduledIds ?? {})) {
-      restored[Number(k)] = (ids as string[])
-        .map((id) => cart.find((c) => c.id === id))
-        .filter((x): x is CartItem => x !== null && x !== undefined);
+    let id: string | null = null;
+    try { id = localStorage.getItem(PLANNER_SB_ID_KEY); } catch {}
+    if (!id) {
+      id = crypto.randomUUID();
+      try { localStorage.setItem(PLANNER_SB_ID_KEY, id); } catch {}
     }
-    setScheduled(restored);
+    setPlannerSbId(id);
+
+    // Supabase에서 플래너 복원 (AI 일정 포함 전체 데이터)
+    fetchPlannerSession(id).then(record => {
+      if (!record) return;
+      skipSaveRef.current = 1;
+      setNumDays(record.num_days ?? 3);
+      setStartDate(record.start_date ?? "");
+      setArrivalTimes(
+        record.arrival_times ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+      );
+      setScheduled((record.scheduled as ScheduledMap) ?? {});
+      setSyncStatus("saved");
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── auto-save: 변경마다 localStorage + Supabase 동기화 ──
+  // ── auto-save: 변경마다 Supabase 동기화 (localStorage 캐시 제거) ──
   useEffect(() => {
     if (skipSaveRef.current > 0) { skipSaveRef.current--; return; }
 
-    // localStorage 저장 (공유 뷰에서는 자신의 플래너를 덮어쓰지 않음)
+    // 경량 메타(numDays, startDate)만 localStorage에 유지 → itinerary 뱃지용
     if (!isShareView) {
-      const scheduledIds: Record<number, string[]> = {};
-      for (const [k, items] of Object.entries(scheduled)) {
-        scheduledIds[Number(k)] = items.map((x) => x.id);
-      }
-      saveSnapshot({ startDate, numDays, arrivalTimes, scheduledIds, updatedAt: Date.now() });
+      try {
+        localStorage.setItem("koreamate_planner_meta", JSON.stringify({ numDays, startDate }));
+        window.dispatchEvent(new CustomEvent(PLANNER_EVENT));
+      } catch { /* ignore */ }
     }
 
     // Supabase 디바운스 동기화 (1.5s)

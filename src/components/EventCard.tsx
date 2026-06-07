@@ -38,6 +38,9 @@ export default function EventCard({ event, onClick }: Props) {
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
 
+  // imgError 상태를 이벤트 ID 변경 시 초기화 (카테고리 전환 후 이미지 꼬임 방지)
+  useEffect(() => { setImgError(false); }, [event.id]);
+
   useEffect(() => {
     setFavorited(isFavorited(event.id));
     const handler = () => setFavorited(isFavorited(event.id));
