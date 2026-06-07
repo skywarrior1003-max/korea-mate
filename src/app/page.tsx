@@ -488,29 +488,31 @@ export default function Home() {
 
       {/* ── 상단 상업 배너 ─────────────────────────────────────── */}
       <div
-        className="py-2.5 px-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8 text-sm"
+        className="py-2 px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-8 text-sm"
         style={{ backgroundColor: "#1a1f36" }}
       >
-        <div className="flex items-center gap-3">
-          <span className="text-white/80 font-medium">📱 Stay connected — Korea eSIM</span>
+        {/* eSIM 행 — 모바일: full-width 양끝 정렬, 데스크탑: inline */}
+        <div className="flex items-center justify-between gap-3 w-full sm:w-auto">
+          <span className="text-white/80 font-medium text-xs sm:text-sm">📱 Stay connected — Korea eSIM</span>
           <a
             href="https://affiliate.klook.com/sl/KiT3U74"
             target="_blank"
             rel="noopener noreferrer sponsored"
-            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white transition-opacity hover:opacity-90"
+            className="shrink-0 inline-flex items-center px-4 py-2.5 sm:px-3 sm:py-1 rounded-full text-xs font-bold text-white transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#f97316" }}
           >
             Get eSIM →
           </a>
         </div>
         <div className="hidden sm:block w-px h-4 bg-white/20" />
-        <div className="flex items-center gap-3">
-          <span className="text-white/80 font-medium">✈️ Airport → Hotel transfer</span>
+        {/* 공항 픽업 행 — 모바일: full-width 양끝 정렬, 데스크탑: inline */}
+        <div className="flex items-center justify-between gap-3 w-full sm:w-auto">
+          <span className="text-white/80 font-medium text-xs sm:text-sm">✈️ Airport → Hotel transfer</span>
           <a
             href="https://affiliate.klook.com/sl/21FkAvj"
             target="_blank"
             rel="noopener noreferrer sponsored"
-            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold transition-opacity hover:opacity-90"
+            className="shrink-0 inline-flex items-center px-4 py-2.5 sm:px-3 sm:py-1 rounded-full text-xs font-bold transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#22c55e", color: "#fff" }}
           >
             Book Transfer →
@@ -1328,6 +1330,32 @@ export default function Home() {
                   <li>• Hotel near <strong className="text-green-300">Yeonje-gu or Haeundae</strong> — easiest return route</li>
                   <li>• Post-concert: Gwangalli Beach (광안리) is ARMY gathering point</li>
                 </ul>
+              </div>
+
+              {/* 구글 지도 내비게이션 버튼 */}
+              <div className="rounded-2xl bg-white/5 border border-white/10 p-5 space-y-3">
+                <p className="text-xs font-black text-purple-300 uppercase tracking-widest">🗺️ Open in Maps</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Busan+Asiad+Main+Stadium"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-black text-white bg-blue-600 hover:bg-blue-500 transition-colors"
+                  >
+                    📍 Stadium Location
+                  </a>
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&origin=종합운동장역+9번출구+부산&destination=Busan+Asiad+Main+Stadium&travelmode=walking"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-black text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+                  >
+                    🚶 Exit 9 → Stadium Walk
+                  </a>
+                </div>
+                <p className="text-xs text-white/40 text-center">종합운동장역 9번 출구 → 고가다리 → 북문 (~8분)</p>
               </div>
 
               <button
