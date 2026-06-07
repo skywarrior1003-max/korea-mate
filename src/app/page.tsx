@@ -631,6 +631,7 @@ export default function Home() {
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
             <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
+            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">🗓️ My Trips</Link>
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
@@ -639,13 +640,18 @@ export default function Home() {
               Plan My Trip
             </button>
           </nav>
-          <button
-            onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
-            className="sm:hidden px-4 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
-            style={{ backgroundColor: "#f97316" }}
-          >
-            Plan My Trip
-          </button>
+          <div className="sm:hidden flex items-center gap-2">
+            <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">
+              🗓️ Trips
+            </Link>
+            <button
+              onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
+              className="px-4 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              Plan My Trip
+            </button>
+          </div>
         </div>
       </header>
 

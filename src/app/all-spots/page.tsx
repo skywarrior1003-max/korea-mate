@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -34,12 +34,15 @@ export default function AllSpotsPage() {
   const [search,   setSearch]   = useState("");
   const [selected, setSelected] = useState<EventItem | null>(null);
   const [savedIds, setSavedIds] = useState<string[]>([]);
+  const [page,     setPage]     = useState(1);
+  const ITEMS_PER_PAGE = 24;
 
   useEffect(() => {
     // ?filter= URL 파라미터로 초기 필터 설정 (View All 연동)
     const params = new URLSearchParams(window.location.search);
     const f = params.get("filter");
     if (f && FILTERS.some(fi => fi.key === f)) setFilter(f);
+    setPage(1);
 
     fetch("/data/events.json")
       .then(r => r.json())
@@ -66,18 +69,29 @@ export default function AllSpotsPage() {
     return list;
   }, [events, filter, savedIds, search]);
 
+  const totalPages  = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+  const safePage    = Math.min(page, totalPages);
+  const pageItems   = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
+
+  const resetPage = useCallback(() => setPage(1), []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
 
       {/* 헤더 */}
       <header className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
-          <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
-            <span className="text-2xl">🇰🇷</span>
-            Korea<span style={{ color: "#f97316" }}>Mate</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
+              <span className="text-2xl">🇰🇷</span>
+              Korea<span style={{ color: "#f97316" }}>Mate</span>
+            </Link>
+            <span className="text-gray-300 text-lg">/</span>
+            <h1 className="text-base font-black text-gray-700">All Spots</h1>
+          </div>
+          <Link href="/my-trips" className="shrink-0 px-3 py-1.5 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors">
+            🗓️ My Trips
           </Link>
-          <span className="text-gray-300 text-lg">/</span>
-          <h1 className="text-base font-black text-gray-700">All Spots</h1>
         </div>
       </header>
 
@@ -103,7 +117,7 @@ export default function AllSpotsPage() {
             {FILTERS.map(f => (
               <button
                 key={f.key}
-                onClick={() => setFilter(f.key)}
+                onClick={() => { setFilter(f.key); resetPage(); }}
                 className="shrink-0 px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
                 style={
                   filter === f.key
@@ -122,7 +136,7 @@ export default function AllSpotsPage() {
             {loading ? "Loading…" : `${filtered.length} spot${filtered.length !== 1 ? "s" : ""}`}
             {filter !== "all" && !loading && " · "}
             {filter !== "all" && !loading && (
-              <button onClick={() => { setFilter("all"); setSearch(""); }} className="text-orange-500 font-bold underline">Show all</button>
+              <button onClick={() => { setFilter("all"); setSearch(""); resetPage(); }} className="text-orange-500 font-bold underline">Show all</button>
             )}
           </p>
         </div>
@@ -145,7 +159,7 @@ export default function AllSpotsPage() {
               {filter === "saved" ? "Tap ❤️ on any card to save spots here." : `Try a different search or filter.`}
             </p>
             <button
-              onClick={() => { setFilter("all"); setSearch(""); }}
+              onClick={() => { setFilter("all"); setSearch(""); resetPage(); }}
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
               style={{ backgroundColor: "#f97316" }}
             >
@@ -153,15 +167,62 @@ export default function AllSpotsPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {filtered.map(event => (
-              <EventCard
-                key={event.id}
-                event={event}
-                onClick={() => setSelected(event)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+              {pageItems.map(event => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  onClick={() => setSelected(event)}
+                />
+              ))}
+            </div>
+
+            {/* 페이지네이션 */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-1 mt-10 flex-wrap">
+                <button
+                  onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  disabled={safePage === 1}
+                  className="px-3 py-2 rounded-lg text-sm font-bold border transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50"
+                >
+                  ← Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(n => n === 1 || n === totalPages || Math.abs(n - safePage) <= 1)
+                  .reduce<(number | "…")[]>((acc, n, i, arr) => {
+                    if (i > 0 && (n as number) - (arr[i - 1] as number) > 1) acc.push("…");
+                    acc.push(n);
+                    return acc;
+                  }, [])
+                  .map((n, i) =>
+                    n === "…" ? (
+                      <span key={`ellipsis-${i}`} className="px-2 text-gray-400">…</span>
+                    ) : (
+                      <button
+                        key={n}
+                        onClick={() => { setPage(n as number); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className="w-9 h-9 rounded-lg text-sm font-bold border transition-colors"
+                        style={safePage === n
+                          ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                          : { backgroundColor: "#fff", color: "#374151", borderColor: "#e5e7eb" }
+                        }
+                      >
+                        {n}
+                      </button>
+                    )
+                  )
+                }
+                <button
+                  onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  disabled={safePage === totalPages}
+                  className="px-3 py-2 rounded-lg text-sm font-bold border transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
 
