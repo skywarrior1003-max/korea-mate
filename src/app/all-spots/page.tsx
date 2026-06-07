@@ -90,7 +90,7 @@ export default function AllSpotsPage() {
             <h1 className="text-base font-black text-gray-700">All Spots</h1>
           </div>
           <Link href="/my-trips" className="shrink-0 px-3 py-1.5 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors">
-            🗓️ My Trips
+            🧳 My Trips
           </Link>
         </div>
       </header>

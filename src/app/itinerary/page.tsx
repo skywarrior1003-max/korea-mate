@@ -268,8 +268,9 @@ function ItineraryResult() {
   const [copied,      setCopied]      = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── 플래너 뱃지 (koreamate_planner_meta 경량 키로 반응형 읽기) ─
-  const [plannerMeta, setPlannerMeta] = useState<{ numDays: number; startDate: string } | null>(null);
+  // ── 플래너 뱃지 + 편집 진입용 플래너 세션 ID ─────────────────
+  const [plannerMeta,  setPlannerMeta]  = useState<{ numDays: number; startDate: string } | null>(null);
+  const [plannerSbId,  setPlannerSbId]  = useState<string | null>(null);
 
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
@@ -379,8 +380,14 @@ function ItineraryResult() {
     return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
   }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── 플래너 메타 뱃지 (반응형) ────────────────────────────
+  // ── 플래너 메타 뱃지 + 편집용 세션 ID 읽기 (반응형) ──────
   useEffect(() => {
+    // 편집 화면 진입 시 전달할 planner session ID
+    try {
+      const id = localStorage.getItem("koreamate_planner_sb_id");
+      setPlannerSbId(id);
+    } catch { /* ignore */ }
+
     const read = () => {
       try {
         const raw = localStorage.getItem("koreamate_planner_meta");
@@ -494,7 +501,7 @@ function ItineraryResult() {
               </span>
             )}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520] mt-3">Your {city} Itinerary</h1>
+          <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520] mt-3">My {city} Trip</h1>
           <p className="text-[#61554D] mt-2 text-base font-bold">
             📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
           </p>
@@ -517,7 +524,7 @@ function ItineraryResult() {
 
           {!shareId && (
             <Link
-              href="/planner"
+              href={plannerSbId ? `/planner?id=${plannerSbId}` : "/planner"}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
               style={{ backgroundColor: "#f97316" }}
             >

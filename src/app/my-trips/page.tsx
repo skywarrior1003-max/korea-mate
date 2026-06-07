@@ -65,7 +65,7 @@ function plannerToCard(r: PlannerSessionRow): TripCard {
   return {
     id:        r.id,
     kind:      "planner",
-    title:     "My Planner",
+    title:     "My Plan",
     subtitle:  r.start_date ? `Starts ${r.start_date}` : "Dates not set",
     meta:      `${r.num_days ?? "?"} day${(r.num_days ?? 0) > 1 ? "s" : ""} planned`,
     updatedAt: r.updated_at ?? "",
@@ -153,8 +153,8 @@ export default function MyTripsPage() {
         <div className="flex gap-2 mb-6">
           {([
             { key: "all",       label: "All",           count: trips.length      },
-            { key: "itinerary", label: "AI Itineraries", count: itinCount        },
-            { key: "planner",   label: "Planners",       count: planCount        },
+            { key: "itinerary", label: "AI Trips",   count: itinCount        },
+            { key: "planner",   label: "My Plans",  count: planCount        },
           ] as const).map((f) => (
             <button
               key={f.key}
@@ -193,7 +193,7 @@ export default function MyTripsPage() {
                 {filter === "all" ? "No trips yet" : `No ${filter === "itinerary" ? "AI itineraries" : "planners"} yet`}
               </p>
               <p className="text-sm text-gray-500 max-w-sm">
-                Generate an itinerary or build a planner — it will automatically appear here.
+                Plan a trip or use AI to generate one — it will automatically appear here.
               </p>
             </div>
             <div className="flex gap-3 flex-wrap justify-center">
@@ -208,7 +208,7 @@ export default function MyTripsPage() {
                 href="/itinerary"
                 className="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-700 bg-white border border-gray-200 hover:border-gray-300 transition-colors"
               >
-                AI Itinerary →
+                Plan a Trip →
               </Link>
             </div>
           </div>
@@ -242,7 +242,7 @@ export default function MyTripsPage() {
                             : { backgroundColor: "#EDE9FE", color: "#7c3aed" }
                         }
                       >
-                        {trip.kind === "itinerary" ? "🤖 AI Itinerary" : "📅 Planner"}
+                        {trip.kind === "itinerary" ? "🤖 AI Trip" : "📅 My Plan"}
                       </span>
                       <span className="text-[10px] text-gray-400 font-medium shrink-0 mt-0.5">
                         {timeAgo(trip.updatedAt)}

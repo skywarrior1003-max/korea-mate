@@ -78,13 +78,25 @@ function PlannerContent() {
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, [refreshCart]);
 
-  // ── 공유 링크 로드 (?id=UUID) ─────────────────
+  // ── ?id= 로드: 자기 세션이면 편집 허용, 타인 세션이면 읽기 전용 ──
   useEffect(() => {
     if (!shareId) return;
-    setIsShareView(true);
-    setPlannerSbId(shareId);
     fetchPlannerSession(shareId).then(record => {
       if (!record) return;
+
+      // device_id 비교로 자기 세션 판별
+      const isOwn = record.device_id === getDeviceId();
+      if (isOwn) {
+        // 자기 세션 → 편집 모드, localStorage ID 동기화
+        try { localStorage.setItem(PLANNER_SB_ID_KEY, shareId); } catch {}
+        setPlannerSbId(shareId);
+        setIsShareView(false);
+      } else {
+        // 타인 세션 → 읽기 전용
+        setPlannerSbId(shareId);
+        setIsShareView(true);
+      }
+
       skipSaveRef.current = 1;
       setNumDays(record.num_days ?? 3);
       setStartDate(record.start_date ?? "");
@@ -286,17 +298,25 @@ function PlannerContent() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-4 bg-gray-50">
         <p className="text-5xl">🗺️</p>
-        <h1 className="text-2xl font-black text-gray-900">Your itinerary is empty</h1>
+        <h1 className="text-2xl font-black text-gray-900">No spots saved yet</h1>
         <p className="text-sm text-gray-500 text-center max-w-xs">
-          Add events and spots from the main page first, then come back here to build your timeline.
+          Browse spots and save them to your trip, then come back here to build your plan.
         </p>
-        <Link
-          href="/"
-          className="px-6 py-3 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90"
-          style={{ backgroundColor: "#f97316" }}
-        >
-          ← Explore Events
-        </Link>
+        <div className="flex gap-3 flex-wrap justify-center">
+          <Link
+            href="/all-spots"
+            className="px-6 py-3 rounded-xl font-black text-white text-sm transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#f97316" }}
+          >
+            🔍 Search Spots
+          </Link>
+          <Link
+            href="/"
+            className="px-6 py-3 rounded-xl font-bold text-gray-700 bg-white border border-gray-200 text-sm hover:border-gray-300 transition-colors"
+          >
+            ← Back to Home
+          </Link>
+        </div>
       </div>
     );
   }
@@ -315,7 +335,7 @@ function PlannerContent() {
         </Link>
 
         <h1 className="text-sm font-black text-white">
-          {isShareView ? "Shared Planner" : "My Planner"}
+          {isShareView ? "Shared Trip" : "Edit My Trip"}
         </h1>
 
         <div className="flex items-center gap-3">
@@ -352,7 +372,7 @@ function PlannerContent() {
         <div className="bg-blue-50 border-b border-blue-200 px-5 py-3 flex items-center gap-3">
           <span className="text-base">🔗</span>
           <p className="text-xs font-bold text-blue-700">
-            You&apos;re viewing a shared planner. Your own planner data is not affected.
+            You&apos;re viewing a shared trip. Your own trip data is not affected.
           </p>
         </div>
       )}
@@ -362,6 +382,15 @@ function PlannerContent() {
 
         {/* ── 왼쪽 패널 ── */}
         <aside className="w-full lg:w-80 shrink-0 flex flex-col gap-4">
+
+          {/* Search Spots 브릿지 */}
+          <Link
+            href="/all-spots"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#f97316" }}
+          >
+            🔍 Search Spots
+          </Link>
 
           {/* Trip Setup */}
           <div className="bg-white rounded-2xl shadow-sm p-5">
@@ -588,7 +617,7 @@ export default function PlannerPage() {
       fallback={
         <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50">
           <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500" />
-          <p className="text-sm font-bold text-gray-500">Loading planner…</p>
+          <p className="text-sm font-bold text-gray-500">Loading your trip…</p>
         </div>
       }
     >

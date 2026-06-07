@@ -105,7 +105,7 @@ export default function CartDrawer() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-black text-gray-900">
-                My Itinerary
+                My Trips
                 <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500 text-white">
                   {items.length}
                 </span>
@@ -114,7 +114,7 @@ export default function CartDrawer() {
                 href="/my-trips"
                 className="text-xs font-bold text-orange-500 hover:text-orange-600 hover:underline transition-colors"
               >
-                Archive →
+                My Trips →
               </Link>
             </div>
             <button
@@ -227,7 +227,7 @@ export default function CartDrawer() {
 
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-black text-white">My Itinerary</span>
+              <span className="text-sm font-black text-white">My Trips</span>
               {/* 숫자 뱃지 */}
               <span className="flex items-center justify-center w-5 h-5 rounded-full text-xs font-black text-white bg-orange-500 shrink-0">
                 {items.length}
@@ -257,7 +257,7 @@ export default function CartDrawer() {
           className="shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl font-black text-sm text-white transition-opacity hover:opacity-90 active:scale-95"
           style={{ backgroundColor: "#f97316" }}
         >
-          Build My Timeline
+          Plan My Trip
           <span className="text-base">→</span>
         </button>
 
