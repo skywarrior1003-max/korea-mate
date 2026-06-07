@@ -752,6 +752,51 @@ export default function Home() {
       <section id="spots-main" className="py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+          {/* ── [Section 1] Airport Transfer Banner — Always Visible ── */}
+          <div
+            className="mb-10 rounded-3xl overflow-hidden relative shadow-xl"
+            style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
+          >
+            <div
+              className="absolute inset-0 opacity-20 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 90% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
+              }}
+            />
+            <div className="relative px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-8">
+              <div className="text-center sm:text-left">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-green-400 border border-green-400/30 bg-green-400/10 mb-4 uppercase tracking-widest">
+                  🔥 Must Book First
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
+                  ✈️ Airport → Hotel Transfer
+                </h3>
+                <p className="text-white/70 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
+                  Private limousine pickup from Gimhae/Incheon Airport, delivered straight to your hotel door.
+                  No subway stress. No language barrier. Fixed price, no meter running.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-5">
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ English driver</span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ Fixed price</span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ 24/7 available</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-3 shrink-0">
+                <a
+                  href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
+                  style={{ backgroundColor: "#22c55e", color: "#fff" }}
+                >
+                  Book Transfer Now →
+                </a>
+                <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
+              </div>
+            </div>
+          </div>
+
           {/* ── 통합 검색창 + 필터 탭 ── */}
           <div className="mb-10 text-center">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2">
@@ -839,51 +884,6 @@ export default function Home() {
                 4섹션 구획 모드
             ══════════════════════════════════════════ */
             <div className="space-y-20">
-
-              {/* ── [Section 1] 공항 리무진 픽업 배너 ── */}
-              <div
-                className="rounded-3xl overflow-hidden relative shadow-xl"
-                style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
-              >
-                <div
-                  className="absolute inset-0 opacity-20 pointer-events-none"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 90% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
-                  }}
-                />
-                <div className="relative px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-8">
-                  <div className="text-center sm:text-left">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-green-400 border border-green-400/30 bg-green-400/10 mb-4 uppercase tracking-widest">
-                      🔥 Must Book First
-                    </span>
-                    <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
-                      ✈️ Airport → Hotel Transfer
-                    </h3>
-                    <p className="text-white/70 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
-                      Private limousine pickup from Gimhae/Incheon Airport, delivered straight to your hotel door.
-                      No subway stress. No language barrier. Fixed price, no meter running.
-                    </p>
-                    <div className="flex flex-wrap gap-3 mt-5">
-                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ English driver</span>
-                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ Fixed price</span>
-                      <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ 24/7 available</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-3 shrink-0">
-                    <a
-                      href="https://www.klook.com/en-US/search-results/?query=korea+airport+private+transfer"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
-                      style={{ backgroundColor: "#22c55e", color: "#fff" }}
-                    >
-                      Book Transfer Now →
-                    </a>
-                    <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
-                  </div>
-                </div>
-              </div>
 
               {/* ── [Section 2] Mega Event & K-POP 성지순례 ── */}
               <div>
