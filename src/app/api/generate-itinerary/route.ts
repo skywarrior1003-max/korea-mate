@@ -40,14 +40,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
   }
 
-  let body: { city: string; startDate: string; endDate: string; travelers: string; travelStyle: string };
+  let body: { city: string; startDate: string; endDate: string; travelers: string; travelStyle: string; startLocation?: string; arrivalTime?: string };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { city, startDate, endDate, travelers, travelStyle } = body;
+  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime } = body;
   if (!city || !startDate || !endDate) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
@@ -56,12 +56,28 @@ export async function POST(request: NextRequest) {
   const end = new Date(endDate);
   const numDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
+  // Arrival time logic for Day 1 scheduling
+  const arrivalHour = arrivalTime ? parseInt(arrivalTime.split(":")[0] ?? "14", 10) : 14;
+  const day1Notes = arrivalHour < 12
+    ? `Day 1: Traveler arrives in the morning (${arrivalTime}). Include breakfast near ${startLocation ?? city}, then full morning + afternoon sightseeing.`
+    : arrivalHour < 15
+    ? `Day 1: Traveler arrives around ${arrivalTime}. Skip breakfast/morning activities. Start with check-in or a late lunch near ${startLocation ?? city}, then afternoon and evening spots.`
+    : `Day 1: Traveler arrives late (${arrivalTime}). Day 1 should only have 1–2 evening spots near ${startLocation ?? city} such as a night market, bridge view, or rooftop bar. No daytime sightseeing on Day 1.`;
+
+  const locationNote = startLocation
+    ? `Starting point / arrival location: ${startLocation}. On Day 1, begin the route near this location and sequence spots geographically outward.`
+    : "";
+
   const prompt = `You are an expert Korea travel planner for foreign visitors.
 
 Create a detailed ${numDays}-day itinerary for ${city}, Korea.
 Travel dates: ${startDate} to ${endDate}
 Number of travelers: ${travelers}
 Travel style: ${travelStyle}
+${locationNote}
+${day1Notes}
+
+CRITICAL Day 1 rule: strictly follow the arrival time instruction above. Do NOT schedule morning activities if the traveler arrives in the afternoon or evening.
 
 Return ONLY a valid JSON object with this exact structure (no markdown, no extra text):
 {
@@ -85,11 +101,12 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
 }
 
 Rules:
-- Include 4-5 places per day, ordered by time
+- Include 4-5 places per day (fewer on Day 1 if late arrival), ordered by time
 - Focus on real, well-known spots in ${city}
 - Tips must be practical for foreigners (Cash only, English menu available, T-money card needed, etc.)
 - googleMapsUrl must use proper URL encoding for spaces
-- Dates must follow the travel dates in order starting from ${startDate}`;
+- Dates must follow the travel dates in order starting from ${startDate}
+- Geographically cluster spots by neighborhood per day to minimize transit time`;
 
   let lastError: Error = new Error("Unknown error");
 

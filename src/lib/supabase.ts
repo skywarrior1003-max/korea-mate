@@ -47,8 +47,10 @@ export async function fetchItinerariesByDevice(deviceId: string): Promise<Itiner
   return (data ?? []) as ItineraryRow[];
 }
 
-export async function deleteItinerary(id: string): Promise<boolean> {
-  const { error } = await supabase.from("itineraries").delete().eq("id", id);
+export async function deleteItinerary(id: string, deviceId?: string): Promise<boolean> {
+  let q = supabase.from("itineraries").delete().eq("id", id);
+  if (deviceId) q = q.eq("device_id", deviceId);
+  const { error } = await q;
   if (error) { console.error("[Supabase] itinerary delete:", error.message); return false; }
   return true;
 }
@@ -93,8 +95,10 @@ export async function fetchPlannersByDevice(deviceId: string): Promise<PlannerSe
   return (data ?? []) as PlannerSessionRow[];
 }
 
-export async function deletePlannerSession(id: string): Promise<boolean> {
-  const { error } = await supabase.from("planner_sessions").delete().eq("id", id);
+export async function deletePlannerSession(id: string, deviceId?: string): Promise<boolean> {
+  let q = supabase.from("planner_sessions").delete().eq("id", id);
+  if (deviceId) q = q.eq("device_id", deviceId);
+  const { error } = await q;
   if (error) { console.error("[Supabase] planner delete:", error.message); return false; }
   return true;
 }

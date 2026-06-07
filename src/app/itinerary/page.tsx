@@ -240,12 +240,14 @@ function ItineraryResult() {
   const searchParams = useSearchParams();
 
   // ── URL 파라미터 (stable consts) ──────────────────────────
-  const shareId        = searchParams.get("id");
-  const paramCity        = searchParams.get("city")        || "Seoul";
-  const paramStartDate   = searchParams.get("startDate")   || "";
-  const paramEndDate     = searchParams.get("endDate")     || "";
-  const paramTravelers   = searchParams.get("travelers")   || "1";
-  const paramTravelStyle = searchParams.get("travelStyle") || "Solo";
+  const shareId          = searchParams.get("id");
+  const paramCity        = searchParams.get("city")          || "Seoul";
+  const paramStartDate   = searchParams.get("startDate")     || "";
+  const paramEndDate     = searchParams.get("endDate")       || "";
+  const paramTravelers   = searchParams.get("travelers")     || "1";
+  const paramTravelStyle = searchParams.get("travelStyle")   || "Solo";
+  const paramStartLoc    = searchParams.get("startLocation") || "";
+  const paramArrivalTime = searchParams.get("arrivalTime")   || "";
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
@@ -338,7 +340,7 @@ function ItineraryResult() {
       // Supabase에 없으면 AI 생성
       setLoading(true);
       setError(null);
-      generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
+      generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
         .then((data) => { setDays(data.days); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
@@ -424,7 +426,7 @@ function ItineraryResult() {
     setDays([]);
     setLoading(true);
     setError(null);
-    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle)
+    generateItinerary(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
       .then((data) => { setDays(data.days); setLoading(false); })
       .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
   }
@@ -645,48 +647,92 @@ function ItineraryResult() {
                               return (
                                 <div
                                   key={idx}
-                                  className="flex flex-col sm:flex-row justify-between gap-4 p-5 hover:bg-[#FAF7F2]/40 transition-colors group relative"
+                                  className="flex flex-col hover:bg-[#FAF7F2]/40 transition-colors group relative"
                                 >
-                                  <div
-                                    className="space-y-2 flex-1 cursor-pointer"
-                                    onClick={() => setSelectedPlace(place)}
-                                  >
-                                    <div className="flex flex-wrap items-center gap-2">
-                                      <span
-                                        className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
-                                        style={{ backgroundColor: getCategoryColor(place.category) }}
-                                      >{place.category}</span>
-                                      <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
-                                      <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
-                                    </div>
-                                    <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
-                                      {place.name}
-                                    </h3>
-                                    <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3">
-                                      <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">{place.tips}</p>
-                                    </div>
-                                    <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                                      Click for full details + maps →
-                                    </p>
-                                  </div>
-                                  <div className="flex sm:flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
-                                    <a
-                                      href={googleUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-400 rounded-xl transition-all shadow-sm sm:w-32"
-                                    >🗺️ Google Maps</a>
-                                    <a
-                                      href={naverUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className={`inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold rounded-xl transition-all shadow-sm sm:w-32 ${
-                                        naverIsGoogle
-                                          ? "bg-white hover:bg-blue-50 text-blue-600 border border-blue-100 hover:border-blue-300"
-                                          : "bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400"
-                                      }`}
+                                  {/* 장소 정보 + 지도 버튼 행 */}
+                                  <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
+                                    <div
+                                      className="space-y-2 flex-1 cursor-pointer"
+                                      onClick={() => setSelectedPlace(place)}
                                     >
-                                      {naverIsGoogle ? "🗺️ More Search" : "💚 Naver Maps"}
+                                      <div className="flex flex-wrap items-center gap-2">
+                                        <span
+                                          className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
+                                          style={{ backgroundColor: getCategoryColor(place.category) }}
+                                        >{place.category}</span>
+                                        <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
+                                        <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
+                                      </div>
+                                      <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
+                                        {place.name}
+                                      </h3>
+                                      <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3">
+                                        <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">{place.tips}</p>
+                                      </div>
+                                      <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                        Click for full details + maps →
+                                      </p>
+                                    </div>
+                                    <div className="flex sm:flex-col gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+                                      <a
+                                        href={googleUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-400 rounded-xl transition-all shadow-sm sm:w-32"
+                                      >🗺️ Google Maps</a>
+                                      <a
+                                        href={naverUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-extrabold rounded-xl transition-all shadow-sm sm:w-32 ${
+                                          naverIsGoogle
+                                            ? "bg-white hover:bg-blue-50 text-blue-600 border border-blue-100 hover:border-blue-300"
+                                            : "bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400"
+                                        }`}
+                                      >
+                                        {naverIsGoogle ? "🗺️ More Search" : "💚 Naver Maps"}
+                                      </a>
+                                    </div>
+                                  </div>
+                                  {/* ── 수익화 제휴 버튼 스트립 ── */}
+                                  <div
+                                    className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E6DFD5]/40"
+                                    style={{ scrollbarWidth: "none" }}
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <a
+                                      href="https://affiliate.klook.com/sl/KiT3U74"
+                                      target="_blank"
+                                      rel="noopener noreferrer sponsored"
+                                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
+                                      style={{ backgroundColor: "#f97316" }}
+                                    >
+                                      📱 Get Korea eSIM
+                                    </a>
+                                    <a
+                                      href={`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city + " Korea")}&checkin=${startDate}&checkout=${endDate}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer sponsored"
+                                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
+                                      style={{ backgroundColor: "#003580" }}
+                                    >
+                                      🏨 Book Hotels
+                                    </a>
+                                    <a
+                                      href="https://www.viator.com/en-KR/Korea/d4431-ttd/"
+                                      target="_blank"
+                                      rel="noopener noreferrer sponsored"
+                                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
+                                      style={{ backgroundColor: "#7c3aed" }}
+                                    >
+                                      🎟️ Book Activities
+                                    </a>
+                                    <a
+                                      href="/all-spots?filter=michelin"
+                                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black transition-opacity hover:opacity-90 border mt-3"
+                                      style={{ backgroundColor: "#fef9c3", color: "#854d0e", borderColor: "#fde047" }}
+                                    >
+                                      ⭐ Michelin Spots
                                     </a>
                                   </div>
                                 </div>

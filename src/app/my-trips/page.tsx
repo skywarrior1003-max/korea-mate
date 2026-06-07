@@ -110,10 +110,20 @@ export default function MyTripsPage() {
   // ── 삭제 ─────────────────────────────────────────────────────
   async function handleDelete(trip: TripCard) {
     setDeleting(trip.id);
+    const deviceId = getDeviceId();
     const ok = trip.kind === "itinerary"
-      ? await deleteItinerary(trip.id)
-      : await deletePlannerSession(trip.id);
-    if (ok) setTrips((prev) => prev.filter((t) => t.id !== trip.id));
+      ? await deleteItinerary(trip.id, deviceId)
+      : await deletePlannerSession(trip.id, deviceId);
+    if (ok) {
+      setTrips((prev) => prev.filter((t) => t.id !== trip.id));
+      // Clear any localStorage references to the deleted trip
+      try {
+        if (trip.kind === "planner") {
+          const stored = localStorage.getItem("koreamate_planner_sb_id");
+          if (stored === trip.id) localStorage.removeItem("koreamate_planner_sb_id");
+        }
+      } catch { /* ignore */ }
+    }
     setDeleting(null);
     setConfirmDel(null);
   }
@@ -203,12 +213,6 @@ export default function MyTripsPage() {
                 style={{ backgroundColor: "#f97316" }}
               >
                 Browse Spots
-              </Link>
-              <Link
-                href="/itinerary"
-                className="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-700 bg-white border border-gray-200 hover:border-gray-300 transition-colors"
-              >
-                Plan a Trip →
               </Link>
             </div>
           </div>

@@ -371,11 +371,13 @@ export default function Home() {
   useEffect(() => { setCurrentPage(1); }, [eventFilter, globalSearch]);
 
   // ── AI 플래너 폼 ──────────────────────────────
-  const [city,      setCity]      = useState("Busan");
-  const [startDate, setStartDate] = useState("");
-  const [endDate,   setEndDate]   = useState("");
-  const [travelers, setTravelers] = useState("1");
-  const [style,     setStyle]     = useState("Solo");
+  const [city,          setCity]          = useState("Busan");
+  const [startDate,     setStartDate]     = useState("");
+  const [endDate,       setEndDate]       = useState("");
+  const [travelers,     setTravelers]     = useState("1");
+  const [style,         setStyle]         = useState("Solo");
+  const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
+  const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
   // ── events.json 로드 ──────────────────────────
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
@@ -426,7 +428,7 @@ export default function Home() {
       alert("Please select both start and end travel dates.");
       return;
     }
-    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style });
+    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style, startLocation, arrivalTime });
     router.push(`/itinerary?${params.toString()}`);
   }
 
@@ -627,14 +629,14 @@ export default function Home() {
           </nav>
           <div className="sm:hidden flex items-center gap-2">
             <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">
-              🗓️ Trips
+              🧳 My Trips
             </Link>
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-4 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
+              className="px-3 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
               style={{ backgroundColor: "#f97316" }}
             >
-              Plan My Trip
+              Plan Trip
             </button>
           </div>
         </div>
@@ -680,27 +682,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 신뢰 지표 ────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-gray-100 py-14">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 text-center gap-8 sm:gap-0">
-            <div className="sm:px-8 pb-8 sm:pb-0">
-              <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">🌏 6.7M+</div>
-              <div className="text-sm font-semibold text-gray-500">Foreign Visitors in 2026</div>
-            </div>
-            <div className="sm:px-8 py-8 sm:py-0">
-              <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">
-                📍 {eventsData.length > 0 ? `${eventsData.length}+` : "200+"}
-              </div>
-              <div className="text-sm font-semibold text-gray-500">Verified Solo-friendly Spots</div>
-            </div>
-            <div className="sm:px-8 pt-8 sm:pt-0">
-              <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">⚡ 30 sec</div>
-              <div className="text-sm font-semibold text-gray-500">To generate your itinerary</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ══════════════════════════════════════════════════════════
           AI 일정 생성 폼
@@ -782,6 +763,62 @@ export default function Home() {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Number of Travelers</label>
                 <input type="number" min="1" max="50" value={travelers} onChange={(e) => setTravelers(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+              </div>
+
+              {/* ── 가변형 AI 스케줄러 — 시작 위치 ── */}
+              <div className="flex flex-col gap-2 sm:col-span-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">📍 Where do you arrive? (Starting Point)</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {[
+                    { value: "KTX Busan Station (부산역)",        label: "🚄 KTX Busan Station" },
+                    { value: "Gimhae International Airport (김해공항)", label: "✈️ Gimhae Airport" },
+                    { value: "Haeundae (해운대)",                  label: "🏖️ Haeundae" },
+                    { value: "Nampo-dong / Gwangbok-ro (남포동)",  label: "🏙️ Nampo-dong" },
+                    { value: "Seomyeon (서면)",                    label: "🛍️ Seomyeon" },
+                    { value: "Centum City (센텀시티)",              label: "🏬 Centum City" },
+                  ].map((loc) => (
+                    <button
+                      key={loc.value}
+                      type="button"
+                      onClick={() => setStartLocation(loc.value)}
+                      className={`px-3 py-2.5 rounded-xl text-sm font-bold text-left transition-all border ${
+                        startLocation === loc.value
+                          ? "border-orange-400 bg-orange-50 text-orange-700"
+                          : "border-gray-200 bg-gray-50 text-gray-600 hover:border-orange-300"
+                      }`}
+                    >
+                      {loc.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── 가변형 AI 스케줄러 — 도착 시간 ── */}
+              <div className="flex flex-col gap-2 sm:col-span-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">🕐 Arrival Time on Day 1</label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {[
+                    { value: "09:00", label: "☀️ Morning",   sub: "9 AM" },
+                    { value: "12:00", label: "🍽️ Noon",      sub: "12 PM" },
+                    { value: "14:00", label: "⛅ Afternoon", sub: "2 PM" },
+                    { value: "17:00", label: "🌅 Evening",   sub: "5 PM" },
+                    { value: "20:00", label: "🌙 Night",     sub: "8 PM" },
+                  ].map((slot) => (
+                    <button
+                      key={slot.value}
+                      type="button"
+                      onClick={() => setArrivalTime(slot.value)}
+                      className={`flex flex-col items-center px-2 py-3 rounded-xl text-center transition-all border ${
+                        arrivalTime === slot.value
+                          ? "border-orange-400 bg-orange-50 text-orange-700"
+                          : "border-gray-200 bg-gray-50 text-gray-600 hover:border-orange-300"
+                      }`}
+                    >
+                      <span className="text-sm font-black">{slot.label}</span>
+                      <span className="text-[10px] font-semibold opacity-60">{slot.sub}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             <button
