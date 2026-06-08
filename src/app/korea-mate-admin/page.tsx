@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
-import { bulkUpsertSpots, csvRowToSpot, type SpotRow } from "@/lib/spots";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { bulkUpsertSpots, csvRowToSpot, fetchFlaggedSpots, type SpotRow } from "@/lib/spots";
 
 const ADMIN_KEY = process.env.NEXT_PUBLIC_ADMIN_KEY ?? "km-admin-2026";
 
@@ -58,8 +58,15 @@ export default function AdminPage() {
 
   const [uploading,     setUploading]     = useState(false);
   const [result,        setResult]        = useState<{ success: number; failed: number; errors: string[] } | null>(null);
+  const [flagged,       setFlagged]       = useState<{ place_id: string; count: number }[]>([]);
 
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // 로그인 후 플래그된 스팟 조회
+  useEffect(() => {
+    if (!authed) return;
+    fetchFlaggedSpots(3).then(setFlagged).catch(() => {});
+  }, [authed]);
 
   // ── DB 자동 초기화 ────────────────────────────────────────
   async function runMigration() {
@@ -204,6 +211,32 @@ export default function AdminPage() {
             로그아웃
           </button>
         </div>
+
+        {/* ⚠️ 데이터 신뢰도 모니터링 */}
+        {flagged.length > 0 && (
+          <div className="bg-gray-900 rounded-2xl p-6 border border-red-700 shadow-lg shadow-red-900/20">
+            <h2 className="text-base font-black mb-1 text-red-400">⚠️ 데이터 검증 필요 알림</h2>
+            <p className="text-gray-400 text-xs mb-4">
+              유저 Dislike가 <strong className="text-white">3회 이상</strong> 누적된 스팟입니다. 정보 정확성을 검토하세요.
+            </p>
+            <div className="space-y-2">
+              {flagged.map(({ place_id, count }) => (
+                <div key={place_id} className="flex items-center justify-between px-4 py-3 rounded-xl bg-red-900/30 border border-red-700/50">
+                  <span className="text-sm font-bold text-white font-mono">{place_id}</span>
+                  <span className="px-3 py-1 rounded-full text-xs font-black bg-red-500 text-white">
+                    👎 {count}건
+                  </span>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => fetchFlaggedSpots(3).then(setFlagged).catch(() => {})}
+              className="mt-4 text-xs text-gray-500 hover:text-white border border-gray-700 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              새로고침
+            </button>
+          </div>
+        )}
 
         {/* STEP 1: DB 자동 초기화 */}
         <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">

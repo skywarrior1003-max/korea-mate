@@ -117,68 +117,6 @@
     }
   },
   {
-    "id": "evt-pre-002",
-    "type": "event",
-    "isAnchor": false,
-    "journeyCluster": "bts-busan-2026",
-    "stage": "Pre-Event",
-    "anchorEventId": "evt-anchor-001",
-    "relatedSpotIds": [],
-    "relatedSurvivalGuides": [
-      "getting-around",
-      "payments"
-    ],
-    "transitFromAnchor": {
-      "distanceKm": 3.8,
-      "walkMinutes": null,
-      "subwayMinutes": 9,
-      "taxiMinutes": 8,
-      "description": "9 min by taxi or subway from Asiad Main Stadium"
-    },
-    "name": "BTS Official Merch Pop-Up — BIFF Square, Nampo",
-    "shortName": "BTS Merch Pop-Up",
-    "tags": [
-      "#BTS",
-      "#Merchandise",
-      "#PopUp",
-      "#Nampo",
-      "#ARMY",
-      "#PreEvent"
-    ],
-    "city": "Busan",
-    "district": "Jung-gu",
-    "address": "BIFF Square, Nampo-dong, Jung-gu, Busan",
-    "mapUrl": "https://maps.google.com/?q=BIFF+Square+Nampo+Busan",
-    "description": "Official BTS concert merchandise pop-up stores typically set up in BIFF Square and surrounding Nampo area 3–5 days before the concert. Get your official MD before it sells out — stock is always limited for foreign fans.",
-    "whyItMatters": "Official concert MD sells out within hours. Arrive in Busan 2–3 days early and secure your goods.",
-    "recommendedDurationMinutes": 90,
-    "bestTimeSlot": "morning",
-    "openingHours": {
-      "open": "10:00",
-      "close": "20:00"
-    },
-    "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400",
-    "startDate": "2026-10-14",
-    "endDate": "2026-10-18",
-    "isTrending": true,
-    "soloFriendly": true,
-    "foreignCardAccepted": true,
-    "cashOnly": false,
-    "englishMenu": true,
-    "barrierFree": true,
-    "koreanSurvivalScore": 82,
-    "notice": "Lines form 2–3 hours before opening. Bring your concert ticket QR code for official MD verification.",
-    "commerce": {
-      "affiliateType": null,
-      "hasAffiliate": false,
-      "affiliatePartner": null,
-      "affiliateUrl": null,
-      "hasMerchandise": true,
-      "hasTicketing": false,
-      "bookingUrl": null
-    }
-  },
-  {
     "id": "evt-pre-003",
     "type": "pilgrimage",
     "isAnchor": false,

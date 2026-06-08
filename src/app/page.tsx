@@ -1471,21 +1471,30 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 프리미엄 리무진 옵션 */}
-              <div className="rounded-2xl bg-green-500/20 border border-green-400/40 p-5">
-                <p className="text-xs font-black text-green-400 uppercase tracking-widest mb-2">🚗 Premium Chauffeur Service</p>
-                <p className="text-white/90 text-sm leading-relaxed mb-3">
-                  Pre-booked private car drops you at the <strong className="text-green-300">Stadium VIP entrance (Gate 2)</strong>, bypassing all road closures via authorized routes. English-speaking driver. Fixed price, no surge pricing on concert day.
-                </p>
+              {/* 리무진 서비스 안내 — 교통 통제 고지 */}
+              <div className="rounded-2xl bg-amber-500/15 border border-amber-400/40 p-5">
+                <p className="text-xs font-black text-amber-400 uppercase tracking-widest mb-3">🚗 Transfer Service Notice</p>
+                <div className="space-y-3 mb-4">
+                  <div className="rounded-xl bg-red-500/20 border border-red-400/30 p-3">
+                    <p className="text-white/90 text-sm leading-relaxed">
+                      <strong className="text-red-300">⚠️ IMPORTANT TRAFFIC NOTICE:</strong> Due to strict total road closures around the Busan Asiad Main Stadium on concert days, no private vehicles or pre-booked chauffeur cars can enter the stadium perimeter or drop off directly at the gates.
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-green-500/10 border border-green-400/20 p-3">
+                    <p className="text-white/90 text-sm leading-relaxed">
+                      <strong className="text-green-300">💡 ALTERNATIVE ROUTE:</strong> You can use our Premium Limousine Service to comfortably travel from Airport/Station to your Hotel, or get dropped off at the nearest accessible transport hub outside the restriction zone. We highly recommend using the expanded Busan Metro (Line 3) which will operate 220 additional runs and extend service by 1 hour post-concert for your safe return.
+                    </p>
+                  </div>
+                </div>
                 <a
                   href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj"}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-white transition-colors"
-                  style={{ backgroundColor: "#22c55e" }}
+                  style={{ backgroundColor: "#f59e0b" }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  Book Premium Transfer →
+                  Book Hotel / Hub Transfer →
                 </a>
               </div>
 

@@ -127,6 +127,35 @@ const HEADER_MAP: Record<string, keyof SpotRow> = {
   buy_url:        "affiliate_url",
 };
 
+// ── 유저 Dislike 기록 ─────────────────────────────────────────
+export async function dislikeSpot(placeId: string, deviceId?: string): Promise<boolean> {
+  const { error } = await supabase
+    .from("spot_reactions")
+    .insert({ place_id: placeId, reaction: "dislike", device_id: deviceId ?? null });
+  if (error) { console.error("[Supabase] dislike:", error.message); return false; }
+  return true;
+}
+
+// ── 관리자: 신뢰도 이슈 스팟 조회 ────────────────────────────
+export async function fetchFlaggedSpots(
+  threshold = 3
+): Promise<{ place_id: string; count: number }[]> {
+  const { data, error } = await supabase
+    .from("spot_reactions")
+    .select("place_id")
+    .eq("reaction", "dislike");
+  if (error) { console.error("[Supabase] flagged:", error.message); return []; }
+
+  const counts: Record<string, number> = {};
+  for (const row of (data ?? [])) {
+    counts[row.place_id] = (counts[row.place_id] ?? 0) + 1;
+  }
+  return Object.entries(counts)
+    .filter(([, c]) => c >= threshold)
+    .map(([place_id, count]) => ({ place_id, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
 export function csvRowToSpot(row: Record<string, string>): Partial<SpotRow> {
   const spot: Partial<SpotRow> = {};
 

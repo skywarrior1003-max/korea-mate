@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import type { EventItem } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 import { getVerifiedImage } from "@/lib/placeImages";
+import { dislikeSpot } from "@/lib/spots";
+import { getDeviceId } from "@/lib/deviceId";
 
 // ── Stage 뱃지 색상 매핑 ──────────────────────────
 const STAGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
@@ -38,9 +40,25 @@ interface Props {
 export default function EventCard({ event, onClick }: Props) {
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
+  const [disliked,    setDisliked]    = useState(false);
 
   // imgError 상태를 이벤트 ID 변경 시 초기화 (카테고리 전환 후 이미지 꼬임 방지)
   useEffect(() => { setImgError(false); }, [event.id]);
+
+  // dislike 상태 localStorage 복원
+  useEffect(() => {
+    setDisliked(!!localStorage.getItem(`km_dislike_${event.id}`));
+  }, [event.id]);
+
+  async function handleDislike(e: React.MouseEvent) {
+    e.stopPropagation();
+    if (disliked) return;
+    const ok = await dislikeSpot(String(event.id), getDeviceId());
+    if (ok) {
+      localStorage.setItem(`km_dislike_${event.id}`, "1");
+      setDisliked(true);
+    }
+  }
 
   useEffect(() => {
     setFavorited(isFavorited(event.id));
@@ -97,27 +115,46 @@ export default function EventCard({ event, onClick }: Props) {
           </span>
         )}
 
-        {/* 찜하기 하트 버튼 */}
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(e) => {
-            e.stopPropagation();
-            setFavorited(toggleFavorite(event.id));
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
+        {/* 하트 + Dislike 버튼 그룹 */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
+          {/* 찜하기 하트 */}
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => {
               e.stopPropagation();
               setFavorited(toggleFavorite(event.id));
-            }
-          }}
-          aria-label={favorited ? "Remove from saved spots" : "Save this spot"}
-          className={`absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-base shadow-md cursor-pointer transition-all z-10 select-none ${
-            favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
-          }`}
-        >
-          {favorited ? "❤️" : "🤍"}
-        </span>
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.stopPropagation();
+                setFavorited(toggleFavorite(event.id));
+              }
+            }}
+            aria-label={favorited ? "Remove from saved spots" : "Save this spot"}
+            className={`w-8 h-8 flex items-center justify-center rounded-full text-base shadow-md cursor-pointer transition-all select-none ${
+              favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
+            }`}
+          >
+            {favorited ? "❤️" : "🤍"}
+          </span>
+          {/* 정보 오류 신고 (Dislike) */}
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={handleDislike}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDislike(e as unknown as React.MouseEvent); }}
+            aria-label={disliked ? "Already reported" : "Report inaccurate info"}
+            title={disliked ? "신고됨 — 관리자가 검토합니다" : "정보 오류 신고"}
+            className={`w-8 h-8 flex items-center justify-center rounded-full text-sm shadow-md cursor-pointer transition-all select-none ${
+              disliked
+                ? "bg-gray-600 text-white scale-110 cursor-not-allowed"
+                : "bg-white/80 hover:bg-white text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            👎
+          </span>
+        </div>
 
         {/* Stage 뱃지 (이미지 하단 왼쪽) */}
         <span
