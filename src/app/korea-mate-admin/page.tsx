@@ -3,35 +3,11 @@
 import { useState, useCallback, useRef } from "react";
 import { bulkUpsertSpots, csvRowToSpot, type SpotRow } from "@/lib/spots";
 
-// ── 어드민 패스워드 (env 우선, 없으면 기본값) ──────────────────
 const ADMIN_KEY = process.env.NEXT_PUBLIC_ADMIN_KEY ?? "km-admin-2026";
 
-// ── SQL DDL 복사용 ─────────────────────────────────────────────
-const SQL_DDL = `-- supabase SQL Editor에 붙여넣고 실행하세요
-CREATE TABLE IF NOT EXISTS spots (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  place_id TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL, name_ko TEXT,
-  category TEXT NOT NULL CHECK (category IN (
-    'attraction','restaurant','cafe','hiking',
-    'activity','accommodation','cultural','market','shopping')),
-  subcategory TEXT, city TEXT NOT NULL DEFAULT 'Busan',
-  district TEXT, address TEXT, description TEXT, image_url TEXT,
-  duration_minutes INTEGER,
-  difficulty TEXT CHECK (difficulty IS NULL OR difficulty IN ('easy','moderate','hard')),
-  required_gear TEXT, tips TEXT, price_range TEXT,
-  michelin_stars INTEGER CHECK (michelin_stars IS NULL OR michelin_stars IN (1,2,3)),
-  opening_hours TEXT,
-  foreign_card_accepted BOOLEAN DEFAULT true,
-  solo_friendly BOOLEAN DEFAULT true,
-  google_maps_url TEXT, naver_maps_url TEXT,
-  is_published BOOLEAN DEFAULT true,
-  created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()
-);
-ALTER TABLE spots ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Public all" ON spots FOR ALL TO anon USING (true) WITH CHECK (true);`;
+type MigrateStatus = "idle" | "running" | "ok" | "token_missing" | "error";
 
-// ── CSV 파서 (quoted fields 지원) ──────────────────────────────
+// ── CSV 파서 (quoted fields 지원) ─────────────────────────────
 function parseCSV(text: string): { headers: string[]; rows: Record<string, string>[] } {
   const lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n").filter(Boolean);
   if (lines.length < 2) return { headers: [], rows: [] };
@@ -46,8 +22,7 @@ function parseCSV(text: string): { headers: string[]; rows: Record<string, strin
         if (inQuote && line[i + 1] === '"') { cur += '"'; i++; }
         else inQuote = !inQuote;
       } else if (ch === "," && !inQuote) {
-        result.push(cur.trim());
-        cur = "";
+        result.push(cur.trim()); cur = "";
       } else {
         cur += ch;
       }
@@ -68,29 +43,63 @@ function parseCSV(text: string): { headers: string[]; rows: Record<string, strin
 
 // ══════════════════════════════════════════════════════════════
 export default function AdminPage() {
-  const [authed,      setAuthed]      = useState(false);
-  const [pw,          setPw]          = useState("");
-  const [pwError,     setPwError]     = useState(false);
+  const [authed,        setAuthed]        = useState(false);
+  const [pw,            setPw]            = useState("");
+  const [pwError,       setPwError]       = useState(false);
 
-  const [csvText,     setCsvText]     = useState("");
-  const [headers,     setHeaders]     = useState<string[]>([]);
-  const [preview,     setPreview]     = useState<Record<string, string>[]>([]);
-  const [parsed,      setParsed]      = useState<SpotRow[]>([]);
-  const [parseError,  setParseError]  = useState<string | null>(null);
+  const [migrateStatus, setMigrateStatus] = useState<MigrateStatus>("idle");
+  const [migrateMsg,    setMigrateMsg]    = useState("");
 
-  const [uploading,   setUploading]   = useState(false);
-  const [result,      setResult]      = useState<{ success: number; failed: number; errors: string[] } | null>(null);
-  const [sqlCopied,   setSqlCopied]   = useState(false);
+  const [csvText,       setCsvText]       = useState("");
+  const [headers,       setHeaders]       = useState<string[]>([]);
+  const [preview,       setPreview]       = useState<Record<string, string>[]>([]);
+  const [parsed,        setParsed]        = useState<SpotRow[]>([]);
+  const [parseError,    setParseError]    = useState<string | null>(null);
+
+  const [uploading,     setUploading]     = useState(false);
+  const [result,        setResult]        = useState<{ success: number; failed: number; errors: string[] } | null>(null);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // ── 패스워드 인증 ──────────────────────────────────────────
-  function handleLogin() {
-    if (pw === ADMIN_KEY) { setAuthed(true); setPwError(false); }
-    else { setPwError(true); }
+  // ── DB 자동 초기화 ────────────────────────────────────────
+  async function runMigration() {
+    setMigrateStatus("running");
+    setMigrateMsg("");
+    try {
+      const res = await fetch("/api/admin/migrate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: ADMIN_KEY }),
+      });
+      const data = await res.json() as { success?: boolean; error?: string; message?: string };
+      if (data.success) {
+        setMigrateStatus("ok");
+        setMigrateMsg("spots 테이블 생성 완료");
+      } else if (data.error === "TOKEN_MISSING") {
+        setMigrateStatus("token_missing");
+        setMigrateMsg(data.message ?? "");
+      } else {
+        setMigrateStatus("error");
+        setMigrateMsg(data.message ?? data.error ?? "알 수 없는 오류");
+      }
+    } catch (err) {
+      setMigrateStatus("error");
+      setMigrateMsg((err as Error).message);
+    }
   }
 
-  // ── 파일 선택 ──────────────────────────────────────────────
+  // ── 패스워드 인증 ──────────────────────────────────────────
+  function handleLogin() {
+    if (pw === ADMIN_KEY) {
+      setAuthed(true);
+      setPwError(false);
+      runMigration(); // 로그인 시 자동 실행
+    } else {
+      setPwError(true);
+    }
+  }
+
+  // ── CSV 파일 처리 ──────────────────────────────────────────
   const handleFile = useCallback((file: File) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -106,7 +115,7 @@ export default function AdminPage() {
     setResult(null);
     try {
       const { headers: h, rows } = parseCSV(text);
-      if (!h.length) { setParseError("CSV 헤더를 읽을 수 없습니다. 첫 번째 행을 확인하세요."); return; }
+      if (!h.length) { setParseError("CSV 헤더를 읽을 수 없습니다."); return; }
       setHeaders(h);
       setPreview(rows.slice(0, 5));
 
@@ -114,8 +123,8 @@ export default function AdminPage() {
       const errs: string[] = [];
       rows.forEach((row, i) => {
         const partial = csvRowToSpot(row);
-        if (!partial.place_id || !partial.name || !partial.category) {
-          errs.push(`Row ${i + 2}: place_id, name, category 필수 — 건너뜀`);
+        if (!partial.place_id || !partial.title || !partial.category) {
+          errs.push(`Row ${i + 2}: place_id, title, category 필수 — 건너뜀`);
           return;
         }
         spots.push(partial as SpotRow);
@@ -127,14 +136,12 @@ export default function AdminPage() {
     }
   }
 
-  // ── 드래그&드롭 ─────────────────────────────────────────────
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file && (file.name.endsWith(".csv") || file.type === "text/csv")) handleFile(file);
   }
 
-  // ── Supabase 업로드 ─────────────────────────────────────────
   async function handleUpload() {
     if (!parsed.length) return;
     setUploading(true);
@@ -142,13 +149,6 @@ export default function AdminPage() {
     const res = await bulkUpsertSpots(parsed);
     setResult(res);
     setUploading(false);
-  }
-
-  // ── SQL 복사 ───────────────────────────────────────────────
-  async function copySql() {
-    await navigator.clipboard.writeText(SQL_DDL).catch(() => window.prompt("Copy SQL:", SQL_DDL));
-    setSqlCopied(true);
-    setTimeout(() => setSqlCopied(false), 2000);
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -205,21 +205,54 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* STEP 1: Supabase 테이블 세팅 */}
+        {/* STEP 1: DB 자동 초기화 */}
         <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
-          <h2 className="text-base font-black mb-1 text-orange-400">① Supabase 테이블 설정 (최초 1회)</h2>
+          <h2 className="text-base font-black mb-1 text-orange-400">① 데이터베이스 자동 초기화</h2>
           <p className="text-gray-400 text-xs mb-4">
-            Supabase 대시보드 → SQL Editor → 아래 SQL을 붙여넣고 실행하세요.
-            이미 생성된 경우 건너뜁니다.
+            로그인 시 자동 실행됩니다. spots 테이블이 없으면 생성, 있으면 재생성합니다.
           </p>
-          <pre className="bg-gray-950 rounded-xl p-4 text-[11px] text-green-300 overflow-x-auto mb-3 whitespace-pre-wrap border border-gray-800">
-            {SQL_DDL}
-          </pre>
+
+          {/* 상태 표시 */}
+          {migrateStatus === "running" && (
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-blue-900/30 border border-blue-700 mb-4">
+              <span className="text-xl animate-spin">⚙️</span>
+              <p className="text-blue-300 text-sm font-bold">테이블 생성 중...</p>
+            </div>
+          )}
+          {migrateStatus === "ok" && (
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-green-900/30 border border-green-700 mb-4">
+              <span className="text-xl">✅</span>
+              <p className="text-green-300 text-sm font-bold">{migrateMsg}</p>
+            </div>
+          )}
+          {migrateStatus === "token_missing" && (
+            <div className="p-4 rounded-xl bg-yellow-900/30 border border-yellow-700 mb-4">
+              <p className="text-yellow-300 text-sm font-black mb-2">⚠️ SUPABASE_ACCESS_TOKEN 미설정</p>
+              <p className="text-yellow-200 text-xs leading-relaxed">
+                1. <a href="https://supabase.com/dashboard/account/tokens" target="_blank" rel="noopener" className="underline">supabase.com/dashboard/account/tokens</a> 에서 토큰 생성<br />
+                2. <code className="bg-gray-800 px-1 rounded">.env.local</code>에 추가: <code className="bg-gray-800 px-1 rounded">SUPABASE_ACCESS_TOKEN=your_token</code><br />
+                3. 개발 서버 재시작 후 아래 버튼 클릭
+              </p>
+            </div>
+          )}
+          {migrateStatus === "error" && (
+            <div className="p-4 rounded-xl bg-red-900/30 border border-red-700 mb-4">
+              <p className="text-red-400 text-sm font-black mb-1">❌ 초기화 실패</p>
+              <p className="text-red-300 text-xs break-all">{migrateMsg}</p>
+            </div>
+          )}
+
           <button
-            onClick={copySql}
-            className="px-4 py-2 rounded-xl text-xs font-black border border-gray-600 hover:border-orange-500 hover:text-orange-400 transition-colors"
+            onClick={runMigration}
+            disabled={migrateStatus === "running"}
+            className="px-5 py-2.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+            style={{ backgroundColor: migrateStatus === "ok" ? "#16a34a" : "#7c3aed" }}
           >
-            {sqlCopied ? "✅ Copied!" : "📋 SQL 복사"}
+            {migrateStatus === "running"
+              ? "⏳ 실행 중..."
+              : migrateStatus === "ok"
+              ? "✅ 초기화 완료 (재실행)"
+              : "🚀 데이터베이스 자동 초기화"}
           </button>
         </div>
 
@@ -227,28 +260,32 @@ export default function AdminPage() {
         <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
           <h2 className="text-base font-black mb-1 text-orange-400">② CSV 헤더 형식</h2>
           <p className="text-gray-400 text-xs mb-3">
-            헤더 이름은 대소문자·언더스코어·띄어쓰기 무관하게 유연하게 파싱됩니다.
-            <strong className="text-white"> place_id, name, category 3개는 필수</strong>입니다.
+            헤더 이름은 대소문자·언더스코어 무관하게 파싱됩니다.
+            <strong className="text-white"> place_id, title, category 3개는 필수</strong>입니다.
           </p>
           <div className="overflow-x-auto">
             <table className="text-[11px] text-gray-300 border-collapse w-full">
               <thead>
                 <tr className="border-b border-gray-700">
-                  {["place_id*","name*","name_ko","category*","subcategory","city","district",
-                    "address","description","image_url","duration_minutes","difficulty",
-                    "required_gear","tips","price_range","michelin_stars","opening_hours",
-                    "foreign_card_accepted","solo_friendly","google_maps_url","naver_maps_url"].map(h => (
+                  {["place_id*", "title*", "category*", "description", "image_url",
+                    "difficulty", "duration_min", "required_gear", "affiliate_url"].map(h => (
                     <th key={h} className="px-2 py-1.5 text-left text-gray-400 font-bold whitespace-nowrap">
                       {h}
                     </th>
                   ))}
                 </tr>
                 <tr>
-                  {["busan-haeundae","Haeundae Beach","해운대해수욕장","attraction","coastal",
-                    "Busan","Haeundae-gu","Haeundae-ro","Korea's most famous beach",
-                    "https://images.unsplash.com/...", "120","easy","","T-money card",
-                    "Free","","09:00–22:00","true","true",
-                    "https://maps.google.com/...","https://map.naver.com/..."].map((v, i) => (
+                  {[
+                    "busan-haeundae",
+                    "Haeundae Beach",
+                    "attraction",
+                    "Korea's most famous beach",
+                    "https://images.unsplash.com/...",
+                    "easy",
+                    "120",
+                    "Comfortable shoes",
+                    "https://affiliate.klook.com/...",
+                  ].map((v, i) => (
                     <td key={i} className="px-2 py-1 text-[10px] text-gray-500 whitespace-nowrap">{v}</td>
                   ))}
                 </tr>
@@ -269,7 +306,7 @@ export default function AdminPage() {
           >
             <p className="text-3xl mb-3">📂</p>
             <p className="text-sm font-bold text-gray-300">CSV 파일을 여기에 드래그하거나 클릭해서 선택</p>
-            <p className="text-xs text-gray-500 mt-1">UTF-8 인코딩 권장 (Excel: 다른 이름으로 저장 → CSV UTF-8)</p>
+            <p className="text-xs text-gray-500 mt-1">UTF-8 인코딩 권장</p>
           </div>
           <input
             ref={fileRef}
@@ -329,7 +366,7 @@ export default function AdminPage() {
             <p className="text-gray-400 text-xs mb-5">
               <strong className="text-white">{parsed.length}개</strong> 레코드를{" "}
               <code className="text-orange-300">spots</code> 테이블에 Upsert합니다.
-              place_id가 같으면 덮어씁니다(중복 없음).
+              place_id가 같으면 덮어씁니다.
             </p>
             <button
               onClick={handleUpload}
@@ -359,7 +396,6 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* 푸터 */}
         <p className="text-center text-xs text-gray-700 pb-6">
           KoreaMate Admin · 비공개 · 외부 공유 금지
         </p>
