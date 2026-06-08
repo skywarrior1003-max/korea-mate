@@ -31,3 +31,5 @@ DROP POLICY IF EXISTS "anon_insert_reactions" ON spot_reactions;
 CREATE POLICY "anon_insert_reactions" ON spot_reactions FOR INSERT TO anon WITH CHECK (true);
 DROP POLICY IF EXISTS "anon_read_reactions" ON spot_reactions;
 CREATE POLICY "anon_read_reactions" ON spot_reactions FOR SELECT TO anon USING (true);
+DROP POLICY IF EXISTS "anon_delete_reactions" ON spot_reactions;
+CREATE POLICY "anon_delete_reactions" ON spot_reactions FOR DELETE TO anon USING (true);

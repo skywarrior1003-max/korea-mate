@@ -138,22 +138,40 @@ export async function dislikeSpot(placeId: string, deviceId?: string): Promise<b
 
 // ── 관리자: 신뢰도 이슈 스팟 조회 ────────────────────────────
 export async function fetchFlaggedSpots(
-  threshold = 3
-): Promise<{ place_id: string; count: number }[]> {
-  const { data, error } = await supabase
+  threshold = 1
+): Promise<{ place_id: string; title: string; count: number }[]> {
+  const { data: reactions, error } = await supabase
     .from("spot_reactions")
     .select("place_id")
     .eq("reaction", "dislike");
   if (error) { console.error("[Supabase] flagged:", error.message); return []; }
 
   const counts: Record<string, number> = {};
-  for (const row of (data ?? [])) {
+  for (const row of (reactions ?? [])) {
     counts[row.place_id] = (counts[row.place_id] ?? 0) + 1;
   }
-  return Object.entries(counts)
+
+  const filtered = Object.entries(counts)
     .filter(([, c]) => c >= threshold)
-    .map(([place_id, count]) => ({ place_id, count }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b[1] - a[1]);
+
+  if (filtered.length === 0) return [];
+
+  const placeIds = filtered.map(([id]) => id);
+  const { data: spotsData } = await supabase
+    .from("spots")
+    .select("place_id, title")
+    .in("place_id", placeIds);
+
+  const titleMap = Object.fromEntries(
+    (spotsData ?? []).map((s: { place_id: string; title: string }) => [s.place_id, s.title])
+  );
+
+  return filtered.map(([place_id, count]) => ({
+    place_id,
+    title: titleMap[place_id] ?? place_id,
+    count,
+  }));
 }
 
 export function csvRowToSpot(row: Record<string, string>): Partial<SpotRow> {

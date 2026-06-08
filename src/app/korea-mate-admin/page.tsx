@@ -58,15 +58,62 @@ export default function AdminPage() {
 
   const [uploading,     setUploading]     = useState(false);
   const [result,        setResult]        = useState<{ success: number; failed: number; errors: string[] } | null>(null);
-  const [flagged,       setFlagged]       = useState<{ place_id: string; count: number }[]>([]);
+  const [flagged,       setFlagged]       = useState<{ place_id: string; title: string; count: number }[]>([]);
+  const [flagLoading,   setFlagLoading]   = useState(false);
+  const [reviewMarked,  setReviewMarked]  = useState<Set<string>>(new Set());
+  const [deletingId,    setDeletingId]    = useState<string | null>(null);
+  const [deleteError,   setDeleteError]   = useState<string | null>(null);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
   // 로그인 후 플래그된 스팟 조회
   useEffect(() => {
     if (!authed) return;
-    fetchFlaggedSpots(3).then(setFlagged).catch(() => {});
+    refreshFlagged();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authed]);
+
+  async function refreshFlagged() {
+    setFlagLoading(true);
+    try {
+      const data = await fetchFlaggedSpots(1);
+      setFlagged(data);
+    } catch { /* noop */ } finally {
+      setFlagLoading(false);
+    }
+  }
+
+  function markReview(placeId: string) {
+    setReviewMarked(prev => {
+      const next = new Set(prev);
+      if (next.has(placeId)) next.delete(placeId); else next.add(placeId);
+      return next;
+    });
+  }
+
+  async function handleDelete(placeId: string) {
+    if (deletingId) return;
+    setDeletingId(placeId);
+    setDeleteError(null);
+    try {
+      const res = await fetch("/api/admin/delete-spot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: ADMIN_KEY, place_id: placeId }),
+      });
+      const data = await res.json() as { success?: boolean; error?: string };
+      if (data.success) {
+        setFlagged(prev => prev.filter(f => f.place_id !== placeId));
+        setReviewMarked(prev => { const n = new Set(prev); n.delete(placeId); return n; });
+      } else {
+        setDeleteError(`삭제 실패 (${placeId}): ${data.error ?? "unknown"}`);
+      }
+    } catch (err) {
+      setDeleteError(`네트워크 오류: ${(err as Error).message}`);
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   // ── DB 자동 초기화 ────────────────────────────────────────
   async function runMigration() {
@@ -212,31 +259,136 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* ⚠️ 데이터 신뢰도 모니터링 */}
-        {flagged.length > 0 && (
-          <div className="bg-gray-900 rounded-2xl p-6 border border-red-700 shadow-lg shadow-red-900/20">
-            <h2 className="text-base font-black mb-1 text-red-400">⚠️ 데이터 검증 필요 알림</h2>
-            <p className="text-gray-400 text-xs mb-4">
-              유저 Dislike가 <strong className="text-white">3회 이상</strong> 누적된 스팟입니다. 정보 정확성을 검토하세요.
-            </p>
-            <div className="space-y-2">
-              {flagged.map(({ place_id, count }) => (
-                <div key={place_id} className="flex items-center justify-between px-4 py-3 rounded-xl bg-red-900/30 border border-red-700/50">
-                  <span className="text-sm font-bold text-white font-mono">{place_id}</span>
-                  <span className="px-3 py-1 rounded-full text-xs font-black bg-red-500 text-white">
-                    👎 {count}건
-                  </span>
-                </div>
-              ))}
+        {/* 🚨 유저 신고 데이터 검증 센터 */}
+        <div className="bg-gray-900 rounded-2xl border border-gray-700 overflow-hidden">
+          {/* 헤더 */}
+          <div className="px-6 py-5 border-b border-gray-700 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-black text-orange-400">🚨 유저 신고 데이터 검증 센터</h2>
+              <p className="text-gray-400 text-xs mt-1">
+                👎 신고가 1건 이상 접수된 모든 장소. 실시간 DB 반영. 3건 이상 = 🔴 위험.
+              </p>
             </div>
             <button
-              onClick={() => fetchFlaggedSpots(3).then(setFlagged).catch(() => {})}
-              className="mt-4 text-xs text-gray-500 hover:text-white border border-gray-700 px-3 py-1.5 rounded-lg transition-colors"
+              onClick={refreshFlagged}
+              disabled={flagLoading}
+              className="shrink-0 text-xs text-gray-400 hover:text-white border border-gray-700 hover:border-gray-500 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
             >
-              새로고침
+              {flagLoading ? "⏳" : "🔄"} 새로고침
             </button>
           </div>
-        )}
+
+          {/* 요약 바 */}
+          <div className="px-6 py-4 border-b border-gray-700/60 flex gap-6">
+            <div className="text-center">
+              <p className="text-2xl font-black text-white leading-none">{flagged.length}</p>
+              <p className="text-[10px] text-gray-400 mt-1">신고 장소 수</p>
+            </div>
+            <div className="w-px bg-gray-700" />
+            <div className="text-center">
+              <p className="text-2xl font-black text-red-400 leading-none">{flagged.filter(f => f.count >= 3).length}</p>
+              <p className="text-[10px] text-gray-400 mt-1">🔴 위험 (3건+)</p>
+            </div>
+            <div className="w-px bg-gray-700" />
+            <div className="text-center">
+              <p className="text-2xl font-black text-yellow-400 leading-none">{flagged.filter(f => f.count < 3).length}</p>
+              <p className="text-[10px] text-gray-400 mt-1">🟡 주의 (1-2건)</p>
+            </div>
+          </div>
+
+          {/* 오류 메시지 */}
+          {deleteError && (
+            <div className="mx-6 mt-4 px-4 py-3 rounded-xl bg-red-900/30 border border-red-700 text-red-300 text-xs font-bold">
+              ❌ {deleteError}
+            </div>
+          )}
+
+          {/* 테이블 or 빈 상태 */}
+          {flagLoading ? (
+            <div className="py-16 text-center text-gray-500 text-sm">⏳ 데이터 로딩 중...</div>
+          ) : flagged.length === 0 ? (
+            <div className="py-16 text-center">
+              <p className="text-4xl mb-3">✅</p>
+              <p className="text-green-400 font-black text-sm">신고된 장소가 없습니다</p>
+              <p className="text-gray-600 text-xs mt-1">유저 신고 데이터가 깨끗합니다.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-700 text-[11px] text-gray-400 font-bold uppercase tracking-wide">
+                    <th className="px-5 py-3 text-left">장소 ID</th>
+                    <th className="px-5 py-3 text-left">장소명 (Title)</th>
+                    <th className="px-5 py-3 text-center">👎 싫어요 누적</th>
+                    <th className="px-5 py-3 text-center">상태</th>
+                    <th className="px-5 py-3 text-center">관리 조치</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {flagged.map(({ place_id, title, count }) => {
+                    const isDanger = count >= 3;
+                    const isReview = reviewMarked.has(place_id);
+                    const isDeleting = deletingId === place_id;
+                    return (
+                      <tr
+                        key={place_id}
+                        className={`border-b border-gray-800/80 ${
+                          isDanger
+                            ? "bg-red-900/20 border-l-4 border-l-red-500"
+                            : "bg-yellow-900/10 border-l-4 border-l-yellow-600"
+                        }`}
+                      >
+                        <td className="px-5 py-3 font-mono text-[11px] text-gray-400 whitespace-nowrap">
+                          {place_id}
+                        </td>
+                        <td className="px-5 py-3 font-semibold text-white text-sm max-w-[200px] truncate">
+                          {title}
+                        </td>
+                        <td className="px-5 py-3 text-center">
+                          <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-black ${
+                            isDanger ? "bg-red-500 text-white" : "bg-yellow-600 text-white"
+                          }`}>
+                            👎 {count}건
+                          </span>
+                        </td>
+                        <td className="px-5 py-3 text-center whitespace-nowrap">
+                          {isReview ? (
+                            <span className="text-xs font-black text-blue-400">🔵 검토 중</span>
+                          ) : isDanger ? (
+                            <span className="text-xs font-black text-red-400">🔴 위험</span>
+                          ) : (
+                            <span className="text-xs font-black text-yellow-400">🟡 주의</span>
+                          )}
+                        </td>
+                        <td className="px-5 py-3">
+                          <div className="flex gap-2 justify-center">
+                            <button
+                              onClick={() => markReview(place_id)}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-black transition-colors whitespace-nowrap ${
+                                isReview
+                                  ? "bg-blue-700 text-white"
+                                  : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                              }`}
+                            >
+                              {isReview ? "✅ 검토 중" : "수정 필요"}
+                            </button>
+                            <button
+                              onClick={() => handleDelete(place_id)}
+                              disabled={isDeleting || deletingId !== null}
+                              className="px-3 py-1.5 rounded-lg text-xs font-black bg-red-700 hover:bg-red-600 disabled:opacity-40 text-white transition-colors whitespace-nowrap"
+                            >
+                              {isDeleting ? "⏳" : "즉시 삭제"}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
         {/* STEP 1: DB 자동 초기화 */}
         <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
