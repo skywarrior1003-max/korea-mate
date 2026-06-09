@@ -28,12 +28,14 @@ export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
   return true;
 }
 
-export async function fetchItinerary(id: string): Promise<ItineraryRow | null> {
-  const { data, error } = await supabase
+export async function fetchItinerary(id: string, deviceId?: string): Promise<ItineraryRow | null> {
+  let q = supabase
     .from("itineraries")
     .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, device_id, updated_at")
-    .eq("id", id)
-    .single();
+    .eq("id", id);
+  // RLS 정책이 device_id를 요구할 때 필터 추가 (own-trip fallback)
+  if (deviceId) q = q.eq("device_id", deviceId);
+  const { data, error } = await q.maybeSingle();
   if (error) { console.error("[Supabase] itinerary fetch:", error.message); return null; }
   return data;
 }

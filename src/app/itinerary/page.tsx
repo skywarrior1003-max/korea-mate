@@ -403,15 +403,35 @@ function ItineraryResult() {
 
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
+  //  2단계 폴백: ① ID만 쿼리 (공유 링크 / RLS 전체 허용)
+  //              ② null이면 device_id 추가 재시도 (RLS가 device_id 일치 요구 시)
   // ══════════════════════════════════════════════════════════
   useEffect(() => {
     if (!shareId) return;
     setLoading(true);
-    fetchItinerary(shareId).then(record => {
+
+    const loadItinerary = async () => {
+      // 시도 1: device_id 없이 ID만으로 조회 (공유 링크 / 익명 읽기 가능 RLS)
+      let record = await fetchItinerary(shareId);
+
+      // 시도 2: RLS가 device_id 일치를 요구할 경우 자신의 device_id로 재시도
       if (!record) {
+        record = await fetchItinerary(shareId, getDeviceId());
+      }
+
+      if (!record) {
+        // 두 시도 모두 실패 → My Trips로 복귀
         router.replace("/my-trips");
         return;
       }
+
+      // days 필드 손상 방어
+      if (!Array.isArray(record.days)) {
+        setError("Itinerary data is corrupted. Please regenerate.");
+        setLoading(false);
+        return;
+      }
+
       setDays(sanitizeDays(record.days as Day[]));
       setItinId(shareId);
       setCity(record.city);
@@ -421,6 +441,11 @@ function ItineraryResult() {
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
       setSyncStatus("saved");
+      setLoading(false);
+    };
+
+    loadItinerary().catch(err => {
+      setError(`Failed to load itinerary: ${(err as Error).message}`);
       setLoading(false);
     });
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
