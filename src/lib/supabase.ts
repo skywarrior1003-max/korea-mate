@@ -14,6 +14,7 @@ export interface ItineraryRow {
   travelers:    string;
   travel_style: string;
   days:         unknown;
+  trip_title?:  string;
   device_id?:   string;
   created_at?:  string;
   updated_at?:  string;
@@ -30,11 +31,22 @@ export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
 export async function fetchItinerary(id: string): Promise<ItineraryRow | null> {
   const { data, error } = await supabase
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, days, device_id, updated_at")
+    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, device_id, updated_at")
     .eq("id", id)
     .single();
   if (error) { console.error("[Supabase] itinerary fetch:", error.message); return null; }
   return data;
+}
+
+export async function updateItineraryTitle(id: string, title: string, deviceId?: string): Promise<boolean> {
+  let q = supabase
+    .from("itineraries")
+    .update({ trip_title: title, updated_at: new Date().toISOString() })
+    .eq("id", id);
+  if (deviceId) q = q.eq("device_id", deviceId);
+  const { error } = await q;
+  if (error) { console.error("[Supabase] title update:", error.message); return false; }
+  return true;
 }
 
 export async function fetchItinerariesByDevice(deviceId: string): Promise<ItineraryRow[]> {

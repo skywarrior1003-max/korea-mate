@@ -58,13 +58,51 @@ export async function POST(request: NextRequest) {
 
   // Arrival time logic for Day 1 scheduling
   const arrivalHour = arrivalTime ? parseInt(arrivalTime.split(":")[0] ?? "14", 10) : 14;
-  const day1Notes = arrivalHour < 12
+
+  const loc = startLocation?.toLowerCase() ?? "";
+  const isAirportEvening =
+    (loc.includes("airport") || loc.includes("gimhae") || loc.includes("공항")) &&
+    arrivalHour >= 17;
+
+  // ── 저녁 김해공항 도착: Day 1을 처방형 템플릿으로 강제 고정 ──────────
+  // AI에게 자유 생성을 허용하지 않고 남포동/부평 구역을 명시적으로 지정.
+  // 리무진·eSIM 수익 배관이 자연스럽게 연결되는 동선.
+  const airportEveningTemplate = isAirportEvening ? `
+MANDATORY Day 1 — DO NOT CHANGE. Output EXACTLY this structure for Day 1:
+Day 1 date: ${startDate}
+Place 1 (REQUIRED, first):
+  name: "Gimhae Airport Limousine → Nampo-dong"
+  category: "Experience"
+  location: "Gimhae International Airport Arrivals → Nampo-dong, Jung-gu"
+  time: "${arrivalTime}"
+  duration: "45 min"
+  tips: "Airport Limousine Bus Line 3 (공항리무진 3번) departs every 20 min from Arrivals Exit 1, Drop-off: Nampo-dong/Gwangbok-ro. Ticket ₩8,000 (cash or T-money card at the booth). ~40 min ride. Activate your Korea eSIM on the bus — you'll need navigation as soon as you step off."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gimhae+International+Airport+Busan+Korea"
+
+Place 2 (REQUIRED, second):
+  name: "Bupyeong Kkangtong Night Market (부평깡통야시장)"
+  category: "Market"
+  location: "Bupyeong-dong, Jung-gu — 5 min walk from Nampo-dong limousine stop"
+  time: (arrival time + 60 minutes)
+  duration: "1h 30 min"
+  tips: "Busan's iconic night market, open until midnight. Must-try: tteokbokki, hotteok, bindaetteok (mung bean pancake). Cash preferred; some stalls accept card. Completely solo-friendly — just point at what you want. Lively even on weeknights."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea"
+
+STRICT Day 1 RULES:
+- Output ONLY these 2 places for Day 1. No exceptions.
+- PROHIBITED on Day 1: Haeundae Beach, Gwangalli, Centum City, BIFF Square, Taejongdae, Haedong Yonggungsa, any location more than 15 min from Nampo-dong.
+- From Day 2 onward: generate freely based on ${travelers} traveler(s) and ${travelStyle} style.
+` : "";
+
+  const day1Notes = isAirportEvening
+    ? airportEveningTemplate
+    : arrivalHour < 12
     ? `Day 1: Traveler arrives in the morning (${arrivalTime}). Include breakfast near ${startLocation ?? city}, then full morning + afternoon sightseeing.`
     : arrivalHour < 15
-    ? `Day 1: Traveler arrives around ${arrivalTime}. Skip breakfast/morning activities. Start with check-in or a late lunch near ${startLocation ?? city}, then afternoon and evening spots.`
-    : `Day 1: Traveler arrives late (${arrivalTime}). Day 1 should only have 1–2 evening spots near ${startLocation ?? city} such as a night market, bridge view, or rooftop bar. No daytime sightseeing on Day 1.`;
+    ? `Day 1: Traveler arrives around ${arrivalTime}. Skip breakfast/morning activities. Start with check-in or late lunch near ${startLocation ?? city}, then afternoon and evening spots.`
+    : `Day 1: Traveler arrives late (${arrivalTime}). Day 1 should only have 1–2 evening spots near ${startLocation ?? city} such as a night market, rooftop bar, or bridge view. No daytime sightseeing on Day 1.`;
 
-  const locationNote = startLocation
+  const locationNote = startLocation && !isAirportEvening
     ? `Starting point / arrival location: ${startLocation}. On Day 1, begin the route near this location and sequence spots geographically outward.`
     : "";
 

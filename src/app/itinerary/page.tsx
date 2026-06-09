@@ -6,7 +6,7 @@ import Link from "next/link";
 import { generateItinerary } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
-import { upsertItinerary, fetchItinerary } from "@/lib/supabase";
+import { upsertItinerary, fetchItinerary, updateItineraryTitle, supabase } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
@@ -300,9 +300,21 @@ function ItineraryResult() {
   const [copied,      setCopied]      = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── 플래너 뱃지 + 편집 진입용 플래너 세션 ID ─────────────────
+  // ── 플래너 뱃지 ────────────────────────────────────────────
   const [plannerMeta,  setPlannerMeta]  = useState<{ numDays: number; startDate: string } | null>(null);
-  const [plannerSbId,  setPlannerSbId]  = useState<string | null>(null);
+
+  // ── 커스텀 제목 편집 (Bug ③) ──────────────────────────────
+  const [tripTitle,    setTripTitle]    = useState("");
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleInput,   setTitleInput]   = useState("");
+
+  // ── 인라인 편집 모드 (Bug ④) ─────────────────────────────
+  const [editMode,      setEditMode]      = useState(false);
+  const [searchQuery,   setSearchQuery]   = useState("");
+  const [searchDayIdx,  setSearchDayIdx]  = useState<number | null>(null);
+  type SpotHit = { place_id: string; title: string; category: string; description: string | null; duration_min: number | null };
+  const [searchResults, setSearchResults] = useState<SpotHit[]>([]);
+  const searchTimerRef2 = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
@@ -323,6 +335,7 @@ function ItineraryResult() {
       setEndDate(record.end_date);
       setTravelers(record.travelers);
       setTravelStyle(record.travel_style);
+      if (record.trip_title) setTripTitle(record.trip_title);
       setSyncStatus("saved");
       setLoading(false);
     });
@@ -349,8 +362,9 @@ function ItineraryResult() {
       toRemove.forEach(k => localStorage.removeItem(k));
     } catch { /* ignore */ }
 
-    // UUID 생성 또는 복원 (캐시 데이터 없이 ID만 보관)
-    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}`;
+    // Bug ①: 캐시 키에 startLocation + arrivalTime 포함 → 다른 출발지/시간은 별도 캐시
+    const locHash = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
+    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
     let id: string | null = null;
     try { id = localStorage.getItem(idLocalKey); } catch {}
     if (!id) {
@@ -363,11 +377,15 @@ function ItineraryResult() {
     fetchItinerary(id).then(record => {
       if (record && Array.isArray(record.days) && (record.days as Day[]).length > 0) {
         setDays(record.days as Day[]);
+        if (record.trip_title) setTripTitle(record.trip_title);
         setSyncStatus("saved");
         setLoading(false);
         return;
       }
-      // Supabase에 없으면 AI 생성 (최소 2.5s 드웰 타임 보장)
+      // Bug ②: Supabase에 없으면(삭제된 ID 포함) 새 UUID 발급 → 기존 UUID로 부활 방지
+      const freshId = crypto.randomUUID();
+      try { localStorage.setItem(idLocalKey, freshId); } catch {}
+      setItinId(freshId);
       setLoading(true);
       setError(null);
       generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
@@ -412,14 +430,8 @@ function ItineraryResult() {
     return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
   }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── 플래너 메타 뱃지 + 편집용 세션 ID 읽기 (반응형) ──────
+  // ── 플래너 메타 뱃지 읽기 (반응형) ────────────────────────
   useEffect(() => {
-    // 편집 화면 진입 시 전달할 planner session ID
-    try {
-      const id = localStorage.getItem("koreamate_planner_sb_id");
-      setPlannerSbId(id);
-    } catch { /* ignore */ }
-
     const read = () => {
       try {
         const raw = localStorage.getItem("koreamate_planner_meta");
@@ -466,6 +478,72 @@ function ItineraryResult() {
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  }
+
+  // ── Bug ③: 커스텀 제목 저장 ─────────────────────────────────
+  async function handleTitleSave() {
+    const trimmed = titleInput.trim();
+    setEditingTitle(false);
+    if (!trimmed || !itinId) return;
+    setTripTitle(trimmed);
+    await updateItineraryTitle(itinId, trimmed, getDeviceId());
+  }
+
+  // ── Bug ④: 인라인 편집 — 장소 삭제 / 순서 변경 / 검색 추가 ──
+  function deletePlace(dayIndex: number, placeIndex: number) {
+    setDays(prev => prev.map((day, di) =>
+      di === dayIndex
+        ? { ...day, places: day.places.filter((_, pi) => pi !== placeIndex) }
+        : day
+    ));
+  }
+
+  function movePlace(dayIndex: number, placeIndex: number, dir: "up" | "down") {
+    const target = placeIndex + (dir === "up" ? -1 : 1);
+    setDays(prev => prev.map((day, di) => {
+      if (di !== dayIndex) return day;
+      const places = [...day.places];
+      if (target < 0 || target >= places.length) return day;
+      [places[placeIndex], places[target]] = [places[target], places[placeIndex]];
+      return { ...day, places };
+    }));
+  }
+
+  function handleSpotSearch(query: string, dayIndex: number) {
+    setSearchQuery(query);
+    setSearchDayIdx(dayIndex);
+    if (searchTimerRef2.current) clearTimeout(searchTimerRef2.current);
+    if (!query.trim()) { setSearchResults([]); return; }
+    searchTimerRef2.current = setTimeout(async () => {
+      const { data } = await supabase
+        .from("spots")
+        .select("place_id,title,category,description,duration_min")
+        .ilike("title", `%${query}%`)
+        .limit(6);
+      setSearchResults((data ?? []) as SpotHit[]);
+    }, 350);
+  }
+
+  function addSpotToDay(dayIndex: number, spot: SpotHit) {
+    const mins = spot.duration_min ?? 60;
+    const dur = mins >= 60
+      ? `${Math.floor(mins / 60)}h${mins % 60 > 0 ? ` ${mins % 60}m` : ""}`
+      : `${mins}m`;
+    const newPlace: Place = {
+      name: spot.title,
+      category: spot.category,
+      location: "Busan",
+      time: "12:00",
+      duration: dur,
+      tips: spot.description ?? "Check opening hours before visiting.",
+      googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.title + " Busan Korea")}`,
+    };
+    setDays(prev => prev.map((day, di) =>
+      di === dayIndex ? { ...day, places: [...day.places, newPlace] } : day
+    ));
+    setSearchQuery("");
+    setSearchResults([]);
+    setSearchDayIdx(null);
   }
 
   // ── 일정 재생성 ──────────────────────────────────────────
@@ -615,7 +693,38 @@ function ItineraryResult() {
               </span>
             )}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520] mt-3">My {city} Trip</h1>
+          {/* Bug ③: 커스텀 제목 편집 */}
+          {editingTitle ? (
+            <div className="flex items-center gap-2 mt-3">
+              <input
+                autoFocus
+                type="text"
+                value={titleInput}
+                onChange={(e) => setTitleInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleTitleSave();
+                  if (e.key === "Escape") setEditingTitle(false);
+                }}
+                onBlur={handleTitleSave}
+                className="text-2xl sm:text-3xl font-black text-[#2C2520] bg-[#FAF7F2] border-2 border-[#D4AF37] rounded-xl px-3 py-1 focus:outline-none w-full"
+                placeholder={`My ${city} Trip`}
+                maxLength={60}
+              />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 mt-3 group">
+              <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520]">
+                {tripTitle || `My ${city} Trip`}
+              </h1>
+              {!shareId && itinId && (
+                <button
+                  onClick={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity text-[#8C6239] hover:text-[#D4AF37] text-xl cursor-pointer shrink-0"
+                  title="제목 편집"
+                >✏️</button>
+              )}
+            </div>
+          )}
           <p className="text-[#61554D] mt-2 text-base font-bold">
             📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
           </p>
@@ -636,14 +745,20 @@ function ItineraryResult() {
             ← Back to Home
           </Link>
 
+          {/* Bug ④: 인라인 편집 모드 토글 */}
           {!shareId && (
-            <Link
-              href={plannerSbId ? `/planner?id=${plannerSbId}` : "/planner"}
+            <button
+              onClick={() => {
+                setEditMode(prev => !prev);
+                setSearchQuery("");
+                setSearchResults([]);
+                setSearchDayIdx(null);
+              }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: editMode ? "#16a34a" : "#f97316" }}
             >
-              ✏️ Edit This Trip
-            </Link>
+              {editMode ? "✅ Done Editing" : "✏️ Edit This Trip"}
+            </button>
           )}
 
           {!shareId && (
@@ -674,9 +789,68 @@ function ItineraryResult() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-[#8C6239] font-bold mb-8 bg-[#EAE3D2]/40 rounded-xl py-2.5">
+      <p className="text-center text-sm text-[#8C6239] font-bold mb-4 bg-[#EAE3D2]/40 rounded-xl py-2.5">
         💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit This Trip above
       </p>
+
+      {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
+      {!shareId && paramStartLoc.toLowerCase().includes("gimhae") && parseInt(paramArrivalTime || "0") >= 17 && (
+        <div className="mb-6 rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
+          <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a
+              href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/redirect?aid=41763&aff_adid=944297&k_site=https%3A%2F%2Fwww.klook.com%2Factivity%2F21049-busan-gimhae-airport-private-transfer%2F"}
+              target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-amber-200 hover:border-amber-400 transition-colors shadow-sm"
+            >
+              <span className="text-2xl">🚐</span>
+              <div>
+                <p className="text-xs font-black text-gray-900">Airport Limousine</p>
+                <p className="text-[10px] text-gray-500">Gimhae → Nampo-dong · ₩8,000</p>
+              </div>
+            </a>
+            <a
+              href={process.env.NEXT_PUBLIC_KLOOK_ESIM_URL || "https://affiliate.klook.com/sl/KiT3U74"}
+              target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-orange-200 hover:border-orange-400 transition-colors shadow-sm"
+            >
+              <span className="text-2xl">📱</span>
+              <div>
+                <p className="text-xs font-black text-gray-900">Korea eSIM</p>
+                <p className="text-[10px] text-gray-500">Activate before landing · 5G</p>
+              </div>
+            </a>
+            <a
+              href={`${process.env.NEXT_PUBLIC_BOOKING_BUSAN_URL || "https://www.booking.com/searchresults.html?ss=Nampo-dong+Busan+Korea"}&checkin=${startDate}&checkout=${endDate}`}
+              target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-blue-200 hover:border-blue-400 transition-colors shadow-sm"
+            >
+              <span className="text-2xl">🏨</span>
+              <div>
+                <p className="text-xs font-black text-gray-900">Hotel near Nampo-dong</p>
+                <p className="text-[10px] text-gray-500">Best access from airport</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* ── 편집 모드 배너 ── */}
+      {editMode && (
+        <div className="mb-6 flex items-start gap-3 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
+          <span className="text-lg mt-0.5 shrink-0">✏️</span>
+          <div className="flex-1">
+            <p className="text-sm font-black text-orange-800">Edit Mode Active</p>
+            <p className="text-xs text-orange-600 mt-0.5">
+              Tap × to remove a place · ↑↓ to reorder · Use search boxes to add spots from database · All changes auto-save.
+            </p>
+          </div>
+          <button
+            onClick={() => { setSearchQuery(""); setSearchResults([]); setSearchDayIdx(null); setEditMode(false); }}
+            className="text-orange-400 hover:text-orange-700 font-black text-base shrink-0"
+          >✕</button>
+        </div>
+      )}
 
       {/* ── Compact 보기 ── */}
       {viewMode === "compact" ? (
@@ -728,7 +902,7 @@ function ItineraryResult() {
                   <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
                 </h2>
 
-                <div className="space-y-4">
+                <div className="space-y-4" id={`day-${day.dayNumber}`}>
                   {TIME_SLOTS.map((ts) => {
                     const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
 
@@ -761,6 +935,32 @@ function ItineraryResult() {
                                   key={idx}
                                   className="flex flex-col hover:bg-[#FAF7F2]/40 transition-colors group relative"
                                 >
+                                  {/* ── 편집 모드 컨트롤 바 ── */}
+                                  {editMode && !shareId && (
+                                    <div
+                                      className="flex items-center gap-2 px-4 py-2 bg-orange-50 border-b border-orange-100"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <button
+                                        onClick={() => deletePlace(day.dayNumber - 1, idx)}
+                                        className="w-6 h-6 rounded-full bg-red-100 text-red-600 hover:bg-red-200 font-black text-sm flex items-center justify-center shrink-0"
+                                        title="Remove this place"
+                                      >×</button>
+                                      <button
+                                        onClick={() => movePlace(day.dayNumber - 1, idx, "up")}
+                                        disabled={idx === 0}
+                                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-30 font-black text-xs flex items-center justify-center shrink-0"
+                                        title="Move up"
+                                      >↑</button>
+                                      <button
+                                        onClick={() => movePlace(day.dayNumber - 1, idx, "down")}
+                                        disabled={idx === day.places.length - 1}
+                                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-30 font-black text-xs flex items-center justify-center shrink-0"
+                                        title="Move down"
+                                      >↓</button>
+                                      <span className="flex-1 text-[10px] text-orange-600 font-semibold truncate">{place.name}</span>
+                                    </div>
+                                  )}
                                   {/* 장소 정보 + 지도 버튼 행 */}
                                   <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
                                     <div
@@ -859,6 +1059,40 @@ function ItineraryResult() {
                       </div>
                     );
                   })}
+
+                  {/* ── 편집 모드: 스팟 검색·추가 패널 ── */}
+                  {editMode && !shareId && (
+                    <div className="mt-2 rounded-2xl border-2 border-dashed border-[#D4AF37]/40 bg-[#FAF7F2]/60 p-4">
+                      <p className="text-xs font-black text-[#8C6239] mb-2.5">＋ Add a spot to Day {day.dayNumber}</p>
+                      <input
+                        type="text"
+                        placeholder="Search spots by name (e.g. Haeundae, Jagalchi…)"
+                        value={searchDayIdx === day.dayNumber - 1 ? searchQuery : ""}
+                        onChange={(e) => handleSpotSearch(e.target.value, day.dayNumber - 1)}
+                        className="w-full text-sm px-4 py-2.5 rounded-xl border border-[#E6DFD5] bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/30"
+                      />
+                      {searchDayIdx === day.dayNumber - 1 && searchResults.length > 0 && (
+                        <div className="mt-2 space-y-1.5">
+                          {searchResults.map((hit) => (
+                            <button
+                              key={hit.place_id}
+                              onClick={() => addSpotToDay(day.dayNumber - 1, hit)}
+                              className="w-full text-left flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white border border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-colors"
+                            >
+                              <span className="text-sm font-black text-[#2C2520] flex-1 truncate">{hit.title}</span>
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#EAE3D2] text-[#61554D] shrink-0">{hit.category}</span>
+                              {hit.duration_min && (
+                                <span className="text-[10px] text-gray-400 shrink-0">{hit.duration_min} min</span>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      {searchDayIdx === day.dayNumber - 1 && searchQuery.length > 1 && searchResults.length === 0 && (
+                        <p className="text-xs text-gray-400 mt-2 text-center italic">No spots found — try a different keyword</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             );
