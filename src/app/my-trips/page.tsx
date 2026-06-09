@@ -87,15 +87,22 @@ export default function MyTripsPage() {
 
   // ── 초기 로드 ────────────────────────────────────────────────
   useEffect(() => {
+    // 재방문 시 이전 state 잔류 방지: fetch 전 선행 초기화
+    setTrips([]);
+    setLoading(true);
+
     const deviceId = getDeviceId();
     Promise.all([
       fetchItinerariesByDevice(deviceId),
       fetchPlannersByDevice(deviceId),
     ]).then(([itins, planners]) => {
+      const seen = new Set<string>();
       const cards: TripCard[] = [
         ...itins.map(itineraryToCard),
         ...planners.map(plannerToCard),
-      ].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      ]
+        .filter((c) => { if (seen.has(c.id)) return false; seen.add(c.id); return true; })
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       setTrips(cards);
       setLoading(false);
     });
@@ -155,7 +162,7 @@ export default function MyTripsPage() {
             Korea<span style={{ color: "#f97316" }}>Mate</span>
           </Link>
           <span className="text-gray-300 text-lg">/</span>
-          <h1 className="text-base font-black text-gray-800">My Trip Archive</h1>
+          <h1 className="text-base font-black text-gray-800">My Trips</h1>
         </div>
       </header>
 
@@ -164,10 +171,10 @@ export default function MyTripsPage() {
         {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
           <h2 className="text-3xl font-black text-gray-900 mb-1">
-            🗃️ My Trip Archive
+            ✈️ My Trips
           </h2>
           <p className="text-sm text-gray-500 font-medium">
-            All itineraries and planners created on this device — no sign-up needed.
+            All your trips saved here.
           </p>
         </div>
 
@@ -212,7 +219,7 @@ export default function MyTripsPage() {
             <span className="text-6xl">✈️</span>
             <div>
               <p className="text-xl font-black text-gray-800 mb-2">
-                {filter === "all" ? "No trips yet" : `No ${filter === "itinerary" ? "AI itineraries" : "planners"} yet`}
+                {filter === "all" ? "No trips yet" : `No ${filter === "itinerary" ? "AI trips" : "plans"} yet`}
               </p>
               <p className="text-sm text-gray-500 max-w-sm">
                 Plan a trip or use AI to generate one — it will automatically appear here.

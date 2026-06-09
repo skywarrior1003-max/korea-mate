@@ -64,14 +64,16 @@ export default function CartDrawer() {
     return () => window.removeEventListener(CART_EVENT, refresh);
   }, [refresh]);
 
-  // 홈·itinerary·planner·my-trips 화면에서는 하단 바 숨김
-  // /my-trips: CartItem 카운트 ≠ Supabase 일정 카운트 — 잔상 혼동 방지
-  if (
+  // 홈·itinerary·planner·my-trips 화면에서는 하단 바 완전 배제
+  // startsWith: trailing slash·query string 변형 모두 방어
+  // !pathname: Suspense hydration 전 null 방어
+  const isExcludedPath =
+    !pathname ||
     pathname === "/" ||
-    pathname === "/itinerary" ||
-    pathname === "/planner" ||
-    pathname === "/my-trips"
-  ) return null;
+    pathname.startsWith("/itinerary") ||
+    pathname.startsWith("/planner") ||
+    pathname.startsWith("/my-trips");
+  if (isExcludedPath) return null;
 
   // 아이템 0개면 드로어 자체를 숨김
   if (items.length === 0) return null;
