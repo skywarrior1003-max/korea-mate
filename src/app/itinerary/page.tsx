@@ -337,9 +337,11 @@ function ItineraryResult() {
   };
 
   // ── sortItinerary: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
-  // 1) 모든 day.places를 HH:MM 시간 오름차순 정렬
+  // 1) 모든 day.places를 HH:MM 시간 오름차순 정렬 (stable: origIdx 서브키)
   // 2) 공항 저녁 도착 Day 1: arrivalHour 이전 & 금지 장소 물리 제거
-  const timeToMins = (t: string): number => {
+
+  // Edge Case 1/3: null·undefined·빈문자열 안전 처리 + 명시적 string | null | undefined 수용
+  const timeToMins = (t: string | null | undefined): number => {
     const parts = (t ?? "12:00").split(":");
     const h = parseInt(parts[0] ?? "12", 10);
     const m = parseInt(parts[1] ?? "0", 10);
@@ -348,10 +350,14 @@ function ItineraryResult() {
 
   const sanitizeDays = (rawDays: Day[]): Day[] =>
     rawDays.map((day, dayIdx) => {
-      // ① 시간 오름차순 정렬 (모든 day)
-      const sorted = [...day.places].sort(
-        (a, b) => timeToMins(a.time) - timeToMins(b.time)
-      );
+      // ① 시간 오름차순 정렬 — origIdx를 서브 정렬 키로 사용하여 동일 시간대 순서 보장
+      const sorted = day.places
+        .map((p, origIdx) => ({ p, origIdx }))
+        .sort((a, b) => {
+          const diff = timeToMins(a.p.time) - timeToMins(b.p.time);
+          return diff !== 0 ? diff : a.origIdx - b.origIdx; // 동일 시간 → 원래 입력 순서 유지
+        })
+        .map(({ p }) => p);
       // ② 공항 저녁 Day 1: 도착 전 슬롯 + 금지 장소 물리 제거
       const cleaned =
         isAirportEvening && dayIdx === 0
@@ -597,18 +603,32 @@ function ItineraryResult() {
     const dur = mins >= 60
       ? `${Math.floor(mins / 60)}h${mins % 60 > 0 ? ` ${mins % 60}m` : ""}`
       : `${mins}m`;
+
+    // Edge Case 1: 스마트 기본 시간 — Day 1 공항 저녁이면 arrivalHour 기준, 그 외 낮 12시
+    // "12:00" 고정 시 isAirportEvening Day 1 필터에 걸려 추가한 장소가 렌더링에서 사라지는 버그 방지
+    const defaultHour = isAirportEvening && dayIndex === 0 ? arrivalHour : 12;
+    const defaultTime = `${String(defaultHour).padStart(2, "0")}:00`;
+
     const newPlace: Place = {
       name: spot.title,
       category: spot.category,
       location: "Busan",
-      time: "12:00",
+      time: defaultTime,
       duration: dur,
       tips: spot.description ?? "Check opening hours before visiting.",
       googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.title + " Busan Korea")}`,
     };
-    setDays(prev => prev.map((day, di) =>
-      di === dayIndex ? { ...day, places: [...day.places, newPlace] } : day
-    ));
+
+    // 추가 후 시간 오름차순 재정렬 (sanitizeDays의 필터 제거 없이 정렬만 적용)
+    setDays(prev => prev.map((day, di) => {
+      if (di !== dayIndex) return day;
+      const updated = [...day.places, newPlace];
+      updated.sort((a, b) => {
+        const diff = timeToMins(a.time) - timeToMins(b.time);
+        return diff !== 0 ? diff : updated.indexOf(a) - updated.indexOf(b);
+      });
+      return { ...day, places: updated };
+    }));
     setSearchQuery("");
     setSearchResults([]);
     setSearchDayIdx(null);
