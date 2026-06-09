@@ -336,6 +336,36 @@ function ItineraryResult() {
     );
   };
 
+  // ── sortItinerary: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
+  // 1) 모든 day.places를 HH:MM 시간 오름차순 정렬
+  // 2) 공항 저녁 도착 Day 1: arrivalHour 이전 & 금지 장소 물리 제거
+  const timeToMins = (t: string): number => {
+    const parts = (t ?? "12:00").split(":");
+    const h = parseInt(parts[0] ?? "12", 10);
+    const m = parseInt(parts[1] ?? "0", 10);
+    return (isNaN(h) ? 12 : h) * 60 + (isNaN(m) ? 0 : m);
+  };
+
+  const sanitizeDays = (rawDays: Day[]): Day[] =>
+    rawDays.map((day, dayIdx) => {
+      // ① 시간 오름차순 정렬 (모든 day)
+      const sorted = [...day.places].sort(
+        (a, b) => timeToMins(a.time) - timeToMins(b.time)
+      );
+      // ② 공항 저녁 Day 1: 도착 전 슬롯 + 금지 장소 물리 제거
+      const cleaned =
+        isAirportEvening && dayIdx === 0
+          ? sorted.filter(p => {
+              const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
+              const prohibited = PROHIBITED_DAY1.some(
+                kw => p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
+              );
+              return h >= arrivalHour && !prohibited;
+            })
+          : sorted;
+      return { ...day, places: cleaned };
+    });
+
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
   // ══════════════════════════════════════════════════════════
@@ -348,7 +378,7 @@ function ItineraryResult() {
         setLoading(false);
         return;
       }
-      setDays(record.days as Day[]);
+      setDays(sanitizeDays(record.days as Day[]));
       setItinId(shareId);
       setCity(record.city);
       setStartDate(record.start_date);
@@ -409,12 +439,12 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
-            .then((data) => { setDays(data.days); setLoading(false); })
+            .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
             .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
           return;
         }
-        // 정상 레코드 → 그대로 사용
-        setDays(loadedDays);
+        // 정상 레코드 → sanitize 후 사용
+        setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
         setSyncStatus("saved");
         setLoading(false);
@@ -427,7 +457,7 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
-        .then((data) => { setDays(data.days); setLoading(false); })
+        .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
   }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -586,9 +616,10 @@ function ItineraryResult() {
 
   // ── 일정 재생성 ──────────────────────────────────────────
   function resetItinerary() {
-    // 새 UUID → 재생성된 일정은 별도 Supabase 레코드
     const newId = crypto.randomUUID();
-    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}`;
+    // v3 키 포맷 사용 — 구버전 키로 저장하면 Effect 2 cleanup에 즉시 삭제됨
+    const locHash = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
+    const idLocalKey = `koreamate_itin3_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
     try { localStorage.setItem(idLocalKey, newId); } catch { /* ignore */ }
     setItinId(newId);
     setSyncStatus("idle");
@@ -596,7 +627,7 @@ function ItineraryResult() {
     setLoading(true);
     setError(null);
     generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
-      .then((data) => { setDays(data.days); setLoading(false); })
+      .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
       .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
   }
 
@@ -893,7 +924,13 @@ function ItineraryResult() {
       {/* ── Compact 보기 ── */}
       {viewMode === "compact" ? (
         <div className="space-y-2 mb-16">
-          {days.map((day) => (
+          {days.map((day) => {
+            // Compact View도 동일한 visiblePlaces 필터 적용
+            const compactPlaces =
+              isAirportEvening && day.dayNumber === 1
+                ? day.places.filter(p => parseInt(p.time?.split(":")?.[0] ?? "20", 10) >= arrivalHour)
+                : day.places;
+            return (
             <div
               key={day.dayNumber}
               className="bg-white rounded-2xl border border-[#E6DFD5] px-5 py-4 flex flex-wrap items-center gap-3 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
@@ -904,10 +941,10 @@ function ItineraryResult() {
                 <span className="text-xs text-[#8C6239] font-medium bg-[#EAE3D2]/50 px-2 py-0.5 rounded-md">{day.date}</span>
               </div>
               <div className="flex-1 flex flex-wrap gap-1.5 min-w-0">
-                {day.places.length === 0 ? (
+                {compactPlaces.length === 0 ? (
                   <span className="text-xs text-[#8C6239]/40 italic">No places — click to add</span>
                 ) : (
-                  day.places.map((p, i) => (
+                  compactPlaces.map((p, i) => (
                     <span key={i} className="inline-flex items-center px-2.5 py-0.5 bg-[#EAE3D2]/60 rounded-md text-xs font-semibold text-[#61554D]">
                       {p.name}
                     </span>
@@ -915,10 +952,11 @@ function ItineraryResult() {
                 )}
               </div>
               <span className="shrink-0 text-xs font-bold text-[#8C6239]/60">
-                {day.places.length} place{day.places.length !== 1 ? "s" : ""} →
+                {compactPlaces.length} place{compactPlaces.length !== 1 ? "s" : ""} →
               </span>
             </div>
-          ))}
+            );
+          })}
           <p className="text-center text-xs text-[#8C6239]/50 mt-3">Click any day card to switch to Full View</p>
         </div>
       ) : (
