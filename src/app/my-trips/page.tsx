@@ -136,30 +136,30 @@ export default function MyTripsPage() {
   // ── 삭제 ─────────────────────────────────────────────────────
   async function handleDelete(trip: TripCard) {
     setDeleting(trip.id);
-    const deviceId = getDeviceId();
-    const ok = trip.kind === "itinerary"
-      ? await deleteItinerary(trip.id, deviceId)
-      : await deletePlannerSession(trip.id, deviceId);
-    if (ok) {
-      setTrips((prev) => prev.filter((t) => t.id !== trip.id));
-      try {
-        if (trip.kind === "planner") {
-          // 플래너 localStorage 참조 제거
-          const stored = localStorage.getItem("koreamate_planner_sb_id");
-          if (stored === trip.id) localStorage.removeItem("koreamate_planner_sb_id");
-        } else {
-          // 이티너러리: 모든 캐시 UUID 키 제거 → 재방문 시 삭제된 ID로 부활 방지 (Bug ②)
-          const toRemove: string[] = [];
-          for (let i = 0; i < localStorage.length; i++) {
-            const k = localStorage.key(i);
-            if (k && k.startsWith("koreamate_itin_id_")) toRemove.push(k);
-          }
-          toRemove.forEach((k) => localStorage.removeItem(k));
-        }
-      } catch { /* ignore */ }
-    }
-    setDeleting(null);
     setConfirmDel(null);
+    // Optimistic: 확인 즉시 카드 제거 → 유령 카드 원천 차단
+    setTrips((prev) => prev.filter((t) => t.id !== trip.id));
+    const deviceId = getDeviceId();
+    await (trip.kind === "itinerary"
+      ? deleteItinerary(trip.id, deviceId)
+      : deletePlannerSession(trip.id, deviceId));
+    try {
+      if (trip.kind === "planner") {
+        const stored = localStorage.getItem("koreamate_planner_sb_id");
+        if (stored === trip.id) localStorage.removeItem("koreamate_planner_sb_id");
+      } else {
+        // v1/v2/v3 캐시 키 전부 제거 → 재방문 시 삭제된 ID로 부활 방지
+        const toRemove: string[] = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && (k.startsWith("koreamate_itin_id_") || k.startsWith("koreamate_itin3_id_"))) {
+            toRemove.push(k);
+          }
+        }
+        toRemove.forEach((k) => localStorage.removeItem(k));
+      }
+    } catch { /* ignore */ }
+    setDeleting(null);
   }
 
   const displayed = filter === "all" ? trips : trips.filter((t) => t.kind === filter);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import { generateItinerary } from "@/lib/scheduler";
@@ -266,6 +266,7 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
 // ══════════════════════════════════════════════════════════════
 function ItineraryResult() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // ── URL 파라미터 (stable consts) ──────────────────────────
   const shareId          = searchParams.get("id");
@@ -329,7 +330,7 @@ function ItineraryResult() {
   // 저녁 도착 감지 (공항 포함 — 17:00 이후 모든 케이스)
   const isEveningOrNightArrival = arrivalHour >= 17;
 
-  // Layer 2: Supabase 레코드 검증 — 공항저녁인데 해운대 등 금지 장소 포함 시 true
+  // Layer 2a: 공항 저녁 도착인데 금지 장소(해운대 등)가 Day 1에 있으면 true
   const PROHIBITED_DAY1 = ["haeundae", "gwangalli", "centum", "biff", "taejongdae", "haedong yonggungsa", "yonggungsa"];
   const day1HasProhibited = (dayList: Day[]): boolean => {
     const first = dayList[0];
@@ -339,6 +340,16 @@ function ItineraryResult() {
         p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
       )
     );
+  };
+
+  // Layer 2b: 저녁/야간 도착인데 Day 1에 minHour 이전 장소가 있으면 → 구버전 캐시
+  const day1HasEarlyPlaces = (dayList: Day[], minHour: number): boolean => {
+    const first = dayList[0];
+    if (!first) return false;
+    return first.places.some(p => {
+      const h = parseInt(p.time?.split(":")?.[0] ?? "12", 10);
+      return !isNaN(h) && h < minHour;
+    });
   };
 
   // ── sanitizeDays: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
@@ -398,8 +409,7 @@ function ItineraryResult() {
     setLoading(true);
     fetchItinerary(shareId).then(record => {
       if (!record) {
-        setError("This shared itinerary could not be found. It may have been deleted.");
-        setLoading(false);
+        router.replace("/my-trips");
         return;
       }
       setDays(sanitizeDays(record.days as Day[]));
@@ -455,8 +465,11 @@ function ItineraryResult() {
     fetchItinerary(id).then(record => {
       const loadedDays = record?.days as Day[] | undefined;
       if (record && Array.isArray(loadedDays) && loadedDays.length > 0) {
-        // Layer 2: 공항 저녁 도착인데 Day 1에 금지 장소(해운대 등)가 있으면 → 캐시 무효화 후 재생성
-        if (isAirportEvening && day1HasProhibited(loadedDays)) {
+        // Layer 2: (a) 공항 저녁 + 금지 장소, (b) 저녁/야간 도착인데 Day 1에 이른 시간 슬롯 존재 → 구버전 캐시 무효화
+        const cacheIsStale =
+          (isAirportEvening && day1HasProhibited(loadedDays)) ||
+          (isEveningOrNightArrival && day1HasEarlyPlaces(loadedDays, arrivalHour));
+        if (cacheIsStale) {
           const freshId = crypto.randomUUID();
           try { localStorage.setItem(idLocalKey, freshId); } catch {}
           setItinId(freshId);
@@ -856,10 +869,15 @@ function ItineraryResult() {
           {!shareId && (
             <button
               onClick={() => {
-                setEditMode(prev => !prev);
-                setSearchQuery("");
-                setSearchResults([]);
-                setSearchDayIdx(null);
+                if (editMode) {
+                  setSearchQuery("");
+                  setSearchResults([]);
+                  setSearchDayIdx(null);
+                  setEditMode(false);
+                  router.push("/my-trips");
+                } else {
+                  setEditMode(true);
+                }
               }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
               style={{ backgroundColor: editMode ? "#16a34a" : "#f97316" }}
