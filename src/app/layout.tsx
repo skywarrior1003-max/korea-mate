@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://gokoreamate.com",
   },
+  verification: {
+    google: "sGBjjMTMMM8LKvzHnDCQ0AQpHdQKBOSEQUizwVBTpxo",
+  },
 };
 
 export default function RootLayout({
