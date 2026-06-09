@@ -551,8 +551,13 @@ export async function generateItineraryInternal(input: HarnessInput): Promise<Ha
       } catch (err) {
         lastErr = (err as Error).message;
         const status = parseInt(lastErr.match(/Gemini (\d+)/)?.[1] ?? "0");
-        if (status === 503 && attempt < MAX_RETRIES - 1) {
-          await sleep(RETRY_DELAY_MS * (attempt + 1));
+        if ((status === 503 || status === 429) && attempt < MAX_RETRIES - 1) {
+          // 429: parse "retry in Xs" from error message; default 42s
+          const retryMatch = lastErr.match(/retry in ([\d.]+)s/i);
+          const wait = status === 429
+            ? Math.ceil((parseFloat(retryMatch?.[1] ?? "42") + 2) * 1000)
+            : RETRY_DELAY_MS * (attempt + 1);
+          await sleep(wait);
           continue;
         }
         break;
