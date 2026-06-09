@@ -109,11 +109,16 @@ function PlannerContent() {
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── UUID 초기화 + Supabase 우선 복원 (일반 모드, 마운트 1회) ─
+  // URL에 startDate / numDays가 있으면 해당 값이 Supabase 저장값을 덮어씀 (Issue 3 fix)
   useEffect(() => {
     if (shareId) return;
 
     // 낡은 v1 캐시 일회성 철거
     try { localStorage.removeItem("koreamate_planner_v1"); } catch {}
+
+    // URL 파라미터 추출 (itinerary → planner 컨텍스트 전달)
+    const urlStartDate = searchParams.get("startDate") ?? "";
+    const urlNumDays   = parseInt(searchParams.get("numDays") ?? "0", 10);
 
     let id: string | null = null;
     try { id = localStorage.getItem(PLANNER_SB_ID_KEY); } catch {}
@@ -123,17 +128,16 @@ function PlannerContent() {
     }
     setPlannerSbId(id);
 
-    // Supabase에서 플래너 복원 (AI 일정 포함 전체 데이터)
+    // Supabase에서 플래너 복원 — URL 파라미터가 있으면 날짜/일수 덮어씀
     fetchPlannerSession(id).then(record => {
-      if (!record) return;
       skipSaveRef.current = 1;
-      setNumDays(record.num_days ?? 3);
-      setStartDate(record.start_date ?? "");
+      setNumDays(urlNumDays > 0 ? urlNumDays : (record?.num_days ?? 3));
+      setStartDate(urlStartDate || (record?.start_date ?? ""));
       setArrivalTimes(
-        record.arrival_times ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
+        record?.arrival_times ?? Array.from({ length: 14 }, (_, i) => (i === 0 ? "14:00" : "09:00"))
       );
-      setScheduled((record.scheduled as ScheduledMap) ?? {});
-      setSyncStatus("saved");
+      if (record?.scheduled) setScheduled(record.scheduled as ScheduledMap);
+      if (record) setSyncStatus("saved");
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

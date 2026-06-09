@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   getCart,
@@ -44,8 +44,9 @@ const STAGE_DOT: Record<string, string> = {
 // ── 컴포넌트 ───────────────────────────────────
 
 export default function CartDrawer() {
-  const router   = useRouter();
-  const pathname = usePathname();
+  const router       = useRouter();
+  const pathname     = usePathname();
+  const searchParams = useSearchParams();
   const [items,        setItems]        = useState<CartItem[]>([]);
   const [isExpanded,   setExpanded]     = useState(false);
   const [imgErrors,    setImgErrors]    = useState<Record<string, boolean>>({});
@@ -63,8 +64,14 @@ export default function CartDrawer() {
     return () => window.removeEventListener(CART_EVENT, refresh);
   }, [refresh]);
 
-  // 홈·itinerary·planner 화면에서는 하단 바 숨김
-  if (pathname === "/" || pathname === "/itinerary" || pathname === "/planner") return null;
+  // 홈·itinerary·planner·my-trips 화면에서는 하단 바 숨김
+  // /my-trips: CartItem 카운트 ≠ Supabase 일정 카운트 — 잔상 혼동 방지
+  if (
+    pathname === "/" ||
+    pathname === "/itinerary" ||
+    pathname === "/planner" ||
+    pathname === "/my-trips"
+  ) return null;
 
   // 아이템 0개면 드로어 자체를 숨김
   if (items.length === 0) return null;
@@ -83,7 +90,17 @@ export default function CartDrawer() {
   }
 
   function handleBuildTimeline() {
-    router.push("/planner");
+    // 현재 URL에 startDate / endDate가 있으면 (itinerary 컨텍스트) → planner에 날짜 전달
+    const urlStart = searchParams.get("startDate");
+    const urlEnd   = searchParams.get("endDate");
+    if (urlStart && urlEnd) {
+      const start   = new Date(urlStart);
+      const end     = new Date(urlEnd);
+      const numDays = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / 86400000) + 1);
+      router.push(`/planner?startDate=${urlStart}&numDays=${numDays}`);
+    } else {
+      router.push("/planner");
+    }
   }
 
   return (

@@ -22,6 +22,8 @@ interface TripCard {
   subtitle:   string;
   meta:       string;
   updatedAt:  string;
+  startDate?: string;   // planner 컨텍스트 전달용
+  numDays?:   number;
 }
 
 // ── 날짜 상대 표시 ─────────────────────────────────────────────
@@ -58,6 +60,8 @@ function itineraryToCard(r: ItineraryRow): TripCard {
       r.travel_style,
     ].filter(Boolean).join(" · "),
     updatedAt: r.updated_at ?? "",
+    startDate: r.start_date ?? undefined,
+    numDays:   days > 0 ? days : undefined,
   };
 }
 
@@ -279,6 +283,16 @@ export default function MyTripsPage() {
                     >
                       Open Trip →
                     </Link>
+
+                    {/* Issue 3 fix: 이티너러리 날짜를 Planner에 컨텍스트로 전달 */}
+                    {trip.kind === "itinerary" && trip.startDate && trip.numDays && (
+                      <Link
+                        href={`/planner?startDate=${trip.startDate}&numDays=${trip.numDays}`}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold border border-orange-200 text-orange-600 hover:bg-orange-50 transition-colors active:scale-95"
+                      >
+                        📅 Plan These Dates
+                      </Link>
+                    )}
 
                     <div className="flex gap-2">
                       {/* 링크 복사 */}
