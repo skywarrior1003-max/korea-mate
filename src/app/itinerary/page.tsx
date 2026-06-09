@@ -316,6 +316,26 @@ function ItineraryResult() {
   const [searchResults, setSearchResults] = useState<SpotHit[]>([]);
   const searchTimerRef2 = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ── 공항 저녁 도착 감지 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
+  const arrivalHour = parseInt(paramArrivalTime?.split(":")?.[0] ?? "14", 10);
+  const isAirportEvening =
+    (paramStartLoc.toLowerCase().includes("airport") ||
+     paramStartLoc.toLowerCase().includes("gimhae") ||
+     paramStartLoc.toLowerCase().includes("공항")) &&
+    arrivalHour >= 17;
+
+  // Layer 2: Supabase 레코드 검증 — 공항저녁인데 해운대 등 금지 장소 포함 시 true
+  const PROHIBITED_DAY1 = ["haeundae", "gwangalli", "centum", "biff", "taejongdae", "haedong yonggungsa", "yonggungsa"];
+  const day1HasProhibited = (dayList: Day[]): boolean => {
+    const first = dayList[0];
+    if (!first) return false;
+    return first.places.some(p =>
+      PROHIBITED_DAY1.some(kw =>
+        p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
+      )
+    );
+  };
+
   // ══════════════════════════════════════════════════════════
   //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
   // ══════════════════════════════════════════════════════════
@@ -352,19 +372,23 @@ function ItineraryResult() {
       return;
     }
 
-    // 낡은 v2 캐시 잔재 일회성 철거
+    // ── Layer 1: 구버전(v1/v2) 캐시 키 일회성 철거 → 잘못 생성된 구버전 UUID 완전 무효화
     try {
       const toRemove: string[] = [];
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
-        if (k && (k.startsWith("koreamate_itin_v2_") || k === "koreamate_planner_v1")) toRemove.push(k);
+        if (k && (
+          k.startsWith("koreamate_itin_v2_") ||
+          k.startsWith("koreamate_itin_id_") ||   // ← v1 prefix (구버전) 전부 제거
+          k === "koreamate_planner_v1"
+        )) toRemove.push(k);
       }
       toRemove.forEach(k => localStorage.removeItem(k));
     } catch { /* ignore */ }
 
-    // Bug ①: 캐시 키에 startLocation + arrivalTime 포함 → 다른 출발지/시간은 별도 캐시
+    // ── 캐시 키 v3: startLocation + arrivalTime 해시 포함, 구버전과 완전 분리
     const locHash = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
-    const idLocalKey = `koreamate_itin_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
+    const idLocalKey = `koreamate_itin3_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
     let id: string | null = null;
     try { id = localStorage.getItem(idLocalKey); } catch {}
     if (!id) {
@@ -373,10 +397,24 @@ function ItineraryResult() {
     }
     setItinId(id);
 
-    // Supabase 우선 로드
+    // ── Supabase 우선 로드 + Layer 2: 내용 검증
     fetchItinerary(id).then(record => {
-      if (record && Array.isArray(record.days) && (record.days as Day[]).length > 0) {
-        setDays(record.days as Day[]);
+      const loadedDays = record?.days as Day[] | undefined;
+      if (record && Array.isArray(loadedDays) && loadedDays.length > 0) {
+        // Layer 2: 공항 저녁 도착인데 Day 1에 금지 장소(해운대 등)가 있으면 → 캐시 무효화 후 재생성
+        if (isAirportEvening && day1HasProhibited(loadedDays)) {
+          const freshId = crypto.randomUUID();
+          try { localStorage.setItem(idLocalKey, freshId); } catch {}
+          setItinId(freshId);
+          setLoading(true);
+          setError(null);
+          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+            .then((data) => { setDays(data.days); setLoading(false); })
+            .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
+          return;
+        }
+        // 정상 레코드 → 그대로 사용
+        setDays(loadedDays);
         if (record.trip_title) setTripTitle(record.trip_title);
         setSyncStatus("saved");
         setLoading(false);
@@ -887,7 +925,16 @@ function ItineraryResult() {
         /* ── Full View ── */
         <div className="space-y-12 mb-16">
           {days.map((day) => {
-            const slotAssigned = day.places.map((p, i) => ({
+            // Layer 3: 공항 저녁 도착 + Day 1 → 도착 시간 이전 장소 렌더링 완전 제거
+            const visiblePlaces =
+              isAirportEvening && day.dayNumber === 1
+                ? day.places.filter(p => {
+                    const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
+                    return h >= arrivalHour;
+                  })
+                : day.places;
+
+            const slotAssigned = visiblePlaces.map((p, i) => ({
               place: p,
               idx: i,
               slot: p.slot ?? assignSlot(p.time),
