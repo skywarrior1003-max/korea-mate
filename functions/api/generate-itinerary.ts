@@ -2,6 +2,9 @@ interface Env {
   GEMINI_API_KEY: string;
 }
 
+// Node.js process.env 접근 허용 (하네스/테스트 런너 전용)
+declare const process: { env: Record<string, string | undefined> };
+
 interface RequestBody {
   city: string;
   startDate: string;
@@ -97,16 +100,89 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+//  MEGA EVENTS — VisitBusan Official (비짓부산 실시간 공식 행사)
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface MegaEvent {
+  title: string;
+  startDate: string;  // YYYY-MM-DD
+  endDate: string;    // YYYY-MM-DD
+  location: string;
+  description: string;
+  startTime?: string;
+  endTime?: string;
+}
+
+export const MEGA_EVENTS: MegaEvent[] = [
+  {
+    title: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN (광안리 M드론 라이트쇼)",
+    startDate: "2026-06-12",
+    endDate:   "2026-06-13",
+    location:  "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan (수영구 광안해변로 219)",
+    description: "World-scale M-drone light show at Gwangalli Beach. BTS Arirang Busan edition. Official: https://www.visitbusan.net",
+    startTime: "22:00",
+  },
+  {
+    title: "The Red Moment Busan (더 레드 모먼트 부산)",
+    startDate: "2026-06-11",
+    endDate:   "2026-06-13",
+    location:  "Busan (venue TBA)",
+    description: "Special evening event in Busan. 19:00–20:30. Official: https://www.visitbusan.net",
+    startTime: "19:00",
+    endTime:   "20:30",
+  },
+  {
+    title: "Port Village Busan 2026 (포트 빌리지 부산 2026)",
+    startDate: "2026-06-09",
+    endDate:   "2026-06-14",
+    location:  "Busan Port area (부산항 일대)",
+    description: "Multi-cultural festival at Busan Port. Official: https://www.visitbusan.net",
+  },
+  {
+    title: "2026 Byeolbada Busan Night Market (별바다부산 나이트마켓)",
+    startDate: "2026-06-01",
+    endDate:   "2026-08-31",
+    location:  "Haeundae area, Busan (해운대구 일대)",
+    description: "Busan's signature summer night market series. Official: https://www.visitbusan.net",
+  },
+  {
+    title: "2026 Busan Gourmet Selection (부산 고메 셀렉션)",
+    startDate: "2026-06-04",
+    endDate:   "2026-06-30",
+    location:  "Participating restaurants across Busan (부산 전역 참여 레스토랑)",
+    description: "Busan's premier gourmet dining event. Official: https://www.visitbusan.net",
+  },
+];
+
+function getOverlappingMegaEvents(tripStart: string, tripEnd: string): MegaEvent[] {
+  const ts = new Date(tripStart).getTime();
+  const te = new Date(tripEnd).getTime();
+  return MEGA_EVENTS.filter(ev => {
+    const es = new Date(ev.startDate).getTime();
+    const ee = new Date(ev.endDate).getTime();
+    return es <= te && ee >= ts;
+  });
+}
+
+function getBTSDroneShowDate(tripStart: string, tripEnd: string): string | null {
+  const ts = new Date(tripStart);
+  const te = new Date(tripEnd);
+  for (const d of ["2026-06-12", "2026-06-13"]) {
+    const dt = new Date(d);
+    if (dt >= ts && dt <= te) return d;
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 //  GEMINI UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
 
 const MODELS = [
   "gemini-2.5-flash",
-  "gemini-2.0-flash",
-  "gemini-1.5-flash",
 ];
-const MAX_RETRIES = 2;
-const RETRY_DELAY_MS = 1500;
+const MAX_RETRIES = 5;
+const RETRY_DELAY_MS = 3000;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -316,12 +392,61 @@ PRE-OUTPUT CHECK (verify before generating JSON):
 PRE-OUTPUT CHECK: Day 1 should have EXACTLY 2 places matching the template above.`
     : "";
 
+  // ── VisitBusan Mega Events ─────────────────────────────────────────────────
+  const overlappingEvents = getOverlappingMegaEvents(startDate, endDate);
+  const droneDate = getBTSDroneShowDate(startDate, endDate);
+
+  const megaEventBlock = overlappingEvents.length > 0 ? `
+
+╔══════════════════════════════════════════════════════╗
+  VISITBUSAN OFFICIAL MEGA EVENTS — HIGHEST PRIORITY
+╚══════════════════════════════════════════════════════╝
+Real confirmed events during this trip. Integrate them on their exact dates.
+All dates are in YYYY-MM-DD format — do NOT alter or approximate:
+
+${overlappingEvents.map(ev =>
+    `• [${ev.startDate} ~ ${ev.endDate}] ${ev.title}\n  Location: ${ev.location}${ev.startTime ? `\n  Time: ${ev.startTime}${ev.endTime ? `–${ev.endTime}` : ""}` : ""}\n  ${ev.description}`
+  ).join("\n\n")}` : "";
+
+  const droneAnchorBlock = droneDate ? (() => {
+    const dayNum =
+      Math.ceil(
+        (new Date(droneDate).getTime() - new Date(startDate).getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1;
+    return `
+
+╔══════════════════════════════════════════════════════╗
+  🔴 BTS DRONE SHOW ANCHOR — DAY ${dayNum} (${droneDate}) 22:00 FIXED
+╚══════════════════════════════════════════════════════╝
+SUPREME PRIORITY — overrides ALL other Day ${dayNum} location anchors and prohibited-zone lists.
+Even if Gwangalli appears in a "prohibited" list above, it is REQUIRED on Day ${dayNum}.
+
+MANDATORY: Include this EXACT entry in Day ${dayNum} places array — no substitutions:
+  name: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN"
+  category: "Experience"
+  location: "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan"
+  time: "22:00"
+  duration: "1 hour"
+  tips: "World-scale M-drone show. Free entry. Arrive by 21:30 — beach fills up fast. Bring a jacket."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea"
+
+Day ${dayNum} evening cluster (17:00–21:30): ALL spots in Gwangalli–Millak area:
+  ✓ Gwangalli restaurant strip — dinner (~18:30)
+  ✓ Millak Waterfront Park — evening walk (~20:00)
+  ✓ Gwangan Bridge night-view café
+  ✗ BANNED on Day ${dayNum} evening: Haeundae, Nampo-dong, Seomyeon, Centum City
+  NOTE: If traveling from arrival point (e.g. Busan Station) to Gwangalli, ~25 min by subway — schedule departure by 17:30.`;
+  })() : "";
+
   return `You are an expert Korea travel planner for foreign visitors.
 User input: city=${city}, dates=${startDate}→${endDate}, travelers=${travelers}, style=${travelStyle}
 Arrival: startLocation="${startLocation || "(not specified)"}", arrivalTime="${arrivalTime}"
 
 ${locationNote}
 ${day1Block}
+${megaEventBlock}
+${droneAnchorBlock}
 
 GLOBAL RULES (Days 2–${numDays} and all days without a constraint above):
 1. Include 4–5 places per day, starting from morning.
@@ -358,6 +483,110 @@ Rules for JSON output:
 - dates: sequential from ${startDate} to ${endDate}
 - Day 1 evening/night: places array contains ONLY entries with time ≥ "${arrivalTime}"
 - Total days in output: exactly ${numDays}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  HARNESS ENTRY POINT (Node.js / test runner)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface HarnessInput {
+  startLocation: string;
+  arrivalTime: string;           // "Morning"|"Evening"|"Night"|"HH:MM"
+  travelDates: [string, string]; // [startDate, endDate]
+}
+
+export interface HarnessSlot { placeName: string }
+
+export interface HarnessResult {
+  days: Array<{
+    slots: {
+      morning?: HarnessSlot;
+      lunch?:   HarnessSlot;
+      evening?: HarnessSlot;
+      night?:   HarnessSlot;   // 21:00+
+    };
+  }>;
+}
+
+export async function generateItineraryInternal(input: HarnessInput): Promise<HarnessResult> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error("GEMINI_API_KEY is not set in environment");
+
+  const [startDate, endDate] = input.travelDates;
+
+  // Parse human-readable arrivalTime label
+  const t = input.arrivalTime.toLowerCase();
+  let arrivalHour = 14;
+  let arrivalTimeStr = "14:00";
+  if      (t.includes("morning"))   { arrivalHour =  9; arrivalTimeStr = "09:00"; }
+  else if (t.includes("noon"))      { arrivalHour = 12; arrivalTimeStr = "12:00"; }
+  else if (t.includes("afternoon")) { arrivalHour = 14; arrivalTimeStr = "14:00"; }
+  else if (t.includes("evening"))   { arrivalHour = 17; arrivalTimeStr = "17:00"; }
+  else if (t.includes("night"))     { arrivalHour = 20; arrivalTimeStr = "20:00"; }
+  else if (/^\d{2}:\d{2}$/.test(input.arrivalTime)) {
+    arrivalHour = parseInt(input.arrivalTime.split(":")[0]!, 10);
+    arrivalTimeStr = input.arrivalTime;
+  }
+
+  const numDays =
+    Math.ceil(
+      (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+        (1000 * 60 * 60 * 24)
+    ) + 1;
+
+  const prompt = buildPrompt(
+    "Busan", startDate, endDate, numDays,
+    "1", "Solo",
+    input.startLocation, arrivalTimeStr, arrivalHour
+  );
+
+  let geminiResult: unknown = null;
+  let lastErr = "unknown";
+
+  outer: for (const model of MODELS) {
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      try {
+        geminiResult = await callGemini(apiKey, model, prompt);
+        break outer;
+      } catch (err) {
+        lastErr = (err as Error).message;
+        const status = parseInt(lastErr.match(/Gemini (\d+)/)?.[1] ?? "0");
+        if (status === 503 && attempt < MAX_RETRIES - 1) {
+          await sleep(RETRY_DELAY_MS * (attempt + 1));
+          continue;
+        }
+        break;
+      }
+    }
+  }
+
+  if (!geminiResult) throw new Error(`Gemini all models failed: ${lastErr}`);
+
+  const raw = geminiResult as {
+    days?: Array<{ places?: Array<{ name: string; time?: string }> }>;
+  };
+  if (!Array.isArray(raw.days)) throw new Error("Gemini response missing 'days' array");
+
+  // Transform places[] → slots format expected by the harness
+  const days: HarnessResult["days"] = raw.days.map((day) => {
+    const places = day.places ?? [];
+    let morning: HarnessSlot | undefined;
+    let lunch:   HarnessSlot | undefined;
+    let evening: HarnessSlot | undefined;
+    let night:   HarnessSlot | undefined;
+
+    for (const p of places) {
+      const h = parseInt((p.time ?? "12:00").split(":")[0]!, 10);
+      if      (h < 12 && !morning)            morning = { placeName: p.name };
+      else if (h >= 12 && h < 14 && !lunch)  lunch   = { placeName: p.name };
+      else if (h >= 17 && h < 21 && !evening) evening = { placeName: p.name };
+      else if (h >= 21 && !night)             night   = { placeName: p.name };
+    }
+
+    return { slots: { morning, lunch, evening, night } };
+  });
+
+  return { days };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -441,7 +670,7 @@ export const onRequestPost: (context: {
         allErrors.push(`[${model} attempt ${attempt + 1}] ${msg}`);
 
         const httpStatus = parseInt(msg.match(/Gemini (\d+)/)?.[1] ?? "0");
-        if ((httpStatus === 503 || httpStatus === 429) && attempt < MAX_RETRIES - 1) {
+        if (httpStatus === 503 && attempt < MAX_RETRIES - 1) {
           await sleep(RETRY_DELAY_MS * (attempt + 1));
           continue;
         }
