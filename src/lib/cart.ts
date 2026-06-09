@@ -64,6 +64,8 @@ export interface EventItem {
   koreanSurvivalScore: number;
   notice: string | null;
   commerce: CommerceInfo;
+  lat?: number;
+  lng?: number;
 }
 
 /** 장바구니에 저장되는 항목 = EventItem + 장바구니 전용 필드 */

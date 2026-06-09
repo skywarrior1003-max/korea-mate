@@ -35,9 +35,10 @@ function fastestTransit(transit: EventItem["transitFromAnchor"]): string | null 
 interface Props {
   event: EventItem;
   onClick: () => void;
+  distanceBadge?: string;
 }
 
-export default function EventCard({ event, onClick }: Props) {
+export default function EventCard({ event, onClick, distanceBadge }: Props) {
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
   const [disliked,    setDisliked]    = useState(false);
@@ -174,10 +175,14 @@ export default function EventCard({ event, onClick }: Props) {
       {/* ── 카드 본문 ── */}
       <div className="p-4 space-y-2">
 
-        {/* 도시 + 지역 */}
-        <p className="text-xs font-semibold text-orange-500 uppercase tracking-wider">
-          {event.city}
-          {event.district ? ` · ${event.district}` : ""}
+        {/* 도시 + 지역 + 거리 뱃지 */}
+        <p className="text-xs font-semibold text-orange-500 uppercase tracking-wider flex items-center gap-1.5 flex-wrap">
+          <span>{event.city}{event.district ? ` · ${event.district}` : ""}</span>
+          {distanceBadge && (
+            <span className="px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-700 font-bold normal-case text-[10px] shrink-0">
+              📍 {distanceBadge}
+            </span>
+          )}
         </p>
 
         {/* 이벤트 이름 */}
