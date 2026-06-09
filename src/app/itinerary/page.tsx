@@ -316,13 +316,18 @@ function ItineraryResult() {
   const [searchResults, setSearchResults] = useState<SpotHit[]>([]);
   const searchTimerRef2 = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── 공항 저녁 도착 감지 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
+  // ── 도착 시간 파싱 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
   const arrivalHour = parseInt(paramArrivalTime?.split(":")?.[0] ?? "14", 10);
+
+  // 공항 저녁 도착 감지
   const isAirportEvening =
     (paramStartLoc.toLowerCase().includes("airport") ||
      paramStartLoc.toLowerCase().includes("gimhae") ||
      paramStartLoc.toLowerCase().includes("공항")) &&
     arrivalHour >= 17;
+
+  // 저녁 도착 감지 (공항 포함 — 17:00 이후 모든 케이스)
+  const isEveningOrNightArrival = arrivalHour >= 17;
 
   // Layer 2: Supabase 레코드 검증 — 공항저녁인데 해운대 등 금지 장소 포함 시 true
   const PROHIBITED_DAY1 = ["haeundae", "gwangalli", "centum", "biff", "taejongdae", "haedong yonggungsa", "yonggungsa"];
@@ -336,9 +341,10 @@ function ItineraryResult() {
     );
   };
 
-  // ── sortItinerary: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
+  // ── sanitizeDays: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
   // 1) 모든 day.places를 HH:MM 시간 오름차순 정렬 (stable: origIdx 서브키)
   // 2) 공항 저녁 도착 Day 1: arrivalHour 이전 & 금지 장소 물리 제거
+  // 3) 저녁/야간 도착 Day 1: arrivalHour 이전 슬롯 물리 제거 (Morning/Lunch 차단)
 
   // Edge Case 1/3: null·undefined·빈문자열 안전 처리 + 명시적 string | null | undefined 수용
   const timeToMins = (t: string | null | undefined): number => {
@@ -358,17 +364,29 @@ function ItineraryResult() {
           return diff !== 0 ? diff : a.origIdx - b.origIdx; // 동일 시간 → 원래 입력 순서 유지
         })
         .map(({ p }) => p);
-      // ② 공항 저녁 Day 1: 도착 전 슬롯 + 금지 장소 물리 제거
-      const cleaned =
-        isAirportEvening && dayIdx === 0
-          ? sorted.filter(p => {
-              const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
-              const prohibited = PROHIBITED_DAY1.some(
-                kw => p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
-              );
-              return h >= arrivalHour && !prohibited;
-            })
-          : sorted;
+
+      // ② Day 1 필터링: 공항 저녁 = 금지 장소 + 이른 시간 제거
+      //                 일반 저녁/야간 = 이른 시간(arrivalHour 이전) 만 제거
+      let cleaned = sorted;
+      if (dayIdx === 0 && isEveningOrNightArrival) {
+        if (isAirportEvening) {
+          // 공항 저녁: arrivalHour 이전 AND 금지 장소 모두 제거
+          cleaned = sorted.filter(p => {
+            const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
+            const prohibited = PROHIBITED_DAY1.some(
+              kw => p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
+            );
+            return h >= arrivalHour && !prohibited;
+          });
+        } else {
+          // 일반 저녁/야간: arrivalHour 이전 시간 슬롯만 제거 (Morning / Lunch 차단)
+          cleaned = sorted.filter(p => {
+            const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
+            return h >= arrivalHour;
+          });
+        }
+      }
+
       return { ...day, places: cleaned };
     });
 

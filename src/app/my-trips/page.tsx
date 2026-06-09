@@ -86,8 +86,13 @@ export default function MyTripsPage() {
   const [copied,      setCopied]      = useState<string | null>(null);
 
   // ── 초기 로드 ────────────────────────────────────────────────
+  // Bug Fix: 다른 페이지 방문 후 복귀 시 이전 trips 배열 뻥튀기 방지
+  // - cancelled 플래그로 unmount 이후 도착한 응답을 무시
+  // - 마운트 즉시 trips=[] 로 강제 초기화하여 잔류 state 원천 차단
   useEffect(() => {
-    // 재방문 시 이전 state 잔류 방지: fetch 전 선행 초기화
+    let cancelled = false;
+
+    // ① 마운트 시점에 즉각 초기화 — 이전 방문에서 남은 카드 0개로 리셋
     setTrips([]);
     setLoading(true);
 
@@ -96,16 +101,26 @@ export default function MyTripsPage() {
       fetchItinerariesByDevice(deviceId),
       fetchPlannersByDevice(deviceId),
     ]).then(([itins, planners]) => {
+      // ② unmount 이후 응답이면 state 변경 완전 차단
+      if (cancelled) return;
+
       const seen = new Set<string>();
       const cards: TripCard[] = [
         ...itins.map(itineraryToCard),
         ...planners.map(plannerToCard),
       ]
+        // ③ 중복 ID 제거 (itinerary + planner 양쪽에 같은 ID 있을 경우 방어)
         .filter((c) => { if (seen.has(c.id)) return false; seen.add(c.id); return true; })
         .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
       setTrips(cards);
       setLoading(false);
+    }).catch(() => {
+      if (!cancelled) setLoading(false);
     });
+
+    // ④ cleanup: 페이지 이탈 시 응답 무시 플래그 ON
+    return () => { cancelled = true; };
   }, []);
 
   // ── 공유 링크 복사 ───────────────────────────────────────────
