@@ -14,7 +14,6 @@ interface RequestBody {
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  LOCATION ANCHOR SYSTEM
-//  특정 출발 지역이 감지되면 Day 1 동선을 해당 권역 내로 강제 바인딩
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface LocationAnchor {
@@ -28,7 +27,6 @@ interface LocationAnchor {
 function detectLocationAnchor(loc: string): LocationAnchor | null {
   const l = loc.toLowerCase();
 
-  // 남포동 권역 감지
   if (
     l.includes("nampo") || l.includes("남포") ||
     l.includes("biff") || l.includes("gwangbok") ||
@@ -56,7 +54,6 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
     };
   }
 
-  // 해운대 권역 감지
   if (l.includes("haeundae") || l.includes("해운대")) {
     return {
       displayName: "Haeundae area",
@@ -76,7 +73,6 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
     };
   }
 
-  // KTX 부산역 / 서면 권역 감지
   if (
     l.includes("ktx") || l.includes("busan station") ||
     l.includes("부산역") || l.includes("seomyeon")
@@ -101,222 +97,6 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  MOCK FALLBACK — 남포동 저녁 도착 기준으로 재편
-//  Gemini 실패 시에도 남포동+저녁 조건에 맞는 데이터 반환
-// ─────────────────────────────────────────────────────────────────────────────
-
-// 남포동 저녁 도착용 Day 1 (기본 fallback)
-const NAMPO_EVENING_DAY1_PLACES = [
-  {
-    name: "Bupyeong Kkangtong Night Market (부평깡통야시장)",
-    category: "Market",
-    location: "Bupyeong-dong, Jung-gu",
-    time: "20:00",
-    duration: "1h 30 min",
-    tips: "Busan's iconic night market, open until midnight. Must-try: tteokbokki, hotteok, bindaetteok. Cash preferred. Solo-friendly — just point at what you want.",
-    googleMapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea",
-  },
-  {
-    name: "Gwangbok-ro Night Walk (광복로 야경)",
-    category: "Attraction",
-    location: "Nampo-dong, Jung-gu",
-    time: "21:30",
-    duration: "45 min",
-    tips: "Busan's main shopping boulevard is beautifully lit at night. Great for people-watching and grabbing a convenience store snack. Near Nampo Station Exit 7.",
-    googleMapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Gwangbok-ro+Busan+Korea",
-  },
-];
-
-const BUSAN_DAY2_ONWARDS = [
-  {
-    places: [
-      {
-        name: "Gamcheon Culture Village",
-        category: "Attraction",
-        location: "Saha-gu",
-        time: "09:30",
-        duration: "2 hours",
-        tips: "Get the ₩2,000 trail map at the entrance — redeemable as a café stamp. Wear comfortable shoes; alleys are very steep. Bus 1-1 or 2 from Toseong-dong.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Gamcheon+Culture+Village+Busan+Korea",
-      },
-      {
-        name: "Jagalchi Fish Market",
-        category: "Restaurant",
-        location: "Jung-gu",
-        time: "12:00",
-        duration: "1.5 hours",
-        tips: "Choose live seafood on the ground floor, take it upstairs to a cooking booth. Budget ₩20,000–₩40,000/person. Mostly cash only. Subway Line 1, Jagalchi Station Exit 10.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Jagalchi+Fish+Market+Busan+Korea",
-      },
-      {
-        name: "BIFF Square & Nampo-dong",
-        category: "Attraction",
-        location: "Jung-gu",
-        time: "14:30",
-        duration: "1.5 hours",
-        tips: "Walk the celebrity handprint plaza, explore Nampo-dong shopping street. Gukje Market is 5 min walk. Foreign cards accepted everywhere here.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=BIFF+Square+Busan+Korea",
-      },
-      {
-        name: "Gwangalli Beach & Gwangan Bridge Night View",
-        category: "Attraction",
-        location: "Suyeong-gu",
-        time: "19:30",
-        duration: "2 hours",
-        tips: "Bridge lights up after sunset — arrive by 19:30. Subway Line 2, Gwangan Station Exit 3.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea",
-      },
-    ],
-  },
-  {
-    places: [
-      {
-        name: "Haeundae Beach",
-        category: "Attraction",
-        location: "Haeundae-gu",
-        time: "10:00",
-        duration: "2 hours",
-        tips: "Free entry. Street food stalls sell tteokbokki and fish cakes (₩2,000–5,000). Foreign cards accepted at nearby cafés. Subway Line 2, Haeundae Station Exit 3.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Haeundae+Beach+Busan+Korea",
-      },
-      {
-        name: "Dongbaek Island (APEC Naru Park)",
-        category: "Park",
-        location: "Haeundae-gu",
-        time: "12:30",
-        duration: "1 hour",
-        tips: "Free entry. Great views of Gwangalli Bridge. Card accepted everywhere around the island.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Dongbaek+Island+Busan+Korea",
-      },
-      {
-        name: "Shinsegae Centum City",
-        category: "Shopping",
-        location: "Haeundae-gu, Centum City",
-        time: "14:00",
-        duration: "2 hours",
-        tips: "World's largest department store. Tax refund desk on B1. Subway Line 2, Centum City Station Exit 12.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Shinsegae+Centum+City+Busan+Korea",
-      },
-      {
-        name: "Seomyeon Food Street (서면 먹자골목)",
-        category: "Restaurant",
-        location: "Busanjin-gu",
-        time: "18:30",
-        duration: "2 hours",
-        tips: "Busan's busiest night food street. Try dakgalbi (spicy stir-fried chicken) for ₩10,000–₩15,000/person. Subway Line 1/2, Seomyeon Station Exit 1.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Seomyeon+Food+Street+Busan+Korea",
-      },
-    ],
-  },
-  {
-    places: [
-      {
-        name: "Taejongdae Resort Park",
-        category: "Park",
-        location: "Yeongdo-gu",
-        time: "09:30",
-        duration: "2.5 hours",
-        tips: "Take the Danubi train inside (₩3,000) or walk 4km loop trail. Rocky cliffs and lighthouse views. Bus 8 or 30 from Nampo-dong (45 min).",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Taejongdae+Resort+Busan+Korea",
-      },
-      {
-        name: "Gukje Market (국제시장)",
-        category: "Market",
-        location: "Jung-gu",
-        time: "13:00",
-        duration: "1.5 hours",
-        tips: "Korea's largest traditional market. Great for souvenirs and street food. Cash preferred. Subway Line 1, Nampo Station Exit 3.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Gukje+Market+Busan+Korea",
-      },
-      {
-        name: "Busan Tower & Yongdusan Park",
-        category: "Attraction",
-        location: "Jung-gu",
-        time: "16:00",
-        duration: "1.5 hours",
-        tips: "Admission ₩12,000. Views of the entire port and city. Take the escalator from Nampo Station Exit 1.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Busan+Tower+Korea",
-      },
-    ],
-  },
-];
-
-function buildFallbackItinerary(
-  startDate: string,
-  numDays: number,
-  city: string,
-  travelers: string,
-  startLocation: string,
-  arrivalHour: number
-): unknown {
-  const base = new Date(startDate);
-  const days = [];
-
-  const anchor = detectLocationAnchor(startLocation);
-  const isNampoEvening = anchor?.displayName.includes("Nampo") && arrivalHour >= 17;
-  const isEveningOrNight = arrivalHour >= 17;
-
-  for (let i = 0; i < numDays; i++) {
-    const d = new Date(base);
-    d.setDate(base.getDate() + i);
-    const dateStr = d.toISOString().split("T")[0];
-
-    let places;
-
-    if (i === 0) {
-      if (isNampoEvening) {
-        // 남포동 저녁 도착: 남포동 야경 스팟
-        const arrivalStr = String(arrivalHour).padStart(2, "0") + ":00";
-        places = NAMPO_EVENING_DAY1_PLACES.map((p) => ({
-          ...p,
-          time: i === 0 ? (p.time < arrivalStr ? arrivalStr : p.time) : p.time,
-        }));
-      } else if (isEveningOrNight) {
-        // 일반 저녁/야간 도착: 저녁 스팟만
-        places = [
-          {
-            name: "Bupyeong Kkangtong Night Market (부평깡통야시장)",
-            category: "Market",
-            location: "Bupyeong-dong, Jung-gu",
-            time: String(arrivalHour).padStart(2, "0") + ":00",
-            duration: "1h 30 min",
-            tips: "Busan's iconic night market, open until midnight. Cash preferred. Solo-friendly.",
-            googleMapsUrl:
-              "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea",
-          },
-        ];
-      } else {
-        // 오전/오후 도착: 기본 Day 1
-        places = BUSAN_DAY2_ONWARDS[0]?.places ?? [];
-      }
-    } else {
-      const template = BUSAN_DAY2_ONWARDS[(i - 1) % BUSAN_DAY2_ONWARDS.length];
-      places = template?.places ?? [];
-    }
-
-    days.push({ date: dateStr, dayNumber: i + 1, places });
-  }
-
-  return {
-    days,
-    _source: `KoreaMate curated itinerary — ${numDays} day(s) in ${city} for ${travelers} traveler(s).`,
-  };
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 //  GEMINI UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -332,19 +112,6 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function extractJson(raw: string): unknown {
-  let text = raw.trim();
-  const fenced = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
-  if (fenced) text = fenced[1].trim();
-  const jsonStart = text.search(/[{[]/);
-  if (jsonStart > 0) text = text.slice(jsonStart);
-  const lastClose = Math.max(text.lastIndexOf("}"), text.lastIndexOf("]"));
-  if (lastClose >= 0 && lastClose < text.length - 1) {
-    text = text.slice(0, lastClose + 1);
-  }
-  return JSON.parse(text);
-}
-
 async function callGemini(
   apiKey: string,
   model: string,
@@ -357,7 +124,10 @@ async function callGemini(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7 },
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.7,
+        },
       }),
     }
   );
@@ -381,11 +151,16 @@ async function callGemini(
   };
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!rawText) throw new Error(`Empty response from model: ${model}`);
-  return extractJson(rawText);
+
+  // responseMimeType=json 이어도 방어적으로 파싱
+  const trimmed = rawText.trim();
+  const jsonStart = trimmed.search(/[{[]/);
+  const cleaned = jsonStart > 0 ? trimmed.slice(jsonStart) : trimmed;
+  return JSON.parse(cleaned);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  PROMPT BUILDER — Location Anchor + Evening Arrival Logic
+//  PROMPT BUILDER
 // ─────────────────────────────────────────────────────────────────────────────
 
 function buildPrompt(
@@ -565,7 +340,16 @@ export const onRequestPost: (context: {
     "Content-Type": "application/json",
   };
 
-  // ── Parse request body ─────────────────────────────────────────
+  // API 키 사전 검증
+  const apiKey = env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return new Response(
+      JSON.stringify({ error: "GEMINI_API_KEY is not configured on the server." }),
+      { status: 500, headers: corsHeaders }
+    );
+  }
+
+  // Request body 파싱
   let body: RequestBody;
   try {
     body = (await request.json()) as RequestBody;
@@ -599,54 +383,45 @@ export const onRequestPost: (context: {
         (1000 * 60 * 60 * 24)
     ) + 1;
 
-  // 도착 시간 파싱
   const arrivalHour = arrivalTime
     ? parseInt(arrivalTime.split(":")[0] ?? "14", 10)
     : 14;
 
-  // ── Try Gemini if API key is available ─────────────────────────
-  const apiKey = env.GEMINI_API_KEY;
+  const prompt = buildPrompt(
+    city, startDate, endDate, numDays,
+    travelers, travelStyle,
+    startLocation, arrivalTime, arrivalHour
+  );
 
-  if (apiKey) {
-    const prompt = buildPrompt(
-      city, startDate, endDate, numDays,
-      travelers, travelStyle,
-      startLocation, arrivalTime, arrivalHour
-    );
+  const allErrors: string[] = [];
 
-    const allErrors: string[] = [];
+  for (const model of MODELS) {
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      try {
+        const result = await callGemini(apiKey, model, prompt);
+        return new Response(JSON.stringify(result), {
+          status: 200,
+          headers: corsHeaders,
+        });
+      } catch (err) {
+        const msg = (err as Error).message;
+        allErrors.push(`[${model} attempt ${attempt + 1}] ${msg}`);
 
-    for (const model of MODELS) {
-      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-        try {
-          const result = await callGemini(apiKey, model, prompt);
-          return new Response(JSON.stringify(result), {
-            status: 200,
-            headers: corsHeaders,
-          });
-        } catch (err) {
-          const msg = (err as Error).message;
-          allErrors.push(`[${model} attempt ${attempt + 1}] ${msg}`);
-
-          const httpStatus = parseInt(msg.match(/Gemini (\d+)/)?.[1] ?? "0");
-          if ((httpStatus === 503 || httpStatus === 429) && attempt < MAX_RETRIES - 1) {
-            await sleep(RETRY_DELAY_MS * (attempt + 1));
-            continue;
-          }
-          break;
+        const httpStatus = parseInt(msg.match(/Gemini (\d+)/)?.[1] ?? "0");
+        if ((httpStatus === 503 || httpStatus === 429) && attempt < MAX_RETRIES - 1) {
+          await sleep(RETRY_DELAY_MS * (attempt + 1));
+          continue;
         }
+        break;
       }
     }
-
-    console.error("Gemini all models failed:", allErrors.join(" | "));
   }
 
-  // ── Fallback: 남포동/저녁 조건을 반영한 curated 데이터 ──────────
-  const fallback = buildFallbackItinerary(
-    startDate, numDays, city, travelers, startLocation, arrivalHour
+  // 모든 모델 실패 → 솔직한 에러 반환 (Mock 데이터 없음)
+  const lastError = allErrors[allErrors.length - 1] ?? "All Gemini models failed.";
+  console.error("Gemini all models failed:", allErrors.join(" | "));
+  return new Response(
+    JSON.stringify({ error: `AI generation failed. Please try again. (${lastError})` }),
+    { status: 500, headers: corsHeaders }
   );
-  return new Response(JSON.stringify(fallback), {
-    status: 200,
-    headers: corsHeaders,
-  });
 };
