@@ -16,14 +16,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KoreaMate — AI Travel Guide for Foreign Visitors to Korea",
+  title: "KoreaMate — Free Korea Travel Itinerary Planner for Tourists",
   description:
-    "Plan your Korea trip with AI. Find solo-friendly spots, get itineraries, and navigate Korea without getting stuck.",
+    "Free AI-powered Korea tour guide and itinerary planner for foreign tourists. Discover Busan and Seoul attractions, build day-by-day trip schedules, and explore local hidden gems.",
+  keywords: [
+    "Korea travel guide",
+    "Busan tour guide",
+    "Seoul itinerary planner",
+    "free travel itinerary planner",
+    "Korea trip scheduler",
+    "tourist attractions Korea",
+    "Korea sightseeing spots",
+    "travel planner for foreigners",
+    "Korea vacation planning",
+    "Busan sightseeing",
+    "Korea travel tips",
+    "AI trip planner Korea",
+  ],
   openGraph: {
-    title: "KoreaMate — AI Travel Guide for Korea",
+    title: "KoreaMate — Free Korea Travel Itinerary Planner",
     description:
-      "AI-powered travel scheduler for foreign travelers visiting Korea.",
+      "AI-powered Korea tour guide and itinerary planner for foreign tourists. Build day-by-day schedules for Busan, Seoul, and beyond.",
     type: "website",
+    url: "https://gokoreamate.com",
+    siteName: "KoreaMate",
+  },
+  metadataBase: new URL("https://gokoreamate.com"),
+  alternates: {
+    canonical: "https://gokoreamate.com",
   },
 };
 
@@ -55,10 +75,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "WebSite",
+              "@type": ["TravelAgency", "TouristInformationCenter"],
               name: "KoreaMate",
-              description: "AI-powered travel guide for foreign visitors to Korea",
-              url: "https://korea-mate.pages.dev",
+              description:
+                "Free AI-powered Korea tour guide and itinerary planner for foreign tourists. Build day-by-day trip schedules for Busan, Seoul, and beyond.",
+              url: "https://gokoreamate.com",
+              sameAs: ["https://korea-mate.pages.dev"],
+              areaServed: {
+                "@type": "Country",
+                name: "South Korea",
+              },
+              serviceType: [
+                "Travel Itinerary Planning",
+                "Tourist Information",
+                "Korea Tour Guide",
+              ],
             }),
           }}
         />
