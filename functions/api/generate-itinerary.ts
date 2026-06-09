@@ -8,59 +8,128 @@ interface RequestBody {
   endDate: string;
   travelers: string;
   travelStyle: string;
+  startLocation?: string;
+  arrivalTime?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  MOCK FALLBACK — 5-day Busan itinerary curated by KoreaMate
-//  Returned whenever Gemini is unavailable (missing key, rate limit, error).
-//  Dates are dynamically filled from the user's actual startDate.
+//  LOCATION ANCHOR SYSTEM
+//  특정 출발 지역이 감지되면 Day 1 동선을 해당 권역 내로 강제 바인딩
 // ─────────────────────────────────────────────────────────────────────────────
 
-const BUSAN_TEMPLATE_DAYS = [
+interface LocationAnchor {
+  displayName: string;
+  radius: string;
+  allowedZones: string[];
+  prohibitedZones: string[];
+  eveningSpots: string;
+}
+
+function detectLocationAnchor(loc: string): LocationAnchor | null {
+  const l = loc.toLowerCase();
+
+  // 남포동 권역 감지
+  if (
+    l.includes("nampo") || l.includes("남포") ||
+    l.includes("biff") || l.includes("gwangbok") ||
+    l.includes("jagalchi") || l.includes("자갈치") ||
+    l.includes("nampo-dong")
+  ) {
+    return {
+      displayName: "Nampo-dong / Jung-gu area",
+      radius: "within 15 minutes walk or 10 min taxi from Nampo-dong",
+      allowedZones: [
+        "Nampo-dong (남포동)", "Jung-gu (중구)", "Jagalchi (자갈치)",
+        "Bupyeong-dong (부평동)", "Yeongdo-gu (영도구)", "Busan Station area (부산역)",
+        "Gwangbok-ro (광복로)", "BIFF Square", "Taejongdae (태종대 — taxi OK)",
+      ],
+      prohibitedZones: [
+        "Haeundae Beach", "Gwangalli Beach", "Centum City",
+        "Seomyeon (서면)", "Gijang", "Haedong Yonggungsa", "Jangsan",
+      ],
+      eveningSpots:
+        "Bupyeong Kkangtong Night Market (부평깡통야시장 — open until midnight), " +
+        "Jagalchi Fish Market evening (open until 21:00), " +
+        "Gwangbok-ro pedestrian street (광복로 야경), " +
+        "Nampo-dong street food alley, " +
+        "Busan Tower (부산타워) night view from Yongdusan Park",
+    };
+  }
+
+  // 해운대 권역 감지
+  if (l.includes("haeundae") || l.includes("해운대")) {
+    return {
+      displayName: "Haeundae area",
+      radius: "within 20 minutes walk or 10 min taxi from Haeundae Beach",
+      allowedZones: [
+        "Haeundae Beach (해운대해수욕장)", "Dongbaekseom Island (동백섬)",
+        "Marine City (마린시티)", "Centum City (센텀시티)",
+        "Dalmaji Hill (달맞이고개)", "Haeundae Market (해운대시장)",
+      ],
+      prohibitedZones: [
+        "Nampo-dong", "Jagalchi", "Gamcheon Culture Village",
+        "Busan Station", "Taejongdae",
+      ],
+      eveningSpots:
+        "Haeundae Beach night walk, Marine City rooftop bars, " +
+        "Dalmaji Hill café strip, Haeundae Market street food",
+    };
+  }
+
+  // KTX 부산역 / 서면 권역 감지
+  if (
+    l.includes("ktx") || l.includes("busan station") ||
+    l.includes("부산역") || l.includes("seomyeon")
+  ) {
+    return {
+      displayName: "Busan Station / Seomyeon area",
+      radius: "within 20 minutes subway or taxi from Busan Station",
+      allowedZones: [
+        "Busan Station (부산역)", "Seomyeon (서면)", "Nampo-dong (남포동)",
+        "Jung-gu (중구)", "Jagalchi (자갈치)", "Bupyeong-dong (부평동)",
+      ],
+      prohibitedZones: [
+        "Haeundae Beach", "Gwangalli", "Gijang", "Centum City (far)",
+      ],
+      eveningSpots:
+        "Seomyeon underground shopping street, Bupyeong Night Market, " +
+        "Nampo-dong street food, Busan Station plaza area",
+    };
+  }
+
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MOCK FALLBACK — 남포동 저녁 도착 기준으로 재편
+//  Gemini 실패 시에도 남포동+저녁 조건에 맞는 데이터 반환
+// ─────────────────────────────────────────────────────────────────────────────
+
+// 남포동 저녁 도착용 Day 1 (기본 fallback)
+const NAMPO_EVENING_DAY1_PLACES = [
   {
-    places: [
-      {
-        name: "Haeundae Beach",
-        category: "Attraction",
-        location: "Haeundae-gu",
-        time: "10:00",
-        duration: "2 hours",
-        tips: "Free entry. Street food stalls sell tteokbokki and fish cakes (₩2,000–5,000). Foreign cards accepted at nearby cafés. Subway Line 2, Haeundae Station Exit 3.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Haeundae+Beach+Busan+Korea",
-      },
-      {
-        name: "Dongbaek Island (APEC Naru Park)",
-        category: "Park",
-        location: "Haeundae-gu",
-        time: "12:30",
-        duration: "1 hour",
-        tips: "Free entry. The island connects via a causeway. Great views of Gwangalli Bridge. Card accepted everywhere around the island.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Dongbaek+Island+Busan+Korea",
-      },
-      {
-        name: "Haeundae Traditional Market",
-        category: "Market",
-        location: "Haeundae-gu",
-        time: "14:00",
-        duration: "1 hour",
-        tips: "Try ssiat hotteok (₩1,500) and fried squid. Cash preferred. Most vendors don't speak English — point and pay.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Haeundae+Traditional+Market+Busan+Korea",
-      },
-      {
-        name: "Gwangalli Beach & Gwangan Bridge Night View",
-        category: "Attraction",
-        location: "Suyeong-gu",
-        time: "19:30",
-        duration: "2 hours",
-        tips: "Bridge lights up after sunset — arrive by 19:30. Buy a convenience store beer and sit on the beach. Subway Line 2, Gwangan Station Exit 3.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea",
-      },
-    ],
+    name: "Bupyeong Kkangtong Night Market (부평깡통야시장)",
+    category: "Market",
+    location: "Bupyeong-dong, Jung-gu",
+    time: "20:00",
+    duration: "1h 30 min",
+    tips: "Busan's iconic night market, open until midnight. Must-try: tteokbokki, hotteok, bindaetteok. Cash preferred. Solo-friendly — just point at what you want.",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea",
   },
+  {
+    name: "Gwangbok-ro Night Walk (광복로 야경)",
+    category: "Attraction",
+    location: "Nampo-dong, Jung-gu",
+    time: "21:30",
+    duration: "45 min",
+    tips: "Busan's main shopping boulevard is beautifully lit at night. Great for people-watching and grabbing a convenience store snack. Near Nampo Station Exit 7.",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Gwangbok-ro+Busan+Korea",
+  },
+];
+
+const BUSAN_DAY2_ONWARDS = [
   {
     places: [
       {
@@ -94,46 +163,46 @@ const BUSAN_TEMPLATE_DAYS = [
           "https://www.google.com/maps/search/?api=1&query=BIFF+Square+Busan+Korea",
       },
       {
-        name: "Busan Tower & Yongdusan Park",
+        name: "Gwangalli Beach & Gwangan Bridge Night View",
         category: "Attraction",
-        location: "Jung-gu",
-        time: "17:00",
-        duration: "1.5 hours",
-        tips: "Admission ₩12,000. Views of the entire port and city. Take the escalator from Nampo Station Exit 1. Free park around the tower.",
+        location: "Suyeong-gu",
+        time: "19:30",
+        duration: "2 hours",
+        tips: "Bridge lights up after sunset — arrive by 19:30. Subway Line 2, Gwangan Station Exit 3.",
         googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Busan+Tower+Korea",
+          "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea",
       },
     ],
   },
   {
     places: [
       {
-        name: "Hwangnyeongsan Sunrise/Night View Trail",
-        category: "Park",
-        location: "Yeonje-gu",
-        time: "07:00",
+        name: "Haeundae Beach",
+        category: "Attraction",
+        location: "Haeundae-gu",
+        time: "10:00",
         duration: "2 hours",
-        tips: "Free 40-min hike to 360° city panorama. No direct subway — taxi (₩5,000–₩8,000) to trailhead is easiest. Non-slip shoes required.",
+        tips: "Free entry. Street food stalls sell tteokbokki and fish cakes (₩2,000–5,000). Foreign cards accepted at nearby cafés. Subway Line 2, Haeundae Station Exit 3.",
         googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Hwangnyeongsan+Busan+Korea",
+          "https://www.google.com/maps/search/?api=1&query=Haeundae+Beach+Busan+Korea",
       },
       {
-        name: "UN Memorial Cemetery",
-        category: "Museum",
-        location: "Nam-gu",
-        time: "10:30",
+        name: "Dongbaek Island (APEC Naru Park)",
+        category: "Park",
+        location: "Haeundae-gu",
+        time: "12:30",
         duration: "1 hour",
-        tips: "Free entry. The only UN-run cemetery in the world. English audio guides available. Bus 68 or 131. Smart dress code appreciated.",
+        tips: "Free entry. Great views of Gwangalli Bridge. Card accepted everywhere around the island.",
         googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=UN+Memorial+Cemetery+Busan+Korea",
+          "https://www.google.com/maps/search/?api=1&query=Dongbaek+Island+Busan+Korea",
       },
       {
         name: "Shinsegae Centum City",
         category: "Shopping",
         location: "Haeundae-gu, Centum City",
-        time: "13:00",
+        time: "14:00",
         duration: "2 hours",
-        tips: "World's largest department store. Tax refund desk on B1. Foreign cards accepted. Subway Line 2, Centum City Station Exit 12.",
+        tips: "World's largest department store. Tax refund desk on B1. Subway Line 2, Centum City Station Exit 12.",
         googleMapsUrl:
           "https://www.google.com/maps/search/?api=1&query=Shinsegae+Centum+City+Busan+Korea",
       },
@@ -141,55 +210,11 @@ const BUSAN_TEMPLATE_DAYS = [
         name: "Seomyeon Food Street (서면 먹자골목)",
         category: "Restaurant",
         location: "Busanjin-gu",
-        time: "18:00",
+        time: "18:30",
         duration: "2 hours",
         tips: "Busan's busiest night food street. Try dakgalbi (spicy stir-fried chicken) for ₩10,000–₩15,000/person. Subway Line 1/2, Seomyeon Station Exit 1.",
         googleMapsUrl:
           "https://www.google.com/maps/search/?api=1&query=Seomyeon+Food+Street+Busan+Korea",
-      },
-    ],
-  },
-  {
-    places: [
-      {
-        name: "Igidae Coastal Walk (이기대 해안산책로)",
-        category: "Park",
-        location: "Nam-gu",
-        time: "09:00",
-        duration: "3 hours",
-        tips: "Free 4.7km cliff trail. Bus 27 or 131 from Gwangalli to Oryukdo Skywalk start. Bring water — no vendors on trail. Paved boardwalks along cliff edges.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Igidae+Coastal+Walk+Busan+Korea",
-      },
-      {
-        name: "Oryukdo Skywalk",
-        category: "Attraction",
-        location: "Nam-gu",
-        time: "13:00",
-        duration: "1 hour",
-        tips: "Glass-floor cliff walkway above the sea. Free entry. Shoe covers provided on-site. Bus 24 or 131 to Oryukdo stop.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Oryukdo+Skywalk+Busan+Korea",
-      },
-      {
-        name: "Songdo Beach & Aerial Cable Car",
-        category: "Experience",
-        location: "Seo-gu",
-        time: "15:30",
-        duration: "1.5 hours",
-        tips: "Cable car round trip ₩15,000. Runs 09:00–22:00. The car crosses over the sea — incredible views. Bus 7 or 71 from Nampo-dong.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Songdo+Beach+Cable+Car+Busan+Korea",
-      },
-      {
-        name: "Gwangbok-ro Fashion Street",
-        category: "Shopping",
-        location: "Jung-gu",
-        time: "18:30",
-        duration: "1.5 hours",
-        tips: "Busan's main shopping boulevard. Mix of Korean streetwear brands and international chains. Foreign cards accepted everywhere. Near Nampo Station.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Gwangbok-ro+Busan+Korea",
       },
     ],
   },
@@ -211,29 +236,19 @@ const BUSAN_TEMPLATE_DAYS = [
         location: "Jung-gu",
         time: "13:00",
         duration: "1.5 hours",
-        tips: "Korea's largest traditional market. Great for souvenirs, dried seafood, and street food. Cash preferred. Subway Line 1, Nampo Station Exit 3.",
+        tips: "Korea's largest traditional market. Great for souvenirs and street food. Cash preferred. Subway Line 1, Nampo Station Exit 3.",
         googleMapsUrl:
           "https://www.google.com/maps/search/?api=1&query=Gukje+Market+Busan+Korea",
       },
       {
-        name: "Choryang Ibagu-gil (168 Steps)",
+        name: "Busan Tower & Yongdusan Park",
         category: "Attraction",
-        location: "Dong-gu",
-        time: "15:30",
+        location: "Jung-gu",
+        time: "16:00",
         duration: "1.5 hours",
-        tips: "Historic hillside alley overlooking the port. 168 Steps stairway with a monorail (₩500). Busan Station Exit 7, 10-min walk.",
+        tips: "Admission ₩12,000. Views of the entire port and city. Take the escalator from Nampo Station Exit 1.",
         googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Choryang+Ibagu+Street+Busan+Korea",
-      },
-      {
-        name: "Busan Station Departure",
-        category: "Experience",
-        location: "Dong-gu",
-        time: "18:00",
-        duration: "1 hour",
-        tips: "KTX to Seoul takes 2h30m — book on Korail website. Coin lockers inside. Lotte Mart in the basement for last-minute Korean snacks.",
-        googleMapsUrl:
-          "https://www.google.com/maps/search/?api=1&query=Busan+Station+Korea",
+          "https://www.google.com/maps/search/?api=1&query=Busan+Tower+Korea",
       },
     ],
   },
@@ -243,21 +258,56 @@ function buildFallbackItinerary(
   startDate: string,
   numDays: number,
   city: string,
-  travelers: string
+  travelers: string,
+  startLocation: string,
+  arrivalHour: number
 ): unknown {
   const base = new Date(startDate);
   const days = [];
+
+  const anchor = detectLocationAnchor(startLocation);
+  const isNampoEvening = anchor?.displayName.includes("Nampo") && arrivalHour >= 17;
+  const isEveningOrNight = arrivalHour >= 17;
 
   for (let i = 0; i < numDays; i++) {
     const d = new Date(base);
     d.setDate(base.getDate() + i);
     const dateStr = d.toISOString().split("T")[0];
-    const template = BUSAN_TEMPLATE_DAYS[i % BUSAN_TEMPLATE_DAYS.length];
-    days.push({
-      date: dateStr,
-      dayNumber: i + 1,
-      places: template.places,
-    });
+
+    let places;
+
+    if (i === 0) {
+      if (isNampoEvening) {
+        // 남포동 저녁 도착: 남포동 야경 스팟
+        const arrivalStr = String(arrivalHour).padStart(2, "0") + ":00";
+        places = NAMPO_EVENING_DAY1_PLACES.map((p) => ({
+          ...p,
+          time: i === 0 ? (p.time < arrivalStr ? arrivalStr : p.time) : p.time,
+        }));
+      } else if (isEveningOrNight) {
+        // 일반 저녁/야간 도착: 저녁 스팟만
+        places = [
+          {
+            name: "Bupyeong Kkangtong Night Market (부평깡통야시장)",
+            category: "Market",
+            location: "Bupyeong-dong, Jung-gu",
+            time: String(arrivalHour).padStart(2, "0") + ":00",
+            duration: "1h 30 min",
+            tips: "Busan's iconic night market, open until midnight. Cash preferred. Solo-friendly.",
+            googleMapsUrl:
+              "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea",
+          },
+        ];
+      } else {
+        // 오전/오후 도착: 기본 Day 1
+        places = BUSAN_DAY2_ONWARDS[0]?.places ?? [];
+      }
+    } else {
+      const template = BUSAN_DAY2_ONWARDS[(i - 1) % BUSAN_DAY2_ONWARDS.length];
+      places = template?.places ?? [];
+    }
+
+    days.push({ date: dateStr, dayNumber: i + 1, places });
   }
 
   return {
@@ -271,9 +321,9 @@ function buildFallbackItinerary(
 // ─────────────────────────────────────────────────────────────────────────────
 
 const MODELS = [
-  "gemini-1.5-flash",
-  "gemini-1.5-flash-8b",
+  "gemini-2.5-flash",
   "gemini-2.0-flash",
+  "gemini-1.5-flash",
 ];
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1500;
@@ -284,21 +334,14 @@ function sleep(ms: number) {
 
 function extractJson(raw: string): unknown {
   let text = raw.trim();
-
-  // 1. Extract from markdown code fence
   const fenced = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
   if (fenced) text = fenced[1].trim();
-
-  // 2. Advance to first JSON delimiter
   const jsonStart = text.search(/[{[]/);
   if (jsonStart > 0) text = text.slice(jsonStart);
-
-  // 3. Trim trailing non-JSON prose
   const lastClose = Math.max(text.lastIndexOf("}"), text.lastIndexOf("]"));
   if (lastClose >= 0 && lastClose < text.length - 1) {
     text = text.slice(0, lastClose + 1);
   }
-
   return JSON.parse(text);
 }
 
@@ -314,6 +357,7 @@ async function callGemini(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7 },
       }),
     }
   );
@@ -327,7 +371,7 @@ async function callGemini(
       detail =
         errBody?.error?.message ?? errBody?.error?.status ?? response.statusText;
     } catch {
-      // keep statusText if body parse fails
+      // keep statusText
     }
     throw new Error(`Gemini ${response.status} [${model}]: ${detail}`);
   }
@@ -338,6 +382,174 @@ async function callGemini(
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!rawText) throw new Error(`Empty response from model: ${model}`);
   return extractJson(rawText);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  PROMPT BUILDER — Location Anchor + Evening Arrival Logic
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildPrompt(
+  city: string,
+  startDate: string,
+  endDate: string,
+  numDays: number,
+  travelers: string,
+  travelStyle: string,
+  startLocation: string,
+  arrivalTime: string,
+  arrivalHour: number
+): string {
+  const loc = startLocation.toLowerCase();
+  const anchor = detectLocationAnchor(loc);
+
+  const isMorningArrival   = arrivalHour < 12;
+  const isNoonArrival      = arrivalHour >= 12 && arrivalHour < 15;
+  const isAfternoonArrival = arrivalHour >= 15 && arrivalHour < 17;
+  const isEveningArrival   = arrivalHour >= 17 && arrivalHour < 20;
+  const isNightArrival     = arrivalHour >= 20;
+
+  const isAirportEvening =
+    (loc.includes("airport") || loc.includes("gimhae") || loc.includes("공항")) &&
+    (isEveningArrival || isNightArrival);
+
+  let day1Block = "";
+
+  if (isAirportEvening) {
+    const market2Time = String(Math.min(arrivalHour + 1, 22)).padStart(2, "0") + ":00";
+    day1Block = `
+══════════════════════════════════════
+MANDATORY Day 1 TEMPLATE — DO NOT MODIFY. Copy EXACTLY.
+══════════════════════════════════════
+Day 1 date: ${startDate}
+
+Place 1 (index 0 — FIXED):
+  name: "Gimhae Airport Limousine → Nampo-dong"
+  category: "Experience"
+  location: "Gimhae International Airport Arrivals → Nampo-dong, Jung-gu, Busan"
+  time: "${arrivalTime}"
+  duration: "45 min"
+  tips: "Airport Limousine Bus Line 3 (공항리무진 3번) departs every 20 min from Arrivals Exit 1. Drop-off: Nampo-dong / Gwangbok-ro. Ticket ₩8,000 at the booth (cash or T-money). ~40 min ride."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gimhae+International+Airport+Busan+Korea"
+
+Place 2 (index 1 — FIXED):
+  name: "Bupyeong Kkangtong Night Market (부평깡통야시장)"
+  category: "Market"
+  location: "Bupyeong-dong, Jung-gu, Busan — 5 min walk from Nampo-dong limousine stop"
+  time: "${market2Time}"
+  duration: "1h 30 min"
+  tips: "Busan's iconic night market, open until midnight. Must-try: tteokbokki, hotteok, bindaetteok. Cash preferred; some stalls accept card. Solo-friendly."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Bupyeong+Kkangtong+Night+Market+Busan+Korea"
+
+ABSOLUTE RULES for Day 1 (AIRPORT EVENING):
+- Output ONLY the 2 places listed above for Day 1. ZERO additional places.
+- DO NOT add: Haeundae Beach, Gwangalli, Centum City, BIFF Square, Taejongdae, or ANY spot more than 15 min from Nampo-dong.
+- DO NOT add any Morning, Breakfast, or Lunch slots. Traveler arrives in the EVENING.
+- From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
+══════════════════════════════════════`;
+
+  } else if (anchor && (isEveningArrival || isNightArrival)) {
+    const anchorTime = arrivalTime || `${String(arrivalHour).padStart(2, "0")}:00`;
+    day1Block = `
+══════════════════════════════════════
+Day 1 LOCATION ANCHOR + EVENING ARRIVAL RULES
+══════════════════════════════════════
+The traveler arrives at: ${anchor.displayName}
+Arrival time: ${anchorTime} (EVENING)
+
+MANDATORY Day 1 rules:
+1. SKIP Morning (before 12:00) and Lunch (12:00–16:59) time slots completely.
+   → First place time must be ${anchorTime} or later.
+2. ALL Day 1 places MUST be within: ${anchor.radius}.
+3. Allowed zones for Day 1: ${anchor.allowedZones.join(", ")}.
+4. PROHIBITED on Day 1: ${anchor.prohibitedZones.join(", ")}.
+5. Evening spot suggestions: ${anchor.eveningSpots}.
+6. Include 2–3 evening/night spots only (dinner, night market, night view).
+7. From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
+══════════════════════════════════════`;
+
+  } else if (anchor && isAfternoonArrival) {
+    day1Block = `
+Day 1 LOCATION ANCHOR (AFTERNOON ARRIVAL):
+- Traveler arrives at ${anchor.displayName} around ${arrivalTime}.
+- SKIP Morning activities. Start from afternoon (${arrivalTime} or later).
+- All Day 1 places must be within: ${anchor.allowedZones.join(", ")}.
+- PROHIBITED: ${anchor.prohibitedZones.join(", ")}.
+- From Day 2 onward: generate freely.`;
+
+  } else if (isEveningArrival) {
+    day1Block = `
+IMPORTANT Day 1 — EVENING ARRIVAL:
+- Traveler arrives at ${startLocation || city} at ${arrivalTime} (EVENING).
+- ABSOLUTE RULE: Do NOT schedule ANY morning, breakfast, or lunch activities on Day 1.
+- Day 1 time slots must start at ${arrivalTime} or later.
+- Include 2–3 evening spots only: dinner restaurant, night market, night view, or rooftop bar.
+- No daytime sightseeing on Day 1.
+- From Day 2 onward: full day schedule starting from morning.`;
+
+  } else if (isNightArrival) {
+    day1Block = `
+IMPORTANT Day 1 — NIGHT ARRIVAL:
+- Traveler arrives very late at ${arrivalTime}.
+- Day 1 must have ONLY 1 spot: a simple nearby night snack or hotel check-in activity.
+- No morning, lunch, or afternoon activities on Day 1.
+- From Day 2 onward: full day schedule starting from morning.`;
+
+  } else if (isMorningArrival) {
+    day1Block = `Day 1: Traveler arrives in the morning (${arrivalTime}). Start with breakfast near ${startLocation || city}, then full morning + afternoon sightseeing.`;
+
+  } else if (isNoonArrival) {
+    day1Block = `Day 1: Traveler arrives around ${arrivalTime}. Skip breakfast and morning activities. Start with check-in or late lunch near ${startLocation || city}, then afternoon and evening spots.`;
+  }
+
+  const locationNote =
+    startLocation && !isAirportEvening && !anchor
+      ? `Starting point / arrival location: ${startLocation}. On Day 1, begin the route near this location.`
+      : "";
+
+  return `You are an expert Korea travel planner for foreign visitors.
+
+Create a detailed ${numDays}-day itinerary for ${city}, Korea.
+Travel dates: ${startDate} to ${endDate}
+Number of travelers: ${travelers}
+Travel style: ${travelStyle}
+${locationNote}
+${day1Block}
+
+CRITICAL GLOBAL RULES (apply to ALL days):
+1. ALWAYS follow the Day 1 time restrictions above. If the traveler arrives in the evening, Day 1 has NO morning or lunch slots.
+2. For Day 2 and beyond: include 4–5 places per day, starting from morning.
+3. All place times must be in HH:MM 24-hour format.
+4. Geographically cluster spots by neighborhood each day to minimize transit time.
+5. Focus on real, well-known spots in ${city}.
+6. Tips must be practical for foreigners (cash/card info, transport, language tips).
+
+OUTPUT RULE: Return ONLY a raw JSON object. No markdown, no code fences, no explanation.
+
+Required JSON structure:
+{
+  "days": [
+    {
+      "date": "YYYY-MM-DD",
+      "dayNumber": 1,
+      "places": [
+        {
+          "name": "Place name in English",
+          "category": "Attraction | Restaurant | Cafe | Market | Museum | Park | Shopping | Experience",
+          "location": "District or neighborhood name",
+          "time": "HH:MM",
+          "duration": "X hours",
+          "tips": "Practical tip for foreign visitors",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Place+Name+${city}+Korea"
+        }
+      ]
+    }
+  ]
+}
+
+Additional rules:
+- googleMapsUrl must use + for spaces in the query parameter
+- Dates must follow the travel dates in order starting from ${startDate}
+- For Day 1 evening/night arrivals: the "places" array starts ONLY from the arrival time`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -364,7 +576,15 @@ export const onRequestPost: (context: {
     );
   }
 
-  const { city = "Busan", startDate, endDate, travelers = "1", travelStyle = "Solo" } = body;
+  const {
+    city = "Busan",
+    startDate,
+    endDate,
+    travelers = "1",
+    travelStyle = "Solo",
+    startLocation = "",
+    arrivalTime = "14:00",
+  } = body;
 
   if (!startDate || !endDate) {
     return new Response(
@@ -379,45 +599,20 @@ export const onRequestPost: (context: {
         (1000 * 60 * 60 * 24)
     ) + 1;
 
+  // 도착 시간 파싱
+  const arrivalHour = arrivalTime
+    ? parseInt(arrivalTime.split(":")[0] ?? "14", 10)
+    : 14;
+
   // ── Try Gemini if API key is available ─────────────────────────
   const apiKey = env.GEMINI_API_KEY;
 
   if (apiKey) {
-    const prompt = `You are an expert Korea travel planner for foreign visitors.
-
-Create a detailed ${numDays}-day itinerary for ${city}, Korea.
-Travel dates: ${startDate} to ${endDate}
-Number of travelers: ${travelers}
-Travel style: ${travelStyle}
-
-OUTPUT RULE: Return ONLY a raw JSON object. No markdown, no code fences, no explanation — just the JSON.
-
-Required JSON structure:
-{
-  "days": [
-    {
-      "date": "YYYY-MM-DD",
-      "dayNumber": 1,
-      "places": [
-        {
-          "name": "Place name in English",
-          "category": "Attraction",
-          "location": "District or neighborhood",
-          "time": "09:00",
-          "duration": "2 hours",
-          "tips": "Practical tip for foreign visitors",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Place+Name+${city}+Korea"
-        }
-      ]
-    }
-  ]
-}
-
-Rules:
-- 4 to 5 places per day, ordered chronologically
-- Only real, well-known spots in ${city}
-- Tips must help foreigners: cash vs card, English availability, transport
-- Dates start from ${startDate} and increment each day`;
+    const prompt = buildPrompt(
+      city, startDate, endDate, numDays,
+      travelers, travelStyle,
+      startLocation, arrivalTime, arrivalHour
+    );
 
     const allErrors: string[] = [];
 
@@ -443,13 +638,13 @@ Rules:
       }
     }
 
-    // Gemini failed — log errors and fall through to mock data
     console.error("Gemini all models failed:", allErrors.join(" | "));
   }
 
-  // ── Fallback: return curated KoreaMate mock itinerary ──────────
-  // Triggered when: (1) no API key, (2) all Gemini calls fail
-  const fallback = buildFallbackItinerary(startDate, numDays, city, travelers);
+  // ── Fallback: 남포동/저녁 조건을 반영한 curated 데이터 ──────────
+  const fallback = buildFallbackItinerary(
+    startDate, numDays, city, travelers, startLocation, arrivalHour
+  );
   return new Response(JSON.stringify(fallback), {
     status: 200,
     headers: corsHeaders,
