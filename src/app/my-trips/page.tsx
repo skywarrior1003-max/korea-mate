@@ -8,6 +8,8 @@ import {
   type ItineraryRow,
 } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
+import { getSavedEmail } from "@/lib/userEmail";
+import EmailCaptureModal from "@/components/EmailCaptureModal";
 
 // ── 날짜 상대 표시 ─────────────────────────────────────────────
 function timeAgo(iso: string): string {
@@ -52,11 +54,17 @@ function itineraryToCard(r: ItineraryRow): TripCard {
 
 // ══════════════════════════════════════════════════════════════
 export default function MyTripsPage() {
-  const [trips,      setTrips]      = useState<TripCard[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [deleting,   setDeleting]   = useState<string | null>(null);
-  const [confirmDel, setConfirmDel] = useState<string | null>(null);
-  const [copied,     setCopied]     = useState<string | null>(null);
+  const [trips,          setTrips]          = useState<TripCard[]>([]);
+  const [loading,        setLoading]        = useState(true);
+  const [deleting,       setDeleting]       = useState<string | null>(null);
+  const [confirmDel,     setConfirmDel]     = useState<string | null>(null);
+  const [copied,         setCopied]         = useState<string | null>(null);
+  const [savedEmail,     setSavedEmail]     = useState<string | null>(null);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+
+  useEffect(() => {
+    setSavedEmail(getSavedEmail());
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -124,6 +132,37 @@ export default function MyTripsPage() {
           <h2 className="text-3xl font-black text-gray-900 mb-1">✈️ My Trips</h2>
           <p className="text-sm text-gray-500 font-medium">Cloud-saved AI itineraries for this device.</p>
         </div>
+
+        {/* 이메일 배너 */}
+        {savedEmail ? (
+          <div className="mb-6 flex items-center gap-3 px-4 py-3 rounded-2xl border border-green-200 bg-green-50">
+            <span className="text-lg">✅</span>
+            <p className="text-sm font-semibold text-green-800 flex-1">
+              Trips linked to <strong>{savedEmail}</strong> — accessible from any device.
+            </p>
+          </div>
+        ) : (
+          <div className="mb-6 flex items-center gap-3 px-4 py-3 rounded-2xl border border-orange-200 bg-orange-50">
+            <span className="text-lg">📧</span>
+            <p className="text-sm font-semibold text-orange-800 flex-1">
+              Link your email to access these trips from any device.
+            </p>
+            <button
+              onClick={() => setEmailModalOpen(true)}
+              className="shrink-0 px-4 py-1.5 rounded-xl text-xs font-black text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              Link Email
+            </button>
+          </div>
+        )}
+
+        <EmailCaptureModal
+          isOpen={emailModalOpen}
+          onClose={() => setEmailModalOpen(false)}
+          context="my-trips"
+          onSuccess={(email) => { setSavedEmail(email); setEmailModalOpen(false); }}
+        />
 
         {/* ── 로딩 ── */}
         {loading && (

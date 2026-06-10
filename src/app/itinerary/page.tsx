@@ -9,6 +9,8 @@ import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary, updateItineraryTitle } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
+import { isEmailSaved } from "@/lib/userEmail";
+import EmailCaptureModal from "@/components/EmailCaptureModal";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -305,7 +307,9 @@ function ItineraryResult() {
   const [itinId,      setItinId]      = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [syncFading,  setSyncFading]  = useState(false);
-  const [copied,      setCopied]      = useState(false);
+  const [copied,          setCopied]          = useState(false);
+  const [emailModalOpen,  setEmailModalOpen]  = useState(false);
+  const [emailSaved,      setEmailSaved]      = useState(() => isEmailSaved());
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── 플래너 뱃지 ────────────────────────────────────────────
@@ -911,6 +915,25 @@ function ItineraryResult() {
             {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
           </button>
 
+          {/* 이메일 저장 버튼 */}
+          {emailSaved ? (
+            <button
+              onClick={() => setEmailModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
+              style={{ backgroundColor: "#22c55e" }}
+            >
+              ✅ Trip Saved to Email
+            </button>
+          ) : (
+            <button
+              onClick={() => setEmailModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              📧 Save to Email
+            </button>
+          )}
+
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-[#FAF7F2] hover:bg-[#F3EEE3] text-[#2C2520] border border-[#E6DFD5] rounded-xl transition-all shadow-sm">
             ← Back to Home
           </Link>
@@ -1332,6 +1355,12 @@ function ItineraryResult() {
         <PlaceModal place={selectedPlace} city={city} onClose={() => setSelectedPlace(null)} />
       )}
 
+      <EmailCaptureModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        context="save-trip"
+        onSuccess={() => setEmailSaved(true)}
+      />
     </main>
   );
 }

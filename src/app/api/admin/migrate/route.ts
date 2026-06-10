@@ -41,6 +41,26 @@ CREATE POLICY "anon_delete_reactions" ON spot_reactions FOR DELETE TO anon USING
 
 -- ③ 안전 스키마 추가: itineraries 커스텀 제목 컬럼
 ALTER TABLE itineraries ADD COLUMN IF NOT EXISTS trip_title TEXT;
+
+-- ④ 이메일 캡처: itineraries에 email 컬럼 추가 (비회원 이메일 저장용)
+ALTER TABLE itineraries ADD COLUMN IF NOT EXISTS email TEXT;
+CREATE INDEX IF NOT EXISTS idx_itineraries_email ON itineraries(email);
+
+-- ⑤ user_emails: 이메일 ↔ device_id 매핑 테이블 (비회원 전환 흐름의 핵심)
+CREATE TABLE IF NOT EXISTS user_emails (
+  id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email      TEXT NOT NULL,
+  device_id  TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(email, device_id)
+);
+CREATE INDEX IF NOT EXISTS idx_user_emails_email  ON user_emails(email);
+CREATE INDEX IF NOT EXISTS idx_user_emails_device ON user_emails(device_id);
+ALTER TABLE user_emails ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "anon_insert_emails" ON user_emails;
+CREATE POLICY "anon_insert_emails" ON user_emails FOR INSERT TO anon WITH CHECK (true);
+DROP POLICY IF EXISTS "anon_read_own_emails" ON user_emails;
+CREATE POLICY "anon_read_own_emails" ON user_emails FOR SELECT TO anon USING (true);
 `.trim();
 
 export async function POST(request: Request) {
@@ -98,5 +118,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ success: true, message: "마이그레이션 완료 (spots + spot_reactions + itineraries.trip_title)" });
+  return NextResponse.json({ success: true, message: "마이그레이션 완료 (spots + spot_reactions + itineraries.trip_title + user_emails + itineraries.email)" });
 }
