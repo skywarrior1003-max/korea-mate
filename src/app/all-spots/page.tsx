@@ -7,6 +7,46 @@ import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 
+// ── 레스토랑 타입 + 어댑터 ────────────────────────────────────────────────────
+
+interface RestaurantItem {
+  id: string; source: string; award: string | null;
+  name_ko: string; name_en: string;
+  category_ko: string; category_en: string;
+  district_ko: string; district_en: string;
+  address_ko: string; address_en: string;
+  description_ko: string; description_en: string;
+  latitude: number; longitude: number;
+  image: string | null; price_range: string | null;
+  tags: string[]; phone: string | null; reservation_required: boolean;
+}
+
+function restaurantToEventItem(r: RestaurantItem): EventItem {
+  const awardScore: Record<string, number> = { "1star": 92, "bib-gourmand": 88, "selected": 83, "certified": 80, "recommended": 78 };
+  return {
+    id: r.id, type: "restaurant", isAnchor: false,
+    journeyCluster: "busan-food-guide-2026", stage: "Standalone",
+    anchorEventId: null, relatedSpotIds: [], relatedSurvivalGuides: ["payments", "solo-dining"],
+    transitFromAnchor: null,
+    name: `${r.name_ko} (${r.name_en})`, shortName: r.name_ko,
+    tags: r.tags ?? [], city: "Busan", district: r.district_en,
+    address: r.address_ko,
+    mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.address_ko)}`,
+    naverMapUrl: `https://map.naver.com/v5/search/${encodeURIComponent(r.name_ko)}`,
+    description: r.description_ko, whyItMatters: r.description_en,
+    recommendedDurationMinutes: 60, bestTimeSlot: "anytime",
+    openingHours: null, image: r.image,
+    startDate: null, endDate: null,
+    isTrending: r.award === "1star" || r.award === "bib-gourmand",
+    soloFriendly: true, foreignCardAccepted: r.price_range !== "$",
+    cashOnly: false, englishMenu: true, barrierFree: true,
+    koreanSurvivalScore: awardScore[r.award ?? ""] ?? 78,
+    notice: null,
+    lat: r.latitude, lng: r.longitude,
+    commerce: { affiliateType: null, hasAffiliate: false, affiliatePartner: null, affiliateUrl: null, hasMerchandise: false, hasTicketing: false, bookingUrl: null },
+  };
+}
+
 // ── 카테고리 필터 ─────────────────────────────────────────────────────────────
 const CATEGORY_FILTERS = [
   { key: "all",      label: "All",                  emoji: ""   },
@@ -100,10 +140,13 @@ export default function AllSpotsPage() {
     const f = params.get("filter");
     if (f && CATEGORY_FILTERS.some(fi => fi.key === f)) setCategoryFilter(f);
     setPage(1);
-    fetch("/data/events.json")
-      .then(r => r.json())
-      .then((data: EventItem[]) => { setEvents(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    Promise.all([
+      fetch("/data/events.json").then(r => r.json()),
+      fetch("/data/restaurants.json").then(r => r.json()).catch(() => [] as RestaurantItem[]),
+    ]).then(([evtsData, restsData]: [EventItem[], RestaurantItem[]]) => {
+      setEvents([...evtsData, ...restsData.map(restaurantToEventItem)]);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   useEffect(() => {

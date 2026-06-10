@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -250,6 +250,86 @@ function toEventItem(spot: LocalInfo): EventItem {
 }
 
 // ═══════════════════════════════════════════════
+//  레스토랑 타입 + 어댑터
+// ═══════════════════════════════════════════════
+
+interface RestaurantItem {
+  id: string; source: string; award: string | null;
+  name_ko: string; name_en: string;
+  category_ko: string; category_en: string;
+  district_ko: string; district_en: string;
+  address_ko: string; address_en: string;
+  description_ko: string; description_en: string;
+  latitude: number; longitude: number;
+  image: string | null; price_range: string | null;
+  tags: string[]; phone: string | null; reservation_required: boolean;
+}
+
+function restaurantToEventItem(r: RestaurantItem): EventItem {
+  const scoreMap: Record<string, number> = { "1star": 92, "bib-gourmand": 88, "selected": 83, "certified": 80, "recommended": 78 };
+  return {
+    id: r.id, type: "restaurant", isAnchor: false,
+    journeyCluster: "busan-food-guide-2026", stage: "Standalone",
+    anchorEventId: null, relatedSpotIds: [], relatedSurvivalGuides: ["payments", "solo-dining"],
+    transitFromAnchor: null,
+    name: `${r.name_ko} (${r.name_en})`, shortName: r.name_ko,
+    tags: r.tags ?? [], city: "Busan", district: r.district_en,
+    address: r.address_ko,
+    mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.address_ko)}`,
+    naverMapUrl: `https://map.naver.com/v5/search/${encodeURIComponent(r.name_ko)}`,
+    description: r.description_ko, whyItMatters: r.description_en,
+    recommendedDurationMinutes: 60, bestTimeSlot: "anytime",
+    openingHours: null, image: r.image,
+    startDate: null, endDate: null,
+    isTrending: r.award === "1star" || r.award === "bib-gourmand",
+    soloFriendly: true, foreignCardAccepted: r.price_range !== "$",
+    cashOnly: false, englishMenu: true, barrierFree: true,
+    koreanSurvivalScore: scoreMap[r.award ?? ""] ?? 78,
+    notice: null,
+    lat: r.latitude, lng: r.longitude,
+    commerce: { affiliateType: null, hasAffiliate: false, affiliatePartner: null, affiliateUrl: null, hasMerchandise: false, hasTicketing: false, bookingUrl: null },
+  };
+}
+
+// ── GPS 헬퍼 (홈 페이지) ──────────────────────────────────────────────────────
+
+function haversineKmHome(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+const HOME_DISTRICT_CENTERS: Record<string, { lat: number; lng: number }> = {
+  "Busanjin-gu":  { lat: 35.1587, lng: 129.0585 },
+  "Haeundae-gu":  { lat: 35.1628, lng: 129.1635 },
+  "Gijang-gun":   { lat: 35.2442, lng: 129.2204 },
+  "Jung-gu":      { lat: 35.1008, lng: 129.0323 },
+  "Yeongdo-gu":   { lat: 35.0847, lng: 129.0675 },
+  "Seo-gu":       { lat: 35.0972, lng: 129.0221 },
+  "Dong-gu":      { lat: 35.1396, lng: 129.0551 },
+  "Suyeong-gu":   { lat: 35.1360, lng: 129.1131 },
+  "Nam-gu":       { lat: 35.1340, lng: 129.0853 },
+  "Yeonje-gu":    { lat: 35.1847, lng: 129.0778 },
+  "Dongnae-gu":   { lat: 35.1949, lng: 129.0832 },
+  "Geumjeong-gu": { lat: 35.2439, lng: 129.0929 },
+  "Buk-gu":       { lat: 35.2073, lng: 128.9925 },
+  "Saha-gu":      { lat: 35.1044, lng: 128.9753 },
+  "Sasang-gu":    { lat: 35.1527, lng: 128.9705 },
+  "Gangseo-gu":   { lat: 35.1063, lng: 128.8962 },
+};
+
+function getHomeEventCoords(event: EventItem): { lat: number; lng: number } {
+  if (event.lat && event.lng) return { lat: event.lat, lng: event.lng };
+  return HOME_DISTRICT_CENTERS[event.district] ?? { lat: 35.1796, lng: 129.0756 };
+}
+
+function fmtDistHome(km: number): string {
+  return km < 1 ? `${Math.round(km * 1000)}m 앞` : `${km.toFixed(1)}km`;
+}
+
+// ═══════════════════════════════════════════════
 //  검색창 컴포넌트
 // ═══════════════════════════════════════════════
 
@@ -379,9 +459,15 @@ export default function Home() {
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
-  // ── events.json 로드 ──────────────────────────
+  // ── events.json + restaurants.json 로드 ───────
   const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
+
+  // ── GPS Near Me ───────────────────────────────
+  const [gpsActive,  setGpsActive]  = useState(false);
+  const [userCoords, setUserCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [gpsError,   setGpsError]   = useState<string | null>(null);
 
   // ── Section 4 페이지네이션 ───────────────────
   const [section4Page, setSection4Page] = useState(1);
@@ -446,11 +532,32 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("/data/events.json")
-      .then((r) => r.json())
-      .then((data: EventItem[]) => { setEventsData(data); setEventsLoading(false); })
-      .catch(() => setEventsLoading(false));
+    Promise.all([
+      fetch("/data/events.json").then(r => r.json()),
+      fetch("/data/restaurants.json").then(r => r.json()).catch(() => [] as RestaurantItem[]),
+    ]).then(([evts, rests]: [EventItem[], RestaurantItem[]]) => {
+      setEventsData([...evts, ...rests.map(restaurantToEventItem)]);
+      setEventsLoading(false);
+    }).catch(() => setEventsLoading(false));
   }, []);
+
+  const handleGpsToggle = useCallback(() => {
+    if (gpsActive) {
+      setGpsActive(false); setUserCoords(null); setGpsError(null); return;
+    }
+    if (!("geolocation" in navigator)) { setGpsError("GPS를 지원하지 않는 기기입니다."); return; }
+    setGpsLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setGpsActive(true); setGpsLoading(false); setGpsError(null);
+        setEventFilter("all");
+        setCurrentPage(1);
+      },
+      () => { setGpsLoading(false); setGpsError("위치 권한을 허용해주세요."); },
+      { timeout: 8000 }
+    );
+  }, [gpsActive]);
 
   useEffect(() => {
     setSavedIds(getFavorites());
@@ -495,10 +602,10 @@ export default function Home() {
     [eventsData, localInfoData]
   );
 
-  // ── 검색/필터 모드 판단 ───────────────────────────────
+  // ── 검색/필터 모드 판단 (GPS 활성 시도 필터 모드 진입) ─
   const isFilteringMode = useMemo(
-    () => globalSearch.trim() !== "" || eventFilter !== "all",
-    [globalSearch, eventFilter]
+    () => globalSearch.trim() !== "" || eventFilter !== "all" || gpsActive,
+    [globalSearch, eventFilter, gpsActive]
   );
 
   // ── 통합 검색 결과 ────────────────────────────────────
@@ -531,8 +638,19 @@ export default function Home() {
         e.district.toLowerCase().includes(q)
       );
     }
+
+    // GPS 활성: 거리 오름차순 정렬
+    if (gpsActive && userCoords) {
+      return [...list].sort((a, b) => {
+        const ac = getHomeEventCoords(a);
+        const bc = getHomeEventCoords(b);
+        return haversineKmHome(userCoords.lat, userCoords.lng, ac.lat, ac.lng)
+             - haversineKmHome(userCoords.lat, userCoords.lng, bc.lat, bc.lng);
+      });
+    }
+
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
-  }, [allItems, eventFilter, globalSearch, savedIds]);
+  }, [allItems, eventFilter, globalSearch, savedIds, gpsActive, userCoords]);
 
   // ── 검색/필터 모드 페이지네이션 ──────────────────────────────
   const ITEMS_PER_PAGE = 12;
@@ -983,7 +1101,7 @@ export default function Home() {
                 placeholder="Search spots, BTS, Michelin, beach, hiking…"
                 highlighted={searchHighlight}
               />
-              {/* 필터 칩 + 결과 카운트 한 줄 */}
+              {/* 필터 칩 + GPS 버튼 + 결과 카운트 한 줄 */}
               <div className="flex items-center gap-2">
                 <div
                   className="flex gap-1.5 overflow-x-auto pb-0.5 flex-1"
@@ -1004,15 +1122,43 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
+
+                {/* ── GPS Near Me 버튼 ── */}
+                <button
+                  onClick={handleGpsToggle}
+                  disabled={gpsLoading}
+                  title={gpsActive ? "GPS 해제" : "내 주변 거리순 정렬"}
+                  className="shrink-0 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer whitespace-nowrap"
+                  style={
+                    gpsActive
+                      ? { backgroundColor: "#2563eb", color: "#fff", borderColor: "#2563eb" }
+                      : { backgroundColor: "#f9fafb", color: "#4b5563", borderColor: "#d1d5db" }
+                  }
+                >
+                  {gpsLoading ? (
+                    <span className="inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <span>📍</span>
+                  )}
+                  Near Me
+                </button>
+
                 {isFilteringMode && (
                   <span className="text-[11px] text-gray-400 shrink-0 font-medium">
                     {filteredResults.length} results ·{" "}
-                    <button onClick={() => { setGlobalSearch(""); setEventFilter("all"); }} className="text-orange-500 font-bold underline">
+                    <button
+                      onClick={() => { setGlobalSearch(""); setEventFilter("all"); if (gpsActive) handleGpsToggle(); }}
+                      className="text-orange-500 font-bold underline"
+                    >
                       Clear
                     </button>
                   </span>
                 )}
               </div>
+              {/* GPS 에러 메시지 */}
+              {gpsError && (
+                <p className="text-[11px] text-red-500 font-medium mt-0.5">{gpsError}</p>
+              )}
             </div>
           </div>
 
@@ -1044,7 +1190,20 @@ export default function Home() {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {pageItems.map((event) => (
-                    <EventCard key={event.id} event={event} onClick={() => setSelectedEvent(event)} />
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      onClick={() => setSelectedEvent(event)}
+                      distanceBadge={
+                        gpsActive && userCoords
+                          ? fmtDistHome(haversineKmHome(
+                              userCoords.lat, userCoords.lng,
+                              getHomeEventCoords(event).lat,
+                              getHomeEventCoords(event).lng
+                            ))
+                          : undefined
+                      }
+                    />
                   ))}
                 </div>
                 {/* 페이지네이션 */}
