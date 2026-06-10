@@ -4,27 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   fetchItinerariesByDevice,
-  fetchPlannersByDevice,
   deleteItinerary,
-  deletePlannerSession,
   type ItineraryRow,
-  type PlannerSessionRow,
 } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
-
-// ── 통합 여행 레코드 ──────────────────────────────────────────
-type TripKind = "itinerary" | "planner";
-
-interface TripCard {
-  id:         string;
-  kind:       TripKind;
-  title:      string;
-  subtitle:   string;
-  meta:       string;
-  updatedAt:  string;
-  startDate?: string;   // planner 컨텍스트 전달용
-  numDays?:   number;
-}
 
 // ── 날짜 상대 표시 ─────────────────────────────────────────────
 function timeAgo(iso: string): string {
@@ -39,132 +22,86 @@ function timeAgo(iso: string): string {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
-// ── 날짜 범위 → "N days" 계산 ────────────────────────────────
 function dayCount(start: string, end: string): number {
   const s = new Date(start), e = new Date(end);
   return Math.max(1, Math.round((e.getTime() - s.getTime()) / 86400000) + 1);
 }
 
+interface TripCard {
+  id:        string;
+  title:     string;
+  subtitle:  string;
+  meta:      string;
+  updatedAt: string;
+}
+
 function itineraryToCard(r: ItineraryRow): TripCard {
   const days = (r.start_date && r.end_date) ? dayCount(r.start_date, r.end_date) : 0;
   return {
-    id:        r.id,
-    kind:      "itinerary",
-    title:     r.city || "Korea Trip",
-    subtitle:  r.start_date && r.end_date
-      ? `${r.start_date} → ${r.end_date}`
-      : "No dates",
-    meta:      [
+    id:       r.id,
+    title:    r.city || "Korea Trip",
+    subtitle: r.start_date && r.end_date ? `${r.start_date} → ${r.end_date}` : "No dates",
+    meta:     [
       days > 0 ? `${days} days` : null,
       r.travelers && r.travelers !== "1" ? `${r.travelers} travelers` : "Solo",
       r.travel_style,
     ].filter(Boolean).join(" · "),
-    updatedAt: r.updated_at ?? "",
-    startDate: r.start_date ?? undefined,
-    numDays:   days > 0 ? days : undefined,
-  };
-}
-
-function plannerToCard(r: PlannerSessionRow): TripCard {
-  return {
-    id:        r.id,
-    kind:      "planner",
-    title:     "My Plan",
-    subtitle:  r.start_date ? `Starts ${r.start_date}` : "Dates not set",
-    meta:      `${r.num_days ?? "?"} day${(r.num_days ?? 0) > 1 ? "s" : ""} planned`,
     updatedAt: r.updated_at ?? "",
   };
 }
 
 // ══════════════════════════════════════════════════════════════
 export default function MyTripsPage() {
-  const [trips,       setTrips]       = useState<TripCard[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [filter,      setFilter]      = useState<"all" | "itinerary" | "planner">("all");
-  const [deleting,    setDeleting]    = useState<string | null>(null);
-  const [confirmDel,  setConfirmDel]  = useState<string | null>(null);
-  const [copied,      setCopied]      = useState<string | null>(null);
+  const [trips,      setTrips]      = useState<TripCard[]>([]);
+  const [loading,    setLoading]    = useState(true);
+  const [deleting,   setDeleting]   = useState<string | null>(null);
+  const [confirmDel, setConfirmDel] = useState<string | null>(null);
+  const [copied,     setCopied]     = useState<string | null>(null);
 
-  // ── 초기 로드 ────────────────────────────────────────────────
-  // Bug Fix: 다른 페이지 방문 후 복귀 시 이전 trips 배열 뻥튀기 방지
-  // - cancelled 플래그로 unmount 이후 도착한 응답을 무시
-  // - 마운트 즉시 trips=[] 로 강제 초기화하여 잔류 state 원천 차단
   useEffect(() => {
     let cancelled = false;
-
-    // ① 마운트 시점에 즉각 초기화 — 이전 방문에서 남은 카드 0개로 리셋
     setTrips([]);
     setLoading(true);
 
     const deviceId = getDeviceId();
-    Promise.all([
-      fetchItinerariesByDevice(deviceId),
-      fetchPlannersByDevice(deviceId),
-    ]).then(([itins, planners]) => {
-      // ② unmount 이후 응답이면 state 변경 완전 차단
+    fetchItinerariesByDevice(deviceId).then((itins) => {
       if (cancelled) return;
-
-      const seen = new Set<string>();
-      const cards: TripCard[] = [
-        ...itins.map(itineraryToCard),
-        ...planners.map(plannerToCard),
-      ]
-        // ③ 중복 ID 제거 (itinerary + planner 양쪽에 같은 ID 있을 경우 방어)
-        .filter((c) => { if (seen.has(c.id)) return false; seen.add(c.id); return true; })
+      const cards = itins
+        .map(itineraryToCard)
         .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-
       setTrips(cards);
       setLoading(false);
-    }).catch(() => {
-      if (!cancelled) setLoading(false);
-    });
+    }).catch(() => { if (!cancelled) setLoading(false); });
 
-    // ④ cleanup: 페이지 이탈 시 응답 무시 플래그 ON
     return () => { cancelled = true; };
   }, []);
 
-  // ── 공유 링크 복사 ───────────────────────────────────────────
   async function handleCopy(trip: TripCard) {
-    const path = trip.kind === "itinerary" ? "itinerary" : "planner";
-    const url  = `${window.location.origin}/${path}?id=${trip.id}`;
+    const url = `${window.location.origin}/itinerary?id=${trip.id}`;
     try { await navigator.clipboard.writeText(url); }
     catch { window.prompt("Copy this link:", url); }
     setCopied(trip.id);
     setTimeout(() => setCopied(null), 2500);
   }
 
-  // ── 삭제 ─────────────────────────────────────────────────────
   async function handleDelete(trip: TripCard) {
     setDeleting(trip.id);
     setConfirmDel(null);
-    // Optimistic: 확인 즉시 카드 제거 → 유령 카드 원천 차단
     setTrips((prev) => prev.filter((t) => t.id !== trip.id));
     const deviceId = getDeviceId();
-    await (trip.kind === "itinerary"
-      ? deleteItinerary(trip.id, deviceId)
-      : deletePlannerSession(trip.id, deviceId));
+    await deleteItinerary(trip.id, deviceId);
     try {
-      if (trip.kind === "planner") {
-        const stored = localStorage.getItem("koreamate_planner_sb_id");
-        if (stored === trip.id) localStorage.removeItem("koreamate_planner_sb_id");
-      } else {
-        // v1/v2/v3 캐시 키 전부 제거 → 재방문 시 삭제된 ID로 부활 방지
-        const toRemove: string[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const k = localStorage.key(i);
-          if (k && (k.startsWith("koreamate_itin_id_") || k.startsWith("koreamate_itin3_id_"))) {
-            toRemove.push(k);
-          }
+      const toRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith("koreamate_itin_id_") || k.startsWith("koreamate_itin3_id_"))) {
+          toRemove.push(k);
         }
-        toRemove.forEach((k) => localStorage.removeItem(k));
       }
+      toRemove.forEach((k) => localStorage.removeItem(k));
     } catch { /* ignore */ }
     setDeleting(null);
   }
-
-  const displayed = filter === "all" ? trips : trips.filter((t) => t.kind === filter);
-  const itinCount = trips.filter((t) => t.kind === "itinerary").length;
-  const planCount = trips.filter((t) => t.kind === "planner").length;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -183,41 +120,9 @@ export default function MyTripsPage() {
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-10">
 
-        {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
-          <h2 className="text-3xl font-black text-gray-900 mb-1">
-            ✈️ My Trips
-          </h2>
-          <p className="text-sm text-gray-500 font-medium">
-            All your trips saved here.
-          </p>
-        </div>
-
-        {/* ── 필터 탭 ── */}
-        <div className="flex gap-2 mb-6">
-          {([
-            { key: "all",       label: "All",           count: trips.length      },
-            { key: "itinerary", label: "AI Trips",   count: itinCount        },
-            { key: "planner",   label: "My Plans",  count: planCount        },
-          ] as const).map((f) => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all border ${
-                filter === f.key
-                  ? "text-white border-transparent"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-gray-300"
-              }`}
-              style={filter === f.key ? { backgroundColor: "#1a1f36" } : {}}
-            >
-              {f.label}
-              <span className={`ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-black ${
-                filter === f.key ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"
-              }`}>
-                {f.count}
-              </span>
-            </button>
-          ))}
+          <h2 className="text-3xl font-black text-gray-900 mb-1">✈️ My Trips</h2>
+          <p className="text-sm text-gray-500 font-medium">Cloud-saved AI itineraries for this device.</p>
         </div>
 
         {/* ── 로딩 ── */}
@@ -229,37 +134,32 @@ export default function MyTripsPage() {
         )}
 
         {/* ── 비어있음 ── */}
-        {!loading && displayed.length === 0 && (
+        {!loading && trips.length === 0 && (
           <div className="flex flex-col items-center justify-center py-24 gap-5 text-center">
             <span className="text-6xl">✈️</span>
             <div>
-              <p className="text-xl font-black text-gray-800 mb-2">
-                {filter === "all" ? "No trips yet" : `No ${filter === "itinerary" ? "AI trips" : "plans"} yet`}
-              </p>
+              <p className="text-xl font-black text-gray-800 mb-2">No trips yet</p>
               <p className="text-sm text-gray-500 max-w-sm">
-                Plan a trip or use AI to generate one — it will automatically appear here.
+                Use the AI planner on the home page to generate your first itinerary.
               </p>
             </div>
-            <div className="flex gap-3 flex-wrap justify-center">
-              <Link
-                href="/"
-                className="px-5 py-2.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#f97316" }}
-              >
-                Browse Spots
-              </Link>
-            </div>
+            <Link
+              href="/"
+              className="px-5 py-2.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              Plan a Trip
+            </Link>
           </div>
         )}
 
-        {/* ── 여행 카드 그리드 ── */}
-        {!loading && displayed.length > 0 && (
+        {/* ── 카드 그리드 ── */}
+        {!loading && trips.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {displayed.map((trip) => {
-              const isDeleting  = deleting === trip.id;
-              const isConfirm   = confirmDel === trip.id;
-              const isCopied    = copied === trip.id;
-              const openPath    = trip.kind === "itinerary" ? "itinerary" : "planner";
+            {trips.map((trip) => {
+              const isDeleting = deleting === trip.id;
+              const isConfirm  = confirmDel === trip.id;
+              const isCopied   = copied === trip.id;
 
               return (
                 <div
@@ -267,57 +167,34 @@ export default function MyTripsPage() {
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden"
                 >
                   {/* 카드 헤더 */}
-                  <div
-                    className="px-5 pt-5 pb-4"
-                    style={{ borderBottom: "1px solid #f3f4f6" }}
-                  >
+                  <div className="px-5 pt-5 pb-4" style={{ borderBottom: "1px solid #f3f4f6" }}>
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <span
                         className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg"
-                        style={
-                          trip.kind === "itinerary"
-                            ? { backgroundColor: "#FFF3E0", color: "#f97316" }
-                            : { backgroundColor: "#EDE9FE", color: "#7c3aed" }
-                        }
+                        style={{ backgroundColor: "#FFF3E0", color: "#f97316" }}
                       >
-                        {trip.kind === "itinerary" ? "🤖 AI Trip" : "📅 My Plan"}
+                        🤖 AI Trip
                       </span>
                       <span className="text-[10px] text-gray-400 font-medium shrink-0 mt-0.5">
                         {timeAgo(trip.updatedAt)}
                       </span>
                     </div>
-
-                    <h3 className="text-lg font-black text-gray-900 leading-tight mb-1">
-                      {trip.kind === "itinerary" ? "🗺️ " : "📋 "}{trip.title}
-                    </h3>
+                    <h3 className="text-lg font-black text-gray-900 leading-tight mb-1">🗺️ {trip.title}</h3>
                     <p className="text-sm font-semibold text-gray-500 mb-1">{trip.subtitle}</p>
                     <p className="text-xs text-gray-400">{trip.meta}</p>
                   </div>
 
                   {/* 카드 액션 */}
                   <div className="px-5 py-4 flex flex-col gap-2 mt-auto">
-
-                    {/* 열기 */}
                     <Link
-                      href={`/${openPath}?id=${trip.id}`}
+                      href={`/itinerary?id=${trip.id}`}
                       className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90 active:scale-95"
                       style={{ backgroundColor: "#1a1f36" }}
                     >
                       Open Trip →
                     </Link>
 
-                    {/* Issue 3 fix: 이티너러리 날짜를 Planner에 컨텍스트로 전달 */}
-                    {trip.kind === "itinerary" && trip.startDate && trip.numDays && (
-                      <Link
-                        href={`/planner?startDate=${trip.startDate}&numDays=${trip.numDays}`}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold border border-orange-200 text-orange-600 hover:bg-orange-50 transition-colors active:scale-95"
-                      >
-                        📅 Plan These Dates
-                      </Link>
-                    )}
-
                     <div className="flex gap-2">
-                      {/* 링크 복사 */}
                       <button
                         onClick={() => handleCopy(trip)}
                         className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all"
@@ -330,7 +207,6 @@ export default function MyTripsPage() {
                         {isCopied ? "✅ Copied!" : "🔗 Copy Link"}
                       </button>
 
-                      {/* 삭제 */}
                       {isConfirm ? (
                         <div className="flex gap-1 flex-1">
                           <button
@@ -368,7 +244,7 @@ export default function MyTripsPage() {
       <footer className="border-t border-gray-100 py-6 text-center text-xs text-gray-400">
         <Link href="/" className="text-orange-500 font-bold hover:underline">← Back to KoreaMate Home</Link>
         <span className="mx-3">·</span>
-        <span>Trips are stored by device. Clear your browser data will remove local access.</span>
+        <span>Trips are stored by device. Clearing browser data will remove local access.</span>
       </footer>
     </div>
   );

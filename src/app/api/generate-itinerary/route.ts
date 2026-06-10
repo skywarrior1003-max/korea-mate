@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash"];
+const MODELS = ["gemini-2.5-flash"];
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 
@@ -96,10 +96,10 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
     };
   }
 
-  // KTX 부산역 권역 감지
+  // KTX 부산역 / 서면 권역 감지 (한국어 "서면" 포함)
   if (
     l.includes("ktx") || l.includes("busan station") ||
-    l.includes("부산역") || l.includes("seomyeon")
+    l.includes("부산역") || l.includes("seomyeon") || l.includes("서면")
   ) {
     return {
       displayName: "Busan Station / Seomyeon area",
@@ -120,12 +120,130 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
   return null; // 앵커 없음 → 자유 생성
 }
 
-export async function POST(request: NextRequest) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
-  }
+// ── 개발·테스트 환경 모의 일정 생성기 ────────────────────────────────────
+function buildMockItinerary(
+  city: string,
+  startDate: string,
+  endDate: string,
+  startLocation?: string,
+  arrivalTime?: string
+) {
+  const start = new Date(startDate);
+  const end   = new Date(endDate);
+  const numDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  const arrivalHour = arrivalTime ? parseInt(arrivalTime.split(":")[0] ?? "14", 10) : 14;
+  const isEveningArrival = arrivalHour >= 17;
+  const startArea = startLocation ?? city;
 
+  // Day 1 도착 야간 템플릿 (항상 공통)
+  const DAY1_EVENING_TEMPLATES = [
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,    time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",    tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Jagalchi Fish Market",            category: "Market",     location: "Nampo-dong", time: "18:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Bupyeong Night Market",           category: "Market",     location: "Jung-gu",   time: "20:00",                                     duration: "1h",    tips: "[MOCK] Open until midnight. Cash preferred." },
+  ];
+
+  // 도착 지역 기반 Day 2 첫날 템플릿 — 도착지에서 모닝 시작
+  const la = (startLocation ?? "").toLowerCase();
+  const isHaeundaeAnchor = la.includes("haeundae") || la.includes("해운대") || la.includes("centum") || la.includes("센텀");
+  const isNampoAnchor    = la.includes("nampo") || la.includes("남포") || la.includes("jagalchi") || la.includes("biff") || la.includes("gwangbok");
+
+  type MockPlace = { name: string; category: string; location: string; time: string; duration: string; tips: string };
+  const DAY2_TEMPLATES: MockPlace[] = isHaeundaeAnchor ? [
+    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
+    { name: "Dongbaekseom Island Walk",      category: "Attraction", location: "Haeundae",   time: "11:00", duration: "1h",  tips: "[MOCK] Free entry. Scenic coastal path around the island." },
+    { name: "Centum City — SHINSEGAE",       category: "Shopping",   location: "Centum City",time: "14:00", duration: "2h",  tips: "[MOCK] World's largest department store. Free Wi-Fi inside." },
+    { name: "Marine City Rooftop Bar",       category: "Experience", location: "Marine City",time: "18:00", duration: "1h",  tips: "[MOCK] Best city + sea view at sunset." },
+  ] : isNampoAnchor ? [
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "09:30", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu", time: "13:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
+    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
+    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1h",  tips: "[MOCK] ₩12,000 entry. Best at night." },
+  ] : [
+    // Seomyeon / KTX BusanStation / 기타: Day 2 모닝은 서면 근처 시작
+    { name: "Seomyeon Breakfast — 돼지국밥", category: "Restaurant", location: "Seomyeon",   time: "09:00", duration: "1h",  tips: "[MOCK] Order pork soup rice (돼지국밥). ₩8,000. Cash or card OK." },
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "11:00", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Jagalchi Fish Market",          category: "Market",     location: "Nampo-dong", time: "14:00", duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
+  ];
+
+  // Day 3+ 공통 순환 템플릿
+  const DAY3_PLUS_TEMPLATES: MockPlace[] = [
+    { name: "Haedong Yonggungsa Temple",     category: "Attraction", location: "Gijang-gun", time: "09:30", duration: "2h",  tips: "[MOCK] Arrive early — parking gets full by 10 AM." },
+    { name: "BIFF Square Street Food",       category: "Market",     location: "Nampo-dong", time: "15:00", duration: "1h",  tips: "[MOCK] Famous for ssiat hotteok (seed pancake)." },
+    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu", time: "14:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
+    { name: "Michelin Lunch — Busan Gukbap", category: "Restaurant", location: "Seomyeon",   time: "12:30", duration: "1h",  tips: "[MOCK] Order 돼지국밥 (pork soup rice). ₩8,000." },
+    { name: "Oryukdo Skywalk",               category: "Attraction", location: "Nam-gu",     time: "15:00", duration: "1h",  tips: "[MOCK] Glass-floor walkway over the sea." },
+    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
+    { name: "Centum City Shopping",          category: "Shopping",   location: "Haeundae",   time: "14:00", duration: "2h",  tips: "[MOCK] Shinsegae — world's largest department store." },
+    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1h",  tips: "[MOCK] ₩12,000 entry. Best at night." },
+  ];
+
+  // 아침 도착 / 일반 Day 1 전체 스케줄 템플릿 (비저녁 도착 Day 1용)
+  const DAY1_FULL_TEMPLATES: MockPlace[] = [
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,    time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",    tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Gamcheon Culture Village",        category: "Attraction", location: "Saha-gu",    time: "10:30",                                     duration: "2h",    tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Jagalchi Fish Market",            category: "Market",     location: "Nampo-dong", time: "14:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Gwangalli Beach Sunset",          category: "Attraction", location: "Suyeong-gu", time: "17:30",                                     duration: "1h",    tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
+  ];
+
+  const days = Array.from({ length: numDays }, (_, i) => {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().split("T")[0];
+
+    let places: MockPlace[];
+    if (i === 0 && isEveningArrival) {
+      // Day 1 저녁 도착: 도착 + 야시장 2개
+      places = DAY1_EVENING_TEMPLATES;
+    } else if (i === 0) {
+      // Day 1 비저녁 도착: 도착 + 당일 스케줄
+      places = DAY1_FULL_TEMPLATES;
+    } else if (i === 1) {
+      // Day 2: 도착 지역 기반 모닝 시작
+      places = DAY2_TEMPLATES;
+    } else {
+      // Day 3+: 공통 순환
+      const offset = (i - 2) * 4;
+      places = DAY3_PLUS_TEMPLATES.slice(offset % DAY3_PLUS_TEMPLATES.length, (offset % DAY3_PLUS_TEMPLATES.length) + 4);
+    }
+
+    return {
+      date: dateStr,
+      dayNumber: i + 1,
+      places: places.map(p => ({
+        ...p,
+        googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + " " + city + " Korea")}`,
+      })),
+    };
+  });
+
+  return { days };
+}
+
+// ── 모의 모드 활성 조건 ────────────────────────────────────────────────────
+// FORCE_LIVE_API=true 가 선언되면 개발 환경에서도 실 Gemini API를 호출한다.
+// 단, HARNESS_SKIP_GEMINI=1 (pre-push 하네스) 또는 MOCK_GEMINI=1 은
+// FORCE_LIVE_API보다 항상 우선 적용되어 하네스 검증을 보호한다.
+function isMockMode(): boolean {
+  // 하네스·명시적 mock 플래그는 최우선 — FORCE_LIVE_API로도 뚫리지 않음
+  if (
+    process.env.HARNESS_SKIP_GEMINI === "1" ||
+    process.env.MOCK_GEMINI === "1"
+  ) {
+    return true;
+  }
+  // 강제 라이브 스위치: 개발·테스트 환경에서도 실 API 호출
+  if (process.env.FORCE_LIVE_API === "true") {
+    return false;
+  }
+  // 기본: 개발/테스트 환경은 Mock
+  return (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test"
+  );
+}
+
+export async function POST(request: NextRequest) {
   let body: {
     city: string; startDate: string; endDate: string;
     travelers: string; travelStyle: string;
@@ -141,6 +259,18 @@ export async function POST(request: NextRequest) {
   const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots } = body;
   if (!city || !startDate || !endDate) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  }
+
+  // ── 개발·테스트 환경: 실 API 호출 없이 모의 데이터 즉시 반환 ──────────────
+  if (isMockMode()) {
+    console.log(`[generate-itinerary] MOCK MODE (NODE_ENV=${process.env.NODE_ENV}) — skipping Gemini API call`);
+    return NextResponse.json(buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime));
+  }
+
+  // ── 프로덕션 전용: 실제 Gemini API 키 검증 ───────────────────────────────
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
   }
 
   const start = new Date(startDate);
@@ -224,7 +354,8 @@ MANDATORY Day 1 rules:
 4. PROHIBITED on Day 1: ${anchor.prohibitedZones.join(", ")}.
 5. Evening spot suggestions for this area: ${anchor.eveningSpots}.
 6. Include 2–3 evening/night spots for Day 1 only (dinner, night market, night view).
-7. From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
+7. Day 2 MORNING (09:00–12:00): MUST start near ${anchor.displayName} — a local breakfast or morning activity within: ${anchor.allowedZones.slice(0, 3).join(", ")}. Do NOT place Haeundae Beach, Gwangalli Beach, or any distant spot as the first activity of Day 2 morning.
+8. From Day 2 afternoon (14:00+) and Day 3 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
 ══════════════════════════════════════`;
 
   } else if (anchor && isAfternoonArrival) {

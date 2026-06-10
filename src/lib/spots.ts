@@ -61,6 +61,18 @@ export async function fetchAllSpots(): Promise<SpotRow[]> {
   return (data ?? []) as SpotRow[];
 }
 
+export async function searchSpots(query: string, limit = 14): Promise<SpotRow[]> {
+  if (!query.trim()) return [];
+  const { data, error } = await supabase
+    .from("spots")
+    .select("place_id, title, category, description, duration_min, image_url")
+    .ilike("title", `%${query.trim()}%`)
+    .order("title")
+    .limit(limit);
+  if (error) { console.error("[Supabase] spot search:", error.message); return []; }
+  return (data ?? []) as SpotRow[];
+}
+
 export async function upsertSpot(row: SpotRow): Promise<boolean> {
   const { error } = await supabase
     .from("spots")

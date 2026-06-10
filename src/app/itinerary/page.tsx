@@ -6,9 +6,9 @@ import Link from "next/link";
 import { generateItinerary } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
-import { upsertItinerary, fetchItinerary, updateItineraryTitle, supabase } from "@/lib/supabase";
+import { upsertItinerary, fetchItinerary, updateItineraryTitle } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
-import { getCart } from "@/lib/cart";
+import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -292,6 +292,12 @@ function ItineraryResult() {
   const [error,         setError]         = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
+  const [editDay,       setEditDay]       = useState(0);
+  // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
+    try { return getCart(); } catch { return []; }
+  });
   // ── 로딩 페이즈 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────────
   const [loadPhase, setLoadPhase] = useState(0);
 
@@ -313,13 +319,17 @@ function ItineraryResult() {
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
   const [isOwner, setIsOwner] = useState(!shareId);
 
-  // ── 인라인 편집 모드 (Bug ④) ─────────────────────────────
-  const [editMode,      setEditMode]      = useState(false);
-  const [searchQuery,   setSearchQuery]   = useState("");
-  const [searchDayIdx,  setSearchDayIdx]  = useState<number | null>(null);
-  type SpotHit = { place_id: string; title: string; category: string; description: string | null; duration_min: number | null };
-  const [searchResults, setSearchResults] = useState<SpotHit[]>([]);
-  const searchTimerRef2 = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
+  const [prefTags] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const cart = getCart();
+      const tagSet = new Set<string>();
+      cart.forEach(item => (item.tags ?? []).forEach((t: string) => tagSet.add(t)));
+      const tags = Array.from(tagSet).slice(0, 6);
+      return tags.length > 0 ? tags : ([paramTravelStyle].filter(Boolean) as string[]);
+    } catch { return []; }
+  });
 
   // ── 도착 시간 파싱 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
   const arrivalHour = parseInt(paramArrivalTime?.split(":")?.[0] ?? "14", 10);
@@ -344,16 +354,6 @@ function ItineraryResult() {
         p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
       )
     );
-  };
-
-  // Layer 2b: 저녁/야간 도착인데 Day 1에 minHour 이전 장소가 있으면 → 구버전 캐시
-  const day1HasEarlyPlaces = (dayList: Day[], minHour: number): boolean => {
-    const first = dayList[0];
-    if (!first) return false;
-    return first.places.some(p => {
-      const h = parseInt(p.time?.split(":")?.[0] ?? "12", 10);
-      return !isNaN(h) && h < minHour;
-    });
   };
 
   // ── sanitizeDays: setDays 전 반드시 통과하는 유일한 정렬·세정 게이트 ──
@@ -493,12 +493,32 @@ function ItineraryResult() {
 
     // ── Supabase 우선 로드 + Layer 2: 내용 검증
     fetchItinerary(id).then(record => {
-      const loadedDays = record?.days as Day[] | undefined;
+      // v2 포맷 파싱 헬퍼 — { __v:2, scheduled, unscheduled } 또는 구버전 Day[]
+      const raw = record?.days as Record<string, unknown> | Day[] | undefined;
+      let loadedDays: Day[];
+      let loadedUnscheduled: CartItem[] = [];
+      if (raw && !Array.isArray(raw) && (raw as Record<string, unknown>).__v === 2) {
+        const v2 = raw as { scheduled: Day[]; unscheduled: CartItem[] };
+        loadedDays        = v2.scheduled    ?? [];
+        loadedUnscheduled = v2.unscheduled  ?? [];
+      } else {
+        loadedDays = (raw as Day[]) ?? [];
+      }
+
       if (record && Array.isArray(loadedDays) && loadedDays.length > 0) {
-        // Layer 2: (a) 공항 저녁 + 금지 장소, (b) 저녁/야간 도착인데 Day 1에 이른 시간 슬롯 존재 → 구버전 캐시 무효화
+        // Day 1 이른 슬롯 감지 — 저녁 도착인데 arrivalHour 이전 슬롯이 있으면 오염된 캐시
+        const day1HasEarlySlot = (dayList: Day[]): boolean => {
+          const first = dayList[0];
+          if (!first) return false;
+          return first.places.some(p => {
+            const h = parseInt(p.time?.split(":")?.[0] ?? "14", 10);
+            return h < arrivalHour;
+          });
+        };
+        // Layer 2: ① 공항 저녁 + 금지 장소 OR ② 일반 저녁 + Day 1 이른 슬롯
         const cacheIsStale =
           (isAirportEvening && day1HasProhibited(loadedDays)) ||
-          (isEveningOrNightArrival && day1HasEarlyPlaces(loadedDays, arrivalHour));
+          (isEveningOrNightArrival && day1HasEarlySlot(loadedDays));
         if (cacheIsStale) {
           const freshId = crypto.randomUUID();
           try { localStorage.setItem(idLocalKey, freshId); } catch {}
@@ -510,9 +530,17 @@ function ItineraryResult() {
             .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
           return;
         }
-        // 정상 레코드 → sanitize 후 사용
+        // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
+        if (loadedUnscheduled.length > 0) {
+          try {
+            localStorage.setItem("koreamate_cart", JSON.stringify(
+              loadedUnscheduled.map((item, i) => ({ ...item, addedAt: item.addedAt || Date.now(), sortOrder: i }))
+            ));
+            window.dispatchEvent(new CustomEvent(CART_EVENT));
+          } catch { /* ignore */ }
+        }
         setSyncStatus("saved");
         setLoading(false);
         return;
@@ -546,13 +574,15 @@ function ItineraryResult() {
     const snapTravelers   = travelers;
     const snapTravelStyle = travelStyle;
     const snapDays        = days;
+    // 보관함(Unscheduled)도 함께 Supabase에 영구 저장 — Single Source of Truth 구현
+    const snapUnscheduled = getCart();
 
     syncTimerRef.current = setTimeout(async () => {
       const ok = await upsertItinerary({
         id: snapId, city: snapCity,
         start_date: snapStartDate, end_date: snapEndDate,
         travelers: snapTravelers, travel_style: snapTravelStyle,
-        days: snapDays,
+        days: { __v: 2, scheduled: snapDays, unscheduled: snapUnscheduled },
         device_id: getDeviceId(),
       });
       setSyncStatus(ok ? "saved" : "error");
@@ -577,6 +607,13 @@ function ItineraryResult() {
     window.addEventListener(PLANNER_EVENT, read);
     return () => window.removeEventListener(PLANNER_EVENT, read);
   }, []);
+
+  // ── 브라우저 탭 제목 동기화 ────────────────────────────────
+  useEffect(() => {
+    document.title = tripTitle
+      ? `${tripTitle} — KoreaMate`
+      : `My ${city} Trip — KoreaMate`;
+  }, [tripTitle, city]);
 
   // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
   useEffect(() => {
@@ -637,92 +674,50 @@ function ItineraryResult() {
     await updateItineraryTitle(itinId, trimmed, getDeviceId());
   }
 
-  // ── Bug ④: 인라인 편집 — 장소 삭제 / 순서 변경 / 검색 추가 ──
-  function deletePlace(dayIndex: number, placeIndex: number) {
+  // ── 인라인 편집: 장소 삭제 / 순서 변경 ─────────────────────
+  function deletePlace(dayIdx: number, placeIdx: number) {
     setDays(prev => prev.map((day, di) =>
-      di === dayIndex
-        ? { ...day, places: day.places.filter((_, pi) => pi !== placeIndex) }
+      di === dayIdx
+        ? { ...day, places: day.places.filter((_, pi) => pi !== placeIdx) }
         : day
     ));
   }
 
-  function movePlace(dayIndex: number, placeIndex: number, dir: "up" | "down") {
-    const target = placeIndex + (dir === "up" ? -1 : 1);
+  function movePlace(dayIdx: number, placeIdx: number, dir: "up" | "down") {
+    const target = placeIdx + (dir === "up" ? -1 : 1);
     setDays(prev => prev.map((day, di) => {
-      if (di !== dayIndex) return day;
+      if (di !== dayIdx) return day;
       const places = [...day.places];
       if (target < 0 || target >= places.length) return day;
-      [places[placeIndex], places[target]] = [places[target], places[placeIndex]];
+      [places[placeIdx], places[target]] = [places[target], places[placeIdx]];
       return { ...day, places };
     }));
   }
 
-  function handleSpotSearch(query: string, dayIndex: number) {
-    setSearchQuery(query);
-    setSearchDayIdx(dayIndex);
-    if (searchTimerRef2.current) clearTimeout(searchTimerRef2.current);
-    if (!query.trim()) { setSearchResults([]); return; }
-    searchTimerRef2.current = setTimeout(async () => {
-      const { data } = await supabase
-        .from("spots")
-        .select("place_id,title,category,description,duration_min")
-        .ilike("title", `%${query}%`)
-        .limit(6);
-      setSearchResults((data ?? []) as SpotHit[]);
-    }, 350);
-  }
+  // ── cart 변경 감지 → Unscheduled 갱신 ─────────────────
+  useEffect(() => {
+    const refreshCart = () => { try { setCartItems(getCart()); } catch { /* ignore */ } };
+    window.addEventListener(CART_EVENT, refreshCart);
+    return () => window.removeEventListener(CART_EVENT, refreshCart);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function addSpotToDay(dayIndex: number, spot: SpotHit) {
-    const mins = spot.duration_min ?? 60;
-    const dur = mins >= 60
-      ? `${Math.floor(mins / 60)}h${mins % 60 > 0 ? ` ${mins % 60}m` : ""}`
-      : `${mins}m`;
-
-    // Edge Case 1: 스마트 기본 시간 — Day 1 공항 저녁이면 arrivalHour 기준, 그 외 낮 12시
-    // "12:00" 고정 시 isAirportEvening Day 1 필터에 걸려 추가한 장소가 렌더링에서 사라지는 버그 방지
-    const defaultHour = isAirportEvening && dayIndex === 0 ? arrivalHour : 12;
-    const defaultTime = `${String(defaultHour).padStart(2, "0")}:00`;
-
+  // ── 보관함 아이템 → 현재 editDay에 추가 ─────────────────
+  function addCartItemToDay(item: CartItem) {
+    const defaultTime = "19:30";
     const newPlace: Place = {
-      name: spot.title,
-      category: spot.category,
-      location: "Busan",
-      time: defaultTime,
-      duration: dur,
-      tips: spot.description ?? "Check opening hours before visiting.",
-      googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.title + " Busan Korea")}`,
+      name:          item.shortName || item.name,
+      category:      item.type || "attraction",
+      location:      item.district || city,
+      time:          defaultTime,
+      duration:      item.recommendedDurationMinutes ? `${item.recommendedDurationMinutes}m` : "60m",
+      tips:          item.description || item.whyItMatters || "",
+      googleMapsUrl: item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.shortName || item.name} ${city} Korea`)}`,
+      slot:          assignSlot(defaultTime),
     };
-
-    // 추가 후 시간 오름차순 재정렬 (sanitizeDays의 필터 제거 없이 정렬만 적용)
-    setDays(prev => prev.map((day, di) => {
-      if (di !== dayIndex) return day;
-      const updated = [...day.places, newPlace];
-      updated.sort((a, b) => {
-        const diff = timeToMins(a.time) - timeToMins(b.time);
-        return diff !== 0 ? diff : updated.indexOf(a) - updated.indexOf(b);
-      });
-      return { ...day, places: updated };
-    }));
-    setSearchQuery("");
-    setSearchResults([]);
-    setSearchDayIdx(null);
-  }
-
-  // ── 일정 재생성 ──────────────────────────────────────────
-  function resetItinerary() {
-    const newId = crypto.randomUUID();
-    // v3 키 포맷 사용 — 구버전 키로 저장하면 Effect 2 cleanup에 즉시 삭제됨
-    const locHash = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
-    const idLocalKey = `koreamate_itin3_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
-    try { localStorage.setItem(idLocalKey, newId); } catch { /* ignore */ }
-    setItinId(newId);
-    setSyncStatus("idle");
-    setDays([]);
-    setLoading(true);
-    setError(null);
-    generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
-      .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
-      .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
+    setDays(prev => prev.map((day, di) =>
+      di === editDay ? { ...day, places: [...day.places, newPlace] } : day
+    ));
+    removeFromCart(item.id); // 배치 후 Unscheduled에서 즉시 제거
   }
 
   // ── 로딩 화면 — 페이즈별 스켈레톤 + 제휴 카드 노출 ──────────
@@ -857,6 +852,18 @@ function ItineraryResult() {
             )}
           </div>
           {/* Bug ③: 커스텀 제목 편집 */}
+          {prefTags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2 mb-1">
+              {prefTags.map(tag => (
+                <span
+                  key={tag}
+                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#EAE3D2] text-[#8C6239] capitalize"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
           {editingTitle ? (
             <div className="flex items-center gap-2 mt-3">
               <input
@@ -879,7 +886,7 @@ function ItineraryResult() {
               <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520]">
                 {tripTitle || `My ${city} Trip`}
               </h1>
-              {!shareId && itinId && (
+              {(!shareId || isOwner) && itinId && (
                 <button
                   onClick={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
                   className="opacity-0 group-hover:opacity-100 transition-opacity text-[#8C6239] hover:text-[#D4AF37] text-xl cursor-pointer shrink-0"
@@ -908,32 +915,14 @@ function ItineraryResult() {
             ← Back to Home
           </Link>
 
-          {/* 인라인 편집 모드 토글 — 비공유 or 본인 일정이면 항상 노출 */}
+          {/* Compact 편집 캔버스 진입 — 비공유 or 본인 일정 */}
           {(!shareId || isOwner) && (
             <button
-              onClick={() => {
-                if (editMode) {
-                  setSearchQuery("");
-                  setSearchResults([]);
-                  setSearchDayIdx(null);
-                  setEditMode(false);
-                } else {
-                  setEditMode(true);
-                }
-              }}
+              onClick={() => { setViewMode("compact"); setEditDay(0); }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: editMode ? "#16a34a" : "#f97316" }}
+              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "#f97316" }}
             >
-              {editMode ? "✅ Done Editing" : "✏️ Edit This Trip (여행 수정)"}
-            </button>
-          )}
-
-          {(!shareId || isOwner) && (
-            <button
-              onClick={resetItinerary}
-              className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-[#8C6239] border border-[#E6DFD5] rounded-xl hover:bg-[#FAF7F2] transition-all"
-            >
-              🔄 Regenerate
+              {viewMode === "compact" ? "✅ 편집 모드 중" : "✏️ Edit This Trip (여행 수정)"}
             </button>
           )}
 
@@ -1002,60 +991,168 @@ function ItineraryResult() {
         </div>
       )}
 
-      {/* ── 편집 모드 배너 ── */}
-      {editMode && (
-        <div className="mb-6 flex items-start gap-3 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
-          <span className="text-lg mt-0.5 shrink-0">✏️</span>
-          <div className="flex-1">
-            <p className="text-sm font-black text-orange-800">Edit Mode Active</p>
-            <p className="text-xs text-orange-600 mt-0.5">
-              Tap × to remove a place · ↑↓ to reorder · Use search boxes to add spots from database · All changes auto-save.
-            </p>
-          </div>
-          <button
-            onClick={() => { setSearchQuery(""); setSearchResults([]); setSearchDayIdx(null); setEditMode(false); }}
-            className="text-orange-400 hover:text-orange-700 font-black text-base shrink-0 cursor-pointer"
-          >✕</button>
-        </div>
-      )}
 
-      {/* ── Compact 보기 ── */}
+      {/* ── Compact / 인라인 편집 캔버스 ── */}
       {viewMode === "compact" ? (
-        <div className="space-y-2 mb-16">
-          {days.map((day) => {
-            // Compact View도 동일한 visiblePlaces 필터 적용
-            const compactPlaces =
-              isAirportEvening && day.dayNumber === 1
-                ? day.places.filter(p => parseInt(p.time?.split(":")?.[0] ?? "20", 10) >= arrivalHour)
-                : day.places;
-            return (
-            <div
-              key={day.dayNumber}
-              className="bg-white rounded-2xl border border-[#E6DFD5] px-5 py-4 flex flex-wrap items-center gap-3 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
+        <div className="mb-16">
+          {/* 안내 배너 */}
+          <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1a1f36] text-white">
+            <span className="text-base shrink-0">✏️</span>
+            <p className="text-xs font-bold flex-1">
+              편집 캔버스 — 장소를 삭제하거나 순서를 바꿀 수 있습니다. 변경사항은 자동 저장됩니다.
+            </p>
+            <button
               onClick={() => setViewMode("full")}
+              className="shrink-0 text-xs font-black text-white/70 hover:text-white px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
             >
-              <div className="shrink-0 flex items-center gap-2">
-                <span className="text-sm font-black text-[#2C2520]">Day {day.dayNumber}</span>
-                <span className="text-xs text-[#8C6239] font-medium bg-[#EAE3D2]/50 px-2 py-0.5 rounded-md">{day.date}</span>
-              </div>
-              <div className="flex-1 flex flex-wrap gap-1.5 min-w-0">
-                {compactPlaces.length === 0 ? (
-                  <span className="text-xs text-[#8C6239]/40 italic">No places — click to add</span>
-                ) : (
-                  compactPlaces.map((p, i) => (
-                    <span key={i} className="inline-flex items-center px-2.5 py-0.5 bg-[#EAE3D2]/60 rounded-md text-xs font-semibold text-[#61554D]">
-                      {p.name}
-                    </span>
-                  ))
+              ⊞ Full View
+            </button>
+          </div>
+
+          {/* 주황 Spot 탐색 버튼 — /all-spots 검색 페이지로 이동 */}
+          {(!shareId || isOwner) && (
+            <Link
+              href="/all-spots"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white mb-4 transition-opacity hover:opacity-90 active:scale-95"
+              style={{ backgroundColor: "#f97316" }}
+            >
+              🔍 Search Spots — 스폿 탐색하기
+            </Link>
+          )}
+
+          {/* Day 탭 */}
+          <div className="flex gap-1.5 overflow-x-auto mb-4 pb-1">
+            {days.map((day, i) => (
+              <button
+                key={i}
+                onClick={() => setEditDay(i)}
+                className={`shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                  editDay === i
+                    ? "bg-[#1a1f36] text-white shadow-md"
+                    : "bg-white text-[#8C6239] border border-[#E6DFD5] hover:border-[#D4AF37]"
+                }`}
+              >
+                <span>Day {day.dayNumber}</span>
+                {day.date && (
+                  <span className={`text-[10px] font-normal mt-0.5 ${editDay === i ? "text-white/60" : "text-gray-400"}`}>
+                    {day.date}
+                  </span>
                 )}
+                <span
+                  className="mt-1 px-1.5 py-0.5 rounded-full text-[10px] font-black"
+                  style={editDay === i
+                    ? { backgroundColor: "#f97316", color: "#fff" }
+                    : { backgroundColor: "#f3f4f6", color: "#374151" }}
+                >
+                  {day.places.length}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* 현재 Day 편집 리스트 — 시간순 플랫 리스트 (슬롯 그루핑 제거로 누락 방지) */}
+          {days[editDay] && (
+            <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
+              <div className="px-5 py-3 flex items-center justify-between" style={{ backgroundColor: "#1a1f36" }}>
+                <span className="text-sm font-black text-white">
+                  Day {days[editDay].dayNumber} — {days[editDay].date}
+                </span>
+                <span className="text-xs text-white/50">{days[editDay].places.length} places</span>
               </div>
-              <span className="shrink-0 text-xs font-bold text-[#8C6239]/60">
-                {compactPlaces.length} place{compactPlaces.length !== 1 ? "s" : ""} →
-              </span>
+
+              {/* 시간순 정렬 플랫 리스트 */}
+              {days[editDay].places.map((p, pi) => (
+                <div
+                  key={pi}
+                  className="flex items-center gap-3 px-4 py-3 border-b border-[#E6DFD5]/40 last:border-0 hover:bg-[#FAF7F2]/60 group transition-colors"
+                >
+                  <span className="text-xs font-bold text-[#8C6239] w-12 shrink-0 tabular-nums">{p.time}</span>
+                  <span
+                    className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
+                    style={{ backgroundColor: getCategoryColor(p.category) }}
+                  >
+                    {p.category.slice(0, 5)}
+                  </span>
+                  <span className="flex-1 text-sm font-bold text-[#2C2520] truncate">{p.name}</span>
+                  {(!shareId || isOwner) && (
+                    <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 sm:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => movePlace(editDay, pi, "up")}
+                        disabled={pi === 0}
+                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer"
+                        title="위로"
+                      >↑</button>
+                      <button
+                        onClick={() => movePlace(editDay, pi, "down")}
+                        disabled={pi === days[editDay].places.length - 1}
+                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer"
+                        title="아래로"
+                      >↓</button>
+                      <button
+                        onClick={() => deletePlace(editDay, pi)}
+                        className="w-6 h-6 rounded-full bg-red-100 text-red-500 hover:bg-red-200 text-xs font-black flex items-center justify-center cursor-pointer"
+                        title="삭제"
+                      >×</button>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {days[editDay].places.length === 0 && (
+                <div className="py-10 text-center text-sm text-[#8C6239]/40 italic">
+                  이 날의 일정이 없습니다
+                </div>
+              )}
             </div>
+          )}
+
+          {/* 보관함 (Unscheduled) — 명시적으로 저장한 스폿 목록 */}
+          {(() => {
+            const unscheduled = cartItems;
+            if (unscheduled.length === 0 || (shareId && !isOwner)) return null;
+            return (
+              <div className="mt-5">
+                <div className="flex items-center gap-2 mb-2 px-1">
+                  <span className="text-xs font-black text-[#8C6239]">❤️ 보관함 (Unscheduled)</span>
+                  <span className="text-[10px] font-bold bg-[#EAE3D2]/60 text-[#8C6239] px-2 py-0.5 rounded-full">
+                    {unscheduled.length}개
+                  </span>
+                  <span className="text-[10px] text-[#8C6239]/50 ml-auto">+ 버튼으로 현재 Day에 추가</span>
+                </div>
+                <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
+                  {unscheduled.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-3 px-4 py-3 border-b border-[#E6DFD5]/40 last:border-0 hover:bg-[#FAF7F2]/60 transition-colors"
+                    >
+                      <span
+                        className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
+                        style={{ backgroundColor: getCategoryColor(item.type) }}
+                      >
+                        {item.type.slice(0, 5)}
+                      </span>
+                      <span className="flex-1 text-sm font-bold text-[#2C2520] truncate">
+                        {item.shortName || item.name}
+                      </span>
+                      <span className="text-[10px] text-[#8C6239]/50 shrink-0 hidden sm:inline">
+                        {item.recommendedDurationMinutes}m
+                      </span>
+                      <button
+                        onClick={() => addCartItemToDay(item)}
+                        className="shrink-0 w-7 h-7 rounded-full text-white text-sm font-black flex items-center justify-center hover:opacity-80 cursor-pointer transition-opacity"
+                        style={{ backgroundColor: "#f97316" }}
+                        title={`Day ${editDay + 1}에 추가`}
+                      >+</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             );
-          })}
-          <p className="text-center text-xs text-[#8C6239]/50 mt-3">Click any day card to switch to Full View</p>
+          })()}
+
+          <p className="text-center text-xs text-[#8C6239]/50 mt-4">
+            ☁️ 변경사항 자동 저장 · 상단 ⊞ Full View 버튼으로 복귀
+          </p>
         </div>
       ) : (
         /* ── Full View ── */
@@ -1088,6 +1185,7 @@ function ItineraryResult() {
                 <div className="space-y-4" id={`day-${day.dayNumber}`}>
                   {TIME_SLOTS.map((ts) => {
                     const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
+                    if (slotItems.length === 0) return null;
 
                     return (
                       <div key={ts.key} className="rounded-2xl border border-[#E6DFD5] overflow-hidden bg-white">
@@ -1097,15 +1195,12 @@ function ItineraryResult() {
                             <span className="text-sm font-black text-[#8C6239]">{ts.label}</span>
                             <span className="text-xs text-[#8C6239]/50 font-medium hidden sm:inline">{ts.range}</span>
                           </div>
-                          {slotItems.length > 0 && (
-                            <span className="text-xs text-[#8C6239]/60 font-semibold">
-                              {slotItems.length} place{slotItems.length !== 1 ? "s" : ""}
-                            </span>
-                          )}
+                          <span className="text-xs text-[#8C6239]/60 font-semibold">
+                            {slotItems.length} place{slotItems.length !== 1 ? "s" : ""}
+                          </span>
                         </div>
 
-                        {slotItems.length > 0 ? (
-                          <div className="divide-y divide-[#E6DFD5]/50">
+                        <div className="divide-y divide-[#E6DFD5]/50">
                             {slotItems.map(({ place, idx }) => {
                               const naverUrl = buildNaverUrl(place.name, city);
                               const googleUrl =
@@ -1118,32 +1213,6 @@ function ItineraryResult() {
                                   key={idx}
                                   className="flex flex-col hover:bg-[#FAF7F2]/40 transition-colors group relative"
                                 >
-                                  {/* ── 편집 모드 컨트롤 바 ── */}
-                                  {editMode && (!shareId || isOwner) && (
-                                    <div
-                                      className="flex items-center gap-2 px-4 py-2 bg-orange-50 border-b border-orange-100"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <button
-                                        onClick={() => deletePlace(day.dayNumber - 1, idx)}
-                                        className="w-6 h-6 rounded-full bg-red-100 text-red-600 hover:bg-red-200 font-black text-sm flex items-center justify-center shrink-0"
-                                        title="Remove this place"
-                                      >×</button>
-                                      <button
-                                        onClick={() => movePlace(day.dayNumber - 1, idx, "up")}
-                                        disabled={idx === 0}
-                                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-30 font-black text-xs flex items-center justify-center shrink-0"
-                                        title="Move up"
-                                      >↑</button>
-                                      <button
-                                        onClick={() => movePlace(day.dayNumber - 1, idx, "down")}
-                                        disabled={idx === day.places.length - 1}
-                                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-30 font-black text-xs flex items-center justify-center shrink-0"
-                                        title="Move down"
-                                      >↓</button>
-                                      <span className="flex-1 text-[10px] text-orange-600 font-semibold truncate">{place.name}</span>
-                                    </div>
-                                  )}
                                   {/* 장소 정보 + 지도 버튼 행 */}
                                   <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
                                     <div
@@ -1234,48 +1303,10 @@ function ItineraryResult() {
                               );
                             })}
                           </div>
-                        ) : (
-                          <div className="p-4 text-center text-xs text-[#8C6239]/40 italic py-3">
-                            No places scheduled for {ts.label.toLowerCase()}
-                          </div>
-                        )}
                       </div>
                     );
                   })}
 
-                  {/* ── 편집 모드: 스팟 검색·추가 패널 ── */}
-                  {editMode && (!shareId || isOwner) && (
-                    <div className="mt-2 rounded-2xl border-2 border-dashed border-[#D4AF37]/40 bg-[#FAF7F2]/60 p-4">
-                      <p className="text-xs font-black text-[#8C6239] mb-2.5">＋ Add a spot to Day {day.dayNumber}</p>
-                      <input
-                        type="text"
-                        placeholder="Search spots by name (e.g. Haeundae, Jagalchi…)"
-                        value={searchDayIdx === day.dayNumber - 1 ? searchQuery : ""}
-                        onChange={(e) => handleSpotSearch(e.target.value, day.dayNumber - 1)}
-                        className="w-full text-sm px-4 py-2.5 rounded-xl border border-[#E6DFD5] bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/30"
-                      />
-                      {searchDayIdx === day.dayNumber - 1 && searchResults.length > 0 && (
-                        <div className="mt-2 space-y-1.5">
-                          {searchResults.map((hit) => (
-                            <button
-                              key={hit.place_id}
-                              onClick={() => addSpotToDay(day.dayNumber - 1, hit)}
-                              className="w-full text-left flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white border border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-colors"
-                            >
-                              <span className="text-sm font-black text-[#2C2520] flex-1 truncate">{hit.title}</span>
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#EAE3D2] text-[#61554D] shrink-0">{hit.category}</span>
-                              {hit.duration_min && (
-                                <span className="text-[10px] text-gray-400 shrink-0">{hit.duration_min} min</span>
-                              )}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                      {searchDayIdx === day.dayNumber - 1 && searchQuery.length > 1 && searchResults.length === 0 && (
-                        <p className="text-xs text-gray-400 mt-2 text-center italic">No spots found — try a different keyword</p>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             );
@@ -1300,6 +1331,7 @@ function ItineraryResult() {
       {selectedPlace && (
         <PlaceModal place={selectedPlace} city={city} onClose={() => setSelectedPlace(null)} />
       )}
+
     </main>
   );
 }

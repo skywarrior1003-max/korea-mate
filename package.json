@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "build:static": "STATIC_EXPORT=true next build",
     "deploy": "STATIC_EXPORT=true next build && npx wrangler pages deploy out --project-name=korea-mate",
@@ -28,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "localtunnel": "^2.0.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.95.0"

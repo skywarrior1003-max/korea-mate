@@ -176,9 +176,10 @@ export default function EventDetailModal({ event, onClose }: Props) {
       onClick={onClose}
     >
       <div
-        className="relative w-full sm:max-w-2xl max-h-[95dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white shadow-2xl"
+        className="relative w-full sm:max-w-2xl max-h-[95dvh] flex flex-col rounded-t-3xl sm:rounded-3xl bg-white shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
+      <div className="flex-1 overflow-y-auto pb-2">
         {/* ── 히어로 이미지 ── */}
         <div className="relative h-64 sm:h-80 w-full overflow-hidden rounded-t-3xl sm:rounded-t-3xl bg-gray-200">
           {event.image && !imgError ? (
@@ -509,37 +510,51 @@ export default function EventDetailModal({ event, onClose }: Props) {
             )}
           </div>
 
-          {/* ── 핵심 CTA: Add / Remove ── */}
+        </div>
+      </div>
+
+      {/* ── Sticky Bottom 액션 바 ── */}
+      <div className="shrink-0 px-5 py-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.07)] rounded-b-3xl sm:rounded-b-3xl">
+        {added && (
+          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">✅ 보관함에 추가됐습니다!</div>
+        )}
+        <div className="flex gap-3">
+          {/* 하트 (찜하기) */}
+          <button
+            onClick={handleToggleFavorite}
+            className={`shrink-0 flex items-center gap-2 px-5 py-3.5 rounded-2xl font-black text-sm border-2 transition-all ${
+              favorited
+                ? "bg-red-50 border-red-300 text-red-500"
+                : "bg-gray-50 border-gray-200 text-gray-500 hover:border-red-200 hover:text-red-400"
+            }`}
+          >
+            {favorited ? "❤️ 저장됨" : "🤍 저장"}
+          </button>
+          {/* 일정표 추가 / 제거 */}
           {inCart ? (
-            <div className="space-y-2">
-              {added && (
-                <div className="text-center text-sm font-bold text-emerald-600 animate-pulse">✅ Added to your itinerary!</div>
-              )}
-              <div className="flex gap-2">
-                <div className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-sm text-white bg-emerald-500">
-                  ✓ In My Itinerary
-                </div>
-                <button
-                  onClick={handleRemoveFromCart}
-                  className="px-5 py-4 rounded-2xl font-bold text-sm text-red-500 border-2 border-red-200 hover:bg-red-50 transition-colors"
-                >
-                  Remove
-                </button>
+            <div className="flex-1 flex gap-2">
+              <div className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white bg-emerald-500">
+                ✓ 보관함에 있음
               </div>
+              <button
+                onClick={handleRemoveFromCart}
+                className="px-4 py-3.5 rounded-2xl font-bold text-sm text-red-500 border-2 border-red-200 hover:bg-red-50 transition-colors"
+              >
+                제거
+              </button>
             </div>
           ) : (
             <button
               onClick={handleAddToCart}
-              className="w-full py-4 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 shadow-lg shadow-orange-200 flex items-center justify-center gap-2"
+              className="flex-1 py-3.5 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
               style={{ backgroundColor: "#f97316" }}
             >
-              + Add to My Itinerary
+              + 일정에 추가
             </button>
           )}
-
-          <div className="h-2" />
         </div>
       </div>
+    </div>
     </div>
   );
 }

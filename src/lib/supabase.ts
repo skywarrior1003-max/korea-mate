@@ -90,13 +90,19 @@ export async function upsertPlannerSession(row: PlannerSessionRow): Promise<bool
 }
 
 export async function fetchPlannerSession(id: string): Promise<PlannerSessionRow | null> {
-  const { data, error } = await supabase
-    .from("planner_sessions")
-    .select("id, num_days, start_date, arrival_times, scheduled, device_id, updated_at")
-    .eq("id", id)
-    .single();
-  if (error) { console.error("[Supabase] planner fetch:", error.message); return null; }
-  return data;
+  try {
+    const { data, error } = await supabase
+      .from("planner_sessions")
+      .select("id, num_days, start_date, arrival_times, scheduled, device_id, updated_at")
+      .eq("id", id)
+      .order("updated_at", { ascending: false })
+      .limit(1);
+    if (error) { console.error("[Supabase] planner fetch:", error.message); return null; }
+    return (data?.[0] ?? null) as PlannerSessionRow | null;
+  } catch (e) {
+    console.error("[Supabase] planner fetch exception:", (e as Error).message);
+    return null;
+  }
 }
 
 export async function fetchPlannersByDevice(deviceId: string): Promise<PlannerSessionRow[]> {
