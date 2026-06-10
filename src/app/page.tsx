@@ -1101,7 +1101,29 @@ export default function Home() {
                 placeholder="Search spots, BTS, Michelin, beach, hiking…"
                 highlighted={searchHighlight}
               />
-              {/* 필터 칩 + GPS 버튼 + 결과 카운트 한 줄 */}
+              {/* ── GPS Near Me 독립 버튼 (항상 전체 폭 노출) ── */}
+              <button
+                onClick={handleGpsToggle}
+                disabled={gpsLoading}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer"
+                style={
+                  gpsActive
+                    ? { backgroundColor: "#1d4ed8", color: "#fff", borderColor: "#1d4ed8" }
+                    : { backgroundColor: "#eff6ff", color: "#1d4ed8", borderColor: "#93c5fd" }
+                }
+              >
+                {gpsLoading ? (
+                  <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <span className="text-base">📍</span>
+                )}
+                {gpsActive ? "GPS 활성 — 거리순 정렬 중 (해제하려면 클릭)" : "내 주변 중심 보기 (Near Me)"}
+              </button>
+              {gpsError && (
+                <p className="text-xs text-red-500 font-medium -mt-0.5">{gpsError}</p>
+              )}
+
+              {/* 필터 칩 + 결과 카운트 */}
               <div className="flex items-center gap-2">
                 <div
                   className="flex gap-1.5 overflow-x-auto pb-0.5 flex-1"
@@ -1122,27 +1144,6 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-
-                {/* ── GPS Near Me 버튼 ── */}
-                <button
-                  onClick={handleGpsToggle}
-                  disabled={gpsLoading}
-                  title={gpsActive ? "GPS 해제" : "내 주변 거리순 정렬"}
-                  className="shrink-0 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer whitespace-nowrap"
-                  style={
-                    gpsActive
-                      ? { backgroundColor: "#2563eb", color: "#fff", borderColor: "#2563eb" }
-                      : { backgroundColor: "#f9fafb", color: "#4b5563", borderColor: "#d1d5db" }
-                  }
-                >
-                  {gpsLoading ? (
-                    <span className="inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <span>📍</span>
-                  )}
-                  Near Me
-                </button>
-
                 {isFilteringMode && (
                   <span className="text-[11px] text-gray-400 shrink-0 font-medium">
                     {filteredResults.length} results ·{" "}
@@ -1155,10 +1156,6 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              {/* GPS 에러 메시지 */}
-              {gpsError && (
-                <p className="text-[11px] text-red-500 font-medium mt-0.5">{gpsError}</p>
-              )}
             </div>
           </div>
 
