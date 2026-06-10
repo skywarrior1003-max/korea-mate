@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
+import SavedSpotsPanel from "@/components/SavedSpotsPanel";
 
 
 const geistSans = Geist({
@@ -96,6 +98,9 @@ export default function RootLayout({
           }}
         />
         {children}
+        <Suspense fallback={null}>
+          <SavedSpotsPanel />
+        </Suspense>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { EventItem } from "@/lib/cart";
-import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
+import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 import { getVerifiedImage } from "@/lib/placeImages";
 import { dislikeSpot } from "@/lib/spots";
 import { getDeviceId } from "@/lib/deviceId";
@@ -124,12 +124,18 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation();
-              setFavorited(toggleFavorite(event.id));
+              const next = toggleFavorite(event.id);
+              setFavorited(next);
+              if (next) cacheSavedSpot(event);
+              else uncacheSavedSpot(event.id);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.stopPropagation();
-                setFavorited(toggleFavorite(event.id));
+                const next = toggleFavorite(event.id);
+                setFavorited(next);
+                if (next) cacheSavedSpot(event);
+                else uncacheSavedSpot(event.id);
               }
             }}
             aria-label={favorited ? "Remove from saved spots" : "Save this spot"}

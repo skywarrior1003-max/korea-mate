@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
 import { addToCart, removeFromCart, isInCart } from "@/lib/cart";
-import { isFavorited, toggleFavorite, FAVORITES_EVENT } from "@/lib/favorites";
+import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 
 // ── koreanSurvivalScore 색상 + 라벨 ──────────────
 function scoreMeta(score: number) {
@@ -142,6 +142,8 @@ export default function EventDetailModal({ event, onClose }: Props) {
   function handleToggleFavorite() {
     const next = toggleFavorite(event.id);
     setFavorited(next);
+    if (next) cacheSavedSpot(event);
+    else uncacheSavedSpot(event.id);
   }
   async function handleCopyAddress(text: string) {
     try {
