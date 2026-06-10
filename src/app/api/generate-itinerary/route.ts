@@ -221,20 +221,24 @@ function buildMockItinerary(
 }
 
 // ── 모의 모드 활성 조건 ────────────────────────────────────────────────────
-// FORCE_LIVE_API=true 가 선언되면 개발 환경에서도 실 Gemini API를 호출한다.
-// 단, HARNESS_SKIP_GEMINI=1 (pre-push 하네스) 또는 MOCK_GEMINI=1 은
-// FORCE_LIVE_API보다 항상 우선 적용되어 하네스 검증을 보호한다.
+// 우선순위 (높은 순):
+//   1. FORCE_LIVE_API=true  → 무조건 Live (대표 품질 확인용, HARNESS_SKIP_GEMINI 무시)
+//   2. MOCK_GEMINI=1        → 무조건 Mock  (개발자 명시적 Mock 강제)
+//   3. HARNESS_SKIP_GEMINI=1 → Mock (harness/pre-push 비용 방어)
+//   4. NODE_ENV=development/test → Mock (기본 개발 환경)
+//   5. 그 외 → Live (프로덕션)
 function isMockMode(): boolean {
-  // 하네스·명시적 mock 플래그는 최우선 — FORCE_LIVE_API로도 뚫리지 않음
-  if (
-    process.env.HARNESS_SKIP_GEMINI === "1" ||
-    process.env.MOCK_GEMINI === "1"
-  ) {
-    return true;
-  }
-  // 강제 라이브 스위치: 개발·테스트 환경에서도 실 API 호출
+  // FORCE_LIVE_API=true: 대표 품질 확인 시 최우선 Live 스위치
+  // HARNESS_SKIP_GEMINI=1이 함께 설정되어 있어도 Live 허용
   if (process.env.FORCE_LIVE_API === "true") {
     return false;
+  }
+  // 명시적 Mock 플래그 (FORCE_LIVE_API 없을 때만 적용)
+  if (
+    process.env.MOCK_GEMINI === "1" ||
+    process.env.HARNESS_SKIP_GEMINI === "1"
+  ) {
+    return true;
   }
   // 기본: 개발/테스트 환경은 Mock
   return (
@@ -489,17 +493,20 @@ Additional rules:
   for (const model of MODELS) {
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
+        // 비용 방어 로그 — API Key는 절대 출력하지 않음
+        console.log(
+          `[Gemini Live Call] ${new Date().toISOString()} | route=next-api/generate-itinerary | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | FORCE_LIVE_API=${process.env.FORCE_LIVE_API ?? "not_set"} | HARNESS_SKIP_GEMINI=${process.env.HARNESS_SKIP_GEMINI ?? "not_set"} | mock=false`
+        );
         const result = await callGemini(apiKey, model, prompt);
         return NextResponse.json(result);
       } catch (err) {
         lastError = err as Error;
         const status = parseInt(lastError.message.match(/Gemini (\d+)/)?.[1] || "0");
-        if (status === 503 || status === 429) {
-          if (attempt < MAX_RETRIES - 1) {
-            await sleep(RETRY_DELAY_MS * (attempt + 1));
-            continue;
-          }
-          break;
+        // 429 쿼터 초과 — 재시도 없이 즉시 에러 반환 (비용 누수 방지)
+        if (status === 429) break;
+        if (status === 503 && attempt < MAX_RETRIES - 1) {
+          await sleep(RETRY_DELAY_MS * (attempt + 1));
+          continue;
         }
         break;
       }

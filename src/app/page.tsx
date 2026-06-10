@@ -507,6 +507,7 @@ export default function Home() {
   }
 
   const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // ── AI 일정 생성 ──────────────────────────────
   function handleGenerate() {
@@ -514,6 +515,8 @@ export default function Home() {
       alert("Please select both start and end travel dates.");
       return;
     }
+    if (isNavigating) return; // 중복 클릭 방지
+    setIsNavigating(true);
     const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style, startLocation, arrivalTime });
     router.push(`/itinerary?${params.toString()}`);
   }
@@ -942,10 +945,11 @@ export default function Home() {
             </div>
             <button
               onClick={handleGenerate}
-              className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer"
+              disabled={isNavigating}
+              className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ backgroundColor: "#f97316" }}
             >
-              ✨ Generate My Itinerary
+              {isNavigating ? "⏳ Generating..." : "✨ Generate My Itinerary"}
             </button>
           </div>
         </div>

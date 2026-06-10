@@ -181,7 +181,7 @@ function getBTSDroneShowDate(tripStart: string, tripEnd: string): string | null 
 const MODELS = [
   "gemini-2.5-flash",
 ];
-const MAX_RETRIES = 5;
+const MAX_RETRIES = 3;   // 5→3: 비용 방어 (503 재시도만, 429는 즉시 종료)
 const RETRY_DELAY_MS = 3000;
 
 function sleep(ms: number) {
@@ -546,18 +546,19 @@ export async function generateItineraryInternal(input: HarnessInput): Promise<Ha
   outer: for (const model of MODELS) {
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
+        // 비용 방어 로그
+        console.log(
+          `[Gemini Live Call] ${new Date().toISOString()} | route=harness-internal | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | mock=false`
+        );
         geminiResult = await callGemini(apiKey, model, prompt);
         break outer;
       } catch (err) {
         lastErr = (err as Error).message;
         const status = parseInt(lastErr.match(/Gemini (\d+)/)?.[1] ?? "0");
-        if ((status === 503 || status === 429) && attempt < MAX_RETRIES - 1) {
-          // 429: parse "retry in Xs" from error message; default 42s
-          const retryMatch = lastErr.match(/retry in ([\d.]+)s/i);
-          const wait = status === 429
-            ? Math.ceil((parseFloat(retryMatch?.[1] ?? "42") + 2) * 1000)
-            : RETRY_DELAY_MS * (attempt + 1);
-          await sleep(wait);
+        // 429 쿼터 초과 — 재시도 없이 즉시 실패 (비용 누수 방지)
+        if (status === 429) break;
+        if (status === 503 && attempt < MAX_RETRIES - 1) {
+          await sleep(RETRY_DELAY_MS * (attempt + 1));
           continue;
         }
         break;
@@ -665,6 +666,10 @@ export const onRequestPost: (context: {
   for (const model of MODELS) {
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
+        // 비용 방어 로그 — API Key는 절대 출력하지 않음
+        console.log(
+          `[Gemini Live Call] ${new Date().toISOString()} | route=cloudflare-pages-fn | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | mock=false`
+        );
         const result = await callGemini(apiKey, model, prompt);
         return new Response(JSON.stringify(result), {
           status: 200,
@@ -675,6 +680,8 @@ export const onRequestPost: (context: {
         allErrors.push(`[${model} attempt ${attempt + 1}] ${msg}`);
 
         const httpStatus = parseInt(msg.match(/Gemini (\d+)/)?.[1] ?? "0");
+        // 429 쿼터 초과 — 재시도 없이 즉시 실패 (비용 누수 방지)
+        if (httpStatus === 429) break;
         if (httpStatus === 503 && attempt < MAX_RETRIES - 1) {
           await sleep(RETRY_DELAY_MS * (attempt + 1));
           continue;
