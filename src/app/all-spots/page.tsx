@@ -19,11 +19,13 @@ const CATEGORY_FILTERS = [
 
 // ── 지역 필터 ─────────────────────────────────────────────────────────────────
 const DISTRICT_FILTERS = [
-  { key: "all",      label: "전체",            districts: [] as string[] },
-  { key: "seomyeon", label: "서면/부산진구",    districts: ["Busanjin-gu"] },
-  { key: "haeundae", label: "해운대/기장",      districts: ["Haeundae-gu", "Gijang-gun"] },
-  { key: "nampo",    label: "남포동/영도/중구", districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
-  { key: "gwangalli",label: "광안리/수영구",    districts: ["Suyeong-gu", "Nam-gu"] },
+  { key: "all",       label: "전체",              districts: [] as string[] },
+  { key: "haeundae",  label: "해운대·기장",        districts: ["Haeundae-gu", "Gijang-gun"] },
+  { key: "gwangalli", label: "수영·광안리",         districts: ["Suyeong-gu", "Nam-gu"] },
+  { key: "seomyeon",  label: "서면·부산진",         districts: ["Busanjin-gu"] },
+  { key: "nampo",     label: "남포·중구·서구",      districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
+  { key: "dongnae",   label: "동래·금정·연제",      districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
+  { key: "bukgu",     label: "북구·사상·강서·사하", districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
 ];
 
 // ── 구별 중심 좌표 (GPS 폴백용) ───────────────────────────────────────────────
@@ -217,40 +219,46 @@ export default function AllSpotsPage() {
           </div>
 
           {/* 카테고리 필터 칩 */}
-          <div className="flex gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-            {CATEGORY_FILTERS.map(f => (
-              <button
-                key={f.key}
-                onClick={() => { setCategoryFilter(f.key); resetPage(); }}
-                className="shrink-0 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
-                style={
-                  categoryFilter === f.key
-                    ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
-                    : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
-                }
-              >
-                {f.emoji && <span className="mr-1">{f.emoji}</span>}{f.label}
-              </button>
-            ))}
+          <div className="relative">
+            <div className="flex gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
+              {CATEGORY_FILTERS.map(f => (
+                <button
+                  key={f.key}
+                  onClick={() => { setCategoryFilter(f.key); resetPage(); }}
+                  className="shrink-0 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
+                  style={
+                    categoryFilter === f.key
+                      ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                      : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
+                  }
+                >
+                  {f.emoji && <span className="mr-1">{f.emoji}</span>}{f.label}
+                </button>
+              ))}
+            </div>
+            <div className="absolute right-0 top-0 bottom-0.5 w-8 pointer-events-none" style={{ background: "linear-gradient(to left, #f9fafb, transparent)" }} />
           </div>
 
           {/* 지역 필터 버튼 */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-            <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">구역</span>
-            {DISTRICT_FILTERS.map(d => (
-              <button
-                key={d.key}
-                onClick={() => { setDistrictFilter(d.key); resetPage(); }}
-                className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border cursor-pointer whitespace-nowrap"
-                style={
-                  districtFilter === d.key
-                    ? { backgroundColor: "#1d4ed8", color: "#fff", borderColor: "#1d4ed8" }
-                    : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
-                }
-              >
-                {d.label}
-              </button>
-            ))}
+          <div className="relative">
+            <div className="flex items-center gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
+              <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">구역</span>
+              {DISTRICT_FILTERS.map(d => (
+                <button
+                  key={d.key}
+                  onClick={() => { setDistrictFilter(d.key); resetPage(); }}
+                  className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border cursor-pointer whitespace-nowrap"
+                  style={
+                    districtFilter === d.key
+                      ? { backgroundColor: "#1d4ed8", color: "#fff", borderColor: "#1d4ed8" }
+                      : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
+                  }
+                >
+                  {d.label}
+                </button>
+              ))}
+            </div>
+            <div className="absolute right-0 top-0 bottom-0.5 w-8 pointer-events-none" style={{ background: "linear-gradient(to left, #f9fafb, transparent)" }} />
           </div>
 
           {/* GPS 토글 + 상태 표시 */}
@@ -308,6 +316,22 @@ export default function AllSpotsPage() {
 
       {/* 메인 콘텐츠 */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* 미식 가이드 배너 */}
+        {!loading && categoryFilter === "all" && districtFilter === "all" && !search && (
+          <Link
+            href="/restaurants"
+            className="group flex items-center gap-4 rounded-2xl p-4 mb-6 border border-orange-100 hover:border-orange-300 transition-all hover:shadow-md bg-gradient-to-r from-orange-50 to-amber-50"
+          >
+            <span className="text-3xl shrink-0">🍽️</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">NEW</p>
+              <p className="text-sm font-black text-gray-900 leading-snug">2026 부산 미식 가이드 100선 — 미쉐린·부산의맛·택슐랭</p>
+            </div>
+            <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">전체 보기 →</span>
+          </Link>
+        )}
+
         {loading ? (
           <div className="text-center py-24">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-6" />

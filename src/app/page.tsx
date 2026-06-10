@@ -616,6 +616,7 @@ export default function Home() {
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
+            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">🍽️ Food Guide</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
             <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
             <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">🧳 My Trips</Link>
@@ -1146,8 +1147,24 @@ export default function Home() {
                   title="Michelin Guide Restaurants"
                   subtitle="Busan's finest dining — from Bib Gourmand to starred establishments"
                   count={michelinFood.length}
-                  onViewAll={() => router.push("/all-spots?filter=michelin")}
+                  onViewAll={() => router.push("/restaurants")}
                 />
+                {/* 2026 부산 미식 가이드 100선 프로모 카드 */}
+                <Link
+                  href="/restaurants"
+                  className="group flex items-center gap-5 rounded-2xl p-5 mb-6 border-2 border-orange-100 hover:border-orange-300 transition-all hover:shadow-lg bg-gradient-to-r from-orange-50 to-amber-50"
+                >
+                  <span className="text-4xl shrink-0">🍽️</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 부산 미식 가이드</p>
+                    <p className="text-base font-black text-gray-900">미쉐린 · 부산의맛 · 택슐랭 선정 레스토랑 <span className="text-orange-500">100선</span></p>
+                    <p className="text-xs text-gray-500 mt-0.5">16개 권역 · 국문·영문 완전 수록 · GPS 거리순 정렬</p>
+                  </div>
+                  <span className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white bg-orange-500 group-hover:bg-orange-600 transition-colors whitespace-nowrap">
+                    전체 보기 →
+                  </span>
+                </Link>
+
                 {eventsLoading ? (
                   <div className="text-center py-16">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
