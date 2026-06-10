@@ -130,6 +130,7 @@ export async function POST(request: NextRequest) {
     city: string; startDate: string; endDate: string;
     travelers: string; travelStyle: string;
     startLocation?: string; arrivalTime?: string;
+    preferredSpots?: string[];
   };
   try {
     body = await request.json();
@@ -137,7 +138,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime } = body;
+  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots } = body;
   if (!city || !startDate || !endDate) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
@@ -234,7 +235,37 @@ Day 1 LOCATION ANCHOR (AFTERNOON ARRIVAL):
 - SKIP Morning activities. Start from afternoon (${arrivalTime} or later).
 - All Day 1 places must be within: ${anchor.allowedZones.join(", ")}.
 - PROHIBITED: ${anchor.prohibitedZones.join(", ")}.
-- From Day 2 onward: generate freely.`;
+- From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.`;
+
+  } else if (anchor && isNoonArrival) {
+    // ── CASE C2: 특정 지역 + 점심 도착 (KTX 부산역 점심 등) → Anchor 강제 적용 ──
+    day1Block = `
+══════════════════════════════════════
+Day 1 LOCATION ANCHOR — NOON / LUNCH ARRIVAL (MANDATORY)
+══════════════════════════════════════
+The traveler arrives at: ${anchor.displayName}
+Arrival time: ${arrivalTime} (NOON — lunch time)
+
+ABSOLUTE Day 1 rules:
+1. SKIP ALL morning activities (09:00–11:59). Day 1 first place time MUST be ${arrivalTime} or later.
+2. ALL Day 1 places MUST be physically located within: ${anchor.allowedZones.join(", ")}.
+3. STRICTLY PROHIBITED on Day 1: ${anchor.prohibitedZones.join(", ")}.
+   → Do NOT place Haeundae, Gwangalli, or any far district on Day 1.
+4. Start with a lunch restaurant near ${anchor.displayName}, then afternoon and evening spots in the same area.
+5. Include 3–4 spots total for Day 1 (lunch, afternoon activity, evening/dinner).
+6. From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
+══════════════════════════════════════`;
+
+  } else if (anchor && isMorningArrival) {
+    // ── CASE C3: 특정 지역 + 아침 도착 → Anchor 강제 적용, 풀데이 ──
+    day1Block = `
+Day 1 LOCATION ANCHOR (MORNING ARRIVAL):
+- Traveler arrives at ${anchor.displayName} around ${arrivalTime} (MORNING).
+- Start the full day near the arrival area.
+- ALL Day 1 places MUST be within: ${anchor.allowedZones.join(", ")}.
+- PROHIBITED on Day 1: ${anchor.prohibitedZones.join(", ")}.
+- Include breakfast near ${anchor.displayName}, then morning + afternoon + evening sightseeing in anchor zone.
+- From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.`;
 
   } else if (isEveningArrival) {
     // ── CASE D: 저녁 도착 (특정 지역 없음) → Morning + Lunch 완전 스킵 ──
@@ -271,6 +302,12 @@ IMPORTANT Day 1 — NIGHT ARRIVAL:
       ? `Starting point / arrival location: ${startLocation}. On Day 1, begin the route near this location and sequence spots geographically outward.`
       : "";
 
+  // ── 취향 스팟 우선 반영 ────────────────────────────────────────────────
+  const preferredSpotsNote =
+    preferredSpots && preferredSpots.length > 0
+      ? `\nUSER'S SAVED FAVORITE SPOTS (must prioritize — include as many of these as possible across all days):\n${preferredSpots.map((s) => `  - ${s}`).join("\n")}\n`
+      : "";
+
   // ── 최종 프롬프트 ──────────────────────────────────────────────────────
   const prompt = `You are an expert Korea travel planner for foreign visitors.
 
@@ -279,6 +316,7 @@ Travel dates: ${startDate} to ${endDate}
 Number of travelers: ${travelers}
 Travel style: ${travelStyle}
 ${locationNote}
+${preferredSpotsNote}
 ${day1Block}
 
 CRITICAL GLOBAL RULES (apply to ALL days):

@@ -8,6 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary, updateItineraryTitle, supabase } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
+import { getCart } from "@/lib/cart";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -309,6 +310,9 @@ function ItineraryResult() {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleInput,   setTitleInput]   = useState("");
 
+  // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
+  const [isOwner, setIsOwner] = useState(!shareId);
+
   // ── 인라인 편집 모드 (Bug ④) ─────────────────────────────
   const [editMode,      setEditMode]      = useState(false);
   const [searchQuery,   setSearchQuery]   = useState("");
@@ -440,6 +444,7 @@ function ItineraryResult() {
       setTravelers(record.travelers);
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
+      setIsOwner((record as { device_id?: string }).device_id === getDeviceId());
       setSyncStatus("saved");
       setLoading(false);
     };
@@ -500,7 +505,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
             .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
             .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
           return;
@@ -518,7 +523,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
         .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
@@ -585,15 +590,28 @@ function ItineraryResult() {
   async function generateWithDwell(
     city: string, sd: string, ed: string,
     trav: string, tstyle: string,
-    startLoc?: string, arrTime?: string
+    startLoc?: string, arrTime?: string,
+    preferredSpots?: string[]
   ) {
     const MIN_MS = 2500 + Math.random() * 1000; // 2.5~3.5s
     const t0 = Date.now();
-    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime);
+    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots);
     const elapsed = Date.now() - t0;
     const wait = Math.max(0, MIN_MS - elapsed);
     if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
     return data;
+  }
+
+  // ── 취향 스팟 이름 목록 (cart 기반) ────────────────────────
+  function getPreferredSpotNames(): string[] {
+    try {
+      return getCart()
+        .map((item) => item.shortName || item.name)
+        .filter(Boolean)
+        .slice(0, 8) as string[];
+    } catch {
+      return [];
+    }
   }
 
   // ── 공유 링크 복사 ───────────────────────────────────────
@@ -702,7 +720,7 @@ function ItineraryResult() {
     setDays([]);
     setLoading(true);
     setError(null);
-    generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined)
+    generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
       .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
       .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
   }
@@ -890,8 +908,8 @@ function ItineraryResult() {
             ← Back to Home
           </Link>
 
-          {/* Bug ④: 인라인 편집 모드 토글 */}
-          {!shareId && (
+          {/* 인라인 편집 모드 토글 — 비공유 or 본인 일정이면 항상 노출 */}
+          {(!shareId || isOwner) && (
             <button
               onClick={() => {
                 if (editMode) {
@@ -899,7 +917,6 @@ function ItineraryResult() {
                   setSearchResults([]);
                   setSearchDayIdx(null);
                   setEditMode(false);
-                  router.push("/my-trips");
                 } else {
                   setEditMode(true);
                 }
@@ -907,11 +924,11 @@ function ItineraryResult() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
               style={{ backgroundColor: editMode ? "#16a34a" : "#f97316" }}
             >
-              {editMode ? "✅ Done Editing" : "✏️ Edit This Trip"}
+              {editMode ? "✅ Done Editing" : "✏️ Edit This Trip (여행 수정)"}
             </button>
           )}
 
-          {!shareId && (
+          {(!shareId || isOwner) && (
             <button
               onClick={resetItinerary}
               className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-[#8C6239] border border-[#E6DFD5] rounded-xl hover:bg-[#FAF7F2] transition-all"
@@ -997,7 +1014,7 @@ function ItineraryResult() {
           </div>
           <button
             onClick={() => { setSearchQuery(""); setSearchResults([]); setSearchDayIdx(null); setEditMode(false); }}
-            className="text-orange-400 hover:text-orange-700 font-black text-base shrink-0"
+            className="text-orange-400 hover:text-orange-700 font-black text-base shrink-0 cursor-pointer"
           >✕</button>
         </div>
       )}
@@ -1102,7 +1119,7 @@ function ItineraryResult() {
                                   className="flex flex-col hover:bg-[#FAF7F2]/40 transition-colors group relative"
                                 >
                                   {/* ── 편집 모드 컨트롤 바 ── */}
-                                  {editMode && !shareId && (
+                                  {editMode && (!shareId || isOwner) && (
                                     <div
                                       className="flex items-center gap-2 px-4 py-2 bg-orange-50 border-b border-orange-100"
                                       onClick={(e) => e.stopPropagation()}
@@ -1227,7 +1244,7 @@ function ItineraryResult() {
                   })}
 
                   {/* ── 편집 모드: 스팟 검색·추가 패널 ── */}
-                  {editMode && !shareId && (
+                  {editMode && (!shareId || isOwner) && (
                     <div className="mt-2 rounded-2xl border-2 border-dashed border-[#D4AF37]/40 bg-[#FAF7F2]/60 p-4">
                       <p className="text-xs font-black text-[#8C6239] mb-2.5">＋ Add a spot to Day {day.dayNumber}</p>
                       <input
