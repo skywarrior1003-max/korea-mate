@@ -140,11 +140,15 @@ export default function AllSpotsPage() {
     const f = params.get("filter");
     if (f && CATEGORY_FILTERS.some(fi => fi.key === f)) setCategoryFilter(f);
     setPage(1);
+    const today = new Date().toISOString().split("T")[0];
     Promise.all([
       fetch("/data/events.json").then(r => r.json()),
       fetch("/data/restaurants.json").then(r => r.json()).catch(() => [] as RestaurantItem[]),
     ]).then(([evtsData, restsData]: [EventItem[], RestaurantItem[]]) => {
-      setEvents([...evtsData, ...restsData.map(restaurantToEventItem)]);
+      const visible = (evtsData as EventItem[]).filter(
+        e => !e.hidden && (!e.displayUntil || e.displayUntil >= today)
+      );
+      setEvents([...visible, ...restsData.map(restaurantToEventItem)]);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);

@@ -552,11 +552,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
     Promise.all([
       fetch("/data/events.json").then(r => r.json()),
       fetch("/data/restaurants.json").then(r => r.json()).catch(() => [] as RestaurantItem[]),
     ]).then(([evts, rests]: [EventItem[], RestaurantItem[]]) => {
-      setEventsData([...evts, ...rests.map(restaurantToEventItem)]);
+      const visible = (evts as EventItem[]).filter(
+        e => !e.hidden && (!e.displayUntil || e.displayUntil >= today)
+      );
+      setEventsData([...visible, ...rests.map(restaurantToEventItem)]);
       setEventsLoading(false);
     }).catch(() => setEventsLoading(false));
   }, []);

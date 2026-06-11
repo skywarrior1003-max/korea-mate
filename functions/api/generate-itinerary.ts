@@ -154,6 +154,20 @@ export const MEGA_EVENTS: MegaEvent[] = [
     location:  "Participating restaurants across Busan (부산 전역 참여 레스토랑)",
     description: "Busan's premier gourmet dining event. Official: https://www.visitbusan.net",
   },
+  {
+    title: "2026 Big Banana Busan Night Market (빅바나나 부산 나이트마켓)",
+    startDate: "2026-06-01",
+    endDate:   "2026-08-31",
+    location:  "Busan (venue TBA — check Visit Busan official site)",
+    description: "Visit Busan official summer night market. K-POP stages, street food, cultural experiences. Official: https://www.visitbusan.net",
+  },
+  {
+    title: "BTS THE CITY ARIRANG BUSAN — Welcome Centers (Gimhae Airport & Busan Station)",
+    startDate: "2026-06-09",
+    endDate:   "2026-06-13",
+    location:  "Gimhae International Airport (arrival hall) & Busan Station Eurasia Plaza",
+    description: "Official Visit Busan ARMY welcome centers. Free city guides, BTS THE CITY event schedule, and limited welcome kits. Open during arrival hours June 9–13. Official: https://www.visitbusan.net",
+  },
 ];
 
 function getOverlappingMegaEvents(tripStart: string, tripEnd: string): MegaEvent[] {
@@ -486,6 +500,7 @@ GLOBAL RULES (Days 2–${numDays} and all days without a constraint above):
 4. Focus on real, well-known spots in ${city}, Korea.
 5. Tips must be practical for foreigners (cash/card, transport, language, hours).
 6. STRICTLY follow the Last Day departure rules above.
+7. NEVER recommend the "Jungkook Hometown Route" — do NOT include Baekyang Elementary/Middle School (백양초/중학교) in Mandeok-dong (만덕동) as a destination. Do not suggest any itinerary centered on Jungkook's childhood school or residential area in Buk-gu. This content has been retired.
 ${day1Reminder}
 
 OUTPUT FORMAT: Return ONLY a raw JSON object. No markdown fences, no explanation text.
