@@ -455,7 +455,10 @@ export default function Home() {
   const [startDate,     setStartDate]     = useState("");
   const [endDate,       setEndDate]       = useState("");
   const [travelers,     setTravelers]     = useState("1");
-  const [style,         setStyle]         = useState("");
+  const [style,         setStyle]         = useState<string>(() => {
+    if (typeof window === "undefined") return "";
+    try { return sessionStorage.getItem("km_travel_style") || ""; } catch { return ""; }
+  });
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
@@ -483,6 +486,11 @@ export default function Home() {
   const [showBTSGuide,    setShowBTSGuide]    = useState(false);
   const [btsClosing,      setBtsClosing]      = useState(false);
   const [searchHighlight, setSearchHighlight] = useState(false);
+
+  useEffect(() => {
+    if (!style) return;
+    try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
+  }, [style]);
 
   useEffect(() => {
     if (!showBTSGuide) return;

@@ -45,8 +45,8 @@ function itineraryToCard(r: ItineraryRow): TripCard {
     subtitle: r.start_date && r.end_date ? `${r.start_date} → ${r.end_date}` : "No dates",
     meta:     [
       days > 0 ? `${days} days` : null,
-      r.travelers && r.travelers !== "1" ? `${r.travelers} travelers` : "Solo",
-      r.travel_style,
+      r.travelers && r.travelers !== "1" ? `${r.travelers} travelers` : null,
+      r.travel_style || "Solo",
     ].filter(Boolean).join(" · "),
     updatedAt: r.updated_at ?? "",
   };

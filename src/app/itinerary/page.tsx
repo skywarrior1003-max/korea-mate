@@ -437,9 +437,12 @@ function ItineraryResult() {
       }
 
       // days 필드 손상 방어 — v2 포맷({ __v:2, scheduled, unscheduled }) 및 legacy Day[] 모두 수용
-      const rawShareDays = record.days as Record<string, unknown> | Day[];
+      const rawShareDays = record.days as Record<string, unknown> | Day[] | null | undefined;
       let sharedDays: Day[];
-      if (rawShareDays && !Array.isArray(rawShareDays) && (rawShareDays as Record<string, unknown>).__v === 2) {
+      if (!rawShareDays) {
+        // null / undefined → 빈 일정으로 처리
+        sharedDays = [];
+      } else if (!Array.isArray(rawShareDays) && (rawShareDays as Record<string, unknown>).__v === 2) {
         sharedDays = ((rawShareDays as { scheduled?: Day[] }).scheduled) ?? [];
       } else if (Array.isArray(rawShareDays)) {
         sharedDays = rawShareDays;
@@ -822,9 +825,16 @@ function ItineraryResult() {
         <div className="text-6xl mb-6">⚠️</div>
         <h2 className="text-3xl font-black text-red-600 mb-4">Something went wrong</h2>
         <p className="text-lg text-[#61554D] max-w-md mb-8 font-bold">{error}</p>
-        <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-colors">
-          ← Back to Home
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-colors">
+            ← Back to Home
+          </Link>
+          {shareId && (
+            <Link href="/my-trips" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-red-50 text-red-600 border-2 border-red-200 rounded-xl hover:bg-red-100 transition-colors">
+              🗑️ My Trips (delete this trip)
+            </Link>
+          )}
+        </div>
       </div>
     );
   }
