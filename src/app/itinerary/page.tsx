@@ -436,14 +436,25 @@ function ItineraryResult() {
         return;
       }
 
-      // days 필드 손상 방어
-      if (!Array.isArray(record.days)) {
+      // days 필드 손상 방어 — v2 포맷({ __v:2, scheduled, unscheduled }) 및 legacy Day[] 모두 수용
+      const rawShareDays = record.days as Record<string, unknown> | Day[];
+      let sharedDays: Day[];
+      if (rawShareDays && !Array.isArray(rawShareDays) && (rawShareDays as Record<string, unknown>).__v === 2) {
+        sharedDays = ((rawShareDays as { scheduled?: Day[] }).scheduled) ?? [];
+      } else if (Array.isArray(rawShareDays)) {
+        sharedDays = rawShareDays;
+      } else {
         setError("Itinerary data is corrupted. Please regenerate.");
         setLoading(false);
         return;
       }
+      if (sharedDays.length === 0) {
+        setError("Itinerary data is empty. Please regenerate.");
+        setLoading(false);
+        return;
+      }
 
-      setDays(sanitizeDays(record.days as Day[]));
+      setDays(sanitizeDays(sharedDays));
       setItinId(shareId);
       setCity(record.city);
       setStartDate(record.start_date);

@@ -455,7 +455,7 @@ export default function Home() {
   const [startDate,     setStartDate]     = useState("");
   const [endDate,       setEndDate]       = useState("");
   const [travelers,     setTravelers]     = useState("1");
-  const [style,         setStyle]         = useState("Solo");
+  const [style,         setStyle]         = useState("");
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
@@ -525,6 +525,10 @@ export default function Home() {
   }
 
   function handleGenerate() {
+    if (!style) {
+      alert("Please select your travel style (Pick Your Vibe).");
+      return;
+    }
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
@@ -909,6 +913,7 @@ export default function Home() {
                 </button>
                 <select value={style} onChange={(e) => setStyle(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                  <option value="" disabled>— Select your travel style —</option>
                   <option value="Solo">Solo FIT Traveler</option>
                   <option value="Couple">Couple / Partners</option>
                   <option value="Family">Family Trip</option>
