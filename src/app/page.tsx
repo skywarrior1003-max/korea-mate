@@ -587,13 +587,17 @@ export default function Home() {
   }, []);
 
   // ── 섹션별 데이터 (4-Section 모드) ───────────────────
-  const megaEvents = useMemo(
-    () => eventsData.filter((e) =>
+  const megaEvents = useMemo(() => {
+    const filtered = eventsData.filter((e) =>
       ["event", "festival", "concert"].includes(e.type) ||
       (e.tags ?? []).some(t => ["bts", "k-pop", "kpop", "idol"].some(k => t.toLowerCase().includes(k)))
-    ),
-    [eventsData]
-  );
+    );
+    // Pin: BTS Concert (anchor) first, Drone Show second
+    const anchor = filtered.find(e => e.id === "evt-anchor-001");
+    const drone  = filtered.find(e => e.id === "evt-drone-001");
+    const rest   = filtered.filter(e => e.id !== "evt-anchor-001" && e.id !== "evt-drone-001");
+    return [...(anchor ? [anchor] : []), ...(drone ? [drone] : []), ...rest];
+  }, [eventsData]);
 
   const michelinFood = useMemo(
     () => eventsData.filter((e) => e.type === "restaurant"),
