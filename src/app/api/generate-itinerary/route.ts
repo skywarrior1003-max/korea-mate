@@ -2,11 +2,26 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const MODELS = ["gemini-2.5-flash"];
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 2000;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function warnIfKeyFormatSuspect(key: string): void {
+  if (!key.startsWith("AIzaSy")) {
+    console.warn(
+      "[generate-itinerary] WARNING: GEMINI_API_KEY format is unexpected. " +
+      "Google AI Studio keys start with 'AIzaSy'. " +
+      "If this key is from a different credential type, expect 400/403/404 errors. " +
+      "Verify at: https://aistudio.google.com/apikey — KEY VALUE NOT LOGGED."
+    );
+  }
+}
+
+function makeRequestId(): string {
+  return `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 async function callGemini(apiKey: string, model: string, prompt: string) {
@@ -444,8 +459,10 @@ export async function POST(request: NextRequest) {
   // ── 프로덕션 전용: 실제 Gemini API 키 검증 ───────────────────────────────
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
+    console.error("[generate-itinerary] GEMINI_API_KEY not set — returning fallback itinerary");
     return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
   }
+  warnIfKeyFormatSuspect(apiKey);
 
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -730,22 +747,47 @@ Additional rules:
 - Dates must follow the travel dates in order starting from ${startDate}
 - For Day 1 evening/night arrivals: the "places" array starts ONLY from the arrival time — no earlier entries`;
 
+  const requestId      = makeRequestId();
+  const candidateCount = (preferredSpots?.length ?? 0) + overlappingEvents.length;
+  const promptLength   = prompt.length;
   let lastError: Error = new Error("Unknown error");
 
   for (const model of MODELS) {
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      // 호출 전 구조화 로그 — API Key는 절대 출력하지 않음
+      console.log(JSON.stringify({
+        ts:             new Date().toISOString(),
+        requestId,
+        action:         "generate-itinerary",
+        model,
+        attempt:        attempt + 1,
+        maxAttempts:    MAX_RETRIES,
+        candidateCount,
+        promptLength,
+        mockMode:       false,
+      }));
+
       try {
-        // 비용 방어 로그 — API Key는 절대 출력하지 않음
-        console.log(
-          `[Gemini Live Call] ${new Date().toISOString()} | route=next-api/generate-itinerary | model=${model} | attempt=${attempt + 1}/${MAX_RETRIES} | FORCE_LIVE_API=${process.env.FORCE_LIVE_API ?? "not_set"} | HARNESS_SKIP_GEMINI=${process.env.HARNESS_SKIP_GEMINI ?? "not_set"} | mock=false`
-        );
         const result = await callGemini(apiKey, model, prompt);
+        console.log(JSON.stringify({
+          ts: new Date().toISOString(), requestId, status: "success", model,
+        }));
         return NextResponse.json(result);
       } catch (err) {
         lastError = err as Error;
         const status = parseInt(lastError.message.match(/Gemini (\d+)/)?.[1] || "0");
-        // 429 쿼터 초과 — 재시도 없이 즉시 에러 반환 (비용 누수 방지)
-        if (status === 429) break;
+        console.error(JSON.stringify({
+          ts:        new Date().toISOString(),
+          requestId,
+          status:    "error",
+          errorCode: status,
+          errorMsg:  lastError.message.slice(0, 200),
+          model,
+          attempt:   attempt + 1,
+        }));
+        // 재시도 금지 조건: 429(쿼터), 404(엔드포인트/모델 없음), 400(잘못된 요청), 403(인증)
+        if (status === 429 || status === 404 || status === 400 || status === 403) break;
+        // 503 일시적 오버로드 → MAX_RETRIES 내에서만 재시도
         if (status === 503 && attempt < MAX_RETRIES - 1) {
           await sleep(RETRY_DELAY_MS * (attempt + 1));
           continue;
@@ -755,5 +797,9 @@ Additional rules:
     }
   }
 
+  console.log(JSON.stringify({
+    ts: new Date().toISOString(), requestId, status: "fallback",
+    reason: lastError.message.slice(0, 200),
+  }));
   return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
 }
