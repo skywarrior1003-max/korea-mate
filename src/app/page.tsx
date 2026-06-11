@@ -8,7 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
-import type { EventItem } from "@/lib/cart";
+import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 
 // ═══════════════════════════════════════════════
@@ -459,7 +459,10 @@ export default function Home() {
     if (typeof window === "undefined") return "";
     try { return sessionStorage.getItem("km_travel_style") || ""; } catch { return ""; }
   });
-  const [styleTouched,  setStyleTouched]  = useState(false);
+  const [cartItemCount, setCartItemCount] = useState<number>(() => {
+    if (typeof window === "undefined") return 0;
+    try { return getCart().length; } catch { return 0; }
+  });
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
@@ -546,8 +549,8 @@ export default function Home() {
       setShowDeptWarning(true);
       return;
     }
-    // 모든 필수 조건 완료 → Pick Your Vibe 미선택 시 유도 모달
-    if (!styleTouched) {
+    // 스팟 미선택 시 유도 모달
+    if (cartItemCount === 0) {
       setShowVibeModal(true);
       return;
     }
@@ -557,14 +560,12 @@ export default function Home() {
   function handlePickVibeClick() {
     setShowVibeModal(false);
     setTimeout(() => {
-      document.getElementById("travel-style-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }
 
-  function handleContinueWithoutVibe() {
+  function handleContinueWithoutPicks() {
     setShowVibeModal(false);
-    // vibe 모달은 handleGenerate에서 필수 조건 검증 후 열리지만,
-    // 모달이 열려 있는 동안 상태가 바뀌는 엣지케이스 방어
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
@@ -575,8 +576,6 @@ export default function Home() {
     }
     const effectiveStyle = style || "Solo";
     if (!style) setStyle(effectiveStyle);
-    // 모든 조건 통과 확인 후에만 touched 세팅 → 이전 시도가 조건 부족으로 막혔어도 상태가 남지 않음
-    setStyleTouched(true);
     doNavigate(effectiveStyle);
   }
 
@@ -630,6 +629,12 @@ export default function Home() {
     const handler = () => setSavedIds(getFavorites());
     window.addEventListener(FAVORITES_EVENT, handler);
     return () => window.removeEventListener(FAVORITES_EVENT, handler);
+  }, []);
+
+  useEffect(() => {
+    const refresh = () => { try { setCartItemCount(getCart().length); } catch { setCartItemCount(0); } };
+    window.addEventListener(CART_EVENT, refresh);
+    return () => window.removeEventListener(CART_EVENT, refresh);
   }, []);
 
   // ── K-POP 고정 정렬 우선순위 (BTS Concert → Drone → VisitBusan → 나머지) ──
@@ -942,9 +947,6 @@ export default function Home() {
               <div id="travel-style-section" className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
                   Travel Style
-                  {!styleTouched && style && (
-                    <span className="ml-2 text-[10px] font-semibold text-orange-400 normal-case tracking-normal">← last trip</span>
-                  )}
                 </label>
                 <button
                   type="button"
@@ -956,8 +958,8 @@ export default function Home() {
                 </button>
                 <select
                   value={style}
-                  onChange={(e) => { setStyle(e.target.value); setStyleTouched(true); }}
-                  className={`w-full bg-gray-50 border rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors ${styleTouched ? "border-orange-300" : "border-gray-200"}`}
+                  onChange={(e) => setStyle(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors"
                 >
                   <option value="" disabled>— Select your travel style —</option>
                   <option value="Solo">Solo FIT Traveler</option>
@@ -1139,11 +1141,11 @@ export default function Home() {
         >
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-7" style={{ animation: "vibeModalIn 0.22s ease-out" }}>
             <div className="text-center mb-5">
-              <div className="text-4xl mb-3">✨</div>
-              <h3 className="text-xl font-black text-[#2C2520] mb-2">Pick your travel vibe?</h3>
+              <div className="text-4xl mb-3">🎯</div>
+              <h3 className="text-xl font-black text-[#2C2520] mb-2">Pick your spots first!</h3>
               <p className="text-sm text-[#61554D] leading-relaxed">
-                Choosing a vibe helps us tailor your route and activity picks for this trip.
-                Takes just a second — or skip and we&apos;ll plan a balanced itinerary.
+                Tap K-POP, Food, Attractions, or other cards below to tell us what you&apos;re into.
+                We&apos;ll build your itinerary around your picks — or skip for a balanced mix.
               </p>
             </div>
             <div className="flex flex-col gap-3">
@@ -1152,13 +1154,13 @@ export default function Home() {
                 className="w-full py-3.5 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
                 style={{ backgroundColor: "#f97316" }}
               >
-                ✨ Pick My Vibe →
+                🎯 Pick Spots →
               </button>
               <button
-                onClick={handleContinueWithoutVibe}
+                onClick={handleContinueWithoutPicks}
                 className="w-full py-3 rounded-xl font-bold text-sm text-[#61554D] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all"
               >
-                Continue Without Vibe →
+                Continue Without Picks →
               </button>
             </div>
           </div>
@@ -1198,7 +1200,7 @@ export default function Home() {
                 Add Departure Info
               </button>
               <button
-                onClick={() => { setShowDeptWarning(false); setDeptDismissed(true); doNavigate(); }}
+                onClick={() => { setShowDeptWarning(false); setDeptDismissed(true); if (cartItemCount === 0) { setShowVibeModal(true); } else { doNavigate(); } }}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
               >
                 Continue Without It

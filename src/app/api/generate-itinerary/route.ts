@@ -9,6 +9,111 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// ── 선택 행사 앵커 타입 ──────────────────────────────────────────────────────
+interface EventAnchor {
+  name: string;
+  date: string;          // YYYY-MM-DD
+  time: string;          // HH:MM 24h
+  durationHours: number;
+  location: string;
+  googleMapsUrl?: string;
+}
+
+function timeToMins(t: string | undefined): number {
+  if (!t) return 0;
+  const parts = t.split(":");
+  const h = parseInt(parts[0] ?? "0", 10);
+  const m = parseInt(parts[1] ?? "0", 10);
+  return (isNaN(h) ? 0 : h) * 60 + (isNaN(m) ? 0 : m);
+}
+
+// ── 선택 행사 강제 삽입: Gemini / mock / fallback 결과에 적용 ─────────────────
+function enforceEventAnchors(
+  result: { days?: unknown[] },
+  anchors: EventAnchor[],
+  startDate: string,
+): typeof result {
+  if (!anchors.length || !result.days) return result;
+
+  type RawPlace = Record<string, unknown>;
+  type RawDay   = { date?: string; dayNumber?: number; places: RawPlace[] };
+
+  const days = (result.days as RawDay[]).map(d => ({ ...d, places: [...d.places] }));
+
+  for (const anchor of anchors) {
+    const dayIdx = Math.round(
+      (new Date(anchor.date).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
+    );
+    if (dayIdx < 0 || dayIdx >= days.length) {
+      console.log(`[event-anchors] "${anchor.name}" (${anchor.date}) outside trip days — skipped`);
+      continue;
+    }
+
+    const day = days[dayIdx]!;
+    const nameKey = anchor.name.toLowerCase().slice(0, 14);
+
+    // 이미 포함된 경우 스킵
+    if (day.places.some(p => String(p.name ?? "").toLowerCase().includes(nameKey))) continue;
+
+    const anchorMins = timeToMins(anchor.time);
+    // 같은 시간대(±30분) 슬롯 제거
+    day.places = day.places.filter(p => Math.abs(timeToMins(String(p.time ?? "")) - anchorMins) > 30);
+
+    // 행사 삽입
+    day.places.push({
+      name: anchor.name,
+      category: "Experience",
+      location: anchor.location,
+      time: anchor.time,
+      duration: `${anchor.durationHours}h`,
+      tips: "Selected event — check official site for latest schedule and tickets.",
+      googleMapsUrl: anchor.googleMapsUrl
+        ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(anchor.name + " Busan Korea")}`,
+    });
+
+    // 시간 오름차순 재정렬
+    day.places.sort((a, b) => timeToMins(String(a.time ?? "")) - timeToMins(String(b.time ?? "")));
+  }
+
+  return { ...result, days };
+}
+
+// ── 마지막 날 출발시간 이후 슬롯 제거: 모든 반환 경로에 적용 ─────────────────
+function enforceDepartureCutoff(
+  result: { days?: unknown[] },
+  departureTime: string | undefined,
+  startDate: string,
+  endDate: string,
+): typeof result {
+  if (!departureTime || !result.days) return result;
+  const cutoffMins = timeToMins(departureTime);
+  if (cutoffMins === 0) return result;
+
+  const numDays = Math.ceil(
+    (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
+  ) + 1;
+
+  type RawPlace = Record<string, unknown>;
+  type RawDay   = { date?: string; dayNumber?: number; places: RawPlace[] };
+
+  const days = (result.days as RawDay[]).map(d => ({ ...d, places: [...d.places] }));
+  const lastIdx = numDays - 1;
+
+  if (lastIdx >= 0 && lastIdx < days.length) {
+    const lastDay = days[lastIdx]!;
+    const before = lastDay.places.length;
+    lastDay.places = lastDay.places.filter(
+      p => timeToMins(String(p.time ?? "")) < cutoffMins
+    );
+    const removed = before - lastDay.places.length;
+    if (removed > 0) {
+      console.log(`[departure-cutoff] Removed ${removed} place(s) on last day at/after ${departureTime}`);
+    }
+  }
+
+  return { ...result, days };
+}
+
 function warnIfKeyFormatSuspect(key: string): void {
   if (key.length < 20) {
     console.warn(
@@ -160,7 +265,8 @@ function buildMockItinerary(
   startDate: string,
   endDate: string,
   startLocation?: string,
-  arrivalTime?: string
+  arrivalTime?: string,
+  departureTime?: string,
 ) {
   const start = new Date(startDate);
   const end   = new Date(endDate);
@@ -245,6 +351,23 @@ function buildMockItinerary(
       // Day 3+: 공통 순환
       const offset = (i - 2) * 4;
       places = DAY3_PLUS_TEMPLATES.slice(offset % DAY3_PLUS_TEMPLATES.length, (offset % DAY3_PLUS_TEMPLATES.length) + 4);
+    }
+
+    // Day 1: 도착시간(arrivalHour) 이전 슬롯 제거 (arrivalHour > 9 인 경우만)
+    if (i === 0 && arrivalHour > 9) {
+      places = places.filter(p => parseInt(p.time.split(":")[0] ?? "0", 10) >= arrivalHour);
+    }
+
+    // Last day: 출발시간(departureTime) 이후 슬롯 제거
+    if (i === numDays - 1 && departureTime) {
+      const dh = parseInt(departureTime.split(":")[0] ?? "23", 10);
+      const dm = parseInt(departureTime.split(":")[1] ?? "0", 10);
+      const deptMins = dh * 60 + dm;
+      places = places.filter(p => {
+        const ph = parseInt(p.time.split(":")[0] ?? "0", 10);
+        const pm = parseInt(p.time.split(":")[1] ?? "0", 10);
+        return (ph * 60 + pm) < deptMins;
+      });
     }
 
     return {
@@ -386,8 +509,9 @@ function buildFallbackItinerary(
   endDate: string,
   startLocation?: string,
   arrivalTime?: string,
+  departureTime?: string,
 ) {
-  const base = buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime);
+  const base = buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime, departureTime);
   const droneDate = getBTSDroneShowDate(startDate, endDate);
 
   if (droneDate) {
@@ -436,6 +560,7 @@ export async function POST(request: NextRequest) {
     startLocation?: string; arrivalTime?: string;
     preferredSpots?: string[];
     departurePlace?: string; departureTime?: string;
+    eventAnchors?: EventAnchor[];
   };
   try {
     body = await request.json();
@@ -443,22 +568,32 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime } = body;
+  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime, eventAnchors } = body;
   if (!city || !startDate || !endDate) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
+  const anchors: EventAnchor[] = Array.isArray(eventAnchors) ? eventAnchors : [];
+
   // ── 개발·테스트 환경: 실 API 호출 없이 모의 데이터 즉시 반환 ──────────────
   if (isMockMode()) {
     console.log(`[generate-itinerary] MOCK MODE (NODE_ENV=${process.env.NODE_ENV}) — skipping Gemini API call`);
-    return NextResponse.json(buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime));
+    const mock = buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime, departureTime);
+    return NextResponse.json(
+      enforceDepartureCutoff(enforceEventAnchors(mock, anchors, startDate), departureTime, startDate, endDate)
+    );
   }
 
   // ── 프로덕션 전용: 실제 Gemini API 키 검증 ───────────────────────────────
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     console.error("[generate-itinerary] GEMINI_API_KEY not set — returning fallback itinerary");
-    return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
+    return NextResponse.json(
+      enforceDepartureCutoff(
+        enforceEventAnchors(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime, departureTime), anchors, startDate),
+        departureTime, startDate, endDate,
+      )
+    );
   }
   warnIfKeyFormatSuspect(apiKey);
 
@@ -567,7 +702,7 @@ The traveler arrives at: ${anchor.displayName}
 Arrival time: ${arrivalTime} (NOON — lunch time)
 
 ABSOLUTE Day 1 rules:
-1. SKIP ALL morning activities (09:00–11:59). Day 1 first place time MUST be ${arrivalTime} or later.
+1. SKIP ALL activities before ${arrivalTime}. Day 1 first place time MUST be ${arrivalTime} or later — NO exceptions.
 2. ALL Day 1 places MUST be physically located within: ${anchor.allowedZones.join(", ")}.
 3. STRICTLY PROHIBITED on Day 1: ${anchor.prohibitedZones.join(", ")}.
    → Do NOT place Haeundae, Gwangalli, or any far district on Day 1.
@@ -635,11 +770,21 @@ IMPORTANT Day 1 — NIGHT ARRIVAL:
     const buffer = isAirport ? 90 : 60;
     const cutoff = subtractMinutes(departureTime, buffer);
     lastDayBlock = `
-LAST DAY (Day ${numDays}) — DEPARTURE RULES (MANDATORY):
+╔══════════════════════════════════════════════════════╗
+  LAST DAY (Day ${numDays}) — DEPARTURE CUTOFF (MANDATORY)
+╚══════════════════════════════════════════════════════╝
 - Traveler departs from: ${departurePlace} at ${departureTime}.
-- Must arrive at departure point ${buffer} min early. Final activity MUST end by ${cutoff}.
-- ALL spots on Day ${numDays} must be close to ${departurePlace} to minimize transit risk.
+- HARD CUTOFF: Do NOT schedule ANY activity at ${departureTime} or later on Day ${numDays}. Zero exceptions.
+- Final activity MUST end by ${cutoff} (${buffer} min before departure for transit).
+- The last entry on Day ${numDays} should be near ${departurePlace} — e.g. a nearby café or snack stop.
+- ALL spots on Day ${numDays} must be geographically close to ${departurePlace}. No spots across town.
 - Do NOT place any spot on the opposite side of the city from ${departurePlace} on Day ${numDays}.`;
+  } else if (departureTime) {
+    lastDayBlock = `
+LAST DAY (Day ${numDays}) — DEPARTURE TIME CUTOFF:
+- Traveler departs at ${departureTime} (no specific departure place given).
+- HARD CUTOFF: Do NOT schedule ANY activity at ${departureTime} or later on Day ${numDays}.
+- Keep Day ${numDays} light and close to the city center.`;
   } else {
     lastDayBlock = `
 LAST DAY (Day ${numDays}) — NO DEPARTURE INFO:
@@ -695,6 +840,25 @@ Day ${dayNum} evening cluster (17:00–21:30): ALL spots in Gwangalli–Millak a
   NOTE: If traveling from arrival point (e.g. Busan Station) to Gwangalli, ~25 min by subway — schedule departure by 17:30.`;
   })() : "";
 
+  // ── 선택 행사 앵커 프롬프트 블록 ────────────────────────────────────────
+  const eventAnchorsBlock = anchors.length > 0 ? `
+
+╔══════════════════════════════════════════════════════╗
+  USER-SELECTED EVENT ANCHORS — FIXED DATE & TIME
+╚══════════════════════════════════════════════════════╝
+The user picked these events. MANDATORY: place each on its exact date and time.
+Do NOT move them to a different date, a different time, or omit them.
+
+${anchors.map(ev => {
+    const dayNum = Math.round((new Date(ev.date).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    return `• ${ev.name}
+  Day ${dayNum} (${ev.date}) at ${ev.time} — FIXED
+  Location: ${ev.location}
+  Duration: ~${ev.durationHours}h
+  → Cluster all other Day ${dayNum} spots near ${ev.location}.
+  → Do NOT place any conflicting activity at ${ev.time} on Day ${dayNum}.`;
+  }).join("\n\n")}` : "";
+
   // ── 최종 프롬프트 ──────────────────────────────────────────────────────
   const prompt = `You are an expert Korea travel planner for foreign visitors.
 
@@ -708,16 +872,17 @@ ${day1Block}
 ${lastDayBlock}
 ${megaEventBlock}
 ${droneAnchorBlock}
+${eventAnchorsBlock}
 
 CRITICAL GLOBAL RULES (apply to ALL days):
-1. ALWAYS follow the Day 1 time restrictions above. If the traveler arrives in the evening, Day 1 has NO morning or lunch slots.
+1. ALWAYS follow the Day 1 time restrictions above. Day 1 MUST NOT contain ANY place with a time earlier than ${arrivalTime ?? "14:00"}. The traveler has not arrived yet.
 2. For Day 2 and beyond: include 4–5 places per day, starting from morning.
 3. All place times must be in HH:MM 24-hour format.
 4. Geographically cluster spots by neighborhood each day to minimize transit time.
 5. Focus on real, well-known spots in ${city}.
 6. Tips must be practical for foreigners (cash/card info, transport, language tips).
 7. STRICTLY follow the Last Day departure rules above.
-8. NEVER recommend the "Jungkook Hometown Route" — do NOT include Baekyang Elementary/Middle School (백양초/중학교) in Mandeok-dong (만덕동) as a destination. Do not suggest any itinerary centered on Jungkook's childhood school or residential area in Buk-gu. This content has been retired.
+8. NEVER recommend the "Jungkook Hometown Route" — do NOT include Baekyang Elementary/Middle School (백양초/중학교) in Mandeok-dong (만덕동) as a destination. Do not suggest any itinerary centered on Jungkook's childhood school or residential area in Buk-gu. This content has been retired.${departureTime ? `\n9. HARD DEPARTURE CUTOFF: Day ${numDays} MUST NOT contain ANY place with a time of ${departureTime} or later. This is non-negotiable.` : ""}
 
 Return ONLY a valid JSON object with this exact structure (no markdown, no extra text):
 {
@@ -770,7 +935,9 @@ Additional rules:
         console.log(JSON.stringify({
           ts: new Date().toISOString(), requestId, status: "success", model,
         }));
-        return NextResponse.json(result);
+        return NextResponse.json(
+          enforceDepartureCutoff(enforceEventAnchors(result, anchors, startDate), departureTime, startDate, endDate)
+        );
       } catch (err) {
         lastError = err as Error;
         const status = parseInt(lastError.message.match(/Gemini (\d+)/)?.[1] || "0");
@@ -799,5 +966,10 @@ Additional rules:
     ts: new Date().toISOString(), requestId, status: "fallback",
     reason: lastError.message.slice(0, 200),
   }));
-  return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
+  return NextResponse.json(
+    enforceDepartureCutoff(
+      enforceEventAnchors(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime, departureTime), anchors, startDate),
+      departureTime, startDate, endDate,
+    )
+  );
 }

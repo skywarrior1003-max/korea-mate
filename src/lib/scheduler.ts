@@ -1,3 +1,12 @@
+export interface EventAnchor {
+  name: string;
+  date: string;          // YYYY-MM-DD — specific trip day
+  time: string;          // HH:MM 24h
+  durationHours: number;
+  location: string;
+  googleMapsUrl?: string;
+}
+
 export async function generateItinerary(
   city: string,
   startDate: string,
@@ -9,11 +18,12 @@ export async function generateItinerary(
   preferredSpots?: string[],
   departurePlace?: string,
   departureTime?: string,
+  eventAnchors?: EventAnchor[],
 ) {
   const response = await fetch("/api/generate-itinerary", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime }),
+    body: JSON.stringify({ city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime, eventAnchors }),
   });
 
   if (!response.ok) {

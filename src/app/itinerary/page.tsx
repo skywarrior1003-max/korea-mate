@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
-import { generateItinerary } from "@/lib/scheduler";
+import { generateItinerary, type EventAnchor } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary, updateItineraryTitle } from "@/lib/supabase";
@@ -387,10 +387,11 @@ function ItineraryResult() {
         })
         .map(({ p }) => p);
 
-      // ② Day 1 필터링: 공항 저녁 = 금지 장소 + 이른 시간 제거
-      //                 일반 저녁/야간 = 이른 시간(arrivalHour 이전) 만 제거
+      // ② Day 1 필터링: 도착 시간(arrivalHour) 이전 슬롯 제거
+      //   - 공항 저녁: arrivalHour 이전 AND 금지 장소 모두 제거
+      //   - 그 외 비모닝 도착(arrivalHour > 9): arrivalHour 이전 슬롯 제거
       let cleaned = sorted;
-      if (dayIdx === 0 && isEveningOrNightArrival) {
+      if (dayIdx === 0 && arrivalHour > 9) {
         if (isAirportEvening) {
           // 공항 저녁: arrivalHour 이전 AND 금지 장소 모두 제거
           cleaned = sorted.filter(p => {
@@ -401,11 +402,20 @@ function ItineraryResult() {
             return h >= arrivalHour && !prohibited;
           });
         } else {
-          // 일반 저녁/야간: arrivalHour 이전 시간 슬롯만 제거 (Morning / Lunch 차단)
+          // 일반 도착(정오/오후/저녁/야간): arrivalHour 이전 시간 슬롯 제거
           cleaned = sorted.filter(p => {
             const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
             return h >= arrivalHour;
           });
+        }
+      }
+
+      // ③ Last day: 출발시간(paramDepartureTime) 이후 슬롯 제거
+      const isLastDay = dayIdx === rawDays.length - 1;
+      if (isLastDay && paramDepartureTime) {
+        const deptMins = timeToMins(paramDepartureTime);
+        if (deptMins > 0) {
+          cleaned = cleaned.filter(p => timeToMins(p.time) < deptMins);
         }
       }
 
@@ -547,7 +557,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined)
+          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined, getEventAnchors())
             .then((data) => { setDays(sanitizeDays(data.days)); if (data.isFallback) setIsFallback(true); setLoading(false); })
             .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
           return;
@@ -573,7 +583,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined)
+      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined, getEventAnchors())
         .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
@@ -652,10 +662,11 @@ function ItineraryResult() {
     startLoc?: string, arrTime?: string,
     preferredSpots?: string[],
     deptPlace?: string, deptTime?: string,
+    eventAnchors?: EventAnchor[],
   ) {
     const MIN_MS = 2500 + Math.random() * 1000; // 2.5~3.5s
     const t0 = Date.now();
-    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots, deptPlace, deptTime);
+    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots, deptPlace, deptTime, eventAnchors);
     const elapsed = Date.now() - t0;
     const wait = Math.max(0, MIN_MS - elapsed);
     if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
@@ -672,6 +683,51 @@ function ItineraryResult() {
     } catch {
       return [];
     }
+  }
+
+  // ── 선택된 행사 카드 앵커 목록 (cart 기반 — 날짜/시간 고정용) ──
+  function extractEventTime(item: CartItem): string {
+    const oh = item.openingHours as { open?: string } | string | null;
+    if (oh && typeof oh === "object" && oh.open) return oh.open;
+    if (typeof (oh as unknown) === "string") {
+      const m = (oh as unknown as string).match(/\b(\d{1,2}:\d{2})\b/);
+      if (m?.[1]) { const t = m[1]; return t.length === 4 ? "0" + t : t; }
+    }
+    const slot = (item.bestTimeSlot ?? "").toLowerCase();
+    if (slot.includes("morning"))                        return "09:00";
+    if (slot.includes("noon") || slot.includes("lunch")) return "12:00";
+    if (slot.includes("afternoon"))                      return "14:00";
+    if (slot.includes("evening"))                        return "18:00";
+    if (slot.includes("night"))                          return "21:00";
+    return "14:00";
+  }
+
+  function getEventAnchors(): EventAnchor[] {
+    try {
+      const cart = getCart();
+      const ts = new Date(paramStartDate).getTime();
+      const te = new Date(paramEndDate).getTime();
+      const anchors: EventAnchor[] = [];
+      for (const item of cart) {
+        if (!item.startDate) continue;
+        const iStart = new Date(item.startDate).getTime();
+        const iEnd   = item.endDate ? new Date(item.endDate).getTime() : iStart;
+        if (iEnd < ts || iStart > te) {
+          console.log(`[event-anchors] "${item.shortName || item.name}" (${item.startDate}) outside trip range — skipped`);
+          continue;
+        }
+        const anchorDate = new Date(Math.max(iStart, ts)).toISOString().split("T")[0]!;
+        anchors.push({
+          name: item.shortName || item.name,
+          date: anchorDate,
+          time: extractEventTime(item),
+          durationHours: Math.max(1, Math.round(item.recommendedDurationMinutes / 60)),
+          location: item.district || item.city || "Busan",
+          googleMapsUrl: item.mapUrl || undefined,
+        });
+      }
+      return anchors;
+    } catch { return []; }
   }
 
   // ── 공유 링크 복사 ───────────────────────────────────────

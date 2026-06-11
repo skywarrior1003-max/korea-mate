@@ -96,7 +96,7 @@ export default function SavedSpotsPanel() {
                   <button
                     onClick={() => addToCart(item)}
                     disabled={inCart}
-                    title={inCart ? "이미 보관함에 있음" : "일정 보관함에 추가"}
+                    title={inCart ? "Already in itinerary" : "Add to itinerary"}
                     className={`shrink-0 w-7 h-7 rounded-full text-xs font-black flex items-center justify-center transition-all ${
                       inCart
                         ? "bg-emerald-100 text-emerald-600 cursor-default"
@@ -113,7 +113,7 @@ export default function SavedSpotsPanel() {
           {/* 하단 힌트 */}
           <div className="px-4 py-2 border-t border-gray-50 shrink-0">
             <p className="text-[10px] text-gray-400 text-center">
-              ❤️ 저장된 Spot · <span className="text-orange-500 font-semibold">+</span> 버튼으로 보관함에 추가
+              ❤️ Saved spots · tap <span className="text-orange-500 font-semibold">+</span> to add to itinerary
             </p>
           </div>
         </div>

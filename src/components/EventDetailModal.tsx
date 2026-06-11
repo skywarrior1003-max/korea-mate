@@ -518,7 +518,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
       {/* ── Sticky Bottom 액션 바 ── */}
       <div className="shrink-0 px-5 py-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.07)] rounded-b-3xl sm:rounded-b-3xl">
         {added && (
-          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">✅ 보관함에 추가됐습니다!</div>
+          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">✅ Added to your itinerary!</div>
         )}
         <div className="flex gap-3">
           {/* 하트 (찜하기) */}
@@ -530,19 +530,19 @@ export default function EventDetailModal({ event, onClose }: Props) {
                 : "bg-gray-50 border-gray-200 text-gray-500 hover:border-red-200 hover:text-red-400"
             }`}
           >
-            {favorited ? "❤️ 저장됨" : "🤍 저장"}
+            {favorited ? "❤️ Saved" : "🤍 Save"}
           </button>
           {/* 일정표 추가 / 제거 */}
           {inCart ? (
             <div className="flex-1 flex gap-2">
               <div className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white bg-emerald-500">
-                ✓ 보관함에 있음
+                ✓ In Itinerary
               </div>
               <button
                 onClick={handleRemoveFromCart}
                 className="px-4 py-3.5 rounded-2xl font-bold text-sm text-red-500 border-2 border-red-200 hover:bg-red-50 transition-colors"
               >
-                제거
+                Remove
               </button>
             </div>
           ) : (
@@ -551,7 +551,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
               className="flex-1 py-3.5 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
               style={{ backgroundColor: "#f97316" }}
             >
-              + 일정에 추가
+              + Add to Itinerary
             </button>
           )}
         </div>
