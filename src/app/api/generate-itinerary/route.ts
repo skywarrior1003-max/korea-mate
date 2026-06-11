@@ -96,6 +96,27 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
     };
   }
 
+  // 광안리 권역 감지 (Gwangalli Beach, 광안리, 수영구)
+  if (l.includes("gwangalli") || l.includes("광안리") || l.includes("gwangan")) {
+    return {
+      displayName: "Gwangalli Beach area",
+      radius: "within 20 minutes walk or 10 min taxi from Gwangalli Beach",
+      allowedZones: [
+        "Gwangalli Beach (광안리해수욕장)", "Suyeong-gu (수영구)",
+        "Gwangan Bridge viewpoint (광안대교)", "Millak Waterfront Park (밀락더마켓)",
+        "Geumnyeonsan (금련산 — short taxi)", "Nam-gu (남구 — adjacent)",
+      ],
+      prohibitedZones: [
+        "Nampo-dong", "Jagalchi", "Busan Station", "Taejongdae", "Gijang",
+        "Gamcheon Culture Village",
+      ],
+      eveningSpots:
+        "Gwangalli Beach sunset & Gwangan Bridge lighting (from 20:00), " +
+        "Millak Waterfront Park (밀락더마켓) rooftop bars, " +
+        "Gwangalli beachfront café strip, Suyeong night seafood alley",
+    };
+  }
+
   // KTX 부산역 / 서면 권역 감지 (한국어 "서면" 포함)
   if (
     l.includes("ktx") || l.includes("busan station") ||
@@ -144,15 +165,21 @@ function buildMockItinerary(
 
   // 도착 지역 기반 Day 2 첫날 템플릿 — 도착지에서 모닝 시작
   const la = (startLocation ?? "").toLowerCase();
-  const isHaeundaeAnchor = la.includes("haeundae") || la.includes("해운대") || la.includes("centum") || la.includes("센텀");
-  const isNampoAnchor    = la.includes("nampo") || la.includes("남포") || la.includes("jagalchi") || la.includes("biff") || la.includes("gwangbok");
+  const isHaeundaeAnchor  = la.includes("haeundae") || la.includes("해운대");
+  const isGwangalliAnchor = la.includes("gwangalli") || la.includes("광안리") || la.includes("gwangan");
+  const isNampoAnchor     = la.includes("nampo") || la.includes("남포") || la.includes("jagalchi") || la.includes("biff") || la.includes("gwangbok");
 
   type MockPlace = { name: string; category: string; location: string; time: string; duration: string; tips: string };
   const DAY2_TEMPLATES: MockPlace[] = isHaeundaeAnchor ? [
     { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
     { name: "Dongbaekseom Island Walk",      category: "Attraction", location: "Haeundae",   time: "11:00", duration: "1h",  tips: "[MOCK] Free entry. Scenic coastal path around the island." },
-    { name: "Centum City — SHINSEGAE",       category: "Shopping",   location: "Centum City",time: "14:00", duration: "2h",  tips: "[MOCK] World's largest department store. Free Wi-Fi inside." },
+    { name: "Haeundae Market Lunch",         category: "Restaurant", location: "Haeundae",   time: "13:00", duration: "1h",  tips: "[MOCK] Try halmae gukbap (할매국밥). ₩9,000." },
     { name: "Marine City Rooftop Bar",       category: "Experience", location: "Marine City",time: "18:00", duration: "1h",  tips: "[MOCK] Best city + sea view at sunset." },
+  ] : isGwangalliAnchor ? [
+    { name: "Gwangalli Beach Morning Walk",  category: "Attraction", location: "Suyeong-gu", time: "09:00", duration: "1h",  tips: "[MOCK] Best at low tide — great view of Gwangan Bridge." },
+    { name: "Millak Waterfront Park",        category: "Attraction", location: "Suyeong-gu", time: "11:00", duration: "1h",  tips: "[MOCK] 밀락더마켓 — open-air food & café market on the waterfront." },
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "14:00", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Gwangan Bridge Night View",     category: "Attraction", location: "Suyeong-gu", time: "20:00", duration: "1h",  tips: "[MOCK] Bridge lights up around 20:00. Best viewed from the beach." },
   ] : isNampoAnchor ? [
     { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "09:30", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
     { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu", time: "13:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
@@ -174,7 +201,7 @@ function buildMockItinerary(
     { name: "Michelin Lunch — Busan Gukbap", category: "Restaurant", location: "Seomyeon",   time: "12:30", duration: "1h",  tips: "[MOCK] Order 돼지국밥 (pork soup rice). ₩8,000." },
     { name: "Oryukdo Skywalk",               category: "Attraction", location: "Nam-gu",     time: "15:00", duration: "1h",  tips: "[MOCK] Glass-floor walkway over the sea." },
     { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
-    { name: "Centum City Shopping",          category: "Shopping",   location: "Haeundae",   time: "14:00", duration: "2h",  tips: "[MOCK] Shinsegae — world's largest department store." },
+    { name: "Gwangalli Beach Sunset",         category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
     { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1h",  tips: "[MOCK] ₩12,000 entry. Best at night." },
   ];
 

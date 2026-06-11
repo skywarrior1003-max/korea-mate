@@ -897,7 +897,7 @@ export default function Home() {
                     { value: "Haeundae (해운대)",                  label: "🏖️ Haeundae" },
                     { value: "Nampo-dong / Gwangbok-ro (남포동)",  label: "🏙️ Nampo-dong" },
                     { value: "Seomyeon (서면)",                    label: "🛍️ Seomyeon" },
-                    { value: "Centum City (센텀시티)",              label: "🏬 Centum City" },
+                    { value: "Gwangalli Beach (광안리해수욕장)",       label: "🌊 Gwangalli Beach" },
                   ].map((loc) => (
                     <button
                       key={loc.value}
