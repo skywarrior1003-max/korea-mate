@@ -1,7 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 
-const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL  ?? "";
-const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL  || "https://placeholder.supabase.co";
+const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
+
+// 빌드 시 env 누락 경고 — 키 값은 절대 출력하지 않음
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  console.warn("[Supabase] NEXT_PUBLIC_SUPABASE_URL is not set. Database features will be unavailable until the env var is configured.");
+}
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
 
