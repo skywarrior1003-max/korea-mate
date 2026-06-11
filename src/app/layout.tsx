@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 import "./globals.css";
 import SavedSpotsPanel from "@/components/SavedSpotsPanel";
+import CartDrawer from "@/components/CartDrawer";
 
 
 const geistSans = Geist({
@@ -100,6 +101,9 @@ export default function RootLayout({
         {children}
         <Suspense fallback={null}>
           <SavedSpotsPanel />
+        </Suspense>
+        <Suspense fallback={null}>
+          <CartDrawer />
         </Suspense>
       </body>
     </html>
