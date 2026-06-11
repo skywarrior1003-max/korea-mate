@@ -459,6 +459,8 @@ export default function Home() {
     if (typeof window === "undefined") return "";
     try { return sessionStorage.getItem("km_travel_style") || ""; } catch { return ""; }
   });
+  const [styleTouched,  setStyleTouched]  = useState(false);
+  const [showVibeModal, setShowVibeModal] = useState(false);
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
@@ -524,17 +526,19 @@ export default function Home() {
   const deptSectionRef = useRef<HTMLDivElement>(null);
 
   // ── AI 일정 생성 ──────────────────────────────
-  function doNavigate() {
+  function doNavigate(overrideStyle?: string) {
     setIsNavigating(true);
-    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style, startLocation, arrivalTime });
+    const effectiveStyle = overrideStyle ?? style;
+    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: effectiveStyle, startLocation, arrivalTime });
     if (departurePlace) params.set("departurePlace", departurePlace);
     if (departureTime)  params.set("departureTime",  departureTime);
     router.push(`/itinerary?${params.toString()}`);
   }
 
   function handleGenerate() {
-    if (!style) {
-      alert("Please select your travel style (Pick Your Vibe).");
+    // Pick Your Vibe 미선택 → 부드러운 유도 모달 (차단이 아닌 안내)
+    if (!styleTouched) {
+      setShowVibeModal(true);
       return;
     }
     if (!startDate || !endDate) {
@@ -548,6 +552,29 @@ export default function Home() {
       return;
     }
     doNavigate();
+  }
+
+  function handlePickVibeClick() {
+    setShowVibeModal(false);
+    setTimeout(() => {
+      document.getElementById("travel-style-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  }
+
+  function handleContinueWithoutVibe() {
+    setShowVibeModal(false);
+    const effectiveStyle = style || "Solo";
+    if (!style) setStyle(effectiveStyle);
+    setStyleTouched(true);
+    if (!startDate || !endDate) {
+      alert("Please select both start and end travel dates.");
+      return;
+    }
+    if (!departurePlace && !departureTime && !deptDismissed) {
+      setShowDeptWarning(true);
+      return;
+    }
+    doNavigate(effectiveStyle);
   }
 
   // ── JSON 로드 ─────────────────────────────────
@@ -909,8 +936,13 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Travel Style</label>
+              <div id="travel-style-section" className="flex flex-col gap-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                  Travel Style
+                  {!styleTouched && style && (
+                    <span className="ml-2 text-[10px] font-semibold text-orange-400 normal-case tracking-normal">← last trip</span>
+                  )}
+                </label>
                 <button
                   type="button"
                   onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
@@ -919,8 +951,11 @@ export default function Home() {
                 >
                   ✨ Pick Your Vibe
                 </button>
-                <select value={style} onChange={(e) => setStyle(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                <select
+                  value={style}
+                  onChange={(e) => { setStyle(e.target.value); setStyleTouched(true); }}
+                  className={`w-full bg-gray-50 border rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors ${styleTouched ? "border-orange-300" : "border-gray-200"}`}
+                >
                   <option value="" disabled>— Select your travel style —</option>
                   <option value="Solo">Solo FIT Traveler</option>
                   <option value="Couple">Couple / Partners</option>
@@ -1092,6 +1127,46 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Pick Your Vibe 유도 모달 ── */}
+      {showVibeModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowVibeModal(false); }}
+        >
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-7" style={{ animation: "vibeModalIn 0.22s ease-out" }}>
+            <div className="text-center mb-5">
+              <div className="text-4xl mb-3">✨</div>
+              <h3 className="text-xl font-black text-[#2C2520] mb-2">Pick your travel vibe?</h3>
+              <p className="text-sm text-[#61554D] leading-relaxed">
+                Choosing a vibe helps us tailor your route and activity picks for this trip.
+                Takes just a second — or skip and we&apos;ll plan a balanced itinerary.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handlePickVibeClick}
+                className="w-full py-3.5 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
+                style={{ backgroundColor: "#f97316" }}
+              >
+                ✨ Pick My Vibe →
+              </button>
+              <button
+                onClick={handleContinueWithoutVibe}
+                className="w-full py-3 rounded-xl font-bold text-sm text-[#61554D] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all"
+              >
+                Continue Without Vibe →
+              </button>
+            </div>
+          </div>
+          <style>{`
+            @keyframes vibeModalIn {
+              from { opacity: 0; transform: scale(0.93) translateY(12px); }
+              to   { opacity: 1; transform: scale(1)   translateY(0); }
+            }
+          `}</style>
+        </div>
+      )}
 
       {/* ── Departure Info 안내 모달 ── */}
       {showDeptWarning && (
