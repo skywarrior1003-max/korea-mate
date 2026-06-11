@@ -52,7 +52,7 @@ export default function CartDrawer() {
             <span className="min-w-[22px] h-[22px] flex items-center justify-center rounded-full text-xs font-black bg-orange-500 text-white px-1.5 leading-none">
               {items.length}
             </span>
-            <span className="text-sm font-bold text-gray-700">내 보관함</span>
+            <span className="text-sm font-bold text-gray-700">My Picks</span>
             <span className="text-gray-400 text-xs leading-none">▲</span>
           </button>
         ) : (
@@ -62,7 +62,7 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
               <div className="flex items-center gap-2">
                 <span className="text-sm leading-none">🗺️</span>
-                <span className="text-sm font-black text-gray-900">내 보관함</span>
+                <span className="text-sm font-black text-gray-900">My Picks</span>
                 <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-orange-500 text-white px-1 leading-none">
                   {items.length}
                 </span>
@@ -72,7 +72,7 @@ export default function CartDrawer() {
                   onClick={handleClearAll}
                   className="text-[11px] font-semibold text-red-400 hover:text-red-600 transition-colors"
                 >
-                  전체 삭제
+                  Clear All
                 </button>
                 <button
                   onClick={() => setExpanded(false)}
@@ -131,7 +131,7 @@ export default function CartDrawer() {
             {/* 하단 힌트 */}
             <div className="px-4 py-2 border-t border-gray-50 shrink-0">
               <p className="text-[10px] text-gray-400 text-center">
-                Spot을 눌러 상세 보기 · × 버튼으로 삭제
+                Tap a spot for details · Use × to remove
               </p>
             </div>
           </div>

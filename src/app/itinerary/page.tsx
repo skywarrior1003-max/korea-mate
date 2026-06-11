@@ -1190,22 +1190,22 @@ function ItineraryResult() {
                   </span>
                   <span className="flex-1 text-sm font-bold text-[#2C2520] truncate">{p.name}</span>
                   {(!shareId || isOwner) && (
-                    <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 sm:opacity-100 transition-opacity">
+                    <div className="flex items-center gap-1.5 shrink-0">
                       <button
                         onClick={() => movePlace(editDay, pi, "up")}
                         disabled={pi === 0}
-                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer"
+                        className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
                         title="위로"
                       >↑</button>
                       <button
                         onClick={() => movePlace(editDay, pi, "down")}
                         disabled={pi === days[editDay].places.length - 1}
-                        className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer"
+                        className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
                         title="아래로"
                       >↓</button>
                       <button
                         onClick={() => deletePlace(editDay, pi)}
-                        className="w-6 h-6 rounded-full bg-red-100 text-red-500 hover:bg-red-200 text-xs font-black flex items-center justify-center cursor-pointer"
+                        className="w-7 h-7 rounded-full bg-red-500 text-white hover:bg-red-600 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
                         title="삭제"
                       >×</button>
                     </div>
