@@ -1274,7 +1274,7 @@ export default function Home() {
                   className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-bold text-sm border-2 transition-all"
                   style={{ backgroundColor: "#fff7ed", color: "#c2410c", borderColor: "#fed7aa" }}
                 >
-                  <span className="text-xl">⭐🍽️</span>
+                  <span className="text-xl">⭐</span>
                   <span className="whitespace-nowrap">Busan Food 100</span>
                 </Link>
                 <button
