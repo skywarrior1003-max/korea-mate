@@ -855,6 +855,14 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Travel Style</label>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
+                  style={{ backgroundColor: "#f97316" }}
+                >
+                  🔎 Explore Spots First
+                </button>
                 <select value={style} onChange={(e) => setStyle(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
                   <option value="Solo">Solo FIT Traveler</option>
