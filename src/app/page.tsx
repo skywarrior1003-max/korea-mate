@@ -861,7 +861,7 @@ export default function Home() {
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
                   style={{ backgroundColor: "#f97316" }}
                 >
-                  🔎 Explore Spots First
+                  ✨ Pick Your Vibe
                 </button>
                 <select value={style} onChange={(e) => setStyle(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400">
