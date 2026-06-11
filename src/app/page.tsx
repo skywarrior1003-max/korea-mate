@@ -381,7 +381,7 @@ function SpotSearchBar({
 const EVENT_FILTERS = [
   { key: "all",      label: "All"                    },
   { key: "kpop",     label: "🎤 K-POP / BTS"         },
-  { key: "michelin", label: "⭐ Michelin Guide"       },
+  { key: "michelin", label: "🍽️ Food"                  },
   { key: "nature",   label: "🗺️ Attractions & Nature" },
   { key: "culture",  label: "🏛️ History & Culture"    },
   { key: "saved",    label: "❤️ My Saved Spots"       },
@@ -1247,7 +1247,7 @@ export default function Home() {
                   className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-bold text-sm border-2 transition-all"
                   style={{ backgroundColor: "#fff7ed", color: "#c2410c", borderColor: "#fed7aa" }}
                 >
-                  <span className="text-xl">🍽️</span>
+                  <span className="text-xl">⭐🍽️</span>
                   <span className="whitespace-nowrap">Busan Food 100</span>
                 </Link>
                 <button
@@ -1452,9 +1452,9 @@ export default function Home() {
               {/* ── [Section 3] Michelin Guide 맛집 ── */}
               <div>
                 <SectionHeader
-                  emoji="⭐"
-                  title="Michelin Guide Restaurants"
-                  subtitle="Busan's finest dining — from Bib Gourmand to starred establishments"
+                  emoji="⭐🍽️"
+                  title="Busan Food 100"
+                  subtitle="Michelin, local favorites, and taxi-driver picks — curated for Busan travelers"
                   count={michelinFood.length}
                   onViewAll={() => router.push("/restaurants")}
                 />

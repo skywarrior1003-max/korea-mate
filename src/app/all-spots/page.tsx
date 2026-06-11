@@ -51,7 +51,7 @@ function restaurantToEventItem(r: RestaurantItem): EventItem {
 const CATEGORY_FILTERS = [
   { key: "all",      label: "All",                  emoji: ""   },
   { key: "kpop",     label: "K-POP / BTS",          emoji: "🎤" },
-  { key: "michelin", label: "Michelin Guide",        emoji: "⭐" },
+  { key: "michelin", label: "Food",                  emoji: "🍽️" },
   { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
   { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
   { key: "saved",    label: "My Saved Spots",        emoji: "❤️" },
