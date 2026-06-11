@@ -280,6 +280,78 @@ function subtractMinutes(time: string, mins: number): string {
   return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
 }
 
+// ── VisitBusan Mega Events (parity with Cloudflare functions) ─────────────
+interface MegaEvent {
+  title: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  description: string;
+  startTime?: string;
+  endTime?: string;
+}
+
+const MEGA_EVENTS: MegaEvent[] = [
+  {
+    title: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN (광안리 M드론 라이트쇼)",
+    startDate: "2026-06-12",
+    endDate:   "2026-06-13",
+    location:  "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan (수영구 광안해변로 219)",
+    description: "World-scale M-drone light show at Gwangalli Beach. BTS Arirang Busan edition. Official: https://www.visitbusan.net",
+    startTime: "22:00",
+  },
+  {
+    title: "The Red Moment Busan (더 레드 모먼트 부산)",
+    startDate: "2026-06-11",
+    endDate:   "2026-06-13",
+    location:  "Busan (venue TBA)",
+    description: "Special evening event in Busan. 19:00–20:30. Official: https://www.visitbusan.net",
+    startTime: "19:00",
+    endTime:   "20:30",
+  },
+  {
+    title: "Port Village Busan 2026 (포트 빌리지 부산 2026)",
+    startDate: "2026-06-09",
+    endDate:   "2026-06-14",
+    location:  "Busan Port area (부산항 일대)",
+    description: "Multi-cultural festival at Busan Port. Official: https://www.visitbusan.net",
+  },
+  {
+    title: "2026 Byeolbada Busan Night Market (별바다부산 나이트마켓)",
+    startDate: "2026-06-01",
+    endDate:   "2026-08-31",
+    location:  "Haeundae area, Busan (해운대구 일대)",
+    description: "Busan's signature summer night market series. Official: https://www.visitbusan.net",
+  },
+  {
+    title: "2026 Busan Gourmet Selection (부산 고메 셀렉션)",
+    startDate: "2026-06-04",
+    endDate:   "2026-06-30",
+    location:  "Participating restaurants across Busan (부산 전역 참여 레스토랑)",
+    description: "Busan's premier gourmet dining event. Official: https://www.visitbusan.net",
+  },
+];
+
+function getOverlappingMegaEvents(tripStart: string, tripEnd: string): MegaEvent[] {
+  const ts = new Date(tripStart).getTime();
+  const te = new Date(tripEnd).getTime();
+  return MEGA_EVENTS.filter(ev => {
+    const es = new Date(ev.startDate).getTime();
+    const ee = new Date(ev.endDate).getTime();
+    return es <= te && ee >= ts;
+  });
+}
+
+function getBTSDroneShowDate(tripStart: string, tripEnd: string): string | null {
+  const ts = new Date(tripStart);
+  const te = new Date(tripEnd);
+  for (const d of ["2026-06-12", "2026-06-13"]) {
+    const dt = new Date(d);
+    if (dt >= ts && dt <= te) return d;
+  }
+  return null;
+}
+
 export async function POST(request: NextRequest) {
   let body: {
     city: string; startDate: string; endDate: string;
@@ -497,6 +569,53 @@ LAST DAY (Day ${numDays}) — NO DEPARTURE INFO:
 - Prioritize spots near the city center or near the Day 1 starting area.`;
   }
 
+  // ── VisitBusan Mega Events 블록 ──────────────────────────────────────
+  const overlappingEvents = getOverlappingMegaEvents(startDate, endDate);
+  const droneDate = getBTSDroneShowDate(startDate, endDate);
+
+  const megaEventBlock = overlappingEvents.length > 0 ? `
+
+╔══════════════════════════════════════════════════════╗
+  VISITBUSAN OFFICIAL MEGA EVENTS — HIGHEST PRIORITY
+╚══════════════════════════════════════════════════════╝
+Real confirmed events during this trip. Integrate them on their exact dates.
+All dates are in YYYY-MM-DD format — do NOT alter or approximate:
+
+${overlappingEvents.map(ev =>
+    `• [${ev.startDate} ~ ${ev.endDate}] ${ev.title}\n  Location: ${ev.location}${ev.startTime ? `\n  Time: ${ev.startTime}${ev.endTime ? `–${ev.endTime}` : ""}` : ""}\n  ${ev.description}`
+  ).join("\n\n")}` : "";
+
+  const droneAnchorBlock = droneDate ? (() => {
+    const dayNum =
+      Math.ceil(
+        (new Date(droneDate).getTime() - new Date(startDate).getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1;
+    return `
+
+╔══════════════════════════════════════════════════════╗
+  🔴 BTS DRONE SHOW ANCHOR — DAY ${dayNum} (${droneDate}) 22:00 FIXED
+╚══════════════════════════════════════════════════════╝
+SUPREME PRIORITY — overrides ALL other Day ${dayNum} location anchors and prohibited-zone lists.
+Even if Gwangalli appears in a "prohibited" list above, it is REQUIRED on Day ${dayNum}.
+
+MANDATORY: Include this EXACT entry in Day ${dayNum} places array — no substitutions:
+  name: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN"
+  category: "Experience"
+  location: "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan"
+  time: "22:00"
+  duration: "1 hour"
+  tips: "World-scale M-drone show. Free entry. Arrive by 21:30 — beach fills up fast. Bring a jacket."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea"
+
+Day ${dayNum} evening cluster (17:00–21:30): ALL spots in Gwangalli–Millak area:
+  ✓ Gwangalli restaurant strip — dinner (~18:30)
+  ✓ Millak Waterfront Park — evening walk (~20:00)
+  ✓ Gwangan Bridge night-view café
+  ✗ BANNED on Day ${dayNum} evening: Haeundae, Nampo-dong, Seomyeon, Centum City
+  NOTE: If traveling from arrival point (e.g. Busan Station) to Gwangalli, ~25 min by subway — schedule departure by 17:30.`;
+  })() : "";
+
   // ── 최종 프롬프트 ──────────────────────────────────────────────────────
   const prompt = `You are an expert Korea travel planner for foreign visitors.
 
@@ -508,6 +627,8 @@ ${locationNote}
 ${preferredSpotsNote}
 ${day1Block}
 ${lastDayBlock}
+${megaEventBlock}
+${droneAnchorBlock}
 
 CRITICAL GLOBAL RULES (apply to ALL days):
 1. ALWAYS follow the Day 1 time restrictions above. If the traveler arrives in the evening, Day 1 has NO morning or lunch slots.
