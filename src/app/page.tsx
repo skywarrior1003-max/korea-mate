@@ -1105,24 +1105,36 @@ export default function Home() {
                 placeholder="Search spots, BTS, Michelin, beach, hiking…"
                 highlighted={searchHighlight}
               />
-              {/* ── GPS Near Me 독립 버튼 (항상 전체 폭 노출) ── */}
-              <button
-                onClick={handleGpsToggle}
-                disabled={gpsLoading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer"
-                style={
-                  gpsActive
-                    ? { backgroundColor: "#1d4ed8", color: "#fff", borderColor: "#1d4ed8" }
-                    : { backgroundColor: "#eff6ff", color: "#1d4ed8", borderColor: "#93c5fd" }
-                }
-              >
-                {gpsLoading ? (
-                  <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <span className="text-base">📍</span>
-                )}
-                {gpsActive ? "GPS 활성 — 거리순 정렬 중 (해제하려면 클릭)" : "내 주변 중심 보기 (Near Me)"}
-              </button>
+              {/* ── 2분할 버튼: 미식 가이드 + Near Me ── */}
+              <div className="flex gap-2">
+                <Link
+                  href="/restaurants"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-bold text-sm border-2 transition-all"
+                  style={{ backgroundColor: "#fff7ed", color: "#c2410c", borderColor: "#fed7aa" }}
+                >
+                  <span className="text-base">🍽️</span>
+                  <span className="whitespace-nowrap">미식 100선</span>
+                </Link>
+                <button
+                  onClick={handleGpsToggle}
+                  disabled={gpsLoading}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer"
+                  style={
+                    gpsActive
+                      ? { backgroundColor: "#1d4ed8", color: "#fff", borderColor: "#1d4ed8" }
+                      : { backgroundColor: "#eff6ff", color: "#1d4ed8", borderColor: "#93c5fd" }
+                  }
+                >
+                  {gpsLoading ? (
+                    <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <span className="text-base">📍</span>
+                  )}
+                  <span className="whitespace-nowrap">
+                    {gpsActive ? "GPS 활성 중" : "Near Me"}
+                  </span>
+                </button>
+              </div>
               {gpsError && (
                 <p className="text-xs text-red-500 font-medium -mt-0.5">{gpsError}</p>
               )}
