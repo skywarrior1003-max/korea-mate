@@ -366,6 +366,56 @@ function getBTSDroneShowDate(tripStart: string, tripEnd: string): string | null 
   return null;
 }
 
+// ── Gemini 실패 시 사용자 노출 fallback 일정 생성기 ────────────────────────────
+function buildFallbackItinerary(
+  city: string,
+  startDate: string,
+  endDate: string,
+  startLocation?: string,
+  arrivalTime?: string,
+) {
+  const base = buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime);
+  const droneDate = getBTSDroneShowDate(startDate, endDate);
+
+  if (droneDate) {
+    const startDt = new Date(startDate);
+    const droneDt = new Date(droneDate);
+    const dayIdx  = Math.round((droneDt.getTime() - startDt.getTime()) / (1000 * 60 * 60 * 24));
+    const btsDay  = base.days[dayIdx];
+    if (btsDay && dayIdx >= 0) {
+      const morning = btsDay.places.filter(
+        p => parseInt((p.time ?? "14:00").split(":")[0] ?? "14", 10) < 16
+      );
+      base.days[dayIdx] = {
+        ...btsDay,
+        places: [
+          ...morning,
+          {
+            name: "BTS Busan Concert — ARIRANG IN BUSAN",
+            category: "Experience",
+            location: "Busan Asiad Main Stadium (아시아드 주경기장), Yeonje-gu, Busan",
+            time: "16:00",
+            duration: "4 hours",
+            tips: "Gates open 2 hours early. Take Metro Line 3 to Sports Complex Station.",
+            googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Busan+Asiad+Main+Stadium+Korea",
+          },
+          {
+            name: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN",
+            category: "Experience",
+            location: "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan",
+            time: "22:00",
+            duration: "1 hour",
+            tips: "Free 1,000-drone aerial show. Arrive by 21:30. Metro Line 3 → Line 2 to Gwangan Station.",
+            googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea",
+          },
+        ],
+      };
+    }
+  }
+
+  return { ...base, isFallback: true as const };
+}
+
 export async function POST(request: NextRequest) {
   let body: {
     city: string; startDate: string; endDate: string;
@@ -394,7 +444,7 @@ export async function POST(request: NextRequest) {
   // ── 프로덕션 전용: 실제 Gemini API 키 검증 ───────────────────────────────
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
+    return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
   }
 
   const start = new Date(startDate);
@@ -705,5 +755,5 @@ Additional rules:
     }
   }
 
-  return NextResponse.json({ error: lastError.message }, { status: 500 });
+  return NextResponse.json(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime));
 }

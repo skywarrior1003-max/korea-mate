@@ -190,6 +190,79 @@ function getBTSDroneShowDate(tripStart: string, tripEnd: string): string | null 
   return null;
 }
 
+// ── Gemini 실패 시 사용자 노출 fallback 일정 생성기 ────────────────────────────
+function buildFallbackItinerary(
+  city: string,
+  startDate: string,
+  endDate: string,
+  startLocation?: string,
+  arrivalTime?: string,
+): { days: object[]; isFallback: true } {
+  const start    = new Date(startDate);
+  const end      = new Date(endDate);
+  const numDays  = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  const arrHour  = arrivalTime ? parseInt(arrivalTime.split(":")[0] ?? "14", 10) : 14;
+  const startArea = startLocation || city;
+
+  type FP = { name: string; category: string; location: string; time: string; duration: string; tips: string };
+  const SPOTS: FP[] = [
+    { name: "Gamcheon Culture Village",   category: "Attraction", location: "Saha-gu",    time: "09:30", duration: "2 hours",   tips: "Wear comfortable shoes — steep hills. Arrive early." },
+    { name: "Jagalchi Fish Market",        category: "Market",     location: "Nampo-dong", time: "14:00", duration: "1.5 hours", tips: "Try fresh seafood on the 2nd floor. Card & cash accepted." },
+    { name: "Gwangalli Beach Sunset",      category: "Attraction", location: "Suyeong-gu",time: "17:30", duration: "1 hour",    tips: "Great view of Gwangan Bridge. Best before sunset." },
+    { name: "Haeundae Beach Morning Walk", category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1 hour",    tips: "Best before 10 AM for fewer crowds." },
+    { name: "Haedong Yonggungsa Temple",   category: "Attraction", location: "Gijang-gun", time: "10:00", duration: "1.5 hours", tips: "Arrive before 11 AM — parking fills fast." },
+    { name: "BIFF Square Street Food",     category: "Market",     location: "Nampo-dong", time: "15:00", duration: "1 hour",    tips: "Famous for ssiat hotteok (seed pancake)." },
+    { name: "Taejongdae Coastal Walk",     category: "Attraction", location: "Yeongdo-gu", time: "14:00", duration: "2 hours",   tips: "Take the Danubi Train inside the park." },
+    { name: "Busan Tower Night View",      category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1 hour",    tips: "₩12,000 entry. Best enjoyed at night." },
+  ];
+
+  const days = Array.from({ length: numDays }, (_, i) => {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().split("T")[0]!;
+    const sl = SPOTS.length;
+
+    let places: FP[];
+    if (i === 0) {
+      places = [
+        { name: `${startArea} Arrival & Check-in`, category: "Experience", location: startArea, time: `${String(arrHour).padStart(2, "0")}:00`, duration: "1 hour", tips: "Check in to your hotel and freshen up." },
+        ...(arrHour <= 16 ? [SPOTS[0]!] : []),
+        SPOTS[1]!,
+      ];
+    } else {
+      const offset = (i - 1) * 3;
+      places = [SPOTS[offset % sl]!, SPOTS[(offset + 1) % sl]!, SPOTS[(offset + 2) % sl]!];
+    }
+
+    return {
+      date: dateStr,
+      dayNumber: i + 1,
+      places: places.map(p => ({
+        ...p,
+        googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + " " + city + " Korea")}`,
+      })),
+    };
+  });
+
+  const droneDate = getBTSDroneShowDate(startDate, endDate);
+  if (droneDate) {
+    const droneDt = new Date(droneDate);
+    const dayIdx  = Math.round((droneDt.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+    const btsDay  = days[dayIdx];
+    if (btsDay && dayIdx >= 0) {
+      type P = { time?: string; [k: string]: unknown };
+      const morning = (btsDay.places as P[]).filter(p => parseInt(String(p.time ?? "14").split(":")[0] ?? "14", 10) < 16);
+      (btsDay.places as P[]) = [
+        ...morning,
+        { name: "BTS Busan Concert — ARIRANG IN BUSAN", category: "Experience", location: "Busan Asiad Main Stadium (아시아드 주경기장), Yeonje-gu, Busan", time: "16:00", duration: "4 hours", tips: "Gates open 2 hours early. Take Metro Line 3 to Sports Complex Station.", googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Busan+Asiad+Main+Stadium+Korea" },
+        { name: "Gwangalli M Drone Light Show — BTS THE CITY ARIRANG BUSAN", category: "Experience", location: "Gwangalli Beach, 219 Gwanganbeolli-ro, Suyeong-gu, Busan", time: "22:00", duration: "1 hour", tips: "Free 1,000-drone aerial show. Arrive by 21:30. Metro Line 3 → Line 2 to Gwangan Station.", googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach+Busan+Korea" },
+      ];
+    }
+  }
+
+  return { days, isFallback: true };
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 //  GEMINI UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
@@ -655,14 +728,7 @@ export const onRequestPost: (context: {
     "Content-Type": "application/json",
   };
 
-  // API 키 사전 검증
   const apiKey = env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return new Response(
-      JSON.stringify({ error: "GEMINI_API_KEY is not configured on the server." }),
-      { status: 500, headers: corsHeaders }
-    );
-  }
 
   // Request body 파싱
   let body: RequestBody;
@@ -691,6 +757,13 @@ export const onRequestPost: (context: {
     return new Response(
       JSON.stringify({ error: "Missing required fields: startDate, endDate." }),
       { status: 400, headers: corsHeaders }
+    );
+  }
+
+  if (!apiKey) {
+    return new Response(
+      JSON.stringify(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime)),
+      { status: 200, headers: corsHeaders }
     );
   }
 
@@ -741,11 +814,10 @@ export const onRequestPost: (context: {
     }
   }
 
-  // 모든 모델 실패 → 솔직한 에러 반환 (Mock 데이터 없음)
-  const lastError = allErrors[allErrors.length - 1] ?? "All Gemini models failed.";
+  // 모든 모델 실패 → fallback 일정 반환 (기술 오류 사용자 노출 금지)
   console.error("Gemini all models failed:", allErrors.join(" | "));
   return new Response(
-    JSON.stringify({ error: `AI generation failed. Please try again. (${lastError})` }),
-    { status: 500, headers: corsHeaders }
+    JSON.stringify(buildFallbackItinerary(city, startDate, endDate, startLocation, arrivalTime)),
+    { status: 200, headers: corsHeaders }
   );
 };

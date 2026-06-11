@@ -294,6 +294,7 @@ function ItineraryResult() {
   const [days,          setDays]          = useState<Day[]>([]);
   const [loading,       setLoading]       = useState(true);
   const [error,         setError]         = useState<string | null>(null);
+  const [isFallback,    setIsFallback]    = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
@@ -533,8 +534,8 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined)
-            .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
-            .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
+            .then((data) => { setDays(sanitizeDays(data.days)); if (data.isFallback) setIsFallback(true); setLoading(false); })
+            .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
           return;
         }
         // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
@@ -826,6 +827,16 @@ function ItineraryResult() {
           <span className="text-lg">🔗</span>
           <p className="text-sm font-bold text-blue-700 flex-1">
             You&apos;re viewing a shared itinerary. Changes you make will sync back to this link.
+          </p>
+        </div>
+      )}
+
+      {/* ── AI fallback 배너 ── */}
+      {isFallback && (
+        <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-amber-50 border border-amber-200">
+          <span className="text-lg">✨</span>
+          <p className="text-sm font-bold text-amber-700 flex-1">
+            AI is busy right now, so we prepared a safe KoreaMate recommended plan for you.
           </p>
         </div>
       )}
