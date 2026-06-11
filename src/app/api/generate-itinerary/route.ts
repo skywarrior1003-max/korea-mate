@@ -10,11 +10,9 @@ function sleep(ms: number) {
 }
 
 function warnIfKeyFormatSuspect(key: string): void {
-  if (!key.startsWith("AIzaSy")) {
+  if (key.length < 20) {
     console.warn(
-      "[generate-itinerary] WARNING: GEMINI_API_KEY format is unexpected. " +
-      "Google AI Studio keys start with 'AIzaSy'. " +
-      "If this key is from a different credential type, expect 400/403/404 errors. " +
+      "[generate-itinerary] WARNING: GEMINI_API_KEY appears too short (< 20 chars). " +
       "Verify at: https://aistudio.google.com/apikey — KEY VALUE NOT LOGGED."
     );
   }
