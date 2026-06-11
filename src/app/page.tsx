@@ -536,19 +536,19 @@ export default function Home() {
   }
 
   function handleGenerate() {
-    // Pick Your Vibe 미선택 → 부드러운 유도 모달 (차단이 아닌 안내)
-    if (!styleTouched) {
-      setShowVibeModal(true);
-      return;
-    }
+    // 필수 조건 먼저 확인 — vibe 모달은 모든 조건 통과 후 마지막에만 표시
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
     }
     if (isNavigating) return;
-    // departure info 미입력 + 아직 dismissed 안 됨 → 안내 모달
     if (!departurePlace && !departureTime && !deptDismissed) {
       setShowDeptWarning(true);
+      return;
+    }
+    // 모든 필수 조건 완료 → Pick Your Vibe 미선택 시 유도 모달
+    if (!styleTouched) {
+      setShowVibeModal(true);
       return;
     }
     doNavigate();
@@ -563,9 +563,8 @@ export default function Home() {
 
   function handleContinueWithoutVibe() {
     setShowVibeModal(false);
-    const effectiveStyle = style || "Solo";
-    if (!style) setStyle(effectiveStyle);
-    setStyleTouched(true);
+    // vibe 모달은 handleGenerate에서 필수 조건 검증 후 열리지만,
+    // 모달이 열려 있는 동안 상태가 바뀌는 엣지케이스 방어
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
@@ -574,6 +573,10 @@ export default function Home() {
       setShowDeptWarning(true);
       return;
     }
+    const effectiveStyle = style || "Solo";
+    if (!style) setStyle(effectiveStyle);
+    // 모든 조건 통과 확인 후에만 touched 세팅 → 이전 시도가 조건 부족으로 막혔어도 상태가 남지 않음
+    setStyleTouched(true);
     doNavigate(effectiveStyle);
   }
 
