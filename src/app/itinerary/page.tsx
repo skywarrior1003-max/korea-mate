@@ -278,8 +278,10 @@ function ItineraryResult() {
   const paramEndDate     = searchParams.get("endDate")       || "";
   const paramTravelers   = searchParams.get("travelers")     || "1";
   const paramTravelStyle = searchParams.get("travelStyle")   || "Solo";
-  const paramStartLoc    = searchParams.get("startLocation") || "";
-  const paramArrivalTime = searchParams.get("arrivalTime")   || "";
+  const paramStartLoc      = searchParams.get("startLocation")  || "";
+  const paramArrivalTime   = searchParams.get("arrivalTime")    || "";
+  const paramDeparturePlace = searchParams.get("departurePlace") || "";
+  const paramDepartureTime  = searchParams.get("departureTime")  || "";
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
@@ -485,8 +487,9 @@ function ItineraryResult() {
     } catch { /* ignore */ }
 
     // ── 캐시 키 v3: startLocation + arrivalTime 해시 포함, 구버전과 완전 분리
-    const locHash = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
-    const idLocalKey = `koreamate_itin3_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}`;
+    const locHash  = (paramStartLoc + paramArrivalTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
+    const deptHash = (paramDeparturePlace + paramDepartureTime).replace(/[^a-zA-Z0-9]/g, "").slice(0, 12);
+    const idLocalKey = `koreamate_itin3_id_${paramCity}_${paramStartDate}_${paramEndDate}_${paramTravelers}_${paramTravelStyle}_${locHash}${deptHash ? "_d" + deptHash : ""}`;
     let id: string | null = null;
     try { id = localStorage.getItem(idLocalKey); } catch {}
     if (!id) {
@@ -529,7 +532,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
+          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined)
             .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
             .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
           return;
@@ -555,7 +558,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames())
+      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined)
         .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
         .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
     });
@@ -632,11 +635,12 @@ function ItineraryResult() {
     city: string, sd: string, ed: string,
     trav: string, tstyle: string,
     startLoc?: string, arrTime?: string,
-    preferredSpots?: string[]
+    preferredSpots?: string[],
+    deptPlace?: string, deptTime?: string,
   ) {
     const MIN_MS = 2500 + Math.random() * 1000; // 2.5~3.5s
     const t0 = Date.now();
-    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots);
+    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots, deptPlace, deptTime);
     const elapsed = Date.now() - t0;
     const wait = Math.max(0, MIN_MS - elapsed);
     if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));

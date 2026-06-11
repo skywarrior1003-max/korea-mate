@@ -274,12 +274,19 @@ function isMockMode(): boolean {
   );
 }
 
+function subtractMinutes(time: string, mins: number): string {
+  const [h, m] = time.split(":").map(Number);
+  const total = ((h * 60 + (m ?? 0)) - mins + 1440) % 1440;
+  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+}
+
 export async function POST(request: NextRequest) {
   let body: {
     city: string; startDate: string; endDate: string;
     travelers: string; travelStyle: string;
     startLocation?: string; arrivalTime?: string;
     preferredSpots?: string[];
+    departurePlace?: string; departureTime?: string;
   };
   try {
     body = await request.json();
@@ -287,7 +294,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots } = body;
+  const { city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime } = body;
   if (!city || !startDate || !endDate) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
@@ -470,6 +477,26 @@ IMPORTANT Day 1 — NIGHT ARRIVAL:
       ? `\nUSER'S SAVED FAVORITE SPOTS (must prioritize — include as many of these as possible across all days):\n${preferredSpots.map((s) => `  - ${s}`).join("\n")}\n`
       : "";
 
+  // ── 마지막 날 출발 정보 블록 ────────────────────────────────────────────
+  let lastDayBlock: string;
+  if (departurePlace && departureTime) {
+    const isAirport = departurePlace.toLowerCase().includes("airport") || departurePlace.toLowerCase().includes("gimhae");
+    const buffer = isAirport ? 90 : 60;
+    const cutoff = subtractMinutes(departureTime, buffer);
+    lastDayBlock = `
+LAST DAY (Day ${numDays}) — DEPARTURE RULES (MANDATORY):
+- Traveler departs from: ${departurePlace} at ${departureTime}.
+- Must arrive at departure point ${buffer} min early. Final activity MUST end by ${cutoff}.
+- ALL spots on Day ${numDays} must be close to ${departurePlace} to minimize transit risk.
+- Do NOT place any spot on the opposite side of the city from ${departurePlace} on Day ${numDays}.`;
+  } else {
+    lastDayBlock = `
+LAST DAY (Day ${numDays}) — NO DEPARTURE INFO:
+- No departure info provided. Keep Day ${numDays} light and central.
+- Avoid long-distance or hard-to-reach spots on the last day.
+- Prioritize spots near the city center or near the Day 1 starting area.`;
+  }
+
   // ── 최종 프롬프트 ──────────────────────────────────────────────────────
   const prompt = `You are an expert Korea travel planner for foreign visitors.
 
@@ -480,6 +507,7 @@ Travel style: ${travelStyle}
 ${locationNote}
 ${preferredSpotsNote}
 ${day1Block}
+${lastDayBlock}
 
 CRITICAL GLOBAL RULES (apply to ALL days):
 1. ALWAYS follow the Day 1 time restrictions above. If the traveler arrives in the evening, Day 1 has NO morning or lunch slots.
@@ -488,6 +516,7 @@ CRITICAL GLOBAL RULES (apply to ALL days):
 4. Geographically cluster spots by neighborhood each day to minimize transit time.
 5. Focus on real, well-known spots in ${city}.
 6. Tips must be practical for foreigners (cash/card info, transport, language tips).
+7. STRICTLY follow the Last Day departure rules above.
 
 Return ONLY a valid JSON object with this exact structure (no markdown, no extra text):
 {

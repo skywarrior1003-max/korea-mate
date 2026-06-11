@@ -6,12 +6,14 @@ export async function generateItinerary(
   travelStyle: string,
   startLocation?: string,
   arrivalTime?: string,
-  preferredSpots?: string[]
+  preferredSpots?: string[],
+  departurePlace?: string,
+  departureTime?: string,
 ) {
   const response = await fetch("/api/generate-itinerary", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots }),
+    body: JSON.stringify({ city, startDate, endDate, travelers, travelStyle, startLocation, arrivalTime, preferredSpots, departurePlace, departureTime }),
   });
 
   if (!response.ok) {

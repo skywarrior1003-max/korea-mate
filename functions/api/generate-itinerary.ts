@@ -13,6 +13,8 @@ interface RequestBody {
   travelStyle: string;
   startLocation?: string;
   arrivalTime?: string;
+  departurePlace?: string;
+  departureTime?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -239,6 +241,12 @@ async function callGemini(
 //  PROMPT BUILDER
 // ─────────────────────────────────────────────────────────────────────────────
 
+function subtractMinutes(time: string, mins: number): string {
+  const [h, m] = time.split(":").map(Number);
+  const total = ((h * 60 + (m ?? 0)) - mins + 1440) % 1440;
+  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+}
+
 function buildPrompt(
   city: string,
   startDate: string,
@@ -248,7 +256,9 @@ function buildPrompt(
   travelStyle: string,
   startLocation: string,
   arrivalTime: string,
-  arrivalHour: number
+  arrivalHour: number,
+  departurePlace?: string,
+  departureTime?: string,
 ): string {
   const loc = startLocation.toLowerCase();
   const anchor = detectLocationAnchor(loc);
@@ -439,12 +449,33 @@ Day ${dayNum} evening cluster (17:00–21:30): ALL spots in Gwangalli–Millak a
   NOTE: If traveling from arrival point (e.g. Busan Station) to Gwangalli, ~25 min by subway — schedule departure by 17:30.`;
   })() : "";
 
+  // ── 마지막 날 출발 정보 블록 ──────────────────────────────────────────
+  let lastDayBlock: string;
+  if (departurePlace && departureTime) {
+    const isAirport = departurePlace.toLowerCase().includes("airport") || departurePlace.toLowerCase().includes("gimhae");
+    const buffer = isAirport ? 90 : 60;
+    const cutoff = subtractMinutes(departureTime, buffer);
+    lastDayBlock = `
+LAST DAY (Day ${numDays}) — DEPARTURE RULES (MANDATORY):
+- Traveler departs from: ${departurePlace} at ${departureTime}.
+- Must arrive at departure point ${buffer} min early. Final activity MUST end by ${cutoff}.
+- ALL spots on Day ${numDays} must be close to ${departurePlace} to minimize transit risk.
+- Do NOT place any spot on the opposite side of the city from ${departurePlace} on Day ${numDays}.`;
+  } else {
+    lastDayBlock = `
+LAST DAY (Day ${numDays}) — NO DEPARTURE INFO:
+- No departure info provided. Keep Day ${numDays} light and central.
+- Avoid long-distance or hard-to-reach spots on the last day.
+- Prioritize spots near the city center or near the Day 1 starting area.`;
+  }
+
   return `You are an expert Korea travel planner for foreign visitors.
 User input: city=${city}, dates=${startDate}→${endDate}, travelers=${travelers}, style=${travelStyle}
 Arrival: startLocation="${startLocation || "(not specified)"}", arrivalTime="${arrivalTime}"
 
 ${locationNote}
 ${day1Block}
+${lastDayBlock}
 ${megaEventBlock}
 ${droneAnchorBlock}
 
@@ -454,6 +485,7 @@ GLOBAL RULES (Days 2–${numDays} and all days without a constraint above):
 3. Cluster spots geographically each day to minimize transit time.
 4. Focus on real, well-known spots in ${city}, Korea.
 5. Tips must be practical for foreigners (cash/card, transport, language, hours).
+6. STRICTLY follow the Last Day departure rules above.
 ${day1Reminder}
 
 OUTPUT FORMAT: Return ONLY a raw JSON object. No markdown fences, no explanation text.
@@ -636,6 +668,8 @@ export const onRequestPost: (context: {
     travelStyle = "Solo",
     startLocation = "",
     arrivalTime = "14:00",
+    departurePlace = "",
+    departureTime = "",
   } = body;
 
   if (!startDate || !endDate) {
@@ -658,7 +692,8 @@ export const onRequestPost: (context: {
   const prompt = buildPrompt(
     city, startDate, endDate, numDays,
     travelers, travelStyle,
-    startLocation, arrivalTime, arrivalHour
+    startLocation, arrivalTime, arrivalHour,
+    departurePlace || undefined, departureTime || undefined,
   );
 
   const allErrors: string[] = [];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -507,18 +507,35 @@ export default function Home() {
   }
 
   const router = useRouter();
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isNavigating,    setIsNavigating]    = useState(false);
+  const [departurePlace,  setDeparturePlace]  = useState("");
+  const [departureTime,   setDepartureTime]   = useState("");
+  const [showDeptSection, setShowDeptSection] = useState(false);
+  const [showDeptWarning, setShowDeptWarning] = useState(false);
+  const [deptDismissed,   setDeptDismissed]   = useState(false);
+  const deptSectionRef = useRef<HTMLDivElement>(null);
 
   // ── AI 일정 생성 ──────────────────────────────
+  function doNavigate() {
+    setIsNavigating(true);
+    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style, startLocation, arrivalTime });
+    if (departurePlace) params.set("departurePlace", departurePlace);
+    if (departureTime)  params.set("departureTime",  departureTime);
+    router.push(`/itinerary?${params.toString()}`);
+  }
+
   function handleGenerate() {
     if (!startDate || !endDate) {
       alert("Please select both start and end travel dates.");
       return;
     }
-    if (isNavigating) return; // 중복 클릭 방지
-    setIsNavigating(true);
-    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: style, startLocation, arrivalTime });
-    router.push(`/itinerary?${params.toString()}`);
+    if (isNavigating) return;
+    // departure info 미입력 + 아직 dismissed 안 됨 → 안내 모달
+    if (!departurePlace && !departureTime && !deptDismissed) {
+      setShowDeptWarning(true);
+      return;
+    }
+    doNavigate();
   }
 
   // ── JSON 로드 ─────────────────────────────────
@@ -951,6 +968,79 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* ── Optional: Departure Info ── */}
+            <div ref={deptSectionRef} className="mt-4">
+              {!showDeptSection ? (
+                <button
+                  type="button"
+                  onClick={() => setShowDeptSection(true)}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold border border-dashed border-gray-300 text-gray-500 hover:border-orange-300 hover:text-orange-600 transition-all bg-transparent"
+                >
+                  <span>✈️</span>
+                  <span>Add Departure Info</span>
+                  <span className="text-[10px] font-normal text-gray-400">(optional — for a safer last day)</span>
+                </button>
+              ) : (
+                <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-4 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-black uppercase tracking-wider text-orange-700">
+                      ✈️ Optional: Departure Info
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => { setShowDeptSection(false); setDeparturePlace(""); setDepartureTime(""); }}
+                      className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      ✕ Remove
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-gray-500 -mt-1">
+                    Add your train or flight time so we can avoid risky routes on your last day.
+                  </p>
+
+                  {/* Where do you leave from? */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-gray-600">📍 Where do you leave from?</label>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[
+                        { value: "KTX Busan Station", label: "🚄 KTX Busan Station" },
+                        { value: "Gimhae Airport",    label: "✈️ Gimhae Airport" },
+                        { value: "Haeundae",          label: "🏖️ Haeundae" },
+                        { value: "Seomyeon",          label: "🛍️ Seomyeon" },
+                        { value: "Gwangalli Beach",   label: "🌊 Gwangalli Beach" },
+                        { value: "Nampo-dong",        label: "🏙️ Nampo-dong" },
+                      ].map((loc) => (
+                        <button
+                          key={loc.value}
+                          type="button"
+                          onClick={() => setDeparturePlace(loc.value)}
+                          className={`px-3 py-2 rounded-lg text-xs font-bold text-left transition-all border ${
+                            departurePlace === loc.value
+                              ? "border-orange-400 bg-orange-100 text-orange-700"
+                              : "border-gray-200 bg-white text-gray-600 hover:border-orange-300"
+                          }`}
+                        >
+                          {loc.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Departure time */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-gray-600">🕐 Departure time on last day</label>
+                    <input
+                      type="time"
+                      value={departureTime}
+                      onChange={(e) => setDepartureTime(e.target.value)}
+                      className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={handleGenerate}
               disabled={isNavigating}
@@ -962,6 +1052,43 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Departure Info 안내 모달 ── */}
+      {showDeptWarning && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowDeptWarning(false); }}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            <div className="text-3xl mb-3 text-center">✈️</div>
+            <h3 className="text-lg font-black text-gray-900 mb-2 text-center">
+              Want a safer last-day plan?
+            </h3>
+            <p className="text-sm text-gray-500 text-center mb-5 leading-relaxed">
+              Add your train or flight departure time so we can avoid risky routes on your final day.
+            </p>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setShowDeptWarning(false);
+                  setShowDeptSection(true);
+                  setTimeout(() => deptSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+                }}
+                className="w-full py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
+                style={{ backgroundColor: "#f97316" }}
+              >
+                Add Departure Info
+              </button>
+              <button
+                onClick={() => { setShowDeptWarning(false); setDeptDismissed(true); doNavigate(); }}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Continue Without It
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* AdBanner */}
       <div className="max-w-4xl mx-auto w-full px-4 py-8">
