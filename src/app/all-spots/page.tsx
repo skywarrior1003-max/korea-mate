@@ -201,6 +201,21 @@ export default function AllSpotsPage() {
       const districts = DISTRICT_FILTERS.find(d => d.key === districtFilter)?.districts ?? [];
       list = list.filter(e => districts.includes(e.district));
     }
+    // K-POP 필터: BTS Concert → Drone Show → Visit Busan → 나머지
+    if (categoryFilter === "kpop" && !gpsActive) {
+      const kpopPri = (e: EventItem) => {
+        if (e.id === "evt-anchor-001") return 0;
+        if (e.id === "evt-drone-001")  return 1;
+        if (e.id.startsWith("visit-busan-")) return 2;
+        return e.isTrending ? 3 : 4;
+      };
+      return [...list].sort((a, b) => {
+        const diff = kpopPri(a) - kpopPri(b);
+        if (diff !== 0) return diff;
+        return (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0);
+      });
+    }
+
     // GPS: 3km 이내 필터 + 거리 오름차순 정렬
     if (gpsActive && userCoords) {
       list = list.filter(e => {

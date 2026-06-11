@@ -590,17 +590,28 @@ export default function Home() {
     return () => window.removeEventListener(FAVORITES_EVENT, handler);
   }, []);
 
+  // ── K-POP 고정 정렬 우선순위 (BTS Concert → Drone → VisitBusan → 나머지) ──
+  function kpopSortPriority(e: EventItem): number {
+    if (e.id === "evt-anchor-001") return 0;
+    if (e.id === "evt-drone-001")  return 1;
+    if (e.id.startsWith("visit-busan-")) return 2;
+    return e.isTrending ? 3 : 4;
+  }
+
   // ── 섹션별 데이터 (4-Section 모드) ───────────────────
   const megaEvents = useMemo(() => {
     const filtered = eventsData.filter((e) =>
       ["event", "festival", "concert"].includes(e.type) ||
       (e.tags ?? []).some(t => ["bts", "k-pop", "kpop", "idol"].some(k => t.toLowerCase().includes(k)))
     );
-    // Pin: BTS Concert (anchor) first, Drone Show second
-    const anchor = filtered.find(e => e.id === "evt-anchor-001");
-    const drone  = filtered.find(e => e.id === "evt-drone-001");
-    const rest   = filtered.filter(e => e.id !== "evt-anchor-001" && e.id !== "evt-drone-001");
-    return [...(anchor ? [anchor] : []), ...(drone ? [drone] : []), ...rest];
+    // Pin: BTS Concert → Drone Show → Visit Busan events → rest
+    const anchor     = filtered.find(e => e.id === "evt-anchor-001");
+    const drone      = filtered.find(e => e.id === "evt-drone-001");
+    const visitBusan = filtered.filter(e => e.id.startsWith("visit-busan-"));
+    const rest       = filtered.filter(e =>
+      e.id !== "evt-anchor-001" && e.id !== "evt-drone-001" && !e.id.startsWith("visit-busan-")
+    );
+    return [...(anchor ? [anchor] : []), ...(drone ? [drone] : []), ...visitBusan, ...rest];
   }, [eventsData]);
 
   const michelinFood = useMemo(
@@ -677,6 +688,14 @@ export default function Home() {
       });
     }
 
+    // K-POP 필터: BTS Concert → Drone Show → Visit Busan → 나머지 (isTrending 순)
+    if (eventFilter === "kpop") {
+      return [...list].sort((a, b) => {
+        const diff = kpopSortPriority(a) - kpopSortPriority(b);
+        if (diff !== 0) return diff;
+        return (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0);
+      });
+    }
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
   }, [allItems, eventFilter, globalSearch, savedIds, gpsActive, userCoords]);
 
