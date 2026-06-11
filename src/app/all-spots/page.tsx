@@ -112,9 +112,9 @@ export function getEventCoords(event: EventItem): { lat: number; lng: number } {
 
 function matchCategoryFilter(e: EventItem, key: string, savedIds: string[]): boolean {
   if (key === "all")      return true;
-  if (key === "kpop")     return ["event","festival","concert"].includes(e.type) || e.tags.some(t => ["bts","k-pop","kpop","idol"].some(k => t.toLowerCase().includes(k)));
+  if (key === "kpop")     return ["event","festival","concert"].includes(e.type) || (e.tags ?? []).some(t => ["bts","k-pop","kpop","idol"].some(k => t.toLowerCase().includes(k)));
   if (key === "nature")   return ["attraction","nature","pilgrimage","permanent"].includes(e.type);
-  if (key === "culture")  return ["heritage","museum","cultural"].some(c => e.type.toLowerCase().includes(c)) || e.tags.some(t => ["history","culture","temple","palace","heritage","tradition","shrine"].some(k => t.toLowerCase().includes(k)));
+  if (key === "culture")  return ["heritage","museum","cultural"].some(c => e.type.toLowerCase().includes(c)) || (e.tags ?? []).some(t => ["history","culture","temple","palace","heritage","tradition","shrine"].some(k => t.toLowerCase().includes(k)));
   if (key === "michelin") return e.type === "restaurant";
   if (key === "saved")    return savedIds.includes(e.id);
   return true;
@@ -188,9 +188,9 @@ export default function AllSpotsPage() {
     const q = search.trim().toLowerCase();
     if (q) list = list.filter(e =>
       e.name.toLowerCase().includes(q) ||
-      e.description.toLowerCase().includes(q) ||
+      (e.description ?? "").toLowerCase().includes(q) ||
       e.city.toLowerCase().includes(q) ||
-      e.tags.some(t => t.toLowerCase().includes(q))
+      (e.tags ?? []).some(t => t.toLowerCase().includes(q))
     );
     // 지역 필터 — district 필드 기준 즉시 필터링
     if (districtFilter !== "all") {

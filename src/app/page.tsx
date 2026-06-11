@@ -590,7 +590,7 @@ export default function Home() {
   const megaEvents = useMemo(
     () => eventsData.filter((e) =>
       ["event", "festival", "concert"].includes(e.type) ||
-      e.tags.some(t => ["bts", "k-pop", "kpop", "idol"].some(k => t.toLowerCase().includes(k)))
+      (e.tags ?? []).some(t => ["bts", "k-pop", "kpop", "idol"].some(k => t.toLowerCase().includes(k)))
     ),
     [eventsData]
   );
@@ -603,7 +603,7 @@ export default function Home() {
   const cultureEvents = useMemo(
     () => eventsData.filter((e) =>
       ["heritage", "museum", "cultural"].some(c => e.type.toLowerCase().includes(c)) ||
-      e.tags.some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
+      (e.tags ?? []).some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
     ),
     [eventsData]
   );
@@ -634,14 +634,14 @@ export default function Home() {
     if (eventFilter === "kpop")
       list = list.filter((e) =>
         ["event", "festival", "concert"].includes(e.type) ||
-        e.tags.some(t => ["bts", "k-pop", "kpop", "idol", "concert"].some(k => t.toLowerCase().includes(k)))
+        (e.tags ?? []).some(t => ["bts", "k-pop", "kpop", "idol", "concert"].some(k => t.toLowerCase().includes(k)))
       );
     else if (eventFilter === "nature")
       list = list.filter((e) => ["attraction", "nature", "pilgrimage", "permanent"].includes(e.type));
     else if (eventFilter === "culture")
       list = list.filter((e) =>
         ["heritage", "museum", "cultural"].some(c => e.type.toLowerCase().includes(c)) ||
-        e.tags.some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
+        (e.tags ?? []).some(t => ["history", "culture", "temple", "palace", "heritage", "tradition", "shrine"].some(k => t.toLowerCase().includes(k)))
       );
     else if (eventFilter === "michelin")
       list = list.filter((e) => e.type === "restaurant");
@@ -652,10 +652,10 @@ export default function Home() {
     if (q) {
       list = list.filter((e) =>
         e.name.toLowerCase().includes(q) ||
-        e.description.toLowerCase().includes(q) ||
-        e.tags.some((t) => t.toLowerCase().includes(q)) ||
+        (e.description ?? "").toLowerCase().includes(q) ||
+        (e.tags ?? []).some((t) => t.toLowerCase().includes(q)) ||
         e.city.toLowerCase().includes(q) ||
-        e.district.toLowerCase().includes(q)
+        (e.district ?? "").toLowerCase().includes(q)
       );
     }
 
@@ -1314,7 +1314,7 @@ export default function Home() {
               검색/필터 모드 — 통합 플랫 그리드
           ══════════════════════════════════════════ */}
           {isFilteringMode ? (
-            eventsLoading ? (
+            eventsLoading && filteredResults.length === 0 ? (
               <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
                 <p className="text-gray-500 font-medium">Loading…</p>
@@ -1325,7 +1325,9 @@ export default function Home() {
                 <p className="text-gray-500 font-semibold text-lg">
                   {eventFilter === "saved"
                     ? "No saved spots yet — tap ❤️ on any card to save it here."
-                    : `No results for "${globalSearch}"`}
+                    : globalSearch
+                    ? `No results for "${globalSearch}"`
+                    : "No spots found for this filter."}
                 </p>
                 <button
                   onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
