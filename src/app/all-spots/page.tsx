@@ -54,7 +54,7 @@ const CATEGORY_FILTERS = [
   { key: "michelin", label: "Food",                  emoji: "🍽️" },
   { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
   { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
-  { key: "saved",    label: "My Saved Spots",        emoji: "❤️" },
+  { key: "saved",    label: "Liked Spots",            emoji: "❤️" },
 ];
 
 // ── 지역 필터 ─────────────────────────────────────────────────────────────────
@@ -406,14 +406,14 @@ export default function AllSpotsPage() {
             </p>
             <p className="text-xl font-black text-gray-700 mb-2">
               {categoryFilter === "saved"
-                ? "No saved spots yet"
+                ? "No liked spots yet"
                 : gpsActive
                 ? "내 주변 3km 이내에 등록된 스팟이 없습니다"
                 : "No results found"}
             </p>
             <p className="text-gray-500 mb-6 text-sm">
               {categoryFilter === "saved"
-                ? "Tap ❤️ on any card to save spots here."
+                ? "Tap ❤️ on any card to like spots."
                 : gpsActive
                 ? "GPS 토글을 끄거나 지역 필터를 변경해보세요."
                 : "Try a different search or filter."}

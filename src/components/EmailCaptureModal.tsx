@@ -24,8 +24,8 @@ const CTA_COPY: Record<NonNullable<Props["context"]>, { headline: string; sub: s
     cta:      "Save My Itinerary →",
   },
   "save-spot": {
-    headline: "Don't lose your saved ARMY spots",
-    sub:      "Save your favorites to your email so you can access them on any device.",
+    headline: "Don't lose your liked spots",
+    sub:      "Link your email to access your liked spots from any device.",
     cta:      "Save My Spots →",
   },
   "my-trips": {
@@ -35,7 +35,7 @@ const CTA_COPY: Record<NonNullable<Props["context"]>, { headline: string; sub: s
   },
   default: {
     headline: "Save your Korea trip",
-    sub:      "Enter your email to keep your itinerary and saved spots safe.",
+    sub:      "Enter your email to keep your itinerary and liked spots safe.",
     cta:      "Save →",
   },
 };

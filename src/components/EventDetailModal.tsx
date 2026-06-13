@@ -214,7 +214,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
             className={`absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full text-xl shadow-md transition-all ${
               favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
             }`}
-            aria-label={favorited ? "Remove from saved" : "Save this spot"}
+            aria-label={favorited ? "Remove from liked" : "Like this spot"}
           >
             {favorited ? "❤️" : "🤍"}
           </button>
@@ -530,7 +530,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
                 : "bg-gray-50 border-gray-200 text-gray-500 hover:border-red-200 hover:text-red-400"
             }`}
           >
-            {favorited ? "❤️ Saved" : "🤍 Save"}
+            {favorited ? "❤️ Liked" : "🤍 Like"}
           </button>
           {/* 일정표 추가 / 제거 */}
           {inCart ? (

@@ -33,14 +33,14 @@ export default function SavedSpotsPanel() {
         // ── 접힌 상태: 작은 pill 버튼 ──────────────────────────────
         <button
           onClick={() => setExpanded(true)}
-          aria-label="Show saved spots"
+          aria-label="Show liked spots"
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all"
         >
           <span className="text-base leading-none">❤️</span>
           <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-red-500 text-white px-1 leading-none">
             {spots.length}
           </span>
-          <span className="text-xs font-semibold text-gray-600">Saved</span>
+          <span className="text-xs font-semibold text-gray-600">Liked</span>
           <span className="text-gray-400 text-xs leading-none">▲</span>
         </button>
       ) : (
@@ -50,14 +50,14 @@ export default function SavedSpotsPanel() {
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
             <div className="flex items-center gap-2">
               <span className="text-sm leading-none">❤️</span>
-              <span className="text-sm font-black text-gray-900">Saved Spots</span>
+              <span className="text-sm font-black text-gray-900">Liked Spots</span>
               <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-red-500 text-white px-1 leading-none">
                 {spots.length}
               </span>
             </div>
             <button
               onClick={() => setExpanded(false)}
-              aria-label="Collapse saved spots panel"
+              aria-label="Collapse liked spots panel"
               className="text-gray-400 hover:text-gray-700 font-bold px-1 py-0.5 transition-colors text-sm"
             >
               ▼
@@ -113,7 +113,7 @@ export default function SavedSpotsPanel() {
           {/* 하단 힌트 */}
           <div className="px-4 py-2 border-t border-gray-50 shrink-0">
             <p className="text-[10px] text-gray-400 text-center">
-              ❤️ Saved spots · tap <span className="text-orange-500 font-semibold">+</span> to add to itinerary
+              ❤️ Liked spots · tap <span className="text-orange-500 font-semibold">+</span> to add to itinerary
             </p>
           </div>
         </div>

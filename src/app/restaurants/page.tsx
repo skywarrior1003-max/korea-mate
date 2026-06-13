@@ -26,6 +26,7 @@ interface RestaurantItem {
   tags: string[];
   phone: string | null;
   reservation_required: boolean;
+  visible?: boolean;
 }
 
 // ── 메타 상수 ─────────────────────────────────────────────────────────────────
@@ -189,7 +190,7 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
           {/* 지도 버튼 */}
           <div className="grid grid-cols-2 gap-3 pt-2">
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.address_ko)}`}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name_ko)}`}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-1.5 py-3 rounded-2xl text-sm font-black text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "#4285f4" }}
@@ -197,7 +198,7 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
               🗺️ Google Maps
             </a>
             <a
-              href={`https://map.naver.com/v5/search/${encodeURIComponent(r.name_ko + " " + r.district_ko)}`}
+              href={`https://map.naver.com/v5/search/${encodeURIComponent(r.name_ko)}`}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-1.5 py-3 rounded-2xl text-sm font-black text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "#03c75a" }}
@@ -346,7 +347,7 @@ export default function RestaurantsPage() {
   }, [gpsActive, resetPage]);
 
   const filtered = useMemo(() => {
-    let list = restaurants;
+    let list = restaurants.filter(r => r.visible !== false);
     if (source !== "all") list = list.filter(r => r.source === source);
     if (district !== "all") {
       const ds = DISTRICT_CLUSTERS.find(d => d.key === district)?.districts ?? [];

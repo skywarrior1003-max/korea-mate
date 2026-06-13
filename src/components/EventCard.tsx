@@ -138,7 +138,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
                 else uncacheSavedSpot(event.id);
               }
             }}
-            aria-label={favorited ? "Remove from saved spots" : "Save this spot"}
+            aria-label={favorited ? "Remove from liked" : "Like this spot"}
             className={`w-8 h-8 flex items-center justify-center rounded-full text-base shadow-md cursor-pointer transition-all select-none ${
               favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
             }`}

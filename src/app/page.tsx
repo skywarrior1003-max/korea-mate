@@ -221,7 +221,7 @@ function toEventItem(spot: LocalInfo): EventItem {
     address: spot.address,
     mapUrl: spot.mapUrl,
     naverMapUrl: spot.naverMapUrl,
-    naverSearchKeyword: spot.searchKeyword,
+    naverSearchKeyword: spot.naverSearchKeyword ?? spot.searchKeyword,
     description: spot.description,
     whyItMatters: spot.whyItMatters ?? spot.description.split(".")[0] + ".",
     recommendedDurationMinutes: spot.durationMinutes ?? 60,
@@ -264,6 +264,7 @@ interface RestaurantItem {
   latitude: number; longitude: number;
   image: string | null; price_range: string | null;
   tags: string[]; phone: string | null; reservation_required: boolean;
+  visible?: boolean;
 }
 
 function restaurantToEventItem(r: RestaurantItem): EventItem {
@@ -276,7 +277,7 @@ function restaurantToEventItem(r: RestaurantItem): EventItem {
     name: `${r.name_ko} (${r.name_en})`, shortName: r.name_ko,
     tags: r.tags ?? [], city: "Busan", district: r.district_en,
     address: r.address_ko,
-    mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.address_ko)}`,
+    mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name_ko)}`,
     naverMapUrl: `https://map.naver.com/v5/search/${encodeURIComponent(r.name_ko)}`,
     description: r.description_ko, whyItMatters: r.description_en,
     recommendedDurationMinutes: 60, bestTimeSlot: "anytime",
@@ -385,7 +386,7 @@ const EVENT_FILTERS = [
   { key: "michelin", label: "🍽️ Food"                  },
   { key: "nature",   label: "🗺️ Attractions & Nature" },
   { key: "culture",  label: "🏛️ History & Culture"    },
-  { key: "saved",    label: "❤️ My Saved Spots"       },
+  { key: "saved",    label: "❤️ Liked Spots"          },
 ];
 
 // ═══════════════════════════════════════════════
@@ -602,7 +603,7 @@ export default function Home() {
       const visible = (evts as EventItem[]).filter(
         e => !e.hidden && (!e.displayUntil || e.displayUntil >= today)
       );
-      setEventsData([...visible, ...rests.map(restaurantToEventItem)]);
+      setEventsData([...visible, ...rests.filter(r => r.visible !== false).map(restaurantToEventItem)]);
       setEventsLoading(false);
     }).catch(() => setEventsLoading(false));
   }, []);
@@ -1447,7 +1448,7 @@ export default function Home() {
                 <p className="text-4xl mb-3">{eventFilter === "saved" ? "🤍" : "🔍"}</p>
                 <p className="text-gray-500 font-semibold text-lg">
                   {eventFilter === "saved"
-                    ? "No saved spots yet — tap ❤️ on any card to save it here."
+                    ? "No liked spots yet — tap ❤️ on any card to like it."
                     : globalSearch
                     ? `No results for "${globalSearch}"`
                     : "No spots found for this filter."}
@@ -1728,7 +1729,9 @@ export default function Home() {
                               <a
                                 href={
                                   item.naverMapUrl ??
-                                  `https://map.naver.com/v5/search/${encodeURIComponent(item.name + " Busan Korea")}?lang=en`
+                                  (item.naverSearchKeyword
+                                    ? `https://map.naver.com/v5/search/${encodeURIComponent(item.naverSearchKeyword)}`
+                                    : `https://map.naver.com/v5/search/${encodeURIComponent(item.name + " Busan Korea")}?lang=en`)
                                 }
                                 target="_blank"
                                 rel="noopener noreferrer"

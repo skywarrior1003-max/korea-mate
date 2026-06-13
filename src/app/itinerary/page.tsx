@@ -1037,7 +1037,7 @@ function ItineraryResult() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
               style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "#f97316" }}
             >
-              {viewMode === "compact" ? "✅ 편집 모드 중" : "✏️ Edit This Trip (여행 수정)"}
+              {viewMode === "compact" ? "✅ Editing" : "✏️ Edit Trip"}
             </button>
           )}
 
@@ -1061,7 +1061,7 @@ function ItineraryResult() {
       </div>
 
       <p className="text-center text-sm text-[#8C6239] font-bold mb-4 bg-[#EAE3D2]/40 rounded-xl py-2.5">
-        💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit This Trip above
+        💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit Trip above
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
@@ -1114,7 +1114,7 @@ function ItineraryResult() {
           <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1a1f36] text-white">
             <span className="text-base shrink-0">✏️</span>
             <p className="text-xs font-bold flex-1">
-              편집 캔버스 — 장소를 삭제하거나 순서를 바꿀 수 있습니다. 변경사항은 자동 저장됩니다.
+              Edit canvas — remove or reorder places. Changes are saved automatically.
             </p>
             <button
               onClick={() => setViewMode("full")}
@@ -1131,7 +1131,7 @@ function ItineraryResult() {
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white mb-4 transition-opacity hover:opacity-90 active:scale-95"
               style={{ backgroundColor: "#f97316" }}
             >
-              🔍 Search Spots — 스폿 탐색하기
+              🔍 Search Spots
             </Link>
           )}
 
@@ -1195,18 +1195,18 @@ function ItineraryResult() {
                         onClick={() => movePlace(editDay, pi, "up")}
                         disabled={pi === 0}
                         className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="위로"
+                        title="Move up"
                       >↑</button>
                       <button
                         onClick={() => movePlace(editDay, pi, "down")}
                         disabled={pi === days[editDay].places.length - 1}
                         className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="아래로"
+                        title="Move down"
                       >↓</button>
                       <button
                         onClick={() => deletePlace(editDay, pi)}
                         className="w-7 h-7 rounded-full bg-red-500 text-white hover:bg-red-600 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="삭제"
+                        title="Remove"
                       >×</button>
                     </div>
                   )}
@@ -1215,7 +1215,7 @@ function ItineraryResult() {
 
               {days[editDay].places.length === 0 && (
                 <div className="py-10 text-center text-sm text-[#8C6239]/40 italic">
-                  이 날의 일정이 없습니다
+                  No places for this day
                 </div>
               )}
             </div>
@@ -1228,11 +1228,11 @@ function ItineraryResult() {
             return (
               <div className="mt-5">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="text-xs font-black text-[#8C6239]">❤️ 보관함 (Unscheduled)</span>
+                  <span className="text-xs font-black text-[#8C6239]">❤️ My Picks (Unscheduled)</span>
                   <span className="text-[10px] font-bold bg-[#EAE3D2]/60 text-[#8C6239] px-2 py-0.5 rounded-full">
-                    {unscheduled.length}개
+                    {unscheduled.length}
                   </span>
-                  <span className="text-[10px] text-[#8C6239]/50 ml-auto">+ 버튼으로 현재 Day에 추가</span>
+                  <span className="text-[10px] text-[#8C6239]/50 ml-auto">Use + to add to this day</span>
                 </div>
                 <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
                   {unscheduled.map((item) => (
@@ -1256,7 +1256,7 @@ function ItineraryResult() {
                         onClick={() => addCartItemToDay(item)}
                         className="shrink-0 w-7 h-7 rounded-full text-white text-sm font-black flex items-center justify-center hover:opacity-80 cursor-pointer transition-opacity"
                         style={{ backgroundColor: "#f97316" }}
-                        title={`Day ${editDay + 1}에 추가`}
+                        title={`Add to Day ${editDay + 1}`}
                       >+</button>
                     </div>
                   ))}
@@ -1266,7 +1266,7 @@ function ItineraryResult() {
           })()}
 
           <p className="text-center text-xs text-[#8C6239]/50 mt-4">
-            ☁️ 변경사항 자동 저장 · 상단 ⊞ Full View 버튼으로 복귀
+            ☁️ Changes are saved automatically · Use Full View above to return
           </p>
         </div>
       ) : (
