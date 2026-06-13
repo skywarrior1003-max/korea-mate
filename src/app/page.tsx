@@ -8,6 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
+import NoticeModal from "@/components/NoticeModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 
@@ -762,6 +763,8 @@ export default function Home() {
   // ════════════════════════════════════════════════════════════════
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
+
+      <NoticeModal />
 
       {/* ── BTS 아리랑 특별 배너 ────────────────────────────────── */}
       <div
