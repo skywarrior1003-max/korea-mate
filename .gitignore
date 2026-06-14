@@ -34,6 +34,7 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+.admin_key_temp
 # .env.example is intentionally committed as a template
 
 # vercel

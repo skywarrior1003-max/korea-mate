@@ -9,6 +9,7 @@ import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import DatePicker from "@/components/DatePicker";
 import NoticeModal from "@/components/NoticeModal";
+import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 
@@ -490,6 +491,7 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
 
   // ── BTS 아리랑 가이드 모달 (가상 라우팅 포함) ────
+  const [contactOpen,     setContactOpen]     = useState(false);
   const [showBTSGuide,    setShowBTSGuide]    = useState(false);
   const [btsClosing,      setBtsClosing]      = useState(false);
   const [searchHighlight, setSearchHighlight] = useState(false);
@@ -1826,6 +1828,12 @@ export default function Home() {
               <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>
               <Link href="/survival-guide" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Survival Guide</Link>
               <Link href="/about"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">About</Link>
+              <button
+                onClick={() => setContactOpen(true)}
+                className="text-sm font-semibold text-gray-400 hover:text-white transition-colors"
+              >
+                Contact
+              </button>
             </div>
             <p className="text-xs text-gray-500 text-center sm:text-right leading-relaxed">
               Data by Korea Tourism Organization<br />AI by Gemini
@@ -1836,6 +1844,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
 
       {/* CartDrawer 가림 방지 */}
       <div className="h-20" />

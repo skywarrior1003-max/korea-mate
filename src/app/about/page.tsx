@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ContactSection from "@/components/ContactSection";
 
 export const metadata = {
   title: "About KoreaMate - KoreaMate",
@@ -106,8 +107,9 @@ export default function AboutPage() {
               ✉️ Contact Us
             </h2>
             <p className="text-lg text-[#61554D] leading-relaxed">
-              Have feedback or suggestions? We'd love to hear from you. Feel free to contact our team to share your thoughts or report details that need updates. Together, let's make traveling in Korea an unforgettable experience!
+              Have feedback or suggestions? We&apos;d love to hear from you. Feel free to contact our team to share your thoughts or report details that need updates. Together, let&apos;s make traveling in Korea an unforgettable experience!
             </p>
+            <ContactSection />
           </section>
 
           <hr className="border-[#FAF7F2]" />
