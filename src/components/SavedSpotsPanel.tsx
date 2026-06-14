@@ -4,10 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import type { EventItem } from "@/lib/cart";
+import EventDetailModal from "@/components/EventDetailModal";
 
 export default function SavedSpotsPanel() {
   const [spots, setSpots] = useState<EventItem[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const [selectedSpot, setSelectedSpot] = useState<EventItem | null>(null);
 
   // FAVORITES_EVENT 또는 CART_EVENT 시 전체 재렌더 — isInCart 상태도 갱신됨
   const refresh = useCallback(() => {
@@ -71,7 +73,10 @@ export default function SavedSpotsPanel() {
               return (
                 <li
                   key={item.id}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors"
+                  onClick={() => setSelectedSpot(item)}
+                  role="button"
+                  aria-label={`View details for ${item.shortName}`}
+                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors cursor-pointer"
                 >
                   {/* 썸네일 */}
                   <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0 bg-gray-100">
@@ -94,7 +99,7 @@ export default function SavedSpotsPanel() {
 
                   {/* 일정에 추가 버튼 */}
                   <button
-                    onClick={() => addToCart(item)}
+                    onClick={(e) => { e.stopPropagation(); addToCart(item); }}
                     disabled={inCart}
                     title={inCart ? "Already in itinerary" : "Add to itinerary"}
                     className={`shrink-0 w-7 h-7 rounded-full text-xs font-black flex items-center justify-center transition-all ${
@@ -122,10 +127,17 @@ export default function SavedSpotsPanel() {
           {/* 하단 힌트 */}
           <div className="px-4 py-2 border-t border-gray-50 shrink-0">
             <p className="text-[10px] text-gray-400 text-center">
-              ❤️ Liked spots · tap <span className="text-orange-500 font-semibold">+</span> to add to itinerary
+              Tap spot for details · <span className="text-orange-500 font-semibold">+</span> to add to itinerary
             </p>
           </div>
         </div>
+      )}
+
+      {selectedSpot && (
+        <EventDetailModal
+          event={selectedSpot}
+          onClose={() => setSelectedSpot(null)}
+        />
       )}
     </div>
   );
