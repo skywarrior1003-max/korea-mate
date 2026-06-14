@@ -48,20 +48,38 @@ export function getSavedSpotsData(): EventItem[] {
   }
 }
 
-/** 찜 추가 시 전체 이벤트 데이터를 캐시에 저장 */
+/** 찜 추가 시 전체 이벤트 데이터를 캐시에 저장 + 패널 갱신 알림 */
 export function cacheSavedSpot(event: EventItem): void {
+  if (typeof window === "undefined") return;
   try {
     const all = getSavedSpotsData();
     if (!all.some(e => e.id === event.id)) {
       localStorage.setItem(SAVED_DATA_KEY, JSON.stringify([...all, event]));
+      window.dispatchEvent(new CustomEvent(FAVORITES_EVENT));
     }
   } catch { /* ignore */ }
 }
 
-/** 찜 해제 시 캐시에서 제거 */
+/** 찜 해제 시 캐시에서 제거 + 패널 갱신 알림 */
 export function uncacheSavedSpot(id: string): void {
+  if (typeof window === "undefined") return;
   try {
     const filtered = getSavedSpotsData().filter(e => e.id !== id);
     localStorage.setItem(SAVED_DATA_KEY, JSON.stringify(filtered));
+    window.dispatchEvent(new CustomEvent(FAVORITES_EVENT));
+  } catch { /* ignore */ }
+}
+
+/**
+ * 패널 삭제 버튼 전용: id 목록 + 캐시 양쪽을 모두 제거한 후 이벤트를 1회만 발생시킨다.
+ * toggleFavorite을 쓰면 캐시 갱신 전에 이벤트가 먼저 발생해 패널이 stale 상태가 되므로
+ * 이 함수에서는 두 저장소를 먼저 업데이트하고 마지막에 이벤트를 한 번만 dispatch 한다.
+ */
+export function removeFavorite(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(SAVED_DATA_KEY, JSON.stringify(getSavedSpotsData().filter(e => e.id !== id)));
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(getFavorites().filter(f => f !== id)));
+    window.dispatchEvent(new CustomEvent(FAVORITES_EVENT));
   } catch { /* ignore */ }
 }

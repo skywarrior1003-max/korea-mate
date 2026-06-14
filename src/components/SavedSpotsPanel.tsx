@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { getSavedSpotsData, FAVORITES_EVENT } from "@/lib/favorites";
+import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import type { EventItem } from "@/lib/cart";
 
@@ -104,6 +104,15 @@ export default function SavedSpotsPanel() {
                     }`}
                   >
                     {inCart ? "✓" : "+"}
+                  </button>
+
+                  {/* 좋아요 취소(제거) 버튼 */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); removeFavorite(item.id); }}
+                    title="Remove from Liked"
+                    className="shrink-0 w-7 h-7 rounded-full text-xs flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
+                  >
+                    ✕
                   </button>
                 </li>
               );
