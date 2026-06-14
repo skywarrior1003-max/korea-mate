@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const NOTICE_VERSION = "v1-map-fix-2026-06";
+const NOTICE_VERSION = "v2-food-guide-194-2026-06";
 const STORAGE_KEY = "km_notice_dismissed";
 
 function getTodayString(): string {
@@ -61,23 +61,41 @@ export default function NoticeModal() {
         <div className="px-6 py-6 sm:px-7 sm:py-7">
           {/* Title */}
           <h2 className="text-lg sm:text-xl font-black text-gray-900 mb-4 tracking-tight">
-            Notice
+            Notice from KoreaMate
           </h2>
 
           {/* Body */}
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            We are currently checking and improving some restaurant map links
-            and address matching on KoreaMate. Some Naver Map and Google Maps
-            links may not yet lead to the exact restaurant location.
+            To ARMY and travelers visiting Busan,
           </p>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
-            We are sorry that we did not catch this issue earlier. We are
-            working carefully to improve the data so your Busan trip can be
-            smoother, easier, and more reliable.
+            We created KoreaMate because we wanted to help you enjoy Busan with
+            better food, travel, and map information.
           </p>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
-            Thank you for your understanding. We hope your journey in Busan is
-            filled only with happy moments.
+            However, some of our earlier restaurant and map data was not
+            accurate enough, and we are sorry that we did not catch and improve
+            it sooner.
+          </p>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
+            We have now rebuilt our Busan Food Guide using the official 2026
+            Busan food guide data, and <strong>194 selected restaurants</strong> are
+            currently available on KoreaMate.
+          </p>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
+            Some images, coordinates, and travel route features may still need
+            further review, but the restaurant names, categories, addresses, and
+            phone numbers have been carefully updated based on the official
+            guide.
+          </p>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
+            We hope this can help make your trip to Busan a little easier,
+            smoother, and happier.
+          </p>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
+            Thank you for your understanding.
+            <br />
+            We will keep improving KoreaMate step by step.
           </p>
           <p className="text-sm sm:text-base text-gray-500 mt-3 font-medium">
             — KoreaMate
