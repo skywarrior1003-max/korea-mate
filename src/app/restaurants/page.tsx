@@ -2,32 +2,8 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
-
-// ── 타입 ─────────────────────────────────────────────────────────────────────
-
-interface RestaurantItem {
-  id: string;
-  source: "michelin-2026" | "busan-mat-2026" | "taegshlang-2025";
-  award: string | null;
-  name_ko: string;
-  name_en: string;
-  category_ko: string;
-  category_en: string;
-  district_ko: string;
-  district_en: string;
-  address_ko: string;
-  address_en: string;
-  description_ko: string;
-  description_en: string;
-  latitude: number;
-  longitude: number;
-  image: string | null;
-  price_range: string | null;
-  tags: string[];
-  phone: string | null;
-  reservation_required: boolean;
-  visible?: boolean;
-}
+import { getRestaurantPlaces } from "@/lib/places";
+import type { RestaurantItem } from "@/lib/places";
 
 // ── 메타 상수 ─────────────────────────────────────────────────────────────────
 
@@ -327,10 +303,20 @@ export default function RestaurantsPage() {
   const [gpsError,    setGpsError]    = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/data/restaurants.json")
-      .then(r => r.json())
-      .then((data: RestaurantItem[]) => { setRestaurants(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    (async () => {
+      // Supabase places 우선 조회 — 실패 또는 0건이면 JSON fallback
+      const placesData = await getRestaurantPlaces();
+      if (placesData.length > 0) {
+        setRestaurants(placesData);
+        setLoading(false);
+        return;
+      }
+      // Fallback: restaurants.json (Supabase 장애 또는 0건)
+      fetch("/data/restaurants.json")
+        .then(r => r.json())
+        .then((data: RestaurantItem[]) => { setRestaurants(data); setLoading(false); })
+        .catch(() => setLoading(false));
+    })();
   }, []);
 
   const resetPage = useCallback(() => setPage(1), []);
