@@ -13,6 +13,12 @@ const SOURCE_META = {
   "taegshlang-2025": { label: "택슐랭 2025",          labelEn: "Taegshlang 2025",      emoji: "🚖", color: "#047857", bg: "#f0fdf4"  },
 } as const;
 
+const SOURCE_CARD_GRADIENT: Record<string, string> = {
+  "michelin-2026":   "linear-gradient(145deg, #4a0519 0%, #7c1533 100%)",
+  "busan-mat-2026":  "linear-gradient(145deg, #0f2347 0%, #1a3a6e 100%)",
+  "taegshlang-2025": "linear-gradient(145deg, #0f2d1e 0%, #1a4a33 100%)",
+};
+
 const AWARD_META: Record<string, { label: string; labelEn: string; color: string; bg: string }> = {
   "1star":        { label: "⭐ 1스타",    labelEn: "1 Star",       color: "#92400e", bg: "#fef3c7" },
   "bib-gourmand": { label: "🍽️ 빕구르망", labelEn: "Bib Gourmand", color: "#be185d", bg: "#fdf2f8" },
@@ -92,30 +98,33 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
           </div>
         ) : (
           <div
-            className="relative h-40 w-full overflow-hidden rounded-t-3xl sm:rounded-t-3xl flex flex-col items-center justify-center gap-3 px-6"
-            style={{ background: `linear-gradient(135deg, ${src.bg} 0%, white 100%)` }}
+            className="relative h-40 w-full overflow-hidden rounded-t-3xl sm:rounded-t-3xl flex flex-col justify-center px-8"
+            style={{ background: SOURCE_CARD_GRADIENT[r.source] ?? "linear-gradient(145deg, #1c1c2e 0%, #2d2d44 100%)" }}
           >
-            <div className="text-5xl opacity-50 select-none">{src.emoji}</div>
-            <div className="flex flex-wrap gap-1.5 justify-center">
-              <span
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black"
-                style={{ color: src.color, backgroundColor: "rgba(255,255,255,0.85)" }}
-              >
-                {src.emoji} {src.label}
-              </span>
-              {awd && (
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[100px] leading-none select-none pointer-events-none opacity-[0.08]">
+              🍽️
+            </span>
+            <div className="relative z-10 space-y-2">
+              <div className="flex flex-wrap gap-1.5">
                 <span
-                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-black"
-                  style={{ color: awd.color, backgroundColor: "rgba(255,255,255,0.85)" }}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border border-white/20 text-white/70"
                 >
-                  {awd.label}
+                  {src.emoji} {src.label}
                 </span>
-              )}
-              {r.category_ko && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/80 text-gray-700">
-                  {r.category_ko}
-                </span>
-              )}
+                {awd && (
+                  <span
+                    className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black border border-white/20 text-white/70"
+                  >
+                    {awd.label}
+                  </span>
+                )}
+              </div>
+              <p className="text-lg font-black text-white/90 leading-tight">
+                {r.category_ko || "레스토랑"}{r.district_ko ? ` · ${r.district_ko}` : ""}
+              </p>
+              <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                Busan Food Guide 2026
+              </p>
             </div>
           </div>
         )}
@@ -250,25 +259,22 @@ function RestaurantCard({
           />
         ) : (
           <div
-            className="w-full h-full flex flex-col items-center justify-center gap-2 px-4"
-            style={{ background: `linear-gradient(135deg, ${src.bg} 0%, #f8fafc 70%, ${src.bg} 100%)` }}
+            className="w-full h-full flex flex-col items-start justify-center pl-5 pr-14 relative overflow-hidden"
+            style={{ background: SOURCE_CARD_GRADIENT[r.source] ?? "linear-gradient(145deg, #1c1c2e 0%, #2d2d44 100%)" }}
           >
-            <span className="text-4xl opacity-50 select-none">{src.emoji}</span>
-            <div className="flex flex-col items-center gap-0.5 text-center">
-              <span className="text-[11px] font-black uppercase tracking-widest" style={{ color: src.color }}>
-                {src.labelEn}
-              </span>
-              {r.category_ko && (
-                <span className="text-[10px] font-semibold text-gray-500 line-clamp-1">{r.category_ko}</span>
-              )}
-              {awd && (
-                <span
-                  className="text-[9px] font-bold px-2 py-0.5 rounded-full mt-0.5 inline-block"
-                  style={{ color: awd.color, backgroundColor: awd.bg }}
-                >
-                  {awd.labelEn}
-                </span>
-              )}
+            <span className="absolute right-0 top-1/2 -translate-y-1/2 text-[88px] leading-none select-none pointer-events-none opacity-[0.09]">
+              🍽️
+            </span>
+            <div className="relative z-10 space-y-1">
+              <p className="text-[9px] font-black uppercase tracking-[0.12em] text-white/40">
+                {r.district_ko ? `${r.district_ko} · Busan` : "Busan"}
+              </p>
+              <p className="text-[13px] font-black text-white/90 leading-snug line-clamp-2">
+                {r.category_ko || "레스토랑"}
+              </p>
+              <p className="text-[9px] font-bold uppercase tracking-wider text-white/35">
+                Busan Food Guide 2026
+              </p>
             </div>
           </div>
         )}
