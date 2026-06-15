@@ -45,6 +45,7 @@ type PlaceRow = {
   lat: number | null;
   lng: number | null;
   image_url: string | null;
+  images: unknown[] | null;
   source_ref: string | null;
   award: string | null;
   price_range: string | null;
@@ -65,6 +66,13 @@ function mapPlace(p: PlaceRow): RestaurantItem {
 
   const extra = p.extra ?? {};
   const district = p.district ?? "";
+  const imgs = Array.isArray(p.images) ? p.images : [];
+  const imageUrl =
+    p.image_url ||
+    (typeof imgs[0] === "string" ? imgs[0] : null) ||
+    (typeof extra.image === "string" ? extra.image : null) ||
+    (typeof extra.image_url === "string" ? extra.image_url : null) ||
+    null;
 
   return {
     id:                   p.place_id,
@@ -82,7 +90,7 @@ function mapPlace(p: PlaceRow): RestaurantItem {
     description_en:       p.description_en || "",
     latitude:             p.lat ?? 0,
     longitude:            p.lng ?? 0,
-    image:                p.image_url || null,
+    image:                imageUrl,
     price_range:          p.price_range || null,
     tags:                 Array.isArray(p.tags) ? p.tags : [],
     phone:                p.phone ?? null,
@@ -108,7 +116,7 @@ export async function getRestaurantPlaces(): Promise<RestaurantItem[]> {
         "place_id, name, name_ko, name_en, subcategory, " +
         "description, description_ko, description_en, " +
         "address, district, district_ko, phone, lat, lng, " +
-        "image_url, source_ref, award, price_range, " +
+        "image_url, images, source_ref, award, price_range, " +
         "is_active, tags, extra"
       )
       .eq("category", "restaurant")

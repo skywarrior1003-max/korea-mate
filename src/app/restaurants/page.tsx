@@ -83,12 +83,40 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
         style={{ animation: "modalIn 0.35s cubic-bezier(0.22,1,0.36,1)" }}
         onClick={e => e.stopPropagation()}
       >
-        {/* 이미지 */}
-        {r.image && (
+        {/* 이미지 또는 placeholder */}
+        {r.image ? (
           <div className="relative h-52 w-full overflow-hidden rounded-t-3xl sm:rounded-t-3xl bg-gray-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={r.image} alt={r.name_en} className="w-full h-full object-cover" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+        ) : (
+          <div
+            className="relative h-40 w-full overflow-hidden rounded-t-3xl sm:rounded-t-3xl flex flex-col items-center justify-center gap-3 px-6"
+            style={{ background: `linear-gradient(135deg, ${src.bg} 0%, white 100%)` }}
+          >
+            <div className="text-5xl opacity-50 select-none">{src.emoji}</div>
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              <span
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black"
+                style={{ color: src.color, backgroundColor: "rgba(255,255,255,0.85)" }}
+              >
+                {src.emoji} {src.label}
+              </span>
+              {awd && (
+                <span
+                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-black"
+                  style={{ color: awd.color, backgroundColor: "rgba(255,255,255,0.85)" }}
+                >
+                  {awd.label}
+                </span>
+              )}
+              {r.category_ko && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/80 text-gray-700">
+                  {r.category_ko}
+                </span>
+              )}
+            </div>
           </div>
         )}
 
@@ -221,8 +249,27 @@ function RestaurantCard({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl bg-gradient-to-br from-gray-50 to-gray-100">
-            {src.emoji}
+          <div
+            className="w-full h-full flex flex-col items-center justify-center gap-2 px-4"
+            style={{ background: `linear-gradient(135deg, ${src.bg} 0%, #f8fafc 70%, ${src.bg} 100%)` }}
+          >
+            <span className="text-4xl opacity-50 select-none">{src.emoji}</span>
+            <div className="flex flex-col items-center gap-0.5 text-center">
+              <span className="text-[11px] font-black uppercase tracking-widest" style={{ color: src.color }}>
+                {src.labelEn}
+              </span>
+              {r.category_ko && (
+                <span className="text-[10px] font-semibold text-gray-500 line-clamp-1">{r.category_ko}</span>
+              )}
+              {awd && (
+                <span
+                  className="text-[9px] font-bold px-2 py-0.5 rounded-full mt-0.5 inline-block"
+                  style={{ color: awd.color, backgroundColor: awd.bg }}
+                >
+                  {awd.labelEn}
+                </span>
+              )}
+            </div>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />

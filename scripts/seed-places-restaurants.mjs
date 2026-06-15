@@ -112,7 +112,7 @@ const rows = restaurants.map(r => {
     'NULL',
     'NULL',
     s(r.naverSearchKeyword || null),
-    'NULL',
+    s(r.image || null),
     "'[]'::jsonb",
     s(src),
     'NULL',
