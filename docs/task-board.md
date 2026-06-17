@@ -146,7 +146,7 @@ TASK-003	restaurants Supabase 연동 검증 도구 추가	P0	완료
 
 TASK-004	Events 데이터 모델 초안 추가	P1	완료
 
-TASK-005	Trip Moments / GPS 데이터 모델 초안 추가	P1	대기중
+TASK-005	Trip Moments / GPS 데이터 모델 초안 추가	P1	완료
 
 TASK-006	Media License 데이터 정책 및 스키마 초안 추가	P1	대기중
 
