@@ -144,7 +144,7 @@ TASK-002	2.0 문서/에이전트 규칙 Git 정리	P0	완료
 
 TASK-003	restaurants Supabase 연동 검증 도구 추가	P0	완료
 
-TASK-004	Events 데이터 모델 초안 추가	P1	대기중
+TASK-004	Events 데이터 모델 초안 추가	P1	완료
 
 TASK-005	Trip Moments / GPS 데이터 모델 초안 추가	P1	대기중
 
