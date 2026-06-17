@@ -156,7 +156,7 @@ TASK-008	Story Routes 데이터 구조 초안 추가	P2	완료
 
 TASK-009	UI Draft Component Sandbox 추가	P2	완료
 
-TASK-010	Trip Story Card 9:16 UI 초안 추가	P2	대기중
+TASK-010	Trip Story Card 9:16 UI 초안 추가	P2	완료
 
 TASK-011	Near Me 2.0 후보군 설계 문서 추가	P2	대기중
 
