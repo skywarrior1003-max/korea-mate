@@ -8,7 +8,8 @@
     "build:static": "STATIC_EXPORT=true next build",
     "deploy": "STATIC_EXPORT=true next build && npx wrangler pages deploy out --project-name=korea-mate",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "agent:verify": "node scripts/agent-verify.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",
