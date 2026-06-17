@@ -152,7 +152,7 @@ TASK-006	Media License 데이터 정책 및 스키마 초안 추가	P1	완료
 
 TASK-007	Affiliate Links / Korea Ready 데이터 구조 초안 추가	P1	완료
 
-TASK-008	Story Routes 데이터 구조 초안 추가	P2	대기중
+TASK-008	Story Routes 데이터 구조 초안 추가	P2	완료
 
 TASK-009	UI Draft Component Sandbox 추가	P2	대기중
 
