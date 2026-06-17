@@ -148,7 +148,7 @@ TASK-004	Events 데이터 모델 초안 추가	P1	완료
 
 TASK-005	Trip Moments / GPS 데이터 모델 초안 추가	P1	완료
 
-TASK-006	Media License 데이터 정책 및 스키마 초안 추가	P1	대기중
+TASK-006	Media License 데이터 정책 및 스키마 초안 추가	P1	완료
 
 TASK-007	Affiliate Links / Korea Ready 데이터 구조 초안 추가	P1	대기중
 
