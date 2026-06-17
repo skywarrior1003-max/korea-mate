@@ -162,6 +162,8 @@ TASK-011	Near Me 2.0 후보군 설계 문서 추가	P2	완료
 
 TASK-012	규칙 기반 Scheduler 후보군 설계 문서 추가	P3	완료
 
+TASK-013	규칙 기반 Scheduler 엔진 구현 (Phase 2 킥오프)	P3	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose
