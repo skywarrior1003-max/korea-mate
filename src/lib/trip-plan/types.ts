@@ -53,6 +53,10 @@ export interface TripPlanInput {
 
   // ── AI 개인화 제어 ────────────────────────────────────────────────────────
   with_ai?:          boolean;          // 기본 false — personalize() 활성화 여부
+
+  // ── TASK-021: 제휴 컨텍스트 자동 조회 힌트 (선택) ────────────────────────
+  city?:             string;           // "busan" | "seoul" | ... — affiliate 도시 필터
+  locale?:           string;           // "en" | "ko" | "ja" | "zh" — 다국어 표시 결정
 }
 
 // ─── Trip Plan Response (Discriminated Union) ─────────────────────────────────

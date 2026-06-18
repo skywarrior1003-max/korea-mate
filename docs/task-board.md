@@ -178,6 +178,8 @@ TASK-019	Story Routes API 구현 및 레거시 소스 청산 통합	P3	완료
 
 TASK-020	Near Me 실 GPS 연동 및 Supabase 실 데이터 파이프라인 활성화	P3	완료
 
+TASK-021	Supabase affiliate_links 스케줄러 인젝터 파이프라인 연동	P3	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose

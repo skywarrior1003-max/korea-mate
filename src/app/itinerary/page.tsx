@@ -147,10 +147,21 @@ interface ApiTripPlanResponse {
   error?:           unknown;
 }
 
+// ── TASK-021: Affiliate Display 타입 ─────────────────────────────────────────
+interface AffiliateDisplay {
+  provider:        string;
+  category:        string;
+  title:           string;
+  description:     string;
+  destination_url: string;
+}
+type AffiliateDisplayMap = Record<string, AffiliateDisplay>;
+
 interface ApiTripPlanResult {
-  data?:      ApiTripPlanResponse;
-  place_map?: PlaceDisplayMap;
-  error?:     string;
+  data?:          ApiTripPlanResponse;
+  place_map?:     PlaceDisplayMap;
+  affiliate_map?: AffiliateDisplayMap;
+  error?:         string;
 }
 
 // ── TASK-018: 도시별 중심 좌표 (GPS 폴백 체인) ──────────────────────────────────
@@ -249,7 +260,7 @@ async function generateWithNewApi(
   tstyle: string,
   arrTime?: string,
   deptTime?: string,
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[] }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -263,6 +274,11 @@ async function generateWithNewApi(
   const pace       = toPace(tstyle);
   const evtCoords  = getEventCoords(cart, sd, ed);
   const timestamp  = arrTime ?? "14:00";
+
+  // TASK-021: 로케일 감지 (SSR-safe)
+  const locale = typeof navigator !== "undefined"
+    ? navigator.language.split("-")[0].toLowerCase()
+    : "en";
 
   const rawResults = await Promise.all(
     dates.map(async (trip_date, i) => {
@@ -288,6 +304,8 @@ async function generateWithNewApi(
             end_time,
             pace,
             event_coords: evtCoords.length > 0 ? evtCoords : undefined,
+            city,
+            locale,
           }),
         });
 
@@ -355,11 +373,18 @@ async function generateWithNewApi(
 
   const isFallback = rawResults.some(r => r?.data?.kind === "fallback");
 
+  // TASK-021: 모든 일차의 affiliate_map을 병합 (동일 링크는 마지막 값으로 덮어쓰기)
+  const affiliateMap: AffiliateDisplayMap = {};
+  for (const result of rawResults) {
+    const map = (result as ApiTripPlanResult)?.affiliate_map;
+    if (map) Object.assign(affiliateMap, map);
+  }
+
   const elapsed = Date.now() - t0;
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers };
+  return { days, isFallback, conflictDayNumbers, affiliateMap };
 }
 
 // ── 카테고리 이미지 ───────────────────────────────────────────
@@ -568,7 +593,9 @@ function ItineraryResult() {
   const [isOwner, setIsOwner] = useState(!shareId);
 
   // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
-  const [conflictDays, setConflictDays] = useState<Set<number>>(new Set());
+  const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
+  // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
+  const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
 
   // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
   const [prefTags] = useState<string[]>(() => {
@@ -802,10 +829,11 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
-            .then(({ days, isFallback, conflictDayNumbers }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
+              if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               setLoading(false);
             })
             .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
@@ -833,10 +861,11 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
-        .then(({ days, isFallback, conflictDayNumbers }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
+          if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
           setLoading(false);
         })
         .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
@@ -1613,6 +1642,38 @@ function ItineraryResult() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* ── TASK-021: Korea Ready Partner Deals (Supabase affiliate_links) ── */}
+      {Object.keys(affiliateMap).length > 0 && (
+        <div className="mb-12">
+          <p className="text-xs font-black uppercase tracking-widest text-[#8C6239] mb-4">
+            Korea Ready Partner Deals
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {Object.entries(affiliateMap).map(([id, deal]) => (
+              <a
+                key={id}
+                href={deal.destination_url}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-[#E6DFD5] shadow-sm hover:border-[#D4AF37] transition-colors"
+              >
+                <div className="w-11 h-11 rounded-xl bg-[#EAE3D2] flex items-center justify-center text-xl shrink-0">
+                  🇰🇷
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-black uppercase tracking-wide text-[#8C6239] mb-0.5">
+                    {deal.provider}
+                  </p>
+                  <p className="text-sm font-black text-[#2C2520] leading-tight">{deal.title}</p>
+                  <p className="text-xs text-[#61554D] leading-relaxed mt-1 line-clamp-2">{deal.description}</p>
+                </div>
+                <span className="text-[#D4AF37] text-sm shrink-0 mt-0.5">→</span>
+              </a>
+            ))}
+          </div>
         </div>
       )}
 
