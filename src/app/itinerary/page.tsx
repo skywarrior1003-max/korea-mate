@@ -10,6 +10,11 @@ import { getDeviceId } from "@/lib/deviceId";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
+import TripMomentCapture from "@/components/TripMomentCapture";
+import TripMomentTimeline from "@/components/TripMomentTimeline";
+import TripStoryExport from "@/components/TripStoryExport";
+import { loadMoments, addMoment, deleteMoment } from "@/lib/trip-moments";
+import type { TripMoment } from "@/lib/trip-moments";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -596,6 +601,10 @@ function ItineraryResult() {
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
+  // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
+  const [moments,         setMoments]         = useState<TripMoment[]>([]);
+  const [captureOpen,     setCaptureOpen]     = useState(false);
+  const [storyExportOpen, setStoryExportOpen] = useState(false);
 
   // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
   const [prefTags] = useState<string[]>(() => {
@@ -910,6 +919,12 @@ function ItineraryResult() {
     return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
   }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // ── TASK-022: itinId 확정 시 moments 로드 ──────────────────
+  useEffect(() => {
+    if (!itinId) return;
+    setMoments(loadMoments(itinId));
+  }, [itinId]);
+
   // ── 플래너 메타 뱃지 읽기 (반응형) ────────────────────────
   useEffect(() => {
     const read = () => {
@@ -951,6 +966,20 @@ function ItineraryResult() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   }
+
+  // ── TASK-022: moment 저장 / 삭제 ────────────────────────────
+  const handleMomentSave = useCallback(async (moment: TripMoment) => {
+    if (!itinId) return;
+    const updated = await addMoment(itinId, moment);
+    setMoments(updated);
+    setCaptureOpen(false);
+  }, [itinId]);
+
+  const handleMomentDelete = useCallback(async (momentId: string) => {
+    if (!itinId) return;
+    const updated = await deleteMoment(itinId, momentId);
+    setMoments(updated);
+  }, [itinId]);
 
   // ── Bug ③: 커스텀 제목 저장 ─────────────────────────────────
   async function handleTitleSave() {
@@ -1231,6 +1260,26 @@ function ItineraryResult() {
               style={{ backgroundColor: "#f97316" }}
             >
               📧 Save to Email
+            </button>
+          )}
+
+          {/* TASK-022: 기억 기록 버튼 */}
+          <button
+            onClick={() => setCaptureOpen(true)}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
+            style={{ backgroundColor: "#1a1a2e" }}
+          >
+            📸 순간 기록 {moments.length > 0 && <span className="bg-[#D4AF37] text-[#1a1a2e] text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
+          </button>
+
+          {/* TASK-022: 공유 카드 버튼 */}
+          {moments.length > 0 && (
+            <button
+              onClick={() => setStoryExportOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2"
+              style={{ borderColor: "#D4AF37", color: "#D4AF37", backgroundColor: "transparent" }}
+            >
+              🎴 공유 카드 만들기
             </button>
           )}
 
@@ -1677,6 +1726,28 @@ function ItineraryResult() {
         </div>
       )}
 
+      {/* ── TASK-022: Trip Journal — 나만의 여행 기억 타임라인 ── */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h2 className="text-2xl font-black text-[#2C2520]">📸 나의 여행 기억</h2>
+            <p className="text-sm text-[#8C6239] mt-0.5">우연히 들른 맛집, 만난 사람들, 풍경… 이 여행의 진짜 이야기</p>
+          </div>
+          <button
+            onClick={() => setCaptureOpen(true)}
+            className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-black text-white transition-all active:scale-95"
+            style={{ backgroundColor: "#1a1a2e" }}
+          >
+            + 기록
+          </button>
+        </div>
+        <TripMomentTimeline
+          moments={moments}
+          onDelete={handleMomentDelete}
+          onAddMemory={() => setCaptureOpen(true)}
+        />
+      </div>
+
       <AdBanner />
 
       {/* eSIM 배너 */}
@@ -1693,6 +1764,31 @@ function ItineraryResult() {
 
       {selectedPlace && (
         <PlaceModal place={selectedPlace} city={city} onClose={() => setSelectedPlace(null)} />
+      )}
+
+      {/* TASK-022: 순간 캡처 모달 */}
+      {captureOpen && itinId && (
+        <TripMomentCapture
+          itineraryId={itinId}
+          deviceId={getDeviceId()}
+          dayNumber={days.length > 0 ? 1 : null}
+          onSave={handleMomentSave}
+          onClose={() => setCaptureOpen(false)}
+        />
+      )}
+
+      {/* TASK-022: 9:16 공유 카드 모달 */}
+      {storyExportOpen && (
+        <TripStoryExport
+          city={city}
+          startDate={startDate}
+          endDate={endDate}
+          dayCount={days.length}
+          placeCount={days.reduce((s, d) => s + d.places.length, 0)}
+          moments={moments}
+          travelStyle={travelStyle}
+          onClose={() => setStoryExportOpen(false)}
+        />
       )}
 
       <EmailCaptureModal
