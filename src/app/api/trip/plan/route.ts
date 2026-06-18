@@ -1,0 +1,147 @@
+// GoKoreaMate / gokoreamate.com — POST /api/trip/plan
+// TASK-017: Trip Plan Combo API (Facade Pattern)
+// Single HTTP round-trip: Near Me + Scheduler + (optional) AI Personalization
+//
+// 200: { data: TripPlanResponse }  — kind: "scheduled" | "personalized" | "fallback"
+// 400: { error: string }           — 입력 유효성 위반
+// 409: { error, conflict }         — 스케줄러 하드 제약 위반
+
+import { NextRequest, NextResponse } from "next/server";
+import { runTripPlan } from "@/lib/trip-plan/index";
+import type { TripPlanInput } from "@/lib/trip-plan/index";
+
+// ─── Validation Helpers ───────────────────────────────────────────────────────
+
+const VALID_PACES     = ["relaxed", "normal", "packed"] as const;
+const HHMM_PATTERN    = /^\d{2}:\d{2}$/;
+const DATE_PATTERN    = /^\d{4}-\d{2}-\d{2}$/;
+
+type ValidPace = typeof VALID_PACES[number];
+
+function isHHMM(s: unknown): s is string {
+  return typeof s === "string" && HHMM_PATTERN.test(s);
+}
+
+function isDateStr(s: unknown): s is string {
+  return typeof s === "string" && DATE_PATTERN.test(s);
+}
+
+function isValidPace(s: unknown): s is ValidPace {
+  return typeof s === "string" && (VALID_PACES as readonly string[]).includes(s);
+}
+
+function timeToMinutes(hhmm: string): number {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+}
+
+// ─── Input Validation ─────────────────────────────────────────────────────────
+
+function validateInput(
+  body: unknown,
+): { valid: true; input: TripPlanInput } | { valid: false; error: string } {
+  if (typeof body !== "object" || body === null) {
+    return { valid: false, error: "Request body must be a JSON object" };
+  }
+
+  const b = body as Record<string, unknown>;
+
+  // ── coordinate (필수) ───────────────────────────────────────────────────
+  if (typeof b.coordinate !== "object" || b.coordinate === null) {
+    return { valid: false, error: "coordinate is required" };
+  }
+  const c = b.coordinate as Record<string, unknown>;
+  if (typeof c.lat !== "number" || typeof c.lng !== "number") {
+    return { valid: false, error: "coordinate.lat and coordinate.lng must be numbers" };
+  }
+  if (c.lat < -90 || c.lat > 90) {
+    return { valid: false, error: "coordinate.lat must be between -90 and 90" };
+  }
+  if (c.lng < -180 || c.lng > 180) {
+    return { valid: false, error: "coordinate.lng must be between -180 and 180" };
+  }
+
+  // ── timestamp (필수) ────────────────────────────────────────────────────
+  if (!isHHMM(b.timestamp)) {
+    return { valid: false, error: "timestamp is required and must be HH:MM format" };
+  }
+
+  // ── trip_date (필수) ────────────────────────────────────────────────────
+  if (!isDateStr(b.trip_date)) {
+    return { valid: false, error: "trip_date is required and must be YYYY-MM-DD format" };
+  }
+
+  // ── start_time / end_time (필수 + 범위 검증) ────────────────────────────
+  if (!isHHMM(b.start_time)) {
+    return { valid: false, error: "start_time is required and must be HH:MM format" };
+  }
+  if (!isHHMM(b.end_time)) {
+    return { valid: false, error: "end_time is required and must be HH:MM format" };
+  }
+  if (timeToMinutes(b.end_time) <= timeToMinutes(b.start_time)) {
+    return { valid: false, error: "end_time must be after start_time" };
+  }
+
+  // ── pace (필수 + 열거형 검증) ────────────────────────────────────────────
+  if (!isValidPace(b.pace)) {
+    return {
+      valid: false,
+      error: `pace must be one of: ${VALID_PACES.join(", ")}`,
+    };
+  }
+
+  const input: TripPlanInput = {
+    coordinate: { lat: c.lat as number, lng: c.lng as number },
+    timestamp:  b.timestamp,
+    trip_date:  b.trip_date,
+    start_time: b.start_time,
+    end_time:   b.end_time,
+    pace:       b.pace,
+
+    // 선택 필드 — 타입 불일치 시 undefined로 방어
+    categories:       Array.isArray(b.categories)        ? (b.categories as TripPlanInput["categories"])       : undefined,
+    liked_place_ids:  Array.isArray(b.liked_place_ids)   ? (b.liked_place_ids as string[])                     : undefined,
+    itinerary_coords: Array.isArray(b.itinerary_coords)  ? (b.itinerary_coords as TripPlanInput["itinerary_coords"]) : undefined,
+    event_coords:     Array.isArray(b.event_coords)      ? (b.event_coords as TripPlanInput["event_coords"])   : undefined,
+    near_me_limit:    typeof b.near_me_limit === "number" ? b.near_me_limit                                    : undefined,
+    anchors:          Array.isArray(b.anchors)            ? (b.anchors as TripPlanInput["anchors"])             : undefined,
+    fixed_events:     Array.isArray(b.fixed_events)       ? (b.fixed_events as TripPlanInput["fixed_events"])  : undefined,
+    preferred_items:  Array.isArray(b.preferred_items)    ? (b.preferred_items as TripPlanInput["preferred_items"]) : undefined,
+    route_template_stays: Array.isArray(b.route_template_stays)
+      ? (b.route_template_stays as TripPlanInput["route_template_stays"])
+      : undefined,
+    affiliate_context: typeof b.affiliate_context === "object" && b.affiliate_context !== null
+      ? (b.affiliate_context as TripPlanInput["affiliate_context"])
+      : undefined,
+    with_ai: typeof b.with_ai === "boolean" ? b.with_ai : false,
+  };
+
+  return { valid: true, input };
+}
+
+// ─── Route Handler ────────────────────────────────────────────────────────────
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const validation = validateInput(body);
+  if (!validation.valid) {
+    return NextResponse.json({ error: validation.error }, { status: 400 });
+  }
+
+  const response = await runTripPlan(validation.input);
+
+  if (response.kind === "conflict") {
+    return NextResponse.json(
+      { error: "Scheduler hard constraint violation", conflict: response.error },
+      { status: 409 },
+    );
+  }
+
+  return NextResponse.json({ data: response }, { status: 200 });
+}
