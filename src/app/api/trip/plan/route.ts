@@ -11,6 +11,8 @@ import { supabase } from "@/lib/supabase";
 import { runTripPlan } from "@/lib/trip-plan/index";
 import type { TripPlanInput, TripPlanResponse } from "@/lib/trip-plan/index";
 import { findRouteById } from "@/lib/story-routes";
+import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates";
+import type { AffiliateDisplayMap } from "@/lib/affiliates";
 
 // ─── Place Display Types ──────────────────────────────────────────────────────
 
@@ -131,7 +133,7 @@ function timeToMinutes(hhmm: string): number {
 
 function validateInput(
   body: unknown,
-): { valid: true; input: TripPlanInput; route_id?: string } | { valid: false; error: string } {
+): { valid: true; input: TripPlanInput; route_id?: string; city?: string; locale?: string } | { valid: false; error: string } {
   if (typeof body !== "object" || body === null) {
     return { valid: false, error: "Request body must be a JSON object" };
   }
@@ -209,8 +211,10 @@ function validateInput(
   };
 
   const route_id = typeof b.route_id === "string" ? b.route_id : undefined;
+  const city     = typeof b.city   === "string" ? b.city.toLowerCase().trim()   : undefined;
+  const locale   = typeof b.locale === "string" ? b.locale.split("-")[0].toLowerCase() : "en";
 
-  return { valid: true, input, route_id };
+  return { valid: true, input, route_id, city, locale };
 }
 
 // ─── Route Handler ────────────────────────────────────────────────────────────
@@ -236,6 +240,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
   }
 
+  // TASK-021: affiliate_links 자동 조회 → affiliate_context 주입
+  // city / locale 미제공 시: 전국 공통 + "en" 폴백 적용
+  const locale         = validation.locale ?? "en";
+  const affiliateRows  = await queryAffiliateLinks(validation.city);
+  if (affiliateRows.length > 0 && !validation.input.affiliate_context) {
+    validation.input.affiliate_context = {
+      affiliate_link_ids: affiliateRows.map(r => r.affiliate_link_id),
+      max_cards:          2,
+    };
+  }
+
   const response = await runTripPlan(validation.input);
 
   if (response.kind === "conflict") {
@@ -245,8 +260,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  const placeIds  = extractPlaceIds(response);
-  const place_map = await buildPlaceMap(placeIds);
+  const placeIds:    string[]            = extractPlaceIds(response);
+  const place_map:   Record<string, unknown> = await buildPlaceMap(placeIds);
+  const affiliate_map: AffiliateDisplayMap   = buildAffiliateMap(affiliateRows, locale);
 
-  return NextResponse.json({ data: response, place_map }, { status: 200 });
+  return NextResponse.json({ data: response, place_map, affiliate_map }, { status: 200 });
 }
