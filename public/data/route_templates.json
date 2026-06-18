@@ -1,0 +1,121 @@
+[
+  {
+    "route_id": "route-busan-bts",
+    "city": "busan",
+    "title_ko": "BTS 투어 부산",
+    "title_en": "BTS Day in Busan",
+    "description_ko": "부산의 BTS 성지와 K-팝 문화 거점을 따라가는 당일 코스입니다.",
+    "description_en": "A full-day pilgrimage through Busan's BTS landmarks and K-pop culture hotspots.",
+    "mood_tags": ["kpop", "bts", "fan", "photo"],
+    "duration_type": "full_day",
+    "estimated_minutes": 480,
+    "difficulty": "easy",
+    "route_type": "kpop",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-kpop-z2", "stay_minutes": 90 },
+      { "place_id": "mock-kpop-z3", "stay_minutes": 90 },
+      { "place_id": "mock-cafe-z1", "stay_minutes": 45 },
+      { "place_id": "mock-attraction-z1", "stay_minutes": 60 }
+    ]
+  },
+  {
+    "route_id": "route-busan-kfood",
+    "city": "busan",
+    "title_ko": "K-푸드 미식 투어",
+    "title_en": "K-Food Gourmet Tour",
+    "description_ko": "해운대·광안리·센텀을 연결하는 부산 대표 미식 코스입니다.",
+    "description_en": "A curated foodie loop connecting Haeundae, Gwangalli, and Centum's best bites.",
+    "mood_tags": ["food", "gourmet", "local", "market"],
+    "duration_type": "full_day",
+    "estimated_minutes": 420,
+    "difficulty": "easy",
+    "route_type": "food",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-food-z1", "stay_minutes": 75 },
+      { "place_id": "mock-food-z2", "stay_minutes": 75 },
+      { "place_id": "mock-cafe-z2", "stay_minutes": 45 },
+      { "place_id": "mock-food-z3", "stay_minutes": 60 }
+    ]
+  },
+  {
+    "route_id": "route-busan-cultural",
+    "city": "busan",
+    "title_ko": "감천문화마을 + 문화 투어",
+    "title_en": "Gamcheon Culture Village & Art Tour",
+    "description_ko": "감천문화마을 골목 산책과 부산 고유의 문화·예술 거점을 엮은 코스입니다.",
+    "description_en": "A walk through Gamcheon's alleyways and Busan's indie art and cultural landmarks.",
+    "mood_tags": ["culture", "art", "photo", "scenic"],
+    "duration_type": "full_day",
+    "estimated_minutes": 390,
+    "difficulty": "moderate",
+    "route_type": "cultural",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-attraction-z3", "stay_minutes": 90 },
+      { "place_id": "mock-walking-z2", "stay_minutes": 45 },
+      { "place_id": "mock-food-z3", "stay_minutes": 60 },
+      { "place_id": "mock-cafe-z3", "stay_minutes": 45 }
+    ]
+  },
+  {
+    "route_id": "route-busan-sunset",
+    "city": "busan",
+    "title_ko": "해운대 선셋 투어",
+    "title_en": "Haeundae Sunset Tour",
+    "description_ko": "해운대 해변에서 시작해 광안대교 야경으로 마무리하는 황혼 코스입니다.",
+    "description_en": "Start at Haeundae beach, stroll the coast, and end with the Gwangan Bridge lights at dusk.",
+    "mood_tags": ["beach", "sunset", "romantic", "ocean"],
+    "duration_type": "half_day",
+    "estimated_minutes": 300,
+    "difficulty": "easy",
+    "route_type": "scenic",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-walking-z1", "stay_minutes": 45 },
+      { "place_id": "mock-attraction-z1", "stay_minutes": 60 },
+      { "place_id": "mock-cafe-z2", "stay_minutes": 45 },
+      { "place_id": "mock-nightview-z2", "stay_minutes": 60 }
+    ]
+  },
+  {
+    "route_id": "route-busan-nightview",
+    "city": "busan",
+    "title_ko": "부산 야경 투어",
+    "title_en": "Busan Night View Circuit",
+    "description_ko": "광안대교·기장 전망대를 잇는 부산 대표 야경 코스입니다.",
+    "description_en": "Hit Busan's best night vistas from Gwangan Bridge to the Gijang hilltop panorama.",
+    "mood_tags": ["nightview", "city", "lights", "photo"],
+    "duration_type": "half_day",
+    "estimated_minutes": 240,
+    "difficulty": "easy",
+    "route_type": "nightview",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-nightview-z2", "stay_minutes": 75 },
+      { "place_id": "mock-nightview-z3", "stay_minutes": 60 },
+      { "place_id": "mock-cafe-z2", "stay_minutes": 30 }
+    ]
+  },
+  {
+    "route_id": "route-busan-temple",
+    "city": "busan",
+    "title_ko": "힐링 사찰 투어",
+    "title_en": "Temple Healing Day",
+    "description_ko": "금정산·기장 산사를 걸으며 도심의 번잡함에서 벗어나는 힐링 코스입니다.",
+    "description_en": "A tranquil loop through Busan's mountain temples and forest walking paths.",
+    "mood_tags": ["temple", "healing", "nature", "meditation"],
+    "duration_type": "full_day",
+    "estimated_minutes": 420,
+    "difficulty": "moderate",
+    "route_type": "temple",
+    "is_active": true,
+    "stays": [
+      { "place_id": "mock-temple-z2", "stay_minutes": 90 },
+      { "place_id": "mock-walking-z2", "stay_minutes": 45 },
+      { "place_id": "mock-temple-z3", "stay_minutes": 90 },
+      { "place_id": "mock-walking-z3", "stay_minutes": 45 }
+    ]
+  }
+]
