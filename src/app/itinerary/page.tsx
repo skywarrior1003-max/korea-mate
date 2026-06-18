@@ -3,7 +3,6 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
-import { generateItinerary, type EventAnchor } from "@/lib/scheduler";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { upsertItinerary, fetchItinerary, updateItineraryTitle } from "@/lib/supabase";
@@ -120,6 +119,232 @@ const LOAD_PHASES = [
     ],
   },
 ] as const;
+
+// ── TASK-018: Trip Plan API 클라이언트 타입 ──────────────────────────────────────
+interface PlaceDisplay {
+  name:            string;
+  category:        string;
+  district:        string;
+  tips:            string;
+  google_maps_url: string;
+}
+type PlaceDisplayMap = Record<string, PlaceDisplay>;
+
+interface ApiScheduledItem {
+  item_type:    string;
+  place_id?:    string;
+  event_id?:    string;
+  start_time:   string;
+  end_time:     string;
+  stay_minutes: number;
+}
+
+interface ApiTripPlanResponse {
+  kind:             "scheduled" | "personalized" | "fallback" | "conflict";
+  plan?:            { items: ApiScheduledItem[] };
+  near_me_count?:   number;
+  fallback_reason?: string;
+  error?:           unknown;
+}
+
+interface ApiTripPlanResult {
+  data?:      ApiTripPlanResponse;
+  place_map?: PlaceDisplayMap;
+  error?:     string;
+}
+
+// ── TASK-018: 도시별 중심 좌표 (GPS 폴백 체인) ──────────────────────────────────
+const CITY_CENTER_COORDS: Record<string, { lat: number; lng: number }> = {
+  busan:    { lat: 35.1796, lng: 129.0756 },
+  seoul:    { lat: 37.5665, lng: 126.9780 },
+  gyeongju: { lat: 35.8562, lng: 129.2247 },
+  jeju:     { lat: 33.4996, lng: 126.5312 },
+};
+const DEFAULT_COORD = { lat: 35.1796, lng: 129.0756 };
+
+// ── TASK-018: ISO 날짜 산술 (new Date() 금지) ────────────────────────────────────
+function addOneDayISO(dateStr: string): string {
+  const [yStr, mStr, dStr] = dateStr.split("-");
+  const y = parseInt(yStr ?? "2026", 10);
+  const m = parseInt(mStr ?? "1",    10);
+  const d = parseInt(dStr ?? "1",    10);
+  const isLeap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  const dim    = [0, 31, isLeap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let nd = d + 1, nm = m, ny = y;
+  if (nd > (dim[m] ?? 31)) { nd = 1; nm += 1; }
+  if (nm > 12)              { nm = 1; ny += 1; }
+  return `${ny}-${String(nm).padStart(2, "0")}-${String(nd).padStart(2, "0")}`;
+}
+
+function buildDateRange(startDate: string, endDate: string): string[] {
+  const dates: string[] = [];
+  let cur = startDate;
+  while (cur <= endDate) { dates.push(cur); cur = addOneDayISO(cur); }
+  return dates;
+}
+
+// ── TASK-018: Coordinate 해결 체인 ──────────────────────────────────────────────
+function resolveCoordinate(city: string, cart: CartItem[]): { lat: number; lng: number } {
+  const cartCoord = cart.find(i => typeof i.lat === "number" && typeof i.lng === "number");
+  if (cartCoord) return { lat: cartCoord.lat!, lng: cartCoord.lng! };
+  return CITY_CENTER_COORDS[city.toLowerCase()] ?? DEFAULT_COORD;
+}
+
+// ── TASK-018: travelStyle → TripPace ────────────────────────────────────────────
+function toPace(travelStyle: string): "relaxed" | "normal" | "packed" {
+  const s = travelStyle.toLowerCase();
+  if (s.includes("adventure"))                                               return "packed";
+  if (s.includes("couple") || s.includes("family") || s.includes("senior")) return "relaxed";
+  return "normal";
+}
+
+// ── TASK-018: F7 이벤트 venue 좌표 수집 (ISO 비교, new Date() 금지) ──────────────
+function getEventCoords(
+  cart: CartItem[],
+  tripStart: string,
+  tripEnd: string,
+): { lat: number; lng: number }[] {
+  return cart
+    .filter(item => {
+      if (typeof item.lat !== "number" || typeof item.lng !== "number") return false;
+      if (item.endDate   && item.endDate   < tripStart) return false;
+      if (item.startDate && item.startDate > tripEnd)   return false;
+      return true;
+    })
+    .map(item => ({ lat: item.lat!, lng: item.lng! }))
+    .slice(0, 5);
+}
+
+// ── TASK-018: PlaceDisplay 합성 폴백 ────────────────────────────────────────────
+function syntheticPlaceDisplay(item: ApiScheduledItem, city: string): PlaceDisplay {
+  const cat    = item.item_type === "event" ? "attraction" : (item.item_type || "attraction");
+  const catCap = cat.charAt(0).toUpperCase() + cat.slice(1);
+  return {
+    name:            `${catCap} in ${city}`,
+    category:        cat,
+    district:        city,
+    tips:            "Explore this recommended local spot.",
+    google_maps_url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${cat} ${city} Korea`)}`,
+  };
+}
+
+// ── TASK-018: 신규 일정 생성 오케스트레이터 (레거시 generateWithDwell 대체) ─────────
+async function generateWithNewApi(
+  city: string,
+  sd: string,
+  ed: string,
+  _trav: string,
+  tstyle: string,
+  arrTime?: string,
+  deptTime?: string,
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[] }> {
+  const MIN_MS = 2500 + Math.random() * 1000;
+  const t0     = Date.now();
+
+  const dates      = buildDateRange(sd, ed);
+  const cart       = getCart();
+  const coordinate = resolveCoordinate(city, cart);
+  const pace       = toPace(tstyle);
+  const evtCoords  = getEventCoords(cart, sd, ed);
+  const timestamp  = arrTime ?? "14:00";
+
+  const rawResults = await Promise.all(
+    dates.map(async (trip_date, i) => {
+      const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
+      const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
+
+      if (start_time >= end_time) {
+        return {
+          data:      { kind: "conflict" as const, error: { code: "HC-6", message: "No valid time window" } },
+          place_map: {} as PlaceDisplayMap,
+        };
+      }
+
+      try {
+        const res = await fetch("/api/trip/plan", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({
+            coordinate,
+            timestamp,
+            trip_date,
+            start_time,
+            end_time,
+            pace,
+            event_coords: evtCoords.length > 0 ? evtCoords : undefined,
+          }),
+        });
+
+        if (res.status === 409) {
+          const body = await res.json() as { error: string; conflict?: unknown };
+          return {
+            data:      { kind: "conflict" as const, error: body.conflict },
+            place_map: {} as PlaceDisplayMap,
+          };
+        }
+        if (!res.ok) {
+          return {
+            data:      { kind: "conflict" as const, error: { message: `HTTP ${res.status}` } },
+            place_map: {} as PlaceDisplayMap,
+          };
+        }
+
+        return await res.json() as ApiTripPlanResult;
+      } catch {
+        return {
+          data:      { kind: "conflict" as const, error: { message: "Network error" } },
+          place_map: {} as PlaceDisplayMap,
+        };
+      }
+    }),
+  );
+
+  const conflictDayNumbers: number[] = [];
+  const days: Day[] = rawResults.map((result, i) => {
+    const dayNumber = i + 1;
+    const tripDate  = dates[i] ?? sd;
+    const resp      = result?.data;
+    const placeMap  = result?.place_map ?? {};
+
+    if (!resp || resp.kind === "conflict") {
+      conflictDayNumbers.push(dayNumber);
+      return { date: tripDate, dayNumber, places: [] };
+    }
+
+    const plan = resp.plan;
+    if (!plan || !Array.isArray(plan.items)) {
+      conflictDayNumbers.push(dayNumber);
+      return { date: tripDate, dayNumber, places: [] };
+    }
+
+    const places: Place[] = (plan.items as ApiScheduledItem[])
+      .filter(item => item.item_type !== "affiliate")
+      .map(item => {
+        const key     = item.place_id ?? item.event_id ?? "";
+        const display = placeMap[key] ?? syntheticPlaceDisplay(item, city);
+        return {
+          name:          display.name,
+          category:      display.category,
+          location:      display.district,
+          time:          item.start_time,
+          duration:      `${item.stay_minutes}m`,
+          tips:          display.tips,
+          googleMapsUrl: display.google_maps_url,
+          slot:          assignSlot(item.start_time),
+        };
+      });
+
+    return { date: tripDate, dayNumber, places };
+  });
+
+  const isFallback = rawResults.some(r => r?.data?.kind === "fallback");
+
+  const elapsed = Date.now() - t0;
+  const wait    = Math.max(0, MIN_MS - elapsed);
+  if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
+
+  return { days, isFallback, conflictDayNumbers };
+}
 
 // ── 카테고리 이미지 ───────────────────────────────────────────
 function getCategoryImage(category: string, name: string): string {
@@ -325,6 +550,9 @@ function ItineraryResult() {
 
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
   const [isOwner, setIsOwner] = useState(!shareId);
+
+  // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
+  const [conflictDays, setConflictDays] = useState<Set<number>>(new Set());
 
   // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
   const [prefTags] = useState<string[]>(() => {
@@ -557,8 +785,13 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined, getEventAnchors())
-            .then((data) => { setDays(sanitizeDays(data.days)); if (data.isFallback) setIsFallback(true); setLoading(false); })
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
+            .then(({ days, isFallback, conflictDayNumbers }) => {
+              setDays(sanitizeDays(days));
+              if (isFallback) setIsFallback(true);
+              if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
+              setLoading(false);
+            })
             .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
           return;
         }
@@ -583,9 +816,14 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithDwell(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramStartLoc || undefined, paramArrivalTime || undefined, getPreferredSpotNames(), paramDeparturePlace || undefined, paramDepartureTime || undefined, getEventAnchors())
-        .then((data) => { setDays(sanitizeDays(data.days)); setLoading(false); })
-        .catch((err) => { setError(`Failed to generate itinerary: ${err.message}`); setLoading(false); });
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
+        .then(({ days, isFallback, conflictDayNumbers }) => {
+          setDays(sanitizeDays(days));
+          if (isFallback) setIsFallback(true);
+          if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
+          setLoading(false);
+        })
+        .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
     });
   }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -654,81 +892,6 @@ function ItineraryResult() {
     const t2 = setTimeout(() => setLoadPhase(2), 2500);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [loading, shareId]);
-
-  // ── AI 생성 + 최소 드웰 타임 보장 헬퍼 ──────────────────────
-  async function generateWithDwell(
-    city: string, sd: string, ed: string,
-    trav: string, tstyle: string,
-    startLoc?: string, arrTime?: string,
-    preferredSpots?: string[],
-    deptPlace?: string, deptTime?: string,
-    eventAnchors?: EventAnchor[],
-  ) {
-    const MIN_MS = 2500 + Math.random() * 1000; // 2.5~3.5s
-    const t0 = Date.now();
-    const data = await generateItinerary(city, sd, ed, trav, tstyle, startLoc, arrTime, preferredSpots, deptPlace, deptTime, eventAnchors);
-    const elapsed = Date.now() - t0;
-    const wait = Math.max(0, MIN_MS - elapsed);
-    if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
-    return data;
-  }
-
-  // ── 취향 스팟 이름 목록 (cart 기반) ────────────────────────
-  function getPreferredSpotNames(): string[] {
-    try {
-      return getCart()
-        .map((item) => item.shortName || item.name)
-        .filter(Boolean)
-        .slice(0, 8) as string[];
-    } catch {
-      return [];
-    }
-  }
-
-  // ── 선택된 행사 카드 앵커 목록 (cart 기반 — 날짜/시간 고정용) ──
-  function extractEventTime(item: CartItem): string {
-    const oh = item.openingHours as { open?: string } | string | null;
-    if (oh && typeof oh === "object" && oh.open) return oh.open;
-    if (typeof (oh as unknown) === "string") {
-      const m = (oh as unknown as string).match(/\b(\d{1,2}:\d{2})\b/);
-      if (m?.[1]) { const t = m[1]; return t.length === 4 ? "0" + t : t; }
-    }
-    const slot = (item.bestTimeSlot ?? "").toLowerCase();
-    if (slot.includes("morning"))                        return "09:00";
-    if (slot.includes("noon") || slot.includes("lunch")) return "12:00";
-    if (slot.includes("afternoon"))                      return "14:00";
-    if (slot.includes("evening"))                        return "18:00";
-    if (slot.includes("night"))                          return "21:00";
-    return "14:00";
-  }
-
-  function getEventAnchors(): EventAnchor[] {
-    try {
-      const cart = getCart();
-      const ts = new Date(paramStartDate).getTime();
-      const te = new Date(paramEndDate).getTime();
-      const anchors: EventAnchor[] = [];
-      for (const item of cart) {
-        if (!item.startDate) continue;
-        const iStart = new Date(item.startDate).getTime();
-        const iEnd   = item.endDate ? new Date(item.endDate).getTime() : iStart;
-        if (iEnd < ts || iStart > te) {
-          console.log(`[event-anchors] "${item.shortName || item.name}" (${item.startDate}) outside trip range — skipped`);
-          continue;
-        }
-        const anchorDate = new Date(Math.max(iStart, ts)).toISOString().split("T")[0]!;
-        anchors.push({
-          name: item.shortName || item.name,
-          date: anchorDate,
-          time: extractEventTime(item),
-          durationHours: Math.max(1, Math.round(item.recommendedDurationMinutes / 60)),
-          location: item.district || item.city || "Busan",
-          googleMapsUrl: item.mapUrl || undefined,
-        });
-      }
-      return anchors;
-    } catch { return []; }
-  }
 
   // ── 공유 링크 복사 ───────────────────────────────────────
   async function handleCopyShareLink() {
@@ -1297,6 +1460,14 @@ function ItineraryResult() {
                   <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
                 </h2>
 
+                {conflictDays.has(day.dayNumber) && (
+                  <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-amber-50 border border-amber-200">
+                    <span className="text-lg shrink-0">⚠️</span>
+                    <p className="text-sm font-bold text-amber-700">
+                      Day {day.dayNumber}: Could not generate schedule — scheduling conflict detected. Try adjusting your travel dates or removing saved places.
+                    </p>
+                  </div>
+                )}
                 <div className="space-y-4" id={`day-${day.dayNumber}`}>
                   {TIME_SLOTS.map((ts) => {
                     const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
