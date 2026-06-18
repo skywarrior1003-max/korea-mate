@@ -172,6 +172,10 @@ TASK-016	Explore & Events API 구현 (events.json 쿼리 + F7 Event Bonus 활성
 
 TASK-017	Trip Plan Combo API 구현 (Near Me + Scheduler + AI 단일 파사드 통합)	P3	완료
 
+TASK-018	프론트엔드 일정 생성 파이프라인 전환 (레거시 → POST /api/trip/plan)	P3	완료
+
+TASK-019	Story Routes API 구현 및 레거시 소스 청산 통합	P3	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose

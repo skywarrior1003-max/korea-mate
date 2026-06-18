@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { runTripPlan } from "@/lib/trip-plan/index";
 import type { TripPlanInput, TripPlanResponse } from "@/lib/trip-plan/index";
+import { findRouteById } from "@/lib/story-routes";
 
 // ─── Place Display Types ──────────────────────────────────────────────────────
 
@@ -130,7 +131,7 @@ function timeToMinutes(hhmm: string): number {
 
 function validateInput(
   body: unknown,
-): { valid: true; input: TripPlanInput } | { valid: false; error: string } {
+): { valid: true; input: TripPlanInput; route_id?: string } | { valid: false; error: string } {
   if (typeof body !== "object" || body === null) {
     return { valid: false, error: "Request body must be a JSON object" };
   }
@@ -207,7 +208,9 @@ function validateInput(
     with_ai: typeof b.with_ai === "boolean" ? b.with_ai : false,
   };
 
-  return { valid: true, input };
+  const route_id = typeof b.route_id === "string" ? b.route_id : undefined;
+
+  return { valid: true, input, route_id };
 }
 
 // ─── Route Handler ────────────────────────────────────────────────────────────
@@ -223,6 +226,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const validation = validateInput(body);
   if (!validation.valid) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
+  }
+
+  // route_id → route_template_stays 해석 (직접 배열 제공보다 route_id 우선)
+  if (validation.route_id && !validation.input.route_template_stays) {
+    const route = findRouteById(validation.route_id);
+    if (route) {
+      validation.input.route_template_stays = route.stays;
+    }
   }
 
   const response = await runTripPlan(validation.input);
