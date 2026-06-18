@@ -215,6 +215,18 @@ function getEventCoords(
     .slice(0, 5);
 }
 
+// ── TASK-020: 브라우저 GPS 취득 (SSR-safe, 8s timeout) ─────────────────────────
+async function getBrowserGPS(): Promise<{ lat: number; lng: number } | null> {
+  if (typeof navigator === "undefined" || !navigator.geolocation) return null;
+  return new Promise(resolve => {
+    navigator.geolocation.getCurrentPosition(
+      pos  => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      _err => resolve(null),
+      { timeout: 8_000, maximumAge: 60_000, enableHighAccuracy: false },
+    );
+  });
+}
+
 // ── TASK-018: PlaceDisplay 합성 폴백 ────────────────────────────────────────────
 function syntheticPlaceDisplay(item: ApiScheduledItem, city: string): PlaceDisplay {
   const cat    = item.item_type === "event" ? "attraction" : (item.item_type || "attraction");
@@ -241,9 +253,13 @@ async function generateWithNewApi(
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
-  const dates      = buildDateRange(sd, ed);
-  const cart       = getCart();
-  const coordinate = resolveCoordinate(city, cart);
+  const dates  = buildDateRange(sd, ed);
+  const cart   = getCart();
+
+  // TASK-020: GPS 우선 체인 — 브라우저 GPS → 카트 좌표 → 도시 중심 → DEFAULT
+  const gpsCoord   = await getBrowserGPS();
+  const coordinate = gpsCoord ?? resolveCoordinate(city, cart);
+
   const pace       = toPace(tstyle);
   const evtCoords  = getEventCoords(cart, sd, ed);
   const timestamp  = arrTime ?? "14:00";
