@@ -20,6 +20,7 @@ export interface NearMeInput {
   categories?:       PlaceCategory[];    // filter; undefined = all supported categories
   liked_place_ids?:  string[];           // F5 preference signal (Like history)
   itinerary_coords?: Coordinate[];       // F6 itinerary proximity (Add to Itinerary coords)
+  event_coords?:     Coordinate[];       // F7 event bonus — geo event venue 좌표 (TASK-016)
   limit?:            number;             // max results returned (default: 20)
 }
 
