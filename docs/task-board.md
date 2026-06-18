@@ -182,6 +182,8 @@ TASK-021	Supabase affiliate_links 스케줄러 인젝터 파이프라인 연동	
 
 TASK-022	Trip Moments GPS 기억 저널 + 9:16 공유 카드	P0	완료
 
+TASK-023	My Trips 허브 전면 개편 (도시 이미지 + 기억 수 + 퍼스낼리티 배지)	P1	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose
