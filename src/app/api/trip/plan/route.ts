@@ -7,8 +7,99 @@
 // 409: { error, conflict }         — 스케줄러 하드 제약 위반
 
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 import { runTripPlan } from "@/lib/trip-plan/index";
-import type { TripPlanInput } from "@/lib/trip-plan/index";
+import type { TripPlanInput, TripPlanResponse } from "@/lib/trip-plan/index";
+
+// ─── Place Display Types ──────────────────────────────────────────────────────
+
+interface PlaceDisplay {
+  name:            string;
+  category:        string;
+  district:        string;
+  tips:            string;
+  google_maps_url: string;
+}
+
+type PlaceDisplayMap = Record<string, PlaceDisplay>;
+
+// ─── Place Map Helpers ────────────────────────────────────────────────────────
+
+function extractPlaceIds(response: TripPlanResponse): string[] {
+  if (response.kind === "conflict") return [];
+  return response.plan.items
+    .map(item => item.place_id ?? item.event_id)
+    .filter((id): id is string => Boolean(id));
+}
+
+function mockPlaceDisplay(placeId: string): PlaceDisplay {
+  const raw    = placeId.replace("mock-", "");
+  const parts  = raw.split("-");
+  const cat    = parts[0] ?? "attraction";
+  const zone   = (parts[1] ?? "z1").toUpperCase();
+  const catCap = cat.charAt(0).toUpperCase() + cat.slice(1);
+  return {
+    name:            `${catCap} Spot (${zone})`,
+    category:        cat,
+    district:        "Haeundae",
+    tips:            "A recommended local spot.",
+    google_maps_url: "https://www.google.com/maps/search/?api=1&query=Haeundae+Busan+Korea",
+  };
+}
+
+type PlaceRow = {
+  place_id:       string;
+  name:           string;
+  name_en:        string | null;
+  category:       string | null;
+  subcategory:    string | null;
+  description_en: string | null;
+  description:    string | null;
+  district:       string | null;
+  lat:            number | null;
+  lng:            number | null;
+};
+
+async function buildPlaceMap(placeIds: string[]): Promise<PlaceDisplayMap> {
+  if (placeIds.length === 0) return {};
+
+  const mockIds = placeIds.filter(id => id.startsWith("mock-"));
+  const realIds = placeIds.filter(id => !id.startsWith("mock-"));
+  const map: PlaceDisplayMap = {};
+
+  for (const id of mockIds) {
+    map[id] = mockPlaceDisplay(id);
+  }
+
+  if (realIds.length > 0) {
+    try {
+      const { data, error } = await supabase
+        .from("places")
+        .select("place_id, name, name_en, category, subcategory, description_en, description, district, lat, lng")
+        .in("place_id", realIds);
+
+      if (!error && Array.isArray(data)) {
+        for (const row of data as PlaceRow[]) {
+          const googleMapsUrl =
+            (row.lat && row.lng)
+              ? `https://www.google.com/maps/search/?api=1&query=${row.lat},${row.lng}`
+              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${row.name_en ?? row.name} Korea`)}`;
+          map[row.place_id] = {
+            name:            row.name_en || row.name || "Unknown Place",
+            category:        row.subcategory || row.category || "attraction",
+            district:        row.district   || "Seoul",
+            tips:            row.description_en || row.description || "",
+            google_maps_url: googleMapsUrl,
+          };
+        }
+      }
+    } catch {
+      // Supabase failure — real IDs absent from map → client falls back to synthetic display
+    }
+  }
+
+  return map;
+}
 
 // ─── Validation Helpers ───────────────────────────────────────────────────────
 
@@ -143,5 +234,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  return NextResponse.json({ data: response }, { status: 200 });
+  const placeIds  = extractPlaceIds(response);
+  const place_map = await buildPlaceMap(placeIds);
+
+  return NextResponse.json({ data: response, place_map }, { status: 200 });
 }
