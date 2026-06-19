@@ -1,0 +1,4 @@
+# gokoreamate — Cloudflare Pages SPA 라우팅
+# /shared/UUID → /shared/ 정적 쉘로 라우팅 (200 rewrite)
+# 클라이언트 JS가 window.location.pathname에서 share ID 추출
+/shared/*  /shared/  200

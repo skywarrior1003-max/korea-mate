@@ -188,6 +188,8 @@ TASK-024	Web Share API 1탭 공유 + 3-tier fallback topology	P0	완료
 
 TASK-025	홈페이지 바이럴 전환 랜딩 + OG 메타 최적화	P0	완료
 
+TASK-026	공유 일정 뷰어 (/shared/) + 제휴 인젝터 컴포넌트 연동	P0	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose
