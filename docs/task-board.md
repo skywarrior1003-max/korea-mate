@@ -192,7 +192,7 @@ TASK-026	공유 일정 뷰어 (/shared/) + 제휴 인젝터 컴포넌트 연동	
 
 TASK-027	Cloudflare Pages Function OG 주입 — SNS 크롤러 동적 메타 바인딩	P0	완료
 
-TASK-028	공유 일정 클론 CTA — "이 일정으로 여행 계획하기" 바이럴 루프	P0	대기중
+TASK-028	공유 일정 클론 CTA — "이 일정으로 여행 계획하기" 바이럴 루프	P0	완료
 
 TASK-029	도시별 동적 OG 이미지 생성 (Seoul/Busan/Jeju 배경 분기)	P1	대기중
 
