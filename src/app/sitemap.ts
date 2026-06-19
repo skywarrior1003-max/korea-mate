@@ -17,11 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: siteUrl,                          lastModified: new Date(), changeFrequency: "daily",   priority: 1.0 },
+    // TASK-031: city SEO landing pages
+    { url: `${siteUrl}/seoul`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/jeju`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/gyeongju`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/explore-busan`,       lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     { url: `${siteUrl}/survival-guide`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/all-spots`,           lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/trending`,            lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
-    { url: `${siteUrl}/planner`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/itinerary`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/blog`,                lastModified: new Date(), changeFrequency: "weekly",  priority: 0.7 },
     ...blogPosts,
