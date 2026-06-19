@@ -32,6 +32,22 @@ interface Day {
   places:    Place[];
 }
 
+// ── 유틸: 클론 URL 빌더 ──────────────────────────────────────────────────────
+// 공유된 일정의 날짜·스타일을 홈페이지 플래너에 pre-fill하는 URL 생성
+const STYLE_MAP: Record<string, string> = {
+  solo: "Solo", couple: "Couple", family: "Family", group: "Group",
+};
+
+function buildCloneUrl(trip: ItineraryRow): string {
+  const params = new URLSearchParams({
+    from:  trip.start_date,
+    to:    trip.end_date,
+    style: STYLE_MAP[trip.travel_style?.toLowerCase()] ?? "Solo",
+    ref:   "clone",
+  });
+  return `/?${params.toString()}`;
+}
+
 // ── 유틸: share_id 추출 ───────────────────────────────────────────────────────
 // 우선순위: pathname (/shared/UUID) → query string (?id=UUID)
 function extractShareId(): string | null {
@@ -335,6 +351,15 @@ export default function SharedTripPage() {
             style={{ backgroundColor: "#D4AF37" }}
           >
             ✨ 지금 내 여행 계획하기 →
+          </Link>
+
+          {/* 클론 CTA — 공유된 일정 날짜·스타일 그대로 복사해서 내 것 만들기 */}
+          <Link
+            href={buildCloneUrl(trip)}
+            className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
+            style={{ color: "rgba(255,255,255,0.65)", borderColor: "rgba(212,175,55,0.35)" }}
+          >
+            🗺️ 이 일정 참고해서 내 것 만들기
           </Link>
         </div>
 

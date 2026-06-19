@@ -466,7 +466,8 @@ export default function Home() {
     if (typeof window === "undefined") return 0;
     try { return getCart().length; } catch { return 0; }
   });
-  const [showVibeModal, setShowVibeModal] = useState(false);
+  const [showVibeModal,   setShowVibeModal]   = useState(false);
+  const [showCloneBanner, setShowCloneBanner] = useState(false);
   const [startLocation, setStartLocation] = useState("KTX Busan Station (부산역)");
   const [arrivalTime,   setArrivalTime]   = useState("14:00");
 
@@ -500,6 +501,23 @@ export default function Home() {
     if (!style) return;
     try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
   }, [style]);
+
+  // ── 클론 파라미터 처리 (?from=&to=&style=&ref=clone) ─────────────────────
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("ref") !== "clone") return;
+    const from  = p.get("from");
+    const to    = p.get("to");
+    const st    = p.get("style");
+    if (from) setStartDate(from);
+    if (to)   setEndDate(to);
+    if (st && ["Solo", "Couple", "Family", "Group"].includes(st)) setStyle(st);
+    setShowCloneBanner(true);
+    setTimeout(() =>
+      document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })
+    , 300);
+  }, []);
 
   useEffect(() => {
     if (!showBTSGuide) return;
@@ -1000,6 +1018,25 @@ export default function Home() {
       ══════════════════════════════════════════════════════════ */}
       <section id="planner" className="py-20" style={{ backgroundColor: "#faf8f3" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
+
+          {/* 클론 배너 — ?ref=clone 진입 시 표시 */}
+          {showCloneBanner && (
+            <div
+              className="mb-6 flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl text-sm font-bold"
+              style={{
+                background: "rgba(212,175,55,0.10)",
+                border: "1px solid rgba(212,175,55,0.35)",
+                color: "#8C6239",
+              }}
+            >
+              <span>🗺️ Dates & travel style copied from a shared trip — adjust and make it yours!</span>
+              <button
+                onClick={() => setShowCloneBanner(false)}
+                className="text-xs font-black opacity-50 hover:opacity-100 shrink-0 transition-opacity"
+              >✕</button>
+            </div>
+          )}
+
           <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
               ✨ Plan Your Korea Trip with AI
