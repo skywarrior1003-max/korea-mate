@@ -12,6 +12,7 @@ export interface PostData {
   category: string;
   tags: string[];
   content: string;
+  image?: string;
 }
 
 function formatDate(dateVal: any): string {
@@ -69,6 +70,7 @@ Wander through beautiful traditional alleys surrounded by preserved Korean homes
         category: matterResult.data.category || "",
         tags: matterResult.data.tags || [],
         content: matterResult.content,
+        image: matterResult.data.image || undefined,
       };
     });
 
@@ -99,6 +101,7 @@ export function getPostData(slug: string): PostData | null {
       category: matterResult.data.category || "",
       tags: matterResult.data.tags || [],
       content: matterResult.content,
+      image: matterResult.data.image || undefined,
     };
   } catch (e) {
     return null;

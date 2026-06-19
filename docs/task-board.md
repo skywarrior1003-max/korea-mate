@@ -200,6 +200,8 @@ TASK-030	공유 뷰 카운터 소셜 프루프 — "X명이 이 일정을 봤어
 
 TASK-031	도시별 SEO 랜딩 페이지 (Seoul/Jeju/Gyeongju) + 사이트맵 최적화	P1	완료
 
+TASK-032	SEO 블로그 콘텐츠 스프린트 + Busan 랜딩 + blog 브랜드 교정	P1	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose

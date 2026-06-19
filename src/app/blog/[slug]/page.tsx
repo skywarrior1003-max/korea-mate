@@ -18,18 +18,29 @@ export function generateStaticParams() {
   }));
 }
 
+const FALLBACK_OG = "https://gokoreamate.com/opengraph-image.png";
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = getPostData(slug);
   if (!post) return {};
 
+  const ogImage = post.image ?? FALLBACK_OG;
+
   return {
-    title: `${post.title} - KoreaMate Blog`,
+    title: `${post.title} — gokoreamate.com`,
     description: post.summary,
     openGraph: {
-      title: `${post.title} - KoreaMate Blog`,
+      title: `${post.title} — gokoreamate.com`,
       description: post.summary,
       type: "article",
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} — gokoreamate.com`,
+      description: post.summary,
+      images: [ogImage],
     },
   };
 }
@@ -70,7 +81,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="text-2xl font-black tracking-tight text-[#2C2520] flex items-center gap-1.5">
-              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> Korea<span className="text-[#D4AF37]">Mate</span>
+              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> <span className="text-[#D4AF37]">gokoreamate</span>.com
             </Link>
           </div>
           <nav className="flex items-center gap-8">
@@ -115,8 +126,8 @@ export default async function BlogPostPage({ params }: Props) {
               headline: post!.title,
               datePublished: post!.date,
               description: post!.summary,
-              author: { "@type": "Organization", name: "KoreaMate" },
-              publisher: { "@type": "Organization", name: "KoreaMate" },
+              author: { "@type": "Organization", name: "gokoreamate.com" },
+              publisher: { "@type": "Organization", name: "gokoreamate.com" },
             }),
           }}
         />
@@ -180,7 +191,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Footer */}
       <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} gokoreamate.com. All rights reserved.</p>
           <p className="font-bold tracking-wide">
             Data provided by Korea Tourism Organization. AI-powered by Gemini.
           </p>
