@@ -862,40 +862,133 @@ export default function Home() {
       </header>
 
       {/* ══════════════════════════════════════════════════════════
-          HERO
+          HERO — TASK-025: 바이럴 루프 전환 랜딩
       ══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden py-24 sm:py-36" style={{ backgroundColor: "#1a1f36" }}>
+      <section className="relative overflow-hidden py-16 sm:py-28" style={{ backgroundColor: "#1a1a2e" }}>
+        {/* 배경 글로우 */}
         <div
-          className="absolute inset-0 opacity-25"
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 15% 60%, #f97316 0%, transparent 45%), radial-gradient(circle at 85% 15%, #3b82f6 0%, transparent 40%)",
+              "radial-gradient(circle at 18% 65%, rgba(212,175,55,0.13) 0%, transparent 50%), radial-gradient(circle at 82% 18%, rgba(59,130,246,0.11) 0%, transparent 45%)",
           }}
         />
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white/70 border border-white/20 mb-6 tracking-widest uppercase">
-            ✨ AI-Powered Travel Guide
-          </span>
-          <h1 className="text-5xl sm:text-7xl font-black text-white tracking-tight leading-tight mb-6">
-            Don&apos;t Get Stuck<br />
-            in <span style={{ color: "#f97316" }}>Korea</span>
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
+
+          {/* 배지 */}
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold text-white/55 border border-white/15 tracking-widest uppercase">
+              🇰🇷 Plan · Capture · Share
+            </span>
+          </div>
+
+          {/* 메인 헤드라인 */}
+          <h1 className="text-center text-5xl sm:text-[5.5rem] font-black text-white tracking-tight leading-[1.05] mb-5">
+            Your Korea Story,<br />
+            <span style={{ color: "#D4AF37" }}>Captured &amp; Shared</span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
-            AI builds your itinerary. We handle the confusing parts — payments, transport, solo dining.
+
+          {/* 서브헤드라인 */}
+          <p className="text-center text-base sm:text-xl text-white/58 max-w-2xl mx-auto leading-relaxed mb-10">
+            AI가 완벽한 한국 여행 일정을 만들어드립니다. 여행 중 GPS 순간을 기록하고, 1탭으로 Instagram · TikTok · X에 공유하세요.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          {/* Primary CTA — 중앙 고정 */}
+          <div className="flex justify-center mb-12">
             <button
-              onClick={() => document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-black text-white shadow-lg transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#f97316" }}
+              onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
+              className="inline-flex items-center justify-center px-10 py-4 rounded-2xl text-lg font-black shadow-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+              style={{ backgroundColor: "#D4AF37", color: "#1a1a2e" }}
             >
-              🔥 View Featured Events →
+              ✨ 지금 내 여행 계획하기
             </button>
+          </div>
+
+          {/* 3단계 플로우 시각화 */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 mb-12">
+            {[
+              { num: "01", icon: "📅", label: "AI가 계획",   sub: "도시·날짜·스타일 입력" },
+              { num: "02", icon: "📸", label: "순간 기록",   sub: "GPS + 사진 + 메모" },
+              { num: "03", icon: "🎴", label: "1탭 공유",    sub: "Instagram · TikTok · X" },
+            ].map((s, i) => (
+              <div key={s.num} className="flex items-center gap-2 sm:gap-3">
+                <div
+                  className="flex flex-col items-center px-5 py-4 rounded-2xl w-44 sm:w-48 text-center"
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(212,175,55,0.22)" }}
+                >
+                  <span className="text-2xl mb-1">{s.icon}</span>
+                  <span className="text-[10px] font-black tracking-widest mb-0.5" style={{ color: "#D4AF37" }}>
+                    STEP {s.num}
+                  </span>
+                  <span className="text-sm font-black text-white">{s.label}</span>
+                  <span className="text-[11px] text-white/38 mt-0.5 leading-tight">{s.sub}</span>
+                </div>
+                {i < 2 && (
+                  <span className="text-white/18 text-xl hidden sm:block">→</span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 스토리 카드 미리보기 (CSS 모크업) */}
+          <div className="flex items-end justify-center gap-0 mb-10">
+            {/* 카드 1 — 전면 */}
+            <div
+              className="relative rounded-2xl overflow-hidden shadow-2xl z-10"
+              style={{
+                width: "120px",
+                aspectRatio: "9/16",
+                background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%)",
+                border: "1px solid rgba(212,175,55,0.3)",
+              }}
+            >
+              <div
+                className="absolute inset-x-2 top-2 rounded-xl"
+                style={{ height: "52%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
+              />
+              <span className="absolute top-[20%] left-0 right-0 text-center text-xs text-white/15">📸</span>
+              <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
+                <div className="w-full h-[1px] mb-1" style={{ background: "#D4AF37", opacity: 0.45 }} />
+                <span className="text-white/75 text-[7px] font-black">✨ My Busan Trip</span>
+                <span className="text-[7px] font-bold" style={{ color: "#D4AF37" }}>3 Days · 12 Spots</span>
+                <span className="text-white/25 text-[6px]">gokoreamate.com</span>
+              </div>
+            </div>
+            {/* 카드 2 — 배경 */}
+            <div
+              className="relative rounded-2xl overflow-hidden shadow-xl -ml-8 mb-6 opacity-60"
+              style={{
+                width: "100px",
+                aspectRatio: "9/16",
+                background: "linear-gradient(180deg, #0f3460 0%, #16213e 60%, #1a1a2e 100%)",
+                border: "1px solid rgba(212,175,55,0.15)",
+              }}
+            >
+              <div
+                className="absolute inset-x-2 top-2 rounded-xl"
+                style={{ height: "50%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.05)" }}
+              />
+              <span className="absolute top-[18%] left-0 right-0 text-center text-xs text-white/10">🏖️</span>
+              <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
+                <div className="w-full h-[1px] mb-1" style={{ background: "#D4AF37", opacity: 0.2 }} />
+                <span className="text-white/40 text-[6px] font-black">🌿 Nature Wanderer</span>
+                <span className="text-white/20 text-[5px]">gokoreamate.com</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 소셜 프루프 + 서브 링크 */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
+            <p className="text-white/28 text-sm font-medium">
+              무료 · 회원가입 불필요 · 30초 일정 생성
+            </p>
+            <span className="hidden sm:block text-white/15 text-lg">·</span>
             <Link
               href="/survival-guide"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-bold text-white border-2 border-white/30 hover:border-white/60 transition-colors"
+              className="text-sm font-semibold text-white/38 hover:text-white/65 transition-colors"
             >
-              See Survival Guide
+              Korea Survival Guide →
             </Link>
           </div>
         </div>
