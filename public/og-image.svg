@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="55%" stop-color="#16213e"/>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+    <radialGradient id="glowGold" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="85%" cy="15%" r="35%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background layers -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glowGold)"/>
+  <rect width="1200" height="630" fill="url(#glowBlue)"/>
+
+  <!-- Top badge pill -->
+  <rect x="490" y="68" width="220" height="36" rx="18" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+  <text x="600" y="91" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.55)" letter-spacing="2">AI TRAVEL PLATFORM</text>
+
+  <!-- Flag bar: red/blue/white stripes (simplified taegeuk hint) -->
+  <rect x="568" y="118" width="8" height="36" rx="4" fill="#CD2E3A"/>
+  <rect x="580" y="118" width="8" height="36" rx="4" fill="#ffffff" opacity="0.7"/>
+  <rect x="592" y="118" width="8" height="36" rx="4" fill="#0047A0"/>
+  <text x="616" y="148" font-family="system-ui,-apple-system,sans-serif" font-size="22" font-weight="800" fill="rgba(255,255,255,0.35)" letter-spacing="1">KOREA</text>
+
+  <!-- Main headline -->
+  <text x="600" y="265" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="78" font-weight="900" fill="#ffffff" letter-spacing="-1">Your Korea Story</text>
+
+  <!-- Gold accent line -->
+  <line x1="440" y1="296" x2="760" y2="296" stroke="#D4AF37" stroke-width="2" opacity="0.6"/>
+
+  <!-- Subheadline -->
+  <text x="600" y="358" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="32" font-weight="400" fill="rgba(255,255,255,0.62)">Plan it. Live it. Share it in 1 tap.</text>
+
+  <!-- 3-step chips -->
+  <!-- Step 1 -->
+  <rect x="138" y="410" width="256" height="72" rx="20" fill="rgba(255,255,255,0.07)" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="266" y="443" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="#D4AF37" letter-spacing="0.5">AI PLANS IT</text>
+  <text x="266" y="463" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="400" fill="rgba(255,255,255,0.45)">Day-by-day itinerary</text>
+
+  <!-- Arrow 1 -->
+  <text x="412" y="452" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="22" fill="rgba(255,255,255,0.25)">→</text>
+
+  <!-- Step 2 -->
+  <rect x="440" y="410" width="320" height="72" rx="20" fill="rgba(255,255,255,0.07)" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="600" y="443" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="#D4AF37" letter-spacing="0.5">YOU CAPTURE IT</text>
+  <text x="600" y="463" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="400" fill="rgba(255,255,255,0.45)">GPS + Photo + Memo</text>
+
+  <!-- Arrow 2 -->
+  <text x="788" y="452" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="22" fill="rgba(255,255,255,0.25)">→</text>
+
+  <!-- Step 3 -->
+  <rect x="806" y="410" width="256" height="72" rx="20" fill="rgba(255,255,255,0.07)" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="934" y="443" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="#D4AF37" letter-spacing="0.5">SHARE THE STORY</text>
+  <text x="934" y="463" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="400" fill="rgba(255,255,255,0.45)">Instagram · TikTok · X</text>
+
+  <!-- Bottom gold divider -->
+  <line x1="80" y1="514" x2="1120" y2="514" stroke="#D4AF37" stroke-width="1" opacity="0.2"/>
+
+  <!-- Domain watermark -->
+  <text x="600" y="567" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" font-weight="800" fill="rgba(255,255,255,0.28)" letter-spacing="1">gokoreamate.com</text>
+  <text x="600" y="598" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="400" fill="rgba(255,255,255,0.18)">Free  ·  No signup  ·  Busan ready</text>
+</svg>

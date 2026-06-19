@@ -18,30 +18,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KoreaMate — Free Korea Travel Itinerary Planner for Tourists",
+  title: "gokoreamate — AI Korea Trip Planner · Capture & Share Your Story",
   description:
-    "Free AI-powered Korea tour guide and itinerary planner for foreign tourists. Discover Busan and Seoul attractions, build day-by-day trip schedules, and explore local hidden gems.",
+    "Plan your perfect Korea itinerary with AI, capture GPS moments during your trip, and share your story in 1 tap to Instagram, TikTok & X. Free · No signup · Busan ready.",
   keywords: [
     "Korea travel guide",
     "Busan tour guide",
     "Seoul itinerary planner",
     "free travel itinerary planner",
     "Korea trip scheduler",
-    "tourist attractions Korea",
-    "Korea sightseeing spots",
-    "travel planner for foreigners",
-    "Korea vacation planning",
-    "Busan sightseeing",
-    "Korea travel tips",
     "AI trip planner Korea",
+    "Korea travel story share",
+    "Korea GPS travel journal",
+    "trip moments Korea",
+    "Korea vacation planning",
+    "gokoreamate",
+    "travel planner for foreigners",
   ],
   openGraph: {
-    title: "KoreaMate — Free Korea Travel Itinerary Planner",
+    title: "gokoreamate — Plan, Capture & Share Your Korea Story",
     description:
-      "AI-powered Korea tour guide and itinerary planner for foreign tourists. Build day-by-day schedules for Busan, Seoul, and beyond.",
+      "AI builds your Korea itinerary. You capture the moments. One tap shares your story to Instagram, TikTok & X.",
     type: "website",
     url: "https://gokoreamate.com",
-    siteName: "KoreaMate",
+    siteName: "gokoreamate.com",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "gokoreamate — Plan · Capture · Share Your Korea Story" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "gokoreamate — Plan, Capture & Share Your Korea Story",
+    description: "AI builds your itinerary · Capture GPS moments · Share your story in 1 tap",
+    images: ["/opengraph-image.png"],
   },
   metadataBase: new URL("https://gokoreamate.com"),
   alternates: {
