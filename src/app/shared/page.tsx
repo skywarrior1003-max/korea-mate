@@ -132,6 +132,26 @@ export default function SharedTripPage() {
     }).catch(() => setStatus("error"));
   }, []);
 
+  // ── TASK-030: 뷰 카운터 RPC — 화면 렌더 후 백그라운드 비동기 호출 ──────────
+  // Edge Function 병목 없음. sessionStorage로 동일 세션 중복 카운트 차단.
+  useEffect(() => {
+    if (!trip?.id) return;
+    const key = `viewed_${trip.id}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    const url  = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/increment_trip_view`;
+    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+    fetch(url, {
+      method:  "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey:         anon,
+        Authorization:  `Bearer ${anon}`,
+      },
+      body: JSON.stringify({ trip_id_param: trip.id }),
+    }).catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
+  }, [trip?.id]);
+
   // ── 로딩 상태 ─────────────────────────────────────────────────────────────
   if (status === "loading") {
     return (
@@ -229,6 +249,13 @@ export default function SharedTripPage() {
               </span>
             ))}
           </div>
+
+          {/* TASK-030: 소셜 프루프 카운터 — 2명 이상일 때만 표시 */}
+          {(trip.view_count ?? 0) >= 2 && (
+            <p className="text-sm font-semibold text-amber-400 mb-6">
+              🔥 {trip.view_count} people found this trip helpful!
+            </p>
+          )}
 
           {/* 골드 디바이더 */}
           <div className="w-24 h-[1.5px] mx-auto" style={{ background: "#D4AF37", opacity: 0.5 }} />
