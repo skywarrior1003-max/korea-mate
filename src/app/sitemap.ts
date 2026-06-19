@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/seoul`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/jeju`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/gyeongju`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${siteUrl}/explore-busan`,       lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
+    { url: `${siteUrl}/busan`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/survival-guide`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/all-spots`,           lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/trending`,            lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
