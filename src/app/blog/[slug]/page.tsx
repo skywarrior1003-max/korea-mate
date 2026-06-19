@@ -1,4 +1,4 @@
-import { getPostData, getSortedPostsData } from "@/lib/posts";
+import { getPostData, getSortedPostsData, type PostData } from "@/lib/posts";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import fs from "fs";
 import path from "path";
 import AdBanner from "@/components/AdBanner";
+import { KLOOK, VIATOR, KTX } from "@/config/affiliates";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -62,6 +63,95 @@ function getAffiliateLink(postTitle: string): string {
     // fall through to default
   }
   return "https://visitkorea.or.kr";
+}
+
+interface BlogCard {
+  emoji: string;
+  provider: string;
+  title: string;
+  desc: string;
+  url: string;
+}
+
+function getBlogAffiliateCards(post: PostData): BlogCard[] {
+  const tags = post.tags.map((t) => t.toLowerCase());
+  const hasTag = (...terms: string[]) => terms.some((t) => tags.includes(t));
+  const img = post.image ?? "";
+
+  const city = img.includes("/og/busan/") ? "busan"
+    : img.includes("/og/jeju/") ? "jeju"
+    : img.includes("/og/gyeongju/") ? "gyeongju"
+    : "seoul";
+
+  const cards: BlogCard[] = [];
+
+  // Transportation guide: KTX + airport transfer
+  if (hasTag("transportation", "ktx", "t-money")) {
+    cards.push({
+      emoji: "🚄",
+      provider: "Klook",
+      title: "Seoul → Busan KTX Train",
+      desc: "Book Korea's fastest inter-city train in advance. 2hr 15min, from ₩59,800.",
+      url: KTX.seoulBusanUrl,
+    });
+    cards.push({
+      emoji: "✈️",
+      provider: "Klook",
+      title: "Incheon Airport Transfer",
+      desc: "Limousine bus direct to Seoul city center. No transit hassle with luggage.",
+      url: KLOOK.transferUrl,
+    });
+    return cards.slice(0, 2);
+  }
+
+  // eSIM guide: airport transfer as companion (avoid eSIM redundancy)
+  if (hasTag("esim", "sim card", "connectivity")) {
+    cards.push({
+      emoji: "✈️",
+      provider: "Klook",
+      title: "Incheon Airport Transfer",
+      desc: "Arrive connected and door-to-door. Limousine bus to Seoul city center.",
+      url: KLOOK.transferUrl,
+    });
+  } else {
+    // All other posts: eSIM is always first
+    cards.push({
+      emoji: "📱",
+      provider: "Klook",
+      title: "Korea eSIM — Stay Connected",
+      desc: "Activate before landing. Fast 5G/LTE data from the moment you arrive at Incheon.",
+      url: KLOOK.esimUrl,
+    });
+  }
+
+  // City-specific tour card
+  if (city === "seoul") {
+    cards.push({
+      emoji: "🎟️",
+      provider: "Viator",
+      title: "Seoul Tours & Day Trips",
+      desc: "Palace tours, K-culture, Gangnam night tours — curated by local Seoul guides.",
+      url: VIATOR.seoulHub(),
+    });
+  } else if (city === "busan") {
+    cards.push({
+      emoji: "🎟️",
+      provider: "Viator",
+      title: "Busan Tours & Day Trips",
+      desc: "Haeundae, Gamcheon, seafood market tours — curated by local Busan guides.",
+      url: VIATOR.busanHub(),
+    });
+  } else if (city === "jeju") {
+    cards.push({
+      emoji: "🚗",
+      provider: "Klook",
+      title: "Jeju Car Rental",
+      desc: "Essential for Jeju island. From ₩35,000/day. International license accepted.",
+      url: KLOOK.jejuCarRentalUrl,
+    });
+  }
+
+  return cards.slice(0, 2);
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -156,6 +246,51 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <AdBanner />
+
+          {/* Contextual affiliate cards (Surface C) */}
+          {(() => {
+            const cards = getBlogAffiliateCards(post!);
+            if (cards.length === 0) return null;
+            return (
+              <div className="mt-8 mb-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#8C6239] mb-3 flex items-center gap-1.5">
+                  🇰🇷 gokoreamate partner network
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {cards.map((card) => (
+                    <a
+                      key={card.title}
+                      href={card.url}
+                      target="_blank"
+                      rel="noopener noreferrer sponsored"
+                      className="flex items-start gap-3 p-4 rounded-2xl border border-[#E6DFD5] bg-[#FAF7F2] hover:border-[#D4AF37] hover:shadow-sm transition-all group"
+                    >
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 bg-[#EAE3D2]">
+                        {card.emoji}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[10px] font-black uppercase tracking-wide text-[#8C6239]">
+                          {card.provider}
+                        </p>
+                        <p className="text-sm font-black text-[#2C2520] leading-tight">
+                          {card.title}
+                        </p>
+                        <p className="text-xs text-[#61554D] leading-relaxed mt-0.5 line-clamp-2">
+                          {card.desc}
+                        </p>
+                      </div>
+                      <span className="text-[#D4AF37] text-sm font-black shrink-0 mt-0.5 group-hover:underline">
+                        →
+                      </span>
+                    </a>
+                  ))}
+                </div>
+                <p className="text-[9px] text-[#B8A89A] mt-2 text-center">
+                  Sponsored · Commission may be earned at no cost to you
+                </p>
+              </div>
+            );
+          })()}
 
           {/* AI Disclosure Warning */}
           <div className="mt-8 bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-6 text-sm sm:text-base text-[#61554D] leading-relaxed">

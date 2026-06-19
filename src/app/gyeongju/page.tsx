@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import KoreaReadySection from "@/components/KoreaReadySection";
 
 export const dynamic = "force-static";
 
@@ -194,6 +195,9 @@ export default function GyeongjuPage() {
         </div>
       </section>
 
+      {/* ── Korea Ready (Surface D) ─────────────────────────────────────── */}
+      <KoreaReadySection city="gyeongju" />
+
       {/* ── AI Planner CTA ──────────────────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">
         <div
@@ -229,7 +233,7 @@ export default function GyeongjuPage() {
         <div className="flex items-center justify-center gap-4 mt-2">
           <Link href="/seoul" className="hover:text-[#8C6239] transition-colors">Seoul</Link>
           <Link href="/jeju" className="hover:text-[#8C6239] transition-colors">Jeju</Link>
-          <Link href="/explore-busan" className="hover:text-[#8C6239] transition-colors">Busan</Link>
+          <Link href="/busan" className="hover:text-[#8C6239] transition-colors">Busan</Link>
           <Link href="/blog" className="hover:text-[#8C6239] transition-colors">Blog</Link>
         </div>
       </footer>

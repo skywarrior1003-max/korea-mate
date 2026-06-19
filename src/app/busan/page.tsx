@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import KoreaReadySection from "@/components/KoreaReadySection";
 
 export const dynamic = "force-static";
 
@@ -193,6 +194,9 @@ export default function BusanPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Korea Ready (Surface D) ─────────────────────────────────────── */}
+      <KoreaReadySection city="busan" />
 
       {/* ── AI Planner CTA ──────────────────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">
