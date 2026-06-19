@@ -3,6 +3,9 @@
 
 import { ImageResponse } from "next/og";
 
+// output: "export" 정적 익스포트 환경 필수 선언
+export const dynamic = "force-static";
+
 export const alt = "gokoreamate — Plan · Capture · Share Your Korea Story";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
