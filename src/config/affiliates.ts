@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  KoreaMate · Affiliate Partner Configuration
+//  gokoreamate · Affiliate Partner Configuration
 //
 //  수익화 파이프라인 3-tier 구조:
 //    Tier 1 — Viator   : 투어 / 액티비티 / 체험 (영미권 메인)
 //    Tier 2 — Booking  : 호텔 / 숙박 예약 (영미권 메인)
-//    Tier 3 — Klook    : 공항 리무진 / 케이블카 / eSIM (로컬 교통 전용)
+//    Tier 3 — Klook    : 공항 리무진 / eSIM / 렌터카 / KTX (로컬 교통 전용)
 //
 //  .env.local 에 실제 ID를 채우면 즉시 전 페이지 동시 반영.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ export const BOOKING = {
 };
 
 // ── Klook (로컬 교통 전용) ───────────────────────────────────────────────────
-//  주의: Klook은 공항 리무진 / eSIM / 케이블카 구역에만 사용.
+//  주의: Klook은 공항 리무진 / eSIM / 렌터카 / KTX 구역에만 사용.
 //  투어·숙박 구역에는 Viator / Booking.com 사용.
 export const KLOOK = {
   /** 공항 픽업 / 리무진 */
@@ -61,6 +61,23 @@ export const KLOOK = {
   /** 송도 케이블카 */
   cableCarUrl: process.env.NEXT_PUBLIC_CABLE_CAR_URL
     ?? "https://www.klook.com/en-US/search-results/?query=busan+songdo+cable+car",
+
+  /** 제주 렌터카 */
+  jejuCarRentalUrl: process.env.NEXT_PUBLIC_KLOOK_JEJU_CAR_URL
+    ?? "https://www.klook.com/en-US/search-results/?query=jeju+car+rental",
+};
+
+// ── KTX Inter-city Rail ───────────────────────────────────────────────────────
+//  Klook sells KTX passes and inter-city rail bookings for tourists.
+//  실제 제휴 URL은 NEXT_PUBLIC_KTX_* 환경변수로 교체 가능.
+export const KTX = {
+  /** 서울 → 부산 KTX */
+  seoulBusanUrl: process.env.NEXT_PUBLIC_KTX_BUSAN_URL
+    ?? "https://www.klook.com/en-US/search-results/?query=seoul+busan+ktx+train",
+
+  /** 서울 → 경주 KTX */
+  seoulGyeongjuUrl: process.env.NEXT_PUBLIC_KTX_GYEONGJU_URL
+    ?? "https://www.klook.com/en-US/search-results/?query=seoul+gyeongju+ktx+train",
 };
 
 // ── 이벤트 타입 → 적합한 제휴 파트너 판별 ──────────────────────────────────
