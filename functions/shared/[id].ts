@@ -90,9 +90,17 @@ export const onRequest: (context: {
   }
 
   // 봇 요청 → 동적 OG HTML 생성
-  const OG_IMAGE  = "https://gokoreamate.com/opengraph-image.png";
-  const CANONICAL = `https://gokoreamate.com/shared/${shareId}`;
+  // TASK-029: 도시별 정적 OG 이미지 맵 (build-time PNG)
+  const CITY_OG_IMAGE: Record<string, string> = {
+    seoul:    "https://gokoreamate.com/og/seoul/opengraph-image.png",
+    busan:    "https://gokoreamate.com/og/busan/opengraph-image.png",
+    jeju:     "https://gokoreamate.com/og/jeju/opengraph-image.png",
+    gyeongju: "https://gokoreamate.com/og/gyeongju/opengraph-image.png",
+  };
+  const FALLBACK_OG = "https://gokoreamate.com/opengraph-image.png";
+  const CANONICAL   = `https://gokoreamate.com/shared/${shareId}`;
 
+  let trip: ItineraryRow | undefined;
   let title       = "AI Korea Trip Planner — gokoreamate.com";
   let description = "Plan, capture & share your Korea trip story with AI. Free · No sign-up required.";
 
@@ -118,7 +126,7 @@ export const onRequest: (context: {
 
     if (res.ok) {
       const rows = (await res.json()) as ItineraryRow[];
-      const trip  = rows[0];
+      trip       = rows[0];
 
       if (trip) {
         const cityCap  = trip.city.charAt(0).toUpperCase() + trip.city.slice(1);
@@ -133,8 +141,10 @@ export const onRequest: (context: {
     // Supabase 타임아웃/네트워크 오류 → 기본값 OG 반환 (크래시 없음)
   }
 
+  const ogImage = CITY_OG_IMAGE[trip?.city?.toLowerCase() ?? ""] ?? FALLBACK_OG;
+
   return new Response(
-    buildBotHtml({ title, description, ogImage: OG_IMAGE, url: CANONICAL }),
+    buildBotHtml({ title, description, ogImage, url: CANONICAL }),
     {
       headers: {
         "content-type":  "text/html;charset=UTF-8",
