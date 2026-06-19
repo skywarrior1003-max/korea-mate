@@ -953,10 +953,10 @@ function ItineraryResult() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [loading, shareId]);
 
-  // ── 공유 링크 복사 ───────────────────────────────────────
+  // ── 공유 링크 복사 (TASK-026: /shared/ 전용 뷰어 URL 사용) ──
   async function handleCopyShareLink() {
     if (!itinId) return;
-    const url = `${window.location.origin}/itinerary?id=${itinId}`;
+    const url = `${window.location.origin}/shared/${itinId}`;
     try {
       await navigator.clipboard.writeText(url);
     } catch {
