@@ -842,62 +842,6 @@ export default function Home() {
 
       <NoticeModal />
 
-      {/* ── BTS 아리랑 특별 배너 ────────────────────────────────── */}
-      <div
-        className="relative overflow-hidden cursor-pointer"
-        style={{ background: "linear-gradient(90deg, #1a0533 0%, #3b0764 40%, #4c0a8a 70%, #1a0533 100%)" }}
-        id="bts-guide"
-        onClick={openBTSGuide}
-      >
-        {/* 보라빛 글로우 애니메이션 레이어 */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.5) 0%, transparent 55%), radial-gradient(ellipse at 80% 50%, rgba(168,85,247,0.4) 0%, transparent 55%)",
-            animation: "btsPulse 3s ease-in-out infinite",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="text-2xl shrink-0 animate-bounce">💜</span>
-            <div className="min-w-0">
-              <p className="text-white font-black text-sm sm:text-base truncate">
-                BTS ARIRANG IN BUSAN — Jun 12–13, 2026
-              </p>
-              <p className="text-purple-300 text-xs font-medium hidden sm:block">
-                Stadium road closures · Line 3 express · Premium chauffeur routes
-              </p>
-            </div>
-          </div>
-          <span className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-white border border-purple-400/60 bg-purple-500/30 hover:bg-purple-500/50 transition-colors whitespace-nowrap">
-            🗺️ Transit Guide →
-          </span>
-        </div>
-        <style>{`
-          @keyframes btsPulse {
-            0%, 100% { opacity: 0.6; }
-            50%       { opacity: 1;   }
-          }
-          @keyframes btsOverlayIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-          }
-          @keyframes btsOverlayOut {
-            from { opacity: 1; }
-            to   { opacity: 0; }
-          }
-          @keyframes btsModalIn {
-            from { opacity: 0; transform: translateY(48px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes btsModalOut {
-            from { opacity: 1; transform: translateY(0); }
-            to   { opacity: 0; transform: translateY(48px); }
-          }
-        `}</style>
-      </div>
-
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
