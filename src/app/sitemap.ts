@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/jeju`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/gyeongju`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/busan`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // TASK-042: explore city pages
+    { url: `${siteUrl}/explore/busan`,       lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
+    { url: `${siteUrl}/explore/seoul`,       lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${siteUrl}/explore/jeju`,        lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${siteUrl}/explore/gyeongju`,    lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${siteUrl}/explore/jeonju`,      lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/survival-guide`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/all-spots`,           lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/trending`,            lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },

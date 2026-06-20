@@ -248,9 +248,9 @@ export default function AllSpotsPage() {
       <header className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
+            <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
               <span className="text-2xl">🇰🇷</span>
-              Korea<span style={{ color: "#f97316" }}>Mate</span>
+              go<span className="font-extrabold">korea</span>mate
             </Link>
             <span className="text-gray-300 text-lg">/</span>
             <h1 className="text-base font-black text-gray-700">All Spots</h1>
