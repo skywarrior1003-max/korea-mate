@@ -114,13 +114,15 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     fetch("/data/local-info.json")
       .then(r => r.json())
       .then((data: CitySpot[]) => {
-        const citySpots  = data.filter(s => s.city === city.name);
-        const existingIds = new Set(city.staticSpots.map(s => s.id));
-        const newOnes    = citySpots.filter(s => !existingIds.has(s.id));
-        if (newOnes.length > 0) setSpots(prev => [...prev, ...newOnes]);
+        const citySpots = data.filter(s => s.city === city.name);
+        setSpots(prev => {
+          const existingIds = new Set(prev.map(s => s.id));
+          const newOnes = citySpots.filter(s => !existingIds.has(s.id));
+          return newOnes.length > 0 ? [...prev, ...newOnes] : prev;
+        });
       })
       .catch(() => {});
-  }, [city.name, city.staticSpots]);
+  }, [city.name]);
 
   // Load GPS-tagged spots from events.json
   useEffect(() => {
