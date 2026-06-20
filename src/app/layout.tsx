@@ -70,7 +70,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       {(() => {
-        const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "0m9jmjejk4";
+        const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
         return (
           <Script
             src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverClientId}`}
