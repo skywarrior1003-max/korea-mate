@@ -132,7 +132,7 @@ export default function ContactModal({
         <div className="px-6 pt-5 pb-1 shrink-0">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-black text-gray-900 tracking-tight">
-              Contact GoKoreaMate
+              Contact gokoreamate
             </h2>
             <button
               onClick={onClose}

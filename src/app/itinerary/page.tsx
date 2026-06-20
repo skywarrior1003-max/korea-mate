@@ -878,7 +878,7 @@ function ItineraryResult() {
           setLoading(false);
         })
         .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
-    });
+    }).catch((err) => { setError(`Failed to load saved itinerary: ${(err as Error).message}`); setLoading(false); });
   }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ══════════════════════════════════════════════════════════

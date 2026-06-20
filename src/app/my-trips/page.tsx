@@ -93,6 +93,7 @@ function rowToTrip(r: ItineraryRow): Trip {
 export default function MyTripsPage() {
   const [trips,          setTrips]          = useState<Trip[]>([]);
   const [loading,        setLoading]        = useState(true);
+  const [fetchError,     setFetchError]     = useState(false);
   const [deleting,       setDeleting]       = useState<string | null>(null);
   const [confirmDel,     setConfirmDel]     = useState<string | null>(null);
   const [copied,         setCopied]         = useState<string | null>(null);
@@ -113,7 +114,7 @@ export default function MyTripsPage() {
         .map(t => ({ ...t, moments: loadMoments(t.id).length }));
       setTrips(sorted);
       setLoading(false);
-    }).catch(() => { if (!cancelled) setLoading(false); });
+    }).catch(() => { if (!cancelled) { setLoading(false); setFetchError(true); } });
 
     return () => { cancelled = true; };
   }, []);
@@ -229,8 +230,28 @@ export default function MyTripsPage() {
           </div>
         )}
 
+        {/* ── 에러 상태 ── */}
+        {!loading && fetchError && (
+          <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
+            <div className="w-24 h-24 rounded-3xl bg-red-50 flex items-center justify-center text-5xl">⚠️</div>
+            <div>
+              <p className="text-2xl font-black text-[#2C2520] mb-2">여행 기록을 불러올 수 없어요</p>
+              <p className="text-[#8C6239] max-w-sm leading-relaxed">
+                네트워크 연결을 확인하고 다시 시도해주세요.
+              </p>
+            </div>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
+              style={{ backgroundColor: "#D4AF37" }}
+            >
+              다시 시도하기
+            </button>
+          </div>
+        )}
+
         {/* ── 빈 상태 ── */}
-        {!loading && trips.length === 0 && (
+        {!loading && !fetchError && trips.length === 0 && (
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-[#EAE3D2] flex items-center justify-center text-5xl">✈️</div>
             <div>
