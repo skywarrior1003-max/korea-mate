@@ -294,9 +294,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           <p className="text-4xl mb-3">🚧</p>
           <p className="text-gray-900 font-black text-lg mb-2">Coming Soon</p>
           <p className="text-sm text-gray-400 mb-4">We&apos;re curating the best spots in {city.name}. Check back soon!</p>
-          <Link href={`/${city.slug}`} className="text-sm font-bold text-orange-500 underline">
-            View our {city.name} travel guide →
-          </Link>
+          View our {city.name} travel guide coming soon.
         </>
       ) : (
         <>
@@ -438,9 +436,9 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-30 shrink-0">
         <div className="max-w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
+          <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
             <span className="text-2xl">🇰🇷</span>
-            Korea<span style={{ color: "#f97316" }}>Mate</span>
+            go<span className="font-extrabold">korea</span>mate
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>

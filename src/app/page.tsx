@@ -835,9 +835,9 @@ export default function Home() {
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-black text-gray-900 flex items-center gap-1.5">
+          <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
             <span className="text-2xl">🇰🇷</span>
-            Korea<span style={{ color: "#f97316" }}>Mate</span>
+            go<span className="font-extrabold">korea</span>mate
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
@@ -1939,9 +1939,9 @@ export default function Home() {
       <footer className="py-12 px-4" style={{ backgroundColor: "#111827" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
-            <span className="text-xl font-black text-white flex items-center gap-1.5">
+            <span className="text-xl font-normal text-white flex items-center gap-1.5">
               <span className="text-2xl">🇰🇷</span>
-              Korea<span style={{ color: "#f97316" }}>Mate</span>
+              go<span className="font-extrabold">korea</span>mate
             </span>
             <div className="flex items-center gap-6">
               <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>

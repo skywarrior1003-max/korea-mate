@@ -35,8 +35,8 @@ export default function SurvivalGuidePage() {
       <header className="border-b border-[#E6DFD5] bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link href="/" className="text-2xl font-black tracking-tight text-[#2C2520] flex items-center gap-1.5">
-              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> Korea<span className="text-[#D4AF37]">Mate</span>
+            <Link href="/" className="text-2xl font-normal tracking-tight text-[#2C2520] flex items-center gap-1.5">
+              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> go<span className="font-extrabold">korea</span>mate
             </Link>
           </div>
           <nav className="flex items-center gap-8">
