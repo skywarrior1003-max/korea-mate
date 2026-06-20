@@ -13,6 +13,7 @@ import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
+import CityQuickLinks from "@/components/CityQuickLinks";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -1401,6 +1402,9 @@ export default function Home() {
       <div className="max-w-4xl mx-auto w-full px-4 py-8">
         <AdBanner />
       </div>
+
+      {/* ── City Quick Links ─────────────────────────────────────── */}
+      <CityQuickLinks />
 
       {/* ── Essential for Foreign Travelers ─────────────────────── */}
       <section id="essential" className="py-20" style={{ backgroundColor: "#f0f4ff" }}>
