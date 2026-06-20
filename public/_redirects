@@ -2,3 +2,5 @@
 # /shared/* 라우팅은 functions/shared/[id].ts Pages Function이 처리 (TASK-027)
 # - 봇 요청: Supabase 조회 → 동적 OG HTML 반환
 # - 일반 유저: env.ASSETS.fetch → /shared/ 정적 쉘 passthrough (TASK-026 보존)
+
+/explore-busan /explore/busan 301

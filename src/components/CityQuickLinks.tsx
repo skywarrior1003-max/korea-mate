@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const CITIES = [
-  { name: "Seoul",     emoji: "🏙️", desc: "K-pop · Palaces · Street Food",   href: "/seoul" },
-  { name: "Busan",     emoji: "🌊", desc: "Beaches · Seafood · Night Views",  href: "/explore-busan" },
-  { name: "Jeju",      emoji: "🌋", desc: "Hallasan · Olle Trail · Nature",   href: "/jeju" },
-  { name: "Gyeongju",  emoji: "🏛️", desc: "Temples · Royal Tombs · History", href: "/gyeongju" },
+  { name: "Seoul",     emoji: "🏙️", desc: "K-pop · Palaces · Street Food",   href: "/explore/seoul" },
+  { name: "Busan",     emoji: "🌊", desc: "Beaches · Seafood · Night Views",  href: "/explore/busan" },
+  { name: "Jeju",      emoji: "🌋", desc: "Hallasan · Olle Trail · Nature",   href: "/explore/jeju" },
+  { name: "Gyeongju",  emoji: "🏛️", desc: "Temples · Royal Tombs · History", href: "/explore/gyeongju" },
 ];
 
 export default function CityQuickLinks() {

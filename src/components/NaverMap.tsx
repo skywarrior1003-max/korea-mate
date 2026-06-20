@@ -36,7 +36,8 @@ interface Props {
   userLocation?: { lat: number; lng: number } | null;
   nearMeActive?: boolean;
   defaultCenter?: { lat: number; lng: number };
-  height?:       number;
+  height?:       number | string;
+  className?:    string;
 }
 
 const CATEGORY_COLOR: Record<string, string> = {
@@ -53,6 +54,7 @@ export default function NaverMap({
   nearMeActive,
   defaultCenter = { lat: 35.1587, lng: 129.1604 },
   height = 420,
+  className,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
@@ -150,7 +152,7 @@ export default function NaverMap({
 
   return (
     <div
-      className="relative w-full rounded-2xl overflow-hidden border border-[#E6DFD5] mb-6"
+      className={className ?? "relative w-full rounded-2xl overflow-hidden border border-[#E6DFD5] mb-6"}
       style={{ height }}
     >
       <div ref={mapDivRef} className="w-full h-full" />
