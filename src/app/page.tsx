@@ -13,6 +13,7 @@ import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
+import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 
 // ═══════════════════════════════════════════════
@@ -340,14 +341,6 @@ function restaurantToEventItem(r: RestaurantItem): EventItem {
 
 // ── GPS 헬퍼 (홈 페이지) ──────────────────────────────────────────────────────
 
-function haversineKmHome(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.asin(Math.sqrt(a));
-}
-
 const HOME_DISTRICT_CENTERS: Record<string, { lat: number; lng: number }> = {
   "Busanjin-gu":  { lat: 35.1587, lng: 129.0585 },
   "Haeundae-gu":  { lat: 35.1628, lng: 129.1635 },
@@ -372,9 +365,6 @@ function getHomeEventCoords(event: EventItem): { lat: number; lng: number } {
   return HOME_DISTRICT_CENTERS[event.district] ?? { lat: 35.1796, lng: 129.0756 };
 }
 
-function fmtDistHome(km: number): string {
-  return km < 1 ? `${Math.round(km * 1000)}m 앞` : `${km.toFixed(1)}km`;
-}
 
 // ═══════════════════════════════════════════════
 //  검색창 컴포넌트
@@ -807,8 +797,8 @@ export default function Home() {
       return [...list].sort((a, b) => {
         const ac = getHomeEventCoords(a);
         const bc = getHomeEventCoords(b);
-        return haversineKmHome(userCoords.lat, userCoords.lng, ac.lat, ac.lng)
-             - haversineKmHome(userCoords.lat, userCoords.lng, bc.lat, bc.lng);
+        return haversineKm(userCoords.lat, userCoords.lng, ac.lat, ac.lng)
+             - haversineKm(userCoords.lat, userCoords.lng, bc.lat, bc.lng);
       });
     }
 
@@ -1601,7 +1591,7 @@ export default function Home() {
                       onClick={() => setSelectedEvent(event)}
                       distanceBadge={
                         gpsActive && userCoords
-                          ? fmtDistHome(haversineKmHome(
+                          ? fmtDist(haversineKm(
                               userCoords.lat, userCoords.lng,
                               getHomeEventCoords(event).lat,
                               getHomeEventCoords(event).lng
