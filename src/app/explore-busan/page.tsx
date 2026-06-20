@@ -7,6 +7,7 @@ import Image from "next/image";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
+import { haversineKm } from "@/lib/geo";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -34,22 +35,6 @@ interface LocalInfo {
   image?: string;
   lat?: number;
   lng?: number;
-}
-
-// ═══════════════════════════════════════════════
-//  HAVERSINE (km)
-// ═══════════════════════════════════════════════
-
-function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.asin(Math.sqrt(a));
 }
 
 // ═══════════════════════════════════════════════
@@ -750,25 +735,17 @@ export default function ExploreBusanPage() {
             <span className="text-2xl">🇰🇷</span>
             Korea<span style={{ color: "#f97316" }}>Mate</span>
           </Link>
-          <nav className="hidden sm:flex items-center gap-6">
+          <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
+            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
+            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">🍽️ Food Guide</Link>
+            <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
+            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">🧳 My Trips</Link>
             <Link
-              href="/trending"
-              className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Trending
-            </Link>
-            <Link
-              href="/survival-guide"
-              className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Survival Guide
-            </Link>
-            <Link
-              href="/my-trips"
+              href="/"
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "#f97316" }}
             >
-              My Trips
+              Plan My Trip
             </Link>
           </nav>
         </div>
