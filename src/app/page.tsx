@@ -42,6 +42,48 @@ interface LocalInfo {
 }
 
 // ═══════════════════════════════════════════════
+//  CITY PLANNER CONFIG
+// ═══════════════════════════════════════════════
+
+const CITY_ARRIVAL_DEFAULTS: Record<string, string> = {
+  Busan:    "KTX Busan Station (부산역)",
+  Seoul:    "Incheon International Airport (인천공항)",
+  Jeju:     "Jeju International Airport (제주공항)",
+  Gyeongju: "Gyeongju KTX Station (신경주역)",
+};
+
+const CITY_ARRIVAL_OPTIONS: Record<string, { value: string; label: string }[]> = {
+  Busan: [
+    { value: "KTX Busan Station (부산역)",                label: "🚄 KTX Busan Station" },
+    { value: "Gimhae International Airport (김해공항)",    label: "✈️ Gimhae Airport"    },
+    { value: "Haeundae (해운대)",                          label: "🏖️ Haeundae"          },
+    { value: "Nampo-dong / Gwangbok-ro (남포동)",          label: "🏙️ Nampo-dong"        },
+    { value: "Seomyeon (서면)",                            label: "🛍️ Seomyeon"          },
+    { value: "Gwangalli Beach (광안리해수욕장)",            label: "🌊 Gwangalli Beach"   },
+  ],
+  Seoul: [
+    { value: "Incheon International Airport (인천공항)",   label: "✈️ Incheon Airport"   },
+    { value: "Seoul Station (서울역)",                     label: "🚄 Seoul Station"      },
+    { value: "Hongdae (홍대)",                             label: "🎵 Hongdae"            },
+    { value: "Myeongdong (명동)",                          label: "🛍️ Myeongdong"        },
+    { value: "Gangnam (강남)",                             label: "🏙️ Gangnam"           },
+    { value: "Dongdaemun (동대문)",                        label: "🏯 Dongdaemun"        },
+  ],
+  Jeju: [
+    { value: "Jeju International Airport (제주공항)",      label: "✈️ Jeju Airport"       },
+    { value: "Jeju City Center (제주시내)",                label: "🏙️ Jeju City"         },
+    { value: "Seogwipo (서귀포)",                          label: "🌊 Seogwipo"          },
+    { value: "Hamdeok Beach (함덕해변)",                   label: "🏖️ Hamdeok Beach"     },
+  ],
+  Gyeongju: [
+    { value: "Gyeongju KTX Station (신경주역)",            label: "🚄 Gyeongju KTX"      },
+    { value: "Gyeongju City Center (경주시내)",            label: "🏛️ Gyeongju City"     },
+    { value: "Bulguksa Temple Area (불국사)",              label: "🏯 Bulguksa"          },
+    { value: "Gyeongju Train Station (경주역)",            label: "🚉 Gyeongju Station"  },
+  ],
+};
+
+// ═══════════════════════════════════════════════
 //  HARDCODED BUSAN SPOTS
 // ═══════════════════════════════════════════════
 
@@ -501,6 +543,11 @@ export default function Home() {
     if (!style) return;
     try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
   }, [style]);
+
+  // ── 도시 변경 시 도착지 기본값 자동 전환 ─────────────────────────────────
+  useEffect(() => {
+    setStartLocation(CITY_ARRIVAL_DEFAULTS[city] ?? city);
+  }, [city]);
 
   // ── 클론 파라미터 처리 (?city=&from=&to=&style=&ref=clone) ──────────────
   useEffect(() => {
@@ -1065,20 +1112,24 @@ export default function Home() {
                     <span>🌊 Busan</span>
                     {city === "Busan" && <span className="text-xs font-black text-orange-500">✓ Selected</span>}
                   </button>
-                  {/* 미오픈 도시들 */}
                   {[
                     { value: "Seoul",    label: "🏙️ Seoul"       },
                     { value: "Jeju",     label: "🏝️ Jeju Island"  },
                     { value: "Gyeongju", label: "🏯 Gyeongju"     },
                   ].map((c) => (
-                    <div
+                    <button
                       key={c.value}
-                      title="Coming Soon"
-                      className="w-full flex items-center justify-between px-4 py-3 text-base font-semibold text-gray-300 bg-gray-50 cursor-not-allowed select-none"
+                      type="button"
+                      onClick={() => setCity(c.value)}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
+                        city === c.value
+                          ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
+                          : "text-gray-900 hover:bg-gray-100"
+                      }`}
                     >
                       <span>{c.label}</span>
-                      <span className="text-xs font-bold text-gray-300 flex items-center gap-1">🔒 Coming Soon</span>
-                    </div>
+                      {city === c.value && <span className="text-xs font-black text-orange-500">✓ Selected</span>}
+                    </button>
                   ))}
                 </div>
               </div>
@@ -1134,14 +1185,7 @@ export default function Home() {
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">📍 Where do you arrive? (Starting Point)</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {[
-                    { value: "KTX Busan Station (부산역)",        label: "🚄 KTX Busan Station" },
-                    { value: "Gimhae International Airport (김해공항)", label: "✈️ Gimhae Airport" },
-                    { value: "Haeundae (해운대)",                  label: "🏖️ Haeundae" },
-                    { value: "Nampo-dong / Gwangbok-ro (남포동)",  label: "🏙️ Nampo-dong" },
-                    { value: "Seomyeon (서면)",                    label: "🛍️ Seomyeon" },
-                    { value: "Gwangalli Beach (광안리해수욕장)",       label: "🌊 Gwangalli Beach" },
-                  ].map((loc) => (
+                  {(CITY_ARRIVAL_OPTIONS[city] ?? CITY_ARRIVAL_OPTIONS["Busan"]!).map((loc) => (
                     <button
                       key={loc.value}
                       type="button"
