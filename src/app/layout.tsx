@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     canonical: "https://gokoreamate.com",
   },
   verification: {
-    google: "sGBjjMTMMM8LKvzHnDCQ0AQpHdQKBOSEQUizwVBTpxo",
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || "sGBjjMTMMM8LKvzHnDCQ0AQpHdQKBOSEQUizwVBTpxo",
   },
 };
 
@@ -69,6 +69,25 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      {(() => {
+        const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
+        const ga4Valid = ga4Id && ga4Id !== "나중에_입력";
+        return ga4Valid ? (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">{`
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','${ga4Id}');
+`}</Script>
+          </>
+        ) : null;
+      })()}
       {(() => {
         const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
         const isValid = adsenseId && adsenseId !== "나중에_입력";
