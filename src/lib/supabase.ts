@@ -4,8 +4,8 @@ const SUPABASE_URL  = process.env.NEXT_PUBLIC_SUPABASE_URL  || "https://placehol
 const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
 
 // 빌드 시 env 누락 경고 — 키 값은 절대 출력하지 않음
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  console.warn("[Supabase] NEXT_PUBLIC_SUPABASE_URL is not set. Database features will be unavailable until the env var is configured.");
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  console.error("[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is not configured — all DB calls will fail at runtime.");
 }
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);

@@ -660,7 +660,7 @@ export default function Home() {
         const newOnes = busanFromJson.filter((s) => !hardcodedIds.has(s.id));
         setLocalInfoData([...BUSAN_SPOTS, ...newOnes]);
       })
-      .catch(() => {});
+      .catch(() => { setLocalInfoData(BUSAN_SPOTS); });
   }, []);
 
   useEffect(() => {

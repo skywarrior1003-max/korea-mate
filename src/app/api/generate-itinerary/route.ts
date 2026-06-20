@@ -275,14 +275,27 @@ function buildMockItinerary(
   const isEveningArrival = arrivalHour >= 17;
   const startArea = startLocation ?? city;
 
-  // Day 1 도착 야간 템플릿 (항상 공통)
-  const DAY1_EVENING_TEMPLATES = [
-    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,    time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",    tips: "[MOCK] Check in to your hotel and freshen up." },
-    { name: "Jagalchi Fish Market",            category: "Market",     location: "Nampo-dong", time: "18:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
-    { name: "Bupyeong Night Market",           category: "Market",     location: "Jung-gu",   time: "20:00",                                     duration: "1h",    tips: "[MOCK] Open until midnight. Cash preferred." },
+  // 도시별 Day 1 저녁 도착 템플릿
+  const cityLower = city.toLowerCase();
+  const DAY1_EVENING_TEMPLATES = cityLower === "seoul" ? [
+    { name: `${startArea} Arrival Check-in`,     category: "Experience", location: startArea,        time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Myeongdong Street Food",             category: "Market",     location: "Myeongdong",     time: "18:30",                                     duration: "1h 30m", tips: "[MOCK] Try tteokbokki and hotteok. Very crowded on weekends." },
+    { name: "Han River Yeouido Night Walk",       category: "Attraction", location: "Yeouido",        time: "20:30",                                     duration: "1h",     tips: "[MOCK] Bike rental nearby — beautiful city skyline at night." },
+  ] : cityLower === "jeju" ? [
+    { name: `${startArea} Arrival Check-in`,     category: "Experience", location: startArea,        time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Dongmun Traditional Market",         category: "Market",     location: "Jeju City",      time: "18:30",                                     duration: "1h 30m", tips: "[MOCK] Try hallabong juice and grilled black pork." },
+    { name: "Jeju Chilseong-ro Night Walk",       category: "Attraction", location: "Jeju City",      time: "20:30",                                     duration: "1h",     tips: "[MOCK] Main street of Jeju City — cafes and souvenir shops open late." },
+  ] : cityLower === "gyeongju" ? [
+    { name: `${startArea} Arrival Check-in`,     category: "Experience", location: startArea,        time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Hwangnam Bread Street",              category: "Market",     location: "Hwangnam-dong",  time: "18:30",                                     duration: "1h",     tips: "[MOCK] Gyeongju's famous sweet bean bread — great for gifts." },
+    { name: "Anapji Pond Night View",             category: "Attraction", location: "Gyeongju City",  time: "20:00",                                     duration: "1h",     tips: "[MOCK] Palace walls reflect in the pond at night. Entry 3,000 KRW." },
+  ] : [
+    { name: `${startArea} Arrival Check-in`,     category: "Experience", location: startArea,        time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Jagalchi Fish Market",               category: "Market",     location: "Nampo-dong",     time: "18:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Bupyeong Night Market",              category: "Market",     location: "Jung-gu",        time: "20:00",                                     duration: "1h",     tips: "[MOCK] Open until midnight. Cash preferred." },
   ];
 
-  // 도착 지역 기반 Day 2 첫날 템플릿 — 도착지에서 모닝 시작
+  // 도착 지역 기반 Day 2 템플릿 — 부산: 도착지 앵커 분기, 기타 도시: 도시별 분기
   const la = (startLocation ?? "").toLowerCase();
   const isHaeundaeAnchor  = la.includes("haeundae") || la.includes("해운대");
   const isGwangalliAnchor = la.includes("gwangalli") || la.includes("광안리") || la.includes("gwangan");
@@ -290,46 +303,105 @@ function buildMockItinerary(
 
   type MockPlace = { name: string; category: string; location: string; time: string; duration: string; tips: string };
   const DAY2_TEMPLATES: MockPlace[] = isHaeundaeAnchor ? [
-    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
-    { name: "Dongbaekseom Island Walk",      category: "Attraction", location: "Haeundae",   time: "11:00", duration: "1h",  tips: "[MOCK] Free entry. Scenic coastal path around the island." },
-    { name: "Haeundae Market Lunch",         category: "Restaurant", location: "Haeundae",   time: "13:00", duration: "1h",  tips: "[MOCK] Try halmae gukbap (할매국밥). ₩9,000." },
-    { name: "Marine City Rooftop Bar",       category: "Experience", location: "Marine City",time: "18:00", duration: "1h",  tips: "[MOCK] Best city + sea view at sunset." },
+    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",    time: "09:00", duration: "1h",     tips: "[MOCK] Best before 10 AM for fewer crowds." },
+    { name: "Dongbaekseom Island Walk",      category: "Attraction", location: "Haeundae",    time: "11:00", duration: "1h",     tips: "[MOCK] Free entry. Scenic coastal path around the island." },
+    { name: "Haeundae Market Lunch",         category: "Restaurant", location: "Haeundae",    time: "13:00", duration: "1h",     tips: "[MOCK] Try halmae gukbap. 9,000 KRW." },
+    { name: "Marine City Rooftop Bar",       category: "Experience", location: "Marine City", time: "18:00", duration: "1h",     tips: "[MOCK] Best city + sea view at sunset." },
   ] : isGwangalliAnchor ? [
-    { name: "Gwangalli Beach Morning Walk",  category: "Attraction", location: "Suyeong-gu", time: "09:00", duration: "1h",  tips: "[MOCK] Best at low tide — great view of Gwangan Bridge." },
-    { name: "Millak Waterfront Park",        category: "Attraction", location: "Suyeong-gu", time: "11:00", duration: "1h",  tips: "[MOCK] 밀락더마켓 — open-air food & café market on the waterfront." },
-    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "14:00", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
-    { name: "Gwangan Bridge Night View",     category: "Attraction", location: "Suyeong-gu", time: "20:00", duration: "1h",  tips: "[MOCK] Bridge lights up around 20:00. Best viewed from the beach." },
+    { name: "Gwangalli Beach Morning Walk",  category: "Attraction", location: "Suyeong-gu",  time: "09:00", duration: "1h",     tips: "[MOCK] Best at low tide — great view of Gwangan Bridge." },
+    { name: "Millak Waterfront Park",        category: "Attraction", location: "Suyeong-gu",  time: "11:00", duration: "1h",     tips: "[MOCK] Open-air food and cafe market on the waterfront." },
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",     time: "14:00", duration: "2h",     tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Gwangan Bridge Night View",     category: "Attraction", location: "Suyeong-gu",  time: "20:00", duration: "1h",     tips: "[MOCK] Bridge lights up around 20:00. Best viewed from the beach." },
   ] : isNampoAnchor ? [
-    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "09:30", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
-    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu", time: "13:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
-    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
-    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1h",  tips: "[MOCK] ₩12,000 entry. Best at night." },
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",     time: "09:30", duration: "2h",     tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu",  time: "13:00", duration: "2h",     tips: "[MOCK] Take the Danubi Train inside the park." },
+    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu",  time: "17:30", duration: "1h",     tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
+    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong",  time: "20:00", duration: "1h",     tips: "[MOCK] 12,000 KRW entry. Best at night." },
+  ] : cityLower === "seoul" ? [
+    { name: "Gyeongbokgung Palace Morning",  category: "Attraction", location: "Gyeongbokgung", time: "09:30", duration: "2h",  tips: "[MOCK] Guard ceremony at 10:00 AM — arrive early. Entry 3,000 KRW." },
+    { name: "Bukchon Hanok Village Walk",    category: "Attraction", location: "Bukchon",       time: "12:00", duration: "1h 30m", tips: "[MOCK] Traditional hanok neighborhood — free entry, quieter before noon." },
+    { name: "Insadong Market Lunch",         category: "Restaurant", location: "Insadong",      time: "14:00", duration: "1h",  tips: "[MOCK] Try bibimbap or japchae. ~10,000 KRW avg." },
+    { name: "Namsan N Seoul Tower",          category: "Attraction", location: "Namsan",        time: "17:00", duration: "2h",  tips: "[MOCK] Cable car or 20-min walk up — panoramic city view." },
+  ] : cityLower === "jeju" ? [
+    { name: "Seongsan Ilchulbong Peak",      category: "Attraction", location: "Seongsan",      time: "09:00", duration: "2h",  tips: "[MOCK] UNESCO site — steep 20-min climb. Entry 5,000 KRW." },
+    { name: "Udo Island Day Trip",           category: "Attraction", location: "Seongsan",      time: "11:30", duration: "2h",  tips: "[MOCK] 15-min ferry from Seongsan Port. Bike rental on the island." },
+    { name: "Seopjikoji Coastal Walk",       category: "Attraction", location: "Seongsan",      time: "14:30", duration: "1h 30m", tips: "[MOCK] Windmill and cliff scenery — most scenic in spring." },
+    { name: "Hyeopjae Beach Sunset",         category: "Attraction", location: "Hallim",        time: "17:30", duration: "1h",  tips: "[MOCK] White sand and emerald water — best beach in Jeju." },
+  ] : cityLower === "gyeongju" ? [
+    { name: "Bulguksa Temple Morning",       category: "Attraction", location: "Bulguksa",      time: "09:00", duration: "2h",  tips: "[MOCK] UNESCO heritage — arrive before tour groups at 10 AM. Entry 6,000 KRW." },
+    { name: "Seokguram Grotto",              category: "Attraction", location: "Tohamsan",      time: "11:30", duration: "1h",  tips: "[MOCK] 10-min bus from Bulguksa. Entry 6,000 KRW. 8th-century stone Buddha." },
+    { name: "Gyeongju National Museum",      category: "Attraction", location: "Gyeongju City", time: "14:00", duration: "1h 30m", tips: "[MOCK] Free entry. Best collection of Silla Kingdom artifacts." },
+    { name: "Donggung Palace (Anapji)",      category: "Attraction", location: "Gyeongju City", time: "18:30", duration: "1h",  tips: "[MOCK] Entry 3,000 KRW. Magical reflection of palace walls at dusk." },
   ] : [
-    // Seomyeon / KTX BusanStation / 기타: Day 2 모닝은 서면 근처 시작
-    { name: "Seomyeon Breakfast — 돼지국밥", category: "Restaurant", location: "Seomyeon",   time: "09:00", duration: "1h",  tips: "[MOCK] Order pork soup rice (돼지국밥). ₩8,000. Cash or card OK." },
-    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",    time: "11:00", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
-    { name: "Jagalchi Fish Market",          category: "Market",     location: "Nampo-dong", time: "14:00", duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
-    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
+    // Seomyeon / KTX BusanStation / 기타 부산 기본값
+    { name: "Seomyeon Breakfast",            category: "Restaurant", location: "Seomyeon",      time: "09:00", duration: "1h",  tips: "[MOCK] Order pork soup rice (dwaeji gukbap). 8,000 KRW. Cash or card OK." },
+    { name: "Gamcheon Culture Village",      category: "Attraction", location: "Saha-gu",       time: "11:00", duration: "2h",  tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Jagalchi Fish Market",          category: "Market",     location: "Nampo-dong",    time: "14:00", duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu",   time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
   ];
 
-  // Day 3+ 공통 순환 템플릿
-  const DAY3_PLUS_TEMPLATES: MockPlace[] = [
-    { name: "Haedong Yonggungsa Temple",     category: "Attraction", location: "Gijang-gun", time: "09:30", duration: "2h",  tips: "[MOCK] Arrive early — parking gets full by 10 AM." },
-    { name: "BIFF Square Street Food",       category: "Market",     location: "Nampo-dong", time: "15:00", duration: "1h",  tips: "[MOCK] Famous for ssiat hotteok (seed pancake)." },
-    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu", time: "14:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
-    { name: "Michelin Lunch — Busan Gukbap", category: "Restaurant", location: "Seomyeon",   time: "12:30", duration: "1h",  tips: "[MOCK] Order 돼지국밥 (pork soup rice). ₩8,000." },
-    { name: "Oryukdo Skywalk",               category: "Attraction", location: "Nam-gu",     time: "15:00", duration: "1h",  tips: "[MOCK] Glass-floor walkway over the sea." },
-    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",   time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
-    { name: "Gwangalli Beach Sunset",         category: "Attraction", location: "Suyeong-gu", time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
-    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong", time: "20:00", duration: "1h",  tips: "[MOCK] ₩12,000 entry. Best at night." },
+  // Day 3+ 순환 템플릿 — 도시별 분기
+  const DAY3_PLUS_TEMPLATES: MockPlace[] = cityLower === "seoul" ? [
+    { name: "Namsan N Seoul Tower",          category: "Attraction", location: "Namsan",         time: "09:30", duration: "2h",     tips: "[MOCK] Cable car or hiking trail. Great city panorama." },
+    { name: "Dongdaemun Design Plaza",       category: "Attraction", location: "Dongdaemun",     time: "14:00", duration: "1h 30m", tips: "[MOCK] Free outdoor area. Interior exhibitions 0-15,000 KRW." },
+    { name: "Hongdae Street Market",         category: "Market",     location: "Hongdae",        time: "17:00", duration: "1h 30m", tips: "[MOCK] K-pop goods, street performers, and cheap eats." },
+    { name: "Han River Banpo Fountain",      category: "Attraction", location: "Banpo",          time: "20:00", duration: "1h",     tips: "[MOCK] Rainbow fountain Apr-Oct, Fri-Sun evenings. Free." },
+    { name: "Changdeokgung Secret Garden",   category: "Attraction", location: "Jongno",         time: "09:30", duration: "2h",     tips: "[MOCK] Guided tour only — book online 1 week ahead. Entry 8,000 KRW." },
+    { name: "Gwangjang Market",              category: "Market",     location: "Jongno",         time: "11:30", duration: "1h 30m", tips: "[MOCK] Try bindaetteok (mung bean pancake) and yukhoe. ~8,000 KRW." },
+    { name: "Lotte World Tower Sky Walk",    category: "Attraction", location: "Songpa",         time: "14:30", duration: "1h 30m", tips: "[MOCK] 555m observation deck — entry 29,000 KRW. Book ahead." },
+    { name: "Cheonggyecheon Stream Walk",    category: "Attraction", location: "Jongno",         time: "19:00", duration: "1h",     tips: "[MOCK] 5.8km urban stream lit up at dusk — free entry." },
+  ] : cityLower === "jeju" ? [
+    { name: "Hallasan Mountain Trail",       category: "Attraction", location: "Hallasan",       time: "07:00", duration: "4h",     tips: "[MOCK] Start early — Seongpanak trail. Bring water. Free entry." },
+    { name: "Manjanggul Lava Tube",          category: "Attraction", location: "Gujwa",          time: "09:30", duration: "1h 30m", tips: "[MOCK] UNESCO site — 1km lit path inside volcanic cave. Entry 4,000 KRW." },
+    { name: "Jeju Folk Village Museum",      category: "Attraction", location: "Seogwipo",       time: "13:30", duration: "1h 30m", tips: "[MOCK] Traditional Jeju homes. Entry 12,000 KRW. Haenyeo demo at 2 PM." },
+    { name: "Jusangjeolli Cliff",            category: "Attraction", location: "Seogwipo",       time: "16:00", duration: "1h",     tips: "[MOCK] Hexagonal basalt columns by the sea — Entry 2,000 KRW." },
+    { name: "Hamdeok Beach Morning Walk",    category: "Attraction", location: "Hamdeok",        time: "08:00", duration: "1h",     tips: "[MOCK] Clearest water in Jeju — snorkeling gear rental nearby." },
+    { name: "Yakcheonsa Buddhist Temple",    category: "Attraction", location: "Seogwipo",       time: "10:00", duration: "1h",     tips: "[MOCK] Stunning 30m pagoda and temple complex — free entry." },
+    { name: "Olle Trail Route 7 Walk",       category: "Attraction", location: "Seogwipo",       time: "14:00", duration: "2h",     tips: "[MOCK] Most scenic Olle trail — coastal cliffs and Hallasan views." },
+    { name: "Seogwipo Night Market",         category: "Market",     location: "Seogwipo",       time: "18:30", duration: "1h 30m", tips: "[MOCK] Open Thu-Sun. Black pork skewers and fresh tangerine desserts." },
+  ] : cityLower === "gyeongju" ? [
+    { name: "Tumuli Park Royal Tombs",       category: "Attraction", location: "Gyeongju City",  time: "09:00", duration: "1h 30m", tips: "[MOCK] Walk among giant Silla burial mounds — Entry 3,000 KRW." },
+    { name: "Cheomseongdae Observatory",     category: "Attraction", location: "Gyeongju City",  time: "11:00", duration: "1h",     tips: "[MOCK] World's oldest surviving astronomical observatory — free outdoor viewing." },
+    { name: "Gyochon Hanok Village",         category: "Attraction", location: "Gyeongju City",  time: "13:00", duration: "1h 30m", tips: "[MOCK] Traditional Korean village — try Gyeongju rice wine. Free entry." },
+    { name: "Anapji Pond Evening",           category: "Attraction", location: "Gyeongju City",  time: "18:30", duration: "1h",     tips: "[MOCK] Entry 3,000 KRW. Most photogenic in evening light." },
+    { name: "Namsan Buddhist Carvings",      category: "Attraction", location: "Namsan",         time: "09:00", duration: "3h",     tips: "[MOCK] Dozens of outdoor Buddha carvings along mountain trails — free." },
+    { name: "Yangdong Folk Village",         category: "Attraction", location: "Yangdong",       time: "10:00", duration: "2h",     tips: "[MOCK] UNESCO heritage — 500-year-old Joseon homes still inhabited." },
+    { name: "Gyeongju National Museum",      category: "Attraction", location: "Gyeongju City",  time: "14:00", duration: "1h 30m", tips: "[MOCK] Free entry. 30,000+ Silla artifacts including the Emille Bell." },
+    { name: "Bunhwangsa Temple",             category: "Attraction", location: "Gyeongju City",  time: "14:00", duration: "1h",     tips: "[MOCK] One of Gyeongju's oldest temples — Entry 1,500 KRW." },
+  ] : [
+    // 기본값: 부산
+    { name: "Haedong Yonggungsa Temple",     category: "Attraction", location: "Gijang-gun",    time: "09:30", duration: "2h",  tips: "[MOCK] Arrive early — parking gets full by 10 AM." },
+    { name: "BIFF Square Street Food",       category: "Market",     location: "Nampo-dong",    time: "15:00", duration: "1h",  tips: "[MOCK] Famous for ssiat hotteok (seed pancake)." },
+    { name: "Taejongdae Coastal Walk",       category: "Attraction", location: "Yeongdo-gu",    time: "14:00", duration: "2h",  tips: "[MOCK] Take the Danubi Train inside the park." },
+    { name: "Michelin Lunch — Busan Gukbap", category: "Restaurant", location: "Seomyeon",      time: "12:30", duration: "1h",  tips: "[MOCK] Order dwaeji gukbap (pork soup rice). 8,000 KRW." },
+    { name: "Oryukdo Skywalk",               category: "Attraction", location: "Nam-gu",        time: "15:00", duration: "1h",  tips: "[MOCK] Glass-floor walkway over the sea." },
+    { name: "Haeundae Beach Morning Walk",   category: "Attraction", location: "Haeundae",      time: "09:00", duration: "1h",  tips: "[MOCK] Best before 10 AM for fewer crowds." },
+    { name: "Gwangalli Beach Sunset",        category: "Attraction", location: "Suyeong-gu",   time: "17:30", duration: "1h",  tips: "[MOCK] Great view of Gwangandaegyo Bridge at night." },
+    { name: "Busan Tower Night View",        category: "Attraction", location: "Nampo-dong",    time: "20:00", duration: "1h",  tips: "[MOCK] 12,000 KRW entry. Best at night." },
   ];
 
-  // 아침 도착 / 일반 Day 1 전체 스케줄 템플릿 (비저녁 도착 Day 1용)
-  const DAY1_FULL_TEMPLATES: MockPlace[] = [
-    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,    time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",    tips: "[MOCK] Check in to your hotel and freshen up." },
-    { name: "Gamcheon Culture Village",        category: "Attraction", location: "Saha-gu",    time: "10:30",                                     duration: "2h",    tips: "[MOCK] Wear comfortable shoes — steep hills." },
-    { name: "Jagalchi Fish Market",            category: "Market",     location: "Nampo-dong", time: "14:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
-    { name: "Gwangalli Beach Sunset",          category: "Attraction", location: "Suyeong-gu", time: "17:30",                                     duration: "1h",    tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
+  // Day 1 비저녁 도착 전일 템플릿 — 도시별 분기
+  const DAY1_FULL_TEMPLATES: MockPlace[] = cityLower === "seoul" ? [
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,         time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Gyeongbokgung Palace",           category: "Attraction", location: "Gyeongbokgung",   time: "10:30",                                     duration: "2h",     tips: "[MOCK] Changing of the Guard at 10 AM and 2 PM — free to watch. Entry 3,000 KRW." },
+    { name: "Insadong Tea Street",            category: "Market",     location: "Insadong",        time: "14:00",                                     duration: "1h 30m", tips: "[MOCK] Try traditional tea and dalgona candy. Great souvenir shops." },
+    { name: "Cheonggyecheon Stream Walk",     category: "Attraction", location: "Jongno",          time: "17:30",                                     duration: "1h",     tips: "[MOCK] 5.8km urban stream — lit up beautifully at dusk. Free entry." },
+  ] : cityLower === "jeju" ? [
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,         time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Seongsan Ilchulbong Peak",       category: "Attraction", location: "Seongsan",        time: "10:00",                                     duration: "1h 30m", tips: "[MOCK] UNESCO site — 20-min steep climb. Entry 5,000 KRW. Skip if rainy." },
+    { name: "Jeju Olle Trail Walk",           category: "Attraction", location: "Jeju City",       time: "13:30",                                     duration: "2h",     tips: "[MOCK] Route 1 coastal path — flat, ocean views throughout. Free." },
+    { name: "Dongmun Market Dinner",          category: "Market",     location: "Jeju City",       time: "18:00",                                     duration: "1h 30m", tips: "[MOCK] Grilled black pork and hallabong juice. Open until 21:00." },
+  ] : cityLower === "gyeongju" ? [
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,         time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",     tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Bulguksa Temple",                category: "Attraction", location: "Bulguksa",        time: "10:30",                                     duration: "2h",     tips: "[MOCK] UNESCO heritage site — Entry 6,000 KRW. Comfortable shoes required." },
+    { name: "Seokguram Grotto",               category: "Attraction", location: "Tohamsan",        time: "13:30",                                     duration: "1h",     tips: "[MOCK] 10-min bus from Bulguksa. Entry 6,000 KRW. 8th-century stone Buddha." },
+    { name: "Anapji Pond Evening",            category: "Attraction", location: "Gyeongju City",   time: "18:30",                                     duration: "1h",     tips: "[MOCK] Entry 3,000 KRW. Best at dusk — palace walls reflect in the pond." },
+  ] : [
+    // 기본값: 부산
+    { name: `${startArea} Arrival Check-in`,  category: "Experience", location: startArea,         time: `${String(arrivalHour).padStart(2,"0")}:00`, duration: "1h",    tips: "[MOCK] Check in to your hotel and freshen up." },
+    { name: "Gamcheon Culture Village",       category: "Attraction", location: "Saha-gu",         time: "10:30",                                     duration: "2h",    tips: "[MOCK] Wear comfortable shoes — steep hills." },
+    { name: "Jagalchi Fish Market",           category: "Market",     location: "Nampo-dong",      time: "14:00",                                     duration: "1h 30m", tips: "[MOCK] Try fresh seafood on the 2nd floor dining area." },
+    { name: "Gwangalli Beach Sunset",         category: "Attraction", location: "Suyeong-gu",     time: "17:30",                                     duration: "1h",    tips: "[MOCK] Great view of Gwangandaegyo Bridge." },
   ];
 
   const days = Array.from({ length: numDays }, (_, i) => {
