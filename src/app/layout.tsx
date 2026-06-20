@@ -70,6 +70,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       {(() => {
+        const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "0m9jmjejk4";
+        return (
+          <Script
+            src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverClientId}`}
+            strategy="afterInteractive"
+          />
+        );
+      })()}
+      {(() => {
         const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
         const ga4Valid = ga4Id && ga4Id !== "나중에_입력";
         return ga4Valid ? (

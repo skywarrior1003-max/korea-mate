@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
+import NaverMap, { type MapSpot } from "@/components/NaverMap";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -553,6 +554,15 @@ function ExploreBusanContent() {
           ⚠️ {locationError}
         </div>
       )}
+
+      {/* ── Naver Map ───────────────────────────── */}
+      <NaverMap
+        spots={filteredSpots.filter((s): s is LocalInfo & MapSpot => s.lat != null && s.lng != null) as MapSpot[]}
+        userLocation={userLocation}
+        nearMeActive={nearMeActive}
+        defaultCenter={{ lat: 35.1587, lng: 129.1604 }}
+        height={420}
+      />
 
       {/* ── Near Me active banner ────────────────── */}
       {nearMeActive && userLocation && (
