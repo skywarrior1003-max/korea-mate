@@ -14,6 +14,7 @@ import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates/affilia
 import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
+import TripStoryExport from "@/components/TripStoryExport";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {
@@ -108,8 +109,9 @@ export default function SharedTripPage() {
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
-  const [helpfulVoted,  setHelpfulVoted]  = useState(false);
-  const [helpfulCount,  setHelpfulCount]  = useState(0);
+  const [helpfulVoted,    setHelpfulVoted]    = useState(false);
+  const [helpfulCount,    setHelpfulCount]    = useState(0);
+  const [storyExportOpen, setStoryExportOpen] = useState(false);
 
   useEffect(() => {
     // ── window 가드 (SSR/빌드타임 안전) ──────────────────────────────────────
@@ -436,11 +438,20 @@ export default function SharedTripPage() {
             🗺️ 나만의 {cityCap} 여행 — 이 스타일로 계획하기 ⚡
           </Link>
 
-          {/* Secondary — 처음부터 새 여행 */}
+          {/* Secondary — 이 일정 공유 카드 만들기 */}
+          <button
+            onClick={() => setStoryExportOpen(true)}
+            className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95 w-full"
+            style={{ color: "rgba(255,255,255,0.80)", borderColor: "rgba(212,175,55,0.50)" }}
+          >
+            📤 이 일정 공유 카드 만들기
+          </button>
+
+          {/* Tertiary — 처음부터 새 여행 */}
           <Link
             href="/"
-            className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
-            style={{ color: "rgba(255,255,255,0.65)", borderColor: "rgba(212,175,55,0.35)" }}
+            className="mt-2 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
+            style={{ color: "rgba(255,255,255,0.40)", borderColor: "rgba(255,255,255,0.12)" }}
           >
             ✨ 처음부터 계획하기 →
           </Link>
@@ -465,6 +476,20 @@ export default function SharedTripPage() {
           이 일정은 gokoreamate.com의 AI 플래너로 생성되었습니다
         </p>
       </div>
+
+      {/* 9:16 공유 카드 모달 */}
+      {storyExportOpen && (
+        <TripStoryExport
+          city={trip.city}
+          startDate={trip.start_date}
+          endDate={trip.end_date}
+          dayCount={days.length}
+          placeCount={totalSpots}
+          moments={[]}
+          travelStyle={trip.travel_style}
+          onClose={() => setStoryExportOpen(false)}
+        />
+      )}
     </div>
   );
 }
