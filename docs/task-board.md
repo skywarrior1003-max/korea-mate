@@ -202,6 +202,10 @@ TASK-031	도시별 SEO 랜딩 페이지 (Seoul/Jeju/Gyeongju) + 사이트맵 최
 
 TASK-032	SEO 블로그 콘텐츠 스프린트 + Busan 랜딩 + blog 브랜드 교정	P1	완료
 
+TASK-033	Affiliate Hub Phase 1 — 맥락 기반 정적 제휴 통합	P1	완료
+
+TASK-034	Trending Discovery + Helpful Vote 바이럴 루프	P1	완료
+
 TASK-001: 자동 검증 스크립트 세팅
 
 Purpose

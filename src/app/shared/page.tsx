@@ -94,10 +94,12 @@ function placeEmoji(category: string): string {
 type Status = "loading" | "found" | "not_found" | "error";
 
 export default function SharedTripPage() {
-  const [status,       setStatus]       = useState<Status>("loading");
-  const [trip,         setTrip]         = useState<ItineraryRow | null>(null);
-  const [days,         setDays]         = useState<Day[]>([]);
-  const [affiliateMap, setAffiliateMap] = useState<AffiliateDisplayMap>({});
+  const [status,        setStatus]        = useState<Status>("loading");
+  const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
+  const [days,          setDays]          = useState<Day[]>([]);
+  const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
+  const [helpfulVoted,  setHelpfulVoted]  = useState(false);
+  const [helpfulCount,  setHelpfulCount]  = useState(0);
 
   useEffect(() => {
     // ── window 가드 (SSR/빌드타임 안전) ──────────────────────────────────────
@@ -112,6 +114,7 @@ export default function SharedTripPage() {
       if (!record) { setStatus("not_found"); return; }
 
       setTrip(record);
+      setHelpfulCount(record.helpful_count ?? 0);
 
       // days JSONB → Day[] 캐스팅
       const parsedDays = Array.isArray(record.days)
@@ -151,6 +154,28 @@ export default function SharedTripPage() {
       body: JSON.stringify({ trip_id_param: trip.id }),
     }).catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
   }, [trip?.id]);
+
+  // ── TASK-034: sessionStorage dedup — 이미 투표한 경우 버튼 비활성화 ─────────
+  useEffect(() => {
+    if (!trip?.id) return;
+    if (sessionStorage.getItem(`helped_${trip.id}`)) setHelpfulVoted(true);
+  }, [trip?.id]);
+
+  // ── TASK-034: Helpful Vote 핸들러 ────────────────────────────────────────
+  function handleHelpfulVote() {
+    if (!trip?.id || helpfulVoted) return;
+    const key = `helped_${trip.id}`;
+    sessionStorage.setItem(key, "1");
+    setHelpfulVoted(true);
+    setHelpfulCount((c) => c + 1);
+    const url  = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/increment_trip_helpful`;
+    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+    fetch(url, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", apikey: anon, Authorization: `Bearer ${anon}` },
+      body:    JSON.stringify({ trip_id_param: trip.id }),
+    }).catch(() => { /* silent */ });
+  }
 
   // ── 로딩 상태 ─────────────────────────────────────────────────────────────
   if (status === "loading") {
@@ -250,12 +275,31 @@ export default function SharedTripPage() {
             ))}
           </div>
 
-          {/* TASK-030: 소셜 프루프 카운터 — 2명 이상일 때만 표시 */}
-          {(trip.view_count ?? 0) >= 2 && (
-            <p className="text-sm font-semibold text-amber-400 mb-6">
-              🔥 {trip.view_count} people found this trip helpful!
-            </p>
-          )}
+          {/* TASK-034: 이중 소셜 프루프 + Helpful Vote 버튼 */}
+          <div className="mb-6 flex flex-col items-center gap-3">
+            {/* 뷰 + 도움 카운터 */}
+            {(trip.view_count ?? 0) >= 2 && (
+              <div className="flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
+                <span className="text-amber-400">🔥 {trip.view_count} views</span>
+                {helpfulCount >= 1 && (
+                  <span className="text-emerald-400">👍 {helpfulCount} found this helpful</span>
+                )}
+              </div>
+            )}
+
+            {/* Helpful Vote 버튼 */}
+            <button
+              onClick={handleHelpfulVote}
+              disabled={helpfulVoted}
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-black transition-all active:scale-95 ${
+                helpfulVoted
+                  ? "text-emerald-300 border border-emerald-400/40 cursor-default"
+                  : "text-white/80 border border-white/25 hover:border-[#D4AF37]/60 hover:text-[#D4AF37]"
+              }`}
+            >
+              {helpfulVoted ? "✅ 도움됐다고 표시했어요!" : "👍 이 일정이 도움됐나요?"}
+            </button>
+          </div>
 
           {/* 골드 디바이더 */}
           <div className="w-24 h-[1.5px] mx-auto" style={{ background: "#D4AF37", opacity: 0.5 }} />

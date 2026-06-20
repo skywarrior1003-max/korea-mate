@@ -12,18 +12,31 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // ── AI 생성 7일+ 일정 ────────────────────────────────────────
 export interface ItineraryRow {
-  id:           string;
-  city:         string;
-  start_date:   string;
-  end_date:     string;
-  travelers:    string;
-  travel_style: string;
-  days:         unknown;
-  trip_title?:  string;
-  device_id?:   string;
-  created_at?:  string;
-  updated_at?:  string;
-  view_count?:  number;
+  id:            string;
+  city:          string;
+  start_date:    string;
+  end_date:      string;
+  travelers:     string;
+  travel_style:  string;
+  days:          unknown;
+  trip_title?:   string;
+  device_id?:    string;
+  created_at?:   string;
+  updated_at?:   string;
+  view_count?:   number;
+  helpful_count?: number;
+}
+
+// Popular trips feed (TASK-034 — view_count >= 2, ordered by weighted score)
+export interface PopularTrip {
+  id:            string;
+  city:          string;
+  start_date:    string;
+  end_date:      string;
+  travel_style:  string;
+  view_count:    number;
+  helpful_count: number;
+  trip_title?:   string;
 }
 
 export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
@@ -37,7 +50,7 @@ export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
 export async function fetchItinerary(id: string, deviceId?: string): Promise<ItineraryRow | null> {
   let q = supabase
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, device_id, updated_at, view_count")
+    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, device_id, updated_at, view_count, helpful_count")
     .eq("id", id);
   // RLS 정책이 device_id를 요구할 때 필터 추가 (own-trip fallback)
   if (deviceId) q = q.eq("device_id", deviceId);
@@ -73,6 +86,21 @@ export async function deleteItinerary(id: string, deviceId?: string): Promise<bo
   const { error } = await q;
   if (error) { console.error("[Supabase] itinerary delete:", error.message); return false; }
   return true;
+}
+
+// TASK-034: popular trips feed — weighted score = view_count + helpful_count × 3
+export async function fetchPopularTrips(limit = 6): Promise<PopularTrip[]> {
+  const { data, error } = await supabase
+    .from("itineraries")
+    .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, trip_title")
+    .gte("view_count", 2)
+    .order("view_count", { ascending: false })
+    .limit(limit * 2); // 클라이언트 가중 정렬 후 slice → 여유분 2배 조회
+  if (error) { console.error("[Supabase] popular trips:", error.message); return []; }
+  const rows = (data ?? []) as PopularTrip[];
+  return rows
+    .sort((a, b) => (b.view_count + (b.helpful_count ?? 0) * 3) - (a.view_count + (a.helpful_count ?? 0) * 3))
+    .slice(0, limit);
 }
 
 // ── 플래너 세션 ──────────────────────────────────────────────

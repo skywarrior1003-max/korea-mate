@@ -6,6 +6,8 @@ import Link from "next/link";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
+import { fetchPopularTrips } from "@/lib/supabase";
+import type { PopularTrip } from "@/lib/supabase";
 
 const EVENT_FILTERS = [
   { key: "all",      label: "All"           },
@@ -53,17 +55,25 @@ function TrendingContent() {
   const initialFilter = searchParams.get("filter") ?? "all";
   const initialQuery  = searchParams.get("q")      ?? "";
 
-  const [eventsData,    setEventsData]    = useState<EventItem[]>([]);
-  const [loading,       setLoading]       = useState(true);
-  const [eventFilter,   setEventFilter]   = useState(initialFilter);
-  const [search,        setSearch]        = useState(initialQuery);
-  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
+  const [eventsData,     setEventsData]     = useState<EventItem[]>([]);
+  const [loading,        setLoading]        = useState(true);
+  const [eventFilter,    setEventFilter]    = useState(initialFilter);
+  const [search,         setSearch]         = useState(initialQuery);
+  const [selectedEvent,  setSelectedEvent]  = useState<EventItem | null>(null);
+  const [popularTrips,   setPopularTrips]   = useState<PopularTrip[]>([]);
+  const [popularLoading, setPopularLoading] = useState(true);
 
   useEffect(() => {
     fetch("/data/events.json")
       .then((r) => r.json())
       .then((data: EventItem[]) => { setEventsData(data); setLoading(false); })
       .catch(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    fetchPopularTrips(6)
+      .then((trips) => { setPopularTrips(trips); setPopularLoading(false); })
+      .catch(() => setPopularLoading(false));
   }, []);
 
   const filteredEvents = useMemo(() => {
@@ -87,8 +97,63 @@ function TrendingContent() {
     return [...list].sort((a, b) => (b.isTrending ? 1 : 0) - (a.isTrending ? 1 : 0));
   }, [eventsData, eventFilter, search]);
 
+  const CITY_EMOJI: Record<string, string> = { seoul: "🌆", busan: "🏙️", jeju: "🌿", gyeongju: "🏛️" };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+      {/* ── Popular Trips ────────────────────────── */}
+      {!popularLoading && popularTrips.length > 0 && (
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-emerald-600 border border-emerald-400/40 bg-emerald-50 uppercase tracking-widest">
+              ✨ Popular Trips
+            </span>
+            <p className="text-sm text-gray-500 font-medium">
+              Real AI-planned itineraries — voted helpful by travelers
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {popularTrips.map((trip) => {
+              const days = Math.round(
+                (new Date(trip.end_date).getTime() - new Date(trip.start_date).getTime()) /
+                  (1000 * 60 * 60 * 24)
+              );
+              const cityLabel = trip.city.charAt(0).toUpperCase() + trip.city.slice(1);
+              const emoji = CITY_EMOJI[trip.city.toLowerCase()] ?? "🇰🇷";
+              return (
+                <Link
+                  key={trip.id}
+                  href={`/shared/${trip.id}`}
+                  className="flex flex-col gap-3 p-5 rounded-2xl border border-gray-200 bg-white hover:border-orange-300 hover:shadow-md transition-all group"
+                >
+                  <div>
+                    <p className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-1.5">
+                      {emoji} {cityLabel} · {days > 0 ? `${days} days` : "weekend"}
+                    </p>
+                    <p className="text-base font-black text-gray-900 leading-tight group-hover:text-orange-600 transition-colors line-clamp-2">
+                      {trip.trip_title ?? `${days > 0 ? days + "-Day" : ""} ${cityLabel} Trip`}
+                    </p>
+                  </div>
+                  <div className="mt-auto">
+                    <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
+                      {trip.travel_style}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-gray-400 border-t border-gray-100 pt-3">
+                    {trip.view_count >= 2 && (
+                      <span className="text-amber-500">🔥 {trip.view_count} views</span>
+                    )}
+                    {(trip.helpful_count ?? 0) >= 1 && (
+                      <span className="text-emerald-500">👍 {trip.helpful_count} helpful</span>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ── Dark header card ─────────────────────── */}
       <div
