@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -10,14 +11,9 @@ import { haversineKm } from "@/lib/geo";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
 
-// ── Category tabs ────────────────────────────────────────────────────────────
+// ── Category tab values ──────────────────────────────────────────────────────
 
-const SPOT_CATEGORIES = [
-  { value: "all",        label: "All Spots"          },
-  { value: "attraction", label: "🏯 Attractions"     },
-  { value: "restaurant", label: "🍜 Food & Drink"    },
-  { value: "nature",     label: "🌿 Nature & Trails" },
-];
+const SPOT_CATEGORY_VALUES = ["all", "attraction", "restaurant", "nature"] as const;
 
 // ── CitySpot → EventItem adapter ────────────────────────────────────────────
 
@@ -72,7 +68,7 @@ function toEventItem(spot: CitySpot): EventItem {
 
 // ── Search bar ───────────────────────────────────────────────────────────────
 
-function SearchBar({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+function SearchBar({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) {
   return (
     <div className="relative w-full">
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-lg">🔍</span>
@@ -80,7 +76,7 @@ function SearchBar({ value, onChange }: { value: string; onChange: (v: string) =
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search spots, beaches, hiking…"
+        placeholder={placeholder}
         className="w-full pl-12 pr-11 py-3.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
       />
       {value && (
@@ -96,6 +92,16 @@ function SearchBar({ value, onChange }: { value: string; onChange: (v: string) =
 // ── Inner content (useSearchParams needs Suspense) ───────────────────────────
 
 function ExploreCityContent({ city }: { city: CityConfig }) {
+  const tE = useTranslations("explore");
+  const tB = useTranslations("badges");
+  const tM = useTranslations("map");
+  const tN = useTranslations("nav");
+
+  const spotCategories = SPOT_CATEGORY_VALUES.map(v => ({
+    value: v,
+    label: tE(`categories.${v}` as "categories.all" | "categories.attraction" | "categories.restaurant" | "categories.nature"),
+  }));
+
   const searchParams = useSearchParams();
 
   const [spots,           setSpots]           = useState<CitySpot[]>(city.staticSpots);
@@ -183,7 +189,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       return;
     }
     if (typeof window === "undefined" || !navigator.geolocation) {
-      setLocationError("Geolocation is not supported by your browser.");
+      setLocationError(tE("locationUnsupported"));
       return;
     }
     setLocationLoading(true);
@@ -195,7 +201,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         setLocationError(null);
       },
       () => {
-        setLocationError("Unable to get your location. Please enable location access.");
+        setLocationError(tE("locationError"));
         setLocationLoading(false);
       },
       { timeout: 10000 }
@@ -242,9 +248,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
   const controls = (
     <div className="mb-4">
-      <SearchBar value={search} onChange={setSearch} />
+      <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} />
       <div className="flex flex-wrap items-center gap-2 mt-3">
-        {SPOT_CATEGORIES.map(cat => (
+        {spotCategories.map(cat => (
           <button
             key={cat.value}
             onClick={() => setSelectedCategory(cat.value)}
@@ -264,7 +270,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
             : { backgroundColor: "white",   color: "#6b7280", borderColor: "#e5e7eb" }
           }
         >
-          {locationLoading ? "⏳ Locating…" : nearMeActive ? "📍 Near Me ✓" : "📍 Near Me"}
+          {locationLoading ? tE("locating") : nearMeActive ? tE("nearMeActive") : tE("nearMe")}
         </button>
       </div>
       {locationError && (
@@ -274,13 +280,15 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       )}
       {nearMeActive && userLocation && (
         <div className="mt-3 px-4 py-3 rounded-xl bg-orange-50 border border-orange-200 text-sm text-orange-700 font-semibold flex items-center gap-2">
-          <span>📍 Sorted by distance from your location.</span>
-          <button onClick={handleNearMe} className="ml-auto text-xs underline opacity-70 hover:opacity-100">Turn off</button>
+          <span>{tE("sortedByDistanceBanner")}</span>
+          <button onClick={handleNearMe} className="ml-auto text-xs underline opacity-70 hover:opacity-100">{tE("turnOff")}</button>
         </div>
       )}
       {search && (
         <p className="mt-2 text-sm text-gray-500 font-semibold">
-          {filteredSpots.length} result{filteredSpots.length !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;
+          {filteredSpots.length === 1
+            ? tE("search.results", { count: filteredSpots.length, query: search })
+            : tE("search.resultsPlural", { count: filteredSpots.length, query: search })}
         </p>
       )}
     </div>
@@ -292,15 +300,15 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       {spots.length === 0 ? (
         <>
           <p className="text-4xl mb-3">🚧</p>
-          <p className="text-gray-900 font-black text-lg mb-2">Coming Soon</p>
-          <p className="text-sm text-gray-400 mb-4">We&apos;re curating the best spots in {city.name}. Check back soon!</p>
-          View our {city.name} travel guide coming soon.
+          <p className="text-gray-900 font-black text-lg mb-2">{tE("comingSoon.title")}</p>
+          <p className="text-sm text-gray-400 mb-4">{tE("comingSoon.description", { city: city.name })}</p>
+          {tE("comingSoon.guide", { city: city.name })}
         </>
       ) : (
         <>
           <p className="text-4xl mb-3">🔍</p>
-          <p className="text-gray-600 font-semibold">No spots found for &ldquo;{search}&rdquo;</p>
-          <button onClick={() => setSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">Clear search</button>
+          <p className="text-gray-600 font-semibold">{tE("search.noResults", { query: search })}</p>
+          <button onClick={() => setSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">{tE("search.clearSearch")}</button>
         </>
       )}
     </div>
@@ -327,12 +335,12 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               )}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-                  View Details →
+                  {tE("viewDetails")}
                 </span>
               </div>
               <div className="absolute top-3 left-3">
                 <span className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide" style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}>
-                  {item.category === "nature" ? "🌿 Nature" : item.category}
+                  {item.category === "nature" ? tB("nature") : item.category}
                 </span>
               </div>
               {distKm !== undefined && (
@@ -351,20 +359,20 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               <h3 className="text-sm font-black text-gray-900 mb-1.5 leading-snug line-clamp-2">{item.name}</h3>
               <p className="text-xs text-gray-500 mb-3 line-clamp-2 leading-relaxed flex-1">{item.description}</p>
               <div className="flex flex-wrap gap-1 mb-3">
-                {item.soloFriendly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">👤 Solo OK</span>}
-                {item.cashOnly    && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">💵 Cash Only</span>}
-                {item.foreignCardAccepted && !item.cashOnly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">💳 Card OK</span>}
-                {item.category === "nature" && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">🆓 Free</span>}
+                {item.soloFriendly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{tB("soloOk")}</span>}
+                {item.cashOnly    && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">{tB("cashOnly")}</span>}
+                {item.foreignCardAccepted && !item.cashOnly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{tB("cardOk")}</span>}
+                {item.category === "nature" && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">{tB("free")}</span>}
               </div>
               <div className="grid grid-cols-2 gap-1.5 mt-auto">
                 <a href={item.mapUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
                    className="flex items-center justify-center gap-1 px-2 py-2 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors">
-                  🗺️ Google
+                  {tM("google")}
                 </a>
                 <a href={item.naverMapUrl ?? `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`}
                    target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
                    className="flex items-center justify-center gap-1 px-2 py-2 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors">
-                  🟢 Naver
+                  {tM("naver")}
                 </a>
               </div>
             </div>
@@ -378,14 +386,16 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const pageHeader = (
     <div className="flex items-start justify-between gap-4 mb-5">
       <div>
-        <h1 className="text-2xl lg:text-3xl font-black text-gray-900">Explore {city.name}</h1>
+        <h1 className="text-2xl lg:text-3xl font-black text-gray-900">{tE("title", { city: city.name })}</h1>
         <p className="text-gray-500 text-sm mt-1">
-          {filteredSpots.length} spot{filteredSpots.length !== 1 ? "s" : ""}
-          {nearMeActive ? " · sorted by distance" : " · click any card for details"}
+          {filteredSpots.length === 1
+            ? tE("spotCount", { count: filteredSpots.length })
+            : tE("spotCountPlural", { count: filteredSpots.length })}
+          {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
         </p>
       </div>
       <Link href="/" className="shrink-0 text-sm font-bold text-gray-500 border border-gray-200 px-3 py-2 rounded-xl hover:border-gray-400 transition-colors">
-        ← Home
+        {tN("home")}
       </Link>
     </div>
   );
@@ -430,6 +440,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 // ── Public export ────────────────────────────────────────────────────────────
 
 export default function ExploreCity({ city }: { city: CityConfig }) {
+  const tN = useTranslations("nav");
+  const tF = useTranslations("footer");
+
   return (
     <div className="min-h-screen lg:h-screen lg:overflow-hidden flex flex-col bg-gray-50 text-gray-900 font-sans antialiased">
 
@@ -441,17 +454,17 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             go<span className="font-extrabold">korea</span>mate
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
-            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
-            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">🍽️ Food Guide</Link>
-            <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
-            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">🧳 My Trips</Link>
+            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("blog")}</Link>
+            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
+            <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
+            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">{tN("myTrips")}</Link>
             <Link href="/" className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#f97316" }}>
-              Plan My Trip
+              {tN("planMyTrip")}
             </Link>
           </nav>
           <div className="sm:hidden flex items-center gap-2">
             <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">🧳</Link>
-            <Link href="/" className="px-3 py-2 rounded-lg text-sm font-bold text-white" style={{ backgroundColor: "#f97316" }}>Plan</Link>
+            <Link href="/" className="px-3 py-2 rounded-lg text-sm font-bold text-white" style={{ backgroundColor: "#f97316" }}>{tN("plan")}</Link>
           </div>
         </div>
       </header>
@@ -469,7 +482,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
 
       {/* Footer: mobile only (desktop right side is the full-height map) */}
       <footer className="lg:hidden py-6 px-4 border-t border-gray-200 bg-white text-center text-sm text-gray-500 shrink-0">
-        <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+        <p>{tF("copyright", { year: new Date().getFullYear() })}</p>
       </footer>
     </div>
   );
