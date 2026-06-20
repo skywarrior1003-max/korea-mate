@@ -1,7 +1,4 @@
-// gokoreamate — KoreaReadySection
-// TASK-033: contextual static affiliate cards for city SEO landing pages (Surface D)
-// Server Component — no "use client", no Supabase query
-
+import AffiliateLink from "@/components/AffiliateLink";
 import { KLOOK, VIATOR, KTX } from "@/config/affiliates";
 
 interface AffiliateCard {
@@ -132,11 +129,12 @@ export default function KoreaReadySection({ city }: { city: City }) {
         {/* Cards grid */}
         <div className="p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <a
+            <AffiliateLink
               key={card.title}
               href={card.url}
-              target="_blank"
-              rel="noopener noreferrer sponsored"
+              provider={card.provider}
+              title={card.title}
+              city={city}
               className="flex flex-col gap-2 p-4 rounded-2xl border border-[#E6DFD5] bg-[#FAF7F2] hover:border-[#D4AF37] hover:shadow-sm transition-all group"
             >
               <div className="flex items-center justify-between mb-1">
@@ -150,7 +148,7 @@ export default function KoreaReadySection({ city }: { city: City }) {
               <span className="text-[#D4AF37] text-xs font-black group-hover:underline mt-1">
                 Check availability →
               </span>
-            </a>
+            </AffiliateLink>
           ))}
         </div>
 

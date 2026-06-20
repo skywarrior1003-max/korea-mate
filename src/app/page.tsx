@@ -12,6 +12,7 @@ import NoticeModal from "@/components/NoticeModal";
 import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
+import { trackEvent } from "@/lib/analytics";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -606,6 +607,10 @@ export default function Home() {
     const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: effectiveStyle, startLocation, arrivalTime });
     if (departurePlace) params.set("departurePlace", departurePlace);
     if (departureTime)  params.set("departureTime",  departureTime);
+    const days = startDate && endDate
+      ? Math.round((new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000) + 1
+      : 0;
+    trackEvent("generate_itinerary", { city, travelers, travel_style: effectiveStyle, days });
     router.push(`/itinerary?${params.toString()}`);
   }
 
