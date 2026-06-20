@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "blog": "블로그",
+    "foodGuide": "🍽️ 맛집 가이드",
+    "survivalGuide": "여행 생존 가이드",
+    "myTrips": "🧳 내 여행",
+    "planMyTrip": "여행 계획하기",
+    "plan": "계획",
+    "home": "← 홈"
+  },
+  "explore": {
+    "title": "{city} 탐험하기",
+    "spotCount": "{count}개 장소",
+    "spotCountPlural": "{count}개 장소",
+    "sortedByDistance": "· 거리순 정렬",
+    "clickForDetails": "· 카드를 클릭하면 상세 정보를 볼 수 있어요",
+    "categories": {
+      "all": "전체 명소",
+      "attraction": "🏯 관광명소",
+      "restaurant": "🍜 음식 & 음료",
+      "nature": "🌿 자연 & 트레일"
+    },
+    "search": {
+      "placeholder": "명소, 해변, 하이킹 검색…",
+      "results": "\"{query}\" 검색 결과 {count}건",
+      "resultsPlural": "\"{query}\" 검색 결과 {count}건",
+      "noResults": "\"{query}\"에 대한 검색 결과가 없습니다",
+      "clearSearch": "검색 초기화"
+    },
+    "nearMe": "📍 내 주변",
+    "nearMeActive": "📍 내 주변 ✓",
+    "locating": "⏳ 위치 확인 중…",
+    "sortedByDistanceBanner": "📍 현재 위치 기준으로 가까운 순서로 정렬되었습니다.",
+    "turnOff": "끄기",
+    "locationError": "위치를 가져올 수 없습니다. 위치 접근 권한을 허용해 주세요.",
+    "locationUnsupported": "이 브라우저는 위치 서비스를 지원하지 않습니다.",
+    "viewDetails": "상세 보기 →",
+    "comingSoon": {
+      "title": "준비 중",
+      "description": "{city}의 최고 명소를 엄선 중입니다. 곧 업데이트 됩니다!",
+      "guide": "{city} 여행 가이드가 곧 공개됩니다."
+    }
+  },
+  "badges": {
+    "soloOk": "👤 혼자 OK",
+    "cashOnly": "💵 현금만 가능",
+    "cardOk": "💳 카드 가능",
+    "free": "🆓 무료",
+    "nature": "🌿 자연"
+  },
+  "map": {
+    "google": "🗺️ 구글",
+    "naver": "🟢 네이버",
+    "loading": "지도 불러오는 중…"
+  },
+  "cityLinks": {
+    "label": "한국 탐험하기",
+    "subtitle": "어느 도시로 떠나시나요?",
+    "cta": "가이드 보기 →"
+  },
+  "footer": {
+    "copyright": "© {year} KoreaMate. All rights reserved."
+  },
+  "modal": {
+    "close": "✕",
+    "openGoogle": "구글 지도에서 보기",
+    "openNaver": "네이버 지도에서 보기",
+    "addToTrip": "일정에 추가",
+    "added": "추가됨 ✓",
+    "duration": "{min}분",
+    "openNow": "영업 중",
+    "closed": "영업 종료",
+    "openHours": "{open} – {close}"
+  }
+}

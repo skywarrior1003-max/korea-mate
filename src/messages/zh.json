@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "blog": "博客",
+    "foodGuide": "🍽️ 美食指南",
+    "survivalGuide": "旅行指南",
+    "myTrips": "🧳 我的行程",
+    "planMyTrip": "规划行程",
+    "plan": "规划",
+    "home": "← 首页"
+  },
+  "explore": {
+    "title": "探索{city}",
+    "spotCount": "{count}个景点",
+    "spotCountPlural": "{count}个景点",
+    "sortedByDistance": "· 按距离排序",
+    "clickForDetails": "· 点击卡片查看详情",
+    "categories": {
+      "all": "所有景点",
+      "attraction": "🏯 旅游景点",
+      "restaurant": "🍜 美食与饮品",
+      "nature": "🌿 自然与步道"
+    },
+    "search": {
+      "placeholder": "搜索景点、海滩、徒步…",
+      "results": "\"{query}\"的搜索结果 {count}条",
+      "resultsPlural": "\"{query}\"的搜索结果 {count}条",
+      "noResults": "未找到\"{query}\"的相关景点",
+      "clearSearch": "清除搜索"
+    },
+    "nearMe": "📍 附近景点",
+    "nearMeActive": "📍 附近景点 ✓",
+    "locating": "⏳ 定位中…",
+    "sortedByDistanceBanner": "📍 已按距离从近到远排列。",
+    "turnOff": "关闭",
+    "locationError": "无法获取您的位置，请允许位置访问权限。",
+    "locationUnsupported": "您的浏览器不支持定位服务。",
+    "viewDetails": "查看详情 →",
+    "comingSoon": {
+      "title": "即将推出",
+      "description": "我们正在精选{city}最好的景点，请稍候！",
+      "guide": "{city}旅游指南即将推出。"
+    }
+  },
+  "badges": {
+    "soloOk": "👤 单人友好",
+    "cashOnly": "💵 仅限现金",
+    "cardOk": "💳 可刷卡",
+    "free": "🆓 免费",
+    "nature": "🌿 自然"
+  },
+  "map": {
+    "google": "🗺️ 谷歌地图",
+    "naver": "🟢 Naver地图",
+    "loading": "地图加载中…"
+  },
+  "cityLinks": {
+    "label": "探索韩国",
+    "subtitle": "您想去哪个城市？",
+    "cta": "查看指南 →"
+  },
+  "footer": {
+    "copyright": "© {year} KoreaMate. 版权所有。"
+  },
+  "modal": {
+    "close": "✕",
+    "openGoogle": "在谷歌地图中打开",
+    "openNaver": "在Naver地图中打开",
+    "addToTrip": "添加到行程",
+    "added": "已添加 ✓",
+    "duration": "{min}分钟",
+    "openNow": "营业中",
+    "closed": "已打烊",
+    "openHours": "{open} – {close}"
+  }
+}
