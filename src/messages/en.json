@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "blog": "Blog",
+    "foodGuide": "🍽️ Food Guide",
+    "survivalGuide": "Survival Guide",
+    "myTrips": "🧳 My Trips",
+    "planMyTrip": "Plan My Trip",
+    "plan": "Plan",
+    "home": "← Home"
+  },
+  "explore": {
+    "title": "Explore {city}",
+    "spotCount": "{count} spot",
+    "spotCountPlural": "{count} spots",
+    "sortedByDistance": "· sorted by distance",
+    "clickForDetails": "· click any card for details",
+    "categories": {
+      "all": "All Spots",
+      "attraction": "🏯 Attractions",
+      "restaurant": "🍜 Food & Drink",
+      "nature": "🌿 Nature & Trails"
+    },
+    "search": {
+      "placeholder": "Search spots, beaches, hiking…",
+      "results": "{count} result for \"{query}\"",
+      "resultsPlural": "{count} results for \"{query}\"",
+      "noResults": "No spots found for \"{query}\"",
+      "clearSearch": "Clear search"
+    },
+    "nearMe": "📍 Near Me",
+    "nearMeActive": "📍 Near Me ✓",
+    "locating": "⏳ Locating…",
+    "sortedByDistanceBanner": "📍 Sorted by distance from your location.",
+    "turnOff": "Turn off",
+    "locationError": "Unable to get your location. Please enable location access.",
+    "locationUnsupported": "Geolocation is not supported by your browser.",
+    "viewDetails": "View Details →",
+    "comingSoon": {
+      "title": "Coming Soon",
+      "description": "We're curating the best spots in {city}. Check back soon!",
+      "guide": "View our {city} travel guide coming soon."
+    }
+  },
+  "badges": {
+    "soloOk": "👤 Solo OK",
+    "cashOnly": "💵 Cash Only",
+    "cardOk": "💳 Card OK",
+    "free": "🆓 Free",
+    "nature": "🌿 Nature"
+  },
+  "map": {
+    "google": "🗺️ Google",
+    "naver": "🟢 Naver",
+    "loading": "Loading map…"
+  },
+  "cityLinks": {
+    "label": "Explore Korea",
+    "subtitle": "Which city are you visiting?",
+    "cta": "View Guide →"
+  },
+  "footer": {
+    "copyright": "© {year} KoreaMate. All rights reserved."
+  },
+  "modal": {
+    "close": "✕",
+    "openGoogle": "Open in Google Maps",
+    "openNaver": "Open in Naver Maps",
+    "addToTrip": "Add to My Trip",
+    "added": "Added ✓",
+    "duration": "{min} min",
+    "openNow": "Open",
+    "closed": "Closed",
+    "openHours": "{open} – {close}"
+  }
+}

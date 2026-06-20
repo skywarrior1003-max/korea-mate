@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "blog": "ブログ",
+    "foodGuide": "🍽️ グルメガイド",
+    "survivalGuide": "旅行サバイバルガイド",
+    "myTrips": "🧳 マイトリップ",
+    "planMyTrip": "旅行を計画する",
+    "plan": "計画",
+    "home": "← ホーム"
+  },
+  "explore": {
+    "title": "{city}を探索",
+    "spotCount": "{count}件のスポット",
+    "spotCountPlural": "{count}件のスポット",
+    "sortedByDistance": "· 距離順",
+    "clickForDetails": "· カードをクリックして詳細を見る",
+    "categories": {
+      "all": "すべてのスポット",
+      "attraction": "🏯 観光スポット",
+      "restaurant": "🍜 グルメ & ドリンク",
+      "nature": "🌿 自然 & トレイル"
+    },
+    "search": {
+      "placeholder": "スポット、ビーチ、ハイキングを検索…",
+      "results": "「{query}」の検索結果 {count}件",
+      "resultsPlural": "「{query}」の検索結果 {count}件",
+      "noResults": "「{query}」の検索結果が見つかりませんでした",
+      "clearSearch": "検索をクリア"
+    },
+    "nearMe": "📍 近くのスポット",
+    "nearMeActive": "📍 近くのスポット ✓",
+    "locating": "⏳ 位置情報取得中…",
+    "sortedByDistanceBanner": "📍 現在地からの距離順に並べ替えました。",
+    "turnOff": "オフにする",
+    "locationError": "位置情報を取得できません。位置情報のアクセスを許可してください。",
+    "locationUnsupported": "このブラウザは位置情報サービスに対応していません。",
+    "viewDetails": "詳細を見る →",
+    "comingSoon": {
+      "title": "近日公開",
+      "description": "{city}のおすすめスポットを厳選中です。もうしばらくお待ちください！",
+      "guide": "{city}の旅行ガイドは近日公開予定です。"
+    }
+  },
+  "badges": {
+    "soloOk": "👤 一人旅OK",
+    "cashOnly": "💵 現金のみ",
+    "cardOk": "💳 カード可",
+    "free": "🆓 無料",
+    "nature": "🌿 自然"
+  },
+  "map": {
+    "google": "🗺️ Google",
+    "naver": "🟢 Naver",
+    "loading": "地図を読み込み中…"
+  },
+  "cityLinks": {
+    "label": "韓国を探索",
+    "subtitle": "どの都市に行きますか？",
+    "cta": "ガイドを見る →"
+  },
+  "footer": {
+    "copyright": "© {year} KoreaMate. All rights reserved."
+  },
+  "modal": {
+    "close": "✕",
+    "openGoogle": "Google マップで開く",
+    "openNaver": "Naver マップで開く",
+    "addToTrip": "旅程に追加",
+    "added": "追加済み ✓",
+    "duration": "{min}分",
+    "openNow": "営業中",
+    "closed": "営業終了",
+    "openHours": "{open} – {close}"
+  }
+}

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import SavedSpotsPanel from "@/components/SavedSpotsPanel";
 import CartDrawer from "@/components/CartDrawer";
+import I18nProvider from "@/components/I18nProvider";
 
 
 const geistSans = Geist({
@@ -110,6 +111,7 @@ gtag('config','${ga4Id}');
         ) : null;
       })()}
       <body className="min-h-full flex flex-col">
+        <I18nProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -140,6 +142,7 @@ gtag('config','${ga4Id}');
         <Suspense fallback={null}>
           <CartDrawer />
         </Suspense>
+        </I18nProvider>
       </body>
     </html>
   );
