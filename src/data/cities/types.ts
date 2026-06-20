@@ -1,3 +1,11 @@
+/** 다국어 텍스트 컨테이너 — 없으면 기존 영어 필드로 fallback */
+export interface LocalizedText {
+  en: string;
+  ko: string;
+  ja?: string;
+  zh?: string;
+}
+
 export interface CitySpot {
   id: number;
   name: string;
@@ -20,6 +28,11 @@ export interface CitySpot {
   image?: string;
   lat?: number;
   lng?: number;
+  // i18n 확장 필드 (optional — 없으면 위 영어 필드로 fallback)
+  nameL10n?: LocalizedText;
+  descriptionL10n?: LocalizedText;
+  whyItMattersL10n?: LocalizedText;
+  addressL10n?: LocalizedText;
 }
 
 export interface CityConfig {
