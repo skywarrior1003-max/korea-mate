@@ -235,9 +235,9 @@ function detectLocationAnchor(loc: string): LocationAnchor | null {
     };
   }
 
-  // KTX 부산역 / 서면 권역 감지 (한국어 "서면" 포함)
+  // KTX 부산역 / 서면 권역 감지 (ktx busan 한정 — "KTX Seoul Station" 오탐 방지)
   if (
-    l.includes("ktx") || l.includes("busan station") ||
+    l.includes("busan station") || l.includes("ktx busan") ||
     l.includes("부산역") || l.includes("seomyeon") || l.includes("서면")
   ) {
     return {
@@ -512,7 +512,8 @@ function buildFallbackItinerary(
   departureTime?: string,
 ) {
   const base = buildMockItinerary(city, startDate, endDate, startLocation, arrivalTime, departureTime);
-  const droneDate = getBTSDroneShowDate(startDate, endDate);
+  // BTS 드론쇼는 부산 전용 이벤트 — 서울/제주/경주 fallback에 삽입 금지
+  const droneDate = city.toLowerCase() === "busan" ? getBTSDroneShowDate(startDate, endDate) : null;
 
   if (droneDate) {
     const startDt = new Date(startDate);
@@ -627,9 +628,11 @@ export async function POST(request: NextRequest) {
   let day1Block = "";
 
   if (isAirportEvening) {
-    // ── CASE A: 김해공항 저녁 도착 → 처방형 고정 템플릿 (리무진 + 야시장) ──
     const market2Time = String(Math.min(arrivalHour + 1, 22)).padStart(2, "0") + ":00";
-    day1Block = `
+
+    if (city.toLowerCase() === "busan") {
+      // ── CASE A-Busan: 김해공항 저녁 도착 → 처방형 고정 템플릿 ────────────
+      day1Block = `
 ══════════════════════════════════════
 MANDATORY Day 1 TEMPLATE — DO NOT MODIFY. Copy EXACTLY.
 ══════════════════════════════════════
@@ -659,6 +662,59 @@ ABSOLUTE RULES for Day 1 (AIRPORT EVENING):
 - DO NOT add any Morning, Breakfast, or Lunch slots. This traveler arrives in the EVENING.
 - From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style.
 ══════════════════════════════════════`;
+
+    } else if (city.toLowerCase() === "seoul") {
+      // ── CASE A-Seoul: 인천공항 저녁 도착 → 홍대/명동 라우팅 ──────────────
+      day1Block = `
+══════════════════════════════════════
+MANDATORY Day 1 TEMPLATE — DO NOT MODIFY. Copy EXACTLY.
+══════════════════════════════════════
+Day 1 date: ${startDate}
+
+Place 1 (index 0 — FIXED):
+  name: "Incheon Airport Limousine → Hongdae / City Center"
+  category: "Experience"
+  location: "Incheon International Airport Arrivals → Hongdae or Myeongdong, Seoul"
+  time: "${arrivalTime}"
+  duration: "60 min"
+  tips: "Airport Limousine Bus (공항리무진) departs every 15–20 min from Arrivals floor. Line 6002 → Hongdae/Sinchon area. Ticket ₩10,000. AREX Express Train also available (43 min to Seoul Station). Activate your Korea eSIM on the way."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Incheon+International+Airport+Seoul+Korea"
+
+Place 2 (index 1 — FIXED):
+  name: "Hongdae Night Scene & Street Food"
+  category: "Experience"
+  location: "Hongdae (홍대), Mapo-gu, Seoul — 5 min walk from bus stop"
+  time: "${market2Time}"
+  duration: "1h 30 min"
+  tips: "Seoul's most vibrant nightlife district. Street performers, 24h convenience stores, pojangmacha tents. Lively until 2 AM — great first night spot regardless of season."
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Hongdae+Street+Seoul+Korea"
+
+ABSOLUTE RULES for Day 1 (AIRPORT EVENING):
+- Output ONLY the 2 places listed above for Day 1. ZERO additional places.
+- DO NOT add any Morning, Breakfast, or Lunch slots on Day 1. Traveler arrives in the EVENING.
+- From Day 2 onward: generate freely for ${travelers} traveler(s), ${travelStyle} style across Seoul.
+══════════════════════════════════════`;
+
+    } else if (city.toLowerCase() === "jeju") {
+      // ── CASE A-Jeju: 제주공항 저녁 도착 → 제주시 중심 ───────────────────
+      day1Block = `
+IMPORTANT Day 1 — JEJU AIRPORT EVENING ARRIVAL:
+- Traveler arrives at Jeju International Airport at ${arrivalTime} (EVENING).
+- ABSOLUTE RULE: Do NOT schedule ANY morning, breakfast, or lunch activities on Day 1.
+- Day 1 first place: taxi or bus from Jeju Airport to Jeju City Center (~15 min).
+- Include 1–2 evening spots only: Dongmun Traditional Market (동문시장) night market, or a haenyeo seafood restaurant in Jeju City.
+- From Day 2 onward: full day schedule across Jeju island.`;
+
+    } else {
+      // ── CASE A-Generic: 기타 도시 공항 저녁 도착 ────────────────────────
+      day1Block = `
+IMPORTANT Day 1 — AIRPORT EVENING ARRIVAL in ${city}:
+- Traveler arrives at ${city} airport at ${arrivalTime} (EVENING).
+- ABSOLUTE RULE: Do NOT schedule ANY morning, breakfast, or lunch activities on Day 1.
+- Day 1 first place: transport from airport to city center (name it "${city} Airport → City Center").
+- Then 1–2 evening spots near the city center: dinner, local night market, or night view.
+- From Day 2 onward: full day schedule starting from morning.`;
+    }
 
   } else if (anchor && (isEveningArrival || isNightArrival)) {
     // ── CASE B: 특정 지역(남포동 등) + 저녁 도착 → Location Anchor + 저녁 스킵 ──
@@ -793,9 +849,13 @@ LAST DAY (Day ${numDays}) — NO DEPARTURE INFO:
 - Prioritize spots near the city center or near the Day 1 starting area.`;
   }
 
-  // ── VisitBusan Mega Events 블록 ──────────────────────────────────────
-  const overlappingEvents = getOverlappingMegaEvents(startDate, endDate);
-  const droneDate = getBTSDroneShowDate(startDate, endDate);
+  // ── VisitBusan Mega Events 블록 (부산 한정) ───────────────────────────
+  const overlappingEvents = city.toLowerCase() === "busan"
+    ? getOverlappingMegaEvents(startDate, endDate)
+    : [];
+  const droneDate = city.toLowerCase() === "busan"
+    ? getBTSDroneShowDate(startDate, endDate)
+    : null;
 
   const megaEventBlock = overlappingEvents.length > 0 ? `
 
