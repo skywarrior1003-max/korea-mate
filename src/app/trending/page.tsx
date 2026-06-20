@@ -285,7 +285,7 @@ export default function TrendingPage() {
           </Link>
           <nav className="hidden sm:flex items-center gap-6">
             <Link
-              href="/explore-busan"
+              href="/busan"
               className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
             >
               Explore Busan

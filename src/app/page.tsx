@@ -502,14 +502,16 @@ export default function Home() {
     try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
   }, [style]);
 
-  // ── 클론 파라미터 처리 (?from=&to=&style=&ref=clone) ─────────────────────
+  // ── 클론 파라미터 처리 (?city=&from=&to=&style=&ref=clone) ──────────────
   useEffect(() => {
     if (typeof window === "undefined") return;
     const p = new URLSearchParams(window.location.search);
     if (p.get("ref") !== "clone") return;
-    const from  = p.get("from");
-    const to    = p.get("to");
-    const st    = p.get("style");
+    const ct   = p.get("city");
+    const from = p.get("from");
+    const to   = p.get("to");
+    const st   = p.get("style");
+    if (ct && ["Busan", "Seoul", "Jeju", "Gyeongju"].includes(ct)) setCity(ct);
     if (from) setStartDate(from);
     if (to)   setEndDate(to);
     if (st && ["Solo", "Couple", "Family", "Group"].includes(st)) setStyle(st);

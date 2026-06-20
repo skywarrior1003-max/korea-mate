@@ -13,6 +13,7 @@ import { fetchItinerary, type ItineraryRow } from "@/lib/supabase";
 import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates/affiliate-loader";
 import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
+import KoreaReadySection from "@/components/KoreaReadySection";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {
@@ -39,13 +40,22 @@ const STYLE_MAP: Record<string, string> = {
 };
 
 function buildCloneUrl(trip: ItineraryRow): string {
+  const cityFormatted = trip.city.charAt(0).toUpperCase() + trip.city.slice(1);
   const params = new URLSearchParams({
+    city:  cityFormatted,
     from:  trip.start_date,
     to:    trip.end_date,
     style: STYLE_MAP[trip.travel_style?.toLowerCase()] ?? "Solo",
     ref:   "clone",
   });
   return `/?${params.toString()}`;
+}
+
+const KR_CITIES = ["seoul", "busan", "jeju", "gyeongju"] as const;
+type KRCity = typeof KR_CITIES[number];
+function toKRCity(c: string): KRCity | null {
+  const lower = c.toLowerCase();
+  return (KR_CITIES as readonly string[]).includes(lower) ? (lower as KRCity) : null;
 }
 
 // ── 유틸: share_id 추출 ───────────────────────────────────────────────────────
@@ -410,27 +420,29 @@ export default function SharedTripPage() {
             gokoreamate.com
           </p>
           <h2 className="text-xl font-black text-white mb-2">
-            나도 한국 여행 계획하고 싶다면?
+            나만의 {cityCap} 여행 계획하기
           </h2>
           <p className="text-sm text-white/55 leading-relaxed mb-6">
-            AI가 30초 만에 나만의 일정을 만들어 드립니다.<br />
+            AI가 30초 만에 이 스타일로 일정을 만들어 드립니다.<br />
             무료 · 회원가입 불필요 · 1탭 공유 가능
           </p>
+
+          {/* Primary — contextual clone CTA (도시·날짜·스타일 pre-fill) */}
           <Link
-            href="/"
+            href={buildCloneUrl(trip)}
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all hover:opacity-90 active:scale-95"
             style={{ backgroundColor: "#D4AF37" }}
           >
-            ✨ 지금 내 여행 계획하기 →
+            🗺️ 나만의 {cityCap} 여행 — 이 스타일로 계획하기 ⚡
           </Link>
 
-          {/* 클론 CTA — 공유된 일정 날짜·스타일 그대로 복사해서 내 것 만들기 */}
+          {/* Secondary — 처음부터 새 여행 */}
           <Link
-            href={buildCloneUrl(trip)}
+            href="/"
             className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
             style={{ color: "rgba(255,255,255,0.65)", borderColor: "rgba(212,175,55,0.35)" }}
           >
-            🗺️ 이 일정 참고해서 내 것 만들기
+            ✨ 처음부터 계획하기 →
           </Link>
         </div>
 
@@ -445,8 +457,11 @@ export default function SharedTripPage() {
           </div>
         )}
 
+        {/* Korea Ready 정적 제휴 카드 — DB 시드 없이 항상 노출 */}
+        {(() => { const krc = toKRCity(trip.city); return krc ? <KoreaReadySection city={krc} /> : null; })()}
+
         {/* 푸터 */}
-        <p className="text-center text-xs text-[#B8A89A] pb-8">
+        <p className="text-center text-xs text-[#B8A89A] pb-8 pt-6">
           이 일정은 gokoreamate.com의 AI 플래너로 생성되었습니다
         </p>
       </div>
