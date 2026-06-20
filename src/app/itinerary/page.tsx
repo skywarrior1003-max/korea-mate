@@ -26,6 +26,7 @@ interface Place {
   tips: string;
   googleMapsUrl: string;
   slot?: string;
+  cartSnapshot?: CartItem;
 }
 
 interface Day {
@@ -443,10 +444,13 @@ interface ModalProps {
 }
 
 function PlaceModal({ place, city, onClose }: ModalProps) {
-  const naverUrl  = buildNaverUrl(place.name, city);
-  const googleUrl = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
-  const imageUrl  = getCategoryImage(place.category, place.name);
+  const snap       = place.cartSnapshot;
+  const naverUrl   = snap?.naverMapUrl ?? buildNaverUrl(place.name, city);
+  const googleUrl  = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
+  const imageUrl   = snap?.image ?? getCategoryImage(place.category, place.name);
   const badgeColor = getCategoryColor(place.category);
+  const tags       = snap?.tags ?? [];
+  const desc       = snap?.whyItMatters ?? snap?.description ?? place.tips;
 
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
@@ -504,8 +508,22 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
           </div>
           <div className="bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-5">
             <p className="text-xs font-black uppercase tracking-widest mb-2 text-[#8C6239]">💡 Tips for Foreigners</p>
-            <p className="text-base text-[#61554D] leading-relaxed font-medium">{place.tips}</p>
+            <p className="text-base text-[#61554D] leading-relaxed font-medium">{desc}</p>
           </div>
+          {(snap?.soloFriendly != null || snap?.cashOnly || snap?.foreignCardAccepted != null) && (
+            <div className="flex flex-wrap gap-2">
+              {snap?.soloFriendly     && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">👤 Solo OK</span>}
+              {snap?.cashOnly         && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">💵 Cash Only</span>}
+              {snap?.foreignCardAccepted && !snap?.cashOnly && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">💳 Card OK</span>}
+            </div>
+          )}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {tags.map(tag => (
+                <span key={tag} className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">{tag}</span>
+              ))}
+            </div>
+          )}
           <div className="bg-green-50 border border-green-200 rounded-xl p-4">
             <p className="text-xs font-bold text-green-700 mb-1">💡 If Naver Maps can&apos;t find it by English name, search in Korean directly.</p>
           </div>
@@ -1029,6 +1047,7 @@ function ItineraryResult() {
       tips:          item.description || item.whyItMatters || "",
       googleMapsUrl: item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.shortName || item.name} ${city} Korea`)}`,
       slot:          assignSlot(defaultTime),
+      cartSnapshot:  item,
     };
     setDays(prev => prev.map((day, di) =>
       di === editDay ? { ...day, places: [...day.places, newPlace] } : day
@@ -1596,7 +1615,7 @@ function ItineraryResult() {
                                   {/* 장소 정보 + 지도 버튼 행 */}
                                   <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
                                     <div
-                                      className="space-y-2 flex-1 cursor-pointer"
+                                      className="space-y-2 flex-1 cursor-pointer min-w-0"
                                       onClick={() => setSelectedPlace(place)}
                                     >
                                       <div className="flex flex-wrap items-center gap-2">
@@ -1607,11 +1626,24 @@ function ItineraryResult() {
                                         <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
                                         <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
                                       </div>
-                                      <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
-                                        {place.name}
-                                      </h3>
-                                      <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3">
-                                        <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">{place.tips}</p>
+                                      <div className="flex items-start gap-3">
+                                        {place.cartSnapshot?.image && (
+                                          <img
+                                            src={place.cartSnapshot.image}
+                                            alt={place.name}
+                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[#E6DFD5]"
+                                          />
+                                        )}
+                                        <div className="min-w-0">
+                                          <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
+                                            {place.name}
+                                          </h3>
+                                          <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3 mt-1">
+                                            <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">
+                                              {place.cartSnapshot?.whyItMatters ?? place.cartSnapshot?.description ?? place.tips}
+                                            </p>
+                                          </div>
+                                        </div>
                                       </div>
                                       <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
                                         Click for full details + maps →
