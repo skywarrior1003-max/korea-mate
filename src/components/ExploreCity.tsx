@@ -4,10 +4,11 @@ import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import Image from "next/image";
 import EventDetailModal from "@/components/EventDetailModal";
+import SpotCard from "@/components/SpotCard";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
 import { haversineKm } from "@/lib/geo";
+import { fetchCitySpots } from "@/lib/city-spots";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
 
@@ -104,26 +105,41 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
   const searchParams = useSearchParams();
 
-  const [spots,           setSpots]           = useState<CitySpot[]>(city.staticSpots);
-  const [imgErrors,       setImgErrors]       = useState<Record<number, boolean>>({});
-  const [search,          setSearch]          = useState(searchParams.get("q") ?? "");
-  const [selectedCategory,setSelectedCategory]= useState(searchParams.get("category") ?? "all");
-  const [selectedEvent,   setSelectedEvent]   = useState<EventItem | null>(null);
+  // Supabase가 primary source, staticSpots는 fetch 전 fallback
+  const [spots,            setSpots]           = useState<CitySpot[]>(city.staticSpots);
+  const [spotsLoading,     setSpotsLoading]    = useState(true);
+  const [search,           setSearch]          = useState(searchParams.get("q") ?? "");
+  const [selectedCategory, setSelectedCategory]= useState(searchParams.get("category") ?? "all");
+  const [selectedEvent,    setSelectedEvent]   = useState<EventItem | null>(null);
 
   const [nearMeActive,    setNearMeActive]    = useState(false);
   const [userLocation,    setUserLocation]    = useState<{ lat: number; lng: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError,   setLocationError]   = useState<string | null>(null);
 
-  // Load extra spots from local-info.json
+  // Supabase city_spots 우선 fetch (fallback: staticSpots)
+  useEffect(() => {
+    setSpotsLoading(true);
+    fetchCitySpots(city.name)
+      .then(supabaseSpots => {
+        if (supabaseSpots.length > 0) {
+          setSpots(supabaseSpots);
+        }
+        // Supabase에 데이터 없으면 staticSpots 유지
+      })
+      .catch(() => {})
+      .finally(() => setSpotsLoading(false));
+  }, [city.name]);
+
+  // Load extra spots from local-info.json (Supabase 미이전 데이터 보완)
   useEffect(() => {
     fetch("/data/local-info.json")
       .then(r => r.json())
       .then((data: CitySpot[]) => {
         const citySpots = data.filter(s => s.city === city.name);
         setSpots(prev => {
-          const existingIds = new Set(prev.map(s => s.id));
-          const newOnes = citySpots.filter(s => !existingIds.has(s.id));
+          const existingNames = new Set(prev.map(s => s.name.toLowerCase()));
+          const newOnes = citySpots.filter(s => !existingNames.has(s.name.toLowerCase()));
           return newOnes.length > 0 ? [...prev, ...newOnes] : prev;
         });
       })
@@ -295,7 +311,22 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   );
 
   // ── Cards grid ──────────────────────────────────────────────────────────────
-  const cardsGrid = filteredSpots.length === 0 ? (
+  const cardsGrid = spotsLoading ? (
+    // 스켈레톤 로딩 UI
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">
+          <div className="h-44 bg-gray-200" />
+          <div className="p-4 space-y-3">
+            <div className="h-3 bg-gray-200 rounded w-1/3" />
+            <div className="h-4 bg-gray-200 rounded w-3/4" />
+            <div className="h-3 bg-gray-200 rounded w-full" />
+            <div className="h-3 bg-gray-200 rounded w-2/3" />
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : filteredSpots.length === 0 ? (
     <div className="text-center py-16">
       {spots.length === 0 ? (
         <>
@@ -314,71 +345,14 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     </div>
   ) : (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-      {filteredSpots.map(item => {
-        const distKm = distances.get(item.id);
-        return (
-          <div
-            key={item.id}
-            onClick={() => setSelectedEvent(toEventItem(item))}
-            className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group"
-          >
-            <div className="h-44 overflow-hidden relative bg-gray-200">
-              {item.image && !imgErrors[item.id] ? (
-                <Image
-                  src={item.image} alt={item.name} fill unoptimized
-                  onError={() => setImgErrors(prev => ({ ...prev, [item.id]: true }))}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src="/images/placeholder-spot.svg" alt="No image" className="w-full h-full object-cover" />
-              )}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-                  {tE("viewDetails")}
-                </span>
-              </div>
-              <div className="absolute top-3 left-3">
-                <span className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide" style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#1a1f36" }}>
-                  {item.category === "nature" ? tB("nature") : item.category}
-                </span>
-              </div>
-              {distKm !== undefined && (
-                <div className="absolute top-3 right-3">
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-bold text-white" style={{ backgroundColor: "#f97316" }}>
-                    📍 {distKm.toFixed(1)} km
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className="p-4 flex flex-col flex-1">
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-semibold text-gray-400">📍 {item.district ?? item.city}</span>
-                {item.durationMinutes && <span className="text-xs font-semibold text-gray-400">🕐 {item.durationMinutes}min</span>}
-              </div>
-              <h3 className="text-sm font-black text-gray-900 mb-1.5 leading-snug line-clamp-2">{item.name}</h3>
-              <p className="text-xs text-gray-500 mb-3 line-clamp-2 leading-relaxed flex-1">{item.description}</p>
-              <div className="flex flex-wrap gap-1 mb-3">
-                {item.soloFriendly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{tB("soloOk")}</span>}
-                {item.cashOnly    && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">{tB("cashOnly")}</span>}
-                {item.foreignCardAccepted && !item.cashOnly && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{tB("cardOk")}</span>}
-                {item.category === "nature" && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">{tB("free")}</span>}
-              </div>
-              <div className="grid grid-cols-2 gap-1.5 mt-auto">
-                <a href={item.mapUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                   className="flex items-center justify-center gap-1 px-2 py-2 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 rounded-xl transition-colors">
-                  {tM("google")}
-                </a>
-                <a href={item.naverMapUrl ?? `https://map.naver.com/v5/search/${encodeURIComponent(item.name)}`}
-                   target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                   className="flex items-center justify-center gap-1 px-2 py-2 text-xs font-bold text-green-700 bg-green-50 border border-green-200 hover:bg-green-100 rounded-xl transition-colors">
-                  {tM("naver")}
-                </a>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {filteredSpots.map(item => (
+        <SpotCard
+          key={item.id}
+          spot={item}
+          distKm={distances.get(item.id)}
+          onClick={() => setSelectedEvent(toEventItem(item))}
+        />
+      ))}
     </div>
   );
 
