@@ -15,6 +15,8 @@ import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, addMoment, deleteMoment } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
+import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
+import type { CitySpot } from "@/data/cities/types";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -440,10 +442,12 @@ function getCategoryColor(category: string): string {
 interface ModalProps {
   place: Place;
   city: string;
+  citySpots: CitySpot[];
   onClose: () => void;
 }
 
-function PlaceModal({ place, city, onClose }: ModalProps) {
+function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
+  const matched    = matchCitySpot(place.name, citySpots);
   const snap       = place.cartSnapshot;
   const naverUrl   = snap?.naverMapUrl ?? buildNaverUrl(place.name, city);
   const googleUrl  = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
@@ -537,6 +541,49 @@ function PlaceModal({ place, city, onClose }: ModalProps) {
               💚 Naver Maps
             </a>
           </div>
+
+          {/* ── SpotCard enrichment (SSOT: city_spots 매칭 성공 시) ── */}
+          {matched && (
+            <div className="border-t border-[#E6DFD5] pt-5 space-y-3">
+              {/* difficulty + entry_fee 배지 */}
+              <div className="flex flex-wrap gap-2">
+                {matched.difficulty && (() => {
+                  const label = matched.difficulty === "easy" ? "🟢 Easy" : matched.difficulty === "moderate" ? "🟡 Moderate" : "🔴 Hard";
+                  const cls   = matched.difficulty === "easy" ? "bg-green-50 text-green-700 border-green-100" : matched.difficulty === "moderate" ? "bg-amber-50 text-amber-700 border-amber-100" : "bg-red-50 text-red-700 border-red-100";
+                  return <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${cls}`}>{label}</span>;
+                })()}
+                {matched.entryFee && (
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-100">💰 {matched.entryFee}</span>
+                )}
+              </div>
+              {/* Official Info + Affiliate CTA */}
+              <div className={`grid gap-3 ${matched.officialUrl && matched.affiliateUrl ? "grid-cols-2" : "grid-cols-1"}`}>
+                {matched.officialUrl && (
+                  <a
+                    href={matched.officialUrl}
+                    target="_blank" rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white transition-colors"
+                    style={{ backgroundColor: "#7c3aed" }}
+                  >
+                    🏔️ Official Info
+                  </a>
+                )}
+                {matched.affiliateUrl && (
+                  <a
+                    href={matched.affiliateUrl}
+                    target="_blank" rel="noopener noreferrer sponsored"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white transition-colors"
+                    style={{ background: "linear-gradient(135deg, #f97316, #ea580c)" }}
+                  >
+                    {matched.affiliateProvider === "klook" ? "🎟️ Book Tour" : "🏨 Book Stay"}
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
           <button onClick={onClose}
             className="w-full py-3.5 rounded-xl text-sm font-black text-[#2C2520] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all cursor-pointer">
             Close
@@ -623,6 +670,8 @@ function ItineraryResult() {
   const [moments,         setMoments]         = useState<TripMoment[]>([]);
   const [captureOpen,     setCaptureOpen]     = useState(false);
   const [storyExportOpen, setStoryExportOpen] = useState(false);
+  // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
+  const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
 
   // ── 취향 태그 (cart 기반 — 세션 내 고정) ──────────────────
   const [prefTags] = useState<string[]>(() => {
@@ -942,6 +991,12 @@ function ItineraryResult() {
     if (!itinId) return;
     setMoments(loadMoments(itinId));
   }, [itinId]);
+
+  // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
+  useEffect(() => {
+    if (!city) return;
+    fetchCitySpots(city.toLowerCase()).then(setCitySpots);
+  }, [city]);
 
   // ── 플래너 메타 뱃지 읽기 (반응형) ────────────────────────
   useEffect(() => {
@@ -1795,7 +1850,7 @@ function ItineraryResult() {
       </div>
 
       {selectedPlace && (
-        <PlaceModal place={selectedPlace} city={city} onClose={() => setSelectedPlace(null)} />
+        <PlaceModal place={selectedPlace} city={city} citySpots={citySpots} onClose={() => setSelectedPlace(null)} />
       )}
 
       {/* TASK-022: 순간 캡처 모달 */}
