@@ -156,6 +156,6 @@ VALUES
   35.1215, 129.1287, 150, 'afternoon', NULL,
   ARRAY['#CoastalWalk','#Cliffs','#OceanView','#Free','#Oryukdo'],
   true, false, false, 'manual',
-  'Free', 'easy', NULL
+  'Free', 'easy', 'https://www.namgu.busan.kr/'
 )
 ON CONFLICT DO NOTHING;
