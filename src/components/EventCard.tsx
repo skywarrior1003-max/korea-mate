@@ -152,7 +152,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             onClick={handleDislike}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDislike(e as unknown as React.MouseEvent); }}
             aria-label={disliked ? "Already reported" : "Report inaccurate info"}
-            title={disliked ? "신고됨 — 관리자가 검토합니다" : "정보 오류 신고"}
+            title={disliked ? "Reported — under review" : "Report incorrect info"}
             className={`w-8 h-8 flex items-center justify-center rounded-full text-sm shadow-md cursor-pointer transition-all select-none ${
               disliked
                 ? "bg-gray-600 text-white scale-110 cursor-not-allowed"

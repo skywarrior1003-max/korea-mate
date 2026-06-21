@@ -15,7 +15,7 @@ export default function CityQuickLinks() {
           Explore Korea
         </p>
         <h2 className="text-2xl font-black text-[#2C2520] text-center mb-8">
-          어느 도시로 떠나시나요?
+          Where will you travel?
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {CITIES.map((city) => (
@@ -31,7 +31,7 @@ export default function CityQuickLinks() {
                 </p>
                 <p className="text-xs text-[#8C6239] mt-0.5 leading-relaxed">{city.desc}</p>
               </div>
-              <span className="text-xs font-black text-[#D4AF37] mt-auto">가이드 보기 →</span>
+              <span className="text-xs font-black text-[#D4AF37] mt-auto">View Guide →</span>
             </Link>
           ))}
         </div>

@@ -51,7 +51,7 @@ export default function AffiliateInlineSection({
             Korea Ready Partner Deals
           </p>
           <p className="text-[11px] text-[#9C8575]">
-            {cityCap} 여행을 위한 파트너 서비스
+            Partner services for your {cityCap} trip
           </p>
         </div>
       </div>

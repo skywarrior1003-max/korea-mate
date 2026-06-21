@@ -59,13 +59,13 @@ const CATEGORY_FILTERS = [
 
 // ── 지역 필터 ─────────────────────────────────────────────────────────────────
 const DISTRICT_FILTERS = [
-  { key: "all",       label: "전체",              districts: [] as string[] },
-  { key: "haeundae",  label: "해운대·기장",        districts: ["Haeundae-gu", "Gijang-gun"] },
-  { key: "gwangalli", label: "수영·광안리",         districts: ["Suyeong-gu", "Nam-gu"] },
-  { key: "seomyeon",  label: "서면·부산진",         districts: ["Busanjin-gu"] },
-  { key: "nampo",     label: "남포·중구·서구",      districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
-  { key: "dongnae",   label: "동래·금정·연제",      districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
-  { key: "bukgu",     label: "북구·사상·강서·사하", districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
+  { key: "all",       label: "All",                    districts: [] as string[] },
+  { key: "haeundae",  label: "Haeundae · Gijang",      districts: ["Haeundae-gu", "Gijang-gun"] },
+  { key: "gwangalli", label: "Suyeong · Gwangalli",     districts: ["Suyeong-gu", "Nam-gu"] },
+  { key: "seomyeon",  label: "Seomyeon · Busanjin",     districts: ["Busanjin-gu"] },
+  { key: "nampo",     label: "Nampo · Jung · Seo-gu",   districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
+  { key: "dongnae",   label: "Dongnae · Geumjeong",     districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
+  { key: "bukgu",     label: "Buk · Sasang · Gangseo",  districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
 ];
 
 // ── 구별 중심 좌표 (GPS 폴백용) ───────────────────────────────────────────────
@@ -101,7 +101,7 @@ export function haversineKm(lat1: number, lng1: number, lat2: number, lng2: numb
 }
 
 export function formatDistance(km: number): string {
-  if (km < 1) return `${Math.round(km * 1000)}m 앞`;
+  if (km < 1) return `${Math.round(km * 1000)}m away`;
   return `${km.toFixed(1)}km`;
 }
 
@@ -168,7 +168,7 @@ export default function AllSpotsPage() {
       return;
     }
     if (!("geolocation" in navigator)) {
-      setGpsError("이 기기는 GPS를 지원하지 않습니다.");
+      setGpsError("Device does not support GPS.");
       return;
     }
     setGpsLoading(true);
@@ -181,7 +181,7 @@ export default function AllSpotsPage() {
       },
       () => {
         setGpsLoading(false);
-        setGpsError("위치 권한을 허용해주세요.");
+        setGpsError("Please allow location permission.");
       },
       { timeout: 8000 }
     );
@@ -304,7 +304,7 @@ export default function AllSpotsPage() {
           {/* 지역 필터 버튼 */}
           <div className="relative">
             <div className="flex items-center gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-              <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">구역</span>
+              <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">Area</span>
               {DISTRICT_FILTERS.map(d => (
                 <button
                   key={d.key}
@@ -337,7 +337,7 @@ export default function AllSpotsPage() {
               }`}
             >
               <span className="text-sm">{gpsLoading ? "⏳" : gpsActive ? "📍" : "📡"}</span>
-              내 주변 3km 이내 보기
+              Within 3km of me
               {/* 토글 인디케이터 */}
               <span
                 className={`inline-block w-8 h-4 rounded-full transition-colors relative ${gpsActive ? "bg-white/30" : "bg-gray-200"}`}
@@ -351,7 +351,7 @@ export default function AllSpotsPage() {
             </button>
             {gpsActive && userCoords && (
               <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-                GPS 활성화 · 거리순 정렬 중
+                GPS active · sorting by distance
               </span>
             )}
             {gpsError && (
@@ -369,7 +369,7 @@ export default function AllSpotsPage() {
                 onClick={() => { setCategoryFilter("all"); setDistrictFilter("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
                 className="text-orange-500 font-bold underline"
               >
-                모두 해제
+                Clear all
               </button>
             )}
           </p>
@@ -388,9 +388,9 @@ export default function AllSpotsPage() {
             <span className="text-3xl shrink-0">🍽️</span>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">NEW</p>
-              <p className="text-sm font-black text-gray-900 leading-snug">2026 부산 미식 가이드 100선 — 미쉐린·부산의맛·택슐랭</p>
+              <p className="text-sm font-black text-gray-900 leading-snug">2026 Busan Food Guide Top 100 — Michelin · Busan Mat · Taegshlang</p>
             </div>
-            <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">전체 보기 →</span>
+            <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">View All →</span>
           </Link>
         )}
 
@@ -408,14 +408,14 @@ export default function AllSpotsPage() {
               {categoryFilter === "saved"
                 ? "No liked spots yet"
                 : gpsActive
-                ? "내 주변 3km 이내에 등록된 스팟이 없습니다"
+                ? "No spots within 3km of you"
                 : "No results found"}
             </p>
             <p className="text-gray-500 mb-6 text-sm">
               {categoryFilter === "saved"
                 ? "Tap ❤️ on any card to like spots."
                 : gpsActive
-                ? "GPS 토글을 끄거나 지역 필터를 변경해보세요."
+                ? "Turn off GPS or change the area filter."
                 : "Try a different search or filter."}
             </p>
             <button
@@ -423,7 +423,7 @@ export default function AllSpotsPage() {
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
               style={{ backgroundColor: "#f97316" }}
             >
-              모든 스팟 보기
+              View All Spots
             </button>
           </div>
         ) : (

@@ -6,13 +6,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "나의 한국 여행 일정 — gokoreamate",
+  title: "My Korea Travel Itinerary — gokoreamate",
   description:
-    "AI로 생성한 나만의 한국 여행 일정. 장소별 GPS 순간을 기록하고 1탭으로 Instagram · TikTok · X에 공유하세요.",
+    "Your AI-generated Korea itinerary. Record GPS moments at each place and share to Instagram · TikTok · X in one tap.",
   openGraph: {
-    title: "나의 한국 여행 일정 — gokoreamate",
+    title: "My Korea Travel Itinerary — gokoreamate",
     description:
-      "AI로 만든 나만의 Korea 여행 플랜. 순간을 기록하고 스토리 카드로 공유하세요 — gokoreamate.com",
+      "Your AI-built Korea trip plan. Capture moments and share as a story card — gokoreamate.com",
     type: "website",
     url: "https://gokoreamate.com/itinerary",
     siteName: "gokoreamate.com",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "나의 한국 여행 일정 — gokoreamate",
+    title: "My Korea Travel Itinerary — gokoreamate",
     description:
-      "AI 일정 생성 · GPS 순간 기록 · 1탭 SNS 공유 — gokoreamate.com",
+      "AI itinerary · GPS moment capture · 1-tap social share — gokoreamate.com",
     images: ["/opengraph-image.png"],
   },
 };

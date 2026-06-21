@@ -163,7 +163,7 @@ export default function NaverMap({
             className="w-8 h-8 rounded-full border-4 animate-spin"
             style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
           />
-          <p className="text-xs font-bold text-[#8C6239]">지도 불러오는 중…</p>
+          <p className="text-xs font-bold text-[#8C6239]">Loading map…</p>
         </div>
       )}
 
