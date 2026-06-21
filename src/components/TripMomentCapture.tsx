@@ -98,16 +98,16 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       {/* 헤더 */}
       <div className="flex items-center justify-between px-5 pt-safe pt-6 pb-4 border-b border-white/10">
         <button onClick={onClose} className="text-white/60 hover:text-white text-sm font-bold px-3 py-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
-          취소
+          Cancel
         </button>
-        <h2 className="text-base font-black">📸 순간 기록</h2>
+        <h2 className="text-base font-black">📸 Capture Moment</h2>
         <button
           onClick={handleSave}
           disabled={saving}
           className="text-sm font-black px-4 py-1.5 rounded-xl transition-all disabled:opacity-40 cursor-pointer"
           style={{ backgroundColor: "#D4AF37", color: "#1a1a2e" }}
         >
-          {saving ? "저장 중…" : "저장"}
+          {saving ? "Saving…" : "Save"}
         </button>
       </div>
 
@@ -121,7 +121,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           {compressing ? (
             <div className="flex flex-col items-center gap-3">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D4AF37]" />
-              <p className="text-xs text-white/50">사진 최적화 중…</p>
+              <p className="text-xs text-white/50">Optimizing photo…</p>
             </div>
           ) : photoData ? (
             /* eslint-disable-next-line @next/next/no-img-element */
@@ -129,14 +129,14 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           ) : (
             <div className="flex flex-col items-center gap-3 py-14">
               <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl">📷</div>
-              <p className="text-sm font-bold text-white/60">탭해서 사진 추가</p>
-              <p className="text-xs text-white/30">카메라 또는 갤러리에서 선택</p>
+              <p className="text-sm font-bold text-white/60">Tap to add photo</p>
+              <p className="text-xs text-white/30">Choose from camera or gallery</p>
             </div>
           )}
           {photoData && (
             <div className="absolute inset-0 flex items-end justify-end p-3">
               <span className="text-xs font-bold bg-black/60 text-white px-2.5 py-1 rounded-lg backdrop-blur-sm cursor-pointer">
-                사진 바꾸기
+                Change photo
               </span>
             </div>
           )}
@@ -161,18 +161,18 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
                 {gpsStatus === "ok"
                   ? formatCoord(lat, lng)
                   : gpsStatus === "loading"
-                  ? "GPS 취득 중…"
-                  : "위치 정보를 가져올 수 없습니다"}
+                  ? "Getting GPS…"
+                  : "Location unavailable"}
               </p>
               {gpsStatus === "ok" && (
-                <p className="text-[10px] text-white/30 mt-0.5">현재 위치 자동 태그됨</p>
+                <p className="text-[10px] text-white/30 mt-0.5">Location auto-tagged</p>
               )}
             </div>
           </div>
 
           {/* 카테고리 선택 */}
           <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">카테고리</p>
+            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">Category</p>
             <div className="flex gap-2 flex-wrap">
               {MOMENT_CATEGORIES.map(cat => (
                 <button
@@ -194,11 +194,11 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
 
           {/* 메모 */}
           <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">메모</p>
+            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">Memo</p>
             <textarea
               value={memo}
               onChange={e => setMemo(e.target.value)}
-              placeholder={`이 순간을 기억하는 한마디…\n예) 골목에서 우연히 들어간 어묵집, 사장님이 서비스로 세 개 더 주심 ㅋㅋ`}
+              placeholder={`One line to remember this moment…\nE.g., Stumbled into a tiny fish cake shop — owner gave 3 extras for free`}
               maxLength={300}
               rows={4}
               className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#D4AF37]/60 resize-none leading-relaxed"

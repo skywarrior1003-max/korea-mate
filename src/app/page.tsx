@@ -677,7 +677,7 @@ export default function Home() {
     if (gpsActive) {
       setGpsActive(false); setUserCoords(null); setGpsError(null); return;
     }
-    if (!("geolocation" in navigator)) { setGpsError("GPS를 지원하지 않는 기기입니다."); return; }
+    if (!("geolocation" in navigator)) { setGpsError("Device does not support GPS."); return; }
     setGpsLoading(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -686,7 +686,7 @@ export default function Home() {
         setEventFilter("all");
         setCurrentPage(1);
       },
-      () => { setGpsLoading(false); setGpsError("위치 권한을 허용해주세요."); },
+      () => { setGpsLoading(false); setGpsError("Please allow location permission."); },
       { timeout: 8000 }
     );
   }, [gpsActive]);
@@ -898,7 +898,7 @@ export default function Home() {
 
           {/* 서브헤드라인 */}
           <p className="text-center text-base sm:text-xl text-white/58 max-w-2xl mx-auto leading-relaxed mb-10">
-            AI가 완벽한 한국 여행 일정을 만들어드립니다. 여행 중 GPS 순간을 기록하고, 1탭으로 Instagram · TikTok · X에 공유하세요.
+            AI builds your perfect Korea itinerary in seconds. Capture GPS moments on the go, share to Instagram · TikTok · X in one tap.
           </p>
 
           {/* Primary CTA — 중앙 고정 */}
@@ -908,16 +908,16 @@ export default function Home() {
               className="inline-flex items-center justify-center px-10 py-4 rounded-2xl text-lg font-black shadow-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer"
               style={{ backgroundColor: "#D4AF37", color: "#1a1a2e" }}
             >
-              ✨ 지금 내 여행 계획하기
+              ✨ Plan My Korea Trip
             </button>
           </div>
 
           {/* 3단계 플로우 시각화 */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 mb-12">
             {[
-              { num: "01", icon: "📅", label: "AI가 계획",   sub: "도시·날짜·스타일 입력" },
-              { num: "02", icon: "📸", label: "순간 기록",   sub: "GPS + 사진 + 메모" },
-              { num: "03", icon: "🎴", label: "1탭 공유",    sub: "Instagram · TikTok · X" },
+              { num: "01", icon: "📅", label: "AI Plans",    sub: "City · dates · style" },
+              { num: "02", icon: "📸", label: "Capture",    sub: "GPS + photo + memo" },
+              { num: "03", icon: "🎴", label: "1-tap Share", sub: "Instagram · TikTok · X" },
             ].map((s, i) => (
               <div key={s.num} className="flex items-center gap-2 sm:gap-3">
                 <div
@@ -988,7 +988,7 @@ export default function Home() {
           {/* 소셜 프루프 + 서브 링크 */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
             <p className="text-white/28 text-sm font-medium">
-              무료 · 회원가입 불필요 · 30초 일정 생성
+              Free · No sign-up · 30-sec itinerary
             </p>
             <span className="hidden sm:block text-white/15 text-lg">·</span>
             <Link
@@ -1511,7 +1511,7 @@ export default function Home() {
                     <span className="text-base">📍</span>
                   )}
                   <span className="whitespace-nowrap">
-                    {gpsActive ? "GPS 활성 중" : "Near Me"}
+                    {gpsActive ? "GPS Active" : "Near Me"}
                   </span>
                 </button>
               </div>
@@ -1710,12 +1710,12 @@ export default function Home() {
                 >
                   <span className="text-4xl shrink-0">🍽️</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 부산 미식 가이드</p>
-                    <p className="text-base font-black text-gray-900">미쉐린 · 부산의맛 · 택슐랭 선정 레스토랑 <span className="text-orange-500">100선</span></p>
-                    <p className="text-xs text-gray-500 mt-0.5">16개 권역 · 국문·영문 완전 수록 · GPS 거리순 정렬</p>
+                    <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 Busan Food Guide</p>
+                    <p className="text-base font-black text-gray-900">Michelin · Busan Taste · Taksulang picks <span className="text-orange-500">Top 100</span></p>
+                    <p className="text-xs text-gray-500 mt-0.5">16 districts · EN/KO · Sorted by GPS distance</p>
                   </div>
                   <span className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white bg-orange-500 group-hover:bg-orange-600 transition-colors whitespace-nowrap">
-                    전체 보기 →
+                    View All →
                   </span>
                 </Link>
 

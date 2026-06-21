@@ -1288,7 +1288,7 @@ function ItineraryResult() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            📸 순간 기록 {moments.length > 0 && <span className="bg-[#D4AF37] text-[#1a1a2e] text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
+            📸 Capture Moment {moments.length > 0 && <span className="bg-[#D4AF37] text-[#1a1a2e] text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
           </button>
 
           {/* TASK-022: 공유 카드 버튼 */}
@@ -1298,7 +1298,7 @@ function ItineraryResult() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2"
               style={{ borderColor: "#D4AF37", color: "#D4AF37", backgroundColor: "transparent" }}
             >
-              🎴 공유 카드 만들기
+              🎴 Create Story Card
             </button>
           )}
 
@@ -1762,15 +1762,15 @@ function ItineraryResult() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-black text-[#2C2520]">📸 나의 여행 기억</h2>
-            <p className="text-sm text-[#8C6239] mt-0.5">우연히 들른 맛집, 만난 사람들, 풍경… 이 여행의 진짜 이야기</p>
+            <h2 className="text-2xl font-black text-[#2C2520]">📸 My Travel Memories</h2>
+            <p className="text-sm text-[#8C6239] mt-0.5">Hidden finds, people you met, scenery… the real story of this trip</p>
           </div>
           <button
             onClick={() => setCaptureOpen(true)}
             className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-black text-white transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            + 기록
+            + Log
           </button>
         </div>
         <TripMomentTimeline

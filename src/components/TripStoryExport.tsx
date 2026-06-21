@@ -76,8 +76,8 @@ function buildShareText(params: {
   const cityCap   = params.city.charAt(0).toUpperCase() + params.city.slice(1);
   const memoPart  = params.momentCount > 0 ? ` · ${params.momentCount} memories` : "";
   return [
-    `나의 ${cityCap} 여행 🇰🇷`,
-    `AI로 만든 ${params.dayCount}일 일정 · ${params.placeCount} spots${memoPart}`,
+    `My ${cityCap} Trip 🇰🇷`,
+    `AI-built ${params.dayCount}-day itinerary · ${params.placeCount} spots${memoPart}`,
     params.personality,
     "gokoreamate.com",
   ].join("\n");
@@ -230,7 +230,7 @@ export default function TripStoryExport({
     // 2. 링크 클립보드 복사
     try { await navigator.clipboard.writeText("https://gokoreamate.com"); } catch { /* 무시 */ }
     // 3. 배너 노출 (3초 후 자동 소멸)
-    setFallbackMsg("📥 이미지가 저장되었습니다. 링크도 복사했어요 — SNS에 붙여넣으세요");
+    setFallbackMsg("📥 Image saved. Link copied — paste on social media");
     setTimeout(() => setFallbackMsg(null), 3500);
   }, [pngFilename]);
 
@@ -251,7 +251,7 @@ export default function TripStoryExport({
       personality: `${personality.emoji} ${personality.title}`,
     });
     const shareUrl  = "https://gokoreamate.com";
-    const shareTitle = `나의 ${city.charAt(0).toUpperCase() + city.slice(1)} 여행 — gokoreamate.com`;
+    const shareTitle = `My ${city.charAt(0).toUpperCase() + city.slice(1)} Trip — gokoreamate.com`;
 
     // [Guard 1] Web Share API 미지원 환경 → 경로 C
     if (typeof navigator === "undefined" || typeof navigator.share !== "function") {
@@ -307,7 +307,7 @@ export default function TripStoryExport({
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      window.prompt("링크를 복사하세요:", "https://gokoreamate.com");
+      window.prompt("Copy this link:", "https://gokoreamate.com");
     }
   }, []);
 
@@ -321,7 +321,7 @@ export default function TripStoryExport({
       <div className="bg-[#1a1a2e] rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl">
         {/* 헤더 */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-          <h2 className="text-base font-black text-white">🎴 여행 공유 카드</h2>
+          <h2 className="text-base font-black text-white">🎴 Trip Story Card</h2>
           <button onClick={onClose} className="text-white/40 hover:text-white text-xl cursor-pointer">✕</button>
         </div>
 
@@ -351,7 +351,7 @@ export default function TripStoryExport({
               className="w-full py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all disabled:opacity-50 cursor-pointer"
               style={{ backgroundColor: "#D4AF37" }}
             >
-              {rendering ? "생성 중…" : "✨ 카드 생성하기"}
+              {rendering ? "Generating…" : "✨ Create Card"}
             </button>
           ) : (
             <>
@@ -363,10 +363,10 @@ export default function TripStoryExport({
                 style={{ backgroundColor: "#D4AF37" }}
               >
                 {sharing
-                  ? "공유 중…"
+                  ? "Sharing…"
                   : nativeShareSupported
-                  ? "📤 지금 공유하기 (1탭)"
-                  : "📤 공유하기"}
+                  ? "📤 Share Now (1-tap)"
+                  : "📤 Share"}
               </button>
 
               {/* Secondary row: 이미지 저장 + 링크 복사 */}
@@ -375,7 +375,7 @@ export default function TripStoryExport({
                   onClick={handleDownload}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                 >
-                  ⬇️ 이미지 저장
+                  ⬇️ Save Image
                 </button>
                 <button
                   onClick={handleCopyLink}
@@ -384,7 +384,7 @@ export default function TripStoryExport({
                     ? { backgroundColor: "#065f46", borderColor: "#10b981", color: "#6ee7b7" }
                     : { backgroundColor: "transparent", borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.7)" }}
                 >
-                  {copied ? "✅ 복사됨" : "🔗 링크 복사"}
+                  {copied ? "✅ Copied" : "🔗 Copy Link"}
                 </button>
               </div>
 
@@ -393,7 +393,7 @@ export default function TripStoryExport({
                 onClick={render}
                 className="w-full py-2 rounded-xl text-xs font-bold text-white/30 hover:text-white/60 transition-colors cursor-pointer"
               >
-                다시 생성
+                Regenerate
               </button>
             </>
           )}

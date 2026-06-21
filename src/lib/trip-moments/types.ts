@@ -4,11 +4,11 @@
 export type MomentCategory = "food" | "scenery" | "people" | "culture" | "random";
 
 export const MOMENT_CATEGORIES: { key: MomentCategory; emoji: string; label: string }[] = [
-  { key: "food",    emoji: "🍜", label: "맛집" },
-  { key: "scenery", emoji: "🌿", label: "자연" },
-  { key: "people",  emoji: "👥", label: "사람" },
-  { key: "culture", emoji: "🏛️", label: "문화" },
-  { key: "random",  emoji: "✨", label: "순간" },
+  { key: "food",    emoji: "🍜", label: "Food" },
+  { key: "scenery", emoji: "🌿", label: "Scenery" },
+  { key: "people",  emoji: "👥", label: "People" },
+  { key: "culture", emoji: "🏛️", label: "Culture" },
+  { key: "random",  emoji: "✨", label: "Random" },
 ];
 
 export interface TripMoment {
