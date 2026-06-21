@@ -46,12 +46,18 @@
     "cashOnly": "💵 Cash Only",
     "cardOk": "💳 Card OK",
     "free": "🆓 Free",
-    "nature": "🌿 Nature"
+    "nature": "🌿 Nature",
+    "easy": "🟢 Easy",
+    "moderate": "🟡 Moderate",
+    "hard": "🔴 Hard"
   },
   "map": {
     "google": "🗺️ Google",
     "naver": "🟢 Naver",
-    "loading": "Loading map…"
+    "loading": "Loading map…",
+    "official": "🏔️ Official Info",
+    "bookStay": "🏨 Book Stay",
+    "bookTour": "🎟️ Book Tour"
   },
   "cityLinks": {
     "label": "Explore Korea",

@@ -46,12 +46,18 @@
     "cashOnly": "💵 仅限现金",
     "cardOk": "💳 可刷卡",
     "free": "🆓 免费",
-    "nature": "🌿 自然"
+    "nature": "🌿 自然",
+    "easy": "🟢 简单",
+    "moderate": "🟡 中等",
+    "hard": "🔴 困难"
   },
   "map": {
     "google": "🗺️ 谷歌地图",
     "naver": "🟢 Naver地图",
-    "loading": "地图加载中…"
+    "loading": "地图加载中…",
+    "official": "🏔️ 官方信息",
+    "bookStay": "🏨 预订住宿",
+    "bookTour": "🎟️ 预订行程"
   },
   "cityLinks": {
     "label": "探索韩国",

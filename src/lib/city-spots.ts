@@ -69,6 +69,7 @@ export function rowToCitySpot(row: CitySpotRow): CitySpot {
     whyItMattersL10n:     row.why_l10n ?? undefined,
     officialUrl:          row.official_url ?? undefined,
     affiliateUrl:         row.affiliate_url ?? undefined,
+    affiliateProvider:    row.affiliate_provider ?? undefined,
     entryFee:             row.entry_fee ?? undefined,
     difficulty:           (row.difficulty as CitySpot["difficulty"]) ?? undefined,
   };

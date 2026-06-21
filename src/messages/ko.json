@@ -46,12 +46,18 @@
     "cashOnly": "💵 현금만 가능",
     "cardOk": "💳 카드 가능",
     "free": "🆓 무료",
-    "nature": "🌿 자연"
+    "nature": "🌿 자연",
+    "easy": "🟢 쉬움",
+    "moderate": "🟡 보통",
+    "hard": "🔴 어려움"
   },
   "map": {
     "google": "🗺️ 구글",
     "naver": "🟢 네이버",
-    "loading": "지도 불러오는 중…"
+    "loading": "지도 불러오는 중…",
+    "official": "🏔️ 공식 정보",
+    "bookStay": "🏨 숙박 예약",
+    "bookTour": "🎟️ 투어 예약"
   },
   "cityLinks": {
     "label": "한국 탐험하기",
