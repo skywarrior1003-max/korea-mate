@@ -28,23 +28,23 @@ const AWARD_META: Record<string, { label: string; labelEn: string; color: string
 };
 
 const PRICE_LABEL: Record<string, string> = {
-  "$":   "₩ 저렴",
-  "$$":  "₩₩ 보통",
-  "$$$": "₩₩₩ 고급",
+  "$":   "₩ Budget",
+  "$$":  "₩₩ Mid-range",
+  "$$$": "₩₩₩ Upscale",
 };
 
 // ── 지역 클러스터 ─────────────────────────────────────────────────────────────
 
 const DISTRICT_CLUSTERS = [
-  { key: "all",       label: "전체",               districts: [] as string[] },
-  { key: "haeundae",  label: "해운대·기장",          districts: ["Haeundae-gu", "Gijang-gun"] },
-  { key: "gwangalli", label: "수영·광안리",           districts: ["Suyeong-gu"] },
-  { key: "seomyeon",  label: "서면·부산진",           districts: ["Busanjin-gu"] },
-  { key: "dongnae",   label: "동래·금정·연제",        districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
-  { key: "namgu",     label: "남구·수영",             districts: ["Nam-gu"] },
-  { key: "nampo",     label: "중구·서구·남포",        districts: ["Jung-gu", "Seo-gu", "Dong-gu"] },
-  { key: "yeongdo",   label: "영도·동구",             districts: ["Yeongdo-gu", "Dong-gu"] },
-  { key: "bukgu",     label: "북구·사상·강서·사하",   districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
+  { key: "all",       label: "All",                    districts: [] as string[] },
+  { key: "haeundae",  label: "Haeundae · Gijang",      districts: ["Haeundae-gu", "Gijang-gun"] },
+  { key: "gwangalli", label: "Suyeong · Gwangalli",     districts: ["Suyeong-gu"] },
+  { key: "seomyeon",  label: "Seomyeon · Busanjin",     districts: ["Busanjin-gu"] },
+  { key: "dongnae",   label: "Dongnae · Geumjeong",     districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
+  { key: "namgu",     label: "Nam-gu · Suyeong",        districts: ["Nam-gu"] },
+  { key: "nampo",     label: "Jung · Seo-gu · Nampo",   districts: ["Jung-gu", "Seo-gu", "Dong-gu"] },
+  { key: "yeongdo",   label: "Yeongdo · Dong-gu",       districts: ["Yeongdo-gu", "Dong-gu"] },
+  { key: "bukgu",     label: "Buk · Sasang · Gangseo",  districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
 ];
 
 // ── GPS 헬퍼 ──────────────────────────────────────────────────────────────────
@@ -120,7 +120,7 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
                 )}
               </div>
               <p className="text-lg font-black text-white/90 leading-tight">
-                {r.category_ko || "레스토랑"}{r.district_ko ? ` · ${r.district_ko}` : ""}
+                {r.category_ko || "Restaurant"}{r.district_ko ? ` · ${r.district_ko}` : ""}
               </p>
               <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
                 Busan Food Guide 2026
@@ -172,7 +172,7 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
 
           {/* 주소 */}
           <div className="space-y-1">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">주소 · Address</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Address</p>
             <p className="text-sm font-semibold text-gray-700">{r.address_ko}</p>
             <p className="text-xs text-gray-500">{r.address_en}</p>
           </div>
@@ -186,7 +186,7 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
             )}
             {r.reservation_required && (
               <span className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                🗓️ 예약 필수
+                🗓️ Reservation Required
               </span>
             )}
           </div>
@@ -270,7 +270,7 @@ function RestaurantCard({
                 {r.district_ko ? `${r.district_ko} · Busan` : "Busan"}
               </p>
               <p className="text-[13px] font-black text-white/90 leading-snug line-clamp-2">
-                {r.category_ko || "레스토랑"}
+                {r.category_ko || "Restaurant"}
               </p>
               <p className="text-[9px] font-bold uppercase tracking-wider text-white/35">
                 Busan Food Guide 2026
@@ -331,7 +331,7 @@ function RestaurantCard({
           className="w-full py-2 rounded-xl text-xs font-bold text-center text-white transition-opacity group-hover:opacity-100 opacity-75"
           style={{ backgroundColor: "#1a1f36" }}
         >
-          상세 보기 · Details →
+          Details →
         </div>
       </div>
     </button>
@@ -376,11 +376,11 @@ export default function RestaurantsPage() {
 
   const handleGps = useCallback(() => {
     if (gpsActive) { setGpsActive(false); setUserCoords(null); setGpsError(null); return; }
-    if (!("geolocation" in navigator)) { setGpsError("GPS를 지원하지 않는 기기입니다."); return; }
+    if (!("geolocation" in navigator)) { setGpsError("Device does not support GPS."); return; }
     setGpsLoading(true);
     navigator.geolocation.getCurrentPosition(
       pos => { setUserCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }); setGpsActive(true); setGpsLoading(false); setGpsError(null); resetPage(); },
-      ()  => { setGpsLoading(false); setGpsError("위치 권한을 허용해주세요."); },
+      ()  => { setGpsLoading(false); setGpsError("Please allow location permission."); },
       { timeout: 8000 }
     );
   }, [gpsActive, resetPage]);
@@ -434,7 +434,7 @@ export default function RestaurantsPage() {
               go<span className="font-extrabold">korea</span>mate
             </Link>
             <span className="text-gray-300 text-lg">/</span>
-            <h1 className="text-sm font-black text-gray-700 truncate">2026 부산 미식 가이드</h1>
+            <h1 className="text-sm font-black text-gray-700 truncate">2026 Busan Food Guide</h1>
           </div>
           <Link href="/all-spots" className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors">
             All Spots
@@ -452,10 +452,10 @@ export default function RestaurantsPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="text-orange-300 text-xs font-black uppercase tracking-widest mb-2">Busan Food Guide 2026</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
-            2026 부산 미식 가이드 <span style={{ color: "#fb923c" }}>100선</span>
+            2026 Busan Food Guide <span style={{ color: "#fb923c" }}>Top 100</span>
           </h2>
           <p className="text-white/70 text-sm sm:text-base font-medium mb-6 max-w-xl">
-            미쉐린 가이드 · 부산의맛 · 택슐랭 3대 권위 가이드 선정 레스토랑 — 16개 권역 완전 수록
+            Michelin Guide · Busan Mat · Taegshlang — selected from 3 major food guides across 16 districts
           </p>
           {/* 출처별 카운터 */}
           {!loading && (
@@ -464,7 +464,7 @@ export default function RestaurantsPage() {
                 <div key={key} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
                   <span className="text-sm">{meta.emoji}</span>
                   <span className="text-white font-black text-xs">{meta.label}</span>
-                  <span className="text-white/60 font-bold text-xs">{srcCounts[key]}개</span>
+                  <span className="text-white/60 font-bold text-xs">{srcCounts[key]}</span>
                 </div>
               ))}
             </div>
@@ -483,7 +483,7 @@ export default function RestaurantsPage() {
               type="text"
               value={search}
               onChange={e => { setSearch(e.target.value); resetPage(); }}
-              placeholder="맛집 이름·지역·카테고리 검색 (Search name, area, category…)"
+              placeholder="Search by name, area, category…"
               className="w-full pl-11 pr-10 py-2.5 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all"
             />
             {search && (
@@ -499,7 +499,7 @@ export default function RestaurantsPage() {
                 className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-black border transition-all cursor-pointer whitespace-nowrap"
                 style={source === "all" ? { backgroundColor: "#1a1f36", color: "#fff", borderColor: "#1a1f36" } : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }}
               >
-                전체 {restaurants.length > 0 && `(${filtered.length})`}
+                All {restaurants.length > 0 && `(${filtered.length})`}
               </button>
               {(Object.entries(SOURCE_META) as [keyof typeof SOURCE_META, typeof SOURCE_META[keyof typeof SOURCE_META]][]).map(([key, meta]) => (
                 <button
@@ -517,7 +517,7 @@ export default function RestaurantsPage() {
           {/* 지역 필터 */}
           <div className="relative">
             <div className="flex gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-              <span className="shrink-0 text-[10px] font-extrabold text-gray-400 uppercase tracking-wider self-center pr-1">구역</span>
+              <span className="shrink-0 text-[10px] font-extrabold text-gray-400 uppercase tracking-wider self-center pr-1">Area</span>
               {DISTRICT_CLUSTERS.map(d => (
                 <button
                   key={d.key}
@@ -545,21 +545,21 @@ export default function RestaurantsPage() {
               }`}
             >
               <span>{gpsLoading ? "⏳" : gpsActive ? "📍" : "📡"}</span>
-              내 주변 거리순 정렬
+              Sort by distance
               <span className={`inline-block w-8 h-4 rounded-full transition-colors relative ${gpsActive ? "bg-white/30" : "bg-gray-200"}`}>
                 <span className={`absolute top-0.5 w-3 h-3 rounded-full transition-transform ${gpsActive ? "bg-white translate-x-4" : "bg-gray-400 translate-x-0.5"}`} />
               </span>
             </button>
-            {gpsActive && <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">GPS 활성화 · 거리순</span>}
+            {gpsActive && <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">GPS active · by distance</span>}
             {gpsError && <span className="text-xs text-red-500 font-semibold">{gpsError}</span>}
             <span className="text-xs text-gray-400 font-medium ml-auto">
-              {loading ? "로딩 중…" : `${filtered.length}개 레스토랑`}
+              {loading ? "Loading…" : `${filtered.length} restaurants`}
               {activeCount > 0 && (
                 <button
                   onClick={() => { setSource("all"); setDistrict("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
                   className="ml-2 text-orange-500 font-bold underline"
                 >
-                  필터 해제
+                  Clear filters
                 </button>
               )}
             </span>
@@ -572,19 +572,19 @@ export default function RestaurantsPage() {
         {loading ? (
           <div className="text-center py-24">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-6" />
-            <p className="text-gray-500 font-semibold">2026 부산 미식 가이드 로딩 중…</p>
+            <p className="text-gray-500 font-semibold">Loading 2026 Busan Food Guide…</p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
             <p className="text-4xl mb-4">🔍</p>
-            <p className="text-xl font-black text-gray-700 mb-2">검색 결과가 없습니다</p>
-            <p className="text-gray-500 text-sm mb-6">다른 검색어나 필터를 사용해보세요.</p>
+            <p className="text-xl font-black text-gray-700 mb-2">No results found</p>
+            <p className="text-gray-500 text-sm mb-6">Try a different keyword or filter.</p>
             <button
               onClick={() => { setSource("all"); setDistrict("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
               style={{ backgroundColor: "#f97316" }}
             >
-              전체 보기
+              View All
             </button>
           </div>
         ) : (
@@ -642,11 +642,11 @@ export default function RestaurantsPage() {
       {/* 푸터 */}
       <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400 space-y-2">
         <p>
-          <Link href="/" className="text-orange-500 font-bold hover:underline">← KoreaMate 홈</Link>
+          <Link href="/" className="text-orange-500 font-bold hover:underline">← KoreaMate Home</Link>
           &nbsp;·&nbsp;
-          <Link href="/all-spots" className="text-orange-500 font-bold hover:underline">전체 스팟 보기</Link>
+          <Link href="/all-spots" className="text-orange-500 font-bold hover:underline">View All Spots</Link>
         </p>
-        <p className="text-xs text-gray-300">데이터 출처: 미쉐린 가이드 부산 2026 · 부산의맛 2026 · 택슐랭 2025</p>
+        <p className="text-xs text-gray-300">Source: Michelin Guide Busan 2026 · Busan Mat 2026 · Taegshlang 2025</p>
       </footer>
 
       {/* 상세 모달 */}

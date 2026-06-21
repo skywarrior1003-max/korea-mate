@@ -71,10 +71,10 @@ function extractShareId(): string | null {
 
 // ── 여행 스타일 한글 매핑 ─────────────────────────────────────────────────────
 const STYLE_LABEL: Record<string, string> = {
-  solo:   "솔로 FIT",
-  couple: "커플 여행",
-  family: "가족 여행",
-  group:  "그룹 여행",
+  solo:   "Solo FIT",
+  couple: "Couple Trip",
+  family: "Family Trip",
+  group:  "Group Trip",
 };
 
 function styleLabel(raw: string): string {
@@ -136,7 +136,7 @@ export default function SharedTripPage() {
 
       // ── document.title 오버라이드 (Phase 1 OG 대응) ─────────────────────────
       const cityCap = record.city.charAt(0).toUpperCase() + record.city.slice(1);
-      document.title = `${cityCap} ${parsedDays.length}일 여행 일정 — gokoreamate.com`;
+      document.title = `${cityCap} ${parsedDays.length}-Day Itinerary — gokoreamate.com`;
 
       setStatus("found");
 
@@ -198,7 +198,7 @@ export default function SharedTripPage() {
             className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
             style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
           />
-          <p className="text-sm font-bold text-[#8C6239]">여행 일정을 불러오는 중…</p>
+          <p className="text-sm font-bold text-[#8C6239]">Loading itinerary…</p>
           <Link href="/" className="text-xs text-[#B8A89A] hover:text-[#8C6239] transition-colors">
             gokoreamate.com
           </Link>
@@ -213,16 +213,16 @@ export default function SharedTripPage() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ backgroundColor: "#FAF7F2" }}>
         <div className="text-center max-w-sm">
           <div className="text-6xl mb-4">🗺️</div>
-          <h1 className="text-2xl font-black text-[#2C2520] mb-3">일정을 찾을 수 없어요</h1>
+          <h1 className="text-2xl font-black text-[#2C2520] mb-3">Itinerary not found</h1>
           <p className="text-sm text-[#61554D] leading-relaxed mb-6">
-            링크가 만료되었거나 존재하지 않는 일정입니다.
+            This link has expired or doesn&apos;t exist.
           </p>
           <Link
             href="/"
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all hover:opacity-90"
             style={{ backgroundColor: "#D4AF37" }}
           >
-            ✨ 내 여행 계획하기
+            ✨ Plan My Trip
           </Link>
           <p className="text-xs text-[#B8A89A] mt-4">gokoreamate.com</p>
         </div>
@@ -257,12 +257,12 @@ export default function SharedTripPage() {
         <div className="relative max-w-2xl mx-auto text-center">
           {/* 공유 배지 */}
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black text-white/50 border border-white/15 mb-6 tracking-widest uppercase">
-            🎴 공유된 여행 일정
+            🎴 Shared Itinerary
           </span>
 
           {/* 도시명 */}
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-2">
-            {cityCap} 여행
+            {cityCap} Trip
           </h1>
 
           {/* 날짜 */}
@@ -309,7 +309,7 @@ export default function SharedTripPage() {
                   : "text-white/80 border border-white/25 hover:border-[#D4AF37]/60 hover:text-[#D4AF37]"
               }`}
             >
-              {helpfulVoted ? "✅ 도움됐다고 표시했어요!" : "👍 이 일정이 도움됐나요?"}
+              {helpfulVoted ? "✅ Marked as helpful!" : "👍 Was this itinerary helpful?"}
             </button>
           </div>
 
@@ -422,11 +422,11 @@ export default function SharedTripPage() {
             gokoreamate.com
           </p>
           <h2 className="text-xl font-black text-white mb-2">
-            나만의 {cityCap} 여행 계획하기
+            Plan Your Own {cityCap} Trip
           </h2>
           <p className="text-sm text-white/55 leading-relaxed mb-6">
-            AI가 30초 만에 이 스타일로 일정을 만들어 드립니다.<br />
-            무료 · 회원가입 불필요 · 1탭 공유 가능
+            AI builds an itinerary like this in 30 seconds.<br />
+            Free · No sign-up · Share in one tap
           </p>
 
           {/* Primary — contextual clone CTA (도시·날짜·스타일 pre-fill) */}
@@ -435,7 +435,7 @@ export default function SharedTripPage() {
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all hover:opacity-90 active:scale-95"
             style={{ backgroundColor: "#D4AF37" }}
           >
-            🗺️ 나만의 {cityCap} 여행 — 이 스타일로 계획하기 ⚡
+            🗺️ Plan My {cityCap} Trip — Same Style ⚡
           </Link>
 
           {/* Secondary — 이 일정 공유 카드 만들기 */}
@@ -444,7 +444,7 @@ export default function SharedTripPage() {
             className="mt-3 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95 w-full"
             style={{ color: "rgba(255,255,255,0.80)", borderColor: "rgba(212,175,55,0.50)" }}
           >
-            📤 이 일정 공유 카드 만들기
+            📤 Create Share Card for This Itinerary
           </button>
 
           {/* Tertiary — 처음부터 새 여행 */}
@@ -453,7 +453,7 @@ export default function SharedTripPage() {
             className="mt-2 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
             style={{ color: "rgba(255,255,255,0.40)", borderColor: "rgba(255,255,255,0.12)" }}
           >
-            ✨ 처음부터 계획하기 →
+            ✨ Start from Scratch →
           </Link>
         </div>
 
@@ -473,7 +473,7 @@ export default function SharedTripPage() {
 
         {/* 푸터 */}
         <p className="text-center text-xs text-[#B8A89A] pb-8 pt-6">
-          이 일정은 gokoreamate.com의 AI 플래너로 생성되었습니다
+          This itinerary was generated by the gokoreamate.com AI planner
         </p>
       </div>
 

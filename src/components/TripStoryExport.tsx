@@ -399,7 +399,7 @@ export default function TripStoryExport({
           )}
 
           <p className="text-center text-[10px] text-white/20">
-            9:16 · Instagram Stories · TikTok · X 최적화
+            9:16 · Optimized for Instagram Stories · TikTok · X
           </p>
         </div>
       </div>
