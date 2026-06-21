@@ -125,6 +125,33 @@ export async function upsertCitySpot(
   return true;
 }
 
+// ── 장소명 정규화 매칭 ────────────────────────────────────────────────────────
+function normName(s: string): string {
+  return s.toLowerCase().replace(/[^a-z0-9가-힣\s]/g, "").replace(/\s+/g, " ").trim();
+}
+
+export function matchCitySpot(placeName: string, spots: CitySpot[]): CitySpot | null {
+  if (!placeName || spots.length === 0) return null;
+  const needle = normName(placeName);
+
+  // 1. Exact normalized match
+  let hit = spots.find(s => normName(s.name) === needle);
+  if (hit) return hit;
+
+  // 2. One contains the other
+  hit = spots.find(s => {
+    const hay = normName(s.name);
+    return needle.includes(hay) || hay.includes(needle);
+  });
+  if (hit) return hit;
+
+  // 3. Any keyword from spot name (≥4 chars) found in needle
+  hit = spots.find(s =>
+    normName(s.name).split(" ").filter(w => w.length >= 4).some(w => needle.includes(w))
+  );
+  return hit ?? null;
+}
+
 export async function bulkUpsertCitySpots(
   rows: Omit<CitySpotRow, "id" | "created_at" | "updated_at">[]
 ): Promise<{ success: number; failed: number }> {
