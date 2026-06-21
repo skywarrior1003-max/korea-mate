@@ -30,6 +30,13 @@ CREATE TABLE IF NOT EXISTS city_spots (
   source_type          TEXT        NOT NULL DEFAULT 'manual', -- manual|tourapi|google
   external_id          TEXT,                          -- TourAPI contentId | Google place_id
   rating               NUMERIC(3,1),                 -- Google Places 별점 (cached)
+  -- 비즈니스 퍼널 (공식 정보 → 숙박 수익화)
+  official_url         TEXT,                          -- 공식 공원/산 관리 사이트
+  affiliate_url        TEXT,                          -- 숙박/투어 제휴 링크
+  affiliate_provider   VARCHAR(50),                   -- 'agoda'|'booking'|'klook' 등
+  -- 외국인 핵심 기초정보 (입력 후 거의 불변)
+  entry_fee            VARCHAR(50),                   -- '무료'|'₩2,000'|'Free'
+  difficulty           VARCHAR(20),                   -- 'easy'|'moderate'|'hard' (하이킹만)
   created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -57,7 +64,8 @@ INSERT INTO city_spots
   (city, name, category, district, address, description, why_it_matters,
    image_url, map_url, naver_map_url, lat, lng,
    duration_minutes, best_time_slot, opening_hours, tags,
-   solo_friendly, foreign_card_accepted, cash_only, source_type)
+   solo_friendly, foreign_card_accepted, cash_only, source_type,
+   entry_fee, difficulty, official_url)
 VALUES
 (
   'Busan', 'Haeundae Beach', 'attraction', 'Haeundae-gu',
@@ -69,7 +77,8 @@ VALUES
   'https://map.naver.com/v5/search/%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5',
   35.1587, 129.1604, 120, 'afternoon', NULL,
   ARRAY['#Beach','#Summer','#Seafood','#Sunrise','#PhotoSpot'],
-  true, true, false, 'manual'
+  true, true, false, 'manual',
+  'Free', NULL, NULL
 ),
 (
   'Busan', 'Gamcheon Culture Village', 'attraction', 'Saha-gu',
@@ -81,7 +90,8 @@ VALUES
   'https://map.naver.com/v5/search/%EA%B0%90%EC%B2%9C%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84',
   35.0975, 129.0104, 90, 'morning', '{"open":"09:00","close":"18:00"}',
   ARRAY['#ColorfulVillage','#Art','#Mural','#PhotoSpot','#BTS'],
-  true, true, false, 'manual'
+  true, true, false, 'manual',
+  '₩2,000', NULL, NULL
 ),
 (
   'Busan', 'Jagalchi Fish Market', 'restaurant', 'Jung-gu',
@@ -93,7 +103,8 @@ VALUES
   'https://map.naver.com/v5/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5',
   35.0971, 129.0302, 60, 'morning', '{"open":"07:00","close":"21:00"}',
   ARRAY['#Seafood','#FishMarket','#LocalFood','#SoloFriendly','#CashOnly'],
-  true, false, true, 'manual'
+  true, false, true, 'manual',
+  'Free entry', NULL, NULL
 ),
 (
   'Busan', 'Gwangalli Beach & Bridge', 'attraction', 'Suyeong-gu',
@@ -105,7 +116,8 @@ VALUES
   'https://map.naver.com/v5/search/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5',
   35.1530, 129.1185, 90, 'evening', NULL,
   ARRAY['#Beach','#GwanganBridge','#NightView','#Seafood','#PhotoSpot'],
-  true, true, false, 'manual'
+  true, true, false, 'manual',
+  'Free', NULL, NULL
 ),
 (
   'Busan', 'Hwangnyeongsan Night View Trail', 'nature', 'Yeonje-gu',
@@ -117,7 +129,8 @@ VALUES
   'https://map.naver.com/v5/search/%ED%99%A9%EB%A0%B9%EC%82%B0',
   35.1475, 129.0715, 120, 'evening', NULL,
   ARRAY['#NightView','#Hiking','#PhotoSpot','#Busan','#Free'],
-  true, false, false, 'manual'
+  true, false, false, 'manual',
+  'Free', 'moderate', 'https://www.busan.go.kr/yeonje/hwangnyeong'
 ),
 (
   'Busan', 'Jangsan Mountain Trail', 'nature', 'Haeundae-gu',
@@ -129,7 +142,8 @@ VALUES
   'https://map.naver.com/v5/search/%EC%9E%A5%EC%82%B0%EB%93%B1%EC%82%B0%EB%A1%9C',
   35.1894, 129.2017, 180, 'morning', NULL,
   ARRAY['#Hiking','#Forest','#Stream','#Haeundae','#Free'],
-  true, false, false, 'manual'
+  true, false, false, 'manual',
+  'Free', 'moderate', 'https://haeundae.go.kr/jangsanlocalpark/index.do'
 ),
 (
   'Busan', 'Igidae Coastal Walk', 'nature', 'Nam-gu',
@@ -141,6 +155,7 @@ VALUES
   'https://map.naver.com/v5/search/%EC%9D%B4%EA%B8%B0%EB%8C%80%ED%95%B4%EC%95%88%EC%82%B0%EC%B1%85%EB%A1%9C',
   35.1215, 129.1287, 150, 'afternoon', NULL,
   ARRAY['#CoastalWalk','#Cliffs','#OceanView','#Free','#Oryukdo'],
-  true, false, false, 'manual'
+  true, false, false, 'manual',
+  'Free', 'easy', NULL
 )
 ON CONFLICT DO NOTHING;

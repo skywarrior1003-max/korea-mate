@@ -28,6 +28,11 @@ export interface CitySpot {
   image?: string;
   lat?: number;
   lng?: number;
+  // 비즈니스 퍼널
+  officialUrl?: string;
+  affiliateUrl?: string;
+  entryFee?: string;
+  difficulty?: "easy" | "moderate" | "hard";
   // i18n 확장 필드 (optional — 없으면 위 영어 필드로 fallback)
   nameL10n?: LocalizedText;
   descriptionL10n?: LocalizedText;

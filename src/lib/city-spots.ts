@@ -30,6 +30,11 @@ export interface CitySpotRow {
   source_type: "manual" | "tourapi" | "google";
   external_id: string | null;
   rating: number | null;
+  official_url: string | null;
+  affiliate_url: string | null;
+  affiliate_provider: string | null;
+  entry_fee: string | null;
+  difficulty: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -62,6 +67,10 @@ export function rowToCitySpot(row: CitySpotRow): CitySpot {
     nameL10n:             row.name_l10n ?? undefined,
     descriptionL10n:      row.desc_l10n ?? undefined,
     whyItMattersL10n:     row.why_l10n ?? undefined,
+    officialUrl:          row.official_url ?? undefined,
+    affiliateUrl:         row.affiliate_url ?? undefined,
+    entryFee:             row.entry_fee ?? undefined,
+    difficulty:           (row.difficulty as CitySpot["difficulty"]) ?? undefined,
   };
 }
 
