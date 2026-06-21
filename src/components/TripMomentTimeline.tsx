@@ -43,14 +43,14 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
       >
         <div className="w-16 h-16 rounded-2xl bg-[#EAE3D2] flex items-center justify-center text-3xl">📸</div>
         <div>
-          <p className="text-base font-black text-[#2C2520]">아직 기록된 순간이 없어요</p>
-          <p className="text-sm text-[#8C6239] mt-1">우연히 들른 맛집, 풍경, 사람들…<br/>이 여행의 진짜 이야기를 남겨보세요</p>
+          <p className="text-base font-black text-[#2C2520]">No moments recorded yet</p>
+          <p className="text-sm text-[#8C6239] mt-1">Hidden gems, scenery, people you met…<br/>Leave the real story of this trip</p>
         </div>
         <button
           className="mt-2 px-6 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
           style={{ backgroundColor: "#D4AF37" }}
         >
-          📸 첫 순간 기록하기
+          📸 Record First Moment
         </button>
       </div>
     );
@@ -101,7 +101,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                   )}
                 </div>
                 <div className="absolute top-3 right-3 text-xs text-white/70 font-medium bg-black/40 px-2 py-1 rounded-lg backdrop-blur-sm">
-                  {isOpen ? "접기 ↑" : "더보기 ↓"}
+                  {isOpen ? "collapse ↑" : "expand ↓"}
                 </div>
               </div>
             )}
@@ -133,7 +133,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                 </p>
               )}
               {!m.memo && (
-                <p className="text-sm text-[#8C6239]/60 italic">메모 없음</p>
+                <p className="text-sm text-[#8C6239]/60 italic">No memo</p>
               )}
 
               <div className="flex items-center justify-between">
@@ -154,7 +154,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                       : "text-[#8C6239]/40 hover:text-red-400 hover:bg-red-50"
                   }`}
                 >
-                  {deleteConfirm === m.moment_id ? "삭제 확인" : "삭제"}
+                  {deleteConfirm === m.moment_id ? "Confirm delete" : "Delete"}
                 </button>
               </div>
             </div>

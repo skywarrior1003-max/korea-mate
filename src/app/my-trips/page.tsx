@@ -45,13 +45,13 @@ function getPersonality(style: string): { emoji: string; label: string; color: s
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 1)  return "방금 전";
-  if (m < 60) return `${m}분 전`;
+  if (m < 1)  return "Just now";
+  if (m < 60) return `${m}m ago`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}시간 전`;
+  if (h < 24) return `${h}h ago`;
   const d = Math.floor(h / 24);
-  if (d < 30) return `${d}일 전`;
-  return new Date(iso).toLocaleDateString("ko-KR", { month: "short", day: "numeric" });
+  if (d < 30) return `${d}d ago`;
+  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 function dayCount(start: string, end: string): number {
@@ -163,7 +163,7 @@ export default function MyTripsPage() {
             href="/"
             className="text-sm font-bold text-[#8C6239] hover:text-[#2C2520] transition-colors"
           >
-            ← 홈으로
+            ← Home
           </Link>
         </div>
       </header>
@@ -172,9 +172,9 @@ export default function MyTripsPage() {
 
         {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black text-[#2C2520] mb-2">나의 여행 기록</h1>
+          <h1 className="text-4xl font-black text-[#2C2520] mb-2">My Trips</h1>
           <p className="text-[#8C6239] font-medium">
-            AI가 만든 나만의 한국 여행 일정 · 기억 · 공유
+            AI-generated Korea itineraries · memories · sharing
           </p>
         </div>
 
@@ -182,9 +182,9 @@ export default function MyTripsPage() {
         {!loading && trips.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-8">
             {[
-              { emoji: "✈️", label: `${trips.length}개 여행` },
-              { emoji: "📍", label: `총 ${trips.reduce((s, t) => s + t.days, 0)}일` },
-              totalMoments > 0 ? { emoji: "📸", label: `${totalMoments}개 기억` } : null,
+              { emoji: "✈️", label: `${trips.length} trips` },
+              { emoji: "📍", label: `${trips.reduce((s, t) => s + t.days, 0)} days` },
+              totalMoments > 0 ? { emoji: "📸", label: `${totalMoments} moments` } : null,
             ].filter(Boolean).map((chip) => (
               <div
                 key={chip!.label}
@@ -203,21 +203,21 @@ export default function MyTripsPage() {
           <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-emerald-200 bg-emerald-50">
             <span className="text-lg">☁️</span>
             <p className="text-sm font-bold text-emerald-800 flex-1">
-              <strong>{savedEmail}</strong> 로 클라우드 저장됨 — 모든 기기에서 접근 가능
+              Saved to cloud as <strong>{savedEmail}</strong> — access from any device
             </p>
           </div>
         ) : (
           <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[#E6DFD5] bg-white shadow-sm">
             <span className="text-lg">📧</span>
             <p className="text-sm font-bold text-[#61554D] flex-1">
-              이메일을 연결하면 다른 기기에서도 내 여행을 볼 수 있어요
+              Connect your email to access trips on any device
             </p>
             <button
               onClick={() => setEmailModalOpen(true)}
               className="shrink-0 px-4 py-2 rounded-xl text-xs font-black text-white transition-opacity hover:opacity-90 cursor-pointer"
               style={{ backgroundColor: "#D4AF37" }}
             >
-              연결하기
+              Connect
             </button>
           </div>
         )}
@@ -226,7 +226,7 @@ export default function MyTripsPage() {
         {loading && (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#D4AF37]" />
-            <p className="text-sm font-bold text-[#8C6239]">여행 기록을 불러오는 중…</p>
+            <p className="text-sm font-bold text-[#8C6239]">Loading your trips…</p>
           </div>
         )}
 
@@ -235,9 +235,9 @@ export default function MyTripsPage() {
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-red-50 flex items-center justify-center text-5xl">⚠️</div>
             <div>
-              <p className="text-2xl font-black text-[#2C2520] mb-2">여행 기록을 불러올 수 없어요</p>
+              <p className="text-2xl font-black text-[#2C2520] mb-2">Could not load trips</p>
               <p className="text-[#8C6239] max-w-sm leading-relaxed">
-                네트워크 연결을 확인하고 다시 시도해주세요.
+                Check your connection and try again.
               </p>
             </div>
             <button
@@ -245,7 +245,7 @@ export default function MyTripsPage() {
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
               style={{ backgroundColor: "#D4AF37" }}
             >
-              다시 시도하기
+              Try Again
             </button>
           </div>
         )}
@@ -255,9 +255,9 @@ export default function MyTripsPage() {
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-[#EAE3D2] flex items-center justify-center text-5xl">✈️</div>
             <div>
-              <p className="text-2xl font-black text-[#2C2520] mb-2">아직 여행이 없어요</p>
+              <p className="text-2xl font-black text-[#2C2520] mb-2">No trips yet</p>
               <p className="text-[#8C6239] max-w-sm leading-relaxed">
-                AI 일정 생성 후 자동으로 이곳에 저장됩니다.<br/>지금 바로 첫 한국 여행을 계획해보세요!
+                Trips are saved here automatically after AI generation.<br/>Plan your first Korea adventure now!
               </p>
             </div>
             <Link
@@ -265,7 +265,7 @@ export default function MyTripsPage() {
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
               style={{ backgroundColor: "#D4AF37" }}
             >
-              🗺️ 여행 계획 시작하기
+              🗺️ Start Planning
             </Link>
           </div>
         )}
@@ -326,17 +326,17 @@ export default function MyTripsPage() {
                   {/* ── 메타 칩 ── */}
                   <div className="px-4 pt-3.5 pb-0 flex flex-wrap gap-1.5">
                     <span className="text-[10px] font-black bg-[#EAE3D2] text-[#8C6239] px-2.5 py-1 rounded-md">
-                      📅 {trip.days}일
+                      📅 {trip.days}d
                     </span>
                     <span className="text-[10px] font-black bg-[#EAE3D2] text-[#8C6239] px-2.5 py-1 rounded-md">
-                      👤 {trip.travelers}명
+                      👤 {trip.travelers} pax
                     </span>
                     {trip.moments > 0 && (
                       <span
                         className="text-[10px] font-black px-2.5 py-1 rounded-md text-white"
                         style={{ backgroundColor: "#1a1a2e" }}
                       >
-                        📸 {trip.moments}개 기억
+                        📸 {trip.moments} moments
                       </span>
                     )}
                   </div>
@@ -348,7 +348,7 @@ export default function MyTripsPage() {
                       className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
                       style={{ backgroundColor: "#2C2520" }}
                     >
-                      일정 열기 →
+                      Open Itinerary →
                     </Link>
 
                     <div className="flex gap-2">
@@ -362,7 +362,7 @@ export default function MyTripsPage() {
                             : { backgroundColor: "#FAF7F2", borderColor: "#E6DFD5", color: "#8C6239" }
                         }
                       >
-                        {isCopied ? "✅ 복사됨" : "🔗 링크 복사"}
+                        {isCopied ? "✅ Copied" : "🔗 Copy Link"}
                       </button>
 
                       {/* 삭제 */}
@@ -373,13 +373,13 @@ export default function MyTripsPage() {
                             disabled={isDeleting}
                             className="px-3 py-2.5 rounded-xl text-xs font-black bg-red-500 text-white hover:bg-red-600 transition-colors disabled:opacity-50 cursor-pointer"
                           >
-                            {isDeleting ? "…" : "삭제"}
+                            {isDeleting ? "…" : "Delete"}
                           </button>
                           <button
                             onClick={() => setConfirmDel(null)}
                             className="px-3 py-2.5 rounded-xl text-xs font-bold bg-[#EAE3D2] text-[#8C6239] hover:bg-[#E6DFD5] transition-colors cursor-pointer"
                           >
-                            취소
+                            Cancel
                           </button>
                         </div>
                       ) : (
@@ -405,8 +405,8 @@ export default function MyTripsPage() {
                 ＋
               </div>
               <div>
-                <p className="text-sm font-black text-[#2C2520]">새 여행 계획</p>
-                <p className="text-xs text-[#8C6239] mt-0.5">AI로 30초 만에</p>
+                <p className="text-sm font-black text-[#2C2520]">New Trip Plan</p>
+                <p className="text-xs text-[#8C6239] mt-0.5">AI in 30 sec</p>
               </div>
             </Link>
           </div>
@@ -416,7 +416,7 @@ export default function MyTripsPage() {
 
       {/* ── 푸터 ── */}
       <footer className="mt-auto border-t border-[#E6DFD5] py-8 text-center text-sm text-[#8C6239] px-4" style={{ backgroundColor: "#FAF7F2" }}>
-        <p>© {new Date().getFullYear()} KoreaMate · 여행 데이터는 기기에 저장됩니다</p>
+        <p>© {new Date().getFullYear()} KoreaMate · Trip data stored on your device</p>
       </footer>
 
       <EmailCaptureModal
