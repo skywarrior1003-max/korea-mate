@@ -475,11 +475,10 @@ function isMockMode(): boolean {
   ) {
     return true;
   }
-  // 기본: 개발/테스트 환경은 Mock
-  return (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "test"
-  );
+  // TASK-050: Default to mock in all environments.
+  // Live Gemini calls on this legacy endpoint require explicit FORCE_LIVE_API=true.
+  // The canonical live path is /api/trip/plan with GEMINI_PERSONALIZATION_ENABLED=true.
+  return true;
 }
 
 function subtractMinutes(time: string, mins: number): string {
