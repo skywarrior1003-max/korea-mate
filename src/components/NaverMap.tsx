@@ -40,6 +40,13 @@ interface Props {
   className?:    string;
 }
 
+// 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
+const KOREA_BOUNDS = { latMin: 33.0, latMax: 39.0, lngMin: 124.0, lngMax: 132.0 };
+function isInKorea(lat: number, lng: number): boolean {
+  return lat >= KOREA_BOUNDS.latMin && lat <= KOREA_BOUNDS.latMax
+      && lng >= KOREA_BOUNDS.lngMin && lng <= KOREA_BOUNDS.lngMax;
+}
+
 const CATEGORY_COLOR: Record<string, string> = {
   attraction:    "#1a1a2e",
   restaurant:    "#c2410c",
@@ -146,8 +153,11 @@ export default function NaverMap({
       zIndex: 100,
     });
 
-    nmap.setCenter(new map.LatLng(userLocation.lat, userLocation.lng));
-    nmap.setZoom(14);
+    // 한국 내에 있을 때만 지도 재중심 — 해외 GPS면 한국 마커가 화면 밖으로 이동하는 것 방지
+    if (isInKorea(userLocation.lat, userLocation.lng)) {
+      nmap.setCenter(new map.LatLng(userLocation.lat, userLocation.lng));
+      nmap.setZoom(14);
+    }
   }, [nearMeActive, userLocation]);
 
   return (

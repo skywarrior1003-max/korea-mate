@@ -5,6 +5,14 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { CitySpot } from "@/data/cities/types";
 
+const CATEGORY_LABEL: Record<string, string> = {
+  attraction:    "🏯 Attraction",
+  restaurant:    "🍜 Restaurant",
+  nature:        "🌿 Nature",
+  event:         "🎪 Event",
+  accommodation: "🏨 Stay",
+};
+
 function getCategoryColor(category: string): string {
   switch (category) {
     case "restaurant": return "#e85d04";
@@ -68,7 +76,7 @@ export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
             className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide text-white"
             style={{ backgroundColor: getCategoryColor(spot.category) }}
           >
-            {spot.category === "nature" ? tB("nature") : spot.category}
+            {CATEGORY_LABEL[spot.category] ?? spot.category}
           </span>
         </div>
         {distKm !== undefined && (
