@@ -47,12 +47,13 @@ export async function queryPlacesByBoundingBox(
   const dbCategories           = toDbCategories(categories);
 
   try {
+    // SSOT: city_spots 테이블 사용 (places 테이블 폐기)
     const { data, error } = await supabase
-      .from("places")
-      .select("place_id, category, lat, lng, district, tags")
-      .eq("is_active", true)
-      .eq("admin_status", "approved")
+      .from("city_spots")
+      .select("id, category, lat, lng, district, tags")
       .in("category", dbCategories)
+      .not("lat", "is", null)
+      .not("lng", "is", null)
       .gte("lat", userCoord.lat - deltaLat)
       .lte("lat", userCoord.lat + deltaLat)
       .gte("lng", userCoord.lng - deltaLng)
@@ -63,7 +64,15 @@ export async function queryPlacesByBoundingBox(
       return [];
     }
 
-    return (data ?? []) as unknown as NearMePlaceRow[];
+    // city_spots.id(number) → NearMePlaceRow.place_id(string) 변환
+    return (data ?? []).map((row: { id: number; category: string; lat: number; lng: number; district: string | null; tags: string[] | null }) => ({
+      place_id: String(row.id),
+      category: row.category,
+      lat:      row.lat,
+      lng:      row.lng,
+      district: row.district,
+      tags:     row.tags,
+    }));
   } catch (err) {
     console.error("[near-me] Supabase fetch failed:", (err as Error).message);
     return [];

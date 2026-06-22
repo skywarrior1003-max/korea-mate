@@ -1,6 +1,16 @@
 import { supabase } from "./supabase";
 import type { CitySpot, LocalizedText } from "@/data/cities/types";
 
+// ── 카테고리 타입 가드 ────────────────────────────────────────────────────────
+
+const VALID_CATEGORIES = ["attraction", "restaurant", "nature", "event", "accommodation"] as const;
+type ValidCategory = typeof VALID_CATEGORIES[number];
+
+function toCategory(raw: string): ValidCategory {
+  if ((VALID_CATEGORIES as readonly string[]).includes(raw)) return raw as ValidCategory;
+  return "attraction"; // DB CHECK constraint으로 실제 도달 불가
+}
+
 // ── Supabase row 타입 ─────────────────────────────────────────────────────────
 
 export interface CitySpotRow {
@@ -9,6 +19,7 @@ export interface CitySpotRow {
   name: string;
   name_l10n: LocalizedText | null;
   category: string;
+  subcategory: string | null;
   district: string | null;
   address: string | null;
   description: string | null;
@@ -45,7 +56,7 @@ export function rowToCitySpot(row: CitySpotRow): CitySpot {
   return {
     id:                   row.id,
     name:                 row.name,
-    category:             row.category as CitySpot["category"],
+    category:             toCategory(row.category),
     city:                 row.city,
     district:             row.district ?? undefined,
     address:              row.address ?? "",
@@ -72,6 +83,7 @@ export function rowToCitySpot(row: CitySpotRow): CitySpot {
     affiliateProvider:    row.affiliate_provider ?? undefined,
     entryFee:             row.entry_fee ?? undefined,
     difficulty:           (row.difficulty as CitySpot["difficulty"]) ?? undefined,
+    subcategory:          row.subcategory ?? undefined,
   };
 }
 
