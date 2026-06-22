@@ -393,6 +393,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               defaultCenter={city.defaultCenter}
               height="100%"
               className="relative w-full h-full overflow-hidden"
+              relayoutKey={mapExpanded ? 1 : 0}
             />
             <button
               onClick={() => setMapExpanded(e => !e)}

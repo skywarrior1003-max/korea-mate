@@ -17,7 +17,7 @@ declare global {
     };
   }
 }
-interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; }
+interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; relayout: () => void; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
 interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
@@ -38,6 +38,7 @@ interface Props {
   defaultCenter?: { lat: number; lng: number };
   height?:       number | string;
   className?:    string;
+  relayoutKey?:  number;
 }
 
 // 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
@@ -62,6 +63,7 @@ export default function NaverMap({
   defaultCenter = { lat: 35.1587, lng: 129.1604 },
   height = 420,
   className,
+  relayoutKey,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
@@ -133,6 +135,12 @@ export default function NaverMap({
       markersRef.current.push(marker);
     });
   }, [spots]);
+
+  // Relayout when container size changes (e.g. full-screen toggle)
+  useEffect(() => {
+    if (relayoutKey === undefined || !mapRef.current) return;
+    mapRef.current.relayout();
+  }, [relayoutKey]);
 
   // User location marker
   useEffect(() => {
