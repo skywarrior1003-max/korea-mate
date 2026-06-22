@@ -14,6 +14,17 @@ import { findRouteById } from "@/lib/story-routes";
 import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates";
 import type { AffiliateDisplayMap } from "@/lib/affiliates";
 
+// ─── Cart Hint Map (P0-1 Phase 2: 수익화 데이터 생존 체인) ──────────────────────
+
+interface CartHintMapEntry {
+  name?:               string;
+  affiliate_url?:      string | null;
+  affiliate_provider?: string | null;
+  booking_url?:        string | null;
+}
+
+type CartHintMap = Record<string, CartHintMapEntry>;
+
 // ─── Place Display Types ──────────────────────────────────────────────────────
 
 interface PlaceDisplay {
@@ -50,17 +61,15 @@ function mockPlaceDisplay(placeId: string): PlaceDisplay {
   };
 }
 
-type PlaceRow = {
-  place_id:       string;
-  name:           string;
-  name_en:        string | null;
-  category:       string | null;
-  subcategory:    string | null;
-  description_en: string | null;
-  description:    string | null;
-  district:       string | null;
-  lat:            number | null;
-  lng:            number | null;
+type CitySpotRow = {
+  id:          number;
+  name:        string;
+  subcategory: string | null;
+  category:    string;
+  description: string | null;
+  district:    string | null;
+  lat:         number | null;
+  lng:         number | null;
 };
 
 async function buildPlaceMap(placeIds: string[]): Promise<PlaceDisplayMap> {
@@ -76,28 +85,31 @@ async function buildPlaceMap(placeIds: string[]): Promise<PlaceDisplayMap> {
 
   if (realIds.length > 0) {
     try {
+      // SSOT: city_spots 테이블 사용 (places 테이블 폐기)
+      // place_id = String(city_spots.id) 로 저장됨
+      const numericIds = realIds.map(Number).filter(n => !isNaN(n));
       const { data, error } = await supabase
-        .from("places")
-        .select("place_id, name, name_en, category, subcategory, description_en, description, district, lat, lng")
-        .in("place_id", realIds);
+        .from("city_spots")
+        .select("id, name, subcategory, category, description, district, lat, lng")
+        .in("id", numericIds);
 
       if (!error && Array.isArray(data)) {
-        for (const row of data as PlaceRow[]) {
+        for (const row of data as CitySpotRow[]) {
           const googleMapsUrl =
             (row.lat && row.lng)
               ? `https://www.google.com/maps/search/?api=1&query=${row.lat},${row.lng}`
-              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${row.name_en ?? row.name} Korea`)}`;
-          map[row.place_id] = {
-            name:            row.name_en || row.name || "Unknown Place",
+              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${row.name} Korea`)}`;
+          map[String(row.id)] = {
+            name:            row.name,
             category:        row.subcategory || row.category || "attraction",
-            district:        row.district   || "Seoul",
-            tips:            row.description_en || row.description || "",
+            district:        row.district    || "Seoul",
+            tips:            row.description || "",
             google_maps_url: googleMapsUrl,
           };
         }
       }
     } catch {
-      // Supabase failure — real IDs absent from map → client falls back to synthetic display
+      // Supabase 실패 — 클라이언트가 synthetic display로 폴백
     }
   }
 
@@ -200,7 +212,8 @@ function validateInput(
     near_me_limit:    typeof b.near_me_limit === "number" ? b.near_me_limit                                    : undefined,
     anchors:          Array.isArray(b.anchors)            ? (b.anchors as TripPlanInput["anchors"])             : undefined,
     fixed_events:     Array.isArray(b.fixed_events)       ? (b.fixed_events as TripPlanInput["fixed_events"])  : undefined,
-    preferred_items:  Array.isArray(b.preferred_items)    ? (b.preferred_items as TripPlanInput["preferred_items"]) : undefined,
+    preferred_items:   Array.isArray(b.preferred_items)    ? (b.preferred_items as TripPlanInput["preferred_items"])    : undefined,
+    cart_coord_hints:  Array.isArray(b.cart_coord_hints)  ? (b.cart_coord_hints as TripPlanInput["cart_coord_hints"]) : undefined,
     route_template_stays: Array.isArray(b.route_template_stays)
       ? (b.route_template_stays as TripPlanInput["route_template_stays"])
       : undefined,
@@ -264,5 +277,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const place_map:   Record<string, unknown> = await buildPlaceMap(placeIds);
   const affiliate_map: AffiliateDisplayMap   = buildAffiliateMap(affiliateRows, locale);
 
-  return NextResponse.json({ data: response, place_map, affiliate_map }, { status: 200 });
+  const cart_hint_map: CartHintMap = {};
+  for (const hint of validation.input.cart_coord_hints ?? []) {
+    cart_hint_map[hint.place_id] = {
+      name:               hint.name,
+      affiliate_url:      hint.affiliate_url,
+      affiliate_provider: hint.affiliate_provider,
+      booking_url:        hint.booking_url,
+    };
+  }
+
+  return NextResponse.json({ data: response, place_map, affiliate_map, cart_hint_map }, { status: 200 });
 }
