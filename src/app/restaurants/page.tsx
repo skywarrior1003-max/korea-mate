@@ -109,18 +109,18 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
                 <span
                   className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border border-white/20 text-white/70"
                 >
-                  {src.emoji} {src.label}
+                  {src.emoji} {src.labelEn}
                 </span>
                 {awd && (
                   <span
                     className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black border border-white/20 text-white/70"
                   >
-                    {awd.label}
+                    {awd.labelEn}
                   </span>
                 )}
               </div>
               <p className="text-lg font-black text-white/90 leading-tight">
-                {r.category_ko || "Restaurant"}{r.district_ko ? ` · ${r.district_ko}` : ""}
+                {r.category_en || "Restaurant"}{r.district_en ? ` · ${r.district_en}` : ""}
               </p>
               <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
                 Busan Food Guide 2026
@@ -139,11 +139,11 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
           {/* 출처 + 등급 뱃지 */}
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black" style={{ color: src.color, backgroundColor: src.bg }}>
-              {src.emoji} {src.label}
+              {src.emoji} {src.labelEn}
             </span>
             {awd && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black" style={{ color: awd.color, backgroundColor: awd.bg }}>
-                {awd.label}
+                {awd.labelEn}
               </span>
             )}
             {r.price_range && (
@@ -155,19 +155,19 @@ function RestaurantModal({ r, onClose }: { r: RestaurantItem; onClose: () => voi
 
           {/* 이름 */}
           <div>
-            <h2 className="text-2xl font-black text-gray-900 leading-tight">{r.name_ko}</h2>
-            <p className="text-base font-semibold text-gray-400 mt-0.5">{r.name_en}</p>
+            <h2 className="text-2xl font-black text-gray-900 leading-tight">{r.name_en}</h2>
+            <p className="text-base font-semibold text-gray-400 mt-0.5">{r.name_ko}</p>
           </div>
 
           {/* 카테고리 · 지역 */}
           <p className="text-sm font-semibold text-orange-500">
-            {r.category_ko} · {r.category_en} &nbsp;|&nbsp; 📍 {r.district_ko} · {r.district_en}
+            {r.category_en} &nbsp;|&nbsp; 📍 {r.district_en}
           </p>
 
           {/* 설명 */}
           <div className="rounded-2xl bg-gray-50 p-4 space-y-2">
-            <p className="text-sm font-semibold text-gray-800 leading-relaxed">{r.description_ko}</p>
-            <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-2">{r.description_en}</p>
+            <p className="text-sm font-semibold text-gray-800 leading-relaxed">{r.description_en}</p>
+            <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-2">{r.description_ko}</p>
           </div>
 
           {/* 주소 */}
@@ -267,10 +267,10 @@ function RestaurantCard({
             </span>
             <div className="relative z-10 space-y-1">
               <p className="text-[9px] font-black uppercase tracking-[0.12em] text-white/40">
-                {r.district_ko ? `${r.district_ko} · Busan` : "Busan"}
+                {r.district_en ? `${r.district_en} · Busan` : "Busan"}
               </p>
               <p className="text-[13px] font-black text-white/90 leading-snug line-clamp-2">
-                {r.category_ko || "Restaurant"}
+                {r.category_en || "Restaurant"}
               </p>
               <p className="text-[9px] font-bold uppercase tracking-wider text-white/35">
                 Busan Food Guide 2026
@@ -294,7 +294,7 @@ function RestaurantCard({
             className="absolute top-3 right-3 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black backdrop-blur-sm"
             style={{ color: awd.color, backgroundColor: "rgba(255,255,255,0.92)" }}
           >
-            {awd.label}
+            {awd.labelEn}
           </span>
         )}
 
@@ -308,10 +308,10 @@ function RestaurantCard({
 
       {/* 본문 */}
       <div className="p-4 space-y-1.5">
-        <p className="text-[10px] font-bold text-orange-500 uppercase tracking-wider">{r.district_ko} · {r.category_ko}</p>
-        <h3 className="text-sm font-black text-gray-900 leading-snug line-clamp-1">{r.name_ko}</h3>
-        <p className="text-[11px] font-semibold text-gray-400 line-clamp-1">{r.name_en}</p>
-        <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed pt-0.5">{r.description_ko}</p>
+        <p className="text-[10px] font-bold text-orange-500 uppercase tracking-wider">{r.district_en} · {r.category_en}</p>
+        <h3 className="text-sm font-black text-gray-900 leading-snug line-clamp-1">{r.name_en}</h3>
+        <p className="text-[11px] font-semibold text-gray-400 line-clamp-1">{r.name_ko}</p>
+        <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed pt-0.5">{r.description_en}</p>
 
         <div className="flex items-center justify-between pt-1.5">
           <div className="flex gap-1 flex-wrap">
@@ -463,7 +463,7 @@ export default function RestaurantsPage() {
               {(Object.entries(SOURCE_META) as [keyof typeof SOURCE_META, typeof SOURCE_META[keyof typeof SOURCE_META]][]).map(([key, meta]) => (
                 <div key={key} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
                   <span className="text-sm">{meta.emoji}</span>
-                  <span className="text-white font-black text-xs">{meta.label}</span>
+                  <span className="text-white font-black text-xs">{meta.labelEn}</span>
                   <span className="text-white/60 font-bold text-xs">{srcCounts[key]}</span>
                 </div>
               ))}
@@ -508,7 +508,7 @@ export default function RestaurantsPage() {
                   className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-black border transition-all cursor-pointer whitespace-nowrap"
                   style={source === key ? { backgroundColor: meta.color, color: "#fff", borderColor: meta.color } : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }}
                 >
-                  {meta.emoji} {meta.label}
+                  {meta.emoji} {meta.labelEn}
                 </button>
               ))}
             </div>
