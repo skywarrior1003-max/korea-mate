@@ -38,7 +38,7 @@ function toEventItem(spot: CitySpot): EventItem {
     mapUrl: spot.mapUrl,
     naverMapUrl: spot.naverMapUrl,
     description: spot.description,
-    whyItMatters: spot.whyItMatters ?? spot.description.split(".")[0] + ".",
+    whyItMatters: spot.whyItMatters ?? (spot.description ? spot.description.split(".")[0] + "." : ""),
     recommendedDurationMinutes: spot.durationMinutes ?? 60,
     bestTimeSlot: spot.bestTimeSlot ?? "anytime",
     openingHours: spot.openingHours ?? null,
@@ -56,10 +56,10 @@ function toEventItem(spot: CitySpot): EventItem {
     lat: spot.lat,
     lng: spot.lng,
     commerce: {
-      affiliateType: null,
-      hasAffiliate: false,
-      affiliatePartner: null,
-      affiliateUrl: null,
+      affiliateType: spot.affiliateUrl ? "booking" : null,
+      hasAffiliate: !!spot.affiliateUrl,
+      affiliatePartner: spot.affiliateProvider ?? null,
+      affiliateUrl: spot.affiliateUrl ?? null,
       hasMerchandise: false,
       hasTicketing: false,
       bookingUrl: null,
@@ -94,8 +94,6 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
 
 function ExploreCityContent({ city }: { city: CityConfig }) {
   const tE = useTranslations("explore");
-  const tB = useTranslations("badges");
-  const tM = useTranslations("map");
   const tN = useTranslations("nav");
 
   const spotCategories = SPOT_CATEGORY_VALUES.map(v => ({
@@ -116,85 +114,87 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [userLocation,    setUserLocation]    = useState<{ lat: number; lng: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError,   setLocationError]   = useState<string | null>(null);
+  const [mapExpanded,     setMapExpanded]     = useState(false);
 
-  // Supabase city_spots 우선 fetch (fallback: staticSpots)
+  // ── 모든 소스를 Promise.all로 병렬 로드 (race condition 방지) ──────────────
+  // 우선순위: Supabase city_spots (1위) > local-info.json (2위) > events.json (3위)
   useEffect(() => {
-    setSpotsLoading(true);
-    fetchCitySpots(city.name)
-      .then(supabaseSpots => {
-        if (supabaseSpots.length > 0) {
-          setSpots(supabaseSpots);
-        }
-        // Supabase에 데이터 없으면 staticSpots 유지
-      })
-      .catch(() => {})
-      .finally(() => setSpotsLoading(false));
-  }, [city.name]);
-
-  // Load extra spots from local-info.json (Supabase 미이전 데이터 보완)
-  useEffect(() => {
-    fetch("/data/local-info.json")
-      .then(r => r.json())
-      .then((data: CitySpot[]) => {
-        const citySpots = data.filter(s => s.city === city.name);
-        setSpots(prev => {
-          const existingNames = new Set(prev.map(s => s.name.toLowerCase()));
-          const newOnes = citySpots.filter(s => !existingNames.has(s.name.toLowerCase()));
-          return newOnes.length > 0 ? [...prev, ...newOnes] : prev;
-        });
-      })
-      .catch(() => {});
-  }, [city.name]);
-
-  // Load GPS-tagged spots from events.json
-  useEffect(() => {
-    type EventSpot = {
-      id: string; name: string; spotCategory?: string; type: string;
-      city: string; district?: string; address: string; description: string;
-      whyItMatters?: string; mapUrl: string;
-      recommendedDurationMinutes?: number; bestTimeSlot?: string;
-      openingHours?: { open: string; close: string } | null;
-      tags?: string[]; relatedSurvivalGuides?: string[];
-      soloFriendly: boolean; foreignCardAccepted: boolean; cashOnly?: boolean;
-      image?: string | null; lat?: number; lng?: number;
+    type RawEventSpot = {
+      name?: unknown; spotCategory?: unknown; city?: unknown;
+      district?: unknown; address?: unknown; description?: unknown;
+      whyItMatters?: unknown; mapUrl?: unknown;
+      recommendedDurationMinutes?: unknown; bestTimeSlot?: unknown;
+      openingHours?: unknown; tags?: unknown; relatedSurvivalGuides?: unknown;
+      soloFriendly?: unknown; foreignCardAccepted?: unknown;
+      cashOnly?: unknown; image?: unknown; lat?: unknown; lng?: unknown;
     };
-    fetch("/data/events.json")
-      .then(r => r.json())
-      .then((data: EventSpot[]) => {
-        const geoSpots = data.filter(e =>
-          e.city === city.name && e.lat != null && e.lng != null && e.spotCategory != null
-        );
-        setSpots(prev => {
-          const existingNames = new Set(prev.map(s => s.name.toLowerCase()));
-          const newOnes: CitySpot[] = geoSpots
-            .filter(e => !existingNames.has(e.name.toLowerCase()))
-            .map((e, idx) => ({
-              id: 3000 + idx,
-              name: e.name,
-              category: (e.spotCategory as CitySpot["category"]) ?? "attraction",
-              city: e.city,
-              district: e.district,
-              address: e.address,
-              description: e.description,
-              whyItMatters: e.whyItMatters,
-              mapUrl: e.mapUrl,
-              durationMinutes: e.recommendedDurationMinutes ?? 90,
-              bestTimeSlot: e.bestTimeSlot ?? "anytime",
-              openingHours: e.openingHours ?? null,
-              tags: e.tags ?? [],
-              relatedSurvivalGuides: e.relatedSurvivalGuides ?? [],
-              soloFriendly: e.soloFriendly,
-              foreignCardAccepted: e.foreignCardAccepted,
-              cashOnly: e.cashOnly ?? false,
-              image: e.image ?? undefined,
-              lat: e.lat,
-              lng: e.lng,
-            }));
-          return newOnes.length > 0 ? [...prev, ...newOnes] : prev;
+
+    Promise.all([
+      fetchCitySpots(city.name.toLowerCase()).catch((): CitySpot[] => []),
+      fetch("/data/local-info.json").then(r => r.json()).catch(() => []),
+      fetch("/data/events.json").then(r => r.json()).catch(() => []),
+    ]).then(([supabaseSpots, localRaw, eventsRaw]: [CitySpot[], unknown, unknown]) => {
+      const result: CitySpot[] = supabaseSpots.length > 0 ? [...supabaseSpots] : [...city.staticSpots];
+      const seen = new Set(result.map(s => s.name.toLowerCase()));
+
+      // local-info.json: 런타임 타입 가드로 필수 필드 검증
+      const localItems: unknown[] = Array.isArray(localRaw) ? localRaw : [];
+      for (const raw of localItems) {
+        if (
+          typeof raw !== "object" || raw === null ||
+          typeof (raw as Record<string, unknown>).id !== "number" ||
+          typeof (raw as Record<string, unknown>).name !== "string" ||
+          typeof (raw as Record<string, unknown>).description !== "string" ||
+          typeof (raw as Record<string, unknown>).address !== "string" ||
+          (raw as Record<string, unknown>).city !== city.name
+        ) continue;
+        const s = raw as CitySpot;
+        if (!seen.has(s.name.toLowerCase())) {
+          result.push(s);
+          seen.add(s.name.toLowerCase());
+        }
+      }
+
+      // events.json: GPS+spotCategory가 있는 항목만 CitySpot으로 변환
+      const eventItems: RawEventSpot[] = Array.isArray(eventsRaw) ? (eventsRaw as RawEventSpot[]) : [];
+      let evtIdx = 0;
+      for (const e of eventItems) {
+        if (
+          e.city !== city.name || e.lat == null || e.lng == null ||
+          e.spotCategory == null || typeof e.name !== "string" ||
+          typeof e.address !== "string" || typeof e.description !== "string" ||
+          typeof e.mapUrl !== "string"
+        ) continue;
+        const key = e.name.toLowerCase();
+        if (seen.has(key)) continue;
+        result.push({
+          id: 3000 + evtIdx++,
+          name: e.name,
+          category: (e.spotCategory as CitySpot["category"]) ?? "attraction",
+          city: city.name,
+          district:      typeof e.district      === "string" ? e.district      : undefined,
+          address:       e.address,
+          description:   e.description,
+          whyItMatters:  typeof e.whyItMatters  === "string" ? e.whyItMatters  : undefined,
+          mapUrl:        e.mapUrl,
+          durationMinutes: typeof e.recommendedDurationMinutes === "number" ? e.recommendedDurationMinutes : 90,
+          bestTimeSlot:  typeof e.bestTimeSlot  === "string" ? e.bestTimeSlot  : "anytime",
+          openingHours:  (e.openingHours as CitySpot["openingHours"]) ?? null,
+          tags:          Array.isArray(e.tags) ? (e.tags as string[]) : [],
+          relatedSurvivalGuides: Array.isArray(e.relatedSurvivalGuides) ? (e.relatedSurvivalGuides as string[]) : [],
+          soloFriendly:       e.soloFriendly === true,
+          foreignCardAccepted: e.foreignCardAccepted === true,
+          cashOnly:      e.cashOnly === true,
+          image:         typeof e.image === "string" ? e.image : undefined,
+          lat:           e.lat as number,
+          lng:           e.lng as number,
         });
-      })
-      .catch(() => {});
-  }, [city.name]);
+        seen.add(key);
+      }
+
+      setSpots(result);
+    }).finally(() => setSpotsLoading(false));
+  }, [city.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // GPS Near Me
   function handleNearMe() {
@@ -237,7 +237,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const filteredSpots = useMemo(() => {
     const q = search.trim().toLowerCase();
     const list = spots
-      .filter(s => s.city === city.name)
+      .filter(s => s.city.toLowerCase() === city.name.toLowerCase())
       .filter(s => selectedCategory === "all" || s.category === selectedCategory)
       .filter(s => {
         if (!q) return true;
@@ -333,7 +333,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           <p className="text-4xl mb-3">🚧</p>
           <p className="text-gray-900 font-black text-lg mb-2">{tE("comingSoon.title")}</p>
           <p className="text-sm text-gray-400 mb-4">{tE("comingSoon.description", { city: city.name })}</p>
-          {tE("comingSoon.guide", { city: city.name })}
+          <p className="text-sm text-gray-400">{tE("comingSoon.guide", { city: city.name })}</p>
         </>
       ) : (
         <>
@@ -384,24 +384,36 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
 
         {/* ── Map column: top on mobile, right sticky on desktop ── */}
-        <div className="h-72 lg:h-full lg:w-[460px] shrink-0 lg:order-2 lg:border-l lg:border-gray-200">
-          <NaverMap
-            spots={mapSpots}
-            userLocation={userLocation}
-            nearMeActive={nearMeActive}
-            defaultCenter={city.defaultCenter}
-            height="100%"
-            className="relative w-full h-full overflow-hidden"
-          />
+        <div className={mapExpanded ? "flex-1 h-full lg:order-2" : "h-72 lg:h-full lg:w-[460px] shrink-0 lg:order-2 lg:border-l lg:border-gray-200"}>
+          <div className="relative w-full h-full">
+            <NaverMap
+              spots={mapSpots}
+              userLocation={userLocation}
+              nearMeActive={nearMeActive}
+              defaultCenter={city.defaultCenter}
+              height="100%"
+              className="relative w-full h-full overflow-hidden"
+            />
+            <button
+              onClick={() => setMapExpanded(e => !e)}
+              className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95"
+              style={{ backgroundColor: mapExpanded ? "#ef4444" : "#1a1f36", opacity: 0.9 }}
+              title={mapExpanded ? "Exit full screen" : "Full screen map"}
+            >
+              {mapExpanded ? "✕ Exit" : "⛶ Full Screen"}
+            </button>
+          </div>
         </div>
 
         {/* ── Cards column: below on mobile, left scrollable on desktop ── */}
-        <div className="flex-1 lg:overflow-y-auto lg:h-full lg:order-1 px-4 lg:px-6 py-5 lg:py-6">
-          {pageHeader}
-          {controls}
-          {cardsGrid}
-          <div className="h-8" /> {/* bottom spacing */}
-        </div>
+        {!mapExpanded && (
+          <div className="flex-1 lg:overflow-y-auto lg:h-full lg:order-1 px-4 lg:px-6 py-5 lg:py-6">
+            {pageHeader}
+            {controls}
+            {cardsGrid}
+            <div className="h-8" /> {/* bottom spacing */}
+          </div>
+        )}
       </div>
 
       {selectedEvent && (
