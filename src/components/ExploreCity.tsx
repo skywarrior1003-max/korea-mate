@@ -116,6 +116,12 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [locationError,   setLocationError]   = useState<string | null>(null);
   const [mapExpanded,     setMapExpanded]     = useState(false);
 
+  // Body scroll lock while map is full-screen
+  useEffect(() => {
+    document.body.style.overflow = mapExpanded ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mapExpanded]);
+
   // ── 모든 소스를 Promise.all로 병렬 로드 (race condition 방지) ──────────────
   // 우선순위: Supabase city_spots (1위) > local-info.json (2위) > events.json (3위)
   useEffect(() => {
@@ -389,7 +395,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
 
         {/* ── Map column: top on mobile, right sticky on desktop ── */}
-        <div className={mapExpanded ? "flex-1 h-full lg:order-2" : "h-72 lg:h-full lg:w-[460px] shrink-0 lg:order-2 lg:border-l lg:border-gray-200"}>
+        {/* Full Screen: fixed overlay so Naver SDK gets guaranteed 100vw×100vh */}
+        <div className={mapExpanded
+          ? "fixed inset-0 z-40 bg-white"
+          : "h-72 lg:h-full lg:w-[460px] shrink-0 lg:order-2 lg:border-l lg:border-gray-200"
+        }>
           <div className="relative w-full h-full">
             <NaverMap
               spots={mapSpots}
@@ -403,7 +413,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
             />
             <button
               onClick={() => setMapExpanded(e => !e)}
-              className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95"
+              className="absolute top-3 right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95"
               style={{ backgroundColor: mapExpanded ? "#ef4444" : "#1a1f36", opacity: 0.9 }}
               title={mapExpanded ? "Exit full screen" : "Full screen map"}
             >
