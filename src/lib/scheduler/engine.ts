@@ -105,6 +105,17 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
         if (hc3TravelFits(travelMin, gap.duration_minutes) !== null) continue;
         if (hc4StayFits(travelMin, stayMin, gap.duration_minutes) !== null) continue;
 
+        // Cart preferred_time_slot 제약 (소프트 — 슬롯 미부합 시 건너뜀)
+        const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);
+        if (preferredItem?.preferred_time_slot) {
+          const gapHour = Math.floor(gap.start_minutes / 60);
+          const slotOk =
+            (preferredItem.preferred_time_slot === "morning"   && gapHour < 12) ||
+            (preferredItem.preferred_time_slot === "afternoon" && gapHour >= 12 && gapHour < 17) ||
+            (preferredItem.preferred_time_slot === "evening"   && gapHour >= 17);
+          if (!slotOk) continue;
+        }
+
         scored.push({
           ...c,
           adjusted_score:       c.score + zoneBonus,

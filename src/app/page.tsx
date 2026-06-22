@@ -627,7 +627,7 @@ export default function Home() {
   function handlePickVibeClick() {
     setShowVibeModal(false);
     setTimeout(() => {
-      document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }
 
@@ -708,8 +708,9 @@ export default function Home() {
   function kpopSortPriority(e: EventItem): number {
     if (e.id === "evt-anchor-001") return 0;
     if (e.id === "evt-drone-001")  return 1;
-    if (e.id.startsWith("visit-busan-")) return 2;
-    return e.isTrending ? 3 : 4;
+    if (e.id === "evt-pre-001")    return 2;   // ZM-ILLENNIAL 3위 고정
+    if (e.id.startsWith("visit-busan-")) return 3;
+    return e.isTrending ? 4 : 5;
   }
 
   // ── 섹션별 데이터 (4-Section 모드) ───────────────────
@@ -1072,6 +1073,13 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
+                <Link
+                  href={`/explore/${city.toLowerCase()}`}
+                  className="flex items-center justify-center gap-1.5 py-2.5 text-xs font-black rounded-xl transition-all active:scale-95 hover:opacity-90 shadow-sm"
+                  style={{ color: "#fff", background: "linear-gradient(135deg, #f97316, #ea580c)" }}
+                >
+                  🗺️ Explore {city} Spots on Map →
+                </Link>
               </div>
               <div id="travel-style-section" className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
@@ -1079,7 +1087,7 @@ export default function Home() {
                 </label>
                 <button
                   type="button"
-                  onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth" })}
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
                   style={{ backgroundColor: "#f97316" }}
                 >
@@ -1427,51 +1435,6 @@ export default function Home() {
       <section id="spots-main" className="py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* ── [Section 1] Airport Transfer Banner — Always Visible ── */}
-          <div
-            className="mb-10 rounded-3xl overflow-hidden relative shadow-xl"
-            style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
-          >
-            <div
-              className="absolute inset-0 opacity-20 pointer-events-none"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 90% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
-              }}
-            />
-            <div className="relative px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-8">
-              <div className="text-center sm:text-left">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-green-400 border border-green-400/30 bg-green-400/10 mb-4 uppercase tracking-widest">
-                  🔥 Must Book First
-                </span>
-                <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
-                  ✈️ Airport → Hotel Transfer
-                </h3>
-                <p className="text-white/70 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
-                  Private limousine pickup from Gimhae/Incheon Airport, delivered straight to your hotel door.
-                  No subway stress. No language barrier. Fixed price, no meter running.
-                </p>
-                <div className="flex flex-wrap gap-3 mt-5">
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ English driver</span>
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ Fixed price</span>
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ 24/7 available</span>
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-3 shrink-0">
-                <a
-                  href="https://affiliate.klook.com/sl/21FkAvj"
-                  target="_blank"
-                  rel="noopener noreferrer sponsored"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
-                  style={{ backgroundColor: "#22c55e", color: "#fff" }}
-                >
-                  Explore Busan Trends →
-                </a>
-                <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
-              </div>
-            </div>
-          </div>
-
           {/* ── 통합 검색창 + 필터 탭 (Sticky 슬림) ── */}
           <div
             id="search-filters-bar"
@@ -1551,6 +1514,51 @@ export default function Home() {
                     </button>
                   </span>
                 )}
+              </div>
+            </div>
+          </div>
+
+          {/* ── [Section 1] Airport Transfer Banner ── */}
+          <div
+            className="mt-6 mb-10 rounded-3xl overflow-hidden relative shadow-xl"
+            style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
+          >
+            <div
+              className="absolute inset-0 opacity-20 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 90% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
+              }}
+            />
+            <div className="relative px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-8">
+              <div className="text-center sm:text-left">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-green-400 border border-green-400/30 bg-green-400/10 mb-4 uppercase tracking-widest">
+                  🔥 Must Book First
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
+                  ✈️ Need an Airport Transfer?
+                </h3>
+                <p className="text-white/70 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
+                  Private limousine pickup from Gimhae/Incheon Airport, delivered straight to your hotel door.
+                  No subway stress. No language barrier. Fixed price, no meter running.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-5">
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ English driver</span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ Fixed price</span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-bold">✅ 24/7 available</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-3 shrink-0">
+                <a
+                  href="https://affiliate.klook.com/sl/21FkAvj"
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
+                  style={{ backgroundColor: "#22c55e", color: "#fff" }}
+                >
+                  Book Airport Transfer →
+                </a>
+                <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
               </div>
             </div>
           </div>

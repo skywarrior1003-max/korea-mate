@@ -24,6 +24,20 @@ export type {
   PersonalizedScheduledDay,
 };
 
+// ─── Cart Coordinate Hint (P0-1 Phase 2: Cart → Scheduler 연동) ───────────────
+
+export interface CartCoordHint {
+  place_id:             string;
+  lat:                  number;
+  lng:                  number;
+  duration_min:         number;
+  preferred_time_slot?: "morning" | "afternoon" | "evening";
+  name?:                string;
+  affiliate_url?:       string | null;
+  affiliate_provider?:  string | null;
+  booking_url?:         string | null;
+}
+
 // ─── Trip Plan Input ──────────────────────────────────────────────────────────
 
 export interface TripPlanInput {
@@ -48,6 +62,7 @@ export interface TripPlanInput {
   anchors?:               TripAnchor[];
   fixed_events?:          FixedEventItem[];     // Events API as_fixed_event 배열
   preferred_items?:       ItineraryItem[];      // Add to Itinerary 장소
+  cart_coord_hints?:      CartCoordHint[];      // Cart → 스케줄러 합성 후보
   route_template_stays?:  RouteTemplateStay[];  // Story Routes 체류 시간 힌트
   affiliate_context?:     AffiliateContext;     // Korea Ready 어필리에이트
 

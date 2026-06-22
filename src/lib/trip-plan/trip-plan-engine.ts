@@ -13,7 +13,7 @@ import { personalize } from "../scheduler/ai/personalizer";
 import { adaptToSchedulerCandidates } from "./near-me-adapter";
 import type { TripPlanInput, TripPlanResponse } from "./types";
 import type { NearMeInput } from "../near-me/types";
-import type { SchedulerInput } from "../scheduler/types";
+import type { NearMeCandidate, SchedulerInput } from "../scheduler/types";
 
 const DEFAULT_NEAR_ME_LIMIT = 12;
 
@@ -39,6 +39,23 @@ export async function runTripPlan(input: TripPlanInput): Promise<TripPlanRespons
 
   const candidates = adaptToSchedulerCandidates(nearMeResponse.results);
 
+  // ── Step 3b: Cart 합성 후보 주입 (score=999, 최우선 배치) ────────────────
+  const cartCandidates: NearMeCandidate[] = (input.cart_coord_hints ?? []).map(hint => ({
+    place_id:              hint.place_id,
+    category:              "event" as const,
+    coordinate:            { lat: hint.lat, lng: hint.lng },
+    zone_id:               1 as const,
+    score:                 999,
+    stay_minutes_override: hint.duration_min > 0 ? hint.duration_min : undefined,
+  }));
+
+  const cartPreferredItems = (input.cart_coord_hints ?? [])
+    .filter(h => h.preferred_time_slot != null)
+    .map(h => ({ place_id: h.place_id, preferred_time_slot: h.preferred_time_slot! }));
+
+  const allCandidates = [...cartCandidates, ...candidates];
+  const mergedPreferredItems = [...(input.preferred_items ?? []), ...cartPreferredItems];
+
   // ── Step 4: SchedulerInput 조립 ──────────────────────────────────────────
 
   const schedulerInput: SchedulerInput = {
@@ -49,10 +66,10 @@ export async function runTripPlan(input: TripPlanInput): Promise<TripPlanRespons
     pace:                 input.pace,
     anchors:              input.anchors,
     fixed_events:         input.fixed_events,
-    preferred_items:      input.preferred_items,
+    preferred_items:      mergedPreferredItems.length > 0 ? mergedPreferredItems : undefined,
     route_template_stays: input.route_template_stays,
     affiliate_context:    input.affiliate_context,
-    candidates,
+    candidates:           allCandidates,
   };
 
   // ── Step 5: 실행 분기 ────────────────────────────────────────────────────

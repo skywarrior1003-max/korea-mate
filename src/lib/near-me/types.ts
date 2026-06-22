@@ -65,27 +65,22 @@ export interface NearMeResponse {
   mock:        boolean;
 }
 
-// ─── DB Category → PlaceCategory Mapping ─────────────────────────────────────
-// event is excluded (served from events table, not places — v2)
+// ─── city_spots category → PlaceCategory Mapping ─────────────────────────────
+// SSOT: city_spots 테이블의 5개 정규화 카테고리만 사용 (places 테이블 폐기)
+// accommodation은 스케줄 방문지가 아니므로 제외
 
 export const CATEGORY_MAP: Record<string, PlaceCategory | undefined> = {
-  restaurant: "food",
-  food:       "food",
-  cafe:       "cafe",
   attraction: "attraction",
-  temple:     "temple",
-  kpop:       "kpop",
-  shopping:   "shopping",
-  nightview:  "nightview",
-  walking:    "walking",
-  rainy_day:  "rainy_day",
+  restaurant: "food",
+  nature:     "walking",   // 자연/등산 → walking PlaceCategory
+  event:      "event",
+  // accommodation 제외 — 방문 일정 대상 아님
 };
 
-// Supported DB category strings for bounding box queries
+// city_spots에서 실제 쿼리할 카테고리 목록
 export const SUPPORTED_DB_CATEGORIES: string[] = Object.keys(CATEGORY_MAP);
 
-// All supported PlaceCategories (excludes "event" — events table, not places)
+// 스케줄러가 다루는 전체 PlaceCategory 목록
 export const ALL_PLACE_CATEGORIES: PlaceCategory[] = [
-  "food", "cafe", "attraction", "temple", "kpop",
-  "shopping", "nightview", "walking", "rainy_day",
+  "food", "attraction", "walking", "event",
 ];

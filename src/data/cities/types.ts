@@ -34,6 +34,7 @@ export interface CitySpot {
   affiliateProvider?: string;
   entryFee?: string;
   difficulty?: "easy" | "moderate" | "hard";
+  subcategory?: string;
   // i18n 확장 필드 (optional — 없으면 위 영어 필드로 fallback)
   nameL10n?: LocalizedText;
   descriptionL10n?: LocalizedText;

@@ -29,6 +29,9 @@ interface Place {
   googleMapsUrl: string;
   slot?: string;
   cartSnapshot?: CartItem;
+  affiliateUrl?:      string | null;
+  affiliateProvider?: string | null;
+  bookingUrl?:        string | null;
 }
 
 interface Day {
@@ -85,6 +88,15 @@ function assignSlot(time: string): string {
   if (h < 14) return "lunch";
   if (h < 17) return "afternoon";
   return "evening";
+}
+
+// ── Cart bestTimeSlot → 스케줄러 preferred_time_slot 정규화 ──
+function toPreferredTimeSlot(s: string): "morning" | "afternoon" | "evening" | undefined {
+  const lower = s.toLowerCase();
+  if (lower === "morning")                       return "morning";
+  if (lower === "afternoon")                     return "afternoon";
+  if (lower === "evening" || lower === "night")  return "evening";
+  return undefined;
 }
 
 // ── Naver Maps URL ────────────────────────────────────────────
@@ -165,11 +177,19 @@ interface AffiliateDisplay {
 }
 type AffiliateDisplayMap = Record<string, AffiliateDisplay>;
 
+interface CartHintEntry {
+  name?:               string;
+  affiliate_url?:      string | null;
+  affiliate_provider?: string | null;
+  booking_url?:        string | null;
+}
+
 interface ApiTripPlanResult {
-  data?:          ApiTripPlanResponse;
-  place_map?:     PlaceDisplayMap;
-  affiliate_map?: AffiliateDisplayMap;
-  error?:         string;
+  data?:           ApiTripPlanResponse;
+  place_map?:      PlaceDisplayMap;
+  affiliate_map?:  AffiliateDisplayMap;
+  cart_hint_map?:  Record<string, CartHintEntry>;
+  error?:          string;
 }
 
 // ── TASK-018: 도시별 중심 좌표 (GPS 폴백 체인) ──────────────────────────────────
@@ -275,6 +295,27 @@ async function generateWithNewApi(
   const dates  = buildDateRange(sd, ed);
   const cart   = getCart();
 
+  // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
+  const cartHints = cart
+    .filter(item => {
+      if (!item.lat || !item.lng) {
+        console.warn(`[cart] item "${item.id}" (${item.name}) skipped — no lat/lng`);
+        return false;
+      }
+      return true;
+    })
+    .map(item => ({
+      place_id:            item.id,
+      lat:                 item.lat!,
+      lng:                 item.lng!,
+      duration_min:        item.recommendedDurationMinutes,
+      preferred_time_slot: toPreferredTimeSlot(item.bestTimeSlot),
+      name:                item.name,
+      affiliate_url:       item.commerce?.affiliateUrl ?? null,
+      affiliate_provider:  item.commerce?.affiliatePartner ?? null,
+      booking_url:         item.commerce?.bookingUrl ?? null,
+    }));
+
   // TASK-020: GPS 우선 체인 — 브라우저 GPS → 카트 좌표 → 도시 중심 → DEFAULT
   const gpsCoord   = await getBrowserGPS();
   const coordinate = gpsCoord ?? resolveCoordinate(city, cart);
@@ -311,7 +352,8 @@ async function generateWithNewApi(
             start_time,
             end_time,
             pace,
-            event_coords: evtCoords.length > 0 ? evtCoords : undefined,
+            event_coords:      evtCoords.length   > 0 ? evtCoords   : undefined,
+            cart_coord_hints:  cartHints.length   > 0 ? cartHints   : undefined,
             city,
             locale,
           }),
@@ -353,6 +395,8 @@ async function generateWithNewApi(
       return { date: tripDate, dayNumber, places: [] };
     }
 
+    const cartHintMap = result?.cart_hint_map ?? {};
+
     const plan = resp.plan;
     if (!plan || !Array.isArray(plan.items)) {
       conflictDayNumbers.push(dayNumber);
@@ -362,17 +406,21 @@ async function generateWithNewApi(
     const places: Place[] = (plan.items as ApiScheduledItem[])
       .filter(item => item.item_type !== "affiliate")
       .map(item => {
-        const key     = item.place_id ?? item.event_id ?? "";
-        const display = placeMap[key] ?? syntheticPlaceDisplay(item, city);
+        const key      = item.place_id ?? item.event_id ?? "";
+        const display  = placeMap[key] ?? syntheticPlaceDisplay(item, city);
+        const cartHint = cartHintMap[key];
         return {
-          name:          display.name,
-          category:      display.category,
-          location:      display.district,
-          time:          item.start_time,
-          duration:      `${item.stay_minutes}m`,
-          tips:          display.tips,
-          googleMapsUrl: display.google_maps_url,
-          slot:          assignSlot(item.start_time),
+          name:              display.name,
+          category:          display.category,
+          location:          display.district,
+          time:              item.start_time,
+          duration:          `${item.stay_minutes}m`,
+          tips:              display.tips,
+          googleMapsUrl:     display.google_maps_url,
+          slot:              assignSlot(item.start_time),
+          affiliateUrl:      cartHint?.affiliate_url,
+          affiliateProvider: cartHint?.affiliate_provider,
+          bookingUrl:        cartHint?.booking_url,
         };
       });
 
@@ -541,6 +589,21 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
               💚 Naver Maps
             </a>
           </div>
+
+          {/* ── Cart 아이템 제휴 링크 (P0-1 Phase 2: 수익화 생존 체인) ── */}
+          {(place.affiliateUrl || place.bookingUrl) && (
+            <a
+              href={(place.affiliateUrl ?? place.bookingUrl)!}
+              target="_blank" rel="noopener noreferrer sponsored"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-xl text-sm font-bold text-white transition-colors"
+              style={{ background: place.affiliateUrl ? "linear-gradient(135deg, #f97316, #ea580c)" : "linear-gradient(135deg, #7c3aed, #6d28d9)" }}
+            >
+              {place.affiliateUrl
+                ? (place.affiliateProvider === "klook" ? "🎟️ Book on Klook" : "🔗 Book Now")
+                : "🏨 Book Stay"}
+            </a>
+          )}
 
           {/* ── SpotCard enrichment (SSOT: city_spots 매칭 성공 시) ── */}
           {matched && (
