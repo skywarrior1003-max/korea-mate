@@ -951,7 +951,11 @@ function ItineraryResult() {
         loadedDays = (raw as Day[]) ?? [];
       }
 
-      if (record && Array.isArray(loadedDays) && loadedDays.length > 0) {
+      const allDaysEmpty =
+        Array.isArray(loadedDays) &&
+        loadedDays.length > 0 &&
+        loadedDays.every(d => !d.places || d.places.length === 0);
+      if (record && Array.isArray(loadedDays) && loadedDays.length > 0 && !allDaysEmpty) {
         // Day 1 이른 슬롯 감지 — 저녁 도착인데 arrivalHour 이전 슬롯이 있으면 오염된 캐시
         const day1HasEarlySlot = (dayList: Day[]): boolean => {
           const first = dayList[0];

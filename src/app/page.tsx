@@ -249,6 +249,18 @@ const BUSAN_SPOTS: LocalInfo[] = [
 // ═══════════════════════════════════════════════
 
 function toEventItem(spot: LocalInfo): EventItem {
+  // Extract lat/lng from Google Maps URL: "https://maps.google.com/maps?q=35.158,129.160&z=17"
+  let parsedLat: number | undefined;
+  let parsedLng: number | undefined;
+  try {
+    const qParam = spot.mapUrl ? new URL(spot.mapUrl).searchParams.get("q") : null;
+    if (qParam) {
+      const [latStr, lngStr] = qParam.split(",");
+      const lat = parseFloat(latStr);
+      const lng = parseFloat(lngStr);
+      if (!isNaN(lat) && !isNaN(lng)) { parsedLat = lat; parsedLng = lng; }
+    }
+  } catch { /* mapUrl 파싱 실패 시 lat/lng 없이 진행 */ }
   return {
     id: `local-${spot.id}`,
     type: spot.category,
@@ -284,6 +296,8 @@ function toEventItem(spot: LocalInfo): EventItem {
     barrierFree: true,
     koreanSurvivalScore: 75,
     notice: null,
+    lat: parsedLat,
+    lng: parsedLng,
     commerce: {
       affiliateType: null,
       hasAffiliate: false,
