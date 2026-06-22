@@ -261,6 +261,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     [filteredSpots]
   );
 
+  function handleMapSpotClick(spot: MapSpot) {
+    const citySpot = filteredSpots.find(s => s.id === spot.id);
+    if (citySpot) setSelectedEvent(toEventItem(citySpot));
+  }
+
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
   const controls = (
     <div className="mb-4">
@@ -394,6 +399,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               height="100%"
               className="relative w-full h-full overflow-hidden"
               relayoutKey={mapExpanded ? 1 : 0}
+              onSpotClick={handleMapSpotClick}
             />
             <button
               onClick={() => setMapExpanded(e => !e)}

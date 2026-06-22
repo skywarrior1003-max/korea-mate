@@ -39,6 +39,7 @@ interface Props {
   height?:       number | string;
   className?:    string;
   relayoutKey?:  number;
+  onSpotClick?:  (spot: MapSpot) => void;
 }
 
 // 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
@@ -64,6 +65,7 @@ export default function NaverMap({
   height = 420,
   className,
   relayoutKey,
+  onSpotClick,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
@@ -129,17 +131,25 @@ export default function NaverMap({
         openInfoRef.current?.close();
         info.open(nmap, marker);
         openInfoRef.current = info;
-        setActiveSpot(spot);
+        if (onSpotClick) {
+          onSpotClick(spot);
+        } else {
+          setActiveSpot(spot);
+        }
       });
 
       markersRef.current.push(marker);
     });
   }, [spots]);
 
-  // Relayout when container size changes (e.g. full-screen toggle)
+  // Relayout when container size changes (e.g. full-screen toggle).
+  // Two-pass: 100ms lets CSS transition start, 300ms catches slow repaints on mobile.
   useEffect(() => {
     if (relayoutKey === undefined || !mapRef.current) return;
-    mapRef.current.relayout();
+    const nmap = mapRef.current;
+    const t1 = setTimeout(() => { nmap.relayout(); }, 100);
+    const t2 = setTimeout(() => { nmap.relayout(); }, 300);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [relayoutKey]);
 
   // User location marker
@@ -185,8 +195,8 @@ export default function NaverMap({
         </div>
       )}
 
-      {/* Active spot info bar */}
-      {activeSpot && (
+      {/* Active spot info bar — only when no parent modal handler */}
+      {!onSpotClick && activeSpot && (
         <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-[#E6DFD5] px-4 py-3 flex items-center justify-between">
           <div className="min-w-0">
             <p className="text-sm font-black text-[#2C2520] truncate">{activeSpot.name}</p>
