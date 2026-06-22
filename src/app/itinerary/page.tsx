@@ -288,20 +288,22 @@ async function generateWithNewApi(
   tstyle: string,
   arrTime?: string,
   deptTime?: string,
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[] }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
   const dates  = buildDateRange(sd, ed);
   const cart   = getCart();
 
+  // Collect names of cart items without coordinates so we can show a UI warning.
+  const skippedCartNames = cart
+    .filter(item => !item.lat || !item.lng)
+    .map(item => item.shortName || item.name);
+
   // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
   const cartHints = cart
     .filter(item => {
-      if (!item.lat || !item.lng) {
-        console.warn(`[cart] item "${item.id}" (${item.name}) skipped — no lat/lng`);
-        return false;
-      }
+      if (!item.lat || !item.lng) return false;
       return true;
     })
     .map(item => ({
@@ -440,7 +442,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames };
 }
 
 // ── 카테고리 이미지 ───────────────────────────────────────────
@@ -727,6 +729,8 @@ function ItineraryResult() {
 
   // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
+  // ── TASK-049: Cart 아이템 좌표 없음 경고 표시용 ────────────────────────────────
+  const [skippedCartNames, setSkippedCartNames] = useState<string[]>([]);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
@@ -968,11 +972,12 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
+              if (skipped.length > 0) setSkippedCartNames(skipped);
               setLoading(false);
             })
             .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
@@ -1000,11 +1005,12 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
+          if (skipped.length > 0) setSkippedCartNames(skipped);
           setLoading(false);
         })
         .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
@@ -1288,6 +1294,23 @@ function ItineraryResult() {
           <span className="text-lg">✨</span>
           <p className="text-sm font-bold text-amber-700 flex-1">
             AI is busy right now, so we prepared a safe KoreaMate recommended plan for you.
+          </p>
+        </div>
+      )}
+
+      {/* ── TASK-049: 좌표 없는 cart 아이템 경고 배너 ── */}
+      {skippedCartNames.length > 0 && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
+          <p className="text-sm font-bold text-orange-700 mb-1">
+            Some selected places could not be scheduled because location data is missing.
+          </p>
+          <ul className="mt-1.5 space-y-0.5">
+            {skippedCartNames.map(name => (
+              <li key={name} className="text-xs text-orange-600 font-medium">· {name}</li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-orange-500">
+            These places are still saved in your cart and can be added manually.
           </p>
         </div>
       )}

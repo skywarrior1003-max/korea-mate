@@ -65,8 +65,10 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
     pq.enqueue(c);
   }
 
-  // Iterate over free gaps, greedily filling each one
-  const greedyLoop = () => {
+  // Iterate over free gaps, greedily filling each one.
+  // cartFallbackMode=true: high-priority cart items (score=999) skip the preferred_time_slot
+  // constraint so they get a second chance after the first pass.
+  const greedyLoop = (cartFallbackMode = false) => {
     const gaps = findFreeGaps(placed, input);
 
     for (const gap of gaps) {
@@ -105,15 +107,21 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
         if (hc3TravelFits(travelMin, gap.duration_minutes) !== null) continue;
         if (hc4StayFits(travelMin, stayMin, gap.duration_minutes) !== null) continue;
 
-        // Cart preferred_time_slot 제약 (소프트 — 슬롯 미부합 시 건너뜀)
+        // Cart preferred_time_slot 제약 (소프트 — 슬롯 미부합 시 건너뜀).
+        // In cartFallbackMode, high-priority cart items (score=999) skip this check —
+        // they already had their preferred window in the first pass and can now go
+        // into any remaining gap within the day window.
         const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);
         if (preferredItem?.preferred_time_slot) {
-          const gapHour = Math.floor(gap.start_minutes / 60);
-          const slotOk =
-            (preferredItem.preferred_time_slot === "morning"   && gapHour < 12) ||
-            (preferredItem.preferred_time_slot === "afternoon" && gapHour >= 12 && gapHour < 17) ||
-            (preferredItem.preferred_time_slot === "evening"   && gapHour >= 17);
-          if (!slotOk) continue;
+          const isCartFallback = cartFallbackMode && c.score === 999;
+          if (!isCartFallback) {
+            const gapHour = Math.floor(gap.start_minutes / 60);
+            const slotOk =
+              (preferredItem.preferred_time_slot === "morning"   && gapHour < 12) ||
+              (preferredItem.preferred_time_slot === "afternoon" && gapHour >= 12 && gapHour < 17) ||
+              (preferredItem.preferred_time_slot === "evening"   && gapHour >= 17);
+            if (!slotOk) continue;
+          }
         }
 
         scored.push({
@@ -172,8 +180,11 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
     }
   };
 
-  // Run greedy fill (multiple passes to fill gaps left by previous placements)
+  // Pass 1: respect preferred_time_slot constraints
   greedyLoop();
+  // Pass 2: cart items (score=999) that could not be placed in their preferred time slot
+  // get a fallback attempt in any remaining gap within the day window.
+  greedyLoop(true);
 
   // ── P4: Affiliate Injection ────────────────────────────────────────────────
 

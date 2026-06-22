@@ -11,9 +11,11 @@ import { runNearMe } from "../near-me/near-me-engine";
 import { runScheduler } from "../scheduler/engine";
 import { personalize } from "../scheduler/ai/personalizer";
 import { adaptToSchedulerCandidates } from "./near-me-adapter";
+import { haversineDistance } from "../scheduler/utils";
+import { assignZoneId } from "../near-me/zone-classifier";
 import type { TripPlanInput, TripPlanResponse } from "./types";
 import type { NearMeInput } from "../near-me/types";
-import type { NearMeCandidate, SchedulerInput } from "../scheduler/types";
+import type { NearMeCandidate, SchedulerInput, ZoneId } from "../scheduler/types";
 
 const DEFAULT_NEAR_ME_LIMIT = 12;
 
@@ -40,14 +42,20 @@ export async function runTripPlan(input: TripPlanInput): Promise<TripPlanRespons
   const candidates = adaptToSchedulerCandidates(nearMeResponse.results);
 
   // ── Step 3b: Cart 합성 후보 주입 (score=999, 최우선 배치) ────────────────
-  const cartCandidates: NearMeCandidate[] = (input.cart_coord_hints ?? []).map(hint => ({
-    place_id:              hint.place_id,
-    category:              "event" as const,
-    coordinate:            { lat: hint.lat, lng: hint.lng },
-    zone_id:               1 as const,
-    score:                 999,
-    stay_minutes_override: hint.duration_min > 0 ? hint.duration_min : undefined,
-  }));
+  const cartCandidates: NearMeCandidate[] = (input.cart_coord_hints ?? []).map(hint => {
+    const hintCoord = { lat: hint.lat, lng: hint.lng };
+    const distMeters = haversineDistance(input.coordinate, hintCoord);
+    // assignZoneId returns null beyond 7km; cart items always get placed so fall back to zone 3
+    const zoneId: ZoneId = assignZoneId(distMeters) ?? 3;
+    return {
+      place_id:              hint.place_id,
+      category:              "event" as const,
+      coordinate:            hintCoord,
+      zone_id:               zoneId,
+      score:                 999,
+      stay_minutes_override: hint.duration_min > 0 ? hint.duration_min : undefined,
+    };
+  });
 
   const cartPreferredItems = (input.cart_coord_hints ?? [])
     .filter(h => h.preferred_time_slot != null)
