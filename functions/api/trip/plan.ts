@@ -8,24 +8,37 @@
 // SAFETY CONTRACT:
 // - with_ai is ALWAYS forced to false: personalizer and gemini-client are NEVER imported.
 // - All imports avoid the scheduler/ai/ dependency chain entirely.
-// - Requires nodejs_compat in wrangler.toml for process.env (NEXT_PUBLIC_SUPABASE_* vars).
+// - runNearMe is NOT imported: it depends on the supabase.ts singleton which reads process.env
+//   at module init time. In Cloudflare Workers, process.env is empty at init → placeholder URL.
+//   Instead, runNearMeDirect() creates a fresh client from ctx.env at request time.
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createClient } from "@supabase/supabase-js";
-import { runNearMe } from "../../../src/lib/near-me/near-me-engine";
 import { adaptToSchedulerCandidates } from "../../../src/lib/trip-plan/near-me-adapter";
 import { runScheduler } from "../../../src/lib/scheduler/engine";
 import { haversineDistance } from "../../../src/lib/scheduler/utils";
-import { assignZoneId } from "../../../src/lib/near-me/zone-classifier";
+import { boundingBoxDelta, assignZoneId, rowsToZonedPlaces, expandZones } from "../../../src/lib/near-me/zone-classifier";
+import { computeTotalScore, buildLikedCategorySet } from "../../../src/lib/near-me/scorer";
+import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
+import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../../../src/lib/near-me/types";
 import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
 
-// ── Inline types (avoids importing trip-plan/types which pulls in AI personalization types) ──
+// ── Inline types ──────────────────────────────────────────────────────────────
 
 interface Coord { lat: number; lng: number; }
 type ZoneId = 1 | 2 | 3;
 type ValidPace = "relaxed" | "normal" | "packed";
+
+interface NearMePlaceRow {
+  place_id: string;
+  category: string;
+  lat:      number | null;
+  lng:      number | null;
+  district: string | null;
+  tags:     string[] | null;
+}
 
 interface CartHint {
   place_id:             string;
@@ -60,17 +73,130 @@ const VALID_PACES   = ["relaxed", "normal", "packed"] as const;
 const HHMM_RE       = /^\d{2}:\d{2}$/;
 const DATE_RE       = /^\d{4}-\d{2}-\d{2}$/;
 const DEFAULT_LIMIT = 12;
+const MAX_RADIUS_KM = 7;
 
-const isHHMM   = (s: unknown): s is string => typeof s === "string" && HHMM_RE.test(s);
+const isHHMM    = (s: unknown): s is string => typeof s === "string" && HHMM_RE.test(s);
 const isDateStr = (s: unknown): s is string => typeof s === "string" && DATE_RE.test(s);
-const isPace   = (s: unknown): s is ValidPace =>
+const isPace    = (s: unknown): s is ValidPace =>
   typeof s === "string" && (VALID_PACES as readonly string[]).includes(s);
-const toMin     = (hhmm: string) => {
+const toMin = (hhmm: string) => {
   const [h, m] = hhmm.split(":").map(Number);
   return (h ?? 0) * 60 + (m ?? 0);
 };
 
-// ── Place display map (mirrors buildPlaceMap in Next.js route) ────────────────
+// ── NearMe: direct Supabase query via ctx.env (bypasses supabase.ts singleton) ──
+//
+// WHY: supabase.ts creates createClient() at module init with process.env.
+// In Cloudflare Workers, process.env is empty at module init → placeholder URL →
+// all queries fail → mock fallback. ctx.env has the real values at request time.
+
+async function runNearMeDirect(
+  input: {
+    coordinate:        Coord;
+    timestamp:         string;
+    categories?:       any[];
+    liked_place_ids?:  string[];
+    itinerary_coords?: Coord[];
+    event_coords?:     Coord[];
+    limit:             number;
+  },
+  env: Record<string, string | undefined>,
+): Promise<{ results: any[]; nearMeCount: number }> {
+  const allCategories = (input.categories as any[]) ?? ALL_PLACE_CATEGORIES;
+
+  let rawRows: NearMePlaceRow[] = [];
+  const supabaseUrl  = env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+  const supabaseAnon = env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+
+  if (supabaseUrl && !supabaseUrl.includes("placeholder") && supabaseAnon) {
+    try {
+      const client = createClient(supabaseUrl, supabaseAnon);
+      const { deltaLat, deltaLng } = boundingBoxDelta(MAX_RADIUS_KM, input.coordinate.lat);
+
+      // PlaceCategory[] → DB category strings
+      const dbCats: string[] = [];
+      for (const [dbCat, nmCat] of Object.entries(CATEGORY_MAP)) {
+        if (allCategories.includes(nmCat)) dbCats.push(dbCat);
+      }
+      const dbCategories = dbCats.length > 0 ? dbCats : SUPPORTED_DB_CATEGORIES;
+
+      const { data, error } = await client
+        .from("city_spots")
+        .select("id, category, lat, lng, district, tags")
+        .in("category", dbCategories)
+        .not("lat", "is", null)
+        .not("lng", "is", null)
+        .gte("lat", input.coordinate.lat - deltaLat)
+        .lte("lat", input.coordinate.lat + deltaLat)
+        .gte("lng", input.coordinate.lng - deltaLng)
+        .lte("lng", input.coordinate.lng + deltaLng);
+
+      if (!error && Array.isArray(data)) {
+        rawRows = (data as any[]).map(row => ({
+          place_id: String(row.id),
+          category: String(row.category),
+          lat:      row.lat as number,
+          lng:      row.lng as number,
+          district: row.district as string | null,
+          tags:     row.tags as string[] | null,
+        }));
+      }
+    } catch {
+      // fall through to mock
+    }
+  }
+
+  // rowsToZonedPlaces uses haversineDistance internally (imported from utils.ts)
+  const zonedPlaces = rowsToZonedPlaces(rawRows as any, input.coordinate as any);
+  let { candidates } = expandZones(zonedPlaces);
+
+  // Mock fallback when no live candidates (mirrors near-me-engine.ts L32-52)
+  if (candidates.length === 0) {
+    const catSet = new Set<string>(allCategories as string[]);
+    candidates = (MOCK_NEAR_ME_PLACES as any[])
+      .filter((p: any) => {
+        const mapped = CATEGORY_MAP[p.category as string];
+        return mapped !== undefined && catSet.has(mapped as string);
+      })
+      .filter((p: any) => p.lat !== null && p.lng !== null)
+      .map((p: any) => ({
+        place_id:   p.place_id,
+        category:   (CATEGORY_MAP[p.category as string] ?? "attraction") as any,
+        coordinate: { lat: p.lat as number, lng: p.lng as number },
+        zone_id:    3 as const,
+        distance_m: 5_000,
+      }));
+  }
+
+  const likedCategories = buildLikedCategorySet(
+    input.liked_place_ids ?? [],
+    candidates as any,
+  );
+
+  const scored = candidates.map((c: any) => ({
+    place_id:   c.place_id,
+    category:   c.category,
+    coordinate: c.coordinate,
+    zone_id:    c.zone_id,
+    distance_m: c.distance_m,
+    score:      computeTotalScore(c as any, {
+      coordinate:       input.coordinate as any,
+      timestamp:        input.timestamp,
+      categories:       allCategories as any,
+      liked_place_ids:  input.liked_place_ids,
+      itinerary_coords: input.itinerary_coords as any,
+      event_coords:     input.event_coords as any,
+    }, likedCategories),
+  }));
+
+  const results = scored
+    .sort((a: any, b: any) => b.score - a.score)
+    .slice(0, input.limit);
+
+  return { results, nearMeCount: results.length };
+}
+
+// ── Place display map ─────────────────────────────────────────────────────────
 
 function mockDisplay(placeId: string): PlaceDisplay {
   const raw   = placeId.replace("mock-", "");
@@ -100,9 +226,9 @@ async function buildPlaceMap(
 
   if (realIds.length > 0) {
     try {
-      const url  = env.NEXT_PUBLIC_SUPABASE_URL  ?? (typeof process !== "undefined" ? process.env.NEXT_PUBLIC_SUPABASE_URL  : undefined) ?? "";
-      const anon = env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? (typeof process !== "undefined" ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : undefined) ?? "";
-      if (url && anon) {
+      const url  = env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+      const anon = env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+      if (url && !url.includes("placeholder") && anon) {
         const client = createClient(url, anon);
         const numericIds = realIds.map(Number).filter(n => !isNaN(n));
         const { data, error } = await client
@@ -132,7 +258,7 @@ async function buildPlaceMap(
   return map;
 }
 
-// ── Cloudflare Pages Function handler ─────────────────────────────────────────
+// ── Cloudflare Pages Function handler ────────────────────────────────────────
 
 interface PagesFunctionCtx {
   request: Request;
@@ -159,14 +285,14 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   if (!coord || typeof coord !== "object") return jsonResp({ error: "coordinate is required" }, 400);
   if (typeof coord.lat !== "number" || typeof coord.lng !== "number")
     return jsonResp({ error: "coordinate.lat and coordinate.lng must be numbers" }, 400);
-  if ((coord.lat as number) < -90 || (coord.lat as number) > 90)
+  if ((coord.lat as number) < -90  || (coord.lat as number) > 90)
     return jsonResp({ error: "coordinate.lat must be between -90 and 90" }, 400);
   if ((coord.lng as number) < -180 || (coord.lng as number) > 180)
     return jsonResp({ error: "coordinate.lng must be between -180 and 180" }, 400);
-  if (!isHHMM(body.timestamp))  return jsonResp({ error: "timestamp must be HH:MM" }, 400);
-  if (!isDateStr(body.trip_date)) return jsonResp({ error: "trip_date must be YYYY-MM-DD" }, 400);
-  if (!isHHMM(body.start_time))  return jsonResp({ error: "start_time must be HH:MM" }, 400);
-  if (!isHHMM(body.end_time))    return jsonResp({ error: "end_time must be HH:MM" }, 400);
+  if (!isHHMM(body.timestamp))     return jsonResp({ error: "timestamp must be HH:MM" }, 400);
+  if (!isDateStr(body.trip_date))  return jsonResp({ error: "trip_date must be YYYY-MM-DD" }, 400);
+  if (!isHHMM(body.start_time))   return jsonResp({ error: "start_time must be HH:MM" }, 400);
+  if (!isHHMM(body.end_time))     return jsonResp({ error: "end_time must be HH:MM" }, 400);
   if (toMin(body.end_time as string) <= toMin(body.start_time as string))
     return jsonResp({ error: "end_time must be after start_time" }, 400);
   if (!isPace(body.pace)) return jsonResp({ error: "pace must be one of: relaxed, normal, packed" }, 400);
@@ -212,8 +338,8 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     };
   }
 
-  // 6. Near Me
-  const nearMeResp = await runNearMe({
+  // 6. Near Me — fresh Supabase client from ctx.env (bypasses supabase.ts singleton)
+  const { results: nearMeResults, nearMeCount } = await runNearMeDirect({
     coordinate,
     timestamp,
     categories,
@@ -221,16 +347,15 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     itinerary_coords,
     event_coords,
     limit: near_me_limit,
-  });
-  const nearMeCount = nearMeResp.results.length;
+  }, ctx.env);
 
   // 7. Adapt Near Me results to scheduler candidates
-  const baseCandidates = adaptToSchedulerCandidates(nearMeResp.results);
+  const baseCandidates = adaptToSchedulerCandidates(nearMeResults as any);
 
   // 8. Cart candidates (score=999, always placed first)
   const cartCandidates = cart_hints.map(hint => {
     const hintCoord: Coord = { lat: hint.lat, lng: hint.lng };
-    const distM = haversineDistance(coordinate, hintCoord);
+    const distM  = haversineDistance(coordinate as any, hintCoord as any);
     const zoneId: ZoneId = (assignZoneId(distM) as ZoneId | null) ?? 3;
     return {
       place_id:              hint.place_id,
@@ -254,14 +379,14 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     trip_date,
     start_time,
     end_time,
-    base_coordinate: coordinate,
+    base_coordinate: coordinate as any,
     pace,
-    anchors:              Array.isArray(body.anchors)       ? body.anchors as any       : undefined,
-    fixed_events:         Array.isArray(body.fixed_events)  ? body.fixed_events as any  : undefined,
+    anchors:              Array.isArray(body.anchors)      ? body.anchors as any      : undefined,
+    fixed_events:         Array.isArray(body.fixed_events) ? body.fixed_events as any : undefined,
     preferred_items:      allPreferred,
     route_template_stays: route_template_stays,
     affiliate_context,
-    candidates:           allCandidates,
+    candidates:           allCandidates as any,
   });
 
   if (!schedulerResult.success) {
@@ -271,12 +396,12 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     );
   }
 
-  // 10. Build place map (Supabase city_spots lookup)
+  // 10. Build place map (Supabase city_spots lookup via ctx.env)
   const placeIds = (schedulerResult.data.items as any[])
     .map((item: any) => item.place_id ?? item.event_id)
     .filter((id: any): id is string => Boolean(id));
 
-  const place_map    = await buildPlaceMap(placeIds, ctx.env);
+  const place_map     = await buildPlaceMap(placeIds, ctx.env);
   const affiliate_map = buildAffiliateMap(affiliateRows, locale);
 
   const cart_hint_map: Record<string, CartHintEntry> = {};
@@ -291,9 +416,9 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
 
   return jsonResp({
     data: {
-      kind:           "scheduled",
-      plan:           schedulerResult.data,
-      near_me_count:  nearMeCount,
+      kind:          "scheduled",
+      plan:          schedulerResult.data,
+      near_me_count: nearMeCount,
     },
     place_map,
     affiliate_map,
