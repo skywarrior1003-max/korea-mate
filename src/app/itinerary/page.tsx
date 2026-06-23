@@ -982,6 +982,9 @@ function ItineraryResult() {
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               if (skipped.length > 0) setSkippedCartNames(skipped);
+              if (days.length > 0 && conflictDayNumbers.length === days.length) {
+                setError("We couldn't generate your trip plan right now. Please try again in a moment.");
+              }
               setLoading(false);
             })
             .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
@@ -1015,6 +1018,9 @@ function ItineraryResult() {
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
           if (skipped.length > 0) setSkippedCartNames(skipped);
+          if (days.length > 0 && conflictDayNumbers.length === days.length) {
+            setError("We couldn't generate your trip plan right now. Please try again in a moment.");
+          }
           setLoading(false);
         })
         .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
@@ -1026,6 +1032,9 @@ function ItineraryResult() {
   // ══════════════════════════════════════════════════════════
   useEffect(() => {
     if (days.length === 0 || !itinId) return;
+    // 빈 스케줄이 Supabase에 저장되면 다음 세션에서 빈 일정이 복원됨 → 저장 금지
+    const allDaysEmpty = days.length > 0 && days.every(d => !d.places || d.places.length === 0);
+    if (allDaysEmpty) return;
 
     // Supabase 디바운스 동기화 (1.5s)
     setSyncStatus("saving");
