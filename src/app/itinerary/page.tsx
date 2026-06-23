@@ -147,6 +147,8 @@ interface PlaceDisplay {
   district:        string;
   tips:            string;
   google_maps_url: string;
+  lat?:            number;
+  lng?:            number;
 }
 type PlaceDisplayMap = Record<string, PlaceDisplay>;
 
@@ -288,6 +290,8 @@ async function generateWithNewApi(
   tstyle: string,
   arrTime?: string,
   deptTime?: string,
+  arrivalCoord?: { lat: number; lng: number },
+  departureCoord?: { lat: number; lng: number },
 ): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[] }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
@@ -322,7 +326,7 @@ async function generateWithNewApi(
 
   // TASK-053: GPS 제거 — AI Trip 기본 생성에서 권한 요청하지 않음
   // GPS는 별도 "Use my current location" 버튼에서만 요청해야 함
-  const coordinate = resolveCoordinate(city, cart);
+  const fallbackCoord = resolveCoordinate(city, cart);
 
   const pace       = toPace(tstyle);
   const evtCoords  = getEventCoords(cart, sd, ed);
@@ -333,6 +337,15 @@ async function generateWithNewApi(
     ? navigator.language.split("-")[0].toLowerCase()
     : "en";
 
+  // TASK-056-A: Cart item coordinate map — used to track previous-day last position
+  const cartCoordByKey: Record<string, { lat: number; lng: number }> = {};
+  for (const h of cartHints) cartCoordByKey[h.place_id] = { lat: h.lat, lng: h.lng };
+
+  // TASK-056-A: Per-day coordinate — starts at arrival coord (or fallback), updated
+  // after each day to the last scheduled place so the next day's NearMe query is
+  // anchored near where the traveller actually ends up.
+  let currentCoordinate = arrivalCoord ?? fallbackCoord;
+
   // TASK-054: Sequential per-day generation (was Promise.all) so each day can
   // exclude places already scheduled in previous days, preventing Day 2/3/4 repeats.
   const rawResults: ApiTripPlanResult[] = [];
@@ -342,6 +355,11 @@ async function generateWithNewApi(
     const trip_date  = dates[i]!;
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
     const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
+
+    // TASK-056-A: Last day uses departure coord so NearMe candidates are near departure point.
+    // If departureCoord is absent, falls back to currentCoordinate (previous day's last position).
+    const isLastDay    = i === dates.length - 1;
+    const dayCoordinate = (isLastDay && departureCoord) ? departureCoord : currentCoordinate;
 
     if (start_time >= end_time) {
       rawResults.push({
@@ -356,7 +374,7 @@ async function generateWithNewApi(
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({
-          coordinate,
+          coordinate: dayCoordinate,
           timestamp,
           trip_date,
           start_time,
@@ -394,6 +412,24 @@ async function generateWithNewApi(
         .map((item: ApiScheduledItem) => item.place_id ?? item.event_id)
         .filter((id): id is string => Boolean(id));
       usedPlaceIds.push(...placedIds);
+
+      // TASK-056-A: Update currentCoordinate to the last scheduled place of this day
+      // so the next day's NearMe search starts near where the traveller ends up.
+      const scheduledItems = (dayResult?.data?.plan?.items ?? [])
+        .filter((item: ApiScheduledItem) => item.item_type !== "affiliate");
+      const lastItem = scheduledItems.at(-1);
+      if (lastItem) {
+        const lastId = lastItem.place_id ?? lastItem.event_id ?? "";
+        const cartCoord = cartCoordByKey[lastId];
+        if (cartCoord) {
+          currentCoordinate = cartCoord;
+        } else {
+          const placeEntry = dayResult.place_map?.[lastId];
+          if (placeEntry?.lat != null && placeEntry?.lng != null) {
+            currentCoordinate = { lat: placeEntry.lat, lng: placeEntry.lng };
+          }
+        }
+      }
     } catch {
       rawResults.push({
         data:      { kind: "conflict" as const, error: { message: "Network error" } },
@@ -704,10 +740,19 @@ function ItineraryResult() {
   const paramEndDate     = searchParams.get("endDate")       || "";
   const paramTravelers   = searchParams.get("travelers")     || "1";
   const paramTravelStyle = searchParams.get("travelStyle")   || "Solo";
-  const paramStartLoc      = searchParams.get("startLocation")  || "";
-  const paramArrivalTime   = searchParams.get("arrivalTime")    || "";
+  const paramStartLoc       = searchParams.get("startLocation")  || "";
+  const paramArrivalTime    = searchParams.get("arrivalTime")    || "";
   const paramDeparturePlace = searchParams.get("departurePlace") || "";
   const paramDepartureTime  = searchParams.get("departureTime")  || "";
+  // TASK-056-A: arrival/departure coordinates from planner page option presets
+  const _paramArrivalLat  = parseFloat(searchParams.get("arrivalLat")   ?? "");
+  const _paramArrivalLng  = parseFloat(searchParams.get("arrivalLng")   ?? "");
+  const _paramDepartureLat = parseFloat(searchParams.get("departureLat") ?? "");
+  const _paramDepartureLng = parseFloat(searchParams.get("departureLng") ?? "");
+  const paramArrivalCoord  = !isNaN(_paramArrivalLat)  && !isNaN(_paramArrivalLng)
+    ? { lat: _paramArrivalLat,  lng: _paramArrivalLng  } : undefined;
+  const paramDepartureCoord = !isNaN(_paramDepartureLat) && !isNaN(_paramDepartureLng)
+    ? { lat: _paramDepartureLat, lng: _paramDepartureLng } : undefined;
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
@@ -1000,7 +1045,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
@@ -1036,7 +1081,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined)
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);

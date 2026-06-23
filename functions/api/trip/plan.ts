@@ -65,6 +65,8 @@ interface PlaceDisplay {
   district:        string;
   tips:            string;
   google_maps_url: string;
+  lat?:            number;
+  lng?:            number;
 }
 
 // ── Validation helpers ────────────────────────────────────────────────────────
@@ -72,7 +74,7 @@ interface PlaceDisplay {
 const VALID_PACES   = ["relaxed", "normal", "packed"] as const;
 const HHMM_RE       = /^\d{2}:\d{2}$/;
 const DATE_RE       = /^\d{4}-\d{2}-\d{2}$/;
-const DEFAULT_LIMIT = 12;
+const DEFAULT_LIMIT = 30;
 const MAX_RADIUS_KM = 7;
 
 const isHHMM    = (s: unknown): s is string => typeof s === "string" && HHMM_RE.test(s);
@@ -247,6 +249,8 @@ async function buildPlaceMap(
               district:        row.district || "Seoul",
               tips:            row.description || "",
               google_maps_url: gmUrl,
+              lat:             typeof row.lat === "number" ? row.lat : undefined,
+              lng:             typeof row.lng === "number" ? row.lng : undefined,
             };
           }
         }

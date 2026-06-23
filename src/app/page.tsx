@@ -55,34 +55,34 @@ const CITY_ARRIVAL_DEFAULTS: Record<string, string> = {
   Gyeongju: "Gyeongju KTX Station (신경주역)",
 };
 
-const CITY_ARRIVAL_OPTIONS: Record<string, { value: string; label: string }[]> = {
+const CITY_ARRIVAL_OPTIONS: Record<string, { value: string; label: string; lat: number; lng: number }[]> = {
   Busan: [
-    { value: "KTX Busan Station (부산역)",                label: "🚄 KTX Busan Station" },
-    { value: "Gimhae International Airport (김해공항)",    label: "✈️ Gimhae Airport"    },
-    { value: "Haeundae (해운대)",                          label: "🏖️ Haeundae"          },
-    { value: "Nampo-dong / Gwangbok-ro (남포동)",          label: "🏙️ Nampo-dong"        },
-    { value: "Seomyeon (서면)",                            label: "🛍️ Seomyeon"          },
-    { value: "Gwangalli Beach (광안리해수욕장)",            label: "🌊 Gwangalli Beach"   },
+    { value: "KTX Busan Station (부산역)",                label: "🚄 KTX Busan Station", lat: 35.1148, lng: 129.0420 },
+    { value: "Gimhae International Airport (김해공항)",    label: "✈️ Gimhae Airport",    lat: 35.1794, lng: 128.9383 },
+    { value: "Haeundae (해운대)",                          label: "🏖️ Haeundae",          lat: 35.1589, lng: 129.1600 },
+    { value: "Nampo-dong / Gwangbok-ro (남포동)",          label: "🏙️ Nampo-dong",        lat: 35.0975, lng: 129.0306 },
+    { value: "Seomyeon (서면)",                            label: "🛍️ Seomyeon",          lat: 35.1575, lng: 129.0592 },
+    { value: "Gwangalli Beach (광안리해수욕장)",            label: "🌊 Gwangalli Beach",   lat: 35.1530, lng: 129.1185 },
   ],
   Seoul: [
-    { value: "Incheon International Airport (인천공항)",   label: "✈️ Incheon Airport"   },
-    { value: "Seoul Station (서울역)",                     label: "🚄 Seoul Station"      },
-    { value: "Hongdae (홍대)",                             label: "🎵 Hongdae"            },
-    { value: "Myeongdong (명동)",                          label: "🛍️ Myeongdong"        },
-    { value: "Gangnam (강남)",                             label: "🏙️ Gangnam"           },
-    { value: "Dongdaemun (동대문)",                        label: "🏯 Dongdaemun"        },
+    { value: "Incheon International Airport (인천공항)",   label: "✈️ Incheon Airport",   lat: 37.4602, lng: 126.4407 },
+    { value: "Seoul Station (서울역)",                     label: "🚄 Seoul Station",      lat: 37.5547, lng: 126.9706 },
+    { value: "Hongdae (홍대)",                             label: "🎵 Hongdae",            lat: 37.5576, lng: 126.9265 },
+    { value: "Myeongdong (명동)",                          label: "🛍️ Myeongdong",        lat: 37.5636, lng: 126.9816 },
+    { value: "Gangnam (강남)",                             label: "🏙️ Gangnam",           lat: 37.4980, lng: 127.0276 },
+    { value: "Dongdaemun (동대문)",                        label: "🏯 Dongdaemun",        lat: 37.5666, lng: 127.0094 },
   ],
   Jeju: [
-    { value: "Jeju International Airport (제주공항)",      label: "✈️ Jeju Airport"       },
-    { value: "Jeju City Center (제주시내)",                label: "🏙️ Jeju City"         },
-    { value: "Seogwipo (서귀포)",                          label: "🌊 Seogwipo"          },
-    { value: "Hamdeok Beach (함덕해변)",                   label: "🏖️ Hamdeok Beach"     },
+    { value: "Jeju International Airport (제주공항)",      label: "✈️ Jeju Airport",       lat: 33.5113, lng: 126.4927 },
+    { value: "Jeju City Center (제주시내)",                label: "🏙️ Jeju City",         lat: 33.4996, lng: 126.5312 },
+    { value: "Seogwipo (서귀포)",                          label: "🌊 Seogwipo",          lat: 33.2541, lng: 126.5600 },
+    { value: "Hamdeok Beach (함덕해변)",                   label: "🏖️ Hamdeok Beach",     lat: 33.5435, lng: 126.6684 },
   ],
   Gyeongju: [
-    { value: "Gyeongju KTX Station (신경주역)",            label: "🚄 Gyeongju KTX"      },
-    { value: "Gyeongju City Center (경주시내)",            label: "🏛️ Gyeongju City"     },
-    { value: "Bulguksa Temple Area (불국사)",              label: "🏯 Bulguksa"          },
-    { value: "Gyeongju Train Station (경주역)",            label: "🚉 Gyeongju Station"  },
+    { value: "Gyeongju KTX Station (신경주역)",            label: "🚄 Gyeongju KTX",      lat: 35.8344, lng: 129.2300 },
+    { value: "Gyeongju City Center (경주시내)",            label: "🏛️ Gyeongju City",     lat: 35.8562, lng: 129.2247 },
+    { value: "Bulguksa Temple Area (불국사)",              label: "🏯 Bulguksa",          lat: 35.7893, lng: 129.3317 },
+    { value: "Gyeongju Train Station (경주역)",            label: "🚉 Gyeongju Station",  lat: 35.8450, lng: 129.2213 },
   ],
 };
 
@@ -609,9 +609,15 @@ export default function Home() {
   function doNavigate(overrideStyle?: string) {
     setIsNavigating(true);
     const effectiveStyle = overrideStyle ?? style;
+    const cityOptions = CITY_ARRIVAL_OPTIONS[city] ?? [];
     const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: effectiveStyle, startLocation, arrivalTime });
     if (departurePlace) params.set("departurePlace", departurePlace);
     if (departureTime)  params.set("departureTime",  departureTime);
+    // Pass arrival/departure coordinates so the scheduler can use per-day base_coordinate
+    const arrivalOpt   = cityOptions.find(o => o.value === startLocation);
+    const departureOpt = cityOptions.find(o => o.value === departurePlace);
+    if (arrivalOpt)   { params.set("arrivalLat",   String(arrivalOpt.lat));   params.set("arrivalLng",   String(arrivalOpt.lng));   }
+    if (departureOpt) { params.set("departureLat",  String(departureOpt.lat)); params.set("departureLng",  String(departureOpt.lng)); }
     const days = startDate && endDate
       ? Math.round((new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000) + 1
       : 0;
@@ -1227,14 +1233,7 @@ export default function Home() {
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-bold text-gray-600">📍 Where do you leave from?</label>
                     <div className="grid grid-cols-2 gap-1.5">
-                      {[
-                        { value: "KTX Busan Station", label: "🚄 KTX Busan Station" },
-                        { value: "Gimhae Airport",    label: "✈️ Gimhae Airport" },
-                        { value: "Haeundae",          label: "🏖️ Haeundae" },
-                        { value: "Seomyeon",          label: "🛍️ Seomyeon" },
-                        { value: "Gwangalli Beach",   label: "🌊 Gwangalli Beach" },
-                        { value: "Nampo-dong",        label: "🏙️ Nampo-dong" },
-                      ].map((loc) => (
+                      {(CITY_ARRIVAL_OPTIONS[city] ?? CITY_ARRIVAL_OPTIONS["Busan"]!).map((loc) => (
                         <button
                           key={loc.value}
                           type="button"
