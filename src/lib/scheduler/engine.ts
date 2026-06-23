@@ -34,6 +34,19 @@ interface ScoredCandidate extends NearMeCandidate {
   stay_minutes_resolved: number;
 }
 
+// TASK-057-A: Penalise candidates far from the previous placed item so the
+// scheduler naturally clusters nearby places. Uses travel time (already computed
+// for HC-3/HC-4) as a distance proxy — avoids a second haversine call.
+// My Picks (score=999) remain above NearMe even at max penalty (999-90 = 909
+// vs NearMe max ≈ 205), so they are never deprioritised below NearMe items.
+function consecutiveDistancePenalty(travelMinutes: number): number {
+  if (travelMinutes <=  8) return   0;  // ≤500m  — walkable, no penalty
+  if (travelMinutes <= 15) return  20;  //  ~1km  — short ride
+  if (travelMinutes <= 20) return  40;  //  ~3km  — medium ride
+  if (travelMinutes <= 30) return  60;  //  ~7km  — long ride
+  return 90;                            //   7km+ — far destination
+}
+
 // ─── Main entry point ─────────────────────────────────────────────────────────
 
 export function runScheduler(input: SchedulerInput): SchedulerResult {
@@ -126,7 +139,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
 
         scored.push({
           ...c,
-          adjusted_score:       c.score + zoneBonus,
+          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin),
           travel_minutes:       travelMin,
           stay_minutes_resolved: stayMin,
         });
