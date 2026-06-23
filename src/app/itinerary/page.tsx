@@ -356,10 +356,10 @@ async function generateWithNewApi(
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
     const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
 
-    // TASK-056-A: Last day uses departure coord so NearMe candidates are near departure point.
-    // If departureCoord is absent, falls back to currentCoordinate (previous day's last position).
-    const isLastDay    = i === dates.length - 1;
-    const dayCoordinate = (isLastDay && departureCoord) ? departureCoord : currentCoordinate;
+    // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
+    // departureCoord on the last day caused airport-area coordinate collision with Day 1,
+    // exhausting candidates and leaving Day 4 empty. end_time already constrains departure timing.
+    const dayCoordinate = currentCoordinate;
 
     if (start_time >= end_time) {
       rawResults.push({
