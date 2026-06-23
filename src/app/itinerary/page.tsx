@@ -333,59 +333,74 @@ async function generateWithNewApi(
     ? navigator.language.split("-")[0].toLowerCase()
     : "en";
 
-  const rawResults = await Promise.all(
-    dates.map(async (trip_date, i) => {
-      const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
-      const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
+  // TASK-054: Sequential per-day generation (was Promise.all) so each day can
+  // exclude places already scheduled in previous days, preventing Day 2/3/4 repeats.
+  const rawResults: ApiTripPlanResult[] = [];
+  const usedPlaceIds: string[] = [];  // accumulated across days
 
-      if (start_time >= end_time) {
-        return {
-          data:      { kind: "conflict" as const, error: { code: "HC-6", message: "No valid time window" } },
+  for (let i = 0; i < dates.length; i++) {
+    const trip_date  = dates[i]!;
+    const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
+    const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
+
+    if (start_time >= end_time) {
+      rawResults.push({
+        data:      { kind: "conflict" as const, error: { code: "HC-6", message: "No valid time window" } },
+        place_map: {} as PlaceDisplayMap,
+      });
+      continue;
+    }
+
+    try {
+      const res = await fetch("/api/trip/plan", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          coordinate,
+          timestamp,
+          trip_date,
+          start_time,
+          end_time,
+          pace,
+          event_coords:       evtCoords.length    > 0 ? evtCoords    : undefined,
+          cart_coord_hints:   cartHints.length    > 0 ? cartHints    : undefined,
+          exclude_place_ids:  usedPlaceIds.length > 0 ? usedPlaceIds : undefined,
+          city,
+          locale,
+        }),
+      });
+
+      if (res.status === 409) {
+        const body = await res.json() as { error: string; conflict?: unknown };
+        rawResults.push({
+          data:      { kind: "conflict" as const, error: body.conflict },
           place_map: {} as PlaceDisplayMap,
-        };
-      }
-
-      try {
-        const res = await fetch("/api/trip/plan", {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body:    JSON.stringify({
-            coordinate,
-            timestamp,
-            trip_date,
-            start_time,
-            end_time,
-            pace,
-            event_coords:      evtCoords.length   > 0 ? evtCoords   : undefined,
-            cart_coord_hints:  cartHints.length   > 0 ? cartHints   : undefined,
-            city,
-            locale,
-          }),
         });
-
-        if (res.status === 409) {
-          const body = await res.json() as { error: string; conflict?: unknown };
-          return {
-            data:      { kind: "conflict" as const, error: body.conflict },
-            place_map: {} as PlaceDisplayMap,
-          };
-        }
-        if (!res.ok) {
-          return {
-            data:      { kind: "conflict" as const, error: { message: `HTTP ${res.status}` } },
-            place_map: {} as PlaceDisplayMap,
-          };
-        }
-
-        return await res.json() as ApiTripPlanResult;
-      } catch {
-        return {
-          data:      { kind: "conflict" as const, error: { message: "Network error" } },
-          place_map: {} as PlaceDisplayMap,
-        };
+        continue;
       }
-    }),
-  );
+      if (!res.ok) {
+        rawResults.push({
+          data:      { kind: "conflict" as const, error: { message: `HTTP ${res.status}` } },
+          place_map: {} as PlaceDisplayMap,
+        });
+        continue;
+      }
+
+      const dayResult = await res.json() as ApiTripPlanResult;
+      rawResults.push(dayResult);
+
+      // Accumulate only actually-placed place_ids so future days exclude them
+      const placedIds = (dayResult?.data?.plan?.items ?? [])
+        .map((item: ApiScheduledItem) => item.place_id ?? item.event_id)
+        .filter((id): id is string => Boolean(id));
+      usedPlaceIds.push(...placedIds);
+    } catch {
+      rawResults.push({
+        data:      { kind: "conflict" as const, error: { message: "Network error" } },
+        place_map: {} as PlaceDisplayMap,
+      });
+    }
+  }
 
   const conflictDayNumbers: number[] = [];
   const days: Day[] = rawResults.map((result, i) => {

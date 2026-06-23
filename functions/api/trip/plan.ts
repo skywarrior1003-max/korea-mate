@@ -315,6 +315,10 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   const cart_hints: CartHint[] = Array.isArray(body.cart_coord_hints)
     ? body.cart_coord_hints as CartHint[]
     : [];
+  // TASK-054: place_ids already scheduled in previous days — exclude from candidates
+  const exclude_place_ids: string[] = Array.isArray(body.exclude_place_ids)
+    ? (body.exclude_place_ids as string[]).map(String)
+    : [];
   const route_id = typeof body.route_id === "string" ? body.route_id : undefined;
 
   // 4. Route template stays
@@ -372,6 +376,14 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     .map(h => ({ place_id: h.place_id, preferred_time_slot: h.preferred_time_slot! }));
 
   const allCandidates = [...cartCandidates, ...baseCandidates];
+
+  // TASK-054: Remove candidates already placed in a previous day
+  // Comparison uses String(place_id) to handle both "94" and "local-23" formats
+  const excludeSet = new Set(exclude_place_ids);
+  const filteredCandidates = excludeSet.size > 0
+    ? allCandidates.filter(c => !excludeSet.has(String(c.place_id)))
+    : allCandidates;
+
   const allPreferred  = cartPreferred.length > 0 ? cartPreferred : undefined;
 
   // 9. Run scheduler — with_ai ALWAYS false, no Gemini calls
@@ -386,7 +398,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     preferred_items:      allPreferred,
     route_template_stays: route_template_stays,
     affiliate_context,
-    candidates:           allCandidates as any,
+    candidates:           filteredCandidates as any,
   });
 
   if (!schedulerResult.success) {
