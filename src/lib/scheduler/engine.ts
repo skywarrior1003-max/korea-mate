@@ -180,10 +180,25 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
     }
   };
 
-  // Pass 1: respect preferred_time_slot constraints
-  greedyLoop();
-  // Pass 2: cart items (score=999) that could not be placed in their preferred time slot
-  // get a fallback attempt in any remaining gap within the day window.
+  // Iterative greedy: repeat until no new items are placed (progress stalls),
+  // the candidate queue is empty, or a hard iteration cap is hit.
+  // Safety: capped at 20 iterations and exits immediately when placed.length
+  // does not increase, preventing infinite loops on unsatisfiable constraints.
+  const MAX_GREEDY_ITERATIONS = 20;
+  let prevCount  = -1;
+  let iterations = 0;
+  while (
+    placed.length !== prevCount &&
+    !pq.isEmpty() &&
+    iterations < MAX_GREEDY_ITERATIONS
+  ) {
+    prevCount = placed.length;
+    greedyLoop();
+    iterations++;
+  }
+
+  // Cart-fallback pass: cart items (score=999) that could not be placed in their
+  // preferred time slot get one final attempt in any remaining gap.
   greedyLoop(true);
 
   // ── P4: Affiliate Injection ────────────────────────────────────────────────
