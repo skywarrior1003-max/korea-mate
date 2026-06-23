@@ -294,6 +294,8 @@ async function generateWithNewApi(
 
   const dates  = buildDateRange(sd, ed);
   const cart   = getCart();
+  // TASK-053: cart item lookup map — used for display fallback when place_map misses "local-*" IDs
+  const cartItemByKey = Object.fromEntries(cart.map(c => [c.id, c]));
 
   // Collect names of cart items without coordinates so we can show a UI warning.
   const skippedCartNames = cart
@@ -318,9 +320,9 @@ async function generateWithNewApi(
       booking_url:         item.commerce?.bookingUrl ?? null,
     }));
 
-  // TASK-020: GPS 우선 체인 — 브라우저 GPS → 카트 좌표 → 도시 중심 → DEFAULT
-  const gpsCoord   = await getBrowserGPS();
-  const coordinate = gpsCoord ?? resolveCoordinate(city, cart);
+  // TASK-053: GPS 제거 — AI Trip 기본 생성에서 권한 요청하지 않음
+  // GPS는 별도 "Use my current location" 버튼에서만 요청해야 함
+  const coordinate = resolveCoordinate(city, cart);
 
   const pace       = toPace(tstyle);
   const evtCoords  = getEventCoords(cart, sd, ed);
@@ -409,7 +411,15 @@ async function generateWithNewApi(
       .filter(item => item.item_type !== "affiliate")
       .map(item => {
         const key      = item.place_id ?? item.event_id ?? "";
-        const display  = placeMap[key] ?? syntheticPlaceDisplay(item, city);
+        const cartFull = cartItemByKey[key];
+        const display: PlaceDisplay = placeMap[key] ?? (cartFull ? {
+          name:            cartFull.name,
+          category:        cartFull.type || "attraction",
+          district:        cartFull.district || city,
+          tips:            cartFull.description || "",
+          google_maps_url: cartFull.mapUrl
+            || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${cartFull.name} ${city} Korea`)}`,
+        } : syntheticPlaceDisplay(item, city));
         const cartHint = cartHintMap[key];
         return {
           name:              display.name,
