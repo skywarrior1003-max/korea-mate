@@ -303,6 +303,19 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
 
   // 3. Extract typed fields
   const coordinate: Coord = { lat: coord.lat as number, lng: coord.lng as number };
+
+  // TASK-057-B2: optional start_coordinate — scheduler Day-start base coordinate.
+  // Falls back to coordinate when absent so existing clients remain compatible.
+  // Phase 1: itinerary/page.tsx sends identical values; B2-2 will override coordinate to My Pick cluster centroid.
+  const rawStartCoord = body.start_coordinate as Record<string, unknown> | null | undefined;
+  const schedulerBaseCoordinate: Coord =
+    rawStartCoord &&
+    typeof rawStartCoord === "object" &&
+    typeof rawStartCoord.lat === "number" &&
+    typeof rawStartCoord.lng === "number"
+      ? { lat: rawStartCoord.lat, lng: rawStartCoord.lng }
+      : coordinate;
+
   const timestamp   = body.timestamp   as string;
   const trip_date   = body.trip_date   as string;
   const start_time  = body.start_time  as string;
@@ -395,7 +408,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     trip_date,
     start_time,
     end_time,
-    base_coordinate: coordinate as any,
+    base_coordinate: schedulerBaseCoordinate as any,
     pace,
     anchors:              Array.isArray(body.anchors)      ? body.anchors as any      : undefined,
     fixed_events:         Array.isArray(body.fixed_events) ? body.fixed_events as any : undefined,

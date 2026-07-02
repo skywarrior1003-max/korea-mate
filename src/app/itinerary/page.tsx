@@ -375,7 +375,9 @@ async function generateWithNewApi(
     // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
     // departureCoord on the last day caused airport-area coordinate collision with Day 1,
     // exhausting candidates and leaving Day 4 empty. end_time already constrains departure timing.
-    const dayCoordinate = currentCoordinate;
+    // TASK-057-B2: Phase 1 structural split — values are identical, enabling B2-2 override later.
+    const dayStartCoordinate     = currentCoordinate;
+    const nearMeSearchCoordinate = dayStartCoordinate;
 
     // TASK-057-B1: Evict already-placed My Picks from the remaining pool, then
     // build today's cart_hints from hints within today's distance threshold.
@@ -402,7 +404,8 @@ async function generateWithNewApi(
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({
-          coordinate: dayCoordinate,
+          coordinate:       nearMeSearchCoordinate,
+          start_coordinate: { lat: dayStartCoordinate.lat, lng: dayStartCoordinate.lng },
           timestamp,
           trip_date,
           start_time,
