@@ -17,6 +17,7 @@ import { loadMoments, addMoment, deleteMoment } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
+import { haversineKm } from "@/lib/geo";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -324,6 +325,21 @@ async function generateWithNewApi(
       booking_url:         item.commerce?.bookingUrl ?? null,
     }));
 
+  // TASK-057-B1: Day-aware My Picks hard filter.
+  // Day 1 uses a generous radius because the user travels from the arrival point
+  // (e.g. Incheon Airport, 50km from Seoul city centre) to the city on Day 1 —
+  // a tight threshold would defer ALL city My Picks on arrival day.
+  // General days (2+) use a tighter radius to prevent mixing distant districts
+  // (e.g. Haeundae picks appearing on a Nampo-anchored day).
+  // isAirportEvening + PROHIBITED_DAY1 already guard beach/distance abuse on Day 1.
+  const DAY1_CART_HINT_MAX_KM    = 50;
+  const DEFAULT_CART_HINT_MAX_KM = 25;
+
+  // Mutable pool: starts with ALL coord-valid My Picks.
+  // Items too far from today's base are deferred (not deleted) for next-day re-evaluation.
+  // Items placed today are removed at the next iteration's start via usedPlaceIds.
+  let remainingCartHints = [...cartHints];
+
   // TASK-053: GPS 제거 — AI Trip 기본 생성에서 권한 요청하지 않음
   // GPS는 별도 "Use my current location" 버튼에서만 요청해야 함
   const fallbackCoord = resolveCoordinate(city, cart);
@@ -361,6 +377,18 @@ async function generateWithNewApi(
     // exhausting candidates and leaving Day 4 empty. end_time already constrains departure timing.
     const dayCoordinate = currentCoordinate;
 
+    // TASK-057-B1: Evict already-placed My Picks from the remaining pool, then
+    // build today's cart_hints from hints within today's distance threshold.
+    // Hints that are too far are NOT removed — they stay for next-day re-evaluation.
+    {
+      const placedSet = new Set(usedPlaceIds.map(String));
+      remainingCartHints = remainingCartHints.filter(h => !placedSet.has(String(h.place_id)));
+    }
+    const maxKm = i === 0 ? DAY1_CART_HINT_MAX_KM : DEFAULT_CART_HINT_MAX_KM;
+    const todayCartHints = remainingCartHints.filter(h =>
+      haversineKm(currentCoordinate.lat, currentCoordinate.lng, h.lat, h.lng) <= maxKm
+    );
+
     if (start_time >= end_time) {
       rawResults.push({
         data:      { kind: "conflict" as const, error: { code: "HC-6", message: "No valid time window" } },
@@ -380,9 +408,9 @@ async function generateWithNewApi(
           start_time,
           end_time,
           pace,
-          event_coords:       evtCoords.length    > 0 ? evtCoords    : undefined,
-          cart_coord_hints:   cartHints.length    > 0 ? cartHints    : undefined,
-          exclude_place_ids:  usedPlaceIds.length > 0 ? usedPlaceIds : undefined,
+          event_coords:       evtCoords.length         > 0 ? evtCoords         : undefined,
+          cart_coord_hints:   todayCartHints.length    > 0 ? todayCartHints    : undefined,
+          exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
           city,
           locale,
         }),
