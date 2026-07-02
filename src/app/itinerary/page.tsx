@@ -753,6 +753,9 @@ function ItineraryResult() {
     ? { lat: _paramArrivalLat,  lng: _paramArrivalLng  } : undefined;
   const paramDepartureCoord = !isNaN(_paramDepartureLat) && !isNaN(_paramDepartureLng)
     ? { lat: _paramDepartureLat, lng: _paramDepartureLng } : undefined;
+  // TASK-060-B3D: transport point type from city-presets.ts — replaces fragile string matching
+  const paramArrivalType   = searchParams.get("arrivalType")   || "";
+  const paramDepartureType = searchParams.get("departureType") || "";
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
@@ -825,12 +828,8 @@ function ItineraryResult() {
   // ── 도착 시간 파싱 (컴포넌트 레벨 — 3중 방어의 공통 기준) ─
   const arrivalHour = parseInt(paramArrivalTime?.split(":")?.[0] ?? "14", 10);
 
-  // 공항 저녁 도착 감지
-  const isAirportEvening =
-    (paramStartLoc.toLowerCase().includes("airport") ||
-     paramStartLoc.toLowerCase().includes("gimhae") ||
-     paramStartLoc.toLowerCase().includes("공항")) &&
-    arrivalHour >= 17;
+  // 공항 저녁 도착 감지 — TASK-060-B3D: type 기반으로 교체 (문자열 "gimhae"/"airport"/"공항" 의존 제거)
+  const isAirportEvening = paramArrivalType === "airport" && arrivalHour >= 17;
 
   // 저녁 도착 감지 (공항 포함 — 17:00 이후 모든 케이스)
   const isEveningOrNightArrival = arrivalHour >= 17;

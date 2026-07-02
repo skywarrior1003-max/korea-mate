@@ -575,8 +575,8 @@ export default function Home() {
     // Pass arrival/departure coordinates so the scheduler can use per-day base_coordinate
     const arrivalOpt   = cityOptions.find(o => o.value === startLocation);
     const departureOpt = cityOptions.find(o => o.value === departurePlace);
-    if (arrivalOpt)   { params.set("arrivalLat",   String(arrivalOpt.lat));   params.set("arrivalLng",   String(arrivalOpt.lng));   }
-    if (departureOpt) { params.set("departureLat",  String(departureOpt.lat)); params.set("departureLng",  String(departureOpt.lng)); }
+    if (arrivalOpt)   { params.set("arrivalLat",   String(arrivalOpt.lat));   params.set("arrivalLng",   String(arrivalOpt.lng));   params.set("arrivalType",   arrivalOpt.type);   }
+    if (departureOpt) { params.set("departureLat",  String(departureOpt.lat)); params.set("departureLng",  String(departureOpt.lng)); params.set("departureType", departureOpt.type); }
     const days = startDate && endDate
       ? Math.round((new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000) + 1
       : 0;
