@@ -304,7 +304,7 @@ async function generateWithNewApi(
   deptTime?: string,
   arrivalCoord?: { lat: number; lng: number },
   departureCoord?: { lat: number; lng: number },
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[] }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -378,6 +378,9 @@ async function generateWithNewApi(
   // exclude places already scheduled in previous days, preventing Day 2/3/4 repeats.
   const rawResults: ApiTripPlanResult[] = [];
   const usedPlaceIds: string[] = [];  // accumulated across days
+  // TASK-057-B3: Trip-level signals for scheduling microcopy
+  let hadDeferredCartHints = false;
+  let usedCartHintCentroid = false;
 
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
@@ -414,6 +417,10 @@ async function generateWithNewApi(
       ) <= NEAR_ME_CLUSTER_SEARCH_MAX_KM
         ? todayCartHintsCentroid
         : dayStartCoordinate;
+
+    // TASK-057-B3: Detect deferred My Picks and centroid usage for microcopy
+    if (todayCartHints.length < remainingCartHints.length) hadDeferredCartHints = true;
+    if (nearMeSearchCoordinate !== dayStartCoordinate)     usedCartHintCentroid  = true;
 
     if (start_time >= end_time) {
       rawResults.push({
@@ -558,7 +565,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, hadDeferredCartHints, usedCartHintCentroid };
 }
 
 // ── 카테고리 이미지 ───────────────────────────────────────────
@@ -859,6 +866,8 @@ function ItineraryResult() {
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
   // ── TASK-049: Cart 아이템 좌표 없음 경고 표시용 ────────────────────────────────
   const [skippedCartNames, setSkippedCartNames] = useState<string[]>([]);
+  // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
+  const [tripNotes,        setTripNotes]        = useState<string[]>([]);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
@@ -1100,12 +1109,16 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               if (skipped.length > 0) setSkippedCartNames(skipped);
+              const notes: string[] = [];
+              if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
+              if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
+              if (notes.length > 0) setTripNotes(notes);
               if (days.length > 0 && conflictDayNumbers.length === days.length) {
                 setError("We couldn't generate your trip plan right now. Please try again in a moment.");
               }
@@ -1136,12 +1149,16 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
           if (skipped.length > 0) setSkippedCartNames(skipped);
+          const notes: string[] = [];
+          if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
+          if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
+          if (notes.length > 0) setTripNotes(notes);
           if (days.length > 0 && conflictDayNumbers.length === days.length) {
             setError("We couldn't generate your trip plan right now. Please try again in a moment.");
           }
@@ -1449,6 +1466,17 @@ function ItineraryResult() {
           <p className="mt-2 text-xs text-orange-500">
             These places are still saved in your cart and can be added manually.
           </p>
+        </div>
+      )}
+
+      {/* ── TASK-057-B3: My Pick scheduling explanation notes ── */}
+      {tripNotes.length > 0 && (
+        <div className="mb-4 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-1">
+          {tripNotes.map(note => (
+            <p key={note} className="text-sm text-blue-700 font-medium flex items-start gap-2">
+              <span className="shrink-0">💡</span>{note}
+            </p>
+          ))}
         </div>
       )}
 
