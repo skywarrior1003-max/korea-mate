@@ -282,6 +282,17 @@ function syntheticPlaceDisplay(item: ApiScheduledItem, city: string): PlaceDispl
   };
 }
 
+// ── TASK-057-B2-2: My Pick cluster centroid for NearMe search coordinate ─────────
+function getCartHintsCentroid(
+  hints: { lat: number; lng: number }[]
+): { lat: number; lng: number } | null {
+  const valid = hints.filter(h => typeof h.lat === "number" && typeof h.lng === "number");
+  if (valid.length === 0) return null;
+  const lat = valid.reduce((s, h) => s + h.lat, 0) / valid.length;
+  const lng = valid.reduce((s, h) => s + h.lng, 0) / valid.length;
+  return { lat, lng };
+}
+
 // ── TASK-018: 신규 일정 생성 오케스트레이터 (레거시 generateWithDwell 대체) ─────────
 async function generateWithNewApi(
   city: string,
@@ -332,8 +343,9 @@ async function generateWithNewApi(
   // General days (2+) use a tighter radius to prevent mixing distant districts
   // (e.g. Haeundae picks appearing on a Nampo-anchored day).
   // isAirportEvening + PROHIBITED_DAY1 already guard beach/distance abuse on Day 1.
-  const DAY1_CART_HINT_MAX_KM    = 50;
-  const DEFAULT_CART_HINT_MAX_KM = 25;
+  const DAY1_CART_HINT_MAX_KM         = 50;   // airport→city transit (Incheon→Seoul ~50km)
+  const DEFAULT_CART_HINT_MAX_KM      = 25;   // Day 2+: prevent district mixing
+  const NEAR_ME_CLUSTER_SEARCH_MAX_KM = 25;   // centroid must be within this km of dayStart to override
 
   // Mutable pool: starts with ALL coord-valid My Picks.
   // Items too far from today's base are deferred (not deleted) for next-day re-evaluation.
@@ -375,9 +387,8 @@ async function generateWithNewApi(
     // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
     // departureCoord on the last day caused airport-area coordinate collision with Day 1,
     // exhausting candidates and leaving Day 4 empty. end_time already constrains departure timing.
-    // TASK-057-B2: Phase 1 structural split — values are identical, enabling B2-2 override later.
-    const dayStartCoordinate     = currentCoordinate;
-    const nearMeSearchCoordinate = dayStartCoordinate;
+    // TASK-057-B2: dayStartCoordinate is the immutable scheduler base for this day.
+    const dayStartCoordinate = currentCoordinate;
 
     // TASK-057-B1: Evict already-placed My Picks from the remaining pool, then
     // build today's cart_hints from hints within today's distance threshold.
@@ -390,6 +401,19 @@ async function generateWithNewApi(
     const todayCartHints = remainingCartHints.filter(h =>
       haversineKm(currentCoordinate.lat, currentCoordinate.lng, h.lat, h.lng) <= maxKm
     );
+
+    // TASK-057-B2-2: Override NearMe search center to My Pick cluster centroid when safe.
+    // Only applies when the centroid is within NEAR_ME_CLUSTER_SEARCH_MAX_KM of dayStartCoordinate
+    // to prevent teleporting the search to a far-away My Pick cluster (e.g. airport Day 1).
+    const todayCartHintsCentroid = getCartHintsCentroid(todayCartHints);
+    const nearMeSearchCoordinate =
+      todayCartHintsCentroid !== null &&
+      haversineKm(
+        dayStartCoordinate.lat, dayStartCoordinate.lng,
+        todayCartHintsCentroid.lat, todayCartHintsCentroid.lng
+      ) <= NEAR_ME_CLUSTER_SEARCH_MAX_KM
+        ? todayCartHintsCentroid
+        : dayStartCoordinate;
 
     if (start_time >= end_time) {
       rawResults.push({
