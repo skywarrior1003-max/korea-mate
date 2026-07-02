@@ -1,6 +1,6 @@
 // GoKoreaMate / gokoreamate.com — Near Me 7-Factor Scorer
 // TASK-015: Near Me API Implementation
-// F1 distance (100) + F4 category (20) + F5 preference (30) + F6 itinerary (25)
+// F1 distance (100) + F4 category (20) + F5 preference (50) + F6 itinerary (25)
 // F2 coordinate_quality: STUB (DB column absent — 0pts, v2 enhancement)
 // F3 opening_hours: STUB (DB column absent — 0pts, v2 enhancement)
 // F7 event bonus: STUB (events table not joined — 0pts, v2 enhancement)
@@ -43,14 +43,14 @@ export function categoryWeight(category: PlaceCategory): number {
   return CATEGORY_WEIGHT[category] ?? 0;
 }
 
-// ─── F5: Preference Score (0 or 30) ───────────────────────────────────────────
-// +30 if the candidate's category matches any liked place's category
+// ─── F5: Preference Score (0 or 50) ───────────────────────────────────────────
+// +50 if candidate category matches a preferred/picked place category
 
 export function preferenceScore(
   candidate:      ZonedPlace,
   likedCategories: Set<PlaceCategory>
 ): number {
-  return likedCategories.has(candidate.category) ? 30 : 0;
+  return likedCategories.has(candidate.category) ? 50 : 0;
 }
 
 // ─── F6: Itinerary Proximity Score (0 or 25) ─────────────────────────────────

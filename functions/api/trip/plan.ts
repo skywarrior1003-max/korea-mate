@@ -360,11 +360,20 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   }
 
   // 6. Near Me — fresh Supabase client from ctx.env (bypasses supabase.ts singleton)
+  // cart_hints represent user-selected itinerary picks, so use their place_ids as preference
+  // signals when liked_place_ids are absent. local-* ids may not match DB candidates and are
+  // safely ignored by the scorer (buildLikedCategorySet skips unmatched ids).
+  const effective_liked_place_ids: string[] | undefined =
+    liked_place_ids ??
+    (cart_hints.length > 0
+      ? cart_hints.map(h => h.place_id).filter((id): id is string => typeof id === "string" && id.length > 0)
+      : undefined);
+
   const { results: nearMeResults, nearMeCount } = await runNearMeDirect({
     coordinate,
     timestamp,
     categories,
-    liked_place_ids,
+    liked_place_ids: effective_liked_place_ids,
     itinerary_coords,
     event_coords,
     limit: near_me_limit,
