@@ -84,3 +84,11 @@ export const CITY_DAY1_PROHIBITED: Record<string, string[]> = {
     "yonggungsa",
   ],
 };
+
+// Airport evening arrival banner gate per city (TASK-060-F).
+// Controls when to show the city-specific airport arrival notice banner.
+// Only cities with an entry show a banner; others (Seoul, Jeju, Gyeongju) get nothing.
+// Banner JSX content stays in itinerary/page.tsx — only the condition is data-driven.
+export const CITY_AIRPORT_ARRIVAL_BANNERS: Record<string, { minArrivalHour: number }> = {
+  Busan: { minArrivalHour: 17 },
+};

@@ -18,7 +18,7 @@ import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
-import { CITY_DAY1_PROHIBITED } from "@/data/city-presets";
+import { CITY_DAY1_PROHIBITED, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -899,6 +899,15 @@ function ItineraryResult() {
   // 저녁 도착 감지 (공항 포함 — 17:00 이후 모든 케이스)
   const isEveningOrNightArrival = arrivalHour >= 17;
 
+  // TASK-060-F: 도시별 공항 저녁 도착 배너 게이팅 — includes("gimhae") 하드코딩 제거
+  // city preset에 entry가 없는 도시(Seoul/Jeju/Gyeongju)는 배너 미표시
+  const _airportBannerCfg = CITY_AIRPORT_ARRIVAL_BANNERS[paramCity];
+  const shouldShowAirportBanner =
+    !shareId &&
+    paramArrivalType === "airport" &&
+    !!_airportBannerCfg &&
+    arrivalHour >= _airportBannerCfg.minArrivalHour;
+
   // Layer 2a: 공항 저녁 도착인데 금지 장소(해운대 등)가 Day 1에 있으면 true
   // TASK-060-E: keyword 출처를 city preset으로 이동 — 부산 전용 하드코딩 제거
   const PROHIBITED_DAY1 = CITY_DAY1_PROHIBITED[paramCity] ?? [];
@@ -1649,7 +1658,7 @@ function ItineraryResult() {
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
-      {!shareId && paramStartLoc.toLowerCase().includes("gimhae") && parseInt(paramArrivalTime || "0") >= 17 && (
+      {shouldShowAirportBanner && (
         <div className="mb-6 rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
           <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
