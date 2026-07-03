@@ -9,6 +9,7 @@ import SpotCard from "@/components/SpotCard";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
 import { haversineKm } from "@/lib/geo";
 import { fetchCitySpots } from "@/lib/city-spots";
+import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
 
@@ -140,7 +141,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       fetch("/data/local-info.json").then(r => r.json()).catch(() => []),
       fetch("/data/events.json").then(r => r.json()).catch(() => []),
     ]).then(([supabaseSpots, localRaw, eventsRaw]: [CitySpot[], unknown, unknown]) => {
-      const result: CitySpot[] = supabaseSpots.length > 0 ? [...supabaseSpots] : [...city.staticSpots];
+      const deduped = dedupeByCanonical(supabaseSpots);
+      const result: CitySpot[] = deduped.length > 0 ? [...deduped] : [...city.staticSpots];
       const seen = new Set(result.map(s => s.name.toLowerCase()));
 
       // local-info.json: 런타임 타입 가드로 필수 필드 검증
