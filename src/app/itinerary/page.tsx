@@ -1923,6 +1923,17 @@ function ItineraryResult() {
                     </p>
                   </div>
                 )}
+
+                {/* TASK-058-D: 마지막 날 출발 버퍼 안내 — 일정이 짧은 이유를 사용자에게 설명 */}
+                {day.dayNumber === days.length && paramDepartureTime && (
+                  <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#EAE3D2]/40 border border-[#D4AF37]/30">
+                    <span className="text-sm shrink-0">🕐</span>
+                    <p className="text-xs font-semibold text-[#8C6239]">
+                      Kept light — your departure is at {paramDepartureTime}.
+                    </p>
+                  </div>
+                )}
+
                 <div className="space-y-4" id={`day-${day.dayNumber}`}>
                   {TIME_SLOTS.map((ts) => {
                     const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
