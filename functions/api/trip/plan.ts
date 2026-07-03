@@ -86,6 +86,19 @@ const toMin = (hhmm: string) => {
   return (h ?? 0) * 60 + (m ?? 0);
 };
 
+// BUG-01: Cart hints arrive as "local-N" (e.g. "local-1"), DB candidates as "N" (e.g. "1").
+// Normalize both to the bare numeric/string id so duplicates can be detected.
+function normalizePlaceIdForDedupe(placeId: unknown): string | null {
+  if (placeId === null || placeId === undefined) return null;
+  const raw = String(placeId).trim();
+  if (!raw) return null;
+  if (raw.startsWith("local-")) {
+    const withoutPrefix = raw.replace(/^local-/, "").trim();
+    return withoutPrefix || raw;
+  }
+  return raw;
+}
+
 // ── NearMe: direct Supabase query via ctx.env (bypasses supabase.ts singleton) ──
 //
 // WHY: supabase.ts creates createClient() at module init with process.env.
@@ -401,7 +414,22 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     .filter(h => h.preferred_time_slot != null)
     .map(h => ({ place_id: h.place_id, preferred_time_slot: h.preferred_time_slot! }));
 
-  const allCandidates = [...cartCandidates, ...baseCandidates];
+  // BUG-01: Strip DB candidates whose bare id matches a cart hint's "local-N" id.
+  // "local-1" normalizes to "1"; DB candidate place_id "1" also normalizes to "1" → dedupe.
+  // cartCandidates themselves are never touched — only baseCandidates are filtered.
+  const cartHintDedupeIds = new Set(
+    cart_hints
+      .map(h => normalizePlaceIdForDedupe(h.place_id))
+      .filter((id): id is string => id !== null),
+  );
+  const dedupedBaseCandidates = cartHintDedupeIds.size > 0
+    ? baseCandidates.filter(c => {
+        const norm = normalizePlaceIdForDedupe((c as any).place_id);
+        return norm === null || !cartHintDedupeIds.has(norm);
+      })
+    : baseCandidates;
+
+  const allCandidates = [...cartCandidates, ...dedupedBaseCandidates];
 
   // TASK-054: Remove candidates already placed in a previous day
   // Comparison uses String(place_id) to handle both "94" and "local-23" formats
