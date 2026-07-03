@@ -18,6 +18,7 @@ import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
+import { CITY_DAY1_PROHIBITED } from "@/data/city-presets";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -899,7 +900,8 @@ function ItineraryResult() {
   const isEveningOrNightArrival = arrivalHour >= 17;
 
   // Layer 2a: 공항 저녁 도착인데 금지 장소(해운대 등)가 Day 1에 있으면 true
-  const PROHIBITED_DAY1 = ["haeundae", "gwangalli", "centum", "biff", "taejongdae", "haedong yonggungsa", "yonggungsa"];
+  // TASK-060-E: keyword 출처를 city preset으로 이동 — 부산 전용 하드코딩 제거
+  const PROHIBITED_DAY1 = CITY_DAY1_PROHIBITED[paramCity] ?? [];
   const day1HasProhibited = (dayList: Day[]): boolean => {
     const first = dayList[0];
     if (!first) return false;

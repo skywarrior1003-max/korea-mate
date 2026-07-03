@@ -68,3 +68,19 @@ export const CITY_ARRIVAL_OPTIONS: Record<string, CityPresetOption[]> = {
     { value: "Gyeongju Train Station (경주역)",            label: "🚉 Gyeongju Station",  lat: 35.8450, lng: 129.2213, type: "train_station"  },
   ],
 };
+
+// Day 1 airport-evening prohibited keywords per city (TASK-060-E).
+// Places whose name or location contains any of these keywords are filtered out
+// when isAirportEvening is true and the user arrives on Day 1.
+// Cities without an entry get [] (no keyword filter beyond time-slot filtering).
+export const CITY_DAY1_PROHIBITED: Record<string, string[]> = {
+  Busan: [
+    "haeundae",
+    "gwangalli",
+    "centum",
+    "biff",
+    "taejongdae",
+    "haedong yonggungsa",
+    "yonggungsa",
+  ],
+};
