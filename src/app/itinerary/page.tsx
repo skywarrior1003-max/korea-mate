@@ -294,6 +294,23 @@ function getCartHintsCentroid(
   return { lat, lng };
 }
 
+// ── TASK-058: Departure buffer — reserves travel time before departure ────────
+// Prevents the scheduler from filling the day right up to departure time,
+// leaving no room for travel to the airport / station / terminal / port.
+const DEPARTURE_BUFFER_MINUTES: Record<string, number> = {
+  airport:       60,
+  port:          45,
+  bus_terminal:  45,
+  train_station: 30,
+};
+const DEFAULT_DEPARTURE_BUFFER_MINUTES = 30;
+
+function applyDepartureBuffer(hhmm: string, bufferMin: number): string {
+  const [h, m] = hhmm.split(":").map(Number);
+  const total   = Math.max(0, (h ?? 0) * 60 + (m ?? 0) - bufferMin);
+  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+}
+
 // ── TASK-018: 신규 일정 생성 오케스트레이터 (레거시 generateWithDwell 대체) ─────────
 async function generateWithNewApi(
   city: string,
@@ -303,6 +320,7 @@ async function generateWithNewApi(
   tstyle: string,
   arrTime?: string,
   deptTime?: string,
+  deptType?: string,
   arrivalCoord?: { lat: number; lng: number },
   departureCoord?: { lat: number; lng: number },
 ): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
@@ -386,7 +404,14 @@ async function generateWithNewApi(
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
-    const end_time   = i === dates.length - 1 ? (deptTime ?? "21:00") : "21:00";
+    // TASK-058: On the last day apply a departure buffer so the scheduler leaves
+    // time to travel from the final place to the departure point.
+    // end_time already constrains departure timing (TASK-056-B); this just
+    // pulls it back by the transport-specific buffer before passing to scheduler.
+    const effectiveDeptTime = (i === dates.length - 1 && deptTime)
+      ? applyDepartureBuffer(deptTime, DEPARTURE_BUFFER_MINUTES[deptType ?? ""] ?? DEFAULT_DEPARTURE_BUFFER_MINUTES)
+      : undefined;
+    const end_time = i === dates.length - 1 ? (effectiveDeptTime ?? "21:00") : "21:00";
 
     // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
     // departureCoord on the last day caused airport-area coordinate collision with Day 1,
@@ -1119,7 +1144,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
@@ -1159,7 +1184,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramArrivalCoord, paramDepartureCoord)
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
