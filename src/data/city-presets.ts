@@ -59,13 +59,16 @@ export const CITY_ARRIVAL_OPTIONS: Record<string, CityPresetOption[]> = {
     { value: "Jeju City Center (제주시내)",                label: "🏙️ Jeju City",              lat: 33.4996, lng: 126.5312, type: "downtown"       },
     { value: "Seogwipo (서귀포)",                          label: "🌊 Seogwipo",               lat: 33.2541, lng: 126.5600, type: "downtown"       },
     { value: "Hamdeok Beach (함덕해변)",                   label: "🏖️ Hamdeok Beach",          lat: 33.5435, lng: 126.6684, type: "tourist_area"   },
-    { value: "Jeju Coastal Ferry Terminal (제주연안여객터미널)", label: "⛴️ Jeju Ferry Terminal", lat: 33.5267, lng: 126.5254, type: "port"          },
+    { value: "Jeju Coastal Ferry Terminal (제주연안여객터미널)", label: "⛴️ Jeju Ferry Terminal",        lat: 33.5267, lng: 126.5254, type: "port"          },
+    { value: "Jeju Intercity Bus Terminal (제주시외버스터미널)", label: "🚌 Jeju Bus Terminal",          lat: 33.4998, lng: 126.5149, type: "bus_terminal"  },
   ],
   Gyeongju: [
     { value: "Gyeongju KTX Station (신경주역)",            label: "🚄 Gyeongju KTX",      lat: 35.8344, lng: 129.2300, type: "train_station"  },
     { value: "Gyeongju City Center (경주시내)",            label: "🏛️ Gyeongju City",     lat: 35.8562, lng: 129.2247, type: "downtown"       },
     { value: "Bulguksa Temple Area (불국사)",              label: "🏯 Bulguksa",          lat: 35.7893, lng: 129.3317, type: "tourist_area"   },
-    { value: "Gyeongju Train Station (경주역)",            label: "🚉 Gyeongju Station",  lat: 35.8450, lng: 129.2213, type: "train_station"  },
+    { value: "Gyeongju Train Station (경주역)",                      label: "🚉 Gyeongju Station",          lat: 35.8450, lng: 129.2213, type: "train_station"  },
+    { value: "Gyeongju Intercity Bus Terminal (경주시외버스터미널)", label: "🚌 Gyeongju Intercity Bus",    lat: 35.8398, lng: 129.2025, type: "bus_terminal"  },
+    { value: "Gyeongju Express Bus Terminal (경주고속버스터미널)",   label: "🚌 Gyeongju Express Bus",      lat: 35.8404, lng: 129.2028, type: "bus_terminal"  },
   ],
 };
 
