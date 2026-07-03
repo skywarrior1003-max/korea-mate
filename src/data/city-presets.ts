@@ -88,6 +88,15 @@ export const CITY_DAY1_PROHIBITED: Record<string, string[]> = {
   ],
 };
 
+// Day 1 airport-evening max distance from arrival point per city (TASK-060-E2).
+// Used alongside CITY_DAY1_PROHIBITED (B안: both checks run independently, OR-combined).
+// Cities without an entry skip the distance check and rely on keyword-only filtering.
+// Seoul is intentionally omitted — Incheon Airport is ~50km from city centre, making
+// any meaningful distance threshold impossible without over-filtering all Seoul spots.
+export const CITY_DAY1_MAX_DISTANCE_KM: Record<string, number> = {
+  Busan: 15,
+};
+
 // Airport evening arrival banner gate per city (TASK-060-F).
 // Controls when to show the city-specific airport arrival notice banner.
 // Only cities with an entry show a banner; others (Seoul, Jeju, Gyeongju) get nothing.

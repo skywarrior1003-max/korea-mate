@@ -18,7 +18,7 @@ import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
-import { CITY_DAY1_PROHIBITED, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
+import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -34,6 +34,8 @@ interface Place {
   affiliateUrl?:      string | null;
   affiliateProvider?: string | null;
   bookingUrl?:        string | null;
+  lat?: number;
+  lng?: number;
 }
 
 interface Day {
@@ -572,6 +574,8 @@ async function generateWithNewApi(
           affiliateUrl:      cartHint?.affiliate_url,
           affiliateProvider: cartHint?.affiliate_provider,
           bookingUrl:        cartHint?.booking_url,
+          lat:               display.lat ?? cartFull?.lat,
+          lng:               display.lng ?? cartFull?.lng,
         };
       });
 
@@ -977,12 +981,19 @@ function ItineraryResult() {
       if (dayIdx === 0 && arrivalHour > 9) {
         if (isAirportEvening) {
           // 공항 저녁: arrivalHour 이전 AND 금지 장소 모두 제거
+          // TASK-060-E2 B안: 거리 체크(tooFar)와 keyword 체크(keywordBlocked)를 독립 실행,
+          // OR 결합. 삼항연산자(A안) 금지 — 좌표가 있어도 keyword는 항상 검사.
+          const cityMaxKm = CITY_DAY1_MAX_DISTANCE_KM[paramCity];
           cleaned = sorted.filter(p => {
             const h = parseInt(p.time?.split(":")?.[0] ?? "20", 10);
-            const prohibited = PROHIBITED_DAY1.some(
+            const tooFar =
+              paramArrivalCoord && p.lat != null && p.lng != null && cityMaxKm != null
+                ? haversineKm(paramArrivalCoord.lat, paramArrivalCoord.lng, p.lat, p.lng) > cityMaxKm
+                : false;
+            const keywordBlocked = PROHIBITED_DAY1.some(
               kw => p.name.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw)
             );
-            return h >= arrivalHour && !prohibited;
+            return h >= arrivalHour && !(tooFar || keywordBlocked);
           });
         } else {
           // 일반 도착(정오/오후/저녁/야간): arrivalHour 이전 시간 슬롯 제거
