@@ -31,7 +31,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/survival-guide/`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/all-spots/`,             lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/trending/`,              lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
-    { url: `${siteUrl}/itinerary/`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/blog/`,                  lastModified: new Date(), changeFrequency: "weekly",  priority: 0.7 },
     ...blogPosts,
   ];

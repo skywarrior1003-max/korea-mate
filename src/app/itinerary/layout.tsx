@@ -6,6 +6,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
   title: "My Korea Travel Itinerary — gokoreamate",
   description:
     "Your AI-generated Korea itinerary. Record GPS moments at each place and share to Instagram · TikTok · X in one tap.",
@@ -14,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "Your AI-built Korea trip plan. Capture moments and share as a story card — gokoreamate.com",
     type: "website",
-    url: "https://gokoreamate.com/itinerary",
+    url: "https://gokoreamate.com/itinerary/",
     siteName: "gokoreamate.com",
     images: [
       {
