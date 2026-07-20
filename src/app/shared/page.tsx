@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { fetchItinerary, type ItineraryRow } from "@/lib/supabase";
+import { fetchSharedItinerary, type ItineraryRow } from "@/lib/supabase";
 import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates/affiliate-loader";
 import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
@@ -121,8 +121,8 @@ export default function SharedTripPage() {
     if (!shareId) { setStatus("not_found"); return; }
 
     // ── Supabase 조회 파이프라인 ───────────────────────────────────────────────
-    // fetchItinerary without deviceId = public read (anon SELECT on itineraries)
-    fetchItinerary(shareId).then(async (record) => {
+    // TASK-SEC-02: fetchSharedItinerary = SECURITY DEFINER RPC 경유 (device_id/email 미반환)
+    fetchSharedItinerary(shareId).then(async (record) => {
       if (!record) { setStatus("not_found"); return; }
 
       setTrip(record);

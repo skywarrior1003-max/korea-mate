@@ -39,7 +39,13 @@ export interface PopularTrip {
   trip_title?:   string;
 }
 
+// ⚠️ TASK-SEC-02: 017_lockdown_itineraries.sql 적용 후 아래 직접 테이블 접근 함수들은
+//   anon SELECT/INSERT/UPDATE/DELETE 권한이 전면 회수되어 42501(permission denied) 실패.
+//   device_id 제거는 코드 레벨 개선이며 실제 보안 차단의 주체는 DB 레벨 REVOKE(017).
+//   복구: Phase 2에서 SECURITY DEFINER RPC 또는 서버 API Route로 교체.
+
 export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
+  // ⚠️ 017 migration 후 INSERT/UPDATE 모두 anon 권한 없음 → 실패 (false 반환)
   const { error } = await supabase
     .from("itineraries")
     .upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "id" });
@@ -48,18 +54,31 @@ export async function upsertItinerary(row: ItineraryRow): Promise<boolean> {
 }
 
 export async function fetchItinerary(id: string, deviceId?: string): Promise<ItineraryRow | null> {
+  // ⚠️ 017 migration 후 anon SELECT 권한 없음 → 실패 (null 반환)
+  // device_id는 SELECT 목록에서 제외: Phase 2 컬럼 제한 선제 대응 (보안 차단은 DB REVOKE)
   let q = supabase
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, device_id, updated_at, view_count, helpful_count")
+    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count")
     .eq("id", id);
-  // RLS 정책이 device_id를 요구할 때 필터 추가 (own-trip fallback)
+  // Phase 2에서 소유권 토큰으로 대체 예정
   if (deviceId) q = q.eq("device_id", deviceId);
   const { data, error } = await q.maybeSingle();
   if (error) { console.error("[Supabase] itinerary fetch:", error.message); return null; }
   return data;
 }
 
+// TASK-SEC-02: 공유 페이지 전용 안전 조회 — SECURITY DEFINER RPC 경유
+// device_id / email / created_at 미반환. 직접 REST 테이블 접근 대체.
+export async function fetchSharedItinerary(id: string): Promise<ItineraryRow | null> {
+  const { data, error } = await supabase
+    .rpc("get_shared_itinerary", { p_id: id });
+  if (error) { console.error("[Supabase] shared fetch:", error.message); return null; }
+  const rows = data as ItineraryRow[] | null;
+  return rows?.[0] ?? null;
+}
+
 export async function updateItineraryTitle(id: string, title: string, deviceId?: string): Promise<boolean> {
+  // ⚠️ 017 migration 후 anon UPDATE 권한 없음 → 실패 (false 반환)
   let q = supabase
     .from("itineraries")
     .update({ trip_title: title, updated_at: new Date().toISOString() })
@@ -71,6 +90,7 @@ export async function updateItineraryTitle(id: string, title: string, deviceId?:
 }
 
 export async function fetchItinerariesByDevice(deviceId: string): Promise<ItineraryRow[]> {
+  // ⚠️ 017 migration 후 anon SELECT 권한 없음 → 실패 ([] 반환, My Trips 빈 화면)
   const { data, error } = await supabase
     .from("itineraries")
     .select("id, city, start_date, end_date, travelers, travel_style, updated_at")
@@ -81,6 +101,7 @@ export async function fetchItinerariesByDevice(deviceId: string): Promise<Itiner
 }
 
 export async function deleteItinerary(id: string, deviceId?: string): Promise<boolean> {
+  // ⚠️ 017 migration 후 anon DELETE 권한 없음 → 실패 (false 반환)
   let q = supabase.from("itineraries").delete().eq("id", id);
   if (deviceId) q = q.eq("device_id", deviceId);
   const { error } = await q;
@@ -89,6 +110,7 @@ export async function deleteItinerary(id: string, deviceId?: string): Promise<bo
 }
 
 // TASK-034: popular trips feed — weighted score = view_count + helpful_count × 3
+// ⚠️ 017 migration 후 anon SELECT 권한 없음 → 실패 ([] 반환, 인기 여행 미노출)
 export async function fetchPopularTrips(limit = 6): Promise<PopularTrip[]> {
   const { data, error } = await supabase
     .from("itineraries")

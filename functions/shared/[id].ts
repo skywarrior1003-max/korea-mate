@@ -105,19 +105,23 @@ export const onRequest: (context: {
   let description = "Plan, capture & share your Korea trip story with AI. Free · No sign-up required.";
 
   try {
-    const endpoint =
-      `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/itineraries` +
-      `?id=eq.${encodeURIComponent(shareId)}` +
-      `&select=city,start_date,end_date,travel_style,days` +
-      `&limit=1`;
+    // TASK-SEC-02: 직접 테이블 REST 호출 → SECURITY DEFINER RPC 교체
+    // get_shared_itinerary: device_id / email 미반환, search_path 고정
+    const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!UUID_RE.test(shareId)) throw new Error("invalid_uuid");
+
+    const endpoint = `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/get_shared_itinerary`;
 
     // 3초 타임아웃 — 초과 시 catch로 넘어가 기본값 OG 반환
     const res = await Promise.race<Response>([
       fetch(endpoint, {
+        method: "POST",
         headers: {
-          apikey:        env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          "Content-Type": "application/json",
+          apikey:         env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+          Authorization:  `Bearer ${env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
         },
+        body: JSON.stringify({ p_id: shareId }),
       }),
       new Promise<Response>((_, reject) =>
         setTimeout(() => reject(new Error("supabase_timeout")), 3000)
