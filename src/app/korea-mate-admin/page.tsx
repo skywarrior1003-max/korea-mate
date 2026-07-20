@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { bulkUpsertSpots, csvRowToSpot, fetchFlaggedSpots, type SpotRow } from "@/lib/spots";
-
-const ADMIN_KEY = process.env.NEXT_PUBLIC_ADMIN_KEY ?? "km-admin-2026";
+import { csvRowToSpot, fetchFlaggedSpots, type SpotRow } from "@/lib/spots";
 
 type MigrateStatus = "idle" | "running" | "ok" | "token_missing" | "error";
 
@@ -45,6 +43,7 @@ function parseCSV(text: string): { headers: string[]; rows: Record<string, strin
 export default function AdminPage() {
   const [authed,        setAuthed]        = useState(false);
   const [pw,            setPw]            = useState("");
+  const [sessionKey,    setSessionKey]    = useState(""); // 인증 후 메모리에만 유지
   const [pwError,       setPwError]       = useState(false);
 
   const [migrateStatus, setMigrateStatus] = useState<MigrateStatus>("idle");
@@ -98,8 +97,8 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/admin/delete-spot", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: ADMIN_KEY, place_id: placeId }),
+        headers: { "Content-Type": "application/json", "x-admin-key": sessionKey },
+        body: JSON.stringify({ place_id: placeId }),
       });
       const data = await res.json() as { success?: boolean; error?: string };
       if (data.success) {
@@ -122,8 +121,7 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/admin/migrate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: ADMIN_KEY }),
+        headers: { "Content-Type": "application/json", "x-admin-key": sessionKey },
       });
       const data = await res.json() as { success?: boolean; error?: string; message?: string };
       if (data.success) {
@@ -143,14 +141,15 @@ export default function AdminPage() {
   }
 
   // ── 패스워드 인증 ──────────────────────────────────────────
+  // 클라이언트 비교 제거 — 입력값을 메모리에 유지, 서버 API에서만 x-admin-key로 검증
   function handleLogin() {
-    if (pw === ADMIN_KEY) {
-      setAuthed(true);
-      setPwError(false);
-      runMigration(); // 로그인 시 자동 실행
-    } else {
+    if (!pw.trim()) {
       setPwError(true);
+      return;
     }
+    setSessionKey(pw);
+    setAuthed(true);
+    setPwError(false);
   }
 
   // ── CSV 파일 처리 ──────────────────────────────────────────
@@ -200,9 +199,19 @@ export default function AdminPage() {
     if (!parsed.length) return;
     setUploading(true);
     setResult(null);
-    const res = await bulkUpsertSpots(parsed);
-    setResult(res);
-    setUploading(false);
+    try {
+      const res = await fetch("/api/admin/upsert-spots", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-key": sessionKey },
+        body: JSON.stringify({ spots: parsed }),
+      });
+      const data = await res.json() as { success: number; failed: number; errors: string[] };
+      setResult(data);
+    } catch (err) {
+      setResult({ success: 0, failed: parsed.length, errors: [(err as Error).message] });
+    } finally {
+      setUploading(false);
+    }
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -252,7 +261,7 @@ export default function AdminPage() {
             <p className="text-gray-400 text-sm mt-1">CSV 일괄 업로더 — Supabase spots 테이블 동기화</p>
           </div>
           <button
-            onClick={() => setAuthed(false)}
+            onClick={() => { setAuthed(false); setSessionKey(""); }}
             className="text-xs text-gray-500 hover:text-white border border-gray-700 px-3 py-1.5 rounded-lg"
           >
             로그아웃

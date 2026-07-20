@@ -73,39 +73,11 @@ export async function searchSpots(query: string, limit = 14): Promise<SpotRow[]>
   return (data ?? []) as SpotRow[];
 }
 
-export async function upsertSpot(row: SpotRow): Promise<boolean> {
-  const { error } = await supabase
-    .from("spots")
-    .upsert(row, { onConflict: "place_id" });
-  if (error) { console.error("[Supabase] spot upsert:", error.message); return false; }
-  return true;
-}
-
-export async function bulkUpsertSpots(
-  rows: SpotRow[]
-): Promise<{ success: number; failed: number; errors: string[] }> {
-  const CHUNK = 50;
-  let success = 0;
-  let failed = 0;
-  const errors: string[] = [];
-
-  for (let i = 0; i < rows.length; i += CHUNK) {
-    const chunk = rows.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("spots")
-      .upsert(chunk, { onConflict: "place_id" });
-    if (error) {
-      failed += chunk.length;
-      errors.push(`Chunk ${Math.floor(i / CHUNK) + 1}: ${error.message}`);
-    } else {
-      success += chunk.length;
-    }
-  }
-
-  return { success, failed, errors };
-}
-
 // CSV 헤더 → SpotRow 필드 매핑
+// NOTE: upsertSpot / bulkUpsertSpots는 TASK-SEC-01-B1에서 제거됨.
+// spots 쓰기는 /api/admin/upsert-spots (service_role) 경로를 통해서만 허용.
+// 브라우저에서 anon key로 직접 upsert하는 구조가 보안 취약점이었음.
+// 대체: /api/admin/upsert-spots (서버 API, service_role key 사용)
 const HEADER_MAP: Record<string, keyof SpotRow> = {
   place_id:       "place_id",
   id_key:         "place_id",

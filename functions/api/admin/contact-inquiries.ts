@@ -1,13 +1,15 @@
 // Cloudflare Pages Function — GET/PATCH /api/admin/contact-inquiries
 // Admin-only: list/single inquiry (GET), update status/priority/note (PATCH).
-// Auth: x-admin-key header validated against ADMIN_KEY env var (server-side only).
+// Auth: x-admin-key 헤더를 ADMIN_KEY env var(서버 전용)로 검증.
+// DB: SUPABASE_SERVICE_ROLE_KEY 필수 — anon key fallback 없음 (TASK-SEC-01-B1-2).
 // Runtime: Cloudflare Workers (edge). No Node.js APIs.
+
+import { checkAdminAuth, getServiceRoleHeaders, json } from "../../_lib/admin-auth";
 
 interface Env {
   ADMIN_KEY: string;
   NEXT_PUBLIC_SUPABASE_URL: string;
   SUPABASE_SERVICE_ROLE_KEY: string;
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: string; // fallback if service role key absent
 }
 
 type Ctx = {
@@ -18,33 +20,6 @@ type Ctx = {
 const ALLOWED_STATUSES = new Set([
   "new", "reviewing", "waiting_user", "resolved", "archived", "spam",
 ]);
-
-function json(data: unknown, status = 200): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-function checkAuth(request: Request, env: Env): { ok: boolean; status: 401 | 503 } {
-  const adminKey = env.ADMIN_KEY;
-  if (!adminKey) {
-    console.error("[admin fn] ADMIN_KEY env var is not set. Admin endpoints are disabled.");
-    return { ok: false, status: 503 };
-  }
-  const key = request.headers.get("x-admin-key");
-  return key === adminKey ? { ok: true, status: 401 } : { ok: false, status: 401 };
-}
-
-function dbHeaders(env: Env): Record<string, string> {
-  // Service role key bypasses RLS — use only on server-side (never expose to client)
-  const key = env.SUPABASE_SERVICE_ROLE_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return {
-    "Content-Type": "application/json",
-    apikey:         key,
-    Authorization:  `Bearer ${key}`,
-  };
-}
 
 function mapRow(r: Record<string, unknown>) {
   return {
@@ -71,23 +46,22 @@ function mapRow(r: Record<string, unknown>) {
 // ── GET /api/admin/contact-inquiries?id=xxx  → single inquiry
 
 export const onRequestGet: (context: Ctx) => Promise<Response> = async ({ request, env }) => {
-  const auth = checkAuth(request, env);
-  if (!auth.ok) {
-    return json(
-      { error: auth.status === 503 ? "Admin API disabled — ADMIN_KEY not configured." : "Unauthorized." },
-      auth.status
-    );
+  const authErr = checkAdminAuth(request, env.ADMIN_KEY);
+  if (authErr) return authErr;
+
+  const dbHeaders = getServiceRoleHeaders(env.SUPABASE_SERVICE_ROLE_KEY);
+  if (!dbHeaders) {
+    return json({ error: "Admin DB client not configured (SUPABASE_SERVICE_ROLE_KEY missing)" }, 503);
   }
 
   const url = new URL(request.url);
   const id  = url.searchParams.get("id");
   const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
-  const headers     = dbHeaders(env);
 
   if (id) {
     const res = await fetch(
       `${supabaseUrl}/rest/v1/contact_inquiries?id=eq.${encodeURIComponent(id)}&limit=1`,
-      { headers }
+      { headers: dbHeaders }
     );
     if (!res.ok) {
       console.error("[admin fn] Supabase select error:", await res.text());
@@ -100,7 +74,7 @@ export const onRequestGet: (context: Ctx) => Promise<Response> = async ({ reques
 
   const res = await fetch(
     `${supabaseUrl}/rest/v1/contact_inquiries?order=created_at.desc&limit=200`,
-    { headers }
+    { headers: dbHeaders }
   );
   if (!res.ok) {
     console.error("[admin fn] Supabase list error:", await res.text());
@@ -114,12 +88,12 @@ export const onRequestGet: (context: Ctx) => Promise<Response> = async ({ reques
 // Body: { id: string; status?: string; priority?: string; adminNote?: string }
 
 export const onRequestPatch: (context: Ctx) => Promise<Response> = async ({ request, env }) => {
-  const auth = checkAuth(request, env);
-  if (!auth.ok) {
-    return json(
-      { error: auth.status === 503 ? "Admin API disabled — ADMIN_KEY not configured." : "Unauthorized." },
-      auth.status
-    );
+  const authErr = checkAdminAuth(request, env.ADMIN_KEY);
+  if (authErr) return authErr;
+
+  const dbHeaders = getServiceRoleHeaders(env.SUPABASE_SERVICE_ROLE_KEY);
+  if (!dbHeaders) {
+    return json({ error: "Admin DB client not configured (SUPABASE_SERVICE_ROLE_KEY missing)" }, 503);
   }
 
   let body: Record<string, unknown>;
@@ -149,13 +123,12 @@ export const onRequestPatch: (context: Ctx) => Promise<Response> = async ({ requ
   }
 
   const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
-  const headers     = dbHeaders(env);
 
   const res = await fetch(
     `${supabaseUrl}/rest/v1/contact_inquiries?id=eq.${encodeURIComponent(id)}`,
     {
       method:  "PATCH",
-      headers: { ...headers, Prefer: "return=minimal" },
+      headers: { ...dbHeaders, Prefer: "return=minimal" },
       body:    JSON.stringify(patch),
     }
   );
@@ -168,7 +141,7 @@ export const onRequestPatch: (context: Ctx) => Promise<Response> = async ({ requ
   return json({ success: true });
 };
 
-// ── Other methods → 405 ───────────────────────────────────────────────────────
+// ── Other methods → 405 ──────────────────────────────────────────────────────
 
 export const onRequest: (context: Ctx) => Promise<Response> =
   async () => json({ error: "Method not allowed." }, 405);

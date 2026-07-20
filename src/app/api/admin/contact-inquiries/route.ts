@@ -8,20 +8,11 @@
 export const dynamic = "force-static";
 
 import { NextRequest, NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/admin-auth";
 
 const ALLOWED_STATUSES = new Set<string>([
   "new", "reviewing", "waiting_user", "resolved", "archived", "spam",
 ]);
-
-function checkAuth(req: NextRequest): { ok: boolean; status: 401 | 503 } {
-  const adminKey = process.env.ADMIN_KEY;
-  if (!adminKey) {
-    console.error("[admin API] ADMIN_KEY env var is not set. Admin endpoints are disabled.");
-    return { ok: false, status: 503 };
-  }
-  const key = req.headers.get("x-admin-key");
-  return key === adminKey ? { ok: true, status: 401 } : { ok: false, status: 401 };
-}
 
 function dbHeaders(): Record<string, string> {
   const key =
@@ -59,13 +50,8 @@ function mapRow(r: Record<string, unknown>) {
 // GET /api/admin/contact-inquiries           → list all (newest first)
 // GET /api/admin/contact-inquiries?id=xxx   → single inquiry
 export async function GET(req: NextRequest) {
-  const auth = checkAuth(req);
-  if (!auth.ok) {
-    const msg = auth.status === 503
-      ? "Admin key not configured on server."
-      : "Unauthorized.";
-    return NextResponse.json({ error: msg }, { status: auth.status });
-  }
+  const authError = checkAdminAuth(req);
+  if (authError) return authError;
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
   const id = req.nextUrl.searchParams.get("id");
@@ -98,13 +84,8 @@ export async function GET(req: NextRequest) {
 
 // PATCH /api/admin/contact-inquiries  → update status / priority / adminNote
 export async function PATCH(req: NextRequest) {
-  const auth = checkAuth(req);
-  if (!auth.ok) {
-    const msg = auth.status === 503
-      ? "Admin key not configured on server."
-      : "Unauthorized.";
-    return NextResponse.json({ error: msg }, { status: auth.status });
-  }
+  const authError = checkAdminAuth(req);
+  if (authError) return authError;
 
   const body = await req.json() as {
     id?: string;

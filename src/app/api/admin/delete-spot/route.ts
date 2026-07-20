@@ -1,51 +1,47 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/admin-auth";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
-export async function POST(request: Request) {
-  const body = await request.json().catch(() => ({})) as Record<string, string>;
+export async function POST(req: NextRequest) {
+  const authError = checkAdminAuth(req);
+  if (authError) return authError;
 
-  const adminKey = process.env.NEXT_PUBLIC_ADMIN_KEY ?? "km-admin-2026";
-  if (body.key !== adminKey) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+  const body = await req.json().catch(() => ({})) as Record<string, string>;
   const { place_id } = body;
+
   if (!place_id || !/^[a-zA-Z0-9\-_]+$/.test(place_id)) {
     return NextResponse.json({ error: "Invalid place_id" }, { status: 400 });
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const accessToken = process.env.SUPABASE_ACCESS_TOKEN;
-
-  if (!supabaseUrl) {
-    return NextResponse.json({ error: "SUPABASE_URL missing" }, { status: 500 });
-  }
-  if (!accessToken) {
-    return NextResponse.json({ error: "TOKEN_MISSING" }, { status: 503 });
+  let db;
+  try {
+    db = getSupabaseAdmin();
+  } catch {
+    return NextResponse.json({ error: "Admin DB client not configured (SUPABASE_SERVICE_ROLE_KEY missing)" }, { status: 503 });
   }
 
-  const projectRef = supabaseUrl.replace("https://", "").split(".")[0];
-  // place_id validated above (alphanum + hyphens/underscores only)
-  const sql = `
-    DELETE FROM spot_reactions WHERE place_id = '${place_id}';
-    DELETE FROM spots WHERE place_id = '${place_id}';
-  `.trim();
+  // spot_reactions 먼저 삭제 (FK 의존성 순서)
+  const { error: reactErr } = await db
+    .from("spot_reactions")
+    .delete()
+    .eq("place_id", place_id);
 
-  const res = await fetch(
-    `https://api.supabase.com/v1/projects/${projectRef}/database/query`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: sql }),
-    }
-  ).catch((err: Error) => { throw new Error(`Network error: ${err.message}`); });
-
-  const data = await res.json().catch(() => null);
-  if (!res.ok) {
+  if (reactErr) {
     return NextResponse.json(
-      { error: (data as { message?: string })?.message ?? `HTTP ${res.status}` },
+      { error: `reactions 삭제 실패: ${reactErr.message}` },
+      { status: 500 }
+    );
+  }
+
+  // spots 삭제
+  const { error: spotErr } = await db
+    .from("spots")
+    .delete()
+    .eq("place_id", place_id);
+
+  if (spotErr) {
+    return NextResponse.json(
+      { error: `spot 삭제 실패: ${spotErr.message}` },
       { status: 500 }
     );
   }

@@ -1,6 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { checkAdminAuth } from "@/lib/admin-auth";
 
 // 완전 멱등 마이그레이션: DROP TABLE 없음 — 기존 데이터 보존, 재실행 안전
+// TASK-SEC-01-B1: anon_all(FOR ALL) 제거 → spots_anon_select(SELECT only) 로 교체
+//                 anon_delete_reactions 제거 (device_id ownership 가드 없이 타인 reaction 삭제 가능)
 const MIGRATION_SQL = `
 -- ① spots 테이블 (IF NOT EXISTS: 기존 데이터 보존)
 CREATE TABLE IF NOT EXISTS spots (
@@ -19,8 +22,10 @@ CREATE TABLE IF NOT EXISTS spots (
 CREATE INDEX IF NOT EXISTS idx_spots_place_id ON spots(place_id);
 CREATE INDEX IF NOT EXISTS idx_spots_category ON spots(category);
 ALTER TABLE spots ENABLE ROW LEVEL SECURITY;
+-- anon: SELECT 전용만 허용 — INSERT/UPDATE/DELETE는 service_role(관리자 API)만 허용
 DROP POLICY IF EXISTS "anon_all" ON spots;
-CREATE POLICY "anon_all" ON spots FOR ALL TO anon USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "spots_anon_select" ON spots;
+CREATE POLICY "spots_anon_select" ON spots FOR SELECT TO anon USING (true);
 
 -- ② spot_reactions 테이블
 CREATE TABLE IF NOT EXISTS spot_reactions (
@@ -36,8 +41,8 @@ DROP POLICY IF EXISTS "anon_insert_reactions" ON spot_reactions;
 CREATE POLICY "anon_insert_reactions" ON spot_reactions FOR INSERT TO anon WITH CHECK (true);
 DROP POLICY IF EXISTS "anon_read_reactions" ON spot_reactions;
 CREATE POLICY "anon_read_reactions" ON spot_reactions FOR SELECT TO anon USING (true);
+-- anon DELETE는 허용하지 않음 — device_id ownership 가드 없이 타인 reaction 삭제 가능
 DROP POLICY IF EXISTS "anon_delete_reactions" ON spot_reactions;
-CREATE POLICY "anon_delete_reactions" ON spot_reactions FOR DELETE TO anon USING (true);
 
 -- ③ 안전 스키마 추가: itineraries 커스텀 제목 컬럼
 ALTER TABLE itineraries ADD COLUMN IF NOT EXISTS trip_title TEXT;
@@ -63,11 +68,21 @@ DROP POLICY IF EXISTS "anon_read_own_emails" ON user_emails;
 CREATE POLICY "anon_read_own_emails" ON user_emails FOR SELECT TO anon USING (true);
 `.trim();
 
-export async function POST(request: Request) {
-  const body = await request.json().catch(() => ({})) as Record<string, string>;
-  const adminKey = process.env.NEXT_PUBLIC_ADMIN_KEY ?? "km-admin-2026";
-  if (body.key !== adminKey) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+export async function POST(req: NextRequest) {
+  const authError = checkAdminAuth(req);
+  if (authError) return authError;
+
+  // Fail-closed: 운영 환경에서 DDL 실수 방지.
+  // 로컬 개발에서만 사용하려면 .env.local에 ENABLE_ADMIN_MIGRATE=true 설정.
+  // Cloudflare Pages 환경 변수에는 절대 설정하지 마세요.
+  if (process.env.ENABLE_ADMIN_MIGRATE !== "true") {
+    return NextResponse.json(
+      {
+        error: "MIGRATION_DISABLED",
+        message: "Migration endpoint is disabled. Set ENABLE_ADMIN_MIGRATE=true in .env.local to enable (dev only).",
+      },
+      { status: 403 }
+    );
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -92,7 +107,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // URL 형식: https://[ref].supabase.co
   const projectRef = supabaseUrl.replace("https://", "").split(".")[0];
 
   const res = await fetch(
