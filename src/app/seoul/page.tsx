@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         alt: "Seoul Korea Trip Itinerary — gokoreamate.com",
       },
     ],
-    url: "https://gokoreamate.com/seoul",
+    url: "https://gokoreamate.com/seoul/",
     siteName: "gokoreamate.com",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "AI itineraries for Seoul — palaces, street food, K-pop & more. Free trip planner.",
     images: ["https://gokoreamate.com/og/seoul/opengraph-image.png"],
   },
-  alternates: { canonical: "https://gokoreamate.com/seoul" },
+  alternates: { canonical: "https://gokoreamate.com/seoul/" },
 };
 
 const HIGHLIGHTS = [

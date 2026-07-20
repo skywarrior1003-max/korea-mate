@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         alt: "Jeju Korea Trip Itinerary — gokoreamate.com",
       },
     ],
-    url: "https://gokoreamate.com/jeju",
+    url: "https://gokoreamate.com/jeju/",
     siteName: "gokoreamate.com",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "AI itineraries for Jeju island — volcanoes, beaches, lava caves & more. Free trip planner.",
     images: ["https://gokoreamate.com/og/jeju/opengraph-image.png"],
   },
-  alternates: { canonical: "https://gokoreamate.com/jeju" },
+  alternates: { canonical: "https://gokoreamate.com/jeju/" },
 };
 
 const HIGHLIGHTS = [

@@ -31,10 +31,14 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${post.title} — gokoreamate.com`,
     description: post.summary,
+    alternates: {
+      canonical: `https://gokoreamate.com/blog/${slug}/`,
+    },
     openGraph: {
       title: `${post.title} — gokoreamate.com`,
       description: post.summary,
       type: "article",
+      url: `https://gokoreamate.com/blog/${slug}/`,
       images: [{ url: ogImage, width: 1200, height: 630 }],
     },
     twitter: {

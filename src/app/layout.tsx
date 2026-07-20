@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description:
       "AI builds your Korea itinerary. You capture the moments. One tap shares your story to Instagram, TikTok & X.",
     type: "website",
-    url: "https://gokoreamate.com",
+    url: "https://gokoreamate.com/",
     siteName: "gokoreamate.com",
     images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "gokoreamate — Plan · Capture · Share Your Korea Story" }],
   },
@@ -52,9 +52,6 @@ export const metadata: Metadata = {
     images: ["/opengraph-image.png"],
   },
   metadataBase: new URL("https://gokoreamate.com"),
-  alternates: {
-    canonical: "https://gokoreamate.com",
-  },
   verification: {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || "sGBjjMTMMM8LKvzHnDCQ0AQpHdQKBOSEQUizwVBTpxo",
   },

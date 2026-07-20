@@ -18,10 +18,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Explore ${config.name} — gokoreamate`,
     description: `Discover the best spots, food, and hidden gems in ${config.name} (${config.nameKo}). Interactive map, GPS Near Me, and curated travel guides.`,
+    alternates: {
+      canonical: `https://gokoreamate.com/explore/${slug}/`,
+    },
     openGraph: {
       title: `Explore ${config.name} — gokoreamate`,
       description: `Plan your ${config.name} adventure with curated spots, NaverMap, and solo-travel tips.`,
-      url: `https://www.gokoreamate.com/explore/${slug}`,
+      url: `https://gokoreamate.com/explore/${slug}/`,
     },
   };
 }

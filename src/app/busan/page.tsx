@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         alt: "Busan Korea Trip Itinerary — gokoreamate.com",
       },
     ],
-    url: "https://gokoreamate.com/busan",
+    url: "https://gokoreamate.com/busan/",
     siteName: "gokoreamate.com",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "AI itineraries for Busan — beaches, seafood, night views & more. Free trip planner.",
     images: ["https://gokoreamate.com/og/busan/opengraph-image.png"],
   },
-  alternates: { canonical: "https://gokoreamate.com/busan" },
+  alternates: { canonical: "https://gokoreamate.com/busan/" },
 };
 
 const HIGHLIGHTS = [

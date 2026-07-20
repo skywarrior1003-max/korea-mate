@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         alt: "Gyeongju Korea Trip Itinerary — gokoreamate.com",
       },
     ],
-    url: "https://gokoreamate.com/gyeongju",
+    url: "https://gokoreamate.com/gyeongju/",
     siteName: "gokoreamate.com",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "AI itineraries for Gyeongju — ancient capital, temples, royal tombs & more. Free trip planner.",
     images: ["https://gokoreamate.com/og/gyeongju/opengraph-image.png"],
   },
-  alternates: { canonical: "https://gokoreamate.com/gyeongju" },
+  alternates: { canonical: "https://gokoreamate.com/gyeongju/" },
 };
 
 const HIGHLIGHTS = [
