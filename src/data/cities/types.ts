@@ -48,4 +48,5 @@ export interface CityConfig {
   nameKo: string;
   defaultCenter: { lat: number; lng: number };
   staticSpots: CitySpot[];
+  seoDescription: string;
 }

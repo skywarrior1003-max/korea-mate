@@ -5,6 +5,7 @@ const busanConfig: CityConfig = {
   name: "Busan",
   nameKo: "부산",
   defaultCenter: { lat: 35.1587, lng: 129.1604 },
+  seoDescription: "Korea's coastal megacity on the south coast. Explore sandy Haeundae and Gwangalli beaches, the painted alleys of Gamcheon Culture Village, fresh catch at Jagalchi Fish Market, and mountain trails above the port. From seaside cafés to late-night raw fish markets — Busan rewards slow wandering.",
   staticSpots: [
     {
       id: 6,

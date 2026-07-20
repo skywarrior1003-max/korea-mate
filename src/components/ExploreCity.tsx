@@ -371,16 +371,13 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
   // ── Page header ─────────────────────────────────────────────────────────────
   const pageHeader = (
-    <div className="flex items-start justify-between gap-4 mb-5">
-      <div>
-        <h1 className="text-2xl lg:text-3xl font-black text-gray-900">{tE("title", { city: city.name })}</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          {filteredSpots.length === 1
-            ? tE("spotCount", { count: filteredSpots.length })
-            : tE("spotCountPlural", { count: filteredSpots.length })}
-          {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
-        </p>
-      </div>
+    <div className="flex items-center justify-between gap-4 mb-5">
+      <p className="text-gray-500 text-sm">
+        {filteredSpots.length === 1
+          ? tE("spotCount", { count: filteredSpots.length })
+          : tE("spotCountPlural", { count: filteredSpots.length })}
+        {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
+      </p>
       <Link href="/" className="shrink-0 text-sm font-bold text-gray-500 border border-gray-200 px-3 py-2 rounded-xl hover:border-gray-400 transition-colors">
         {tN("home")}
       </Link>
@@ -445,6 +442,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 // ── Public export ────────────────────────────────────────────────────────────
 
 export default function ExploreCity({ city }: { city: CityConfig }) {
+  const tE = useTranslations("explore");
   const tN = useTranslations("nav");
   const tF = useTranslations("footer");
 
@@ -476,6 +474,11 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
 
       {/* Main content: flex-1 so map fills remaining viewport on desktop */}
       <main className="flex-1 overflow-hidden flex flex-col">
+        {/* SEO: h1 + city description — server-rendered outside Suspense BAILOUT */}
+        <div className="shrink-0 bg-white border-b border-gray-100 px-4 lg:px-6 py-3">
+          <h1 className="text-lg font-black text-gray-900">{tE("title", { city: city.name })}</h1>
+          <p className="text-sm text-gray-500 mt-0.5 max-w-2xl leading-relaxed">{city.seoDescription}</p>
+        </div>
         <Suspense fallback={
           <div className="flex-1 flex items-center justify-center py-24">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2" style={{ borderColor: "#f97316" }} />
