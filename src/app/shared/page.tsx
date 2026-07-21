@@ -34,6 +34,20 @@ interface Day {
   places:    Place[];
 }
 
+// ── v2 days 파싱 — { __v:2, scheduled: Day[] } 또는 legacy Day[] 모두 지원 ───
+function parseScheduledDays(value: unknown): Day[] {
+  if (Array.isArray(value)) return value as Day[];
+  if (
+    value !== null &&
+    typeof value === "object" &&
+    (value as { __v?: number }).__v === 2
+  ) {
+    const scheduled = (value as { scheduled?: unknown }).scheduled;
+    if (Array.isArray(scheduled)) return scheduled as Day[];
+  }
+  return [];
+}
+
 // ── 유틸: 클론 URL 빌더 ──────────────────────────────────────────────────────
 // 공유된 일정의 날짜·스타일을 홈페이지 플래너에 pre-fill하는 URL 생성
 const STYLE_MAP: Record<string, string> = {
@@ -128,10 +142,8 @@ export default function SharedTripPage() {
       setTrip(record);
       setHelpfulCount(record.helpful_count ?? 0);
 
-      // days JSONB → Day[] 캐스팅
-      const parsedDays = Array.isArray(record.days)
-        ? (record.days as unknown as Day[])
-        : [];
+      // days JSONB → Day[] 파싱 (legacy Day[] 및 v2 { __v:2, scheduled } 모두 지원)
+      const parsedDays = parseScheduledDays(record.days);
       setDays(parsedDays);
 
       // ── document.title 오버라이드 (Phase 1 OG 대응) ─────────────────────────

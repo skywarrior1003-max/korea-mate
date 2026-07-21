@@ -16,6 +16,20 @@ interface ItineraryRow {
   days:         unknown[];
 }
 
+// ── v2 days 파싱 — { __v:2, scheduled: unknown[] } 또는 legacy 배열 모두 지원 ─
+function getScheduledDayCount(value: unknown): number {
+  if (Array.isArray(value)) return value.length;
+  if (
+    value !== null &&
+    typeof value === "object" &&
+    (value as { __v?: number }).__v === 2
+  ) {
+    const scheduled = (value as { scheduled?: unknown }).scheduled;
+    if (Array.isArray(scheduled)) return scheduled.length;
+  }
+  return 0;
+}
+
 // ── 크롤러 봇 User-Agent 패턴 ─────────────────────────────────────────────────
 const BOT_UA_PATTERNS: RegExp[] = [
   /facebookexternalhit/i,  // Facebook / Instagram
@@ -134,7 +148,7 @@ export const onRequest: (context: {
 
       if (trip) {
         const cityCap  = trip.city.charAt(0).toUpperCase() + trip.city.slice(1);
-        const dayCount = Array.isArray(trip.days) ? trip.days.length : 0;
+        const dayCount = getScheduledDayCount(trip.days);
         title       = `${cityCap} ${dayCount}-Day Korea Itinerary — gokoreamate.com`;
         description =
           `AI-generated ${cityCap} trip · ${trip.start_date} to ${trip.end_date} · ` +
