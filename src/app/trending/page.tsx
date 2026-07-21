@@ -6,7 +6,7 @@ import Link from "next/link";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
-import { fetchPopularTrips } from "@/lib/supabase";
+import { apiFetchPopularTrips } from "@/lib/itinerary-api";
 import type { PopularTrip } from "@/lib/supabase";
 
 const EVENT_FILTERS = [
@@ -71,7 +71,7 @@ function TrendingContent() {
   }, []);
 
   useEffect(() => {
-    fetchPopularTrips(6)
+    apiFetchPopularTrips(6)
       .then((trips) => { setPopularTrips(trips); setPopularLoading(false); })
       .catch(() => setPopularLoading(false));
   }, []);

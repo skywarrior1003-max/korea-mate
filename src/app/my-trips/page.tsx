@@ -6,10 +6,10 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
-  fetchItinerariesByDevice,
-  deleteItinerary,
-  type ItineraryRow,
-} from "@/lib/supabase";
+  apiFetchItinerariesByDevice,
+  apiDeleteItinerary,
+} from "@/lib/itinerary-api";
+import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 import { getSavedEmail } from "@/lib/userEmail";
 import { loadMoments } from "@/lib/trip-moments";
@@ -106,7 +106,7 @@ export default function MyTripsPage() {
     let cancelled = false;
     setLoading(true);
 
-    fetchItinerariesByDevice(getDeviceId()).then((itins) => {
+    apiFetchItinerariesByDevice(getDeviceId()).then((itins) => {
       if (cancelled) return;
       const sorted = itins
         .map(rowToTrip)
@@ -131,7 +131,7 @@ export default function MyTripsPage() {
     setDeleting(trip.id);
     setConfirmDel(null);
     setTrips(prev => prev.filter(t => t.id !== trip.id));
-    await deleteItinerary(trip.id, getDeviceId());
+    await apiDeleteItinerary(trip.id, getDeviceId());
     // localStorage 캐시 키 일괄 제거
     try {
       const toRemove: string[] = [];

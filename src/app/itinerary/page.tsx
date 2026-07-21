@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
-import { upsertItinerary, fetchItinerary, updateItineraryTitle } from "@/lib/supabase";
+import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
@@ -1017,26 +1017,20 @@ function ItineraryResult() {
     });
 
   // ══════════════════════════════════════════════════════════
-  //  Effect 1: 공유 링크 모드 (?id=UUID) → Supabase에서 로드
-  //  2단계 폴백: ① ID만 쿼리 (공유 링크 / RLS 전체 허용)
-  //              ② null이면 device_id 추가 재시도 (RLS가 device_id 일치 요구 시)
+  //  Effect 1: 공유 링크 모드 (?id=UUID) → 소유자 전용 API 로드
+  //  GET /api/itinerary/[id] 는 owner-only (x-device-id 필수).
+  //  null → 비소유자 or 미존재 → /shared/[id] 공개 뷰어로 리다이렉트.
   // ══════════════════════════════════════════════════════════
   useEffect(() => {
     if (!shareId) return;
     setLoading(true);
 
     const loadItinerary = async () => {
-      // 시도 1: device_id 없이 ID만으로 조회 (공유 링크 / 익명 읽기 가능 RLS)
-      let record = await fetchItinerary(shareId);
-
-      // 시도 2: RLS가 device_id 일치를 요구할 경우 자신의 device_id로 재시도
-      if (!record) {
-        record = await fetchItinerary(shareId, getDeviceId());
-      }
+      // owner-only GET — 비소유자는 404 → record null
+      const record = await apiFetchItinerary(shareId, getDeviceId());
 
       if (!record) {
-        // 두 시도 모두 실패 → My Trips로 복귀
-        router.replace("/my-trips");
+        router.replace(`/shared/${shareId}`);
         return;
       }
 
@@ -1069,7 +1063,7 @@ function ItineraryResult() {
       setTravelers(record.travelers);
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
-      setIsOwner((record as { device_id?: string }).device_id === getDeviceId());
+      setIsOwner(true); // GET is owner-only; having a record confirms ownership
       setSyncStatus("saved");
       setLoading(false);
     };
@@ -1117,8 +1111,8 @@ function ItineraryResult() {
     }
     setItinId(id);
 
-    // ── Supabase 우선 로드 + Layer 2: 내용 검증
-    fetchItinerary(id).then(record => {
+    // ── API 우선 로드 + Layer 2: 내용 검증
+    apiFetchItinerary(id, getDeviceId()).then(record => {
       // v2 포맷 파싱 헬퍼 — { __v:2, scheduled, unscheduled } 또는 구버전 Day[]
       const raw = record?.days as Record<string, unknown> | Day[] | undefined;
       let loadedDays: Day[];
@@ -1239,13 +1233,12 @@ function ItineraryResult() {
     const snapUnscheduled = getCart();
 
     syncTimerRef.current = setTimeout(async () => {
-      const ok = await upsertItinerary({
+      const ok = await apiSaveItinerary({
         id: snapId, city: snapCity,
         start_date: snapStartDate, end_date: snapEndDate,
         travelers: snapTravelers, travel_style: snapTravelStyle,
         days: { __v: 2, scheduled: snapDays, unscheduled: snapUnscheduled },
-        device_id: getDeviceId(),
-      });
+      }, getDeviceId());
       setSyncStatus(ok ? "saved" : "error");
       if (ok) {
         setTimeout(() => setSyncFading(true), 2500);
@@ -1330,7 +1323,7 @@ function ItineraryResult() {
     setEditingTitle(false);
     if (!trimmed || !itinId) return;
     setTripTitle(trimmed);
-    await updateItineraryTitle(itinId, trimmed, getDeviceId());
+    await apiUpdateItineraryTitle(itinId, trimmed, getDeviceId());
   }
 
   // ── 인라인 편집: 장소 삭제 / 순서 변경 ─────────────────────
