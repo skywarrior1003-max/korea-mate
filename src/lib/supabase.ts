@@ -36,6 +36,7 @@ export interface PopularTrip {
   travel_style:  string;
   view_count:    number;
   helpful_count: number;
+  copy_count?:   number;
   trip_title?:   string;
 }
 

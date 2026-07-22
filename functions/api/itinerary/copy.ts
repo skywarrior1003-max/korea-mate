@@ -98,5 +98,11 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to create copy" }, 500);
   }
 
+  // 원본 copy_count 원자적 증가 — 실패해도 복사본 생성 성공 유지
+  const { error: countErr } = await admin.rpc("increment_copy_count", { p_id: shareId });
+  if (countErr) {
+    console.error("[copy] copy_count increment error:", countErr.code);
+  }
+
   return json({ id: newId }, 201);
 }

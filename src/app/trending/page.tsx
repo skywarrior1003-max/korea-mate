@@ -147,6 +147,9 @@ function TrendingContent() {
                     {(trip.helpful_count ?? 0) >= 1 && (
                       <span className="text-emerald-500">👍 {trip.helpful_count} helpful</span>
                     )}
+                    {(trip.copy_count ?? 0) >= 1 && (
+                      <span className="text-blue-500">📋 {trip.copy_count} copied</span>
+                    )}
                   </div>
                 </Link>
               );

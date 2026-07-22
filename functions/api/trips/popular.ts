@@ -4,7 +4,7 @@
 // GoKoreaMate uses STATIC_EXPORT=true → Next.js API Routes excluded from out/.
 // Mirrors src/app/api/trips/popular/route.ts — security policy identical.
 //
-// Weighted sort: view_count + helpful_count × 3. No device_id/email in response.
+// Weighted sort: view_count + helpful_count × 3 + copy_count × 5. No device_id/email in response.
 
 import { createClient } from "@supabase/supabase-js";
 
@@ -43,7 +43,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, trip_title")
+    .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, copy_count, trip_title")
     .gte("view_count", 2)
     .order("view_count", { ascending: false })
     .limit(limit * 2);
@@ -53,13 +53,13 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to fetch popular trips" }, 500);
   }
 
-  type Row = { view_count: number; helpful_count: number };
+  type Row = { view_count: number; helpful_count: number; copy_count: number };
   const rows = (data ?? []) as Row[];
   const sorted = rows
     .sort(
       (a, b) =>
-        (b.view_count + (b.helpful_count ?? 0) * 3) -
-        (a.view_count + (a.helpful_count ?? 0) * 3)
+        (b.view_count + (b.helpful_count ?? 0) * 3 + (b.copy_count ?? 0) * 5) -
+        (a.view_count + (a.helpful_count ?? 0) * 3 + (a.copy_count ?? 0) * 5)
     )
     .slice(0, limit);
 
