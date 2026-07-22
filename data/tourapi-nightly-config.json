@@ -1,0 +1,35 @@
+{
+  "cities": {
+    "busan": {
+      "name": "Busan",
+      "supabaseFilter": { "city": "busan" },
+      "boundingBox": { "latMin": 35.0, "latMax": 35.4, "lngMin": 128.8, "lngMax": 129.4 },
+      "discoverGridStepDeg": 0.03,
+      "discoverRadiusM": 2000,
+      "contentTypeIds": [12, 14, 38, 75, 76]
+    },
+    "seoul": {
+      "name": "Seoul",
+      "supabaseFilter": { "city": "seoul" },
+      "boundingBox": { "latMin": 37.4, "latMax": 37.7, "lngMin": 126.8, "lngMax": 127.2 },
+      "discoverGridStepDeg": 0.03,
+      "discoverRadiusM": 2000,
+      "contentTypeIds": [12, 14, 38, 75, 76]
+    }
+  },
+  "defaults": {
+    "maxCalls": 200,
+    "maxItems": 50,
+    "callDelayMs": 500,
+    "maxRetry": 2,
+    "searchNumOfRows": 5,
+    "discoverNumOfRows": 10
+  },
+  "matchThresholds": {
+    "highConfidenceMinScore": 130,
+    "wrongMatchDistM": 5000,
+    "coordCloseDistM": 500
+  },
+  "shoppingTypeIds": [38, 79, 82],
+  "updateTriggerStatuses": ["no_match", "wrong_match", "duplicate_contentid_conflict", "manual_review_required"]
+}

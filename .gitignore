@@ -50,3 +50,7 @@ supabase/.temp/
 
 # Wrangler local dev artifacts (auto-regenerated on every wrangler dev/pages dev run)
 .wrangler/
+
+# TourAPI research outputs
+tmp/tourapi-pilot/
+tmp/tourapi-nightly/
