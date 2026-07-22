@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "build:static": "STATIC_EXPORT=true next build",
-    "deploy": "STATIC_EXPORT=true next build && npx wrangler pages deploy out --project-name=korea-mate",
+    "build:static": "node scripts/build-static.mjs",
+    "deploy": "npm run build:static && npx wrangler pages deploy out --project-name=korea-mate",
+    "dev:pages": "npm run build:static && npx wrangler pages dev out",
     "start": "next start",
     "lint": "eslint"
   },
