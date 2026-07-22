@@ -19,6 +19,8 @@ import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
+import UserSpotsPanel from "@/components/UserSpotsPanel";
+import type { UserSpot } from "@/lib/user-spots-api";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -36,6 +38,12 @@ interface Place {
   bookingUrl?:        string | null;
   lat?: number;
   lng?: number;
+  // PHASE 1 metadata
+  source?:   "city_spot" | "user_spot";
+  place_id?: string;
+  title?:    string;
+  address?:  string;
+  note?:     string;
 }
 
 interface Day {
@@ -1373,6 +1381,34 @@ function ItineraryResult() {
     removeFromCart(item.id); // 배치 후 Unscheduled에서 즉시 제거
   }
 
+  // ── user_spot → 현재 editDay에 추가 (PHASE 1) ────────────────
+  function addUserSpotToDay(userSpot: UserSpot, selectedTime: string, slot: string) {
+    const newPlace: Place = {
+      name:          userSpot.name,
+      title:         userSpot.name,
+      source:        "user_spot",
+      place_id:      userSpot.id,
+      category:      userSpot.category || "attraction",
+      location:      userSpot.address || userSpot.city || city,
+      time:          selectedTime,
+      duration:      "60m",
+      tips:          userSpot.note || "",
+      googleMapsUrl: (userSpot.lat != null && userSpot.lng != null)
+        ? `https://www.google.com/maps/search/?api=1&query=${userSpot.lat},${userSpot.lng}`
+        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            [userSpot.name, userSpot.address || userSpot.city, "Korea"].filter(Boolean).join(" ")
+          )}`,
+      slot:          slot,
+      lat:           userSpot.lat,
+      lng:           userSpot.lng,
+      address:       userSpot.address,
+      note:          userSpot.note,
+    };
+    setDays(prev => prev.map((day, di) =>
+      di === editDay ? { ...day, places: [...day.places, newPlace] } : day
+    ));
+  }
+
   // ── 로딩 화면 — 페이즈별 스켈레톤 + 제휴 카드 노출 ──────────
   if (loading) {
     const phase = LOAD_PHASES[Math.min(loadPhase, LOAD_PHASES.length - 1)];
@@ -1886,6 +1922,17 @@ function ItineraryResult() {
               </div>
             );
           })()}
+
+          {/* My Places (user_spots) — PHASE 1 */}
+          {(!shareId || isOwner) && (
+            <UserSpotsPanel
+              city={city}
+              selectedDayIndex={editDay}
+              selectedDayLabel={`Day ${days[editDay]?.dayNumber ?? editDay + 1}`}
+              existingPlaces={days[editDay]?.places ?? []}
+              onAddToDay={addUserSpotToDay}
+            />
+          )}
 
           <p className="text-center text-xs text-[#8C6239]/50 mt-4">
             ☁️ Changes are saved automatically · Use Full View above to return
