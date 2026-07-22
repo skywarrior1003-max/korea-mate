@@ -109,3 +109,42 @@ export async function apiFetchPopularTrips(limit = 6): Promise<PopularTrip[]> {
   if (!res || !res.ok) return [];
   return (await res.json()) as PopularTrip[];
 }
+
+// ── Copy shared itinerary to caller's device ──────────────────────────────────
+// Throws Error("TRIP_NOT_AVAILABLE") on 404, Error("COPY_FAILED") on all other failures.
+export async function apiCopyItinerary(
+  shareId: string,
+  deviceId: string
+): Promise<{ id: string }> {
+  let res: Response | null = null;
+  try {
+    res = await fetch("/api/itinerary/copy", {
+      method: "POST",
+      headers: deviceHeader(deviceId),
+      body: JSON.stringify({ share_id: shareId }),
+    });
+  } catch {
+    throw new Error("COPY_FAILED");
+  }
+
+  if (res.status === 404) throw new Error("TRIP_NOT_AVAILABLE");
+  if (res.status !== 201) throw new Error("COPY_FAILED");
+
+  let data: unknown;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error("COPY_FAILED");
+  }
+
+  if (
+    !data ||
+    typeof data !== "object" ||
+    !("id" in data) ||
+    typeof (data as Record<string, unknown>).id !== "string"
+  ) {
+    throw new Error("COPY_FAILED");
+  }
+
+  return { id: (data as { id: string }).id };
+}

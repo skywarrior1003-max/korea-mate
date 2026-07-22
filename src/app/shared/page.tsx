@@ -8,6 +8,7 @@
 export const dynamic = "force-static";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { fetchSharedItinerary, type ItineraryRow } from "@/lib/supabase";
 import { queryAffiliateLinks, buildAffiliateMap } from "@/lib/affiliates/affiliate-loader";
@@ -15,6 +16,8 @@ import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
+import { apiCopyItinerary } from "@/lib/itinerary-api";
+import { getDeviceId } from "@/lib/deviceId";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {
@@ -126,6 +129,9 @@ export default function SharedTripPage() {
   const [helpfulVoted,    setHelpfulVoted]    = useState(false);
   const [helpfulCount,    setHelpfulCount]    = useState(0);
   const [storyExportOpen, setStoryExportOpen] = useState(false);
+  const [isCopying,       setIsCopying]       = useState(false);
+  const [copyError,       setCopyError]       = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // ── window 가드 (SSR/빌드타임 안전) ──────────────────────────────────────
@@ -199,6 +205,30 @@ export default function SharedTripPage() {
       headers: { "Content-Type": "application/json", apikey: anon, Authorization: `Bearer ${anon}` },
       body:    JSON.stringify({ trip_id_param: trip.id }),
     }).catch(() => { /* silent */ });
+  }
+
+  // ── PHASE 1-A-FE1: 공유 일정 복사 ────────────────────────────────────────
+  async function handleCopyTrip() {
+    if (isCopying || !trip) return;
+    const shareId = extractShareId();
+    if (!shareId) {
+      setCopyError("This shared trip link is invalid.");
+      return;
+    }
+    setIsCopying(true);
+    setCopyError(null);
+    try {
+      const { id } = await apiCopyItinerary(shareId, getDeviceId());
+      router.push(`/itinerary?id=${encodeURIComponent(id)}`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg === "TRIP_NOT_AVAILABLE") {
+        setCopyError("This trip is no longer available.");
+      } else {
+        setCopyError("Could not copy this trip. Please try again.");
+      }
+      setIsCopying(false);
+    }
   }
 
   // ── 로딩 상태 ─────────────────────────────────────────────────────────────
@@ -441,13 +471,28 @@ export default function SharedTripPage() {
             Free · No sign-up · Share in one tap
           </p>
 
-          {/* Primary — contextual clone CTA (도시·날짜·스타일 pre-fill) */}
-          <Link
-            href={buildCloneUrl(trip)}
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all hover:opacity-90 active:scale-95"
+          {/* Primary — copy days directly to My Trips */}
+          <button
+            onClick={handleCopyTrip}
+            disabled={isCopying}
+            aria-disabled={isCopying}
+            className="w-full inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
             style={{ backgroundColor: "#D4AF37" }}
           >
-            🗺️ Plan My {cityCap} Trip — Same Style ⚡
+            {isCopying ? "Copying Trip…" : "📋 Copy This Trip"}
+          </button>
+          <p className="text-xs text-white/50 mt-1.5 mb-1">Save an editable copy to My Trips.</p>
+          {copyError && (
+            <p className="text-xs text-red-400 mb-3">{copyError}</p>
+          )}
+
+          {/* Secondary — contextual clone CTA (도시·날짜·스타일 pre-fill) */}
+          <Link
+            href={buildCloneUrl(trip)}
+            className="mt-3 inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black border transition-all hover:bg-white/10 active:scale-95"
+            style={{ color: "rgba(255,255,255,0.80)", borderColor: "rgba(212,175,55,0.50)" }}
+          >
+            🗺️ Plan a Similar Trip
           </Link>
 
           {/* Secondary — 이 일정 공유 카드 만들기 */}
