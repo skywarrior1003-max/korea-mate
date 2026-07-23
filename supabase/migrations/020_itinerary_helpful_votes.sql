@@ -22,6 +22,8 @@ ALTER TABLE public.itinerary_helpful_votes ENABLE ROW LEVEL SECURITY;
 -- INSERT vote + helpful_count 증가를 단일 트랜잭션 내에서 처리
 -- 중복 device_id: INSERT ON CONFLICT DO NOTHING → count 증가 없이 현재값 반환
 -- 반환: added=true(신규 투표), false(중복); helpful_count=최신 카운트
+-- EXECUTE 동적 SQL: RETURNS TABLE(helpful_count) 암묵적 OUT 변수와
+-- UPDATE 컬럼명 충돌(42702 ambiguous) 우회
 CREATE OR REPLACE FUNCTION public.add_itinerary_helpful_vote(
   p_itinerary_id UUID,
   p_device_id    TEXT
@@ -32,9 +34,9 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
 DECLARE
-  v_rows          BIGINT  := 0;
-  v_added         BOOLEAN := false;
-  v_helpful_count INTEGER;
+  v_rows  BIGINT  := 0;
+  v_added BOOLEAN := false;
+  v_count INTEGER;
 BEGIN
   IF p_itinerary_id IS NULL OR p_device_id IS NULL OR length(p_device_id) = 0 THEN
     RETURN;
@@ -48,21 +50,22 @@ BEGIN
   v_added := (v_rows > 0);
 
   IF v_added THEN
-    UPDATE public.itineraries
-    SET helpful_count = helpful_count + 1
-    WHERE id = p_itinerary_id
-    RETURNING helpful_count INTO v_helpful_count;
-  ELSE
-    SELECT i.helpful_count INTO v_helpful_count
-    FROM public.itineraries i
-    WHERE i.id = p_itinerary_id;
+    EXECUTE 'UPDATE public.itineraries SET helpful_count = helpful_count + 1 WHERE id = $1'
+    USING p_itinerary_id;
   END IF;
 
-  RETURN QUERY SELECT v_added, COALESCE(v_helpful_count, 0);
+  SELECT i.helpful_count INTO v_count
+  FROM public.itineraries i
+  WHERE i.id = p_itinerary_id;
+
+  RETURN QUERY SELECT v_added, COALESCE(v_count, 0)::INTEGER;
 END;
 $$;
 
+-- Supabase 기본 권한이 REVOKE FROM PUBLIC을 우회하므로 명시적으로 각 롤 차단
 REVOKE ALL     ON FUNCTION public.add_itinerary_helpful_vote(UUID, TEXT) FROM PUBLIC;
+REVOKE EXECUTE ON FUNCTION public.add_itinerary_helpful_vote(UUID, TEXT) FROM anon;
+REVOKE EXECUTE ON FUNCTION public.add_itinerary_helpful_vote(UUID, TEXT) FROM authenticated;
 GRANT  EXECUTE ON FUNCTION public.add_itinerary_helpful_vote(UUID, TEXT) TO service_role;
 
 COMMIT;
