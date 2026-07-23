@@ -60,7 +60,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("user_spots")
-    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at")
+    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();

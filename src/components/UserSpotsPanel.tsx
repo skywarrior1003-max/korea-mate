@@ -6,6 +6,7 @@ import {
   apiCreateUserSpot,
   apiUpdateUserSpot,
   apiDeleteUserSpot,
+  apiSubmitUserSpot,
   type UserSpot,
   type UpdateUserSpotInput,
 } from "@/lib/user-spots-api";
@@ -93,6 +94,8 @@ export default function UserSpotsPanel({
   const [deletingId,      setDeletingId]      = useState<string | null>(null);
   const [addingId,        setAddingId]        = useState<string | null>(null);
   const [addErrors,       setAddErrors]       = useState<Record<string, string>>({});
+  const [submittingId,    setSubmittingId]    = useState<string | null>(null);
+  const [submitErrors,    setSubmitErrors]    = useState<Record<string, string>>({});
   const [formError,       setFormError]       = useState<string | null>(null);
   const [form,            setForm]            = useState<FormState>(EMPTY_FORM);
   // Per-spot selected times
@@ -244,6 +247,23 @@ export default function UserSpotsPanel({
     } finally {
       setDeletingId(null);
     }
+  }
+
+  // ── Submit for public ─────────────────────────────────────────────────────
+
+  async function handleSubmit(spot: UserSpot) {
+    if (submittingId === spot.id) return;
+    setSubmittingId(spot.id);
+    setSubmitErrors(prev => { const n = { ...prev }; delete n[spot.id]; return n; });
+    const result = await apiSubmitUserSpot(spot.id);
+    if (result.ok) {
+      setSpots(prev => prev.map(s =>
+        s.id === spot.id ? { ...s, submission_status: "pending" } : s
+      ));
+    } else {
+      setSubmitErrors(prev => ({ ...prev, [spot.id]: result.error ?? "Submit failed" }));
+    }
+    setSubmittingId(null);
   }
 
   // ── Add to Day ────────────────────────────────────────────────────────────
@@ -438,8 +458,11 @@ export default function UserSpotsPanel({
           const isConfirmDelete = confirmDeleteId === spot.id;
           const isDeleting      = deletingId      === spot.id;
           const isAdding        = addingId        === spot.id;
+          const isSubmitting    = submittingId    === spot.id;
           const addErr          = addErrors[spot.id];
+          const submitErr       = submitErrors[spot.id];
           const spotTime        = timeMap[spot.id] ?? defaultTime;
+          const subStatus       = spot.submission_status ?? "none";
 
           return (
             <div
@@ -509,6 +532,39 @@ export default function UserSpotsPanel({
                           Cancel
                         </button>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Submission status / submit button */}
+                  {!isConfirmDelete && (
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {subStatus === "pending" && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 border border-yellow-200">
+                          🟡 Under Review
+                        </span>
+                      )}
+                      {subStatus === "approved" && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-200">
+                          ✅ Approved Public
+                        </span>
+                      )}
+                      {subStatus === "rejected" && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-red-100 text-red-600 border border-red-200">
+                          ❌ Rejected
+                        </span>
+                      )}
+                      {(subStatus === "none" || subStatus === "rejected") && (
+                        <button
+                          onClick={() => void handleSubmit(spot)}
+                          disabled={isSubmitting}
+                          className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#D4AF37]/50 text-[#8C6239] hover:bg-[#D4AF37]/10 transition-colors disabled:opacity-50 cursor-pointer"
+                        >
+                          {isSubmitting ? "…" : "📤 Submit for public"}
+                        </button>
+                      )}
+                      {submitErr && (
+                        <span className="text-[10px] text-red-500 font-medium">{submitErr}</span>
+                      )}
                     </div>
                   )}
 

@@ -6,17 +6,18 @@ import { getDeviceId } from "@/lib/deviceId";
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 export interface UserSpot {
-  id:          string;
-  name:        string;
-  city?:       string;
-  address?:    string;
-  lat?:        number;
-  lng?:        number;
-  category?:   string;
-  note?:       string;
-  photo_url?:  string;
-  created_at:  string;
-  updated_at:  string;
+  id:                 string;
+  name:               string;
+  city?:              string;
+  address?:           string;
+  lat?:               number;
+  lng?:               number;
+  category?:          string;
+  note?:              string;
+  photo_url?:         string;
+  created_at:         string;
+  updated_at:         string;
+  submission_status?: "none" | "pending" | "approved" | "rejected";
 }
 
 export interface CreateUserSpotInput {
@@ -146,6 +147,32 @@ export async function apiUpdateUserSpot(
   if (res.status === 404) return false;
   if (!res.ok) throw safeError(res);
   return true;
+}
+
+// ── PATCH /api/user-spots/submit/:id ─────────────────────────────────────────
+// Returns: { ok: true } | { error: string }
+// 409 = already pending/approved, 429 = pending limit reached
+
+export async function apiSubmitUserSpot(
+  id: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const deviceId = getDeviceId();
+  let res: Response | null = null;
+  try {
+    res = await fetch(`/api/user-spots/submit/${encodeURIComponent(id)}`, {
+      method:  "PATCH",
+      headers: { "x-device-id": deviceId },
+    });
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+  if (res.ok) return { ok: true };
+  let msg = `HTTP ${res.status}`;
+  try {
+    const body = (await res.json()) as { error?: string };
+    if (body.error) msg = body.error;
+  } catch { /* ignore */ }
+  return { ok: false, error: msg };
 }
 
 // ── DELETE /api/user-spots/:id ────────────────────────────────────────────────
