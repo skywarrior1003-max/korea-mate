@@ -155,3 +155,16 @@ export async function apiCopyItinerary(
 
   return { id: (data as { id: string }).id };
 }
+
+// ── Helpful vote ──────────────────────────────────────────────────────────────
+export async function apiHelpfulVote(
+  itineraryId: string,
+  deviceId:    string,
+): Promise<{ added: boolean; helpful_count: number } | null> {
+  const res = await fetch(`/api/itinerary/helpful/${itineraryId}`, {
+    method:  "PATCH",
+    headers: { "x-device-id": deviceId },
+  }).catch(() => null);
+  if (!res || !res.ok) return null;
+  return (await res.json()) as { added: boolean; helpful_count: number };
+}

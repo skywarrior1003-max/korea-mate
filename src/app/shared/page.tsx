@@ -16,7 +16,7 @@ import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
-import { apiCopyItinerary } from "@/lib/itinerary-api";
+import { apiCopyItinerary, apiHelpfulVote } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
@@ -192,19 +192,14 @@ export default function SharedTripPage() {
   }, [trip?.id]);
 
   // ── TASK-034: Helpful Vote 핸들러 ────────────────────────────────────────
-  function handleHelpfulVote() {
+  async function handleHelpfulVote() {
     if (!trip?.id || helpfulVoted) return;
     const key = `helped_${trip.id}`;
     sessionStorage.setItem(key, "1");
     setHelpfulVoted(true);
     setHelpfulCount((c) => c + 1);
-    const url  = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/increment_trip_helpful`;
-    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-    fetch(url, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json", apikey: anon, Authorization: `Bearer ${anon}` },
-      body:    JSON.stringify({ trip_id_param: trip.id }),
-    }).catch(() => { /* silent */ });
+    const result = await apiHelpfulVote(trip.id, getDeviceId());
+    if (result?.helpful_count !== undefined) setHelpfulCount(result.helpful_count);
   }
 
   // ── PHASE 1-A-FE1: 공유 일정 복사 ────────────────────────────────────────
