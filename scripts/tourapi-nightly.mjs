@@ -618,6 +618,17 @@ DRY-RUN: ${args.dryRun}
   }
 
   detectDuplicateContentIds(results);
+
+  // duplicate 감지 이후 state 갱신 — 감지 전 saveState에서 저장된 manual_review를 덮어씀
+  for (const r of results) {
+    if (r.confidence === 'duplicate_conflict' && stateItems[String(r.id)]) {
+      stateItems[String(r.id)].status    = 'duplicate_conflict';
+      stateItems[String(r.id)].updatedAt = nowIso();
+    }
+  }
+  state.items = stateItems;
+  saveState(paths.stateFile, state);
+
   saveResults(results, paths, args.mode, ctx);
   printSummary(results, args.mode, ctx, args);
 }
