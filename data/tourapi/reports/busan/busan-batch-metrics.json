@@ -1,0 +1,229 @@
+{
+  "run_date": "2026-07-23",
+  "max_pages": "all",
+  "total_requests": 49,
+  "sources": {
+    "busan-attraction-ko": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 213,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:56:41.096Z"
+    },
+    "busan-attraction-en": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 208,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:56:52.164Z"
+    },
+    "busan-food-ko": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "items_collected": 437,
+      "request_count": 5,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:09.996Z"
+    },
+    "busan-food-en": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "items_collected": 436,
+      "request_count": 5,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:16.806Z"
+    },
+    "busan-attraction-ja": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 209,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:21.775Z"
+    },
+    "busan-attraction-zhs": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 209,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:24.560Z"
+    },
+    "busan-attraction-zht": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 209,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:27.027Z"
+    },
+    "busan-food-ja": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "items_collected": 438,
+      "request_count": 5,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:32.212Z"
+    },
+    "busan-food-zhs": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "items_collected": 338,
+      "request_count": 4,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:36.181Z"
+    },
+    "busan-food-zht": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 286,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:38.905Z"
+    },
+    "kto-ko": {
+      "status": "completed",
+      "total_count": 775,
+      "total_pages": 9,
+      "completed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "items_collected": 775,
+      "request_count": 9,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:57:53.829Z"
+    },
+    "kto-en": {
+      "status": "completed",
+      "total_count": 194,
+      "total_pages": 3,
+      "completed_pages": [
+        1,
+        2,
+        3
+      ],
+      "items_collected": 194,
+      "request_count": 3,
+      "last_error": null,
+      "updated_at": "2026-07-23T07:58:08.831Z"
+    }
+  },
+  "total_normalized": 3952,
+  "source_key_duplicates": 0,
+  "coord_rate": "0.999",
+  "image_rate": "0.912",
+  "desc_rate": "0.755",
+  "language_links": {
+    "high": 2364,
+    "manual_review": 66,
+    "low": 0,
+    "total": 2430
+  },
+  "unlinked_insufficient_evidence": 92,
+  "reprocess_pass": true,
+  "failed_sources": [],
+  "storage": {
+    "total_files": 49,
+    "total_bytes": 6192360,
+    "candidate_files": 0,
+    "candidate_bytes": 0
+  },
+  "snapshot": {
+    "path": "2026-07-23/run-002",
+    "run_number": 2
+  },
+  "diff": {
+    "run_date": "2026-07-23",
+    "compared_against": "2026-07-23/run-001",
+    "new": 0,
+    "changed": 0,
+    "missing_once": 0,
+    "unchanged": 3952,
+    "compare_fields": [
+      "title",
+      "address",
+      "latitude",
+      "longitude",
+      "image_url",
+      "description"
+    ],
+    "generated_at": "2026-07-23T09:05:59.267Z"
+  }
+}

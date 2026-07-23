@@ -1,0 +1,17 @@
+{
+  "run_date": "2026-07-23",
+  "compared_against": "2026-07-23/run-001",
+  "new": 0,
+  "changed": 0,
+  "missing_once": 0,
+  "unchanged": 3952,
+  "compare_fields": [
+    "title",
+    "address",
+    "latitude",
+    "longitude",
+    "image_url",
+    "description"
+  ],
+  "generated_at": "2026-07-23T09:05:59.267Z"
+}

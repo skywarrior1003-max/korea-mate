@@ -54,3 +54,8 @@ supabase/.temp/
 # TourAPI research outputs
 tmp/tourapi-pilot/
 tmp/tourapi-nightly/
+
+# TourAPI 대용량 산출물 (배치 raw, 스냅샷, 정규화 JSON)
+data/tourapi/raw/
+data/tourapi/snapshots/
+data/tourapi/normalized/**/*-batch-normalized.json
