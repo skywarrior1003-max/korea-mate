@@ -67,6 +67,19 @@ export async function apiFetchItinerary(
 }
 
 // ── Update title ──────────────────────────────────────────────────────────────
+export async function apiSetPublic(
+  id:       string,
+  isPublic: boolean,
+  deviceId: string,
+): Promise<boolean> {
+  const res = await fetch(`/api/itinerary/${id}`, {
+    method:  "PATCH",
+    headers: deviceHeader(deviceId),
+    body:    JSON.stringify({ is_public: isPublic }),
+  }).catch(() => null);
+  return !!res?.ok;
+}
+
 export async function apiUpdateItineraryTitle(
   id: string,
   title: string,

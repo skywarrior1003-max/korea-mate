@@ -25,6 +25,7 @@ export interface ItineraryRow {
   updated_at?:   string;
   view_count?:   number;
   helpful_count?: number;
+  is_public?:    boolean;
 }
 
 // Popular trips feed (TASK-034 — view_count >= 2, ordered by weighted score)

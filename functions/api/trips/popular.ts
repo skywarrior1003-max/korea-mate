@@ -53,6 +53,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   let query = admin
     .from("itineraries")
     .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, copy_count, trip_title")
+    .eq("is_public", true)
     .gte("view_count", 2);
 
   if (cityFilter)  query = query.eq("city",         cityFilter);

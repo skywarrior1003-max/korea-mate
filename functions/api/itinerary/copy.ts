@@ -65,6 +65,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("city, start_date, end_date, travelers, travel_style, days, trip_title")
     .eq("id", shareId)
+    .eq("is_public", true)
     .maybeSingle();
 
   if (fetchErr) {

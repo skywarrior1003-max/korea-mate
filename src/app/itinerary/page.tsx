@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
-import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle } from "@/lib/itinerary-api";
+import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPublic } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
@@ -898,7 +898,8 @@ function ItineraryResult() {
   const [titleInput,   setTitleInput]   = useState("");
 
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
-  const [isOwner, setIsOwner] = useState(!shareId);
+  const [isOwner,  setIsOwner]  = useState(!shareId);
+  const [isPublic, setIsPublic] = useState(false);
 
   // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
@@ -1071,6 +1072,7 @@ function ItineraryResult() {
       setTravelers(record.travelers);
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
+      if (record.is_public !== undefined) setIsPublic(record.is_public);
       setIsOwner(true); // GET is owner-only; having a record confirms ownership
       setSyncStatus("saved");
       setLoading(false);
@@ -1179,6 +1181,7 @@ function ItineraryResult() {
         // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
+        if (record.is_public !== undefined) setIsPublic(record.is_public);
         if (loadedUnscheduled.length > 0) {
           try {
             localStorage.setItem("koreamate_cart", JSON.stringify(
@@ -1334,6 +1337,15 @@ function ItineraryResult() {
       alert("삭제에 실패했습니다. 네트워크 상태를 확인 후 다시 시도해주세요.");
     }
   }, [itinId]);
+
+  // ── 공개/비공개 토글 ─────────────────────────────────────────
+  async function handleTogglePublic() {
+    if (!itinId) return;
+    const next = !isPublic;
+    setIsPublic(next);
+    const ok = await apiSetPublic(itinId, next, getDeviceId());
+    if (!ok) setIsPublic(!next);
+  }
 
   // ── Bug ③: 커스텀 제목 저장 ─────────────────────────────────
   async function handleTitleSave() {
@@ -1654,6 +1666,20 @@ function ItineraryResult() {
           >
             {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
           </button>
+
+          {/* 공개/비공개 토글 */}
+          {(!shareId || isOwner) && itinId && (
+            <button
+              onClick={handleTogglePublic}
+              className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 ${
+                isPublic
+                  ? "bg-emerald-600 text-white"
+                  : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
+              }`}
+            >
+              {isPublic ? "🌐 Public" : "🔒 Private"}
+            </button>
+          )}
 
           {/* 이메일 저장 버튼 */}
           {emailSaved ? (

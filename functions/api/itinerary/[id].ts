@@ -7,7 +7,7 @@
 // SECURITY CONTRACT:
 // - GET: owner-only (WHERE id + device_id). Non-owners receive 404. device_id never in response.
 // - PUT: conditional UPDATE (WHERE id + device_id). 0 rows → 404.
-// - PATCH: title-only UPDATE (WHERE id + device_id).
+// - PATCH: title or is_public UPDATE (WHERE id + device_id). Allowlist enforced.
 // - DELETE: WHERE id + device_id.
 // - x-device-id header required for all methods; body device_id ignored.
 
@@ -60,7 +60,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count")
+    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, is_public")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -122,7 +122,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   return json({ ok: true });
 }
 
-// ── PATCH — title only ────────────────────────────────────────────────────────
+// ── PATCH — title or is_public (allowlist) ───────────────────────────────────
 export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   const id = ctx.params.id as string;
   if (!UUID_RE.test(id)) return json({ error: "Invalid ID" }, 400);
@@ -135,10 +135,14 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
 
   const read = await readBodyWithLimit(ctx.request, MAX_SMALL_BODY_BYTES);
   if (!read.ok) return json({ error: read.error }, read.status);
-  const body = read.body as { trip_title?: unknown };
+  const body = read.body as { trip_title?: unknown; is_public?: unknown };
 
+  const row: Record<string, unknown> = { updated_at: new Date().toISOString() };
   const title = typeof body.trip_title === "string" ? body.trip_title.trim().slice(0, 300) : "";
-  if (!title) return json({ error: "trip_title is required" }, 400);
+  if (title) row.trip_title = title;
+  if (typeof body.is_public === "boolean") row.is_public = body.is_public;
+
+  if (Object.keys(row).length === 1) return json({ error: "No valid fields to update" }, 400);
 
   let admin;
   try { admin = adminClient(ctx.env); }
@@ -146,14 +150,14 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .update({ trip_title: title, updated_at: new Date().toISOString() })
+    .update(row)
     .eq("id", id)
     .eq("device_id", deviceId)
     .select("id");
 
   if (error) {
     console.error("[functions/api/itinerary PATCH] db error:", error.code);
-    return json({ error: "Failed to update title" }, 500);
+    return json({ error: "Failed to update itinerary" }, 500);
   }
   if (!data || data.length === 0) return json({ error: "Not found or permission denied" }, 404);
 
