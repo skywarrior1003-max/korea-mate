@@ -8,6 +8,7 @@ import Link from "next/link";
 import {
   apiFetchItinerariesByDevice,
   apiDeleteItinerary,
+  apiSetPublic,
 } from "@/lib/itinerary-api";
 import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
@@ -71,6 +72,7 @@ interface Trip {
   updatedAt:   string;
   days:        number;
   moments:     number;
+  isPublic:    boolean;
 }
 
 function rowToTrip(r: ItineraryRow): Trip {
@@ -82,10 +84,11 @@ function rowToTrip(r: ItineraryRow): Trip {
     endDate:     r.end_date   ?? "",
     travelers:   r.travelers  ?? "1",
     travelStyle: r.travel_style ?? "Solo",
-    tripTitle:   (r as unknown as { trip_title?: string }).trip_title ?? null,
+    tripTitle:   r.trip_title ?? null,
     updatedAt:   r.updated_at ?? "",
     days,
     moments:     0,
+    isPublic:    r.is_public ?? false,
   };
 }
 
@@ -99,6 +102,7 @@ export default function MyTripsPage() {
   const [copied,         setCopied]         = useState<string | null>(null);
   const [savedEmail,     setSavedEmail]     = useState<string | null>(null);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [togglingPublic, setTogglingPublic] = useState<Set<string>>(new Set());
 
   useEffect(() => { setSavedEmail(getSavedEmail()); }, []);
 
@@ -145,6 +149,16 @@ export default function MyTripsPage() {
     } catch { /* ignore */ }
     setDeleting(null);
   }, []);
+
+  const handleTogglePublic = useCallback(async (trip: Trip) => {
+    if (togglingPublic.has(trip.id)) return;
+    const next = !trip.isPublic;
+    setTogglingPublic(prev => { const s = new Set(prev); s.add(trip.id); return s; });
+    setTrips(prev => prev.map(t => t.id === trip.id ? { ...t, isPublic: next } : t));
+    const ok = await apiSetPublic(trip.id, next, getDeviceId());
+    if (!ok) setTrips(prev => prev.map(t => t.id === trip.id ? { ...t, isPublic: !next } : t));
+    setTogglingPublic(prev => { const s = new Set(prev); s.delete(trip.id); return s; });
+  }, [togglingPublic]);
 
   const totalMoments = trips.reduce((s, t) => s + t.moments, 0);
   const cityCap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
@@ -339,6 +353,18 @@ export default function MyTripsPage() {
                         📸 {trip.moments} moments
                       </span>
                     )}
+                    <button
+                      onClick={() => handleTogglePublic(trip)}
+                      disabled={togglingPublic.has(trip.id)}
+                      className="text-[10px] font-black px-2.5 py-1 rounded-md border transition-all cursor-pointer disabled:opacity-50"
+                      style={
+                        trip.isPublic
+                          ? { backgroundColor: "#eff6ff", borderColor: "#bfdbfe", color: "#1d4ed8" }
+                          : { backgroundColor: "#EAE3D2", borderColor: "#d1c4b0", color: "#8C6239" }
+                      }
+                    >
+                      {togglingPublic.has(trip.id) ? "…" : trip.isPublic ? "🌐 Public" : "🔒 Private"}
+                    </button>
                   </div>
 
                   {/* ── 액션 버튼 ── */}

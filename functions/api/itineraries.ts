@@ -47,7 +47,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, updated_at")
+    .select("id, city, start_date, end_date, travelers, travel_style, updated_at, trip_title, is_public")
     .eq("device_id", deviceId)
     .order("updated_at", { ascending: false })
     .limit(limit);
