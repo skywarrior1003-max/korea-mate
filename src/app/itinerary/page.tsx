@@ -13,7 +13,7 @@ import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
-import { loadMoments, addMoment, deleteMoment } from "@/lib/trip-moments";
+import { loadMoments, loadMomentsFromServer, addMoment, deleteMoment } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
@@ -1260,8 +1260,13 @@ function ItineraryResult() {
   // ── TASK-022: itinId 확정 시 moments 로드 ──────────────────
   useEffect(() => {
     if (!itinId) return;
-    setMoments(loadMoments(itinId));
-  }, [itinId]);
+    // shareId 로 공유 조회 중이고 본인 일정이 아니면 서버 API 소유권 오류 → 로컬만 사용
+    if (shareId && !isOwner) {
+      setMoments(loadMoments(itinId));
+      return;
+    }
+    loadMomentsFromServer(itinId, getDeviceId()).then(setMoments);
+  }, [itinId, shareId, isOwner]);
 
   // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
   useEffect(() => {
@@ -1314,15 +1319,20 @@ function ItineraryResult() {
   // ── TASK-022: moment 저장 / 삭제 ────────────────────────────
   const handleMomentSave = useCallback(async (moment: TripMoment) => {
     if (!itinId) return;
-    const updated = await addMoment(itinId, moment);
+    const updated = await addMoment(itinId, moment, getDeviceId());
     setMoments(updated);
     setCaptureOpen(false);
   }, [itinId]);
 
   const handleMomentDelete = useCallback(async (momentId: string) => {
     if (!itinId) return;
-    const updated = await deleteMoment(itinId, momentId);
-    setMoments(updated);
+    try {
+      const updated = await deleteMoment(itinId, momentId, getDeviceId());
+      setMoments(updated);
+    } catch {
+      // 서버 삭제 실패 → 롤백됨. 사용자에게 재시도 안내 (조용한 데이터 손실 방지)
+      alert("삭제에 실패했습니다. 네트워크 상태를 확인 후 다시 시도해주세요.");
+    }
   }, [itinId]);
 
   // ── Bug ③: 커스텀 제목 저장 ─────────────────────────────────

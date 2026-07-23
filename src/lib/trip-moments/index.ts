@@ -3,4 +3,4 @@
 
 export type { TripMoment, MomentCategory } from "./types";
 export { MOMENT_CATEGORIES } from "./types";
-export { loadMoments, addMoment, deleteMoment, compressPhoto, formatCoord } from "./storage";
+export { loadMoments, loadMomentsFromServer, addMoment, deleteMoment, compressPhoto, formatCoord } from "./storage";
