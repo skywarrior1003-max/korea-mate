@@ -1,0 +1,93 @@
+source_key_ko,source_key_target,target_language,score,dist_m,title_ko,title_target,status
+FoodService:1065:ko,EngService2:2946941:en,en,50,25,삼진어묵 본점,AREA6 (AREA6),insufficient_evidence
+KorService2:2760771:ko,EngService2:1970795:en,en,50,159,거대갈비,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:2841481:ko,EngService2:3521718:en,en,50,182,공극샌드커피,Osiria Coastal Walk (오시리아 해안산책로),insufficient_evidence
+KorService2:128610:ko,EngService2:3400947:en,en,50,136,공수어촌체험마을,Gijang Jonggajip Gomjangeo (기장종가집곰장어),insufficient_evidence
+KorService2:2805377:ko,EngService2:1941477:en,en,50,132,광명집,Peace Park (평화공원),insufficient_evidence
+KorService2:126857:ko,EngService2:1055405:en,en,50,142,광복로패션거리,Gwangbok-dong Cultural & Fashion Street (광복로문화패션거리),insufficient_evidence
+KorService2:1942576:ko,EngService2:2710546:en,en,50,145,국제시장을 기웃거리다,Hotel Forêt Premier Nampo (호텔포레 프리미어 남포),insufficient_evidence
+KorService2:2869454:ko,EngService2:3098936:en,en,50,155,그라치에,Yeongdo Cheonghak Reservoir Observatory (영도 청학배수지 전망대),insufficient_evidence
+KorService2:3421909:ko,EngService2:3035570:en,en,50,130,그런고로,Jeonpo Gonggu Street (전포공구길),insufficient_evidence
+KorService2:2778487:ko,EngService2:1970795:en,en,50,185,금수복국 해운대본점,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:2789451:ko,EngService2:3364622:en,en,50,184,깃발집 국수전골,Busan Wooridul Spine Hospital (부산우리들병원),insufficient_evidence
+KorService2:2783360:ko,EngService2:3516784:en,en,50,157,꽃피는 4월 밀익는 5월,B-Con Ground (비콘그라운드),insufficient_evidence
+KorService2:1846830:ko,EngService2:349631:en,en,50,143,남도해양열차 에스트레인(S-train),Hotel Gwangjang (광장호텔),insufficient_evidence
+KorService2:1942299:ko,EngService2:349631:en,en,50,181,남선창고터,Hotel Gwangjang (광장호텔),insufficient_evidence
+KorService2:2872199:ko,EngService2:3468740:en,en,50,200,남파랑길(부산),Oryukdo Sunrise Park (오륙도해맞이공원),insufficient_evidence
+KorService2:3470558:ko,EngService2:2947885:en,en,50,177,넘버25 호텔 기장 연화리점,Gijang Haenyeo Village (Yeonhwari Hoetchon Village) (기장해녀촌(연화리횟촌)),insufficient_evidence
+KorService2:2785275:ko,EngService2:264198:en,en,50,156,다솥맛집,Songjeong Beach (송정해수욕장),insufficient_evidence
+KorService2:1889060:ko,EngService2:2382544:en,en,50,22,다이나믹한 부산의 매력을 만나다,Jagalchi Market (부산 자갈치시장),insufficient_evidence
+KorService2:1942233:ko,EngService2:1475231:en,en,50,150,대각사(부산),Busan Tower (부산타워),insufficient_evidence
+KorService2:2699332:ko,EngService2:3562686:en,en,50,197,더웨이브,October Festa in Gwangalli (옥토버페스타 인 광안리),insufficient_evidence
+KorService2:2852312:ko,EngService2:2953407:en,en,50,105,덕산명가 참소국밥,UN Sculpture Park (UN조각공원),insufficient_evidence
+KorService2:2891745:ko,EngService2:3367727:en,en,50,191,듀스포레,Golden Navis (골든나비스),insufficient_evidence
+KorService2:3335951:ko,EngService2:3562686:en,en,50,136,레이저태그스포츠 광안점,October Festa in Gwangalli (옥토버페스타 인 광안리),insufficient_evidence
+KorService2:133839:ko,EngService2:3477557:en,en,50,167,롯데호텔부산 무궁화,Design Plastic Surgery Clinic (디자인성형외과의원),insufficient_evidence
+KorService2:2868609:ko,EngService2:3517139:en,en,50,173,리오네,Mangmidangil Street  (망미단길),insufficient_evidence
+KorService2:2867715:ko,EngService2:2447385:en,en,50,183,만석미역 본점,HILLSIDE HOTEL / 힐사이드호텔,insufficient_evidence
+KorService2:2393457:ko,EngService2:1959107:en,en,50,167,맛있는 부산의 남항시장 탐방,Yeongdodaegyo Bridge (영도대교),insufficient_evidence
+KorService2:851907:ko,EngService2:1245275:en,en,50,170,문화쌈밥,Busan Cultural Center (부산문화회관),insufficient_evidence
+KorService2:2872395:ko,EngService2:2947858:en,en,50,157,미동암소정,Ahopsan Forest (아홉산숲),insufficient_evidence
+KorService2:3028593:ko,EngService2:2710564:en,en,50,163,베이하운드호텔,La Valse Hotel Busan (라발스호텔),insufficient_evidence
+KorService2:2840956:ko,EngService2:2492127:en,en,50,182,벨렘351,Daejeo Eco Park (대저생태공원),insufficient_evidence
+KorService2:3532971:ko,EngService2:1054924:en,en,50,160,부산 서구 의료관광축제,Busan Songdo Beach (부산 송도해수욕장),insufficient_evidence
+KorService2:2504464:ko,EngService2:2657026:en,en,50,169,부산 송도해상케이블카,Songdo Cloud Walk (송도 구름산책로(스카이워크)),insufficient_evidence
+KorService2:3515311:ko,EngService2:2946907:en,en,50,187,부산국제AI영화제,Museum 1 (뮤지엄 원),insufficient_evidence
+KorService2:3006246:ko,EngService2:1245275:en,en,50,144,부산국제공연예술마켓,Busan Cultural Center (부산문화회관),insufficient_evidence
+KorService2:3083767:ko,EngService2:1475231:en,en,50,175,부산근현대역사관 본관,Busan Tower (부산타워),insufficient_evidence
+KorService2:2554068:ko,EngService2:1475231:en,en,50,136,부산영화체험박물관,Busan Tower (부산타워),insufficient_evidence
+KorService2:132550:ko,EngService2:2545473:en,en,50,161,부평동한복거리,GnB HOTEL (지엔비호텔(GNB호텔)),insufficient_evidence
+KorService2:851286:ko,EngService2:2351201:en,en,50,182,상국이네,KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔),insufficient_evidence
+KorService2:3533138:ko,EngService2:3562686:en,en,50,126,샌드스테이,October Festa in Gwangalli (옥토버페스타 인 광안리),insufficient_evidence
+KorService2:1019616:ko,EngService2:3450964:en,en,50,180,센텀시티 아이스링크,Sojunghannun Ophthalmology Clinic (센텀소중한눈안과),insufficient_evidence
+KorService2:2952019:ko,EngService2:1970795:en,en,50,196,소공간,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:1607335:ko,EngService2:2401023:en,en,50,191,소림사(부산),168 Stairs (168계단),insufficient_evidence
+KorService2:2793181:ko,EngService2:2990076:en,en,50,142,속씨원한대구탕미포본점,Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간)),insufficient_evidence
+KorService2:3532572:ko,EngService2:264198:en,en,50,136,송정담다펜션,Songjeong Beach (송정해수욕장),insufficient_evidence
+KorService2:3442923:ko,EngService2:3451721:en,en,50,103,솥이랑 서면점,Goodwill Dental Hospital (굿윌치과병원),insufficient_evidence
+KorService2:2836405:ko,EngService2:3098936:en,en,50,168,신기숲,Yeongdo Cheonghak Reservoir Observatory (영도 청학배수지 전망대),insufficient_evidence
+KorService2:2869439:ko,EngService2:3539851:en,en,50,194,신라농원,Olive Skin Clinic (올리브피부과의원),insufficient_evidence
+KorService2:2832671:ko,EngService2:264602:en,en,50,158,신발원,Busan Chinatown Special Zone (부산 차이나타운특구(상해문.상해거리)),insufficient_evidence
+KorService2:767084:ko,EngService2:3450964:en,en,50,161,신세계백화점 센텀시티점,Sojunghannun Ophthalmology Clinic (센텀소중한눈안과),insufficient_evidence
+KorService2:2622969:ko,EngService2:264602:en,en,50,160,싱글싱글,Busan Chinatown Special Zone (부산 차이나타운특구(상해문.상해거리)),insufficient_evidence
+KorService2:1013461:ko,EngService2:1973370:en,en,50,161,아이하시 (수제젓가락공예),Bosu-dong Book Street Cultural Center(보수동 책방골목 문화관),insufficient_evidence
+KorService2:3081825:ko,EngService2:3403110:en,en,50,143,아트모이지,Millac The Market (밀락더마켓),insufficient_evidence
+KorService2:2773623:ko,EngService2:2021670:en,en,50,129,야스마루,Seomyeon Underground Shopping Center (서면지하도상가),insufficient_evidence
+KorService2:2836412:ko,EngService2:3002479:en,en,50,132,에테르,Huin-yeoul Coastal Tunnel (영도 흰여울해안터널),insufficient_evidence
+KorService2:2605959:ko,EngService2:1751530:en,en,50,12,"열정, 젊음, 시원함이 있는 밤바다 여행",Haeundae Dongbaekseom Island (해운대 동백섬),insufficient_evidence
+KorService2:131943:ko,EngService2:3002802:en,en,50,187,영도관광실탄사격장,Haneul Observatory (영도 하늘전망대),insufficient_evidence
+KorService2:1942553:ko,EngService2:1959107:en,en,50,167,영도다리를 건너다,Yeongdodaegyo Bridge (영도대교),insufficient_evidence
+KorService2:1942316:ko,EngService2:2503883:en,en,50,108,영도봉래시장,Samjin Fish Cake History Museum · History Hall (삼진어묵체험·역사관),insufficient_evidence
+KorService2:3454074:ko,EngService2:2946907:en,en,50,187,영화의전당 라이브러리 자료실,Museum 1 (뮤지엄 원),insufficient_evidence
+KorService2:2860782:ko,EngService2:2818163:en,en,50,183,오반장,Felix by STX (펠릭스바이STX),insufficient_evidence
+KorService2:2726193:ko,EngService2:2545473:en,en,50,116,이가네떡볶이,GnB HOTEL (지엔비호텔(GNB호텔)),insufficient_evidence
+KorService2:1428723:ko,EngService2:2021670:en,en,50,194,이비스 앰배서더 부산 시티센터,Seomyeon Underground Shopping Center (서면지하도상가),insufficient_evidence
+KorService2:3533143:ko,EngService2:2695544:en,en,50,185,읽다부산,Jeongeul Damda (정을담다),insufficient_evidence
+KorService2:3083428:ko,EngService2:2818163:en,en,50,146,제이비디자인호텔,Felix by STX (펠릭스바이STX),insufficient_evidence
+KorService2:2037531:ko,EngService2:1348758:en,en,50,0,지하철 타고 돌아보는 부산 시간여행,Geumgang Park (금강공원),insufficient_evidence
+KorService2:1942239:ko,EngService2:2401023:en,en,50,145,초량교회,168 Stairs (168계단),insufficient_evidence
+KorService2:2785956:ko,EngService2:3366195:en,en,50,106,초량밀면,"KJ Globaltour.Co.,Ltd (케이제이글로벌투어 주식회사)",insufficient_evidence
+KorService2:2039866:ko,EngService2:3074034:en,en,50,82,코오롱 씨클라우드 호텔,Hyeongje Jeontong Dwaeji Gukbap (형제전통돼지국밥),insufficient_evidence
+KorService2:3437916:ko,EngService2:2946907:en,en,50,187,크리스마스 빌리지 부산 2025,Museum 1 (뮤지엄 원),insufficient_evidence
+KorService2:2496023:ko,EngService2:2946907:en,en,50,181,키자니아 부산,Museum 1 (뮤지엄 원),insufficient_evidence
+KorService2:3532722:ko,EngService2:3451721:en,en,50,145,트래블라이트,Goodwill Dental Hospital (굿윌치과병원),insufficient_evidence
+KorService2:2613988:ko,EngService2:1970795:en,en,50,121,팝콘 호스텔 해운대점,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:2905141:ko,EngService2:1970795:en,en,50,129,할매집,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:2869618:ko,EngService2:3466939:en,en,50,159,합천국밥집,Busan St Mary's Hospital (부산성모병원),insufficient_evidence
+KorService2:2822343:ko,EngService2:2589248:en,en,50,118,해운대 그린레일웨이 (미포~송정 구간),Cheongsapo Port (청사포),insufficient_evidence
+KorService2:2760773:ko,EngService2:2990076:en,en,50,161,해운대기와집대구탕,Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간)),insufficient_evidence
+KorService2:2663379:ko,EngService2:2596967:en,en,50,149,해운대센텀호텔,Centum Primus Hotel (센텀프리머스 호텔),insufficient_evidence
+KorService2:126108:ko,EngService2:1970795:en,en,50,159,해운대온천센터,Haeundae Amso Galbijip ( 해운대암소갈비집),insufficient_evidence
+KorService2:2858936:ko,EngService2:2990076:en,en,50,161,해운대하얀오징어집,Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간)),insufficient_evidence
+KorService2:2869343:ko,EngService2:3516784:en,en,50,178,홍순덕 전포양곱창,B-Con Ground (비콘그라운드),insufficient_evidence
+KorService2:126814:ko,EngService2:1752895:en,en,50,150,25의용단,Suyeong Sajeok Park (수영사적공원),insufficient_evidence
+KorService2:2624014:ko,EngService2:264250:en,en,50,137,The Park Guest House,Gwangalli Beach (광안리해수욕장),insufficient_evidence
+KorService2:2704645:ko,EngService2:2990076:en,en,50,188,[해파랑길] 2코스,Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간)),insufficient_evidence
+KorService2:2860782:ko,FoodService:2262:ja,ja,50,50,오반장,海木,insufficient_evidence
+KorService2:2786766:ko,FoodService:2262:ja,ja,50,7,해목,海木,insufficient_evidence
+KorService2:127004:ko,AttractionService:783:ja,ja,50,17,해운대 관광특구,海雲台の良さを再発見,insufficient_evidence
+KorService2:2860782:ko,FoodService:2262:zhs,zhs,50,50,오반장,海木,insufficient_evidence
+KorService2:2786766:ko,FoodService:2262:zhs,zhs,50,7,해목,海木,insufficient_evidence
+KorService2:2860782:ko,FoodService:2262:zht,zht,50,50,오반장,海木,insufficient_evidence
+KorService2:2786766:ko,FoodService:2262:zht,zht,50,7,해목,海木,insufficient_evidence
+KorService2:127004:ko,AttractionService:788:zht,zht,50,9,해운대 관광특구,海雲臺旅遊攻略,insufficient_evidence
