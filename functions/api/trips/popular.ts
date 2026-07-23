@@ -5,6 +5,7 @@
 // Mirrors src/app/api/trips/popular/route.ts — security policy identical.
 //
 // Weighted sort: view_count + helpful_count × 3 + copy_count × 5. No device_id/email in response.
+// Optional filters: ?city=seoul&travel_style=Solo (exact match, case-sensitive as stored in DB)
 
 import { createClient } from "@supabase/supabase-js";
 
@@ -32,19 +33,32 @@ function adminClient(env: Env) {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
+const VALID_CITIES  = new Set(["seoul", "busan", "jeju", "gyeongju"]);
+const VALID_STYLES  = new Set(["Solo", "Couple", "Family", "Group"]);
+
 export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const url      = new URL(ctx.request.url);
   const limitRaw = parseInt(url.searchParams.get("limit") ?? "6", 10);
   const limit    = Math.min(Math.max(1, isNaN(limitRaw) ? 6 : limitRaw), 50);
 
+  const cityParam  = (url.searchParams.get("city")         ?? "").trim().toLowerCase();
+  const styleParam = (url.searchParams.get("travel_style") ?? "").trim();
+  const cityFilter  = VALID_CITIES.has(cityParam)  ? cityParam  : null;
+  const styleFilter = VALID_STYLES.has(styleParam) ? styleParam : null;
+
   let admin;
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const { data, error } = await admin
+  let query = admin
     .from("itineraries")
     .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, copy_count, trip_title")
-    .gte("view_count", 2)
+    .gte("view_count", 2);
+
+  if (cityFilter)  query = query.eq("city",         cityFilter);
+  if (styleFilter) query = query.eq("travel_style", styleFilter);
+
+  const { data, error } = await query
     .order("view_count", { ascending: false })
     .limit(limit * 2);
 

@@ -104,8 +104,15 @@ export async function apiDeleteItinerary(
 }
 
 // ── Popular trips ─────────────────────────────────────────────────────────────
-export async function apiFetchPopularTrips(limit = 6): Promise<PopularTrip[]> {
-  const res = await fetch(`/api/trips/popular?limit=${limit}`).catch(() => null);
+export async function apiFetchPopularTrips(
+  limit = 6,
+  city?: string,
+  travelStyle?: string,
+): Promise<PopularTrip[]> {
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (city)        params.set("city",         city);
+  if (travelStyle) params.set("travel_style", travelStyle);
+  const res = await fetch(`/api/trips/popular?${params}`).catch(() => null);
   if (!res || !res.ok) return [];
   return (await res.json()) as PopularTrip[];
 }

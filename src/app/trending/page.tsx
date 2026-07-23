@@ -16,6 +16,22 @@ const EVENT_FILTERS = [
   { key: "activity", label: "🗺️ Activity"   },
 ];
 
+const TRIP_CITY_FILTERS = [
+  { key: "",          label: "All Cities" },
+  { key: "seoul",     label: "🌆 Seoul"   },
+  { key: "busan",     label: "🏙️ Busan"   },
+  { key: "jeju",      label: "🌿 Jeju"    },
+  { key: "gyeongju",  label: "🏛️ Gyeongju" },
+];
+
+const TRIP_STYLE_FILTERS = [
+  { key: "",        label: "All Styles" },
+  { key: "Solo",    label: "Solo"       },
+  { key: "Couple",  label: "Couple"     },
+  { key: "Family",  label: "Family"     },
+  { key: "Group",   label: "Group"      },
+];
+
 function SearchBar({
   value,
   onChange,
@@ -62,6 +78,8 @@ function TrendingContent() {
   const [selectedEvent,  setSelectedEvent]  = useState<EventItem | null>(null);
   const [popularTrips,   setPopularTrips]   = useState<PopularTrip[]>([]);
   const [popularLoading, setPopularLoading] = useState(true);
+  const [tripCity,       setTripCity]       = useState("");
+  const [tripStyle,      setTripStyle]      = useState("");
 
   useEffect(() => {
     fetch("/data/events.json")
@@ -71,10 +89,11 @@ function TrendingContent() {
   }, []);
 
   useEffect(() => {
-    apiFetchPopularTrips(6)
+    setPopularLoading(true);
+    apiFetchPopularTrips(9, tripCity || undefined, tripStyle || undefined)
       .then((trips) => { setPopularTrips(trips); setPopularLoading(false); })
       .catch(() => setPopularLoading(false));
-  }, []);
+  }, [tripCity, tripStyle]);
 
   const filteredEvents = useMemo(() => {
     let list = eventsData;
@@ -103,16 +122,75 @@ function TrendingContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
       {/* ── Popular Trips ────────────────────────── */}
-      {!popularLoading && popularTrips.length > 0 && (
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-emerald-600 border border-emerald-400/40 bg-emerald-50 uppercase tracking-widest">
-              ✨ Popular Trips
-            </span>
-            <p className="text-sm text-gray-500 font-medium">
-              Real AI-planned itineraries — voted helpful by travelers
-            </p>
+      <section className="mb-10">
+        {/* 섹션 헤더 */}
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-emerald-600 border border-emerald-400/40 bg-emerald-50 uppercase tracking-widest">
+            ✨ Popular Trips
+          </span>
+          <p className="text-sm text-gray-500 font-medium">
+            Real AI-planned itineraries — voted helpful by travelers
+          </p>
+        </div>
+
+        {/* 도시·스타일 필터 */}
+        <div className="flex flex-wrap gap-2 mb-3">
+          {TRIP_CITY_FILTERS.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => setTripCity(f.key)}
+              className="px-3 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer"
+              style={
+                tripCity === f.key
+                  ? { backgroundColor: "#059669", color: "#fff", borderColor: "#059669" }
+                  : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+              }
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {TRIP_STYLE_FILTERS.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => setTripStyle(f.key)}
+              className="px-3 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer"
+              style={
+                tripStyle === f.key
+                  ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                  : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+              }
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
+        {/* 로딩 */}
+        {popularLoading ? (
+          <div className="flex items-center gap-2 py-6 text-gray-400 text-sm font-medium">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-500" />
+            Loading trips…
           </div>
+        ) : popularTrips.length === 0 ? (
+          /* 빈 상태 — 자동 폴백 없음 */
+          <div className="py-10 text-center border border-dashed border-gray-200 rounded-2xl">
+            <p className="text-3xl mb-2">🗺️</p>
+            <p className="text-sm font-semibold text-gray-500 mb-3">
+              No public itineraries match the selected filters.
+            </p>
+            {(tripCity || tripStyle) && (
+              <button
+                onClick={() => { setTripCity(""); setTripStyle(""); }}
+                className="text-xs font-bold underline"
+                style={{ color: "#f97316" }}
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {popularTrips.map((trip) => {
               const days = Math.round(
@@ -155,8 +233,8 @@ function TrendingContent() {
               );
             })}
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* ── Dark header card ─────────────────────── */}
       <div
