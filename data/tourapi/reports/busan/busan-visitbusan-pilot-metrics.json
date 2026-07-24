@@ -1,0 +1,60 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-VISITBUSAN-PILOT",
+  "pagination": {
+    "method": "GET",
+    "param": "startPage",
+    "get_page1": 13,
+    "pagination_worked": true,
+    "total_pages": 2,
+    "total_events": 16
+  },
+  "ko_fill_rates": {
+    "total": 16,
+    "title": 15,
+    "date_start": 15,
+    "date_end": 15,
+    "venue": 13,
+    "address": 10,
+    "official_url": 10,
+    "image_url": 15
+  },
+  "language_stats": {
+    "en": {
+      "fetched": 10,
+      "available": 0,
+      "unavailable": 10,
+      "review_required": 0
+    },
+    "ja": {
+      "fetched": 10,
+      "available": 0,
+      "unavailable": 10,
+      "review_required": 0
+    },
+    "zhs": {
+      "fetched": 3,
+      "available": 0,
+      "unavailable": 3,
+      "review_required": 0
+    },
+    "zht": {
+      "fetched": 3,
+      "available": 0,
+      "unavailable": 3,
+      "review_required": 0
+    }
+  },
+  "multi_month_count": 7,
+  "multi_month_sids": [
+    "6167",
+    "6111",
+    "6074",
+    "6037",
+    "6068",
+    "6148",
+    "5524"
+  ],
+  "total_requests": 44,
+  "generated_at": "2026-07-24T02:24:46.357Z"
+}

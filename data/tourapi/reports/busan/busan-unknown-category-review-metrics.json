@@ -1,0 +1,45 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-UNKNOWN-CATEGORY-REVIEW-07",
+  "overall": "PASS",
+  "total_reviewed": 173,
+  "by_content_type": {
+    "shopping": 53,
+    "experience": 120
+  },
+  "by_status": {
+    "ready_for_candidate": 116,
+    "manual_review": 12,
+    "exclude_non_place": 8,
+    "reference_only": 18,
+    "duplicate_suspected": 19
+  },
+  "ready_for_candidate": {
+    "total": 116,
+    "by_category": {
+      "attraction": 87,
+      "restaurant": 5,
+      "nature": 21,
+      "event": 3
+    }
+  },
+  "duplicate_suspected": {
+    "total": 19,
+    "accommodation_type": 7,
+    "market_type": 11,
+    "other": 1
+  },
+  "new_category_proposal": {
+    "shopping": {
+      "needed": true,
+      "reason": "백화점·면세점·소품샵 31건이 attraction으로 임시 매핑됨",
+      "count": 31
+    },
+    "outdoor_activity": {
+      "needed": true,
+      "reason": "서핑·클라이밍·카약 등 스포츠 체험이 nature로 임시 매핑됨",
+      "count": 6
+    }
+  },
+  "generated_at": "2026-07-24T09:35:40.389Z"
+}

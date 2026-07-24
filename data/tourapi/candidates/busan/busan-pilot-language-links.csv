@@ -1,0 +1,41 @@
+source_key_ko,source_key_en,score,confidence,dist_m,title_ko,title_en,link_method
+AttractionService:255:ko,AttractionService:255:en,100,high,0,흰여울문화마을,Huinnyeoul Culture Village at the end of the steep cliff,same_id
+AttractionService:256:ko,AttractionService:256:en,100,high,0,깡깡이 예술마을,Kangkangee Arts Village where history lives on,same_id
+AttractionService:257:ko,AttractionService:257:en,100,high,0,"국립해양박물관(한,영,중간,중번,일)","Korea National Maritime Museum, the Flower of Maritime Culture",same_id
+AttractionService:258:ko,AttractionService:258:en,100,high,0,태종대,Taejongdae Park’s 100 years of history with Yeongdo Lighthouse,same_id
+AttractionService:259:ko,AttractionService:259:en,100,high,0,죽성성당,The unique view of the Gijang Ocean at Jukseong Catholic Church,same_id
+AttractionService:260:ko,AttractionService:260:en,100,high,0,"아홉산 숲 (한,영,중간,중번,일)",Meet the forest preserved for over 400 years in its natural state,same_id
+AttractionService:261:ko,AttractionService:261:en,100,high,0,"해동용궁사 (한,영,중간,중번,일)",Haedong Yonggungsa Temple in Gijang,same_id
+AttractionService:262:ko,AttractionService:262:en,100,high,0,임랑해수욕장,"Imnang Beach, The Beach that only I want to know",same_id
+AttractionService:264:ko,AttractionService:264:en,100,high,0,"문화공감 수정, 초량1941(한,영,중간,중번,일)","Munhwa Gonggam Sujeong and Choryang 1941, where old stories remain",same_id
+AttractionService:265:ko,AttractionService:265:en,100,high,0,"부산바다의 과거와 현재, 일광해수욕장","Ilgwang Beach, the past and present of the Busan Sea ",same_id
+AttractionService:266:ko,AttractionService:266:en,100,high,0,"구 백제병원 (한,영,중간,중번,일)",Former Baekje Hospital,same_id
+AttractionService:267:ko,AttractionService:267:en,100,high,0,백산기념관,Baeksan Memorial Hall,same_id
+AttractionService:268:ko,AttractionService:268:en,100,high,0,"한성1918 부산생활문화센터(한,영,중간,중번,일)",Hansung 1918 Busan Lifestyle Culture Center,same_id
+AttractionService:269:ko,AttractionService:269:en,100,high,0,"조선통신사역사관(한,영,중간,중번,일)",History Museum of Joseon Tongsinsa,same_id
+AttractionService:270:ko,AttractionService:270:en,100,high,0,부산해양자연사박물관,Busan Marine Natural History Museum,same_id
+AttractionService:272:ko,AttractionService:272:en,100,high,0,보수동책방골목,Bosu Book Street: Put a bookmark in your mind,same_id
+AttractionService:273:ko,AttractionService:273:en,100,high,0,"임시수도기념관(한,영,중간,중번,일)","Meet the provisional capital, Busan",same_id
+AttractionService:274:ko,AttractionService:274:en,100,high,0,"동아대석당박물관(한,영,중간,중번,일)",Seokdang Museum of Dong-A University embraces the historic values of Korea,same_id
+AttractionService:275:ko,AttractionService:275:en,100,high,0,"국립일제강제동원역사관(한,영,중간,중번,일)",National Memorial Museum of Forced Mobilization under Japanese Occupation embraces the painful history,same_id
+AttractionService:276:ko,AttractionService:276:en,100,high,0,부산박물관,History of Busan and the history of Korea,same_id
+FoodService:70:ko,FoodService:70:en,100,high,0,만드리곤드레밥,Mandeuri Gondeurebap (만드리곤드레밥),same_id
+FoodService:77:ko,FoodService:77:en,100,high,0,민물가든,MinmulGarden (민물가든),same_id
+FoodService:94:ko,FoodService:94:en,100,high,0,가야할매밀면,GayaHalmaeMaemilmyeon (가야할매밀면),same_id
+FoodService:95:ko,FoodService:95:en,100,high,0,국제밀면본점,Gukje Milmyeon Main Branch (국제밀면본점),same_id
+FoodService:102:ko,FoodService:102:en,100,high,0,할매가야밀면,Gaya Milmyeon (가야밀면),same_id
+FoodService:103:ko,FoodService:103:en,100,high,0,거인통닭,Darin Geoin tongdak,same_id
+FoodService:118:ko,FoodService:118:en,100,high,0,부산꼼장어맛집 성일집,Seongiljip,same_id
+FoodService:130:ko,FoodService:130:en,100,high,0,배비장보쌈구서본점,Baebijang Bossam Guseo Branch (배비장보쌈),same_id
+FoodService:138:ko,FoodService:138:en,100,high,0,장수장 꼬리곰탕,Jangsujang Kkorigomtang (장수장꼬리곰탕),same_id
+FoodService:146:ko,FoodService:146:en,100,high,0,금수복국 해운대본점,Geumsubokguk Haeundae Branch (금수복국),same_id
+FoodService:152:ko,FoodService:152:en,100,high,0,다온 한정식,Daon (다온),same_id
+FoodService:164:ko,FoodService:164:en,100,high,0,할매재첩국집,Halmae Jaecheopguk (할매재첩국),same_id
+FoodService:166:ko,FoodService:166:en,100,high,0,예이제,Yeije (예이제),same_id
+FoodService:167:ko,FoodService:167:en,100,high,0,합천일류돼지국밥,Hapcheon Illyu Dwaejigukbap (합천일류돼지국밥),same_id
+FoodService:169:ko,FoodService:169:en,100,high,0,원조석대추어탕,Wonjo Seokdae Chueotang (원조석대추어탕),same_id
+FoodService:190:ko,FoodService:190:en,100,high,0,할매복국,Halmae Bokguk (원조할매복국),same_id
+FoodService:198:ko,FoodService:198:en,100,high,0,신창국밥 본점,Sinchang Gukbap (신창국밥),same_id
+FoodService:201:ko,FoodService:201:en,100,high,0,평안도족발,Pyeongan-do Jokbal (평안도족발),same_id
+FoodService:203:ko,FoodService:203:en,100,high,0,한우숯불양곱창,Hanwoo Sootbul Yanggopchang (한우숯불양곱창),same_id
+FoodService:204:ko,FoodService:204:en,100,high,0,쌍둥이돼지국밥 본점,Ssangdungi  Dwaejigukbap  Main Store(쌍둥이돼지국밥 본점),same_id

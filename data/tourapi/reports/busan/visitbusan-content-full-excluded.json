@@ -1,0 +1,364 @@
+[
+  {
+    "excluded_at": "2026-07-24T07:19:29.507Z",
+    "language": "ko",
+    "uc_seq": "2566",
+    "ctype": "attraction",
+    "parse_status": "requires_client_render",
+    "reason": "vue_title_only",
+    "source_detail_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=2566&lang_cd=ko",
+    "source_key": "VisitBusanContent:attraction:2566:ko"
+  },
+  {
+    "excluded_at": "2026-07-24T07:19:30.185Z",
+    "language": "ko",
+    "uc_seq": "1499",
+    "ctype": "food",
+    "parse_status": "requires_client_render",
+    "reason": "vue_title_only",
+    "source_detail_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1499&lang_cd=ko",
+    "source_key": "VisitBusanContent:food:1499:ko"
+  },
+  {
+    "excluded_at": "2026-07-24T06:10:47.168Z",
+    "language": "en",
+    "uc_seq": "2753",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=2753&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:10:50.887Z",
+    "language": "en",
+    "uc_seq": "2588",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=2588&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:12:05.900Z",
+    "language": "en",
+    "uc_seq": "859",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=859&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:12:09.150Z",
+    "language": "en",
+    "uc_seq": "832",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=832&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:12:09.902Z",
+    "language": "en",
+    "uc_seq": "813",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=813&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:12:10.646Z",
+    "language": "en",
+    "uc_seq": "804",
+    "ctype": "attraction",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201001001000&uc_seq=804&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:16:32.392Z",
+    "language": "en",
+    "uc_seq": "1065",
+    "ctype": "food",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201002001000&uc_seq=1065&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:17:43.504Z",
+    "language": "en",
+    "uc_seq": "2417",
+    "ctype": "shopping",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201003001000&uc_seq=2417&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:17:53.901Z",
+    "language": "en",
+    "uc_seq": "819",
+    "ctype": "shopping",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000201003001000&uc_seq=819&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:16.996Z",
+    "language": "en",
+    "uc_seq": "2789",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2789&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:17.685Z",
+    "language": "en",
+    "uc_seq": "2784",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2784&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:18.407Z",
+    "language": "en",
+    "uc_seq": "2763",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2763&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:19.088Z",
+    "language": "en",
+    "uc_seq": "2755",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2755&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:20.485Z",
+    "language": "en",
+    "uc_seq": "2703",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2703&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:22.694Z",
+    "language": "en",
+    "uc_seq": "2410",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2410&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:41.925Z",
+    "language": "en",
+    "uc_seq": "2144",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2144&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:50.045Z",
+    "language": "en",
+    "uc_seq": "2060",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=2060&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:54.405Z",
+    "language": "en",
+    "uc_seq": "1899",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1899&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:18:58.823Z",
+    "language": "en",
+    "uc_seq": "1858",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1858&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:04.756Z",
+    "language": "en",
+    "uc_seq": "1755",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1755&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:12.106Z",
+    "language": "en",
+    "uc_seq": "1729",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1729&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:19.726Z",
+    "language": "en",
+    "uc_seq": "1316",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1316&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:24.249Z",
+    "language": "en",
+    "uc_seq": "1093",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1093&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:25.007Z",
+    "language": "en",
+    "uc_seq": "1066",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1066&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:26.487Z",
+    "language": "en",
+    "uc_seq": "1057",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1057&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:27.208Z",
+    "language": "en",
+    "uc_seq": "1034",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=1034&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:29.393Z",
+    "language": "en",
+    "uc_seq": "986",
+    "ctype": "experience",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202008001000&uc_seq=986&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:46.970Z",
+    "language": "en",
+    "uc_seq": "2788",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=2788&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:19:54.492Z",
+    "language": "en",
+    "uc_seq": "2076",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=2076&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:00.467Z",
+    "language": "en",
+    "uc_seq": "1708",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=1708&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:01.275Z",
+    "language": "en",
+    "uc_seq": "1697",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=1697&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:02.064Z",
+    "language": "en",
+    "uc_seq": "1688",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=1688&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:06.166Z",
+    "language": "en",
+    "uc_seq": "1376",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=1376&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:12.196Z",
+    "language": "en",
+    "uc_seq": "1060",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=1060&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:15.290Z",
+    "language": "en",
+    "uc_seq": "997",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=997&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:16.033Z",
+    "language": "en",
+    "uc_seq": "975",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=975&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:18.395Z",
+    "language": "en",
+    "uc_seq": "320",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=320&lang_cd=en"
+  },
+  {
+    "excluded_at": "2026-07-24T06:20:22.091Z",
+    "language": "en",
+    "uc_seq": "322",
+    "ctype": "course",
+    "parse_status": "language_content_unavailable",
+    "reason": "en_var_mtTitle_absent",
+    "source_detail_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000202012001000&uc_seq=322&lang_cd=en"
+  }
+]

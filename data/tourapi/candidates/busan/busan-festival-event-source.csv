@@ -1,0 +1,184 @@
+source_key,source_id,source_language,title,official_url,official_url_domain,official_url_fallback_language,official_check_required,schedule_change_detected,possible_stale_event,date_review_required,affiliate_url,affiliate_provider,event_period_raw,venue
+FestivalService:71:ko,71,ko,"부산바다축제(한,영, 중간,중번,일)",http://www.bfo.or.kr/festival_sea/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025. 8. 1. ~ 8. 3.,다대포 해수욕장 일원
+FestivalService:253:ko,253,ko,"수국축제(한,영,중간,중번,일)",,,,true,false,true,true,,,2025. 7. 5.(토) ~ 7. 13.(일),"태종대, 태종사"
+FestivalService:329:ko,329,ko,"센텀맥주축제(한,영,중간,중번,일)",http://www.beerfestival.co.kr,www.beerfestival.co.kr,,true,false,false,false,,,2026. 05. 22. ~ 05. 31.,센텀맥주축제
+FestivalService:330:ko,330,ko,"금정산성축제(한,영,중간,중번,일)",http://www.gjfac.org/gjfac/main.php,www.gjfac.org,,true,false,false,false,,,2026. 10. 16. ~ 10. 18.,금정산성축제
+FestivalService:331:ko,331,ko,"낙동강구포나루축제(한,영,중간,중번,일)",https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000402006001000,www.bsbukgu.go.kr,,true,false,true,true,,,2025. 9. 26.(금) ~ 2025. 9. 28.(일),낙동강구포나루축제
+FestivalService:395:ko,395,ko,"부산불꽃축제(한, 영, 중간, 중번, 일)",https://www.bfo.or.kr/festival/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025.11.15.(토)매년 11월,부산불꽃축제
+FestivalService:403:ko,403,ko,"삼광사 연등축제(한,영,중간,중번,일)",http://www.samkwangsa.or.kr/,www.samkwangsa.or.kr,,true,false,false,false,,,2026. 5. 15. ~  5. 24. 점등시간 매일 저녁 7시~새벽 1시,삼광사 연등축제
+FestivalService:405:ko,405,ko,"해운대모래축제(한,영,중간,중번,일)",https://www.instagram.com/haeundae_sandfestival/,www.instagram.com,,true,false,true,true,,,2025.5.16.(금) ~ 5.19.(월) 모래조각전 6.8.(일)까지 전시,해운대모래축제
+FestivalService:406:ko,406,ko,"부산항축제(한,영,중간,중번,일)",https://festivalbusan.com/busanport/,festivalbusan.com,,true,false,false,false,,,2026. 6. 19.(금) ~ 6. 20.(토),
+FestivalService:407:ko,407,ko,"동래읍성 역사축제(한, 영, 중간, 중번, 일)",https://www.dongnae.go.kr/festival/index.dongnae?contentsSid=169,www.dongnae.go.kr,,true,false,true,true,,,2025.10.24. (금) ~ 2025.10.26. (일),동래읍성 역사축제
+FestivalService:411:ko,411,ko,"부산자갈치축제(한,영,중간,중번,일)",,,,true,false,true,true,,,2025. 10. 23. ~ 10. 06.,부산자갈치축제
+FestivalService:414:ko,414,ko,"차이나타운특구 문화축제(한,영,중간,중번,일)",https://부산차이나축제.com,xn--910bt8v7nc70jbyas1pcvc.com,,true,false,true,true,,,2025. 10. 17 ~ 10. 19.,부산차이나타운특구 문화축제
+FestivalService:427:ko,427,ko,"부산바다미술제(한,영,중간,중번,일)",https://www.saf2023.org/,www.saf2023.org,,true,false,true,true,,,2025. 9. 27.(토) ~ 2025. 11. 2.(일),일광해수욕장
+FestivalService:440:ko,440,ko,"해운대 빛축제(한,영,중간,중번,일)",https://www.haeundae.go.kr/index.do?menuCd=DOM_000000309006001000,www.haeundae.go.kr,,true,false,false,false,,,2025년 11월 29일 ~ 2026년 1월 18일 점등시간 : 18:00~23:00,"해운대해수욕장, 해운대광장(구남로), 해운대시장, 온천길 일원"
+FestivalService:441:ko,441,ko,"기장미역다시마축제(한, 영, 중간, 중번, 일)",http://www.gijang.go.kr/tour/index.gijang,www.gijang.go.kr,,true,false,false,false,,,2026.04.17.~04.19.,기장미역다시마축제
+FestivalService:442:ko,442,ko,"광안리어방축제(한,영,중간,중번,일)",http://www.suyeong.go.kr/eobang,www.suyeong.go.kr,,true,false,false,false,,,2026. 06. 12. ~ 06. 14.,광안리해변 및 수영사적공원 일원
+FestivalService:443:ko,443,ko,"기장멸치축제(한, 영, 중간, 중번, 일)",https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000302000000000,www.gijang.go.kr,,true,false,false,false,,,2026. 04. 24. ~ 04. 26.,기장멸치축제
+FestivalService:449:ko,449,ko,"광복로 겨울빛 트리축제(한,영,중간,중번,일)",,,,true,false,false,false,,,2025.12.05(금) ~ 2026.02.22(일),
+FestivalService:470:ko,470,ko,"부산국제록페스티벌(한,영, 중간,중번,일)",https://busanrockfestival.com/,busanrockfestival.com,,true,false,true,true,,,2025. 9. 26.(금) ~ 2025. 9. 28.(일),부산국제록페스티벌
+FestivalService:497:ko,497,ko,"대저토마토축제(한, 영, 중간, 중번, 일)",https://www.bsgangseo.go.kr/visit/contents.do?mId=0305000000,www.bsgangseo.go.kr,,true,false,false,false,,,2026. 3. 21. ~ 3. 22.,강서체육공원
+FestivalService:499:ko,499,ko,"낙동강 정원 벚꽃축제(한,영,중간,중번,일)",https://www.sasang.go.kr/index.sasang?menuCd=DOM_000000604002000000,www.sasang.go.kr,,true,false,false,false,,,2026. 03. 27. ~ 04. 12.,낙동강 정원 벚꽃축제
+FestivalService:500:ko,500,ko,"사상강변축제(한,영,중간,중번,일)",https://xn--939a392a91cocr48bfii.com/,xn--939a392a91cocr48bfii.com,,true,false,true,true,,,2025년 9월 20일(토) ~ 9월 21일(일),삼락생태공원 문화마당
+FestivalService:502:ko,502,ko,"해운대달맞이온천축제(한,영,중간,중번,일)",,,,true,false,true,true,,,2025.2.12매년 정월대보름,해운대달맞이온천축제
+FestivalService:503:ko,503,ko,"해운대북극곰축제(한,영,중간,중번,일)",http://bear.busan.com/,bear.busan.com,,true,false,false,false,,,2026. 01. 17. ~ 01. 18.,해운대해수욕장
+FestivalService:523:ko,523,ko,"조선통신사축제(한,영,중간,중번,일)",http://www.tongsinsa.com/,www.tongsinsa.com,,true,false,true,true,,,2025.4.25.(금) ~ 4.27.(일),조선통신사축제
+FestivalService:524:ko,524,ko,"부산국제영화제(한, 영, 중간, 중번, 일)",http://www.biff.kr,www.biff.kr,,true,false,true,true,,,2025. 09. 17. (수) ~ 2025. 09. 26. (금),부산국제영화제
+FestivalService:531:ko,531,ko,"감천문화마을골목축제(한,영,중간,중번,일)",https://www.gamcheon.or.kr/,www.gamcheon.or.kr,,true,false,true,true,,,2025. 10. 24. ~ 10. 25.,감천문화마을 골목축제
+FestivalService:807:ko,807,ko,"부산푸드필름페스타(한, 영)",https://bfff.kr/,bfff.kr,,true,false,false,false,,,2026. 06. 26.(금) ~ 06. 28.(일),부산푸드필름페스타
+FestivalService:1432:ko,1432,ko,"부산연등회(한,영,중간,중번,일)",http://www.bba48.or.kr,www.bba48.or.kr,,true,false,false,false,,,2026. 05. 01 ~ 05. 17.,"송상현광장, 부산시민공원"
+FestivalService:1694:ko,1694,ko,"부산수제맥주마스터스챌린지(한,영,중간,중번,일)",https://festivalshiwol.app/,festivalshiwol.app,,true,false,true,true,,,2025. 9. 20.(토) ~ 2025. 9. 24.(수)2025. 9. 20.(토) ~ 2025. 9. 24.(수),BEXCO 야외광장 일원
+FestivalService:1698:ko,1698,ko,"나이트레이스 인 부산(한, 영, 중간, 중번, 일)",http://www.nightracebusan.co.kr/,www.nightracebusan.co.kr,,true,false,true,true,,,2025년 8월 2일 (토),광안대교
+FestivalService:1705:ko,1705,ko,"별바다부산 나이트페스타(한)//영,중간,중번,일",https://www.instagram.com/starry_night_busan.kr/,www.instagram.com,,true,false,true,true,,,2025.07. ~ 2025.10.,
+FestivalService:1807:ko,1807,ko,부산국제마케팅광고제(한),https://www.madstars.org,www.madstars.org,,true,false,true,true,,,2025. 8. 27 ~ 8.29. / 상시운영,
+FestivalService:1897:ko,1897,ko,부산국제어린이청소년영화제,https://www.biky.or.kr/,www.biky.or.kr,,true,false,true,true,,,2025.7.8.(화) ~ 7.19.(토),영화의 전당
+FestivalService:1961:ko,1961,ko,2024 용두산 썸머 비치,,,,true,false,true,true,,,"2024. 7. 27.(토) ~ 9. 21.(토), 매주 토요일 16:00 ~ 20:00",용두산공원
+FestivalService:2136:ko,2136,ko,"서면 빛 축제(한,영,중간,중번,일)",https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&paging=ok&startPage=1&dataSid=3898941,www.busanjin.go.kr,,true,false,true,true,,,2024.10.02.수~2025.01.10.금,
+FestivalService:2368:ko,2368,ko,2026 원아시아페스티벌(BOF),https://www.bof.or.kr/,www.bof.or.kr,,true,false,false,false,,,Big CONCERT: 2026. 6. 27.(토) ~ 6. 28.(일) 13:00~21:00 PARK CONCERT: 6. 20(토) 18:00,
+FestivalService:2373:ko,2373,ko,택슐랭,www.festivalbusan.com/taxchelin/,,,true,false,true,true,,,2025. 5. 16.(금) ~ 5. 18.(일),"부산역, 부산근현대역사관, 충무동 새벽시장, 유라리광장"
+FestivalService:2383:ko,2383,ko,부산콘서트홀 개관 페스티벌,https://classicbusan.busan.go.kr/,classicbusan.busan.go.kr,,true,false,true,true,,,2025. 6. 21.(토) ~ 6. 28.(토),부산콘서트홀
+FestivalService:2730:ko,2730,ko,김해공항 Welcome to Busan 환대 행사,,,,true,false,false,false,,,,김해공항 국제선 1층 도착장 GATE 1 앞
+FestivalService:71:en,71,en,Into the sea of festivals,http://www.bfo.or.kr/festival_Eng/info/01.asp?MENUDIV=1&Fcode=SEAFESTIVAL,www.bfo.or.kr,,true,false,true,true,,,Expected in August 2025,Major beaches in Busan
+FestivalService:253:en,253,en,The beautiful and brilliant hydrangea at Taejongdae Park,,,,true,false,true,true,,,2025. 7. 5. ~ 7. 13.,"Taejongdae Park, Taejongsa Temple"
+FestivalService:329:en,329,en,Beer lovers! Come and visit the Centum Beer Festival!,http://www.beerfestival.co.kr,www.beerfestival.co.kr,ko,true,false,false,false,,,2026.05.22. ~ 05.31.,
+FestivalService:330:en,330,en,Explore the culture at Geumjeongsanseong Festival,http://www.gjfac.org/gjfac/main.php,www.gjfac.org,,true,false,false,false,,,2026. 10. 16. ~ 10. 18.,Geumjeongsanseong Festival
+FestivalService:331:en,331,en,"Nakdonggang Gupo Naru Festival, romantic memories of Gupo Quay",https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000402006001000,www.bsbukgu.go.kr,,true,false,false,false,,,,Nakdonggang Gupo Naru Festival
+FestivalService:395:en,395,en,"The beautiful harmony in the night sky of Busan, Busan Fireworks Festival",https://www.bfo.or.kr/festival/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025. 11. 15.,Busan Fireworks Festival
+FestivalService:403:en,403,en,Enjoy the colorful lotus lantern tunnel at the Samgwangsa Lotus Lantern Festival,http://www.samkwangsa.or.kr/,www.samkwangsa.or.kr,ko,true,false,false,false,,,"May 15–24, 2026 / Illuminations will be on daily from 7:00 p.m. to 1:00 a.m.",Samgwangsa Lotus Lantern Festival
+FestivalService:405:en,405,en,An artistic transformation of sand at the Haeundae Sand Festival,https://www.instagram.com/haeundae_sandfestival/,www.instagram.com,ko,true,false,true,true,,,"May 16th ~ May 19th, 2025",Haeundae Sand Festival
+FestivalService:406:en,406,en,Learn all about the ocean at the Busan Port Festival,https://festivalbusan.com/busanport/,festivalbusan.com,,true,false,false,false,,,"June 19 (Fri) – June 20 (Sat), 2026","Bukhang Waterfront Park, Busan Port Authority Headquarters, and surrounding areas"
+FestivalService:407:en,407,en,"Dongnaeeupseong History Festival, a reenactment of the historical day on Dongnae Hill",https://www.dongnae.go.kr/festival/index.dongnae?contentsSid=169,www.dongnae.go.kr,ko,true,false,true,true,,,2025.10.24. ~ 2025.10.26.,Dongnaeeupseong History Festival
+FestivalService:411:en,411,en,"Busan Jagalchi Festival is full of various tastes and entertainment programs, offering the full experience",,,,true,false,true,true,,,2025. 10. 23.-10. 06.,Busan Jagalchi Festival
+FestivalService:414:en,414,en,The Busan Chinatown Culture Festival encourages full excitement in Busan Chinatown!,https://부산차이나축제.com,xn--910bt8v7nc70jbyas1pcvc.com,ko,true,false,true,true,,,"October 17, 2025(Fri) - October 19, 2025(Sun)",Busan Chinatown Culture Festival
+FestivalService:427:en,427,en,Sea Art Festival in Busan: A Time When Art Permeated the Sea,https://www.saf2023.org/?lang=en,www.saf2023.org,,true,false,true,true,,,"September 27 (Sat) – November 2 (Sun), 2025",Ilgwang Beach
+FestivalService:440:en,440,en,Haeundae Lighting Festival filling the night sea of Haeundae with romance,https://www.haeundae.go.kr/index.do?menuCd=DOM_000000309006001000,www.haeundae.go.kr,ko,true,false,false,false,,,,Haeundae Lighting Festival
+FestivalService:441:en,441,en,Taste the flavors of Gijang’s spring sea at the Gijang Seaweed Festival.,http://www.gijang.go.kr/tour/index.gijang,www.gijang.go.kr,ko,true,false,false,false,,,Every April Differs by program (refer to the website),
+FestivalService:442:en,442,en,Aren’t you curious about what Eobang is? Then visit the Gwangalli Yellowtail Festival,https://www.suyeong.go.kr/eng/index.suyeong,www.suyeong.go.kr,,true,false,false,false,,,2026. 06. 12. ~ 06. 14.,
+FestivalService:443:en,443,en,The transformation of Gijang anchovy at the Gijang Anchovy Festival,https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000302000000000,www.gijang.go.kr,,true,false,false,false,,,2026. 04. 24. ~ 04. 26.,Gijang Anchovy Festival
+FestivalService:449:en,449,en,"Busan Christmas Tree Cultural Festival, the feast of Christmas tree lighting",,,,true,false,true,true,,,2024. 11. 15. ~ 2025. 02. 02.,Busan Christmas Tree Cultural Festival
+FestivalService:470:en,470,en,Busan International Rock Festival,https://busanrockfestival.com/,busanrockfestival.com,,true,false,true,true,,,"September 26 (FRI) – 28 (SUN), 2025",Busan International Rock Festival
+FestivalService:497:en,497,en,"Daejeo Tomato Festival, Where You Can Get Premium Tomatoes!",https://www.bsgangseo.go.kr/visit/contents.do?mId=0305000000,www.bsgangseo.go.kr,ko,true,false,false,false,,,"March 21st ~ 22nd, 2026",Daejeo Tomato Festival
+FestivalService:499:en,499,en,"Samnak Cherry Blossom Festival, Cherishing Dreamlike Moments",https://www.sasang.go.kr/index.sasang?menuCd=DOM_000000604002000000,www.sasang.go.kr,ko,true,false,false,false,,,2026. 03. 27. ~ 04. 12.,Nakdonggang Riverside Cherry Blossom Festival
+FestivalService:500:en,500,en,Sasang Riverside Festival,https://xn--939a392a91cocr48bfii.com/,xn--939a392a91cocr48bfii.com,,true,false,true,true,,,"September 20 (Sat) ~ 21 (Sun), 2025",Sasang Riverside Festival
+FestivalService:502:en,502,en,Haeundae Full Moon & Spa Festival on a Full Moon Night,,,,true,false,true,true,,,2025.2.1215th day of the first lunar month each year,Haeundae Full Moon & Spa Festival
+FestivalService:503:en,503,en,"Haeundae Polar Bear Festival, the Thrill of Icy-Cold Midwinter",http://bear.busan.com/,bear.busan.com,ko,true,false,false,false,,,2026. 01. 17. ~ 01. 18.,Haeundae Polar Bear Festival
+FestivalService:523:en,523,en,A spring flower blossoming in Korea and Japan through the Joseon Tongsinsa Festival,http://www.tongsinsa.com/html/ex_eng/,www.tongsinsa.com,,true,false,true,true,,,2025.4.25. ~ 4.27.,Joseon Tongsinsa Festival
+FestivalService:524:en,524,en,"In September, Busan becomes a cinema paradise with the Busan International Film Festival.",http://www.biff.kr/eng/default.asp,www.biff.kr,,true,false,true,true,,,"September 17 (Wed) - 24 (Fri), 2025",Busan International Film Festival (BIFF)
+FestivalService:531:en,531,en,Tour the maze of alleys at the Gamcheon Culture Village Alley Festival.,https://www.gamcheon.or.kr/,www.gamcheon.or.kr,ko,true,false,false,false,,,,Gamcheon Culture Village Alley Festival
+FestivalService:807:en,807,en,Busan Food Film Festa,https://bfff.kr/,bfff.kr,,true,false,true,true,,,2025. 6. 13. ~ 6. 15.,Busan Food Film Festa
+FestivalService:1432:en,1432,en,Busan Lotus Lantern Festival: Experience the enchanting glow of delicate lights,http://www.bba48.or.kr,www.bba48.or.kr,ko,true,false,false,false,,,2026. 05. 01 ~ 05. 17.,
+FestivalService:1694:en,1694,en,Busan Craft Beer Masters Challenge,https://festivalshiwol.app/,festivalshiwol.app,ko,true,false,true,true,,,"September 20 (Sat) – 24 (Wed), 2025",BEXCO
+FestivalService:1699:en,1699,en,Busan International Comedy Festival,http://www.bicf.kr/en/,www.bicf.kr,,true,false,true,true,,,2025.08.29(Fri)~2025.09.07(Sun),Venue varies by performance
+FestivalService:1897:en,1897,en,The 19th Busan International Kids & Youth Film Festival,https://www.biky.or.kr/,www.biky.or.kr,,true,false,true,true,,,2025.7.8 ~ 2025.7.19,Busan Cinema Center
+FestivalService:2049:en,2049,en,Starry Night at Busan Night Festa 2025,https://www.instagram.com/starry_night_busan.en/,www.instagram.com,,true,false,true,true,,,2025.07 ~ 2025.10,"Haeundae River Cruise, Busan Modern & Contemporary History Museum, Annex of Busan Modern & Contemporary History Museum, Busan National Science Museum, Dadaepo Beach Park, Gwangalli Beach, APEC Naru Park, Lotus Garden, Hwamyeong Eco Park, Yongdusan Park, Lawn plaza, Busan Citizen Park"
+FestivalService:2136:en,2136,en,"Seomyeon Light Festival: Into the Night of Seomyeon, Into the Feast of Lights!",https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&paging=ok&startPage=1&dataSid=3898941,www.busanjin.go.kr,,true,false,true,true,,,"Oct. 2 (WED), 2024 – Jan. 10 (FRI), 2025",
+FestivalService:2368:en,2368,en,Busan One Asia Festival (BOF),https://www.bof.or.kr/,www.bof.or.kr,,true,false,false,false,,,"Big CONCERT: June 27 (Sat) – June 28 (Sun), 2026 / 13:00–21:00 PARK CONCERT: June 20 (Sat), 2026 / 18:00",
+FestivalService:2383:en,2383,en,Busan Concert Hall Grand Opening Festival,https://classicbusan.busan.go.kr/Home/en/Main,classicbusan.busan.go.kr,,true,false,true,true,,,"June 21, 2025(Sat) – June 28, 2025(Sat)",Busan Concert Hall
+FestivalService:2730:en,2730,en,Welcome to Busan Event at Gimhae Airport,,,,true,false,false,false,,,,"In front of Gate 1, International Arrivals Hall (1F), Gimhae International Airport"
+FestivalService:71:ja,71,ja,釜山海祭り,http://www.bfo.or.kr/festival_Eng/info/01.asp?MENUDIV=1&Fcode=SEAFESTIVAL,www.bfo.or.kr,,true,false,true,true,,,2025年8月中に予定,釜山市内の主な海水浴場
+FestivalService:253:ja,253,ja,太宗台、太宗寺,,,,true,false,true,true,,,2025. 7. 5. ~ 7. 13.,太宗台、太宗寺
+FestivalService:329:ja,329,ja,センタムビール祭り,http://www.beerfestival.co.kr,www.beerfestival.co.kr,ko,true,false,false,false,,,2026.05.22. ~ 05.31.,
+FestivalService:330:ja,330,ja,金井山城祭り,http://www.gjfac.org/gjfac/main.php,www.gjfac.org,,true,false,false,false,,,2026. 10. 16. ~ 10. 18.,金井山城祭り
+FestivalService:331:ja,331,ja,洛東江亀浦ナル祭り,https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000402006001000,www.bsbukgu.go.kr,,true,false,false,false,,,,洛東江亀浦ナル祭り
+FestivalService:395:ja,395,ja,釜山花火祭り,https://www.bfo.or.kr/festival/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025. 11. 15.,釜山花火祭り
+FestivalService:403:ja,403,ja,三光寺燃灯祭り,http://www.samkwangsa.or.kr/,www.samkwangsa.or.kr,ko,true,false,false,false,,,026年5月15日～5月24日 ／ 点灯時間：毎日19:00～翌1:00,三光寺燃灯祭り
+FestivalService:405:ja,405,ja,海雲台砂祭り,https://www.instagram.com/haeundae_sandfestival/,www.instagram.com,ko,true,false,true,true,,,2025年5月16日~2025年5月19日,海雲台砂祭り
+FestivalService:406:ja,406,ja,釜山港祭り,https://festivalbusan.com/busanport/,festivalbusan.com,,true,false,false,false,,,2026年6月19日（金）～6月20日（土）,北港親水公園、釜山港湾公社本社 ほか周辺一帯
+FestivalService:407:ja,407,ja,東莱邑城歴史祭り,https://www.dongnae.go.kr/festival/index.dongnae?contentsSid=169,www.dongnae.go.kr,ko,true,false,true,true,,,2025.10.24. ~ 2025.10.26.,東莱邑城歴史祭り
+FestivalService:411:ja,411,ja,釜山チャガルチ祭り,,,,true,false,true,true,,,2025. 10. 23.-10. 06.,釜山チャガルチ祭り
+FestivalService:414:ja,414,ja,釜山チャイナタウン特区文化祭り,https://부산차이나축제.com,xn--910bt8v7nc70jbyas1pcvc.com,ko,true,false,false,false,,,,釜山チャイナタウン特区文化祭り
+FestivalService:427:ja,427,ja,海に美術が滲み、芸術と呼ばれる時間 釜山海美術祭,https://www.saf2023.org/,www.saf2023.org,ko,true,false,true,true,,,2025.9.27 ~ 11.2,日光海水浴場
+FestivalService:440:ja,440,ja,海雲台光祭り,https://www.haeundae.go.kr/index.do?menuCd=DOM_000000309006001000,www.haeundae.go.kr,ko,true,false,false,false,,,,海雲台光祭り
+FestivalService:441:ja,441,ja,機張わかめ昆布祭り,http://www.gijang.go.kr/tour/index.gijang,www.gijang.go.kr,ko,true,false,false,false,,,毎年4月 プログラムによって異なる（ホームページ参照）,
+FestivalService:442:ja,442,ja,広安里漁坊祭り,https://www.suyeong.go.kr/eng/index.suyeong,www.suyeong.go.kr,,true,false,false,false,,,2026. 06. 12. ~ 06. 14.,
+FestivalService:443:ja,443,ja,機張カタクチイワシ祭り,https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000302000000000,www.gijang.go.kr,,true,false,false,false,,,2026. 04. 24. ~ 04. 26.,機張カタクチイワシ祭り
+FestivalService:449:ja,449,ja,釜山クリスマスツリー文化祭り,,,,true,false,true,true,,,2024. 11. 15. ~ 2025. 02. 02.,釜山クリスマスツリー文化祭り
+FestivalService:470:ja,470,ja,釜山国際ロックフェスティバル,https://busanrockfestival.com/,busanrockfestival.com,,true,false,true,true,,,2025.9.26. ~ 2025.9.28.,釜山国際ロックフェスティバル
+FestivalService:497:ja,497,ja,大渚トマト祭り,https://www.bsgangseo.go.kr/visit/contents.do?mId=0305000000,www.bsgangseo.go.kr,ko,true,false,false,false,,,2026年3月21日 ~ 2026年3月22日,大渚トマト祭り
+FestivalService:499:ja,499,ja,夢のような瞬間をとらえる洛東江庭園桜祭り,https://www.sasang.go.kr/index.sasang?menuCd=DOM_000000604002000000,www.sasang.go.kr,ko,true,false,false,false,,,2026. 03. 27. ~ 04. 12.,洛東江庭園桜祭り
+FestivalService:500:ja,500,ja,沙上江辺祭り,https://xn--939a392a91cocr48bfii.com/,xn--939a392a91cocr48bfii.com,,true,false,true,true,,,2025年9月20日（土）～ 2025年9月21日（日）,沙上江辺祭り
+FestivalService:502:ja,502,ja,海雲台月見温泉祭り,,,,true,false,true,true,,,2025.2.12毎年正月テボルム,海雲台月見温泉祭り
+FestivalService:503:ja,503,ja,海雲台ホッキョクグマ祭り,http://bear.busan.com/,bear.busan.com,ko,true,false,false,false,,,2026. 01. 17. ~ 01. 18.,海雲台ホッキョクグマ祭り
+FestivalService:523:ja,523,ja,朝鮮通信使祭り,http://www.tongsinsa.com/html/ex_jpn/,www.tongsinsa.com,,true,false,true,true,,,2025.4.25. ~ 4.27.,朝鮮通信使祭り
+FestivalService:524:ja,524,ja,釜山国際映画祭,http://www.biff.kr/eng/default.asp,www.biff.kr,,true,false,true,true,,,2025年9月17日（水）～ 2025年9月26日（金）,釜山国際映画祭
+FestivalService:531:ja,531,ja,甘川文化村路地祭り,https://www.gamcheon.or.kr/,www.gamcheon.or.kr,ko,true,false,false,false,,,,甘川文化村路地祭り
+FestivalService:1432:ja,1432,ja,色とりどりのほのかな明かりが美しい釜山燃灯祭り,http://www.bba48.or.kr,www.bba48.or.kr,ko,true,false,false,false,,,2026. 05. 01 ~ 05. 17.,
+FestivalService:1694:ja,1694,ja,釜山クラフトビール・マスターズチャレンジ,https://festivalshiwol.app/,festivalshiwol.app,ko,true,false,true,true,,,2025. 9. 20. ~ 2025. 9. 24.2025. 9. 20. ~ 2025. 9. 24.,
+FestivalService:1699:ja,1699,ja,釜山国際コメディフェスティバル,http://www.bicf.kr/en/,www.bicf.kr,,true,false,false,false,,,,各公演の開催場所は異なります
+FestivalService:1897:ja,1897,ja,釜山国際子供・青少年映画祭,https://www.biky.or.kr/,www.biky.or.kr,,true,false,true,true,,,2025.7.8 ~ 2025.7.19,映画の殿堂
+FestivalService:2052:ja,2052,ja,2025 星の海釜山 Night Festa,https://www.instagram.com/starry_night_busan.en/,www.instagram.com,,true,false,true,true,,,2025.07 ~ 2025.10,
+FestivalService:2136:ja,2136,ja,西面の夜、華やかな光の饗宴！「西面光祭り」,https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&paging=ok&startPage=1&dataSid=3898941,www.busanjin.go.kr,,true,false,true,true,,,2024年10月2日(水)～2025年1月10日(金),
+FestivalService:2368:ja,2368,ja,釜山ワンアジアフェスティバル,https://www.bof.or.kr/,www.bof.or.kr,,true,false,false,false,,,Big CONCERT： 2026年6月27日（土）～6月28日（日）13:00～21:00 PARK CONCERT： 2026年6月20日（土）18:00,
+FestivalService:2383:ja,2383,ja,釜山コンサートホール 開館フェスティバル,https://classicbusan.busan.go.kr/Home/en/Main,classicbusan.busan.go.kr,,true,false,false,false,,,6月21日（土）～6月28日（土）,釜山コンサートホール
+FestivalService:71:zhs,71,zhs,釜山海洋节,http://www.bfo.or.kr/festival_Eng/info/01.asp?MENUDIV=1&Fcode=SEAFESTIVAL,www.bfo.or.kr,,true,false,true,true,,,预计于2025年8月,釜山广域市主要海水浴场
+FestivalService:253:zhs,253,zhs,繡球花文化節,,,,true,false,true,true,,,2025. 7. 5. ~ 7. 13.,太宗台、太宗寺
+FestivalService:329:zhs,329,zhs,Centum啤酒节,http://www.beerfestival.co.kr,www.beerfestival.co.kr,ko,true,false,false,false,,,2026.05.22. ~ 05.31.,
+FestivalService:330:zhs,330,zhs,金井山城节,http://www.gjfac.org/gjfac/main.php,www.gjfac.org,,true,false,false,false,,,2026. 10. 16. ~ 10. 18.,金井山城节
+FestivalService:331:zhs,331,zhs,洛东江龟浦渡口节,https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000402006001000,www.bsbukgu.go.kr,,true,false,false,false,,,,洛东江龟浦渡口节
+FestivalService:395:zhs,395,zhs,釜山烟花节,https://www.bfo.or.kr/festival/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025. 11. 15.,广安里海水浴场
+FestivalService:403:zhs,403,zhs,三光寺燃灯节,http://www.samkwangsa.or.kr/,www.samkwangsa.or.kr,ko,true,false,false,false,,,2026年5月15日－5月24日 / 每晚点灯时间为19:00－次日凌晨1:00,三光寺燃灯节
+FestivalService:405:zhs,405,zhs,海云台沙滩节,https://www.instagram.com/haeundae_sandfestival/,www.instagram.com,ko,true,false,true,true,,,2025年5月16日~2025年5月19日,海云台沙滩节
+FestivalService:406:zhs,406,zhs,釜山港庆典,https://festivalbusan.com/busanport/,festivalbusan.com,,true,false,false,false,,,2026年6月19日（周五）– 6月20日（周六）,北港亲水公园、釜山港湾公社总部及周边区域
+FestivalService:407:zhs,407,zhs,东莱邑城历史庆典,https://www.dongnae.go.kr/festival/index.dongnae?contentsSid=169,www.dongnae.go.kr,ko,true,false,true,true,,,2025.10.24. ~ 2025.10.26.,东莱邑城历史庆典
+FestivalService:411:zhs,411,zhs,釜山札嘎其节,,,,true,false,true,true,,,2025. 10. 23.-10. 06.,釜山札嘎其节
+FestivalService:414:zhs,414,zhs,釜山中华街特区文化节,https://부산차이나축제.com,xn--910bt8v7nc70jbyas1pcvc.com,ko,true,false,false,false,,,,釜山中华街特区文化节
+FestivalService:427:zhs,427,zhs,美术渗入大海、被称为“艺术”的时光，釜山海洋美术节,https://www.saf2023.org/,www.saf2023.org,ko,true,false,true,true,,,2025.9.27 ~ 11.2,日光海水浴场
+FestivalService:440:zhs,440,zhs,海云台光庆典,https://www.haeundae.go.kr/index.do?menuCd=DOM_000000309006001000,www.haeundae.go.kr,ko,true,false,false,false,,,,海云台罗古光庆典
+FestivalService:441:zhs,441,zhs,机张海带昆布节,http://www.gijang.go.kr/tour/index.gijang,www.gijang.go.kr,ko,true,false,false,false,,,每年4月 依项目而异（参考官网）,
+FestivalService:442:zhs,442,zhs,广安里渔坊节,https://www.suyeong.go.kr/eng/index.suyeong,www.suyeong.go.kr,,true,false,false,false,,,2026. 06. 12. ~ 06. 14.,
+FestivalService:443:zhs,443,zhs,机张鳀鱼节,https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000302000000000,www.gijang.go.kr,,true,false,false,false,,,2026. 04. 24. ~ 04. 26.,机张鳀鱼节
+FestivalService:449:zhs,449,zhs,釜山圣诞树文化节,,,,true,false,true,true,,,2024. 11. 15. ~ 2025. 02. 02.,釜山圣诞树文化节
+FestivalService:470:zhs,470,zhs,釜山国际摇滚节,https://busanrockfestival.com/,busanrockfestival.com,,true,false,true,true,,,2025.9.26. ~ 2025.9.28.,釜山国际摇滚音乐节
+FestivalService:497:zhs,497,zhs,抢夺精品番茄！大渚番茄庆典,https://www.bsgangseo.go.kr/visit/contents.do?mId=0305000000,www.bsgangseo.go.kr,ko,true,false,false,false,,,2026年3月21日 ~ 2026年3月22日,大渚番茄庆典
+FestivalService:499:zhs,499,zhs,记录梦幻瞬间，洛东江庭园樱花节,https://www.sasang.go.kr/index.sasang?menuCd=DOM_000000604002000000,www.sasang.go.kr,ko,true,false,false,false,,,2026. 03. 27. ~ 04. 12.,洛东江庭园樱花节
+FestivalService:500:zhs,500,zhs,沙上江边庆典,https://xn--939a392a91cocr48bfii.com/,xn--939a392a91cocr48bfii.com,,true,false,true,true,,,2025年9月20日（周六）~ 2025年9月21日（周日）,沙上江边庆典
+FestivalService:502:zhs,502,zhs,海云台迎月温泉节,,,,true,false,true,true,,,2025.2.12每年正月十五,海云台迎月温泉节
+FestivalService:503:zhs,503,zhs,海云台冬泳庆典,http://bear.busan.com/,bear.busan.com,ko,true,false,false,false,,,2026. 01. 17. ~ 01. 18.,海云台冬泳庆典
+FestivalService:523:zhs,523,zhs,朝鲜通信使庆典,http://www.tongsinsa.com/html/ex_eng/,www.tongsinsa.com,,true,false,true,true,,,2025.4.25. ~ 4.27.,朝鲜通信使庆典
+FestivalService:524:zhs,524,zhs,釜山国际电影节,http://www.biff.kr/eng/default.asp,www.biff.kr,,true,false,true,true,,,2025年9月17日（周三）~ 2025年9月26日（周五）,釜山国际电影节
+FestivalService:531:zhs,531,zhs,甘川文化村胡同庆典,https://www.gamcheon.or.kr/,www.gamcheon.or.kr,ko,true,false,false,false,,,,甘川文化村胡同庆典
+FestivalService:1432:zhs,1432,zhs,缤纷朦胧的釜山燃灯节,http://www.bba48.or.kr,www.bba48.or.kr,ko,true,false,false,false,,,2026. 05. 01 ~ 05. 17.,
+FestivalService:1694:zhs,1694,zhs,釜山手工啤酒大师挑战赛,https://festivalshiwol.app/,festivalshiwol.app,ko,true,false,true,true,,,2025. 9. 20. ~ 2025. 9. 24.2025. 9. 20. ~ 2025. 9. 24.,BEXCO
+FestivalService:1699:zhs,1699,zhs,釜山国际喜剧节,http://www.bicf.kr/en/,www.bicf.kr,,true,false,false,false,,,,演出场地因节目而异
+FestivalService:1897:zhs,1897,zhs,釜山国际儿童青少年电影节,https://www.biky.or.kr/,www.biky.or.kr,,true,false,true,true,,,2025.7.8 ~ 2025.7.19,电影殿堂
+FestivalService:2050:zhs,2050,zhs,2025星海釜山夜光节,https://www.instagram.com/starry_night_busan.en/,www.instagram.com,,true,false,true,true,,,2025.07 ~ 2025.10,
+FestivalService:2136:zhs,2136,zhs,西面的夜晚，走进被灯光染上绚丽色彩的盛宴！——西面灯节,https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&paging=ok&startPage=1&dataSid=3898941,www.busanjin.go.kr,,true,false,true,true,,,2024.10.02 周三~2025.01.10 周五,
+FestivalService:2368:zhs,2368,zhs,釜山同一个亚洲文化节(BOF),https://www.bof.or.kr/,www.bof.or.kr,,true,false,false,false,,,Big CONCERT： 2026年6月27日（周六）－6月28日（周日）13:00－21:00 PARK CONCERT： 2026年6月20日（周六）18:00,
+FestivalService:2383:zhs,2383,zhs,釜山音乐厅开馆庆典,https://classicbusan.busan.go.kr/Home/en/Main,classicbusan.busan.go.kr,,true,false,false,false,,,6. 21.(周六) ~ 6. 28.(周六),釜山音乐厅
+FestivalService:71:zht,71,zht,釜山海洋節,http://www.bfo.or.kr/festival_Eng/info/01.asp?MENUDIV=1&Fcode=SEAFESTIVAL,www.bfo.or.kr,,true,false,true,true,,,預計於2025年8月,釜山廣域市主要海水浴場
+FestivalService:253:zht,253,zht,在太宗台遇見五彩繽紛繡球花的魅力,,,,true,false,true,true,,,2025. 7. 5. ~ 7. 13.,太宗台、太宗寺
+FestivalService:329:zht,329,zht,Centum啤酒節,http://www.beerfestival.co.kr,www.beerfestival.co.kr,ko,true,false,false,false,,,2026.05.22. ~ 05.31.,
+FestivalService:330:zht,330,zht,金井山城節,http://www.gjfac.org/gjfac/main.php,www.gjfac.org,,true,false,false,false,,,2026. 10. 16. ~ 10. 18.,金井山城節
+FestivalService:331:zht,331,zht,洛東江龜浦渡口節,https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000402006001000,www.bsbukgu.go.kr,,true,false,false,false,,,,洛東江龜浦渡口節
+FestivalService:395:zht,395,zht,釜山煙火節,https://www.bfo.or.kr/festival/info/01.asp?MENUDIV=1,www.bfo.or.kr,,true,false,true,true,,,2025. 11. 15.,釜山煙火節
+FestivalService:403:zht,403,zht,三光寺燃燈節,http://www.samkwangsa.or.kr/,www.samkwangsa.or.kr,ko,true,false,false,false,,,2026年5月15日－5月24日／每日點燈時間為晚上7:00至凌晨1:00,三光寺燃燈節
+FestivalService:405:zht,405,zht,海雲台沙灘節,https://www.instagram.com/haeundae_sandfestival/,www.instagram.com,ko,true,false,true,true,,,2025年5月16日~2025年5月19日,海雲台沙灘節
+FestivalService:406:zht,406,zht,釜山港慶典,https://festivalbusan.com/busanport/,festivalbusan.com,,true,false,false,false,,,2026年6月19日（週五）– 6月20日（週六）,北港親水公園、釜山港灣公社總部及周邊地區
+FestivalService:407:zht,407,zht,東萊邑城歷史慶典,https://www.dongnae.go.kr/festival/index.dongnae?contentsSid=169,www.dongnae.go.kr,ko,true,false,true,true,,,2025.10.24. ~ 2025.10.26.,東萊邑城歷史慶典
+FestivalService:411:zht,411,zht,釜山札嘎其節,,,,true,false,true,true,,,2025. 10. 23.-10. 06.,釜山札噶其節
+FestivalService:414:zht,414,zht,釜山中華街特區文化節,https://부산차이나축제.com,xn--910bt8v7nc70jbyas1pcvc.com,ko,true,false,false,false,,,,釜山中華街特區文化節
+FestivalService:427:zht,427,zht,美術滲入大海，被稱為藝術的時間「釜山海洋美術節」,https://www.saf2023.org/,www.saf2023.org,ko,true,false,true,true,,,2025.9.27 ~ 11.2,日光海水浴場
+FestivalService:440:zht,440,zht,海雲台光慶典,https://www.haeundae.go.kr/index.do?menuCd=DOM_000000309006001000,www.haeundae.go.kr,ko,true,false,false,false,,,,海雲台羅古光慶典
+FestivalService:441:zht,441,zht,機張海帶昆布節,http://www.gijang.go.kr/tour/index.gijang,www.gijang.go.kr,ko,true,false,false,false,,,每年4月 依項目而異（參考官網）,
+FestivalService:442:zht,442,zht,廣安里漁坊節,https://www.suyeong.go.kr/eng/index.suyeong,www.suyeong.go.kr,,true,false,false,false,,,2026. 06. 12. ~ 06. 14.,
+FestivalService:443:zht,443,zht,機張鳀魚節,https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000302000000000,www.gijang.go.kr,,true,false,false,false,,,2026. 04. 24. ~ 04. 26.,機張鳀魚節
+FestivalService:449:zht,449,zht,釜山聖誕樹文化節,,,,true,false,true,true,,,2024. 11. 15. ~ 2025. 02. 02.,釜山聖誕樹文化節
+FestivalService:470:zht,470,zht,釜山國際搖滾節,https://busanrockfestival.com/,busanrockfestival.com,,true,false,true,true,,,2025.9.26. ~ 2025.9.28.,釜山國際搖滾音樂節
+FestivalService:497:zht,497,zht,大渚番茄節,https://www.bsgangseo.go.kr/visit/contents.do?mId=0305000000,www.bsgangseo.go.kr,ko,true,false,false,false,,,2026年3月21日 ~ 2026年3月22日,江西體育公園
+FestivalService:499:zht,499,zht,收藏夢幻瞬間，洛東江庭園櫻花節,https://www.sasang.go.kr/index.sasang?menuCd=DOM_000000604002000000,www.sasang.go.kr,ko,true,false,false,false,,,2026. 03. 27. ~ 04. 12.,洛東江庭園櫻花節
+FestivalService:500:zht,500,zht,沙上江邊慶典,https://xn--939a392a91cocr48bfii.com/,xn--939a392a91cocr48bfii.com,,true,false,true,true,,,2025年9月20日（週六）~ 2025年9月21日（週日）,沙上江邊慶典
+FestivalService:502:zht,502,zht,海雲台迎月溫泉節,,,,true,false,true,true,,,2025.2.12每年正月十五,海雲台迎月溫泉節
+FestivalService:503:zht,503,zht,海雲台北極熊游泳慶典,http://bear.busan.com/,bear.busan.com,ko,true,false,false,false,,,2026. 01. 17. ~ 01. 18.,海雲台北極熊游泳慶典
+FestivalService:523:zht,523,zht,朝鮮通信使慶典,http://www.tongsinsa.com/html/ex_eng/,www.tongsinsa.com,,true,false,true,true,,,2025.4.25. ~ 4.27.,朝鮮通信使慶典
+FestivalService:524:zht,524,zht,釜山國際電影節,http://www.biff.kr/eng/default.asp,www.biff.kr,,true,false,true,true,,,2025年9月17日（週三）~ 2025年9月26日（週五）,釜山國際電影節
+FestivalService:531:zht,531,zht,甘川文化村胡同慶典,https://www.gamcheon.or.kr/,www.gamcheon.or.kr,ko,true,false,false,false,,,,甘川文化村胡同慶典
+FestivalService:818:zht,818,zht,釜山美食電影節,https://bfff.kr/,bfff.kr,,true,false,false,false,,,2026. 06. 26. ~ 06. 28.,
+FestivalService:1432:zht,1432,zht,繽紛朦朧的釜山燈節,http://www.bba48.or.kr,www.bba48.or.kr,ko,true,false,false,false,,,2026. 05. 01 ~ 05. 17.,
+FestivalService:1694:zht,1694,zht,釜山精釀啤酒大師挑戰賽,https://festivalshiwol.app/,festivalshiwol.app,ko,true,false,true,true,,,2025. 9. 20. ~ 2025. 9. 24.2025. 9. 20. ~ 2025. 9. 24.,
+FestivalService:1699:zht,1699,zht,釜山國際喜劇節,http://www.bicf.kr/en/,www.bicf.kr,,true,false,false,false,,,,每場演出地點各異
+FestivalService:1897:zht,1897,zht,釜山國際兒童青少年電影節,https://www.biky.or.kr/,www.biky.or.kr,,true,false,true,true,,,2025.7.8 ~ 2025.7.19,電影殿堂
+FestivalService:2051:zht,2051,zht,2025 星海釜山 Night Festa,https://www.instagram.com/starry_night_busan.en/,www.instagram.com,,true,false,true,true,,,2025.07 ~ 2025.10,
+FestivalService:2136:zht,2136,zht,西面之夜，走進光之饗宴！「西面燈節」,https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&paging=ok&startPage=1&dataSid=3898941,www.busanjin.go.kr,,true,false,true,true,,,2024.10.02（三）～2025.01.10（五）,
+FestivalService:2368:zht,2368,zht,釜山 One Asia Festival(BOF),https://www.bof.or.kr/,www.bof.or.kr,,true,false,false,false,,,Big CONCERT： 2026年6月27日（週六）－6月28日（週日）13:00－21:00 PARK CONCERT： 2026年6月20日（週六）18:00,
+FestivalService:2383:zht,2383,zht,釜山音樂廳開幕音樂節,https://classicbusan.busan.go.kr/Home/en/Main,classicbusan.busan.go.kr,,true,false,false,false,,,6月21日（週六）～6月28日（週六）,釜山音樂廳

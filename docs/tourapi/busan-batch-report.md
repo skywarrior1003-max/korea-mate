@@ -1,6 +1,6 @@
 # GoKoreaMate 부산 전체 배치 보고서
 
-**날짜:** 2026-07-23
+**날짜:** 2026-07-24
 **태스크:** TASK-DATA-BUSAN-BATCH-01
 **max_pages:** all (전체)
 
@@ -18,34 +18,39 @@
 | busan-food-ja | 438 | 5 | completed |
 | busan-food-zhs | 338 | 4 | completed |
 | busan-food-zht | 286 | 3 | completed |
+| busan-festival-ko | 40 | 1 | completed |
+| busan-festival-en | 37 | 1 | completed |
+| busan-festival-ja | 35 | 1 | completed |
+| busan-festival-zhs | 35 | 1 | completed |
+| busan-festival-zht | 36 | 1 | completed |
 | kto-ko | 775 | 9 | completed |
 | kto-en | 194 | 3 | completed |
 
-**총 API 요청:** 49회
-**정규화 레코드:** 3952건
+**총 API 요청:** 54회
+**정규화 레코드:** 4135건
 
 ## 필드 보유율
 
 | 항목 | 보유율 |
 |---|---|
-| 좌표 | 99.9% |
-| 이미지 URL | 91.2% |
-| 설명문 | 75.5% |
+| 좌표 | 100.0% |
+| 이미지 URL | 91.6% |
+| 설명문 | 76.6% |
 
 ## 언어 연결
 
 | 신뢰도 | 건수 |
 |---|---|
-| high | 2364 |
-| manual_review | 66 |
+| high | 2498 |
+| manual_review | 73 |
 | low | 0 |
-| 합계 | 2430 |
+| 합계 | 2571 |
 
 ## 미연결 후보 (insufficient_evidence)
 
 | 항목 | 건수 |
 |---|---|
-| score 50~59 (GPS 단독) | 92 |
+| score 50~59 (GPS 단독) | 98 |
 | status | insufficient_evidence |
 
 ## 재처리 검증
@@ -60,8 +65,8 @@
 
 | 항목 | 값 |
 |---|---|
-| Raw 파일 수 | 49개 |
-| Raw 총 용량 | 5.9MB |
+| Raw 파일 수 | 103개 |
+| Raw 총 용량 | 12.3MB |
 | 14일 초과 후보 | 0개 / 0.0MB |
 
 
@@ -69,9 +74,9 @@
 
 | 항목 | 값 |
 |---|---|
-| 저장 경로 | 2026-07-23/run-002 |
+| 저장 경로 | 2026-07-24/run-002 |
 | 실행 번호 | run-002 |
-| 비교 대상 | 2026-07-23/run-001 |
+| 비교 대상 | 2026-07-24/run-001 |
 
 
 ## 변경분 비교
@@ -81,5 +86,5 @@
 | new | 0 |
 | changed | 0 |
 | missing_once | 0 |
-| unchanged | 3952 |
+| unchanged | 4135 |
 

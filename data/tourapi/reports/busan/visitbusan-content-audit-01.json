@@ -1,0 +1,246 @@
+{
+  "run_date": "2026-07-24",
+  "robots_txt": {
+    "allow": [
+      "/"
+    ],
+    "disallow": [],
+    "crawl_delay": null,
+    "sitemap": []
+  },
+  "total_requests": 40,
+  "content_types": {
+    "attraction": {
+      "listing_url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001000000",
+      "listing_menu_cd": "DOM_000000201001000000",
+      "detail_menu_cd": "DOM_000000201001001000",
+      "id_param": "uc_seq",
+      "pagination": "GET currentPage=N (16 items/page, category filter: ucc2_seq=N)",
+      "items_per_page": 16,
+      "total_estimated": "unknown (featured list only)",
+      "page2_same_as_p1": true,
+      "categories_found": 4,
+      "detail_fields": [
+        "주소",
+        "홈페이지",
+        "휴무일",
+        "운영요일 및 시간",
+        "이용요금",
+        "hours",
+        "website",
+        "description",
+        "lat",
+        "lon"
+      ],
+      "language_support": {
+        "ko": true,
+        "en": true,
+        "ja": false,
+        "zhs": false,
+        "zht": false
+      },
+      "en_different_content": "영어 콘텐츠",
+      "internal_api": false,
+      "has_vue_templates": false,
+      "sample_ids": [
+        "2753",
+        "2678",
+        "2612",
+        "2598",
+        "2594"
+      ]
+    },
+    "food": {
+      "listing_url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002000000",
+      "listing_menu_cd": "DOM_000000201002000000",
+      "detail_menu_cd": "DOM_000000201002001000",
+      "id_param": "uc_seq",
+      "pagination": "GET currentPage=N (16 items/page, category filter: ucc2_seq=N)",
+      "items_per_page": 16,
+      "total_estimated": "unknown (featured list only)",
+      "page2_same_as_p1": true,
+      "categories_found": 8,
+      "detail_fields": [
+        "대표 메뉴",
+        "주소",
+        "전화번호",
+        "휴무일",
+        "운영요일 및 시간",
+        "hours",
+        "website",
+        "menu",
+        "description",
+        "lat",
+        "lon"
+      ],
+      "language_support": {
+        "ko": true,
+        "en": true,
+        "ja": false,
+        "zhs": false,
+        "zht": false
+      },
+      "en_different_content": "영어 콘텐츠",
+      "internal_api": false,
+      "has_vue_templates": false,
+      "sample_ids": [
+        "2386",
+        "2384",
+        "2381",
+        "2379",
+        "2371"
+      ]
+    },
+    "shopping": {
+      "listing_url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201003000000",
+      "listing_menu_cd": "DOM_000000201003000000",
+      "detail_menu_cd": "DOM_000000201003001000",
+      "id_param": "uc_seq",
+      "pagination": "GET currentPage=N (16 items/page, category filter: ucc2_seq=N)",
+      "items_per_page": 16,
+      "total_estimated": "unknown (featured list only)",
+      "page2_same_as_p1": true,
+      "categories_found": 4,
+      "detail_fields": [
+        "주소",
+        "전화번호",
+        "휴무일",
+        "운영요일 및 시간",
+        "교통정보",
+        "hours",
+        "website",
+        "description",
+        "lat",
+        "lon"
+      ],
+      "language_support": {
+        "ko": true
+      },
+      "en_different_content": "영어 콘텐츠",
+      "internal_api": false,
+      "has_vue_templates": false,
+      "sample_ids": [
+        "2670",
+        "2662",
+        "2589",
+        "2581",
+        "2580"
+      ]
+    },
+    "course": {
+      "listing_url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202012000000",
+      "listing_menu_cd": "DOM_000000202012000000",
+      "detail_menu_cd": "DOM_000000202012001000",
+      "id_param": "uc_seq",
+      "pagination": "GET currentPage=N (16 items/page, category filter: ucc2_seq=N)",
+      "items_per_page": 16,
+      "total_estimated": "unknown (featured list only)",
+      "page2_same_as_p1": true,
+      "categories_found": 4,
+      "detail_fields": [
+        "주소",
+        "교통정보",
+        "website",
+        "description",
+        "lat",
+        "lon",
+        "hours"
+      ],
+      "language_support": {
+        "ko": true
+      },
+      "en_different_content": "영어 콘텐츠",
+      "internal_api": false,
+      "has_vue_templates": false,
+      "sample_ids": [
+        "2788",
+        "2624",
+        "2606",
+        "2565",
+        "2318"
+      ]
+    },
+    "experience": {
+      "listing_url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008000000",
+      "listing_menu_cd": "DOM_000000202008000000",
+      "detail_menu_cd": "DOM_000000202008001000",
+      "id_param": "uc_seq",
+      "pagination": "GET currentPage=N (16 items/page, category filter: ucc2_seq=N)",
+      "items_per_page": 16,
+      "total_estimated": "unknown (featured list only)",
+      "page2_same_as_p1": true,
+      "categories_found": 3,
+      "detail_fields": [
+        "website",
+        "description",
+        "lat",
+        "lon",
+        "신청 방법",
+        "7월 예정 프로그램",
+        "주소",
+        "전화번호",
+        "홈페이지",
+        "휴무일",
+        "운영요일 및 시간",
+        "교통정보",
+        "hours"
+      ],
+      "language_support": {
+        "ko": true
+      },
+      "en_different_content": "영어 콘텐츠",
+      "internal_api": false,
+      "has_vue_templates": false,
+      "sample_ids": [
+        "2789",
+        "2784",
+        "2763",
+        "2755",
+        "2704"
+      ]
+    }
+  },
+  "language_findings": {
+    "ko": "완전 서버사이드 렌더링",
+    "en": "번역된 EN 콘텐츠 서버사이드 렌더링 확인",
+    "ja": "RFC 3.0 서버 오류 (미제공)",
+    "zhs": "RFC 3.0 서버 오류 (미제공)",
+    "zht": "RFC 3.0 서버 오류 (미제공)"
+  },
+  "internal_api": {
+    "found": true,
+    "endpoints": [],
+    "notes": "Vue.js 프론트엔드 사용 확인. Vue 템플릿 패턴 2개. "
+  },
+  "canonical_cross_ref": {
+    "canonical_total": 1356,
+    "web_sampled": 15,
+    "canon_sampled": 10,
+    "matched": 1,
+    "web_only": 14,
+    "api_only": 9,
+    "match_rate": "4.2%",
+    "notes": "uc_seq(VisitBusan)↔contentId(TourAPI) 직접 매핑 없음. 제목·주소 유사도로 추정."
+  },
+  "collection_feasibility": {
+    "overall": "가능 (단, 주의사항 있음)",
+    "ko_collection": "직접 가능 (서버사이드 렌더링, uc_seq 기반)",
+    "en_collection": "가능 (EN 상세 페이지 번역 제공 확인)",
+    "ja_collection": "불가 (서버 RFC 3.0 오류)",
+    "zhs_collection": "불가 (서버 RFC 3.0 오류)",
+    "zht_collection": "불가 (서버 RFC 3.0 오류)",
+    "id_param": "uc_seq (contentsSid/dataSid 아님)",
+    "listing_limitation": "목록 페이지는 16개 featured 항목만 표시. 전체 목록은 카테고리 필터(ucc2_seq) 조합 필요",
+    "vue_js_impact": "일부 동적 렌더링 있으나 핵심 필드는 서버사이드 임베드 확인",
+    "rate_limit_safe": "600ms 간격 권장"
+  },
+  "estimated_total_requests": 736,
+  "risks": [
+    "JA/ZhS/ZhT: 비이벤트 콘텐츠도 RFC 3.0 서버 에러 — KO+EN만 수집 가능",
+    "attraction: 목록 페이지네이션이 featured 16개만 순환. 전체 수집은 카테고리 필터(ucc2_seq) 루프 필요",
+    "food: 목록 페이지네이션이 featured 16개만 순환. 전체 수집은 카테고리 필터(ucc2_seq) 루프 필요",
+    "shopping: 목록 페이지네이션이 featured 16개만 순환. 전체 수집은 카테고리 필터(ucc2_seq) 루프 필요",
+    "course: 목록 페이지네이션이 featured 16개만 순환. 전체 수집은 카테고리 필터(ucc2_seq) 루프 필요",
+    "experience: 목록 페이지네이션이 featured 16개만 순환. 전체 수집은 카테고리 필터(ucc2_seq) 루프 필요"
+  ]
+}

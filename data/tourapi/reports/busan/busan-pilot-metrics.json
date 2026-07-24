@@ -1,0 +1,58 @@
+{
+  "run_date": "2026-07-23",
+  "phase": 2,
+  "api_requests": 0,
+  "sources": {
+    "busan-attraction-ko": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 20,
+      "error": null
+    },
+    "busan-attraction-en": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 20,
+      "error": null
+    },
+    "busan-food-ko": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 20,
+      "error": null
+    },
+    "busan-food-en": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 20,
+      "error": null
+    },
+    "kto-ko": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 775,
+      "error": null
+    },
+    "kto-en": {
+      "ok": true,
+      "items_raw": 20,
+      "total_api": 194,
+      "error": null
+    }
+  },
+  "total_normalized": 120,
+  "coord_rate": "1.000",
+  "image_rate": "0.883",
+  "desc_rate": "0.667",
+  "language_links": {
+    "high": 40,
+    "manual_review": 0,
+    "low": 0,
+    "total": 40
+  },
+  "comparison": {
+    "comparison_source_missing": 78,
+    "matched_busan_ts": 3,
+    "new_candidate": 39
+  }
+}

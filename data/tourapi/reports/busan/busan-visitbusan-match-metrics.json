@@ -1,0 +1,56 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-VISITBUSAN-MATCH-05",
+  "overall": "PASS",
+  "visitbusan_input": 773,
+  "canonical_input": 1356,
+  "visitbusan_result": {
+    "matched": 362,
+    "web_only": 402,
+    "manual_review": 9,
+    "total": 773
+  },
+  "canonical_result": {
+    "matched": 362,
+    "manual_review": 7,
+    "api_only": 987,
+    "total": 1356
+  },
+  "by_type": {
+    "attraction": {
+      "matched": 36,
+      "web_only": 171,
+      "manual_review": 5,
+      "total": 212
+    },
+    "food": {
+      "matched": 325,
+      "web_only": 9,
+      "manual_review": 2,
+      "total": 336
+    },
+    "shopping": {
+      "matched": 1,
+      "web_only": 53,
+      "manual_review": 1,
+      "total": 55
+    },
+    "experience": {
+      "matched": 0,
+      "web_only": 120,
+      "manual_review": 1,
+      "total": 121
+    },
+    "course": {
+      "matched": 0,
+      "web_only": 49,
+      "manual_review": 0,
+      "total": 49
+    }
+  },
+  "match_confidence": {
+    "high": 362,
+    "medium": 0
+  },
+  "generated_at": "2026-07-24T08:56:50.449Z"
+}

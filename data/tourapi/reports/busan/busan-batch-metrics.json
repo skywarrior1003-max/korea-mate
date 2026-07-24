@@ -1,7 +1,7 @@
 {
-  "run_date": "2026-07-23",
+  "run_date": "2026-07-24",
   "max_pages": "all",
-  "total_requests": 49,
+  "total_requests": 54,
   "sources": {
     "busan-attraction-ko": {
       "status": "completed",
@@ -150,6 +150,66 @@
       "last_error": null,
       "updated_at": "2026-07-23T07:57:38.905Z"
     },
+    "busan-festival-ko": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1
+      ],
+      "items_collected": 40,
+      "request_count": 1,
+      "last_error": null,
+      "updated_at": "2026-07-24T00:26:21.787Z"
+    },
+    "busan-festival-en": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1
+      ],
+      "items_collected": 37,
+      "request_count": 1,
+      "last_error": null,
+      "updated_at": "2026-07-24T00:26:22.232Z"
+    },
+    "busan-festival-ja": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1
+      ],
+      "items_collected": 35,
+      "request_count": 1,
+      "last_error": null,
+      "updated_at": "2026-07-24T00:26:22.889Z"
+    },
+    "busan-festival-zhs": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1
+      ],
+      "items_collected": 35,
+      "request_count": 1,
+      "last_error": null,
+      "updated_at": "2026-07-24T00:26:28.163Z"
+    },
+    "busan-festival-zht": {
+      "status": "completed",
+      "total_count": null,
+      "total_pages": null,
+      "completed_pages": [
+        1
+      ],
+      "items_collected": 36,
+      "request_count": 1,
+      "last_error": null,
+      "updated_at": "2026-07-24T00:26:28.729Z"
+    },
     "kto-ko": {
       "status": "completed",
       "total_count": 775,
@@ -185,45 +245,47 @@
       "updated_at": "2026-07-23T07:58:08.831Z"
     }
   },
-  "total_normalized": 3952,
+  "total_normalized": 4135,
   "source_key_duplicates": 0,
-  "coord_rate": "0.999",
-  "image_rate": "0.912",
-  "desc_rate": "0.755",
+  "coord_rate": "1.000",
+  "image_rate": "0.916",
+  "desc_rate": "0.766",
   "language_links": {
-    "high": 2364,
-    "manual_review": 66,
+    "high": 2498,
+    "manual_review": 73,
     "low": 0,
-    "total": 2430
+    "total": 2571
   },
-  "unlinked_insufficient_evidence": 92,
+  "unlinked_insufficient_evidence": 98,
   "reprocess_pass": true,
   "failed_sources": [],
   "storage": {
-    "total_files": 49,
-    "total_bytes": 6192360,
+    "total_files": 103,
+    "total_bytes": 12863110,
     "candidate_files": 0,
     "candidate_bytes": 0
   },
   "snapshot": {
-    "path": "2026-07-23/run-002",
+    "path": "2026-07-24/run-002",
     "run_number": 2
   },
   "diff": {
-    "run_date": "2026-07-23",
-    "compared_against": "2026-07-23/run-001",
+    "run_date": "2026-07-24",
+    "compared_against": "2026-07-24/run-001",
     "new": 0,
     "changed": 0,
     "missing_once": 0,
-    "unchanged": 3952,
+    "unchanged": 4135,
     "compare_fields": [
       "title",
       "address",
       "latitude",
       "longitude",
       "image_url",
-      "description"
+      "description",
+      "venue",
+      "event_period_raw"
     ],
-    "generated_at": "2026-07-23T09:05:59.267Z"
+    "generated_at": "2026-07-24T00:27:42.967Z"
   }
 }

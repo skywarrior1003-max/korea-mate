@@ -1,0 +1,208 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-INTEGRATED-CANDIDATES-06",
+  "overall": "PASS",
+  "total_candidates": 1767,
+  "by_status": {
+    "api_only_existing": 990,
+    "existing_enriched": 362,
+    "manual_review": 13,
+    "web_only_new": 353,
+    "course_reference": 49
+  },
+  "canonical_tracked": {
+    "enriched": 362,
+    "api_only": 990,
+    "canon_manual": 4,
+    "total": 1356
+  },
+  "vb_tracked": {
+    "web_only_new": 353,
+    "course_reference": 49,
+    "vb_manual": 9
+  },
+  "enriched_fields": {
+    "hours": 357,
+    "phone": 357,
+    "external_url": 50
+  },
+  "unknown_allowed_count": 173,
+  "unknown_allowed_by_type": {
+    "shopping": 53,
+    "experience": 120
+  },
+  "coordinate_conflict_count": 2,
+  "coordinate_conflict_detail": [
+    {
+      "candidate_id": "busan-K-00739",
+      "status": "existing_enriched",
+      "distance_m": 14,
+      "manual_review_flagged": false
+    },
+    {
+      "candidate_id": "busan-VBM-1640",
+      "status": "manual_review",
+      "distance_m": 4,
+      "manual_review_flagged": true
+    }
+  ],
+  "generated_at": "2026-07-24T09:11:04.581Z",
+  "finalize_10": {
+    "task": "TASK-DATA-BUSAN-INTEGRATED-CANDIDATES-FINALIZE-10",
+    "run_date": "2026-07-24",
+    "overall": "PASS",
+    "input_unknown_allowed": 173,
+    "resolved_breakdown": {
+      "ready_for_candidate": 131,
+      "merge_existing": 12,
+      "reference_only": 21,
+      "excluded": 8,
+      "unresolved_manual_review": 1,
+      "total": 173
+    },
+    "merge_targets": [
+      {
+        "candidate_id": "busan-VB-399",
+        "merge_target_id": "busan-K-00058"
+      },
+      {
+        "candidate_id": "busan-VB-412",
+        "merge_target_id": "busan-K-00057"
+      },
+      {
+        "candidate_id": "busan-VB-400",
+        "merge_target_id": "busan-K-00176"
+      },
+      {
+        "candidate_id": "busan-VB-363",
+        "merge_target_id": "busan-K-00148"
+      },
+      {
+        "candidate_id": "busan-VB-327",
+        "merge_target_id": "busan-K-00055"
+      },
+      {
+        "candidate_id": "busan-VB-300",
+        "merge_target_id": "busan-K-00190"
+      },
+      {
+        "candidate_id": "busan-VB-1870",
+        "merge_target_id": "busan-K-00350"
+      },
+      {
+        "candidate_id": "busan-VB-1858",
+        "merge_target_id": "busan-K-00078"
+      },
+      {
+        "candidate_id": "busan-VB-1177",
+        "merge_target_id": "busan-K-00224"
+      },
+      {
+        "candidate_id": "busan-VB-990",
+        "merge_target_id": "busan-VB-336"
+      },
+      {
+        "candidate_id": "busan-VB-481",
+        "merge_target_id": "busan-VB-518"
+      },
+      {
+        "candidate_id": "busan-VB-542",
+        "merge_target_id": "busan-A-00004"
+      }
+    ],
+    "unknown_allowed_active_subcategory_unknown": 0,
+    "final_status_distribution": {
+      "api_only_existing": 990,
+      "existing_enriched": 362,
+      "manual_review": 14,
+      "web_only_new": 311,
+      "excluded": 8,
+      "reference_only": 21,
+      "merge_existing": 12,
+      "course_reference": 49
+    },
+    "total_candidates": 1767,
+    "active_operational_candidates": 1663,
+    "manual_review_total": 14,
+    "schema_additions": [
+      "merge_target_id column added to integrated CSV"
+    ]
+  },
+  "precommit_12a": {
+    "task": "TASK-DATA-BUSAN-PRECOMMIT-REVIEW-12A",
+    "generated_at": "2026-07-24",
+    "lotte_hotel": {
+      "candidate_id": "busan-K-00081",
+      "change": "category=unknown → accommodation, subcategory=unknown → hotel",
+      "status_change": "manual_review → api_only_existing"
+    },
+    "vbm_merges": [
+      {
+        "candidate_id": "busan-VBM-1796",
+        "merge_target_id": "busan-A-00139",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=1796 동일, 주소 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-1322",
+        "merge_target_id": "busan-A-00119",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=1322 동일, 주소 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-367",
+        "merge_target_id": "busan-A-00064",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=367 동일, 주소+전화 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-346",
+        "merge_target_id": "busan-A-00053",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=346 동일, 주소 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-308",
+        "merge_target_id": "busan-A-00041",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=308 동일, 주소+전화 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-1523",
+        "merge_target_id": "busan-F-00236",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=1523 동일, 주소+전화 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-1516",
+        "merge_target_id": "busan-F-00229",
+        "status_change": "manual_review → merge_existing",
+        "reason": "uc_seq=1516 동일, 주소+전화 일치"
+      },
+      {
+        "candidate_id": "busan-VBM-2131",
+        "merge_target_id": "busan-F-00088",
+        "status_change": "manual_review → merge_existing",
+        "reason": "주소+전화 완전 일치 (2nd VB article)"
+      },
+      {
+        "candidate_id": "busan-VBM-1640",
+        "merge_target_id": "busan-A-00064",
+        "status_change": "manual_review → merge_existing",
+        "reason": "좌표 4m 이내, 주소+전화 일치"
+      }
+    ],
+    "counts_after": {
+      "existing_enriched": 362,
+      "api_only_existing": 991,
+      "web_only_new": 311,
+      "course_reference": 49,
+      "reference_only": 21,
+      "merge_existing": 21,
+      "excluded": 8,
+      "manual_review": 4,
+      "total": 1767,
+      "active_operational": 1664
+    }
+  }
+}

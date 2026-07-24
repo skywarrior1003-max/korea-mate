@@ -1,0 +1,67 @@
+canonical_id,canonical_key,review_type,title_ko,address,dist_m,sim,kto_canonical_key,title_kto,ct_kto,category_busan,reason
+busan-A-00105,AttractionService:833:ko,lang_link_quality,"송도용궁구름다리(한,영, 중간, 중번)",부산광역시 서구 암남동 620-53,,,,松島竜宮吊橋を歩こう,,,score
+busan-A-00107,AttractionService:848:ko,lang_link_quality,"부산치유의 숲(한, 영)",부산광역시 기장군 철마면 철마천로 101,,,,釜山の癒しスポット、釜山癒しの森,,,score
+busan-A-00107,AttractionService:848:ko,lang_link_quality,"부산치유의 숲(한, 영)",부산광역시 기장군 철마면 철마천로 101,,,,釜山治愈之林,,,score
+busan-A-00107,AttractionService:848:ko,lang_link_quality,"부산치유의 숲(한, 영)",부산광역시 기장군 철마면 철마천로 101,,,,釜山療癒之林,,,score
+busan-A-00108,AttractionService:859:ko,lang_link_quality,구덕문화공원(한),부산광역시 서구 꽃마을로163번길 73,,,,散步好去处_九德文化公园,,,score
+busan-E-00028,FestivalService:807:ko,lang_link_quality,"부산푸드필름페스타(한, 영)",부산광역시 해운대구 수영강변대로 120,,,,釜山国際コメディフェスティバル,,,score
+busan-E-00028,FestivalService:807:ko,lang_link_quality,"부산푸드필름페스타(한, 영)",부산광역시 해운대구 수영강변대로 120,,,,釜山国际喜剧节,,,score
+busan-E-00028,FestivalService:807:ko,lang_link_quality,"부산푸드필름페스타(한, 영)",부산광역시 해운대구 수영강변대로 120,,,,釜山美食電影節,,,score
+busan-E-00032,FestivalService:1705:ko,lang_link_quality,"별바다부산 나이트페스타(한)//영,중간,중번,일","부산광역시 중구, 북구, 사하구, 해운대구 일대",,,,Starry Night at Busan Night Festa 2025,,,score
+busan-E-00032,FestivalService:1705:ko,lang_link_quality,"별바다부산 나이트페스타(한)//영,중간,중번,일","부산광역시 중구, 북구, 사하구, 해운대구 일대",,,,2025 星の海釜山 Night Festa,,,score
+busan-E-00032,FestivalService:1705:ko,lang_link_quality,"별바다부산 나이트페스타(한)//영,중간,중번,일","부산광역시 중구, 북구, 사하구, 해운대구 일대",,,,2025星海釜山夜光节,,,score
+busan-E-00032,FestivalService:1705:ko,lang_link_quality,"별바다부산 나이트페스타(한)//영,중간,중번,일","부산광역시 중구, 북구, 사하구, 해운대구 일대",,,,2025 星海釜山 Night Festa,,,score
+busan-K-00017,KorService2:128164:ko,lang_link_quality,부산광안대교,부산광역시 해운대구 수영강변대로 203,,,,Busan Gwangandaegyo Bridge (부산광안대교),,,score
+busan-K-00023,KorService2:128886:ko,lang_link_quality,홍법사(부산),부산광역시 금정구 두구로33번길 202 (두구동),,,,Busan Hongbeopsa Temple (홍법사(부산)),,,score
+busan-K-00029,KorService2:129725:ko,lang_link_quality,부산문화회관,부산광역시 남구 유엔평화로76번길 1 부산문화회관,,,,Busan Cultural Center (부산문화회관),,,score
+busan-K-00054,KorService2:132187:ko,lang_link_quality,남포동 지하도상가,부산광역시 중구 구덕로 지하 44,,,,Hotel Forêt Premier Nampo (호텔포레 프리미어 남포),,,score
+busan-K-00063,KorService2:132574:ko,lang_link_quality,광복 지하도상가,부산광역시 중구 중앙대로 지하17 (중앙동6가),,,,Central Park Hotel (센트럴파크 호텔),,,score
+busan-K-00077,KorService2:142852:ko,lang_link_quality,코모도 호텔 부산,부산광역시 중구 중구로 151 (영주동),,,,HILLSIDE HOTEL / 힐사이드호텔,,,score
+busan-K-00078,KorService2:142853:ko,lang_link_quality,파라다이스 호텔 부산,부산광역시 해운대구 해운대해변로 296,,,,Paradise Casino Busan (파라다이스 카지노 부산),,,score
+busan-K-00081,KorService2:142998:ko,lang_link_quality,롯데호텔 부산,부산광역시 부산진구 가야대로 772 (부전동),,,,SEVEN LUCK CASINO - Busan Lotte Branch (세븐럭 카지노(부산롯데점)),,,score
+busan-K-00082,KorService2:229912:ko,lang_link_quality,씨라이프부산아쿠아리움,부산광역시 해운대구 해운대해변로 266,,,,Haeundae Beach (해운대해수욕장),,,score
+busan-K-00087,KorService2:252562:ko,lang_link_quality,부산대교,부산광역시 영도구 봉래나루로 79 (봉래동1가),,,,La Valse Hotel Busan (라발스호텔),,,score
+busan-K-00088,KorService2:294452:ko,lang_link_quality,감천사(부산),부산광역시 연제구 묘봉산로 40,,,,Hyewonjeongsa Temple (혜원정사),,,score
+busan-K-00117,KorService2:850093:ko,lang_link_quality,급행장,부산광역시 부산진구 서면문화로 4,,,,Busan BGSS Eye Clinic (부산밝은세상안과),,,score
+busan-K-00119,KorService2:850217:ko,lang_link_quality,다원,부산광역시 부산진구 서면문화로 23-1,,,,line-up dental hospital (라인업치과병원),,,score
+busan-K-00124,KorService2:850891:ko,lang_link_quality,용궁해물야채쟁반짜장,부산광역시 기장군 기장읍 기장해안로 208,,,,Skyline Luge Busan (스카이라인 루지(부산)),,,score
+busan-K-00126,KorService2:851073:ko,lang_link_quality,장성향,부산광역시 동구 대영로243번길 29,,,,Busan Chinatown Special Zone (부산 차이나타운특구(상해문.상해거리)),,,score
+busan-K-00134,KorService2:986063:ko,lang_link_quality,남포동건어물도매시장,부산광역시 중구 용미길8번길 4-1,,,,First Eye Clinic (퍼스트안과의원),,,score
+busan-K-00136,KorService2:1013112:ko,lang_link_quality,광주요,부산광역시 해운대구 센텀남대로 35,,,,Shinsegae Centum City (신세계 센텀시티),,,score
+busan-K-00143,KorService2:1080734:ko,lang_link_quality,영도다리축제,부산광역시 영도구 해양로301번길 45 (동삼동),,,,National Maritime Museum (국립해양박물관),,,score
+busan-K-00169,KorService2:1805656:ko,lang_link_quality,일번지자갈치산곰장어,부산광역시 해운대구 구남로41번길 12,,,,KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔),,,score
+busan-K-00171,KorService2:1805853:ko,lang_link_quality,수민이네,부산광역시 해운대구 청사포로58번길 118,,,,Haeundae Blueline Park (해운대 블루라인파크),,,score
+busan-K-00176,KorService2:1878218:ko,lang_link_quality,부평깡통시장,부산광역시 중구 부평1길 48,,,,Yangsanjip (양산집),,,score
+busan-K-00194,KorService2:1942348:ko,lang_link_quality,관수옥과 초량왜관 터,부산광역시 중구 용두산길 37-55,,,,Busan Jung-gu Pet Festival (부산중구반려동물축제),,,score
+busan-K-00204,KorService2:2019366:ko,lang_link_quality,대한민국 국제해양레저위크(KIMA WEEK),부산광역시 사하구 다대동,,,,Oia Hotel (오이아호텔),,,score
+busan-K-00217,KorService2:2385685:ko,lang_link_quality,대나무 울창한 아홉산 숲으로,,,,,Busan National Science Museum (국립부산과학관),,,score
+busan-K-00221,KorService2:2456837:ko,lang_link_quality,부산 영화의 전당,부산광역시 해운대구 수영강변대로 120,,,,Busan International Film Festival (BIFF) (부산국제영화제),,,score
+busan-K-00222,KorService2:2470024:ko,lang_link_quality,삼진어묵 체험·역사과학관,부산광역시 영도구 절영로7번길 41-1 (봉래동2가),,,,AREA6 (AREA6),,,score
+busan-K-00241,KorService2:2570213:ko,lang_link_quality,AJ하우스(AJ House),부산광역시 영도구 태종로 40,,,,Yeongdodaegyo Bridge (영도대교),,,score
+busan-K-00267,KorService2:2626043:ko,lang_link_quality,그랜드애플,부산광역시 해운대구 센텀1로 25,,,,BASE DERMATOLOGY CLINIC (베이스피부과의원),,,score
+busan-K-00289,KorService2:2696456:ko,lang_link_quality,브로시스 호텔,부산광역시 중구 구덕로48번길 4,,,,Gwangbok-dong Cultural & Fashion Street (광복로문화패션거리),,,score
+busan-K-00294,KorService2:2702333:ko,lang_link_quality,카운트다운 부산,부산광역시 수영구 광안해변로 219 (광안동),,,,Busan Fireworks Festival (부산불꽃축제),,,score
+busan-K-00307,KorService2:2721176:ko,lang_link_quality,울산의 초록빛과 부산의 푸른빛에 둘려쌓여 자유를 만끽하다!,부산광역시 해운대구 청사포로 167,,,,Cheongsapo Daritdol Observatory (청사포 다릿돌전망대),,,score
+busan-K-00381,KorService2:2783380:ko,lang_link_quality,대연수목전시원,부산광역시 남구 신선로447번길 24 (대연동),,,,Peace Park (평화공원),,,score
+busan-K-00405,KorService2:2785970:ko,lang_link_quality,장씨해녀집,부산광역시 기장군 기장읍 연화1길 169,,,,Gijang Haenyeo Village (Yeonhwari Hoetchon Village) (기장해녀촌(연화리횟촌)),,,score
+busan-K-00421,KorService2:2789488:ko,lang_link_quality,미포정거장,부산광역시 해운대구 달맞이길62번길 13 (중동),,,,Haewol Observatory (해월전망대),,,score
+busan-K-00427,KorService2:2804372:ko,lang_link_quality,하운드호텔 부산역점,부산광역시 동구 중앙대로236번길 9 하운드호텔,,,,"KJ Globaltour.Co.,Ltd (케이제이글로벌투어 주식회사)",,,score
+busan-K-00439,KorService2:2818890:ko,lang_link_quality,그랜드 조선 부산,부산광역시 해운대구 해운대해변로 292 그랜드 조선 부산,,,,Haeundae Light Festival (해운대 빛축제),,,score
+busan-K-00459,KorService2:2834026:ko,lang_link_quality,갤러리이알디 부산,"부산광역시 해운대구 해운대해변로 302 (중동, 대림맨션)",,,,Ocean Spa Cimer (오션스파 씨메르),,,score
+busan-K-00472,KorService2:2838872:ko,lang_link_quality,더스타뷔페,"부산광역시 부산진구 중앙대로666번길 50 (부전동, 더샵 센트럴스타)",,,,Busan JMJ (부산제이엠제이),,,score
+busan-K-00501,KorService2:2845041:ko,lang_link_quality,더바베큐051,부산광역시 기장군 기장읍 기장해안로 62,,,,Gijang Jonggajip Gomjangeo (기장종가집곰장어),,,score
+busan-K-00620,KorService2:2870354:ko,lang_link_quality,스완양분식,부산광역시 동구 중앙대로236번길 7-5 (초량동),,,,Hound Hotel Busan Station (하운드호텔 부산역점),,,score
+busan-K-00625,KorService2:2870780:ko,lang_link_quality,클레이디뷔페 돌잔치,부산광역시 동구 조방로 14 (범일동),,,,Korea Medical Institute Busan Branch ((재)한국의학연구소 부산분사무소),,,score
+busan-K-00659,KorService2:2875837:ko,lang_link_quality,달맞이동산,부산광역시 해운대구 달맞이길 184 (중동),,,,Dalmaji Road (해운대 달맞이길),,,score
+busan-K-00670,KorService2:2892757:ko,lang_link_quality,노떼 라 미아 호텔,부산광역시 동구 대영로 265,,,,Le IDEA Hotel Busan Station (르이데아호텔),,,score
+busan-K-00679,KorService2:2946508:ko,lang_link_quality,부산 영화의 거리,"부산광역시 해운대구 마린시티1로 91 (우동, 마린시티두산위브포세이돈)",,,,Hanwha Resort Haeundae (한화리조트 해운대),,,score
+busan-K-00696,KorService2:3023734:ko,lang_link_quality,동서대학교 소향씨어터 신한카드홀,부산광역시 해운대구 센텀중앙로 55 (우동),,,,Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀),,,score
+busan-K-00704,KorService2:3044610:ko,lang_link_quality,브라운도트 호텔 서면역점 비즈니스,부산광역시 부산진구 가야대로756번길 16 (부전동),,,,Nunevit Eye Clinic (누네빛안과의원),,,score
+busan-K-00708,KorService2:3065360:ko,lang_link_quality,부산 요트투어 요트야,부산광역시 해운대구 해운대해변로 84 (우동),,,,Suyeongman Bay Yachting Center (수영만 요트경기장),,,score
+busan-K-00720,KorService2:3336600:ko,lang_link_quality,고래서이뻐,부산광역시 해운대구 우동1로38번길 15-1 (우동),,,,Haeridan Street (해리단길),,,score
+busan-K-00723,KorService2:3356047:ko,lang_link_quality,2025 별바다부산 나이트마켓,부산광역시 북구 생태공원길 270 (화명동),,,,Starry Night in Busan Night Festa,,,score
+busan-K-00733,KorService2:3442423:ko,lang_link_quality,부산기후변화체험교육관,부산광역시 북구 학사로 118 (화명동),,,,Busan Fishing Village Folk Museum (부산어촌민속관),,,score
+busan-K-00741,KorService2:3464876:ko,lang_link_quality,아스티호텔 부산,부산광역시 동구 중앙대로214번길 7-8 (초량동),,,,Hotel Gwangjang (광장호텔),,,score
+busan-K-00774,KorService2:3559571:ko,lang_link_quality,부산중구반려동물축제,부산광역시 중구 용두산길 37-30 (광복동2가),,,,Busan Tower (부산타워),,,score
+busan-K-00775,KorService2:3576410:ko,lang_link_quality,광복로 겨울빛 트리축제,부산광역시 중구 광복로 72-1 (광복동2가),,,,Busan Street Festa in Gwangbok (부산 스트릿 페스타 인 광복),,,score
+,FoodService:2332:ko,category_mismatch,,,85,0.9,KorService2:142998:ko,롯데호텔 부산,32,food,category_mismatch

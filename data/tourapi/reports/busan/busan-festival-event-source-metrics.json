@@ -1,0 +1,93 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-EVENT-SOURCE-01-REV",
+  "current_year": 2026,
+  "festival_total": 183,
+  "festival_count_ok": true,
+  "source_key_duplicates": 0,
+  "official_url": {
+    "total_with_url": 160,
+    "own_url": 105,
+    "ko_fallback": 55,
+    "null_count": 23,
+    "fill_rate": "0.874",
+    "by_language": {
+      "ko": {
+        "total": 40,
+        "own_url": 34,
+        "ko_fallback": 0,
+        "no_url": 6
+      },
+      "en": {
+        "total": 37,
+        "own_url": 19,
+        "ko_fallback": 13,
+        "no_url": 5
+      },
+      "ja": {
+        "total": 35,
+        "own_url": 17,
+        "ko_fallback": 14,
+        "no_url": 4
+      },
+      "zhs": {
+        "total": 35,
+        "own_url": 17,
+        "ko_fallback": 14,
+        "no_url": 4
+      },
+      "zht": {
+        "total": 36,
+        "own_url": 18,
+        "ko_fallback": 14,
+        "no_url": 4
+      }
+    }
+  },
+  "official_check_required_all_true": true,
+  "schedule_change_detected": {
+    "count": 0,
+    "synthetic_test_pass": true
+  },
+  "possible_stale_event": {
+    "count": 96,
+    "ko_count": 24,
+    "rate": "0.525",
+    "ko_samples": [
+      {
+        "source_key": "FestivalService:71:ko",
+        "title": "부산바다축제(한,영, 중간,중번,일)",
+        "event_period_raw": "2025. 8. 1. ~ 8. 3."
+      },
+      {
+        "source_key": "FestivalService:253:ko",
+        "title": "수국축제(한,영,중간,중번,일)",
+        "event_period_raw": "2025. 7. 5.(토) ~ 7. 13.(일)"
+      },
+      {
+        "source_key": "FestivalService:331:ko",
+        "title": "낙동강구포나루축제(한,영,중간,중번,일)",
+        "event_period_raw": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)"
+      },
+      {
+        "source_key": "FestivalService:395:ko",
+        "title": "부산불꽃축제(한, 영, 중간, 중번, 일)",
+        "event_period_raw": "2025.11.15.(토)매년 11월"
+      },
+      {
+        "source_key": "FestivalService:405:ko",
+        "title": "해운대모래축제(한,영,중간,중번,일)",
+        "event_period_raw": "2025.5.16.(금) ~ 5.19.(월)\n모래조각전 6.8.(일)까지 전시"
+      }
+    ]
+  },
+  "date_review_required_count": 96,
+  "affiliate_provider_illegal": 0,
+  "allowed_affiliate_providers": [
+    "klook",
+    "booking",
+    null
+  ],
+  "canonical_untouched": true,
+  "generated_at": "2026-07-24T01:40:01.186Z"
+}

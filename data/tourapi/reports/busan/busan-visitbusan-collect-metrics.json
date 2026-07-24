@@ -1,0 +1,89 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-VISITBUSAN-COLLECT",
+  "year": "2026",
+  "month_stats": [
+    {
+      "month": "01",
+      "count": 6,
+      "pages": 1
+    },
+    {
+      "month": "02",
+      "count": 7,
+      "pages": 1
+    },
+    {
+      "month": "03",
+      "count": 5,
+      "pages": 1
+    },
+    {
+      "month": "04",
+      "count": 12,
+      "pages": 1
+    },
+    {
+      "month": "05",
+      "count": 18,
+      "pages": 2
+    },
+    {
+      "month": "06",
+      "count": 11,
+      "pages": 1
+    },
+    {
+      "month": "07",
+      "count": 15,
+      "pages": 2
+    },
+    {
+      "month": "08",
+      "count": 11,
+      "pages": 1
+    },
+    {
+      "month": "09",
+      "count": 5,
+      "pages": 1
+    },
+    {
+      "month": "10",
+      "count": 5,
+      "pages": 1
+    },
+    {
+      "month": "11",
+      "count": 4,
+      "pages": 1
+    },
+    {
+      "month": "12",
+      "count": 3,
+      "pages": 1
+    }
+  ],
+  "total_unique_events": 68,
+  "multi_month_count": 14,
+  "fill_rates": {
+    "total": 68,
+    "title": 68,
+    "date_start": 68,
+    "date_end": 68,
+    "venue": 62,
+    "address": 40,
+    "official_url": 39,
+    "image_url": 68,
+    "parse_failed": 0
+  },
+  "festival_links": {
+    "total": 11,
+    "high": 2,
+    "medium": 9,
+    "low": 0
+  },
+  "parse_failed_list": [],
+  "total_requests": 83,
+  "generated_at": "2026-07-24T02:47:47.373Z"
+}

@@ -1,0 +1,40 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-EVENT-MERGE-01-REV",
+  "input": {
+    "vb_events": 68,
+    "festival_source": 183,
+    "canonical_groups": 1356
+  },
+  "tracking": {
+    "total": 68,
+    "source_key_duplicates": 0,
+    "url_field_mix": 0
+  },
+  "link_summary": {
+    "auto_high": 2,
+    "auto_title_exact": 6,
+    "manual_link_review": 3,
+    "unlinked": 57,
+    "total_auto": 8
+  },
+  "status_counts": {
+    "schedule_ready": 13,
+    "official_check_required": 2,
+    "manual_link_review": 3,
+    "archived": 50
+  },
+  "edition_year_changed_count": 3,
+  "validation": {
+    "all_68_tracked": true,
+    "no_source_key_duplicate": true,
+    "no_url_field_mix": true,
+    "auto_link_8": true,
+    "manual_3": true,
+    "unlinked_57": true,
+    "festival_source_unchanged": true,
+    "canonical_unchanged": true
+  },
+  "result": "PASS",
+  "generated_at": "2026-07-24T03:09:18.262Z"
+}

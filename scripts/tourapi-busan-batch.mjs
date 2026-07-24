@@ -187,6 +187,47 @@ function normBusanFood(item, lang) {
   };
 }
 
+function normBusanFestival(item, lang) {
+  const id    = String(item.UC_SEQ ?? '');
+  const title = lang !== 'ko' ? (item.TITLE ?? item.MAIN_TITLE) : item.MAIN_TITLE;
+  const rawPeriod = ((item.USAGE_DAY_WEEK_AND_TIME || '') + (item.USAGE_DAY || '')).trim() ||
+                    (item.USAGE_DAY_WEEK_AND_TIME || item.USAGE_DAY || '').trim() || null;
+  const officialUrl = (item.HOMEPAGE_URL ?? '').trim() || null;
+  let officialUrlDomain = null;
+  if (officialUrl) {
+    try { officialUrlDomain = new URL(officialUrl).hostname || null; } catch {}
+  }
+  const staleYears = rawPeriod
+    ? [...rawPeriod.matchAll(/\b(20\d{2})\b/g)].map(m => parseInt(m[1]))
+    : [];
+  const possibleStale = staleYears.length > 0 && Math.max(...staleYears) < new Date().getFullYear();
+  return {
+    source_provider: 'busan', source_service: 'FestivalService',
+    source_id: id, source_language: lang,
+    source_key: `FestivalService:${id}:${lang}`,
+    title: title ?? null, title_normalized: normStr(title),
+    address: item.ADDR1 || item.ADDR2 || null,
+    district: item.GUGUN_NM ?? null,
+    latitude:  item.LAT ? parseFloat(item.LAT) : null,
+    longitude: item.LNG ? parseFloat(item.LNG) : null,
+    description: item.ITEMCNTNTS ?? null, content_type_id: null,
+    category: 'festival',
+    image_url:    item.MAIN_IMG_NORMAL ?? null,
+    image_source: item.MAIN_IMG_NORMAL ? 'visitbusan' : null,
+    image_license: '미확인', modified_at: null,
+    collected_at: COL_AT, source_verified: 'confirmed',
+    venue: item.MAIN_PLACE ?? item.PLACE ?? null,
+    event_period_raw: rawPeriod,
+    official_url: officialUrl,
+    official_url_domain: officialUrlDomain,
+    official_check_required: true,
+    affiliate_url: null,
+    affiliate_provider: null,
+    possible_stale_event: possibleStale,
+    date_review_required: possibleStale,
+  };
+}
+
 function normKTO(item, service, lang) {
   const id = String(item.contentid ?? '');
   return {
@@ -372,6 +413,41 @@ const SOURCES = [
     buildUrl: p => `${BUSAN_BASE}/FoodService/getFoodZht?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
     parse: d  => parseBusan(d, 'getFoodZht'),
     norm:  item => normBusanFood(item, 'zht'),
+    hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
+  },
+  {
+    key: 'busan-festival-ko', type: 'busan',
+    buildUrl: p => `${BUSAN_BASE}/FestivalService/getFestivalKr?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
+    parse: d  => parseBusan(d, 'getFestivalKr'),
+    norm:  item => normBusanFestival(item, 'ko'),
+    hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
+  },
+  {
+    key: 'busan-festival-en', type: 'busan',
+    buildUrl: p => `${BUSAN_BASE}/FestivalService/getFestivalEn?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
+    parse: d  => parseBusan(d, 'getFestivalEn'),
+    norm:  item => normBusanFestival(item, 'en'),
+    hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
+  },
+  {
+    key: 'busan-festival-ja', type: 'busan',
+    buildUrl: p => `${BUSAN_BASE}/FestivalService/getFestivalJa?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
+    parse: d  => parseBusan(d, 'getFestivalJa'),
+    norm:  item => normBusanFestival(item, 'ja'),
+    hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
+  },
+  {
+    key: 'busan-festival-zhs', type: 'busan',
+    buildUrl: p => `${BUSAN_BASE}/FestivalService/getFestivalZhs?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
+    parse: d  => parseBusan(d, 'getFestivalZhs'),
+    norm:  item => normBusanFestival(item, 'zhs'),
+    hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
+  },
+  {
+    key: 'busan-festival-zht', type: 'busan',
+    buildUrl: p => `${BUSAN_BASE}/FestivalService/getFestivalZht?serviceKey=${API_KEY}&numOfRows=${NUM_OF_ROWS}&pageNo=${p}&resultType=json`,
+    parse: d  => parseBusan(d, 'getFestivalZht'),
+    norm:  item => normBusanFestival(item, 'zht'),
     hardPageLimit: BUSAN_HARD_PAGE_LIMIT,
   },
   {

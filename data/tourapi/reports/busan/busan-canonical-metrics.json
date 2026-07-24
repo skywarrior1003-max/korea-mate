@@ -1,0 +1,77 @@
+{
+  "run_date": "2026-07-24",
+  "total_records": 4135,
+  "canonical_groups": {
+    "total": 1356,
+    "by_status": {
+      "busan_confirmed": 536,
+      "same_place": 109,
+      "busan_unlinked": 4,
+      "busan_manual_review": 1,
+      "festival_confirmed": 34,
+      "festival_manual_review": 2,
+      "festival_unlinked": 4,
+      "kto_separate": 282,
+      "kto_parent_child": 383,
+      "kto_manual_review": 1
+    },
+    "by_category": {
+      "attraction": 213,
+      "festival": 40,
+      "food": 437,
+      "null": 666
+    },
+    "by_source_service": {
+      "AttractionService": 213,
+      "FestivalService": 40,
+      "FoodService": 437,
+      "KorService2": 666
+    }
+  },
+  "same_place_merges": {
+    "pairs_merged": 124,
+    "kto_groups_absorbed": 109,
+    "dist_threshold_m": 100,
+    "sim_threshold": 0.85,
+    "sim_method": "normTitle + contains(min3) + bigram_jaccard"
+  },
+  "manual_review": {
+    "lang_link_quality_groups": 58,
+    "category_mismatch_pairs": 1,
+    "total": 59
+  },
+  "parent_child_ref": {
+    "total": 1766,
+    "dist_range_m": "101-300"
+  },
+  "unmatched_records": {
+    "total": 99,
+    "insufficient_evidence_only": 37,
+    "unclaimed": 62
+  },
+  "unlinked_delta_analysis": {
+    "note": "busan-batch-unlinked-candidates.csv 기반 festival/비Festival 분리",
+    "pre_festival_total_rows": 92,
+    "post_festival_total_rows": 98,
+    "festival_rows": 2,
+    "non_festival_rows": 96,
+    "non_festival_delta": 4,
+    "explanation": "festival 통합 시 KTO 타겟 풀 확장으로 비Festival KorService2 4건 새로 insufficient_evidence 진입. Festival 자체 2건 신규.",
+    "non_festival_link_check": {
+      "high": 2364,
+      "manual_review": 66,
+      "high_ok": true,
+      "manual_review_ok": true
+    }
+  },
+  "tracking_verification": {
+    "original_ko": 1465,
+    "linked_non_ko": 2571,
+    "insu_only": 37,
+    "unclaimed": 62,
+    "total_accounted": 4135,
+    "expected": 4135,
+    "ok": true
+  },
+  "generated_at": "2026-07-24T01:12:11.332Z"
+}

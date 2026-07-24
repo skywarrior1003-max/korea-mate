@@ -1,0 +1,167 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-DUPLICATE-MANUAL-RESOLUTION-08",
+  "overall": "PASS",
+  "total_reviewed": 31,
+  "input": {
+    "duplicate_suspected": 19,
+    "manual_review": 12
+  },
+  "by_final_status": {
+    "unresolved": 8,
+    "merge_existing": 9,
+    "ready_for_candidate": 12,
+    "reference_only": 2
+  },
+  "merge_existing": {
+    "total": 9,
+    "to_canonical": 7,
+    "to_vb_candidate": 2,
+    "targets": [
+      {
+        "candidate_id": "busan-VB-399",
+        "merge_target_id": "busan-K-00058",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-412",
+        "merge_target_id": "busan-K-00057",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-400",
+        "merge_target_id": "busan-K-00176",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-363",
+        "merge_target_id": "busan-K-00148",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-327",
+        "merge_target_id": "busan-K-00055",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-300",
+        "merge_target_id": "busan-K-00190",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-1858",
+        "merge_target_id": "busan-K-00078",
+        "type": "canonical"
+      },
+      {
+        "candidate_id": "busan-VB-990",
+        "merge_target_id": "busan-VB-336",
+        "type": "vb_candidate"
+      },
+      {
+        "candidate_id": "busan-VB-481",
+        "merge_target_id": "busan-VB-518",
+        "type": "vb_candidate"
+      }
+    ]
+  },
+  "ready_for_candidate": {
+    "total": 12,
+    "by_category": {
+      "attraction": 5,
+      "restaurant": 3,
+      "accommodation": 4
+    },
+    "new_accommodation": 4
+  },
+  "reference_only": [
+    {
+      "candidate_id": "busan-VB-2245",
+      "title_ko": "부산 곳곳에서 경험하는 노르딕 워킹, ‘놀핏’"
+    },
+    {
+      "candidate_id": "busan-VB-1874",
+      "title_ko": "플로깅 투어하러 롤로와, 영도!"
+    }
+  ],
+  "unresolved": {
+    "total": 8,
+    "items": [
+      {
+        "candidate_id": "busan-VB-2581",
+        "title_ko": "바다처럼",
+        "reason": "\"바다처럼\"(해운대구 우동1로38번길 15-1 1층): 주소는 있으나 상호 \"바다처럼\"만으로 업종(카페/쇼핑"
+      },
+      {
+        "candidate_id": "busan-VB-2579",
+        "title_ko": "달콤한 부산의 매력,",
+        "reason": "\"달콤한 부산의 매력,\"(해운대구 우동1로 13-29 1층): 제목 미완성(쉼표 후 내용 없음), 실제 업체"
+      },
+      {
+        "candidate_id": "busan-VB-1899",
+        "title_ko": "자연도 흥미진진하다구! 낙동강 감동포구에서 즐기는 생태 어드벤처",
+        "reason": "\"낙동강 감동포구 생태 어드벤처\": 주소 없음. 감동포구가 어느 포구인지 텍스트만으로 특정 불가. URL 방"
+      },
+      {
+        "candidate_id": "busan-VB-1870",
+        "title_ko": "세상에 쓸모없는 쓰레기는 없으니까!",
+        "reason": "\"세상에 쓸모없는 쓰레기는 없으니까!\"(강서구 생곡산단1로24번길 58): 기사체 제목으로 시설명 불명. 산"
+      },
+      {
+        "candidate_id": "busan-VB-1859",
+        "title_ko": "K-POP 스타랑 동문 된 썰 푼다",
+        "reason": "\"K-POP 스타랑 동문 된 썰 푼다\"(진구 동천로132번길 6 3층): 기사체 제목으로 댄스학원인지 체험관"
+      },
+      {
+        "candidate_id": "busan-VB-1855",
+        "title_ko": "라이언 홀리데이 인 부산",
+        "reason": "\"라이언 홀리데이 인 부산\"(해운대해변로 292 지하1층): 인접한 파라다이스 호텔(296번지)과 다른 주소"
+      },
+      {
+        "candidate_id": "busan-VB-1177",
+        "title_ko": "아트다 아트 꿀잼 아트",
+        "reason": "\"아트다 아트 꿀잼 아트\"(캐비네 드 쁘아송, 아난티코브 미디어아트 갤러리): canonical busan-"
+      },
+      {
+        "candidate_id": "busan-VB-542",
+        "title_ko": "다누비열차",
+        "reason": "\"다누비열차\": 주소 없음. 낙동강 생태열차 추정이나 운영 노선·위치 텍스트로 특정 불가. URL 방문 필요"
+      }
+    ]
+  },
+  "generated_at": "2026-07-24T09:48:00.862Z",
+  "review_09": {
+    "task": "TASK-DATA-BUSAN-UNRESOLVED-FINAL-REVIEW-09",
+    "run_date": "2026-07-24",
+    "input_unresolved": 8,
+    "by_final_status": {
+      "ready_for_candidate": 3,
+      "merge_existing": 3,
+      "reference_only": 1,
+      "unresolved_remaining": 1
+    },
+    "ready_for_candidate": [
+      { "candidate_id": "busan-VB-2581", "title_ko": "바다처럼", "category": "attraction", "subcategory": "retail_store", "evidence": "Instagram @pretty_whale.shop 확인, 고정 점포" },
+      { "candidate_id": "busan-VB-2579", "title_ko": "달콤한 부산의 매력,", "category": "restaurant", "subcategory": "dessert_shop", "evidence": "busansand.co.kr 확인, 부산샌드 버터샌드 전문점" },
+      { "candidate_id": "busan-VB-1855", "title_ko": "라이언 홀리데이 인 부산", "category": "attraction", "subcategory": "theme_park", "evidence": "VisitBusan 페이지 확인, 카카오프렌즈 캐릭터 테마파크" }
+    ],
+    "merge_existing": [
+      { "candidate_id": "busan-VB-1870", "merge_target_id": "busan-K-00350", "type": "canonical", "evidence": "주소 완전 일치, 부산자원순환협력센터" },
+      { "candidate_id": "busan-VB-1177", "merge_target_id": "busan-K-00224", "type": "canonical", "evidence": "아난티 공식사이트 확인, 캐비네 드 쁘아송=F&B·어메니티 라인, 독립 갤러리 아님" },
+      { "candidate_id": "busan-VB-542", "merge_target_id": "busan-A-00004", "type": "canonical", "evidence": "태종대유원지 공식사이트 확인, 다누비열차=태종대 내부 순환 열차" }
+    ],
+    "reference_only": [
+      { "candidate_id": "busan-VB-1899", "title_ko": "자연도 흥미진진하다구! 낙동강 감동포구에서 즐기는 생태 어드벤처", "reason": "다중 거점 생태 투어 프로그램, 단일 고정 city_spot 아님" }
+    ],
+    "unresolved_remaining": [
+      { "candidate_id": "busan-VB-1859", "title_ko": "K-POP 스타랑 동문 된 썰 푼다", "reason": "sdkart.modoo.at 2025-06-26 서비스 종료, 업체 운영 여부 및 업종 확인 불가" }
+    ],
+    "final_totals_after_review_09": {
+      "merge_existing": 12,
+      "ready_for_candidate": 15,
+      "reference_only": 3,
+      "unresolved": 1,
+      "total": 31
+    }
+  }
+}

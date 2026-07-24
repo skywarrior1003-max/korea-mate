@@ -1,0 +1,232 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-VISITBUSAN-CONTENT-COLLECT-04",
+  "overall": "PASS",
+  "elapsed_seconds": 1193,
+  "req_count": 1597,
+  "total_ids_discovered": 775,
+  "count_by_type": {
+    "attraction": 213,
+    "food": 337,
+    "shopping": 55,
+    "experience": 121,
+    "course": 49
+  },
+  "candidates_total": 1510,
+  "ko": {
+    "total": 775,
+    "ok": 773,
+    "requires_client_render": 2,
+    "error_page": 0,
+    "by_type": {
+      "attraction": {
+        "total": 213,
+        "ok": 212,
+        "requires_client_render": 1,
+        "html_contamination": 0,
+        "error_page": 0
+      },
+      "food": {
+        "total": 337,
+        "ok": 336,
+        "requires_client_render": 1,
+        "html_contamination": 0,
+        "error_page": 0
+      },
+      "shopping": {
+        "total": 55,
+        "ok": 55,
+        "requires_client_render": 0,
+        "html_contamination": 0,
+        "error_page": 0
+      },
+      "experience": {
+        "total": 121,
+        "ok": 121,
+        "requires_client_render": 0,
+        "html_contamination": 0,
+        "error_page": 0
+      },
+      "course": {
+        "total": 49,
+        "ok": 49,
+        "requires_client_render": 0,
+        "html_contamination": 0,
+        "error_page": 0
+      }
+    }
+  },
+  "en": {
+    "total": 775,
+    "ok": 737,
+    "language_content_unavailable": 38,
+    "not_en_page": 0,
+    "error_page": 0,
+    "by_type": {
+      "attraction": {
+        "total": 213,
+        "ok": 207,
+        "language_content_unavailable": 6,
+        "not_en_page": 0,
+        "error_page": 0
+      },
+      "food": {
+        "total": 337,
+        "ok": 336,
+        "language_content_unavailable": 1,
+        "not_en_page": 0,
+        "error_page": 0
+      },
+      "shopping": {
+        "total": 55,
+        "ok": 53,
+        "language_content_unavailable": 2,
+        "not_en_page": 0,
+        "error_page": 0
+      },
+      "experience": {
+        "total": 121,
+        "ok": 103,
+        "language_content_unavailable": 18,
+        "not_en_page": 0,
+        "error_page": 0
+      },
+      "course": {
+        "total": 49,
+        "ok": 38,
+        "language_content_unavailable": 11,
+        "not_en_page": 0,
+        "error_page": 0
+      }
+    }
+  },
+  "ja_zhs_zht_status": {
+    "attraction": {
+      "ja": {
+        "uc_seq": "2753",
+        "accessible": false,
+        "title": null
+      },
+      "zhs": {
+        "uc_seq": "2753",
+        "accessible": false,
+        "title": null
+      },
+      "zht": {
+        "uc_seq": "2753",
+        "accessible": false,
+        "title": null
+      }
+    },
+    "food": {
+      "ja": {
+        "uc_seq": "2386",
+        "accessible": false,
+        "title": null
+      },
+      "zhs": {
+        "uc_seq": "2386",
+        "accessible": false,
+        "title": null
+      },
+      "zht": {
+        "uc_seq": "2386",
+        "accessible": false,
+        "title": null
+      }
+    },
+    "shopping": {
+      "ja": {
+        "uc_seq": "2670",
+        "accessible": false,
+        "title": null
+      },
+      "zhs": {
+        "uc_seq": "2670",
+        "accessible": false,
+        "title": null
+      },
+      "zht": {
+        "uc_seq": "2670",
+        "accessible": false,
+        "title": null
+      }
+    },
+    "experience": {
+      "ja": {
+        "uc_seq": "2789",
+        "accessible": false,
+        "title": null
+      },
+      "zhs": {
+        "uc_seq": "2789",
+        "accessible": false,
+        "title": null
+      },
+      "zht": {
+        "uc_seq": "2789",
+        "accessible": false,
+        "title": null
+      }
+    },
+    "course": {
+      "ja": {
+        "uc_seq": "2788",
+        "accessible": false,
+        "title": null
+      },
+      "zhs": {
+        "uc_seq": "2788",
+        "accessible": false,
+        "title": null
+      },
+      "zht": {
+        "uc_seq": "2788",
+        "accessible": false,
+        "title": null
+      }
+    }
+  },
+  "patch_04a": {
+    "run_date": "2026-07-24",
+    "task": "TASK-DATA-BUSAN-VISITBUSAN-CONTENT-PATCH-04A",
+    "overall": "PASS",
+    "elapsed_seconds": 575,
+    "req_count": 775,
+    "ko": {
+      "total": 775,
+      "ok": 773,
+      "requires_client_render": 2,
+      "error_page": 0,
+      "parse_failed": 0,
+      "by_type": {
+        "attraction": {
+          "total": 213,
+          "ok": 212
+        },
+        "food": {
+          "total": 337,
+          "ok": 336
+        },
+        "shopping": {
+          "total": 55,
+          "ok": 55
+        },
+        "experience": {
+          "total": 121,
+          "ok": 121
+        },
+        "course": {
+          "total": 49,
+          "ok": 49
+        }
+      }
+    },
+    "en_preserved": 737,
+    "candidates_total": 1510,
+    "hours_before_pct": 0,
+    "hours_after_pct": 84.6,
+    "hours_before_n": 0,
+    "hours_after_n": 654
+  }
+}

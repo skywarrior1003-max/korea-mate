@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 
-export const COMPARE_FIELDS = ['title', 'address', 'latitude', 'longitude', 'image_url', 'description'];
+export const COMPARE_FIELDS = ['title', 'address', 'latitude', 'longitude', 'image_url', 'description', 'venue', 'event_period_raw'];
 
 // ── 디스크 여유 공간 확인 ─────────────────────────────────────────────────────
 export function checkDiskSpace(checkPath, minBytes = 2 * 1024 * 1024 * 1024) {

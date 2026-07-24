@@ -1,0 +1,101 @@
+{
+  "run_date": "2026-07-24",
+  "task": "TASK-DATA-BUSAN-VISITBUSAN-CONTENT-PILOT-02",
+  "total_requests": 113,
+  "by_type": {
+    "attraction": {
+      "ko_collected": 16,
+      "en_collected": 5,
+      "ko_parse_failed": 0,
+      "en_unavailable": 0,
+      "field_fill": {
+        "title_ko": "16/16 (100%)",
+        "address": "16/16 (100%)",
+        "lat": "16/16 (100%)",
+        "lon": "16/16 (100%)",
+        "hours": "8/16 (50%)",
+        "website": "16/16 (100%)",
+        "image_url": "0/16 (0%)",
+        "phone": "5/16 (31%)"
+      }
+    },
+    "food": {
+      "ko_collected": 16,
+      "en_collected": 5,
+      "ko_parse_failed": 0,
+      "en_unavailable": 0,
+      "field_fill": {
+        "title_ko": "16/16 (100%)",
+        "address": "16/16 (100%)",
+        "lat": "16/16 (100%)",
+        "lon": "16/16 (100%)",
+        "hours": "16/16 (100%)",
+        "website": "16/16 (100%)",
+        "image_url": "0/16 (0%)",
+        "phone": "16/16 (100%)"
+      }
+    },
+    "shopping": {
+      "ko_collected": 16,
+      "en_collected": 5,
+      "ko_parse_failed": 0,
+      "en_unavailable": 0,
+      "field_fill": {
+        "title_ko": "16/16 (100%)",
+        "address": "15/16 (94%)",
+        "lat": "16/16 (100%)",
+        "lon": "16/16 (100%)",
+        "hours": "14/16 (88%)",
+        "website": "16/16 (100%)",
+        "image_url": "0/16 (0%)",
+        "phone": "10/16 (63%)"
+      }
+    },
+    "experience": {
+      "ko_collected": 16,
+      "en_collected": 5,
+      "ko_parse_failed": 0,
+      "en_unavailable": 0,
+      "field_fill": {
+        "title_ko": "16/16 (100%)",
+        "address": "14/16 (88%)",
+        "lat": "16/16 (100%)",
+        "lon": "16/16 (100%)",
+        "hours": "9/16 (56%)",
+        "website": "16/16 (100%)",
+        "image_url": "0/16 (0%)",
+        "phone": "11/16 (69%)"
+      }
+    },
+    "course": {
+      "ko_collected": 16,
+      "en_collected": 5,
+      "ko_parse_failed": 0,
+      "en_unavailable": 0,
+      "field_fill": {
+        "title_ko": "16/16 (100%)",
+        "address": "13/16 (81%)",
+        "lat": "16/16 (100%)",
+        "lon": "16/16 (100%)",
+        "hours": "0/16 (0%)",
+        "website": "16/16 (100%)",
+        "image_url": "0/16 (0%)",
+        "phone": "13/16 (81%)"
+      }
+    }
+  },
+  "language_status": {
+    "ja": "unsupported (HTTP 200)",
+    "zhs": "unsupported (HTTP 200)",
+    "zht": "unsupported (HTTP 200)"
+  },
+  "validation": {
+    "ko_total": 80,
+    "en_total": 25,
+    "title_blank_count": 0,
+    "html_contam_count": 0,
+    "source_key_duplicate": 0,
+    "parse_failed_count": 6
+  },
+  "result": "PASS"
+}

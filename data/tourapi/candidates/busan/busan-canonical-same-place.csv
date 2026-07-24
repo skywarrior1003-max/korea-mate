@@ -1,0 +1,125 @@
+kto_canonical_key,busan_canonical_key,dist_m,sim,title_kto,title_busan,category_busan,ct_kto
+KorService2:132805:ko,FoodService:109:ko,1,1,물꽁식당,물꽁식당,food,39
+KorService2:135827:ko,FoodService:154:ko,1,1,동백섬횟집,동백섬횟집,food,39
+KorService2:849929:ko,FoodService:94:ko,1,1,가야할매 밀면,가야할매밀면,food,39
+KorService2:851989:ko,FoodService:190:ko,1,1,할매복국,할매복국,food,39
+KorService2:2844748:ko,FoodService:1241:ko,1,1,포에버얌 부산기장점,포에버얌 부산기장점,food,39
+KorService2:403957:ko,FoodService:118:ko,1,0.9,성일집,부산꼼장어맛집 성일집,food,39
+KorService2:686419:ko,FoodService:102:ko,2,1,할매가야밀면,할매가야밀면,food,39
+KorService2:820382:ko,FoodService:1582:ko,2,1,목장원,목장원,food,39
+KorService2:2805377:ko,FoodService:1092:ko,2,1,광명집,광명집,food,39
+KorService2:2809068:ko,FoodService:208:ko,2,1,국이네 낙지볶음,국이네낙지볶음,food,39
+KorService2:2847969:ko,FoodService:1463:ko,2,1,브리타니,브리타니,food,39
+KorService2:132805:ko,FoodService:1608:ko,3,1,물꽁식당,물꽁식당,food,39
+KorService2:134326:ko,FoodService:1822:ko,3,1,곰보식당,곰보식당,food,39
+KorService2:841730:ko,FoodService:87:ko,3,1,사미헌,사미헌,food,39
+KorService2:2778487:ko,FoodService:146:ko,3,1,금수복국 해운대본점,금수복국 해운대본점,food,39
+KorService2:2869454:ko,FoodService:1252:ko,3,1,그라치에,그라치에,food,39
+KorService2:2870394:ko,FoodService:1539:ko,3,1,은하갈비,은하갈비,food,39
+KorService2:133313:ko,FoodService:1612:ko,4,1,부산명물횟집,부산명물횟집,food,39
+KorService2:135827:ko,FoodService:1546:ko,4,1,동백섬횟집,동백섬횟집,food,39
+KorService2:250562:ko,FoodService:1575:ko,4,1,카파도키아,카파도키아,food,39
+KorService2:403961:ko,FoodService:2337:ko,4,1,선창횟집,선창횟집,food,39
+KorService2:820382:ko,FoodService:1250:ko,4,1,목장원,목장원,food,39
+KorService2:2759629:ko,FoodService:926:ko,4,1,디저트시네마,디저트시네마,food,39
+KorService2:2832671:ko,FoodService:242:ko,4,1,신발원,신발원,food,39
+KorService2:2836450:ko,FoodService:124:ko,4,1,이재모피자 본점,이재모피자 본점,food,39
+KorService2:2868609:ko,FoodService:1567:ko,4,1,리오네,리오네,food,39
+KorService2:127004:ko,AttractionService:373:ko,4,0.9,해운대 관광특구,해운대,attraction,12
+KorService2:130774:ko,AttractionService:2153:ko,4,0.9,동삼동패총전시관,"동삼동패총전시관(한,영,중간,중번,일)",attraction,14
+KorService2:1607360:ko,AttractionService:439:ko,4,0.9,동래향교,"동래향교, 기장향교(한,영,중간,중번,일)",attraction,12
+KorService2:2661479:ko,AttractionService:2024:ko,4,0.9,구덕야영장,"구덕야영장 계곡(한,영,중간,중번,일)",attraction,28
+KorService2:3017347:ko,AttractionService:2218:ko,4,0.9,해돋이전망대,"영도해돋이전망대 (한,영,중간,중번,일)",attraction,12
+KorService2:133313:ko,FoodService:112:ko,5,1,부산명물횟집,부산명물횟집,food,39
+KorService2:849887:ko,FoodService:564:ko,5,1,김유순대구뽈찜,김유순대구뽈찜,food,39
+KorService2:2668119:ko,FoodService:1837:ko,5,1,재기돼지국밥,재기돼지국밥,food,39
+KorService2:2726193:ko,FoodService:1527:ko,5,1,이가네떡볶이,이가네떡볶이,food,39
+KorService2:2759609:ko,FoodService:204:ko,5,1,쌍둥이돼지국밥 본점,쌍둥이돼지국밥 본점,food,39
+KorService2:2777936:ko,FoodService:1477:ko,5,1,어밤부,어밤부,food,39
+KorService2:2784320:ko,FoodService:1453:ko,5,1,소문난원조조방낙지본점,소문난원조조방낙지본점,food,39
+KorService2:2784321:ko,FoodService:1602:ko,5,1,개금밀면,개금밀면,food,39
+KorService2:2785270:ko,FoodService:1483:ko,5,1,복성반점,복성반점,food,39
+KorService2:2832671:ko,FoodService:1617:ko,5,1,신발원,신발원,food,39
+KorService2:2838382:ko,FoodService:198:ko,5,1,신창국밥 본점,신창국밥 본점,food,39
+KorService2:2838489:ko,FoodService:1515:ko,5,1,수복돼지국밥,수복돼지국밥,food,39
+KorService2:2840921:ko,FoodService:865:ko,5,1,방코,방코,food,39
+KorService2:2845149:ko,FoodService:1461:ko,5,1,아데초이,아데초이,food,39
+KorService2:2853156:ko,FoodService:1518:ko,5,1,해물왕창칼국수,해물왕창칼국수,food,39
+KorService2:2858974:ko,FoodService:1505:ko,5,1,타이가텐푸라,타이가 텐푸라,food,39
+KorService2:2859101:ko,FoodService:1496:ko,5,1,나가하마만게츠,나가하마만게츠,food,39
+KorService2:2861189:ko,FoodService:1485:ko,5,1,부우사안,부우사안,food,39
+KorService2:2861189:ko,FoodService:1556:ko,5,1,부우사안,부우사안,food,39
+KorService2:2867674:ko,FoodService:929:ko,5,1,연산낙지해물탕,연산낙지해물탕,food,39
+KorService2:2869113:ko,FoodService:1610:ko,5,1,배종관동래삼계탕,배종관동래삼계탕,food,39
+KorService2:2869113:ko,FoodService:1813:ko,5,1,배종관동래삼계탕,배종관동래삼계탕,food,39
+KorService2:2869532:ko,FoodService:1271:ko,5,1,타이빈,타이빈,food,39
+KorService2:2869595:ko,FoodService:1555:ko,5,1,미미루,미미루,food,39
+KorService2:2869618:ko,FoodService:1511:ko,5,1,합천국밥집,합천국밥집,food,39
+KorService2:2869618:ko,FoodService:1540:ko,5,1,합천국밥집,합천국밥집,food,39
+KorService2:2875744:ko,FoodService:1552:ko,5,1,영남돼지,영남돼지,food,39
+KorService2:2891789:ko,FoodService:1566:ko,5,1,라꽁띠,라꽁띠,food,39
+KorService2:2952019:ko,FoodService:1846:ko,5,1,소공간,소공간,food,39
+KorService2:1277679:ko,AttractionService:550:ko,5,0.9,부산타워,"부산타워(한,영,중간,중번,일)",attraction,12
+KorService2:2752976:ko,FoodService:1094:ko,5,0.9,명지첫집,명지첫집 국제신도시본점,food,39
+KorService2:2759609:ko,FoodService:1542:ko,5,0.9,쌍둥이돼지국밥 본점,쌍둥이돼지국밥,food,39
+KorService2:2773623:ko,FoodService:1502:ko,5,0.9,야스마루,야스마루 쇼쿠도,food,39
+KorService2:2778487:ko,FoodService:1604:ko,5,0.9,금수복국 해운대본점,금수복국,food,39
+KorService2:2832729:ko,FoodService:1634:ko,5,0.9,모모스커피 본점,모모스커피,food,39
+KorService2:2836450:ko,FoodService:1570:ko,5,0.9,이재모피자 본점,이재모피자,food,39
+KorService2:2841442:ko,FoodService:1506:ko,5,0.9,톤쇼우,톤쇼우 부산대점,food,39
+KorService2:2776391:ko,FoodService:1441:ko,6,1,미청식당,미청식당,food,39
+KorService2:2836412:ko,FoodService:920:ko,6,1,에테르,에테르,food,39
+KorService2:2869183:ko,FoodService:1814:ko,6,1,신가네 호떡 김밥 떡볶이,신가네 호떡 김밥 떡볶이,food,39
+KorService2:2869323:ko,FoodService:1528:ko,6,1,우성삼계탕,우성삼계탕,food,39
+KorService2:2869595:ko,FoodService:1265:ko,6,1,미미루,미미루,food,39
+KorService2:2870703:ko,FoodService:1450:ko,6,1,초량온당,초량온당,food,39
+KorService2:2785266:ko,FoodService:1118:ko,6,0.9,영진돼지국밥,영진돼지국밥 본점,food,39
+KorService2:2832729:ko,FoodService:127:ko,6,0.9,모모스커피 본점,모모스커피,food,39
+KorService2:3064931:ko,AttractionService:2106:ko,6,0.9,색채마을,"색채마을(한,영,중간,중번,일)",attraction,12
+KorService2:133314:ko,FoodService:936:ko,7,1,팔미초밥,팔미초밥,food,39
+KorService2:2788406:ko,FoodService:2365:ko,7,1,자매국밥,자매국밥,food,39
+KorService2:2852685:ko,FoodService:904:ko,7,1,금강만두,금강만두,food,39
+KorService2:1918263:ko,AttractionService:2121:ko,7,0.9,누리마루 APEC하우스,"누리마루 APEC하우스 (한,영,중간,중번,일)",attraction,14
+KorService2:2840998:ko,FoodService:1219:ko,8,1,오리한상 명지본점,오리한상 명지본점,food,39
+KorService2:2873468:ko,FoodService:1457:ko,8,1,제주복국,제주복국,food,39
+KorService2:133839:ko,FoodService:1591:ko,8,0.9,롯데호텔부산 무궁화,무궁화,food,39
+KorService2:2554068:ko,AttractionService:367:ko,8,0.9,부산영화체험박물관,부산영화체험박물관/씨네뮤지엄,attraction,12
+KorService2:2756690:ko,FoodService:1521:ko,9,1,박해윤통영해물밥상,박해윤통영해물밥상,food,39
+KorService2:2785272:ko,FoodService:1804:ko,9,1,고향연화,고향연화,food,39
+KorService2:2853145:ko,FoodService:1464:ko,10,1,브레이크인커피,브레이크인커피,food,39
+KorService2:2867662:ko,FoodService:184:ko,11,1,원조18번완당,원조18번완당,food,39
+KorService2:2875761:ko,FoodService:169:ko,11,1,원조석대추어탕,원조석대추어탕,food,39
+KorService2:2994179:ko,AttractionService:1329:ko,12,0.9,전포공구길,"힙함 가득한 전포공구길(한,영,중간,중번,일)",attraction,12
+KorService2:2869196:ko,FoodService:1436:ko,15,1,마파람해물찜해물탕 구서본점,마파람해물찜해물탕 구서본점,food,39
+KorService2:2870868:ko,FoodService:966:ko,16,1,동원장수촌,동원장수촌,food,39
+KorService2:130668:ko,AttractionService:420:ko,16,0.9,벡스코(BEXCO),벡스코,attraction,14
+KorService2:2823059:ko,AttractionService:1709:ko,16,0.9,박태준기념관,"박태준기념관(한,영,중간,중번,일)",attraction,14
+KorService2:2775543:ko,FoodService:884:ko,17,1,탐복,탐복,food,39
+KorService2:2785276:ko,FoodService:1524:ko,17,1,하기연진주냉면,하기연진주냉면,food,39
+KorService2:2869936:ko,FoodService:1479:ko,17,1,우봉,우봉,food,39
+KorService2:2852419:ko,FoodService:961:ko,17,0.9,몽실종가돼지국밥,몽실종가돼지국밥 감천문화마을 본점,food,39
+KorService2:2775543:ko,FoodService:1554:ko,19,1,탐복,탐복,food,39
+KorService2:2776396:ko,FoodService:1553:ko,19,1,무진장횟집,무진장횟집,food,39
+KorService2:2776396:ko,FoodService:1806:ko,19,0.9,무진장횟집,무진장횟집 기장점,food,39
+KorService2:2815627:ko,AttractionService:1310:ko,19,0.9,롯데월드 어드벤처 부산,"롯데월드 어드벤처 부산 (한,영,중간,중번,일)",attraction,12
+KorService2:128053:ko,AttractionService:458:ko,20,0.9,선암사(부산),선암사,attraction,12
+KorService2:128290:ko,AttractionService:371:ko,20,0.9,황령산,"황령산 전망쉼터(한,영,중간,중번,일)",attraction,12
+KorService2:2822840:ko,FoodService:1448:ko,21,1,칠암사계,칠암사계,food,39
+KorService2:1805095:ko,FoodService:1459:ko,22,0.9,할매팥빙수단팥죽,용호동할매팥빙수단팥죽 본점,food,39
+KorService2:3083767:ko,AttractionService:1881:ko,22,0.9,부산근현대역사관 본관,"부산근현대역사관 본관(한,영,중간,중번,일)",attraction,14
+KorService2:2607423:ko,AttractionService:2202:ko,24,0.9,이바구캠프,"이바구캠프(한,영,중간,중번,일)",attraction,32
+KorService2:2775559:ko,AttractionService:2220:ko,28,0.9,해광사,"해광사(한,영,중간,중번,일)",attraction,12
+KorService2:2875783:ko,FoodService:1584:ko,35,1,이레옥,이레옥,food,39
+KorService2:1310148:ko,FoodService:166:ko,36,0.9,예이제 한정식,예이제,food,39
+KorService2:130166:ko,AttractionService:289:ko,38,1,부산시립미술관,부산시립미술관,attraction,14
+KorService2:1942553:ko,AttractionService:369:ko,40,0.9,영도다리를 건너다,영도다리,attraction,25
+KorService2:2838849:ko,FoodService:245:ko,45,1,초량1941,초량1941,food,39
+KorService2:2872611:ko,FoodService:72:ko,49,1,만호갈미샤브샤브,만호갈미샤브샤브,food,39
+KorService2:2660770:ko,AttractionService:848:ko,57,0.9,부산 치유의 숲,"부산치유의 숲(한, 영)",attraction,12
+KorService2:2822240:ko,AttractionService:2133:ko,62,0.9,용호별빛공원,"용호 별빛공원(한,영,중간,중번,일)",attraction,12
+KorService2:2760771:ko,FoodService:141:ko,66,1,거대갈비,거대갈비,food,39
+KorService2:2744597:ko,AttractionService:859:ko,68,0.9,구덕문화공원,구덕문화공원(한),attraction,12
+KorService2:2784363:ko,AttractionService:1444:ko,76,0.9,부산근현대역사관 별관,"부산근현대역사관 별관(한,영,중간,중번,일)",attraction,14
+KorService2:128055:ko,AttractionService:1731:ko,81,0.9,평화공원,"유엔평화공원(한,영,중간,중번,일)",attraction,12
+KorService2:346661:ko,AttractionService:459:ko,82,0.9,운수사(부산),운수사,attraction,12
+KorService2:2755676:ko,AttractionService:313:ko,93,0.9,구포 어린이교통공원,"구포어린이교통공원(한,영,중간,중번,일)",attraction,12
