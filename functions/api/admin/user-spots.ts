@@ -141,10 +141,10 @@ export const onRequestGet = async ({ request, env }: Ctx): Promise<Response> => 
   // ── 목록 조회 ─────────────────────────────────────────────────────────────
   const res = await fetch(
     `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/user_spots` +
-    `?submission_status=eq.pending` +
+    `?submission_status=in.(pending,approved)` +
     `&order=submitted_at.desc` +
     `&limit=200` +
-    `&select=id,name,city,address,category,note,submitted_at,photo_url,lat,lng,city_spot_id,published_at`,
+    `&select=id,name,city,address,category,note,submission_status,submitted_at,photo_url,lat,lng,city_spot_id,published_at`,
     { headers: dbHeaders },
   );
 

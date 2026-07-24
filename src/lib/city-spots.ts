@@ -38,7 +38,7 @@ export interface CitySpotRow {
   solo_friendly: boolean;
   foreign_card_accepted: boolean;
   cash_only: boolean;
-  source_type: "manual" | "tourapi" | "google";
+  source_type: "manual" | "tourapi" | "google" | "user";
   external_id: string | null;
   rating: number | null;
   official_url: string | null;
