@@ -205,7 +205,23 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     }
   }
 
-  // 4단계: itinerary DB 삭제
+  // 4단계: trip_moments 명시적 DELETE (FK/CASCADE 없는 경우 고아 행 방지)
+  const { error: momDelErr } = await admin
+    .from("trip_moments")
+    .delete()
+    .eq("itinerary_id", id);
+
+  if (momDelErr) {
+    // Storage는 이미 삭제됐으나 trip_moments DB 삭제 실패
+    console.error("[itinerary DELETE] CRITICAL: storage deleted but moments db delete failed", {
+      itineraryId: id,
+      pathCount: storagePaths.length,
+      code: momDelErr.code,
+    });
+    return json({ error: "Failed to delete moments" }, 500);
+  }
+
+  // 5단계: itinerary DB 삭제
   const { data, error } = await admin
     .from("itineraries")
     .delete()
@@ -214,16 +230,11 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .select("id");
 
   if (error) {
-    if (storagePaths.length > 0) {
-      // Storage는 삭제됐으나 DB 삭제 실패 — 파일 복구 불가
-      console.error("[itinerary DELETE] CRITICAL: storage deleted but db delete failed", {
-        itineraryId: id,
-        pathCount: storagePaths.length,
-        code: error.code,
-      });
-    } else {
-      console.error("[functions/api/itinerary DELETE] db error:", error.code);
-    }
+    // Storage·trip_moments 삭제 완료 후 itinerary DB 삭제 실패
+    console.error("[itinerary DELETE] CRITICAL: moments deleted but itinerary db delete failed", {
+      itineraryId: id,
+      code: error.code,
+    });
     return json({ error: "Failed to delete itinerary" }, 500);
   }
   if (!data || data.length === 0) return json({ error: "Not found or permission denied" }, 404);
