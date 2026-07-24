@@ -12,6 +12,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../src/lib/itinerary-validate";
+import { removeMomentStorage } from "../../../src/lib/photo-delete";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -49,10 +50,10 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  // 1단계: moment 존재 + device_id 일치 확인 → itinerary_id 취득
+  // 1단계: moment 존재 + device_id 일치 확인 → itinerary_id, storage_path 취득
   const { data: moment } = await admin
     .from("trip_moments")
-    .select("moment_id, itinerary_id")
+    .select("moment_id, itinerary_id, storage_path")
     .eq("moment_id", momentId)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -69,7 +70,16 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
 
   if (!itinerary) return json({ error: "Not found" }, 404);
 
-  // 3단계: 삭제
+  // 3단계: Storage-first 삭제 (사진이 있을 때만)
+  if (moment.storage_path) {
+    const storageErr = await removeMomentStorage(admin.storage, moment.storage_path);
+    if (storageErr) {
+      console.error("[trip-moments/:id DELETE] storage remove failed:", storageErr);
+      return json({ error: "Failed to remove photo" }, 500);
+    }
+  }
+
+  // 4단계: DB 삭제
   const { error } = await admin
     .from("trip_moments")
     .delete()

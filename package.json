@@ -12,7 +12,8 @@
     "lint": "eslint",
     "test:jpeg": "node --experimental-strip-types src/lib/jpeg-strip-exif.test.ts",
     "test:photo": "node --experimental-strip-types src/lib/photo-validate.test.ts",
-    "test:compress": "node --experimental-strip-types src/lib/photo-compress.test.ts"
+    "test:compress": "node --experimental-strip-types src/lib/photo-compress.test.ts",
+    "test:delete": "node --experimental-strip-types src/lib/photo-delete.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",

@@ -20,6 +20,7 @@ import {
   isValidDays,
   optStr,
 } from "../../../src/lib/itinerary-validate";
+import { collectStoragePaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -176,6 +177,35 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
+  // 1단계: 소유권 확인 (Storage 삭제 전 SELECT로 검증)
+  const { data: itinerary } = await admin
+    .from("itineraries")
+    .select("id")
+    .eq("id", id)
+    .eq("device_id", deviceId)
+    .maybeSingle();
+
+  if (!itinerary) return json({ error: "Not found or permission denied" }, 404);
+
+  // 2단계: 연결 Storage 파일 경로 수집
+  const { data: momentRows } = await admin
+    .from("trip_moments")
+    .select("storage_path")
+    .eq("itinerary_id", id)
+    .not("storage_path", "is", null);
+
+  const storagePaths = collectStoragePaths(momentRows ?? []);
+
+  // 3단계: Storage-first 삭제 (Storage 실패 시 DB 미삭제)
+  if (storagePaths.length > 0) {
+    const storageErr = await removeItineraryStorage(admin.storage, storagePaths);
+    if (storageErr) {
+      console.error("[itinerary DELETE] storage remove failed:", storageErr, { count: storagePaths.length });
+      return json({ error: "Failed to remove photos" }, 500);
+    }
+  }
+
+  // 4단계: itinerary DB 삭제
   const { data, error } = await admin
     .from("itineraries")
     .delete()
@@ -184,7 +214,16 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
     .select("id");
 
   if (error) {
-    console.error("[functions/api/itinerary DELETE] db error:", error.code);
+    if (storagePaths.length > 0) {
+      // Storage는 삭제됐으나 DB 삭제 실패 — 파일 복구 불가
+      console.error("[itinerary DELETE] CRITICAL: storage deleted but db delete failed", {
+        itineraryId: id,
+        pathCount: storagePaths.length,
+        code: error.code,
+      });
+    } else {
+      console.error("[functions/api/itinerary DELETE] db error:", error.code);
+    }
     return json({ error: "Failed to delete itinerary" }, 500);
   }
   if (!data || data.length === 0) return json({ error: "Not found or permission denied" }, 404);
