@@ -7,12 +7,13 @@
 -- 트랜잭션: city_spots INSERT + user_spots 역참조 갱신 원자적 처리
 -- 동시성: FOR UPDATE 행 잠금 → IS NULL 재검사 → UNIQUE 인덱스(마지막 방어)
 --
--- 오류 코드 5종 (Admin API allowlist와 1:1 대응):
+-- 오류 코드 6종 (Admin API allowlist와 1:1 대응):
 --   USER_SPOT_NOT_FOUND         → API 404
 --   USER_SPOT_NOT_APPROVED      → API 409
 --   USER_SPOT_ALREADY_PUBLISHED → API 409
 --   USER_SPOT_REQUIRED_FIELD    → API 400
 --   USER_SPOT_INVALID_OVERRIDE  → API 400
+--   USER_SPOT_DUPLICATE_NAME    → API 409
 --
 -- overrides allowlist 14개:
 --   name, city, category, subcategory, address, lat, lng,
@@ -89,7 +90,8 @@ DECLARE
   v_why         TEXT;
   v_why_l10n    JSONB;
 
-  v_city_spot_id BIGINT;
+  v_city_spot_id    BIGINT;
+  v_constraint_name TEXT;
 BEGIN
   -- ── 1. FOR UPDATE 행 잠금 ────────────────────────────────────────────────────
   -- 관리자 버튼 중복 클릭·동시 요청 방지
@@ -209,6 +211,16 @@ BEGIN
     RAISE EXCEPTION 'USER_SPOT_INVALID_OVERRIDE' USING ERRCODE = 'P0001';
   END IF;
 
+  -- ── 8.5 이름+도시 중복 사전 검사 ────────────────────────────────────────────
+  -- uq_city_spots_city_name 충돌 선제 차단 → 관리자에게 정확한 원인 전달
+  -- 병합 후 최종값 기준: 스텝 5 이후에만 유효
+  IF EXISTS (
+    SELECT 1 FROM public.city_spots
+    WHERE city = v_city AND name = v_name
+  ) THEN
+    RAISE EXCEPTION 'USER_SPOT_DUPLICATE_NAME' USING ERRCODE = 'P0001';
+  END IF;
+
   -- ── 9. city_spots INSERT ──────────────────────────────────────────────────────
   -- source_type='user', external_id=UUID::text 강제 (overrides 변경 불가)
   -- UNIQUE INDEX (source_type, external_id) WHERE external_id IS NOT NULL:
@@ -239,6 +251,20 @@ BEGIN
   WHERE id = p_user_spot_id;
 
   RETURN jsonb_build_object('city_spot_id', v_city_spot_id);
+
+EXCEPTION
+  WHEN unique_violation THEN
+    -- 사전 검사(8.5)를 통과한 뒤 INSERT에서 동시 충돌이 발생하는 경우 최종 방어
+    -- CONSTRAINT_NAME: PostgreSQL은 CREATE UNIQUE INDEX 충돌 시 인덱스명을 반환
+    GET STACKED DIAGNOSTICS v_constraint_name = CONSTRAINT_NAME;
+    IF v_constraint_name = 'uq_city_spots_city_name' THEN
+      RAISE EXCEPTION 'USER_SPOT_DUPLICATE_NAME' USING ERRCODE = 'P0001';
+    ELSIF v_constraint_name = 'idx_city_spots_source_external' THEN
+      -- external_id 충돌 = 동일 user_spot 재게시 시도 (정상 경로에서는 발생 불가)
+      RAISE EXCEPTION 'USER_SPOT_ALREADY_PUBLISHED' USING ERRCODE = 'P0001';
+    ELSE
+      RAISE;
+    END IF;
 END;
 $$;
 
