@@ -159,7 +159,7 @@ export async function deleteMoment(
   }
 }
 
-// ── 사진 canvas 압축 ──────────────────────────────────────────────────────────
+// ── 사진 canvas 압축 (미리보기용: base64 반환, localStorage 저장) ────────────
 // 패키지 추가 없이 브라우저 canvas API로 max 600px JPEG 75% 압축
 
 export function compressPhoto(file: File): Promise<string> {
@@ -182,6 +182,65 @@ export function compressPhoto(file: File): Promise<string> {
     };
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("image load failed")); };
     img.src = url;
+  });
+}
+
+// ── Upload-grade 압축 (서버 전송용: Blob 반환, multipart 전용) ──────────────
+// base64는 임시 미리보기 외 서버 전송 금지. 이 함수는 Blob만 반환.
+
+export const COMPRESS_MAX_LONG_PX   = 1920;
+export const COMPRESS_MAX_BYTES     = 1_048_576; // 1 MB (서버 하드 한도)
+export const COMPRESS_QUALITY_STEPS = [0.82, 0.77, 0.72] as const;
+export const COMPRESS_FALLBACK_LONG = 1600;
+
+export function calcResizeDimensions(
+  srcW:    number,
+  srcH:    number,
+  maxLong = COMPRESS_MAX_LONG_PX,
+): { w: number; h: number } {
+  const long = Math.max(srcW, srcH);
+  if (long <= maxLong) return { w: srcW, h: srcH }; // 확대 없음
+  const scale = maxLong / long;
+  return { w: Math.round(srcW * scale), h: Math.round(srcH * scale) };
+}
+
+// encoder를 주입받아 Canvas 없이 단위 테스트 가능한 핵심 로직
+export async function runCompressSteps(
+  srcW:   number,
+  srcH:   number,
+  encode: (w: number, h: number, quality: number) => Promise<Blob>,
+): Promise<Blob> {
+  for (const maxLong of [COMPRESS_MAX_LONG_PX, COMPRESS_FALLBACK_LONG]) {
+    const { w, h } = calcResizeDimensions(srcW, srcH, maxLong);
+    for (const quality of COMPRESS_QUALITY_STEPS) {
+      const blob = await encode(w, h, quality);
+      if (blob.size <= COMPRESS_MAX_BYTES) return blob;
+    }
+  }
+  throw new Error("Cannot compress photo below 1 MB limit");
+}
+
+// 서버 업로드 전용 압축. Canvas 재생성으로 EXIF 자동 제거 (서버 stripJpegApp1 이중 보호).
+export async function compressPhotoBlob(file: File): Promise<Blob> {
+  const objUrl = URL.createObjectURL(file);
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image();
+    el.onload  = () => { URL.revokeObjectURL(objUrl); resolve(el); };
+    el.onerror = () => { URL.revokeObjectURL(objUrl); reject(new Error("image load failed")); };
+    el.src = objUrl;
+  });
+  return runCompressSteps(img.naturalWidth, img.naturalHeight, (w, h, quality) => {
+    const canvas = document.createElement("canvas");
+    canvas.width  = w;
+    canvas.height = h;
+    canvas.getContext("2d")!.drawImage(img, 0, 0, w, h);
+    return new Promise<Blob>((resolve, reject) =>
+      canvas.toBlob(
+        blob => (blob ? resolve(blob) : reject(new Error("toBlob returned null"))),
+        "image/jpeg",
+        quality,
+      ),
+    );
   });
 }
 

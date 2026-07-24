@@ -61,11 +61,11 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
   if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
 
-  // Content-Length 조기 거부 (multipart 오버헤드 ~4KB 허용)
+  // Content-Length 조기 거부 (multipart 오버헤드 최대 256KB 허용)
   const cl = ctx.request.headers.get("content-length");
   if (cl) {
     const clNum = parseInt(cl, 10);
-    if (!isNaN(clNum) && clNum > MAX_PHOTO_BYTES + 4 * 1024) {
+    if (!isNaN(clNum) && clNum > MAX_PHOTO_BYTES + 256 * 1024) {
       return json({ error: "Request too large" }, 413);
     }
   }
@@ -139,6 +139,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const isReplacement = moment.storage_path !== null;
 
   // ── 10. 신규 사진 수량 제한 (교체는 제외) ───────────────────────────────────
+  // best-effort limit: COUNT → upload 사이 window에서 동시 요청 시 한도를 일시 초과할 수 있음
   if (!isReplacement) {
     const { count: deviceCount } = await admin
       .from("trip_moments")
@@ -197,7 +198,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   }
 
   // ── 13. 교체 성공 후 이전 파일 삭제 (실패 = 성공 응답 유지 + 구조화 로그) ──
-  if (isReplacement && typeof moment.storage_path === "string") {
+  if (isReplacement && typeof moment.storage_path === "string" && moment.storage_path !== storagePath) {
     const { error: oldDelErr } = await admin.storage
       .from(PHOTO_BUCKET)
       .remove([moment.storage_path]);
