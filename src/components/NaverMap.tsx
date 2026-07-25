@@ -13,11 +13,13 @@ declare global {
         InfoWindow: new (opts: Record<string, unknown>) => NaverInfoWindowObj;
         Event:      { addListener: (t: unknown, ev: string, fn: () => void) => void };
         Point:      new (x: number, y: number) => { x: number; y: number };
+        Size:       new (w: number, h: number) => unknown;
       };
     };
   }
 }
-interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; relayout: () => void; getCenter: () => NaverLatLng; }
+// 주의: relayout()은 Kakao Maps API — Naver v3에는 없다. 크기 갱신은 setSize()가 정식 API.
+interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; setSize: (s: unknown) => void; getCenter: () => NaverLatLng; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
 interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
@@ -142,36 +144,41 @@ export default function NaverMap({
     });
   }, [spots]);
 
-  // Container 크기 변경 감지 → relayout + 기존 center 복원 (전체화면 토글 대응 주 경로).
-  // 고정 타임아웃 대신 ResizeObserver 사용 — 확장 시점이 늦어도 항상 실제 크기 변화에 반응.
-  // center 복원이 없으면 Naver v3가 확장 영역 타일을 늦게 로드해 오른쪽 공백이 생길 수 있다.
+  // 컨테이너 실제 크기를 지도에 반영 — Naver v3 정식 API setSize() 사용.
+  // center를 먼저 저장하고 setSize 후 복원해야 확장 영역 타일이 즉시 로드된다.
+  // 숨김 상태(0×0)나 SDK 스텁(인증 실패 시 메서드 부재)에는 호출하지 않는다.
+  const applyContainerSize = () => {
+    const nmap = mapRef.current;
+    const el   = mapDivRef.current;
+    if (!nmap || !el || !window.naver?.maps?.Size) return;
+    if (typeof nmap.setSize !== "function" || typeof nmap.getCenter !== "function") return;
+    const w = el.offsetWidth;
+    const h = el.offsetHeight;
+    if (w <= 0 || h <= 0) return;
+    const center = nmap.getCenter();
+    nmap.setSize(new window.naver.maps.Size(w, h));
+    nmap.setCenter(center);
+  };
+  const applySizeRef = useRef(applyContainerSize);
+  applySizeRef.current = applyContainerSize;
+
+  // 크기 변경 감지 주 경로 — ResizeObserver + rAF 디바운스 (전체화면 토글 대응).
   useEffect(() => {
     if (!ready || !mapDivRef.current) return;
     const el = mapDivRef.current;
     let raf = 0;
     const ro = new ResizeObserver(() => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const nmap = mapRef.current;
-        if (!nmap) return;
-        const center = nmap.getCenter();
-        nmap.relayout();
-        nmap.setCenter(center);
-      });
+      raf = requestAnimationFrame(() => applySizeRef.current());
     });
     ro.observe(el);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); };
   }, [ready]);
 
-  // relayoutKey 보조 경로 (ResizeObserver 미지원·레이아웃 지연 환경 폴백) — 단일 300ms 패스로 축소.
+  // relayoutKey 보조 폴백 (ResizeObserver 미지원·레이아웃 지연 환경) — 단일 300ms 패스.
   useEffect(() => {
     if (relayoutKey === undefined || !mapRef.current) return;
-    const nmap = mapRef.current;
-    const t = setTimeout(() => {
-      const center = nmap.getCenter();
-      nmap.relayout();
-      nmap.setCenter(center);
-    }, 300);
+    const t = setTimeout(() => applySizeRef.current(), 300);
     return () => clearTimeout(t);
   }, [relayoutKey]);
 
