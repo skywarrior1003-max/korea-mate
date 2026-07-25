@@ -277,6 +277,17 @@ export default function EventDetailModal({ event, onClose }: Props) {
             </a>
           </div>
 
+          {/* Place Detail 페이지 링크 — city_spots 기반(local-<id>) 장소만 */}
+          {event.id.startsWith("local-") && (
+            <a
+              href={`/place/${event.id.slice(6)}`}
+              className="flex items-center justify-between px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+            >
+              <p className="text-sm font-bold text-gray-700">📄 View full details</p>
+              <span className="text-gray-400">→</span>
+            </a>
+          )}
+
           {/* 네이버 지도 한국어 안내 (외국인용) */}
           <div className="rounded-xl bg-green-50 border border-green-200 p-4 space-y-2">
             <p className="text-xs font-bold text-green-700 flex items-center gap-1.5">
