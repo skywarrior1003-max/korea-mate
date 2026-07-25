@@ -77,5 +77,12 @@
     "openNow": "영업 중",
     "closed": "영업 종료",
     "openHours": "{open} – {close}"
+  },
+  "shell": {
+    "home": "홈",
+    "explore": "둘러보기",
+    "myTrip": "내 여행",
+    "saved": "저장됨",
+    "more": "더보기"
   }
 }

@@ -77,5 +77,12 @@
     "openNow": "营业中",
     "closed": "已打烊",
     "openHours": "{open} – {close}"
+  },
+  "shell": {
+    "home": "首页",
+    "explore": "探索",
+    "myTrip": "我的行程",
+    "saved": "已保存",
+    "more": "更多"
   }
 }

@@ -77,5 +77,12 @@
     "openNow": "営業中",
     "closed": "営業終了",
     "openHours": "{open} – {close}"
+  },
+  "shell": {
+    "home": "ホーム",
+    "explore": "探す",
+    "myTrip": "マイ旅行",
+    "saved": "保存済み",
+    "more": "その他"
   }
 }
