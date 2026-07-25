@@ -14,6 +14,10 @@ import type { EventItem } from "@/lib/cart";
 
 type Tab = "places" | "mine";
 
+const CATEGORY_EMOJI: Record<string, string> = {
+  attraction: "🏛️", restaurant: "🍽️", nature: "🌿", event: "🎉", accommodation: "🏨",
+};
+
 export default function SavedClient() {
   const t = useTranslations("saved");
   const tS = useTranslations("shell");
@@ -101,7 +105,7 @@ export default function SavedClient() {
                           {e.image
                             ? /* eslint-disable-next-line @next/next/no-img-element */
                               <img src={e.image} alt="" className="w-full h-full object-cover" />
-                            : <span aria-hidden>📍</span>}
+                            : <span aria-hidden>{CATEGORY_EMOJI[e.type] ?? "📍"}</span>}
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="font-semibold text-ink text-[15px] leading-snug">{e.name}</p>

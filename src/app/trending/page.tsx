@@ -158,7 +158,7 @@ function TrendingContent() {
               className="px-3 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer"
               style={
                 tripStyle === f.key
-                  ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                  ? { backgroundColor: "var(--gkm-action-primary)", color: "#fff", borderColor: "var(--gkm-action-primary)" }
                   : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
               }
             >
@@ -286,7 +286,7 @@ function TrendingContent() {
               className="px-4 py-1.5 rounded-full text-sm font-bold transition-all border cursor-pointer"
               style={
                 eventFilter === f.key
-                  ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                  ? { backgroundColor: "var(--gkm-action-primary)", color: "#fff", borderColor: "var(--gkm-action-primary)" }
                   : { backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.15)" }
               }
             >
@@ -380,7 +380,7 @@ export default function TrendingPage() {
             <Link
               href="/planner"
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >
               My Planner
             </Link>
