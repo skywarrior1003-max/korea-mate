@@ -84,5 +84,49 @@
     "myTrip": "My Trip",
     "saved": "Saved",
     "more": "More"
+  },
+  "saved": {
+    "title": "Saved",
+    "tabPlaces": "Saved places",
+    "tabMine": "My Places",
+    "empty": "No saved places yet",
+    "emptyHint": "Tap the bookmark on any place to keep it here.",
+    "build": "Build my itinerary",
+    "remove": "Remove",
+    "privateLabel": "Private — only you",
+    "explore": "Explore places",
+    "mineEmpty": "No places of your own yet",
+    "mineHint": "Add places you know that aren't on the map yet — from the itinerary builder.",
+    "openItinerary": "Open itinerary builder"
+  },
+  "place": {
+    "save": "Save",
+    "savedState": "Saved",
+    "hours": "Hours",
+    "address": "Address",
+    "entryFee": "Entry fee",
+    "duration": "Suggested visit",
+    "officialLink": "View official details on {source}",
+    "startPlanning": "Start planning",
+    "soloFriendly": "Solo-friendly",
+    "cardOk": "Card accepted",
+    "cashOnly": "Cash only",
+    "notFound": "Place not found",
+    "backExplore": "Back to Explore",
+    "whyGo": "Why go",
+    "details": "Details",
+    "viewDetails": "View details"
+  },
+  "adaptive": {
+    "inTripTitle": "You're traveling now",
+    "inTripHint": "Open today's plan or find places near you.",
+    "todayPlan": "Today's itinerary",
+    "nearMe": "Near me",
+    "postTripTitle": "Welcome back!",
+    "postTripHint": "Relive your trip and share your story.",
+    "memories": "My memories",
+    "preTripTitle": "Trip coming up",
+    "preTripHint": "Your {city} trip starts {date}.",
+    "openPlan": "Open my plan"
   }
 }

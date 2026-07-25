@@ -6,6 +6,7 @@ import "./globals.css";
 import SavedSpotsPanel from "@/components/SavedSpotsPanel";
 import CartDrawer from "@/components/CartDrawer";
 import I18nProvider from "@/components/I18nProvider";
+import NavShell from "@/components/ui/NavShell";
 
 
 const geistSans = Geist({
@@ -138,6 +139,9 @@ gtag('config','${ga4Id}');
         </Suspense>
         <Suspense fallback={null}>
           <CartDrawer />
+        </Suspense>
+        <Suspense fallback={null}>
+          <NavShell />
         </Suspense>
         </I18nProvider>
       </body>

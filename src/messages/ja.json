@@ -84,5 +84,49 @@
     "myTrip": "マイ旅行",
     "saved": "保存済み",
     "more": "その他"
+  },
+  "saved": {
+    "title": "保存済み",
+    "tabPlaces": "保存した場所",
+    "tabMine": "マイプレイス",
+    "empty": "保存した場所がありません",
+    "emptyHint": "場所のブックマークを押すとここに保存されます。",
+    "build": "旅程を作成",
+    "remove": "削除",
+    "privateLabel": "非公開 — 自分のみ",
+    "explore": "場所を探す",
+    "mineEmpty": "登録した場所がありません",
+    "mineHint": "地図にない場所を旅程エディタから追加できます。",
+    "openItinerary": "旅程エディタを開く"
+  },
+  "place": {
+    "save": "保存",
+    "savedState": "保存済み",
+    "hours": "営業時間",
+    "address": "住所",
+    "entryFee": "入場料",
+    "duration": "推奨滞在時間",
+    "officialLink": "{source}で公式情報を見る",
+    "startPlanning": "旅程を作成",
+    "soloFriendly": "おひとり様OK",
+    "cardOk": "カード利用可",
+    "cashOnly": "現金のみ",
+    "notFound": "場所が見つかりません",
+    "backExplore": "探すに戻る",
+    "whyGo": "おすすめの理由",
+    "details": "詳細情報",
+    "viewDetails": "詳細を見る"
+  },
+  "adaptive": {
+    "inTripTitle": "旅行中ですね",
+    "inTripHint": "今日の予定を開くか、近くの場所を探しましょう。",
+    "todayPlan": "今日の旅程",
+    "nearMe": "近くを探す",
+    "postTripTitle": "おかえりなさい！",
+    "postTripHint": "旅を振り返り、ストーリーを共有しましょう。",
+    "memories": "思い出",
+    "preTripTitle": "旅行が近づいています",
+    "preTripHint": "{city}旅行は{date}に始まります。",
+    "openPlan": "旅程を開く"
   }
 }

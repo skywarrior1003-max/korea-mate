@@ -84,5 +84,49 @@
     "myTrip": "我的行程",
     "saved": "已保存",
     "more": "更多"
+  },
+  "saved": {
+    "title": "已保存",
+    "tabPlaces": "保存的地点",
+    "tabMine": "我的地点",
+    "empty": "暂无保存的地点",
+    "emptyHint": "点击地点的书签即可保存到这里。",
+    "build": "创建行程",
+    "remove": "删除",
+    "privateLabel": "私密 — 仅自己可见",
+    "explore": "探索地点",
+    "mineEmpty": "暂无自己添加的地点",
+    "mineHint": "在行程编辑器中添加地图上没有的地点。",
+    "openItinerary": "打开行程编辑器"
+  },
+  "place": {
+    "save": "保存",
+    "savedState": "已保存",
+    "hours": "营业时间",
+    "address": "地址",
+    "entryFee": "门票",
+    "duration": "建议游览时间",
+    "officialLink": "在{source}查看官方信息",
+    "startPlanning": "创建行程",
+    "soloFriendly": "适合独自前往",
+    "cardOk": "可刷卡",
+    "cashOnly": "仅收现金",
+    "notFound": "未找到该地点",
+    "backExplore": "返回探索",
+    "whyGo": "推荐理由",
+    "details": "详细信息",
+    "viewDetails": "查看详情"
+  },
+  "adaptive": {
+    "inTripTitle": "您正在旅行中",
+    "inTripHint": "查看今日行程或寻找附近的地点。",
+    "todayPlan": "今日行程",
+    "nearMe": "附近",
+    "postTripTitle": "欢迎回来！",
+    "postTripHint": "回顾旅程并分享您的故事。",
+    "memories": "我的回忆",
+    "preTripTitle": "旅行即将开始",
+    "preTripHint": "您的{city}之旅将于{date}开始。",
+    "openPlan": "打开行程"
   }
 }

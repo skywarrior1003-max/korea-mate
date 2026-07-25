@@ -84,5 +84,49 @@
     "myTrip": "내 여행",
     "saved": "저장됨",
     "more": "더보기"
+  },
+  "saved": {
+    "title": "저장됨",
+    "tabPlaces": "저장한 장소",
+    "tabMine": "내 장소",
+    "empty": "저장한 장소가 없습니다",
+    "emptyHint": "장소의 북마크를 누르면 여기에 보관됩니다.",
+    "build": "일정 만들기",
+    "remove": "삭제",
+    "privateLabel": "비공개 — 나만 보기",
+    "explore": "장소 둘러보기",
+    "mineEmpty": "직접 등록한 장소가 없습니다",
+    "mineHint": "지도에 없는 나만 아는 장소를 일정 편집기에서 추가하세요.",
+    "openItinerary": "일정 편집기 열기"
+  },
+  "place": {
+    "save": "저장",
+    "savedState": "저장됨",
+    "hours": "영업시간",
+    "address": "주소",
+    "entryFee": "입장료",
+    "duration": "권장 방문 시간",
+    "officialLink": "{source}에서 공식 정보 보기",
+    "startPlanning": "일정 만들기",
+    "soloFriendly": "혼자 방문 OK",
+    "cardOk": "카드 결제 가능",
+    "cashOnly": "현금 전용",
+    "notFound": "장소를 찾을 수 없습니다",
+    "backExplore": "둘러보기로 돌아가기",
+    "whyGo": "추천 이유",
+    "details": "상세 정보",
+    "viewDetails": "상세 보기"
+  },
+  "adaptive": {
+    "inTripTitle": "여행 중이시네요",
+    "inTripHint": "오늘 일정을 열거나 주변 장소를 찾아보세요.",
+    "todayPlan": "오늘 일정",
+    "nearMe": "내 주변",
+    "postTripTitle": "돌아오신 것을 환영해요!",
+    "postTripHint": "여행을 돌아보고 스토리를 공유하세요.",
+    "memories": "내 추억",
+    "preTripTitle": "다가오는 여행",
+    "preTripHint": "{city} 여행이 {date}에 시작됩니다.",
+    "openPlan": "내 일정 열기"
   }
 }
