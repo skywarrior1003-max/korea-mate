@@ -17,7 +17,7 @@ declare global {
     };
   }
 }
-interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; relayout: () => void; }
+interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; relayout: () => void; getCenter: () => NaverLatLng; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
 interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
@@ -142,14 +142,37 @@ export default function NaverMap({
     });
   }, [spots]);
 
-  // Relayout when container size changes (e.g. full-screen toggle).
-  // Two-pass: 100ms lets CSS transition start, 300ms catches slow repaints on mobile.
+  // Container 크기 변경 감지 → relayout + 기존 center 복원 (전체화면 토글 대응 주 경로).
+  // 고정 타임아웃 대신 ResizeObserver 사용 — 확장 시점이 늦어도 항상 실제 크기 변화에 반응.
+  // center 복원이 없으면 Naver v3가 확장 영역 타일을 늦게 로드해 오른쪽 공백이 생길 수 있다.
+  useEffect(() => {
+    if (!ready || !mapDivRef.current) return;
+    const el = mapDivRef.current;
+    let raf = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const nmap = mapRef.current;
+        if (!nmap) return;
+        const center = nmap.getCenter();
+        nmap.relayout();
+        nmap.setCenter(center);
+      });
+    });
+    ro.observe(el);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, [ready]);
+
+  // relayoutKey 보조 경로 (ResizeObserver 미지원·레이아웃 지연 환경 폴백) — 단일 300ms 패스로 축소.
   useEffect(() => {
     if (relayoutKey === undefined || !mapRef.current) return;
     const nmap = mapRef.current;
-    const t1 = setTimeout(() => { nmap.relayout(); }, 100);
-    const t2 = setTimeout(() => { nmap.relayout(); }, 300);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const t = setTimeout(() => {
+      const center = nmap.getCenter();
+      nmap.relayout();
+      nmap.setCenter(center);
+    }, 300);
+    return () => clearTimeout(t);
   }, [relayoutKey]);
 
   // User location marker
