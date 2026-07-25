@@ -22,6 +22,7 @@ import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_B
 import UserSpotsPanel from "@/components/UserSpotsPanel";
 import ItineraryDayMap from "@/components/ItineraryDayMap";
 import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
+import PublishPreviewModal from "@/components/PublishPreviewModal";
 import type { UserSpot } from "@/lib/user-spots-api";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
@@ -904,6 +905,7 @@ function ItineraryResult() {
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
   const [isOwner,  setIsOwner]  = useState(!shareId);
   const [isPublic, setIsPublic] = useState(false);
+  const [publishPreviewOpen, setPublishPreviewOpen] = useState(false); // S3: 공개 전 미리보기
 
   // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
@@ -1343,12 +1345,18 @@ function ItineraryResult() {
   }, [itinId]);
 
   // ── 공개/비공개 토글 ─────────────────────────────────────────
-  async function handleTogglePublic() {
+  // S3: 공개 전환은 Publish Preview에서 명시적 확인 후에만 실행.
+  // 비공개 전환은 즉시 (노출 축소 방향은 미리보기 불필요).
+  async function applyPublic(next: boolean) {
     if (!itinId) return;
-    const next = !isPublic;
     setIsPublic(next);
     const ok = await apiSetPublic(itinId, next, getDeviceId());
     if (!ok) setIsPublic(!next);
+  }
+  function handleTogglePublic() {
+    if (!itinId) return;
+    if (isPublic) { void applyPublic(false); return; }
+    setPublishPreviewOpen(true);
   }
 
   // ── Bug ③: 커스텀 제목 저장 ─────────────────────────────────
@@ -2359,6 +2367,20 @@ function ItineraryResult() {
         context="save-trip"
         onSuccess={() => setEmailSaved(true)}
       />
+
+      {/* S3: 공개 전 Publish Preview — 명시적 확인 후에만 is_public 전환 */}
+      {publishPreviewOpen && (
+        <PublishPreviewModal
+          title={tripTitle || `My ${city} Trip`}
+          city={city}
+          startDate={startDate}
+          endDate={endDate}
+          days={days}
+          momentCount={moments.length}
+          onConfirm={() => { setPublishPreviewOpen(false); void applyPublic(true); }}
+          onClose={() => setPublishPreviewOpen(false)}
+        />
+      )}
     </main>
   );
 }

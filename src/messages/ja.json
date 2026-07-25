@@ -139,5 +139,22 @@
   },
   "common": {
     "language": "言語"
+  },
+  "publish": {
+    "eyebrow": "公開プレビュー",
+    "title": "他の人にはこう表示されます",
+    "placesTotal": "旅行全体で{n}か所",
+    "privateTitle": "非公開のまま保持されます",
+    "photosStayPrivate": "写真{n}枚とメモは非公開のままで、公開ストーリーには表示されません。",
+    "noPhotos": "写真とメモは（追加しても）非公開のままです。",
+    "noDeviceInfo": "端末識別子や正確なGPS位置は一切含まれません。",
+    "cancel": "あとで",
+    "publish": "ストーリーを公開"
+  },
+  "story": {
+    "copyTrip": "この旅行をコピー",
+    "copied": "閲覧 {n}",
+    "helpful": "役に立った",
+    "copiedCount": "コピー"
   }
 }
