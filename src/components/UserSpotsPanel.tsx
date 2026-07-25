@@ -306,7 +306,7 @@ export default function UserSpotsPanel({
       <form onSubmit={(e) => void onSubmit(e)} className="space-y-3 mt-3">
         {/* Name */}
         <div>
-          <label className="text-xs font-black text-[#8C6239] uppercase tracking-wider">Name *</label>
+          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Name *</label>
           <input
             type="text"
             required
@@ -314,17 +314,17 @@ export default function UserSpotsPanel({
             onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
             maxLength={300}
             placeholder="e.g. My favourite café"
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E6DFD5] text-sm font-medium text-[#2C2520] bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D]"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="text-xs font-black text-[#8C6239] uppercase tracking-wider">Category</label>
+          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Category</label>
           <select
             value={form.category}
             onChange={e => setForm(p => ({ ...p, category: e.target.value as CategoryValue }))}
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E6DFD5] text-sm font-medium text-[#2C2520] bg-white focus:outline-none focus:border-[#D4AF37]"
+            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D]"
           >
             {CATEGORIES.map(c => (
               <option key={c.value} value={c.value}>{c.label}</option>
@@ -334,27 +334,27 @@ export default function UserSpotsPanel({
 
         {/* Address */}
         <div>
-          <label className="text-xs font-black text-[#8C6239] uppercase tracking-wider">Address <span className="font-normal normal-case text-[#8C6239]/60">(optional)</span></label>
+          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Address <span className="font-normal normal-case text-[#565D66]/60">(optional)</span></label>
           <input
             type="text"
             value={form.address}
             onChange={e => setForm(p => ({ ...p, address: e.target.value }))}
             maxLength={500}
             placeholder="Street address or neighbourhood"
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E6DFD5] text-sm font-medium text-[#2C2520] bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D]"
           />
         </div>
 
         {/* Note */}
         <div>
-          <label className="text-xs font-black text-[#8C6239] uppercase tracking-wider">Note <span className="font-normal normal-case text-[#8C6239]/60">(optional)</span></label>
+          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Note <span className="font-normal normal-case text-[#565D66]/60">(optional)</span></label>
           <textarea
             value={form.note}
             onChange={e => setForm(p => ({ ...p, note: e.target.value }))}
             maxLength={2000}
             rows={2}
             placeholder="Your tip, reservation note, etc."
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E6DFD5] text-sm font-medium text-[#2C2520] bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] resize-none"
+            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D] resize-none"
           />
         </div>
 
@@ -367,14 +367,14 @@ export default function UserSpotsPanel({
             type="submit"
             disabled={submitting}
             className="flex-1 py-2.5 rounded-xl text-sm font-black text-white transition-opacity disabled:opacity-60 cursor-pointer"
-            style={{ backgroundColor: "#D4AF37" }}
+            style={{ backgroundColor: "#FF4A2D" }}
           >
             {submitting ? "Saving…" : submitLabel}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2.5 rounded-xl text-sm font-bold border border-[#E6DFD5] text-[#8C6239] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl text-sm font-bold border border-[#E5E7EA] text-[#565D66] hover:bg-[#F6F7F8] transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -389,9 +389,9 @@ export default function UserSpotsPanel({
     <div className="mt-5">
       {/* Section header */}
       <div className="flex items-center gap-2 mb-2 px-1">
-        <span className="text-xs font-black text-[#8C6239]">📍 My Places</span>
+        <span className="text-xs font-black text-[#565D66]">📍 My Places</span>
         {!loading && spots.length > 0 && (
-          <span className="text-[10px] font-bold bg-[#EAE3D2]/60 text-[#8C6239] px-2 py-0.5 rounded-full">
+          <span className="text-[10px] font-bold bg-[#F6F7F8]/60 text-[#565D66] px-2 py-0.5 rounded-full">
             {spots.length}
           </span>
         )}
@@ -399,7 +399,7 @@ export default function UserSpotsPanel({
           <button
             onClick={openCreate}
             className="ml-auto text-[10px] font-black px-2.5 py-1 rounded-full text-white transition-opacity hover:opacity-80 cursor-pointer"
-            style={{ backgroundColor: "#D4AF37" }}
+            style={{ backgroundColor: "#FF4A2D" }}
             title="Add a new personal place"
           >
             + Add Place
@@ -409,8 +409,8 @@ export default function UserSpotsPanel({
 
       {/* Create form */}
       {showCreate && (
-        <div className="bg-white rounded-2xl border border-[#D4AF37]/40 p-4 shadow-sm mb-3">
-          <p className="text-xs font-black text-[#2C2520] mb-1">New Place</p>
+        <div className="bg-white rounded-2xl border border-[#FF4A2D]/40 p-4 shadow-sm mb-3">
+          <p className="text-xs font-black text-[#191C21] mb-1">New Place</p>
           {renderForm(
             handleCreate,
             () => { setShowCreate(false); setFormError(null); setForm(EMPTY_FORM); },
@@ -420,13 +420,13 @@ export default function UserSpotsPanel({
       )}
 
       {/* List */}
-      <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
+      <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
 
         {/* Loading */}
         {loading && (
           <div className="py-8 flex items-center justify-center gap-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#D4AF37]" />
-            <span className="text-xs font-bold text-[#8C6239]">Loading…</span>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#FF4A2D]" />
+            <span className="text-xs font-bold text-[#565D66]">Loading…</span>
           </div>
         )}
 
@@ -436,7 +436,7 @@ export default function UserSpotsPanel({
             <p className="text-xs font-bold text-red-500 mb-2">Could not load your places.</p>
             <button
               onClick={() => void loadSpots()}
-              className="text-xs font-black text-[#D4AF37] underline cursor-pointer"
+              className="text-xs font-black text-[#FF4A2D] underline cursor-pointer"
             >
               Try again
             </button>
@@ -446,7 +446,7 @@ export default function UserSpotsPanel({
         {/* Empty */}
         {!loading && !loadError && spots.length === 0 && (
           <div className="py-10 text-center px-4">
-            <p className="text-xs text-[#8C6239]/60 italic">
+            <p className="text-xs text-[#565D66]/60 italic">
               Save your own restaurant, café, hotel, or hidden spot here.
             </p>
           </div>
@@ -467,12 +467,12 @@ export default function UserSpotsPanel({
           return (
             <div
               key={spot.id}
-              className={`border-b border-[#E6DFD5]/40 last:border-0 ${isEditing ? "bg-[#FAF7F2]" : "hover:bg-[#FAF7F2]/60"} transition-colors`}
+              className={`border-b border-[#E5E7EA]/40 last:border-0 ${isEditing ? "bg-[#F6F7F8]" : "hover:bg-[#F6F7F8]/60"} transition-colors`}
             >
               {isEditing ? (
                 /* ── Inline edit form ── */
                 <div className="px-4 py-3">
-                  <p className="text-xs font-black text-[#2C2520] mb-1">Edit Place</p>
+                  <p className="text-xs font-black text-[#191C21] mb-1">Edit Place</p>
                   {renderForm(
                     (e) => handleEdit(e, spot),
                     () => { setEditingId(null); setFormError(null); },
@@ -486,13 +486,13 @@ export default function UserSpotsPanel({
                   <div className="flex items-start gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-sm font-black text-[#2C2520] truncate">{spot.name}</span>
-                        <span className="text-[10px] font-bold bg-[#EAE3D2] text-[#8C6239] px-1.5 py-0.5 rounded capitalize shrink-0">
+                        <span className="text-sm font-black text-[#191C21] truncate">{spot.name}</span>
+                        <span className="text-[10px] font-bold bg-[#F6F7F8] text-[#565D66] px-1.5 py-0.5 rounded capitalize shrink-0">
                           {spot.category || "attraction"}
                         </span>
                       </div>
                       {(spot.address || spot.note) && (
-                        <p className="text-[11px] text-[#8C6239]/70 mt-0.5 leading-snug line-clamp-1">
+                        <p className="text-[11px] text-[#565D66]/70 mt-0.5 leading-snug line-clamp-1">
                           {spot.address || spot.note}
                         </p>
                       )}
@@ -501,12 +501,12 @@ export default function UserSpotsPanel({
                     <div className="flex items-center gap-1 shrink-0">
                       <button
                         onClick={() => openEdit(spot)}
-                        className="w-6 h-6 rounded-full bg-[#EAE3D2] text-[#8C6239] text-xs flex items-center justify-center hover:bg-[#D4AF37] hover:text-white transition-colors cursor-pointer"
+                        className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-[#FF4A2D] hover:text-white transition-colors cursor-pointer"
                         title="Edit"
                       >✏️</button>
                       <button
                         onClick={() => setConfirmDeleteId(spot.id)}
-                        className="w-6 h-6 rounded-full bg-[#EAE3D2] text-[#8C6239] text-xs flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors cursor-pointer"
+                        className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors cursor-pointer"
                         title="Delete"
                       >🗑️</button>
                     </div>
@@ -557,7 +557,7 @@ export default function UserSpotsPanel({
                         <button
                           onClick={() => void handleSubmit(spot)}
                           disabled={isSubmitting}
-                          className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#D4AF37]/50 text-[#8C6239] hover:bg-[#D4AF37]/10 transition-colors disabled:opacity-50 cursor-pointer"
+                          className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#FF4A2D]/50 text-[#565D66] hover:bg-[#FF4A2D]/10 transition-colors disabled:opacity-50 cursor-pointer"
                         >
                           {isSubmitting ? "…" : "📤 Submit for public"}
                         </button>
@@ -579,13 +579,13 @@ export default function UserSpotsPanel({
                           setTimeMap(prev => ({ ...prev, [spot.id]: val }));
                           setAddErrors(prev => { const n = { ...prev }; delete n[spot.id]; return n; });
                         }}
-                        className="px-2 py-1.5 rounded-lg border border-[#E6DFD5] text-xs font-bold text-[#2C2520] bg-white focus:outline-none focus:border-[#D4AF37] w-[6.5rem] shrink-0"
+                        className="px-2 py-1.5 rounded-lg border border-[#E5E7EA] text-xs font-bold text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] w-[6.5rem] shrink-0"
                       />
                       <button
                         onClick={() => handleAddToDay(spot)}
                         disabled={isAdding}
                         className="flex-1 py-1.5 rounded-lg text-xs font-black text-white transition-all active:scale-95 disabled:opacity-60 cursor-pointer truncate"
-                        style={{ backgroundColor: "#f97316" }}
+                        style={{ backgroundColor: "#FF4A2D" }}
                       >
                         {isAdding
                           ? "Added ✓"

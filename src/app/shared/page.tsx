@@ -229,14 +229,14 @@ export default function SharedTripPage() {
   // ── 로딩 상태 ─────────────────────────────────────────────────────────────
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center" style={{ backgroundColor: "#FAF7F2" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center" style={{ backgroundColor: "#F6F7F8" }}>
         <div className="flex flex-col items-center gap-4">
           <div
             className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
-            style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
+            style={{ borderColor: "#FF4A2D", borderTopColor: "transparent" }}
           />
-          <p className="text-sm font-bold text-[#8C6239]">Loading itinerary…</p>
-          <Link href="/" className="text-xs text-[#B8A89A] hover:text-[#8C6239] transition-colors">
+          <p className="text-sm font-bold text-[#565D66]">Loading itinerary…</p>
+          <Link href="/" className="text-xs text-[#8A919B] hover:text-[#565D66] transition-colors">
             gokoreamate.com
           </Link>
         </div>
@@ -247,21 +247,21 @@ export default function SharedTripPage() {
   // ── 404 / 에러 상태 ──────────────────────────────────────────────────────
   if (status === "not_found" || status === "error") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ backgroundColor: "#FAF7F2" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ backgroundColor: "#F6F7F8" }}>
         <div className="text-center max-w-sm">
           <div className="text-6xl mb-4">🗺️</div>
-          <h1 className="text-2xl font-black text-[#2C2520] mb-3">Itinerary not found</h1>
-          <p className="text-sm text-[#61554D] leading-relaxed mb-6">
+          <h1 className="text-2xl font-black text-[#191C21] mb-3">Itinerary not found</h1>
+          <p className="text-sm text-[#565D66] leading-relaxed mb-6">
             This link has expired or doesn&apos;t exist.
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all hover:opacity-90"
-            style={{ backgroundColor: "#D4AF37" }}
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-white transition-all hover:opacity-90"
+            style={{ backgroundColor: "#FF4A2D" }}
           >
             ✨ Plan My Trip
           </Link>
-          <p className="text-xs text-[#B8A89A] mt-4">gokoreamate.com</p>
+          <p className="text-xs text-[#8A919B] mt-4">gokoreamate.com</p>
         </div>
       </div>
     );
@@ -275,7 +275,7 @@ export default function SharedTripPage() {
   const hasAffiliate = Object.keys(affiliateMap).length > 0;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#FAF7F2" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#F6F7F8" }}>
 
       {/* ── 히어로 헤더 ─────────────────────────────────────────────────────── */}
       <div
@@ -343,7 +343,7 @@ export default function SharedTripPage() {
               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-black transition-all active:scale-95 ${
                 helpfulVoted
                   ? "text-emerald-300 border border-emerald-400/40 cursor-default"
-                  : "text-white/80 border border-white/25 hover:border-[#D4AF37]/60 hover:text-[#D4AF37]"
+                  : "text-white/80 border border-white/25 hover:border-[#FF4A2D]/60 hover:text-[#FF4A2D]"
               }`}
             >
               {helpfulVoted ? "✅ Marked as helpful!" : "👍 Was this itinerary helpful?"}
@@ -351,7 +351,7 @@ export default function SharedTripPage() {
           </div>
 
           {/* 골드 디바이더 */}
-          <div className="w-24 h-[1.5px] mx-auto" style={{ background: "#D4AF37", opacity: 0.5 }} />
+          <div className="w-24 h-[1.5px] mx-auto" style={{ background: "#FF4A2D", opacity: 0.5 }} />
         </div>
       </div>
 
@@ -381,10 +381,10 @@ export default function SharedTripPage() {
                 {day.dayNumber ?? dayIdx + 1}
               </div>
               <div>
-                <p className="text-base font-black text-[#2C2520]">
+                <p className="text-base font-black text-[#191C21]">
                   Day {day.dayNumber ?? dayIdx + 1}
                 </p>
-                <p className="text-xs text-[#8C6239]">{day.date}</p>
+                <p className="text-xs text-[#565D66]">{day.date}</p>
               </div>
             </div>
 
@@ -393,7 +393,7 @@ export default function SharedTripPage() {
               {(day.places ?? []).map((place, placeIdx) => (
                 <div
                   key={placeIdx}
-                  className="bg-white rounded-2xl p-4 border border-[#E6DFD5] shadow-sm"
+                  className="bg-white rounded-2xl p-4 border border-[#E5E7EA] shadow-sm"
                 >
                   <div className="flex items-start gap-3">
                     <div
@@ -404,12 +404,12 @@ export default function SharedTripPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm font-black text-[#2C2520] truncate">{place.name}</p>
-                        <span className="text-xs font-bold text-[#8C6239] shrink-0">{place.time}</span>
+                        <p className="text-sm font-black text-[#191C21] truncate">{place.name}</p>
+                        <span className="text-xs font-bold text-[#565D66] shrink-0">{place.time}</span>
                       </div>
                       <p className="text-xs text-[#9C8575] mt-0.5">{place.location}</p>
                       {place.tips && (
-                        <p className="text-xs text-[#61554D] mt-1.5 leading-relaxed line-clamp-2">
+                        <p className="text-xs text-[#565D66] mt-1.5 leading-relaxed line-clamp-2">
                           {place.tips}
                         </p>
                       )}
@@ -422,11 +422,11 @@ export default function SharedTripPage() {
                       href={place.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 flex items-center gap-1 text-[10px] font-bold text-[#8C6239] hover:text-[#D4AF37] transition-colors"
+                      className="mt-3 flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
                     >
                       <span>📍</span>
                       <span>Google Maps</span>
-                      <span className="text-[#D4AF37]">→</span>
+                      <span className="text-[#FF4A2D]">→</span>
                     </a>
                   )}
                 </div>
@@ -472,7 +472,7 @@ export default function SharedTripPage() {
             disabled={isCopying}
             aria-disabled={isCopying}
             className="w-full inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ backgroundColor: "#D4AF37" }}
+            style={{ backgroundColor: "#FF4A2D" }}
           >
             {isCopying ? "Copying Trip…" : "📋 Copy This Trip"}
           </button>
@@ -524,7 +524,7 @@ export default function SharedTripPage() {
         {(() => { const krc = toKRCity(trip.city); return krc ? <KoreaReadySection city={krc} /> : null; })()}
 
         {/* 푸터 */}
-        <p className="text-center text-xs text-[#B8A89A] pb-8 pt-6">
+        <p className="text-center text-xs text-[#8A919B] pb-8 pt-6">
           This itinerary was generated by the gokoreamate.com AI planner
         </p>
 

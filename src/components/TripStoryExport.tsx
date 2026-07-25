@@ -164,12 +164,12 @@ export default function TripStoryExport({
     }
 
     const lineY = Math.round(H * 0.60);
-    ctx.strokeStyle = "#D4AF37"; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = "#FF4A2D"; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.5;
     ctx.beginPath(); ctx.moveTo(60, lineY); ctx.lineTo(W - 60, lineY); ctx.stroke();
     ctx.globalAlpha = 1;
 
     let y = lineY + 60;
-    ctx.fillStyle = "#D4AF37"; ctx.font = "bold 38px system-ui, sans-serif"; ctx.textAlign = "center";
+    ctx.fillStyle = "#FF4A2D"; ctx.font = "bold 38px system-ui, sans-serif"; ctx.textAlign = "center";
     ctx.fillText(`${personality.emoji}  ${personality.title}`, W / 2, y); y += 52;
     ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.font = "400 30px system-ui, sans-serif";
     for (const line of wrapText(ctx, personality.desc, W - 120)) { ctx.fillText(line, W / 2, y); y += 40; }
@@ -187,7 +187,7 @@ export default function TripStoryExport({
     for (const stat of stats) {
       ctx.fillStyle = "rgba(255,255,255,0.10)"; ctx.beginPath();
       ctx.roundRect(chipX, y - 40, chipW, 60, 18); ctx.fill();
-      ctx.fillStyle = "#D4AF37"; ctx.font = "bold 30px system-ui, sans-serif";
+      ctx.fillStyle = "#FF4A2D"; ctx.font = "bold 30px system-ui, sans-serif";
       ctx.fillText(stat, chipX + chipW / 2, y); chipX += chipW + chipGap;
     }
     y += 60;
@@ -348,8 +348,8 @@ export default function TripStoryExport({
             <button
               onClick={render}
               disabled={rendering}
-              className="w-full py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all disabled:opacity-50 cursor-pointer"
-              style={{ backgroundColor: "#D4AF37" }}
+              className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all disabled:opacity-50 cursor-pointer"
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               {rendering ? "Generating…" : "✨ Create Card"}
             </button>
@@ -359,8 +359,8 @@ export default function TripStoryExport({
               <button
                 onClick={handleShare}
                 disabled={sharing}
-                className="w-full py-3.5 rounded-xl text-sm font-black text-[#1a1a2e] transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
-                style={{ backgroundColor: "#D4AF37" }}
+                className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                style={{ backgroundColor: "#FF4A2D" }}
               >
                 {sharing
                   ? "Sharing…"

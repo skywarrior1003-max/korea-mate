@@ -105,7 +105,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           onClick={handleSave}
           disabled={saving}
           className="text-sm font-black px-4 py-1.5 rounded-xl transition-all disabled:opacity-40 cursor-pointer"
-          style={{ backgroundColor: "#D4AF37", color: "#1a1a2e" }}
+          style={{ backgroundColor: "#FF4A2D", color: "#1a1a2e" }}
         >
           {saving ? "Saving…" : "Save"}
         </button>
@@ -120,7 +120,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
         >
           {compressing ? (
             <div className="flex flex-col items-center gap-3">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D4AF37]" />
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF4A2D]" />
               <p className="text-xs text-white/50">Optimizing photo…</p>
             </div>
           ) : photoData ? (
@@ -183,7 +183,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
                       ? "text-[#1a1a2e]"
                       : "text-white/50 bg-white/8 hover:bg-white/15"
                   }`}
-                  style={category === cat.key ? { backgroundColor: "#D4AF37" } : {}}
+                  style={category === cat.key ? { backgroundColor: "#FF4A2D" } : {}}
                 >
                   <span>{cat.emoji}</span>
                   <span>{cat.label}</span>
@@ -201,7 +201,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
               placeholder={`One line to remember this moment…\nE.g., Stumbled into a tiny fish cake shop — owner gave 3 extras for free`}
               maxLength={300}
               rows={4}
-              className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#D4AF37]/60 resize-none leading-relaxed"
+              className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#FF4A2D]/60 resize-none leading-relaxed"
             />
             <p className="text-right text-[10px] text-white/25 mt-1">{memo.length}/300</p>
           </div>

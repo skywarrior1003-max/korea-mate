@@ -149,7 +149,7 @@ const LOAD_PHASES = [
     emoji: "📱",
     label: "[Step 3] Optimizing eSIM coverage & transport routes...",
     cards: [
-      { emoji: "📱", name: "Korea eSIM",     desc: "Unlimited 5G data — active before you land",    color: "#f97316" },
+      { emoji: "📱", name: "Korea eSIM",     desc: "Unlimited 5G data — active before you land",    color: "#FF4A2D" },
       { emoji: "✈️", name: "Airport Transfer",desc: "Fixed-price pickup from Gimhae Airport",        color: "#16a34a" },
     ],
   },
@@ -640,7 +640,7 @@ function getCategoryImage(category: string, name: string): string {
 
 function getCategoryColor(category: string): string {
   const c = category.toLowerCase();
-  if (c.includes("restaurant") || c.includes("food")) return "#f97316";
+  if (c.includes("restaurant") || c.includes("food")) return "#FF4A2D";
   if (c.includes("cafe") || c.includes("coffee")) return "#d97706";
   if (c.includes("market")) return "#dc2626";
   if (c.includes("museum")) return "#7c3aed";
@@ -721,12 +721,12 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
 
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "#f97316" }}>📍 {place.location}</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#2C2520] leading-tight">{place.name}</h2>
+            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "#FF4A2D" }}>📍 {place.location}</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#191C21] leading-tight">{place.name}</h2>
           </div>
-          <div className="bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-5">
-            <p className="text-xs font-black uppercase tracking-widest mb-2 text-[#8C6239]">💡 Tips for Foreigners</p>
-            <p className="text-base text-[#61554D] leading-relaxed font-medium">{desc}</p>
+          <div className="bg-[#F6F7F8] border border-[#E5E7EA] rounded-2xl p-5">
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-[#565D66]">💡 Tips for Foreigners</p>
+            <p className="text-base text-[#565D66] leading-relaxed font-medium">{desc}</p>
           </div>
           {(snap?.soloFriendly != null || snap?.cashOnly || snap?.foreignCardAccepted != null) && (
             <div className="flex flex-wrap gap-2">
@@ -763,7 +763,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
               target="_blank" rel="noopener noreferrer sponsored"
               onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-xl text-sm font-bold text-white transition-colors"
-              style={{ background: place.affiliateUrl ? "linear-gradient(135deg, #f97316, #ea580c)" : "linear-gradient(135deg, #7c3aed, #6d28d9)" }}
+              style={{ background: place.affiliateUrl ? "linear-gradient(135deg, #FF4A2D, #D93317)" : "linear-gradient(135deg, #7c3aed, #6d28d9)" }}
             >
               {place.affiliateUrl
                 ? (place.affiliateProvider === "klook" ? "🎟️ Book on Klook" : "🔗 Book Now")
@@ -773,7 +773,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
 
           {/* ── SpotCard enrichment (SSOT: city_spots 매칭 성공 시) ── */}
           {matched && (
-            <div className="border-t border-[#E6DFD5] pt-5 space-y-3">
+            <div className="border-t border-[#E5E7EA] pt-5 space-y-3">
               {/* difficulty + entry_fee 배지 */}
               <div className="flex flex-wrap gap-2">
                 {matched.difficulty && (() => {
@@ -804,7 +804,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
                     target="_blank" rel="noopener noreferrer sponsored"
                     onClick={(e) => e.stopPropagation()}
                     className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white transition-colors"
-                    style={{ background: "linear-gradient(135deg, #f97316, #ea580c)" }}
+                    style={{ background: "linear-gradient(135deg, #FF4A2D, #D93317)" }}
                   >
                     {matched.affiliateProvider === "klook" ? "🎟️ Book Tour" : "🏨 Book Stay"}
                   </a>
@@ -814,7 +814,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
           )}
 
           <button onClick={onClose}
-            className="w-full py-3.5 rounded-xl text-sm font-black text-[#2C2520] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all cursor-pointer">
+            className="w-full py-3.5 rounded-xl text-sm font-black text-[#191C21] border-2 border-[#E5E7EA] hover:border-[#FF4A2D] hover:bg-[#F6F7F8] transition-all cursor-pointer">
             Close
           </button>
         </div>
@@ -1506,16 +1506,16 @@ function ItineraryResult() {
 
         {/* ── 페이즈 표시기 ── */}
         <div className="text-center mb-8 w-full max-w-lg">
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#EAE3D2]/60 border border-[#E6DFD5] mb-4">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#D4AF37] shrink-0" />
-            <span className="text-sm font-black text-[#2C2520]">
+          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#F6F7F8]/60 border border-[#E5E7EA] mb-4">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#FF4A2D] shrink-0" />
+            <span className="text-sm font-black text-[#191C21]">
               {shareId ? "Loading shared itinerary…" : phase.label}
             </span>
           </div>
           {!shareId && (
-            <div className="w-full bg-[#E6DFD5] rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-[#E5E7EA] rounded-full h-1.5 overflow-hidden">
               <div
-                className="h-full bg-[#D4AF37] rounded-full transition-all duration-700 ease-out"
+                className="h-full bg-[#FF4A2D] rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${((loadPhase + 1) / LOAD_PHASES.length) * 100}%` }}
               />
             </div>
@@ -1528,7 +1528,7 @@ function ItineraryResult() {
             {phase.cards.map((card) => (
               <div
                 key={card.name}
-                className="bg-white rounded-2xl border border-[#E6DFD5] p-5 flex items-start gap-4 shadow-sm"
+                className="bg-white rounded-2xl border border-[#E5E7EA] p-5 flex items-start gap-4 shadow-sm"
                 style={{ animation: "fadeInUp 0.4s ease-out" }}
               >
                 <div
@@ -1538,8 +1538,8 @@ function ItineraryResult() {
                   {card.emoji}
                 </div>
                 <div>
-                  <p className="text-sm font-black text-[#2C2520]">{card.name}</p>
-                  <p className="text-xs text-[#61554D] leading-relaxed mt-0.5">{card.desc}</p>
+                  <p className="text-sm font-black text-[#191C21]">{card.name}</p>
+                  <p className="text-xs text-[#565D66] leading-relaxed mt-0.5">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -1549,16 +1549,16 @@ function ItineraryResult() {
         {/* ── 스켈레톤 일정 카드 ── */}
         <div className="w-full space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-2xl border border-[#E6DFD5] p-5 animate-pulse">
+            <div key={i} className="bg-white rounded-2xl border border-[#E5E7EA] p-5 animate-pulse">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded-full bg-[#EAE3D2]" />
-                <div className="h-5 bg-[#EAE3D2] rounded w-24" />
-                <div className="h-4 bg-[#EAE3D2] rounded w-16 ml-2" />
+                <div className="w-6 h-6 rounded-full bg-[#F6F7F8]" />
+                <div className="h-5 bg-[#F6F7F8] rounded w-24" />
+                <div className="h-4 bg-[#F6F7F8] rounded w-16 ml-2" />
               </div>
               <div className="space-y-2.5">
-                <div className="h-3.5 bg-[#EAE3D2] rounded w-3/4" />
-                <div className="h-3.5 bg-[#EAE3D2] rounded w-1/2" />
-                <div className="h-3.5 bg-[#EAE3D2] rounded w-2/3" />
+                <div className="h-3.5 bg-[#F6F7F8] rounded w-3/4" />
+                <div className="h-3.5 bg-[#F6F7F8] rounded w-1/2" />
+                <div className="h-3.5 bg-[#F6F7F8] rounded w-2/3" />
               </div>
             </div>
           ))}
@@ -1579,9 +1579,9 @@ function ItineraryResult() {
       <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
         <div className="text-6xl mb-6">⚠️</div>
         <h2 className="text-3xl font-black text-red-600 mb-4">Something went wrong</h2>
-        <p className="text-lg text-[#61554D] max-w-md mb-8 font-bold">{error}</p>
+        <p className="text-lg text-[#565D66] max-w-md mb-8 font-bold">{error}</p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-colors">
+          <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-[#191C21] text-[#F6F7F8] rounded-xl hover:bg-black transition-colors">
             ← Back to Home
           </Link>
           {shareId && (
@@ -1646,10 +1646,10 @@ function ItineraryResult() {
       )}
 
       {/* ── 헤더 카드 ── */}
-      <div className="bg-white rounded-3xl p-8 border border-[#E6DFD5] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-8 border border-[#E5E7EA] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-black bg-[#EAE3D2] text-[#8C6239] px-3 py-1 rounded-md uppercase tracking-wider">
+            <span className="text-xs font-black bg-[#F6F7F8] text-[#565D66] px-3 py-1 rounded-md uppercase tracking-wider">
               {travelStyle} Trip
             </span>
             {plannerMeta && (
@@ -1680,7 +1680,7 @@ function ItineraryResult() {
               {prefTags.map(tag => (
                 <span
                   key={tag}
-                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#EAE3D2] text-[#8C6239] capitalize"
+                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F6F7F8] text-[#565D66] capitalize"
                 >
                   {tag}
                 </span>
@@ -1699,26 +1699,26 @@ function ItineraryResult() {
                   if (e.key === "Escape") setEditingTitle(false);
                 }}
                 onBlur={handleTitleSave}
-                className="text-2xl sm:text-3xl font-black text-[#2C2520] bg-[#FAF7F2] border-2 border-[#D4AF37] rounded-xl px-3 py-1 focus:outline-none w-full"
+                className="text-2xl sm:text-3xl font-black text-[#191C21] bg-[#F6F7F8] border-2 border-[#FF4A2D] rounded-xl px-3 py-1 focus:outline-none w-full"
                 placeholder={`My ${city} Trip`}
                 maxLength={60}
               />
             </div>
           ) : (
             <div className="flex items-center gap-2 mt-3 group">
-              <h1 className="text-3xl sm:text-4xl font-black text-[#2C2520]">
+              <h1 className="text-3xl sm:text-4xl font-black text-[#191C21]">
                 {tripTitle || `My ${city} Trip`}
               </h1>
               {(!shareId || isOwner) && itinId && (
                 <button
                   onClick={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity text-[#8C6239] hover:text-[#D4AF37] text-xl cursor-pointer shrink-0"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity text-[#565D66] hover:text-[#FF4A2D] text-xl cursor-pointer shrink-0"
                   title="제목 편집"
                 >✏️</button>
               )}
             </div>
           )}
-          <p className="text-[#61554D] mt-2 text-base font-bold">
+          <p className="text-[#565D66] mt-2 text-base font-bold">
             📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
           </p>
         </div>
@@ -1729,7 +1729,7 @@ function ItineraryResult() {
             onClick={handleCopyShareLink}
             disabled={!itinId}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all disabled:opacity-40 active:scale-95"
-            style={{ backgroundColor: "#D4AF37" }}
+            style={{ backgroundColor: "#FF4A2D" }}
           >
             {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
           </button>
@@ -1760,8 +1760,7 @@ function ItineraryResult() {
           ) : (
             <button
               onClick={() => setEmailModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: "#f97316" }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-[#191C21] bg-white border-2 border-[#E5E7EA] hover:border-[#8A919B] rounded-xl transition-all active:scale-95"
             >
               📧 Save to Email
             </button>
@@ -1773,7 +1772,7 @@ function ItineraryResult() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            📸 Capture Moment {moments.length > 0 && <span className="bg-[#D4AF37] text-[#1a1a2e] text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
+            📸 Capture Moment {moments.length > 0 && <span className="bg-[#FF4A2D] text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
           </button>
 
           {/* TASK-022: 공유 카드 버튼 */}
@@ -1781,13 +1780,13 @@ function ItineraryResult() {
             <button
               onClick={() => setStoryExportOpen(true)}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2"
-              style={{ borderColor: "#D4AF37", color: "#D4AF37", backgroundColor: "transparent" }}
+              style={{ borderColor: "#FF4A2D", color: "#FF4A2D", backgroundColor: "transparent" }}
             >
               🎴 Create Story Card
             </button>
           )}
 
-          <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-[#FAF7F2] hover:bg-[#F3EEE3] text-[#2C2520] border border-[#E6DFD5] rounded-xl transition-all shadow-sm">
+          <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-[#F6F7F8] hover:bg-[#F3EEE3] text-[#191C21] border border-[#E5E7EA] rounded-xl transition-all shadow-sm">
             ← Back to Home
           </Link>
 
@@ -1796,22 +1795,22 @@ function ItineraryResult() {
             <button
               onClick={() => { setViewMode("compact"); setEditDay(0); }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "#f97316" }}
+              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "#191C21" }}
             >
               {viewMode === "compact" ? "✅ Editing" : "✏️ Edit Trip"}
             </button>
           )}
 
           {/* Compact / Full View 토글 */}
-          <div className="flex gap-1.5 p-1 border border-[#E6DFD5] rounded-xl bg-[#FAF7F2]">
+          <div className="flex gap-1.5 p-1 border border-[#E5E7EA] rounded-xl bg-[#F6F7F8]">
             {(["full", "compact"] as const).map((mode) => (
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
                 className={`flex-1 px-4 py-2 rounded-lg text-xs font-black transition-all ${
                   viewMode === mode
-                    ? "bg-[#2C2520] text-[#FAF7F2] shadow-sm"
-                    : "text-[#8C6239] hover:text-[#2C2520]"
+                    ? "bg-[#191C21] text-[#F6F7F8] shadow-sm"
+                    : "text-[#565D66] hover:text-[#191C21]"
                 }`}
               >
                 {mode === "compact" ? "⊟ Compact" : "⊞ Full View"}
@@ -1821,13 +1820,13 @@ function ItineraryResult() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-[#8C6239] font-bold mb-4 bg-[#EAE3D2]/40 rounded-xl py-2.5">
+      <p className="text-center text-sm text-[#565D66] font-bold mb-4 bg-[#F6F7F8]/40 rounded-xl py-2.5">
         💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit Trip above
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
       {shouldShowAirportBanner && (
-        <div className="mb-6 rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
+        <div className="mb-6 rounded-2xl border border-[#FF4A2D]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
           <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
@@ -1890,7 +1889,7 @@ function ItineraryResult() {
             <Link
               href="/all-spots"
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white mb-4 transition-opacity hover:opacity-90 active:scale-95"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               🔍 Search Spots
             </Link>
@@ -1905,7 +1904,7 @@ function ItineraryResult() {
                 className={`shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   editDay === i
                     ? "bg-[#1a1f36] text-white shadow-md"
-                    : "bg-white text-[#8C6239] border border-[#E6DFD5] hover:border-[#D4AF37]"
+                    : "bg-white text-[#565D66] border border-[#E5E7EA] hover:border-[#FF4A2D]"
                 }`}
               >
                 <span>Day {day.dayNumber}</span>
@@ -1917,7 +1916,7 @@ function ItineraryResult() {
                 <span
                   className="mt-1 px-1.5 py-0.5 rounded-full text-[10px] font-black"
                   style={editDay === i
-                    ? { backgroundColor: "#f97316", color: "#fff" }
+                    ? { backgroundColor: "#FF4A2D", color: "#fff" }
                     : { backgroundColor: "#f3f4f6", color: "#374151" }}
                 >
                   {day.places.length}
@@ -1928,7 +1927,7 @@ function ItineraryResult() {
 
           {/* 현재 Day 편집 리스트 — 시간순 플랫 리스트 (슬롯 그루핑 제거로 누락 방지) */}
           {days[editDay] && (
-            <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
               <div className="px-5 py-3 flex items-center justify-between" style={{ backgroundColor: "#1a1f36" }}>
                 <span className="text-sm font-black text-white">
                   Day {days[editDay].dayNumber} — {days[editDay].date}
@@ -1940,16 +1939,16 @@ function ItineraryResult() {
               {days[editDay].places.map((p, pi) => (
                 <div
                   key={pi}
-                  className="flex items-center gap-3 px-4 py-3 border-b border-[#E6DFD5]/40 last:border-0 hover:bg-[#FAF7F2]/60 group transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 group transition-colors"
                 >
-                  <span className="text-xs font-bold text-[#8C6239] w-12 shrink-0 tabular-nums">{p.time}</span>
+                  <span className="text-xs font-bold text-[#565D66] w-12 shrink-0 tabular-nums">{p.time}</span>
                   <span
                     className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
                     style={{ backgroundColor: getCategoryColor(p.category) }}
                   >
                     {p.category.slice(0, 5)}
                   </span>
-                  <span className="flex-1 text-sm font-bold text-[#2C2520] truncate">{p.name}</span>
+                  <span className="flex-1 text-sm font-bold text-[#191C21] truncate">{p.name}</span>
                   {(!shareId || isOwner) && (
                     <div className="flex items-center gap-1.5 shrink-0">
                       <button
@@ -1975,7 +1974,7 @@ function ItineraryResult() {
               ))}
 
               {days[editDay].places.length === 0 && (
-                <div className="py-10 text-center text-sm text-[#8C6239]/40 italic">
+                <div className="py-10 text-center text-sm text-[#565D66]/40 italic">
                   No places for this day
                 </div>
               )}
@@ -1989,17 +1988,17 @@ function ItineraryResult() {
             return (
               <div className="mt-5">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="text-xs font-black text-[#8C6239]">❤️ My Picks (Unscheduled)</span>
-                  <span className="text-[10px] font-bold bg-[#EAE3D2]/60 text-[#8C6239] px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-black text-[#565D66]">❤️ My Picks (Unscheduled)</span>
+                  <span className="text-[10px] font-bold bg-[#F6F7F8]/60 text-[#565D66] px-2 py-0.5 rounded-full">
                     {unscheduled.length}
                   </span>
-                  <span className="text-[10px] text-[#8C6239]/50 ml-auto">Use + to add to this day</span>
+                  <span className="text-[10px] text-[#565D66]/50 ml-auto">Use + to add to this day</span>
                 </div>
-                <div className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm">
+                <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
                   {unscheduled.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 px-4 py-3 border-b border-[#E6DFD5]/40 last:border-0 hover:bg-[#FAF7F2]/60 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 transition-colors"
                     >
                       <span
                         className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
@@ -2007,16 +2006,16 @@ function ItineraryResult() {
                       >
                         {item.type.slice(0, 5)}
                       </span>
-                      <span className="flex-1 text-sm font-bold text-[#2C2520] truncate">
+                      <span className="flex-1 text-sm font-bold text-[#191C21] truncate">
                         {item.shortName || item.name}
                       </span>
-                      <span className="text-[10px] text-[#8C6239]/50 shrink-0 hidden sm:inline">
+                      <span className="text-[10px] text-[#565D66]/50 shrink-0 hidden sm:inline">
                         {item.recommendedDurationMinutes}m
                       </span>
                       <button
                         onClick={() => addCartItemToDay(item)}
                         className="shrink-0 w-7 h-7 rounded-full text-white text-sm font-black flex items-center justify-center hover:opacity-80 cursor-pointer transition-opacity"
-                        style={{ backgroundColor: "#f97316" }}
+                        style={{ backgroundColor: "#FF4A2D" }}
                         title={`Add to Day ${editDay + 1}`}
                       >+</button>
                     </div>
@@ -2037,7 +2036,7 @@ function ItineraryResult() {
             />
           )}
 
-          <p className="text-center text-xs text-[#8C6239]/50 mt-4">
+          <p className="text-center text-xs text-[#565D66]/50 mt-4">
             ☁️ Changes are saved automatically · Use Full View above to return
           </p>
         </div>
@@ -2071,12 +2070,12 @@ function ItineraryResult() {
             }));
 
             return (
-              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-[#D4AF37]/30">
-                <div className="absolute -left-[11px] top-1.5 bg-[#FAF7F2] border-4 border-[#D4AF37] w-5 h-5 rounded-full z-10" />
-                <h2 className="text-2xl sm:text-3xl font-black text-[#2C2520] mb-5 flex items-center gap-3 flex-wrap">
+              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-[#FF4A2D]/30">
+                <div className="absolute -left-[11px] top-1.5 bg-[#F6F7F8] border-4 border-[#FF4A2D] w-5 h-5 rounded-full z-10" />
+                <h2 className="text-2xl sm:text-3xl font-black text-[#191C21] mb-5 flex items-center gap-3 flex-wrap">
                   <span>Day {day.dayNumber}</span>
-                  <span className="text-lg font-bold text-[#8C6239] bg-[#EAE3D2]/40 px-3 py-0.5 rounded-full">{day.date}</span>
-                  <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
+                  <span className="text-lg font-bold text-[#565D66] bg-[#F6F7F8]/40 px-3 py-0.5 rounded-full">{day.date}</span>
+                  <span className="text-sm font-semibold text-[#565D66]">({day.places.length} places)</span>
                   {/* S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만) */}
                   {(() => {
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
@@ -2099,9 +2098,9 @@ function ItineraryResult() {
 
                 {/* TASK-058-D: 마지막 날 출발 버퍼 안내 — 일정이 짧은 이유를 사용자에게 설명 */}
                 {day.dayNumber === days.length && paramDepartureTime && (
-                  <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#EAE3D2]/40 border border-[#D4AF37]/30">
+                  <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F6F7F8]/40 border border-[#FF4A2D]/30">
                     <span className="text-sm shrink-0">🕐</span>
-                    <p className="text-xs font-semibold text-[#8C6239]">
+                    <p className="text-xs font-semibold text-[#565D66]">
                       Kept light — your departure is at {paramDepartureTime}.
                     </p>
                   </div>
@@ -2113,19 +2112,19 @@ function ItineraryResult() {
                     if (slotItems.length === 0) return null;
 
                     return (
-                      <div key={ts.key} className="rounded-2xl border border-[#E6DFD5] overflow-hidden bg-white">
-                        <div className="px-5 py-3 bg-[#EAE3D2]/25 border-b border-[#E6DFD5] flex items-center justify-between">
+                      <div key={ts.key} className="rounded-2xl border border-[#E5E7EA] overflow-hidden bg-white">
+                        <div className="px-5 py-3 bg-[#F6F7F8]/25 border-b border-[#E5E7EA] flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="text-base">{ts.emoji}</span>
-                            <span className="text-sm font-black text-[#8C6239]">{ts.label}</span>
-                            <span className="text-xs text-[#8C6239]/50 font-medium hidden sm:inline">{ts.range}</span>
+                            <span className="text-sm font-black text-[#565D66]">{ts.label}</span>
+                            <span className="text-xs text-[#565D66]/50 font-medium hidden sm:inline">{ts.range}</span>
                           </div>
-                          <span className="text-xs text-[#8C6239]/60 font-semibold">
+                          <span className="text-xs text-[#565D66]/60 font-semibold">
                             {slotItems.length} place{slotItems.length !== 1 ? "s" : ""}
                           </span>
                         </div>
 
-                        <div className="divide-y divide-[#E6DFD5]/50">
+                        <div className="divide-y divide-[#E5E7EA]/50">
                             {slotItems.map(({ place, idx }) => {
                               const naverUrl = buildNaverUrl(place.name, city);
                               const googleUrl =
@@ -2136,7 +2135,7 @@ function ItineraryResult() {
                               return (
                                 <div
                                   key={idx}
-                                  className="flex flex-col hover:bg-[#FAF7F2]/40 transition-colors group relative"
+                                  className="flex flex-col hover:bg-[#F6F7F8]/40 transition-colors group relative"
                                 >
                                   {/* 장소 정보 + 지도 버튼 행 */}
                                   <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
@@ -2149,8 +2148,8 @@ function ItineraryResult() {
                                           className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
                                           style={{ backgroundColor: getCategoryColor(place.category) }}
                                         >{place.category}</span>
-                                        <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
-                                        <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
+                                        <span className="text-xs font-bold text-[#565D66]">🕒 {place.time} ({place.duration})</span>
+                                        <span className="text-xs font-bold text-[#565D66]">📍 {place.location}</span>
                                         {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
                                         <button
                                           onClick={(e) => { e.stopPropagation(); toggleVisited(day.dayNumber, place); }}
@@ -2158,7 +2157,7 @@ function ItineraryResult() {
                                           className={`text-xs font-bold px-2.5 py-1 rounded-full border transition-colors cursor-pointer ${
                                             visited.has(visitedPlaceKey(day.dayNumber, place))
                                               ? "bg-emerald-50 text-emerald-700 border-emerald-300"
-                                              : "bg-white text-[#8C6239]/60 border-[#E6DFD5] hover:border-[#8C6239]/40"
+                                              : "bg-white text-[#565D66]/60 border-[#E5E7EA] hover:border-[#565D66]/40"
                                           }`}
                                         >
                                           {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ Visited" : "○ Visited"}
@@ -2169,21 +2168,21 @@ function ItineraryResult() {
                                           <img
                                             src={place.cartSnapshot.image}
                                             alt={place.name}
-                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[#E6DFD5]"
+                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[#E5E7EA]"
                                           />
                                         )}
                                         <div className="min-w-0">
-                                          <h3 className="text-lg sm:text-xl font-black text-[#2C2520] group-hover:text-[#8C6239] transition-colors">
+                                          <h3 className="text-lg sm:text-xl font-black text-[#191C21] group-hover:text-[#565D66] transition-colors">
                                             {place.name}
                                           </h3>
-                                          <div className="bg-[#FAF7F2]/60 border border-[#E6DFD5]/60 rounded-xl p-3 mt-1">
-                                            <p className="text-xs text-[#61554D] leading-relaxed line-clamp-2">
+                                          <div className="bg-[#F6F7F8]/60 border border-[#E5E7EA]/60 rounded-xl p-3 mt-1">
+                                            <p className="text-xs text-[#565D66] leading-relaxed line-clamp-2">
                                               {place.cartSnapshot?.whyItMatters ?? place.cartSnapshot?.description ?? place.tips}
                                             </p>
                                           </div>
                                         </div>
                                       </div>
-                                      <p className="text-xs text-[#D4AF37] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <p className="text-xs text-[#FF4A2D] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
                                         Click for full details + maps →
                                       </p>
                                     </div>
@@ -2210,7 +2209,7 @@ function ItineraryResult() {
                                   </div>
                                   {/* ── 수익화 제휴 버튼 스트립 (환경변수 기반) ── */}
                                   <div
-                                    className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E6DFD5]/40"
+                                    className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E5E7EA]/40"
                                     style={{ scrollbarWidth: "none" }}
                                     onClick={(e) => e.stopPropagation()}
                                   >
@@ -2219,7 +2218,7 @@ function ItineraryResult() {
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
-                                      style={{ backgroundColor: "#f97316" }}
+                                      style={{ backgroundColor: "#FF4A2D" }}
                                     >
                                       📱 Get Korea eSIM
                                     </a>
@@ -2267,7 +2266,7 @@ function ItineraryResult() {
       {/* ── TASK-021: Korea Ready Partner Deals (Supabase affiliate_links) ── */}
       {Object.keys(affiliateMap).length > 0 && (
         <div className="mb-12">
-          <p className="text-xs font-black uppercase tracking-widest text-[#8C6239] mb-4">
+          <p className="text-xs font-black uppercase tracking-widest text-[#565D66] mb-4">
             Korea Ready Partner Deals
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2277,19 +2276,19 @@ function ItineraryResult() {
                 href={deal.destination_url}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-[#E6DFD5] shadow-sm hover:border-[#D4AF37] transition-colors"
+                className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-[#E5E7EA] shadow-sm hover:border-[#FF4A2D] transition-colors"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#EAE3D2] flex items-center justify-center text-xl shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-[#F6F7F8] flex items-center justify-center text-xl shrink-0">
                   🇰🇷
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-black uppercase tracking-wide text-[#8C6239] mb-0.5">
+                  <p className="text-xs font-black uppercase tracking-wide text-[#565D66] mb-0.5">
                     {deal.provider}
                   </p>
-                  <p className="text-sm font-black text-[#2C2520] leading-tight">{deal.title}</p>
-                  <p className="text-xs text-[#61554D] leading-relaxed mt-1 line-clamp-2">{deal.description}</p>
+                  <p className="text-sm font-black text-[#191C21] leading-tight">{deal.title}</p>
+                  <p className="text-xs text-[#565D66] leading-relaxed mt-1 line-clamp-2">{deal.description}</p>
                 </div>
-                <span className="text-[#D4AF37] text-sm shrink-0 mt-0.5">→</span>
+                <span className="text-[#FF4A2D] text-sm shrink-0 mt-0.5">→</span>
               </a>
             ))}
           </div>
@@ -2300,8 +2299,8 @@ function ItineraryResult() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-black text-[#2C2520]">📸 My Travel Memories</h2>
-            <p className="text-sm text-[#8C6239] mt-0.5">Hidden finds, people you met, scenery… the real story of this trip</p>
+            <h2 className="text-2xl font-black text-[#191C21]">📸 My Travel Memories</h2>
+            <p className="text-sm text-[#565D66] mt-0.5">Hidden finds, people you met, scenery… the real story of this trip</p>
           </div>
           <button
             onClick={() => setCaptureOpen(true)}
@@ -2321,13 +2320,13 @@ function ItineraryResult() {
       <AdBanner />
 
       {/* eSIM 배너 */}
-      <div className="bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#C29D26] rounded-3xl p-8 sm:p-10 shadow-xl border border-[#E6DFD5] text-[#2C2520] mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-[#FF4A2D] to-[#D93317] rounded-3xl p-8 sm:p-10 shadow-xl text-white mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center sm:text-left">
           <h3 className="text-2xl sm:text-3xl font-black">📱 Don&apos;t forget your eSIM!</h3>
-          <p className="text-base sm:text-lg font-bold text-[#4E3F35]">Stay connected throughout your Korea trip with 10% off.</p>
+          <p className="text-base sm:text-lg font-bold text-white/85">Stay connected throughout your Korea trip with 10% off.</p>
         </div>
         <a href="https://affiliate.klook.com/sl/KiT3U74" target="_blank" rel="noopener noreferrer sponsored"
-          className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-all shadow-md">
+          className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-[#191C21] text-[#F6F7F8] rounded-xl hover:bg-black transition-all shadow-md">
           Get eSIM Now
         </a>
       </div>
@@ -2390,11 +2389,11 @@ function ItineraryResult() {
 // ══════════════════════════════════════════════════════════════
 export default function ItineraryPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C2520] font-sans antialiased">
-      <header className="border-b border-[#E6DFD5] bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-40">
+    <div className="min-h-screen flex flex-col bg-[#F6F7F8] text-[#191C21] font-sans antialiased">
+      <header className="border-b border-[#E5E7EA] bg-[#F6F7F8]/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-normal tracking-tight text-[#2C2520] flex items-center gap-1.5">
-            <span className="text-[#D4AF37] text-3xl">🇰🇷</span>
+          <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
+            <span className="text-[#FF4A2D] text-3xl">🇰🇷</span>
             go<span className="font-extrabold">korea</span>mate
           </Link>
         </div>
@@ -2403,15 +2402,15 @@ export default function ItineraryPage() {
       <Suspense
         fallback={
           <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#D4AF37] mb-8" />
-            <h2 className="text-3xl font-black text-[#2C2520] mb-3">Loading itinerary…</h2>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#FF4A2D] mb-8" />
+            <h2 className="text-3xl font-black text-[#191C21] mb-3">Loading itinerary…</h2>
           </div>
         }
       >
         <ItineraryResult />
       </Suspense>
 
-      <footer className="mt-auto border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4">
+      <footer className="mt-auto border-t border-[#E5E7EA] bg-[#F6F7F8] py-8 text-center text-sm text-[#565D66] px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
           <p className="font-bold tracking-wide">Data provided by Korea Tourism Organization. AI-powered by Gemini.</p>

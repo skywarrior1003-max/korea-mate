@@ -14,11 +14,11 @@ interface Props {
 }
 
 const CAT_COLORS: Record<string, string> = {
-  food:    "#f97316",
+  food:    "#FF4A2D",
   scenery: "#16a34a",
   people:  "#7c3aed",
   culture: "#d97706",
-  random:  "#D4AF37",
+  random:  "#FF4A2D",
 };
 
 export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: Props) {
@@ -38,17 +38,17 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
   if (moments.length === 0) {
     return (
       <div
-        className="rounded-3xl border-2 border-dashed border-[#E6DFD5] p-10 text-center flex flex-col items-center gap-4 cursor-pointer hover:border-[#D4AF37] transition-colors"
+        className="rounded-3xl border-2 border-dashed border-[#E5E7EA] p-10 text-center flex flex-col items-center gap-4 cursor-pointer hover:border-[#FF4A2D] transition-colors"
         onClick={onAddMemory}
       >
-        <div className="w-16 h-16 rounded-2xl bg-[#EAE3D2] flex items-center justify-center text-3xl">📸</div>
+        <div className="w-16 h-16 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-3xl">📸</div>
         <div>
-          <p className="text-base font-black text-[#2C2520]">No moments recorded yet</p>
-          <p className="text-sm text-[#8C6239] mt-1">Hidden gems, scenery, people you met…<br/>Leave the real story of this trip</p>
+          <p className="text-base font-black text-[#191C21]">No moments recorded yet</p>
+          <p className="text-sm text-[#565D66] mt-1">Hidden gems, scenery, people you met…<br/>Leave the real story of this trip</p>
         </div>
         <button
           className="mt-2 px-6 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
-          style={{ backgroundColor: "#D4AF37" }}
+          style={{ backgroundColor: "#FF4A2D" }}
         >
           📸 Record First Moment
         </button>
@@ -60,7 +60,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
     <div className="space-y-4">
       {moments.map((m, i) => {
         const cat      = MOMENT_CATEGORIES.find(c => c.key === m.category) ?? MOMENT_CATEGORIES[4];
-        const color    = CAT_COLORS[m.category] ?? "#D4AF37";
+        const color    = CAT_COLORS[m.category] ?? "#FF4A2D";
         const isOpen   = expanded === m.moment_id;
         const dateStr  = new Date(m.captured_at).toLocaleString("ko-KR", {
           month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
@@ -69,7 +69,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
         return (
           <div
             key={m.moment_id}
-            className="bg-white rounded-2xl border border-[#E6DFD5] overflow-hidden shadow-sm"
+            className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm"
             style={{ animation: `fadeInUp 0.3s ease-out ${i * 0.06}s both` }}
           >
             {/* 사진 */}
@@ -118,7 +118,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                   {cat.emoji} {cat.label}
                 </span>
                 {m.day_number !== null && (
-                  <span className="text-xs font-bold bg-[#EAE3D2] text-[#8C6239] px-2 py-1 rounded-lg">
+                  <span className="text-xs font-bold bg-[#F6F7F8] text-[#565D66] px-2 py-1 rounded-lg">
                     Day {m.day_number}
                   </span>
                 )}
@@ -128,16 +128,16 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
             {/* 내용 */}
             <div className="px-5 py-4 space-y-2.5">
               {m.memo && (
-                <p className="text-sm text-[#2C2520] leading-relaxed font-medium whitespace-pre-line">
+                <p className="text-sm text-[#191C21] leading-relaxed font-medium whitespace-pre-line">
                   {m.memo}
                 </p>
               )}
               {!m.memo && (
-                <p className="text-sm text-[#8C6239]/60 italic">No memo</p>
+                <p className="text-sm text-[#565D66]/60 italic">No memo</p>
               )}
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 text-xs text-[#8C6239]/60">
+                <div className="flex items-center gap-3 text-xs text-[#565D66]/60">
                   <span>🕐 {dateStr}</span>
                   {m.lat !== null && (
                     <span>📍 {m.location_label}</span>
@@ -151,7 +151,7 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                   className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                     deleteConfirm === m.moment_id
                       ? "bg-red-500 text-white"
-                      : "text-[#8C6239]/40 hover:text-red-400 hover:bg-red-50"
+                      : "text-[#565D66]/40 hover:text-red-400 hover:bg-red-50"
                   }`}
                 >
                   {deleteConfirm === m.moment_id ? "Confirm delete" : "Delete"}

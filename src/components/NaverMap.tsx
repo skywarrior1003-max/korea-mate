@@ -143,9 +143,9 @@ export default function NaverMap({
       });
 
       const info = new map.InfoWindow({
-        content: `<div style="padding:10px 14px;font-size:13px;max-width:220px"><b style="color:#1a1a2e">${spot.name}</b><br/><span style="font-size:11px;color:#8C6239">${spot.address.slice(0, 55)}</span></div>`,
+        content: `<div style="padding:10px 14px;font-size:13px;max-width:220px"><b style="color:#1a1a2e">${spot.name}</b><br/><span style="font-size:11px;color:#565D66">${spot.address.slice(0, 55)}</span></div>`,
         borderWidth: 1,
-        borderColor: "#D4AF37",
+        borderColor: "#FF4A2D",
       });
 
       map.Event.addListener(marker, "click", () => {
@@ -275,7 +275,7 @@ export default function NaverMap({
       position: new map.LatLng(userLocation.lat, userLocation.lng),
       map: nmap as unknown as Record<string, unknown>,
       icon: {
-        content: `<div style="width:16px;height:16px;background:#f97316;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 4px rgba(249,115,22,0.25)"></div>`,
+        content: `<div style="width:16px;height:16px;background:#FF4A2D;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 4px rgba(249,115,22,0.25)"></div>`,
         anchor: new map.Point(8, 8),
       },
       zIndex: 100,
@@ -290,31 +290,31 @@ export default function NaverMap({
 
   return (
     <div
-      className={className ?? "relative w-full rounded-2xl overflow-hidden border border-[#E6DFD5] mb-6"}
+      className={className ?? "relative w-full rounded-2xl overflow-hidden border border-[#E5E7EA] mb-6"}
       style={{ height }}
     >
       <div ref={mapDivRef} className="w-full h-full" />
 
       {!ready && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#FAF7F2] gap-3">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#F6F7F8] gap-3">
           <div
             className="w-8 h-8 rounded-full border-4 animate-spin"
-            style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
+            style={{ borderColor: "#FF4A2D", borderTopColor: "transparent" }}
           />
-          <p className="text-xs font-bold text-[#8C6239]">Loading map…</p>
+          <p className="text-xs font-bold text-[#565D66]">Loading map…</p>
         </div>
       )}
 
       {/* Active spot info bar — only when no parent modal handler */}
       {!onSpotClick && activeSpot && (
-        <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-[#E6DFD5] px-4 py-3 flex items-center justify-between">
+        <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-[#E5E7EA] px-4 py-3 flex items-center justify-between">
           <div className="min-w-0">
-            <p className="text-sm font-black text-[#2C2520] truncate">{activeSpot.name}</p>
-            <p className="text-xs text-[#8C6239] truncate">{activeSpot.address.slice(0, 55)}</p>
+            <p className="text-sm font-black text-[#191C21] truncate">{activeSpot.name}</p>
+            <p className="text-xs text-[#565D66] truncate">{activeSpot.address.slice(0, 55)}</p>
           </div>
           <button
             onClick={() => { openInfoRef.current?.close(); setActiveSpot(null); }}
-            className="ml-3 text-[#B8A89A] hover:text-[#2C2520] text-lg shrink-0"
+            className="ml-3 text-[#8A919B] hover:text-[#191C21] text-lg shrink-0"
           >
             ✕
           </button>

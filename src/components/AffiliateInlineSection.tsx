@@ -39,15 +39,15 @@ export default function AffiliateInlineSection({
     <div
       className="rounded-2xl overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #FAF7F2 0%, #F5EFE3 100%)",
-        border: "1px solid #E6DFD5",
+        background: "linear-gradient(135deg, #F6F7F8 0%, #F5EFE3 100%)",
+        border: "1px solid #E5E7EA",
       }}
     >
       {/* 헤더 */}
-      <div className="px-5 pt-4 pb-3 flex items-center gap-2 border-b border-[#E6DFD5]">
+      <div className="px-5 pt-4 pb-3 flex items-center gap-2 border-b border-[#E5E7EA]">
         <span className="text-base">🇰🇷</span>
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-[#8C6239]">
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#565D66]">
             Korea Ready Partner Deals
           </p>
           <p className="text-[11px] text-[#9C8575]">
@@ -67,35 +67,35 @@ export default function AffiliateInlineSection({
             className={
               compact
                 ? "flex items-center gap-3 px-5 py-3.5 hover:bg-[#F0E9DE] transition-colors"
-                : "flex items-start gap-3 p-4 bg-white rounded-xl border border-[#E6DFD5] hover:border-[#D4AF37] hover:shadow-sm transition-all"
+                : "flex items-start gap-3 p-4 bg-white rounded-xl border border-[#E5E7EA] hover:border-[#FF4A2D] hover:shadow-sm transition-all"
             }
           >
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0"
-              style={{ backgroundColor: "#EAE3D2" }}
+              style={{ backgroundColor: "#F6F7F8" }}
             >
               {categoryEmoji(deal.category)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-black uppercase tracking-wide text-[#8C6239]">
+              <p className="text-[10px] font-black uppercase tracking-wide text-[#565D66]">
                 {deal.provider}
               </p>
-              <p className="text-sm font-black text-[#2C2520] leading-tight">
+              <p className="text-sm font-black text-[#191C21] leading-tight">
                 {deal.title}
               </p>
               {!compact && (
-                <p className="text-xs text-[#61554D] leading-relaxed mt-0.5 line-clamp-2">
+                <p className="text-xs text-[#565D66] leading-relaxed mt-0.5 line-clamp-2">
                   {deal.description}
                 </p>
               )}
             </div>
-            <span className="text-[#D4AF37] text-sm font-black shrink-0 mt-0.5">→</span>
+            <span className="text-[#FF4A2D] text-sm font-black shrink-0 mt-0.5">→</span>
           </a>
         ))}
       </div>
 
       {/* 스폰서 레이블 */}
-      <p className="text-center text-[9px] text-[#B8A89A] py-2 border-t border-[#E6DFD5]">
+      <p className="text-center text-[9px] text-[#8A919B] py-2 border-t border-[#E5E7EA]">
         Sponsored · gokoreamate partner network
       </p>
     </div>

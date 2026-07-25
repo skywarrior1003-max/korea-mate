@@ -33,13 +33,13 @@ function getCityImage(city: string): string {
 // ── 여행 퍼스낼리티 배지 ─────────────────────────────────────────────────────
 function getPersonality(style: string): { emoji: string; label: string; color: string } {
   const s = style.toLowerCase();
-  if (s.includes("food"))      return { emoji: "🍜", label: "Foodie",       color: "#f97316" };
+  if (s.includes("food"))      return { emoji: "🍜", label: "Foodie",       color: "#FF4A2D" };
   if (s.includes("adventure")) return { emoji: "⚡", label: "Adventurer",   color: "#dc2626" };
   if (s.includes("couple"))    return { emoji: "💫", label: "Romantic",     color: "#db2777" };
   if (s.includes("family"))    return { emoji: "👨‍👩‍👧", label: "Family",       color: "#16a34a" };
   if (s.includes("culture"))   return { emoji: "🏛️", label: "Cultural",     color: "#7c3aed" };
   if (s.includes("solo"))      return { emoji: "🎒", label: "Solo",         color: "#0ea5e9" };
-  return                              { emoji: "✨", label: "Explorer",     color: "#D4AF37" };
+  return                              { emoji: "✨", label: "Explorer",     color: "#FF4A2D" };
 }
 
 // ── 날짜 유틸 ─────────────────────────────────────────────────────────────────
@@ -164,18 +164,18 @@ export default function MyTripsPage() {
   const cityCap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#FAF7F2" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#F6F7F8" }}>
 
       {/* ── 헤더 ── */}
-      <header className="sticky top-0 z-40 border-b border-[#E6DFD5] backdrop-blur-md" style={{ backgroundColor: "rgba(250,247,242,0.92)" }}>
+      <header className="sticky top-0 z-40 border-b border-[#E5E7EA] backdrop-blur-md" style={{ backgroundColor: "rgba(250,247,242,0.92)" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-normal tracking-tight text-[#2C2520] flex items-center gap-1.5">
-            <span className="text-[#D4AF37] text-3xl">🇰🇷</span>
+          <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
+            <span className="text-[#FF4A2D] text-3xl">🇰🇷</span>
             go<span className="font-extrabold">korea</span>mate
           </Link>
           <Link
             href="/"
-            className="text-sm font-bold text-[#8C6239] hover:text-[#2C2520] transition-colors"
+            className="text-sm font-bold text-[#565D66] hover:text-[#191C21] transition-colors"
           >
             ← Home
           </Link>
@@ -186,8 +186,8 @@ export default function MyTripsPage() {
 
         {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black text-[#2C2520] mb-2">My Trips</h1>
-          <p className="text-[#8C6239] font-medium">
+          <h1 className="text-4xl font-black text-[#191C21] mb-2">My Trips</h1>
+          <p className="text-[#565D66] font-medium">
             AI-generated Korea itineraries · memories · sharing
           </p>
         </div>
@@ -202,8 +202,8 @@ export default function MyTripsPage() {
             ].filter(Boolean).map((chip) => (
               <div
                 key={chip!.label}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black border border-[#E6DFD5] bg-white"
-                style={{ color: "#2C2520" }}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black border border-[#E5E7EA] bg-white"
+                style={{ color: "#191C21" }}
               >
                 <span>{chip!.emoji}</span>
                 <span>{chip!.label}</span>
@@ -221,15 +221,15 @@ export default function MyTripsPage() {
             </p>
           </div>
         ) : (
-          <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[#E6DFD5] bg-white shadow-sm">
+          <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[#E5E7EA] bg-white shadow-sm">
             <span className="text-lg">📧</span>
-            <p className="text-sm font-bold text-[#61554D] flex-1">
+            <p className="text-sm font-bold text-[#565D66] flex-1">
               Connect your email to access trips on any device
             </p>
             <button
               onClick={() => setEmailModalOpen(true)}
               className="shrink-0 px-4 py-2 rounded-xl text-xs font-black text-white transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#D4AF37" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               Connect
             </button>
@@ -239,8 +239,8 @@ export default function MyTripsPage() {
         {/* ── 로딩 ── */}
         {loading && (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#D4AF37]" />
-            <p className="text-sm font-bold text-[#8C6239]">Loading your trips…</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#FF4A2D]" />
+            <p className="text-sm font-bold text-[#565D66]">Loading your trips…</p>
           </div>
         )}
 
@@ -249,15 +249,15 @@ export default function MyTripsPage() {
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-red-50 flex items-center justify-center text-5xl">⚠️</div>
             <div>
-              <p className="text-2xl font-black text-[#2C2520] mb-2">Could not load trips</p>
-              <p className="text-[#8C6239] max-w-sm leading-relaxed">
+              <p className="text-2xl font-black text-[#191C21] mb-2">Could not load trips</p>
+              <p className="text-[#565D66] max-w-sm leading-relaxed">
                 Check your connection and try again.
               </p>
             </div>
             <button
               onClick={() => window.location.reload()}
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
-              style={{ backgroundColor: "#D4AF37" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               Try Again
             </button>
@@ -267,17 +267,17 @@ export default function MyTripsPage() {
         {/* ── 빈 상태 ── */}
         {!loading && !fetchError && trips.length === 0 && (
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
-            <div className="w-24 h-24 rounded-3xl bg-[#EAE3D2] flex items-center justify-center text-5xl">✈️</div>
+            <div className="w-24 h-24 rounded-3xl bg-[#F6F7F8] flex items-center justify-center text-5xl">✈️</div>
             <div>
-              <p className="text-2xl font-black text-[#2C2520] mb-2">No trips yet</p>
-              <p className="text-[#8C6239] max-w-sm leading-relaxed">
+              <p className="text-2xl font-black text-[#191C21] mb-2">No trips yet</p>
+              <p className="text-[#565D66] max-w-sm leading-relaxed">
                 Trips are saved here automatically after AI generation.<br/>Plan your first Korea adventure now!
               </p>
             </div>
             <Link
               href="/"
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
-              style={{ backgroundColor: "#D4AF37" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               🗺️ Start Planning
             </Link>
@@ -298,7 +298,7 @@ export default function MyTripsPage() {
               return (
                 <div
                   key={trip.id}
-                  className="bg-white rounded-3xl border border-[#E6DFD5] shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col group"
+                  className="bg-white rounded-3xl border border-[#E5E7EA] shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col group"
                   style={{ animation: `fadeInUp 0.3s ease-out ${i * 0.07}s both` }}
                 >
                   {/* ── 도시 히어로 이미지 ── */}
@@ -339,10 +339,10 @@ export default function MyTripsPage() {
 
                   {/* ── 메타 칩 ── */}
                   <div className="px-4 pt-3.5 pb-0 flex flex-wrap gap-1.5">
-                    <span className="text-[10px] font-black bg-[#EAE3D2] text-[#8C6239] px-2.5 py-1 rounded-md">
+                    <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
                       📅 {trip.days}d
                     </span>
-                    <span className="text-[10px] font-black bg-[#EAE3D2] text-[#8C6239] px-2.5 py-1 rounded-md">
+                    <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
                       👤 {trip.travelers} pax
                     </span>
                     {trip.moments > 0 && (
@@ -360,7 +360,7 @@ export default function MyTripsPage() {
                       style={
                         trip.isPublic
                           ? { backgroundColor: "#eff6ff", borderColor: "#bfdbfe", color: "#1d4ed8" }
-                          : { backgroundColor: "#EAE3D2", borderColor: "#d1c4b0", color: "#8C6239" }
+                          : { backgroundColor: "#F6F7F8", borderColor: "#d1c4b0", color: "#565D66" }
                       }
                     >
                       {togglingPublic.has(trip.id) ? "…" : trip.isPublic ? "🌐 Public" : "🔒 Private"}
@@ -372,7 +372,7 @@ export default function MyTripsPage() {
                     <Link
                       href={`/itinerary?id=${trip.id}`}
                       className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
-                      style={{ backgroundColor: "#2C2520" }}
+                      style={{ backgroundColor: "#191C21" }}
                     >
                       Open Itinerary →
                     </Link>
@@ -385,7 +385,7 @@ export default function MyTripsPage() {
                         style={
                           isCopied
                             ? { backgroundColor: "#f0fdf4", borderColor: "#86efac", color: "#16a34a" }
-                            : { backgroundColor: "#FAF7F2", borderColor: "#E6DFD5", color: "#8C6239" }
+                            : { backgroundColor: "#F6F7F8", borderColor: "#E5E7EA", color: "#565D66" }
                         }
                       >
                         {isCopied ? "✅ Copied" : "🔗 Copy Link"}
@@ -403,7 +403,7 @@ export default function MyTripsPage() {
                           </button>
                           <button
                             onClick={() => setConfirmDel(null)}
-                            className="px-3 py-2.5 rounded-xl text-xs font-bold bg-[#EAE3D2] text-[#8C6239] hover:bg-[#E6DFD5] transition-colors cursor-pointer"
+                            className="px-3 py-2.5 rounded-xl text-xs font-bold bg-[#F6F7F8] text-[#565D66] hover:bg-[#E5E7EA] transition-colors cursor-pointer"
                           >
                             Cancel
                           </button>
@@ -411,7 +411,7 @@ export default function MyTripsPage() {
                       ) : (
                         <button
                           onClick={() => setConfirmDel(trip.id)}
-                          className="px-3 py-2.5 rounded-xl text-xs font-bold border border-[#E6DFD5] text-[#8C6239]/50 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
+                          className="px-3 py-2.5 rounded-xl text-xs font-bold border border-[#E5E7EA] text-[#565D66]/50 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
                         >
                           🗑️
                         </button>
@@ -425,14 +425,14 @@ export default function MyTripsPage() {
             {/* ── 새 여행 추가 카드 ── */}
             <Link
               href="/"
-              className="rounded-3xl border-2 border-dashed border-[#E6DFD5] flex flex-col items-center justify-center gap-3 py-16 text-center hover:border-[#D4AF37] transition-colors group"
+              className="rounded-3xl border-2 border-dashed border-[#E5E7EA] flex flex-col items-center justify-center gap-3 py-16 text-center hover:border-[#FF4A2D] transition-colors group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-[#EAE3D2] flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                 ＋
               </div>
               <div>
-                <p className="text-sm font-black text-[#2C2520]">New Trip Plan</p>
-                <p className="text-xs text-[#8C6239] mt-0.5">AI in 30 sec</p>
+                <p className="text-sm font-black text-[#191C21]">New Trip Plan</p>
+                <p className="text-xs text-[#565D66] mt-0.5">AI in 30 sec</p>
               </div>
             </Link>
           </div>
@@ -441,7 +441,7 @@ export default function MyTripsPage() {
       </main>
 
       {/* ── 푸터 ── */}
-      <footer className="mt-auto border-t border-[#E6DFD5] py-8 text-center text-sm text-[#8C6239] px-4" style={{ backgroundColor: "#FAF7F2" }}>
+      <footer className="mt-auto border-t border-[#E5E7EA] py-8 text-center text-sm text-[#565D66] px-4" style={{ backgroundColor: "#F6F7F8" }}>
         <p>© {new Date().getFullYear()} KoreaMate · Trip data stored on your device</p>
       </footer>
 

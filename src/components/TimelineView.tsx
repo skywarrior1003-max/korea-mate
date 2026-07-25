@@ -224,7 +224,7 @@ export default function TimelineView({
                       target="_blank"
                       rel="noopener noreferrer sponsored"
                       className="inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl text-xs font-bold text-white transition-opacity hover:opacity-90"
-                      style={{ backgroundColor: "#f97316" }}
+                      style={{ backgroundColor: "#FF4A2D" }}
                     >
                       🤝 Book via {item.commerce.affiliatePartner} →
                     </a>
