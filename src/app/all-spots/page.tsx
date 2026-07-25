@@ -388,7 +388,7 @@ export default function AllSpotsPage() {
             <span className="text-3xl shrink-0">🍽️</span>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">NEW</p>
-              <p className="text-sm font-black text-gray-900 leading-snug">2026 Busan Food Guide Top 100 — Michelin · Busan Mat · Taegshlang</p>
+              <p className="text-sm font-black text-gray-900 leading-snug">2026 Busan Food Guide — Michelin · Busan Mat · Taegshlang</p>
             </div>
             <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">View All →</span>
           </Link>

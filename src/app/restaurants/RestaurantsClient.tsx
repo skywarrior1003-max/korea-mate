@@ -452,7 +452,7 @@ export default function RestaurantsClient() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="text-orange-300 text-xs font-black uppercase tracking-widest mb-2">Busan Food Guide 2026</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
-            2026 Busan Food Guide <span style={{ color: "#fb923c" }}>Top 100</span>
+            2026 Busan Food Guide
           </h2>
           <p className="text-white/70 text-sm sm:text-base font-medium mb-6 max-w-xl">
             Michelin Guide · Busan Mat · Taegshlang — selected from 3 major food guides across 16 districts

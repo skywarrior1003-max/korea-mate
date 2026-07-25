@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import RestaurantsClient from "./RestaurantsClient";
 
-const title = "Busan Restaurant Guide 2026 | GoKoreaMate";
+const title = "2026 Busan Food Guide | GoKoreaMate";
 const description =
   "Discover top Busan restaurants from Michelin 2026, Busan Mat 2026, and Taegshlang 2025. Filter by district, price, and award.";
 

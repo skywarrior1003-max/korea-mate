@@ -15,6 +15,7 @@ import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
 import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
+import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -808,15 +809,15 @@ export default function HomeClient() {
   //  RENDER
   // ════════════════════════════════════════════════════════════════
   return (
-    <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
+    <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased overflow-x-clip">
 
       <NoticeModal />
 
       {/* ── 네비게이션 ──────────────────────────────────────────── */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
-            <span className="text-2xl">🇰🇷</span>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+          <Link href="/" className="text-lg sm:text-xl font-normal text-gray-900 flex items-center gap-1 sm:gap-1.5 shrink min-w-0">
+            <span className="text-xl sm:text-2xl">🇰🇷</span>
             go<span className="font-extrabold">korea</span>mate
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
@@ -833,13 +834,13 @@ export default function HomeClient() {
               Plan My Trip
             </button>
           </nav>
-          <div className="sm:hidden flex items-center gap-2">
-            <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">
+          <div className="sm:hidden flex items-center gap-1.5 shrink-0">
+            <Link href="/my-trips" className="px-2.5 py-2 rounded-lg text-[13px] font-bold text-orange-600 border border-orange-200 bg-orange-50 whitespace-nowrap">
               🧳 My Trips
             </Link>
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-3 py-2 rounded-lg text-sm font-bold text-white cursor-pointer"
+              className="px-2.5 py-2 rounded-lg text-[13px] font-bold text-white cursor-pointer whitespace-nowrap"
               style={{ backgroundColor: "#f97316" }}
             >
               Plan Trip
@@ -981,6 +982,8 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* Adaptive Home — 여행 상태(pre/in/post) 실데이터 기반 조건부 모듈 (S1) */}
+      <AdaptiveHomeCard />
 
       {/* ══════════════════════════════════════════════════════════
           AI 일정 생성 폼
@@ -1428,7 +1431,7 @@ export default function HomeClient() {
                   style={{ backgroundColor: "#fff7ed", color: "#c2410c", borderColor: "#fed7aa" }}
                 >
                   <span className="text-xl">⭐</span>
-                  <span className="whitespace-nowrap">Busan Food 100</span>
+                  <span className="whitespace-nowrap">2026 Busan Food Guide</span>
                 </Link>
                 <button
                   onClick={handleGpsToggle}
@@ -1678,7 +1681,7 @@ export default function HomeClient() {
               <div>
                 <SectionHeader
                   emoji="⭐🍽️"
-                  title="Busan Food 100"
+                  title="2026 Busan Food Guide"
                   subtitle="Michelin, local favorites, and taxi-driver picks — curated for Busan travelers"
                   count={michelinFood.length}
                   onViewAll={() => router.push("/restaurants")}
@@ -1691,7 +1694,7 @@ export default function HomeClient() {
                   <span className="text-4xl shrink-0">🍽️</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 Busan Food Guide</p>
-                    <p className="text-base font-black text-gray-900">Michelin · Busan Taste · Taksulang picks <span className="text-orange-500">Top 100</span></p>
+                    <p className="text-base font-black text-gray-900">Michelin · Busan Mat · Taegshlang picks</p>
                     <p className="text-xs text-gray-500 mt-0.5">16 districts · EN/KO · Sorted by GPS distance</p>
                   </div>
                   <span className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white bg-orange-500 group-hover:bg-orange-600 transition-colors whitespace-nowrap">

@@ -283,20 +283,20 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           <button
             key={cat.value}
             onClick={() => setSelectedCategory(cat.value)}
-            className="px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer"
+            className="gkm-focus px-4 py-2 min-h-11 rounded-full text-sm font-bold transition-all border cursor-pointer"
             style={selectedCategory === cat.value
-              ? { backgroundColor: "#1a1f36", color: "white", borderColor: "#1a1f36" }
-              : { backgroundColor: "white",   color: "#6b7280", borderColor: "#e5e7eb" }
+              ? { backgroundColor: "var(--gkm-ink)", color: "white", borderColor: "var(--gkm-ink)" }
+              : { backgroundColor: "var(--gkm-surface)", color: "var(--gkm-text-sub)", borderColor: "var(--gkm-line)" }
             }
           >{cat.label}</button>
         ))}
         <button
           onClick={handleNearMe}
           disabled={locationLoading}
-          className="ml-auto px-4 py-2 rounded-full text-sm font-bold transition-all border cursor-pointer flex items-center gap-1.5 disabled:opacity-60"
+          className="gkm-focus ml-auto px-4 py-2 min-h-11 rounded-full text-sm font-bold transition-all border cursor-pointer flex items-center gap-1.5 disabled:opacity-60"
           style={nearMeActive
-            ? { backgroundColor: "#f97316", color: "white",   borderColor: "#f97316" }
-            : { backgroundColor: "white",   color: "#6b7280", borderColor: "#e5e7eb" }
+            ? { backgroundColor: "var(--gkm-action-primary)", color: "white", borderColor: "var(--gkm-action-primary)" }
+            : { backgroundColor: "var(--gkm-surface)", color: "var(--gkm-text-sub)", borderColor: "var(--gkm-line)" }
           }
         >
           {locationLoading ? tE("locating") : nearMeActive ? tE("nearMeActive") : tE("nearMe")}
