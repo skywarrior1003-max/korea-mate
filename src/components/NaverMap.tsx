@@ -14,12 +14,16 @@ declare global {
         Event:      { addListener: (t: unknown, ev: string, fn: () => void) => void };
         Point:      new (x: number, y: number) => { x: number; y: number };
         Size:       new (w: number, h: number) => unknown;
+        Polyline:   new (opts: Record<string, unknown>) => NaverShapeObj;
+        LatLngBounds: new (sw: NaverLatLng, ne: NaverLatLng) => NaverBoundsObj;
       };
     };
   }
 }
 // 주의: relayout()은 Kakao Maps API — Naver v3에는 없다. 크기 갱신은 setSize()가 정식 API.
-interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; setSize: (s: unknown) => void; getCenter: () => NaverLatLng; }
+interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; setSize: (s: unknown) => void; getCenter: () => NaverLatLng; fitBounds: (b: NaverBoundsObj, opts?: Record<string, unknown>) => void; }
+interface NaverShapeObj    { setMap: (m: NaverMapObj | null) => void; }
+interface NaverBoundsObj   { extend: (l: NaverLatLng) => void; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
 interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
@@ -33,6 +37,13 @@ export interface MapSpot {
   address:  string;
 }
 
+// S2 trip 레이어 — 선택한 Day의 방문 순서 장소 (번호 마커 + 순서선)
+export interface DayPlace {
+  name: string;
+  lat:  number;
+  lng:  number;
+}
+
 interface Props {
   spots:         MapSpot[];
   userLocation?: { lat: number; lng: number } | null;
@@ -42,6 +53,10 @@ interface Props {
   className?:    string;
   relayoutKey?:  number;
   onSpotClick?:  (spot: MapSpot) => void;
+  /** trip 레이어: 방문 순서대로 번호 코랄 마커 + 점선 순서선. 항상 최상위, 클러스터 없음. */
+  dayPlaces?:    DayPlace[];
+  /** true면 마커 클릭 시 Naver InfoWindow를 열지 않음 — 자체 프리뷰 UI를 쓰는 화면용(일정 지도). */
+  hideInfoWindow?: boolean;
 }
 
 // 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
@@ -68,12 +83,16 @@ export default function NaverMap({
   className,
   relayoutKey,
   onSpotClick,
+  dayPlaces,
+  hideInfoWindow,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
   const markersRef    = useRef<NaverMarkerObj[]>([]);
   const userMarkerRef = useRef<NaverMarkerObj | null>(null);
   const openInfoRef   = useRef<NaverInfoWindowObj | null>(null);
+  const dayMarkersRef = useRef<NaverMarkerObj[]>([]);
+  const dayLineRef    = useRef<NaverShapeObj | null>(null);
   const [ready,      setReady]      = useState(false);
   const [activeSpot, setActiveSpot] = useState<MapSpot | null>(null);
 
@@ -131,8 +150,10 @@ export default function NaverMap({
 
       map.Event.addListener(marker, "click", () => {
         openInfoRef.current?.close();
-        info.open(nmap, marker);
-        openInfoRef.current = info;
+        if (!hideInfoWindow) {
+          info.open(nmap, marker);
+          openInfoRef.current = info;
+        }
         if (onSpotClick) {
           onSpotClick(spot);
         } else {
@@ -181,6 +202,65 @@ export default function NaverMap({
     const t = setTimeout(() => applySizeRef.current(), 300);
     return () => clearTimeout(t);
   }, [relayoutKey]);
+
+  // ── S2 trip 레이어: 번호 마커(코랄) + 점선 순서선 — 도로 경로가 아닌 방문 순서 표현 ──
+  // base 마커와 독립 관리(additive). 항상 최상위(zIndex 200), 클러스터 없음.
+  useEffect(() => {
+    if (!mapRef.current || !window.naver?.maps) return;
+    // 이전 trip 레이어 정리
+    dayMarkersRef.current.forEach(m => m.setMap(null));
+    dayMarkersRef.current = [];
+    dayLineRef.current?.setMap(null);
+    dayLineRef.current = null;
+
+    const pts = (dayPlaces ?? []).filter(p => p.lat && p.lng);
+    if (pts.length === 0) return;
+
+    const map = window.naver.maps;
+    const nmap = mapRef.current;
+
+    const latlngs = pts.map(p => new map.LatLng(p.lat, p.lng));
+
+    // 순서선 (점선 — planned-visit 관계 표현)
+    if (latlngs.length >= 2) {
+      dayLineRef.current = new map.Polyline({
+        map: nmap as unknown as Record<string, unknown>,
+        path: latlngs,
+        strokeColor: "#FF4A2D",
+        strokeOpacity: 0.55,
+        strokeWeight: 3,
+        strokeStyle: "shortdash",
+        zIndex: 150,
+      });
+    }
+
+    // 번호 마커 1..n
+    pts.forEach((p, i) => {
+      const marker = new map.Marker({
+        position: latlngs[i],
+        map: nmap as unknown as Record<string, unknown>,
+        zIndex: 200,
+        icon: {
+          content: `<div style="display:flex;align-items:center;gap:5px">
+            <div style="width:26px;height:26px;border-radius:50%;background:#FF4A2D;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${i + 1}</div>
+            <div style="background:rgba(255,255,255,0.95);color:#191C21;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.2)">${p.name.length > 12 ? p.name.slice(0, 11) + "…" : p.name}</div>
+          </div>`,
+          anchor: new map.Point(13, 13),
+        },
+      });
+      dayMarkersRef.current.push(marker);
+    });
+
+    // 해당 Day 전체가 보이도록 fit (1곳이면 center만)
+    if (latlngs.length === 1) {
+      nmap.setCenter(latlngs[0]);
+      nmap.setZoom(14);
+    } else {
+      const bounds = new map.LatLngBounds(latlngs[0], latlngs[0]);
+      latlngs.forEach(l => bounds.extend(l));
+      nmap.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
+    }
+  }, [dayPlaces, ready]); // ready: 지도 초기화 이전에 dayPlaces가 먼저 도착하는 경우 재실행
 
   // User location marker
   useEffect(() => {
