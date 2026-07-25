@@ -20,6 +20,8 @@ import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 import UserSpotsPanel from "@/components/UserSpotsPanel";
+import ItineraryDayMap from "@/components/ItineraryDayMap";
+import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import type { UserSpot } from "@/lib/user-spots-api";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
@@ -872,6 +874,8 @@ function ItineraryResult() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
+  const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
+  const [visited,       setVisited]       = useState<Set<string>>(new Set()); // S2: 로컬 방문 체크 (DB 무변경)
   // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
@@ -1431,6 +1435,61 @@ function ItineraryResult() {
     ));
   }
 
+  // ── S2: Day 지도의 base 핀 → 선택 Day에 추가 (Add to this day) ─────────────
+  // 저장 형식 무변경 — addUserSpotToDay와 동일한 Place 스냅샷 + place_id 메타.
+  function addCitySpotToDay(spot: CitySpot, dayIdx: number) {
+    const target = days[dayIdx];
+    // 시간: 해당 Day 마지막 장소 +90분 (파싱 실패·빈 Day는 10:00)
+    let time = "10:00";
+    const last = target?.places[target.places.length - 1];
+    if (last?.time) {
+      const [h, m] = last.time.split(":").map(Number);
+      if (!isNaN(h)) {
+        const total = Math.min(h * 60 + (m || 0) + 90, 21 * 60);
+        time = `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+      }
+    }
+    const newPlace: Place = {
+      name:          spot.name,
+      title:         spot.name,
+      source:        "city_spot",
+      place_id:      String(spot.id),
+      category:      spot.category,
+      location:      spot.district || spot.city,
+      time,
+      duration:      spot.durationMinutes ? `${spot.durationMinutes}m` : "60m",
+      tips:          spot.whyItMatters || spot.description || "",
+      googleMapsUrl: spot.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${spot.name} ${spot.city} Korea`)}`,
+      slot:          assignSlot(time),
+      lat:           spot.lat,
+      lng:           spot.lng,
+      address:       spot.address,
+    };
+    setDays(prev => prev.map((day, di) =>
+      di === dayIdx ? { ...day, places: [...day.places, newPlace] } : day
+    ));
+  }
+
+  // ── S2: 방문 체크 로컬 저장 (itinerary 계약·DB 무변경 — localStorage 전용) ──
+  // 격리: 여행별 storage key(itinId 우선, 미저장은 draft) + place_id 최우선 place key.
+  const visitedKey = visitedStorageKey(itinId ?? shareId);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(visitedKey);
+      setVisited(raw ? new Set(JSON.parse(raw) as string[]) : new Set());
+    } catch { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visitedKey]);
+  function toggleVisited(dayNumber: number, place: Place) {
+    setVisited(prev => {
+      const next = new Set(prev);
+      const key = visitedPlaceKey(dayNumber, place);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      try { localStorage.setItem(visitedKey, JSON.stringify([...next])); } catch { /* ignore */ }
+      return next;
+    });
+  }
+
   // ── 로딩 화면 — 페이즈별 스켈레톤 + 제휴 카드 노출 ──────────
   if (loading) {
     const phase = LOAD_PHASES[Math.min(loadPhase, LOAD_PHASES.length - 1)];
@@ -1977,6 +2036,16 @@ function ItineraryResult() {
       ) : (
         /* ── Full View ── */
         <div className="space-y-12 mb-16">
+          {/* S2: 선택 Day 지도 — 번호 마커·순서선·Add to this day */}
+          {days.length > 0 && (
+            <ItineraryDayMap
+              days={days}
+              city={city}
+              selectedDay={Math.min(mapDay, days.length - 1)}
+              onSelectDay={setMapDay}
+              onAddToDay={(!shareId || isOwner) ? addCitySpotToDay : undefined}
+            />
+          )}
           {days.map((day) => {
             // Layer 3: 공항 저녁 도착 + Day 1 → 도착 시간 이전 장소 렌더링 완전 제거
             const visiblePlaces =
@@ -2000,6 +2069,15 @@ function ItineraryResult() {
                   <span>Day {day.dayNumber}</span>
                   <span className="text-lg font-bold text-[#8C6239] bg-[#EAE3D2]/40 px-3 py-0.5 rounded-full">{day.date}</span>
                   <span className="text-sm font-semibold text-[#8C6239]">({day.places.length} places)</span>
+                  {/* S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만) */}
+                  {(() => {
+                    const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
+                    return done > 0 ? (
+                      <span className="text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-0.5 rounded-full">
+                        ✓ {done}/{day.places.length} visited
+                      </span>
+                    ) : null;
+                  })()}
                 </h2>
 
                 {conflictDays.has(day.dayNumber) && (
@@ -2065,6 +2143,18 @@ function ItineraryResult() {
                                         >{place.category}</span>
                                         <span className="text-xs font-bold text-[#61554D]">🕒 {place.time} ({place.duration})</span>
                                         <span className="text-xs font-bold text-[#61554D]">📍 {place.location}</span>
+                                        {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
+                                        <button
+                                          onClick={(e) => { e.stopPropagation(); toggleVisited(day.dayNumber, place); }}
+                                          aria-pressed={visited.has(visitedPlaceKey(day.dayNumber, place))}
+                                          className={`text-xs font-bold px-2.5 py-1 rounded-full border transition-colors cursor-pointer ${
+                                            visited.has(visitedPlaceKey(day.dayNumber, place))
+                                              ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                                              : "bg-white text-[#8C6239]/60 border-[#E6DFD5] hover:border-[#8C6239]/40"
+                                          }`}
+                                        >
+                                          {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ Visited" : "○ Visited"}
+                                        </button>
                                       </div>
                                       <div className="flex items-start gap-3">
                                         {place.cartSnapshot?.image && (

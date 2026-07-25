@@ -128,5 +128,16 @@
     "preTripTitle": "Trip coming up",
     "preTripHint": "Your {city} trip starts {date}.",
     "openPlan": "Open my plan"
+  },
+  "itin": {
+    "dayMap": "Day map",
+    "addToThisDay": "Add to Day {n}",
+    "added": "Added to Day {n}",
+    "noCoords": "{n} place(s) without map coordinates are not shown on the map",
+    "visited": "Visited",
+    "progress": "{done}/{total} visited"
+  },
+  "common": {
+    "language": "Language"
   }
 }

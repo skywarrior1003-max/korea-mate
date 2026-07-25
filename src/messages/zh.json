@@ -128,5 +128,16 @@
     "preTripTitle": "旅行即将开始",
     "preTripHint": "您的{city}之旅将于{date}开始。",
     "openPlan": "打开行程"
+  },
+  "itin": {
+    "dayMap": "每日地图",
+    "addToThisDay": "添加到第{n}天",
+    "added": "已添加到第{n}天",
+    "noCoords": "{n}个无坐标的地点未显示在地图上",
+    "visited": "已访问",
+    "progress": "{done}/{total} 已访问"
+  },
+  "common": {
+    "language": "语言"
   }
 }

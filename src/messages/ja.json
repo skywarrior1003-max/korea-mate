@@ -128,5 +128,16 @@
     "preTripTitle": "旅行が近づいています",
     "preTripHint": "{city}旅行は{date}に始まります。",
     "openPlan": "旅程を開く"
+  },
+  "itin": {
+    "dayMap": "日別マップ",
+    "addToThisDay": "Day {n}に追加",
+    "added": "Day {n}に追加しました",
+    "noCoords": "座標のない{n}件の場所は地図に表示されません",
+    "visited": "訪問済み",
+    "progress": "{done}/{total} 訪問"
+  },
+  "common": {
+    "language": "言語"
   }
 }

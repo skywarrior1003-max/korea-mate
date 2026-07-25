@@ -128,5 +128,16 @@
     "preTripTitle": "다가오는 여행",
     "preTripHint": "{city} 여행이 {date}에 시작됩니다.",
     "openPlan": "내 일정 열기"
+  },
+  "itin": {
+    "dayMap": "일자별 지도",
+    "addToThisDay": "Day {n}에 추가",
+    "added": "Day {n}에 추가됨",
+    "noCoords": "좌표가 없는 장소 {n}곳은 지도에 표시되지 않습니다",
+    "visited": "방문함",
+    "progress": "{done}/{total} 방문"
+  },
+  "common": {
+    "language": "언어"
   }
 }
