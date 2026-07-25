@@ -290,7 +290,7 @@ export default function AllSpotsPage() {
                   className="shrink-0 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all border cursor-pointer whitespace-nowrap"
                   style={
                     categoryFilter === f.key
-                      ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                      ? { backgroundColor: "#FF4A2D", color: "#fff", borderColor: "#FF4A2D" }
                       : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
                   }
                 >
@@ -421,7 +421,7 @@ export default function AllSpotsPage() {
             <button
               onClick={() => { setCategoryFilter("all"); setDistrictFilter("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               View All Spots
             </button>
@@ -476,7 +476,7 @@ export default function AllSpotsPage() {
                         onClick={() => { setPage(n as number); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                         className="w-9 h-9 rounded-lg text-sm font-bold border transition-colors"
                         style={safePage === n
-                          ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                          ? { backgroundColor: "#FF4A2D", color: "#fff", borderColor: "#FF4A2D" }
                           : { backgroundColor: "#fff", color: "#374151", borderColor: "#e5e7eb" }
                         }
                       >

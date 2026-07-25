@@ -433,7 +433,7 @@ function SectionHeader({
           <button
             onClick={onViewAll}
             className="inline-flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-black border-2 transition-all cursor-pointer hover:shadow-md"
-            style={{ borderColor: "#f97316", color: "#f97316" }}
+            style={{ borderColor: "#FF4A2D", color: "#FF4A2D" }}
           >
             View All →
           </button>
@@ -829,7 +829,7 @@ export default function HomeClient() {
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               Plan My Trip
             </button>
@@ -841,7 +841,7 @@ export default function HomeClient() {
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="px-2.5 py-2 rounded-lg text-[13px] font-bold text-white cursor-pointer whitespace-nowrap"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               Plan Trip
             </button>
@@ -874,7 +874,7 @@ export default function HomeClient() {
           {/* 메인 헤드라인 */}
           <h1 className="text-center text-5xl sm:text-[5.5rem] font-black text-white tracking-tight leading-[1.05] mb-5">
             Your Korea Story,<br />
-            <span style={{ color: "#D4AF37" }}>Captured &amp; Shared</span>
+            <span style={{ color: "#FF6A50" }}>Captured &amp; Shared</span>
           </h1>
 
           {/* 서브헤드라인 */}
@@ -887,7 +887,7 @@ export default function HomeClient() {
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center justify-center px-10 py-4 rounded-2xl text-lg font-black shadow-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer"
-              style={{ backgroundColor: "#D4AF37", color: "#1a1a2e" }}
+              style={{ backgroundColor: "#FF4A2D", color: "#ffffff" }}
             >
               ✨ Plan My Korea Trip
             </button>
@@ -906,7 +906,7 @@ export default function HomeClient() {
                   style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(212,175,55,0.22)" }}
                 >
                   <span className="text-2xl mb-1">{s.icon}</span>
-                  <span className="text-[10px] font-black tracking-widest mb-0.5" style={{ color: "#D4AF37" }}>
+                  <span className="text-[10px] font-black tracking-widest mb-0.5" style={{ color: "#FF4A2D" }}>
                     STEP {s.num}
                   </span>
                   <span className="text-sm font-black text-white">{s.label}</span>
@@ -937,9 +937,9 @@ export default function HomeClient() {
               />
               <span className="absolute top-[20%] left-0 right-0 text-center text-xs text-white/15">📸</span>
               <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
-                <div className="w-full h-[1px] mb-1" style={{ background: "#D4AF37", opacity: 0.45 }} />
+                <div className="w-full h-[1px] mb-1" style={{ background: "#FF4A2D", opacity: 0.45 }} />
                 <span className="text-white/75 text-[7px] font-black">✨ My Busan Trip</span>
-                <span className="text-[7px] font-bold" style={{ color: "#D4AF37" }}>3 Days · 12 Spots</span>
+                <span className="text-[7px] font-bold" style={{ color: "#FF4A2D" }}>3 Days · 12 Spots</span>
                 <span className="text-white/25 text-[6px]">gokoreamate.com</span>
               </div>
             </div>
@@ -959,7 +959,7 @@ export default function HomeClient() {
               />
               <span className="absolute top-[18%] left-0 right-0 text-center text-xs text-white/10">🏖️</span>
               <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
-                <div className="w-full h-[1px] mb-1" style={{ background: "#D4AF37", opacity: 0.2 }} />
+                <div className="w-full h-[1px] mb-1" style={{ background: "#FF4A2D", opacity: 0.2 }} />
                 <span className="text-white/40 text-[6px] font-black">🌿 Nature Wanderer</span>
                 <span className="text-white/20 text-[5px]">gokoreamate.com</span>
               </div>
@@ -1058,7 +1058,7 @@ export default function HomeClient() {
                 <Link
                   href={`/explore/${city.toLowerCase()}`}
                   className="flex items-center justify-center gap-1.5 py-2.5 text-xs font-black rounded-xl transition-all active:scale-95 hover:opacity-90 shadow-sm"
-                  style={{ color: "#fff", background: "linear-gradient(135deg, #f97316, #ea580c)" }}
+                  style={{ color: "#fff", background: "linear-gradient(135deg, #FF4A2D, #D93317)" }}
                 >
                   🗺️ Explore {city} Spots on Map →
                 </Link>
@@ -1071,7 +1071,7 @@ export default function HomeClient() {
                   type="button"
                   onClick={() => document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth" })}
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
-                  style={{ backgroundColor: "#f97316" }}
+                  style={{ backgroundColor: "#FF4A2D" }}
                 >
                   ✨ Pick Your Vibe
                 </button>
@@ -1230,7 +1230,7 @@ export default function HomeClient() {
               onClick={handleGenerate}
               disabled={isNavigating}
               className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               {isNavigating ? "⏳ Generating..." : "✨ Generate My Itinerary"}
             </button>
@@ -1257,13 +1257,13 @@ export default function HomeClient() {
               <button
                 onClick={handlePickVibeClick}
                 className="w-full py-3.5 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
-                style={{ backgroundColor: "#f97316" }}
+                style={{ backgroundColor: "#FF4A2D" }}
               >
                 🎯 Pick Spots →
               </button>
               <button
                 onClick={handleContinueWithoutPicks}
-                className="w-full py-3 rounded-xl font-bold text-sm text-[#61554D] border-2 border-[#E6DFD5] hover:border-[#D4AF37] hover:bg-[#FAF7F2] transition-all"
+                className="w-full py-3 rounded-xl font-bold text-sm text-[#61554D] border-2 border-[#E6DFD5] hover:border-[#FF4A2D] hover:bg-[#FAF7F2] transition-all"
               >
                 Continue Without Picks →
               </button>
@@ -1300,7 +1300,7 @@ export default function HomeClient() {
                   setTimeout(() => deptSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
                 }}
                 className="w-full py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#f97316" }}
+                style={{ backgroundColor: "#FF4A2D" }}
               >
                 Add Departure Info
               </button>
@@ -1376,10 +1376,10 @@ export default function HomeClient() {
               <div
                 key={card.title}
                 className={`rounded-2xl p-8 shadow-sm flex flex-col ${card.highlight ? "border-2 bg-white" : "bg-white border border-gray-100"}`}
-                style={card.highlight ? { borderColor: "#f97316" } : {}}
+                style={card.highlight ? { borderColor: "#FF4A2D" } : {}}
               >
                 {card.highlight && (
-                  <span className="self-start mb-3 px-2.5 py-0.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest" style={{ backgroundColor: "#f97316" }}>
+                  <span className="self-start mb-3 px-2.5 py-0.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest" style={{ backgroundColor: "#FF4A2D" }}>
                     🔥 MUST BOOK
                   </span>
                 )}
@@ -1389,7 +1389,7 @@ export default function HomeClient() {
                 {card.external ? (
                   <a href={card.href} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: "#f97316" }}>
+                    style={{ backgroundColor: "#FF4A2D" }}>
                     {card.cta}
                   </a>
                 ) : (
@@ -1470,7 +1470,7 @@ export default function HomeClient() {
                       className="shrink-0 px-3 py-1 rounded-full text-xs font-bold transition-all border cursor-pointer whitespace-nowrap"
                       style={
                         eventFilter === f.key
-                          ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                          ? { backgroundColor: "#FF4A2D", color: "#fff", borderColor: "#FF4A2D" }
                           : { backgroundColor: "#f9fafb", color: "#6b7280", borderColor: "#e5e7eb" }
                       }
                     >
@@ -1544,7 +1544,7 @@ export default function HomeClient() {
           {isFilteringMode ? (
             eventsLoading && filteredResults.length === 0 ? (
               <div className="text-center py-20">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#f97316" }} />
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#FF4A2D" }} />
                 <p className="text-gray-500 font-medium">Loading…</p>
               </div>
             ) : filteredResults.length === 0 ? (
@@ -1599,7 +1599,7 @@ export default function HomeClient() {
                         className="w-9 h-9 rounded-lg text-sm font-black transition-all"
                         style={
                           pg === safePage
-                            ? { backgroundColor: "#f97316", color: "#fff" }
+                            ? { backgroundColor: "#FF4A2D", color: "#fff" }
                             : { backgroundColor: "#fff", color: "#6b7280", border: "1px solid #e5e7eb" }
                         }
                       >{pg}</button>
@@ -1630,7 +1630,7 @@ export default function HomeClient() {
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
                     <p className="text-gray-500 text-sm font-medium">Loading events…</p>
                   </div>
                 ) : megaEvents.length === 0 ? (
@@ -1660,7 +1660,7 @@ export default function HomeClient() {
                   />
                   {eventsLoading ? (
                     <div className="text-center py-16">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
                       <p className="text-gray-500 text-sm font-medium">Loading…</p>
                     </div>
                   ) : (
@@ -1704,7 +1704,7 @@ export default function HomeClient() {
 
                 {eventsLoading ? (
                   <div className="text-center py-16">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#f97316" }} />
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
                     <p className="text-gray-500 text-sm font-medium">Loading restaurants…</p>
                   </div>
                 ) : michelinFood.length === 0 ? (
@@ -1909,7 +1909,7 @@ export default function HomeClient() {
                 <div className="text-4xl">{card.icon}</div>
                 <h3 className="text-xl font-black text-white">{card.title}</h3>
                 <p className="text-sm font-medium text-gray-400">{card.desc}</p>
-                <span className="text-sm font-bold mt-2 group-hover:underline" style={{ color: "#f97316" }}>
+                <span className="text-sm font-bold mt-2 group-hover:underline" style={{ color: "#FF4A2D" }}>
                   Read More →
                 </span>
               </Link>

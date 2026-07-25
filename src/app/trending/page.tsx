@@ -184,7 +184,7 @@ function TrendingContent() {
               <button
                 onClick={() => { setTripCity(""); setTripStyle(""); }}
                 className="text-xs font-bold underline"
-                style={{ color: "#f97316" }}
+                style={{ color: "#FF4A2D" }}
               >
                 Clear filters
               </button>
@@ -245,7 +245,7 @@ function TrendingContent() {
           className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 90% 50%, #f97316 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
+              "radial-gradient(circle at 90% 50%, #FF4A2D 0%, transparent 50%), radial-gradient(circle at 10% 20%, #3b82f6 0%, transparent 40%)",
           }}
         />
         <div className="relative flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-6">
@@ -311,7 +311,7 @@ function TrendingContent() {
         <div className="text-center py-20">
           <div
             className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4"
-            style={{ borderColor: "#f97316" }}
+            style={{ borderColor: "#FF4A2D" }}
           />
           <p className="text-gray-500 font-medium">Loading events…</p>
         </div>
@@ -325,7 +325,7 @@ function TrendingContent() {
             <button
               onClick={() => setSearch("")}
               className="mt-3 text-sm font-bold underline"
-              style={{ color: "#f97316" }}
+              style={{ color: "#FF4A2D" }}
             >
               Clear search
             </button>
@@ -394,7 +394,7 @@ export default function TrendingPage() {
           <div className="flex-1 flex items-center justify-center py-24">
             <div
               className="animate-spin rounded-full h-10 w-10 border-b-2"
-              style={{ borderColor: "#f97316" }}
+              style={{ borderColor: "#FF4A2D" }}
             />
           </div>
         }

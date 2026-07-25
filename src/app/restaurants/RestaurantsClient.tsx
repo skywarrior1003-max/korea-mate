@@ -448,7 +448,7 @@ export default function RestaurantsClient() {
         style={{ background: "linear-gradient(135deg, #1a0f00 0%, #7c2d12 50%, #1a0f00 100%)" }}
       >
         <div className="absolute inset-0 opacity-30 pointer-events-none"
-          style={{ backgroundImage: "radial-gradient(ellipse at 20% 50%, #f97316 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, #fbbf24 0%, transparent 50%)" }} />
+          style={{ backgroundImage: "radial-gradient(ellipse at 20% 50%, #FF4A2D 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, #fbbf24 0%, transparent 50%)" }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="text-orange-300 text-xs font-black uppercase tracking-widest mb-2">Busan Food Guide 2026</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
@@ -582,7 +582,7 @@ export default function RestaurantsClient() {
             <button
               onClick={() => { setSource("all"); setDistrict("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               View All
             </button>
@@ -624,7 +624,7 @@ export default function RestaurantsClient() {
                           onClick={() => { setPage(n as number); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                           className="w-9 h-9 rounded-lg text-sm font-bold border transition-colors"
                           style={safePage === n
-                            ? { backgroundColor: "#f97316", color: "#fff", borderColor: "#f97316" }
+                            ? { backgroundColor: "#FF4A2D", color: "#fff", borderColor: "#FF4A2D" }
                             : { backgroundColor: "#fff", color: "#374151", borderColor: "#e5e7eb" }}
                         >{n}</button>
                   )}

@@ -81,7 +81,7 @@ export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
         </div>
         {distKm !== undefined && (
           <div className="absolute top-3 right-3">
-            <span className="px-2.5 py-1 rounded-lg text-xs font-bold text-white" style={{ backgroundColor: "#f97316" }}>
+            <span className="px-2.5 py-1 rounded-lg text-xs font-bold text-white" style={{ backgroundColor: "#FF4A2D" }}>
               📍 {distKm.toFixed(1)} km
             </span>
           </div>

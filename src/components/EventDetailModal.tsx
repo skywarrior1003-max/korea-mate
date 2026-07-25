@@ -560,7 +560,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
             <button
               onClick={handleAddToCart}
               className="flex-1 py-3.5 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               + Add to Itinerary
             </button>

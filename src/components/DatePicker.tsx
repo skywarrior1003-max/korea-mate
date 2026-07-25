@@ -111,7 +111,7 @@ export default function DatePicker({
         {/* Calendar icon */}
         <svg
           className="w-5 h-5 shrink-0"
-          style={{ color: open ? "#f97316" : "#d1d5db" }}
+          style={{ color: open ? "#FF4A2D" : "#d1d5db" }}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
           aria-hidden="true"
         >
@@ -192,7 +192,7 @@ export default function DatePicker({
                   disabled={isDisabled}
                   onClick={() => handleSelect(day)}
                   className={cellClass}
-                  style={isSelected ? { backgroundColor: "#f97316" } : {}}
+                  style={isSelected ? { backgroundColor: "#FF4A2D" } : {}}
                   aria-label={`${MONTHS[viewMonth]} ${day}, ${viewYear}`}
                   aria-pressed={isSelected}
                 >

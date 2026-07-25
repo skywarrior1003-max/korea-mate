@@ -461,13 +461,13 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
             <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">{tN("myTrips")}</Link>
-            <Link href="/" className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#f97316" }}>
+            <Link href="/" className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#FF4A2D" }}>
               {tN("planMyTrip")}
             </Link>
           </nav>
           <div className="sm:hidden flex items-center gap-2">
             <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">🧳</Link>
-            <Link href="/" className="px-3 py-2 rounded-lg text-sm font-bold text-white" style={{ backgroundColor: "#f97316" }}>{tN("plan")}</Link>
+            <Link href="/" className="px-3 py-2 rounded-lg text-sm font-bold text-white" style={{ backgroundColor: "#FF4A2D" }}>{tN("plan")}</Link>
           </div>
         </div>
       </header>
@@ -481,7 +481,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
         </div>
         <Suspense fallback={
           <div className="flex-1 flex items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2" style={{ borderColor: "#f97316" }} />
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2" style={{ borderColor: "#FF4A2D" }} />
           </div>
         }>
           <ExploreCityContent city={city} />

@@ -11,7 +11,7 @@ export default function ContactSection() {
       <button
         onClick={() => setOpen(true)}
         className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
-        style={{ backgroundColor: "#f97316" }}
+        style={{ backgroundColor: "#FF4A2D" }}
       >
         ✉️ Contact gokoreamate
       </button>

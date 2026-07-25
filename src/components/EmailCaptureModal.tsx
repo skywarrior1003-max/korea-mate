@@ -150,7 +150,7 @@ export default function EmailCaptureModal({ isOpen, onClose, context = "default"
               type="submit"
               disabled={status === "loading" || !email.trim()}
               className="w-full py-3.5 rounded-2xl text-sm font-black text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: "#f97316" }}
+              style={{ backgroundColor: "#FF4A2D" }}
             >
               {status === "loading" ? "Saving…" : copy.cta}
             </button>

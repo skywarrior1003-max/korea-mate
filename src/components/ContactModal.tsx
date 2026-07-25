@@ -127,7 +127,7 @@ export default function ContactModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top accent bar */}
-        <div className="h-1.5 w-full shrink-0" style={{ backgroundColor: "#f97316" }} />
+        <div className="h-1.5 w-full shrink-0" style={{ backgroundColor: "#FF4A2D" }} />
 
         <div className="px-6 pt-5 pb-1 shrink-0">
           <div className="flex items-center justify-between">
@@ -156,7 +156,7 @@ export default function ContactModal({
               <button
                 onClick={onClose}
                 className="mt-6 px-6 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#f97316" }}
+                style={{ backgroundColor: "#FF4A2D" }}
               >
                 Close
               </button>
@@ -273,7 +273,7 @@ export default function ContactModal({
                   type="submit"
                   disabled={status === "loading"}
                   className="flex-1 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-                  style={{ backgroundColor: "#f97316" }}
+                  style={{ backgroundColor: "#FF4A2D" }}
                 >
                   {status === "loading" ? "Sending…" : "Send message"}
                 </button>
