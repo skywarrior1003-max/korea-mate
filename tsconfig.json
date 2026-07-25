@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "allowImportingTsExtensions": true,
     "plugins": [
       {
         "name": "next"
@@ -30,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "functions", "src/lib/jpeg-strip-exif.test.ts", "src/lib/photo-validate.test.ts", "src/lib/photo-compress.test.ts", "src/lib/photo-delete.test.ts", "src/lib/photo-url.test.ts"]
+  "exclude": ["node_modules", "functions", "src/lib/jpeg-strip-exif.test.ts", "src/lib/photo-validate.test.ts", "src/lib/photo-compress.test.ts", "src/lib/photo-delete.test.ts", "src/lib/photo-url.test.ts", "src/lib/photo-url-route.test.ts"]
 }

@@ -14,7 +14,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../../src/lib/itinerary-validate";
-import { createMomentSignedUrl } from "../../../../src/lib/photo-url";
+import { handlePhotoUrlCore, AdminLike } from "../../../../src/lib/photo-url-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -52,35 +52,5 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  // 1단계: moment 존재 + device_id 확인 → itinerary_id, storage_path 취득
-  const { data: moment } = await admin
-    .from("trip_moments")
-    .select("moment_id, itinerary_id, storage_path")
-    .eq("moment_id", momentId)
-    .eq("device_id", deviceId)
-    .maybeSingle();
-
-  if (!moment) return json({ error: "Not found" }, 404);
-
-  // 2단계: itinerary 소유권 재확인 (FK 부재 보완)
-  const { data: itinerary } = await admin
-    .from("itineraries")
-    .select("id")
-    .eq("id", moment.itinerary_id)
-    .eq("device_id", deviceId)
-    .maybeSingle();
-
-  if (!itinerary) return json({ error: "Not found" }, 404);
-
-  // 3단계: storage_path 없으면 404
-  if (!moment.storage_path) return json({ error: "Not found" }, 404);
-
-  // 4단계: signed URL 생성
-  const result = await createMomentSignedUrl(admin.storage, moment.storage_path);
-  if (typeof result === "string") {
-    console.error("[trip-moments/:momentId/photo-url GET] signed URL failed:", result);
-    return json({ error: "Failed to generate photo URL" }, 500);
-  }
-
-  return json(result);
+  return handlePhotoUrlCore(momentId, deviceId, admin as unknown as AdminLike);
 }
