@@ -89,7 +89,9 @@ function cap(s: string): string {
 
 export default function PlaceDetailClient({ spot }: { spot: CitySpotRow }) {
   const t = useTranslations("place");
+  const tSaved = useTranslations("saved");
   const [saved, setSaved] = useState(false);
+  const [toast, setToast] = useState(false); // S2: Save 후 일정 브리지 토스트
 
   useEffect(() => {
     setSaved(getFavorites().includes(`local-${spot.id}`));
@@ -98,8 +100,13 @@ export default function PlaceDetailClient({ spot }: { spot: CitySpotRow }) {
   function handleSave() {
     const id = `local-${spot.id}`;
     const nowSaved = toggleFavorite(id);
-    if (nowSaved) cacheSavedSpot(toSavedEvent(spot));
-    else uncacheSavedSpot(id);
+    if (nowSaved) {
+      cacheSavedSpot(toSavedEvent(spot));
+      setToast(true);
+      setTimeout(() => setToast(false), 4000);
+    } else {
+      uncacheSavedSpot(id);
+    }
     setSaved(nowSaved);
   }
 
@@ -242,6 +249,20 @@ export default function PlaceDetailClient({ spot }: { spot: CitySpotRow }) {
           </div>
         </Card>
       </main>
+
+      {/* S2: Save → 일정 브리지 토스트 (BottomNav 위) */}
+      {toast && (
+        <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
+          <span>✓ {t("savedState")}</span>
+          <Link
+            href="/#planner"
+            className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
+            onClick={() => setToast(false)}
+          >
+            {tSaved("build")}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

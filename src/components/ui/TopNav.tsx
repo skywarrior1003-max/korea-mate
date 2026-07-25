@@ -5,6 +5,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export interface TopNavProps {
   savedCount?: number; // 실측치만
@@ -38,6 +39,7 @@ export default function TopNav({ savedCount }: TopNavProps) {
           <Link href="/about" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("more")}
           </Link>
+          <LanguageSwitcher />
         </nav>
       </div>
     </header>
