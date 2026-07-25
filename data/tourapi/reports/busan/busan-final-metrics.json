@@ -1,24 +1,103 @@
 {
   "city": "busan",
-  "package_task": "TASK-DATA-BUSAN-FINAL-PACKAGE-11",
-  "generated_at": "2026-07-24",
+  "previous_snapshot_task": "TASK-DATA-BUSAN-FINAL-PACKAGE-11",
+  "current_snapshot_task": "TASK-DATA-BUSAN-FINAL-METRICS-FULL-SYNC-18B",
+  "source_of_truth": "busan-integrated-candidates",
+  "snapshot_status": "current",
+  "updated_at": "2026-07-25",
   "pipeline_tasks": [
-    "TASK-01 ~ TASK-10"
+    "TASK-01 ~ TASK-10 (수집·매칭·통합·중복·정리)",
+    "TASK-13B: busan-K-* 665건 category 정규화 (contentTypeId 기반)",
+    "TASK-14: 전체 1,642건 subcategory 규칙 기반 분류",
+    "TASK-15: VisitBusan 이미지 URL 318건 Playwright 수집·적용",
+    "TASK-17B: 종교·역사시설 subcategory 오분류 수정 + CSV image_source 열 추가",
+    "TASK-18B: busan-final-metrics.json 완전 동기화"
   ],
   "final_candidate_counts": {
     "total": 1767,
-    "active_operational": 1664,
+    "active_operational": 1642,
     "by_status": {
+      "api_only_existing": 969,
       "existing_enriched": 362,
-      "api_only_existing": 991,
+      "manual_review": 4,
+      "course_reference": 71,
       "web_only_new": 311,
-      "course_reference": 49,
-      "reference_only": 21,
-      "merge_existing": 21,
       "excluded": 8,
-      "manual_review": 4
+      "reference_only": 21,
+      "merge_existing": 21
     },
-    "unresolved_core": 1
+    "by_category": {
+      "attraction": 717,
+      "event": 72,
+      "restaurant": 721,
+      "nature": 50,
+      "accommodation": 82
+    },
+    "by_subcategory": {
+      "village": 51,
+      "museum": 53,
+      "landmark": 48,
+      "cultural_site": 28,
+      "other_attraction": 202,
+      "temple": 38,
+      "cultural_space": 42,
+      "park": 63,
+      "observatory": 16,
+      "gallery": 16,
+      "historic_site": 24,
+      "family_attraction": 11,
+      "retail_store": 19,
+      "market": 42,
+      "spa": 9,
+      "shopping": 39,
+      "festival": 45,
+      "other_event": 13,
+      "seasonal_event": 7,
+      "performance": 5,
+      "korean_food": 117,
+      "other_restaurant": 429,
+      "seafood": 90,
+      "international_food": 23,
+      "cafe": 25,
+      "dessert_shop": 5,
+      "bar": 22,
+      "bakery": 6,
+      "outdoor_activity": 12,
+      "sports_facility": 13,
+      "hotel": 42,
+      "other_accommodation": 27,
+      "mountain": 4,
+      "other_nature": 6,
+      "guesthouse": 3,
+      "pension": 8,
+      "hostel": 1,
+      "trail": 8,
+      "coastal_walk": 2,
+      "unknown": 13,
+      "exhibition": 2,
+      "forest": 1,
+      "cooking_class": 4,
+      "ecological_site": 2,
+      "river": 1,
+      "island": 1,
+      "resort": 1,
+      "theme_park": 3
+    },
+    "key_subcategory_checks": {
+      "temple": 38,
+      "cultural_site": 28,
+      "historic_site": 24,
+      "other_attraction": 202
+    },
+    "image_stats": {
+      "image_count": 1501,
+      "image_total_active": 1642,
+      "image_rate": 91.4,
+      "visitbusan_image_source_count": 318,
+      "visitbusan_image_license_count": 318
+    },
+    "category_unknown_active": 0,
+    "intentional_manual_review_unknown": 13
   },
   "operational_readiness": {
     "ready_for_db_update": {
@@ -28,7 +107,7 @@
         "note": "제목·좌표·카테고리 충돌은 자동 덮어쓰기 금지. provenance 보존 필수."
       },
       "api_only_existing": {
-        "count": 990,
+        "count": 969,
         "action": "현재 DB 내용 유지. 변경 없음.",
         "note": "VB 데이터 없음. 다음 수집 사이클에서 VB 매칭 재시도 가능."
       }
@@ -40,20 +119,20 @@
         "note": "자동 운영 승인 금지. 131건 category_confirmed + 180건 direct 매핑."
       },
       "merge_existing": {
-        "count": 12,
+        "count": 21,
         "action": "canonical 대상 항목에 VB 보강 필드 연결 여부 수동 승인",
-        "note": "canonical 데이터 덮어쓰기 금지. 보강 필드(hours/phone/source_url)만 추가."
+        "note": "canonical 데이터 덮어쓰기 금지. 보강 필드(hours/phone/source_url)만 추가. merge_existing_12 섹션 참조."
       },
       "manual_review": {
-        "count": 14,
+        "count": 4,
         "action": "개별 수동 확인 후 상태 결정",
-        "note": "busan-K-00081 category=unknown 긴급 확인 필요."
+        "note": "candidate_status_manual_review 섹션 참조."
       }
     },
     "excluded_from_operations": {
       "course_reference": {
-        "count": 49,
-        "reason": "VisitBusan 코스 묶음 참조용, 독립 city_spot 아님"
+        "count": 71,
+        "reason": "VisitBusan 코스 묶음 참조용 + 여행코스(contentTypeId=25) 22건, 독립 city_spot 아님"
       },
       "reference_only": {
         "count": 21,
@@ -65,135 +144,221 @@
       }
     }
   },
-  "manual_review_14": [
+  "image_status": {
+    "visitbusan_images": "TASK-15 완료 — Playwright 기반 318건 수집 (2026-07-25)",
+    "tourapi_kto_images": "image_url 보유 항목에 포함. image_source 미기록 (라이선스 미확인)",
+    "image_coverage": {
+      "total_active": 1642,
+      "has_image": 1501,
+      "no_image": 141,
+      "rate_pct": 91.4
+    },
+    "by_source": {
+      "visitbusan": 318,
+      "tourapi_kto": 1183
+    },
+    "license": {
+      "visitbusan": "image_license=all_rights_reserved_visitbusan (318건). 상업 사용 전 권리 확인 필요.",
+      "tourapi_kto": "라이선스 미확정 — 추정 금지"
+    },
+    "overwrite_policy": "기존 image_url 덮어쓰기 0건 — 신규 항목에만 적용",
+    "image_quality": "로고·배너·placeholder 오포착 0건 (Playwright 검증 완료)",
+    "no_image_items": 141,
+    "completed_at": "TASK-15, 2026-07-25"
+  },
+  "known_limitations": [
+    "의도적 manual_review unknown 13건: camping_in_nature 8건(→ accommodation/camping 권장), mobile_program 5건(고정 장소 없음, 제외 여부 결정 필요). subcategory_manual_review 섹션 참조.",
+    "candidate_status=manual_review 4건: 개별 확인 필요. candidate_status_manual_review 섹션 참조.",
+    "other_* 비중 높음: other_restaurant 429건, other_attraction 202건 — 제목 키워드 분류 한계. 필요 시 수동 보완.",
+    "course_reference 71건: 독립 운영 city_spot 아님 (VB 코스 묶음 + 여행코스). 개별 spot 매핑 미완료.",
+    "busan-VB-1859(K-POP 동문): sdkart.modoo.at 2025-06-26 서비스 종료. 현장 확인 필요.",
+    "busan-K-00739: KTO↔VB 좌표 14m 차이 → 수동 확인 권장.",
+    "merge_existing 21건: busan-merge_existing_12(TASK-11 기준 12건) + 야간 보강 9건. canonical 덮어쓰기 금지.",
+    "운영 DB 반영(existing_enriched 362, web_only_new 311)은 메인 노트북 수동 승인 필요."
+  ],
+  "update_modes": {
+    "update": {
+      "description": "기존 canonical 후보의 필드 변경·누락·충돌 탐지 및 보강",
+      "scope": "existing_enriched 362건 + api_only_existing 969건",
+      "frequency": "주 1회 또는 VB 업데이트 감지 시",
+      "auto_apply": [
+        "hours",
+        "phone"
+      ],
+      "manual_required": [
+        "title_ko",
+        "latitude",
+        "longitude",
+        "category",
+        "address"
+      ],
+      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=update"
+    },
+    "discover": {
+      "description": "신규 후보만 발굴 (기존 항목 변경 없음)",
+      "scope": "web_only_new 311건 + 미수집 VB 콘텐츠",
+      "frequency": "신규 VB 콘텐츠 감지 시",
+      "auto_apply": [],
+      "manual_required": [
+        "category",
+        "운영 승인"
+      ],
+      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=discover"
+    },
+    "full": {
+      "description": "승인된 전체 후보 재점검 (비용 높음)",
+      "scope": "1767건 전체",
+      "frequency": "분기 1회 또는 대규모 VB 재수집 시",
+      "auto_apply": [],
+      "manual_required": [
+        "전체 검토 후 승인"
+      ],
+      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=full"
+    }
+  },
+  "source_missing_policy": {
+    "rule": "원천에서 사라진 항목은 즉시 삭제 금지",
+    "first_miss": "status: source_missing 표시",
+    "second_miss": "manual_review 대상으로 이동",
+    "deletion": "수동 승인 후에만 삭제"
+  },
+  "pipeline_scripts": [
     {
-      "candidate_id": "busan-A-00105",
-      "title_ko": "송도용궁구름다리(한,영, 중간, 중번)",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "canonical_only",
-      "review_type": "canonical_manual",
-      "priority": "normal"
+      "task": "TASK-03",
+      "script": "scripts/tourapi-busan-visitbusan-discovery-03.mjs",
+      "role": "VisitBusan 콘텐츠 수집"
     },
     {
-      "candidate_id": "busan-E-00028",
-      "title_ko": "부산푸드필름페스타(한, 영)",
-      "category": "event",
-      "subcategory": "unknown",
-      "compat": "canonical_only",
-      "review_type": "canonical_manual",
-      "priority": "normal"
+      "task": "TASK-05",
+      "script": "scripts/tourapi-busan-visitbusan-match-05.mjs",
+      "role": "VB↔canonical 매칭"
     },
     {
-      "candidate_id": "busan-E-00032",
-      "title_ko": "별바다부산 나이트페스타(한)//영,중간,중번,일",
-      "category": "event",
-      "subcategory": "unknown",
-      "compat": "canonical_only",
-      "review_type": "canonical_manual",
-      "priority": "normal"
+      "task": "TASK-06",
+      "script": "scripts/tourapi-busan-integrated-candidates-06.mjs",
+      "role": "통합 후보 생성 (1767건)"
     },
     {
-      "candidate_id": "busan-K-00081",
-      "title_ko": "롯데호텔 부산",
-      "category": "unknown",
-      "subcategory": "unknown",
-      "compat": "canonical_only",
-      "review_type": "canonical_manual",
-      "priority": "high",
-      "note": "category=unknown 미확정, 즉시 확인 필요"
+      "task": "TASK-07",
+      "script": "scripts/tourapi-busan-unknown-category-review-07.mjs",
+      "role": "unknown category 173건 분류"
     },
     {
-      "candidate_id": "busan-VBM-1796",
-      "title_ko": "목련꽃 가득 안은 성암사, 나만 알고 싶은 부산 봄꽃 성지",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near",
-      "sim": 0.818
+      "task": "TASK-08",
+      "script": "scripts/tourapi-busan-duplicate-manual-resolution-08.mjs",
+      "role": "중복·수동검토 31건 판정"
     },
     {
-      "candidate_id": "busan-VBM-1322",
-      "title_ko": "복합문화공간 현대 모터스튜디오 부산",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near",
-      "sim": 0.6
+      "task": "TASK-10",
+      "script": "scripts/tourapi-busan-integrated-candidates-finalize-10.mjs",
+      "role": "통합 후보 최종 정리 반영"
     },
     {
-      "candidate_id": "busan-VBM-367",
-      "title_ko": "부산영화체험박물관 feat.씨네뮤지엄",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near",
-      "sim": 0.667
+      "task": "TASK-13B",
+      "script": "scripts/tourapi-busan-category-normalize-13b.mjs",
+      "role": "busan-K-* 665건 category 정규화 (contentTypeId 기반)"
     },
     {
-      "candidate_id": "busan-VBM-346",
-      "title_ko": "신명천지 국립부산국악원",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near",
-      "sim": 0.6
+      "task": "TASK-14",
+      "script": "scripts/tourapi-busan-subcategory-classify-14.mjs",
+      "role": "전체 1,642건 subcategory 규칙 기반 분류"
     },
     {
-      "candidate_id": "busan-VBM-308",
-      "title_ko": "네 꿈을 펼쳐라! 부산시청자미디어센터",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near",
-      "sim": 0.6
+      "task": "TASK-15",
+      "script": "scripts/tourapi-busan-image-apply-15.mjs",
+      "role": "VisitBusan 이미지 URL 318건 CSV/JSON 적용"
     },
     {
-      "candidate_id": "busan-VBM-1523",
-      "title_ko": "삼락하동재첩국",
-      "category": "restaurant",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near_food",
-      "sim": 0.667
+      "task": "TASK-15 (image-collect)",
+      "script": ".tools/playwright-visitbusan/collect-images.mjs (레포 외부)",
+      "role": "Playwright 기반 VisitBusan 이미지 URL 수집 (318건 성공률 100%)"
     },
     {
-      "candidate_id": "busan-VBM-1516",
-      "title_ko": "부광돼지국밥",
-      "category": "restaurant",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near_food",
-      "sim": 0.625
-    },
-    {
-      "candidate_id": "busan-VBM-2131",
-      "title_ko": "삼진어묵",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_geo_near_food",
-      "sim": 0.6
-    },
-    {
-      "candidate_id": "busan-VBM-1640",
-      "title_ko": "부산영화체험박물관",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "manual_review_geo_near",
-      "review_type": "vbm_coordinate_conflict",
-      "coordinate_distance_m": 4
-    },
-    {
-      "candidate_id": "busan-VB-1859",
-      "title_ko": "K-POP 스타랑 동문 된 썰 푼다",
-      "category": "attraction",
-      "subcategory": "unknown",
-      "compat": "unresolved",
-      "review_type": "url_defunct",
-      "note": "sdkart.modoo.at 2025-06-26 서비스 종료. 현장 확인 필요."
+      "task": "TASK-17B",
+      "script": "scripts/tourapi-busan-fix-17b.mjs",
+      "role": "종교·역사시설 subcategory 오분류 11건 수정 + CSV image_source/image_license 열 추가"
     }
   ],
+  "key_files": {
+    "primary_candidates": "data/tourapi/candidates/busan/busan-integrated-candidates.csv",
+    "primary_candidates_json": "data/tourapi/candidates/busan/busan-integrated-candidates.json",
+    "subcategory_manual_review": "data/tourapi/candidates/busan/busan-subcategory-manual-review.csv",
+    "candidate_manual_review": "data/tourapi/candidates/busan/busan-integrated-manual-review.csv",
+    "metrics_task_history": "data/tourapi/reports/busan/busan-integrated-candidates-metrics.json",
+    "final_metrics": "data/tourapi/reports/busan/busan-final-metrics.json",
+    "handoff_doc": "docs/tourapi/busan-handoff-to-main-pc.md",
+    "handoff_legacy": "docs/tourapi/busan-final-handoff-11.md"
+  },
+  "candidate_status_manual_review": {
+    "count": 4,
+    "note": "candidate_status=manual_review 4건. 개별 수동 확인 후 상태 결정 필요.",
+    "items": [
+      {
+        "candidate_id": "busan-A-00105",
+        "title_ko": "송도용궁구름다리(한,영, 중간, 중번)",
+        "category": "attraction",
+        "subcategory": "unknown",
+        "review_reason": "canonical_manual_review"
+      },
+      {
+        "candidate_id": "busan-E-00028",
+        "title_ko": "부산푸드필름페스타(한, 영)",
+        "category": "event",
+        "subcategory": "unknown",
+        "review_reason": "canonical_manual_review"
+      },
+      {
+        "candidate_id": "busan-E-00032",
+        "title_ko": "별바다부산 나이트페스타(한)//영,중간,중번,일",
+        "category": "event",
+        "subcategory": "unknown",
+        "review_reason": "canonical_manual_review"
+      },
+      {
+        "candidate_id": "busan-VB-1859",
+        "title_ko": "K-POP 스타랑 동문 된 썰 푼다",
+        "category": "attraction",
+        "subcategory": "unknown",
+        "review_reason": "[REVIEW-09 미확정] REVIEW-09: 공식 URL(sdkart.modoo.at) 2025년 6월 26일 서비스 종료로 접속 불가. 진구 동천로132번길 6 3층 업체의 현재 운영 여부 및 업종 확인 불가 → 최종 unresolved 유지."
+      }
+    ]
+  },
+  "subcategory_manual_review": {
+    "count": 15,
+    "note": "subcategory_status=manual_review 15건. 자동분류 불가 — 메인 노트북 결정 필요.",
+    "subcategory_unknown_count": 13,
+    "subcategory_other_nature_count": 2,
+    "by_evidence": {
+      "camping_in_nature": {
+        "count": 10,
+        "recommendation": "accommodation/camping으로 category 변경 후 재분류",
+        "ids": [
+          "busan-K-00309",
+          "busan-K-00311",
+          "busan-K-00315",
+          "busan-K-00316",
+          "busan-K-00317",
+          "busan-K-00320",
+          "busan-K-00321",
+          "busan-K-00325",
+          "busan-VB-2142",
+          "busan-VB-1852"
+        ]
+      },
+      "mobile_program": {
+        "count": 5,
+        "recommendation": "고정 장소 없음 — 제외(excluded) 여부 결정 필요",
+        "ids": [
+          "busan-K-00378",
+          "busan-K-00383",
+          "busan-K-00422",
+          "busan-K-00688",
+          "busan-K-00708"
+        ]
+      }
+    }
+  },
+  "merge_existing_12_note": "TASK-11 시점 수동 확정 12건 목록. 현재 candidate_status=merge_existing는 21건 (야간 보강 TASK-13B~15에서 9건 추가). 아래 목록은 TASK-11 당시 확인된 병합 대상이며 여전히 유효함.",
   "merge_existing_12": [
     {
       "candidate_id": "busan-VB-399",
@@ -321,120 +486,5 @@
         "source_detail_url"
       ]
     }
-  ],
-  "update_modes": {
-    "update": {
-      "description": "기존 canonical 후보의 필드 변경·누락·충돌 탐지 및 보강",
-      "scope": "existing_enriched 362건 + api_only_existing 990건",
-      "frequency": "주 1회 또는 VB 업데이트 감지 시",
-      "auto_apply": [
-        "hours",
-        "phone"
-      ],
-      "manual_required": [
-        "title_ko",
-        "latitude",
-        "longitude",
-        "category",
-        "address"
-      ],
-      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=update"
-    },
-    "discover": {
-      "description": "신규 후보만 발굴 (기존 항목 변경 없음)",
-      "scope": "web_only_new 311건 + 미수집 VB 콘텐츠",
-      "frequency": "신규 VB 콘텐츠 감지 시",
-      "auto_apply": [],
-      "manual_required": [
-        "category",
-        "운영 승인"
-      ],
-      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=discover"
-    },
-    "full": {
-      "description": "승인된 전체 후보 재점검 (비용 높음)",
-      "scope": "1767건 전체",
-      "frequency": "분기 1회 또는 대규모 VB 재수집 시",
-      "auto_apply": [],
-      "manual_required": [
-        "전체 검토 후 승인"
-      ],
-      "run_command": "# 향후 구현 예정\n# node scripts/tourapi-busan-update.mjs --mode=full"
-    }
-  },
-  "source_missing_policy": {
-    "rule": "원천에서 사라진 항목은 즉시 삭제 금지",
-    "first_miss": "status: source_missing 표시",
-    "second_miss": "manual_review 대상으로 이동",
-    "deletion": "수동 승인 후에만 삭제"
-  },
-  "image_status": {
-    "visitbusan_images": "미수집 (Vue.js 동적 로딩으로 정적 HTML 추출 불가)",
-    "tourapi_kto_images": "existing_enriched 362건에 KTO 이미지 URL 보유",
-    "fallback_policy": "이미지 없는 항목은 placeholder 처리",
-    "next_step": "Playwright 기반 VB 이미지 수집 — 별도 후속 과제"
-  },
-  "key_files": {
-    "primary_candidates": "data/tourapi/candidates/busan/busan-integrated-candidates.csv",
-    "primary_candidates_json": "data/tourapi/candidates/busan/busan-integrated-candidates.json",
-    "manual_review": "data/tourapi/candidates/busan/busan-integrated-manual-review.csv",
-    "unknown_category_review": "data/tourapi/candidates/busan/busan-unknown-category-review.csv",
-    "duplicate_resolution": "data/tourapi/candidates/busan/busan-duplicate-manual-resolution.csv",
-    "metrics_task_history": "data/tourapi/reports/busan/busan-integrated-candidates-metrics.json",
-    "final_metrics": "data/tourapi/reports/busan/busan-final-metrics.json",
-    "handoff_doc": "docs/tourapi/busan-final-handoff-11.md"
-  },
-  "pipeline_scripts": [
-    {
-      "task": "TASK-03",
-      "script": "tourapi-busan-visitbusan-discovery-03.mjs",
-      "role": "VisitBusan 콘텐츠 수집"
-    },
-    {
-      "task": "TASK-05",
-      "script": "tourapi-busan-visitbusan-match-05.mjs",
-      "role": "VB↔canonical 매칭"
-    },
-    {
-      "task": "TASK-06",
-      "script": "tourapi-busan-integrated-candidates-06.mjs",
-      "role": "통합 후보 생성 (1767건)"
-    },
-    {
-      "task": "TASK-07",
-      "script": "tourapi-busan-unknown-category-review-07.mjs",
-      "role": "unknown category 173건 분류"
-    },
-    {
-      "task": "TASK-08",
-      "script": "tourapi-busan-duplicate-manual-resolution-08.mjs",
-      "role": "중복·수동검토 31건 판정"
-    },
-    {
-      "task": "TASK-10",
-      "script": "tourapi-busan-integrated-candidates-finalize-10.mjs",
-      "role": "통합 후보 최종 정리 반영"
-    }
-  ],
-  "known_limitations": [
-    "VisitBusan 이미지: Vue.js 동적 로딩으로 Playwright 없이 수집 불가",
-    "busan-K-00081(롯데호텔 부산): category=unknown — 즉시 수동 확인 필요",
-    "busan-VB-1859(K-POP 동문): modoo.at 서비스 종료, 현재 운영 여부 불명",
-    "busan-VBM 9건: geo-near 매칭 유사도 0.6 수준, 수동 canonical 확인 필요",
-    "busan-K-00739: coordinate_distance_m=14m, 좌표 수동 확인 권장",
-    "subcategory: canonical/api_only 1352건 subcategory=unknown (하위 분류 미수집)",
-    "이미지 없는 web_only_new 311건 중 다수 — placeholder 필요",
-    "course_reference 49건: 개별 spot은 별도 매핑 미완료"
-  ],
-  "precommit_12a": {
-    "task": "TASK-DATA-BUSAN-PRECOMMIT-REVIEW-12A",
-    "generated_at": "2026-07-24",
-    "lotte_hotel_fixed": {
-      "candidate_id": "busan-K-00081",
-      "category": "accommodation",
-      "subcategory": "hotel"
-    },
-    "vbm_merges_count": 9,
-    "manual_review_remaining": 4
-  }
+  ]
 }

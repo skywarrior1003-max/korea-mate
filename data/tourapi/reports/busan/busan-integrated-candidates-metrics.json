@@ -204,5 +204,244 @@
       "total": 1767,
       "active_operational": 1664
     }
+  },
+  "category_normalize_13b": {
+    "task": "TASK-DATA-BUSAN-CATEGORY-NORMALIZE-13B",
+    "generated_at": "2026-07-24",
+    "stats": {
+      "total_processed": 665,
+      "attraction": 240,
+      "event": 31,
+      "accommodation": 77,
+      "restaurant": 266,
+      "nature": 29,
+      "course_reference_reclassified": 22,
+      "not_found": 0,
+      "skipped_already_categorized": 1
+    },
+    "not_found_log": [],
+    "final_status_dist": {
+      "api_only_existing": 969,
+      "existing_enriched": 362,
+      "manual_review": 4,
+      "course_reference": 71,
+      "web_only_new": 311,
+      "excluded": 8,
+      "reference_only": 21,
+      "merge_existing": 21
+    },
+    "final_active_category_dist": {
+      "attraction": 717,
+      "event": 72,
+      "restaurant": 721,
+      "nature": 50,
+      "accommodation": 82
+    },
+    "final_total": 1767,
+    "final_active": 1642
+  },
+  "subcategory_classify_14": {
+    "task": "TASK-DATA-BUSAN-SUBCATEGORY-CLASSIFY-14",
+    "generated_at": "2026-07-24",
+    "stats": {
+      "total_active": 1642,
+      "target_missing": 802,
+      "legacy_normalized": 0,
+      "classified_high": 2,
+      "classified_rule": 785,
+      "manual_review": 15,
+      "not_applicable": 0,
+      "skipped_has_value": 840
+    },
+    "category_subcategory_distribution": {
+      "attraction": {
+        "village": 51,
+        "museum": 53,
+        "landmark": 48,
+        "temple": 41,
+        "other_attraction": 206,
+        "cultural_space": 42,
+        "park": 63,
+        "observatory": 16,
+        "gallery": 16,
+        "historic_site": 21,
+        "family_attraction": 11,
+        "retail_store": 19,
+        "market": 42,
+        "spa": 9,
+        "shopping": 39,
+        "cultural_site": 24,
+        "sports_facility": 13,
+        "theme_park": 3
+      },
+      "event": {
+        "festival": 45,
+        "other_event": 13,
+        "seasonal_event": 7,
+        "performance": 5,
+        "exhibition": 2
+      },
+      "restaurant": {
+        "korean_food": 117,
+        "other_restaurant": 429,
+        "seafood": 90,
+        "international_food": 23,
+        "cafe": 25,
+        "dessert_shop": 5,
+        "bar": 22,
+        "bakery": 6,
+        "cooking_class": 4
+      },
+      "nature": {
+        "outdoor_activity": 12,
+        "mountain": 4,
+        "other_nature": 6,
+        "trail": 8,
+        "coastal_walk": 2,
+        "unknown": 13,
+        "forest": 1,
+        "ecological_site": 2,
+        "river": 1,
+        "island": 1
+      },
+      "accommodation": {
+        "hotel": 42,
+        "other_accommodation": 27,
+        "guesthouse": 3,
+        "pension": 8,
+        "hostel": 1,
+        "resort": 1
+      }
+    },
+    "subcategory_distribution": {
+      "village": 51,
+      "museum": 53,
+      "landmark": 48,
+      "cultural_site": 28,
+      "other_attraction": 202,
+      "temple": 38,
+      "cultural_space": 42,
+      "park": 63,
+      "observatory": 16,
+      "gallery": 16,
+      "historic_site": 24,
+      "family_attraction": 11,
+      "retail_store": 19,
+      "market": 42,
+      "spa": 9,
+      "shopping": 39,
+      "festival": 45,
+      "other_event": 13,
+      "seasonal_event": 7,
+      "performance": 5,
+      "korean_food": 117,
+      "other_restaurant": 429,
+      "seafood": 90,
+      "international_food": 23,
+      "cafe": 25,
+      "dessert_shop": 5,
+      "bar": 22,
+      "bakery": 6,
+      "outdoor_activity": 12,
+      "sports_facility": 13,
+      "hotel": 42,
+      "other_accommodation": 27,
+      "mountain": 4,
+      "other_nature": 6,
+      "guesthouse": 3,
+      "pension": 8,
+      "hostel": 1,
+      "trail": 8,
+      "coastal_walk": 2,
+      "unknown": 13,
+      "exhibition": 2,
+      "forest": 1,
+      "cooking_class": 4,
+      "ecological_site": 2,
+      "river": 1,
+      "island": 1,
+      "resort": 1,
+      "theme_park": 3
+    },
+    "hard_stop_errors": [],
+    "total_rows": 1767,
+    "active_count": 1642
+  },
+  "image_apply_15": {
+    "task": "TASK-DATA-BUSAN-OVERNIGHT-ENRICHMENT-15 PHASE 5",
+    "generated_at": "2026-07-24",
+    "stats": {
+      "applied": 318,
+      "skipped_existing": 0,
+      "skipped_no_result": 1449,
+      "not_in_csv": 0
+    },
+    "image_coverage": {
+      "total": 1642,
+      "has_image": 1501,
+      "no_image": 141,
+      "by_source": {
+        "unknown": 1183,
+        "visitbusan": 318
+      }
+    },
+    "total_rows": 1767
+  },
+  "fix_17b": {
+    "task": "TASK-DATA-BUSAN-FIX-17B",
+    "applied_at": "2026-07-25",
+    "defects_fixed": [
+      "A_csv_image_source_missing",
+      "B_metrics_stale",
+      "C_handoff_stale_991",
+      "D_non_temple_suffix_bug"
+    ],
+    "reclassified": {
+      "temple_to_cultural_site": [
+        "busan-A-00005",
+        "busan-VB-259",
+        "busan-K-00188",
+        "busan-K-00677"
+      ],
+      "temple_to_historic_site": [
+        "busan-A-00086",
+        "busan-K-00200",
+        "busan-VB-439"
+      ],
+      "other_attraction_to_temple": [
+        "busan-A-00093",
+        "busan-A-00195",
+        "busan-K-00023",
+        "busan-K-00090"
+      ]
+    },
+    "subcategory_delta": {
+      "temple": {
+        "before": 41,
+        "after": 38
+      },
+      "cultural_site": {
+        "before": 24,
+        "after": 28
+      },
+      "historic_site": {
+        "before": 21,
+        "after": 24
+      },
+      "other_attraction": {
+        "before": 206,
+        "after": 202
+      }
+    },
+    "image_source_csv_added": 318,
+    "image_coverage_after": {
+      "total": 1642,
+      "has_image": 1501,
+      "no_image": 141,
+      "by_source": {
+        "unknown": 1183,
+        "visitbusan": 318
+      }
+    }
   }
 }
