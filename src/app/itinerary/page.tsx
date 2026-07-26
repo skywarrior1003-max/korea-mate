@@ -23,6 +23,7 @@ import UserSpotsPanel from "@/components/UserSpotsPanel";
 import ItineraryDayMap from "@/components/ItineraryDayMap";
 import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
+import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
@@ -918,6 +919,7 @@ function ItineraryResult() {
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
   const [moments,         setMoments]         = useState<TripMoment[]>([]);
   const [captureOpen,     setCaptureOpen]     = useState(false);
+  const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
@@ -1497,12 +1499,45 @@ function ItineraryResult() {
     } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visitedKey]);
+  // 방문 대상 = 화면에 실제로 렌더되는 장소 (공항 저녁 도착 Day 1 의 도착 전 항목 제외)
+  const visitTargets = useCallback((day: Day): Place[] =>
+    isAirportEvening && day.dayNumber === 1
+      ? day.places.filter(p => parseInt(p.time?.split(":")?.[0] ?? "20", 10) >= arrivalHour)
+      : day.places
+  , [isAirportEvening, arrivalHour]);
+
+  // Day 완주 축하 — 미완료 → 완료로 바뀌는 순간 1회만. 축하한 day 는 로컬에 기록해
+  // 렌더·새로고침마다 반복 노출하지 않는다. (Visited 저장 계약은 그대로 둔다)
+  const celebratedKey = `koreamate_daydone_${itinId ?? shareId ?? "draft"}`;
+  const [celebrated, setCelebrated] = useState<Set<number>>(new Set());
+  const [dayDone,    setDayDone]    = useState<number | null>(null);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(celebratedKey);
+      setCelebrated(raw ? new Set(JSON.parse(raw) as number[]) : new Set());
+    } catch { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [celebratedKey]);
+
   function toggleVisited(dayNumber: number, place: Place) {
     setVisited(prev => {
       const next = new Set(prev);
       const key = visitedPlaceKey(dayNumber, place);
       if (next.has(key)) next.delete(key); else next.add(key);
       try { localStorage.setItem(visitedKey, JSON.stringify([...next])); } catch { /* ignore */ }
+
+      // 완주 판정: 소유자 화면 + 방문 대상이 1곳 이상 + 전부 체크 + 아직 축하 안 함
+      if (!shareId || isOwner) {
+        const day = days.find(d => d.dayNumber === dayNumber);
+        const targets = day ? visitTargets(day) : [];
+        const allDone = targets.length > 0 && targets.every(p => next.has(visitedPlaceKey(dayNumber, p)));
+        if (allDone && !celebrated.has(dayNumber)) {
+          const nextCel = new Set(celebrated).add(dayNumber);
+          setCelebrated(nextCel);
+          try { localStorage.setItem(celebratedKey, JSON.stringify([...nextCel])); } catch { /* ignore */ }
+          setDayDone(dayNumber);
+        }
+      }
       return next;
     });
   }
@@ -2350,9 +2385,18 @@ function ItineraryResult() {
         <TripMomentCapture
           itineraryId={itinId}
           deviceId={getDeviceId()}
-          dayNumber={days.length > 0 ? 1 : null}
+          dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
           onSave={handleMomentSave}
-          onClose={() => setCaptureOpen(false)}
+          onClose={() => { setCaptureOpen(false); setCaptureDay(null); }}
+        />
+      )}
+
+      {/* Day 완주 축하 → Add a memory (완료한 day 를 기본 선택) */}
+      {dayDone !== null && (!shareId || isOwner) && (
+        <DayCompleteToast
+          dayNumber={dayDone}
+          onAddMemory={() => { setCaptureDay(dayDone); setDayDone(null); setCaptureOpen(true); }}
+          onClose={() => setDayDone(null)}
         />
       )}
 

@@ -177,5 +177,11 @@
     "remaining": "{n} left",
     "tooLong": "{n} over the 2000-character limit",
     "saveFailed": "Couldn't save. Your original memo is unchanged."
+  },
+  "dayDone": {
+    "title": "Day {n} complete!",
+    "hint": "You visited everything planned. Keep the moment before it fades.",
+    "cta": "Add a memory",
+    "dismiss": "Not now"
   }
 }
