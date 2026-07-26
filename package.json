@@ -16,7 +16,8 @@
     "test:delete": "node --experimental-strip-types src/lib/photo-delete.test.ts",
     "test:url": "node --experimental-strip-types src/lib/photo-url.test.ts",
     "test:url-route": "node --experimental-strip-types src/lib/photo-url-route.test.ts",
-    "test:visited": "node --experimental-strip-types src/lib/visited.test.ts"
+    "test:visited": "node --experimental-strip-types src/lib/visited.test.ts",
+    "test:memo-patch": "node --experimental-strip-types src/lib/trip-moments/memo-patch-core.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",

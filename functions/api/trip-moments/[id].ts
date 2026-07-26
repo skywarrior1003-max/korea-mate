@@ -1,18 +1,23 @@
-// Cloudflare Pages Function: DELETE /api/trip-moments/:id
+// Cloudflare Pages Function: DELETE · PATCH /api/trip-moments/:id
 //
 // DELETE — moment 소유자만 삭제
 //          moment.device_id 일치 + 연결 itinerary 소유권 이중 확인
+// PATCH  — moment 소유자만 memo 수정 (화이트리스트: memo 만 반영)
 //
 // SECURITY CONTRACT:
 // - x-device-id header 필수 (UUID 검증)
 // - moment.device_id = x-device-id 확인
 // - 연결 itinerary도 동일 device 소유인지 재확인
 // - 비소유자·미존재 = 404 (정보 누출 방지)
+// - PATCH 응답에 device_id·storage_path·photo_data 미포함
 // - service_role 사용
 
 import { createClient } from "@supabase/supabase-js";
-import { UUID_RE } from "../../../src/lib/itinerary-validate";
+import { UUID_RE, readBodyWithLimit } from "../../../src/lib/itinerary-validate";
 import { removeMomentStorage } from "../../../src/lib/photo-delete";
+import { patchMomentMemo, type MomentAdminLike } from "../../../src/lib/trip-moments/memo-patch-core";
+
+const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text only, no photo_data
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -92,4 +97,28 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   }
 
   return json({ ok: true });
+}
+
+// ── PATCH — 본인 memo 수정 ───────────────────────────────────────────────────
+export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
+  const momentId = ctx.params.id as string;
+  if (!UUID_RE.test(momentId)) return json({ error: "Invalid moment ID" }, 400);
+
+  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
+  if (!UUID_RE.test(deviceId)) return json({ error: "Invalid device ID" }, 400);
+
+  const read = await readBodyWithLimit(ctx.request, MAX_MOMENT_BODY_BYTES);
+  if (!read.ok) return json({ error: read.error }, read.status);
+
+  let admin;
+  try { admin = adminClient(ctx.env); }
+  catch { return json({ error: "Server configuration error" }, 503); }
+
+  const result = await patchMomentMemo(
+    momentId,
+    deviceId,
+    (read.body ?? {}) as Record<string, unknown>,
+    admin as unknown as MomentAdminLike,
+  );
+  return json(result.body, result.status);
 }

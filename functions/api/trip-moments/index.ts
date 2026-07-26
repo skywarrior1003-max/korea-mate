@@ -17,6 +17,7 @@ import {
   str,
   optNum,
 } from "../../../src/lib/itinerary-validate";
+import { normalizeMemo } from "../../../src/lib/trip-moments/memo-patch-core";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
@@ -110,6 +111,10 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     ? categoryRaw as ValidCategory
     : "random";
 
+  // memo: 무음 절단 금지 — 초과 시 400 (PATCH 와 동일 정책). 공백만 입력은 "" 허용.
+  const memoNorm = normalizeMemo(body.memo ?? "");
+  if (!memoNorm.ok) return json({ error: "Invalid memo" }, 400);
+
   let admin;
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
@@ -122,7 +127,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     moment_id:      momentId,
     itinerary_id:   itineraryId,
     device_id:      deviceId,
-    memo:           str(body.memo, 2000),
+    memo:           memoNorm.memo,
     category,
     location_label: str(body.location_label, 200),
     captured_at:    str(body.captured_at, 30) || new Date().toISOString(),
