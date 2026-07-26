@@ -6,7 +6,7 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 interface PreviewDay {
@@ -21,23 +21,74 @@ interface Props {
   endDate: string;
   days: PreviewDay[];
   momentCount: number;
-  onConfirm: () => void;
+  /** 공개 API 실행 — 성공 여부를 반환해야 성공 화면으로 전환된다. */
+  onConfirm: () => Promise<boolean>;
+  /** 공개 성공 후 안내할 공유 URL (기존 /shared/{id} 규칙 재사용). null이면 수동 복사 영역 미표시. */
+  shareUrl: string | null;
   onClose: () => void;
 }
 
+type Phase = "preview" | "publishing" | "published";
+type CopyState = "idle" | "copied" | "failed";
+
 export default function PublishPreviewModal({
-  title, city, startDate, endDate, days, momentCount, onConfirm, onClose,
+  title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl, onClose,
 }: Props) {
   const t = useTranslations("publish");
+  const [phase, setPhase]         = useState<Phase>("preview");
+  const [copyState, setCopyState] = useState<CopyState>("idle");
+  const [error, setError]         = useState(false);
+  const [canShare, setCanShare]   = useState(false);
+
+  // Web Share API 지원 여부 — 마운트 후 판정 (SSR hydration 불일치 방지)
+  useEffect(() => {
+    setCanShare(typeof navigator !== "undefined" && typeof navigator.share === "function");
+  }, []);
 
   useEffect(() => {
-    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const h = (e: KeyboardEvent) => {
+      // 공개 요청 진행 중에는 ESC로 닫지 않는다 (중복 요청·상태 유실 방지)
+      if (e.key === "Escape" && phase !== "publishing") onClose();
+    };
     window.addEventListener("keydown", h);
     document.body.style.overflow = "hidden";
     return () => { window.removeEventListener("keydown", h); document.body.style.overflow = ""; };
-  }, [onClose]);
+  }, [onClose, phase]);
 
   const totalPlaces = days.reduce((s, d) => s + d.places.length, 0);
+
+  async function copyLink(): Promise<boolean> {
+    if (!shareUrl) return false;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopyState("copied");
+      return true;
+    } catch {
+      setCopyState("failed");
+      return false;
+    }
+  }
+
+  // 공개 실행 → 성공 시에만 공유 URL 안내 + 자동 복사 1회 시도.
+  // phase 가드로 중복 공개 요청을 차단한다.
+  async function handlePublish() {
+    if (phase !== "preview") return;
+    setPhase("publishing");
+    setError(false);
+    const ok = await onConfirm();
+    if (!ok) { setPhase("preview"); setError(true); return; }
+    setPhase("published");
+    void copyLink(); // 실패해도 공개 성공 상태는 유지
+  }
+
+  async function handleShare() {
+    if (!shareUrl) return;
+    try {
+      await navigator.share({ title, text: `${city} · ${startDate} – ${endDate}`, url: shareUrl });
+    } catch {
+      // 사용자 취소(AbortError)·미지원은 오류 아님 — 상태 변경 없음
+    }
+  }
 
   return (
     <div
@@ -52,6 +103,64 @@ export default function PublishPreviewModal({
         className="bg-surface w-full sm:max-w-md max-h-[90vh] overflow-y-auto rounded-t-frame sm:rounded-frame shadow-modal"
         onClick={e => e.stopPropagation()}
       >
+        {/* ══ 공개 성공 화면 — 별도 화면 이동 없이 링크 획득까지 완료 ══ */}
+        {phase === "published" ? (
+          <div className="p-6">
+            <p className="text-xs font-bold text-faint uppercase tracking-wider mb-1">{t("eyebrow")}</p>
+            <h2 className="text-xl font-extrabold text-ink mb-1">✓ {t("successTitle")}</h2>
+            <p className="text-sm text-sub mb-4">{t("successHint")}</p>
+
+            {/* 자동 복사 결과 — 성공/실패 상태를 명확히 구분 */}
+            <div
+              className={`rounded-control px-4 py-3 mb-4 text-sm font-semibold ${
+                copyState === "copied"
+                  ? "bg-ok-tint text-ok"
+                  : "bg-surface-dim text-sub"
+              }`}
+            >
+              {copyState === "copied" ? `✓ ${t("linkCopied")}` : t("copyManual")}
+            </div>
+
+            {/* 공유 URL — 자동 복사 실패 시에도 항상 수동 복사 가능 */}
+            {shareUrl && (
+              <p className="rounded-control bg-surface-dim border border-line px-3 py-2.5 mb-4 text-xs text-sub break-all select-all">
+                {shareUrl}
+              </p>
+            )}
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => void copyLink()}
+                className="gkm-focus flex-1 min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+              >
+                {copyState === "copied" ? `✓ ${t("copiedShort")}` : t("copyLink")}
+              </button>
+              {canShare ? (
+                <button
+                  onClick={() => void handleShare()}
+                  className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta"
+                >
+                  {t("share")}
+                </button>
+              ) : (
+                <button
+                  onClick={onClose}
+                  className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta"
+                >
+                  {t("done")}
+                </button>
+              )}
+            </div>
+            {canShare && (
+              <button
+                onClick={onClose}
+                className="gkm-focus w-full min-h-11 mt-2 text-sm font-semibold text-sub hover:text-ink"
+              >
+                {t("done")}
+              </button>
+            )}
+          </div>
+        ) : (
         <div className="p-6">
           <p className="text-xs font-bold text-faint uppercase tracking-wider mb-1">{t("eyebrow")}</p>
           <h2 className="text-xl font-extrabold text-ink mb-4">{t("title")}</h2>
@@ -85,22 +194,32 @@ export default function PublishPreviewModal({
             <p className="text-xs text-sub leading-relaxed">{t("noDeviceInfo")}</p>
           </div>
 
+          {/* 공개 실패 시에만 표시 — 재시도 가능 */}
+          {error && (
+            <p className="rounded-control bg-error-tint text-error text-sm font-semibold px-4 py-3 mb-4">
+              {t("failed")}
+            </p>
+          )}
+
           {/* ── 액션: coral primary 1개 ── */}
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="gkm-focus flex-1 min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+              disabled={phase === "publishing"}
+              className="gkm-focus flex-1 min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold disabled:opacity-50"
             >
               {t("cancel")}
             </button>
             <button
-              onClick={onConfirm}
-              className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta"
+              onClick={() => void handlePublish()}
+              disabled={phase === "publishing"}
+              className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta disabled:opacity-60"
             >
-              {t("publish")}
+              {phase === "publishing" ? t("publishing") : t("publish")}
             </button>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

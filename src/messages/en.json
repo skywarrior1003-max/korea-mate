@@ -149,7 +149,17 @@
     "noPhotos": "Your photos and notes (if you add any) stay private.",
     "noDeviceInfo": "No device identifiers or exact GPS locations are ever included.",
     "cancel": "Not now",
-    "publish": "Publish my story"
+    "publish": "Publish my story",
+    "publishing": "Publishing…",
+    "successTitle": "Your trip is public",
+    "successHint": "Anyone with this link can view your itinerary.",
+    "linkCopied": "Share link copied",
+    "copyManual": "Copy the link below to share it.",
+    "copyLink": "Copy link",
+    "copiedShort": "Copied",
+    "share": "Share",
+    "done": "Done",
+    "failed": "Couldn't publish. Please try again."
   },
   "story": {
     "copyTrip": "Copy this trip",

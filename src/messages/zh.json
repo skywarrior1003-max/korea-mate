@@ -149,7 +149,17 @@
     "noPhotos": "您的照片和笔记（如有）将保持私密。",
     "noDeviceInfo": "绝不包含设备标识符或精确GPS位置。",
     "cancel": "暂不",
-    "publish": "发布我的故事"
+    "publish": "发布我的故事",
+    "publishing": "正在公开…",
+    "successTitle": "您的行程已公开",
+    "successHint": "拥有此链接的人都可以查看您的行程。",
+    "linkCopied": "已复制分享链接",
+    "copyManual": "复制下方链接进行分享。",
+    "copyLink": "复制链接",
+    "copiedShort": "已复制",
+    "share": "分享",
+    "done": "完成",
+    "failed": "公开失败，请重试。"
   },
   "story": {
     "copyTrip": "复制此行程",

@@ -149,7 +149,17 @@
     "noPhotos": "사진과 메모는 (추가하셔도) 비공개로 유지됩니다.",
     "noDeviceInfo": "기기 식별자와 정확한 GPS 위치는 절대 포함되지 않습니다.",
     "cancel": "나중에",
-    "publish": "스토리 공개하기"
+    "publish": "스토리 공개하기",
+    "publishing": "공개하는 중…",
+    "successTitle": "여행이 공개되었습니다",
+    "successHint": "이 링크가 있는 사람은 일정을 볼 수 있습니다.",
+    "linkCopied": "공유 링크를 복사했습니다",
+    "copyManual": "아래 링크를 복사해 공유하세요.",
+    "copyLink": "링크 복사",
+    "copiedShort": "복사됨",
+    "share": "공유하기",
+    "done": "완료",
+    "failed": "공개하지 못했습니다. 다시 시도해 주세요."
   },
   "story": {
     "copyTrip": "이 여행 복사하기",

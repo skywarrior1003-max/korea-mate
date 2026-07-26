@@ -1347,11 +1347,12 @@ function ItineraryResult() {
   // ── 공개/비공개 토글 ─────────────────────────────────────────
   // S3: 공개 전환은 Publish Preview에서 명시적 확인 후에만 실행.
   // 비공개 전환은 즉시 (노출 축소 방향은 미리보기 불필요).
-  async function applyPublic(next: boolean) {
-    if (!itinId) return;
+  async function applyPublic(next: boolean): Promise<boolean> {
+    if (!itinId) return false;
     setIsPublic(next);
     const ok = await apiSetPublic(itinId, next, getDeviceId());
     if (!ok) setIsPublic(!next);
+    return ok;
   }
   function handleTogglePublic() {
     if (!itinId) return;
@@ -2376,7 +2377,8 @@ function ItineraryResult() {
           endDate={endDate}
           days={days}
           momentCount={moments.length}
-          onConfirm={() => { setPublishPreviewOpen(false); void applyPublic(true); }}
+          shareUrl={itinId && typeof window !== "undefined" ? `${window.location.origin}/shared/${itinId}` : null}
+          onConfirm={() => applyPublic(true)}
           onClose={() => setPublishPreviewOpen(false)}
         />
       )}

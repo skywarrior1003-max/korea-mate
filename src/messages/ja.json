@@ -149,7 +149,17 @@
     "noPhotos": "写真とメモは（追加しても）非公開のままです。",
     "noDeviceInfo": "端末識別子や正確なGPS位置は一切含まれません。",
     "cancel": "あとで",
-    "publish": "ストーリーを公開"
+    "publish": "ストーリーを公開",
+    "publishing": "公開しています…",
+    "successTitle": "旅行が公開されました",
+    "successHint": "このリンクを知っている人は旅程を閲覧できます。",
+    "linkCopied": "共有リンクをコピーしました",
+    "copyManual": "下のリンクをコピーして共有してください。",
+    "copyLink": "リンクをコピー",
+    "copiedShort": "コピー済み",
+    "share": "共有",
+    "done": "完了",
+    "failed": "公開できませんでした。もう一度お試しください。"
   },
   "story": {
     "copyTrip": "この旅行をコピー",
