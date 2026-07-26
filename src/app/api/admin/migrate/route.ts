@@ -62,10 +62,11 @@ CREATE TABLE IF NOT EXISTS user_emails (
 CREATE INDEX IF NOT EXISTS idx_user_emails_email  ON user_emails(email);
 CREATE INDEX IF NOT EXISTS idx_user_emails_device ON user_emails(device_id);
 ALTER TABLE user_emails ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "anon_insert_emails" ON user_emails;
-CREATE POLICY "anon_insert_emails" ON user_emails FOR INSERT TO anon WITH CHECK (true);
-DROP POLICY IF EXISTS "anon_read_own_emails" ON user_emails;
-CREATE POLICY "anon_read_own_emails" ON user_emails FOR SELECT TO anon USING (true);
+-- TASK-027: anon INSERT/SELECT 정책 생성 제거.
+-- user_emails 는 functions/api/save-email.ts(service_role) 전용이며 브라우저 직접
+-- 접근 경로가 없다. 과거 이 route 가 만들던 "anon_insert_emails"·"anon_read_own_emails"
+-- 는 027_lockdown_private_tables.sql 에서 제거되므로, 여기서 재생성하면 잠금이
+-- 무효화된다. 정책 없이 RLS 만 활성 상태로 두면 service_role 만 접근 가능하다.
 `.trim();
 
 export async function POST(req: NextRequest) {
