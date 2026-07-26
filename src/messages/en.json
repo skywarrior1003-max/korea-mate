@@ -191,5 +191,9 @@
   "creatorStats": {
     "copied": "Copied {n} times",
     "helpful": "{n} helpful"
+  },
+  "socialProof": {
+    "copied": "Copied {n} times",
+    "helpful": "👍 {n} helpful votes after copying"
   }
 }

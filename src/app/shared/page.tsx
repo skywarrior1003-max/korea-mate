@@ -8,6 +8,7 @@
 export const dynamic = "force-static";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { fetchSharedItinerary, type ItineraryRow } from "@/lib/supabase";
@@ -126,7 +127,9 @@ export default function SharedTripPage() {
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
+  const tProof = useTranslations("socialProof");
   const [helpfulCount,    setHelpfulCount]    = useState(0); // 읽기 전용 표시
+  const [copyCount,       setCopyCount]       = useState(0); // 읽기 전용 표시
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   const [isCopying,       setIsCopying]       = useState(false);
   const [copyError,       setCopyError]       = useState<string | null>(null);
@@ -146,6 +149,7 @@ export default function SharedTripPage() {
 
       setTrip(record);
       setHelpfulCount(record.helpful_count ?? 0);
+      setCopyCount(record.copy_count ?? 0);
 
       // days JSONB → Day[] 파싱 (legacy Day[] 및 v2 { __v:2, scheduled } 모두 지원)
       const parsedDays = parseScheduledDays(record.days);
@@ -314,11 +318,19 @@ export default function SharedTripPage() {
               TASK-HELPFUL-GUARD: 모든 방문자에게 보이던 Helpful 입력 버튼은 제거했다.
               Helpful 은 이제 "복사 후 실제로 써본 사람의 반응"이며, 서버가 복사 이력을
               요구한다. 입력 진입점은 후속 작업에서 별도로 붙인다. */}
-          {(trip.view_count ?? 0) >= 2 && (
+          {/* 각 지표는 서로·view_count 와 독립. 기준 미만이면 개별 숨김.
+              copy_count 는 복사 "횟수"이고 helpful 은 기기 기준 중복 방지이므로
+              고유 여행자 수로 읽히는 표현("N travelers")은 쓰지 않는다. */}
+          {((trip.view_count ?? 0) >= 2 || copyCount >= 2 || helpfulCount >= 2) && (
             <div className="mb-6 flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
-              <span className="text-amber-400">🔥 {trip.view_count} views</span>
-              {helpfulCount >= 1 && (
-                <span className="text-emerald-400">👍 {helpfulCount} found this helpful</span>
+              {(trip.view_count ?? 0) >= 2 && (
+                <span className="text-amber-400">🔥 {trip.view_count} views</span>
+              )}
+              {copyCount >= 2 && (
+                <span className="text-white/85">📋 {tProof("copied", { n: copyCount })}</span>
+              )}
+              {helpfulCount >= 2 && (
+                <span className="text-emerald-400">{tProof("helpful", { n: helpfulCount })}</span>
               )}
             </div>
           )}

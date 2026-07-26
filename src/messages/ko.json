@@ -191,5 +191,9 @@
   "creatorStats": {
     "copied": "{n}번 복사됨",
     "helpful": "도움됨 {n}"
+  },
+  "socialProof": {
+    "copied": "{n}번 복사됨",
+    "helpful": "👍 복사 후 도움됨 {n}"
   }
 }

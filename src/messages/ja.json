@@ -191,5 +191,9 @@
   "creatorStats": {
     "copied": "{n}回コピー",
     "helpful": "役に立った {n}"
+  },
+  "socialProof": {
+    "copied": "{n}回コピー",
+    "helpful": "👍 コピー後に役立った {n}"
   }
 }
