@@ -16,7 +16,7 @@ import type { AffiliateDisplayMap } from "@/lib/affiliates/types";
 import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
-import { apiCopyItinerary, apiHelpfulVote } from "@/lib/itinerary-api";
+import { apiCopyItinerary } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
@@ -126,8 +126,7 @@ export default function SharedTripPage() {
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
-  const [helpfulVoted,    setHelpfulVoted]    = useState(false);
-  const [helpfulCount,    setHelpfulCount]    = useState(0);
+  const [helpfulCount,    setHelpfulCount]    = useState(0); // 읽기 전용 표시
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   const [isCopying,       setIsCopying]       = useState(false);
   const [copyError,       setCopyError]       = useState<string | null>(null);
@@ -185,22 +184,9 @@ export default function SharedTripPage() {
     }).catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
   }, [trip?.id]);
 
-  // ── TASK-034: sessionStorage dedup — 이미 투표한 경우 버튼 비활성화 ─────────
-  useEffect(() => {
-    if (!trip?.id) return;
-    if (sessionStorage.getItem(`helped_${trip.id}`)) setHelpfulVoted(true);
-  }, [trip?.id]);
-
-  // ── TASK-034: Helpful Vote 핸들러 ────────────────────────────────────────
-  async function handleHelpfulVote() {
-    if (!trip?.id || helpfulVoted) return;
-    const key = `helped_${trip.id}`;
-    sessionStorage.setItem(key, "1");
-    setHelpfulVoted(true);
-    setHelpfulCount((c) => c + 1);
-    const result = await apiHelpfulVote(trip.id, getDeviceId());
-    if (result?.helpful_count !== undefined) setHelpfulCount(result.helpful_count);
-  }
+  // TASK-HELPFUL-GUARD: 서버 성공 전에 카운트를 올리고 sessionStorage 로 잠그던
+  // 낙관적 처리를 제거했다. 거짓 +1·거짓 완료 표시의 원인이었고, 서버가 복사 이력을
+  // 요구하게 되면서 비복사 방문자에게는 실패가 정상 응답이 되기 때문이다.
 
   // ── PHASE 1-A-FE1: 공유 일정 복사 ────────────────────────────────────────
   async function handleCopyTrip() {
@@ -324,31 +310,18 @@ export default function SharedTripPage() {
             ))}
           </div>
 
-          {/* TASK-034: 이중 소셜 프루프 + Helpful Vote 버튼 */}
-          <div className="mb-6 flex flex-col items-center gap-3">
-            {/* 뷰 + 도움 카운터 */}
-            {(trip.view_count ?? 0) >= 2 && (
-              <div className="flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
-                <span className="text-amber-400">🔥 {trip.view_count} views</span>
-                {helpfulCount >= 1 && (
-                  <span className="text-emerald-400">👍 {helpfulCount} found this helpful</span>
-                )}
-              </div>
-            )}
-
-            {/* Helpful Vote 버튼 */}
-            <button
-              onClick={handleHelpfulVote}
-              disabled={helpfulVoted}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-black transition-all active:scale-95 ${
-                helpfulVoted
-                  ? "text-emerald-300 border border-emerald-400/40 cursor-default"
-                  : "text-white/80 border border-white/25 hover:border-[#FF4A2D]/60 hover:text-[#FF4A2D]"
-              }`}
-            >
-              {helpfulVoted ? "✅ Marked as helpful!" : "👍 Was this itinerary helpful?"}
-            </button>
-          </div>
+          {/* 소셜 프루프 — 읽기 전용.
+              TASK-HELPFUL-GUARD: 모든 방문자에게 보이던 Helpful 입력 버튼은 제거했다.
+              Helpful 은 이제 "복사 후 실제로 써본 사람의 반응"이며, 서버가 복사 이력을
+              요구한다. 입력 진입점은 후속 작업에서 별도로 붙인다. */}
+          {(trip.view_count ?? 0) >= 2 && (
+            <div className="mb-6 flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
+              <span className="text-amber-400">🔥 {trip.view_count} views</span>
+              {helpfulCount >= 1 && (
+                <span className="text-emerald-400">👍 {helpfulCount} found this helpful</span>
+              )}
+            </div>
+          )}
 
           {/* 골드 디바이더 */}
           <div className="w-24 h-[1.5px] mx-auto" style={{ background: "#FF4A2D", opacity: 0.5 }} />

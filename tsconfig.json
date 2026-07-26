@@ -31,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "functions", "src/lib/jpeg-strip-exif.test.ts", "src/lib/photo-validate.test.ts", "src/lib/photo-compress.test.ts", "src/lib/photo-delete.test.ts", "src/lib/photo-url.test.ts", "src/lib/photo-url-route.test.ts", "src/lib/visited.test.ts", "src/lib/trip-moments/memo-patch-core.test.ts"]
+  "exclude": ["node_modules", "functions", "src/lib/jpeg-strip-exif.test.ts", "src/lib/photo-validate.test.ts", "src/lib/photo-compress.test.ts", "src/lib/photo-delete.test.ts", "src/lib/photo-url.test.ts", "src/lib/photo-url-route.test.ts", "src/lib/visited.test.ts", "src/lib/trip-moments/memo-patch-core.test.ts", "src/lib/helpful-guard-core.test.ts"]
 }

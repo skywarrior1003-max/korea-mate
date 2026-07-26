@@ -1,8 +1,14 @@
 // Cloudflare Pages Function: PATCH /api/itinerary/helpful/:id
 // Increments helpful_count for an itinerary, deduplicated by device_id.
 // Uses add_itinerary_helpful_vote RPC (service_role only, atomic INSERT + UPDATE).
+//
+// TASK-HELPFUL-GUARD: RPC 호출 전 서버에서 3가지를 검증한다 —
+//   대상 존재+공개 / 셀프 반응 아님 / 요청 기기가 해당 원본의 복사본 소유.
+//   Helpful 을 "복사 후 실제로 써본 사람의 반응"으로 유지하기 위함이며,
+//   DB·RPC·제약은 변경하지 않는다.
 
 import { createClient } from "@supabase/supabase-js";
+import { guardedHelpfulVote, type HelpfulAdminLike } from "../../../../src/lib/helpful-guard-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -44,19 +50,10 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
-  const { data, error } = await admin.rpc("add_itinerary_helpful_vote", {
-    p_itinerary_id: itineraryId,
-    p_device_id:    deviceId,
-  });
-
-  if (error) {
-    console.error("[helpful PATCH] rpc error:", error.code, error.message);
-    return json({ error: "Failed to record vote" }, 500);
-  }
-
-  const row = Array.isArray(data) ? data[0] : data;
-  return json({
-    added:         row?.added         ?? false,
-    helpful_count: row?.helpful_count ?? 0,
-  });
+  const result = await guardedHelpfulVote(
+    itineraryId,
+    deviceId,
+    admin as unknown as HelpfulAdminLike,
+  );
+  return json(result.body, result.status);
 }
