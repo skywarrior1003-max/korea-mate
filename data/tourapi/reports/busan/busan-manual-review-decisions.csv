@@ -1,0 +1,16 @@
+candidate_id,cur_category,cur_subcategory,rec_category,rec_subcategory,recommendation,evidence,source_url,auto_apply
+busan-K-00309,nature,unknown,accommodation,camping,reclassify,"시설명 ""야영장""은 캠핑시설을 명시. 고정 주소 확인(중구 이순신대로 72). content_type=레포츠이나 실제 숙박/야영 시설.",https://www.data.go.kr/data/15101578/openapi.do (contentid:2726803),possible
+busan-K-00311,nature,unknown,accommodation,camping,reclassify,"시설명 ""캠핑장"" 명시. 고정 주소 확인(강서구 체육공원로6번길 184).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2729157),possible
+busan-K-00315,nature,unknown,accommodation,camping,reclassify,"시설명 ""캠핑장"" 명시. 고정 주소 확인(기장군 정관읍 병산1길 18).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2734175),possible
+busan-K-00316,nature,unknown,accommodation,camping,reclassify,"시설명 ""장안캠프""는 캠프(캠핑) 시설. 고정 주소 확인(기장군 장안읍 장안로 18).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2734243),possible
+busan-K-00317,nature,unknown,accommodation,camping,reclassify,"시설명 ""오토캠핑장"" 명시. 고정 주소 확인(북구 낙동강자전거길 1425).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2734674),possible
+busan-K-00320,nature,unknown,accommodation,camping,reclassify,"시설명 ""글램핑""은 캠핑 변형. 고정 주소 확인(기장군 일광읍 이천8길 132-20).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2741526),possible
+busan-K-00321,nature,unknown,accommodation,camping,reclassify,"시설명 ""카라반파크""는 카라반 캠핑시설. 고정 주소 확인(기장군 일광면 일광로 763).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2741535),possible
+busan-K-00325,nature,unknown,accommodation,camping,reclassify,"시설명 ""카라반""은 카라반 캠핑시설. 고정 주소 확인(기장군 장안읍 해맞이로 290).",https://www.data.go.kr/data/15101578/openapi.do (contentid:2747589),possible
+busan-K-00378,nature,unknown,nature,outdoor_activity,reclassify,"서핑 스쿨. 고정 주소 확인(수영구 광안해변로 125). 관광객이 직접 찾아가는 고정 위치 레저시설. ""no_fixed_spot"" 자동 분류 오류.",https://www.data.go.kr/data/15101578/openapi.do (contentid:2783308),possible
+busan-K-00383,nature,unknown,nature,outdoor_activity,reclassify,서핑 스쿨. 고정 주소 확인(해운대구 송정해변로 34-8). 고정 위치 레저시설.,https://www.data.go.kr/data/15101578/openapi.do (contentid:2784112),possible
+busan-K-00422,nature,unknown,nature,outdoor_activity,reclassify,"요트투어 운영사. 고정 출발지(해운대 해변로 84, 해운대 마리나). 관광객이 예약·탑승하는 고정 장소. [주의: 00688·00708과 동일 주소 — 중복 3건 운영 여부 확인 권고]",https://www.data.go.kr/data/15101578/openapi.do (contentid:2790332),manual_confirm_recommended
+busan-K-00688,nature,unknown,nature,outdoor_activity,reclassify,"요트투어 운영사. 고정 출발지(해운대 해변로 84, 해운대 마리나). [주의: 00422·00708과 동일 주소 — 3건 중복 운영 여부 확인 권고]",https://www.data.go.kr/data/15101578/openapi.do (contentid:3009050),manual_confirm_recommended
+busan-K-00708,nature,unknown,nature,outdoor_activity,reclassify,"요트투어 운영사. 고정 출발지(해운대 해변로 84, 해운대 마리나). [주의: 00422·00688과 동일 주소 — 3건 중복 운영 여부 확인 권고]",https://www.data.go.kr/data/15101578/openapi.do (contentid:3065360),manual_confirm_recommended
+busan-VB-2142,nature,other_nature,accommodation,camping,reclassify,"시설명 ""천성항 노지 캠핑장"" — 캠핑장 명시. 고정 주소(강서구 천성동 3435). content_type=experience이나 야영 시설.",https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2142&lang_cd=ko,possible
+busan-VB-1852,nature,other_nature,accommodation,camping,reclassify,"시설명 ""힐링야영장"" — 야영장(캠핑) 명시. 고정 주소(동구 초량동 1185-1). content_type=experience이나 야영 시설.",https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1852&lang_cd=ko,possible

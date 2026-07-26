@@ -77,9 +77,11 @@ git checkout research/tourapi-nightly-20260722
 | accommodation (82) | hotel:42, pension:8, guesthouse:3, hostel:1, resort:1 | other_accommodation:27 | — |
 | nature (50) | outdoor_activity:12, trail:8, mountain:4, forest:1, … | other_nature:6 | 13 (camping·이동형) |
 
-**manual_review 15건:**
-- camping_in_nature:10 — category=nature지만 캠핑/글램핑/카라반 → accommodation/camping 권장
-- mobile_program:5 — 서핑학교·요트투어 (고정 장소 없음) → 제외 여부 결정 필요
+**manual_review 15건 — TASK-20A-6 결정 완료:**
+- camping_in_nature:10 → reclassify accommodation/camping (auto_apply 10건 모두 가능)
+- mobile_program:5 → reclassify nature/outdoor_activity
+  - 서핑 2건 (busan-K-00378, 00383): auto_apply possible — 고정 사업장 주소 확인
+  - 요트 3건 (busan-K-00422, 00688, 00708): manual_confirm_recommended — 동일 주소(해운대 마리나) 중복 여부 확인 필요
 
 ### 이미지 보유 현황
 
@@ -161,10 +163,10 @@ city_spots 허용 카테고리: `attraction` / `restaurant` / `nature` / `event`
 |---|---|
 | VisitBusan 이미지 | TASK-15에서 318건 수집 완료. 나머지 141건은 VisitBusan 미연결 또는 이미지 없음. |
 | other_* subcategory | attraction:206건, restaurant:429건이 other_* 상태. 키워드 분류 한계 — 필요 시 수동 보완. |
-| subcategory manual_review 15건 | camping_in_nature 10건(accommodation/camping 권장), mobile_program 5건(제외 여부 결정 필요). `data/tourapi/candidates/busan/busan-subcategory-manual-review.csv` 참조. |
+| subcategory manual_review 15건 (TASK-20A-6 결정 완료) | camping 10건: reclassify → accommodation/camping (auto 10). mobile_program 5건: reclassify → nature/outdoor_activity (서핑 2건 auto_apply, 요트 3건 manual_confirm_recommended). 결정서: `data/tourapi/reports/busan/busan-manual-review-decisions.csv` |
 | course_reference 71건 | VB 코스 내 개별 spot 매핑 미완료 |
 | busan-K-00739 | 좌표 14m 차이 (KTO↔VB) → 수동 확인 |
-| 이미지 license | visitbusan 이미지는 `all_rights_reserved_visitbusan` — 상업 사용 전 권리 확인 필요 |
+| 이미지 권리 감사 (TASK-20A 완료) | KTO 543건: usable (KOGL 1유형 75건·3유형 468건, item_verified, 출처 표시 필수). VisitBusan 958건: review_required (domain_inferred, 개별 공공누리 미탐지 — 기관 허가 필요). no_image 141건. 상세: `data/tourapi/candidates/busan/busan-image-rights-audit.csv` |
 
 ---
 
@@ -211,4 +213,161 @@ city_spots 허용 카테고리: `attraction` / `restaurant` / `nature` / `event`
 
 ---
 
+---
+
+## 11. 이미지 권리 감사 결과 (TASK-20A 시리즈, 2026-07-26)
+
+| 공급자 | 건수 | 권리 판정 | 근거 |
+|---|---|---|---|
+| KTO TourAPI | **543** | **usable** | cpyrhtDivCd (KOGL 1유형 75건·3유형 468건), item_verified |
+| VisitBusan | **958** | **review_required** | All Rights Reserved, 개별 공공누리 미탐지, domain_inferred |
+| no_image | **141** | — | 이미지 없음 |
+
+**KTO 사용 조건 (KOGL 공통):** 출처 표시 필수 (기관명·저작연도·저작물명·링크). 1유형: 수정 허용. 3유형: 수정 금지.
+
+**VisitBusan 조치 옵션:** KTO 이미지로 대체, 기관 서면 허가, 또는 placeholder 처리. 개별 공공누리 마크 확인 전 상업 사용 불가.
+
+### busan-A-00064 병합 감사
+
+| 항목 | 내용 |
+|---|---|
+| canonical | busan-A-00064 (부산영화체험박물관/씨네뮤지엄) |
+| 판정 | **same_place** (신뢰도: high) |
+| 보강 권고 | VBM-367(attraction) 정보로 busan-A-00064 보강 |
+| 중복 제거 권고 | VBM-1640(experience) — 동일 시설 중복 등재 |
+| 자동 병합 | **금지** — 메인 노트북 수동 확인 필요 |
+
+### 관련 파일
+
+| 파일 | 설명 |
+|---|---|
+| `data/tourapi/candidates/busan/busan-image-rights-audit.csv` | 1,642건 전체 권리 판정 (정본) |
+| `data/tourapi/reports/busan/busan-image-rights-linkage-audit.csv` | 링키지 감사 원본 |
+| `data/tourapi/reports/busan/busan-manual-review-decisions.csv` | manual_review 15건 결정 |
+| `docs/tourapi/busan-exception-review-20a6.md` | 예외 검토 보고서 |
+
 이상입니다. 추가 질문은 `docs/tourapi/busan-final-handoff-11.md` 또는 각 태스크 보고서를 참조해주세요.
+
+---
+
+## 12. TASK-20A-8~12 감사 완료 요약 (2026-07-26 추가)
+
+### 12-1. VB 이미지 KTO 대체 매칭 (TASK-20A-8)
+
+| 결과 | 건수 | 내용 |
+|------|------|------|
+| auto_replace | 7 | KTO KOGL 이미지로 자동 교체 가능 |
+| manual_review | 2 | 50~100m medium 신뢰도 — 지도 확인 후 결정 |
+| no_kto_match | 949 | KTO 풀에 대응 없음 |
+
+파일: `data/tourapi/reports/busan/busan-vb-image-replacement-match.csv`
+
+### 12-2. 음식점 이미지 권리 분류 (TASK-20A-9)
+
+| 결과 | 건수 | 조치 |
+|------|------|------|
+| use_as_official_promotional_image (low) | 397 | FoodService API 공식 출처 — 기술 확인 완료 |
+| manual_review (medium/unknown) | 18 | VisitBusan web-only — 수동 확인 필요 |
+
+파일: `data/tourapi/reports/busan/busan-restaurant-image-rights.csv`
+
+### 12-3. 음식점 이미지 기술 스캔 (TASK-20A-10)
+
+| 결과 | 건수 | 비고 |
+|------|------|------|
+| valid (use_candidate) | 396 | HTTP 200, JPEG, 1200px 너비, 최소 21.7KB |
+| invalid_image (replace_image) | 1 | busan-F-00324 — HTML 오류 페이지 반환 |
+
+시각 검수(워터마크·인물·상호) 미실시(`visual_inspection_status=not_inspected`).  
+파일: `data/tourapi/reports/busan/busan-restaurant-image-safety-scan.csv`
+
+### 12-4. busan-F-00324 대체 이미지 탐색 (TASK-20A-11)
+
+| 항목 | 내용 |
+|------|------|
+| 음식점 | 부산명물횟집 (중구 자갈치해안로 55) |
+| 깨진 이미지 | `20230613131233567_ttiel` (HTML 오류 반환) |
+| 대체 이미지 | `20240419101804650_ttiel` (FoodService:112:ko, UC_SEQ=112) |
+| 근거 | 동일 이름+주소+좌표 9m — FoodService 이중 등록(UC_SEQ=1612↔112) |
+| 사전 검증 | HTTP 200 + JPEG 111KB + 1200×544px (세션 내 확인) |
+| 실행 시 상태 | 서버 502(일시 오류) — 복구 후 재접근 권장 |
+| **실제 교체** | **보류** — 운영 반영 전 재확인 필요 |
+| 관련 후보 | busan-F-00013 (동일 UC_SEQ=112 이미 매핑됨) |
+
+파일: `data/tourapi/reports/busan/busan-F-00324-image-replacement.csv`
+
+---
+
+## 13. 미해결 사항 — 메인 노트북 처리 필요
+
+### [미해결-1] VisitBusan web-only 음식점 18건 수동 확인
+
+- **해당 후보**: web_only_new, source_type=visitbusan_content (FoodService API 미연결)
+- **상태**: `manual_review` — 공식 출처 불확실
+- **조치 필요**: 각 음식점 페이지 직접 확인 후 use / exclude 결정
+- **파일**: `data/tourapi/reports/busan/busan-restaurant-image-rights.csv` (recommended_action=manual_review 18건)
+
+### [미해결-2] 요트 3건 수동 확인
+
+- **해당 후보**: `busan-K-00422`, `busan-K-00688`, `busan-K-00708`
+- **위치**: 해운대 해변로 84 (해운대 마리나) — 동일 주소 3건
+- **상태**: reclassify → nature/outdoor_activity 권고 완료, 중복 운영 여부 수동 확인 필요
+- **조치 필요**: 3건이 동일 업체 중복인지, 별도 프로그램인지 확인 후 subcategory 적용
+- **파일**: `data/tourapi/reports/busan/busan-manual-review-decisions.csv`
+
+### [미해결-3] busan-A-00064 병합 수동 승인
+
+- **canonical**: busan-A-00064 (부산영화체험박물관/씨네뮤지엄)
+- **판정**: same_place (high, 자동 병합 금지)
+- **보강 권고**: busan-VBM-367(attraction) 필드로 busan-A-00064 보강
+- **중복 제거 권고**: busan-VBM-1640(experience) — 동일 시설 중복 등재
+- **조치 필요**: 메인 노트북에서 수동 승인 후 병합
+
+### [미해결-4] PhotoGalleryService1 전체 매칭
+
+- **상태**: 야간 후속 작업 미시작
+- **내용**: KTO PhotoGallery API 이미지와 후보 매칭 작업
+- **주의**: 완료 처리 금지 — 이번 TASK-20A 시리즈 범위 외
+
+---
+
+## 14. 메인 노트북 전달 파일 목록
+
+### 14-1. 정본 (읽기 전용, 수정 금지)
+
+| 파일 | 설명 | 행수 |
+|------|------|------|
+| `data/tourapi/candidates/busan/busan-integrated-candidates.csv` | 후보 정본 CSV | 1,768줄 (헤더+1,767) |
+| `data/tourapi/candidates/busan/busan-integrated-candidates.json` | 후보 정본 JSON | 1,767건 |
+| `data/tourapi/candidates/busan/busan-image-rights-audit.csv` | 이미지 권리 감사 정본 | 1,643줄 (헤더+1,642) |
+| `data/tourapi/candidates/busan/busan-subcategory-manual-review.csv` | subcategory manual_review 15건 |  |
+| `data/tourapi/candidates/busan/busan-integrated-manual-review.csv` | candidate manual_review 4건 |  |
+
+### 14-2. 20A 감사 산출물 (참고용)
+
+| 파일 | 설명 | 행수 |
+|------|------|------|
+| `data/tourapi/reports/busan/busan-image-rights-linkage-audit.csv` | 링키지 감사 전체 | 1,643줄 |
+| `data/tourapi/reports/busan/busan-vb-image-replacement-match.csv` | VB→KTO 대체 매칭 | 959줄 (958건) |
+| `data/tourapi/reports/busan/busan-restaurant-image-rights.csv` | 음식점 이미지 권리 분류 | 416줄 (415건) |
+| `data/tourapi/reports/busan/busan-restaurant-image-safety-scan.csv` | 음식점 이미지 기술 스캔 | 398줄 (397건) |
+| `data/tourapi/reports/busan/busan-F-00324-image-replacement.csv` | 부산명물횟집 대체 이미지 | 2줄 (1건) |
+| `data/tourapi/reports/busan/busan-manual-review-decisions.csv` | manual_review 15건 결정 | 16줄 |
+
+### 14-3. metrics (최신)
+
+| 파일 | 설명 |
+|------|------|
+| `data/tourapi/reports/busan/busan-final-metrics.json` | 전체 파이프라인 최종 지표 (TASK-20A-12 반영) |
+| `data/tourapi/reports/busan/busan-integrated-candidates-metrics.json` | 태스크별 히스토리 |
+
+### 14-4. 핵심 보고서
+
+| 파일 | 설명 |
+|------|------|
+| `docs/tourapi/busan-handoff-to-main-pc.md` | 이 문서 (메인 인수인계) |
+| `docs/tourapi/busan-exception-review-20a6.md` | subcategory manual_review 결정서 |
+| `docs/tourapi/busan-vb-image-replacement-match-20a8.md` | VB→KTO 대체 매칭 보고서 |
+| `docs/tourapi/busan-restaurant-image-rights-20a9.md` | 음식점 권리 분류 보고서 |
+| `docs/tourapi/busan-restaurant-image-safety-scan-20a10.md` | 기술 스캔 보고서 |
+| `docs/tourapi/busan-F-00324-image-fix-20a11.md` | 부산명물횟집 대체 이미지 보고서 |

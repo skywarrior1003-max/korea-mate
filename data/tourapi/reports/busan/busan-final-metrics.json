@@ -1,17 +1,22 @@
 {
   "city": "busan",
   "previous_snapshot_task": "TASK-DATA-BUSAN-FINAL-PACKAGE-11",
-  "current_snapshot_task": "TASK-DATA-BUSAN-FINAL-METRICS-FULL-SYNC-18B",
+  "current_snapshot_task": "TASK-DATA-BUSAN-AUDIT-FINALIZE-20A-12",
   "source_of_truth": "busan-integrated-candidates",
   "snapshot_status": "current",
-  "updated_at": "2026-07-25",
+  "updated_at": "2026-07-26",
   "pipeline_tasks": [
     "TASK-01 ~ TASK-10 (수집·매칭·통합·중복·정리)",
     "TASK-13B: busan-K-* 665건 category 정규화 (contentTypeId 기반)",
     "TASK-14: 전체 1,642건 subcategory 규칙 기반 분류",
     "TASK-15: VisitBusan 이미지 URL 318건 Playwright 수집·적용",
     "TASK-17B: 종교·역사시설 subcategory 오분류 수정 + CSV image_source 열 추가",
-    "TASK-18B: busan-final-metrics.json 완전 동기화"
+    "TASK-18B: busan-final-metrics.json 완전 동기화",
+    "TASK-20A-8: VB 958건 KTO 대체 이미지 매칭 — auto_replace 7건 + manual_review 2건 확정",
+    "TASK-20A-9: 음식점 415건 이미지 권리 분류 — low(공식)397건 + manual_review(unknown)18건",
+    "TASK-20A-10: 음식점 397건 이미지 기술 스캔 — valid 396건 + invalid_image 1건(busan-F-00324)",
+    "TASK-20A-11: busan-F-00324 이미지 대체 탐색 — found(FoodService:112:ko, UC_SEQ=112)",
+    "TASK-20A-12: 감사 최종 정리 — 미해결 4종 분리, metrics/handoff 업데이트"
   ],
   "final_candidate_counts": {
     "total": 1767,
@@ -158,8 +163,8 @@
       "tourapi_kto": 1183
     },
     "license": {
-      "visitbusan": "image_license=all_rights_reserved_visitbusan (318건). 상업 사용 전 권리 확인 필요.",
-      "tourapi_kto": "라이선스 미확정 — 추정 금지"
+      "visitbusan": "review_required (domain_inferred). All Rights Reserved — 개별 공공누리 마크 미확인. 기관 허가 필요. TASK-20A 감사 완료.",
+      "tourapi_kto": "KOGL 1유형 75건 + KOGL 3유형 468건. usable (item_verified). 출처 표시 필수. TASK-20A-4 확인 완료."
     },
     "overwrite_policy": "기존 image_url 덮어쓰기 0건 — 신규 항목에만 적용",
     "image_quality": "로고·배너·placeholder 오포착 0건 (Playwright 검증 완료)",
@@ -167,14 +172,18 @@
     "completed_at": "TASK-15, 2026-07-25"
   },
   "known_limitations": [
-    "의도적 manual_review unknown 13건: camping_in_nature 8건(→ accommodation/camping 권장), mobile_program 5건(고정 장소 없음, 제외 여부 결정 필요). subcategory_manual_review 섹션 참조.",
+    "의도적 manual_review unknown 13건: camping_in_nature 8건(subcategory=unknown, TASK-20A-6 결정: reclassify → accommodation/camping, auto_apply 가능), mobile_program 5건(TASK-20A-6 결정: reclassify → nature/outdoor_activity, 서핑 2건 auto/요트 3건 manual_confirm). 결정서: busan-manual-review-decisions.csv 참조.",
     "candidate_status=manual_review 4건: 개별 확인 필요. candidate_status_manual_review 섹션 참조.",
     "other_* 비중 높음: other_restaurant 429건, other_attraction 202건 — 제목 키워드 분류 한계. 필요 시 수동 보완.",
     "course_reference 71건: 독립 운영 city_spot 아님 (VB 코스 묶음 + 여행코스). 개별 spot 매핑 미완료.",
     "busan-VB-1859(K-POP 동문): sdkart.modoo.at 2025-06-26 서비스 종료. 현장 확인 필요.",
     "busan-K-00739: KTO↔VB 좌표 14m 차이 → 수동 확인 권장.",
     "merge_existing 21건: busan-merge_existing_12(TASK-11 기준 12건) + 야간 보강 9건. canonical 덮어쓰기 금지.",
-    "운영 DB 반영(existing_enriched 362, web_only_new 311)은 메인 노트북 수동 승인 필요."
+    "운영 DB 반영(existing_enriched 362, web_only_new 311)은 메인 노트북 수동 승인 필요.",
+    "VisitBusan web-only 음식점 18건 (web_only_new, source_type=visitbusan_content): FoodService API 미연결로 공식 출처 불확실 — 수동 확인 후 use/exclude 결정 필요. 파일: busan-restaurant-image-rights.csv (manual_review 18건).",
+    "yacht 3건 수동 확인 미완료: busan-K-00422/00688/00708 (해운대 마리나 동일 주소, 중복 운영 여부 불명). TASK-20A-6 결정서 참조. reclassify → nature/outdoor_activity 대기.",
+    "busan-A-00064 병합 확인 대기: busan-VBM-367(보강 권고) + busan-VBM-1640(중복 제거 권고). same_place(high) 판정 완료. 메인 노트북 수동 승인 후 병합.",
+    "PhotoGalleryService1 전체 매칭: 야간 후속 작업 미완료. KTO PhotoGallery API 이미지와 후보 매칭 작업 미시작 — 이번 TASK-20A 시리즈 범위 외. 완료 처리 금지."
   ],
   "update_modes": {
     "update": {
@@ -287,7 +296,10 @@
     "metrics_task_history": "data/tourapi/reports/busan/busan-integrated-candidates-metrics.json",
     "final_metrics": "data/tourapi/reports/busan/busan-final-metrics.json",
     "handoff_doc": "docs/tourapi/busan-handoff-to-main-pc.md",
-    "handoff_legacy": "docs/tourapi/busan-final-handoff-11.md"
+    "handoff_legacy": "docs/tourapi/busan-final-handoff-11.md",
+    "image_rights_audit": "data/tourapi/candidates/busan/busan-image-rights-audit.csv",
+    "image_rights_linkage_audit": "data/tourapi/reports/busan/busan-image-rights-linkage-audit.csv",
+    "manual_review_decisions": "data/tourapi/reports/busan/busan-manual-review-decisions.csv"
   },
   "candidate_status_manual_review": {
     "count": 4,
@@ -331,7 +343,9 @@
     "by_evidence": {
       "camping_in_nature": {
         "count": 10,
-        "recommendation": "accommodation/camping으로 category 변경 후 재분류",
+        "recommendation": "reclassify_to_accommodation_camping",
+        "auto_apply_possible": 10,
+        "manual_confirm_recommended": 0,
         "ids": [
           "busan-K-00309",
           "busan-K-00311",
@@ -343,18 +357,27 @@
           "busan-K-00325",
           "busan-VB-2142",
           "busan-VB-1852"
-        ]
+        ],
+        "decided_at": "TASK-DATA-BUSAN-EXCEPTION-REVIEW-20A-6",
+        "decision_date": "2026-07-26"
       },
       "mobile_program": {
         "count": 5,
-        "recommendation": "고정 장소 없음 — 제외(excluded) 여부 결정 필요",
-        "ids": [
+        "recommendation": "reclassify_to_nature_outdoor_activity",
+        "auto_apply_possible": 2,
+        "manual_confirm_recommended": 3,
+        "auto_apply_ids": [
           "busan-K-00378",
-          "busan-K-00383",
+          "busan-K-00383"
+        ],
+        "manual_confirm_ids": [
           "busan-K-00422",
           "busan-K-00688",
           "busan-K-00708"
-        ]
+        ],
+        "manual_confirm_reason": "동일 주소(해운대 해변로 84, 해운대 마리나) 3건 — 중복 운영 여부 확인 필요",
+        "decided_at": "TASK-DATA-BUSAN-EXCEPTION-REVIEW-20A-6",
+        "decision_date": "2026-07-26"
       }
     }
   },
@@ -486,5 +509,196 @@
         "source_detail_url"
       ]
     }
-  ]
+  ],
+  "audit_scripts": [
+    {
+      "task": "TASK-20A-3",
+      "script": "scripts/tourapi-busan-image-rights-linkage-20a3.mjs",
+      "role": "이미지 권리 링키지 감사 — 활성 후보 1,642건 linkage_status 매핑",
+      "type": "audit_once",
+      "note": "정기 배치 아님. 일회성 감사 스크립트."
+    },
+    {
+      "task": "TASK-20A-4",
+      "script": "scripts/tourapi-busan-kto-rights-apply-20a4.mjs",
+      "role": "KTO 543건 cpyrhtDivCd → busan-image-rights-audit.csv 반영",
+      "type": "audit_once",
+      "note": "정기 배치 아님. 일회성 판정 스크립트."
+    },
+    {
+      "task": "TASK-20A-6",
+      "script": "scripts/tourapi-busan-exception-review-20a6.mjs",
+      "role": "subcategory manual_review 15건 + busan-A-00064 병합 검토 권고",
+      "type": "audit_once",
+      "note": "정기 배치 아님. 일회성 판정 스크립트."
+    }
+  ],
+  "merge_audit_results": {
+    "generated_at": "TASK-DATA-BUSAN-EXCEPTION-REVIEW-20A-6",
+    "audit_date": "2026-07-26",
+    "items": [
+      {
+        "canonical_id": "busan-A-00064",
+        "canonical_title": "부산영화체험박물관/씨네뮤지엄",
+        "sources": [
+          "busan-VBM-367",
+          "busan-VBM-1640"
+        ],
+        "recommendation": "same_place",
+        "confidence": "high",
+        "preferred_enrichment_source": "busan-VBM-367",
+        "duplicate_candidate": "busan-VBM-1640",
+        "auto_merge": false,
+        "main_pc_confirmation_required": true,
+        "evidence": "세 항목 동일 주소(중구 대청로126번길 12). VBM-367(attraction)/VBM-1640(experience)는 동일 시설 중복 등재."
+      }
+    ]
+  },
+  "image_rights_audit": {
+    "generated_at": "TASK-20A-3 ~ TASK-20A-6",
+    "audit_date": "2026-07-26",
+    "total_active": 1642,
+    "kto": {
+      "count": 543,
+      "source_domain": "tong.visitkorea.or.kr",
+      "kogl_type1": 75,
+      "kogl_type3": 468,
+      "operational_decision": "usable",
+      "evidence_level": "item_verified",
+      "license_basis": "cpyrhtDivCd (KTO raw API)",
+      "attribution_required": true
+    },
+    "visitbusan": {
+      "count": 958,
+      "source_domain": "www.visitbusan.net",
+      "operational_decision": "review_required",
+      "evidence_level": "domain_inferred",
+      "license_basis": "All Rights Reserved (부산광역시) — 개별 공공누리 마크 미확인",
+      "auto_detection_feasible": false,
+      "note": "Playwright 사전 점검(PRECHECK-20A-5A): KOGL 마크 미탐지. 기관 허가 필요."
+    },
+    "no_image": {
+      "count": 141
+    },
+    "audit_files": {
+      "rights_audit_csv": "data/tourapi/candidates/busan/busan-image-rights-audit.csv",
+      "linkage_audit_csv": "data/tourapi/reports/busan/busan-image-rights-linkage-audit.csv",
+      "manual_review_decisions": "data/tourapi/reports/busan/busan-manual-review-decisions.csv"
+    }
+  },
+  "image_replacement_results": {
+    "generated_at": "TASK-DATA-BUSAN-RESTAURANT-IMAGE-FIX-20A-11",
+    "audit_date": "2026-07-26",
+    "items": [
+      {
+        "candidate_id": "busan-F-00324",
+        "restaurant_name": "부산명물횟집",
+        "replacement_status": "found",
+        "broken_image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20230613131233567_ttiel",
+        "replacement_image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240419101804650_ttiel",
+        "replacement_provider": "VisitBusan_FoodService",
+        "replacement_source_id": "FoodService:112:ko",
+        "license_type": "unverified_official_promotional_image",
+        "note": "동일 음식점 FoodService 이중 등록(UC_SEQ=1612 깨짐→UC_SEQ=112 정상). 세션 내 사전 검증 HTTP 200+JPEG 111KB 확인. 실행 시 서버 502(일시 오류) — 서버 복구 후 재접근 권장. 실제 교체 보류.",
+        "linked_candidate": "busan-F-00013"
+      }
+    ]
+  },
+  "audit_20a_summary": {
+    "audit_series": "TASK-DATA-BUSAN-AUDIT-20A",
+    "audit_period": "2026-07-26",
+    "tasks_completed": [
+      {
+        "task": "TASK-20A-1",
+        "scope": "감사 계획 수립",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-2",
+        "scope": "이미지 공급자 정책 조사 (VisitBusan)",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-3",
+        "scope": "이미지 권리 링키지 감사 (1,642건)",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-4",
+        "scope": "KTO 543건 cpyrhtDivCd 반영",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-5A",
+        "scope": "VisitBusan Playwright KOGL 마크 사전 점검",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-6",
+        "scope": "subcategory manual_review 15건 판정 + busan-A-00064 병합 감사",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-7",
+        "scope": "metrics 동기화",
+        "status": "complete"
+      },
+      {
+        "task": "TASK-20A-8",
+        "scope": "VB 958건 KTO 대체 매칭",
+        "status": "complete",
+        "result": "auto_replace:7 + manual_review:2 + no_match:949"
+      },
+      {
+        "task": "TASK-20A-9",
+        "scope": "음식점 415건 이미지 권리 분류",
+        "status": "complete",
+        "result": "low:397 + manual_review:18"
+      },
+      {
+        "task": "TASK-20A-10",
+        "scope": "음식점 397건 이미지 기술 스캔",
+        "status": "complete",
+        "result": "valid:396 + invalid_image:1(busan-F-00324)"
+      },
+      {
+        "task": "TASK-20A-11",
+        "scope": "busan-F-00324 대체 이미지 탐색",
+        "status": "complete",
+        "result": "found(FoodService:112:ko)"
+      },
+      {
+        "task": "TASK-20A-12",
+        "scope": "감사 최종 정리 (metrics·handoff 업데이트)",
+        "status": "complete"
+      }
+    ],
+    "pending_items": [
+      {
+        "item": "VisitBusan web-only 음식점 18건 수동 확인",
+        "priority": "medium",
+        "file": "busan-restaurant-image-rights.csv"
+      },
+      {
+        "item": "yacht 3건(busan-K-00422/688/708) 중복·운영 여부 확인",
+        "priority": "medium",
+        "file": "busan-manual-review-decisions.csv"
+      },
+      {
+        "item": "busan-A-00064 병합 수동 승인",
+        "priority": "medium",
+        "note": "auto_merge=false, main_pc_confirmation_required=true"
+      },
+      {
+        "item": "PhotoGalleryService1 전체 매칭",
+        "priority": "low",
+        "note": "야간 후속 작업 — 미시작"
+      },
+      {
+        "item": "busan-F-00324 이미지 실제 교체",
+        "priority": "low",
+        "note": "서버 502 복구 확인 후 적용. 대체 URL 준비됨."
+      }
+    ]
+  }
 }
