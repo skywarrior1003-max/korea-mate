@@ -13,7 +13,7 @@ import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
-import { loadMoments, loadMomentsFromServer, addMoment, deleteMoment } from "@/lib/trip-moments";
+import { loadMoments, loadMomentsFromServer, addMoment, deleteMoment, updateMomentMemo } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
@@ -1344,6 +1344,14 @@ function ItineraryResult() {
     }
   }, [itinId]);
 
+  // ── memo 수정 — 성공 시 서버 응답 기준으로 상태 갱신, 실패는 throw 하여
+  //    Timeline 이 원본을 유지한 채 오류를 표시하게 한다.
+  const handleMemoEdit = useCallback(async (momentId: string, memo: string) => {
+    if (!itinId) throw new Error("NO_ITINERARY");
+    const updated = await updateMomentMemo(itinId, momentId, memo, getDeviceId());
+    setMoments(updated);
+  }, [itinId]);
+
   // ── 공개/비공개 토글 ─────────────────────────────────────────
   // S3: 공개 전환은 Publish Preview에서 명시적 확인 후에만 실행.
   // 비공개 전환은 즉시 (노출 축소 방향은 미리보기 불필요).
@@ -2314,6 +2322,7 @@ function ItineraryResult() {
         <TripMomentTimeline
           moments={moments}
           onDelete={handleMomentDelete}
+          onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
           onAddMemory={() => setCaptureOpen(true)}
         />
       </div>

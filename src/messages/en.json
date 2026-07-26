@@ -166,5 +166,16 @@
     "copied": "{n} views",
     "helpful": "helpful",
     "copiedCount": "copied"
+  },
+  "memo": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "noMemo": "No memo",
+    "placeholder": "Write a memo…",
+    "remaining": "{n} left",
+    "tooLong": "{n} over the 2000-character limit",
+    "saveFailed": "Couldn't save. Your original memo is unchanged."
   }
 }

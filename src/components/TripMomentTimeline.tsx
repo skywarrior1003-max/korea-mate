@@ -4,13 +4,18 @@
 // TASK-022: 기록된 순간들의 아름다운 타임라인 뷰
 
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import type { TripMoment } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
+
+const MEMO_MAX = 2000;
 
 interface Props {
   moments:       TripMoment[];
   onDelete:      (momentId: string) => void;
   onAddMemory:   () => void;
+  /** memo 수정 — 미전달 시 Edit 버튼을 노출하지 않는다 (공유·읽기 전용 화면 대비) */
+  onEditMemo?:   (momentId: string, memo: string) => Promise<void>;
 }
 
 const CAT_COLORS: Record<string, string> = {
@@ -21,9 +26,44 @@ const CAT_COLORS: Record<string, string> = {
   random:  "#FF4A2D",
 };
 
-export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: Props) {
+export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onEditMemo }: Props) {
+  const t = useTranslations("memo");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [expanded,      setExpanded]      = useState<string | null>(null);
+  const [editingId,     setEditingId]     = useState<string | null>(null);
+  const [draft,         setDraft]         = useState("");
+  const [saving,        setSaving]        = useState(false);
+  const [editError,     setEditError]     = useState(false);
+
+  const over = draft.trim().length - MEMO_MAX;
+
+  const startEdit = useCallback((m: TripMoment) => {
+    setEditingId(m.moment_id);
+    setDraft(m.memo ?? "");
+    setEditError(false);
+  }, []);
+
+  const cancelEdit = useCallback(() => {
+    setEditingId(null);
+    setDraft("");
+    setEditError(false);
+  }, []);
+
+  const saveEdit = useCallback(async (momentId: string) => {
+    if (!onEditMemo || saving) return;             // 저장 중 중복 요청 방지
+    if (draft.trim().length > MEMO_MAX) return;
+    setSaving(true);
+    setEditError(false);
+    try {
+      await onEditMemo(momentId, draft);
+      setEditingId(null);
+      setDraft("");
+    } catch {
+      setEditError(true);                          // 실패 시 편집창 유지, 원본 보존
+    } finally {
+      setSaving(false);
+    }
+  }, [onEditMemo, draft, saving]);
 
   const handleDelete = useCallback((id: string) => {
     if (deleteConfirm === id) {
@@ -127,13 +167,57 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
 
             {/* 내용 */}
             <div className="px-5 py-4 space-y-2.5">
-              {m.memo && (
-                <p className="text-sm text-[#191C21] leading-relaxed font-medium whitespace-pre-line">
-                  {m.memo}
-                </p>
-              )}
-              {!m.memo && (
-                <p className="text-sm text-[#565D66]/60 italic">No memo</p>
+              {editingId === m.moment_id ? (
+                /* 편집 모드 — Fable 토큰 유지, Timeline 구조 그대로 */
+                <div className="space-y-2">
+                  <textarea
+                    autoFocus
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") { e.preventDefault(); cancelEdit(); }
+                      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); void saveEdit(m.moment_id); }
+                    }}
+                    rows={3}
+                    disabled={saving}
+                    placeholder={t("placeholder")}
+                    aria-label={t("edit")}
+                    className="gkm-focus w-full text-sm text-[#191C21] leading-relaxed rounded-xl border border-[#E5E7EA] bg-white px-3 py-2 resize-y disabled:opacity-60"
+                  />
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`text-xs font-medium ${over > 0 ? "text-[#D23B2E]" : "text-[#565D66]/60"}`}>
+                      {over > 0 ? t("tooLong", { n: over }) : t("remaining", { n: MEMO_MAX - draft.trim().length })}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={cancelEdit}
+                        disabled={saving}
+                        className="gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg text-[#565D66] hover:bg-[#F6F7F8] disabled:opacity-50 cursor-pointer"
+                      >{t("cancel")}</button>
+                      <button
+                        onClick={() => void saveEdit(m.moment_id)}
+                        disabled={saving || over > 0}
+                        className="gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg bg-[#FF4A2D] text-white hover:bg-[#D93317] disabled:opacity-50 cursor-pointer"
+                      >{saving ? t("saving") : t("save")}</button>
+                    </div>
+                  </div>
+                  {editError && (
+                    <p className="text-xs font-semibold text-[#D23B2E] bg-[#FDF1EF] rounded-lg px-3 py-2">
+                      {t("saveFailed")}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {m.memo && (
+                    <p className="text-sm text-[#191C21] leading-relaxed font-medium whitespace-pre-line">
+                      {m.memo}
+                    </p>
+                  )}
+                  {!m.memo && (
+                    <p className="text-sm text-[#565D66]/60 italic">{t("noMemo")}</p>
+                  )}
+                </>
               )}
 
               <div className="flex items-center justify-between">
@@ -146,16 +230,26 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory }: P
                     <span className="text-emerald-500">☁️</span>
                   )}
                 </div>
-                <button
-                  onClick={() => handleDelete(m.moment_id)}
-                  className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    deleteConfirm === m.moment_id
-                      ? "bg-red-500 text-white"
-                      : "text-[#565D66]/40 hover:text-red-400 hover:bg-red-50"
-                  }`}
-                >
-                  {deleteConfirm === m.moment_id ? "Confirm delete" : "Delete"}
-                </button>
+                <div className="flex items-center gap-1">
+                  {onEditMemo && editingId !== m.moment_id && (
+                    <button
+                      onClick={() => startEdit(m)}
+                      className="gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg text-[#565D66]/60 hover:text-[#191C21] hover:bg-[#F6F7F8] transition-all cursor-pointer"
+                    >
+                      {t("edit")}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleDelete(m.moment_id)}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                      deleteConfirm === m.moment_id
+                        ? "bg-red-500 text-white"
+                        : "text-[#565D66]/40 hover:text-red-400 hover:bg-red-50"
+                    }`}
+                  >
+                    {deleteConfirm === m.moment_id ? "Confirm delete" : "Delete"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

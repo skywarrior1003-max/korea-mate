@@ -159,6 +159,49 @@ export async function deleteMoment(
   }
 }
 
+// ── memo 수정: PATCH 성공 시 서버 응답 기준으로 로컬 갱신 ────────────────────
+// 서버에 저장된 적 없는 로컬 전용 moment 는 서버 호출 없이 로컬만 갱신한다.
+// 실패 시 로컬을 건드리지 않고 throw — 호출부가 원본을 유지한다.
+export async function updateMomentMemo(
+  itinId:   string,
+  momentId: string,
+  memo:     string,
+  deviceId: string,
+): Promise<TripMoment[]> {
+  const before = loadMoments(itinId);
+  const target = before.find(m => m.moment_id === momentId);
+  const trimmed = memo.trim();
+
+  if (target && !target.synced) {
+    const localOnly = before.map(m => m.moment_id === momentId ? { ...m, memo: trimmed } : m);
+    saveMomentsLocal(itinId, localOnly);
+    return localOnly;
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}`, {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      body:    JSON.stringify({ memo: trimmed }),
+    });
+  } catch {
+    throw new Error("PATCH_FAILED");
+  }
+  if (!res.ok) throw new Error("PATCH_FAILED");
+
+  // 서버 응답의 memo 를 정본으로 삼는다 (서버 측 정규화 결과 반영)
+  let serverMemo = trimmed;
+  try {
+    const row = (await res.json()) as { memo?: unknown };
+    if (typeof row.memo === "string") serverMemo = row.memo;
+  } catch { /* 응답 파싱 실패 시 요청값 유지 */ }
+
+  const updated = before.map(m => m.moment_id === momentId ? { ...m, memo: serverMemo } : m);
+  saveMomentsLocal(itinId, updated);
+  return updated;
+}
+
 // ── 사진 canvas 압축 (미리보기용: base64 반환, localStorage 저장) ────────────
 // 패키지 추가 없이 브라우저 canvas API로 max 600px JPEG 75% 압축
 

@@ -166,5 +166,16 @@
     "copied": "浏览 {n}",
     "helpful": "有帮助",
     "copiedCount": "已复制"
+  },
+  "memo": {
+    "edit": "编辑",
+    "save": "保存",
+    "cancel": "取消",
+    "saving": "保存中…",
+    "noMemo": "暂无备注",
+    "placeholder": "输入备注…",
+    "remaining": "还剩{n}字",
+    "tooLong": "超出2000字限制{n}字",
+    "saveFailed": "保存失败，原备注未更改。"
   }
 }

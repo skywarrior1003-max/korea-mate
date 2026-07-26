@@ -105,7 +105,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           onClick={handleSave}
           disabled={saving}
           className="text-sm font-black px-4 py-1.5 rounded-xl transition-all disabled:opacity-40 cursor-pointer"
-          style={{ backgroundColor: "#FF4A2D", color: "#1a1a2e" }}
+          style={{ backgroundColor: "#FF4A2D", color: "#ffffff" }}
         >
           {saving ? "Saving…" : "Save"}
         </button>

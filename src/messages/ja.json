@@ -166,5 +166,16 @@
     "copied": "閲覧 {n}",
     "helpful": "役に立った",
     "copiedCount": "コピー"
+  },
+  "memo": {
+    "edit": "編集",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "saving": "保存中…",
+    "noMemo": "メモなし",
+    "placeholder": "メモを入力…",
+    "remaining": "残り{n}文字",
+    "tooLong": "2000文字の上限を{n}文字超えています",
+    "saveFailed": "保存できませんでした。元のメモはそのままです。"
   }
 }
