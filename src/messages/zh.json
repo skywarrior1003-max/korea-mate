@@ -187,5 +187,9 @@
     "sent": "已表达感谢 👍",
     "failed": "发送失败，请重试。",
     "sending": "发送中…"
+  },
+  "creatorStats": {
+    "copied": "被复制{n}次",
+    "helpful": "{n}人觉得有帮助"
   }
 }

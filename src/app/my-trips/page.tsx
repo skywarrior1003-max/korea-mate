@@ -4,6 +4,7 @@
 // TASK-023: premium trip management hub with moments count + personality badge
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import {
   apiFetchItinerariesByDevice,
@@ -73,6 +74,8 @@ interface Trip {
   days:        number;
   moments:     number;
   isPublic:    boolean;
+  copyCount:   number;   // 실측 누적값 — 낙관적 증가 없음
+  helpfulCount:number;
 }
 
 function rowToTrip(r: ItineraryRow): Trip {
@@ -89,11 +92,14 @@ function rowToTrip(r: ItineraryRow): Trip {
     days,
     moments:     0,
     isPublic:    r.is_public ?? false,
+    copyCount:   r.copy_count ?? 0,
+    helpfulCount:r.helpful_count ?? 0,
   };
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
 export default function MyTripsPage() {
+  const tStats = useTranslations("creatorStats");
   const [trips,          setTrips]          = useState<Trip[]>([]);
   const [loading,        setLoading]        = useState(true);
   const [fetchError,     setFetchError]     = useState(false);
@@ -351,6 +357,17 @@ export default function MyTripsPage() {
                         style={{ backgroundColor: "#1a1a2e" }}
                       >
                         📸 {trip.moments} moments
+                      </span>
+                    )}
+                    {/* 원작자 성과 — 실측 누적값만. 둘 다 0이면 미노출 */}
+                    {trip.copyCount > 0 && (
+                      <span className="text-[10px] font-black bg-[#FFF0EC] text-[#FF4A2D] px-2.5 py-1 rounded-md">
+                        📋 {tStats("copied", { n: trip.copyCount })}
+                      </span>
+                    )}
+                    {trip.helpfulCount > 0 && (
+                      <span className="text-[10px] font-black bg-[#E7F5EF] text-[#1D9A6C] px-2.5 py-1 rounded-md">
+                        👍 {tStats("helpful", { n: trip.helpfulCount })}
                       </span>
                     )}
                     <button

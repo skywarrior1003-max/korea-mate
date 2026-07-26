@@ -187,5 +187,9 @@
     "sent": "Thanks — sent 👍",
     "failed": "Couldn't send. Try again.",
     "sending": "Sending…"
+  },
+  "creatorStats": {
+    "copied": "Copied {n} times",
+    "helpful": "{n} helpful"
   }
 }
