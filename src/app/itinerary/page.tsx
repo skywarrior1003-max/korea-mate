@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
-import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPublic } from "@/lib/itinerary-api";
+import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPublic, apiHelpfulStatus, apiHelpfulVote } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
@@ -1081,6 +1081,7 @@ function ItineraryResult() {
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
       if (record.is_public !== undefined) setIsPublic(record.is_public);
+      setHelpfulOrigin(record.copy_of ?? null); // 복사본이면 원본 id 보관
       setIsOwner(true); // GET is owner-only; having a record confirms ownership
       setSyncStatus("saved");
       setLoading(false);
@@ -1511,6 +1512,10 @@ function ItineraryResult() {
   const celebratedKey = `koreamate_daydone_${itinId ?? shareId ?? "draft"}`;
   const [celebrated, setCelebrated] = useState<Set<number>>(new Set());
   const [dayDone,    setDayDone]    = useState<number | null>(null);
+  // 복사본 소유자만 원작자에게 Helpful 전송 가능 — 서버가 3중 가드로 최종 판정하며
+  // 여기서는 CTA 노출 여부만 결정한다. sent 이면 이후 Day 에서도 재노출하지 않는다.
+  const [helpfulOrigin,   setHelpfulOrigin]   = useState<string | null>(null);
+  const [helpfulEligible, setHelpfulEligible] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(celebratedKey);
@@ -1518,6 +1523,34 @@ function ItineraryResult() {
     } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [celebratedKey]);
+
+  // 복사본이면 서버에 자격·전송 여부를 조회 (카운트 변경 없음)
+  useEffect(() => {
+    if (!helpfulOrigin) { setHelpfulEligible(false); return; }
+    let cancelled = false;
+    apiHelpfulStatus(helpfulOrigin, getDeviceId()).then(st => {
+      if (!cancelled) setHelpfulEligible(!!st && st.eligible && !st.sent);
+    }).catch(() => { /* 조회 실패 → CTA 미노출 */ });
+    return () => { cancelled = true; };
+  }, [helpfulOrigin]);
+
+  // Helpful 전송 — 실패는 throw 하여 토스트가 재시도 가능한 오류 상태를 보여준다.
+  // 성공해도 여기서 자격을 내리지 않는다: 즉시 내리면 토스트의 Helpful 블록이
+  // 언마운트되어 "감사 완료" 상태가 보이지 않는다. 자격 해제는 토스트를 닫을 때
+  // 수행해, 이후 Day 완주에서는 재노출되지 않게 한다.
+  const helpfulSentRef = useRef(false);
+  const sendHelpful = useCallback(async () => {
+    if (!helpfulOrigin) throw new Error("NO_ORIGIN");
+    const r = await apiHelpfulVote(helpfulOrigin, getDeviceId());
+    if (!r) throw new Error("HELPFUL_FAILED");
+    helpfulSentRef.current = true;
+  }, [helpfulOrigin]);
+
+  // 토스트 종료 — 전송했다면 이후 Day 에서 재노출하지 않는다.
+  const closeDayDone = useCallback(() => {
+    setDayDone(null);
+    if (helpfulSentRef.current) setHelpfulEligible(false);
+  }, []);
 
   function toggleVisited(dayNumber: number, place: Place) {
     setVisited(prev => {
@@ -2395,8 +2428,9 @@ function ItineraryResult() {
       {dayDone !== null && (!shareId || isOwner) && (
         <DayCompleteToast
           dayNumber={dayDone}
-          onAddMemory={() => { setCaptureDay(dayDone); setDayDone(null); setCaptureOpen(true); }}
-          onClose={() => setDayDone(null)}
+          onAddMemory={() => { setCaptureDay(dayDone); closeDayDone(); setCaptureOpen(true); }}
+          onSendHelpful={helpfulEligible ? sendHelpful : undefined}
+          onClose={closeDayDone}
         />
       )}
 

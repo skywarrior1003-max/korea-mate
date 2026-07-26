@@ -170,6 +170,20 @@ export async function apiCopyItinerary(
 }
 
 // ── Helpful vote ──────────────────────────────────────────────────────────────
+// ── Helpful 반응 자격·전송 여부 조회 (카운트 변경 없음) ──────────────────────
+export async function apiHelpfulStatus(
+  itineraryId: string,
+  deviceId:    string,
+): Promise<{ eligible: boolean; sent: boolean } | null> {
+  const res = await fetch(`/api/itinerary/helpful/${itineraryId}`, {
+    headers: { "x-device-id": deviceId },
+  }).catch(() => null);
+  if (!res || !res.ok) return null;
+  const d = (await res.json().catch(() => null)) as { eligible?: boolean; sent?: boolean } | null;
+  if (!d) return null;
+  return { eligible: !!d.eligible, sent: !!d.sent };
+}
+
 export async function apiHelpfulVote(
   itineraryId: string,
   deviceId:    string,

@@ -8,7 +8,7 @@
 //   DB·RPC·제약은 변경하지 않는다.
 
 import { createClient } from "@supabase/supabase-js";
-import { guardedHelpfulVote, type HelpfulAdminLike } from "../../../../src/lib/helpful-guard-core";
+import { guardedHelpfulVote, helpfulStatus, type HelpfulAdminLike } from "../../../../src/lib/helpful-guard-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -55,5 +55,21 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
     deviceId,
     admin as unknown as HelpfulAdminLike,
   );
+  return json(result.body, result.status);
+}
+
+// ── GET — 요청 기기의 반응 자격·전송 여부 조회 (카운트 변경 없음) ─────────────
+export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
+  const itineraryId = (ctx.params.id ?? "").trim();
+  if (!UUID_RE.test(itineraryId)) return json({ error: "Invalid itinerary id" }, 400);
+
+  const deviceId = (ctx.request.headers.get("x-device-id") ?? "").trim();
+  if (!deviceId) return json({ error: "x-device-id header required" }, 400);
+
+  let admin;
+  try { admin = adminClient(ctx.env); }
+  catch { return json({ error: "Server configuration error" }, 503); }
+
+  const result = await helpfulStatus(itineraryId, deviceId, admin as unknown as HelpfulAdminLike);
   return json(result.body, result.status);
 }

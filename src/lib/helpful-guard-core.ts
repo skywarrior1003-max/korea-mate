@@ -13,6 +13,12 @@
 
 export type HelpfulReason = "added" | "already_added" | "self" | "not_copied";
 
+export interface StatusResult {
+  status: number;
+  /** eligible = 이 기기가 지금 반응을 보낼 자격이 있는가 / sent = 이미 보냈는가 */
+  body: { eligible?: boolean; sent?: boolean; error?: string };
+}
+
 export interface GuardResult {
   status: number;
   body: { added?: boolean; helpful_count?: number; reason?: HelpfulReason; error?: string };
@@ -28,6 +34,61 @@ interface QueryChain {
 export interface HelpfulAdminLike {
   from(table: string): QueryChain;
   rpc(fn: string, args: Record<string, unknown>): Promise<{ data: unknown; error: unknown }>;
+}
+
+// ── 상태 조회 (GET) — 카운트 변경 없음 ────────────────────────────────────────
+// PATCH 와 동일한 3중 가드를 재사용해 eligible 을 판정하고, 투표 행 존재로 sent 를
+// 판정한다. 민감정보(원작자 device_id, copy_of 등)는 응답에 포함하지 않는다.
+export async function helpfulStatus(
+  itineraryId: string,
+  deviceId: string,
+  admin: HelpfulAdminLike,
+): Promise<StatusResult> {
+  const { data: target, error: targetErr } = (await admin
+    .from("itineraries")
+    .select("id, device_id, is_public")
+    .eq("id", itineraryId)
+    .maybeSingle()) as {
+    data: { id: string; device_id: string | null; is_public: boolean } | null;
+    error: { code?: string } | null;
+  };
+  if (targetErr) {
+    console.error("[helpful GET] db error (target):", targetErr.code);
+    return { status: 500, body: { error: "Server error" } };
+  }
+  if (!target || !target.is_public) return { status: 404, body: { error: "Not found" } };
+
+  // 자기 일정이면 자격 없음 (존재 사실만 알려주고 상태는 false)
+  if (target.device_id && target.device_id === deviceId) {
+    return { status: 200, body: { eligible: false, sent: false } };
+  }
+
+  const { data: copy, error: copyErr } = (await admin
+    .from("itineraries")
+    .select("id")
+    .eq("copy_of", itineraryId)
+    .eq("device_id", deviceId)
+    .limit(1)
+    .maybeSingle()) as { data: { id: string } | null; error: { code?: string } | null };
+  if (copyErr) {
+    console.error("[helpful GET] db error (copy):", copyErr.code);
+    return { status: 500, body: { error: "Server error" } };
+  }
+  if (!copy) return { status: 200, body: { eligible: false, sent: false } };
+
+  const { data: vote, error: voteErr } = (await admin
+    .from("itinerary_helpful_votes")
+    .select("id")
+    .eq("itinerary_id", itineraryId)
+    .eq("device_id", deviceId)
+    .limit(1)
+    .maybeSingle()) as { data: { id: string } | null; error: { code?: string } | null };
+  if (voteErr) {
+    console.error("[helpful GET] db error (vote):", voteErr.code);
+    return { status: 500, body: { error: "Server error" } };
+  }
+
+  return { status: 200, body: { eligible: true, sent: !!vote } };
 }
 
 export async function guardedHelpfulVote(

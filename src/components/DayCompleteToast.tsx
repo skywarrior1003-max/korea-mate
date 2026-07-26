@@ -7,17 +7,36 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 interface Props {
   dayNumber: number;
   onAddMemory: () => void;
   onClose: () => void;
+  /** 복사본 소유자이며 아직 미전송일 때만 전달 — 없으면 Helpful CTA 미노출 */
+  onSendHelpful?: () => Promise<void>;
 }
 
-export default function DayCompleteToast({ dayNumber, onAddMemory, onClose }: Props) {
+export default function DayCompleteToast({ dayNumber, onAddMemory, onClose, onSendHelpful }: Props) {
   const t = useTranslations("dayDone");
+  const [sending, setSending] = useState(false);
+  const [sent,    setSent]    = useState(false);
+  const [failed,  setFailed]  = useState(false);
+
+  async function handleSend() {
+    if (!onSendHelpful || sending || sent) return;   // 중복 전송 차단
+    setSending(true);
+    setFailed(false);
+    try {
+      await onSendHelpful();
+      setSent(true);                                  // 서버 성공 후에만 완료 표시
+    } catch {
+      setFailed(true);                                // Day 완료·Memory 상태에는 영향 없음
+    } finally {
+      setSending(false);
+    }
+  }
 
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -44,6 +63,28 @@ export default function DayCompleteToast({ dayNumber, onAddMemory, onClose }: Pr
           className="gkm-focus shrink-0 text-faint hover:text-ink px-1.5 py-1 -mt-1 -mr-1"
         >✕</button>
       </div>
+      {/* Helpful — secondary. 복사본 소유자이며 미전송일 때만 노출 */}
+      {onSendHelpful && (
+        <>
+          <button
+            onClick={() => void handleSend()}
+            disabled={sending || sent}
+            className={`gkm-focus w-full min-h-11 rounded-control border text-sm font-semibold transition-colors ${
+              sent
+                ? "border-ok/30 bg-ok-tint text-ok cursor-default"
+                : "border-line bg-surface text-ink hover:bg-surface-dim disabled:opacity-60"
+            }`}
+          >
+            {sent ? `✓ ${t("sent")}` : sending ? t("sending") : t("send")}
+          </button>
+          {failed && (
+            <p className="text-xs font-semibold text-error bg-error-tint rounded-control px-3 py-2">
+              {t("failed")}
+            </p>
+          )}
+        </>
+      )}
+
       <div className="flex gap-2">
         <button
           onClick={onClose}

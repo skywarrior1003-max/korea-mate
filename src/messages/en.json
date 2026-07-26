@@ -182,6 +182,10 @@
     "title": "Day {n} complete!",
     "hint": "You visited everything planned. Keep the moment before it fades.",
     "cta": "Add a memory",
-    "dismiss": "Not now"
+    "dismiss": "Not now",
+    "send": "Send 👍 to the author",
+    "sent": "Thanks — sent 👍",
+    "failed": "Couldn't send. Try again.",
+    "sending": "Sending…"
   }
 }

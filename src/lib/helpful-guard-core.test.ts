@@ -4,7 +4,7 @@
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { guardedHelpfulVote } from "./helpful-guard-core.ts";
+import { guardedHelpfulVote, helpfulStatus } from "./helpful-guard-core.ts";
 
 const TARGET = "00000000-0000-0000-0000-0000000000t1";
 const OWNER  = "device-owner";
@@ -129,4 +129,70 @@ test("소유자 device_id 가 null 이면 self 로 오판하지 않음", async (
   const r = await guardedHelpfulVote(TARGET, COPIER, a as any);
   assert.notStrictEqual(r.body.reason, "self");
   assert.strictEqual(r.body.reason, "added");
+});
+
+// ── helpfulStatus (GET) ───────────────────────────────────────────────────────
+
+// from() 순서: 1=대상, 2=복사본, 3=투표행
+function mockStatusAdmin({
+  target = { id: TARGET, device_id: OWNER, is_public: true } as unknown,
+  copy = { id: "copy-1" } as unknown,
+  vote = null as unknown,
+  err = null as unknown,
+  errAt = 0,
+} = {}) {
+  let call = 0;
+  return {
+    from(_t: string) {
+      const n = ++call;
+      const chain: any = {
+        select: () => chain, eq: () => chain, limit: () => chain,
+        maybeSingle: async () => {
+          if (errAt === n) return { data: null, error: err };
+          return { data: n === 1 ? target : n === 2 ? copy : vote, error: null };
+        },
+      };
+      return chain;
+    },
+    async rpc() { throw new Error("GET must not call rpc"); },
+  };
+}
+
+test("status: 복사자 미전송 → eligible=true, sent=false", async () => {
+  const r = await helpfulStatus(TARGET, COPIER, mockStatusAdmin() as any);
+  assert.strictEqual(r.status, 200);
+  assert.deepStrictEqual(r.body, { eligible: true, sent: false });
+});
+
+test("status: 복사자 전송 완료 → eligible=true, sent=true", async () => {
+  const r = await helpfulStatus(TARGET, COPIER, mockStatusAdmin({ vote: { id: "v1" } }) as any);
+  assert.deepStrictEqual(r.body, { eligible: true, sent: true });
+});
+
+test("status: 자기 일정 → eligible=false", async () => {
+  const r = await helpfulStatus(TARGET, OWNER, mockStatusAdmin() as any);
+  assert.deepStrictEqual(r.body, { eligible: false, sent: false });
+});
+
+test("status: 미복사 기기 → eligible=false", async () => {
+  const r = await helpfulStatus(TARGET, "stranger", mockStatusAdmin({ copy: null }) as any);
+  assert.deepStrictEqual(r.body, { eligible: false, sent: false });
+});
+
+test("status: 미존재·비공개 → 404", async () => {
+  assert.strictEqual((await helpfulStatus(TARGET, COPIER, mockStatusAdmin({ target: null }) as any)).status, 404);
+  assert.strictEqual((await helpfulStatus(TARGET, COPIER,
+    mockStatusAdmin({ target: { id: TARGET, device_id: OWNER, is_public: false } }) as any)).status, 404);
+});
+
+test("status: 응답에 민감정보 없음", async () => {
+  const r = await helpfulStatus(TARGET, COPIER, mockStatusAdmin() as any);
+  const s = JSON.stringify(r.body);
+  assert.ok(!s.includes(OWNER) && !s.includes("device_id") && !s.includes("copy_of"));
+});
+
+test("status: DB 오류 → 500", async () => {
+  const r = await helpfulStatus(TARGET, COPIER, mockStatusAdmin({ err: { code: "PGRST" }, errAt: 3 }) as any);
+  assert.strictEqual(r.status, 500);
+  assert.ok(!JSON.stringify(r.body).includes("PGRST"));
 });
