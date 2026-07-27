@@ -90,6 +90,31 @@ export function parseCoverRequest(body: unknown): ParsedRequest {
   return { ok: false, status: 400, error: "Invalid kind" };
 }
 
+/**
+ * 커버 쓰기 게이트 — 반드시 소유권 확인을 통과한 "뒤에" 호출한다.
+ *
+ * 개인 Memory 사진을 새 커버로 지정하는 것은 공개 일정에서만 허용한다.
+ * 읽기 경로(verifyPersonalCover)가 이미 is_public 을 막고 있으므로 노출 차단이
+ * 아니라 쓰기측 다층 방어다 — 비공개 일정에 개인 사진 ID 가 저장된 채로 남지
+ * 않게 해서, 나중에 공개로 바꿀 때 동의 없이 사진이 표지가 되는 일을 막는다.
+ *
+ * auto(해제)는 공개 범위를 줄이는 작업이라 공개 여부와 무관하게 허용하고,
+ * asset(승인 관광 사진)은 개인 정보가 아니므로 기존 계약을 그대로 둔다.
+ *
+ * 소유권 실패는 이 함수에 닿기 전에 404 로 끝나므로, 여기서 409 를 돌려줘도
+ * 타 사용자에게 일정 존재 여부를 누출하지 않는다.
+ */
+export function coverWriteBlock(
+  kind: CoverKind,
+  itin: { is_public: boolean },
+): { status: 409; error: string } | null {
+  if (kind === "moment" && !itin.is_public) {
+    // 내부 상태·경로를 드러내지 않는 안전 문구만 반환한다
+    return { status: 409, error: "Itinerary is not public" };
+  }
+  return null;
+}
+
 /** 전환 시 관련 필드를 한 번에 설정·초기화한다 (부분 갱신 금지 — CHECK 위반 방지) */
 export function buildCoverPatch(
   kind: CoverKind,

@@ -7,6 +7,7 @@
 // - x-device-id(UUID) + 일정 소유권 필수
 // - assetId 는 V1A manifest 화이트리스트만 허용
 // - moment 는 같은 itinerary·같은 device 소유 + 실제 사진 존재 + 정확한 동의 버전
+// - moment 지정은 공개 일정에서만 허용 — 비공개면 409 (소유권 확인 뒤라 누출 없음)
 // - 요청으로 URL·storage_path 를 받지 않는다 (parseCoverRequest 가 화이트리스트 파싱)
 // - 소유권·존재 실패는 전부 404 로 통일 — 타 사용자 자원 존재를 누출하지 않는다
 // - trip_moments.is_public 은 읽지도 쓰지도 않는다
@@ -15,7 +16,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE, MAX_SMALL_BODY_BYTES, readBodyWithLimit } from "../../../../src/lib/itinerary-validate";
 import { assetById } from "../../../../src/lib/trip-cover/assets.data";
-import { parseCoverRequest, buildCoverPatch } from "../../../../src/lib/trip-cover/cover-state-core";
+import { parseCoverRequest, buildCoverPatch, coverWriteBlock } from "../../../../src/lib/trip-cover/cover-state-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -69,7 +70,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   // ── 일정 소유권 ────────────────────────────────────────────────────────────
   const { data: itin, error: itinErr } = await admin
     .from("itineraries")
-    .select("id, device_id")
+    .select("id, device_id, is_public")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -79,6 +80,11 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to load itinerary" }, 500);
   }
   if (!itin) return notFound();
+
+  // 소유권이 확인된 뒤에만 상태 기반 거부(409)를 낸다 — 순서를 바꾸면
+  // 타 사용자에게 일정 존재 여부가 드러난다
+  const blocked = coverWriteBlock(parsed.kind, { is_public: Boolean(itin.is_public) });
+  if (blocked) return json({ error: blocked.error }, blocked.status);
 
   const now = new Date().toISOString();
 

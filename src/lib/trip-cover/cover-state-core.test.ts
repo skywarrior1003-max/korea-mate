@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import {
   CONSENT_VERSION, parseCoverRequest, buildCoverPatch, buildResetPatch,
   verifyPersonalCover, needsMomentLookup, coverETag, etagMatches, coverVersion,
+  coverWriteBlock,
 } from "./cover-state-core.ts";
 import type { ItineraryCoverRow, MomentRow } from "./cover-state-core.ts";
 
@@ -367,4 +368,42 @@ test("resolve: 응답에 storage_path·device_id 원문이 담기지 않는 형�
   assert.ok(!body.includes("storage"));
   assert.ok(!body.includes(DEV_ID));
   assert.ok(!body.includes(MOM_ID));
+});
+
+// ── 쓰기 게이트: 비공개 일정에는 개인 커버를 새로 지정할 수 없다 ──────────────
+
+test("gate: 비공개 + moment → 409", () => {
+  const b = coverWriteBlock("moment", { is_public: false });
+  assert.strictEqual(b?.status, 409);
+  assert.strictEqual(typeof b?.error, "string");
+});
+
+test("gate: 공개 + moment → 통과", () => {
+  assert.strictEqual(coverWriteBlock("moment", { is_public: true }), null);
+});
+
+test("gate: auto 해제는 공개 여부와 무관하게 통과", () => {
+  assert.strictEqual(coverWriteBlock("auto", { is_public: false }), null);
+  assert.strictEqual(coverWriteBlock("auto", { is_public: true }), null);
+});
+
+test("gate: asset 은 기존 동작 유지 — 게이트가 막지 않는다", () => {
+  assert.strictEqual(coverWriteBlock("asset", { is_public: false }), null);
+  assert.strictEqual(coverWriteBlock("asset", { is_public: true }), null);
+});
+
+test("gate: 409 문구에 내부 정보가 담기지 않는다", () => {
+  const b = coverWriteBlock("moment", { is_public: false });
+  const body = JSON.stringify(b);
+  for (const leak of ["storage", "device", "path", "consent", "service_role"]) {
+    assert.ok(!body.toLowerCase().includes(leak), `${leak} 노출`);
+  }
+});
+
+test("gate: moment 만 차단한다 (전수)", () => {
+  for (const k of ["auto", "asset", "moment"] as const)
+    for (const pub of [true, false]) {
+      const blocked = coverWriteBlock(k, { is_public: pub }) !== null;
+      assert.strictEqual(blocked, k === "moment" && !pub, `${k}/${pub}`);
+    }
 });
