@@ -21,7 +21,7 @@
     "maxCalls": 200,
     "maxItems": 50,
     "callDelayMs": 500,
-    "maxRetry": 2,
+    "maxRetry": 3,
     "searchNumOfRows": 5,
     "discoverNumOfRows": 10
   },
