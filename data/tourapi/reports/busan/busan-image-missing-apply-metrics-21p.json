@@ -1,0 +1,86 @@
+{
+  "taskId": "21p",
+  "generatedAt": "2026-07-27T11:29:16.657Z",
+  "inputFiles": {
+    "busan-image-status-21h-rev2.csv": "9eb746b4b0226d59",
+    "busan-curated-images-21f.jsonl": "1a487ddb18c9f621",
+    "busan-image-missing-resolution-21o.csv": "0e4d361cc15da24b",
+    "busan-image-missing-audit-21n.csv": "3eb8b309290ebd8e"
+  },
+  "inputRows": 1642,
+  "outputRows": 1642,
+  "task1_distance_verification": {
+    "claim": "약 20.4km (KTO src=688610 해운대구 ↔ VB src=287 사하구)",
+    "basis": "KTO+VB source record 좌표 (PG GPS 미사용)",
+    "restaurant_coords": {
+      "lat": 35.1581353515,
+      "lng": 129.1485450604,
+      "source": "KTO src=688610"
+    },
+    "observatory_coords": {
+      "lat": 35.052727,
+      "lng": 128.96075,
+      "source": "VB src=287"
+    },
+    "calculated_km": 20.4,
+    "pg_gps_used": false,
+    "verdict": "PASS — 거리 수치 유효, 유지"
+  },
+  "task2_status_changes": {
+    "busan-F-00289": {
+      "from": "image_missing",
+      "to": "source_exhausted",
+      "reason": "PG 22건=전북 익산 무관 사진"
+    },
+    "busan-K-00058": {
+      "from": "image_missing",
+      "to": "image_missing",
+      "reason": "review_required 5건 보류"
+    },
+    "busan-K-00109": {
+      "from": "image_missing",
+      "to": "image_missing",
+      "reason": "duplicate_name_collision, PG 11건 무효"
+    },
+    "busan-K-00119": {
+      "from": "image_missing",
+      "to": "source_exhausted",
+      "reason": "PG 31건=전국 녹차밭 무관 사진"
+    },
+    "busan-K-00306": {
+      "from": "image_missing",
+      "to": "image_partial",
+      "reason": "PG 3건 고신뢰도 채택(location_address_match)"
+    }
+  },
+  "task3_rule_additions": {
+    "file": "docs/automation/photo-gallery-rules.md",
+    "section": "동명 장소 오매칭 방지",
+    "rules_count": 7
+  },
+  "statusDistribution": {
+    "image_sufficient": 1506,
+    "source_exhausted": 133,
+    "image_missing": 2,
+    "image_partial": 1,
+    "total": 1642
+  },
+  "curation": {
+    "cheonma_curated_count": 3,
+    "cheonma_rights": "operational_assumed",
+    "cheonma_match_basis": "location_address_match",
+    "name_score_only_adopted": 0,
+    "pg_gps_null_distance_claimed": 0
+  },
+  "validationGate": {
+    "input_output_row_match": true,
+    "source_exhausted_count_correct": true,
+    "image_missing_maintained": true,
+    "cheonma_candidates_le3": true,
+    "name_score_only_adopted_zero": true,
+    "pg_gps_null_distance_claimed_zero": true,
+    "existing_files_unchanged": true,
+    "no_duplicates": true,
+    "verdict": "PASS"
+  }
+}
