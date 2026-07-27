@@ -1,0 +1,84 @@
+{
+  "task": "TASK-DATA-IMAGE-MISSING-FINAL-RESOLUTION-21Q",
+  "executed_at": "2026-07-27",
+  "input_source": "busan-image-status-21p.csv / busan-curated-images-21p.jsonl",
+  "input_total": 1642,
+  "image_missing_input": 2,
+  "image_missing_resolved": 2,
+  "image_missing_final": 0,
+  "status_changes": [
+    {
+      "candidate_id": "busan-K-00058",
+      "title_ko": "국제시장",
+      "status_21p": "image_missing",
+      "status_21q": "image_partial",
+      "resolution_method": "pg_address_match",
+      "curated_count": 3,
+      "photos": [
+        {
+          "pg_source_id": "2927807",
+          "role": "primary",
+          "match_evidence": "location_address_match",
+          "match_note": "location_raw=중구 신창로4가 일원 = 후보 주소 정확 일치"
+        },
+        {
+          "pg_source_id": "3406729",
+          "role": "context",
+          "match_evidence": "location_neighborhood_match",
+          "match_note": "location_raw=중구 신창동4가 ≈ 신창로4가(동 단위 일치). 2024-09 전문 촬영"
+        },
+        {
+          "pg_source_id": "3406739",
+          "role": "context",
+          "match_evidence": "location_neighborhood_match",
+          "match_note": "location_raw=중구 신창동4가 ≈ 신창로4가(동 단위 일치). 2024-09 전문 촬영 동일 그룹 다른 컷"
+        }
+      ],
+      "candidates_reviewed": ["2927807","2927993","3406729","3406739","3406740"],
+      "candidates_not_selected": ["2927993"],
+      "not_selected_reason": "2927993 location=중구 중구로 36, 국제시장 주소(신창로4가)와 상이한 인근 거리. primary 기준 미충족"
+    },
+    {
+      "candidate_id": "busan-K-00109",
+      "title_ko": "아미산",
+      "status_21p": "image_missing",
+      "status_21q": "source_exhausted",
+      "resolution_method": "external_verification_no_source",
+      "verification_date": "2026-07-27",
+      "verification_sources": [
+        "https://www.daangn.com/kr/local-profile/아미산-해운대-중식당-6tjcwbt4qvqk/",
+        "https://www.diningcode.com/profile.php?rid=QY8XMpr0ErBc",
+        "https://www.siksinhot.com/P/367818",
+        "https://access.visitkorea.or.kr/food/detail.do?cotId=808b9aed-ce11-484a-afb8-2ffc01af4a1c"
+      ],
+      "verification_result": "restaurant_confirmed_active",
+      "verification_detail": "1996년 개업 현존 중식당(해운대 마리나동원 8층). 영업 중 확인.",
+      "source_exhaustion": {
+        "kto_src_688610": "이미지 없음(공란)",
+        "vb_src_152": "별개 사업체 다온한정식(동일 주소 마리나동원8층 다른 레스토랑). 이미지 공유 불가",
+        "pg_11_records": "전량 아미산 산악지역(사하구) 사진. 해운대 레스토랑에 사용 금지(place_identity_issue)"
+      }
+    }
+  ],
+  "validation_gate": {
+    "input_count_matches_output": true,
+    "image_missing_final_zero": true,
+    "name_score_only_adopted": 0,
+    "pg_gps_null_distance_claimed": 0,
+    "address_evidence_required": true,
+    "address_evidence_met": true,
+    "cross_entity_image_sharing": 0
+  },
+  "final_distribution_21q": {
+    "image_sufficient": 1506,
+    "source_exhausted": 134,
+    "image_partial": 2,
+    "image_missing": 0,
+    "total": 1642
+  },
+  "delta_from_21p": {
+    "source_exhausted": "+1 (아미산)",
+    "image_partial": "+1 (국제시장)",
+    "image_missing": "-2"
+  }
+}

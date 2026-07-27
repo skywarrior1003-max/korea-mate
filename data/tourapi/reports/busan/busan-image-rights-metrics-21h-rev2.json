@@ -1,0 +1,59 @@
+{
+  "task": "TASK-DATA-IMAGE-RIGHTS-RECLASSIFICATION-21H-REV2",
+  "execution_date": "2026-07-27",
+  "applied_rules": [
+    "image-curation-rules.md §이미지 권리 운영 기준 (21I)",
+    "21I: 사이트 공통 ARR만으로 blocked 처리 금지"
+  ],
+  "input": {
+    "rights_21g": 958,
+    "status_21g": 1642
+  },
+  "rights_reclassification": {
+    "total": 958,
+    "by_rights_status": {
+      "operational_assumed": 958
+    },
+    "prior_to_new_mapping": {
+      "rights_unknown → operational_assumed": 640,
+      "rights_restricted → operational_assumed": 318
+    },
+    "by_category": {
+      "attraction|operational_assumed": 477,
+      "event|operational_assumed": 41,
+      "restaurant|operational_assumed": 415,
+      "nature|operational_assumed": 21,
+      "accommodation|operational_assumed": 4
+    },
+    "blocked": 0,
+    "review_required": 0,
+    "classification_method_uniform": "operational_policy",
+    "validation": {
+      "blocked_zero": "PASS",
+      "all_classified": "PASS"
+    }
+  },
+  "image_status_update": {
+    "total": 1642,
+    "changed": 958,
+    "unchanged": 684,
+    "status_21g": {
+      "image_partial": 958,
+      "image_sufficient": 548,
+      "source_exhausted": 131,
+      "image_missing": 5
+    },
+    "status_21h_rev2": {
+      "image_sufficient": 1506,
+      "source_exhausted": 131,
+      "image_missing": 5
+    }
+  },
+  "output_files": [
+    "data/tourapi/reports/busan/busan-visitbusan-rights-21h-rev2.csv",
+    "data/tourapi/reports/busan/busan-image-status-21h-rev2.csv",
+    "data/tourapi/reports/busan/busan-image-rights-metrics-21h-rev2.json",
+    "docs/tourapi/busan-image-rights-21h-rev2.md"
+  ],
+  "validation_gate": "PASS"
+}
