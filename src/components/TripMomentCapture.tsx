@@ -4,6 +4,7 @@
 // TASK-022: photo + GPS + memo + category 캡처
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import type { TripMoment, MomentCategory } from "@/lib/trip-moments/types";
 import { MOMENT_CATEGORIES } from "@/lib/trip-moments/types";
 import { compressPhoto, formatCoord } from "@/lib/trip-moments/storage";
@@ -12,11 +13,17 @@ interface Props {
   itineraryId: string;
   deviceId:    string;
   dayNumber:   number | null;
-  onSave:      (moment: TripMoment) => void;
+  /**
+   * 로컬 저장 성공 여부를 반환한다.
+   * 오프라인 우선 구조라 서버 동기화 실패는 "저장 실패"가 아니며,
+   * 로컬 저장이 된 경우 true 를 돌려 모달을 닫는다.
+   */
+  onSave:      (moment: TripMoment) => Promise<boolean> | boolean;
   onClose:     () => void;
 }
 
 export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, onSave, onClose }: Props) {
+  const t = useTranslations("memo");
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   const [memo,         setMemo]         = useState("");
   const [category,     setCategory]     = useState<MomentCategory>("random");
@@ -25,6 +32,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
   const [gpsStatus,    setGpsStatus]    = useState<"idle" | "loading" | "ok" | "denied">("idle");
   const [compressing,  setCompressing]  = useState(false);
   const [saving,       setSaving]       = useState(false);
+  // 압축·저장 실패를 사용자에게 보여준다. 조용히 삼키면 실패가 성공처럼 보인다.
+  const [errorKey,     setErrorKey]     = useState<"compressFailed" | "localSaveFailed" | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // GPS 자동 취득
@@ -61,11 +70,20 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
     const file = e.target.files?.[0];
     if (!file) return;
     setCompressing(true);
+    setErrorKey(null);
     try {
       const data = await compressPhoto(file);
       setPhotoData(data);
-    } catch { /* 압축 실패 시 원본 무시 */ }
-    finally { setCompressing(false); }
+    } catch {
+      // 무검증 원본을 올리지 않는다. 사진·모달을 유지해 재시도할 수 있게 한다.
+      // 진단 로그에 파일명·내용 등 민감정보를 남기지 않는다.
+      console.warn("[TripMomentCapture] photo compression failed");
+      setErrorKey("compressFailed");
+    } finally {
+      setCompressing(false);
+      // 파일 input 을 비워 같은 사진 재선택도 change 이벤트가 발생하게 한다
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   }, []);
 
   const handleSave = useCallback(async () => {
@@ -85,8 +103,24 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       day_number:     dayNumber,
       synced:         false,
     };
-    onSave(moment);
+    setErrorKey(null);
+    try {
+      const ok = await onSave(moment);
+      // 로컬 저장 자체가 실패했을 때만 오류다. 서버 동기화 대기는 오류가 아니다.
+      if (!ok) setErrorKey("localSaveFailed");
+      // 성공 시 모달을 닫는 책임은 상위(onSave)에 있다
+    } catch {
+      setErrorKey("localSaveFailed");
+    } finally {
+      // 성공·실패 어느 쪽이든 loading 을 반드시 해제한다
+      setSaving(false);
+    }
   }, [saving, itineraryId, deviceId, photoData, memo, category, lat, lng, dayNumber, onSave]);
+
+  // 내부 enum(key)과 API 값은 영어 그대로 유지하고 표시명만 번역한다
+  const catLabel = (k: MomentCategory) =>
+    t(({ food: "catFood", scenery: "catScenery", people: "catPeople",
+         culture: "catCulture", random: "catRandom" } as const)[k]);
 
   const catInfo = MOMENT_CATEGORIES.find(c => c.key === category)!;
 
@@ -98,18 +132,28 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       {/* 헤더 */}
       <div className="flex items-center justify-between px-5 pt-safe pt-6 pb-4 border-b border-white/10">
         <button onClick={onClose} className="text-white/60 hover:text-white text-sm font-bold px-3 py-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
-          Cancel
+          {t("cancel")}
         </button>
-        <h2 className="text-base font-black">📸 Capture Moment</h2>
+        <h2 className="text-base font-black">📸 {t("captureTitle")}</h2>
         <button
           onClick={handleSave}
           disabled={saving}
           className="text-sm font-black px-4 py-1.5 rounded-xl transition-all disabled:opacity-40 cursor-pointer"
           style={{ backgroundColor: "#FF4A2D", color: "#ffffff" }}
         >
-          {saving ? "Saving…" : "Save"}
+          {saving ? t("saving") : t("save")}
         </button>
       </div>
+
+      {errorKey && (
+        <div
+          role="alert"
+          className="mx-5 mt-4 rounded-xl px-4 py-3 text-sm font-semibold"
+          style={{ backgroundColor: "rgba(255,74,45,0.14)", color: "#FFB4A5" }}
+        >
+          {t(errorKey)}
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         {/* 사진 영역 */}
@@ -121,22 +165,22 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           {compressing ? (
             <div className="flex flex-col items-center gap-3">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF4A2D]" />
-              <p className="text-xs text-white/50">Optimizing photo…</p>
+              <p className="text-xs text-white/50">{t("optimizing")}</p>
             </div>
           ) : photoData ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={photoData} alt="capture" className="w-full object-cover" style={{ maxHeight: 340 }} />
+            <img src={photoData} alt={t("photoAlt")} className="w-full object-cover" style={{ maxHeight: 340 }} />
           ) : (
             <div className="flex flex-col items-center gap-3 py-14">
               <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl">📷</div>
-              <p className="text-sm font-bold text-white/60">Tap to add photo</p>
-              <p className="text-xs text-white/30">Choose from camera or gallery</p>
+              <p className="text-sm font-bold text-white/60">{t("tapToAddPhoto")}</p>
+              <p className="text-xs text-white/30">{t("choosePhotoSource")}</p>
             </div>
           )}
           {photoData && (
             <div className="absolute inset-0 flex items-end justify-end p-3">
               <span className="text-xs font-bold bg-black/60 text-white px-2.5 py-1 rounded-lg backdrop-blur-sm cursor-pointer">
-                Change photo
+                {t("changePhoto")}
               </span>
             </div>
           )}
@@ -161,18 +205,18 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
                 {gpsStatus === "ok"
                   ? formatCoord(lat, lng)
                   : gpsStatus === "loading"
-                  ? "Getting GPS…"
-                  : "Location unavailable"}
+                  ? t("gpsLoading")
+                  : t("gpsUnavailable")}
               </p>
               {gpsStatus === "ok" && (
-                <p className="text-[10px] text-white/30 mt-0.5">Location auto-tagged</p>
+                <p className="text-[10px] text-white/30 mt-0.5">{t("gpsTagged")}</p>
               )}
             </div>
           </div>
 
           {/* 카테고리 선택 */}
           <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">Category</p>
+            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("categoryLabel")}</p>
             <div className="flex gap-2 flex-wrap">
               {MOMENT_CATEGORIES.map(cat => (
                 <button
@@ -186,7 +230,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
                   style={category === cat.key ? { backgroundColor: "#FF4A2D" } : {}}
                 >
                   <span>{cat.emoji}</span>
-                  <span>{cat.label}</span>
+                  <span>{catLabel(cat.key)}</span>
                 </button>
               ))}
             </div>
@@ -194,11 +238,11 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
 
           {/* 메모 */}
           <div>
-            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">Memo</p>
+            <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             <textarea
               value={memo}
               onChange={e => setMemo(e.target.value)}
-              placeholder={`One line to remember this moment…\nE.g., Stumbled into a tiny fish cake shop — owner gave 3 extras for free`}
+              placeholder={t("memoPlaceholder")}
               maxLength={300}
               rows={4}
               className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#FF4A2D]/60 resize-none leading-relaxed"
@@ -211,7 +255,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
             <span>🕐</span>
             <span>{new Date().toLocaleString("ko-KR", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
             {dayNumber !== null && <span>· Day {dayNumber}</span>}
-            <span>· {catInfo.emoji} {catInfo.label}</span>
+            <span>· {catInfo.emoji} {catLabel(catInfo.key)}</span>
           </div>
         </div>
       </div>
