@@ -8,7 +8,8 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { resolveTheme, coverProxyPath, THEME_LABEL } from "@/lib/trip-cover/cover-core";
+import { resolveTheme, coverProxyPath, coverEyebrow, coverAlt } from "@/lib/trip-cover/cover-core";
+import type { CoverDisplayKind } from "@/lib/trip-cover/cover-core";
 import { pickAsset } from "@/lib/trip-cover/assets.data";
 import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
@@ -39,6 +40,12 @@ interface Props {
   coverPhotos?: ConsentPhoto[];
   /** 아직 사진 동기화가 끝나지 않은 Memory 수 — 안내 문구용 */
   coverPendingCount?: number;
+  /**
+   * 서버가 알려준 현재 커버 종류. 미리보기 문구의 유일한 근거다.
+   * 모르는 상태로 관광 테마 라벨을 그리면 개인 사진을 오표기하므로
+   * 기본값은 "unknown"(도시명만) 이다.
+   */
+  coverKind?: CoverDisplayKind;
   onClose: () => void;
 }
 
@@ -48,7 +55,7 @@ type CopyState = "idle" | "copied" | "failed";
 export default function PublishPreviewModal({
   title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl,
   itineraryId = null, copyCount = 0, helpfulCount = 0, coverPhotos = [],
-  coverPendingCount = 0, onClose,
+  coverPendingCount = 0, coverKind = "unknown", onClose,
 }: Props) {
   const t = useTranslations("publish");
   const tConsent = useTranslations("coverConsent");
@@ -79,6 +86,9 @@ export default function PublishPreviewModal({
   }, [onClose, phase]);
 
   const totalPlaces = days.reduce((s, d) => s + d.places.length, 0);
+
+  // 이 모달에서 개인 커버를 적용하면 서버 응답을 다시 기다리지 않고 personal 로 확정한다
+  const displayKind: CoverDisplayKind = personalOn ? "personal" : coverKind;
 
   // ── Trip Cover V1A — 결정론적 테마 커버 ──────────────────────────────────
   const coverPlaces = days.flatMap((d) =>
@@ -225,7 +235,7 @@ export default function PublishPreviewModal({
                     src={itineraryId
                       ? `/img/trip-cover/${encodeURIComponent(itineraryId)}?v=${coverBust}`
                       : coverProxyPath(cover.asset_id)}
-                    alt={`${city} ${THEME_LABEL[coverTheme]}`}
+                    alt={coverAlt(displayKind, { city, theme: coverTheme, title })}
                     className="w-full h-32 object-cover"
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.visibility = "hidden"; }}
                   />
@@ -235,7 +245,7 @@ export default function PublishPreviewModal({
                   />
                   <p className="absolute left-3 bottom-2 text-[10px] font-black tracking-widest uppercase"
                      style={{ color: "#FF4A2D" }}>
-                    {city} · {THEME_LABEL[coverTheme]}
+                    {coverEyebrow(city, displayKind, coverTheme)}
                   </p>
                 </div>
                 {coverPhotos.length === 0 && coverPendingCount > 0 && (

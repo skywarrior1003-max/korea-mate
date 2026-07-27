@@ -9,6 +9,7 @@ import {
   COVER_THEMES, DEFAULT_THEME, THEME_LABEL, coverProxyPath,
   buildCoverAssets, filterByTheme, findById,
   resolveTheme, pickFrom, fnv1a32,
+  coverEyebrow, coverAlt,
 } from "./cover-core.ts";
 
 // 실제 manifest 를 fs 로 읽어 동일한 검증기에 통과시킨다.
@@ -237,4 +238,67 @@ test("attribution 은 짧은 표기이며 unknown 을 포함하지 않는다", (
     assert.ok(!/unknown/i.test(a.attribution_text), a.asset_id);
     assert.match(a.attribution_text, /Korea Tourism Organization/);
   }
+});
+
+// ── 표지 문구: 개인 사진에 관광 테마명을 쓰지 않는다 ─────────────────────────
+
+test("eyebrow: personal → CITY · MY TRIP STORY (테마명 없음)", () => {
+  for (const th of COVER_THEMES) {
+    const e = coverEyebrow("Busan", "personal", th);
+    assert.strictEqual(e, "Busan · MY TRIP STORY");
+    assert.ok(!e.includes(THEME_LABEL[th]), `${th} 라벨 누출`);
+  }
+});
+
+test("eyebrow: tourism → 기존 CITY · THEME 그대로", () => {
+  for (const th of COVER_THEMES)
+    assert.strictEqual(coverEyebrow("Busan", "tourism", th), `Busan · ${THEME_LABEL[th]}`);
+});
+
+test("eyebrow: unknown → 도시명만 (플래시 방지)", () => {
+  for (const th of COVER_THEMES) {
+    const e = coverEyebrow("Busan", "unknown", th);
+    assert.strictEqual(e, "Busan");
+    assert.ok(!e.includes("·"), "구분자가 남으면 빈 라벨이 보인다");
+    assert.ok(!e.includes(THEME_LABEL[th]), "unknown 에 테마 라벨 누출");
+  }
+});
+
+test("alt: personal 은 제목 우선, 테마명 없음", () => {
+  assert.strictEqual(coverAlt("personal", { city: "Busan", theme: "beach_ocean", title: "3 Days in Busan" }),
+                     "3 Days in Busan personal trip cover");
+  for (const th of COVER_THEMES) {
+    const a = coverAlt("personal", { city: "Busan", theme: th, title: "My Trip" });
+    assert.ok(!a.includes(THEME_LABEL[th]), `${th} 라벨 누출`);
+  }
+});
+
+test("alt: personal 제목이 비면 도시명으로 대체", () => {
+  for (const t of [undefined, null, "", "   "])
+    assert.strictEqual(coverAlt("personal", { city: "Busan", theme: "beach_ocean", title: t }),
+                       "Busan personal trip cover");
+});
+
+test("alt: tourism 은 기존 `CITY THEME` 유지", () => {
+  for (const th of COVER_THEMES)
+    assert.strictEqual(coverAlt("tourism", { city: "Busan", theme: th, title: "My Trip" }),
+                       `Busan ${THEME_LABEL[th]}`);
+});
+
+test("alt: unknown 은 중립 문구 — 테마명 없음", () => {
+  for (const th of COVER_THEMES) {
+    const a = coverAlt("unknown", { city: "Busan", theme: th, title: "My Trip" });
+    assert.strictEqual(a, "My Trip trip cover");
+    assert.ok(!a.includes(THEME_LABEL[th]), `${th} 라벨 누출`);
+  }
+  assert.strictEqual(coverAlt("unknown", { city: "Busan", theme: "beach_ocean" }), "Busan trip cover");
+});
+
+test("테마 라벨은 tourism 에서만 등장한다 (전수)", () => {
+  for (const th of COVER_THEMES)
+    for (const k of ["unknown", "personal", "tourism"] as const) {
+      const shown = coverEyebrow("Busan", k, th).includes(THEME_LABEL[th])
+                 || coverAlt(k, { city: "Busan", theme: th, title: "T" }).includes(THEME_LABEL[th]);
+      assert.strictEqual(shown, k === "tourism", `${k}/${th}`);
+    }
 });

@@ -11,7 +11,7 @@
 // 아래 Trip highlights 영역에 분리해 표시한다.
 
 import { useState } from "react";
-import { THEME_LABEL } from "@/lib/trip-cover/cover-core";
+import { coverEyebrow, coverAlt } from "@/lib/trip-cover/cover-core";
 import type { CoverAsset, CoverTheme } from "@/lib/trip-cover/cover-core";
 
 export interface TripCoverProps {
@@ -71,7 +71,7 @@ export default function TripCover({
         {showPhoto ? (
           <img
             src={coverSrc}
-            alt={`${cityCap} ${THEME_LABEL[theme]}`}
+            alt={coverAlt(coverKind, { city: cityCap, theme, title })}
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
             onError={() => { setFailed(true); onImageError?.(); }}
@@ -99,7 +99,7 @@ export default function TripCover({
               className="text-[11px] sm:text-xs font-black tracking-[0.18em] uppercase mb-2.5"
               style={{ color: CORAL }}
             >
-              {cityCap} · {THEME_LABEL[theme]}
+              {coverEyebrow(cityCap, coverKind, theme)}
             </p>
             <h1 className="text-white font-black leading-[1.08] text-[30px] sm:text-[44px] text-balance">
               {title}

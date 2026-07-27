@@ -2612,6 +2612,9 @@ function ItineraryResult() {
           coverPendingCount={moments.filter(
             (m) => Boolean(m.photo_data) && m.has_photo !== true,
           ).length}
+          // 미리보기 문구용 커버 종류. cover_moment_id 가 비면 사진이 지워져
+          // FK 가 NULL 로 만든 상태이므로 개인 커버로 보지 않는다.
+          coverKind={coverKind === "moment" && coverMomentId ? "personal" : "tourism"}
           onConfirm={() => applyPublic(true)}
           onClose={() => setPublishPreviewOpen(false)}
         />

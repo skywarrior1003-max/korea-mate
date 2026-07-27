@@ -115,6 +115,40 @@ export function coverProxyPath(assetId: string): string {
   return `/img/cover/${encodeURIComponent(assetId)}`;
 }
 
+// ── 표지 문구 ────────────────────────────────────────────────────────────────
+//
+// 표지에 실제로 무엇이 보이는지에 따라 문구가 갈린다. 개인 사진 위에 관광
+// 테마명(예: "BEACH & OCEAN")을 붙이면 사용자의 사진을 관광 자산인 것처럼
+// 잘못 설명하게 된다 — eyebrow 와 alt 양쪽 모두 해당된다.
+//
+// "unknown" 은 판정 전 상태다. 이때 테마 라벨을 먼저 그렸다가 personal 로
+// 바꾸면 잘못된 라벨이 순간적으로 보이므로(플래시), 도시명만 표시한다.
+// 판정 근거는 서버가 준 커버 종류뿐이다 — 이미지 로드 결과나 currentSrc 로
+// 추론하지 않는다.
+//
+// 문구는 영어 고정이다. 표지 카드의 나머지(Day/Place/Copied 등)가 모두 영어라
+// eyebrow 만 번역하면 한 카드 안에서 언어가 섞인다. 카드 전체 i18n 은 별건이다.
+
+export type CoverDisplayKind = "unknown" | "personal" | "tourism";
+
+/** 표지 상단 eyebrow — `CITY · THEME` / `CITY · MY TRIP STORY` / `CITY` */
+export function coverEyebrow(city: string, kind: CoverDisplayKind, theme: CoverTheme): string {
+  if (kind === "personal") return `${city} · MY TRIP STORY`;
+  if (kind === "tourism")  return `${city} · ${THEME_LABEL[theme]}`;
+  return city;
+}
+
+/** 표지 이미지 alt — 개인 사진과 unknown 에는 관광 테마명을 쓰지 않는다 */
+export function coverAlt(
+  kind: CoverDisplayKind,
+  o: { city: string; theme: CoverTheme; title?: string | null },
+): string {
+  const named = (o.title ?? "").trim() || o.city;
+  if (kind === "personal") return `${named} personal trip cover`;
+  if (kind === "tourism")  return `${o.city} ${THEME_LABEL[o.theme]}`;
+  return `${named} trip cover`;
+}
+
 // ══════════════════════════════════════════════════════════════════════════
 // GoKoreaMate — Trip Cover 테마 판정 + 결정론적 자산 선택
 //
