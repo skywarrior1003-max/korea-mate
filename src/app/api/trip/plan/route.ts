@@ -33,6 +33,8 @@ interface PlaceDisplay {
   district:        string;
   tips:            string;
   google_maps_url: string;
+  lat?:            number;
+  lng?:            number;
 }
 
 type PlaceDisplayMap = Record<string, PlaceDisplay>;
@@ -105,6 +107,10 @@ async function buildPlaceMap(placeIds: string[]): Promise<PlaceDisplayMap> {
             district:        row.district    || "Seoul",
             tips:            row.description || "",
             google_maps_url: googleMapsUrl,
+            // TASK-TRIP-PLACE-IDENTITY: functions/api/trip/plan.ts(운영본)와 parity.
+            // lat/lng를 SELECT하고도 emit하지 않아 dev 생성 일정만 좌표를 잃던 결함.
+            lat:             typeof row.lat === "number" ? row.lat : undefined,
+            lng:             typeof row.lng === "number" ? row.lng : undefined,
           };
         }
       }

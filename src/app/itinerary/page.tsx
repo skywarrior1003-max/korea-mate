@@ -574,6 +574,14 @@ async function generateWithNewApi(
             || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${cartFull.name} ${city} Korea`)}`,
         } : syntheticPlaceDisplay(item, city));
         const cartHint = cartHintMap[key];
+        // TASK-TRIP-PLACE-IDENTITY: city_spots 실장소만 식별정보 보존.
+        // 정본 필드는 기존 addCitySpotToDay/addUserSpotToDay와 동일한 place_id + source.
+        // mock·synthetic·cart(=events.json id) 에는 ID를 만들지 않는다.
+        const isCitySpot =
+          item.item_type === "place" &&
+          typeof item.place_id === "string" &&
+          !item.place_id.startsWith("mock-") &&
+          placeMap[item.place_id] !== undefined;
         return {
           name:              display.name,
           category:          display.category,
@@ -588,6 +596,7 @@ async function generateWithNewApi(
           bookingUrl:        cartHint?.booking_url,
           lat:               display.lat ?? cartFull?.lat,
           lng:               display.lng ?? cartFull?.lng,
+          ...(isCitySpot ? { place_id: item.place_id, source: "city_spot" as const } : {}),
         };
       });
 
