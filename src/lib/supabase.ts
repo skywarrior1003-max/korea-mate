@@ -28,6 +28,10 @@ export interface ItineraryRow {
   is_public?:    boolean;
   copy_of?:      string | null;
   copy_count?:   number;
+  /** 현재 표지 종류. 소유자 GET 에서만 내려온다 */
+  cover_kind?:      "auto" | "asset" | "moment";
+  /** cover_kind="moment" 일 때 표지로 쓰는 Memory. 경로가 아니라 ID 다 */
+  cover_moment_id?: string | null;
 }
 
 // Popular trips feed (TASK-034 — view_count >= 2, ordered by weighted score)

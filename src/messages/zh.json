@@ -209,7 +209,13 @@
     "syncPendingPhoto": "记忆已保存 · 照片同步中",
     "syncDone": "同步完成",
     "coverNeedsSync": "照片同步完成后即可用作行程封面。",
-    "localSaveFailed": "未能保存到此设备。请重试。"
+    "localSaveFailed": "未能保存到此设备。请重试。",
+    "makeCover": "将这张照片设为行程封面",
+    "currentCover": "当前行程封面",
+    "useTourismCover": "改用观光照片封面",
+    "coverUpdated": "已更新行程封面",
+    "tourismCoverRestored": "已恢复观光照片封面",
+    "coverUpdateFailed": "未能更新封面。请重试。"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",

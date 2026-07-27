@@ -8,6 +8,8 @@ import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
 import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPublic, apiHelpfulStatus, apiHelpfulVote } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
+import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
+import CoverConsentDialog from "@/components/CoverConsentDialog";
 import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
@@ -917,6 +919,12 @@ function ItineraryResult() {
   // ── 오너 판별 (shareId로 접근해도 본인 일정이면 편집 허용) ──
   const [isOwner,  setIsOwner]  = useState(!shareId);
   const [isPublic, setIsPublic] = useState(false);
+  // 현재 표지 상태 — 소유자 GET 이 내려주므로 새로고침 후에도 복원된다
+  const [coverKind,     setCoverKind]     = useState<"auto" | "asset" | "moment">("auto");
+  const [coverMomentId, setCoverMomentId] = useState<string | null>(null);
+  const [coverBusy,     setCoverBusy]     = useState(false);
+  const [coverNotice,   setCoverNotice]   = useState<"coverUpdated" | "tourismCoverRestored" | "coverUpdateFailed" | null>(null);
+  const [coverPickId,   setCoverPickId]   = useState<string | null>(null);   // 동의 대기 중인 moment
   const [publishPreviewOpen, setPublishPreviewOpen] = useState(false); // S3: 공개 전 미리보기
 
   // ── TASK-018: 부분 실패 일차 추적 (Partial Success Policy) ──
@@ -1092,6 +1100,8 @@ function ItineraryResult() {
       setTravelStyle(record.travel_style);
       if (record.trip_title) setTripTitle(record.trip_title);
       if (record.is_public !== undefined) setIsPublic(record.is_public);
+      if (record.cover_kind) setCoverKind(record.cover_kind);
+      setCoverMomentId(record.cover_moment_id ?? null);
       setHelpfulOrigin(record.copy_of ?? null); // 복사본이면 원본 id 보관
       setIsOwner(true); // GET is owner-only; having a record confirms ownership
       setSyncStatus("saved");
@@ -1202,6 +1212,8 @@ function ItineraryResult() {
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
         if (record.is_public !== undefined) setIsPublic(record.is_public);
+        if (record.cover_kind) setCoverKind(record.cover_kind);
+        setCoverMomentId(record.cover_moment_id ?? null);
         if (loadedUnscheduled.length > 0) {
           try {
             localStorage.setItem("koreamate_cart", JSON.stringify(
@@ -1355,6 +1367,60 @@ function ItineraryResult() {
   // ── TASK-022: moment 저장 / 삭제 ────────────────────────────
   // 성공 시에만 목록 갱신 + 모달 닫기. 실패하면 false 를 돌려 모달·입력을
   // 유지하고, 캡처 화면이 현지화된 오류를 표시한다 (실패를 성공처럼 보이지 않게).
+  // ── Trip Cover 변경 ────────────────────────────────────────────────────────
+  //
+  // 개인 사진 지정은 CoverConsentDialog 동의를 통과한 뒤에만 호출된다.
+  // 해제(auto)는 공개를 줄이는 작업이라 추가 동의를 요구하지 않으며,
+  // 비공개 일정에서도 허용한다(이미 지정된 개인 커버를 풀 수 있어야 한다).
+  // 커버 결과 안내는 5초 후 자동으로 사라진다 (비차단)
+  useEffect(() => {
+    if (!coverNotice) return;
+    const t = setTimeout(() => setCoverNotice(null), 5000);
+    return () => clearTimeout(t);
+  }, [coverNotice]);
+
+  const applyCover = useCallback(async (
+    body: { kind: "moment"; momentId: string; consent: true; consentVersion: string } | { kind: "auto" },
+  ): Promise<boolean> => {
+    if (!itinId) return false;
+    setCoverBusy(true);
+    setCoverNotice(null);
+    try {
+      const res = await fetch(`/api/itinerary/${encodeURIComponent(itinId)}/cover`, {
+        method:  "PUT",
+        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        body:    JSON.stringify(body),
+      });
+      if (!res.ok) {
+        // 서버 원문 오류는 노출하지 않는다. 기존 커버 상태를 그대로 유지한다.
+        setCoverNotice("coverUpdateFailed");
+        return false;
+      }
+      if (body.kind === "moment") {
+        setCoverKind("moment");
+        setCoverMomentId(body.momentId);
+        setCoverNotice("coverUpdated");
+      } else {
+        setCoverKind("auto");
+        setCoverMomentId(null);
+        setCoverNotice("tourismCoverRestored");
+      }
+      return true;
+    } catch {
+      setCoverNotice("coverUpdateFailed");
+      return false;
+    } finally {
+      setCoverBusy(false);
+    }
+  }, [itinId]);
+
+  const confirmCoverConsent = useCallback(async (momentId: string) => {
+    const ok = await applyCover({
+      kind: "moment", momentId, consent: true, consentVersion: CONSENT_VERSION,
+    });
+    if (ok) setCoverPickId(null);   // 실패 시 동의창을 유지해 재시도할 수 있게 한다
+  }, [applyCover]);
+
   // 오프라인 우선: 로컬 저장이 되면 성공이다. 서버 메타·사진 동기화 실패는
   // "저장 실패"가 아니라 대기 상태이며, Timeline 배지로 표시된다.
   const handleMomentSave = useCallback(async (moment: TripMoment): Promise<boolean> => {
@@ -2429,6 +2495,11 @@ function ItineraryResult() {
           onDelete={handleMomentDelete}
           onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
           onAddMemory={() => setCaptureOpen(true)}
+          isPublic={isPublic}
+          currentCoverMomentId={coverKind === "moment" ? coverMomentId : null}
+          coverBusy={coverBusy}
+          onUseAsCover={(!shareId || isOwner) ? (mid) => setCoverPickId(mid) : undefined}
+          onClearCover={(!shareId || isOwner) ? () => void applyCover({ kind: "auto" }) : undefined}
         />
       </div>
 
@@ -2448,6 +2519,36 @@ function ItineraryResult() {
 
       {selectedPlace && (
         <PlaceModal place={selectedPlace} city={city} citySpots={citySpots} onClose={() => setSelectedPlace(null)} />
+      )}
+
+      {/* Trip Cover — Timeline 에서 고른 사진의 공개 동의 (기존 다이얼로그 재사용) */}
+      {coverPickId && (() => {
+        const pick = moments.find((m) => m.moment_id === coverPickId);
+        if (!pick?.photo_data) return null;
+        return (
+          <CoverConsentDialog
+            photos={[{ momentId: pick.moment_id, previewUrl: pick.photo_data, label: pick.memo }]}
+            busy={coverBusy}
+            onCancel={() => setCoverPickId(null)}
+            onApply={(mid) => void confirmCoverConsent(mid)}
+          />
+        );
+      })()}
+
+      {/* 커버 변경 결과 — 비차단 안내. Publish·Memory 저장과 독립이다.
+          z-80: 동의 다이얼로그(z-70) 위에 떠야 한다. 실패 시 다이얼로그는 재시도를 위해
+          열린 채로 남으므로, 그 아래 깔리면 실패가 사용자에게 전혀 보이지 않는다. */}
+      {coverNotice && (
+        <div
+          role="status"
+          className="fixed left-1/2 -translate-x-1/2 bottom-24 z-[80] max-w-[92vw] px-4 py-3 rounded-xl text-sm font-bold shadow-modal"
+          style={coverNotice === "coverUpdateFailed"
+            ? { backgroundColor: "#FFF1EC", color: "#B33A22" }
+            : { backgroundColor: "#191C21", color: "#ffffff" }}
+          onClick={() => setCoverNotice(null)}
+        >
+          {tMemo(coverNotice)}
+        </div>
       )}
 
       {/* TASK-022: 순간 캡처 모달 */}

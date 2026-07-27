@@ -209,7 +209,13 @@
     "syncPendingPhoto": "Memory を保存しました · 写真を同期中",
     "syncDone": "同期完了",
     "coverNeedsSync": "写真の同期が完了すると、旅の表紙に使用できます。",
-    "localSaveFailed": "この端末に保存できませんでした。もう一度お試しください。"
+    "localSaveFailed": "この端末に保存できませんでした。もう一度お試しください。",
+    "makeCover": "この写真を旅の表紙に",
+    "currentCover": "現在の旅の表紙",
+    "useTourismCover": "観光写真の表紙に戻す",
+    "coverUpdated": "旅の表紙を変更しました",
+    "tourismCoverRestored": "観光写真の表紙に戻しました",
+    "coverUpdateFailed": "表紙を変更できませんでした。もう一度お試しください。"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

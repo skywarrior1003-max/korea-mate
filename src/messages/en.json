@@ -209,7 +209,13 @@
     "syncPendingPhoto": "Memory saved · photo syncing",
     "syncDone": "Synced",
     "coverNeedsSync": "You can use this photo as your trip cover once it finishes syncing.",
-    "localSaveFailed": "Couldn't save on this device. Please try again."
+    "localSaveFailed": "Couldn't save on this device. Please try again.",
+    "makeCover": "Make this my trip cover",
+    "currentCover": "Current trip cover",
+    "useTourismCover": "Use tourism cover instead",
+    "coverUpdated": "Trip cover updated",
+    "tourismCoverRestored": "Tourism cover restored",
+    "coverUpdateFailed": "Couldn't update your cover. Please try again."
   },
   "dayDone": {
     "title": "Day {n} complete!",

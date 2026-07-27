@@ -61,7 +61,9 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, is_public, copy_of")
+    // 커버 상태는 소유자가 "현재 표지"를 표시·해제하는 데 필요하다.
+    // storage_path·device_id·cover_consent_* 는 select 하지 않으므로 응답에 나갈 수 없다.
+    .select("id, city, start_date, end_date, travelers, travel_style, days, trip_title, updated_at, view_count, helpful_count, is_public, copy_of, cover_kind, cover_moment_id")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();

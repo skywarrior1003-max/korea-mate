@@ -16,6 +16,18 @@ interface Props {
   onAddMemory:   () => void;
   /** memo 수정 — 미전달 시 Edit 버튼을 노출하지 않는다 (공유·읽기 전용 화면 대비) */
   onEditMemo?:   (momentId: string, memo: string) => Promise<void>;
+
+  // ── Trip Cover 연결 (V1B) ───────────────────────────────────────────────
+  /** 일정 공개 여부. 새 개인 커버 "선택"은 공개 일정에서만 허용된다 */
+  isPublic?:        boolean;
+  /** 현재 개인 커버로 지정된 moment (cover_kind="moment" 일 때만) */
+  currentCoverMomentId?: string | null;
+  /** 커버 지정 요청 — 동의 절차는 상위(CoverConsentDialog)가 담당한다 */
+  onUseAsCover?:    (momentId: string) => void;
+  /** 개인 커버 해제 → 관광 커버. 공개를 줄이는 작업이라 추가 동의를 요구하지 않는다 */
+  onClearCover?:    () => void;
+  /** 커버 변경 진행 중 — 버튼 중복 클릭 방지 */
+  coverBusy?:       boolean;
 }
 
 const CAT_COLORS: Record<string, string> = {
@@ -26,7 +38,11 @@ const CAT_COLORS: Record<string, string> = {
   random:  "#FF4A2D",
 };
 
-export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onEditMemo }: Props) {
+export default function TripMomentTimeline({
+  moments, onDelete, onAddMemory, onEditMemo,
+  isPublic = false, currentCoverMomentId = null,
+  onUseAsCover, onClearCover, coverBusy = false,
+}: Props) {
   const t = useTranslations("memo");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [expanded,      setExpanded]      = useState<string | null>(null);
@@ -113,6 +129,11 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onE
           : m.photo_data && m.has_photo !== true      ? "syncPendingPhoto"
           : m.photo_data                              ? "syncDone"
           : null;
+        // 현재 표지인가 / 새 표지로 고를 수 있는가
+        const isCover = currentCoverMomentId !== null && currentCoverMomentId === m.moment_id;
+        const canBeCover =
+          !isCover && isPublic && m.synced && m.has_photo === true && Boolean(m.photo_data);
+
         const syncTone = syncKey === "syncDone"
           ? { bg: "#E8F5EC", fg: "#1B7F3B" }
           : { bg: "#FFF1EC", fg: "#B33A22" };
@@ -252,7 +273,40 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onE
                     <span className="text-emerald-500">☁️</span>
                   )}
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 flex-wrap justify-end">
+                  {/* 현재 표지 — 재설정 대신 상태 표시 + 해제.
+                      해제는 공개를 줄이는 작업이라 비공개 일정에서도 허용한다. */}
+                  {isCover && (
+                    <>
+                      <span
+                        className="text-xs font-bold px-2.5 py-1.5 rounded-lg"
+                        style={{ backgroundColor: "#FFF1EC", color: "#B33A22" }}
+                      >
+                        {t("currentCover")}
+                      </span>
+                      {onClearCover && (
+                        <button
+                          onClick={onClearCover}
+                          disabled={coverBusy}
+                          className="gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg text-[#565D66]/60 hover:text-[#191C21] hover:bg-[#F6F7F8] transition-all disabled:opacity-50 cursor-pointer"
+                        >
+                          {t("useTourismCover")}
+                        </button>
+                      )}
+                    </>
+                  )}
+
+                  {/* 새 개인 커버 선택 — 공개 일정 + 서버 동기화 완료 사진만 */}
+                  {canBeCover && onUseAsCover && (
+                    <button
+                      onClick={() => onUseAsCover(m.moment_id)}
+                      disabled={coverBusy}
+                      className="gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg text-[#565D66]/60 hover:text-[#191C21] hover:bg-[#F6F7F8] transition-all disabled:opacity-50 cursor-pointer"
+                    >
+                      {t("makeCover")}
+                    </button>
+                  )}
+
                   {onEditMemo && editingId !== m.moment_id && (
                     <button
                       onClick={() => startEdit(m)}
