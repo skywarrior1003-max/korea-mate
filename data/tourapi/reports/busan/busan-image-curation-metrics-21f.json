@@ -1,0 +1,46 @@
+{
+  "total": 1642,
+  "image_status": {
+    "image_partial": 1506,
+    "source_exhausted": 131,
+    "image_missing": 5
+  },
+  "rights_flag": {
+    "PASS_WITH_WARNINGS": 958,
+    "PASS": 684
+  },
+  "classification": {
+    "review_required": 176,
+    "keep_primary": 1297,
+    "unresolved": 131,
+    "supplement_candidate": 33,
+    "replace_candidate": 5
+  },
+  "category": {
+    "attraction": 717,
+    "event": 72,
+    "restaurant": 721,
+    "nature": 50,
+    "accommodation": 82
+  },
+  "curated_count_dist": {
+    "0": 136,
+    "1": 1473,
+    "2": 33
+  },
+  "validation": {
+    "pass": 684,
+    "pass_with_warnings": 958,
+    "fail": 0
+  },
+  "source_pool_photos": 9630,
+  "max_curated_exceeded": 0,
+  "determinism_check": "PASS",
+  "runDate": "2026-07-27T03:50:14.613Z",
+  "validationGate": {
+    "total": "PASS",
+    "imageStatusSum": "PASS",
+    "classificationSum": "PASS",
+    "maxExceeded": "PASS"
+  }
+}
