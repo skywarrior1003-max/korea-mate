@@ -77,6 +77,16 @@ image-status-rights-21g.mjs
 
 ---
 
+## 메인 통합 범위
+
+이 문서는 research 브랜치 **전체** 인수인계 기준이며, master 통합분과 범위가 다르다.
+아래 대용량 기준 파일 2개는 현재 master 통합 범위에서 **의도적으로 제외**했다.
+`data/tourapi/normalized/busan/busan-batch-normalized.json` · `data/tourapi/normalized/photo-gallery/integrated/busan-photo-gallery-integrated-21d-rev2.jsonl`
+삭제된 것이 아니라 research 브랜치에 그대로 보존돼 있다. 별도 용량·보관 정책 승인 전에는 master 반영도 재생성도 하지 않는다.
+재현 상태는 `not_reexecuted` 를 그대로 유지한다.
+
+---
+
 ## 메인 병합 주의사항
 
 - [ ] **CLAUDE.md 전체 덮어쓰기 금지** — `docs/automation/claude-md-merge-guide.md` 따라 수동 통합 (이식 항목 4개)
