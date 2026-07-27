@@ -1,0 +1,6 @@
+candidate_id,title_ko,category,subcategory,address,candidate_status,vb_image_found,pg_named_match_count,pg_named_match_title,pg_named_match_score,verdict,status_recommendation,audit_note
+busan-F-00289,고스락,restaurant,other_restaurant,기장군 장안읍 해맞이로 286,api_only_existing,N,0,-,-,no_existing_candidate,source_exhausted,KTO·VB 모두 이미지 없음. match CSV 매칭 0건. place-summary pg_manual_count=22이나 해당 사진 현재 파일에서 추적 불가.
+busan-K-00058,국제시장,attraction,market,중구 신창로4가 일원,api_only_existing,N,37,부산국제시장,65,ambiguous_candidate,image_missing,"부산국제시장" 37건 manual_review(score 65). 장소명 일치하나 자동 threshold 미달. 수동 검증 후 image_partial 상향 가능.
+busan-K-00109,아미산,restaurant,other_restaurant,해운대구 해운대해변로 154,api_only_existing,N,11,아미산둘레길,95,place_identity_issue,image_missing,PG 매칭 11건 "아미산둘레길"(score 95)은 아미산 산악지역(서구 ~35.05°N) 사진. 이 레스토랑(해운대 35.16°N)과 약 20km 이격. 명칭 동일성 혼동으로 잘못 매칭됨. 기존 PG 후보 사용 불가.
+busan-K-00119,다원,restaurant,other_restaurant,부산진구 서면문화로 23-1,api_only_existing,N,0,-,-,no_existing_candidate,source_exhausted,KTO·VB 모두 이미지 없음. match CSV 매칭 0건. place-summary pg_manual_count=31이나 해당 사진 현재 파일에서 추적 불가.
+busan-K-00306,천마산하늘전망대,attraction,observatory,서구 해돋이로183번길 17-4,api_only_existing,N,4,천마산,80,ambiguous_candidate,image_missing,"천마산" 4건 manual_review(score 80). 좌표 미기재로 위치 확인 불가하나 전망대 명칭 부분 일치. 수동 검증 후 image_partial 상향 가능.
