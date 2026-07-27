@@ -1,14 +1,18 @@
-// GoKoreaMate — Trip Cover V1A 자산 로더
+// GoKoreaMate — Trip Cover V1A 순수 로직 (검증 · 테마 판정 · 결정론적 선택)
 //
-// SSOT: data/trip-cover/busan-v1-assets.json
-// 컴포넌트·Function 은 이 모듈만 사용한다. URL·출처·테마를 다시 하드코딩하지 않는다.
+// SSOT 는 data/trip-cover/busan-v1-assets.json 이며, 그 JSON 을 실제로 import 하는
+// 모듈은 assets.data.ts 하나뿐이다.
+//
+// 이 파일이 JSON 을 직접 import 하지 않는 이유:
+//   Cloudflare Pages 의 Functions 번들러(wrangler 3.114 / 구 esbuild)는 import 속성
+//   (`with { type: "json" }`)을 파싱하지 못해 배포 빌드가 깨진다. 반대로 Node 의 ESM
+//   런너는 속성이 없으면 JSON 을 로드하지 못한다. 순수 로직을 여기에 두고 JSON import
+//   를 assets.data.ts 로 격리하면 Node 테스트·Next 빌드·Pages 번들이 모두 통과한다.
 //
 // 규칙:
 // - KOGL Type 1 이 아닌 자산은 거부한다 (권리 미확인 이미지가 섞이는 것을 원천 차단)
 // - 필수 필드가 잘못된 자산은 제외하되 런타임 전체를 실패시키지 않는다
 // - 24건 전부 place_match_status=theme_only — 특정 장소의 사진이라고 표시하면 안 된다
-
-import manifest from "../../../data/trip-cover/busan-v1-assets.json" with { type: "json" };
 
 export type CoverTheme =
   | "beach_ocean"
@@ -56,7 +60,7 @@ export interface CoverAsset {
 const REQUIRED_LICENSE = "kogl_type1";
 const ALLOWED_HOST     = "tong.visitkorea.or.kr";
 
-function isValid(raw: unknown): raw is CoverAsset {
+export function isValidAsset(raw: unknown): raw is CoverAsset {
   if (raw === null || typeof raw !== "object") return false;
   const a = raw as Record<string, unknown>;
 
@@ -82,27 +86,28 @@ function isValid(raw: unknown): raw is CoverAsset {
   return true;
 }
 
-/** 검증을 통과한 자산만. priority 오름차순 고정 정렬 — 해시 선택의 안정성 근거 */
-export const COVER_ASSETS: readonly CoverAsset[] = Object.freeze(
-  ((manifest as { assets?: unknown[] }).assets ?? [])
-    .filter(isValid)
-    .sort((a, b) =>
-      a.theme === b.theme
-        ? (a.priority - b.priority) || a.asset_id.localeCompare(b.asset_id)
-        : a.theme.localeCompare(b.theme),
-    ),
-);
-
-/** 로더가 제외한 자산 수 — 진단용 */
-export const COVER_ASSETS_REJECTED =
-  (((manifest as { assets?: unknown[] }).assets ?? []).length) - COVER_ASSETS.length;
-
-export function assetsByTheme(theme: CoverTheme): readonly CoverAsset[] {
-  return COVER_ASSETS.filter((a) => a.theme === theme);
+/**
+ * 원본 manifest 배열 → 검증 통과 자산만, priority 오름차순 고정 정렬.
+ * 정렬이 고정이어야 해시 선택이 안정적이다.
+ */
+export function buildCoverAssets(raw: unknown[]): readonly CoverAsset[] {
+  return Object.freeze(
+    (raw ?? [])
+      .filter(isValidAsset)
+      .sort((a, b) =>
+        a.theme === b.theme
+          ? (a.priority - b.priority) || a.asset_id.localeCompare(b.asset_id)
+          : a.theme.localeCompare(b.theme),
+      ),
+  );
 }
 
-export function assetById(assetId: string): CoverAsset | undefined {
-  return COVER_ASSETS.find((a) => a.asset_id === assetId);
+export function filterByTheme(pool: readonly CoverAsset[], theme: CoverTheme): readonly CoverAsset[] {
+  return pool.filter((a) => a.theme === theme);
+}
+
+export function findById(pool: readonly CoverAsset[], assetId: string): CoverAsset | undefined {
+  return pool.find((a) => a.asset_id === assetId);
 }
 
 /** 같은 출처 프록시 경로 — 클라이언트·Canvas 는 항상 이 URL 만 사용한다 */
@@ -225,12 +230,13 @@ export function fnv1a32(str: string): number {
  * theme 의 정렬된 자산 목록에서 itineraryId 기반으로 하나를 고정 선택한다.
  * skip 은 이미지 로드 실패 시 다음 후보로 넘어가기 위한 오프셋이다.
  */
-export function pickAsset(
+export function pickFrom(
+  all: readonly CoverAsset[],
   itineraryId: string,
   theme: CoverTheme,
   skip = 0,
 ): CoverAsset | undefined {
-  const pool = assetsByTheme(theme);
+  const pool = filterByTheme(all, theme);
   if (pool.length === 0) return undefined;
   const idx = (fnv1a32(`${itineraryId}:${theme}`) + skip) % pool.length;
   return pool[idx];

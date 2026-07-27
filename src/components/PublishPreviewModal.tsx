@@ -8,7 +8,8 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { resolveTheme, pickAsset, coverProxyPath, THEME_LABEL } from "@/lib/trip-cover/cover-core";
+import { resolveTheme, coverProxyPath, THEME_LABEL } from "@/lib/trip-cover/cover-core";
+import { pickAsset } from "@/lib/trip-cover/assets.data";
 import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
 
 interface PreviewDay {

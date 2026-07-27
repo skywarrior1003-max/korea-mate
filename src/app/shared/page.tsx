@@ -20,7 +20,8 @@ import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
 import TripCover from "@/components/TripCover";
-import { resolveTheme, pickAsset } from "@/lib/trip-cover/cover-core";
+import { resolveTheme } from "@/lib/trip-cover/cover-core";
+import { pickAsset } from "@/lib/trip-cover/assets.data";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {

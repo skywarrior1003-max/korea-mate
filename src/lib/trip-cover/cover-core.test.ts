@@ -4,11 +4,26 @@
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
-  COVER_ASSETS, COVER_ASSETS_REJECTED, COVER_THEMES, DEFAULT_THEME,
-  THEME_LABEL, assetsByTheme, assetById, coverProxyPath,
+  COVER_THEMES, DEFAULT_THEME, THEME_LABEL, coverProxyPath,
+  buildCoverAssets, filterByTheme, findById,
+  resolveTheme, pickFrom, fnv1a32,
 } from "./cover-core.ts";
-import { resolveTheme, pickAsset, fnv1a32 } from "./cover-core.ts";
+
+// 실제 manifest 를 fs 로 읽어 동일한 검증기에 통과시킨다.
+// (assets.data.ts 는 속성 없는 JSON import 를 쓰므로 Node ESM 런너가 로드하지 못한다.
+//  대신 SSOT 파일 자체를 읽어 검증하므로 커버리지는 동일하다.)
+const RAW = JSON.parse(
+  readFileSync(new URL("../../../data/trip-cover/busan-v1-assets.json", import.meta.url), "utf8"),
+) as { assets: unknown[] };
+
+const COVER_ASSETS = buildCoverAssets(RAW.assets);
+const COVER_ASSETS_REJECTED = RAW.assets.length - COVER_ASSETS.length;
+const assetsByTheme = (t: (typeof COVER_THEMES)[number]) => filterByTheme(COVER_ASSETS, t);
+const assetById = (id: string) => findById(COVER_ASSETS, id);
+const pickAsset = (id: string, t: (typeof COVER_THEMES)[number], skip = 0) =>
+  pickFrom(COVER_ASSETS, id, t, skip);
 
 // ── 1. manifest 검증 ─────────────────────────────────────────────────────────
 

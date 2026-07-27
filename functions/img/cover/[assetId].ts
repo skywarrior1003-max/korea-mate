@@ -15,7 +15,7 @@
 // - 원본 URL 을 응답 본문·헤더·오류에 노출하지 않음
 // - 실패는 항상 200 브랜드 fallback (Shared 페이지가 깨지지 않도록)
 
-import { COVER_ASSETS } from "../../../src/lib/trip-cover/cover-core";
+import { COVER_ASSETS } from "../../../src/lib/trip-cover/assets.data";
 
 const ALLOWED_HOSTS = new Set(["tong.visitkorea.or.kr"]);
 const ALLOWED_MIME  = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp"]);
