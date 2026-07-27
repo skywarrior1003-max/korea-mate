@@ -1,0 +1,42 @@
+{
+  "total": 1642,
+  "image_status_before": {
+    "image_partial": 1506,
+    "source_exhausted": 131,
+    "image_missing": 5
+  },
+  "image_status_after": {
+    "image_partial": 958,
+    "source_exhausted": 131,
+    "image_missing": 5,
+    "image_sufficient": 548
+  },
+  "sufficient_by_category": {
+    "attraction": 224,
+    "nature": 27,
+    "accommodation": 44,
+    "restaurant": 222,
+    "event": 31
+  },
+  "partial_remaining_by_category": {
+    "attraction": 477,
+    "event": 41,
+    "restaurant": 415,
+    "nature": 21,
+    "accommodation": 4
+  },
+  "rights_class": {
+    "rights_unknown": 640,
+    "rights_restricted": 318
+  },
+  "operational_blocked": 958,
+  "determinism_check": "PASS",
+  "runDate": "2026-07-27T04:16:09.187Z",
+  "validationGate": {
+    "total_1642": "PASS",
+    "rights_958": "PASS",
+    "source_exhausted_unchanged": "PASS",
+    "determinism": "PASS",
+    "file_21f_integrity": "PASS"
+  }
+}
