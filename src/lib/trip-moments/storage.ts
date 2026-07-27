@@ -46,6 +46,8 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     captured_at:    String(r.captured_at ?? new Date().toISOString()),
     day_number:     typeof r.day_number === "number" ? r.day_number : null,
     synced:         true,
+    // 서버는 storage_path 원문 대신 has_photo boolean 만 준다
+    has_photo:      r.has_photo === true,
   };
 }
 
@@ -57,7 +59,9 @@ function mergeMoments(serverMoments: TripMoment[], localMoments: TripMoment[]): 
 
   const merged = serverMoments.map(sm => {
     const local = localMap.get(sm.moment_id);
-    return local?.photo_data ? { ...sm, photo_data: local.photo_data } : sm;
+    // 서버 has_photo=true 를 우선 보존한다 (재업로드 방지의 근거)
+    const base = { ...sm, has_photo: sm.has_photo === true || local?.has_photo === true };
+    return local?.photo_data ? { ...base, photo_data: local.photo_data } : base;
   });
 
   // 서버에 없는 로컬 moments (pending · photo-only) 보존
@@ -88,44 +92,188 @@ export async function loadMomentsFromServer(
 }
 
 // moment 추가: 로컬 우선 저장 후 서버 POST. 중복 moment_id 방지.
-export async function addMoment(
-  itinId:   string,
-  moment:   TripMoment,
+// ── 사진 업로드 ───────────────────────────────────────────────────────────────
+//
+// 메타데이터 POST 는 photo_data 를 보내지 않는다(전송 금지). 사진은 별도
+// multipart 엔드포인트로만 올린다.
+//   POST /api/trip-moments/:momentId/photo  ·  field "photo"  ·  x-device-id 필수
+//   JPEG 전용 · 1MB (서버가 MIME·SOI·구조를 재검증하고 EXIF 를 제거한다)
+//
+// 응답은 {ok:true} 뿐이므로 storage_path 를 받지 않는다. 2xx 면 has_photo=true
+// 로 표시하고, 다음 서버 로드에서 GET 의 has_photo 가 이를 확인해 준다.
+
+/** data:image/jpeg data URL → Blob. 형식이 아니면 null (임의 URL 업로드 차단) */
+export function jpegDataUrlToBlob(dataUrl: string): Blob | null {
+  const m = /^data:image\/jpeg;base64,([A-Za-z0-9+/=]+)$/.exec(dataUrl.trim());
+  if (!m || !m[1]) return null;
+  try {
+    const bin = atob(m[1]);
+    const buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    if (buf.length === 0 || buf.length > COMPRESS_MAX_BYTES) return null;
+    return new Blob([buf], { type: "image/jpeg" });
+  } catch { return null; }
+}
+
+/** 사진 1장을 서버에 올린다. 성공 여부만 반환하고 서버 원문 오류를 노출하지 않는다. */
+export async function uploadMomentPhoto(
+  momentId: string,
+  photoData: string,
   deviceId: string,
-): Promise<TripMoment[]> {
-  const existing = loadMoments(itinId);
-  if (existing.some(m => m.moment_id === moment.moment_id)) return existing;
+): Promise<boolean> {
+  const blob = jpegDataUrlToBlob(photoData);
+  if (!blob) return false;
+  try {
+    const fd = new FormData();
+    fd.append("photo", blob, `${momentId}.jpg`);
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photo`, {
+      method:  "POST",
+      headers: { "x-device-id": deviceId },
+      body:    fd,
+    });
+    return res.ok;
+  } catch {
+    // 오프라인·네트워크 오류 — 로컬 photo_data 는 유지되므로 다음 큐에서 재시도된다
+    return false;
+  }
+}
 
-  const withPending = [moment, ...existing];
-  saveMomentsLocal(itinId, withPending);
+/** 로컬 목록에서 한 moment 의 필드를 갱신하고 저장한다 */
+function patchLocal(itinId: string, momentId: string, patch: Partial<TripMoment>): TripMoment[] {
+  const next = loadMoments(itinId).map(m =>
+    m.moment_id === momentId ? { ...m, ...patch } : m,
+  );
+  saveMomentsLocal(itinId, next);
+  return next;
+}
 
+export interface AddMomentResult {
+  moments:     TripMoment[];
+  /** 로컬 저장 성공 여부 — false 일 때만 "저장 실패"다 */
+  localSaved:  boolean;
+  metaSynced:  boolean;
+  photoSynced: boolean;
+}
+
+/** 메타데이터 upsert 1건. moment_id 고정이라 재시도해도 행이 중복되지 않는다. */
+async function postMomentMeta(m: TripMoment, deviceId: string): Promise<boolean> {
   try {
     const res = await fetch("/api/trip-moments", {
       method:  "POST",
       headers: { "Content-Type": "application/json", "x-device-id": deviceId },
       body: JSON.stringify({
-        moment_id:      moment.moment_id,
-        itinerary_id:   moment.itinerary_id,
-        memo:           moment.memo,
-        category:       moment.category,
-        lat:            moment.lat,
-        lng:            moment.lng,
-        location_label: moment.location_label,
-        captured_at:    moment.captured_at,
-        day_number:     moment.day_number,
-        // photo_data 전송 금지
+        moment_id:      m.moment_id,
+        itinerary_id:   m.itinerary_id,
+        memo:           m.memo,
+        category:       m.category,
+        lat:            m.lat,
+        lng:            m.lng,
+        location_label: m.location_label,
+        captured_at:    m.captured_at,
+        day_number:     m.day_number,
+        // photo_data 전송 금지 — 사진은 multipart 엔드포인트로만 올린다
       }),
     });
-    if (res.ok) {
-      const synced = loadMoments(itinId).map(m =>
-        m.moment_id === moment.moment_id ? { ...m, synced: true } : m,
-      );
-      saveMomentsLocal(itinId, synced);
-      return synced;
-    }
-  } catch { /* 서버 실패 — pending 상태 유지 */ }
+    return res.ok;
+  } catch { return false; }
+}
 
-  return loadMoments(itinId);
+/**
+ * 로컬 우선 저장 → 메타데이터 upsert → (성공 시) 사진 업로드.
+ *
+ * 로컬 저장이 되면 사용자의 Memory 는 이미 안전하다. 서버 동기화 실패는
+ * "저장 실패"가 아니라 "동기화 대기"이며, 로컬 데이터를 지우지 않는다.
+ */
+export async function addMomentDetailed(
+  itinId:   string,
+  moment:   TripMoment,
+  deviceId: string,
+): Promise<AddMomentResult> {
+  const existing = loadMoments(itinId);
+  if (existing.some(m => m.moment_id === moment.moment_id)) {
+    const cur = existing.find(m => m.moment_id === moment.moment_id)!;
+    return { moments: existing, localSaved: true,
+             metaSynced: cur.synced, photoSynced: cur.has_photo === true };
+  }
+
+  // ① 로컬 저장 (실패하면 이때만 진짜 저장 실패다)
+  let moments = [moment, ...existing];
+  try {
+    saveMomentsLocal(itinId, moments);
+  } catch {
+    return { moments: existing, localSaved: false, metaSynced: false, photoSynced: false };
+  }
+  if (loadMoments(itinId).every(m => m.moment_id !== moment.moment_id)) {
+    return { moments: existing, localSaved: false, metaSynced: false, photoSynced: false };
+  }
+
+  // ② 메타데이터
+  const metaSynced = await postMomentMeta(moment, deviceId);
+  if (!metaSynced) {
+    return { moments: loadMoments(itinId), localSaved: true, metaSynced: false, photoSynced: false };
+  }
+  moments = patchLocal(itinId, moment.moment_id, { synced: true });
+
+  // ③ 사진 (메타데이터 성공 시에만)
+  if (!moment.photo_data) {
+    return { moments, localSaved: true, metaSynced: true, photoSynced: false };
+  }
+  const photoSynced = await uploadMomentPhoto(moment.moment_id, moment.photo_data, deviceId);
+  moments = patchLocal(itinId, moment.moment_id, { has_photo: photoSynced });
+
+  return { moments, localSaved: true, metaSynced: true, photoSynced };
+}
+
+/** 기존 호출부 호환 — 목록만 필요할 때 */
+export async function addMoment(
+  itinId:   string,
+  moment:   TripMoment,
+  deviceId: string,
+): Promise<TripMoment[]> {
+  return (await addMomentDetailed(itinId, moment, deviceId)).moments;
+}
+
+// ── 순차 재동기화 큐 ──────────────────────────────────────────────────────────
+//
+// A. synced=false            → 메타데이터부터, 성공하면 사진까지
+// B. synced=true + 사진 대기 → 사진만
+// has_photo=true 는 건너뛴다(재업로드 금지). 한 건씩 순차 처리하며 한 항목의
+// 실패가 다음 항목을 막지 않는다. single-flight 로 중복 실행을 막는다.
+
+const resyncInFlight = new Set<string>();
+
+export interface ResyncResult { metaSynced: number; photoSynced: number; skipped: number; }
+
+export async function resyncPendingMoments(
+  itinId:   string,
+  deviceId: string,
+): Promise<ResyncResult> {
+  const out: ResyncResult = { metaSynced: 0, photoSynced: 0, skipped: 0 };
+  if (resyncInFlight.has(itinId)) { out.skipped = 1; return out; }
+  resyncInFlight.add(itinId);
+
+  try {
+    // 스냅샷을 떠서 순회한다. 각 단계는 patchLocal 로 즉시 반영된다.
+    for (const snap of loadMoments(itinId)) {
+      const cur = loadMoments(itinId).find(m => m.moment_id === snap.moment_id);
+      if (!cur) continue;
+
+      let meta = cur.synced;
+      if (!meta) {
+        meta = await postMomentMeta(cur, deviceId);
+        if (meta) { patchLocal(itinId, cur.moment_id, { synced: true }); out.metaSynced++; }
+      }
+      if (!meta) continue;                       // 다음 항목으로 (전체 중단 아님)
+      if (!cur.photo_data) continue;             // 텍스트 Memory
+      if (cur.has_photo === true) continue;      // 이미 서버에 있음 — 재업로드 금지
+
+      const ok = await uploadMomentPhoto(cur.moment_id, cur.photo_data, deviceId);
+      if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true }); out.photoSynced++; }
+    }
+  } finally {
+    resyncInFlight.delete(itinId);
+  }
+  return out;
 }
 
 // moment 삭제: 낙관적 로컬 제거 후 서버 DELETE. 실패 시 롤백 + throw.

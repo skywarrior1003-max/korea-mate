@@ -83,14 +83,14 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onE
       >
         <div className="w-16 h-16 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-3xl">📸</div>
         <div>
-          <p className="text-base font-black text-[#191C21]">No moments recorded yet</p>
-          <p className="text-sm text-[#565D66] mt-1">Hidden gems, scenery, people you met…<br/>Leave the real story of this trip</p>
+          <p className="text-base font-black text-[#191C21]">{t("emptyTitle")}</p>
+          <p className="text-sm text-[#565D66] mt-1">{t("emptyLine1")}<br/>{t("emptyLine2")}</p>
         </div>
         <button
           className="mt-2 px-6 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
           style={{ backgroundColor: "#FF4A2D" }}
         >
-          📸 Record First Moment
+          {t("addMemory")}
         </button>
       </div>
     );
@@ -106,12 +106,34 @@ export default function TripMomentTimeline({ moments, onDelete, onAddMemory, onE
           month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
         });
 
+        // 동기화 상태 배지 — 사진 없는 텍스트 Memory 에는 사진 배지를 달지 않는다.
+        // 로컬 저장은 이미 끝났으므로 "대기"이지 "실패"가 아니다.
+        const syncKey: "syncPendingMeta" | "syncPendingPhoto" | "syncDone" | null =
+          !m.synced                                   ? "syncPendingMeta"
+          : m.photo_data && m.has_photo !== true      ? "syncPendingPhoto"
+          : m.photo_data                              ? "syncDone"
+          : null;
+        const syncTone = syncKey === "syncDone"
+          ? { bg: "#E8F5EC", fg: "#1B7F3B" }
+          : { bg: "#FFF1EC", fg: "#B33A22" };
+
         return (
           <div
             key={m.moment_id}
             className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm"
             style={{ animation: `fadeInUp 0.3s ease-out ${i * 0.06}s both` }}
           >
+            {syncKey && (
+              <div className="px-4 pt-3">
+                <span
+                  className="inline-block text-[11px] font-bold px-2.5 py-1 rounded-full"
+                  style={{ backgroundColor: syncTone.bg, color: syncTone.fg }}
+                >
+                  {t(syncKey)}
+                </span>
+              </div>
+            )}
+
             {/* 사진 */}
             {m.photo_data && (
               <div

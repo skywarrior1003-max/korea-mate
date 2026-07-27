@@ -35,8 +35,10 @@ interface Props {
   itineraryId?: string | null;
   copyCount?: number;
   helpfulCount?: number;
-  /** 이 일정의 Memory 사진 (미리보기용 data URL 보유분만) */
+  /** 서버 동기화가 끝난 Memory 사진만 (커버 PUT 이 성공할 수 있는 것들) */
   coverPhotos?: ConsentPhoto[];
+  /** 아직 사진 동기화가 끝나지 않은 Memory 수 — 안내 문구용 */
+  coverPendingCount?: number;
   onClose: () => void;
 }
 
@@ -45,10 +47,12 @@ type CopyState = "idle" | "copied" | "failed";
 
 export default function PublishPreviewModal({
   title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl,
-  itineraryId = null, copyCount = 0, helpfulCount = 0, coverPhotos = [], onClose,
+  itineraryId = null, copyCount = 0, helpfulCount = 0, coverPhotos = [],
+  coverPendingCount = 0, onClose,
 }: Props) {
   const t = useTranslations("publish");
   const tConsent = useTranslations("coverConsent");
+  const tMemo    = useTranslations("memo");
   const [phase, setPhase]         = useState<Phase>("preview");
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [error, setError]         = useState(false);
@@ -234,6 +238,9 @@ export default function PublishPreviewModal({
                     {city} · {THEME_LABEL[coverTheme]}
                   </p>
                 </div>
+                {coverPhotos.length === 0 && coverPendingCount > 0 && (
+                  <p className="mt-2 text-xs text-sub">{tMemo("coverNeedsSync")}</p>
+                )}
                 {coverPhotos.length > 0 && !personalOn && (
                   <button
                     onClick={() => setConsentOpen(true)}

@@ -6,6 +6,7 @@ export { MOMENT_CATEGORIES } from "./types";
 export {
   loadMoments, loadMomentsFromServer, addMoment, deleteMoment, updateMomentMemo,
   compressPhoto, compressPhotoBlob, runCompressSteps, calcResizeDimensions,
+  addMomentDetailed, resyncPendingMoments, uploadMomentPhoto, jpegDataUrlToBlob,
   COMPRESS_MAX_LONG_PX, COMPRESS_MAX_BYTES, COMPRESS_QUALITY_STEPS, COMPRESS_FALLBACK_LONG,
   formatCoord,
 } from "./storage";

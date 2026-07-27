@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
@@ -13,7 +14,7 @@ import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
-import { loadMoments, loadMomentsFromServer, addMoment, deleteMoment, updateMomentMemo } from "@/lib/trip-moments";
+import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import type { CitySpot } from "@/data/cities/types";
@@ -896,6 +897,7 @@ function ItineraryResult() {
   const [loadPhase, setLoadPhase] = useState(0);
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
+  const tMemo = useTranslations("memo");
   const [itinId,      setItinId]      = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [syncFading,  setSyncFading]  = useState(false);
@@ -1286,7 +1288,20 @@ function ItineraryResult() {
       setMoments(loadMoments(itinId));
       return;
     }
-    loadMomentsFromServer(itinId, getDeviceId()).then(setMoments);
+    // 서버 병합 후 대기 항목(메타·사진)을 순차 재동기화한다
+    const runResync = async () => {
+      await resyncPendingMoments(itinId, getDeviceId());
+      setMoments(loadMoments(itinId));
+    };
+    loadMomentsFromServer(itinId, getDeviceId()).then(async (merged) => {
+      setMoments(merged);
+      await runResync();
+    });
+    // 오프라인에서 쌓인 항목을 온라인 복귀 시 다시 시도한다.
+    // resyncPendingMoments 가 single-flight 라 중복 실행되지 않는다.
+    const onOnline = () => { void runResync(); };
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
   }, [itinId, shareId, isOwner]);
 
   // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
@@ -1338,11 +1353,24 @@ function ItineraryResult() {
   }
 
   // ── TASK-022: moment 저장 / 삭제 ────────────────────────────
-  const handleMomentSave = useCallback(async (moment: TripMoment) => {
-    if (!itinId) return;
-    const updated = await addMoment(itinId, moment, getDeviceId());
-    setMoments(updated);
-    setCaptureOpen(false);
+  // 성공 시에만 목록 갱신 + 모달 닫기. 실패하면 false 를 돌려 모달·입력을
+  // 유지하고, 캡처 화면이 현지화된 오류를 표시한다 (실패를 성공처럼 보이지 않게).
+  // 오프라인 우선: 로컬 저장이 되면 성공이다. 서버 메타·사진 동기화 실패는
+  // "저장 실패"가 아니라 대기 상태이며, Timeline 배지로 표시된다.
+  const handleMomentSave = useCallback(async (moment: TripMoment): Promise<boolean> => {
+    if (!itinId) return false;
+    try {
+      const r = await addMomentDetailed(itinId, moment, getDeviceId());
+      setMoments(r.moments);
+      if (!r.localSaved) return false;          // 이때만 모달 유지 + 오류 표시
+      setCaptureOpen(false);
+      setCaptureDay(null);
+      return true;
+    } catch {
+      // 서버 원문 오류·Storage 경로는 사용자에게 노출하지 않는다
+      console.warn("[itinerary] moment save failed");
+      return false;
+    }
   }, [itinId]);
 
   const handleMomentDelete = useCallback(async (momentId: string) => {
@@ -1858,7 +1886,7 @@ function ItineraryResult() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            📸 Capture Moment {moments.length > 0 && <span className="bg-[#FF4A2D] text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
+            📸 {tMemo("captureTitle")} {moments.length > 0 && <span className="bg-[#FF4A2D] text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
           </button>
 
           {/* TASK-022: 공유 카드 버튼 */}
@@ -2385,15 +2413,15 @@ function ItineraryResult() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-black text-[#191C21]">📸 My Travel Memories</h2>
-            <p className="text-sm text-[#565D66] mt-0.5">Hidden finds, people you met, scenery… the real story of this trip</p>
+            <h2 className="text-2xl font-black text-[#191C21]">📸 {tMemo("memoriesTitle")}</h2>
+            <p className="text-sm text-[#565D66] mt-0.5">{tMemo("memoriesSubtitle")}</p>
           </div>
           <button
             onClick={() => setCaptureOpen(true)}
             className="shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-black text-white transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            + Log
+            + {tMemo("addMemory")}
           </button>
         </div>
         <TripMomentTimeline
@@ -2475,9 +2503,14 @@ function ItineraryResult() {
           momentCount={moments.length}
           shareUrl={itinId && typeof window !== "undefined" ? `${window.location.origin}/shared/${itinId}` : null}
           itineraryId={itinId}
+          // 서버 동기화가 끝난 사진만 커버 후보로 준다. 미동기화 사진을 고르면
+          // 커버 PUT 이 storage_path 부재로 404 가 되므로 애초에 노출하지 않는다.
           coverPhotos={moments
-            .filter((m) => Boolean(m.photo_data))
+            .filter((m) => Boolean(m.photo_data) && m.has_photo === true && m.synced)
             .map((m) => ({ momentId: m.moment_id, previewUrl: m.photo_data as string, label: m.memo }))}
+          coverPendingCount={moments.filter(
+            (m) => Boolean(m.photo_data) && m.has_photo !== true,
+          ).length}
           onConfirm={() => applyPublic(true)}
           onClose={() => setPublishPreviewOpen(false)}
         />

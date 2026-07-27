@@ -1,6 +1,7 @@
 // Cloudflare Pages Function: GET/POST /api/trip-moments
 //
 // GET  ?itinerary_id=  — itinerary 소유자의 text moments 반환 (photo_data 없음)
+//                        사진 존재 여부는 has_photo:boolean 으로만 알린다
 // POST                 — 새 text moment 저장
 //
 // SECURITY CONTRACT:
@@ -8,6 +9,9 @@
 // - GET/POST 전 itineraries.id + itineraries.device_id 소유권 확인
 // - 비소유자·존재하지 않는 itinerary = 404 (정보 누출 방지)
 // - photo_data 수신·저장 금지
+// - storage_path 원문·Storage key·signed URL 을 응답에 포함하지 않는다.
+//   클라이언트는 사진 동기화 완료 여부만 알면 되므로 has_photo:boolean 만 내보낸다
+//   (재업로드 방지·커버 후보 판정에 필요한 최소 정보)
 // - service_role 사용
 
 import { createClient } from "@supabase/supabase-js";
@@ -77,9 +81,10 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   const owned = await verifyItineraryOwner(admin, itineraryId, deviceId);
   if (!owned) return json({ error: "Not found" }, 404);
 
+  // storage_path 는 내부 판정에만 쓰고 응답에는 넣지 않는다
   const { data, error } = await admin
     .from("trip_moments")
-    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number")
+    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path")
     .eq("itinerary_id", itineraryId)
     .eq("device_id", deviceId)
     .order("captured_at", { ascending: false });
@@ -89,7 +94,13 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to fetch moments" }, 500);
   }
 
-  return json(data ?? []);
+  // storage_path 를 has_photo 로 축약해 원문 경로가 클라이언트로 나가지 않게 한다
+  const rows = (data ?? []).map((r) => {
+    const { storage_path, ...rest } = r as Record<string, unknown>;
+    return { ...rest, has_photo: Boolean(storage_path) };
+  });
+
+  return json(rows);
 }
 
 // ── POST — 새 text moment 생성 ────────────────────────────────────────────────

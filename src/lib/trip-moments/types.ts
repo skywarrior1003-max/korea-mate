@@ -23,5 +23,11 @@ export interface TripMoment {
   location_label: string;    // GPS → 인간 가독 힌트 ("35.1°N 129.0°E")
   captured_at:  string;      // ISO datetime
   day_number:   number | null;
-  synced:       boolean;     // Supabase sync 완료 여부
+  synced:       boolean;     // Supabase 메타데이터 sync 완료 여부
+  /**
+   * 서버 private moments 버킷에 사진이 올라가 있는지.
+   * GET /api/trip-moments 가 storage_path 원문 대신 boolean 으로만 알려준다.
+   * 사진 없는 텍스트 Memory 에는 의미가 없다(undefined 유지).
+   */
+  has_photo?:   boolean;
 }
