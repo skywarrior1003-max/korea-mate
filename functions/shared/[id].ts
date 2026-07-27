@@ -14,6 +14,8 @@ interface ItineraryRow {
   end_date:     string;
   travel_style: string;
   days:         unknown[];
+  // TASK-TRIP-COVER-V1B: OG 캐시 버전용. RPC 는 이미 반환하지만 타입에 없었다.
+  updated_at?:  string;
 }
 
 // ── v2 days 파싱 — { __v:2, scheduled: unknown[] } 또는 legacy 배열 모두 지원 ─
@@ -159,7 +161,16 @@ export const onRequest: (context: {
     // Supabase 타임아웃/네트워크 오류 → 기본값 OG 반환 (크래시 없음)
   }
 
-  const ogImage = CITY_OG_IMAGE[trip?.city?.toLowerCase() ?? ""] ?? FALLBACK_OG;
+  // TASK-TRIP-COVER-V1B: og:image 를 커버 프록시로 연결한다.
+  // 개인 커버 유효 → 개인 사진 / 무효·auto·asset → 관광 커버로 내부 302 /
+  // 비공개·미존재 → 브랜드 fallback. 판정은 전부 프록시가 하므로 RPC 변경이 없다.
+  // v 는 updated_at 고정값. Date.now() 를 쓰면 매 요청 URL 이 바뀌어 캐시가 죽는다.
+  const coverVersion = trip?.updated_at && String(trip.updated_at).trim()
+    ? String(trip.updated_at).trim()
+    : "0";
+  const ogImage = trip
+    ? `https://gokoreamate.com/img/trip-cover/${shareId}?v=${encodeURIComponent(coverVersion)}`
+    : (CITY_OG_IMAGE[trip?.city?.toLowerCase() ?? ""] ?? FALLBACK_OG);
 
   return new Response(
     buildBotHtml({ title, description, ogImage, url: CANONICAL }),

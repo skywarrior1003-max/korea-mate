@@ -15,6 +15,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE, readBodyWithLimit } from "../../../src/lib/itinerary-validate";
 import { removeMomentStorage } from "../../../src/lib/photo-delete";
+import { buildResetPatch } from "../../../src/lib/trip-cover/cover-state-core";
 import { patchMomentMemo, type MomentAdminLike } from "../../../src/lib/trip-moments/memo-patch-core";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text only, no photo_data
@@ -94,6 +95,30 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   if (error) {
     console.error("[trip-moments/:id DELETE] db error:", error.code);
     return json({ error: "Failed to delete moment" }, 500);
+  }
+
+  // 5단계: 이 사진이 커버였다면 일정을 auto 로 되돌린다 (TASK-TRIP-COVER-V1B)
+  //
+  // FK 는 ON DELETE SET NULL 이므로 4단계에서 cover_moment_id 는 이미 NULL 이
+  // 됐고, CHECK 도 moment 상태에서 NULL 을 허용하므로 삭제가 막히지 않는다.
+  // 다만 cover_kind='moment' 가 남아 있으면 UI·프록시가 매번 무효 판정을
+  // 거쳐야 하므로 여기서 정리한다.
+  //
+  // best-effort — 실패해도 사진 삭제 성공(200)을 되돌리지 않는다.
+  // 프록시가 cover_moment_id=NULL 을 무효로 보고 관광 커버로 fallback 하므로
+  // 정리에 실패해도 사용자에게 보이는 동작은 동일하다.
+  const { error: cleanupErr } = await admin
+    .from("itineraries")
+    .update(buildResetPatch(new Date().toISOString()))
+    .eq("id", moment.itinerary_id)
+    .eq("device_id", deviceId)
+    .eq("cover_kind", "moment");
+
+  if (cleanupErr) {
+    console.error(
+      "[trip-moments/:id DELETE] cover cleanup failed (photo already deleted)",
+      JSON.stringify({ itinerary_id: moment.itinerary_id, code: cleanupErr.code }),
+    );
   }
 
   return json({ ok: true });
