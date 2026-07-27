@@ -137,6 +137,8 @@ export default function SharedTripPage() {
   const [isCopying,       setIsCopying]       = useState(false);
   const [copyError,       setCopyError]       = useState<string | null>(null);
   const [coverSkip,       setCoverSkip]       = useState(0);   // 이미지 실패 → 다음 자산
+  // 실제 표시 커버 종류. 판정 전(unknown)에는 KTO 출처를 붙이지 않는다.
+  const [coverKind, setCoverKind] = useState<"unknown" | "personal" | "tourism">("unknown");
   const router = useRouter();
 
   useEffect(() => {
@@ -154,6 +156,15 @@ export default function SharedTripPage() {
       setTrip(record);
       setHelpfulCount(record.helpful_count ?? 0);
       setCopyCount(record.copy_count ?? 0);
+
+      // 개인/관광 커버 판정 — 실패하면 unknown 을 유지해 출처를 숨긴다.
+      // 이 조회가 실패해도 커버 이미지와 Shared 페이지는 그대로 동작한다.
+      fetch(`/api/shared/${encodeURIComponent(shareId)}/cover-kind`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d: { kind?: string } | null) => {
+          if (d?.kind === "personal" || d?.kind === "tourism") setCoverKind(d.kind);
+        })
+        .catch(() => { /* unknown 유지 — 잘못된 출처를 표시하지 않는다 */ });
 
       // days JSONB → Day[] 파싱 (legacy Day[] 및 v2 { __v:2, scheduled } 모두 지원)
       const parsedDays = parseScheduledDays(record.days);
@@ -287,6 +298,7 @@ export default function SharedTripPage() {
     <div className="min-h-screen" style={{ backgroundColor: "#F6F7F8" }}>
 
       <TripCover
+        coverSrc={`/img/trip-cover/${trip.id}?v=${encodeURIComponent(trip.updated_at ?? "0")}`}
         asset={coverAsset}
         theme={coverTheme}
         title={trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`}
@@ -299,6 +311,7 @@ export default function SharedTripPage() {
         copyCount={copyCount}
         helpfulCount={helpfulCount}
         highlights={highlights}
+        coverKind={coverKind}
         onImageError={() => setCoverSkip((n) => n + 1)}
       />
 

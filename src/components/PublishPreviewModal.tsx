@@ -11,6 +11,9 @@ import { useTranslations } from "next-intl";
 import { resolveTheme, coverProxyPath, THEME_LABEL } from "@/lib/trip-cover/cover-core";
 import { pickAsset } from "@/lib/trip-cover/assets.data";
 import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
+import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
+import CoverConsentDialog, { type ConsentPhoto } from "@/components/CoverConsentDialog";
+import { getDeviceId } from "@/lib/deviceId";
 
 interface PreviewDay {
   dayNumber: number;
@@ -32,6 +35,8 @@ interface Props {
   itineraryId?: string | null;
   copyCount?: number;
   helpfulCount?: number;
+  /** 이 일정의 Memory 사진 (미리보기용 data URL 보유분만) */
+  coverPhotos?: ConsentPhoto[];
   onClose: () => void;
 }
 
@@ -40,14 +45,19 @@ type CopyState = "idle" | "copied" | "failed";
 
 export default function PublishPreviewModal({
   title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl,
-  itineraryId = null, copyCount = 0, helpfulCount = 0, onClose,
+  itineraryId = null, copyCount = 0, helpfulCount = 0, coverPhotos = [], onClose,
 }: Props) {
   const t = useTranslations("publish");
+  const tConsent = useTranslations("coverConsent");
   const [phase, setPhase]         = useState<Phase>("preview");
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [error, setError]         = useState(false);
   const [canShare, setCanShare]   = useState(false);
   const [cardState, setCardState] = useState<"idle" | "working" | "done" | "failed">("idle");
+  const [consentOpen, setConsentOpen] = useState(false);
+  const [coverBusy,   setCoverBusy]   = useState(false);
+  const [personalOn,  setPersonalOn]  = useState(false);   // 개인 커버 적용됨
+  const [coverBust,   setCoverBust]   = useState(0);       // 미리보기 갱신용
 
   // Web Share API 지원 여부 — 마운트 후 판정 (SSR hydration 불일치 방지)
   useEffect(() => {
@@ -102,6 +112,31 @@ export default function PublishPreviewModal({
     }
   }
 
+  /** 개인 사진을 공개 커버로 적용. 실패해도 Publish 성공 상태는 유지된다. */
+  async function applyPersonalCover(momentId: string): Promise<void> {
+    if (!itineraryId) return;
+    setCoverBusy(true);
+    try {
+      const res = await fetch(`/api/itinerary/${encodeURIComponent(itineraryId)}/cover`, {
+        method:  "PUT",
+        headers: { "Content-Type": "application/json", "x-device-id": getDeviceId() },
+        body:    JSON.stringify({
+          kind: "moment", momentId, consent: true, consentVersion: CONSENT_VERSION,
+        }),
+      });
+      if (res.ok) {
+        setPersonalOn(true);
+        setCoverBust((n) => n + 1);
+        setConsentOpen(false);
+      }
+      // 실패 시 조용히 기존 V1A 관광 커버를 유지한다 (Publish 는 이미 성공)
+    } catch {
+      /* 네트워크 실패 — 관광 커버 유지 */
+    } finally {
+      setCoverBusy(false);
+    }
+  }
+
   async function copyLink(): Promise<boolean> {
     if (!shareUrl) return false;
     try {
@@ -148,6 +183,15 @@ export default function PublishPreviewModal({
         className="bg-surface w-full sm:max-w-md max-h-[90vh] overflow-y-auto rounded-t-frame sm:rounded-frame shadow-modal"
         onClick={e => e.stopPropagation()}
       >
+        {consentOpen && (
+          <CoverConsentDialog
+            photos={coverPhotos}
+            busy={coverBusy}
+            onCancel={() => setConsentOpen(false)}
+            onApply={(momentId) => void applyPersonalCover(momentId)}
+          />
+        )}
+
         {/* ══ 공개 성공 화면 — 별도 화면 이동 없이 링크 획득까지 완료 ══ */}
         {phase === "published" ? (
           <div className="p-6">
@@ -172,8 +216,11 @@ export default function PublishPreviewModal({
             {cover && (
               <div className="mb-4">
                 <div className="relative rounded-control overflow-hidden" style={{ backgroundColor: "#191C21" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={coverProxyPath(cover.asset_id)}
+                    src={itineraryId
+                      ? `/img/trip-cover/${encodeURIComponent(itineraryId)}?v=${coverBust}`
+                      : coverProxyPath(cover.asset_id)}
                     alt={`${city} ${THEME_LABEL[coverTheme]}`}
                     className="w-full h-32 object-cover"
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.visibility = "hidden"; }}
@@ -187,6 +234,14 @@ export default function PublishPreviewModal({
                     {city} · {THEME_LABEL[coverTheme]}
                   </p>
                 </div>
+                {coverPhotos.length > 0 && !personalOn && (
+                  <button
+                    onClick={() => setConsentOpen(true)}
+                    className="gkm-focus w-full min-h-11 mt-2 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+                  >
+                    {tConsent("useMyPhoto")}
+                  </button>
+                )}
                 <button
                   onClick={() => void createCard()}
                   disabled={cardState === "working"}

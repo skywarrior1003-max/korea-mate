@@ -199,5 +199,20 @@
   "socialProof": {
     "copied": "被复制{n}次",
     "helpful": "👍 复制后觉得有帮助 {n}"
+  },
+  "coverConsent": {
+    "title": "将这张照片用作公开行程封面？",
+    "subtitle": "从本次行程的照片中选择一张。仅上传照片不会使其公开。",
+    "scopePublicTrip": "将显示在你公开的 GoKoreaMate 行程页面上。",
+    "scopeLinkPreview": "将显示在社交应用和通讯软件的链接预览中。",
+    "scopeAnyone": "收到链接的任何人都能看到，无需账号。",
+    "cacheWarning": "即使你删除照片或取消公开，外部社交平台仍可能在一段时间内保留已缓存的照片。",
+    "checkOwnRights": "我拥有这张照片或有权分享它。",
+    "checkUnderstandPublic": "我理解这张照片将公开，任何拥有链接的人都能看到。",
+    "apply": "用作封面",
+    "applying": "正在应用…",
+    "cancel": "取消",
+    "useMyPhoto": "使用我的照片",
+    "noPhotos": "请先为此行程添加 Memory 照片"
   }
 }

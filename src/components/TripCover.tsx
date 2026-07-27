@@ -11,10 +11,12 @@
 // 아래 Trip highlights 영역에 분리해 표시한다.
 
 import { useState } from "react";
-import { THEME_LABEL, coverProxyPath } from "@/lib/trip-cover/cover-core";
+import { THEME_LABEL } from "@/lib/trip-cover/cover-core";
 import type { CoverAsset, CoverTheme } from "@/lib/trip-cover/cover-core";
 
 export interface TripCoverProps {
+  /** 커버 이미지 소스. V1B 에서 /img/trip-cover/:id?v= 로 주입된다 */
+  coverSrc:      string;
   asset:         CoverAsset | undefined;
   theme:         CoverTheme;
   title:         string;
@@ -27,6 +29,12 @@ export interface TripCoverProps {
   copyCount:     number;
   helpfulCount:  number;
   highlights:    string[];       // 일정의 실제 대표 장소 — 사진과 결합하지 않는다
+  /**
+   * 실제로 표시되는 커버 종류.
+   * "unknown" 이면 아직 판정 전이므로 KTO 출처를 **표시하지 않는다** —
+   * 기본값을 tourism 으로 잡으면 개인 사진에 한국관광공사 출처가 잠깐 노출된다.
+   */
+  coverKind?:    "unknown" | "personal" | "tourism";
   /** 이미지 로드 실패 시 다음 후보를 요청 */
   onImageError?: () => void;
 }
@@ -35,12 +43,13 @@ const CORAL = "#FF4A2D";
 const INK   = "#191C21";
 
 export default function TripCover({
-  asset, theme, title, city, startDate, endDate,
-  days, places, neighborhoods, copyCount, helpfulCount, highlights, onImageError,
+  coverSrc, asset, theme, title, city, startDate, endDate,
+  days, places, neighborhoods, copyCount, helpfulCount, highlights,
+  coverKind = "unknown", onImageError,
 }: TripCoverProps) {
   const [failed, setFailed] = useState(false);
   const cityCap = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
-  const showPhoto = Boolean(asset) && !failed;
+  const showPhoto = Boolean(coverSrc) && !failed;
 
   const stamps: [number, string][] = [
     [days,          days === 1 ? "Day" : "Days"],
@@ -61,7 +70,7 @@ export default function TripCover({
       <div className="relative w-full h-[62vh] min-h-[420px] max-h-[560px] sm:h-[52vh] sm:max-h-[520px]">
         {showPhoto ? (
           <img
-            src={coverProxyPath(asset!.asset_id)}
+            src={coverSrc}
             alt={`${cityCap} ${THEME_LABEL[theme]}`}
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
@@ -144,7 +153,7 @@ export default function TripCover({
           )}
 
           {/* 출처 — 짧은 표기만. creator·원본 페이지가 unknown 이면 표시하지 않는다 */}
-          {showPhoto && asset && (
+          {showPhoto && asset && coverKind === "tourism" && (
             <p className="pt-5 pb-2 text-white/28 text-[11px]">
               {asset.attribution_text.replace(/\s*\(KOGL Type 1\)\s*$/i, "")}
             </p>

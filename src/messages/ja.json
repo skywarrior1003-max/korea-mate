@@ -199,5 +199,20 @@
   "socialProof": {
     "copied": "{n}回コピー",
     "helpful": "👍 コピー後に役立った {n}"
+  },
+  "coverConsent": {
+    "title": "この写真を公開する旅の表紙にしますか？",
+    "subtitle": "この旅行の写真から1枚選んでください。アップロードしただけでは公開されません。",
+    "scopePublicTrip": "公開中のGoKoreaMate旅行ページに表示されます。",
+    "scopeLinkPreview": "SNSやメッセンジャーのリンクプレビューに表示されます。",
+    "scopeAnyone": "リンクを受け取った人は誰でも見られます。アカウントは不要です。",
+    "cacheWarning": "写真を削除したり公開を取り消した後も、外部SNSがキャッシュした写真を一定期間保持する場合があります。",
+    "checkOwnRights": "この写真を所有しているか、共有する権利があります。",
+    "checkUnderstandPublic": "この写真が公開され、リンクを持つ誰でも見られることを理解しています。",
+    "apply": "表紙にする",
+    "applying": "適用中…",
+    "cancel": "キャンセル",
+    "useMyPhoto": "自分の写真を使う",
+    "noPhotos": "まずこの旅行にMemory写真を追加してください"
   }
 }

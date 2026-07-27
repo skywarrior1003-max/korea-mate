@@ -2475,6 +2475,9 @@ function ItineraryResult() {
           momentCount={moments.length}
           shareUrl={itinId && typeof window !== "undefined" ? `${window.location.origin}/shared/${itinId}` : null}
           itineraryId={itinId}
+          coverPhotos={moments
+            .filter((m) => Boolean(m.photo_data))
+            .map((m) => ({ momentId: m.moment_id, previewUrl: m.photo_data as string, label: m.memo }))}
           onConfirm={() => applyPublic(true)}
           onClose={() => setPublishPreviewOpen(false)}
         />

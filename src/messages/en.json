@@ -199,5 +199,20 @@
   "socialProof": {
     "copied": "Copied {n} times",
     "helpful": "👍 {n} helpful votes after copying"
+  },
+  "coverConsent": {
+    "title": "Use this photo as your public trip cover?",
+    "subtitle": "Pick one photo from this trip. Uploading a photo never makes it public on its own.",
+    "scopePublicTrip": "It will appear on your public GoKoreaMate trip page.",
+    "scopeLinkPreview": "It will appear in link previews on social apps and messengers.",
+    "scopeAnyone": "Anyone who receives the link can see it — no account needed.",
+    "cacheWarning": "Social platforms may keep a cached copy of this photo for some time even after you delete it or turn sharing off.",
+    "checkOwnRights": "I own this photo or have permission to share it.",
+    "checkUnderstandPublic": "I understand this photo will become public and can be seen by anyone with the link.",
+    "apply": "Use as cover",
+    "applying": "Applying…",
+    "cancel": "Cancel",
+    "useMyPhoto": "Use my photo",
+    "noPhotos": "Add a Memory photo to this trip first"
   }
 }
