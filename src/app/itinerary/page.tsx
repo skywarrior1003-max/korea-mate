@@ -2474,6 +2474,7 @@ function ItineraryResult() {
           days={days}
           momentCount={moments.length}
           shareUrl={itinId && typeof window !== "undefined" ? `${window.location.origin}/shared/${itinId}` : null}
+          itineraryId={itinId}
           onConfirm={() => applyPublic(true)}
           onClose={() => setPublishPreviewOpen(false)}
         />

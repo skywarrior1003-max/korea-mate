@@ -159,7 +159,11 @@
     "copiedShort": "コピー済み",
     "share": "共有",
     "done": "完了",
-    "failed": "公開できませんでした。もう一度お試しください。"
+    "failed": "公開できませんでした。もう一度お試しください。",
+    "createShareImage": "シェア画像を作成",
+    "creatingImage": "画像を作成中…",
+    "imageReady": "画像の準備完了",
+    "imageFailed": "画像を作成できませんでした — 再試行"
   },
   "story": {
     "copyTrip": "この旅行をコピー",

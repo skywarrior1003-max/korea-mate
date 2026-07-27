@@ -19,6 +19,8 @@ import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
 import { getDeviceId } from "@/lib/deviceId";
+import TripCover from "@/components/TripCover";
+import { resolveTheme, pickAsset } from "@/lib/trip-cover/cover-core";
 
 // ── 로컬 타입 (itinerary/page.tsx 와 동일 구조) ──────────────────────────────
 interface Place {
@@ -133,6 +135,7 @@ export default function SharedTripPage() {
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   const [isCopying,       setIsCopying]       = useState(false);
   const [copyError,       setCopyError]       = useState<string | null>(null);
+  const [coverSkip,       setCoverSkip]       = useState(0);   // 이미지 실패 → 다음 자산
   const router = useRouter();
 
   useEffect(() => {
@@ -264,8 +267,39 @@ export default function SharedTripPage() {
   const totalSpots = days.reduce((sum, d) => sum + d.places.length, 0);
   const hasAffiliate = Object.keys(affiliateMap).length > 0;
 
+  // ── Trip Cover V1A — 관광 테마 사진 커버 ─────────────────────────────────
+  // 자산은 전부 theme_only 라 사진을 특정 장소의 사진으로 표시하지 않는다.
+  // 일정의 실제 장소는 highlights 로 분리해 넘긴다.
+  const coverPlaces = days.flatMap((d) =>
+    d.places.map((p) => ({ name: p.name, category: p.category, location: p.location })),
+  );
+  const coverTheme = resolveTheme({ tripTitle: trip.trip_title, places: coverPlaces }).theme;
+  const coverAsset = pickAsset(trip.id, coverTheme, coverSkip);
+  const neighborhoods = new Set(
+    coverPlaces.map((p) => (p.location ?? "").trim()).filter(Boolean),
+  ).size;
+  const highlights = Array.from(
+    new Set(coverPlaces.map((p) => (p.name ?? "").trim()).filter(Boolean)),
+  ).slice(0, 4);
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F6F7F8" }}>
+
+      <TripCover
+        asset={coverAsset}
+        theme={coverTheme}
+        title={trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`}
+        city={trip.city}
+        startDate={trip.start_date}
+        endDate={trip.end_date}
+        days={days.length}
+        places={totalSpots}
+        neighborhoods={neighborhoods}
+        copyCount={copyCount}
+        helpfulCount={helpfulCount}
+        highlights={highlights}
+        onImageError={() => setCoverSkip((n) => n + 1)}
+      />
 
       {/* ── 히어로 헤더 ─────────────────────────────────────────────────────── */}
       <div
@@ -282,56 +316,18 @@ export default function SharedTripPage() {
         />
 
         <div className="relative max-w-2xl mx-auto text-center">
-          {/* 공유 배지 */}
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black text-white/50 border border-white/15 mb-6 tracking-widest uppercase">
-            🎴 Shared Itinerary
-          </span>
-
-          {/* 도시명 */}
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-2">
-            {cityCap} Trip
-          </h1>
-
-          {/* 날짜 */}
-          <p className="text-base text-white/55 mb-6">
-            {trip.start_date} ~ {trip.end_date}
-          </p>
-
-          {/* 스탯 칩 */}
-          <div className="flex items-center justify-center gap-3 flex-wrap mb-8">
-            {[
-              { label: `${days.length} Days` },
-              { label: `${totalSpots} Spots` },
-              { label: styleLabel(trip.travel_style) },
-            ].map((chip) => (
-              <span
-                key={chip.label}
-                className="px-4 py-1.5 rounded-full text-xs font-black text-white/70"
-                style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(212,175,55,0.22)" }}
-              >
-                {chip.label}
-              </span>
-            ))}
-          </div>
+          {/* TASK-TRIP-COVER-V1A: 배지·도시명·날짜·스탯 칩은 상단 Trip Cover 가
+              그대로 담당한다. 여기서 다시 그리면 제목·기간·지표가 화면에 두 번
+              나오므로 중복 블록만 제거했다. 아래 복사 CTA·Day 목록은 그대로 유지. */}
 
           {/* 소셜 프루프 — 읽기 전용.
               TASK-HELPFUL-GUARD: 모든 방문자에게 보이던 Helpful 입력 버튼은 제거했다.
               Helpful 은 이제 "복사 후 실제로 써본 사람의 반응"이며, 서버가 복사 이력을
-              요구한다. 입력 진입점은 후속 작업에서 별도로 붙인다. */}
-          {/* 각 지표는 서로·view_count 와 독립. 기준 미만이면 개별 숨김.
-              copy_count 는 복사 "횟수"이고 helpful 은 기기 기준 중복 방지이므로
-              고유 여행자 수로 읽히는 표현("N travelers")은 쓰지 않는다. */}
-          {((trip.view_count ?? 0) >= 2 || copyCount >= 2 || helpfulCount >= 2) && (
+              요구한다. 입력 진입점은 후속 작업에서 별도로 붙인다.
+              Copied·Helpful 은 Trip Cover 가 담당하므로 여기서는 view_count 만 남긴다. */}
+          {(trip.view_count ?? 0) >= 2 && (
             <div className="mb-6 flex items-center gap-3 text-sm font-semibold flex-wrap justify-center">
-              {(trip.view_count ?? 0) >= 2 && (
-                <span className="text-amber-400">🔥 {trip.view_count} views</span>
-              )}
-              {copyCount >= 2 && (
-                <span className="text-white/85">📋 {tProof("copied", { n: copyCount })}</span>
-              )}
-              {helpfulCount >= 2 && (
-                <span className="text-emerald-400">{tProof("helpful", { n: helpfulCount })}</span>
-              )}
+              <span className="text-amber-400">🔥 {trip.view_count} views</span>
             </div>
           )}
 

@@ -8,10 +8,12 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { resolveTheme, pickAsset, coverProxyPath, THEME_LABEL } from "@/lib/trip-cover/cover-core";
+import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
 
 interface PreviewDay {
   dayNumber: number;
-  places: { name: string }[];
+  places: { name: string; category?: string; location?: string }[];
 }
 
 interface Props {
@@ -25,6 +27,10 @@ interface Props {
   onConfirm: () => Promise<boolean>;
   /** 공개 성공 후 안내할 공유 URL (기존 /shared/{id} 규칙 재사용). null이면 수동 복사 영역 미표시. */
   shareUrl: string | null;
+  /** Trip Cover 결정론적 선택 키. 없으면 커버 영역을 렌더하지 않는다. */
+  itineraryId?: string | null;
+  copyCount?: number;
+  helpfulCount?: number;
   onClose: () => void;
 }
 
@@ -32,13 +38,15 @@ type Phase = "preview" | "publishing" | "published";
 type CopyState = "idle" | "copied" | "failed";
 
 export default function PublishPreviewModal({
-  title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl, onClose,
+  title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl,
+  itineraryId = null, copyCount = 0, helpfulCount = 0, onClose,
 }: Props) {
   const t = useTranslations("publish");
   const [phase, setPhase]         = useState<Phase>("preview");
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [error, setError]         = useState(false);
   const [canShare, setCanShare]   = useState(false);
+  const [cardState, setCardState] = useState<"idle" | "working" | "done" | "failed">("idle");
 
   // Web Share API 지원 여부 — 마운트 후 판정 (SSR hydration 불일치 방지)
   useEffect(() => {
@@ -56,6 +64,42 @@ export default function PublishPreviewModal({
   }, [onClose, phase]);
 
   const totalPlaces = days.reduce((s, d) => s + d.places.length, 0);
+
+  // ── Trip Cover V1A — 결정론적 테마 커버 ──────────────────────────────────
+  const coverPlaces = days.flatMap((d) =>
+    d.places.map((p) => ({ name: p.name, category: p.category, location: p.location })),
+  );
+  const coverTheme = resolveTheme({ tripTitle: title, places: coverPlaces }).theme;
+  const cover      = itineraryId ? pickAsset(itineraryId, coverTheme) : undefined;
+  const neighborhoods = new Set(
+    coverPlaces.map((p) => (p.location ?? "").trim()).filter(Boolean),
+  ).size;
+
+  /** 세로 공유 카드 생성 — 실패해도 Publish 성공 상태를 되돌리지 않는다 */
+  async function createCard(): Promise<void> {
+    if (!cover) return;
+    setCardState("working");
+    try {
+      const blob = await renderShareCard({
+        coverSrc:      coverProxyPath(cover.asset_id),
+        theme:         coverTheme,
+        title,
+        city,
+        startDate,
+        endDate,
+        days:          days.length,
+        places:        totalPlaces,
+        neighborhoods,
+        copyCount,
+        helpfulCount,
+        attribution:   cover.attribution_text.replace(/\s*\(KOGL Type 1\)\s*$/i, ""),
+      });
+      await shareOrDownload(blob, `gokoreamate-${city.toLowerCase()}-trip.png`, title);
+      setCardState("done");
+    } catch {
+      setCardState("failed");
+    }
+  }
 
   async function copyLink(): Promise<boolean> {
     if (!shareUrl) return false;
@@ -120,6 +164,40 @@ export default function PublishPreviewModal({
             >
               {copyState === "copied" ? `✓ ${t("linkCopied")}` : t("copyManual")}
             </div>
+
+            {/* ── Trip Cover 미리보기 + 세로 공유 이미지 (V1A) ─────────────────
+                자산은 theme_only 이므로 사진 아래에 장소명을 붙이지 않는다.
+                테마 라벨만 노출하고, 이미지는 같은 출처 프록시로만 불러온다. */}
+            {cover && (
+              <div className="mb-4">
+                <div className="relative rounded-control overflow-hidden" style={{ backgroundColor: "#191C21" }}>
+                  <img
+                    src={coverProxyPath(cover.asset_id)}
+                    alt={`${city} ${THEME_LABEL[coverTheme]}`}
+                    className="w-full h-32 object-cover"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.visibility = "hidden"; }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(to bottom, rgba(25,28,33,0) 40%, rgba(25,28,33,0.85) 100%)" }}
+                  />
+                  <p className="absolute left-3 bottom-2 text-[10px] font-black tracking-widest uppercase"
+                     style={{ color: "#FF4A2D" }}>
+                    {city} · {THEME_LABEL[coverTheme]}
+                  </p>
+                </div>
+                <button
+                  onClick={() => void createCard()}
+                  disabled={cardState === "working"}
+                  className="gkm-focus w-full min-h-11 mt-2 rounded-control border border-line bg-surface text-ink text-sm font-semibold disabled:opacity-60"
+                >
+                  {cardState === "working" ? t("creatingImage")
+                    : cardState === "done"  ? `✓ ${t("imageReady")}`
+                    : cardState === "failed" ? t("imageFailed")
+                    : t("createShareImage")}
+                </button>
+              </div>
+            )}
 
             {/* 공유 URL — 자동 복사 실패 시에도 항상 수동 복사 가능 */}
             {shareUrl && (

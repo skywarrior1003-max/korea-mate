@@ -159,7 +159,11 @@
     "copiedShort": "Copied",
     "share": "Share",
     "done": "Done",
-    "failed": "Couldn't publish. Please try again."
+    "failed": "Couldn't publish. Please try again.",
+    "createShareImage": "Create share image",
+    "creatingImage": "Creating image…",
+    "imageReady": "Image ready",
+    "imageFailed": "Couldn't create image — try again"
   },
   "story": {
     "copyTrip": "Copy this trip",

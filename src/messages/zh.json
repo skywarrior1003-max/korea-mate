@@ -159,7 +159,11 @@
     "copiedShort": "已复制",
     "share": "分享",
     "done": "完成",
-    "failed": "公开失败，请重试。"
+    "failed": "公开失败，请重试。",
+    "createShareImage": "生成分享图片",
+    "creatingImage": "正在生成图片…",
+    "imageReady": "图片已就绪",
+    "imageFailed": "图片生成失败 — 请重试"
   },
   "story": {
     "copyTrip": "复制此行程",
