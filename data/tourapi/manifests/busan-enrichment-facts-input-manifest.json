@@ -1,0 +1,108 @@
+{
+  "created_at": "2026-07-28T00:00:00.000Z",
+  "task": "TASK-BUSAN-SCHEMA-INDEPENDENT-ENRICHMENT-START",
+  "branch": "research/busan-enrichment-facts-20260728",
+  "base_ref": "origin/master",
+  "base_commit": "297f6b41d41fa3bad8b5f68d0141f8827e72f0f5",
+  "ssot_version": "1.0",
+  "ssot_status": "ACTIVE",
+  "research_ref": "origin/research/tourapi-nightly-20260722",
+  "research_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+  "integration_ref": "origin/integration/busan-linkage-index-20260727",
+  "integration_commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+  "assets": [
+    {
+      "id": "linkage_index",
+      "source_ref": "origin/integration/busan-linkage-index-20260727",
+      "source_commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+      "source_path": "data/tourapi/reports/busan/busan-linkage-index-21r.csv",
+      "source_sha256": "118f3b89fc8c8dca7838eb37fd43239ae5753e1bd3d17a2ee4a413ad0d95695f",
+      "source_bytes": 753150,
+      "destination_path": "data/tourapi/reports/busan/busan-linkage-index-21r.csv",
+      "classification": "canonical_linkage_index",
+      "row_count": 1642,
+      "selection_reason": "공식 handoff(21W) 기준 canonical 1,642건 정의 파일; SSOT 섹션2 확인"
+    },
+    {
+      "id": "integrated_candidates",
+      "source_ref": "origin/research/tourapi-nightly-20260722",
+      "source_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "source_path": "data/tourapi/candidates/busan/busan-integrated-candidates.csv",
+      "source_sha256": "06f1ce6c3b48676ba03dedabfca3eb79eeec321fefebf7418e4e0f87a21badee",
+      "source_bytes": 994815,
+      "destination_path": "data/tourapi/candidates/busan/busan-integrated-candidates.csv",
+      "classification": "source_identity_registry",
+      "row_count": 1767,
+      "selection_reason": "source_detail_url, linked_source_keys, address 조인 기준; 21W handoff 포함"
+    },
+    {
+      "id": "image_rights_audit",
+      "source_ref": "origin/research/tourapi-nightly-20260722",
+      "source_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "source_path": "data/tourapi/candidates/busan/busan-image-rights-audit.csv",
+      "source_sha256": "5688d8e3a53369fd280e81239b8855a6a8b0e98fabb1f16b36af2962d54ff597",
+      "source_bytes": 721908,
+      "destination_path": "data/tourapi/candidates/busan/busan-image-rights-audit.csv",
+      "classification": "image_rights_record",
+      "selection_reason": "VB 이미지 권리 기록; 21F~21H-REV2 파이프라인 입력; 21V 검증 완료"
+    },
+    {
+      "id": "batch_normalized",
+      "source_ref": "origin/research/tourapi-nightly-20260722",
+      "source_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "source_path": "data/tourapi/normalized/busan/busan-batch-normalized.json",
+      "source_sha256": "b7d9e2dc9dff0bf2fa72a7ecff5d7dd923ac0e27c962e2ddbae9417e98f6aa68",
+      "source_bytes": 5814602,
+      "destination_path": "data/tourapi/normalized/busan/busan-batch-normalized.json",
+      "classification": "normalized_source_data",
+      "row_count": 4135,
+      "selection_reason": "4,135건 원천 정규화; district, description 원문값 조회 기준"
+    },
+    {
+      "id": "image_status_21q",
+      "source_ref": "origin/research/tourapi-nightly-20260722",
+      "source_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "source_path": "data/tourapi/reports/busan/busan-image-status-21q.csv",
+      "source_sha256": "95fcdeaf6a0ade1f80922dbb20f82241926522308222a20638a5185a0b5a2475",
+      "source_bytes": 201015,
+      "destination_path": "data/tourapi/reports/busan/busan-image-status-21q.csv",
+      "classification": "final_image_status",
+      "row_count": 1642,
+      "selection_reason": "최종 이미지 상태 21Q; rights_status 포함"
+    },
+    {
+      "id": "curated_images_21q",
+      "source_ref": "origin/research/tourapi-nightly-20260722",
+      "source_commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "source_path": "data/tourapi/reports/busan/busan-curated-images-21q.jsonl",
+      "source_sha256": "12d0d8c4be21262112b9d437954a8334e0a6c7fdca1b0f04bd7b3d76d4912d48",
+      "source_bytes": 646460,
+      "destination_path": "data/tourapi/reports/busan/busan-curated-images-21q.jsonl",
+      "classification": "final_curated_images",
+      "row_count": 1642,
+      "selection_reason": "최종 큐레이션 이미지 21Q; curated_images 배열 조회 기준"
+    },
+    {
+      "id": "pg_place_summary",
+      "source_ref": "origin/integration/busan-linkage-index-20260727",
+      "source_commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+      "source_path": "data/tourapi/reports/busan/busan-photo-gallery-place-summary-21d-rev2.csv",
+      "source_sha256": "356118181631e5cb14e7dac681d7d66014538875ca4a7bbdfbf7b43f056a1093",
+      "source_bytes": 237401,
+      "destination_path": "data/tourapi/reports/busan/busan-photo-gallery-place-summary-21d-rev2.csv",
+      "classification": "photo_gallery_summary",
+      "selection_reason": "PG 장소 요약; 이미지 매칭 근거 및 대체 이미지 탐색 기준"
+    },
+    {
+      "id": "visitbusan_rights_21h_rev2",
+      "source_ref": "origin/integration/busan-linkage-index-20260727",
+      "source_commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+      "source_path": "data/tourapi/reports/busan/busan-visitbusan-rights-21h-rev2.csv",
+      "source_sha256": "3ddce2b4dd36dba7c3e384b55c51cc3c4802909f07281bfc7d975983150d51b9",
+      "source_bytes": 307004,
+      "destination_path": "data/tourapi/reports/busan/busan-visitbusan-rights-21h-rev2.csv",
+      "classification": "visitbusan_rights_reclassified",
+      "selection_reason": "958건 operational_assumed 재분류 근거(21H-REV2); 이미지 권리 조회 기준"
+    }
+  ]
+}
