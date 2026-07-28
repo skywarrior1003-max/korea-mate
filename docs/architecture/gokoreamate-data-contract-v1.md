@@ -3,14 +3,14 @@
 | 항목 | 값 |
 |---|---|
 | `document_title` | GoKoreaMate Data Contract v1 |
-| `document_version` | 1.0 |
-| `status` | **ACTIVE** — 데이터·DB·병합 TASK의 공식 최상위 SSOT |
+| `document_version` | **1.1** |
+| `status` | **ACTIVE** — GoKoreaMate 데이터·DB·병합·보강 작업의 공식 최상위 SSOT v1.1 |
 | `ssot_scope` | 제품 방향 · 장소 데이터 · 사용자 여행 콘텐츠 · 공유/재방문 · DB 물리 구조 · readiness/RLS · 스케줄러 · provenance · legacy 승계 · 중단 병합 · 보조컴퓨터 계약 · 다도시 확장 |
 | `last_verified_commit` | `6e6f62f` (local master) |
 | `last_verified_origin_commit` | `6e6f62f` (origin/master) |
 | `last_verified_db_date` | 2026-07-28 |
 | `document_updated_date` | 2026-07-28 |
-| `schema_status` | 방향 승인(DIRECTION_APPROVED) · 물리 명세 확정 · migration 미작성 · 운영 DB 미적용 |
+| `schema_status` | 방향 승인(DIRECTION_APPROVED) · 물리 명세 확정 · **v1.1에서 review flag semantics 교정** · migration 미작성 · 운영 DB 미적용 |
 | `pending_decisions` | §23 참조 — 현재 blocker **0건** / 사용자 실행 승인 **1건**(M5) / 기술 후속 **3건** / 향후 사업 결정 **1건** |
 
 **표기 규칙** — `CONFIRMED` 코드·DB·파일 실측 / `DECIDED` 제품·운영 원칙 확정 / `PROPOSED` 후속 구현 전 권고 / `BLOCKED` 추가 결정·검증 필요.
@@ -158,21 +158,52 @@ content_meta
 
 **`review_status`** = 장소 정체성·기본 검수의 **전체 진행 상태**. 허용값 `collected` · `in_review` · `approved` · `rejected` · `archived`.
 
-**`review_flags text[] NOT NULL DEFAULT '{}'`** = 동시에 존재할 수 있는 **부족 항목**. 허용 flag:
-`needs_identity` · `needs_translation` · `needs_content` · `needs_image` · `needs_arrival` · `needs_district` · `needs_hours` · `needs_restaurant_branch`
+**`review_flags text[] NOT NULL DEFAULT '{}'`** = 동시에 존재할 수 있는 **부족 항목**. 허용 flag (v1.1 확정):
 
-**readiness별 차단 flag 매트릭스**
+```
+needs_identity
+needs_translation
+needs_content
+needs_image
+needs_arrival
+needs_arrival_verification
+needs_map_name_ko
+needs_district
+needs_hours
+needs_restaurant_branch
+```
+
+**자동 검산 (2026-07-28)** 항목 **10**개 · 중복 **0**개. 위 코드블록을 줄 단위로 파싱해 `len` / `len(set)` 비교한다. 사람이 세지 않는다.
+
+**flag 의미 정의 (v1.1 교정)**
+
+| flag | 의미 | 해당하지 않는 것 |
+|---|---|---|
+| `needs_identity` | canonical 장소 동일성이 불명확 — 동명 장소 충돌 · 음식점 지점 불명확 · 중복 장소 가능성 · 서로 다른 시설 가능성 · source 간 identity 충돌 | **`external_id` NULL · 공식 source 연결 없음 · `source_type='manual'` · 자동 갱신 원천 없음** (이는 provenance·자동 갱신 상태이며 identity와 분리한다) |
+| `needs_translation` | GoKoreaMate 기본 fallback 언어인 **영어**의 canonical display name이 없거나 신뢰할 수 없음 — 사용자가 장소를 구분할 필수 영문 표시 정보 부재 | **`name_l10n.ko` 없음 · 일본어/중국어 번역 없음 · 영문 description 부족**(→ `needs_content`) · 검증된 legacy 영문 대표명이 있는데 공식 source 영어명만 없는 경우 |
+| `needs_arrival` | 좌표 없음 · 좌표가 명백히 잘못됨 · 다른 장소 좌표 가능성 · **사용자를 안전하게 안내할 수 없음** | 좌표로 접근은 되는데 최적 진입점만 미검증인 경우(→ `needs_arrival_verification`) |
+| `needs_arrival_verification` | 현재 좌표로 장소 접근은 가능하나 **정문·출입구·주차장·셔틀·트레일 입구 등 최적 도착점 검증이 남음** | 좌표 자체가 없거나 틀린 경우(→ `needs_arrival`) |
+| `needs_map_name_ko` | Naver Maps 검색 · 한국 현지 지도 확인 · 택시 기사·현장 안내에 쓸 **검증된 한국어 장소명 부족** | 영문명 부재(→ `needs_translation`) |
+| `needs_content` | `description`·`why_it_matters` 등 사용자 판단용 콘텐츠 부족 | 이름 부재 |
+| `needs_image` | 장소와 일치하는 대표 이미지 부족 | — |
+| `needs_district` | district/zone 확정 불가 | — |
+| `needs_hours` | 운영시간 미확인 | — |
+| `needs_restaurant_branch` | 음식점 지점 동일성 불명확 | — |
+
+**readiness별 차단 flag 매트릭스** (10/10 전건 명시)
 
 | flag | CATALOG 차단 | SCHEDULER 차단 | FEATURED 차단 |
 |---|---|---|---|
 | `needs_identity` | ● | ● | ● |
-| `needs_translation` | ● | — | ● |
+| `needs_translation` | ● | ● | ● |
 | `needs_arrival` | ● | ● | ● |
 | `needs_district` | ● | ● | — |
+| `needs_restaurant_branch` | ● | ● | ● |
 | `needs_content` | — | — | ● |
 | `needs_image` | — | — | ● |
+| `needs_arrival_verification` | — | — | — |
+| `needs_map_name_ko` | — | — | — |
 | `needs_hours` | — | — | — |
-| `needs_restaurant_branch` | ● | ● | ● |
 
 **공존 규칙** `approved` 상태에서도 **비차단 flag는 남을 수 있다**. 예: `review_status='approved'` + `review_flags={needs_image}` → `catalog_ready=true`, `scheduler_ready=true`, `featured_ready=false`. 데이터 부족 flag와 전체 검수 상태를 혼동하지 않는다. **GIN 인덱스는 만들지 않는다** — 1,500건 규모에서 불필요하며, 실제 필요성이 측정된 뒤 추가한다.
 
@@ -491,6 +522,8 @@ Naver Maps와 Google Maps를 **모두** 제공한다. Naver=한국 현지 장소
 
 **86행 backfill manifest · 일괄 승인 금지** — "기존에 공개하고 있었다"는 사실만으로 `approved`·`catalog_ready` 를 부여하지 않는다. 실측된 결함(깨진 이미지 79건 · 삭제 대상 3건 · 도착 좌표 일부 미검증 · 공식 identity 대부분 미확정 · 오래된 영업시간 · 잘못될 수 있는 지도 링크)을 그대로 승인하면 §7 readiness 규칙을 문서 스스로 위반한다.
 
+**v1.1 manifest 판정 금지 사항** ①`name_l10n.ko` NULL만으로 비공개 금지 — `needs_map_name_ko`(비차단)로 기록한다 ②`external_id` NULL만으로 `needs_identity` 부여 금지 ③좌표가 사용 가능한데 최적 진입점만 미검증이면 `needs_arrival` 이 아니라 `needs_arrival_verification` ④이미지 부족은 CATALOG 차단이 아니다 ⑤기존 공개 이력만으로 `approved` 부여 금지 ⑥**보고서의 예상 수치(공개 유지 83행 등)를 승인값으로 그대로 사용하지 않는다** — 행별 근거 manifest로 확정한다.
+
 M1 실행 **전에** 행별 manifest를 만든다.
 
 **M1 backfill manifest 필드** `city_spot_id` · `is_published` · `review_status` · `review_flags` · `catalog_ready` · `scheduler_ready` · `featured_ready` · `backfill_reason`
@@ -506,10 +539,18 @@ M1 실행 **전에** 행별 manifest를 만든다.
 | 최소 공개 계약 충족 | 공개 유지 (`approved`·`catalog_ready=true`·`is_published=true`) |
 | 이미지·콘텐츠만 부족(`needs_image`·`needs_content`) | **공개 유지 + 비차단 flag 기록**, `featured_ready=false` |
 | 차단 flag 보유(`needs_identity`·`needs_arrival`·`needs_translation`·`needs_district`·`needs_restaurant_branch`) | **수정 후 공개 또는 비공개 보류** (`in_review`) |
+| 비차단 flag만 보유(`needs_arrival_verification`·`needs_map_name_ko`·`needs_hours`) | **공개 유지**, `approved` 와 공존 가능 |
 | M5 삭제 대상 3행(`#4`·`#3`·`#49`) | backfill 제외, M5에서 처리 |
 | 일정 후보로 부적합 | `planned_schedulable=false` (M3에서 `schedulable` 로 적용) | **SQL만 먼저 적용하거나 코드만 먼저 배포하면 기존 장소가 전부 사라져 보이거나 미검수 데이터가 노출된다.** 같은 배포 창에서 처리한다.
 
 **M5 안전 조건** 삭제 대상 전체 행 스냅샷 · 참조 0건 재확인 · 선별 필드 survivor 이관 · 단일 트랜잭션 · 명시적 ID 포함 rollback · child source/image 0건 확인 · **identity sequence `setval` 검증**(`id`는 `GENERATED BY DEFAULT`, `max(id)=95`).
+
+**migration 수동 적용 운영 계약 · DECIDED** 실측상 `supabase/migrations` 파일 **31개**인데 `supabase_migrations.schema_migrations` 기록은 **4건(최신 `004`)** 이다(2026-07-28 확인). 이 프로젝트는 005~031을 `supabase db push` 가 아니라 검증된 SQL 수동 적용으로 운영해 왔으므로 **예상된 상태**이며, 검증된 SQL 수동 적용 자체의 차단 사유가 아니다.
+
+- **금지** `supabase db push` · migration history repair · history 기반 자동 적용
+- **허용** 사전 스키마 직접 조회 → 검증된 SQL 수동 적용
+- **적용 기록 필수 항목** migration 파일명 · 적용 대상 project · **사전 schema fingerprint** · 적용 명령 · 적용 시각 · 적용 결과 · **사후 schema fingerprint** · rollback SQL · QA 결과
+- migration 파일은 **코드 이력용**으로 보존하고, 실제 적용 여부는 **DB 구조로 검증**한다
 
 **공개 게이트 대상 8경로 (CONFIRMED, 현재 필터 0개)** `fetchCitySpots` · `fetchCitySpotsByCategory` · `/place/[id] fetchSpotIds` · `/place/[id] fetchSpot` · `functions/api/trip/plan.ts:139` · `:250` · `src/app/api/trip/plan/route.ts:94` · `near-me/candidate-generator.ts:52`.
 
@@ -609,6 +650,21 @@ M1 실행 **전에** 행별 manifest를 만든다.
 | 공개 이미지 `rights_status <> 'blocked'` | **허용목록 `IN ('rights_confirmed','operational_assumed')`** | `<> blocked` 는 `review_required` 까지 공개함 | 2026-07-28 |
 | `city_spot_images.image_status` 보유 | **제거** | 개별 이미지가 아니라 장소 단위 수집 상태 | 2026-07-28 |
 | B 분류 `SAFE_TO_MERGE_NOW` | **`SELECTIVE_MERGE_CANDIDATE`** | "충돌 없음"과 "병합 대상"은 다름 | 2026-07-28 |
+
+**v1.1 개정 (2026-07-28)** — 본 버전은 공식 SSOT v1.0 커밋 `297f6b4` 를 기반으로 개정했다. `last_verified_commit`·`last_verified_origin_commit` 은 **코드·DB 검증 기준점**이므로 `6e6f62f` 를 유지한다.
+
+| 이전 결정 | 새 결정 | 이유 | 변경일 |
+|---|---|---|---|
+| `name_l10n.ko` 부재 = `needs_translation` | **철회** — `needs_map_name_ko` 로 분리 | 영문 대표명이 있으면 발견·이해에 지장 없음. 한국어명은 지도 검색·현장 확인 품질 문제 | 2026-07-28 |
+| — | **`needs_map_name_ko` 신설**(비차단) | Naver 검색·택시·현장 안내용 한국어명 부족을 별도 queue 로 관리 | 2026-07-28 |
+| `external_id` 부재 = `needs_identity` | **철회** — provenance 문제로 분리 | 공식 source 연결 부재는 자동 갱신 상태이지 장소 동일성 문제가 아님 | 2026-07-28 |
+| `needs_arrival` = 도착점 관련 전반 | **unsafe/missing 으로 한정**(차단 유지) | 좌표가 없거나 틀리면 사용자를 엉뚱한 곳으로 보냄 — 사용자 신뢰 1순위 위반 | 2026-07-28 |
+| — | **`needs_arrival_verification` 신설**(비차단) | 좌표로 접근은 되고 최적 진입점만 미검증인 경우를 차단과 분리 | 2026-07-28 |
+| `needs_translation` CATALOG·FEATURED 차단, SCHEDULER 미차단 | **CATALOG·SCHEDULER·FEATURED 3종 차단** | 영문 대표명이 없으면 일정에 넣어도 사용자가 장소를 구분할 수 없음 | 2026-07-28 |
+| `review_flags` 8개 | **10개** | 위 2종 신설 | 2026-07-28 |
+| `document_version` 1.0 | **1.1** | review flag semantics 교정 | 2026-07-28 |
+
+**Security-0 · PROPOSED (미구현)** — `src/lib/city-spots.ts` 의 anon 기반 write 함수 2개(`upsertCitySpot`·`bulkUpsertCitySpots`)가 코드에 존재하나 **호출부 0건**이고 현재 RLS 정책 구성에서 **실행 불가**다(2026-07-28 확인). Security-0 에서 **삭제**할 예정이며, 대량 적재는 서버 전용 importer 가 담당한다. **브라우저 anon write 경로로 이관하지 않는다.** 아울러 `city_spots` 의 anon·authenticated 테이블/컬럼 write 권한 `REVOKE` 도 같은 단계에서 다룬다. **이 항목은 후속 결정이며 구현 완료가 아니다.**
 
 ---
 
