@@ -1,0 +1,234 @@
+{
+  "report_type": "enrichment_validation",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+  "branch": "data/busan-enrichment-v1",
+  "ssot_version": "1.1",
+  "run_start": "2026-07-28T08:51:58.446815Z",
+  "run_end": "2026-07-28T08:51:58.628127Z",
+  "duration_s": 0.2,
+  "total_candidates": 1642,
+  "duplicate_ids": 0,
+  "illegal_flags": 0,
+  "coverage": {
+    "english_name": 677,
+    "english_name_pct": 41.2,
+    "description": 687,
+    "description_pct": 41.8,
+    "district_resolved": 1331,
+    "district_resolved_pct": 81.1
+  },
+  "manual_review_required": 1401,
+  "confidence_distribution": {
+    "high": 677,
+    "medium": 965
+  },
+  "review_flag_distribution": {
+    "needs_arrival_verification": 1642,
+    "needs_hours": 1642,
+    "needs_translation": 965,
+    "needs_content": 955,
+    "needs_restaurant_branch": 721,
+    "needs_map_name_ko": 643,
+    "needs_district": 311,
+    "needs_image": 136
+  },
+  "by_category": {
+    "attraction": 717,
+    "event": 72,
+    "restaurant": 721,
+    "nature": 50,
+    "accommodation": 82
+  },
+  "by_source_type": {
+    "busan_official_api": 326,
+    "visitbusan_web": 673,
+    "kto_tourapi": 643
+  },
+  "by_image_status": {
+    "image_sufficient": 1506,
+    "source_exhausted": 134,
+    "image_partial": 2
+  },
+  "by_district_quality": {
+    "name_present": 687,
+    "digit_code": 644,
+    "missing": 311
+  },
+  "source_facts_total": 2008,
+  "validation_status": "PASS",
+  "validation_notes": [
+    "All candidate_ids unique (0 duplicates)",
+    "All review_flags within SSOT v1.1 allowed set (10 flags)",
+    "Representative sample gate PASSED (50 VB + 20 KTO)",
+    "KTO candidates correctly flagged: needs_translation, needs_content, needs_map_name_ko",
+    "VB candidates: English names derived via :en suffix key lookup",
+    "Digit district codes decoded via empirical mapping (codes 1-16)"
+  ],
+  "checkpoints": [
+    {
+      "index": 50,
+      "candidate_id": "busan-A-00050",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 100,
+      "candidate_id": "busan-A-00100",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 150,
+      "candidate_id": "busan-A-00151",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 200,
+      "candidate_id": "busan-A-00201",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 250,
+      "candidate_id": "busan-E-00040",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 300,
+      "candidate_id": "busan-F-00050",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 350,
+      "candidate_id": "busan-F-00100",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 400,
+      "candidate_id": "busan-F-00150",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 450,
+      "candidate_id": "busan-F-00200",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 500,
+      "candidate_id": "busan-F-00250",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 550,
+      "candidate_id": "busan-F-00300",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 600,
+      "candidate_id": "busan-F-00350",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 650,
+      "candidate_id": "busan-F-00400",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 700,
+      "candidate_id": "busan-K-00016",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 750,
+      "candidate_id": "busan-K-00075",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 800,
+      "candidate_id": "busan-K-00136",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 850,
+      "candidate_id": "busan-K-00202",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 900,
+      "candidate_id": "busan-K-00264",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 950,
+      "candidate_id": "busan-K-00319",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1000,
+      "candidate_id": "busan-K-00383",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1050,
+      "candidate_id": "busan-K-00448",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1100,
+      "candidate_id": "busan-K-00511",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1150,
+      "candidate_id": "busan-K-00568",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1200,
+      "candidate_id": "busan-K-00633",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1250,
+      "candidate_id": "busan-K-00691",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1300,
+      "candidate_id": "busan-K-00744",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1350,
+      "candidate_id": "busan-VB-139",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1400,
+      "candidate_id": "busan-VB-2013",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1450,
+      "candidate_id": "busan-VB-2200",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1500,
+      "candidate_id": "busan-VB-258",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1550,
+      "candidate_id": "busan-VB-313",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1600,
+      "candidate_id": "busan-VB-44",
+      "elapsed_s": 0.0
+    },
+    {
+      "index": 1642,
+      "candidate_id": "busan-VB-996",
+      "elapsed_s": 0.0
+    }
+  ]
+}

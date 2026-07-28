@@ -1,0 +1,65 @@
+{
+  "manifest_type": "enrichment_output_assets",
+  "version": "v1",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+  "branch": "data/busan-enrichment-v1",
+  "ssot_version": "1.1",
+  "created_at": "2026-07-28T08:51:58.628127Z",
+  "total_candidates": 1642,
+  "assets": [
+    {
+      "id": "enriched_candidates",
+      "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "description": "Schema-independent enriched candidate facts (1,642건)",
+      "sha256": "f1f39fded850ccb319d766faf2327ad9d591b5896c4e1b9d5233673834d93404",
+      "bytes": 4403950,
+      "row_count": 1642,
+      "format": "jsonl",
+      "classification": "enriched_candidates"
+    },
+    {
+      "id": "source_facts",
+      "path": "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl",
+      "description": "Source-level fact records (per source key per candidate)",
+      "sha256": "c009ccf47fe5f4e2b4a40c6359965089377b3e4c8d2f163bac698b02616eea9a",
+      "bytes": 1079815,
+      "row_count": 2008,
+      "format": "jsonl",
+      "classification": "source_facts"
+    },
+    {
+      "id": "manual_review",
+      "path": "data/tourapi/enriched/busan/busan-manual-review-v1.jsonl",
+      "description": "Manual review queue (1401건, blocking flags present)",
+      "sha256": "41df48119b546f8a1d066b018e9246ccc4418e4182d0ea143d10f312a004ff3e",
+      "bytes": 466314,
+      "row_count": 1401,
+      "format": "jsonl",
+      "classification": "manual_review_queue"
+    },
+    {
+      "id": "validation_report",
+      "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
+      "description": "Enrichment run validation report",
+      "sha256": "a0a789dd0017c0893264cbfa927c7ee39a0da28bf673606e67e7d695b35c029f",
+      "bytes": 5259,
+      "format": "json",
+      "classification": "validation_report"
+    },
+    {
+      "id": "run_manifest",
+      "path": "data/tourapi/manifests/busan-enrichment-v1-run-manifest.json",
+      "description": "Enrichment run manifest with input/output SHA256 and strategy",
+      "sha256": "a2edacfe7a074975fd825d7a42d3e77c902b874f8b04b6ae83b6567b1082d40f",
+      "bytes": 3447,
+      "format": "json",
+      "classification": "run_manifest"
+    }
+  ],
+  "coverage_summary": {
+    "english_name_pct": 41.2,
+    "description_pct": 41.8,
+    "district_resolved_pct": 81.1,
+    "manual_review_pct": 85.3
+  }
+}

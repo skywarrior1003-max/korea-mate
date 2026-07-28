@@ -1,0 +1,103 @@
+{
+  "manifest_type": "enrichment_run",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+  "branch": "data/busan-enrichment-v1",
+  "base_commit": "64a330555ff53b5ec7d9e1d1f9ad38f0f99b6f34",
+  "ssot_version": "1.1",
+  "ssot_ref": "origin/master",
+  "ssot_commit": "369d4cc",
+  "run_start": "2026-07-28T08:51:58.446815Z",
+  "run_end": "2026-07-28T08:51:58.628127Z",
+  "duration_s": 0.2,
+  "total_candidates": 1642,
+  "checkpoint_count": 33,
+  "input_assets": [
+    {
+      "id": "linkage_index",
+      "ref": "origin/integration/busan-linkage-index-20260727",
+      "commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+      "path": "data/tourapi/reports/busan/busan-linkage-index-21r.csv",
+      "sha256": "118f3b89fc8c8dca7838eb37fd43239ae5753e1bd3d17a2ee4a413ad0d95695f",
+      "bytes": 753150,
+      "row_count": 1642
+    },
+    {
+      "id": "batch_normalized",
+      "ref": "origin/research/tourapi-nightly-20260722",
+      "commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "path": "data/tourapi/normalized/busan/busan-batch-normalized.json",
+      "sha256": "b7d9e2dc9dff0bf2fa72a7ecff5d7dd923ac0e27c962e2ddbae9417e98f6aa68",
+      "bytes": 5814602,
+      "row_count": 4135
+    },
+    {
+      "id": "curated_images_21q",
+      "ref": "origin/research/tourapi-nightly-20260722",
+      "commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "path": "data/tourapi/reports/busan/busan-curated-images-21q.jsonl",
+      "sha256": "12d0d8c4be21262112b9d437954a8334e0a6c7fdca1b0f04bd7b3d76d4912d48",
+      "bytes": 646460,
+      "row_count": 1642
+    }
+  ],
+  "output_assets": [
+    {
+      "id": "enriched_candidates",
+      "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "sha256": "f1f39fded850ccb319d766faf2327ad9d591b5896c4e1b9d5233673834d93404",
+      "bytes": 4403950,
+      "row_count": 1642
+    },
+    {
+      "id": "source_facts",
+      "path": "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl",
+      "sha256": "c009ccf47fe5f4e2b4a40c6359965089377b3e4c8d2f163bac698b02616eea9a",
+      "bytes": 1079815,
+      "row_count": 2008
+    },
+    {
+      "id": "manual_review",
+      "path": "data/tourapi/enriched/busan/busan-manual-review-v1.jsonl",
+      "sha256": "41df48119b546f8a1d066b018e9246ccc4418e4182d0ea143d10f312a004ff3e",
+      "bytes": 466314,
+      "row_count": 1401
+    },
+    {
+      "id": "validation_report",
+      "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
+      "sha256": "a0a789dd0017c0893264cbfa927c7ee39a0da28bf673606e67e7d695b35c029f",
+      "bytes": 5259
+    },
+    {
+      "id": "asset_manifest",
+      "path": "data/tourapi/manifests/busan-enrichment-v1-asset-manifest.json",
+      "sha256": "1fe77b5b25dcde540a288887abe6192ae0aac4f74b24e86cd4d57ed8e2d0757d",
+      "bytes": 2430
+    }
+  ],
+  "district_mapping_used": {
+    "method": "empirical_from_kto_english_addresses",
+    "codes": {
+      "1": "강서구",
+      "2": "금정구",
+      "3": "기장군",
+      "4": "남구",
+      "5": "동구",
+      "6": "동래구",
+      "7": "부산진구",
+      "8": "북구",
+      "9": "사상구",
+      "10": "사하구",
+      "11": "서구",
+      "12": "수영구",
+      "13": "연제구",
+      "14": "영도구",
+      "15": "중구",
+      "16": "해운대구"
+    }
+  },
+  "english_name_strategy": {
+    "vb_candidates": "Derive English source_key by replacing :ko with :en in AttractionService/FoodService key",
+    "kto_candidates": "No English equivalent (EngService2 IDs do not overlap with KorService2 IDs); flag as needs_translation"
+  }
+}
