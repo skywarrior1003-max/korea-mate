@@ -1,234 +1,200 @@
 {
-  "report_type": "enrichment_validation",
-  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+  "report_type": "enrichment_qa02_validation",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
   "branch": "data/busan-enrichment-v1",
+  "base_result_commit": "84f1531",
   "ssot_version": "1.1",
-  "run_start": "2026-07-28T08:51:58.446815Z",
-  "run_end": "2026-07-28T08:51:58.628127Z",
-  "duration_s": 0.2,
+  "run_ts": "2026-07-28T09:33:33.464655Z",
   "total_candidates": 1642,
-  "duplicate_ids": 0,
-  "illegal_flags": 0,
+  "corrections_applied": {
+    "hours_from_ic": {
+      "applied": 571,
+      "source": "integrated_candidates.hours"
+    },
+    "restaurant_branch_cleared": 654,
+    "kto_en_linked": 43
+  },
   "coverage": {
-    "english_name": 677,
-    "english_name_pct": 41.2,
-    "description": 687,
-    "description_pct": 41.8,
-    "district_resolved": 1331,
-    "district_resolved_pct": 81.1
+    "english_name_before": 677,
+    "english_name_after": 720,
+    "description_before": 687,
+    "description_after": 687,
+    "district_before": 1331,
+    "district_after": 1331
   },
-  "manual_review_required": 1401,
-  "confidence_distribution": {
-    "high": 677,
-    "medium": 965
-  },
-  "review_flag_distribution": {
-    "needs_arrival_verification": 1642,
+  "review_flags_before": {
     "needs_hours": 1642,
+    "needs_restaurant_branch": 721,
     "needs_translation": 965,
     "needs_content": 955,
-    "needs_restaurant_branch": 721,
+    "needs_arrival_verification": 1642,
     "needs_map_name_ko": 643,
     "needs_district": 311,
     "needs_image": 136
   },
-  "by_category": {
-    "attraction": 717,
-    "event": 72,
-    "restaurant": 721,
-    "nature": 50,
-    "accommodation": 82
+  "review_flags_after": {
+    "needs_arrival_verification": 1642,
+    "needs_hours": 1071,
+    "needs_translation": 922,
+    "needs_restaurant_branch": 67,
+    "needs_image": 136,
+    "needs_content": 955,
+    "needs_map_name_ko": 643,
+    "needs_district": 311
   },
-  "by_source_type": {
-    "busan_official_api": 326,
-    "visitbusan_web": 673,
-    "kto_tourapi": 643
+  "translation_unresolved_reasons": {
+    "en_source_key_not_in_batch": 11,
+    "kto_no_bijective_en_link": 600,
+    "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311
   },
-  "by_image_status": {
-    "image_sufficient": 1506,
-    "source_exhausted": 134,
-    "image_partial": 2
+  "content_unresolved_reasons": {
+    "kto_description_null": 643,
+    "description_not_in_normalized_source": 1,
+    "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311
   },
-  "by_district_quality": {
-    "name_present": 687,
-    "digit_code": 644,
-    "missing": 311
+  "visitbusan_content_only_311": {
+    "status": "CURRENT_CANONICAL_INPUT_UNAVAILABLE",
+    "note": "VisitBusanContent has 0 records in batch_normalized; official data not absent but not in current selected canonical input"
   },
-  "source_facts_total": 2008,
-  "validation_status": "PASS",
-  "validation_notes": [
-    "All candidate_ids unique (0 duplicates)",
-    "All review_flags within SSOT v1.1 allowed set (10 flags)",
-    "Representative sample gate PASSED (50 VB + 20 KTO)",
-    "KTO candidates correctly flagged: needs_translation, needs_content, needs_map_name_ko",
-    "VB candidates: English names derived via :en suffix key lookup",
-    "Digit district codes decoded via empirical mapping (codes 1-16)"
-  ],
-  "checkpoints": [
-    {
-      "index": 50,
-      "candidate_id": "busan-A-00050",
-      "elapsed_s": 0.0
+  "source_reconciliation": {
+    "canonical_source_keys": 2004,
+    "visitbusan_content_keys_not_in_batch": 673,
+    "resolving_ko_source_keys": 1331,
+    "en_derivation_additions": 677,
+    "kto_en_link_injections": 43,
+    "total_source_facts": 2008,
+    "formula": "1331 KO + 677 EN = 2008",
+    "reconciliation_pass": true
+  },
+  "district_mapping_evidence": {
+    "1": {
+      "numeric_code": "1",
+      "district_ko": "강서구",
+      "ko_source_count": 46,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 100,
-      "candidate_id": "busan-A-00100",
-      "elapsed_s": 0.0
+    "2": {
+      "numeric_code": "2",
+      "district_ko": "금정구",
+      "ko_source_count": 44,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 150,
-      "candidate_id": "busan-A-00151",
-      "elapsed_s": 0.0
+    "3": {
+      "numeric_code": "3",
+      "district_ko": "기장군",
+      "ko_source_count": 126,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 200,
-      "candidate_id": "busan-A-00201",
-      "elapsed_s": 0.0
+    "4": {
+      "numeric_code": "4",
+      "district_ko": "남구",
+      "ko_source_count": 29,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 250,
-      "candidate_id": "busan-E-00040",
-      "elapsed_s": 0.0
+    "5": {
+      "numeric_code": "5",
+      "district_ko": "동구",
+      "ko_source_count": 43,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 300,
-      "candidate_id": "busan-F-00050",
-      "elapsed_s": 0.0
+    "6": {
+      "numeric_code": "6",
+      "district_ko": "동래구",
+      "ko_source_count": 37,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 350,
-      "candidate_id": "busan-F-00100",
-      "elapsed_s": 0.0
+    "7": {
+      "numeric_code": "7",
+      "district_ko": "부산진구",
+      "ko_source_count": 47,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 400,
-      "candidate_id": "busan-F-00150",
-      "elapsed_s": 0.0
+    "8": {
+      "numeric_code": "8",
+      "district_ko": "북구",
+      "ko_source_count": 15,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 450,
-      "candidate_id": "busan-F-00200",
-      "elapsed_s": 0.0
+    "9": {
+      "numeric_code": "9",
+      "district_ko": "사상구",
+      "ko_source_count": 26,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 500,
-      "candidate_id": "busan-F-00250",
-      "elapsed_s": 0.0
+    "10": {
+      "numeric_code": "10",
+      "district_ko": "사하구",
+      "ko_source_count": 28,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 550,
-      "candidate_id": "busan-F-00300",
-      "elapsed_s": 0.0
+    "11": {
+      "numeric_code": "11",
+      "district_ko": "서구",
+      "ko_source_count": 25,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 600,
-      "candidate_id": "busan-F-00350",
-      "elapsed_s": 0.0
+    "12": {
+      "numeric_code": "12",
+      "district_ko": "수영구",
+      "ko_source_count": 54,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 650,
-      "candidate_id": "busan-F-00400",
-      "elapsed_s": 0.0
+    "13": {
+      "numeric_code": "13",
+      "district_ko": "연제구",
+      "ko_source_count": 13,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 700,
-      "candidate_id": "busan-K-00016",
-      "elapsed_s": 0.0
+    "14": {
+      "numeric_code": "14",
+      "district_ko": "영도구",
+      "ko_source_count": 40,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 750,
-      "candidate_id": "busan-K-00075",
-      "elapsed_s": 0.0
+    "15": {
+      "numeric_code": "15",
+      "district_ko": "중구",
+      "ko_source_count": 52,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     },
-    {
-      "index": 800,
-      "candidate_id": "busan-K-00136",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 850,
-      "candidate_id": "busan-K-00202",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 900,
-      "candidate_id": "busan-K-00264",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 950,
-      "candidate_id": "busan-K-00319",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1000,
-      "candidate_id": "busan-K-00383",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1050,
-      "candidate_id": "busan-K-00448",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1100,
-      "candidate_id": "busan-K-00511",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1150,
-      "candidate_id": "busan-K-00568",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1200,
-      "candidate_id": "busan-K-00633",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1250,
-      "candidate_id": "busan-K-00691",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1300,
-      "candidate_id": "busan-K-00744",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1350,
-      "candidate_id": "busan-VB-139",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1400,
-      "candidate_id": "busan-VB-2013",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1450,
-      "candidate_id": "busan-VB-2200",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1500,
-      "candidate_id": "busan-VB-258",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1550,
-      "candidate_id": "busan-VB-313",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1600,
-      "candidate_id": "busan-VB-44",
-      "elapsed_s": 0.0
-    },
-    {
-      "index": 1642,
-      "candidate_id": "busan-VB-996",
-      "elapsed_s": 0.0
+    "16": {
+      "numeric_code": "16",
+      "district_ko": "해운대구",
+      "ko_source_count": 143,
+      "method": "KTO_KorService2_district_field",
+      "note": "digit code in KorService2.district field; mapping derived from KTO EngService2 address -gu/-gun extraction"
     }
-  ]
+  },
+  "kto_en_link_algorithm": {
+    "method": "coordinate_distance_le_20m_bijective_1to1",
+    "title_filter": "Korean char Jaccard >= 0.3 OR exact match in EN parenthetical",
+    "bijective_candidates": 52,
+    "approved": 43,
+    "rejected": 9
+  },
+  "validation_checks": {
+    "total_1642": true,
+    "no_duplicates": true,
+    "illegal_flags": true,
+    "source_reconcile": true,
+    "hours_no_inconsistency": true,
+    "branch_no_inconsistency": true,
+    "kto_en_no_inconsistency": true
+  },
+  "validation_status": "PASS"
 }

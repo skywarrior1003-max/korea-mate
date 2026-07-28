@@ -99,5 +99,24 @@
   "english_name_strategy": {
     "vb_candidates": "Derive English source_key by replacing :ko with :en in AttractionService/FoodService key",
     "kto_candidates": "No English equivalent (EngService2 IDs do not overlap with KorService2 IDs); flag as needs_translation"
+  },
+  "qa02_run": {
+    "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
+    "run_ts": "2026-07-28T09:33:33.464655Z",
+    "corrections": {
+      "hours_from_ic": {
+        "applied": 571,
+        "source": "integrated_candidates.hours"
+      },
+      "restaurant_branch_cleared": 654,
+      "kto_en_linked": 43
+    },
+    "output_sha256": {
+      "enriched": "63174347a24e59e758daa07da51d122c781ad8ce380d14d4f262f4626deb8df0",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+      "manual_review": "4bdc20a36603f5f915998b1d61c0ef28530d63243ba7c8a57cf3f2308f4c0b6a",
+      "validation": "9accc9b553fb42656d784e9876928120c96dee9960832471bf35c6215637e73b",
+      "asset_manifest": "e11557659ae003ce3df87f4783bf39694fa54b128cdde463413808584bb4fed9"
+    }
   }
 }
