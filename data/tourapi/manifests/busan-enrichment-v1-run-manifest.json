@@ -219,5 +219,33 @@
       "enriched_modified": false,
       "verdict": "PASS"
     }
+  },
+  "kto_detail_full_preflight": {
+    "run_ts": "2026-07-29T07:40:00Z",
+    "task": "TASK-BUSAN-KTO-DETAIL-FULL-PREFLIGHT",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "summary": {
+      "kto_candidates_total": 644,
+      "detailIntro2_target": 557,
+      "detailCommon2_target": 644,
+      "detailImage2_target": 94,
+      "pilot_reuse_total": 20,
+      "new_calls_total": 1275,
+      "original_estimate_1929_corrected_to": 1275,
+      "call_limit_status": "CALL_LIMIT_UNVERIFIED",
+      "dry_run_executed": true,
+      "dry_run_bug_fixed": true,
+      "collector_missing_features": 6,
+      "type28_full_reclassification_required": true,
+      "full_run_blocked": true,
+      "verdict": "PARTIAL_PASS"
+    },
+    "output_assets": [
+      "data/tourapi/reports/busan/kto-detail-preflight-report.json",
+      "data/tourapi/reports/busan/kto-detail-preflight-manifest.json"
+    ]
   }
 }

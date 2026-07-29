@@ -416,7 +416,11 @@ for (const [ct, m] of Object.entries(fieldMatrix)) {
   };
 }
 
-fs.writeFileSync(MATRIX_OUT, JSON.stringify(fieldMatrixOut, null, 2), 'utf8');
+if (DRY_RUN) {
+  console.log(`[dry-run] would write field_matrix: ${MATRIX_OUT}`);
+} else {
+  fs.writeFileSync(MATRIX_OUT, JSON.stringify(fieldMatrixOut, null, 2), 'utf8');
+}
 
 // ── 요약 집계 ─────────────────────────────────────────────────────────────────
 const intro_ok   = results.detailIntro2.filter(r => r.api_ok).length;
@@ -512,7 +516,11 @@ const report = {
   },
 };
 
-fs.writeFileSync(REPORT_OUT, JSON.stringify(report, null, 2), 'utf8');
+if (DRY_RUN) {
+  console.log(`[dry-run] would write report: ${REPORT_OUT}`);
+} else {
+  fs.writeFileSync(REPORT_OUT, JSON.stringify(report, null, 2), 'utf8');
+}
 
 // 파일럿 매니페스트
 const manifest = {
@@ -527,12 +535,17 @@ const manifest = {
   detailImage2_sample: IMAGE_SAMPLE.map(s => s.candidate_id),
   total_calls: totalCalls,
   verdict,
-  output_sha: {
+  output_sha: DRY_RUN ? { report: null, field_matrix: null } : {
     report: sha256File(REPORT_OUT),
     field_matrix: sha256File(MATRIX_OUT),
   },
 };
-fs.writeFileSync(MANIFEST_OUT, JSON.stringify(manifest, null, 2), 'utf8');
+if (DRY_RUN) {
+  console.log(`[dry-run] would write manifest: ${MANIFEST_OUT}`);
+  console.log(`[dry-run] expected total calls: ${totalCalls}`);
+} else {
+  fs.writeFileSync(MANIFEST_OUT, JSON.stringify(manifest, null, 2), 'utf8');
+}
 
 // ── 콘솔 최종 요약 ─────────────────────────────────────────────────────────────
 console.log('\n=== PILOT 결과 요약 ===');
