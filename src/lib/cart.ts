@@ -63,7 +63,9 @@ export interface EventItem {
   barrierFree: boolean;
   koreanSurvivalScore: number;
   notice: string | null;
-  commerce: CommerceInfo;
+  // optional — 장소 상세에서 담은 항목은 상업 키 자체를 갖지 않는다
+  // (place-detail-core.toItineraryEvent). 소비처는 optional chaining 을 쓴다.
+  commerce?: CommerceInfo;
   lat?: number;
   lng?: number;
   hidden?: boolean;

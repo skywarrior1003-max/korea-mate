@@ -216,24 +216,24 @@ export default function TimelineView({
                 )}
 
                 {/* ── 제휴 링크 CTA ── */}
-                {item.commerce.hasAffiliate &&
-                  item.commerce.affiliateUrl &&
-                  item.commerce.affiliatePartner && (
+                {item.commerce?.hasAffiliate &&
+                  item.commerce?.affiliateUrl &&
+                  item.commerce?.affiliatePartner && (
                     <a
-                      href={item.commerce.affiliateUrl}
+                      href={item.commerce?.affiliateUrl}
                       target="_blank"
                       rel="noopener noreferrer sponsored"
                       className="inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded-xl text-xs font-bold text-white transition-opacity hover:opacity-90"
                       style={{ backgroundColor: "#FF4A2D" }}
                     >
-                      🤝 Book via {item.commerce.affiliatePartner} →
+                      🤝 Book via {item.commerce?.affiliatePartner} →
                     </a>
                   )}
 
                 {/* 티켓 링크 (별도 존재 시) */}
-                {item.commerce.hasTicketing && item.commerce.bookingUrl && (
+                {item.commerce?.hasTicketing && item.commerce?.bookingUrl && (
                   <a
-                    href={item.commerce.bookingUrl}
+                    href={item.commerce?.bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 self-start mt-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors"

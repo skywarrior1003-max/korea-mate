@@ -27,10 +27,12 @@ import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
 import {
   resolvePlaceText,
-  resolveOneLiner,
+  resolvePublicPlaceSummary,
+  resolveDisplayImage,
   resolveProvenance,
   resolveMapLinks,
   toItineraryEvent,
+  stripCommercialKeys,
   placeEventId,
   buildShareContent,
   PROVENANCE_MESSAGE_KEY,
@@ -75,11 +77,12 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   const eventId = placeEventId(spot.id);
   const text      = resolvePlaceText(spot, locale);
-  const oneLiner  = resolveOneLiner(text);
+  const oneLiner  = resolvePublicPlaceSummary(text); // 내부 운영 메모 차단
   const maps      = resolveMapLinks(spot, text.name);
   const provKind  = resolveProvenance(spot);
   const catLabel  = [cap(spot.category), spot.subcategory].filter(Boolean).join(" · ");
-  const showImage = Boolean(spot.image_url) && !imgFailed;
+  const safeImage = resolveDisplayImage(spot.image_url); // 죽은 호스트는 시도조차 하지 않는다
+  const showImage = Boolean(safeImage) && !imgFailed;
 
   useEffect(() => {
     setSaved(getFavorites().includes(eventId));
@@ -102,7 +105,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     const already = isInCart(eventId);
     if (!already) {
       // 비상업 어댑터 — 상업 문맥을 Cart 로 넘기지 않는다
-      addToCart(toItineraryEvent(spot, text));
+      addToCart(stripCommercialKeys(toItineraryEvent(spot, text)));
     }
     setInCart(true);
     setAdded(true);
@@ -116,7 +119,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   function handleSave() {
     const nowSaved = toggleFavorite(eventId);
     if (nowSaved) {
-      cacheSavedSpot(toItineraryEvent(spot, text));
+      cacheSavedSpot(stripCommercialKeys(toItineraryEvent(spot, text)));
       setSavedT(true);
       setTimeout(() => setSavedT(false), 4000);
     } else {
@@ -241,7 +244,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
               {showImage ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  src={spot.image_url!}
+                  src={safeImage!}
                   alt={text.name ?? spot.name}
                   className="w-full h-full object-cover"
                   onError={() => setImgFail(true)}

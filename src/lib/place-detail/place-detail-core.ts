@@ -42,11 +42,36 @@ const PLACE_VIEW_KEYS = [
   "official_url", "entry_fee",
 ] as const satisfies readonly (keyof PlaceView)[];
 
-/** 허용 목록 기반 projection — 컬럼이 추가돼도 자동으로 새 나가지 않는다 */
+/** l10n 객체에서 내부 메모인 값만 제거한다 (다른 locale 값은 보존) */
+function sanitizeL10n(v: unknown): unknown {
+  if (!v || typeof v !== "object" || Array.isArray(v)) return v;
+  const out: Record<string, unknown> = {};
+  for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
+    if (typeof val === "string" && isInternalMemo(val)) continue;
+    out[k] = val;
+  }
+  return Object.keys(out).length > 0 ? out : null;
+}
+
+/**
+ * 허용 목록 기반 projection — 컬럼이 추가돼도 자동으로 새 나가지 않는다.
+ *
+ * 추가로 내부 운영 메모를 **전달 단계에서 제거**한다. 화면에서 가리는 것만으로는
+ * 부족하다 — 원본 값이 props 로 넘어가면 정적 HTML 의 RSC 페이로드에 그대로
+ * 직렬화돼 기계가 읽을 수 있다. affiliate 컬럼을 뺀 것과 같은 이유다.
+ */
 export function toPlaceView(row: CitySpotRow): PlaceView {
   const src = row as unknown as Record<string, unknown>;
   const out: Record<string, unknown> = {};
   for (const k of PLACE_VIEW_KEYS) out[k] = src[k];
+
+  for (const k of ["why_it_matters", "description"]) {
+    if (typeof out[k] === "string" && isInternalMemo(out[k] as string)) out[k] = null;
+  }
+  for (const k of ["why_l10n", "desc_l10n"]) {
+    out[k] = sanitizeL10n(out[k]);
+  }
+
   return out as unknown as PlaceView;
 }
 
@@ -96,6 +121,9 @@ export function resolvePlaceText(spot: PlaceView, locale: string): LocalizedPlac
 /**
  * 한 줄 소개. why_it_matters 가 있으면 그것을, 없으면 설명의 첫 문장을 쓴다.
  * 둘 다 없으면 null — 호출부는 블록 자체를 렌더하지 않는다 (빈 셸 금지).
+ *
+ * 주의: 이 함수는 내부 메모를 거르지 않는다. 공개 화면·metadata 에는 반드시
+ * resolvePublicPlaceSummary 를 쓴다.
  */
 export function resolveOneLiner(text: LocalizedPlaceText): string | null {
   if (hasText(text.whyItMatters)) return text.whyItMatters;
@@ -104,6 +132,102 @@ export function resolveOneLiner(text: LocalizedPlaceText): string | null {
     return hasText(first) ? first : text.description;
   }
   return null;
+}
+
+// ── 1-B. 내부 운영 메모 차단 ─────────────────────────────────────────────────
+//
+// 실측(2026-07-29): city_spots.why_it_matters 19/86 행이 사용자 문구가 아니라
+// 내부 사업 메모다. 예) "High value nightlife and accommodation zone for
+// affiliate traffic". 이 필드는 화면 한 줄 소개이자 meta/OG/Twitter description
+// 이므로 구글 검색 스니펫과 SNS 미리보기에 그대로 실린다.
+//
+// Product Constitution §16 — 제품 신뢰보다 단기 수익을 우선하지 않는다.
+// DB 정정 전까지 렌더링 계층에서 막는다. 장소 ID 를 하드코딩하지 않는다.
+//
+// 오탐 주의: "paid" 단독으로는 막지 않는다. 유료 관광지의 정상적인 설명까지
+// 걸러내기 때문이다. 내부 수익·판매 최적화 의도가 직접 드러나는 표현만 잡는다.
+
+const INTERNAL_MEMO_PATTERNS: readonly RegExp[] = [
+  /\baffiliate\b/i,
+  /\bconversion\b/i,
+  /\bfunnel(s)?\b/i,
+  /\bmonetiz(e|ation|ing)\b/i,
+  /\bupsell\b/i,
+  /\bcommercial\s+(base|anchor|stop|value)\b/i,
+  /\bhigh[-\s]value\b/i,
+  /\brevenue\b/i,
+  /\bARPU\b/,
+  /\bCTR\b/,
+  /\bpaid\s+(product|attraction\s+product)s?\b/i,
+];
+
+/** 사용자에게 보여선 안 되는 내부 운영·수익화 메모인가 */
+export function isInternalMemo(s: string | null | undefined): boolean {
+  if (!hasText(s)) return false;
+  return INTERNAL_MEMO_PATTERNS.some(re => re.test(s));
+}
+
+/**
+ * 공개 화면과 metadata 가 **함께** 쓰는 소개 문구.
+ *
+ * 순서
+ *   1. why_it_matters 가 안전하면 사용
+ *   2. 내부 메모면 사용 금지 → description 첫 문장으로 fallback
+ *   3. description 도 안전하지 않거나 없으면 null → 블록·description 생략
+ *
+ * 새로운 사실을 지어내지 않는다.
+ */
+export function resolvePublicPlaceSummary(text: LocalizedPlaceText): string | null {
+  if (hasText(text.whyItMatters) && !isInternalMemo(text.whyItMatters)) {
+    return text.whyItMatters;
+  }
+  if (hasText(text.description) && !isInternalMemo(text.description)) {
+    const first = text.description.split(/(?<=\.)\s/)[0];
+    return hasText(first) ? first : text.description;
+  }
+  return null;
+}
+
+// ── 1-C. metadata 이미지 ─────────────────────────────────────────────────────
+//
+// <img onError> fallback 은 브라우저에서만 동작한다. OG·Twitter·JSON-LD 를 읽는
+// 크롤러에는 적용되지 않으므로, 죽은 URL 을 metadata 에 넣으면 공유 썸네일이
+// 계속 깨진다.
+//
+// 실측(2026-07-29): image_url 86건 중 source.unsplash.com 79건이 HTTP 503,
+// images.unsplash.com 7건이 200. 죽은 호스트는 metadata 에서 제외하고, 우리가
+// 직접 생성해 권리가 확실한 도시·브랜드 OG 이미지로 떨어뜨린다.
+//
+// DB image_url 은 이 파일에서 수정하지 않는다. 새 외부 이미지를 가져오지 않는다.
+
+/** 실측으로 죽은 것이 확인된 호스트 */
+const DEAD_IMAGE_HOSTS: readonly string[] = ["source.unsplash.com"];
+
+/** 자체 생성 OG 이미지가 있는 도시 (src/app/og/<city>/opengraph-image) */
+const CITY_OG_ROUTES: readonly string[] = ["busan", "seoul", "jeju", "gyeongju"];
+
+function imageHost(url: string): string | null {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return null; }
+}
+
+/** 화면 <img> 에 시도해도 되는 URL 인가 — 죽은 호스트는 애초에 시도하지 않는다 */
+export function resolveDisplayImage(imageUrl: string | null): string | null {
+  if (!hasText(imageUrl)) return null;
+  const host = imageHost(imageUrl);
+  if (!host || DEAD_IMAGE_HOSTS.includes(host)) return null;
+  return imageUrl;
+}
+
+/**
+ * OG · Twitter · JSON-LD 가 **함께** 쓰는 절대 URL 이미지.
+ * 죽은 호스트면 우리가 만든 도시 OG → 사이트 OG 순으로 떨어진다.
+ */
+export function resolvePublicMetadataImage(city: string, imageUrl: string | null): string {
+  const safe = resolveDisplayImage(imageUrl);
+  if (safe && safe.startsWith("https://")) return safe;
+  const key = (city ?? "").toLowerCase().trim();
+  if (CITY_OG_ROUTES.includes(key)) return `${SITE_ORIGIN}/og/${key}/opengraph-image`;
+  return `${SITE_ORIGIN}/opengraph-image`;
 }
 
 // ── 2. provenance 분류 ───────────────────────────────────────────────────────
@@ -230,28 +354,57 @@ export function toItineraryEvent(spot: PlaceView, text?: LocalizedPlaceText): Ev
     lat:                         spot.lat ?? undefined,
     lng:                         spot.lng ?? undefined,
     // ── 상업 문맥 차단 지점 ──
-    // 여기에 affiliate_url·affiliate_provider·booking_url 을 넣지 않는다.
-    // 넣으면 Cart → cartHints → plan API 로 상업 문맥이 흘러간다.
-    commerce: {
-      affiliateType:    null,
-      hasAffiliate:     false,
-      affiliatePartner: null,
-      affiliateUrl:     null,
-      hasMerchandise:   false,
-      hasTicketing:     false,
-      bookingUrl:       null,
-    },
+    // commerce 키 자체를 만들지 않는다. null 로 채우면 JSON 직렬화 결과와
+    // localStorage 에 affiliateUrl·bookingUrl 같은 키 이름이 그대로 남는다.
+    // 키가 없어야 Cart → cartHints → plan API 경로에 상업 문맥이 실릴 수 없다.
   };
+}
+
+/** 일정·저장 객체에 존재해선 안 되는 키 (재귀 검사용) */
+export const FORBIDDEN_COMMERCE_KEYS: readonly string[] = [
+  "commerce", "affiliate_url", "affiliateUrl", "affiliate_provider", "affiliatePartner",
+  "affiliateType", "booking_url", "bookingUrl", "hasAffiliate", "hasTicketing",
+  "hasMerchandise", "offer_id", "offerId", "commission", "commercial_priority",
+  "commercialPriority",
+];
+
+/** 객체 트리 어디에도 상업 키가 없는지 검사 — 테스트와 저장 직전 가드가 함께 쓴다 */
+export function findCommercialKeys(value: unknown, seen = new Set<unknown>()): string[] {
+  if (value === null || typeof value !== "object") return [];
+  if (seen.has(value)) return [];
+  seen.add(value);
+  const found: string[] = [];
+  if (Array.isArray(value)) {
+    for (const v of value) found.push(...findCommercialKeys(v, seen));
+    return found;
+  }
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    if (FORBIDDEN_COMMERCE_KEYS.includes(k)) found.push(k);
+    found.push(...findCommercialKeys(v, seen));
+  }
+  return [...new Set(found)];
+}
+
+/**
+ * 저장 직전 allowlist projection.
+ * 다른 화면에서 만들어진 항목(explore·Saved 등)이 상업 키를 갖고 들어와도
+ * 상세페이지 경로로 저장될 때는 제거된다. 기존 Cart 항목을 일괄 migration 하지는
+ * 않는다 — 그건 별도 판단이 필요하다.
+ */
+export function stripCommercialKeys<T>(obj: T): T {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) return obj.map(v => stripCommercialKeys(v)) as unknown as T;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(obj as Record<string, unknown>)) {
+    if (FORBIDDEN_COMMERCE_KEYS.includes(k)) continue;
+    out[k] = stripCommercialKeys(v);
+  }
+  return out as T;
 }
 
 /** 일정 입력 객체에 상업 문맥이 남아 있지 않은지 검사 (테스트·런타임 가드용) */
 export function hasCommercialContext(event: EventItem): boolean {
-  const c = event.commerce;
-  if (!c) return false;
-  return Boolean(
-    c.affiliateUrl || c.affiliatePartner || c.affiliateType || c.bookingUrl ||
-    c.hasAffiliate || c.hasTicketing || c.hasMerchandise,
-  );
+  return findCommercialKeys(event).length > 0;
 }
 
 // ── 5. 구조화 데이터 ─────────────────────────────────────────────────────────
@@ -289,8 +442,12 @@ export function buildPlaceJsonLd(
     url:        placeUrl(spot.id),
   };
 
-  if (hasText(text.description)) ld.description = text.description;
-  if (hasText(spot.image_url))   ld.image       = spot.image_url;
+  // 화면·metadata 와 같은 공개 요약을 쓴다 (내부 메모 차단)
+  const summary = resolvePublicPlaceSummary(text);
+  if (hasText(summary)) ld.description = summary;
+
+  // 죽은 원격 URL 을 구조화 데이터에 넣지 않는다
+  ld.image = resolvePublicMetadataImage(spot.city, spot.image_url);
 
   // 주소는 있는 값만. 국가는 city_spots 가 한국 장소만 담으므로 확정 사실이다.
   if (hasText(spot.address) || hasText(spot.district)) {

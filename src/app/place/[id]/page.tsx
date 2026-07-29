@@ -16,6 +16,8 @@ import {
   buildBreadcrumbJsonLd,
   placeUrl,
   toPlaceView,
+  resolvePublicPlaceSummary,
+  resolvePublicMetadataImage,
 } from "@/lib/place-detail/place-detail-core";
 
 export const dynamicParams = false; // 정적 export — 빌드된 id 외에는 404
@@ -36,10 +38,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // 정적 페이지는 빌드 시 locale 을 알 수 없다. metadata 는 기본값(영어)을 쓰고,
   // 화면 본문은 클라이언트에서 활성 locale 로 다시 해석한다.
-  const text = resolvePlaceText(toPlaceView(spot), "en");
-  const desc = (text.whyItMatters ?? text.description ?? `${spot.name} in ${spot.city}`).slice(0, 155);
+  const view = toPlaceView(spot);
+  const text = resolvePlaceText(view, "en");
+
+  // 화면과 **같은** resolver 를 쓴다. 서로 다른 필터를 쓰면 화면에서 가린 내부
+  // 메모가 검색 스니펫에는 그대로 남는다.
+  const summary = resolvePublicPlaceSummary(text);
+  const desc = (summary ?? `${spot.name} in ${spot.city}`).slice(0, 155);
+
   const url = placeUrl(id);
-  const images = spot.image_url ? [{ url: spot.image_url }] : undefined;
+  // 크롤러에는 onError fallback 이 없다 — 죽은 URL 을 넣지 않는다.
+  const image = resolvePublicMetadataImage(spot.city, spot.image_url);
 
   return {
     title: `${spot.name} — ${spot.city} | gokoreamate`,
@@ -49,13 +58,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${spot.name} — ${spot.city}`,
       description: desc,
       url,
-      ...(images ? { images } : {}),
+      images: [{ url: image }],
     },
     twitter: {
-      card: images ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: `${spot.name} — ${spot.city}`,
       description: desc,
-      ...(spot.image_url ? { images: [spot.image_url] } : {}),
+      images: [image],
     },
   };
 }

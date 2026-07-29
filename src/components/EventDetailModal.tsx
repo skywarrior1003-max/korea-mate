@@ -486,9 +486,9 @@ export default function EventDetailModal({ event, onClose }: Props) {
           )}
 
           {/* 티켓 구매 링크 */}
-          {event.commerce.hasTicketing && event.commerce.bookingUrl && (
+          {event.commerce?.hasTicketing && event.commerce?.bookingUrl && (
             <a
-              href={event.commerce.bookingUrl}
+              href={event.commerce?.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-bold text-sm text-white transition-opacity hover:opacity-90"

@@ -21,6 +21,12 @@ import {
   buildBreadcrumbJsonLd,
   buildShareContent,
   toPlaceView,
+  isInternalMemo,
+  resolvePublicPlaceSummary,
+  resolveDisplayImage,
+  resolvePublicMetadataImage,
+  stripCommercialKeys,
+  findCommercialKeys,
   PROVENANCE_MESSAGE_KEY,
 } from "./place-detail-core.ts";
 import type { CitySpotRow } from "@/lib/city-spots";
@@ -228,15 +234,10 @@ test("지도: 이름·주소·좌표가 전부 없으면 둘 다 null (버튼 �
 
 // ── 5. 일정 입력 어댑터 — 상업 문맥 차단 ─────────────────────────────────────
 
-test("일정 어댑터: commerce 가 전부 비어 있다", () => {
+test("일정 어댑터: commerce 키를 만들지 않는다 (null 로 채우지 않는다)", () => {
   const e = toItineraryEvent(spot({ affiliate_url: "https://aff.example/x", affiliate_provider: "PartnerX" }));
-  assert.equal(e.commerce.affiliateUrl, null);
-  assert.equal(e.commerce.affiliatePartner, null);
-  assert.equal(e.commerce.affiliateType, null);
-  assert.equal(e.commerce.bookingUrl, null);
-  assert.equal(e.commerce.hasAffiliate, false);
-  assert.equal(e.commerce.hasTicketing, false);
-  assert.equal(e.commerce.hasMerchandise, false);
+  assert.equal(e.commerce, undefined);
+  assert.ok(!Object.keys(e).includes("commerce"));
 });
 
 test("일정 어댑터: hasCommercialContext 가 false", () => {
@@ -283,10 +284,10 @@ test("일정 어댑터: id 는 Saved·Explore 와 같은 체계여서 중복 추
   assert.equal(toItineraryEvent(spot({ id: 7 })).id, placeEventId(7));
 });
 
-test("hasCommercialContext: 상업 값이 있으면 true 로 잡아낸다", () => {
-  const e = toItineraryEvent(spot());
-  e.commerce.affiliateUrl = "https://aff.example/x";
-  assert.equal(hasCommercialContext(e), true);
+test("hasCommercialContext: 상업 키가 다시 생기면 true 로 잡아낸다", () => {
+  const e = toItineraryEvent(spot()) as unknown as Record<string, unknown>;
+  e.commerce = { affiliateUrl: "https://aff.example/x" };
+  assert.equal(hasCommercialContext(e as never), true);
 });
 
 // ── 6. JSON-LD ───────────────────────────────────────────────────────────────
@@ -316,7 +317,9 @@ test("JSON-LD: 없는 필드를 생성하지 않는다", () => {
   const ld = buildPlaceJsonLd(s, resolvePlaceText(s, "en"))!;
   assert.ok(!("address" in ld));
   assert.ok(!("geo" in ld));
-  assert.ok(!("image" in ld));
+  // image 는 항상 존재한다 — 죽은 원격 URL 대신 우리가 만든 OG 이미지로 떨어진다.
+  // 크롤러에는 onError fallback 이 없으므로 "생략" 보다 "안전한 대체" 가 옳다.
+  assert.equal(ld.image, "https://gokoreamate.com/og/busan/opengraph-image");
   assert.ok(!("sameAs" in ld));
   assert.ok(!("description" in ld));
 });
@@ -371,4 +374,196 @@ test("공유: affiliate URL 이나 개인 데이터가 들어가지 않는다", 
 
 test("공유: locale 이름이 있으면 그것을 쓴다", () => {
   assert.ok(buildShareContent(spot(), "海雲台ビーチ").title.includes("海雲台ビーチ"));
+});
+
+// ── 8. 내부 운영 메모 차단 ───────────────────────────────────────────────────
+
+const REAL_MEMOS = [
+  "High value nightlife and accommodation zone for affiliate traffic",
+  "High food tour and local experience affiliate value",
+  "Paid observatory plus Nampo hotel and tour conversion potential",
+  "Essential Busan nature landmark with tour bus and cruise upsell potential",
+  "Top nightlife and taxi tour conversion spot near Seomyeon and Gwangalli",
+  "One of Busan's best paid attraction products for affiliate conversion",
+  "Best commercial base for hotel nightlife and restaurant affiliate funnels",
+  "Premium accommodation affiliate anchor for high value travelers",
+  "Strategic route for accommodation shopping and family travel monetization",
+  "Completes the Songdo paid attraction funnel after cable car purchase",
+];
+
+test("내부 메모: 운영 DB 실측 19건 패턴을 전부 탐지한다", () => {
+  for (const m of REAL_MEMOS) assert.equal(isInternalMemo(m), true, `놓침: ${m}`);
+});
+
+test("내부 메모: 정상 장소 설명을 오탐하지 않는다", () => {
+  const safe = [
+    "A lively beach facing Gwangan Bridge with cafes bars and night scenery",
+    "Busan's landmark seafood market near Nampo and BIFF Square",
+    "A high rise observatory inside LCT with wide views of Haeundae and the sea",
+    "Paid entry required for the observatory deck",
+    "A cable car crossing the sea between Songdo Beach and Amnam Park",
+    "The main rail gateway to Busan and a practical itinerary starting point",
+  ];
+  for (const s of safe) assert.equal(isInternalMemo(s), false, `오탐: ${s}`);
+});
+
+test("내부 메모: paid 단독으로는 차단하지 않는다", () => {
+  assert.equal(isInternalMemo("Paid observatory with city views"), false);
+});
+
+test("공개 요약: 안전한 why_it_matters 는 그대로 통과", () => {
+  const t = { name: "x", description: "Desc.", whyItMatters: "A quiet coastal walk." };
+  assert.equal(resolvePublicPlaceSummary(t), "A quiet coastal walk.");
+});
+
+test("공개 요약: 내부 메모면 description 첫 문장으로 fallback", () => {
+  const t = {
+    name: "x",
+    description: "A lively beach facing Gwangan Bridge. More text here.",
+    whyItMatters: "High value nightlife and accommodation zone for affiliate traffic",
+  };
+  assert.equal(resolvePublicPlaceSummary(t), "A lively beach facing Gwangan Bridge.");
+});
+
+test("공개 요약: 내부 메모 + description 없음 → null (생략)", () => {
+  const t = { name: "x", description: null, whyItMatters: "Strong affiliate conversion value" };
+  assert.equal(resolvePublicPlaceSummary(t), null);
+});
+
+test("공개 요약: description 도 내부 메모면 null", () => {
+  const t = { name: "x", description: "Best commercial base for affiliate funnels", whyItMatters: null };
+  assert.equal(resolvePublicPlaceSummary(t), null);
+});
+
+test("공개 요약: 사실을 지어내지 않는다 — 없으면 없다", () => {
+  assert.equal(resolvePublicPlaceSummary({ name: "x", description: null, whyItMatters: null }), null);
+});
+
+// ── 9. metadata 이미지 ───────────────────────────────────────────────────────
+
+test("이미지: 죽은 source.unsplash.com 은 화면에서도 시도하지 않는다", () => {
+  assert.equal(resolveDisplayImage("https://source.unsplash.com/featured/?busan"), null);
+});
+
+test("이미지: 살아있는 images.unsplash.com 은 사용한다", () => {
+  const u = "https://images.unsplash.com/photo-1507525428034?w=600";
+  assert.equal(resolveDisplayImage(u), u);
+});
+
+test("이미지: NULL·빈 문자열은 null", () => {
+  assert.equal(resolveDisplayImage(null), null);
+  assert.equal(resolveDisplayImage("   "), null);
+});
+
+test("metadata 이미지: 죽은 호스트면 도시 OG 로 떨어진다", () => {
+  const r = resolvePublicMetadataImage("busan", "https://source.unsplash.com/x");
+  assert.equal(r, "https://gokoreamate.com/og/busan/opengraph-image");
+});
+
+test("metadata 이미지: 도시 OG 가 없으면 사이트 OG", () => {
+  const r = resolvePublicMetadataImage("daegu", "https://source.unsplash.com/x");
+  assert.equal(r, "https://gokoreamate.com/opengraph-image");
+});
+
+test("metadata 이미지: 항상 절대 URL", () => {
+  for (const c of ["busan", "seoul", "jeju", "gyeongju", "daegu", ""]) {
+    assert.ok(resolvePublicMetadataImage(c, null).startsWith("https://gokoreamate.com/"));
+  }
+});
+
+test("metadata 이미지: 살아있는 원격 URL 은 그대로 쓴다", () => {
+  const u = "https://images.unsplash.com/photo-1?w=600";
+  assert.equal(resolvePublicMetadataImage("busan", u), u);
+});
+
+test("metadata 이미지: 죽은 URL 이 결과에 절대 포함되지 않는다", () => {
+  for (const c of ["busan", "seoul", "daegu"]) {
+    assert.ok(!resolvePublicMetadataImage(c, "https://source.unsplash.com/x").includes("source.unsplash.com"));
+  }
+});
+
+// ── 10. Cart 상업 키 완전 제거 ───────────────────────────────────────────────
+
+test("Cart: 반환 객체에 commerce 키 자체가 없다", () => {
+  const e = toItineraryEvent(spot({ affiliate_url: "https://aff.example/x", affiliate_provider: "P" }));
+  assert.ok(!("commerce" in e));
+});
+
+test("Cart: 재귀 key 검사에서 금지 키 0건", () => {
+  const e = toItineraryEvent(spot({ affiliate_url: "https://aff.example/x", affiliate_provider: "P" }));
+  assert.deepEqual(findCommercialKeys(e), []);
+});
+
+test("Cart: JSON.stringify 결과에 금지 키 문자열이 없다", () => {
+  const s = JSON.stringify(toItineraryEvent(spot({ affiliate_url: "https://a/x", affiliate_provider: "P" })));
+  for (const k of ["commerce", "affiliateUrl", "affiliatePartner", "bookingUrl",
+                   "hasAffiliate", "hasTicketing", "affiliate_url", "booking_url"]) {
+    assert.ok(!s.includes(k), `${k} 가 남아 있다`);
+  }
+});
+
+test("Cart: 기존 상업 키를 가진 항목도 저장 직전 projection 으로 제거된다", () => {
+  const legacy = {
+    id: "local-9", name: "X", lat: 1, lng: 2,
+    commerce: { hasAffiliate: true, affiliateUrl: "https://a/SECRET", affiliatePartner: "P",
+                affiliateType: "booking", bookingUrl: "https://b/x",
+                hasTicketing: true, hasMerchandise: false },
+    nested: { deep: { affiliate_url: "https://a/DEEP" } },
+  };
+  const clean = stripCommercialKeys(legacy);
+  assert.deepEqual(findCommercialKeys(clean), []);
+  const s = JSON.stringify(clean);
+  assert.ok(!s.includes("SECRET"));
+  assert.ok(!s.includes("DEEP"));
+  assert.equal((clean as typeof legacy).id, "local-9");
+  assert.equal((clean as typeof legacy).lat, 1);
+});
+
+test("Cart: projection 이 비상업 필드를 보존한다", () => {
+  const clean = stripCommercialKeys(toItineraryEvent(spot()));
+  assert.equal(clean.id, "local-1");
+  assert.equal(clean.name, "Haeundae Beach");
+  assert.equal(clean.city, "busan");
+  assert.equal(clean.lat, 35.1587);
+  assert.equal(clean.lng, 129.1604);
+  assert.equal(clean.recommendedDurationMinutes, 90);
+  assert.equal(clean.type, "attraction");
+});
+
+test("Cart: findCommercialKeys 가 순환 참조에서 멈춘다", () => {
+  const a: Record<string, unknown> = { id: "x" };
+  a.self = a;
+  assert.deepEqual(findCommercialKeys(a), []);
+});
+
+test("hasCommercialContext: 키 없는 객체는 false", () => {
+  assert.equal(hasCommercialContext(toItineraryEvent(spot())), false);
+});
+
+test("PlaceView: 내부 메모는 props 로도 넘어가지 않는다", () => {
+  const v = toPlaceView(spot({ why_it_matters: "Premium accommodation affiliate anchor for high value travelers" }));
+  assert.equal(v.why_it_matters, null);
+  assert.ok(!JSON.stringify(v).toLowerCase().includes("affiliate"));
+});
+
+test("PlaceView: 안전한 why_it_matters 는 그대로 넘어간다", () => {
+  const v = toPlaceView(spot({ why_it_matters: "A quiet coastal walk with sea views" }));
+  assert.equal(v.why_it_matters, "A quiet coastal walk with sea views");
+});
+
+test("PlaceView: l10n 은 내부 메모인 locale 값만 제거하고 나머지는 보존", () => {
+  const v = toPlaceView(spot({
+    why_l10n: { en: "Strong affiliate conversion value", ja: "静かな海辺の散歩道" } as never,
+  }));
+  assert.deepEqual(v.why_l10n, { ja: "静かな海辺の散歩道" });
+});
+
+test("PlaceView: l10n 전 값이 내부 메모면 null", () => {
+  const v = toPlaceView(spot({ why_l10n: { en: "High value affiliate funnel" } as never }));
+  assert.equal(v.why_l10n, null);
+});
+
+test("PlaceView: description 이 내부 메모여도 제거된다", () => {
+  const v = toPlaceView(spot({ description: "Best commercial base for affiliate funnels" }));
+  assert.equal(v.description, null);
 });

@@ -237,9 +237,9 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         </div>
 
         {/* 제휴 파트너 표시 */}
-        {event.commerce.hasAffiliate && event.commerce.affiliatePartner && (
+        {event.commerce?.hasAffiliate && event.commerce?.affiliatePartner && (
           <p className="text-[10px] text-gray-400 pt-0.5">
-            🤝 via {event.commerce.affiliatePartner}
+            🤝 via {event.commerce?.affiliatePartner}
           </p>
         )}
       </div>
