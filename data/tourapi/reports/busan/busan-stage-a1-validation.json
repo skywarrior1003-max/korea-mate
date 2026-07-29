@@ -53,10 +53,10 @@
       "event": "FAIL — busan-E-00029 부산연등회 has multi-venue address (newline; '\\n' separates 송상현광장 and 부산시민공원 venues)"
     },
     "applied": {
-      "restaurant": 651,
+      "restaurant": 650,
       "accommodation": 81,
       "event": 0,
-      "total": 732
+      "total": 731
     },
     "held": {
       "event_eligible_revised": 0,
@@ -71,7 +71,9 @@
         "complex_name:센터": 1
       },
       "event": "held (gate failed)"
-    }
+    },
+    "applied_corrected": true,
+    "correction_note": "busan-F-00341 was excluded in apply phase due to duplicate_coordinate_value (lat=lng=35.195267); validation report originally showed 651 before exclusion was finalized"
   },
   "district_resolution": {
     "needs_district_before": 311,
@@ -124,5 +126,14 @@
     }
   },
   "auto_validation": "PASS",
-  "validation_status": "PASS"
+  "validation_status": "PASS",
+  "stage_a1_arrival_qa": {
+    "run_ts": "2026-07-29T06:16:08.259604Z",
+    "gate_status": "PASS",
+    "keep_resolved": 726,
+    "restore_verification": 2,
+    "require_arrival": 2,
+    "manual_review": 3,
+    "output_sha256": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150"
+  }
 }

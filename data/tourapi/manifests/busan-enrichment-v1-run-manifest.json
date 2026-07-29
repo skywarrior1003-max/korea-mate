@@ -161,5 +161,42 @@
         "path": "data/tourapi/reports/busan/busan-district-resolution-a1.json"
       }
     ]
+  },
+  "stage_a1_arrival_qa": {
+    "run_ts": "2026-07-29T06:16:08.259604Z",
+    "input_sha256_enriched": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+    "output_sha256_enriched": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "gate_status": "PASS",
+    "changes": {
+      "restore_verification": [
+        "busan-K-00585",
+        "busan-VB-2097"
+      ],
+      "require_arrival": [
+        "busan-F-00341",
+        "busan-K-00674"
+      ],
+      "manual_review": [
+        "busan-VB-1721",
+        "busan-VB-2704",
+        "busan-VB-518"
+      ]
+    },
+    "flag_changes": {
+      "needs_arrival_verification": {
+        "before": 911,
+        "after": 911
+      },
+      "needs_arrival": {
+        "before": 0,
+        "after": 2
+      }
+    },
+    "output_assets": [
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/reports/busan/busan-arrival-qa-a1.json",
+      "data/tourapi/reports/busan/busan-arrival-qa-a1-sample.json",
+      "data/tourapi/reports/busan/busan-stage-a1-validation.json"
+    ]
   }
 }
