@@ -118,5 +118,48 @@
       "validation": "d9bf15493b87b0732a72ef25476bc754e126a63d8c141c683e3b528c5f46d2f0",
       "asset_manifest": "f6969a3696d7131f7c815c4b10d581612801e869effc96c4b90370233dc33100"
     }
+  },
+  "stage_a1": {
+    "task": "TASK-BUSAN-ENRICH-STAGE-A1",
+    "run_ts": "2026-07-29T05:48:03.735158Z",
+    "input_sha256": {
+      "enriched_candidates": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "output_sha256": {
+      "enriched_candidates": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "changes": {
+      "arrival_flags_removed": 732,
+      "district_fixed": 308,
+      "en_join_fixed": 0,
+      "content_fixed": 0,
+      "event_arrival_held": "gate_failed_multi_venue"
+    },
+    "output_assets": [
+      {
+        "id": "enriched_candidates",
+        "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+        "sha256": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+        "row_count": 1642
+      },
+      {
+        "id": "stage_a1_validation",
+        "path": "data/tourapi/reports/busan/busan-stage-a1-validation.json"
+      },
+      {
+        "id": "arrival_eligibility",
+        "path": "data/tourapi/reports/busan/busan-arrival-eligibility-a1.json"
+      },
+      {
+        "id": "event_hours_classification",
+        "path": "data/tourapi/reports/busan/busan-event-hours-classification-a1.json"
+      },
+      {
+        "id": "district_resolution",
+        "path": "data/tourapi/reports/busan/busan-district-resolution-a1.json"
+      }
+    ]
   }
 }

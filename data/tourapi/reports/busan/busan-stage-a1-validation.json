@@ -1,0 +1,128 @@
+{
+  "report_type": "enrichment_stage_a1_validation",
+  "task": "TASK-BUSAN-ENRICH-STAGE-A1",
+  "branch": "data/busan-enrichment-v1",
+  "ssot_version": "1.1",
+  "run_ts": "2026-07-29T05:48:03.735158Z",
+  "input_sha256": {
+    "enriched_candidates_pre": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+    "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+  },
+  "output_sha256": {
+    "enriched_candidates": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907"
+  },
+  "baseline": {
+    "total_candidates": 1642,
+    "source_facts": 2008,
+    "manual_review": 989
+  },
+  "en_join_fix": {
+    "candidates_with_reason": 11,
+    "fixable": 0,
+    "note": "All 11 EN source keys absent from batch_normalized; EN API data not available for: AttractionService(5), FestivalService(4), FoodService(1), KorService2(1)"
+  },
+  "content_fix": {
+    "candidates_with_reason": 1,
+    "fixable": 0,
+    "note": "busan-K-00739 커넥트현대: KorService2:3452166:ko in batch_normalized but description=null; VisitBusanContent:shopping:549:ko not in batch_normalized"
+  },
+  "event_hours_classification": {
+    "total_events": 72,
+    "hours_applied": 2,
+    "category_A": 0,
+    "category_B": 2,
+    "category_C": 70,
+    "flag_changes": 0,
+    "category_B_items": [
+      {
+        "candidate_id": "busan-VB-1769",
+        "name": "광안리 M 드론라이트쇼",
+        "hours_preview": "매주 토요일 2회 공연 - 하절기(3월~9월) 20시, 22시 - 동절기(10월~2월) 19시, 21시"
+      },
+      {
+        "candidate_id": "busan-VB-1965",
+        "name": "광안리 해변영화관",
+        "hours_preview": "3월~10월 매주 금요일 20시(우천시 취소)"
+      }
+    ]
+  },
+  "arrival_resolution": {
+    "gate_result": {
+      "restaurant": "PASS (15/15 sample)",
+      "accommodation": "PASS (10/10 sample)",
+      "event": "FAIL — busan-E-00029 부산연등회 has multi-venue address (newline; '\\n' separates 송상현광장 and 부산시민공원 venues)"
+    },
+    "applied": {
+      "restaurant": 651,
+      "accommodation": 81,
+      "event": 0,
+      "total": 732
+    },
+    "held": {
+      "event_eligible_revised": 0,
+      "note": "All event arrival changes held; event gate failed due to multi-venue false positive"
+    },
+    "exclusion_reasons": {
+      "restaurant": {
+        "needs_restaurant_branch": 67,
+        "complex_facility:공항": 3
+      },
+      "accommodation": {
+        "complex_name:센터": 1
+      },
+      "event": "held (gate failed)"
+    }
+  },
+  "district_resolution": {
+    "needs_district_before": 311,
+    "resolved_address_direct": 308,
+    "unresolvable": 3,
+    "needs_district_after": 3,
+    "method_used": "extract district name from proposed_values.address (priority-1: address_direct)",
+    "note": "3 unresolvable: address exists but no Busan district name matches"
+  },
+  "flag_changes": {
+    "needs_arrival_verification": {
+      "before": 1642,
+      "after": 911,
+      "delta": -731
+    },
+    "needs_district": {
+      "before": 311,
+      "after": 3,
+      "delta": -308
+    },
+    "needs_hours": {
+      "before": 1071,
+      "after": 1071,
+      "delta": 0
+    },
+    "needs_content": {
+      "before": 955,
+      "after": 955,
+      "delta": 0
+    },
+    "needs_translation": {
+      "before": 923,
+      "after": 923,
+      "delta": 0
+    },
+    "needs_map_name_ko": {
+      "before": 643,
+      "after": 643,
+      "delta": 0
+    },
+    "needs_image": {
+      "before": 136,
+      "after": 136,
+      "delta": 0
+    },
+    "needs_restaurant_branch": {
+      "before": 67,
+      "after": 67,
+      "delta": 0
+    }
+  },
+  "auto_validation": "PASS",
+  "validation_status": "PASS"
+}

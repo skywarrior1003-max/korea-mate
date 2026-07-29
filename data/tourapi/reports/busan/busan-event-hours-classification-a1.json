@@ -1,0 +1,25 @@
+{
+  "report_type": "event_hours_classification_a1",
+  "task": "TASK-BUSAN-ENRICH-STAGE-A1",
+  "run_ts": "2026-07-29T05:48:03.735158Z",
+  "total_events": 72,
+  "category_A": {
+    "count": 0,
+    "description": "event period/date only, no daily hours",
+    "items": []
+  },
+  "category_B": {
+    "count": 2,
+    "description": "has daily operation/performance/entry times",
+    "items": [
+      "busan-VB-1769",
+      "busan-VB-1965"
+    ]
+  },
+  "category_C": {
+    "count": 70,
+    "description": "no schedule or time info; needs_hours remains"
+  },
+  "flag_changes": 0,
+  "note": "B items already have hours applied (no flag change needed). A=0 so no NOT_APPLICABLE assignment needed."
+}
