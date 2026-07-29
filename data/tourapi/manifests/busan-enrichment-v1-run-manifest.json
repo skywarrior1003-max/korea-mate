@@ -198,5 +198,26 @@
       "data/tourapi/reports/busan/busan-arrival-qa-a1-sample.json",
       "data/tourapi/reports/busan/busan-stage-a1-validation.json"
     ]
+  },
+  "stage_a1_arrival_provenance_qa": {
+    "run_ts": "2026-07-29T06:30:44.287969Z",
+    "task": "TASK-BUSAN-ENRICH-STAGE-A1-ARRIVAL-PROVENANCE-QA",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "output_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "provenance_qa_report": "a0d8d3e1c31f999671a8b1ff1c0b2607f0541368f7db86012785a9629e210b44",
+      "validation_report": "b38b4401d2ab8034480551b24667de0c14914060a3696188dc7b03de6df1384b"
+    },
+    "summary": {
+      "audited": 22,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY (22/22)",
+      "source_count_bug": false,
+      "new_require_arrival": 0,
+      "enriched_modified": false,
+      "verdict": "PASS"
+    }
   }
 }

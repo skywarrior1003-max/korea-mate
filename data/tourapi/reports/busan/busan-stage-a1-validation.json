@@ -135,5 +135,18 @@
     "require_arrival": 2,
     "manual_review": 3,
     "output_sha256": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150"
+  },
+  "stage_a1_arrival_provenance_qa": {
+    "run_ts": "2026-07-29T06:30:44.287969Z",
+    "task": "TASK-BUSAN-ENRICH-STAGE-A1-ARRIVAL-PROVENANCE-QA",
+    "scope": "22 source_count=0 resolved candidates",
+    "finding": "All 22 are VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+    "source_count_bug": false,
+    "provenance_traceable": 22,
+    "new_require_arrival": 0,
+    "enriched_candidates_modified": false,
+    "verdict": "PASS — source_count=0 is structurally correct; VB-web-direct provenance confirmed",
+    "report_sha": "a0d8d3e1c31f999671a8b1ff1c0b2607f0541368f7db86012785a9629e210b44",
+    "report_path": "data/tourapi/reports/busan/busan-arrival-provenance-qa.json"
   }
 }
