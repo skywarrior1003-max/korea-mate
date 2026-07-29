@@ -1,0 +1,34 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "130200",
+            "contenttypeid": "14",
+            "scale": "연면적 204평<br>지상 1층 / 지하 1층",
+            "usefee": "체험에 따라 다름",
+            "discountinfo": "",
+            "spendtime": "",
+            "parkingfee": "",
+            "infocenterculture": "051-242-3100",
+            "accomcountculture": "",
+            "usetimeculture": "09:00~18:00",
+            "restdateculture": "매주 일요일 / 명절 / 공휴일",
+            "parkingculture": "가능",
+            "chkbabycarriageculture": "없음",
+            "chkpetculture": "",
+            "chkcreditcardculture": "없음"
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

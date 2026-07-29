@@ -1,0 +1,48 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "142861",
+            "contenttypeid": "32",
+            "roomcount": "49실",
+            "roomtype": "비즈니스 / 디럭스 / 프리미어 디럭스",
+            "refundregulation": "",
+            "checkintime": "15:00",
+            "checkouttime": "11:00",
+            "chkcooking": "불가",
+            "seminar": "0",
+            "sports": "0",
+            "sauna": "1",
+            "beauty": "0",
+            "beverage": "0",
+            "karaoke": "0",
+            "barbecue": "0",
+            "campfire": "0",
+            "bicycle": "0",
+            "fitness": "1",
+            "publicpc": "0",
+            "publicbath": "0",
+            "subfacility": "",
+            "foodplace": "해수커피(카페)",
+            "reservationurl": "",
+            "pickup": "",
+            "infocenterlodging": "051-634-3001",
+            "parkinglodging": "가능",
+            "reservationlodging": "",
+            "scalelodging": "",
+            "accomcountlodging": "120명"
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/62/3332662_image2_1.jpg",
+            "imgname": "부산문화회관 (1)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/62/3332662_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332662_5"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/63/3332663_image2_1.jpg",
+            "imgname": "부산문화회관 (2)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/63/3332663_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332663_8"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/64/3332664_image2_1.jpg",
+            "imgname": "부산문화회관 (3)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/64/3332664_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332664_4"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/67/3332667_image2_1.jpg",
+            "imgname": "부산문화회관 (6)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/67/3332667_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332667_2"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/69/3332669_image2_1.jpg",
+            "imgname": "부산문화회관 (8)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/69/3332669_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332669_1"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/70/3332670_image2_1.jpg",
+            "imgname": "부산문화회관 (9)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/70/3332670_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332670_3"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/71/3332671_image2_1.jpg",
+            "imgname": "부산문화회관 (10)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/71/3332671_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332671_9"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/72/3332672_image2_1.jpg",
+            "imgname": "부산문화회관 (11)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/72/3332672_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332672_6"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/65/3332665_image2_1.jpg",
+            "imgname": "부산문화회관 (4)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/65/3332665_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332665_10"
+          },
+          {
+            "contentid": "129725",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/66/3332666_image2_1.jpg",
+            "imgname": "부산문화회관 (5)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/66/3332666_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3332666_11"
+          }
+        ]
+      },
+      "numOfRows": 10,
+      "pageNo": 1,
+      "totalCount": 10
+    }
+  }
+}

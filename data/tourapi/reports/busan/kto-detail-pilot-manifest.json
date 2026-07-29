@@ -1,0 +1,120 @@
+{
+  "manifest_type": "kto-detail-pilot",
+  "task": "TASK-BUSAN-KTO-DETAIL-ENDPOINT-PILOT",
+  "run_ts": "2026-07-29T07:08:11.790Z",
+  "branch": "data/busan-enrichment-v1",
+  "head": "400e31e",
+  "ssot_version": "v1.1",
+  "pilot_sample": [
+    {
+      "candidate_id": "busan-K-00001",
+      "content_id": "126028",
+      "content_type_id": 12,
+      "title": "금정산"
+    },
+    {
+      "candidate_id": "busan-K-00002",
+      "content_id": "126108",
+      "content_type_id": 12,
+      "title": "해운대온천센터"
+    },
+    {
+      "candidate_id": "busan-K-00003",
+      "content_id": "126122",
+      "content_type_id": 12,
+      "title": "부산 송도해수욕장"
+    },
+    {
+      "candidate_id": "busan-K-00029",
+      "content_id": "129725",
+      "content_type_id": 14,
+      "title": "부산문화회관"
+    },
+    {
+      "candidate_id": "busan-K-00031",
+      "content_id": "130200",
+      "content_type_id": 14,
+      "title": "구덕민속예술관"
+    },
+    {
+      "candidate_id": "busan-K-00032",
+      "content_id": "130216",
+      "content_type_id": 14,
+      "title": "부산 강서문화원"
+    },
+    {
+      "candidate_id": "busan-K-00050",
+      "content_id": "131087",
+      "content_type_id": 28,
+      "title": "용호동일대 바다낚시"
+    },
+    {
+      "candidate_id": "busan-K-00051",
+      "content_id": "131146",
+      "content_type_id": 28,
+      "title": "부산광역시교육청학생인성교육원"
+    },
+    {
+      "candidate_id": "busan-K-00052",
+      "content_id": "131452",
+      "content_type_id": 28,
+      "title": "함지골청소년수련관"
+    },
+    {
+      "candidate_id": "busan-K-00077",
+      "content_id": "142852",
+      "content_type_id": 32,
+      "title": "코모도 호텔 부산"
+    },
+    {
+      "candidate_id": "busan-K-00078",
+      "content_id": "142853",
+      "content_type_id": 32,
+      "title": "파라다이스 호텔 부산"
+    },
+    {
+      "candidate_id": "busan-K-00079",
+      "content_id": "142861",
+      "content_type_id": 32,
+      "title": "라메르호텔"
+    },
+    {
+      "candidate_id": "busan-K-00068",
+      "content_id": "133525",
+      "content_type_id": 39,
+      "title": "18번완당집"
+    },
+    {
+      "candidate_id": "busan-K-00070",
+      "content_id": "133997",
+      "content_type_id": 39,
+      "title": "대궐안집"
+    },
+    {
+      "candidate_id": "busan-K-00072",
+      "content_id": "134718",
+      "content_type_id": 39,
+      "title": "원조소문난산곰장어"
+    }
+  ],
+  "detailCommon2_sample": [
+    "busan-K-00001",
+    "busan-K-00029",
+    "busan-K-00050",
+    "busan-K-00077",
+    "busan-K-00068"
+  ],
+  "detailImage2_sample": [
+    "busan-K-00001",
+    "busan-K-00002",
+    "busan-K-00003",
+    "busan-K-00029",
+    "busan-K-00031"
+  ],
+  "total_calls": 25,
+  "verdict": "PASS",
+  "output_sha": {
+    "report": "68922874090783f3af78da2f62a98749e67a958800cf6e5618c9cf8988e65fe0",
+    "field_matrix": "c82db3a06c85329b3494371eef5dcd86da4b2afb868d95a6216558bed50e79ad"
+  }
+}

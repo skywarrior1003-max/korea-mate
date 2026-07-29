@@ -1,0 +1,34 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "130216",
+            "contenttypeid": "14",
+            "scale": "",
+            "usefee": "※ 행사, 강좌별 상이하므로 홈페이지 참고",
+            "discountinfo": "",
+            "spendtime": "",
+            "parkingfee": "",
+            "infocenterculture": "051-972-6369",
+            "accomcountculture": "",
+            "usetimeculture": "09:00~18:00",
+            "restdateculture": "※ 행사, 강좌별 상이하므로 홈페이지 참고",
+            "parkingculture": "가능<br>요금 (무료)",
+            "chkbabycarriageculture": "없음",
+            "chkpetculture": "",
+            "chkcreditcardculture": "없음"
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

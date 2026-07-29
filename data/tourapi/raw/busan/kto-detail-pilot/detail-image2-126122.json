@@ -1,0 +1,65 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/59/3436159_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (1)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/59/3436159_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436159_6"
+          },
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/60/3436160_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (2)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/60/3436160_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436160_5"
+          },
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/61/3436161_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (3)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/61/3436161_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436161_4"
+          },
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/62/3436162_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (4)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/62/3436162_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436162_3"
+          },
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/63/3436163_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (5)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/63/3436163_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436163_1"
+          },
+          {
+            "contentid": "126122",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/64/3436164_image2_1.jpg",
+            "imgname": "부산_서구_부산 송도해수욕장 (6)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/64/3436164_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3436164_2"
+          }
+        ]
+      },
+      "numOfRows": 6,
+      "pageNo": 1,
+      "totalCount": 6
+    }
+  }
+}

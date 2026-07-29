@@ -1,0 +1,208 @@
+{
+  "12": {
+    "content_type_id": 12,
+    "sample_count": 3,
+    "expected_fields": [
+      "usetime",
+      "restdate",
+      "parking",
+      "infocenter",
+      "chkbabycarriage",
+      "chkpet",
+      "chkcreditcard",
+      "expagerange",
+      "useseason",
+      "accomcount",
+      "expguide",
+      "heritage1",
+      "heritage2",
+      "heritage3"
+    ],
+    "fields_with_value_in_any_sample": [
+      "chkbabycarriage",
+      "chkcreditcard",
+      "heritage1",
+      "heritage2",
+      "heritage3",
+      "infocenter",
+      "parking",
+      "restdate",
+      "usetime"
+    ],
+    "fields_always_empty_in_sample": [
+      "chkpet",
+      "expagerange",
+      "useseason",
+      "accomcount",
+      "expguide"
+    ],
+    "coverage_pct": 64
+  },
+  "14": {
+    "content_type_id": 14,
+    "sample_count": 3,
+    "expected_fields": [
+      "usetimeculture",
+      "restdateculture",
+      "parking",
+      "parkingfee",
+      "infocenterculture",
+      "chkbabycarriageculture",
+      "chkpetculture",
+      "chkcreditcardculture",
+      "discountinfo",
+      "scale",
+      "spendtime",
+      "accomcountculture",
+      "usefee"
+    ],
+    "fields_with_value_in_any_sample": [
+      "chkbabycarriageculture",
+      "chkcreditcardculture",
+      "infocenterculture",
+      "parkingfee",
+      "restdateculture",
+      "scale",
+      "spendtime",
+      "usefee",
+      "usetimeculture"
+    ],
+    "fields_always_empty_in_sample": [
+      "parking",
+      "chkpetculture",
+      "discountinfo",
+      "accomcountculture"
+    ],
+    "coverage_pct": 69
+  },
+  "28": {
+    "content_type_id": 28,
+    "sample_count": 3,
+    "expected_fields": [
+      "openperiod",
+      "reservation",
+      "infocenterleports",
+      "parkingleports",
+      "usetimeleports",
+      "restdateleports",
+      "chkbabycarriageleports",
+      "chkcreditcardleports",
+      "expagerangeleports",
+      "accomcountleports",
+      "usefeeleports",
+      "scaleleports"
+    ],
+    "fields_with_value_in_any_sample": [],
+    "fields_always_empty_in_sample": [
+      "openperiod",
+      "reservation",
+      "infocenterleports",
+      "parkingleports",
+      "usetimeleports",
+      "restdateleports",
+      "chkbabycarriageleports",
+      "chkcreditcardleports",
+      "expagerangeleports",
+      "accomcountleports",
+      "usefeeleports",
+      "scaleleports"
+    ],
+    "coverage_pct": 0
+  },
+  "32": {
+    "content_type_id": 32,
+    "sample_count": 3,
+    "expected_fields": [
+      "checkin",
+      "checkout",
+      "infocenterlodging",
+      "parkinglodging",
+      "reservationlodging",
+      "chkbabycarriagelodging",
+      "subfacility",
+      "accomcountlodging",
+      "roomtype",
+      "foodplace",
+      "pickup",
+      "barbecue",
+      "beauty",
+      "beverage",
+      "bicycle",
+      "campfire",
+      "fitness",
+      "karaoke",
+      "publicbath",
+      "publicpc",
+      "sauna",
+      "seminar",
+      "sports"
+    ],
+    "fields_with_value_in_any_sample": [
+      "accomcountlodging",
+      "barbecue",
+      "beauty",
+      "beverage",
+      "bicycle",
+      "campfire",
+      "fitness",
+      "foodplace",
+      "infocenterlodging",
+      "karaoke",
+      "parkinglodging",
+      "publicbath",
+      "publicpc",
+      "roomtype",
+      "sauna",
+      "seminar",
+      "sports"
+    ],
+    "fields_always_empty_in_sample": [
+      "checkin",
+      "checkout",
+      "reservationlodging",
+      "chkbabycarriagelodging",
+      "subfacility",
+      "pickup"
+    ],
+    "coverage_pct": 74
+  },
+  "39": {
+    "content_type_id": 39,
+    "sample_count": 3,
+    "expected_fields": [
+      "opentimefood",
+      "restdatefood",
+      "firstmenu",
+      "treatmenu",
+      "infocenterfood",
+      "parkingfood",
+      "reservationfood",
+      "chkcreditcardfood",
+      "discountinfofood",
+      "packing",
+      "kidsfacility",
+      "seat",
+      "smoking",
+      "lcnsno"
+    ],
+    "fields_with_value_in_any_sample": [
+      "chkcreditcardfood",
+      "firstmenu",
+      "infocenterfood",
+      "kidsfacility",
+      "lcnsno",
+      "opentimefood",
+      "packing",
+      "parkingfood",
+      "reservationfood",
+      "restdatefood",
+      "smoking",
+      "treatmenu"
+    ],
+    "fields_always_empty_in_sample": [
+      "discountinfofood",
+      "seat"
+    ],
+    "coverage_pct": 86
+  }
+}

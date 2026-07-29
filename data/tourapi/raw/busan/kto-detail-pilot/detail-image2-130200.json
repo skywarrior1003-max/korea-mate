@@ -1,0 +1,73 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/37/2649737_image2_1.jpg",
+            "imgname": "구덕 민속예술관 (3)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/37/2649737_image2_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649737_1"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/38/2649738_image2_1.JPG",
+            "imgname": "구덕 민속예술관 (2)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/38/2649738_image2_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649738_6"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/39/2649739_image2_1.JPG",
+            "imgname": "구덕 민속예술관 (8)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/39/2649739_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649739_2"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/40/2649740_image2_1.jpg",
+            "imgname": "구덕 민속예술관 (6)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/40/2649740_image2_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649740_4"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/41/2649741_image2_1.jpg",
+            "imgname": "구덕 민속예술관 (7)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/41/2649741_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649741_5"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/44/2649744_image2_1.jpg",
+            "imgname": "구덕 민속예술관 (4)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/44/2649744_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649744_7"
+          },
+          {
+            "contentid": "130200",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/45/2649745_image2_1.jpg",
+            "imgname": "구덕 민속예술관 (5)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/45/2649745_image3_1.jpg",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "2649745_3"
+          }
+        ]
+      },
+      "numOfRows": 7,
+      "pageNo": 1,
+      "totalCount": 7
+    }
+  }
+}
