@@ -2,11 +2,21 @@
 // 정적 export: generateStaticParams가 빌드 시 city_spots id 목록을 조회해 SSG.
 // 데이터도 빌드 시 조회해 정적 렌더 — 런타임 Supabase 의존 없음.
 // env 부재·네트워크 실패 시 빈 params 반환 → 기존 빌드를 깨뜨리지 않는다.
+//
+// V1-A: 조회를 place-source 로 옮겨 sitemap 과 같은 장소 집합을 쓰게 했다.
+//       Twitter card·장소 JSON-LD·Breadcrumb JSON-LD 를 추가했다.
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PlaceDetailClient from "./PlaceDetailClient";
-import type { CitySpotRow } from "@/lib/city-spots";
+import { fetchPublicSpotIds, fetchSpot } from "@/lib/place-detail/place-source";
+import {
+  resolvePlaceText,
+  buildPlaceJsonLd,
+  buildBreadcrumbJsonLd,
+  placeUrl,
+  toPlaceView,
+} from "@/lib/place-detail/place-detail-core";
 
 export const dynamicParams = false; // 정적 export — 빌드된 id 외에는 404
 
@@ -14,48 +24,8 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-// ── 빌드 타임 Supabase REST 조회 (anon key — 공개 읽기 전용) ─────────────────
-
-function supabaseEnv(): { url: string; key: string } | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return null;
-  return { url, key };
-}
-
-async function fetchSpotIds(): Promise<number[]> {
-  const env = supabaseEnv();
-  if (!env) return [];
-  try {
-    const res = await fetch(`${env.url}/rest/v1/city_spots?select=id&order=id`, {
-      headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
-    });
-    if (!res.ok) return [];
-    const rows = (await res.json()) as { id: number }[];
-    return rows.map(r => r.id);
-  } catch {
-    return [];
-  }
-}
-
-async function fetchSpot(id: string): Promise<CitySpotRow | null> {
-  const env = supabaseEnv();
-  if (!env) return null;
-  if (!/^\d+$/.test(id)) return null;
-  try {
-    const res = await fetch(`${env.url}/rest/v1/city_spots?id=eq.${id}&limit=1`, {
-      headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
-    });
-    if (!res.ok) return null;
-    const rows = (await res.json()) as CitySpotRow[];
-    return rows[0] ?? null;
-  } catch {
-    return null;
-  }
-}
-
 export async function generateStaticParams() {
-  const ids = await fetchSpotIds();
+  const ids = await fetchPublicSpotIds();
   return ids.map(id => ({ id: String(id) }));
 }
 
@@ -63,16 +33,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const spot = await fetchSpot(id);
   if (!spot) return { title: "Place — gokoreamate" };
-  const desc = spot.why_it_matters ?? spot.description ?? `${spot.name} in ${spot.city}`;
+
+  // 정적 페이지는 빌드 시 locale 을 알 수 없다. metadata 는 기본값(영어)을 쓰고,
+  // 화면 본문은 클라이언트에서 활성 locale 로 다시 해석한다.
+  const text = resolvePlaceText(toPlaceView(spot), "en");
+  const desc = (text.whyItMatters ?? text.description ?? `${spot.name} in ${spot.city}`).slice(0, 155);
+  const url = placeUrl(id);
+  const images = spot.image_url ? [{ url: spot.image_url }] : undefined;
+
   return {
     title: `${spot.name} — ${spot.city} | gokoreamate`,
-    description: desc.slice(0, 155),
-    alternates: { canonical: `https://gokoreamate.com/place/${id}/` },
+    description: desc,
+    alternates: { canonical: url },
     openGraph: {
       title: `${spot.name} — ${spot.city}`,
-      description: desc.slice(0, 155),
-      url: `https://gokoreamate.com/place/${id}/`,
-      ...(spot.image_url ? { images: [{ url: spot.image_url }] } : {}),
+      description: desc,
+      url,
+      ...(images ? { images } : {}),
+    },
+    twitter: {
+      card: images ? "summary_large_image" : "summary",
+      title: `${spot.name} — ${spot.city}`,
+      description: desc,
+      ...(spot.image_url ? { images: [spot.image_url] } : {}),
     },
   };
 }
@@ -81,5 +64,28 @@ export default async function PlacePage({ params }: Props) {
   const { id } = await params;
   const spot = await fetchSpot(id);
   if (!spot) notFound();
-  return <PlaceDetailClient spot={spot} />;
+
+  // 클라이언트에는 상업 필드를 뺀 projection 만 넘긴다 (place-detail-core §0).
+  const view = toPlaceView(spot);
+
+  // 구조화 데이터는 화면에 실제로 표시되는 값만 담는다 (place-detail-core 계약).
+  const text = resolvePlaceText(view, "en");
+  const placeLd = buildPlaceJsonLd(view, text);
+  const crumbLd = buildBreadcrumbJsonLd(view, text.name);
+
+  return (
+    <>
+      {placeLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(placeLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbLd) }}
+      />
+      <PlaceDetailClient spot={view} />
+    </>
+  );
 }

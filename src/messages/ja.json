@@ -115,7 +115,22 @@
     "backExplore": "探すに戻る",
     "whyGo": "おすすめの理由",
     "details": "詳細情報",
-    "viewDetails": "詳細を見る"
+    "viewDetails": "詳細を見る",
+    "addToItinerary": "旅程に追加",
+    "inItinerary": "旅程に追加済み",
+    "addedToTrip": "旅程に追加しました",
+    "keepExploring": "引き続き探す",
+    "viewItinerary": "旅程を見る",
+    "share": "共有",
+    "linkCopied": "リンクをコピーしました",
+    "naverMaps": "NAVER マップ",
+    "googleMaps": "Google マップ",
+    "openInMaps": "地図で開く",
+    "photoComingSoon": "写真は準備中です",
+    "provenanceOfficial": "公式観光情報ソース",
+    "provenanceCurated": "GoKoreaMate キュレーション",
+    "provenanceCommunity": "ユーザー投稿 · GoKoreaMate 確認済み",
+    "provenanceCatalog": "GoKoreaMate カタログ"
   },
   "adaptive": {
     "inTripTitle": "旅行中ですね",

@@ -115,7 +115,22 @@
     "backExplore": "返回探索",
     "whyGo": "推荐理由",
     "details": "详细信息",
-    "viewDetails": "查看详情"
+    "viewDetails": "查看详情",
+    "addToItinerary": "加入行程",
+    "inItinerary": "已加入行程",
+    "addedToTrip": "已加入你的行程",
+    "keepExploring": "继续浏览",
+    "viewItinerary": "查看行程",
+    "share": "分享",
+    "linkCopied": "已复制链接",
+    "naverMaps": "NAVER 地图",
+    "googleMaps": "Google 地图",
+    "openInMaps": "在地图中打开",
+    "photoComingSoon": "照片准备中",
+    "provenanceOfficial": "官方旅游信息来源",
+    "provenanceCurated": "GoKoreaMate 精选",
+    "provenanceCommunity": "用户提交 · 已由 GoKoreaMate 审核",
+    "provenanceCatalog": "GoKoreaMate 目录"
   },
   "adaptive": {
     "inTripTitle": "您正在旅行中",

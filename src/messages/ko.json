@@ -115,7 +115,22 @@
     "backExplore": "둘러보기로 돌아가기",
     "whyGo": "추천 이유",
     "details": "상세 정보",
-    "viewDetails": "상세 보기"
+    "viewDetails": "상세 보기",
+    "addToItinerary": "일정에 추가",
+    "inItinerary": "일정에 있음",
+    "addedToTrip": "일정에 추가했습니다",
+    "keepExploring": "계속 둘러보기",
+    "viewItinerary": "일정 보기",
+    "share": "공유",
+    "linkCopied": "링크를 복사했습니다",
+    "naverMaps": "네이버 지도",
+    "googleMaps": "구글 지도",
+    "openInMaps": "지도로 열기",
+    "photoComingSoon": "사진 준비 중",
+    "provenanceOfficial": "공식 관광 정보 원천",
+    "provenanceCurated": "GoKoreaMate 큐레이션",
+    "provenanceCommunity": "사용자 제보 · GoKoreaMate 검토 완료",
+    "provenanceCatalog": "GoKoreaMate 카탈로그"
   },
   "adaptive": {
     "inTripTitle": "여행 중이시네요",

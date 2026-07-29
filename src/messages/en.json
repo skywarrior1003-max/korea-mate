@@ -115,7 +115,22 @@
     "backExplore": "Back to Explore",
     "whyGo": "Why go",
     "details": "Details",
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "addToItinerary": "Add to Itinerary",
+    "inItinerary": "In your trip",
+    "addedToTrip": "Added to your trip",
+    "keepExploring": "Keep exploring",
+    "viewItinerary": "View itinerary",
+    "share": "Share",
+    "linkCopied": "Link copied",
+    "naverMaps": "Naver Maps",
+    "googleMaps": "Google Maps",
+    "openInMaps": "Open in maps",
+    "photoComingSoon": "Photo coming soon",
+    "provenanceOfficial": "Official tourism source",
+    "provenanceCurated": "Curated by GoKoreaMate",
+    "provenanceCommunity": "Community-submitted · Reviewed by GoKoreaMate",
+    "provenanceCatalog": "GoKoreaMate catalog"
   },
   "adaptive": {
     "inTripTitle": "You're traveling now",

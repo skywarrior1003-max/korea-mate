@@ -280,7 +280,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* Place Detail 페이지 링크 — city_spots 기반(local-<id>) 장소만 */}
           {event.id.startsWith("local-") && (
             <a
-              href={`/place/${event.id.slice(6)}`}
+              href={`/place/${event.id.slice(6)}/`}
               className="flex items-center justify-between px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
             >
               <p className="text-sm font-bold text-gray-700">📄 View full details</p>

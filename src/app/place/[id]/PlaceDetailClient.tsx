@@ -1,67 +1,41 @@
 // S1 — Place Detail 본문 (design-system.md PlaceDetail·EssentialsStrip)
 // 원칙: 방문 판단에 충분한 요약 + 공식 원문 링크(기관명 표시). 얕은 복제 금지.
 // 데이터 없는 필드는 렌더하지 않는다 (unknown ≠ 불가). 가짜 수치·후기 금지.
-// Save가 primary (일정 컨텍스트 없는 화면 — coral 1개 규칙), Start planning은 quiet.
+//
+// V1-A 변경
+//   - Product Constitution §11 "Add to Itinerary 가 일정 입력의 중심" 을 반영해
+//     primary CTA 를 Save → Add to Itinerary 로 교체했다. coral primary 는
+//     화면당 1개 규칙을 유지하며, 모바일은 하단 sticky 에만 둔다.
+//   - 일정 입력에는 비상업 어댑터(toItineraryEvent)만 쓴다. Cart 의 commerce 가
+//     cartHints 를 거쳐 plan API 로 흘러가므로, 상세페이지발 항목은 상업 문맥을
+//     갖지 않는다 (§14).
+//   - 원격 이미지 로드 실패에도 fallback 을 그린다. 운영 image_url 다수가 폐지된
+//     호스트라 onError 가 없으면 브라우저 기본 깨짐 아이콘이 그대로 노출된다.
+//   - provenance 를 4종으로 정직하게 표시한다 (§8). manual 을 공식 정보로
+//     표시하지 않는다.
+//   - 장소 텍스트는 활성 locale 로 다시 해석한다. l10n 이 전부 NULL 인 현재도
+//     영어 표시가 회귀하지 않는다.
 
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
-import type { CitySpotRow } from "@/lib/city-spots";
-import type { EventItem } from "@/lib/cart";
-
-// Explore(toEventItem)와 동일한 id 체계(local-<id>)로 저장 — Saved 패널·페이지와 호환
-function toSavedEvent(s: CitySpotRow): EventItem {
-  return {
-    id: `local-${s.id}`,
-    type: s.category as EventItem["type"],
-    isAnchor: false,
-    journeyCluster: `${s.city.toLowerCase()}-explore`,
-    stage: "Standalone",
-    anchorEventId: null,
-    relatedSpotIds: [],
-    relatedSurvivalGuides: [],
-    transitFromAnchor: null,
-    name: s.name,
-    shortName: s.name,
-    tags: s.tags ?? [],
-    city: s.city,
-    district: s.district ?? "",
-    address: s.address ?? "",
-    mapUrl: s.map_url ?? "",
-    naverMapUrl: s.naver_map_url ?? undefined,
-    description: s.description ?? "",
-    whyItMatters: s.why_it_matters ?? "",
-    recommendedDurationMinutes: s.duration_minutes ?? 60,
-    bestTimeSlot: s.best_time_slot ?? "anytime",
-    openingHours: s.opening_hours,
-    image: s.image_url,
-    startDate: null,
-    endDate: null,
-    isTrending: false,
-    soloFriendly: s.solo_friendly,
-    foreignCardAccepted: s.foreign_card_accepted,
-    cashOnly: s.cash_only ?? false,
-    englishMenu: false, // 확인되지 않은 사실 — 긍정 값 하드코딩 금지
-    barrierFree: false,
-    koreanSurvivalScore: 0,
-    notice: null,
-    lat: s.lat ?? undefined,
-    lng: s.lng ?? undefined,
-    commerce: {
-      affiliateType: s.affiliate_url ? "booking" : null,
-      hasAffiliate: !!s.affiliate_url,
-      affiliatePartner: s.affiliate_provider,
-      affiliateUrl: s.affiliate_url,
-      hasMerchandise: false,
-      hasTicketing: false,
-      bookingUrl: null,
-    },
-  };
-}
+import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
+import { trackEvent } from "@/lib/analytics";
+import {
+  resolvePlaceText,
+  resolveOneLiner,
+  resolveProvenance,
+  resolveMapLinks,
+  toItineraryEvent,
+  placeEventId,
+  buildShareContent,
+  PROVENANCE_MESSAGE_KEY,
+} from "@/lib/place-detail/place-detail-core";
+import type { PlaceView } from "@/lib/place-detail/place-detail-core";
 
 // 공식 링크 출처 기관명 추출 (도메인 기반 — 알 수 없으면 도메인 자체 표기)
 function officialSourceName(url: string): string {
@@ -87,32 +61,153 @@ function cap(s: string): string {
   return s.length > 0 ? s[0].toUpperCase() + s.slice(1) : s;
 }
 
-export default function PlaceDetailClient({ spot }: { spot: CitySpotRow }) {
+export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const t = useTranslations("place");
   const tSaved = useTranslations("saved");
-  const [saved, setSaved] = useState(false);
-  const [toast, setToast] = useState(false); // S2: Save 후 일정 브리지 토스트
+  const locale = useLocale();
+
+  const [saved, setSaved]       = useState(false);
+  const [inCart, setInCart]     = useState(false);
+  const [addedToast, setAdded]  = useState(false); // Add 성공 후 다음 행동 제시
+  const [savedToast, setSavedT] = useState(false);
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
+  const [imgFailed, setImgFail] = useState(false);
+
+  const eventId = placeEventId(spot.id);
+  const text      = resolvePlaceText(spot, locale);
+  const oneLiner  = resolveOneLiner(text);
+  const maps      = resolveMapLinks(spot, text.name);
+  const provKind  = resolveProvenance(spot);
+  const catLabel  = [cap(spot.category), spot.subcategory].filter(Boolean).join(" · ");
+  const showImage = Boolean(spot.image_url) && !imgFailed;
 
   useEffect(() => {
-    setSaved(getFavorites().includes(`local-${spot.id}`));
-  }, [spot.id]);
+    setSaved(getFavorites().includes(eventId));
+    setInCart(isInCart(eventId));
+  }, [eventId]);
 
-  function handleSave() {
-    const id = `local-${spot.id}`;
-    const nowSaved = toggleFavorite(id);
-    if (nowSaved) {
-      cacheSavedSpot(toSavedEvent(spot));
-      setToast(true);
-      setTimeout(() => setToast(false), 4000);
-    } else {
-      uncacheSavedSpot(id);
+  // 다른 화면(My Picks 드로어 등)에서 Cart 가 바뀌어도 버튼 상태가 어긋나지 않게 한다
+  useEffect(() => {
+    const sync = () => setInCart(isInCart(eventId));
+    window.addEventListener(CART_EVENT, sync);
+    return () => window.removeEventListener(CART_EVENT, sync);
+  }, [eventId]);
+
+  // place_view 는 장소당 1회만 발화한다 (spot.id 변경 시에만 재실행)
+  useEffect(() => {
+    trackEvent("place_view", { place_id: spot.id, city: spot.city, category: spot.category });
+  }, [spot.id, spot.city, spot.category]);
+
+  function handleAddToItinerary(source: "sticky" | "card") {
+    const already = isInCart(eventId);
+    if (!already) {
+      // 비상업 어댑터 — 상업 문맥을 Cart 로 넘기지 않는다
+      addToCart(toItineraryEvent(spot, text));
     }
-    setSaved(nowSaved);
+    setInCart(true);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 5000);
+    trackEvent("place_add_to_itinerary", {
+      place_id: spot.id, city: spot.city, category: spot.category,
+      cta_position: source, duplicate: already,
+    });
   }
 
-  const oneLiner = spot.why_it_matters ?? (spot.description ? spot.description.split(".")[0] + "." : null);
-  const catLabel = [cap(spot.category), spot.subcategory].filter(Boolean).join(" · ");
-  const mapHref = spot.naver_map_url || spot.map_url;
+  function handleSave() {
+    const nowSaved = toggleFavorite(eventId);
+    if (nowSaved) {
+      cacheSavedSpot(toItineraryEvent(spot, text));
+      setSavedT(true);
+      setTimeout(() => setSavedT(false), 4000);
+    } else {
+      uncacheSavedSpot(eventId);
+    }
+    setSaved(nowSaved);
+    trackEvent("place_save", { place_id: spot.id, city: spot.city, saved: nowSaved });
+  }
+
+  function handleMapOpen(provider: "naver" | "google") {
+    trackEvent("place_map_open", { place_id: spot.id, city: spot.city, map_provider: provider });
+  }
+
+  async function handleShare() {
+    const content = buildShareContent(spot, text.name);
+    try {
+      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+        await navigator.share(content);
+        trackEvent("place_share", { place_id: spot.id, city: spot.city, method: "web_share" });
+        return;
+      }
+    } catch {
+      // 사용자가 취소했거나 Web Share 실패 — 복사로 떨어진다
+    }
+    try {
+      await navigator.clipboard.writeText(content.url);
+      setShareMsg(t("linkCopied"));
+      setTimeout(() => setShareMsg(null), 3000);
+      trackEvent("place_share", { place_id: spot.id, city: spot.city, method: "copy" });
+    } catch {
+      setShareMsg(content.url); // 복사도 막히면 URL 을 직접 보여준다
+      setTimeout(() => setShareMsg(null), 6000);
+    }
+  }
+
+  // ── 재사용 조각 ────────────────────────────────────────────────────────────
+
+  const addLabel = inCart ? `✓ ${t("inItinerary")}` : `+ ${t("addToItinerary")}`;
+
+  const mapButtons = (
+    <div className="flex gap-2">
+      {maps.naver && (
+        <a href={maps.naver} target="_blank" rel="noopener noreferrer"
+           onClick={() => handleMapOpen("naver")}
+           className="gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink">
+          {t("naverMaps")} ↗
+        </a>
+      )}
+      {maps.google && (
+        <a href={maps.google} target="_blank" rel="noopener noreferrer"
+           onClick={() => handleMapOpen("google")}
+           className="gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink">
+          {t("googleMaps")} ↗
+        </a>
+      )}
+    </div>
+  );
+
+  const essentials = (
+    <dl className="flex flex-col gap-3 text-sm">
+      {spot.opening_hours && (
+        <div className="flex gap-3">
+          <dt className="w-24 shrink-0 text-faint font-medium">{t("hours")}</dt>
+          <dd className="text-ink font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</dd>
+        </div>
+      )}
+      {spot.entry_fee && (
+        <div className="flex gap-3">
+          <dt className="w-24 shrink-0 text-faint font-medium">{t("entryFee")}</dt>
+          <dd className="text-ink font-medium">{spot.entry_fee}</dd>
+        </div>
+      )}
+      {typeof spot.duration_minutes === "number" && spot.duration_minutes > 0 && (
+        <div className="flex gap-3">
+          <dt className="w-24 shrink-0 text-faint font-medium">{t("duration")}</dt>
+          <dd className="text-ink font-medium">~{spot.duration_minutes} min</dd>
+        </div>
+      )}
+      {spot.address && (
+        <div className="flex gap-3">
+          <dt className="w-24 shrink-0 text-faint font-medium">{t("address")}</dt>
+          <dd className="text-ink">{spot.address}</dd>
+        </div>
+      )}
+    </dl>
+  );
+
+  // provenance — 운영 테이블에 있다는 이유로 공식 기관 정보라고 쓰지 않는다
+  const provenanceLine = (
+    <p className="text-xs text-faint">{t(PROVENANCE_MESSAGE_KEY[provKind])}</p>
+  );
 
   return (
     <div className="min-h-screen bg-surface-dim flex flex-col">
@@ -120,147 +215,216 @@ export default function PlaceDetailClient({ spot }: { spot: CitySpotRow }) {
 
       {/* 모바일 상단 바 */}
       <header className="md:hidden bg-surface border-b border-line px-4 h-14 flex items-center gap-3">
-        <Link href={`/explore/${spot.city.toLowerCase()}`} className="gkm-focus text-sub text-lg" aria-label={t("backExplore")}>←</Link>
-        <p className="font-bold text-ink truncate">{spot.name}</p>
+        <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sub text-lg" aria-label={t("backExplore")}>←</Link>
+        <p className="font-bold text-ink truncate">{text.name ?? spot.name}</p>
       </header>
 
-      {/* pb-24: 우하단 My Picks 드로어·모바일 BottomNav에 하단 버튼이 가려지지 않도록 */}
-      <main className="flex-1 w-full max-w-[720px] mx-auto md:px-4 md:py-6 pb-24">
-        <Card className="md:rounded-card rounded-none border-x-0 md:border-x">
-          {/* 대표 사진 (fallback 내장) */}
-          <div className="relative h-56 md:h-72 bg-surface-dim flex items-center justify-center overflow-hidden">
-            {spot.image_url ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={spot.image_url} alt={spot.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-faint">
-                <span className="text-4xl" aria-hidden>{CATEGORY_EMOJI[spot.category] ?? "📍"}</span>
-                <span className="text-xs font-medium">Photo coming soon</span>
-              </div>
-            )}
-          </div>
+      {/* 화면 breadcrumb — BreadcrumbList JSON-LD 와 같은 경로 */}
+      <nav aria-label="Breadcrumb" className="hidden md:block w-full max-w-[1100px] mx-auto px-4 pt-5">
+        <ol className="flex items-center gap-1.5 text-xs text-faint">
+          <li><Link href="/" className="gkm-focus hover:text-ink">GoKoreaMate</Link></li>
+          <li aria-hidden>/</li>
+          <li><Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus hover:text-ink">{cap(spot.city)}</Link></li>
+          <li aria-hidden>/</li>
+          <li className="text-sub font-medium truncate max-w-[280px]">{text.name ?? spot.name}</li>
+        </ol>
+      </nav>
 
-          <div className="p-5 md:p-7">
-            {/* 이름·지역·카테고리 */}
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <h1 className="text-2xl font-extrabold text-ink leading-tight" style={{ textWrap: "balance" }}>
-                  {spot.name}
-                </h1>
-                <p className="text-sm text-faint mt-1.5">
-                  {[spot.district, cap(spot.city), catLabel].filter(Boolean).join(" · ")}
+      {/* pb-32: 모바일 sticky CTA + BottomNav 에 본문이 가려지지 않도록 */}
+      <main className="flex-1 w-full max-w-[1100px] mx-auto md:px-4 md:py-6 pb-32 md:pb-10">
+        <div className="md:grid md:grid-cols-[minmax(0,1fr)_340px] md:gap-6 md:items-start">
+
+          {/* ── 왼쪽: 내용 ────────────────────────────────────────────────── */}
+          <Card className="md:rounded-card rounded-none border-x-0 md:border-x">
+            {/* 대표 사진 — NULL 과 로드 실패 모두 같은 fallback (레이아웃 높이 유지) */}
+            <div className="relative h-56 md:h-72 bg-surface-dim flex items-center justify-center overflow-hidden">
+              {showImage ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={spot.image_url!}
+                  alt={text.name ?? spot.name}
+                  className="w-full h-full object-cover"
+                  onError={() => setImgFail(true)}
+                />
+              ) : (
+                <div className="flex flex-col items-center gap-2 text-faint">
+                  <span className="text-4xl" aria-hidden>{CATEGORY_EMOJI[spot.category] ?? "📍"}</span>
+                  <span className="text-xs font-medium">{t("photoComingSoon")}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="p-5 md:p-7">
+              <h1 className="text-2xl font-extrabold text-ink leading-tight" style={{ textWrap: "balance" }}>
+                {text.name ?? spot.name}
+              </h1>
+              <p className="text-sm text-faint mt-1.5">
+                {[spot.district, cap(spot.city), catLabel].filter(Boolean).join(" · ")}
+              </p>
+              <div className="mt-2">{provenanceLine}</div>
+
+              {oneLiner && (
+                <p className="mt-4 text-[15px] text-sub leading-relaxed border-l-2 border-action pl-3">
+                  {oneLiner}
                 </p>
+              )}
+
+              {/* 여행자 편의 chips — 확인된 사실만 (unknown 은 렌더 안 함) */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {spot.solo_friendly && <Badge kind="editorial">{t("soloFriendly")}</Badge>}
+                {spot.foreign_card_accepted && <Badge kind="editorial">{t("cardOk")}</Badge>}
+                {spot.cash_only === true && <Badge kind="editorial-warm">{t("cashOnly")}</Badge>}
               </div>
-              {/* Save — 이 화면의 유일한 coral primary */}
+
+              {/* 모바일에서만 본문에 essentials — 데스크톱은 오른쪽 카드가 갖는다 */}
+              <div className="mt-6 md:hidden">{essentials}</div>
+
+              {text.description && (
+                <section className="mt-6">
+                  <h2 className="text-base font-bold text-ink mb-2">{t("details")}</h2>
+                  <p className="text-sm text-sub leading-relaxed">{text.description}</p>
+                </section>
+              )}
+
+              {/* 지도 — 모바일 본문 배치 (데스크톱은 오른쪽 카드) */}
+              {(maps.naver || maps.google) && (
+                <section className="mt-6 md:hidden">
+                  <h2 className="text-base font-bold text-ink mb-2">{t("openInMaps")}</h2>
+                  {mapButtons}
+                </section>
+              )}
+
+              {/* 공식 원문 링크 — 기관명 명시 */}
+              {spot.official_url && (
+                <a
+                  href={spot.official_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gkm-focus mt-6 flex items-center justify-between gap-3 p-4 rounded-control bg-official-tint text-official font-semibold text-sm"
+                >
+                  <span>{t("officialLink", { source: officialSourceName(spot.official_url) })}</span>
+                  <span aria-hidden>↗</span>
+                </a>
+              )}
+
+              <div className="mt-8 pt-5 border-t border-line flex items-center justify-between gap-3">
+                <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sm font-semibold text-sub hover:text-ink">
+                  ← {t("backExplore")}
+                </Link>
+                {/* primary 를 반복하지 않는다 — 여기서는 quiet 링크만 */}
+                <Link href="/itinerary/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink border border-line rounded-control min-h-11 px-4 inline-flex items-center">
+                  {t("viewItinerary")}
+                </Link>
+              </div>
+            </div>
+          </Card>
+
+          {/* ── 오른쪽: 데스크톱 sticky action card ───────────────────────── */}
+          <aside className="hidden md:block md:sticky md:top-6">
+            <Card className="p-5 flex flex-col gap-3">
+              <button
+                onClick={() => handleAddToItinerary("card")}
+                aria-pressed={inCart}
+                className={`gkm-focus w-full min-h-12 rounded-control text-sm font-bold transition-colors ${
+                  inCart ? "bg-action-tint text-action" : "bg-action text-white hover:bg-action-hover shadow-cta"
+                }`}
+              >
+                {addLabel}
+              </button>
+
               <button
                 onClick={handleSave}
                 aria-pressed={saved}
-                className={`gkm-focus shrink-0 min-h-11 px-4 rounded-control text-sm font-bold transition-colors ${
-                  saved
-                    ? "bg-action-tint text-action"
-                    : "bg-action text-white hover:bg-action-hover shadow-cta"
-                }`}
+                className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
               >
                 {saved ? `✓ ${t("savedState")}` : `🔖 ${t("save")}`}
               </button>
-            </div>
 
-            {/* 한 줄 추천 이유 */}
-            {oneLiner && (
-              <p className="mt-4 text-[15px] text-sub leading-relaxed border-l-2 border-action pl-3">
-                {oneLiner}
-              </p>
-            )}
+              {(maps.naver || maps.google) && mapButtons}
 
-            {/* 여행자 편의 chips — 확인된 사실만 (unknown은 렌더 안 함) */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {spot.solo_friendly && <Badge kind="editorial">{t("soloFriendly")}</Badge>}
-              {spot.foreign_card_accepted && <Badge kind="editorial">{t("cardOk")}</Badge>}
-              {spot.cash_only === true && <Badge kind="editorial-warm">{t("cashOnly")}</Badge>}
-              {spot.source_type === "tourapi" && <Badge kind="source">Official info</Badge>}
-            </div>
-
-            {/* EssentialsStrip — 알려진 사실만, 빈 셸 금지 */}
-            <dl className="mt-6 flex flex-col gap-3 text-sm">
-              {spot.opening_hours && (
-                <div className="flex gap-3">
-                  <dt className="w-24 shrink-0 text-faint font-medium">{t("hours")}</dt>
-                  <dd className="text-ink font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</dd>
-                </div>
-              )}
-              {spot.entry_fee && (
-                <div className="flex gap-3">
-                  <dt className="w-24 shrink-0 text-faint font-medium">{t("entryFee")}</dt>
-                  <dd className="text-ink font-medium">{spot.entry_fee}</dd>
-                </div>
-              )}
-              {typeof spot.duration_minutes === "number" && spot.duration_minutes > 0 && (
-                <div className="flex gap-3">
-                  <dt className="w-24 shrink-0 text-faint font-medium">{t("duration")}</dt>
-                  <dd className="text-ink font-medium">~{spot.duration_minutes} min</dd>
-                </div>
-              )}
-              {spot.address && (
-                <div className="flex gap-3">
-                  <dt className="w-24 shrink-0 text-faint font-medium">{t("address")}</dt>
-                  <dd className="text-ink">
-                    {spot.address}
-                    {mapHref && (
-                      <a href={mapHref} target="_blank" rel="noopener noreferrer"
-                         className="gkm-focus ml-2 text-official font-semibold whitespace-nowrap">
-                        Map ↗
-                      </a>
-                    )}
-                  </dd>
-                </div>
-              )}
-            </dl>
-
-            {/* 상세 설명 (요약 수준 — 전체 소개는 공식 원문으로) */}
-            {spot.description && (
-              <section className="mt-6">
-                <h2 className="text-base font-bold text-ink mb-2">{t("details")}</h2>
-                <p className="text-sm text-sub leading-relaxed">{spot.description}</p>
-              </section>
-            )}
-
-            {/* 공식 원문 링크 — 기관명 명시 */}
-            {spot.official_url && (
-              <a
-                href={spot.official_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gkm-focus mt-6 flex items-center justify-between gap-3 p-4 rounded-control bg-official-tint text-official font-semibold text-sm"
+              <button
+                onClick={handleShare}
+                className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
               >
-                <span>{t("officialLink", { source: officialSourceName(spot.official_url) })}</span>
-                <span aria-hidden>↗</span>
-              </a>
-            )}
+                ↗ {t("share")}
+              </button>
 
-            {/* 일정 연결 — S1: quiet Start planning (Add to trip은 S2 일정 컨텍스트에서) */}
-            <div className="mt-8 pt-5 border-t border-line flex items-center justify-between gap-3">
-              <Link href={`/explore/${spot.city.toLowerCase()}`} className="gkm-focus text-sm font-semibold text-sub hover:text-ink">
-                ← {t("backExplore")}
-              </Link>
-              <Link href="/#planner" className="gkm-focus text-sm font-semibold text-sub hover:text-ink border border-line rounded-control min-h-11 px-4 inline-flex items-center">
-                {t("startPlanning")}
-              </Link>
-            </div>
-          </div>
-        </Card>
+              <div className="pt-3 mt-1 border-t border-line">{essentials}</div>
+              <div className="pt-3 border-t border-line">{provenanceLine}</div>
+            </Card>
+          </aside>
+        </div>
       </main>
 
-      {/* S2: Save → 일정 브리지 토스트 (BottomNav 위) */}
-      {toast && (
-        <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
+      {/* ── 모바일 sticky CTA — primary 1개만, BottomNav 위, safe-area 고려 ── */}
+      <div
+        className="md:hidden fixed left-0 right-0 bottom-16 z-40 bg-surface border-t border-line px-4 py-3 flex items-center gap-2"
+        style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+      >
+        <button
+          onClick={() => handleAddToItinerary("sticky")}
+          aria-pressed={inCart}
+          className={`gkm-focus flex-1 min-h-12 rounded-control text-sm font-bold transition-colors ${
+            inCart ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
+          }`}
+        >
+          {addLabel}
+        </button>
+        <button
+          onClick={handleSave}
+          aria-pressed={saved}
+          aria-label={t("save")}
+          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line text-lg"
+        >
+          {saved ? "✓" : "🔖"}
+        </button>
+        <button
+          onClick={handleShare}
+          aria-label={t("share")}
+          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line text-lg"
+        >
+          ↗
+        </button>
+      </div>
+
+      {/* Add 성공 → 다음 행동 제시 */}
+      {addedToast && (
+        <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
+          <span>✓ {t("addedToTrip")}</span>
+          <Link
+            href="/itinerary/"
+            className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
+            onClick={() => setAdded(false)}
+          >
+            {t("viewItinerary")}
+          </Link>
+          <button
+            onClick={() => setAdded(false)}
+            className="gkm-focus text-white/80 hover:text-white text-sm font-semibold px-2 py-1.5"
+          >
+            {t("keepExploring")}
+          </button>
+        </div>
+      )}
+
+      {/* Save → 일정 브리지 토스트 */}
+      {savedToast && !addedToast && (
+        <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
           <span>✓ {t("savedState")}</span>
           <Link
             href="/#planner"
             className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
-            onClick={() => setToast(false)}
+            onClick={() => setSavedT(false)}
           >
             {tSaved("build")}
           </Link>
+        </div>
+      )}
+
+      {/* Share 결과 */}
+      {shareMsg && (
+        <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[90vw] truncate bg-ink text-white text-sm font-semibold px-4 py-2.5 rounded-control shadow-modal">
+          {shareMsg}
         </div>
       )}
     </div>

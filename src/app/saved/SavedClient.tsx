@@ -114,7 +114,7 @@ export default function SavedClient() {
                           </p>
                         </div>
                         {placeId && (
-                          <Link href={`/place/${placeId}`} className="gkm-focus shrink-0 text-sm font-semibold text-sub hover:text-ink px-2 py-2">
+                          <Link href={`/place/${placeId}/`} className="gkm-focus shrink-0 text-sm font-semibold text-sub hover:text-ink px-2 py-2">
                             {tP("viewDetails")}
                           </Link>
                         )}
