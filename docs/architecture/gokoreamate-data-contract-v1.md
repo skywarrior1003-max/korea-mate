@@ -3,13 +3,15 @@
 | 항목 | 값 |
 |---|---|
 | `document_title` | GoKoreaMate Data Contract v1 |
-| `document_version` | **1.1** |
-| `status` | **ACTIVE** — GoKoreaMate 데이터·DB·병합·보강 작업의 공식 최상위 SSOT v1.1 |
-| `ssot_scope` | 제품 방향 · 장소 데이터 · 사용자 여행 콘텐츠 · 공유/재방문 · DB 물리 구조 · readiness/RLS · 스케줄러 · provenance · legacy 승계 · 중단 병합 · 보조컴퓨터 계약 · 다도시 확장 |
-| `last_verified_commit` | `6e6f62f` (local master) |
-| `last_verified_origin_commit` | `6e6f62f` (origin/master) |
-| `last_verified_db_date` | 2026-07-28 |
-| `document_updated_date` | 2026-07-28 |
+| `document_version` | **1.2** |
+| `status` | **ACTIVE** — GoKoreaMate 데이터·DB·병합·보강 작업의 공식 최상위 SSOT v1.2 |
+| `ssot_scope` | 장소 데이터 · identity · 사용자 여행 콘텐츠의 데이터 구조 · 공유/재방문 데이터 계약 · DB 물리 구조 · readiness/RLS · 스케줄러 데이터 · provenance · legacy 승계 · 병합·보강 · importer 계약 · 보조컴퓨터 계약 · 다도시 확장 |
+| `product_authority` | **제품 목적·사용자 흐름·기능 우선순위·개인정보·바이럴·수익화 원칙은 `../product/gokoreamate-product-constitution-v1.md` v1.0 ACTIVE 를 따른다.** 이 문서는 그 원칙을 데이터·DB 구조로 구현한다 |
+| `implementation_status` | 현재 구현 상태·수치는 `../product/gokoreamate-product-status-v1.md`(`authority: NONE`)가 기록한다 |
+| `last_verified_commit` | `d50afef` (local master) |
+| `last_verified_origin_commit` | `d50afef` (origin/master) |
+| `last_verified_db_date` | 2026-07-29 |
+| `document_updated_date` | 2026-07-29 |
 | `schema_status` | 방향 승인(DIRECTION_APPROVED) · 물리 명세 확정 · **v1.1에서 review flag semantics 교정** · migration 미작성 · 운영 DB 미적용 |
 | `pending_decisions` | §23 참조 — 현재 blocker **0건** / 사용자 실행 승인 **1건**(M5) / 기술 후속 **3건** / 향후 사업 결정 **1건** |
 
@@ -19,27 +21,27 @@
 
 ---
 
-## 1. 제품·사업 방향과 판단 기준 · DECIDED
+## 1. 제품 방향 — Product Constitution 참조
 
-GoKoreaMate는 관광지 목록 사이트가 아니며 Google Maps·Naver Maps의 대체재도 아니다.
+**GoKoreaMate의 제품 목적 · 사용자 흐름 · 기능 우선순위 · 개인정보 · 바이럴 · 수익화 원칙은 `../product/gokoreamate-product-constitution-v1.md` (v1.0 `ACTIVE`)를 따른다.**
 
-**핵심 사용자 흐름**
-```
-장소 발견 → 저장·일정 추가 → 일정 생성·수정 → 날짜별 동선 확인 → 공유
-→ 다른 사용자가 복사 → 실제 여행 → 개인 사진·메모·추억 기록
-→ 개인 여행 콘텐츠 공유 → 신규 사용자 유입 → 일정 재방문
-→ 지도·길찾기 실행 → 여행상품 구매 → 제휴·광고 수익
-```
+**이 문서는 그 제품 원칙을 데이터·DB 구조로 구현하는 계약이다.** 데이터 설계가 Product Constitution과 충돌하면 임의로 진행하지 않고 **중단·보고**한다.
 
-**바이럴의 주인공**은 사용자의 일정·사진·추억·메모·방문 장소·날짜별 흐름이다. **공식 관광지·맛집 이미지는 주인공이 아니라 사용자 사진이 없을 때의 fallback이다.**
+**제품 판단 기준의 상세 목록은 Product Constitution 한 곳에서만 관리한다.** 이 문서는 중복 보유하지 않는다.
 
-**판단 기준 (우선순위)** ①사용자 신뢰 ②일정 품질 ③실제 여행 편의성 ④공유·복사·재방문 ⑤바이럴 성장 ⑥파트너 구매 전환 ⑦광고·제휴 수익 ⑧운영비 ⑨구현 복잡성 ⑩다도시 확장성 ⑪장애·보안 위험 ⑫공급자 교체 가능성.
+### 1-1. 데이터 판단에 직접 필요한 최소 요약 · DECIDED
 
-**권고 형식** 선택지를 나열하지 않고 권장안 1개를 먼저 제시한다. 판정 수준: `STRONGLY_RECOMMENDED` / `RECOMMENDED` / `ACCEPTABLE_ALTERNATIVE` / `NOT_RECOMMENDED` / `BLOCKED`.
+아래는 데이터 구조 결정에 매번 필요한 항목만 남긴 것이다. 근거와 전문은 Product Constitution에 있다.
 
-**수익화·파트너 원칙 · DECIDED** 특정 업체를 전체 서비스의 고정 파트너로 전제하지 않는다. eSIM 분야만 현재 제휴 방향이 정해져 있다. 숙박·액티비티·교통·입장권 등은 구현 전 분야별 비교 보고서로 `RECOMMENDED` 1 + `ALTERNATIVE` 1을 선정한다(평가 기준: 사용자 편의·신뢰도·한국 여행 커버리지·수익성·수수료·취소환불·다국어·추적·연동 난이도·운영비·바이럴 결합성). **파트너명을 애플리케이션 로직에 고정하지 않는다.**
+- **공개 카탈로그 장소와 사용자 기록을 구분한다.** 운영 장소 테이블에 들어갔다는 사실이 공식 기관 원천을 뜻하지 않는다. 승인된 사용자 제보도 provenance는 사용자 제보로 보존한다.
+- **사용자 사진과 공식 장소 이미지를 같은 테이블·같은 권한 체계로 섞지 않는다.** 공유 이미지 우선순위는 사용자가 선택한 개인 사진이 1순위이며, 장소 이미지는 그것이 없을 때의 대체재다.
+- **스케줄러와 상업 데이터를 분리한다.** 스케줄러는 provider ID·offer ID·수수료·상업 우선순위 등 상업 문맥을 입력받지 않는다. 상품 연결은 일정과 장소 순서가 확정된 **후** 렌더·추천 계층에서만 수행한다. 특정 파트너명을 애플리케이션 로직에 고정하지 않는다.
+- **provenance를 보존한다.** 원천·수집 시각·연결 근거를 잃는 병합을 하지 않는다.
+- **공개 상태와 개인 상태를 분리해 저장한다.** 축적과 공개는 다른 층위이며, 개인 기록의 기본값은 비공개다.
 
-`COMMERCIAL_OFFERS`는 스케줄러와 분리한다. 일정과 장소 순서가 확정된 **후** 렌더·추천 단계에서만 상품을 연결하며, **스케줄러가 offer·수수료·상업 우선순위를 읽지 못하게 한다.**
+### 1-2. 권고 형식 · DECIDED
+
+선택지를 나열하지 않고 권장안 1개를 먼저 제시한다. 판정 수준: `STRONGLY_RECOMMENDED` / `RECOMMENDED` / `ACCEPTABLE_ALTERNATIVE` / `NOT_RECOMMENDED` / `BLOCKED`.
 
 ---
 
