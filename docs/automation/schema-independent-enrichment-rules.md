@@ -3,7 +3,8 @@
 **문서 버전**: 1.0  
 **최초 작성**: 2026-07-29  
 **적용 범위**: GoKoreaMate 전체 도시의 schema-independent enrichment 단계  
-**상위 문서**: `docs/automation/nightly-execution-rules.md`, `docs/automation/auxiliary-computer-operating-rules.md`  
+**상위 문서**: `docs/automation/nightly-execution-rules.md`  
+**장비별 운영 규칙**: Git 저장소 밖 각 장비 로컬 전용 경로에서 관리  
 **부산 검증 기준**: TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE + QA-02 (commit `8bed5fb`)
 
 > 이 규칙은 부산에서 검증된 절차를 도시 공통 기준으로 일반화한 것이다.  
@@ -132,7 +133,7 @@
 - 좌표 거리 임계값 (부산 검증값: ≤ 20m — 다른 도시에 그대로 복사 금지)
 - 제목 유사도 임계값 (부산 검증값: Korean char Jaccard ≥ 0.5 또는 exact — 다른 도시에 그대로 복사 금지)
 
-→ 세부 규칙: `docs/automation/auxiliary-computer-operating-rules.md` 섹션 6
+→ 장비별 세부 운영 규칙은 Git 저장소 밖 각 장비 로컬 전용 경로에서 관리한다
 
 ---
 
@@ -307,4 +308,5 @@ IC.hours 비어 있지 않음 (raw):  N건
 
 ---
 
-*관련 문서: `docs/automation/nightly-execution-rules.md` · `docs/automation/auxiliary-computer-operating-rules.md`*
+*관련 문서: `docs/automation/nightly-execution-rules.md`*  
+*장비별 운영 규칙과 세션 시작 체크리스트는 Git 저장소 밖에서 관리한다*
