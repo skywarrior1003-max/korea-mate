@@ -199,11 +199,14 @@ commit과 push를 구분한다.
 
 **KTO KO↔EN 자동 연결 추가 조건:**
 
-- 좌표 거리 ≤ 20m
 - 1:1 bijective (EN key가 다른 candidate에 이미 사용되지 않음)
 - category/content type 호환
-- Korean char Jaccard ≥ 0.5 또는 exact parenthetical match
 - 시설·행사·프로그램 혼용 금지
+- 좌표 거리 임계값: 도시별 표본 검증 후 확정 *(부산 검증값: ≤ 20m)*
+- 제목 유사도: 도시별 표본 검증 후 확정 *(부산 검증값: Korean char Jaccard ≥ 0.5 또는 exact parenthetical match)*
+
+부산 전용 임계값을 다른 도시에 그대로 적용하지 않는다.  
+세부 규칙: `docs/automation/schema-independent-enrichment-rules.md` 섹션 E
 
 ---
 
