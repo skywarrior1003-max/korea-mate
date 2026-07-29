@@ -123,19 +123,10 @@ export async function fetchCitySpotsByCategory(
   return (data as CitySpotRow[]).map(rowToCitySpot);
 }
 
-export async function upsertCitySpot(
-  row: Omit<CitySpotRow, "id" | "created_at" | "updated_at">
-): Promise<boolean> {
-  const { error } = await supabase
-    .from("city_spots")
-    .upsert({ ...row, updated_at: new Date().toISOString() });
-
-  if (error) {
-    console.error("[city-spots] upsert error:", error.message);
-    return false;
-  }
-  return true;
-}
+// Security-0: 브라우저 anon 클라이언트로 city_spots 에 쓰던 upsertCitySpot /
+// bulkUpsertCitySpots 를 제거했다. 호출부가 0 이었고 RLS 에 INSERT/UPDATE 정책이
+// 없어 실행되지도 않았다. 이 파일은 읽기 전용이며, 대량 적재·갱신은 서버 전용
+// importer(service_role)가 담당한다. anon write 경로를 다시 만들지 않는다.
 
 // ── 장소명 정규화 매칭 ────────────────────────────────────────────────────────
 function normName(s: string): string {
@@ -162,28 +153,4 @@ export function matchCitySpot(placeName: string, spots: CitySpot[]): CitySpot | 
     normName(s.name).split(" ").filter(w => w.length >= 4).some(w => needle.includes(w))
   );
   return hit ?? null;
-}
-
-export async function bulkUpsertCitySpots(
-  rows: Omit<CitySpotRow, "id" | "created_at" | "updated_at">[]
-): Promise<{ success: number; failed: number }> {
-  const CHUNK = 50;
-  let success = 0;
-  let failed = 0;
-
-  for (let i = 0; i < rows.length; i += CHUNK) {
-    const chunk = rows.slice(i, i + CHUNK).map(r => ({
-      ...r,
-      updated_at: new Date().toISOString(),
-    }));
-    const { error } = await supabase.from("city_spots").upsert(chunk);
-    if (error) {
-      console.error(`[city-spots] bulk chunk ${Math.floor(i / CHUNK) + 1}:`, error.message);
-      failed += chunk.length;
-    } else {
-      success += chunk.length;
-    }
-  }
-
-  return { success, failed };
 }
