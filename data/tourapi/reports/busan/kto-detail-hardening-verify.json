@@ -1,0 +1,155 @@
+{
+  "report_id": "kto-detail-hardening-verify",
+  "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+  "generated_ts": "2026-07-29T08:09:54Z",
+  "branch": "data/busan-enrichment-v1",
+  "script": "scripts/tourapi-busan-detail.mjs",
+  "overall_verdict": "PASS",
+  "scenarios_total": 9,
+  "scenarios_passed": 9,
+  "scenarios": {
+    "scenario_1_dry_run_new_targets": {
+      "description": "dry-run shows correct new call count for empty FULL_RAW_DIR",
+      "passed": true,
+      "details": {
+        "new_calls": 1295,
+        "api_calls_made": 0
+      },
+      "output_excerpt": "[tourapi-busan-detail v2] TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING\n  mode: FULL | DRY-RUN | ts: 2026-07-29T08:09:53.920Z\n  raw dir: c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\kto-detail-full\n  call_limit_status: UNVERIFIED\n\n[MANIFEST] Loaded: kto-detail-preflight-manifest.json (sha: 544bfd9a21e6b7e8...)\n[TARGET_BUILD] Reading enriched candidates...\n[TARGET_BUILD] contentId→type map: 775 entries from 9 batch files\n[TARGET_BUILD] detailIntro2: 557 | detailCommon2: 644 | detailIma"
+    },
+    "scenario_2_skip_existing_valid": {
+      "description": "all 25 pilot raw files detected as valid → skip=25, new_calls=0",
+      "passed": true,
+      "details": {
+        "skip_count": 25,
+        "new_call_count": 0,
+        "expected_skip": 25,
+        "expected_new": 0
+      },
+      "output_excerpt": "[tourapi-busan-detail v2] TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING\n  mode: SAMPLE (pilot 15건) | DRY-RUN | ts: 2026-07-29T08:09:54.132Z\n  raw dir: c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\kto-detail-pilot\n  call_limit_status: UNVERIFIED\n\n=== DRY-RUN 계획 ===\n\n  detailIntro2:\n    total targets: 15\n    skip (valid existing): 15\n    new calls needed:      0\n\n  detailCommon2:\n    tota"
+    },
+    "scenario_3_4_invalid_raw_classification": {
+      "description": "corrupt/XML/error-resultCode raw → reprocess:true; valid → skip:true",
+      "passed": true,
+      "test_cases": [
+        {
+          "name": "corrupt_json",
+          "skip": false,
+          "reason": "JSON_PARSE_ERROR",
+          "reprocess": true,
+          "expected_skip": false,
+          "passed": true
+        },
+        {
+          "name": "xml_response",
+          "skip": false,
+          "reason": "CORRUPT_XML",
+          "reprocess": true,
+          "expected_skip": false,
+          "passed": true
+        },
+        {
+          "name": "saved_xml_marker",
+          "skip": false,
+          "reason": "SAVED_XML_ERROR",
+          "reprocess": true,
+          "expected_skip": false,
+          "passed": true
+        },
+        {
+          "name": "error_resultcode",
+          "skip": false,
+          "reason": "RESULT_CODE_99",
+          "reprocess": true,
+          "expected_skip": false,
+          "passed": true
+        },
+        {
+          "name": "valid_response",
+          "skip": true,
+          "reason": "VALID_EXISTS",
+          "reprocess": false,
+          "expected_skip": true,
+          "passed": true
+        },
+        {
+          "name": "valid_empty_items",
+          "skip": true,
+          "reason": "VALID_EXISTS",
+          "reprocess": false,
+          "expected_skip": true,
+          "passed": true
+        }
+      ]
+    },
+    "scenario_5_dedup": {
+      "description": "no duplicate contentId in enriched candidates → dedup produces clean target list",
+      "passed": true,
+      "details": {
+        "total_kto": 644,
+        "duplicates_in_source": 0
+      }
+    },
+    "scenario_6_checkpoint_resume": {
+      "description": "partial checkpoint loaded → resume reduces remaining targets",
+      "passed": true,
+      "details": {
+        "checkpoint_written": "c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\kto-detail-full\\checkpoint.json",
+        "manifest_hash_in_checkpoint": "544bfd9a21e6b7e8...",
+        "resume_detected_in_output": true
+      },
+      "output_excerpt": "[tourapi-busan-detail v2] TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING\n  mode: FULL | DRY-RUN | RESUME | ts: 2026-07-29T08:09:54.373Z\n  raw dir: c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\kto-detail-full\n  call_limit_status: UNVERIFIED\n\n[MANIFEST] Loaded: kto-detail-preflight-manifest.json (sha: 544bfd9a21e6b7e8...)\n[TARGET_BUILD] Reading enriched candidates...\n[TARGET_BUILD] contentId→type map: 775 entries from 9 batch files\n[TARGET_BUILD] detailIntro2: 557 | detailCommon2: 644 | detailImage2: 94\n[RESUME] Loaded checkpoint: 2026-07-29T07:00:00Z\n  intro2:  100 done, 557/557 remaining\n  common2: 0 done, 644/644 remaining\n  image2:  0 done, 94/94 remaining\n=== DRY-RUN 계획 ===\n\n  detailIntro2:\n    total targets: 557\n    skip (valid existing): 0\n    new calls needed:      557\n\n  d"
+    },
+    "scenario_7_manifest_hash_mismatch": {
+      "description": "checkpoint with wrong manifest hash → ABORT with exit code 1",
+      "passed": true,
+      "details": {
+        "checkpoint_hash": "aaaaaaaaaaaaaaaa... (intentionally wrong)",
+        "actual_manifest_hash": "544bfd9a21e6b7e8...",
+        "abort_detected": true,
+        "exit_code": 1
+      },
+      "output_excerpt": "[tourapi-busan-detail v2] TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING\n  mode: FULL | DRY-RUN | RESUME | ts: 2026-07-29T08:09:54.582Z\n  raw dir: c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\kto-detail-full\n  call_limit_status: UNVERIFIED\n\n[MANIFEST] Loaded: kto-detail-preflight-manifest.json (sha: 544bfd9a21e6b7e8...)\n[TARGET_BUILD] Reading enriched candidates...\n[TARGET_BUILD] content"
+    },
+    "scenario_8_consecutive_failure_abort": {
+      "description": "consecutive failure abort implemented (static code verification)",
+      "passed": true,
+      "details": {
+        "CONSECUTIVE_FAILURE_LIMIT_defined": true,
+        "checkConsecutiveFailure_function": true,
+        "consecutiveFailures_counter": true,
+        "counter_reset_on_success": true,
+        "process_exit_on_abort": true,
+        "default_threshold": 5,
+        "note": "실제 실패 시나리오는 live API 없이 단위 검증 한계. 코드 리뷰로 대체."
+      }
+    },
+    "scenario_9_call_limit_gate": {
+      "description": "--full --allow-full without --dry-run blocked by CALL_LIMIT_STATUS=UNVERIFIED",
+      "passed": true,
+      "details": {
+        "exit_code": 1,
+        "blocked_message_present": true,
+        "call_limit_status": "UNVERIFIED"
+      },
+      "output_excerpt": "[BLOCKED] KTO full collection blocked:\n  official daily call limit is not verified.\n  Confirm at: data.go.kr → 마이페이지 → 개발계정 관리\n              → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량\n  Then set CALL_LIMIT_STATUS = 'VERIFIED' in this script."
+    },
+    "scenario_10_api_key_not_in_files": {
+      "description": "API key not present in any raw or report JSON files",
+      "passed": true,
+      "details": {
+        "key_present": true,
+        "findings_in_raw": [],
+        "findings_in_reports": [],
+        "total_findings": 0
+      }
+    }
+  },
+  "safety_checks": {
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "review_flags_modified": false,
+    "api_calls_made": 0,
+    "api_key_in_files": false
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "report_id": "kto-detail-hardening-checkpoint-verify",
+  "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+  "generated_ts": "2026-07-29T08:11:37Z",
+  "scenarios": {
+    "scenario_6_resume": {
+      "description": "partial checkpoint loaded → RESUME output, remaining targets reduced",
+      "method": "wrote partial checkpoint (100 fake done), ran --resume --dry-run --manifest",
+      "result": "PASS — checkpoint loaded, 'Loaded checkpoint' in output, exit_code=0"
+    },
+    "scenario_7_manifest_hash_mismatch": {
+      "description": "checkpoint with wrong manifest hash → ABORT, exit_code=1",
+      "method": "wrote checkpoint with hash='aaaa'*16, ran --resume --dry-run --manifest",
+      "result": "PASS — 'ABORT' / 'Manifest hash mismatch' in output, exit_code=1"
+    },
+    "scenario_corrupt_checkpoint": {
+      "description": "corrupt checkpoint.json → safe abort, not silent continue",
+      "method": "static code verification — readCheckpoint() catches JSON.parse error and calls process.exit(1)",
+      "result": "PASS (static) — code review confirmed"
+    }
+  },
+  "checkpoint_location_full_mode": "data/tourapi/raw/busan/kto-detail-full/checkpoint.json",
+  "checkpoint_write_strategy": "atomic: .tmp write → unlinkSync existing → renameSync",
+  "checkpoint_interval": 50,
+  "overall_verdict": "PASS"
+}

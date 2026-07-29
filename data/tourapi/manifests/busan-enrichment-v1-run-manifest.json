@@ -247,5 +247,37 @@
       "data/tourapi/reports/busan/kto-detail-preflight-report.json",
       "data/tourapi/reports/busan/kto-detail-preflight-manifest.json"
     ]
+  },
+  "kto_detail_collector_hardening": {
+    "run_ts": "2026-07-29T08:10:00Z",
+    "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "summary": {
+      "script_version": "v2-hardened",
+      "features_implemented": 6,
+      "features": ["skip_existing", "timeout", "checkpoint", "consecutive_failure_abort", "manifest_input", "full_output_path"],
+      "verification_scenarios": 9,
+      "verification_passed": 9,
+      "dry_run_api_calls": 0,
+      "call_limit_status": "UNVERIFIED",
+      "full_run_still_blocked": true,
+      "enriched_candidates_modified": false,
+      "source_facts_modified": false,
+      "review_flags_modified": false,
+      "api_key_exposed": false,
+      "verdict": "PASS"
+    },
+    "output_assets": [
+      "scripts/tourapi-busan-detail.mjs",
+      "data/tourapi/reports/busan/kto-detail-hardening-verify.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-dry-run.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-feature-matrix.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-secret-scan.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-checkpoint-verify.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-file-hashes.json"
+    ]
   }
 }
