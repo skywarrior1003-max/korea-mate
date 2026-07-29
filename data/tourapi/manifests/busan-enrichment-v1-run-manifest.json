@@ -102,21 +102,21 @@
   },
   "qa02_run": {
     "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
-    "run_ts": "2026-07-28T09:33:33.464655Z",
+    "run_ts": "2026-07-29T03:44:16.470799Z",
     "corrections": {
       "hours_from_ic": {
         "applied": 571,
         "source": "integrated_candidates.hours"
       },
       "restaurant_branch_cleared": 654,
-      "kto_en_linked": 43
+      "kto_en_linked": 42
     },
     "output_sha256": {
-      "enriched": "63174347a24e59e758daa07da51d122c781ad8ce380d14d4f262f4626deb8df0",
+      "enriched": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
       "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
-      "manual_review": "4bdc20a36603f5f915998b1d61c0ef28530d63243ba7c8a57cf3f2308f4c0b6a",
-      "validation": "9accc9b553fb42656d784e9876928120c96dee9960832471bf35c6215637e73b",
-      "asset_manifest": "e11557659ae003ce3df87f4783bf39694fa54b128cdde463413808584bb4fed9"
+      "manual_review": "cc07d590a227038f9a4f6285939341086038eaed555ce032103639d1dc38c85d",
+      "validation": "d9bf15493b87b0732a72ef25476bc754e126a63d8c141c683e3b528c5f46d2f0",
+      "asset_manifest": "f6969a3696d7131f7c815c4b10d581612801e869effc96c4b90370233dc33100"
     }
   }
 }

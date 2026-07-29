@@ -3,14 +3,14 @@
   "version": "v1-qa02",
   "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
   "branch": "data/busan-enrichment-v1",
-  "created_at": "2026-07-28T09:33:33.464655Z",
+  "created_at": "2026-07-29T03:44:16.470799Z",
   "total_candidates": 1642,
   "assets": [
     {
       "id": "enriched_candidates",
       "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
-      "sha256": "63174347a24e59e758daa07da51d122c781ad8ce380d14d4f262f4626deb8df0",
-      "bytes": 5155477,
+      "sha256": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+      "bytes": 5155460,
       "row_count": 1642
     },
     {
@@ -23,15 +23,15 @@
     {
       "id": "manual_review",
       "path": "data/tourapi/enriched/busan/busan-manual-review-v1.jsonl",
-      "sha256": "4bdc20a36603f5f915998b1d61c0ef28530d63243ba7c8a57cf3f2308f4c0b6a",
-      "bytes": 399605,
-      "row_count": 988
+      "sha256": "cc07d590a227038f9a4f6285939341086038eaed555ce032103639d1dc38c85d",
+      "bytes": 400002,
+      "row_count": 989
     },
     {
       "id": "validation_report",
       "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
-      "sha256": "9accc9b553fb42656d784e9876928120c96dee9960832471bf35c6215637e73b",
-      "bytes": 7362
+      "sha256": "d9bf15493b87b0732a72ef25476bc754e126a63d8c141c683e3b528c5f46d2f0",
+      "bytes": 8869
     }
   ],
   "coverage_summary": {

@@ -4,7 +4,7 @@
   "branch": "data/busan-enrichment-v1",
   "base_result_commit": "84f1531",
   "ssot_version": "1.1",
-  "run_ts": "2026-07-28T09:33:33.464655Z",
+  "run_ts": "2026-07-29T03:44:16.470799Z",
   "total_candidates": 1642,
   "corrections_applied": {
     "hours_from_ic": {
@@ -12,11 +12,11 @@
       "source": "integrated_candidates.hours"
     },
     "restaurant_branch_cleared": 654,
-    "kto_en_linked": 43
+    "kto_en_linked": 42
   },
   "coverage": {
     "english_name_before": 677,
-    "english_name_after": 720,
+    "english_name_after": 719,
     "description_before": 687,
     "description_after": 687,
     "district_before": 1331,
@@ -35,7 +35,7 @@
   "review_flags_after": {
     "needs_arrival_verification": 1642,
     "needs_hours": 1071,
-    "needs_translation": 922,
+    "needs_translation": 923,
     "needs_restaurant_branch": 67,
     "needs_image": 136,
     "needs_content": 955,
@@ -44,7 +44,7 @@
   },
   "translation_unresolved_reasons": {
     "en_source_key_not_in_batch": 11,
-    "kto_no_bijective_en_link": 600,
+    "kto_no_bijective_en_link": 601,
     "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311
   },
   "content_unresolved_reasons": {
@@ -52,16 +52,41 @@
     "description_not_in_normalized_source": 1,
     "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311
   },
-  "visitbusan_content_only_311": {
-    "status": "CURRENT_CANONICAL_INPUT_UNAVAILABLE",
-    "note": "VisitBusanContent has 0 records in batch_normalized; official data not absent but not in current selected canonical input"
+  "hours_reconciliation": {
+    "ic_candidates_total": 1642,
+    "hours_field_empty": 1024,
+    "hours_field_nonempty_raw": 618,
+    "hours_valid_applied": 571,
+    "hours_filtered_out": 47,
+    "filter_reasons": {
+      "too_short_le3": 47
+    },
+    "note": "filtered_out includes placeholder values (0, N/A, 없음, 미등록) and strings ≤3 chars"
+  },
+  "needs_content_955_breakdown": {
+    "total": 955,
+    "kto_description_null": 643,
+    "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311,
+    "description_not_in_normalized_source": 1,
+    "detail_by_reason": {
+      "kto_description_null": 643,
+      "description_not_in_normalized_source": 1,
+      "CURRENT_CANONICAL_INPUT_UNAVAILABLE": 311
+    },
+    "note": "KTO KorService2 description is null in batch_normalized; VisitBusanContent-only 311 candidates have no records in current canonical input (batch_normalized)"
+  },
+  "visitbusan_content_units_clarification": {
+    "candidates_vc_only_311": "311 = candidate count where ALL linked_source_keys are VisitBusanContent (no other batch_normalized data)",
+    "source_keys_vc_673": "673 = total VisitBusanContent source key count across all linkage rows (some candidates have VB keys PLUS other keys)",
+    "status_for_311": "CURRENT_CANONICAL_INPUT_UNAVAILABLE",
+    "note": "VisitBusanContent has 0 records in batch_normalized; data not absent globally but not in current selected canonical input"
   },
   "source_reconciliation": {
     "canonical_source_keys": 2004,
     "visitbusan_content_keys_not_in_batch": 673,
     "resolving_ko_source_keys": 1331,
     "en_derivation_additions": 677,
-    "kto_en_link_injections": 43,
+    "kto_en_link_injections": 42,
     "total_source_facts": 2008,
     "formula": "1331 KO + 677 EN = 2008",
     "reconciliation_pass": true
@@ -182,10 +207,11 @@
   },
   "kto_en_link_algorithm": {
     "method": "coordinate_distance_le_20m_bijective_1to1",
-    "title_filter": "Korean char Jaccard >= 0.3 OR exact match in EN parenthetical",
-    "bijective_candidates": 52,
-    "approved": 43,
-    "rejected": 9
+    "title_filter": "Korean char Jaccard >= 0.5 OR exact match in EN parenthetical (raised from 0.3 to exclude 부산영화의전당↔BIFF false positive)",
+    "false_positive_excluded": "KorService2:2456837 부산영화의전당 ↔ EngService2 Busan International Film Festival (j=0.44, entity_type_conflict: facility vs event)",
+    "bijective_candidates_before_title_filter": 52,
+    "approved": 42,
+    "rejected_false_positive_or_low_j": 10
   },
   "validation_checks": {
     "total_1642": true,
