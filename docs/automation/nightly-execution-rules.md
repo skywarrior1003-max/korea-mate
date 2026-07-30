@@ -185,6 +185,7 @@
 - **정규화**: raw 합계 ≥ normalized 합계 (중복 제거 반영), normalized 합계 > 0, 필수 컬럼 존재
 - **매칭**: match CSV 행 수 = normalized 합계, confidence 값이 허용 목록(high/manual_review/no_match) 이내, 경로가 `data/tourapi/` 하위
 - **집계**: auto_ready + manual_review + unresolved = 활성 후보 합계, 장소당 대표 사진 최대 1장, 결정성(동일 입력 → 동일 출력)
+- **보강 (⑥~⑪단계)**: candidate/source/join 급락 탐지, 좌표 sanity bounds 검증, invalid 좌표 + arrival_resolved=true 금지, unresolved_reason 미기록 FAIL → `schema-independent-enrichment-rules.md` § K · § N · § O · § R 적용
 
 ### 파이프라인 Checkpoint
 

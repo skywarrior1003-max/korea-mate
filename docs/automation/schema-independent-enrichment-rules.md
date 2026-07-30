@@ -1,6 +1,7 @@
 # Schema-Independent Enrichment 규칙
 
-**문서 버전**: 1.0  
+**문서 버전**: 1.1  
+**최종 수정**: 2026-07-30 (TASK-DATA-QUALITY-RULES-UPGRADE-V1)  
 **최초 작성**: 2026-07-29  
 **적용 범위**: GoKoreaMate 전체 도시의 schema-independent enrichment 단계  
 **상위 문서**: `docs/automation/nightly-execution-rules.md`  
@@ -9,6 +10,9 @@
 
 > 이 규칙은 부산에서 검증된 절차를 도시 공통 기준으로 일반화한 것이다.  
 > 도시별 임계값(좌표 거리, 제목 유사도 등)은 이 문서와 별도로 도시별 표본 검증 후 확정한다.
+
+> **이 문서는 § B(데이터 상태 구분), § E(장소 동일성), § F(음식점 지점), § M(누락 원인 세분화)의 공통 SSOT다.**  
+> 장비별 운영 규칙에서는 이 문서를 교차 참조하고, 규칙을 중복 작성하지 않는다.
 
 ---
 
@@ -268,6 +272,178 @@ IC.hours 비어 있지 않음 (raw):  N건
 - DB·migration 변경 0
 
 코드 내부 상태 일치만 확인하지 않는다. **위험 표본으로 실제 판정 정확성을 검증한다.**
+
+---
+
+## L. 복구 우선 순서
+
+`정보 없음` 판정 전에 아래 순서로 확인하고, 실제로 확인한 원천을 기록한다.
+
+1. **기존 candidate 확인** — candidate 내 기존 필드 값
+2. **기존 normalized 확인** — batch_normalized 해당 source record
+3. **기존 raw 확인** — raw API 응답 파일
+4. **parser·normalizer 누락 확인** — 값이 raw에 있는데 normalized에 없으면 parser 문제
+5. **source key·join 오류 확인** — 잘못된 source key로 join 실패 여부
+6. **기존 공식 원천 재결합** — `linked_source_keys` 전개, 다국어 source 재연결
+7. **승인 상세 API** — detailCommon2·detailIntro2·detailImage2 (미수집이면 `CURRENT_INPUT_UNAVAILABLE`)
+8. **공식 관광 포털** — VisitBusan·공식 관광 사이트 (사실 확인 보조)
+9. **공식 홈페이지** — 해당 장소·기관 공식 홈페이지 (사실 확인 보조)
+10. **지도 서비스 교차확인** — Naver Maps·Google Maps (단독 원천 금지)
+11. **그래도 불명확하면** — review flag + `unresolved_reason` 기록 후 다음 candidate 계속
+
+위 순서 없이 즉시 `정보 없음`으로 판정하거나 candidate를 제외하지 않는다.
+
+---
+
+## M. 누락 원인 세분화
+
+기존 5가지 상태(§ B)를 `unresolved_reason` 서브타입으로 세분화한다.  
+**새로운 최상위 상태를 추가하지 않는다** — 기존 상태를 정확히 쓰고 이유를 기록한다.
+
+| 상태 | unresolved_reason 예시 | 의미 |
+|---|---|---|
+| `UNRESOLVED` | `EXTRACTION_FAILED` | 값이 raw에 있으나 parser가 추출 실패 |
+| `UNRESOLVED` | `JOIN_FAILED` | source는 있으나 candidate-source join 실패 |
+| `UNRESOLVED` | `SOURCE_KEY_MISMATCH` | source key 형식 오류 또는 다른 서비스 key 혼용 |
+| `UNRESOLVED` | `NORMALIZER_FIELD_MISSING` | normalizer가 해당 필드를 출력하지 않음 |
+| `CURRENT_INPUT_UNAVAILABLE` | — | 현재 canonical 입력에 없음 (전역 부재 아님) |
+| `NOT_APPLICABLE` | — | 해당 category·type에 이 필드가 적용되지 않음 |
+| `VERIFIED` (empty) | — | 원천에 실제로 값이 없음이 확인됨 |
+
+**금지**: `UNRESOLVED` + 이유 미기록 — 이유를 알 수 없어도 조사한 원천을 기록  
+**금지**: `CURRENT_INPUT_UNAVAILABLE`을 전역 부재로 기록  
+**금지**: `NOT_APPLICABLE`을 조사 없이 기본값으로 사용
+
+**다음 조치**: `EXTRACTION_FAILED`·`JOIN_FAILED`·`SOURCE_KEY_MISMATCH` → 다음 수집 전 parser·join 수정  
+**공개 영향**: `CURRENT_INPUT_UNAVAILABLE`은 공개를 차단하지 않음 — 수집 후 재판정
+
+---
+
+## N. 좌표 자동검증
+
+enrichment Validation Gate에 다음 좌표 검사를 포함한다.
+
+| 탐지 조건 | 판정 |
+|---|---|
+| lat 또는 lng null | `PASS_WITH_WARNINGS` + `needs_arrival` |
+| 숫자 파싱 실패 | `FAIL` |
+| lat == lng (동일값 오류) | `PASS_WITH_WARNINGS` + `needs_arrival` |
+| 0, 0 (기본값 오류) | `FAIL` + `needs_arrival` |
+| 위도·경도 역전 의심 (lng가 lat 범위 30~40 내, lat이 lng 범위 125~132 내) | `PASS_WITH_WARNINGS` + `needs_arrival` |
+| 도시 sanity bounds 이탈 (아래 참조) | `PASS_WITH_WARNINGS` + `needs_arrival` |
+| 복수 source 간 거리 > 500m | `PASS_WITH_WARNINGS` |
+| invalid 좌표인데 `arrival_resolved=true` | `FAIL` |
+
+**부산 sanity bounds (오류 탐지 전용)**  
+lat: 34.88 ~ 35.39 / lng: 128.74 ~ 129.31
+
+**이 bounds의 용도 제한**: district 자동 확정·identity 확정·정확한 입구 판정에 사용 금지. 오류 가능성 탐지에만 사용.
+
+**부산 회귀 Fixture 연동**  
+`busan-F-00341` (lat == lng = 35.195267, 동일값 오류) · `busan-K-00674` (lat=19.69, lng=117.99, bounds 이탈)  
+두 건 모두 자동 탐지 후 `needs_arrival` flag 자동 부여, `arrival_resolved=false` 강제.  
+자동 테스트: `data/tourapi/validation/busan-regression-fixtures-v1.json` Case 7·8
+
+---
+
+## O. 이상 탐지 패턴
+
+아래 패턴 탐지 시 Validation Gate에서 경고 또는 중단한다.  
+**수치 임계값은 도시별 baseline을 사전 표본으로 설정한다. 부산 수치를 전 도시 고정값으로 복사하지 않는다.**
+
+| 패턴 | 탐지 조건 | 판정 |
+|---|---|---|
+| 전건 동일 review flag | 특정 flag가 candidate 100% | `PASS_WITH_WARNINGS` — 규칙 오류 가능 |
+| EN 원천 있는데 영어명 0 | EN source row 존재 + 영어명 확보율 0% | `PASS_WITH_WARNINGS` |
+| raw hours 있는데 추출 0 | hours 비어있지 않음 N건 → 유효 판정 0건 | `FAIL` |
+| 음식점 전건 branch flag | restaurant category 전건 `needs_restaurant_branch` | `PASS_WITH_WARNINGS` |
+| candidate 전건 arrival verification | 전건 `needs_arrival_verification` | `PASS_WITH_WARNINGS` |
+| description 전부 null | description 확보율 0% | `PASS_WITH_WARNINGS` |
+| candidate/source/join 급락 | 직전 실행 대비 10% 초과 감소 | `FAIL` |
+| source 있는데 unresolved_reason 미기록 | source row 존재 + UNRESOLVED + reason 없음 | `FAIL` |
+| invalid 좌표 + arrival_resolved=true | § N의 탐지 조건 + `arrival_resolved=true` | `FAIL` |
+
+---
+
+## P. 공개 가능 필수 게이트
+
+기존 `review_status` · `review_flags` · readiness 구조(SSOT v1.1 § 6·7)를 사용한다.  
+**새로운 병렬 상태를 만들지 않는다.**
+
+| 공개 상태 | 기존 필드 조건 |
+|---|---|
+| **공개 가능** | `review_status='approved'`, `catalog_ready=true`, `is_published=true`, 차단 flag 없음 |
+| **조건부 공개** | 위 조건 충족 + 비차단 flag 존재 (`needs_arrival_verification` · `needs_hours`) |
+| **수집 대기** | `review_status='collected'` + `needs_content` flag (KTO detailCommon2 미수집 등) |
+| **검토 대기** | `review_status='in_review'` |
+| **보류** | `review_status='rejected'` 또는 차단 flag + 단기 해소 불가 |
+
+**차단 flag**: `needs_identity` · `needs_translation` · `needs_arrival` · `needs_district` · `needs_restaurant_branch`  
+차단 flag가 하나라도 있으면 다른 품질 지표로 상쇄 불가. `catalog_ready = false` 유지.
+
+---
+
+## Q. 설명·이미지 품질 최소 기준
+
+### 설명 최소 기준
+
+값 존재 여부만 검사하지 않는다. 다음 중 최소 하나를 포함해야 한다:
+
+1. **무엇인지** — 장소·행사·시설의 성격
+2. **대표 특징** — 구체적 특징(위치·역사·체험·메뉴 등)
+3. **방문 가치 또는 체험** — 방문 이유
+
+**자동 탐지 대상 (review 필요)**: 한국어 30자 미만 description / 장소명만 반복하는 문장 / 자기 참조 순환 문장
+
+**분리 필수**: `source_fact` (원천 원문)과 `proposed_description` (요약·편집본)은 별도 필드로 관리. 원문을 요약본으로 덮어쓰지 않는다.
+
+### 이미지 최소 기준
+
+- `place_match_status`: `verified` 또는 `likely`
+- 다른 지점 이미지 아님 (음식점 지점 확인 후 적용)
+- 로고·배너·지도 단독 이미지 제외
+- `rights_status`: `rights_confirmed` 또는 `operational_assumed`
+- `original_url` 또는 `storage_path` 비어있지 않음 (SSOT v1.1 § 12 CHECK)
+
+**이미지 없음 ≠ 원천 미수집**: `image_missing` 상태와 `source_exhausted` 상태를 구분 유지한다.
+
+---
+
+## R. 양방향 Reconciliation
+
+enrichment 완료 후 양방향으로 검증한다.
+
+### A. candidate → source 방향
+
+- 존재하지 않는 source key 참조: `FAIL`
+- 다중 source 충돌 (동일 필드, 서로 다른 값): § A 우선순위 적용 후 기록 필수
+- provenance 누락 (`collected_at` · `source_key` 없음): `FAIL`
+
+### B. source → candidate 방향
+
+- candidate에 연결되지 않은 orphan source: `PASS_WITH_WARNINGS`
+- 동일 source가 여러 candidate에 연결: 복합시설 외 `FAIL`
+- 직전 실행 대비 orphan 급증: `FAIL` — join 로직 오류 가능
+
+**`source_count = 0`은 오류가 아니다.** VB direct embed(VisitBusan 웹 직접 수집)는 source_facts를 경유하지 않아 `source_count=0`이 정상이다. `primary_source_ref` + `primary_source_file`로 별도 추적한다.
+
+---
+
+## S. 다음 도시 진입 게이트
+
+새로운 도시 작업 시작 전 아래 조건을 **전부** 충족한다.
+
+| 조건 | 기준 |
+|---|---|
+| raw 수량만으로 이동 금지 | publishability 확인 없이 "N건 수집 완료"만으로 다음 도시 시작 금지 |
+| publishability 기준 확정 | 이 문서 § P 기준 확정 후 진입 |
+| source coverage reconciliation | § R의 A·B 검증 PASS |
+| 부산 회귀 fixture PASS | `data/tourapi/validation/busan-regression-fixtures-v1.json` 전건 PASS |
+| 공개 가능 수 실측 | `catalog_ready=true` 예상 건수 실측 확인 |
+| unresolved 원인 분류 | § M의 `unresolved_reason` 기준 전건 분류 |
+| 고위험 표본 수동 QA | geo_title_category 연결 건·음식점 지점 건 포함 20건 이상 |
+| 도시별 threshold 사전 표본 | 좌표 거리·Jaccard 임계값 20~50건 표본 확인 |
+| 부산 임계값 무비판 복사 금지 | ≤20m·Jaccard≥0.5 등 부산 검증값을 다른 도시에 그대로 사용 금지 |
 
 ---
 
