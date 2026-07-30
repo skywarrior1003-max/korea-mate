@@ -4,7 +4,7 @@
  *
  * Modes:
  *   --sample               pilot 15건 (허용)
- *   --full --allow-full    전체 수집 (CALL_LIMIT_STATUS='VERIFIED' 필요)
+ *   --full --allow-full    전체 수집 (kto-detail-call-limit.json status=VERIFIED 필요)
  *   --dry-run              API 호출 없이 대상·skip·신규 호출 수 출력
  *   --resume               checkpoint에서 이어서 시작 (full mode only)
  *   --manifest <path>      full 모드 target manifest 경로
@@ -57,12 +57,32 @@ const CONSECUTIVE_FAILURE_LIMIT = 5;
 const CHECKPOINT_INTERVAL       = 50;
 
 // ── 호출 한도 상태 ────────────────────────────────────────────────────────────
+// 설정 파일: data/tourapi/config/kto-detail-call-limit.json
 // 'VERIFIED'   : 공식 한도 확인 완료 → full 실행 허용
 // 'UNVERIFIED' : 미확인 → full 실행 차단
 //   확인 방법: data.go.kr → 마이페이지 → 개발계정 관리
 //              → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량
-// 확인 후 'VERIFIED'로 변경한다. 임의 숫자 기본값 입력 금지.
-const CALL_LIMIT_STATUS = 'UNVERIFIED';
+// 확인 후 kto-detail-call-limit.json의 status 필드를 'VERIFIED'로 변경한다.
+const _clCfgPath = path.join(ROOT, 'data/tourapi/config/kto-detail-call-limit.json');
+let _clCfg = { status: 'UNVERIFIED', daily_limit: null, verified_at: null };
+try {
+  const _clRaw = fs.readFileSync(_clCfgPath, 'utf8');
+  const _clParsed = JSON.parse(_clRaw);
+  if (_clParsed._schema === 'kto-detail-call-limit-v1' && _clParsed.status) {
+    _clCfg = _clParsed;
+  } else {
+    console.warn('[CALL_LIMIT] config schema 불일치 — UNVERIFIED 유지');
+  }
+} catch (e) {
+  if (e.code !== 'ENOENT') {
+    console.warn(`[CALL_LIMIT] config 읽기 실패: ${e.message} — UNVERIFIED 유지`);
+  }
+}
+if (_clCfg.status === 'VERIFIED' && !(_clCfg.verified_at && _clCfg.daily_limit > 0)) {
+  console.error('[CALL_LIMIT] VERIFIED 설정 불완전 (verified_at·daily_limit 필수) — UNVERIFIED 처리');
+  _clCfg.status = 'UNVERIFIED';
+}
+const CALL_LIMIT_STATUS = _clCfg.status;
 
 // ── CLI 파싱 ──────────────────────────────────────────────────────────────────
 const args        = process.argv.slice(2);
@@ -89,7 +109,7 @@ if (ALLOW_FULL && !FULL_MODE) {
 if (!SAMPLE_MODE && !FULL_MODE) {
   console.error('Usage: node tourapi-busan-detail.mjs [options]');
   console.error('  --sample                    pilot 15건 (허용)');
-  console.error('  --full --allow-full         전체 수집 (CALL_LIMIT_STATUS=VERIFIED 필요)');
+  console.error('  --full --allow-full         전체 수집 (kto-detail-call-limit.json status=VERIFIED 필요)');
   console.error('  --dry-run                   API 호출 없이 계획 출력');
   console.error('  --resume                    checkpoint에서 재개 (full only)');
   console.error('  --manifest <path>           full 모드 target manifest');
@@ -103,7 +123,7 @@ if (FULL_MODE && ALLOW_FULL && !DRY_RUN && CALL_LIMIT_STATUS !== 'VERIFIED') {
   console.error('  official daily call limit is not verified.');
   console.error('  Confirm at: data.go.kr → 마이페이지 → 개발계정 관리');
   console.error('              → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량');
-  console.error("  Then set CALL_LIMIT_STATUS = 'VERIFIED' in this script.");
+  console.error("  Then update status to 'VERIFIED' in: data/tourapi/config/kto-detail-call-limit.json");
   process.exit(1);
 }
 

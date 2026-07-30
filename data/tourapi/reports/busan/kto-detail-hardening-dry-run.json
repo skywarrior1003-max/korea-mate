@@ -1,7 +1,7 @@
 {
   "report_id": "kto-detail-hardening-dry-run",
   "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
-  "run_ts": "2026-07-29T08:09:54.373Z",
+  "run_ts": "2026-07-30T04:07:22.289Z",
   "branch": "data/busan-enrichment-v1",
   "mode": "FULL",
   "dry_run": true,

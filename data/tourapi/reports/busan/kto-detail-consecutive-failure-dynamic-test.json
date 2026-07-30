@@ -1,0 +1,287 @@
+{
+  "report_id": "kto-detail-consecutive-failure-dynamic-test",
+  "task": "TASK-BUSAN-KTO-DETAIL-FULL-EXECUTION-GATE",
+  "run_ts": "2026-07-30T04:07:14.113Z",
+  "consecutive_failure_limit": 5,
+  "external_api_calls": 0,
+  "verdict": "PASS",
+  "scenarios": [
+    {
+      "scenario_id": "scenario-A",
+      "description": "연속 실패 5회 → 5번째 직후 안전 중단",
+      "pass": true,
+      "errors": [],
+      "result": {
+        "callsMade": 5,
+        "abortedAfterCall": 5,
+        "failureList_len": 5
+      },
+      "expected": {
+        "abortedAfterCall": 5,
+        "callsMade": 5,
+        "calls_after_abort": 0,
+        "exit_code": 1,
+        "checkpoint_saved": true,
+        "failure_list_len": 5
+      },
+      "events": [
+        {
+          "seq": 1,
+          "content_id": "A-001",
+          "type": "failure",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 2,
+          "content_id": "A-002",
+          "type": "failure",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 3,
+          "content_id": "A-003",
+          "type": "failure",
+          "counter_after": 3,
+          "fetch": true
+        },
+        {
+          "seq": 4,
+          "content_id": "A-004",
+          "type": "failure",
+          "counter_after": 4,
+          "fetch": true
+        },
+        {
+          "seq": 5,
+          "content_id": "A-005",
+          "type": "failure",
+          "counter_after": 5,
+          "fetch": true
+        },
+        {
+          "seq": 5,
+          "content_id": "A-005",
+          "type": "ABORT",
+          "note": "checkpoint saved (simulated)",
+          "fetch": false
+        }
+      ]
+    },
+    {
+      "scenario_id": "scenario-B",
+      "description": "중간 성공으로 counter 초기화 → 이후 4회 실패로 중단 없음",
+      "pass": true,
+      "errors": [],
+      "result": {
+        "callsMade": 8,
+        "abortedAfterCall": null,
+        "failureList_len": 7
+      },
+      "expected": {
+        "abortedAfterCall": null,
+        "callsMade": 8,
+        "exit_code": 0,
+        "failure_list_len": 7,
+        "counter_at_end": 4
+      },
+      "events": [
+        {
+          "seq": 1,
+          "content_id": "B-001",
+          "type": "failure",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 2,
+          "content_id": "B-002",
+          "type": "failure",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 3,
+          "content_id": "B-003",
+          "type": "failure",
+          "counter_after": 3,
+          "fetch": true
+        },
+        {
+          "seq": 4,
+          "content_id": "B-004",
+          "type": "success",
+          "counter_after": 0,
+          "fetch": true
+        },
+        {
+          "seq": 5,
+          "content_id": "B-005",
+          "type": "failure",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 6,
+          "content_id": "B-006",
+          "type": "failure",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 7,
+          "content_id": "B-007",
+          "type": "failure",
+          "counter_after": 3,
+          "fetch": true
+        },
+        {
+          "seq": 8,
+          "content_id": "B-008",
+          "type": "failure",
+          "counter_after": 4,
+          "fetch": true
+        }
+      ]
+    },
+    {
+      "scenario_id": "scenario-C",
+      "description": "5회 연속 타임아웃 → 동일 중단 (timeout = failure)",
+      "pass": true,
+      "errors": [],
+      "result": {
+        "callsMade": 5,
+        "abortedAfterCall": 5,
+        "failureList_len": 5
+      },
+      "expected": {
+        "abortedAfterCall": 5,
+        "callsMade": 5,
+        "calls_after_abort": 0,
+        "exit_code": 1,
+        "checkpoint_saved": true,
+        "failure_list_len": 5
+      },
+      "events": [
+        {
+          "seq": 1,
+          "content_id": "C-001",
+          "type": "timeout",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 2,
+          "content_id": "C-002",
+          "type": "timeout",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 3,
+          "content_id": "C-003",
+          "type": "timeout",
+          "counter_after": 3,
+          "fetch": true
+        },
+        {
+          "seq": 4,
+          "content_id": "C-004",
+          "type": "timeout",
+          "counter_after": 4,
+          "fetch": true
+        },
+        {
+          "seq": 5,
+          "content_id": "C-005",
+          "type": "timeout",
+          "counter_after": 5,
+          "fetch": true
+        },
+        {
+          "seq": 5,
+          "content_id": "C-005",
+          "type": "ABORT",
+          "note": "checkpoint saved (simulated)",
+          "fetch": false
+        }
+      ]
+    },
+    {
+      "scenario_id": "scenario-D",
+      "description": "skip(VALID_EXISTS)으로 counter 초기화 → 이후 3회 실패로 중단 없음",
+      "pass": true,
+      "errors": [],
+      "result": {
+        "callsMade": 6,
+        "abortedAfterCall": null,
+        "failureList_len": 6
+      },
+      "expected": {
+        "abortedAfterCall": null,
+        "callsMade": 6,
+        "exit_code": 0,
+        "failure_list_len": 6,
+        "counter_at_end": 3
+      },
+      "events": [
+        {
+          "seq": 1,
+          "content_id": "D-001",
+          "type": "failure",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 2,
+          "content_id": "D-002",
+          "type": "failure",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 3,
+          "content_id": "D-003",
+          "type": "failure",
+          "counter_after": 3,
+          "fetch": true
+        },
+        {
+          "seq": 4,
+          "content_id": "D-004",
+          "type": "skip",
+          "counter_after": 0,
+          "fetch": false
+        },
+        {
+          "seq": 5,
+          "content_id": "D-005",
+          "type": "failure",
+          "counter_after": 1,
+          "fetch": true
+        },
+        {
+          "seq": 6,
+          "content_id": "D-006",
+          "type": "failure",
+          "counter_after": 2,
+          "fetch": true
+        },
+        {
+          "seq": 7,
+          "content_id": "D-007",
+          "type": "failure",
+          "counter_after": 3,
+          "fetch": true
+        }
+      ]
+    }
+  ],
+  "verification_notes": [
+    "checkConsecutiveFailure()는 counter >= limit 판정 (limit=5이면 5번째 실패에서 즉시 중단)",
+    "timeout은 failure와 동일하게 처리 (별도 분기 없음)",
+    "skip(VALID_EXISTS)은 fetch를 실행하지 않고 counter를 0으로 초기화",
+    "success 또는 skip 후 counter 초기화 — detailIntro2/Common2/Image2 각 루프 시작 시 counter=0 reset"
+  ]
+}
