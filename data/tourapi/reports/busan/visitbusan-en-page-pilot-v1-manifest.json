@@ -5,7 +5,7 @@
   "verdict": "PASS",
   "branch": "data/busan-enrichment-v1",
   "head_before": "a013b45",
-  "head_after": null,
+  "head_after": "d591152",
   "api_calls": 0,
   "http_requests": 31,
   "data_modified": false,
@@ -22,5 +22,7 @@
   "access_blocked": 3,
   "ssr_collectible": 180,
   "experience_js_required": 93,
-  "expand_ssr_recommended": true
+  "expand_ssr_recommended": true,
+  "raw_html_gitignored": true,
+  "raw_html_note": "data/tourapi/raw/ is git-ignored; 30 HTML pilot files stored locally only"
 }
