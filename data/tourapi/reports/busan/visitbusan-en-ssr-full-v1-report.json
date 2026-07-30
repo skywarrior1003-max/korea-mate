@@ -1,0 +1,56 @@
+{
+  "report_id": "visitbusan-en-ssr-full-v1",
+  "task": "TASK-VISITBUSAN-EN-SSR-FULL-V1",
+  "run_ts": "2026-07-30T07:00:15.315728+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "b7cd8c4",
+  "head_after": null,
+  "target_count": 183,
+  "processed_count": 183,
+  "ssr_category_breakdown": {
+    "attraction": 173,
+    "food": 10
+  },
+  "collection_results": {
+    "ko_page_success": 183,
+    "en_page_success": 183,
+    "http_requests_total": 367
+  },
+  "en_content_results": {
+    "en_title_found": 177,
+    "en_title_rate_pct": 96.7,
+    "en_useful": 144,
+    "en_useful_rate_pct": 78.7,
+    "en_image_found": 183,
+    "address_ko_found": 0
+  },
+  "status_distribution": {
+    "PARSE_FAILED": 6,
+    "EN_USEFUL": 144,
+    "EN_DESCRIPTION_WEAK": 9,
+    "EN_TITLE_ONLY": 24
+  },
+  "identity_check": {
+    "confirmed": 183,
+    "conflict": 0,
+    "unverifiable": 0
+  },
+  "needs_translation_impact": {
+    "records_with_needs_translation": 183,
+    "en_title_found_for_needs_translation": 177,
+    "note": "EN title found = needs_translation potentially resolvable after enrichment reflux"
+  },
+  "pass_criteria": {
+    "no_candidate_data_modified": true,
+    "no_secret_stored": true,
+    "no_groundless_id_link": true,
+    "no_push": true,
+    "request_count_recorded": true
+  },
+  "data_modified": false,
+  "push": false,
+  "raw_html_gitignored": true,
+  "raw_dir": "data\\tourapi\\raw\\busan\\visitbusan-en-ssr-full",
+  "parsed_sha256": "f9def6566fc66f7fd93276782190777a6b8f052c62762a261817a62e1ae708d5"
+}
