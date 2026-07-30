@@ -1,0 +1,27 @@
+{
+  "report_id": "busan-publishability-v2-post-vb-en-ssr",
+  "gate_version": "BUSAN_PUBLISHABILITY_V2_POST_VB_EN_SSR",
+  "based_on": "BUSAN_PUBLISHABILITY_BASELINE_V1 (identical gate rules)",
+  "task": "TASK-VISITBUSAN-EN-SSR-APPLY-V1",
+  "run_ts": "2026-07-30T07:33:16.632633+00:00",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 993,
+    "pending_review": 72,
+    "publishable": 291
+  },
+  "v1_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 993,
+    "pending_review": 72,
+    "publishable": 291
+  },
+  "delta_vs_v1": {
+    "pending_review": 0,
+    "publishable_with_caveat": 0,
+    "pending_source": 0,
+    "publishable": 0
+  },
+  "gate_change_note": "description_gate still uses has_ko_description (unchanged). VB EN candidates still blocked by description_gate despite EN description applied. name_en_gate improved for 177 records but other gates remain blocking."
+}
