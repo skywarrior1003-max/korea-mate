@@ -1,0 +1,127 @@
+{
+  "fixture_id": "visitbusan-description-regression-fixtures-v1",
+  "task": "TASK-VISITBUSAN-DESCRIPTION-REGRESSION-FIXTURES",
+  "source_task": "TASK-VISITBUSAN-EXPERIENCE-DESCRIPTION-QA",
+  "created_at": "2026-07-30",
+  "branch": "data/busan-enrichment-v1",
+  "purpose": "has_visit_value() 및 향후 설명 검증 로직 개선 시 회귀 테스트용 기준 사례",
+  "validator_function": "has_visit_value(text, title) in scripts/run-visitbusan-experience-en-full-apply-v1.py",
+  "expected_outcome": "모든 5건: has_visit_value() == False (TOO_GENERIC으로 분류되어야 함)",
+
+  "auto_detection_summary": {
+    "has_visit_value_detection_rate": "0/5",
+    "has_visit_value_missed_all": true,
+    "note": "has_visit_value()는 5건 모두 True를 반환하여 EN_USEFUL로 오분류. 이후 QA 단계에서 별도 generic_start 휴리스틱으로 3건 추가 탐지, 나머지 2건은 수동 감사로만 확인.",
+    "detection_by_stage": {
+      "has_visit_value_True_all_5": ["busan-VB-482", "busan-VB-1860", "busan-VB-839", "busan-VB-1157", "busan-VB-446"],
+      "qa_generic_start_heuristic_caught": ["busan-VB-482", "busan-VB-839", "busan-VB-1157"],
+      "manual_audit_only": ["busan-VB-1860", "busan-VB-446"]
+    }
+  },
+
+  "fixtures": [
+    {
+      "candidate_id": "busan-VB-482",
+      "title_ko": "일상 속 쉼표를 찍는 시간, 템플스테이",
+      "en_title": "Templestay, a time to take a break from your daily",
+      "en_description": "What modern people dream of and long for is to take a rest, to escape from the hustle and bustle of daily life that repeats itself like a wheel. If you can",
+      "en_description_len": 155,
+      "expected_status": "TOO_GENERIC",
+      "expected_has_visit_value": false,
+      "failure_pattern": "truncated_generic_hook",
+      "reason": "시설명 미언급. 'take a rest, escape from the hustle and bustle' 일반 휴식 훅. 문장 중간 절단('If you can'으로 끝남). 방문 가치 전달 불가.",
+      "has_visit_value_actual": true,
+      "has_visit_value_miss_reason": "len=155(≥150), 'modern' 키워드 매칭으로 True 반환. 시설명·위치 부재를 함수가 판단하지 못함.",
+      "qa_caught_by": "generic_start heuristic + manual audit",
+      "qa_verdict": "TOO_GENERIC (수동 감사 확정)"
+    },
+    {
+      "candidate_id": "busan-VB-1860",
+      "title_ko": "월클 K-POP 아티스트 되는 '상상'",
+      "en_title": "Imagine Becoming a World Class K-POP Artist",
+      "en_description": "① I frequently listen to K-POP. ② I can feel SMP flowing through my veins.③ I often imagine dancing to K-POP beats. ④ I have imagined myself being a popular idol on stage.⑤ I have had a reality check while dancing in front of a mirror.If any of these apply to you, you are a true fan of K-POP!It a time for you to join a dance class at KT&G Sangsangmadang Dance Studio!",
+      "en_description_len": 369,
+      "expected_status": "TOO_GENERIC",
+      "expected_has_visit_value": false,
+      "failure_pattern": "checklist_venue_buried",
+      "reason": "체크리스트 형식 ①②③④⑤로 전체 80% 구성. 시설명(KT&G Sangsangmadang Dance Studio)이 마지막 42자에만 등장. 앞부분 전체가 일반 K-POP 팬 설문.",
+      "has_visit_value_actual": true,
+      "has_visit_value_miss_reason": "len=369(≥150), 'popular', 'class' 키워드 매칭. venue_position 미체크로 오탐.",
+      "qa_caught_by": "manual audit only",
+      "qa_verdict": "TOO_GENERIC (수동 감사 확정, 자동 전혀 미탐지)"
+    },
+    {
+      "candidate_id": "busan-VB-839",
+      "title_ko": "강물 따라 유유히 카약을 즐기다",
+      "en_title": "Enjoy Kayaking Down The River",
+      "en_description": "Every summer, you think about how you will beat the heat. You can't just stay indoors with the air conditioning on all the time, but you can't spend a fortune either, especially now that you have to plan your life with social distancing in mind. Although there aren't many options, there is one way to get out and enjoy the cool river breeze. Kayaking, how does that sound?",
+      "en_description_len": 373,
+      "expected_status": "TOO_GENERIC",
+      "expected_has_visit_value": false,
+      "failure_pattern": "no_venue_covid_dated",
+      "reason": "운영자·시설명 없음. COVID 사회적 거리두기 언급('social distancing in mind') — 구 정보. 'Kayaking, how does that sound?' 일반 권유로 마무리. 위치 특정 없음.",
+      "has_visit_value_actual": true,
+      "has_visit_value_miss_reason": "len=373(≥150), 'enjoy', 'special', 'river' 키워드 매칭. 시설명 부재·구식 정보를 함수가 판단하지 못함.",
+      "qa_caught_by": "generic_start heuristic + manual audit",
+      "qa_verdict": "TOO_GENERIC (수동 감사 확정)"
+    },
+    {
+      "candidate_id": "busan-VB-1157",
+      "title_ko": "부산에서 공해 없이 가을 타기",
+      "en_title": "Enjoying the fall without pollution in Busan",
+      "en_description": "From the blue skies to the sculpted clouds, fresh wind, and the deepening fall colors... Fall is truly in full swing, when nature's beauty is at its brightest. Just like the popular saying, one often gets the \"fall blues.\" One wonders, is there a way to break out of the blues and enjoy the things we have? It is now time to leave to a place where one can ride through an unforgettable memory.",
+      "en_description_len": 393,
+      "expected_status": "TOO_GENERIC",
+      "expected_has_visit_value": false,
+      "failure_pattern": "seasonal_poetry_no_facts",
+      "reason": "시설명 없음. 계절 감성 시적 표현만('blue skies', 'sculpted clouds', 'fall blues'). '기억 속을 달려라' 결말에 구체적 장소/프로그램 전무. en_title에 'Busan' 포함이지만 본문에 장소 특정 없음.",
+      "has_visit_value_actual": true,
+      "has_visit_value_miss_reason": "len=393(≥150), 'enjoy', 'popular' 키워드 매칭. 시적 표현과 실제 장소 정보를 구분하지 못함.",
+      "qa_caught_by": "generic_start heuristic + manual audit",
+      "qa_verdict": "TOO_GENERIC (수동 감사 확정)"
+    },
+    {
+      "candidate_id": "busan-VB-446",
+      "title_ko": "살아있음을 느껴라! 산악자전거 라이딩",
+      "en_title": "Feel alive with mountain biking!",
+      "en_description": "Mountain biking entails riding bicycles on off-road trails, such as rough hills and mountains. It makes you feel \"alive,\" an experience unachievable from other activities. Pedaling up a mountain can be harder than any other sport, but you will feel extremely thrilled as you fly down the mountain biking trail, enjoying the cool breeze.",
+      "en_description_len": 336,
+      "expected_status": "TOO_GENERIC",
+      "expected_has_visit_value": false,
+      "failure_pattern": "activity_description_no_venue",
+      "reason": "시설명/운영자 없음. 산악 자전거 활동 백과사전 설명('riding bicycles on off-road trails'). 위치 특정 없음.",
+      "has_visit_value_actual": true,
+      "has_visit_value_miss_reason": "len=336(≥150), 'experience', 'enjoy', 'mountain' 키워드 매칭. generic_start=False로 위험 신호도 미탐지. 수동 감사 없이는 발견 불가.",
+      "qa_caught_by": "manual audit only",
+      "qa_verdict": "TOO_GENERIC (수동 감사 확정, 자동 전혀 미탐지)"
+    }
+  ],
+
+  "detection_patterns": {
+    "has_visit_value_blind_spots": {
+      "description": "has_visit_value()가 탐지하지 못하는 패턴 전체 목록",
+      "patterns": [
+        "truncated_generic_hook: 문장 절단 + 일반 훅 (len≥150이면 통과)",
+        "checklist_venue_buried: 시설명이 마지막 절에만 등장, keyword는 앞부분에 풍부",
+        "no_venue_covid_dated: 시설명 없음, keyword('enjoy','river')로 오탐",
+        "seasonal_poetry_no_facts: 감성 시적 표현, keyword('popular','enjoy')로 오탐",
+        "activity_description_no_venue: 활동 설명 백과사전, keyword('mountain','experience')로 오탐"
+      ]
+    },
+    "future_improvement_ideas": [
+      "venue_position_check: 시설명(en_title 고유명사)이 전체 텍스트 첫 60% 내 등장 여부",
+      "venue_name_required: en_title의 대문자 고유명사가 본문에 1회 이상 등장 여부",
+      "checklist_penalty: ① ② ③ 등 번호 체크리스트 패턴 감지 시 WEAK 강등",
+      "sentence_topic_check: 첫 문장이 2인칭 질문('you think', 'you can')으로 시작하면 위험 신호"
+    ],
+    "note": "개선 아이디어는 문서화만. 현재 함수 로직 대규모 수정은 이 태스크 범위 외."
+  },
+
+  "regression_test_script": "scripts/test-visitbusan-description-regression-v1.py",
+  "regression_test_result": {
+    "run_at": "2026-07-30",
+    "passed": 0,
+    "failed": 5,
+    "interpretation": "5건 모두 has_visit_value() == True 반환 (예상 False). 이 fixtures는 함수 개선 후 탐지율이 얼마나 올라가는지 측정하는 기준선으로 사용."
+  }
+}
