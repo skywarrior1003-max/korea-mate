@@ -9,6 +9,7 @@ import {
   type CartItem,
   type EventItem,
 } from "@/lib/cart";
+import { getItemSourceKey } from "@/lib/place-identity";
 import EventDetailModal from "@/components/EventDetailModal";
 
 export default function CartDrawer() {
@@ -28,9 +29,10 @@ export default function CartDrawer() {
 
   if (items.length === 0) return null;
 
-  function handleRemove(e: React.MouseEvent, id: string) {
+  // 인자는 sourceKey 다 — id 로 지우면 같은 id 의 다른 장소까지 사라진다.
+  function handleRemove(e: React.MouseEvent, sourceKey: string) {
     e.stopPropagation();
-    removeFromCart(id);
+    removeFromCart(sourceKey);
   }
 
   function handleClearAll() {
@@ -88,7 +90,7 @@ export default function CartDrawer() {
             <ul className="overflow-y-auto flex-1 divide-y divide-gray-50">
               {items.map((item) => (
                 <li
-                  key={item.id}
+                  key={getItemSourceKey(item)}
                   onClick={() => setSelected(item)}
                   className="flex items-center gap-3 px-4 py-2.5 hover:bg-orange-50/40 transition-colors cursor-pointer group"
                 >
@@ -118,7 +120,7 @@ export default function CartDrawer() {
 
                   {/* 제거 버튼 — stopPropagation으로 모달 열기와 분리 */}
                   <button
-                    onClick={(e) => handleRemove(e, item.id)}
+                    onClick={(e) => handleRemove(e, getItemSourceKey(item))}
                     className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors text-base font-bold"
                     aria-label={`Remove ${item.shortName}`}
                   >

@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import { citySpotSourceKey } from "@/lib/place-identity";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -86,12 +87,12 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   useEffect(() => {
     setSaved(getFavorites().includes(eventId));
-    setInCart(isInCart(eventId));
+    setInCart(isInCart(citySpotSourceKey(spot.id)));
   }, [eventId]);
 
   // 다른 화면(My Picks 드로어 등)에서 Cart 가 바뀌어도 버튼 상태가 어긋나지 않게 한다
   useEffect(() => {
-    const sync = () => setInCart(isInCart(eventId));
+    const sync = () => setInCart(isInCart(citySpotSourceKey(spot.id)));
     window.addEventListener(CART_EVENT, sync);
     return () => window.removeEventListener(CART_EVENT, sync);
   }, [eventId]);
@@ -102,7 +103,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   }, [spot.id, spot.city, spot.category]);
 
   function handleAddToItinerary(source: "sticky" | "card") {
-    const already = isInCart(eventId);
+    const already = isInCart(citySpotSourceKey(spot.id));
     if (!already) {
       // 비상업 어댑터 — 상업 문맥을 Cart 로 넘기지 않는다
       addToCart(stripCommercialKeys(toItineraryEvent(spot, text)));
@@ -117,13 +118,13 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   }
 
   function handleSave() {
-    const nowSaved = toggleFavorite(eventId);
+    const nowSaved = toggleFavorite(eventId, citySpotSourceKey(spot.id));
     if (nowSaved) {
       cacheSavedSpot(stripCommercialKeys(toItineraryEvent(spot, text)));
       setSavedT(true);
       setTimeout(() => setSavedT(false), 4000);
     } else {
-      uncacheSavedSpot(eventId);
+      uncacheSavedSpot(eventId, citySpotSourceKey(spot.id));
     }
     setSaved(nowSaved);
     trackEvent("place_save", { place_id: spot.id, city: spot.city, saved: nowSaved });

@@ -10,6 +10,8 @@ import NaverMap, { type MapSpot } from "@/components/NaverMap";
 import { haversineKm } from "@/lib/geo";
 import { fetchCitySpots } from "@/lib/city-spots";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
+import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
+import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
 
@@ -21,7 +23,9 @@ const SPOT_CATEGORY_VALUES = ["all", "attraction", "restaurant", "nature"] as co
 
 function toEventItem(spot: CitySpot): EventItem {
   return {
+    // id 는 저장 일정·공유 호환용이라 형식을 바꾸지 않는다. 판정은 sourceKey 로 한다.
     id: `local-${spot.id}`,
+    sourceKey: spot.sourceKey ?? citySpotSourceKey(spot.id),
     type: spot.category,
     isAnchor: false,
     journeyCluster: `${spot.city.toLowerCase()}-explore`,
@@ -121,6 +125,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   // 우선순위: Supabase city_spots (1위) > local-info.json (2위) > events.json (3위)
   useEffect(() => {
     type RawEventSpot = {
+      id?: unknown;
       name?: unknown; spotCategory?: unknown; city?: unknown;
       district?: unknown; address?: unknown; description?: unknown;
       whyItMatters?: unknown; mapUrl?: unknown;
@@ -136,7 +141,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       fetch("/data/events.json").then(r => r.json()).catch(() => []),
     ]).then(([supabaseSpots, localRaw, eventsRaw]: [CitySpot[], unknown, unknown]) => {
       const deduped = dedupeByCanonical(supabaseSpots);
-      const result: CitySpot[] = deduped.length > 0 ? [...deduped] : [...city.staticSpots];
+      // 병합 시점이 소스를 아는 유일한 지점이다. 여기서 sourceKey 를 붙이지 않으면
+      // 이후 `local-24` 만 남아 어느 소스였는지 복원할 수 없다.
+      const result: CitySpot[] = (deduped.length > 0 ? deduped : city.staticSpots)
+        .map(s => ({ ...s, sourceKey: s.sourceKey ?? citySpotSourceKey(s.id) }));
       const seen = new Set(result.map(s => s.name.toLowerCase()));
 
       // local-info.json: 런타임 타입 가드로 필수 필드 검증
@@ -152,7 +160,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         ) continue;
         const s = raw as CitySpot;
         if (!seen.has(s.name.toLowerCase())) {
-          result.push(s);
+          result.push({ ...s, sourceKey: localInfoSourceKey(city.name, s.id) });
           seen.add(s.name.toLowerCase());
         }
       }
@@ -169,7 +177,13 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         ) continue;
         const key = e.name.toLowerCase();
         if (seen.has(key)) continue;
+        // id 는 3000+index 라 파일 순서가 바뀌면 달라진다. sourceKey 에는 절대
+        // 쓰지 않고, events.json 이 이미 갖고 있는 안정적 문자열 id 를 쓴다.
+        const rawEventId = typeof e.id === "string" && e.id.trim() ? e.id.trim() : null;
         result.push({
+          sourceKey: rawEventId
+            ? eventSourceKey(city.name, rawEventId)
+            : localInfoSourceKey(city.name, `evt-noid-${evtIdx}`),
           id: 3000 + evtIdx++,
           name: e.name,
           category: (e.spotCategory as CitySpot["category"]) ?? "attraction",
@@ -193,6 +207,24 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
         });
         seen.add(key);
       }
+
+      // 개발 경고 — 같은 sourceKey 를 서로 다른 행이 만들면 병합 규칙이 깨진 것이다.
+      // city_spot:24 와 local_info:busan:24 는 서로 다른 키이므로 경고 대상이 아니다.
+      if (process.env.NODE_ENV !== "production") {
+        const seenKeys = new Map<string, number>();
+        for (const s of result) {
+          const k = s.sourceKey ?? citySpotSourceKey(s.id);
+          seenKeys.set(k, (seenKeys.get(k) ?? 0) + 1);
+        }
+        for (const [k, n] of seenKeys) {
+          // 장소명·좌표는 출력하지 않는다
+          if (n > 1) console.warn(`[explore] duplicate sourceKey: ${k} (${n} records)`);
+        }
+      }
+
+      // 기존 브라우저의 Cart·Saved 에 sourceKey 를 채운다. 병합 목록이 곧
+      // 후보 목록이므로 여기가 실행 지점이다. 멱등이라 매번 호출해도 된다.
+      runCartIdentityMigration(toSourceCandidates(result));
 
       setSpots(result);
     }).finally(() => setSpotsLoading(false));
@@ -264,7 +296,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   );
 
   function handleMapSpotClick(spot: MapSpot) {
-    const citySpot = filteredSpots.find(s => s.id === spot.id);
+    // 병합 목록에는 같은 숫자 id 를 가진 다른 소스의 장소가 있다. 숫자로 찾으면
+    // 마커를 눌렀을 때 엉뚱한 장소가 열린다. 좌표까지 함께 대조한다.
+    const citySpot =
+      filteredSpots.find(s => s.id === spot.id && s.lat === spot.lat && s.lng === spot.lng)
+      ?? filteredSpots.find(s => s.id === spot.id);
     if (citySpot) setSelectedEvent(toEventItem(citySpot));
   }
 

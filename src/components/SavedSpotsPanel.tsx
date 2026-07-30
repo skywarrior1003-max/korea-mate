@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
+import { getItemSourceKey } from "@/lib/place-identity";
 import type { EventItem } from "@/lib/cart";
 import EventDetailModal from "@/components/EventDetailModal";
 
@@ -69,10 +70,10 @@ export default function SavedSpotsPanel() {
           {/* 스팟 목록 */}
           <ul className="overflow-y-auto flex-1 divide-y divide-gray-50">
             {spots.map(item => {
-              const inCart = isInCart(item.id);
+              const inCart = isInCart(getItemSourceKey(item));
               return (
                 <li
-                  key={item.id}
+                  key={getItemSourceKey(item)}
                   onClick={() => setSelectedSpot(item)}
                   role="button"
                   aria-label={`View details for ${item.shortName}`}

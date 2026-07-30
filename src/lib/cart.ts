@@ -1,11 +1,12 @@
 import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
+import { getItemSourceKey, IDENTITY_STORAGE_KEYS } from "@/lib/place-identity";
 // ─────────────────────────────────────────────
 //  KoreaMate · Cart (localStorage)
 //  사용자가 [Add to My Itinerary]를 눌렀을 때
 //  선택한 이벤트들을 브라우저에 저장·관리한다.
 // ─────────────────────────────────────────────
 
-const STORAGE_KEY = "koreamate_cart";
+const STORAGE_KEY = IDENTITY_STORAGE_KEYS.cart;
 export const CART_EVENT = "koreamate-cart-updated";
 
 // ── 타입 정의 ──────────────────────────────────
@@ -31,6 +32,18 @@ export interface CommerceInfo {
 /** events.json 한 항목과 1:1 대응하는 타입 */
 export interface EventItem {
   id: string;
+  /**
+   * 데이터 원천에서의 고유 식별자. 중복·Added·Remove 판정은 이 값으로 한다.
+   *
+   * `id` 는 저장된 일정(unscheduled[].id)과 공유·복사 호환을 위해 형식을
+   * 유지해야 하는데, 서로 다른 소스가 같은 숫자를 써서 `local-24` 하나로는
+   * 다른 장소를 구분할 수 없다. 판정용 identity 만 분리한다.
+   *
+   * optional 인 이유: 이 필드가 없던 시절의 localStorage·저장 일정이 그대로
+   * 열려야 한다. 마이그레이션 전 항목은 getItemSourceKey 가 id 로 fallback 한다.
+   * 새로 만드는 항목에는 항상 넣는다.
+   */
+  sourceKey?: string;
   type: string;
   isAnchor: boolean;
   journeyCluster: string | null;
@@ -128,7 +141,11 @@ export function getCart(): CartItem[] {
  */
 export function addToCart(event: EventItem): void {
   const items = readStorage();
-  const alreadyExists = items.some((item) => item.id === event.id);
+  // id 가 아니라 sourceKey 로 비교한다. 서로 다른 소스의 두 장소가 같은
+  // `local-<n>` id 를 갖는 경우가 실측 118/158 카드라, id 비교는 다른 장소를
+  // 중복으로 오판해 추가 자체를 막는다.
+  const key = getItemSourceKey(event);
+  const alreadyExists = items.some((item) => getItemSourceKey(item) === key);
   if (alreadyExists) return;
 
   const newItem: CartItem = {
@@ -143,8 +160,10 @@ export function addToCart(event: EventItem): void {
 /**
  * 특정 이벤트를 장바구니에서 제거
  */
-export function removeFromCart(eventId: string): void {
-  const filtered = readStorage().filter((item) => item.id !== eventId);
+/** 인자는 **sourceKey** 다. id 로 지우면 같은 id 의 다른 장소까지 사라진다. */
+export function removeFromCart(sourceKey: string): void {
+  const items = readStorage();
+  const filtered = items.filter((item) => getItemSourceKey(item) !== sourceKey);
   // 제거 후 sortOrder를 0부터 다시 정렬해 빈 번호가 없도록 한다
   const reIndexed = filtered.map((item, index) => ({
     ...item,
@@ -157,8 +176,18 @@ export function removeFromCart(eventId: string): void {
  * 특정 이벤트가 장바구니에 담겨 있는지 확인
  * [Add] / [Remove] 버튼 상태 표시에 사용한다.
  */
-export function isInCart(eventId: string): boolean {
-  return readStorage().some((item) => item.id === eventId);
+/**
+ * 인자는 **sourceKey** 다 (getItemSourceKey 로 얻은 값).
+ *
+ * 기존 id 로도 매칭하는 fallback 을 두면 안 된다. 서로 다른 두 장소가 같은
+ * `local-24` 를 갖는 것이 바로 이 작업이 고치는 결함인데, id 를 함께 보면
+ * 한 장소를 담았을 때 다른 장소가 "이미 담김"으로 나온다.
+ *
+ * 마이그레이션 전 항목은 getItemSourceKey 가 id 를 돌려주므로, 호출부가
+ * 같은 helper 로 만든 값을 넘기는 한 그 경우에도 정확히 맞는다.
+ */
+export function isInCart(sourceKey: string): boolean {
+  return readStorage().some((item) => getItemSourceKey(item) === sourceKey);
 }
 
 /**
@@ -177,9 +206,10 @@ export function clearCart(): void {
  */
 export function updateSortOrder(orderedIds: string[]): void {
   const items = readStorage();
+  // orderedIds 는 sourceKey 목록이다. id 로 찾으면 같은 id 의 다른 장소를 집는다.
   const updatedItems = orderedIds
-    .map((id, index) => {
-      const item = items.find((i) => i.id === id);
+    .map((key, index) => {
+      const item = items.find((i) => getItemSourceKey(i) === key);
       if (!item) return null;
       return { ...item, sortOrder: index };
     })

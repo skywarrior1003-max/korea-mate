@@ -8,6 +8,14 @@ export interface LocalizedText {
 
 export interface CitySpot {
   id: number;
+  /**
+   * 데이터 원천 식별자 (src/lib/place-identity.ts).
+   *
+   * Explore 는 city_spots · local-info.json · events.json 을 한 목록으로 합치는데
+   * 세 소스의 `id` 공간이 겹친다. 병합 시점에 어느 소스인지 기록해 두지 않으면
+   * 이후 어디에서도 복원할 수 없다. 정적 데이터에는 없어도 되므로 optional.
+   */
+  sourceKey?: string;
   name: string;
   category: "attraction" | "restaurant" | "event" | "accommodation" | "nature";
   city: string;

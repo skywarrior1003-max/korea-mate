@@ -5,6 +5,7 @@ import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
 import { addToCart, removeFromCart, isInCart } from "@/lib/cart";
+import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 
 // ── koreanSurvivalScore 색상 + 라벨 ──────────────
@@ -85,6 +86,9 @@ interface Props {
 
 export default function EventDetailModal({ event, onClose }: Props) {
   const [inCart,    setInCart]    = useState(false);
+  // 문자열로 고정한다 — effect 의존성이 event 객체가 아니라 안정적인 키가 된다.
+  const sourceKey    = getItemSourceKey(event);
+  const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);
   const [added,     setAdded]     = useState(false);
   const [favorited, setFavorited] = useState(false);
@@ -97,8 +101,8 @@ export default function EventDetailModal({ event, onClose }: Props) {
 
   // ── 마운트: 상태 초기화 + 모바일 뒤로가기 방지 ──
   useEffect(() => {
-    setInCart(isInCart(event.id));
-    setFavorited(isFavorited(event.id));
+    setInCart(isInCart(sourceKey));
+    setFavorited(isFavorited(event.id, sourceKey));
     setReview(loadReview(event.id));
 
     // 모바일 뒤로가기 → 앱 이탈 방지: history 상태 주입
@@ -107,14 +111,14 @@ export default function EventDetailModal({ event, onClose }: Props) {
     function handlePop() { onCloseRef.current(); }
     window.addEventListener("popstate", handlePop);
     return () => window.removeEventListener("popstate", handlePop);
-  }, [event.id]);
+  }, [event.id, sourceKey]);
 
   // ── 찜 상태 동기화 ────────────────────────────────
   useEffect(() => {
-    const handler = () => setFavorited(isFavorited(event.id));
+    const handler = () => setFavorited(isFavorited(event.id, sourceKey));
     window.addEventListener(FAVORITES_EVENT, handler);
     return () => window.removeEventListener(FAVORITES_EVENT, handler);
-  }, [event.id]);
+  }, [event.id, sourceKey]);
 
   // ── ESC 닫기 + body 스크롤 잠금 ──────────────────
   const handleKeyDown = useCallback(
@@ -137,14 +141,15 @@ export default function EventDetailModal({ event, onClose }: Props) {
     setTimeout(() => setAdded(false), 1500);
   }
   function handleRemoveFromCart() {
-    removeFromCart(event.id);
+    removeFromCart(sourceKey);
     setInCart(false);
   }
   function handleToggleFavorite() {
-    const next = toggleFavorite(event.id);
+    // legacy id 와 sourceKey 를 함께 기록한다(롤백 호환).
+    const next = toggleFavorite(event.id, sourceKey);
     setFavorited(next);
     if (next) cacheSavedSpot(event);
-    else uncacheSavedSpot(event.id);
+    else uncacheSavedSpot(event.id, sourceKey);
   }
   async function handleCopyAddress(text: string) {
     try {
@@ -281,10 +286,12 @@ export default function EventDetailModal({ event, onClose }: Props) {
             </a>
           </div>
 
-          {/* Place Detail 페이지 링크 — city_spots 기반(local-<id>) 장소만 */}
-          {event.id.startsWith("local-") && (
+          {/* Place Detail 페이지 링크 — city_spots 행에만 존재한다.
+              id 접두어로 판정하면 안 된다: local-info·events 항목도 `local-<n>` 을
+              쓰기 때문에 무관한 DB 장소로 이동한다(실측 63건 오연결·13건 404). */}
+          {citySpotDbId && (
             <a
-              href={`/place/${event.id.slice(6)}/`}
+              href={`/place/${citySpotDbId}/`}
               className="flex items-center justify-between px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
             >
               <p className="text-sm font-bold text-gray-700">📄 View full details</p>

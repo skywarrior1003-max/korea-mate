@@ -14,6 +14,7 @@ import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
+import { citySpotSourceKey } from "@/lib/place-identity";
 import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
@@ -224,6 +225,9 @@ function toEventItem(spot: LocalInfo): EventItem {
   } catch { /* mapUrl 파싱 실패 시 lat/lng 없이 진행 */ }
   return {
     id: `local-${spot.id}`,
+    // 홈 프리셋은 src/data/cities/busan.ts id 1~7 이며 city_spots 1~7 과 같은
+    // 장소다(이름·whyItMatters 문자열 일치 확인). 별도 namespace 를 만들지 않는다.
+    sourceKey: citySpotSourceKey(spot.id),
     type: spot.category,
     isAnchor: false,
     journeyCluster: "busan-explore",

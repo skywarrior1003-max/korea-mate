@@ -26,6 +26,9 @@ import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 // 어떤 문구를 먼저 보여줄지는 각 호출부가 인자 순서로 정한다. 이번 방어는
 // 내부 메모를 막는 것이지 기존 사용자 문구의 우선순위를 바꾸는 작업이 아니다.
 import { firstPublicText } from "@/lib/place-detail/place-detail-core";
+// planner 로 보내는 키는 반드시 이 helper 하나만 쓴다 — cart_hints·조회 맵이
+// 서로 다른 규칙을 쓰면 같은 장소가 다시 어긋난다.
+import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
@@ -55,6 +58,12 @@ interface Place {
   // PHASE 1 metadata
   source?:   "city_spot" | "user_spot";
   place_id?: string;
+  /**
+   * 원천 식별자 (src/lib/place-identity.ts). optional 이라 이 필드가 없던
+   * 기존 저장 일정도 그대로 열린다. place_id 는 "planner 내부 키"와 "DB 장소 ID"
+   * 두 의미를 겸할 수 있어, 어느 소스인지는 이 값이 설명한다.
+   */
+  sourceKey?: string;
   title?:    string;
   address?:  string;
   note?:     string;
@@ -354,7 +363,8 @@ async function generateWithNewApi(
   const dates  = buildDateRange(sd, ed);
   const cart   = getCart();
   // TASK-053: cart item lookup map — used for display fallback when place_map misses "local-*" IDs
-  const cartItemByKey = Object.fromEntries(cart.map(c => [c.id, c]));
+  // TASK-053 의 "local-*" 매칭을 source-aware 키로 교체한다.
+  const cartItemByKey = Object.fromEntries(cart.map(c => [getPlannerHintKey(c), c]));
 
   // Collect names of cart items without coordinates so we can show a UI warning.
   const skippedCartNames = cart
@@ -368,7 +378,11 @@ async function generateWithNewApi(
       return true;
     })
     .map(item => ({
-      place_id:            item.id,
+      // city_spot 은 바레 숫자로 보낸다 — plan.ts 가 DB 후보와 대조해 중복을
+      // 제거하고 place_map 이 표시정보를 채운다(기존 BUG-01 동작 보존).
+      // 그 밖의 소스는 sourceKey 원문이라 어떤 DB 후보와도 매칭되지 않는다.
+      place_id:            getPlannerHintKey(item),
+      source_key:          getItemSourceKey(item),
       lat:                 item.lat!,
       lng:                 item.lng!,
       duration_min:        item.recommendedDurationMinutes,
@@ -606,6 +620,8 @@ async function generateWithNewApi(
           lat:               display.lat ?? cartFull?.lat,
           lng:               display.lng ?? cartFull?.lng,
           ...(isCitySpot ? { place_id: item.place_id, source: "city_spot" as const } : {}),
+          // 원천 정보를 여기서 버리면 저장·재진입·공유·복사에서 복원할 수 없다.
+          ...(cartFull?.sourceKey ? { sourceKey: cartFull.sourceKey } : {}),
         };
       });
 
@@ -1530,6 +1546,7 @@ function ItineraryResult() {
       duration:      item.recommendedDurationMinutes ? `${item.recommendedDurationMinutes}m` : "60m",
       // 이 경로만 description 이 먼저다. 보관함 카드가 원래 보여주던 문구이므로
       // 순서를 바꾸지 않는다 — 바꾸면 안전한 문구까지 전부 교체된다(실측 86/86).
+      sourceKey:     getItemSourceKey(item),
       tips:          firstPublicText(item.description, item.whyItMatters),
       googleMapsUrl: item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.shortName || item.name} ${city} Korea`)}`,
       slot:          assignSlot(defaultTime),
@@ -1538,7 +1555,7 @@ function ItineraryResult() {
     setDays(prev => prev.map((day, di) =>
       di === editDay ? { ...day, places: [...day.places, newPlace] } : day
     ));
-    removeFromCart(item.id); // 배치 후 Unscheduled에서 즉시 제거
+    removeFromCart(getItemSourceKey(item)); // 배치 후 Unscheduled에서 즉시 제거
   }
 
   // ── user_spot → 현재 editDay에 추가 (PHASE 1) ────────────────
@@ -1548,6 +1565,7 @@ function ItineraryResult() {
       title:         userSpot.name,
       source:        "user_spot",
       place_id:      userSpot.id,
+      sourceKey:     userSpotSourceKey(userSpot.id),
       category:      userSpot.category || "attraction",
       location:      userSpot.address || userSpot.city || city,
       time:          selectedTime,
@@ -1593,6 +1611,7 @@ function ItineraryResult() {
       time,
       duration:      spot.durationMinutes ? `${spot.durationMinutes}m` : "60m",
       // 기존 순서(whyItMatters → description)를 유지하고 판정만 추가한다.
+      sourceKey:     spot.sourceKey ?? citySpotSourceKey(spot.id),
       tips:          firstPublicText(spot.whyItMatters, spot.description),
       googleMapsUrl: spot.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${spot.name} ${spot.city} Korea`)}`,
       slot:          assignSlot(time),
@@ -2190,7 +2209,9 @@ function ItineraryResult() {
                 <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
                   {unscheduled.map((item) => (
                     <div
-                      key={item.id}
+                      /* 같은 `local-<n>` 을 가진 다른 소스의 장소가 함께 있을 수 있다.
+                         id 를 key 로 쓰면 React 가 두 행을 같은 것으로 보고 재사용한다. */
+                      key={getItemSourceKey(item)}
                       className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 transition-colors"
                     >
                       <span

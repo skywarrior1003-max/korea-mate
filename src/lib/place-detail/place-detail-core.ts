@@ -13,6 +13,7 @@
 
 import type { CitySpotRow } from "@/lib/city-spots";
 import type { EventItem } from "@/lib/cart";
+import { citySpotSourceKey } from "../place-identity.ts";
 
 export const SITE_ORIGIN = "https://gokoreamate.com";
 
@@ -349,6 +350,9 @@ export function toItineraryEvent(spot: PlaceView, text?: LocalizedPlaceText): Ev
   const name = text?.name ?? spot.name;
   return {
     id:                          placeEventId(spot.id),
+    // Place Detail 은 항상 city_spots 행이다. Explore 에서 같은 장소를 담았을 때와
+    // 반드시 같은 sourceKey 여야 두 경로가 서로를 중복으로 인식한다.
+    sourceKey:                   citySpotSourceKey(spot.id),
     type:                        spot.category as EventItem["type"],
     isAnchor:                    false,
     journeyCluster:              `${spot.city.toLowerCase()}-explore`,

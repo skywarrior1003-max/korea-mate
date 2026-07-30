@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { EventItem } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import { getItemSourceKey } from "@/lib/place-identity";
 import { getVerifiedImage } from "@/lib/placeImages";
 import { dislikeSpot } from "@/lib/spots";
 import { getDeviceId } from "@/lib/deviceId";
@@ -62,12 +63,15 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
     }
   }
 
+  // 문자열로 고정해 effect 의존성을 안정화한다
+  const sourceKey = getItemSourceKey(event);
+
   useEffect(() => {
-    setFavorited(isFavorited(event.id));
-    const handler = () => setFavorited(isFavorited(event.id));
+    setFavorited(isFavorited(event.id, sourceKey));
+    const handler = () => setFavorited(isFavorited(event.id, sourceKey));
     window.addEventListener(FAVORITES_EVENT, handler);
     return () => window.removeEventListener(FAVORITES_EVENT, handler);
-  }, [event.id]);
+  }, [event.id, sourceKey]);
 
   const stage   = STAGE_STYLE[event.stage] ?? STAGE_STYLE["Standalone"];
   const transit = fastestTransit(event.transitFromAnchor);
@@ -125,18 +129,18 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation();
-              const next = toggleFavorite(event.id);
+              const next = toggleFavorite(event.id, sourceKey);
               setFavorited(next);
               if (next) cacheSavedSpot(event);
-              else uncacheSavedSpot(event.id);
+              else uncacheSavedSpot(event.id, sourceKey);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.stopPropagation();
-                const next = toggleFavorite(event.id);
+                const next = toggleFavorite(event.id, sourceKey);
                 setFavorited(next);
                 if (next) cacheSavedSpot(event);
-                else uncacheSavedSpot(event.id);
+                else uncacheSavedSpot(event.id, sourceKey);
               }
             }}
             aria-label={favorited ? "Remove from liked" : "Like this spot"}

@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { useTranslations } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
@@ -97,9 +98,11 @@ export default function SavedClient() {
             <>
               <ul className="flex flex-col gap-3">
                 {saved.map(e => {
-                  const placeId = e.id.startsWith("local-") ? e.id.slice(6) : null;
+                  // city_spots 행만 상세 페이지를 갖는다. `local-` 접두어는
+                  // 세 소스가 공유하므로 판정 근거가 되지 못한다.
+                  const placeId = parseCitySpotId(getItemSourceKey(e));
                   return (
-                    <li key={e.id}>
+                    <li key={getItemSourceKey(e)}>
                       <Card className="flex items-center gap-3 p-3">
                         <div className="w-13 h-13 min-w-13 rounded-control bg-surface-dim flex items-center justify-center text-xl overflow-hidden">
                           {e.image
