@@ -1,0 +1,83 @@
+{
+  "report_id": "busan-publishability-baseline-v1",
+  "task": "TASK-BUSAN-PUBLISHABILITY-BASELINE-V1",
+  "gate_version": "BUSAN_PUBLISHABILITY_BASELINE_V1",
+  "run_ts": "2026-07-30T05:40:21.401274+00:00",
+  "input_file": "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl",
+  "total_records": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 993,
+    "pending_review": 72,
+    "publishable": 291
+  },
+  "category_distribution": {
+    "accommodation": {
+      "pending_source": 82
+    },
+    "attraction": {
+      "publishable_with_caveat": 207,
+      "pending_source": 509,
+      "pending_review": 1
+    },
+    "event": {
+      "pending_review": 3,
+      "publishable_with_caveat": 32,
+      "pending_source": 37
+    },
+    "nature": {
+      "pending_source": 50
+    },
+    "restaurant": {
+      "publishable_with_caveat": 47,
+      "publishable": 291,
+      "pending_review": 68,
+      "pending_source": 315
+    }
+  },
+  "top_block_reasons": {
+    "description_gate": 953,
+    "name_en_gate": 920,
+    "identity_gate": 311,
+    "needs_hours": 263,
+    "needs_arrival_verification": 240,
+    "image_gate": 124,
+    "branch_gate": 67,
+    "address_gate": 3,
+    "coordinate_gate": 2
+  },
+  "golden_dataset_cross_validation_summary": {
+    "total_gd_records": 60,
+    "exact_match": 28,
+    "explained_gate_version_difference": 32,
+    "unexplained_conflict": 0,
+    "pass": true,
+    "explanation_types": {
+      "description_or_image_absent_reclassified_as_pending_source": 32
+    }
+  },
+  "gate_design": {
+    "name_en_gate": "HARD gate (BUSAN_PUBLISHABILITY_BASELINE_V1) — needs_translation → PENDING_SOURCE. 외국인 여행자 서비스: 영어명 필수. 카베아트 불가.",
+    "description_gate": "PENDING_SOURCE when has_ko_description=False (KTO detailCommon2 수집 BLOCKED_LIMIT_UNVERIFIED — 소스 부재, 품질 불합격 아님)",
+    "image_gate": "PENDING_SOURCE when curated_count=0 (소스 소진, 보완 가능)",
+    "map_resolution_gate": "DERIVED_CAPABLE (유효 좌표 + title_ko → 지도 연결 가능 추정). 정보성만, 게이트 차단 없음. 수동 확인 REQUIRED.",
+    "freshness_flags": [
+      "needs_arrival_verification",
+      "needs_hours",
+      "needs_map_name_ko"
+    ],
+    "needs_hours_integration": "qa02_corrections.hours_applied=True + hours_value → needs_hours review_flags에서 유효 플래그로 제거",
+    "needs_translation_integration": "qa02_corrections.kto_en_linked=True → needs_translation 유효 플래그에서 제거"
+  },
+  "key_differences_from_gd_adjudication_v1": [
+    "description absent → PENDING_SOURCE in BUSAN_PUBLISHABILITY_BASELINE_V1 (was PENDING_REVIEW — KTO 수집 차단이 원인, 데이터 불량 아님)",
+    "image absent → PENDING_SOURCE in BUSAN_PUBLISHABILITY_BASELINE_V1 (was PENDING_REVIEW)",
+    "needs_translation → HARD gate PENDING_SOURCE in BUSAN_PUBLISHABILITY_BASELINE_V1 (was caveat-eligible in GD adjudication v1)",
+    "source_data_missing identity PENDING_SOURCE takes priority over district/description hard gates"
+  ],
+  "output_files": {
+    "summary": "data\\tourapi\\reports\\busan\\busan-publishability-baseline-v1.json",
+    "details": "data\\tourapi\\reports\\busan\\busan-publishability-baseline-v1-details.jsonl",
+    "validation": "data\\tourapi\\reports\\busan\\busan-publishability-baseline-v1-validation.json"
+  }
+}
