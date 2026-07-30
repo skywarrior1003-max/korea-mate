@@ -1,0 +1,30 @@
+{
+  "runs": [
+    {
+      "run_id": "run_1",
+      "started_at": "2026-07-30T12:00:39Z",
+      "run_calls": 639,
+      "success": 0,
+      "limit_reached": false,
+      "limit_reached_at": null,
+      "note": "전량 resultCode=10 — addrinfoYN 등 잘못된 파라미터 사용. 기존 스크립트(v1) 실행."
+    },
+    {
+      "run_id": "run_2",
+      "started_at": "2026-07-30T12:23:05Z",
+      "run_calls": 362,
+      "success": 361,
+      "limit_reached": true,
+      "limit_reached_at": null,
+      "note": "파라미터 수정(contentId만) 후 재수집. 361건 성공 후 LIMIT_REACHED. 기존 스크립트(v1) 실행."
+    },
+    {
+      "run_id": "run_3",
+      "started_at": "2026-07-30T21:46:09.662892Z",
+      "run_calls": 278,
+      "success": 278,
+      "limit_reached": false,
+      "limit_reached_at": null
+    }
+  ]
+}
