@@ -2,9 +2,22 @@
   "task_id": "TASK-BUSAN-FOODSERVICE-OFFICIAL-IMAGE-PILOT",
   "task_version": "pilot-v1",
   "report_type": "COMPLETION",
-  "overall_result": "PASS",
-  "pilot_verdict": "SELECTIVE_PROCESSING",
+  "overall_result": "PARTIAL_PASS",
+  "pilot_verdict": "IMAGE_TRACK_CLOSED",
   "generated_at": "2026-07-30T00:00:00+09:00",
+  "report_correction": {
+    "corrected_at": "2026-07-30T00:00:00+09:00",
+    "correction_reason": "초기 보고서의 IMAGE_FOUND 판정이 재사용 권한 및 장소 대표성 기준을 충족하지 못함을 확인하여 교정",
+    "original_verdict": "SELECTIVE_PROCESSING",
+    "corrected_verdict": "IMAGE_TRACK_CLOSED",
+    "corrected_stats": {
+      "original_IMAGE_FOUND": 2,
+      "corrected_official_site_found": 2,
+      "corrected_place_representative_candidates": 1,
+      "corrected_IMAGE_VERIFIED": 0,
+      "corrected_immediately_applicable": 0
+    }
+  },
   "context": {
     "background": "37건 FoodService-only 후보의 공식 홈페이지 이미지 존재 가능성을 표본 조사하여 전체 확대 여부 판단",
     "prior_exhausted_paths": [
@@ -58,24 +71,28 @@
   },
   "pilot_results": {
     "total_searched": 10,
-    "IMAGE_FOUND": 2,
+    "official_site_found": 2,
+    "place_representative_candidates": 1,
+    "IMAGE_VERIFIED": 0,
     "SOURCE_NOT_FOUND": 8,
-    "yield_rate": 0.2,
-    "yield_percent": "20%"
+    "immediately_applicable": 0,
+    "note": "공식 사이트 발견 2건 중 재사용 권한까지 확인된 건 0건. 장소 대표성 충족은 1건(팔레드신)뿐."
   },
-  "image_found_cases": [
+  "image_candidates": [
     {
       "candidate_id": "busan-F-00310",
       "title_ko": "팔레드신",
       "name_en": "PALAIS DE CHINE",
       "district": "해운대구",
       "address": "부산 해운대구 해운대해변로 292",
+      "verdict": "IMAGE_PROPOSED_MANUAL_CHECK",
+      "rejection_reason": "RIGHTS_UNCONFIRMED",
+      "rejection_detail": "공식 사이트 게시 사실만으로 GoKoreaMate의 재사용 권한이 확인되지 않음. 이용약관·저작권 정책 또는 별도 허가 근거 필요. curated_images 반영 및 needs_image 제거 금지.",
       "official_site_url": "https://gjb.josunhotel.com/dining/palais.do",
       "official_site_type": "hotel_official_dining_page",
-      "site_operator": "그랜드 조선 부산 (Grand Josun Busan)",
-      "site_description": "조선호텔앤리조트 운영 그랜드 조선 부산의 공식 다이닝 페이지",
-      "confirmed_image_url": "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252085&cntntsSn=252083",
-      "additional_image_urls": [
+      "site_operator": "그랜드 조선 부산 (Grand Josun Busan / 조선호텔앤리조트)",
+      "evidence_image_url": "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252085&cntntsSn=252083",
+      "evidence_additional_urls": [
         "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252097&cntntsSn=252083",
         "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252099&cntntsSn=252083"
       ],
@@ -83,11 +100,10 @@
       "image_description": "고급 중식당 인테리어 (amber 벨벳 의자, 대리석 원형 테이블, 중국풍 바, 펜던트 조명). 전문 프로모션 촬영본.",
       "image_accessible": true,
       "image_size_kb": 130,
-      "rights_basis": "official_hotel_promotional_image",
-      "place_match": true,
-      "place_match_note": "gjb.josunhotel.com에서 PALAIS DE CHINE 다이닝 섹션에 게재된 이미지. 장소 일치 확실.",
-      "meets_criteria": true,
-      "caveat": "음식 사진 아닌 실내 인테리어 사진. 기준 '매장 모습' 범위 내 해당."
+      "place_representativeness": "HIGH",
+      "place_match_note": "gjb.josunhotel.com PALAIS DE CHINE 다이닝 섹션 이미지. 장소 일치 확실.",
+      "immediately_applicable": false,
+      "evidence_preserved_for": "KTO detailImage2 수집 후 또는 저작권 확인 후 재판정"
     },
     {
       "candidate_id": "busan-F-00344",
@@ -95,27 +111,17 @@
       "name_en": "Ops",
       "district": "수영구",
       "address": "부산 수영구 황령대로489번길 37",
+      "verdict": "DISQUALIFIED",
+      "rejection_reason": "LOGO_OR_PRODUCT_IMAGE / WRONG_LEVEL_OF_IDENTITY",
+      "rejection_detail": "ops.co.kr에서 발견된 이미지는 OPS 브랜드 제품(쿠키세트) 및 로고가 포함된 상품 사진. 특정 부산 남천점의 외관·내부가 아니며, 해당 후보(candidate) 지점을 증명하지 못함. 브랜드 제품 사진을 특정 지점의 장소 대표 이미지로 사용하면 실제 매장 사진으로 오해 가능. 반영 금지.",
       "official_site_url": "https://www.ops.co.kr/",
       "official_site_type": "chain_official_ecommerce",
       "site_operator": "OPS (BREAD & CAKE PATTISERIE OPS 옵스)",
-      "site_description": "OPS 옵스 공식 온라인 쇼핑몰. 부산 남천 본점 운영 브랜드의 공식 웹사이트.",
-      "confirmed_image_url": "https://www.ops.co.kr/web/product/medium/202506/4c26af9d6d73c2fd049c760bfc472998.jpg",
-      "additional_image_urls": [
-        "https://www.ops.co.kr/web/product/medium/202506/4acc4ab2c3a25abbd33ecebbfad70676.jpg",
-        "https://www.ops.co.kr/web/product/medium/202506/1d864af5a0e41f0529df8719d67f1acc.jpg",
-        "https://www.ops.co.kr/web/product/medium/202604/8d5da0794eeef391a2f73fec92cdc00f.jpg",
-        "https://www.ops.co.kr/web/product/medium/202606/f58c51ac705ee431f08418db5ad39a39.jpg",
-        "https://ops007.cafe24.com/web/upload/banner/260720.jpg"
-      ],
-      "image_type": "product_food_photo",
-      "image_description": "OPS 쿠키세트 S 제품 사진. 하늘색 OPS 브랜드 박스, 쿠키가 담긴 선물 세트, 커피컵과 쿠키. OPS 로고 선명히 보임. 전문 제품 촬영본.",
-      "image_accessible": true,
-      "image_size_kb": 38.4,
-      "rights_basis": "official_brand_product_photo",
-      "place_match": true,
-      "place_match_note": "ops.co.kr는 OPS 옵스의 공식 브랜드 쇼핑몰. 후보 busan-F-00344는 OPS 남천점(본점)으로 브랜드 이미지 적용 적합.",
-      "meets_criteria": true,
-      "caveat": "체인 중앙 웹사이트 이미지이므로 특정 지점 전용 촬영본 아님. 그러나 남천점이 OPS 본점이므로 브랜드 대표 이미지 사용 적합."
+      "examined_image_url": "https://www.ops.co.kr/web/product/medium/202506/4c26af9d6d73c2fd049c760bfc472998.jpg",
+      "image_type": "brand_product_photo_with_logo",
+      "image_description": "OPS 쿠키세트 S 제품 사진. 하늘색 OPS 브랜드 박스, OPS 로고 선명. 남천점 매장 외관/내부 아님.",
+      "place_representativeness": "NONE",
+      "immediately_applicable": false
     }
   ],
   "source_not_found_cases": [
@@ -172,30 +178,35 @@
     }
   ],
   "decision": {
-    "applied_rule": "1~2건: 비용 대비 효과 낮음, 선택적 처리",
-    "result_count": 2,
-    "action": "SELECTIVE_PROCESSING",
-    "rationale": "10건 중 2건만 공식 이미지 확보 가능. 나머지 27건 추가 탐색의 기대 수익이 낮음. 특히 전통 음식점·소규모 업소·개인 운영 베이커리는 공식 웹사이트를 운영하지 않는 패턴이 명확함. 반면 호텔 부속 레스토랑(팔레드신)과 전국 유통 베이커리 체인(옵스)은 공식 사이트 존재.",
+    "applied_rule": "IMAGE_VERIFIED 0건: 공식 홈페이지 이미지 트랙 종료",
+    "official_site_found": 2,
+    "IMAGE_VERIFIED": 0,
+    "action": "IMAGE_TRACK_CLOSED",
+    "rationale": "공식 사이트 발견 2건 중 즉시 반영 가능한 이미지 0건. 팔레드신은 장소 대표성 있으나 재사용 권한 미확인, 옵스는 장소 대표성 자체가 없는 브랜드 제품 사진. 이미지 기준 완화 금지 원칙에 따라 이 상태로는 반영 불가. 추가 27건 수작업 탐색도 효율이 낮을 것으로 판단하여 종료.",
     "next_steps": [
       {
         "step": 1,
-        "action": "busan-F-00310 팔레드신 이미지 적용",
-        "description": "gjb.josunhotel.com/dining/palais.do의 이미지를 enriched candidates에 curated_image로 추가. 별도 태스크 필요.",
-        "image_url": "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252085&cntntsSn=252083",
-        "rights_basis": "official_hotel_promotional"
+        "action": "busan-F-00310 팔레드신: evidence URL 보존, 반영 금지",
+        "description": "gjb.josunhotel.com/dining/palais.do URL을 evidence로만 기록. curated_images 추가 및 needs_image 제거 금지. KTO detailImage2 수집 또는 저작권 확인 후 재판정.",
+        "prohibited": ["curated_images 수정", "needs_image 플래그 제거", "image_gate 변경"]
       },
       {
         "step": 2,
-        "action": "busan-F-00344 옵스 이미지 적용",
-        "description": "ops.co.kr의 제품 이미지를 enriched candidates에 curated_image로 추가. 별도 태스크 필요.",
-        "image_url": "https://www.ops.co.kr/web/product/medium/202506/4c26af9d6d73c2fd049c760bfc472998.jpg",
-        "rights_basis": "official_brand_product_photo"
+        "action": "busan-F-00344 옵스: 부적합 이미지로 기록",
+        "description": "LOGO_OR_PRODUCT_IMAGE / WRONG_LEVEL_OF_IDENTITY로 기록. 반영 금지.",
+        "prohibited": ["어떤 형태로도 enriched candidates 수정"]
       },
       {
         "step": 3,
-        "action": "나머지 35건 현 상태 유지",
-        "description": "추가 공식 홈페이지 탐색 없이 image_status=no_image, image_gate=FAIL 유지. 35건은 pending_source 상태로 이미지 트랙 종료.",
-        "affected_count": 35
+        "action": "37건 전부 pending_source 유지",
+        "description": "추가 공식 홈페이지 조사 없음. image_status, image_gate, needs_image 현 상태 유지.",
+        "affected_count": 37
+      },
+      {
+        "step": 4,
+        "action": "KTO detailImage2 수집 후 재판정",
+        "description": "2026-08-02 18:00 이후 KTO 공식 호출 한도 확인. KTO 공식 관광 이미지와 권리 코드가 확보되는 후보만 다시 판정. 신규 데이터 수정·push 없음.",
+        "scheduled_check": "2026-08-02T18:00:00+09:00"
       }
     ]
   },
@@ -210,7 +221,7 @@
       "가족 경영 국밥·불고기 업소: 웹사이트 운영 없음",
       "단독 매장 파인다이닝 (라꽁띠, 아오모리): 예약 플랫폼 의존, 독자 사이트 없음"
     ],
-    "note_for_remaining_35": "파일럿 미포함 27건 중에서도 호텔 부속 레스토랑이나 전국 브랜드 체인이 있다면 선택적으로 조사 가능. 그러나 대부분 전통 음식점으로 기대 수확이 낮음."
+    "note_for_remaining_35": "파일럿 미포함 27건 중에서도 호텔 부속 레스토랑이나 전국 브랜드 체인이 있다면 선택적으로 조사 가능. 그러나 대부분 전통 음식점으로 기대 수확이 낮음. 이미지 트랙 종료 결정에 따라 추가 조사 없음."
   },
   "safety_compliance": {
     "enriched_candidates_modified": false,
