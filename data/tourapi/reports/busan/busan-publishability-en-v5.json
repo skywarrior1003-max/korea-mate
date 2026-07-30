@@ -1,0 +1,33 @@
+{
+  "report_id": "busan-publishability-en-v5",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V5",
+  "task": "TASK-VISITBUSAN-EXPERIENCE-EN-FULL-APPLY-V1",
+  "run_ts": "2026-07-30T08:52:11.458320+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 488,
+    "pending_source": 777,
+    "pending_review": 74,
+    "publishable": 303
+  },
+  "env4_distribution": {
+    "publishable_with_caveat": 448,
+    "pending_source": 820,
+    "pending_review": 73,
+    "publishable": 301
+  },
+  "delta_vs_env4": {
+    "publishable_with_caveat": 40,
+    "pending_review": 1,
+    "publishable": 2,
+    "pending_source": -43
+  },
+  "status_changed_count": 43,
+  "change_types": {
+    "pending_source→publishable_with_caveat": 40,
+    "pending_source→publishable": 2,
+    "pending_source→pending_review": 1
+  },
+  "kto_not_needed_upgrades": 42
+}
