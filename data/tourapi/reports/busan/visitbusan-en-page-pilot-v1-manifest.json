@@ -1,0 +1,26 @@
+{
+  "manifest_id": "visitbusan-en-page-pilot-v1",
+  "task": "TASK-VISITBUSAN-EN-PAGE-PILOT",
+  "run_ts": "2026-07-30T06:30:14.135297+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "a013b45",
+  "head_after": null,
+  "api_calls": 0,
+  "http_requests": 31,
+  "data_modified": false,
+  "push": false,
+  "samples": 15,
+  "en_page_exists": 12,
+  "en_description_useful": 11,
+  "expand_recommended": false,
+  "output_files": {
+    "report": "data\\tourapi\\reports\\busan\\visitbusan-en-page-pilot-v1-report.json",
+    "pilot_dir": "data\\tourapi\\raw\\busan\\visitbusan-en-pilot"
+  },
+  "parser_version": "v2-body-parser",
+  "access_blocked": 3,
+  "ssr_collectible": 180,
+  "experience_js_required": 93,
+  "expand_ssr_recommended": true
+}

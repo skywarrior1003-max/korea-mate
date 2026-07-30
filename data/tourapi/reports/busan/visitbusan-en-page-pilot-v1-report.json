@@ -1,0 +1,1095 @@
+{
+  "report_id": "visitbusan-en-page-pilot-v1",
+  "task": "TASK-VISITBUSAN-EN-PAGE-PILOT",
+  "run_ts": "2026-07-30T06:30:14.135297+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "a013b45",
+  "git_head_full": "a013b45 data(validation): map Busan pending source recovery paths",
+  "robots_check": {
+    "accessible": true,
+    "status": 200,
+    "disallow_paths": [],
+    "target_blocked": false,
+    "raw_excerpt": "User-agent: *\n\r\nAllow: /\n"
+  },
+  "sample_summary": {
+    "total_vb_candidates": 311,
+    "samples_selected": 15,
+    "category_distribution": {
+      "attraction": 5,
+      "nature": 3,
+      "restaurant": 4,
+      "accommodation": 2,
+      "event": 1
+    }
+  },
+  "en_page_results": {
+    "ko_page_success": 15,
+    "en_page_exists": 12,
+    "en_page_exists_rate_pct": 80.0,
+    "en_title_found": 12,
+    "en_description_useful": 11,
+    "en_description_useful_rate_pct": 73.3,
+    "en_image_found": 15,
+    "access_blocked_js_rendering": 3,
+    "en_page_not_found": 0,
+    "url_rule_invalid": 0,
+    "ssr_only_useful_rate_pct": 91.7
+  },
+  "cause_distribution": {
+    "EN_PAGE_EXISTS_USEFUL": 11,
+    "ACCESS_BLOCKED": 3,
+    "EN_PAGE_EXISTS_TITLE_ONLY": 1
+  },
+  "quality_distribution": {
+    "USEFUL": 11,
+    "ABSENT": 3,
+    "TITLE_ONLY": 1
+  },
+  "full_expansion": {
+    "total_vb_pending": 311,
+    "ssr_collectible": 180,
+    "experience_js_required": 93,
+    "shopping_tbd": 38,
+    "expand_ssr_recommended": true,
+    "expand_experience_note": "Requires Playwright/Puppeteer OR VB internal API discovery",
+    "projected_ssr_en_useful": 165,
+    "projected_total_en_if_all_accessible": 228,
+    "collector_requirements_ssr": [
+      "Standard urllib/requests + 1-2s delay",
+      "Parse h4.tit for EN title (h4 class=tit)",
+      "Parse JS inline for description: .attr(\"content\", \"...\")",
+      "Parse imgLoadComm seqs for image URLs",
+      "Confirm source_key category before collection (skip experience)"
+    ],
+    "collector_requirements_experience": [
+      "Playwright or Puppeteer for JS rendering",
+      "OR: explore VB internal API (ubicont endpoint patterns)",
+      "NOT included in immediate expansion scope"
+    ]
+  },
+  "pass_criteria": {
+    "sample_count": 15,
+    "all_results_present": true,
+    "api_calls_recorded": true,
+    "no_cookie_stored": true,
+    "no_candidate_data_modified": true,
+    "no_groundless_identity_link": true,
+    "missing_vs_absent_distinguished": true
+  },
+  "http_requests_total": 31,
+  "sample_results": [
+    {
+      "candidate_id": "busan-VB-1031",
+      "category": "attraction",
+      "name_ko": "슬기로운 부산도서관 생활",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=1031&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=1031&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "명소 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "명소 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Be Smart in Busan Metropolitan Library",
+          "subtitle": "An open library for everyone",
+          "description": "Last November, the long-awaited Busan Metropolitan Library has finally been opened to the public. This brings happy changes to the lives of the people of Busan, who have been anxiously waiting for this opening. Today, we’ll explore this open library for all so that everyone can become smart when in Busan Metropolitan Library!",
+          "image_seqs": [
+            "17246",
+            "17247",
+            "17248",
+            "17249",
+            "17250",
+            "17251",
+            "17252",
+            "17253",
+            "17254",
+            "17255"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/17246_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "2 of Deokpo Station on Busan Metro Line 2 → Walk for 3 min",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 327
+        }
+      },
+      "en_title": "Be Smart in Busan Metropolitan Library",
+      "en_description": "Last November, the long-awaited Busan Metropolitan Library has finally been opened to the public. This brings happy changes to the lives of the people of Busan, who have been anxiously waiting for this opening. Today, we’ll explore this open library for all so that everyone can become smart when in Busan Metropolitan Library!",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/17246_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "An open library for everyone",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "17246",
+        "17247",
+        "17248",
+        "17249",
+        "17250",
+        "17251",
+        "17252",
+        "17253",
+        "17254",
+        "17255"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1034",
+      "category": "attraction",
+      "name_ko": "문화예술촌 공방",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1034&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1034&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "",
+          "subtitle": "",
+          "description": "",
+          "image_seqs": [
+            "17293",
+            "17294",
+            "17295",
+            "17296",
+            "17297"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/17293_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": false,
+          "has_description": false,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 0
+        }
+      },
+      "en_title": "",
+      "en_description": "",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/17293_thumbL",
+      "description_quality": "ABSENT",
+      "cause": "ACCESS_BLOCKED",
+      "notes": [
+        "Vue.js client-rendered (experience category); static HTML returns loading placeholder only"
+      ],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "17293",
+        "17294",
+        "17295",
+        "17296",
+        "17297"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1057",
+      "category": "attraction",
+      "name_ko": "민속마당",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1057&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1057&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "",
+          "subtitle": "",
+          "description": "",
+          "image_seqs": [
+            "17385",
+            "17386",
+            "17387"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/17385_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": false,
+          "has_description": false,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 0
+        }
+      },
+      "en_title": "",
+      "en_description": "",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/17385_thumbL",
+      "description_quality": "ABSENT",
+      "cause": "ACCESS_BLOCKED",
+      "notes": [
+        "Vue.js client-rendered (experience category); static HTML returns loading placeholder only"
+      ],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "17385",
+        "17386",
+        "17387"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1063",
+      "category": "attraction",
+      "name_ko": "한지러브",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1063&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1063&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "HANJI LOVE",
+          "subtitle": "HANJI LOVE",
+          "description": "Ye-Rim Inc., managed by Korean paper crafts artist Song Ji Hyun, offers a variety of contents designed to provide participants with the joy of Korean paper-based traditional crafts.<br/>We have expanded our business into various fields to provide a wide range of programs for anyone to take in order to experience easy and fun activities as a means of enriching life, building artistic talent, or taking challenge in search of happiness.",
+          "image_seqs": [
+            "17500",
+            "17501",
+            "17502",
+            "17503",
+            "17504"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/17500_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 437
+        }
+      },
+      "en_title": "HANJI LOVE",
+      "en_description": "Ye-Rim Inc., managed by Korean paper crafts artist Song Ji Hyun, offers a variety of contents designed to provide participants with the joy of Korean paper-based traditional crafts.<br/>We have expanded our business into various fields to provide a wide range of programs for anyone to take in order to experience easy and fun activities as a means of enriching life, building artistic talent, or taking challenge in search of happiness.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/17500_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "HANJI LOVE",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "17500",
+        "17501",
+        "17502",
+        "17503",
+        "17504"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1066",
+      "category": "attraction",
+      "name_ko": "드림씨어터",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1066&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1066&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "",
+          "subtitle": "",
+          "description": "",
+          "image_seqs": [
+            "17521",
+            "17522",
+            "17523",
+            "17524",
+            "17525"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/17521_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": false,
+          "has_description": false,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 0
+        }
+      },
+      "en_title": "",
+      "en_description": "",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/17521_thumbL",
+      "description_quality": "ABSENT",
+      "cause": "ACCESS_BLOCKED",
+      "notes": [
+        "Vue.js client-rendered (experience category); static HTML returns loading placeholder only"
+      ],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "17521",
+        "17522",
+        "17523",
+        "17524",
+        "17525"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1157",
+      "category": "nature",
+      "name_ko": "부산에서 공해 없이 가을 타기",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1157&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1157&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Enjoying the fall without pollution in Busan",
+          "subtitle": "♬ In fall blues",
+          "description": "From the blue skies to the sculpted clouds, fresh wind, and the deepening fall colors... Fall is truly in full swing, when nature’s beauty is at its brightest. Just like the popular saying, one often gets the “fall blues.” One wonders, is there a way to break out of the blues and enjoy the things we have? It is now time to leave to a place where one can ride through an unforgettable memory.",
+          "image_seqs": [
+            "18664",
+            "18665",
+            "18666",
+            "18667",
+            "18668",
+            "18669",
+            "18670",
+            "18732",
+            "18672",
+            "18673"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/18664_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 393
+        }
+      },
+      "en_title": "Enjoying the fall without pollution in Busan",
+      "en_description": "From the blue skies to the sculpted clouds, fresh wind, and the deepening fall colors... Fall is truly in full swing, when nature’s beauty is at its brightest. Just like the popular saying, one often gets the “fall blues.” One wonders, is there a way to break out of the blues and enjoy the things we have? It is now time to leave to a place where one can ride through an unforgettable memory.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/18664_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "♬ In fall blues",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "18664",
+        "18665",
+        "18666",
+        "18667",
+        "18668",
+        "18669",
+        "18670",
+        "18732",
+        "18672",
+        "18673"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1315",
+      "category": "nature",
+      "name_ko": "태종대에서 즐기는 스쿠버다이빙",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1315&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1315&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Enjoying scuba diving in Taejongdae Park",
+          "subtitle": "Written and Photographed by Travel Writer Jung Ho-yoon",
+          "description": "One of the most attractive things about Busan is that you can meet the blue sea that refreshes your mind anywhere. Gamjihaebyeon Beach is one of top locations for scuba diving, and it is also popular as an educational place for beginners. I suggest taking a walk in Taejongdae Park and enjoying its scenery after seeing the mysterious underwater world through scuba diving. <br/>",
+          "image_seqs": [
+            "22449",
+            "22252",
+            "22253",
+            "22254",
+            "22255",
+            "22256",
+            "22257",
+            "22258",
+            "22259",
+            "22260"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/22449_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "7 of Busan Station on Busan Metro Line No. 1 → Transfer to bus 88, 101 at Busan Station Bus Station",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 379
+        }
+      },
+      "en_title": "Enjoying scuba diving in Taejongdae Park",
+      "en_description": "One of the most attractive things about Busan is that you can meet the blue sea that refreshes your mind anywhere. Gamjihaebyeon Beach is one of top locations for scuba diving, and it is also popular as an educational place for beginners. I suggest taking a walk in Taejongdae Park and enjoying its scenery after seeing the mysterious underwater world through scuba diving. <br/>",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/22449_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "Written and Photographed by Travel Writer Jung Ho-yoon",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "22449",
+        "22252",
+        "22253",
+        "22254",
+        "22255",
+        "22256",
+        "22257",
+        "22258",
+        "22259",
+        "22260"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-139",
+      "category": "nature",
+      "name_ko": "서프홀릭 서핑 체험 프로그램",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=139&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=139&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Surfing Courses and Lessons",
+          "subtitle": "Surf Holic",
+          "description": "Surf Holic’s “Surfing Course”<br/>- What is surfing? It is a course designed for those who want to enjoy marine leisure and sports<br/><br/>Surf Holic’s “5-Session Surfing Course”<br/>- Surf Holic’s exclusive 5-session surfing course is designed for beginners to acquire basic skills for safely enjoying surfing alone. As part of this course, you will be able to learn safety tips, surfing rules, and surf culture.<br/><br/>Surf Holic’s “Advanced Surfing Course”<br/>- This advanced surfing course is for intermediate or even advanced surfers. It consists of a one-point lesson and a theoretical surf class so that the more experienced can hone their surfing techniques and respond to waves of different intensities.<br/><br/>Surf Holic’s “Surf Instructor Development Course”<br/>- This is a surf instructor development course designed for those who plan to become surf instructors at a Surf Holic franchise or any other surf facility.<br/><br/>",
+          "image_seqs": [
+            "1628",
+            "24069",
+            "24070",
+            "24071",
+            "24072"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/1628_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "50 Songjeonghaebyeon-ro, Haeundae-gu, Busan",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 945
+        }
+      },
+      "en_title": "Surfing Courses and Lessons",
+      "en_description": "Surf Holic’s “Surfing Course”<br/>- What is surfing? It is a course designed for those who want to enjoy marine leisure and sports<br/><br/>Surf Holic’s “5-Session Surfing Course”<br/>- Surf Holic’s exclusive 5-session surfing course is designed for beginners to acquire basic skills for safely enjoying surfing alone. As part of this course, you will be able to learn safety tips, surfing rules, and surf culture.<br/><br/>Surf Holic’s “Advanced Surfing Course”<br/>- This advanced surfing course is for intermediate or even advanced surfers. It consists of a one-point lesson and a theoretical surf class so that the more experienced can hone their surfing techniques and respond to waves of different intensities.<br/><br/>Surf Holic’s “Surf Instructor Development Course”<br/>- This is a surf instructor development course designed for those who plan to become surf instructors at a Surf Holic franchise or any other surf facility.<br/><br/>",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/1628_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "Surf Holic",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "1628",
+        "24069",
+        "24070",
+        "24071",
+        "24072"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1133",
+      "category": "restaurant",
+      "name_ko": "도날드즉석떡볶이",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1133&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1133&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Donald Tteokbokki(도날드즉석떡볶이)",
+          "subtitle": "",
+          "description": "A famous nostalgic joint for the locals, Donald Tteobokki is a made-to-order tteobokki shop that has been in operation for 35 years. They are known for their original flavors with seafood broth and gochujang sauce. Many also come here for Ppeong Cream, an ice cream sandwich with ppeongtwigi (rice puff) sold as dessert.",
+          "image_seqs": [
+            "33118",
+            "18067",
+            "18068",
+            "27726",
+            "27727"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/33118_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 320
+        }
+      },
+      "en_title": "Donald Tteokbokki(도날드즉석떡볶이)",
+      "en_description": "A famous nostalgic joint for the locals, Donald Tteobokki is a made-to-order tteobokki shop that has been in operation for 35 years. They are known for their original flavors with seafood broth and gochujang sauce. Many also come here for Ppeong Cream, an ice cream sandwich with ppeongtwigi (rice puff) sold as dessert.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/33118_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "33118",
+        "18067",
+        "18068",
+        "27726",
+        "27727"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1137",
+      "category": "restaurant",
+      "name_ko": "원산면옥 1953",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1137&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1137&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Wonsanmyeonok",
+          "subtitle": "",
+          "description": "Wonsanmyeonok is a longstanding naengmyeon (cold noodle soup) establishment with 60 years of history, run by third-generation family members. They use Hanwoo, domestic pork, and fresh chicken, and the naengmyeon broth made of over 10 ingredients boasts the same flavor every time.",
+          "image_seqs": [
+            "33179",
+            "33180",
+            "18084",
+            "27638"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/33179_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 280
+        }
+      },
+      "en_title": "Wonsanmyeonok",
+      "en_description": "Wonsanmyeonok is a longstanding naengmyeon (cold noodle soup) establishment with 60 years of history, run by third-generation family members. They use Hanwoo, domestic pork, and fresh chicken, and the naengmyeon broth made of over 10 ingredients boasts the same flavor every time.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/33179_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "33179",
+        "33180",
+        "18084",
+        "27638"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1248",
+      "category": "restaurant",
+      "name_ko": "GAB148 Steak & Pasta",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1248&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1248&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "GAB148",
+          "subtitle": "(지에이비148)",
+          "description": "It is a dining pub frequented by couples with stunning indoor and outdoor terraces. The steak, the signature menu here, is popular because it is served on a stone heated to 250 degrees. Guests can taste various levels of steak, from rare to well-done.<br/><br/>",
+          "image_seqs": [
+            "21077",
+            "21078",
+            "21079",
+            "21080"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/21077_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 261
+        }
+      },
+      "en_title": "GAB148",
+      "en_description": "It is a dining pub frequented by couples with stunning indoor and outdoor terraces. The steak, the signature menu here, is popular because it is served on a stone heated to 250 degrees. Guests can taste various levels of steak, from rare to well-done.<br/><br/>",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/21077_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "(지에이비148)",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "21077",
+        "21078",
+        "21079",
+        "21080"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1262",
+      "category": "restaurant",
+      "name_ko": "홍성방",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1262&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1262&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "음식 | 부산에가면 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Hongseongbang (홍성방)",
+          "subtitle": "",
+          "description": "This restaurant, which has been operated for over 50 years by three generations, is one of the most famous restaurants in Busan’s Chinatown. Water dumplings are so popular that they have long been called “Yeongju-dong water dumplings,” and there are many regulars coming from other provinces on weekends as well.",
+          "image_seqs": [
+            "32933",
+            "32934",
+            "27516"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/32933_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "50 years by three generations, is one of the most famous restaurants in Busan’s Chinatown. Water dumplings are so popular that they have long been cal",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 312
+        }
+      },
+      "en_title": "Hongseongbang (홍성방)",
+      "en_description": "This restaurant, which has been operated for over 50 years by three generations, is one of the most famous restaurants in Busan’s Chinatown. Water dumplings are so popular that they have long been called “Yeongju-dong water dumplings,” and there are many regulars coming from other provinces on weekends as well.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/32933_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "32933",
+        "32934",
+        "27516"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2243",
+      "category": "accommodation",
+      "name_ko": "해운대 도심 속 화려한 웰니스, ‘파크 하얏트 부산’",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2243&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2243&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Park Hyatt Busan offers a spectacular wellness experience in the heart of Haeundae",
+          "subtitle": "Park Hyatt Busan",
+          "description": "Park Hyatt Busan is located in the center of Haeundae Marine City in Busan. It is a premium hotel boasting panoramic views of the Haeundae Sea, Gwangandaegyo Bridge, and the yacht marina. The stylish interior, filled with natural light, makes a relaxing stay in the city even more enjoyable.",
+          "image_seqs": [
+            "40213",
+            "40214",
+            "44373",
+            "40216",
+            "44374",
+            "40218",
+            "40219",
+            "40220"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/40213_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 291
+        }
+      },
+      "en_title": "Park Hyatt Busan offers a spectacular wellness experience in the heart of Haeundae",
+      "en_description": "Park Hyatt Busan is located in the center of Haeundae Marine City in Busan. It is a premium hotel boasting panoramic views of the Haeundae Sea, Gwangandaegyo Bridge, and the yacht marina. The stylish interior, filled with natural light, makes a relaxing stay in the city even more enjoyable.",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/40213_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "Park Hyatt Busan",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "40213",
+        "40214",
+        "44373",
+        "40216",
+        "44374",
+        "40218",
+        "40219",
+        "40220"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2270",
+      "category": "accommodation",
+      "name_ko": "송도 바다를 품은 럭셔리 스테이, 윈덤 그랜드 부산",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2270&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2270&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Wyndham Grand Busan: A Luxurious Stay by the Sea in Songdo",
+          "subtitle": "Wyndham Grand Busan",
+          "description": "Wyndham Grand Busan is a 5-star luxury hotel offering a panoramic view of Namhangdaegyo Bridge and Songdo Sea. It provides the perfect retreat, set against the stunning backdrop of Busan",
+          "image_seqs": [
+            "40602",
+            "40456",
+            "40457",
+            "40592",
+            "40593",
+            "40594",
+            "40595",
+            "40596",
+            "40597",
+            "40603"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/40602_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "",
+          "has_title": true,
+          "has_description": true,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 186
+        }
+      },
+      "en_title": "Wyndham Grand Busan: A Luxurious Stay by the Sea in Songdo",
+      "en_description": "Wyndham Grand Busan is a 5-star luxury hotel offering a panoramic view of Namhangdaegyo Bridge and Songdo Sea. It provides the perfect retreat, set against the stunning backdrop of Busan",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/40602_thumbL",
+      "description_quality": "USEFUL",
+      "cause": "EN_PAGE_EXISTS_USEFUL",
+      "notes": [],
+      "en_subtitle": "Wyndham Grand Busan",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "40602",
+        "40456",
+        "40457",
+        "40592",
+        "40593",
+        "40594",
+        "40595",
+        "40596",
+        "40597",
+        "40603"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1769",
+      "category": "event",
+      "name_ko": "대한민국 메가 트렌드의 중심! 광안리 M 드론라이트쇼",
+      "flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1769&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1769&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false
+      },
+      "en_info": {
+        "title": "체험·해양·웰니스 | 추천여행 | Visit Busan 釜山広域市",
+        "description": "부산여행의 모든 정보, VISIT BUSAN, 부산여행, 부산관광, 비짓부산, 부산시 공식 관광 홈페이지, 부산가볼만한곳,부산의 맛",
+        "description_length": 73,
+        "og_image": "",
+        "has_content": true,
+        "is_js_shell": false,
+        "parsed_body": {
+          "title": "Gwangalli M Drone Light Show, one of the hottest trends in Korea",
+          "subtitle": "",
+          "description": "",
+          "image_seqs": [
+            "32514",
+            "32173",
+            "32174",
+            "32179",
+            "32239"
+          ],
+          "image_url_example": "https://visitbusan.net/uploadImgs/files/cntnts/32514_thumbL",
+          "arrival_info": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+          "address": "5 of Gwangan Station on Busan Metro Line 2",
+          "has_title": true,
+          "has_description": false,
+          "has_image": true,
+          "has_arrival": true,
+          "description_length": 0
+        }
+      },
+      "en_title": "Gwangalli M Drone Light Show, one of the hottest trends in Korea",
+      "en_description": "",
+      "en_image": "https://visitbusan.net/uploadImgs/files/cntnts/32514_thumbL",
+      "description_quality": "TITLE_ONLY",
+      "cause": "EN_PAGE_EXISTS_TITLE_ONLY",
+      "notes": [],
+      "en_subtitle": "",
+      "en_arrival": "BUSAN, 부산에 가면, 부산시 공식 관광 홈페이지, 부산가볼만한곳, 부산데이트코스, 부산데이트, 부산갈만한곳,부산2박3일여행,부산1박2일여행,부산당일여행,부산맛집,부산호텔,부산의 맛\" />",
+      "en_image_seqs": [
+        "32514",
+        "32173",
+        "32174",
+        "32179",
+        "32239"
+      ]
+    }
+  ],
+  "run_ts_reanalysis": "2026-07-30T06:46:50.443680+00:00",
+  "parser_version": "v2-body-parser",
+  "parser_notes": "v1 used og:meta tags (empty/generic on VB). v2 uses h4.tit + $('#meta_description').attr() + imgLoadComm seqs. All 15 EN pages have SSR-rendered title and JS-inline description.",
+  "vb_source_category_breakdown": {
+    "attraction_ssr_collectible": 171,
+    "food_ssr_collectible": 9,
+    "experience_js_rendering_required": 93,
+    "shopping_unknown": 38,
+    "total_pending": 311
+  },
+  "run_ts_final": "2026-07-30T06:49:17.048791+00:00"
+}
