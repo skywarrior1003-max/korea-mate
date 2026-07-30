@@ -20,6 +20,12 @@ import TripStoryExport from "@/components/TripStoryExport";
 import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
+// 공개 문구 판정은 Place Detail 과 같은 SSOT 를 쓴다. 내부 메모 정규식을 이
+// 파일에 복제하지 않는다 — 규칙이 두 곳에 있으면 한쪽만 갱신되어 뚫린다.
+//
+// 어떤 문구를 먼저 보여줄지는 각 호출부가 인자 순서로 정한다. 이번 방어는
+// 내부 메모를 막는 것이지 기존 사용자 문구의 우선순위를 바꾸는 작업이 아니다.
+import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
@@ -681,7 +687,10 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
   const imageUrl   = snap?.image ?? getCategoryImage(place.category, place.name);
   const badgeColor = getCategoryColor(place.category);
   const tags       = snap?.tags ?? [];
-  const desc       = snap?.whyItMatters ?? snap?.description ?? place.tips;
+  // 스냅샷 원문을 직접 읽는 자리다. tips 는 생성 시 이미 걸러졌지만 cartSnapshot
+  // 은 Explore 시점 값 그대로이고, 서버가 만든 일정의 tips 는 우리 코드를 거치지
+  // 않았을 수 있다. 세 후보를 모두 같은 판정에 통과시킨다.
+  const desc       = firstPublicText(snap?.whyItMatters, snap?.description, place.tips);
 
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
@@ -1519,7 +1528,9 @@ function ItineraryResult() {
       location:      item.district || city,
       time:          defaultTime,
       duration:      item.recommendedDurationMinutes ? `${item.recommendedDurationMinutes}m` : "60m",
-      tips:          item.description || item.whyItMatters || "",
+      // 이 경로만 description 이 먼저다. 보관함 카드가 원래 보여주던 문구이므로
+      // 순서를 바꾸지 않는다 — 바꾸면 안전한 문구까지 전부 교체된다(실측 86/86).
+      tips:          firstPublicText(item.description, item.whyItMatters),
       googleMapsUrl: item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.shortName || item.name} ${city} Korea`)}`,
       slot:          assignSlot(defaultTime),
       cartSnapshot:  item,
@@ -1581,7 +1592,8 @@ function ItineraryResult() {
       location:      spot.district || spot.city,
       time,
       duration:      spot.durationMinutes ? `${spot.durationMinutes}m` : "60m",
-      tips:          spot.whyItMatters || spot.description || "",
+      // 기존 순서(whyItMatters → description)를 유지하고 판정만 추가한다.
+      tips:          firstPublicText(spot.whyItMatters, spot.description),
       googleMapsUrl: spot.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${spot.name} ${spot.city} Korea`)}`,
       slot:          assignSlot(time),
       lat:           spot.lat,
@@ -2358,7 +2370,7 @@ function ItineraryResult() {
                                           </h3>
                                           <div className="bg-[#F6F7F8]/60 border border-[#E5E7EA]/60 rounded-xl p-3 mt-1">
                                             <p className="text-xs text-[#565D66] leading-relaxed line-clamp-2">
-                                              {place.cartSnapshot?.whyItMatters ?? place.cartSnapshot?.description ?? place.tips}
+                                              {firstPublicText(place.cartSnapshot?.whyItMatters, place.cartSnapshot?.description, place.tips)}
                                             </p>
                                           </div>
                                         </div>

@@ -188,6 +188,36 @@ export function resolvePublicPlaceSummary(text: LocalizedPlaceText): string | nu
   return null;
 }
 
+/**
+ * 후보 문구 중 **공개해도 되는 첫 번째**를 원문 그대로 고른다.
+ *
+ * resolvePublicPlaceSummary 와 역할이 다르다
+ *   저쪽은 metadata·검색 스니펫용 **요약 문장**을 만든다. 그래서 description 을
+ *   첫 문장으로 정형화하고 후보 순서가 (why → description) 로 고정돼 있다.
+ *   일정 tips 는 요약이 아니라 화면에 그대로 싣는 안내문이고, 호출부마다
+ *   어떤 문구를 먼저 보여줄지가 이미 정해져 있다. 그 순서를 함수 시그니처가
+ *   강제하면 안 된다.
+ *
+ * 그래서 이 함수는 **판정만** 한다
+ *   - 무엇이 내부 메모인가 → isInternalMemo (정책 SSOT, 이 파일 한 곳)
+ *   - 무엇을 먼저 보여줄까 → 호출부가 인자 순서로 표현
+ *
+ * 통과한 후보는 자르지 않고, 마침표를 붙이지 않고, 다시 쓰지 않는다.
+ * trim 은 "값이 있는가" 판정에만 쓰고 반환값에는 적용하지 않는다 — 여기서
+ * 또 다듬으면 같은 데이터가 화면마다 다르게 보인다.
+ *
+ * 모든 후보가 없거나 내부 메모면 빈 문자열. 호출부는 빈 값일 때 블록을
+ * 렌더하지 않는다. 없는 문구를 지어내지 않는다.
+ */
+export function firstPublicText(
+  ...candidates: Array<string | null | undefined>
+): string {
+  for (const c of candidates) {
+    if (hasText(c) && !isInternalMemo(c)) return c;
+  }
+  return "";
+}
+
 // ── 1-C. metadata 이미지 ─────────────────────────────────────────────────────
 //
 // <img onError> fallback 은 브라우저에서만 동작한다. OG·Twitter·JSON-LD 를 읽는

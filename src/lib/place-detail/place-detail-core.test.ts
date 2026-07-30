@@ -23,6 +23,7 @@ import {
   toPlaceView,
   isInternalMemo,
   resolvePublicPlaceSummary,
+  firstPublicText,
   resolveDisplayImage,
   resolvePublicMetadataImage,
   stripCommercialKeys,
@@ -566,4 +567,168 @@ test("PlaceView: l10n 전 값이 내부 메모면 null", () => {
 test("PlaceView: description 이 내부 메모여도 제거된다", () => {
   const v = toPlaceView(spot({ description: "Best commercial base for affiliate funnels" }));
   assert.equal(v.description, null);
+});
+
+// ── firstPublicText — 일정 표시 경로 방어 (GUARD-FIX-V1) ────────────────────
+//
+// 이 함수가 하는 일은 하나다: 후보 중 공개해도 되는 첫 번째를 원문 그대로 고른다.
+// 후보 순서는 호출부가 정한다. 여기서 검증하는 것은 (1) 판정이 SSOT 와 같은가,
+// (2) 통과한 문구를 손대지 않는가 두 가지다.
+
+test("firstPublicText: 첫 후보가 안전하면 원문 그대로 반환한다", () => {
+  assert.equal(
+    firstPublicText("A marina side night view and dining complex near Haeundae", "second"),
+    "A marina side night view and dining complex near Haeundae",
+  );
+});
+
+test("firstPublicText: 첫 후보가 affiliate 메모면 두 번째 후보", () => {
+  assert.equal(firstPublicText("High value zone for affiliate traffic", "A lively beach"), "A lively beach");
+});
+
+test("firstPublicText: conversion 메모면 건너뛴다", () => {
+  assert.equal(firstPublicText("Strong hotel conversion driver", "A hillside village"), "A hillside village");
+});
+
+test("firstPublicText: commercial value 메모면 건너뛴다", () => {
+  assert.equal(
+    firstPublicText("High commercial value for nightlife hotel and food spending routes", "A marina complex"),
+    "A marina complex",
+  );
+});
+
+test("firstPublicText: monetization·upsell·funnel 메모를 건너뛴다", () => {
+  for (const memo of ["Key monetization anchor", "Good upsell point for tours", "Top of the booking funnel"]) {
+    assert.equal(firstPublicText(memo, "A coastal trail"), "A coastal trail", memo);
+  }
+});
+
+test("firstPublicText: revenue·ARPU·CTR 메모를 건너뛴다", () => {
+  for (const memo of ["Highest revenue per visitor", "Best ARPU segment", "Strong CTR on cards"]) {
+    assert.equal(firstPublicText(memo, "A city park"), "A city park", memo);
+  }
+});
+
+test("firstPublicText: null·undefined 후보를 건너뛴다", () => {
+  assert.equal(firstPublicText(null, undefined, "A quiet temple"), "A quiet temple");
+  assert.equal(firstPublicText(undefined, "A quiet temple"), "A quiet temple");
+});
+
+test("firstPublicText: 빈 문자열·공백만인 후보를 건너뛴다", () => {
+  assert.equal(firstPublicText("", "   ", "A quiet temple"), "A quiet temple");
+});
+
+test("firstPublicText: 후보가 전부 내부 메모면 빈 문자열", () => {
+  assert.equal(firstPublicText("affiliate anchor", "Best commercial base for affiliate funnels"), "");
+});
+
+test("firstPublicText: 후보가 하나도 없으면 빈 문자열", () => {
+  assert.equal(firstPublicText(), "");
+  assert.equal(firstPublicText(null, undefined, "", "  "), "");
+});
+
+test("firstPublicText: 여행자용 사실 정보는 차단하지 않는다", () => {
+  // 유료 관광지·입장료는 내부 수익화 메모가 아니라 여행자가 알아야 할 사실이다.
+  for (const s of [
+    "A paid attraction with an observation deck",
+    "PaidAttraction",
+    "Entry fee is 27,000 KRW",
+    "A high rise observatory inside LCT with wide views of Haeundae and the sea",
+    "Busan's central shopping nightlife and transit district",
+  ]) {
+    assert.equal(firstPublicText(s, "fallback"), s, s);
+  }
+});
+
+test("firstPublicText: 대소문자를 가리지 않고 차단한다", () => {
+  for (const s of ["AFFILIATE hub", "Affiliate Hub", "aFfIlIaTe hub"]) {
+    assert.equal(firstPublicText(s, "A park"), "A park", s);
+  }
+});
+
+test("firstPublicText: 다문장 원문을 자르지 않는다 — 요약 함수가 아니다", () => {
+  const long = "A 1.8km white-sand stretch in Haeundae-gu, open year-round. Street food stalls line the promenade. Busiest in August.";
+  assert.equal(firstPublicText(long), long);
+  // resolvePublicPlaceSummary 는 반대로 첫 문장만 준다 — 두 함수의 역할이 다르다
+  assert.equal(
+    resolvePublicPlaceSummary({ name: null, description: long, whyItMatters: null }),
+    "A 1.8km white-sand stretch in Haeundae-gu, open year-round.",
+  );
+});
+
+test("firstPublicText: 마침표를 추가하지 않는다", () => {
+  assert.equal(firstPublicText("A lively beach facing Gwangan Bridge with cafes bars and night scenery"),
+               "A lively beach facing Gwangan Bridge with cafes bars and night scenery");
+});
+
+test("firstPublicText: 앞뒤 공백이 있어도 원문 그대로 반환한다 — 판정에만 trim 을 쓴다", () => {
+  assert.equal(firstPublicText("  A marina complex  "), "  A marina complex  ");
+});
+
+test("firstPublicText: 후보 세 개의 순서를 보존한다", () => {
+  assert.equal(firstPublicText("first", "second", "third"), "first");
+  assert.equal(firstPublicText(null, "second", "third"), "second");
+  assert.equal(firstPublicText(null, null, "third"), "third");
+  // 순서를 뒤집으면 결과도 뒤집힌다 = 순서를 호출부가 정한다는 계약
+  assert.equal(firstPublicText("desc", "why"), "desc");
+  assert.equal(firstPublicText("why", "desc"), "why");
+});
+
+test("firstPublicText: 세 번째 후보(tips)도 안전성 검사를 받는다", () => {
+  assert.equal(firstPublicText(null, null, "High commercial value for hotel conversion"), "");
+  assert.equal(firstPublicText("affiliate memo", "conversion memo", "A safe tip"), "A safe tip");
+});
+
+test("firstPublicText: 원본 입력을 변경하지 않는다", () => {
+  const arr = ["High value affiliate zone", "A lively beach"];
+  const copy = [...arr];
+  firstPublicText(...arr);
+  assert.deepEqual(arr, copy);
+});
+
+test("firstPublicText: 판정이 isInternalMemo 와 일치한다 — 정책 SSOT 단일", () => {
+  const samples = [
+    "A safe line", "High value affiliate zone", "Strong CTR on cards",
+    "Entry fee is 27,000 KRW", "Best commercial base for affiliate funnels",
+    "A paid attraction with an observation deck",
+  ];
+  for (const s of samples) {
+    assert.equal(firstPublicText(s), isInternalMemo(s) ? "" : s, s);
+  }
+});
+
+// ── 네 호출부의 후보 순서 고정 ───────────────────────────────────────────────
+//
+// 순서가 조용히 바뀌면 안전한 사용자 문구까지 전부 교체된다(실측 86/86행).
+// 각 경로의 순서를 테스트로 못박는다.
+
+test("호출부 순서: addPlaceFromSpot 은 whyItMatters 먼저", () => {
+  const spot = { whyItMatters: "The curated line.", description: "The long description." };
+  assert.equal(firstPublicText(spot.whyItMatters, spot.description), "The curated line.");
+});
+
+test("호출부 순서: addCartItemToDay 는 description 먼저", () => {
+  const item = { whyItMatters: "The curated line.", description: "The long description." };
+  assert.equal(firstPublicText(item.description, item.whyItMatters), "The long description.");
+});
+
+test("호출부 순서: cartSnapshot 소비는 whyItMatters → description → tips", () => {
+  const snap = { whyItMatters: "why", description: "desc" };
+  const tips = "tips";
+  assert.equal(firstPublicText(snap.whyItMatters, snap.description, tips), "why");
+  assert.equal(firstPublicText(undefined, snap.description, tips), "desc");
+  assert.equal(firstPublicText(undefined, undefined, tips), "tips");
+});
+
+test("인위적 오염: 오염된 후보는 건너뛰고 안전한 후보가 남는다", () => {
+  const DESC = "A marina-side night view and dining complex.";
+  const MEMO = "High commercial value for hotel conversion.";
+  // why-first 경로
+  assert.equal(firstPublicText(MEMO, DESC), DESC);
+  // description-first 경로
+  assert.equal(firstPublicText(DESC, MEMO), DESC);
+  // 두 후보 모두 오염 → 안전한 세 번째
+  assert.equal(firstPublicText(MEMO, MEMO, "A safe tip"), "A safe tip");
+  // 전부 오염 → 빈 문자열
+  assert.equal(firstPublicText(MEMO, MEMO, MEMO), "");
 });
