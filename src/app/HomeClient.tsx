@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -1372,7 +1373,12 @@ export default function HomeClient() {
                 external: false,
                 highlight: false,
               },
-            ].map((card) => (
+            ]
+              // Trip-Flow Commerce (§14-1-A) — 홈은 일정 생성 이전 단계다.
+              // external 카드는 제휴 판매 CTA 이므로 게이트가 false 면 제외한다.
+              // 내부 링크 카드(external: false)는 그대로 유지된다.
+              .filter((card) => TRIP_FLOW_COMMERCE_ENABLED || !card.external)
+              .map((card) => (
               <div
                 key={card.title}
                 className={`rounded-2xl p-8 shadow-sm flex flex-col ${card.highlight ? "border-2 bg-white" : "bg-white border border-gray-100"}`}
@@ -1524,6 +1530,8 @@ export default function HomeClient() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-3 shrink-0">
+                {/* Trip-Flow Commerce (§14-1-A) — 일정 생성 전 판매 CTA */}
+                {TRIP_FLOW_COMMERCE_ENABLED && (
                 <a
                   href="https://affiliate.klook.com/sl/21FkAvj"
                   target="_blank"
@@ -1533,6 +1541,7 @@ export default function HomeClient() {
                 >
                   Book Airport Transfer →
                 </a>
+                )}
                 <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
               </div>
             </div>
@@ -2050,6 +2059,7 @@ export default function HomeClient() {
                     </p>
                   </div>
                 </div>
+                {TRIP_FLOW_COMMERCE_ENABLED && (
                 <a
                   href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj"}
                   target="_blank"
@@ -2060,6 +2070,7 @@ export default function HomeClient() {
                 >
                   Book Hotel / Hub Transfer →
                 </a>
+                )}
               </div>
 
               {/* 콘서트 타임라인 */}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { CitySpot } from "@/data/cities/types";
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -45,9 +46,12 @@ export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
     spot.difficulty === "moderate" ? "bg-amber-50 text-amber-700 border-amber-100" :
                                      "bg-red-50 text-red-700 border-red-100";
 
-  const affiliateLabel = spot.affiliateProvider === "klook" ? tM("bookTour") : tM("bookStay");
-  const hasSecondRow   = !!(spot.officialUrl || spot.affiliateUrl);
-  const hasBoth        = !!(spot.officialUrl && spot.affiliateUrl);
+  // Trip-Flow Commerce (§14-1-A) — 장소 카드는 일정 확정 전 "선택 단계"다.
+  // 예약·구매 CTA 를 만들지 않는다. spot.affiliateUrl 은 조회 projection 단계에서
+  // 이미 제외되지만(city-spots.ts EXPLORE_SELECT), 게이트로 한 번 더 막는다.
+  const showTripCommerce = TRIP_FLOW_COMMERCE_ENABLED && !!spot.affiliateUrl;
+  const hasSecondRow   = !!spot.officialUrl || showTripCommerce;
+  const hasBoth        = !!spot.officialUrl && showTripCommerce;
 
   return (
     <div
@@ -154,13 +158,13 @@ export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
                   {tM("official")}
                 </a>
               )}
-              {spot.affiliateUrl && (
+              {showTripCommerce && (
                 <a
                   href={spot.affiliateUrl}
-                  target="_blank" rel="noopener noreferrer"
+                  target="_blank" rel="noopener noreferrer sponsored"
                   className="flex items-center justify-center gap-1 px-2 py-2 text-xs font-bold text-white bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 rounded-xl transition-colors shadow-sm"
                 >
-                  {affiliateLabel}
+                  {spot.affiliateProvider === "klook" ? tM("bookTour") : tM("bookStay")}
                 </a>
               )}
             </div>

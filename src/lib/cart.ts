@@ -1,3 +1,4 @@
+import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
 // ─────────────────────────────────────────────
 //  KoreaMate · Cart (localStorage)
 //  사용자가 [Add to My Itinerary]를 눌렀을 때
@@ -81,18 +82,32 @@ export interface CartItem extends EventItem {
 // ── 내부 헬퍼 ──────────────────────────────────
 
 /** SSR(서버)에서는 localStorage가 없으므로 항상 빈 배열로 안전하게 처리 */
+// Trip-Flow Commerce (§14-1-A) — 과거 브라우저에 저장된 항목에는 commerce 가
+// 남아 있을 수 있다. 로드할 때 상업 키만 제거하고, **실제로 바뀐 경우에만**
+// 다시 저장한다. 매 로드마다 재저장하면 불필요한 쓰기와 이벤트가 발생한다.
+//
+// 사용자 장소·일정·메모·즐겨찾기·방문 상태는 건드리지 않는다. 전체 초기화도
+// 하지 않는다. 정확히 알려진 상업 키만 재귀 제거한다.
 function readStorage(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as CartItem[]) : [];
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as CartItem[];
+    if (findTripCommerceKeys(parsed).length === 0) return parsed;
+
+    const cleaned = stripTripCommerceKeys(parsed);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned));
+    return cleaned;
   } catch {
     return [];
   }
 }
 
 function writeStorage(items: CartItem[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  // 저장 직전에도 한 번 더 거른다 — 어느 화면에서 담았든 Cart 에는 상업 문맥이
+  // 들어가지 않는다.
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stripTripCommerceKeys(items)));
   // CartDrawer 등 구독 컴포넌트에 변경 알림
   window.dispatchEvent(new CustomEvent(CART_EVENT));
 }

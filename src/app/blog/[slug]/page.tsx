@@ -1,4 +1,5 @@
 import { getPostData, getSortedPostsData, type PostData } from "@/lib/posts";
+import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -251,8 +252,12 @@ export default async function BlogPostPage({ params }: Props) {
 
           <AdBanner />
 
-          {/* Contextual affiliate cards (Surface C) */}
+          {/* Contextual affiliate cards — Editorial Content Affiliate (§14-1-C)
+              blog 는 승인된 표면이다. 가시적 제휴 고지(하단 Sponsored 문구)를 갖추고
+              있고 일정·Cart·scheduler 와 데이터 연결이 없다. allowlist 판정을
+              명시적으로 통과할 때만 렌더한다. */}
           {(() => {
+            if (!isEditorialAffiliateEnabled("blog")) return null;
             const cards = getBlogAffiliateCards(post!);
             if (cards.length === 0) return null;
             return (

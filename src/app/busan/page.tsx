@@ -196,7 +196,7 @@ export default function BusanPage() {
       </section>
 
       {/* ── Korea Ready (Surface D) ─────────────────────────────────────── */}
-      <KoreaReadySection city="busan" />
+      <KoreaReadySection city="busan" surface="city-landing" />
 
       {/* ── AI Planner CTA ──────────────────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">

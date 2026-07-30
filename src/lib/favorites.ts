@@ -1,4 +1,5 @@
 import type { EventItem } from "@/lib/cart";
+import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
 
 const FAVORITES_KEY = "koreamate_favorites";
 export const FAVORITES_EVENT = "koreamate-favorites-updated";
@@ -38,11 +39,19 @@ export function toggleFavorite(id: string): boolean {
 
 const SAVED_DATA_KEY = "koreamate_saved_spots_data";
 
+// Trip-Flow Commerce (§14-1-A) — Cart 와 같은 정리 규칙.
+// 상업 키가 실제로 발견된 경우에만 재저장한다 (idempotent).
 export function getSavedSpotsData(): EventItem[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(SAVED_DATA_KEY);
-    return raw ? (JSON.parse(raw) as EventItem[]) : [];
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as EventItem[];
+    if (findTripCommerceKeys(parsed).length === 0) return parsed;
+
+    const cleaned = stripTripCommerceKeys(parsed);
+    localStorage.setItem(SAVED_DATA_KEY, JSON.stringify(cleaned));
+    return cleaned;
   } catch {
     return [];
   }
@@ -54,7 +63,7 @@ export function cacheSavedSpot(event: EventItem): void {
   try {
     const all = getSavedSpotsData();
     if (!all.some(e => e.id === event.id)) {
-      localStorage.setItem(SAVED_DATA_KEY, JSON.stringify([...all, event]));
+      localStorage.setItem(SAVED_DATA_KEY, JSON.stringify(stripTripCommerceKeys([...all, event])));
       window.dispatchEvent(new CustomEvent(FAVORITES_EVENT));
     }
   } catch { /* ignore */ }

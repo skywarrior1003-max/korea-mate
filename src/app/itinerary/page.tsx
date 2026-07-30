@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { useTranslations } from "next-intl";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
@@ -367,9 +368,8 @@ async function generateWithNewApi(
       duration_min:        item.recommendedDurationMinutes,
       preferred_time_slot: toPreferredTimeSlot(item.bestTimeSlot),
       name:                item.name,
-      affiliate_url:       item.commerce?.affiliateUrl ?? null,
-      affiliate_provider:  item.commerce?.affiliatePartner ?? null,
-      booking_url:         item.commerce?.bookingUrl ?? null,
+      // Trip-Flow Commerce (§14-1-A) — plan API 요청 payload 에 상업 문맥을
+      // 넣지 않는다. "렌더용" 이라는 이유로도 보내지 않는다.
     }));
 
   // TASK-057-B1: Day-aware My Picks hard filter.
@@ -594,7 +594,7 @@ async function generateWithNewApi(
           tips:              display.tips,
           googleMapsUrl:     display.google_maps_url,
           slot:              assignSlot(item.start_time),
-          affiliateUrl:      cartHint?.affiliate_url,
+          // affiliateUrl 을 cartHint 로부터 복원하지 않는다 (§14-1-A)
           affiliateProvider: cartHint?.affiliate_provider,
           bookingUrl:        cartHint?.booking_url,
           lat:               display.lat ?? cartFull?.lat,
@@ -770,7 +770,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
           </div>
 
           {/* ── Cart 아이템 제휴 링크 (P0-1 Phase 2: 수익화 생존 체인) ── */}
-          {(place.affiliateUrl || place.bookingUrl) && (
+          {TRIP_FLOW_COMMERCE_ENABLED && (place.affiliateUrl || place.bookingUrl) && (
             <a
               href={(place.affiliateUrl ?? place.bookingUrl)!}
               target="_blank" rel="noopener noreferrer sponsored"
@@ -799,7 +799,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
                 )}
               </div>
               {/* Official Info + Affiliate CTA */}
-              <div className={`grid gap-3 ${matched.officialUrl && matched.affiliateUrl ? "grid-cols-2" : "grid-cols-1"}`}>
+              <div className={`grid gap-3 ${matched.officialUrl && TRIP_FLOW_COMMERCE_ENABLED && matched.affiliateUrl ? "grid-cols-2" : "grid-cols-1"}`}>
                 {matched.officialUrl && (
                   <a
                     href={matched.officialUrl}
@@ -811,7 +811,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
                     🏔️ Official Info
                   </a>
                 )}
-                {matched.affiliateUrl && (
+                {TRIP_FLOW_COMMERCE_ENABLED && matched.affiliateUrl && (
                   <a
                     href={matched.affiliateUrl}
                     target="_blank" rel="noopener noreferrer sponsored"
@@ -2005,7 +2005,8 @@ function ItineraryResult() {
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
-      {shouldShowAirportBanner && (
+      {/* Post-Plan Commerce (§14-1-B) — 일정 확정 후 문맥 상품. 정상화 전까지 비활성 */}
+      {POST_PLAN_COMMERCE_ENABLED && shouldShowAirportBanner && (
         <div className="mb-6 rounded-2xl border border-[#FF4A2D]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
           <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -2387,7 +2388,10 @@ function ItineraryResult() {
                                       </a>
                                     </div>
                                   </div>
-                                  {/* ── 수익화 제휴 버튼 스트립 (환경변수 기반) ── */}
+                                  {/* 수익화 제휴 버튼 스트립 — slotItems.map 내부, 즉
+                                      **일정 항목 내부**이므로 Post-Plan 이 아니라
+                                      Trip-Flow Commerce (§14-1-A) 로 분류한다. */}
+                                  {TRIP_FLOW_COMMERCE_ENABLED && (
                                   <div
                                     className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E5E7EA]/40"
                                     style={{ scrollbarWidth: "none" }}
@@ -2428,6 +2432,7 @@ function ItineraryResult() {
                                       ⭐ Michelin Spots
                                     </a>
                                   </div>
+                                  )}
                                 </div>
                               );
                             })}
@@ -2505,7 +2510,12 @@ function ItineraryResult() {
 
       <AdBanner />
 
-      {/* eSIM 배너 */}
+      {/* eSIM 배너 — 같은 코드가 두 문맥에서 렌더된다 (§14-1 문맥별 판정)
+            본인 일정 (!shareId) → 일정 확정 후 별도 상품 영역 → Post-Plan
+            공유 일정 (shareId)  → 다른 사용자가 보는 공유 일정 → Trip-Flow
+          두 조건을 모두 만족할 때만 anchor 를 생성한다. Post-Plan 을 미래에
+          활성화해도 공유 일정에서는 shareId 때문에 계속 0 이다. */}
+      {!shareId && POST_PLAN_COMMERCE_ENABLED && (
       <div className="bg-gradient-to-r from-[#FF4A2D] to-[#D93317] rounded-3xl p-8 sm:p-10 shadow-xl text-white mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center sm:text-left">
           <h3 className="text-2xl sm:text-3xl font-black">📱 Don&apos;t forget your eSIM!</h3>
@@ -2516,6 +2526,7 @@ function ItineraryResult() {
           Get eSIM Now
         </a>
       </div>
+      )}
 
       {selectedPlace && (
         <PlaceModal place={selectedPlace} city={city} citySpots={citySpots} onClose={() => setSelectedPlace(null)} />

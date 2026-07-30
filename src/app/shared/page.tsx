@@ -8,6 +8,7 @@
 export const dynamic = "force-static";
 
 import { useEffect, useState } from "react";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -277,7 +278,9 @@ export default function SharedTripPage() {
 
   const cityCap    = trip.city.charAt(0).toUpperCase() + trip.city.slice(1);
   const totalSpots = days.reduce((sum, d) => sum + d.places.length, 0);
-  const hasAffiliate = Object.keys(affiliateMap).length > 0;
+  // Trip-Flow Commerce (§14-1-A) — 공유 일정은 다른 사용자가 보는 일정 화면이다.
+  // 게이트가 false 인 동안 상업 섹션을 만들지 않는다.
+  const hasAffiliate = TRIP_FLOW_COMMERCE_ENABLED && Object.keys(affiliateMap).length > 0;
 
   // ── Trip Cover V1A — 관광 테마 사진 커버 ─────────────────────────────────
   // 자산은 전부 theme_only 라 사진을 특정 장소의 사진으로 표시하지 않는다.
@@ -516,7 +519,8 @@ export default function SharedTripPage() {
         )}
 
         {/* Korea Ready 정적 제휴 카드 — DB 시드 없이 항상 노출 */}
-        {(() => { const krc = toKRCity(trip.city); return krc ? <KoreaReadySection city={krc} /> : null; })()}
+        {/* 공유 일정은 Trip-Flow (§14-1-A) — surface 로 명시해 게이트가 차단하게 한다 */}
+        {(() => { const krc = toKRCity(trip.city); return krc ? <KoreaReadySection city={krc} surface="shared-itinerary" /> : null; })()}
 
         {/* 푸터 */}
         <p className="text-center text-xs text-[#8A919B] pb-8 pt-6">

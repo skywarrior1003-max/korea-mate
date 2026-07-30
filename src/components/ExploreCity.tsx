@@ -56,15 +56,9 @@ function toEventItem(spot: CitySpot): EventItem {
     notice: null,
     lat: spot.lat,
     lng: spot.lng,
-    commerce: {
-      affiliateType: spot.affiliateUrl ? "booking" : null,
-      hasAffiliate: !!spot.affiliateUrl,
-      affiliatePartner: spot.affiliateProvider ?? null,
-      affiliateUrl: spot.affiliateUrl ?? null,
-      hasMerchandise: false,
-      hasTicketing: false,
-      bookingUrl: null,
-    },
+    // Trip-Flow Commerce (§14-1-A) — Explore 에서 만든 객체는 Modal·Cart·Saved·
+    // 일정 입력으로 흘러간다. commerce 키를 아예 만들지 않는다. null 로 채우면
+    // 키 이름이 JSON·localStorage 에 그대로 남는다.
   };
 }
 

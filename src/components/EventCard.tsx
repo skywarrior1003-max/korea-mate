@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { EventItem } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 import { getVerifiedImage } from "@/lib/placeImages";
@@ -237,7 +238,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         </div>
 
         {/* 제휴 파트너 표시 */}
-        {event.commerce?.hasAffiliate && event.commerce?.affiliatePartner && (
+        {TRIP_FLOW_COMMERCE_ENABLED && event.commerce?.hasAffiliate && event.commerce?.affiliatePartner && (
           <p className="text-[10px] text-gray-400 pt-0.5">
             🤝 via {event.commerce?.affiliatePartner}
           </p>

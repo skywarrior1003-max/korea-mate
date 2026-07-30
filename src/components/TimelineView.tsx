@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { CartItem } from "@/lib/cart";
 
 // ── 상수 ───────────────────────────────────────
@@ -216,7 +217,8 @@ export default function TimelineView({
                 )}
 
                 {/* ── 제휴 링크 CTA ── */}
-                {item.commerce?.hasAffiliate &&
+                {TRIP_FLOW_COMMERCE_ENABLED &&
+                  item.commerce?.hasAffiliate &&
                   item.commerce?.affiliateUrl &&
                   item.commerce?.affiliatePartner && (
                     <a
@@ -231,7 +233,7 @@ export default function TimelineView({
                   )}
 
                 {/* 티켓 링크 (별도 존재 시) */}
-                {item.commerce?.hasTicketing && item.commerce?.bookingUrl && (
+                {TRIP_FLOW_COMMERCE_ENABLED && item.commerce?.hasTicketing && item.commerce?.bookingUrl && (
                   <a
                     href={item.commerce?.bookingUrl}
                     target="_blank"

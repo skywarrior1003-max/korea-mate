@@ -196,7 +196,7 @@ export default function SeoulPage() {
       </section>
 
       {/* ── Korea Ready (Surface D) ─────────────────────────────────────── */}
-      <KoreaReadySection city="seoul" />
+      <KoreaReadySection city="seoul" surface="city-landing" />
 
       {/* ── AI Planner CTA ──────────────────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">

@@ -1,5 +1,9 @@
 import AffiliateLink from "@/components/AffiliateLink";
 import { KLOOK, VIATOR, KTX } from "@/config/affiliates";
+import {
+  isEditorialAffiliateEnabled,
+  type CommerceSurface,
+} from "@/config/commerce-surfaces";
 
 interface AffiliateCard {
   emoji: string;
@@ -106,9 +110,25 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
   ],
 };
 
-export default function KoreaReadySection({ city }: { city: City }) {
+// 같은 컴포넌트가 도시 랜딩과 공유 일정 두 문맥에서 쓰인다.
+// Product Constitution v1.1 §14-1 — 파일이 아니라 **사용 문맥**으로 범위를 판정한다.
+//   도시 랜딩   → Editorial Content Affiliate 승인 표면
+//   공유 일정   → Trip-Flow Commerce (공유 일정은 §14-1-A 대상)
+//
+// surface 를 선택 prop 으로 두지 않는다. 선택이면 새 호출부가 조용히 통과하고
+// 기본값이 "노출"이 된다. 필수 prop 이면 분류를 잊은 호출부가 컴파일되지 않는다.
+interface Props {
+  city:    City;
+  surface: CommerceSurface;
+}
+
+export default function KoreaReadySection({ city, surface }: Props) {
   const cards = CITY_CARDS[city];
   const cityLabel = city.charAt(0).toUpperCase() + city.slice(1);
+
+  // 승인된 Editorial 표면이 아니면 상업 anchor 를 생성하지 않는다.
+  // CSS 숨김이 아니라 섹션 자체를 렌더하지 않는다.
+  if (!isEditorialAffiliateEnabled(surface)) return null;
 
   return (
     <section className="max-w-5xl mx-auto px-4 pb-4">

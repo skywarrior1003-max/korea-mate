@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
 import { addToCart, removeFromCart, isInCart } from "@/lib/cart";
@@ -167,9 +168,12 @@ export default function EventDetailModal({ event, onClose }: Props) {
     event.name.toLowerCase().includes("송도") ||
     event.tags.some((t) => t.toLowerCase().includes("cable"));
 
-  const showViator  = isViatorEligible(event.type);
-  const showBooking = isBookingEligible(event.type);
-  const showKlook   = isCableCarRelated || event.type === "transport";
+  // Trip-Flow Commerce (§14-1-A) — 장소 상세 모달은 일정 확정 전 "선택 단계"다.
+  // 게이트가 false 인 동안 세 공급자 CTA 를 만들지 않는다. VIATOR·BOOKING·KLOOK
+  // 설정과 추적 URL 은 그대로 보존하며, 향후 Post-Plan 계층이 사용한다.
+  const showViator  = TRIP_FLOW_COMMERCE_ENABLED && isViatorEligible(event.type);
+  const showBooking = TRIP_FLOW_COMMERCE_ENABLED && isBookingEligible(event.type);
+  const showKlook   = TRIP_FLOW_COMMERCE_ENABLED && (isCableCarRelated || event.type === "transport");
 
   return (
     <div
@@ -486,7 +490,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           )}
 
           {/* 티켓 구매 링크 */}
-          {event.commerce?.hasTicketing && event.commerce?.bookingUrl && (
+          {TRIP_FLOW_COMMERCE_ENABLED && event.commerce?.hasTicketing && event.commerce?.bookingUrl && (
             <a
               href={event.commerce?.bookingUrl}
               target="_blank"

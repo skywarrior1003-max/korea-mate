@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
 
 export const metadata = {
   title: "Korea Survival Guide - KoreaMate",
@@ -101,6 +102,10 @@ export default function SurvivalGuidePage() {
                 </li>
               </ul>
             </div>
+            {/* Editorial Content Affiliate (§14-1-C) — survival-guide 는 사용자
+                가시 제휴 고지가 없어 승인 표면 목록에 없다. 고지 보강 전까지
+                anchor 를 생성하지 않는다. 링크·코드는 후속 정상화를 위해 보존한다. */}
+            {isEditorialAffiliateEnabled("survival-guide") && (
             <a
               href="https://affiliate.klook.com/sl/KiT3U74"
               target="_blank"
@@ -109,6 +114,7 @@ export default function SurvivalGuidePage() {
             >
               Get eSIM Now
             </a>
+            )}
           </div>
 
           {/* Section 2 - Money & Payments */}
