@@ -7,9 +7,9 @@
 | `authority` | **`NONE`** — 이 문서는 제품 SSOT가 아니다. 아무것도 결정하지 않는다 |
 | `status` | **`VERIFIED_SNAPSHOT`** — 아래 `verified_commit` · `verified_db_date` 기준으로 **검증이 완료된 상태**라는 뜻이다. 제품 권한을 뜻하지 않는다 |
 | `document_version` | 1.0 |
-| `verified_commit` | `d50afef` — 이 저장소 commit 기준으로 구현 사실을 검증했다 |
-| `verified_db_date` | 2026-07-29 — 이 날짜 기준으로 운영 DB 사실을 검증했다 |
-| `current_product_authority` | 제품 방향 ACTIVE 권한은 **`gokoreamate-product-constitution-v1.md` v1.0 ACTIVE**에 있다 |
+| `verified_commit` | `1024698` — 이 저장소 commit 기준으로 구현 사실을 검증했다 |
+| `verified_db_date` | 2026-07-29 — 이 날짜 기준으로 운영 DB 사실을 검증했다 (코드 사실은 2026-07-30 재확인) |
+| `current_product_authority` | 제품 방향 ACTIVE 권한은 **`gokoreamate-product-constitution-v1.md` v1.1 ACTIVE**에 있다 |
 | `this_document_authority` | **항상 `NONE`.** 활성화 전환 대상이 아니다 |
 | `data_authority` | 데이터 · DB 최상위 SSOT는 `../architecture/gokoreamate-data-contract-v1.md`(v1.2 ACTIVE)다 |
 | `freshness_rule` | **수치와 구현 상태가 바뀌면 이 문서가 아니라 실제 저장소·DB가 우선한다.** 차이를 발견하면 이 문서를 갱신한다 |
@@ -154,20 +154,65 @@ Constitution §4가 열거한 자산의 현재 축적 수준이다.
 
 ---
 
-## 7. `KNOWN_DEVIATION` — 스케줄러 내부 상업 주입
+## 7. 상업 표면 — Constitution §14-1 세 범위별 현재 상태
 
-Constitution §14의 원칙과 현재 코드가 다르다. **§14-1 HARD_GATE가 이 항목을 근거로 작동한다.**
+**기준 코드 snapshot** `verified commit 1024698` · `verified date 2026-07-30`
 
-| 확인 항목 | 실측 (2026-07-29 · `d50afef`) |
+**이 문서는 코드가 정책을 이미 준수한다고 기록하지 않는다.** 아래는 전부 편차 기록이다.
+
+### 7-1. Trip-Flow Commerce — `KNOWN_DEVIATION`
+
+Constitution §14-1-A 대상 표면에 상업 노출과 상업 문맥 유입이 남아 있다.
+
+| 편차 | 실측 |
 |---|---|
-| 연결 위치 | `src/lib/scheduler/engine.ts:19` import · `:219-220` P4 단계에서 `injectAffiliates()` 호출 |
-| 장소 선택·순서 영향 | **없음.** P4는 모든 배치 완료 후 실행되며 `findFreeGaps`로 빈 시간대만 채운다. 장소를 재정렬하거나 밀어내지 않는다 |
-| 스케줄러가 받는 데이터 | `AffiliateContext = { affiliate_link_ids: string[]; max_cards: number }` — commission·commercial priority 필드는 없음 |
-| **다만 상업 문맥 유입** | `affiliate_link_ids`는 **offer 식별자**이며, 그 순서는 `src/lib/affiliates/affiliate-loader.ts`의 `.order("priority")` 결과다. **Constitution §14의 "상업 문맥 자체를 입력받지 않는다"를 충족하지 못한다** |
-| 운영 활성 여부 | **휴면.** 참조 테이블 `affiliate_links`가 운영 DB에 존재하지 않음(`42P01`) → 빈 배열 → 주입 0건 |
-| 구조 판정 | 연결 지점이 렌더 계층이 아니라 스케줄러 내부. **원칙의 구조 요건 미충족** |
+| 장소 카드 판매 링크 | `SpotCard` 가 `spot.affiliateUrl` 을 anchor 로 렌더. 운영 `/explore/busan/` 에서 **75개** (JS 렌더 후). 사용자 가시 고지 없음 |
+| 장소 객체 commerce 주입 | `ExploreCity` 가 `affiliateUrl`·`affiliateProvider` 를 `commerce` 에 주입 |
+| Event·Modal·Timeline 상업 렌더 | `EventCard` 제휴 배지 · `EventDetailModal` 4개 판매 링크 · `TimelineView` `Book via` |
+| 일정 장소 항목 예약 링크 | `itinerary/page.tsx` 의 `place.affiliateUrl`·`matched.affiliateUrl` 기반 버튼 |
+| `cartHints` affiliate 왕복 | Cart → `cartHints` → plan API 요청에 `affiliate_url`·`affiliate_provider`·`booking_url` 포함 |
+| Home 여행계획 전 판매 CTA | `HomeClient` 제휴 anchor. 운영 **2개** 렌더 |
+| shared 화면 콘텐츠 제휴 재사용 | 공유 일정 페이지가 도시 랜딩용 준비물 섹션을 그대로 재사용 |
+| **Trip-Flow gate 미구현** | 중앙 게이트 없음 |
 
-**해소 조건** 스케줄러 입력에서 상업 문맥을 완전히 제거하고, 주입을 일정 확정 이후 추천·렌더링 계층으로 이관한다. 그 전에는 Constitution §14-1의 기술 중립 게이트가 적용된다 — `affiliate_links`는 **현재 확인된 사례일 뿐이며 게이트 범위는 테이블명에 한정되지 않는다.**
+**스케줄러 입력 자체** — `runScheduler()` 후보 객체에는 상업 필드가 없다(`place_id`·`category`·`coordinate`·`zone_id`·`score`·`stay_minutes_override`). 다만 `affiliate_link_ids` 를 받는 `AffiliateContext` 경로가 엔진 내부에 남아 있고, 그 순서가 `.order("priority")` 결과이므로 **§14 "상업 문맥 자체를 입력받지 않는다" 를 충족하지 못한다.** 참조 테이블 `affiliate_links` 부재(`42P01`)로 현재 **휴면**.
+
+### 7-2. Post-Plan Commerce — `PARTIAL`
+
+| 항목 | 상태 |
+|---|---|
+| 일정 확정 후 렌더 | 충족 — 일정 렌더 완료 후 별도 배너·스트립 |
+| 문맥 사용 | 충족 — 도시·도착시간·여행기간을 읽음 |
+| 일정 선택·점수 되먹임 | **확인되지 않음** — 되먹임 경로를 찾지 못했다 |
+| 공유 일정 제외 | 부분 충족 — 배너는 `!shareId` 조건 보유 |
+| **특정 공급자 URL 하드코딩** | **미충족** |
+| **provider-neutral adapter** | **부재** |
+| **화면에 보이는 제휴 고지** | **부족** — `rel="sponsored"` 만 있고 가시 문구 없음 |
+| **Post-Plan gate 미구현** | 중앙 게이트 없음 |
+
+### 7-3. Editorial Content Affiliate — `PARTIAL`
+
+| 항목 | 상태 |
+|---|---|
+| 도시 랜딩 준비물 섹션 가시 고지 | **보유** — `Sponsored · gokoreamate partner network · Commission may be earned at no cost to you` |
+| 블로그 가시 고지 | **보유** — `Sponsored · Commission may be earned at no cost to you` |
+| Survival Guide 가시 고지 | **부족** — `rel="sponsored"` 만 |
+| 중앙 설정 · 하드코딩 | **혼재** — 일부는 공급자 설정 경유, 일부는 URL 직접 하드코딩 |
+| **명시적 승인 표면 allowlist** | **부재** |
+| 동일 컴포넌트의 shared 재사용 | **잘못된 재사용** — 준비물 섹션이 공유 일정에도 렌더된다 (§7-1 참조) |
+| **Editorial Content 분류 게이트 미구현** | 중앙 게이트 없음 |
+
+### 7-4. 공통 편차
+
+| 항목 | 상태 |
+|---|---|
+| 공급자 하드코딩 | **`KNOWN_DEVIATION`** — 전 범위에 걸쳐 특정 공급자명·URL 이 컴포넌트에 고정돼 있다 |
+| 사용자 가시 고지 부족 | **`KNOWN_DEVIATION`** — Trip-Flow·Post-Plan 표면 대부분이 `rel` 속성만 보유 |
+| 정책별 중앙 게이트 부재 | **`KNOWN_DEVIATION`** — 세 범위 어느 것도 게이트가 구현돼 있지 않다 |
+| `affiliate_links` 저장소 부재 | `FACT` — 운영 DB 에 테이블 없음(`42P01`). **이 기록이 즉시 생성 승인을 뜻하지 않는다** |
+| 실제 수익 추적 링크 | `FACT` — 실제 추적 ID 가 붙은 링크가 운영에 존재한다. **현재 수익을 0 으로 표현하지 않는다** |
+
+**해소 조건** Constitution §14-1 의 세 범위별 게이트를 구현하고, Trip-Flow 경로에서 상업 문맥과 노출을 제거하며, Post-Plan 은 정상화 조건 10개를 충족한 뒤 활성화하고, Editorial Content 는 명시적 승인 표면 allowlist 를 도입한다. **문서 변경만으로는 어느 것도 해소되지 않는다.**
 
 ---
 
