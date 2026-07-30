@@ -1,0 +1,32 @@
+{
+  "report_id": "busan-publishability-en-v2-vs-baseline",
+  "run_ts": "2026-07-30T07:47:53.724925+00:00",
+  "v1_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 993,
+    "pending_review": 72,
+    "publishable": 291
+  },
+  "env2_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 994,
+    "pending_review": 72,
+    "publishable": 290
+  },
+  "delta": {
+    "publishable": -1,
+    "pending_review": 0,
+    "pending_source": 1,
+    "publishable_with_caveat": 0
+  },
+  "changed_records": [
+    {
+      "candidate_id": "busan-F-00096",
+      "category": "restaurant",
+      "v1": "publishable",
+      "en_v2": "pending_source",
+      "description_en_gate": "PENDING_SOURCE",
+      "has_ko_description": true
+    }
+  ]
+}

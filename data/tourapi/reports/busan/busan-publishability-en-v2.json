@@ -1,0 +1,62 @@
+{
+  "report_id": "busan-publishability-en-v2",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V2",
+  "task": "TASK-BUSAN-PUBLISHABILITY-LANGUAGE-GATE-V2",
+  "run_ts": "2026-07-30T07:47:53.724925+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head": "c215595",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 994,
+    "pending_review": 72,
+    "publishable": 290
+  },
+  "v1_baseline_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 993,
+    "pending_review": 72,
+    "publishable": 291
+  },
+  "delta_vs_v1_baseline": {
+    "publishable": -1,
+    "pending_review": 0,
+    "pending_source": 1,
+    "publishable_with_caveat": 0
+  },
+  "description_en_gate_pass": 820,
+  "ko_only_downgraded": 1,
+  "status_changed_count": 1,
+  "status_change_breakdown": {
+    "publishable→pending_source": 1
+  },
+  "vb_ssr_cross_check": {
+    "EN_DESCRIPTION_WEAK": {
+      "pending_source": 9
+    },
+    "EN_TITLE_ONLY": {
+      "pending_source": 24
+    },
+    "EN_USEFUL": {
+      "pending_source": 144
+    },
+    "PARSE_FAILED": {
+      "pending_source": 6
+    }
+  },
+  "validation_checks": {
+    "ssr_useful_count_correct": true,
+    "ssr_useful_all_desc_en_gate_pass": true,
+    "ssr_useful_identity_gate_blocks_explained": "VB candidates have source_data_missing validation_status (KTO API limit). identity_gate = PENDING_SOURCE for all VB candidates. Unblocked by description_en_gate; overall upgrade awaits KTO API calls.",
+    "title_only_not_publishable": true,
+    "desc_weak_not_publishable": true,
+    "no_publishable_without_en_desc": true,
+    "protected_files_unchanged": true,
+    "candidate_count_1642": true,
+    "data_modified": false,
+    "external_requests": 0,
+    "push": false
+  },
+  "verdict": "PASS",
+  "gate_change_note": "description_gate (V1: has_ko_description) replaced by description_en_gate. has_ko_description recorded as source_support only. EN description from official sources (AttractionService EN) and VB SSR EN_USEFUL are treated equally as 'verified useful'. EN description absent = PENDING_SOURCE regardless of KO description presence."
+}
