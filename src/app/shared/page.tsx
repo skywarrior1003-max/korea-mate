@@ -178,6 +178,17 @@ export default function SharedTripPage() {
       setStatus("found");
 
       // ── 제휴 링크 인젝션 파이프라인 ────────────────────────────────────────
+      // Trip-Flow Commerce (§14-1-A) — 게이트는 렌더가 아니라 **데이터 경계**다.
+      // 렌더만 막으면 존재하지 않는 affiliate_links 에 요청이 나가고(도시 한정 +
+      // zero-row fallback 으로 2회) payload 까지 만들어진다. 조회 자체를 막는다.
+      //
+      // affiliateMap 초기값이 {} 이므로 여기서 setState 를 호출할 필요가 없다.
+      // 불필요한 state update 도 발생하지 않는다.
+      //
+      // 조회·fallback 코드는 삭제하지 않는다. 게이트가 정상화 후 true 가 되면
+      // 아래 파이프라인이 그대로 다시 동작한다.
+      if (!TRIP_FLOW_COMMERCE_ENABLED) return;
+
       const locale = navigator.language.split("-")[0].toLowerCase();
       const rows   = await queryAffiliateLinks(record.city);
       setAffiliateMap(buildAffiliateMap(rows, locale));
