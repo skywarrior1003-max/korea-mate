@@ -12,6 +12,8 @@ function getTodayString(): string {
 export default function NoticeModal() {
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
+  // 모달을 열기 직전에 focus 가 있던 곳. 닫을 때 여기로 돌려준다.
+  const prevFocusRef = useRef<HTMLElement | null>(null);
 
   // Check localStorage on mount — same logic as before
   useEffect(() => {
@@ -53,9 +55,21 @@ export default function NoticeModal() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, handleClose]);
 
-  // Move focus to close button when modal opens
+  // Move focus to close button when modal opens, and give it back on close.
+  //
+  // 돌려주지 않으면 focus 가 <body> 로 떨어진다. 키보드 사용자는 모달을 닫은
+  // 순간 문서 맨 위로 돌아가고, /#planner 처럼 특정 영역을 겨냥해 들어온
+  // 사용자는 그 위치를 잃는다.
   useEffect(() => {
-    if (open) closeRef.current?.focus();
+    if (!open) return;
+    prevFocusRef.current = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    return () => {
+      const prev = prevFocusRef.current;
+      prevFocusRef.current = null;
+      // 그 사이에 사라진 요소면 되돌릴 곳이 없다. 억지로 다른 곳을 잡지 않는다.
+      if (prev && prev.isConnected) prev.focus({ preventScroll: true });
+    };
   }, [open]);
 
   if (!open) return null;

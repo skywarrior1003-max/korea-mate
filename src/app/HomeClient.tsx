@@ -562,6 +562,33 @@ export default function HomeClient() {
   }
 
   const router = useRouter();
+
+  // ── /#planner 로 들어오면 플래너에 키보드 focus 를 준다 ──────────────────
+  //
+  // 브라우저 기본 앵커 이동은 스크롤만 하고 focus 는 직전에 누른 버튼에
+  // 남겨 둔다(실측: CartDrawer 의 Build 버튼). 키보드·스크린리더 사용자는
+  // 화면은 플래너로 갔는데 Tab 은 헤더로 돌아가는 상태가 된다.
+  //
+  // preventScroll 로 브라우저 앵커 스크롤과 겹치는 두 번째 점프를 막는다.
+  // 이미 플래너 안쪽에 focus 가 있으면 빼앗지 않는다 — 입력 중에 커서를
+  // 옮기면 더 나쁘다.
+  useEffect(() => {
+    function focusPlanner() {
+      if (window.location.hash !== "#planner") return;
+      const section = document.getElementById("planner");
+      if (!section) return;
+      if (section.contains(document.activeElement)) return;
+      section.focus({ preventScroll: true });
+    }
+    // 해시 진입 직후에는 아직 섹션이 그려지지 않았을 수 있다.
+    const id = window.setTimeout(focusPlanner, 0);
+    window.addEventListener("hashchange", focusPlanner);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("hashchange", focusPlanner);
+    };
+  }, []);
+
   const [isNavigating,    setIsNavigating]    = useState(false);
   const [departurePlace,  setDeparturePlace]  = useState("");
   const [departureTime,   setDepartureTime]   = useState("");
@@ -993,7 +1020,16 @@ export default function HomeClient() {
       {/* ══════════════════════════════════════════════════════════
           AI 일정 생성 폼
       ══════════════════════════════════════════════════════════ */}
-      <section id="planner" className="py-20" style={{ backgroundColor: "#faf8f3" }}>
+      {/* tabIndex={-1} 은 프로그램적 focus 만 허용한다 — Tab 순서에는 들어가지
+          않으므로 마우스 사용자의 흐름은 그대로다. aria-labelledby 로 아래
+          h2 를 이름으로 재사용해 스크린리더가 이 영역의 목적을 읽는다. */}
+      <section
+        id="planner"
+        tabIndex={-1}
+        aria-labelledby="planner-heading"
+        className="py-20 focus:outline-none"
+        style={{ backgroundColor: "#faf8f3" }}
+      >
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
 
           {/* 클론 배너 — ?ref=clone 진입 시 표시 */}
@@ -1015,7 +1051,7 @@ export default function HomeClient() {
           )}
 
           <div className="text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
+            <h2 id="planner-heading" className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
               ✨ Plan Your Korea Trip with AI
             </h2>
             <p className="text-base font-medium text-gray-500">
@@ -1310,7 +1346,23 @@ export default function HomeClient() {
                 Add Departure Info
               </button>
               <button
-                onClick={() => { setShowDeptWarning(false); setDeptDismissed(true); if (cartItemCount === 0) { setShowVibeModal(true); } else { doNavigate(); } }}
+                onClick={() => {
+                  setShowDeptWarning(false);
+                  setDeptDismissed(true);
+                  // 한 번의 Generate 클릭에서 모달은 하나까지다.
+                  //
+                  // 여기까지 왔다는 것은 사용자가 이미 "출발 정보 없이 계속"을
+                  // 고른 것이다. 곧바로 Vibe 모달을 또 띄우면 아무것도 고르지
+                  // 않은 첫 사용자가 모달 두 개를 연달아 통과해야 한다.
+                  //
+                  // handleContinueWithoutPicks 와 같은 fallback 을 쓴다 —
+                  // 취향을 안 골랐으면 "Solo" 로 균형 잡힌 일정을 만든다.
+                  // 출발 정보가 있거나 경고가 필요 없는 빈 Cart 사용자는
+                  // handleGenerate 의 기존 Vibe 흐름을 그대로 탄다.
+                  const effectiveStyle = style || "Solo";
+                  if (!style) setStyle(effectiveStyle);
+                  doNavigate(effectiveStyle);
+                }}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
               >
                 Continue Without It
