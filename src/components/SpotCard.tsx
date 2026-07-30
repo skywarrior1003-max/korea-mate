@@ -28,13 +28,22 @@ interface SpotCardProps {
   spot: CitySpot;
   distKm?: number;
   onClick: () => void;
+  /**
+   * 이미 담긴 장소인가. Cart 구독은 ExploreCity 가 한 번만 한다 —
+   * 카드마다 CART_EVENT 를 구독하면 담을 때마다 158개가 전부 리렌더된다.
+   */
+  isAdded?: boolean;
+  /** 없으면 CTA 를 렌더하지 않는다 (Explore 밖 사용처 호환) */
+  onAdd?: () => void;
 }
 
-export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
+export default function SpotCard({ spot, distKm, onClick, isAdded, onAdd }: SpotCardProps) {
   const [imgError, setImgError] = useState(false);
   const tB = useTranslations("badges");
   const tM = useTranslations("map");
   const tE = useTranslations("explore");
+  const tP = useTranslations("picks");
+  const tMo = useTranslations("modal");
 
   const difficultyLabel =
     spot.difficulty === "easy"     ? tB("easy") :
@@ -128,6 +137,27 @@ export default function SpotCard({ spot, distKm, onClick }: SpotCardProps) {
 
         {/* 버튼 영역 */}
         <div className="flex flex-col gap-1.5 mt-auto" onClick={e => e.stopPropagation()}>
+          {/* 일정에 담기 — 이 카드의 핵심 행동이라 지도 링크보다 위에 둔다.
+              onAdd 가 없으면(Explore 밖) 렌더하지 않는다. */}
+          {onAdd && (
+            <button
+              type="button"
+              onClick={onAdd}
+              disabled={isAdded}
+              aria-label={isAdded ? tP("addedAria", { name: spot.name }) : tP("addAria", { name: spot.name })}
+              className={
+                isAdded
+                  ? "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 cursor-default"
+                  : "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
+              }
+              style={isAdded ? undefined : { backgroundColor: "#FF4A2D" }}
+            >
+              {/* 색상만으로 구분하지 않는다 — 기호와 문구가 함께 바뀐다 */}
+              <span aria-hidden="true">{isAdded ? "✓" : "+"}</span>
+              {isAdded ? tMo("added") : tMo("addToTrip")}
+            </button>
+          )}
+
           {/* Google + Naver (항상 표시) */}
           <div className="grid grid-cols-2 gap-1.5">
             <a

@@ -7,11 +7,14 @@ import Link from "next/link";
 import EventDetailModal from "@/components/EventDetailModal";
 import SpotCard from "@/components/SpotCard";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
-import { haversineKm } from "@/lib/geo";
+import { haversineKm, isValidCoordinate } from "@/lib/geo";
 import { fetchCitySpots } from "@/lib/city-spots";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
 import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
+import { addToCart, isInCart, getCart, CART_EVENT } from "@/lib/cart";
+import { getItemSourceKey } from "@/lib/place-identity";
+import { trackEvent } from "@/lib/analytics";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
 
@@ -108,12 +111,24 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [search,           setSearch]          = useState(searchParams.get("q") ?? "");
   const [selectedCategory, setSelectedCategory]= useState(searchParams.get("category") ?? "all");
   const [selectedEvent,    setSelectedEvent]   = useState<EventItem | null>(null);
+  // Cart 는 여기서 한 번만 구독한다. 카드에는 boolean 만 내려보내 158개가
+  // 담기 한 번에 전부 리렌더되지 않게 한다.
+  const [pickedKeys, setPickedKeys] = useState<Set<string>>(new Set());
+  const tPicks = useTranslations("picks");
+  const [liveMessage, setLiveMessage] = useState("");
 
   const [nearMeActive,    setNearMeActive]    = useState(false);
   const [userLocation,    setUserLocation]    = useState<{ lat: number; lng: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError,   setLocationError]   = useState<string | null>(null);
   const [mapExpanded,     setMapExpanded]     = useState(false);
+
+  useEffect(() => {
+    const sync = () => setPickedKeys(new Set(getCart().map(getItemSourceKey)));
+    sync();
+    window.addEventListener(CART_EVENT, sync);
+    return () => window.removeEventListener(CART_EVENT, sync);
+  }, []);
 
   // Body scroll lock while map is full-screen
   useEffect(() => {
@@ -226,7 +241,16 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       // 후보 목록이므로 여기가 실행 지점이다. 멱등이라 매번 호출해도 된다.
       runCartIdentityMigration(toSourceCandidates(result));
 
-      setSpots(result);
+      // 좌표가 없는 장소는 공개 목록에서 뺀다.
+      //
+      // 좌표가 없으면 스케줄러 후보(cart_hints)에 들어가지 못해 "담았는데
+      // 일정에 안 들어오는" 상태가 된다. 실측(2026-07-30 부산): local-info
+      // 64건이 좌표 0건. 카드만 숨기고 모달에는 담기가 남는 중간 상태를 만들지
+      // 않기 위해 목록 단계에서 제외한다.
+      //
+      // 데이터 보강으로 좌표가 채워지면 이 조건이 저절로 통과하므로 코드를
+      // 다시 고칠 필요가 없다. DB·파일 데이터는 건드리지 않는다.
+      setSpots(result.filter(s => isValidCoordinate(s.lat, s.lng)));
     }).finally(() => setSpotsLoading(false));
   }, [city.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -294,6 +318,30 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     ) as unknown as MapSpot[],
     [filteredSpots]
   );
+
+  function handleAddSpot(spot: CitySpot) {
+    const event = toEventItem(spot);
+    const key   = getItemSourceKey(event);
+    const already = isInCart(key);
+    if (!already) addToCart(event);
+    setPickedKeys(new Set(getCart().map(getItemSourceKey)));
+    const picked = getCart().length;
+    // 영어는 1개일 때 "place" 다. 기존 spotCount / spotCountPlural 와 같은 방식으로
+    // 키를 나눠 쓴다 — 이 저장소에 ICU plural 전례가 없다.
+    setLiveMessage(
+      picked === 1
+        ? tPicks("addedLiveOne", { name: spot.name })
+        : tPicks("addedLive",    { name: spot.name, count: picked }),
+    );
+    trackEvent("place_add_to_itinerary", {
+      city:         spot.city,
+      category:     spot.category,
+      source_type:  (spot.sourceKey ?? "").split(":")[0],
+      cta_position: "explore-card",
+      duplicate:    already,
+      picked_count: picked,
+    });
+  }
 
   function handleMapSpotClick(spot: MapSpot) {
     // 병합 목록에는 같은 숫자 id 를 가진 다른 소스의 장소가 있다. 숫자로 찾으면
@@ -390,9 +438,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
       {filteredSpots.map(item => (
         <SpotCard
-          key={item.id}
+          key={item.sourceKey ?? item.id}
           spot={item}
           distKm={distances.get(item.id)}
+          isAdded={pickedKeys.has(getItemSourceKey(toEventItem(item)))}
+          onAdd={() => handleAddSpot(item)}
           onClick={() => setSelectedEvent(toEventItem(item))}
         />
       ))}
@@ -465,6 +515,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       {selectedEvent && (
         <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
       )}
+
+      {/* 담기 결과를 스크린리더에 알린다. 버튼 라벨만 바뀌면 시각적으로만
+          전달되어 화면을 못 보는 사용자는 성공 여부를 알 수 없다. */}
+      <p aria-live="polite" className="sr-only">{liveMessage}</p>
     </>
   );
 }

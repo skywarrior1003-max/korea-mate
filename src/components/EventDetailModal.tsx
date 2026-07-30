@@ -4,8 +4,10 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
-import { addToCart, removeFromCart, isInCart } from "@/lib/cart";
+import { addToCart, removeFromCart, isInCart, getCart } from "@/lib/cart";
+import { trackEvent } from "@/lib/analytics";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
+import { useTranslations } from "next-intl";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 
 // ── koreanSurvivalScore 색상 + 라벨 ──────────────
@@ -88,6 +90,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
   const [inCart,    setInCart]    = useState(false);
   // 문자열로 고정한다 — effect 의존성이 event 객체가 아니라 안정적인 키가 된다.
   const sourceKey    = getItemSourceKey(event);
+  const tModal       = useTranslations("modal");
   const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);
   const [added,     setAdded]     = useState(false);
@@ -135,10 +138,20 @@ export default function EventDetailModal({ event, onClose }: Props) {
   }, [handleKeyDown]);
 
   function handleAddToCart() {
+    // 카드와 같은 이벤트를 쓴다. 표면마다 이벤트명을 나누면 퍼널을 합산할 수 없다.
+    const already = isInCart(sourceKey);
     addToCart(event);
     setInCart(true);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
+    trackEvent("place_add_to_itinerary", {
+      city:         event.city,
+      category:     event.type,
+      source_type:  sourceKey.split(":")[0],
+      cta_position: "explore-modal",
+      duplicate:    already,
+      picked_count: getCart().length,
+    });
   }
   function handleRemoveFromCart() {
     removeFromCart(sourceKey);
@@ -294,7 +307,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
               href={`/place/${citySpotDbId}/`}
               className="flex items-center justify-between px-4 py-3 rounded-2xl border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
             >
-              <p className="text-sm font-bold text-gray-700">📄 View full details</p>
+              <p className="text-sm font-bold text-gray-700">{tModal("viewFullDetails")}</p>
               <span className="text-gray-400">→</span>
             </a>
           )}
@@ -540,7 +553,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
       {/* ── Sticky Bottom 액션 바 ── */}
       <div className="shrink-0 px-5 py-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.07)] rounded-b-3xl sm:rounded-b-3xl">
         {added && (
-          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">✅ Added to your itinerary!</div>
+          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">{tModal("addedToast")}</div>
         )}
         <div className="flex gap-3">
           {/* 하트 (찜하기) */}
@@ -552,19 +565,19 @@ export default function EventDetailModal({ event, onClose }: Props) {
                 : "bg-gray-50 border-gray-200 text-gray-500 hover:border-red-200 hover:text-red-400"
             }`}
           >
-            {favorited ? "❤️ Liked" : "🤍 Like"}
+            {favorited ? tModal("liked") : tModal("like")}
           </button>
           {/* 일정표 추가 / 제거 */}
           {inCart ? (
             <div className="flex-1 flex gap-2">
               <div className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white bg-emerald-500">
-                ✓ In Itinerary
+                {tModal("inTrip")}
               </div>
               <button
                 onClick={handleRemoveFromCart}
                 className="px-4 py-3.5 rounded-2xl font-bold text-sm text-red-500 border-2 border-red-200 hover:bg-red-50 transition-colors"
               >
-                Remove
+                {tModal("remove")}
               </button>
             </div>
           ) : (
@@ -573,7 +586,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
               className="flex-1 py-3.5 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              + Add to Itinerary
+              + {tModal("addToTrip")}
             </button>
           )}
         </div>

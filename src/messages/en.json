@@ -76,7 +76,13 @@
     "duration": "{min} min",
     "openNow": "Open",
     "closed": "Closed",
-    "openHours": "{open} – {close}"
+    "openHours": "{open} – {close}",
+    "inTrip": "✓ In Itinerary",
+    "remove": "Remove",
+    "like": "🤍 Like",
+    "liked": "❤️ Liked",
+    "addedToast": "✅ Added to your itinerary!",
+    "viewFullDetails": "📄 View full details"
   },
   "shell": {
     "home": "Home",
@@ -264,5 +270,22 @@
     "cancel": "Cancel",
     "useMyPhoto": "Use my photo",
     "noPhotos": "Add a Memory photo to this trip first"
+  },
+  "picks": {
+    "title": "My Picks",
+    "clearAll": "Clear All",
+    "listHint": "Tap a spot for details · Use × to remove",
+    "buildTrip": "Build My Trip",
+    "openPicks": "Show my picks ({count})",
+    "collapse": "Collapse picks panel",
+    "empty": "No places picked yet",
+    "countFew": "{count} places picked",
+    "countOne": "1 place picked",
+    "countHalfDay": "{count} spots · about half a day",
+    "countFullDay": "{count} spots · a full day ready",
+    "addedLive": "{name} added. {count} places picked.",
+    "addedLiveOne": "{name} added. 1 place picked.",
+    "addAria": "Add {name} to my trip",
+    "addedAria": "{name} is already in my trip"
   }
 }

@@ -76,7 +76,13 @@
     "duration": "{min}분",
     "openNow": "영업 중",
     "closed": "영업 종료",
-    "openHours": "{open} – {close}"
+    "openHours": "{open} – {close}",
+    "inTrip": "✓ 일정에 있음",
+    "remove": "삭제",
+    "like": "🤍 찜하기",
+    "liked": "❤️ 찜함",
+    "addedToast": "✅ 일정에 추가했어요!",
+    "viewFullDetails": "📄 상세 정보 보기"
   },
   "shell": {
     "home": "홈",
@@ -264,5 +270,22 @@
     "cancel": "취소",
     "useMyPhoto": "내 사진 사용",
     "noPhotos": "이 여행에 Memory 사진을 먼저 추가하세요"
+  },
+  "picks": {
+    "title": "내가 고른 곳",
+    "clearAll": "모두 지우기",
+    "listHint": "장소를 누르면 상세 · ×로 삭제",
+    "buildTrip": "일정 만들기",
+    "openPicks": "내가 고른 곳 보기 ({count})",
+    "collapse": "목록 접기",
+    "empty": "아직 고른 장소가 없어요",
+    "countFew": "{count}곳 선택",
+    "countOne": "1곳 선택",
+    "countHalfDay": "{count}곳 · 반나절 분량",
+    "countFullDay": "{count}곳 · 하루 일정 완성",
+    "addedLive": "{name} 추가됨. 총 {count}곳.",
+    "addedLiveOne": "{name} 추가됨. 총 1곳.",
+    "addAria": "{name} 내 일정에 추가",
+    "addedAria": "{name} 이미 일정에 있음"
   }
 }

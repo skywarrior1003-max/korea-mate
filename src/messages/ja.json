@@ -76,7 +76,13 @@
     "duration": "{min}分",
     "openNow": "営業中",
     "closed": "営業終了",
-    "openHours": "{open} – {close}"
+    "openHours": "{open} – {close}",
+    "inTrip": "✓ 旅程に追加済み",
+    "remove": "削除",
+    "like": "🤍 お気に入り",
+    "liked": "❤️ お気に入り済み",
+    "addedToast": "✅ 旅程に追加しました！",
+    "viewFullDetails": "📄 詳細を見る"
   },
   "shell": {
     "home": "ホーム",
@@ -264,5 +270,22 @@
     "cancel": "キャンセル",
     "useMyPhoto": "自分の写真を使う",
     "noPhotos": "まずこの旅行にMemory写真を追加してください"
+  },
+  "picks": {
+    "title": "マイピック",
+    "clearAll": "すべて削除",
+    "listHint": "スポットをタップで詳細 · ×で削除",
+    "buildTrip": "旅程をつくる",
+    "openPicks": "マイピックを表示 ({count})",
+    "collapse": "リストを閉じる",
+    "empty": "まだ選んだ場所がありません",
+    "countFew": "{count}か所を選択",
+    "countOne": "1か所を選択",
+    "countHalfDay": "{count}か所 · 半日ぶん",
+    "countFullDay": "{count}か所 · 1日分そろいました",
+    "addedLive": "{name} を追加しました。全{count}か所。",
+    "addedLiveOne": "{name} を追加しました。全1か所。",
+    "addAria": "{name} を旅程に追加",
+    "addedAria": "{name} はすでに旅程にあります"
   }
 }

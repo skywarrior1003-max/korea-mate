@@ -76,7 +76,13 @@
     "duration": "{min}分钟",
     "openNow": "营业中",
     "closed": "已打烊",
-    "openHours": "{open} – {close}"
+    "openHours": "{open} – {close}",
+    "inTrip": "✓ 已在行程中",
+    "remove": "移除",
+    "like": "🤍 收藏",
+    "liked": "❤️ 已收藏",
+    "addedToast": "✅ 已加入行程！",
+    "viewFullDetails": "📄 查看详情"
   },
   "shell": {
     "home": "首页",
@@ -264,5 +270,22 @@
     "cancel": "取消",
     "useMyPhoto": "使用我的照片",
     "noPhotos": "请先为此行程添加 Memory 照片"
+  },
+  "picks": {
+    "title": "我的收藏",
+    "clearAll": "全部清除",
+    "listHint": "点击地点查看详情 · 用 × 删除",
+    "buildTrip": "生成行程",
+    "openPicks": "查看我的收藏 ({count})",
+    "collapse": "收起列表",
+    "empty": "还没有选择地点",
+    "countFew": "已选 {count} 个地点",
+    "countOne": "已选 1 个地点",
+    "countHalfDay": "{count} 个地点 · 约半天",
+    "countFullDay": "{count} 个地点 · 一天行程就绪",
+    "addedLive": "已添加 {name}。共 {count} 个地点。",
+    "addedLiveOne": "已添加 {name}。共 1 个地点。",
+    "addAria": "把 {name} 加入我的行程",
+    "addedAria": "{name} 已在行程中"
   }
 }
