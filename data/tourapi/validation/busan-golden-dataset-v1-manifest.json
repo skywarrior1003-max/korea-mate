@@ -1,0 +1,51 @@
+{
+  "manifest_id": "busan-golden-dataset-v1-manifest",
+  "task": "TASK-BUSAN-GOLDEN-DATASET-V1",
+  "created": "2026-07-30T04:29:47.273192+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "total_records": 60,
+  "sha256": "1cdcae631a29f34b18a09ec787279a1bcd0520551fb2188df88d89fe46bb2125",
+  "enriched_candidates_sha256": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+  "fixture_set": "busan-regression-fixtures-v1",
+  "category_distribution": {
+    "attraction": 15,
+    "nature": 9,
+    "restaurant": 21,
+    "accommodation": 6,
+    "event": 9
+  },
+  "group_distribution": {
+    "normal": 19,
+    "highrisk": 41
+  },
+  "publishability_distribution": {
+    "publishable_with_caveat": 36,
+    "pending_source": 5,
+    "pending_review": 10,
+    "publishable": 9
+  },
+  "verification_status_totals": {
+    "VERIFIED": 208,
+    "DERIVED": 200,
+    "UNRESOLVED": 107,
+    "PROPOSED": 25
+  },
+  "fixture_links": [
+    "case-08",
+    "case-07"
+  ],
+  "required_ids_present": [
+    "busan-E-00026",
+    "busan-E-00029",
+    "busan-F-00341",
+    "busan-K-00674",
+    "busan-K-00740",
+    "busan-VB-1721",
+    "busan-VB-2097",
+    "busan-VB-2704",
+    "busan-VB-518"
+  ],
+  "output_path": "data\\tourapi\\validation\\busan-golden-dataset-v1.jsonl",
+  "api_calls": 0,
+  "data_modified": false
+}

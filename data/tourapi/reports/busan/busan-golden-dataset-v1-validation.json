@@ -1,0 +1,472 @@
+{
+  "report_id": "busan-golden-dataset-v1-validation",
+  "task": "TASK-BUSAN-GOLDEN-DATASET-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T04:29:47.273192+00:00",
+  "total_selected": 60,
+  "category_distribution": {
+    "attraction": 15,
+    "nature": 9,
+    "restaurant": 21,
+    "accommodation": 6,
+    "event": 9
+  },
+  "group_distribution": {
+    "normal": 19,
+    "highrisk": 41
+  },
+  "publishability_distribution": {
+    "publishable_with_caveat": 36,
+    "pending_source": 5,
+    "pending_review": 10,
+    "publishable": 9
+  },
+  "verification_status_totals": {
+    "VERIFIED": 208,
+    "DERIVED": 200,
+    "UNRESOLVED": 107,
+    "PROPOSED": 25
+  },
+  "fixture_links": [
+    "case-08",
+    "case-07"
+  ],
+  "unresolved_fields": [
+    {
+      "golden_id": "GD-BUSAN-001",
+      "candidate_id": "busan-K-00003",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-002",
+      "candidate_id": "busan-K-00017",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-003",
+      "candidate_id": "busan-K-00058",
+      "fields": [
+        "hours",
+        "description",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-004",
+      "candidate_id": "busan-K-00141",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-005",
+      "candidate_id": "busan-K-00192",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-006",
+      "candidate_id": "busan-K-00249",
+      "fields": [
+        "hours",
+        "description",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-007",
+      "candidate_id": "busan-K-00684",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-008",
+      "candidate_id": "busan-K-00678",
+      "fields": [
+        "hours",
+        "description",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-009",
+      "candidate_id": "busan-VB-2284",
+      "fields": [
+        "name_en",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-010",
+      "candidate_id": "busan-K-00674",
+      "fields": [
+        "name_en",
+        "coordinates",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-011",
+      "candidate_id": "busan-K-00740",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-012",
+      "candidate_id": "busan-A-00001",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-013",
+      "candidate_id": "busan-K-00696",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-014",
+      "candidate_id": "busan-VB-2165",
+      "fields": [
+        "name_en",
+        "district",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-015",
+      "candidate_id": "busan-VB-2557",
+      "fields": [
+        "name_en",
+        "district",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-016",
+      "candidate_id": "busan-K-00216",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-017",
+      "candidate_id": "busan-K-00236",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-018",
+      "candidate_id": "busan-K-00177",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-019",
+      "candidate_id": "busan-K-00278",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-020",
+      "candidate_id": "busan-K-00295",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-021",
+      "candidate_id": "busan-K-00299",
+      "fields": [
+        "hours",
+        "description",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-022",
+      "candidate_id": "busan-K-00301",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-023",
+      "candidate_id": "busan-K-00309",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-024",
+      "candidate_id": "busan-K-00422",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-025",
+      "candidate_id": "busan-F-00341",
+      "fields": [
+        "coordinates",
+        "hours",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-026",
+      "candidate_id": "busan-VB-2097",
+      "fields": [
+        "name_en",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-027",
+      "candidate_id": "busan-VB-1721",
+      "fields": [
+        "name_en",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-028",
+      "candidate_id": "busan-VB-2704",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-029",
+      "candidate_id": "busan-VB-518",
+      "fields": [
+        "name_en",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-030",
+      "candidate_id": "busan-K-00131",
+      "fields": [
+        "hours",
+        "description",
+        "image"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-045",
+      "candidate_id": "busan-VB-1248",
+      "fields": [
+        "name_en",
+        "district",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-046",
+      "candidate_id": "busan-K-00077",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-047",
+      "candidate_id": "busan-K-00078",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-048",
+      "candidate_id": "busan-K-00147",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-049",
+      "candidate_id": "busan-K-00210",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-050",
+      "candidate_id": "busan-K-00302",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-051",
+      "candidate_id": "busan-K-00245",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-052",
+      "candidate_id": "busan-E-00026",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-053",
+      "candidate_id": "busan-E-00029",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-054",
+      "candidate_id": "busan-E-00014",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-055",
+      "candidate_id": "busan-K-00211",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-056",
+      "candidate_id": "busan-K-00773",
+      "fields": [
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-057",
+      "candidate_id": "busan-K-00757",
+      "fields": [
+        "name_en",
+        "hours",
+        "description"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-058",
+      "candidate_id": "busan-E-00034",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-059",
+      "candidate_id": "busan-E-00006",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "golden_id": "GD-BUSAN-060",
+      "candidate_id": "busan-E-00037",
+      "fields": [
+        "address",
+        "hours"
+      ]
+    }
+  ],
+  "errors": [],
+  "checks": {
+    "count_60_80": true,
+    "no_duplicates": true,
+    "all_in_enriched": true,
+    "required_ids_present": true,
+    "normal_and_highrisk": true,
+    "api_calls": 0,
+    "data_modified": false
+  },
+  "selection_criteria": {
+    "method": "structured_dual_group — 정상 대표 + 고위험 경계 사례",
+    "reproducible": "후보 ID 명시적 지정, enriched candidates 기준 재현 가능",
+    "risk_types_covered": [
+      "trail_segment",
+      "major_hotel",
+      "nature_facility",
+      "kto_en_event",
+      "coord_duplicate",
+      "multi_venue_event",
+      "tour_nature_boundary",
+      "small_accommodation",
+      "needs_district",
+      "same_location_diff_entity",
+      "no_en_source",
+      "kto_en_distance",
+      "complex_market",
+      "facility_vs_event",
+      "identity_cooking",
+      "facility_within_facility",
+      "branch_cleared",
+      "similar_event",
+      "branch_name_main",
+      "trail",
+      "image_exhausted",
+      "hours_closure",
+      "hotel_internal",
+      "kto_en_link",
+      "identity_naming",
+      "needs_branch",
+      "kto_en_restaurant",
+      "arrival_restore",
+      "duplicate_source",
+      "landmark",
+      "major_event",
+      "coord_out_of_bounds",
+      "clean_publishable",
+      "facility_naming",
+      "new_event_2026",
+      "trail_named",
+      "kto_en_low_j"
+    ]
+  }
+}
