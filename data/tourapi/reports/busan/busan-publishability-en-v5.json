@@ -1,13 +1,14 @@
 {
   "report_id": "busan-publishability-en-v5",
   "gate_version": "BUSAN_PUBLISHABILITY_EN_V5",
-  "task": "TASK-VISITBUSAN-EXPERIENCE-EN-FULL-APPLY-V1",
-  "run_ts": "2026-07-30T08:52:11.458320+00:00",
+  "task": "TASK-VISITBUSAN-EXPERIENCE-DESCRIPTION-QA",
+  "run_ts": "2026-07-30T09:14:26.247111+00:00",
   "branch": "data/busan-enrichment-v1",
+  "note": "QA correction after TASK-VISITBUSAN-EXPERIENCE-EN-FULL-APPLY-V1: 5 TOO_GENERIC description_en revoked",
   "total_candidates": 1642,
   "publishability_distribution": {
-    "publishable_with_caveat": 488,
-    "pending_source": 777,
+    "publishable_with_caveat": 483,
+    "pending_source": 782,
     "pending_review": 74,
     "publishable": 303
   },
@@ -18,16 +19,15 @@
     "publishable": 301
   },
   "delta_vs_env4": {
-    "publishable_with_caveat": 40,
-    "pending_review": 1,
     "publishable": 2,
-    "pending_source": -43
+    "publishable_with_caveat": 35,
+    "pending_source": -38,
+    "pending_review": 1
   },
-  "status_changed_count": 43,
+  "status_changed_count": 38,
   "change_types": {
-    "pending_source→publishable_with_caveat": 40,
-    "pending_source→publishable": 2,
-    "pending_source→pending_review": 1
-  },
-  "kto_not_needed_upgrades": 42
+    "pending_source-->publishable_with_caveat": 35,
+    "pending_source-->publishable": 2,
+    "pending_source-->pending_review": 1
+  }
 }
