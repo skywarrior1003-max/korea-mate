@@ -1,0 +1,28 @@
+{
+  "report_id": "busan-publishability-en-v3",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V3",
+  "task": "TASK-VISITBUSAN-SHOPPING-EN-FULL-APPLY-V1",
+  "run_ts": "2026-07-30T08:07:27.371825+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 994,
+    "pending_review": 72,
+    "publishable": 290
+  },
+  "env2_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 994,
+    "pending_review": 72,
+    "publishable": 290
+  },
+  "delta_vs_env2": {
+    "publishable_with_caveat": 0,
+    "pending_review": 0,
+    "publishable": 0,
+    "pending_source": 0
+  },
+  "status_changed_count": 0,
+  "gate_change_note": "EN_V3 uses identical gate logic to EN_V2 (BUSAN_PUBLISHABILITY_EN_V2). Input data updated: shopping 38건 EN name/description applied. VB shopping candidates remain pending_source: identity_gate blocks (source_data_missing). description_en_gate and name_en_gate now PASS for applied records."
+}

@@ -1,0 +1,92 @@
+{
+  "report_id": "visitbusan-shopping-en-full-apply-v1",
+  "task": "TASK-VISITBUSAN-SHOPPING-EN-FULL-APPLY-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T08:07:27.371825+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "9d9adcb",
+  "collection": {
+    "total_candidates": 38,
+    "en_page_exists": 38,
+    "en_title_found": 36,
+    "en_useful": 30,
+    "en_description_weak": 1,
+    "en_title_only": 5,
+    "parse_failed": 2,
+    "identity_conflict": 0,
+    "not_found": 0,
+    "client_rendered": 0,
+    "status_distribution": {
+      "EN_USEFUL": 30,
+      "PARSE_FAILED": 2,
+      "EN_TITLE_ONLY": 5,
+      "EN_DESCRIPTION_WEAK": 1
+    },
+    "collection_pass": true,
+    "http_requests": 76
+  },
+  "application": {
+    "name_en_applied": 36,
+    "description_en_applied": 30,
+    "needs_translation_removed": 36,
+    "needs_content_removed": 30,
+    "title_only_kept_needs_content": 5,
+    "desc_weak_kept_needs_content": 1,
+    "parse_failed_no_change": 2,
+    "en_source_facts_created": 36,
+    "sf_duplicate_skipped": 0,
+    "no_overwrite_name_en": 0,
+    "no_overwrite_desc_en": 0
+  },
+  "publishability": {
+    "env2_distribution": {
+      "publishable_with_caveat": 286,
+      "pending_source": 994,
+      "pending_review": 72,
+      "publishable": 290
+    },
+    "env3_distribution": {
+      "publishable_with_caveat": 286,
+      "pending_source": 994,
+      "pending_review": 72,
+      "publishable": 290
+    },
+    "delta": {
+      "publishable_with_caveat": 0,
+      "pending_review": 0,
+      "publishable": 0,
+      "pending_source": 0
+    },
+    "status_changed": 0,
+    "change_details": [],
+    "note": "Shopping 38건 전부 source_data_missing (identity_gate PENDING_SOURCE). description_en_gate·name_en_gate PASS 개선. KTO API 수집 후 identity_gate 해소 시 즉시 승격 대상."
+  },
+  "file_shas": {
+    "ec_input": "8a38da4ceb63bca5",
+    "ec_output": "0e76badb84dc96ae",
+    "sf_input": "2bcc18546d16d801",
+    "sf_output": "02d90c6f3220d754",
+    "protected_unchanged": true
+  },
+  "validation_checks": {
+    "all_38_processed": true,
+    "zero_identity_conflict": true,
+    "zero_candidate_mismatch": true,
+    "title_only_no_content_removal": true,
+    "weak_no_content_removal": true,
+    "sf_no_duplicates": true,
+    "candidate_count_1642": true,
+    "protected_files_unchanged": true,
+    "images_not_modified": true,
+    "push": false
+  },
+  "safety": {
+    "data_modified": true,
+    "files_modified": [
+      "busan-enriched-candidates-v1.jsonl",
+      "busan-source-facts-v1.jsonl"
+    ],
+    "images_downloaded": false,
+    "push": false
+  }
+}
