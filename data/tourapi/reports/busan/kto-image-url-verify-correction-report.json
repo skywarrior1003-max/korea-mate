@@ -1,0 +1,66 @@
+{
+  "task_id": "TASK-KTO-IMAGE-URL-VERIFY-CORRECTION",
+  "verdict": "PASS",
+  "generated_at": "2026-07-31T08:28:38.155096Z",
+  "dry_run": false,
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "head": "342e62df3beb5356d006d0225565c94334f022b0"
+  },
+  "push": false,
+  "target_count": 2,
+  "verification_results": [
+    {
+      "candidate_id": "busan-K-00249",
+      "url": "http://tong.visitkorea.or.kr/cms/resource/90/2611590_image2_1.jpg",
+      "imgname": "영도 흰여울해안터널(2)",
+      "http_status": 206,
+      "content_type": "image/jpg",
+      "is_image_content_type": true,
+      "first_bytes_html": false,
+      "error": null,
+      "url_verdict": "VERIFIED_ACCESSIBLE"
+    },
+    {
+      "candidate_id": "busan-K-00299",
+      "url": "http://tong.visitkorea.or.kr/cms/resource/07/2708007_image2_1.jpg",
+      "imgname": "광안리 SUP Zone_1",
+      "http_status": 206,
+      "content_type": "image/jpg",
+      "is_image_content_type": true,
+      "first_bytes_html": false,
+      "error": null,
+      "url_verdict": "VERIFIED_ACCESSIBLE"
+    }
+  ],
+  "summary": {
+    "images_kept": 2,
+    "images_rolled_back": 0,
+    "needs_image_removal_kept": 2,
+    "needs_image_restored": 0,
+    "candidate_total": 1642,
+    "other_candidates_changed": 0
+  },
+  "changes": [
+    {
+      "candidate_id": "busan-K-00249",
+      "action": "KEEP",
+      "verdict": "VERIFIED_ACCESSIBLE",
+      "url": "http://tong.visitkorea.or.kr/cms/resource/90/2611590_image2_1.jpg"
+    },
+    {
+      "candidate_id": "busan-K-00299",
+      "action": "KEEP",
+      "verdict": "VERIFIED_ACCESSIBLE",
+      "url": "http://tong.visitkorea.or.kr/cms/resource/07/2708007_image2_1.jpg"
+    }
+  ],
+  "safety_checks": {
+    "description_hours_sf_changed": false,
+    "publishability_remeasured": false,
+    "new_flag_created": false,
+    "api_calls": false,
+    "push": false,
+    "git_add_A": false
+  }
+}
