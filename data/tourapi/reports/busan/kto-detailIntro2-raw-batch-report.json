@@ -1,0 +1,70 @@
+{
+  "task_id": "TASK-KTO-DETAIL-INTRO-RAW-BATCH-V1",
+  "report_type": "COMPLETION",
+  "verdict": "PASS",
+  "generated_at": "2026-07-31T04:45:37.981152Z",
+  "dry_run": false,
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "head": "38a82256adc78bbbfe96191efc3c06bed0fe851d"
+  },
+  "manifest": {
+    "path": "data\\tourapi\\manifests\\busan\\kto-detailIntro2-targets.json",
+    "total": 557,
+    "excluded_types": [
+      15,
+      38
+    ],
+    "candidates_sha256": "c4fbeaaf5cce687d8ec16c0c51f2a5bf7b51811cdf8fafe04ea9bf76093dec25"
+  },
+  "call_limit": {
+    "status": "UNVERIFIED",
+    "daily_limit": null
+  },
+  "api_call_tracking": {
+    "run_calls": 542,
+    "total_calls_all_runs": 1084,
+    "limit_reached": false,
+    "limit_reached_at_cid": null,
+    "remaining_after_limit": 0
+  },
+  "phase2_verification": {
+    "total_target": 557,
+    "valid_files": 557,
+    "invalid_files": 0,
+    "pass_all_checks": true,
+    "checks_applied": [
+      "JSON 파싱 성공",
+      "response 키 존재 (flat error 아님)",
+      "response.header.resultCode == 0000",
+      "response.body 존재",
+      "response contentid == 요청 contentId"
+    ],
+    "error_groups": {},
+    "invalid_sample": []
+  },
+  "run_detail": {
+    "run_id": "run_2",
+    "run_calls": 542,
+    "skip_pilot": 15,
+    "skip_valid_full": 0,
+    "skip_resume": 0,
+    "success_new": 542,
+    "fail_api": 0,
+    "fail_atomic_save": 0,
+    "failures": []
+  },
+  "partial_limit_reached_next_step": null,
+  "sha_manifest_path": "data\\tourapi\\raw\\kto\\detailIntro2\\full\\sha-manifest.json",
+  "safety_checks": {
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "flags_modified": false,
+    "api_key_logged": false,
+    "push_performed": false,
+    "git_add_A_used": false,
+    "pilot_files_overwritten": false,
+    "detailCommon2_recalled": false,
+    "detailImage2_called": false
+  }
+}
