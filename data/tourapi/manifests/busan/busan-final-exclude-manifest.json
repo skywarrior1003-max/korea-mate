@@ -1,0 +1,11 @@
+{
+  "manifest_id": "busan-final-exclude-v1",
+  "task_id": "TASK-BUSAN-FINAL-PUBLISH-CANDIDATE-QA-V1",
+  "generated_at": "2026-07-31T10:31:58.133290Z",
+  "git": {
+    "head": "09376994fadad18247ebacace13efc29f07df561",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "count": 0,
+  "records": []
+}
