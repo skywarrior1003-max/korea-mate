@@ -69,10 +69,12 @@ export default function CartDrawer() {
 
   return (
     <>
-      <div
-        className="fixed right-4 z-30 select-none"
-        style={{ bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
-      >
+      {/* 모바일에서는 BottomNav(3.5rem + safe-area) 위로 올린다.
+          예전 값(바닥 1.5rem)은 nav 뒤에 깔려 My Picks·Build 버튼의 중심 탭을
+          nav 가 가로챘다 — 높이의 30%만 눌렸다. 4.25rem = nav 3.5rem + 간격 0.75rem.
+          z 도 nav(40) 위로 올린다. 단 상단 고정 바(z-50)·토스트(z-55)보다는 낮게 둔다.
+          데스크톱은 BottomNav 가 없으므로(md:hidden) 기존 위치를 유지한다. */}
+      <div className="fixed right-4 z-[45] select-none bottom-[calc(4.25rem+env(safe-area-inset-bottom))] md:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]">
         {!expanded ? (
           // ── 접힌 상태 ────────────────────────────────────────────────
           // 목록 열기와 일정 만들기는 서로 다른 행동이라 버튼을 분리한다.

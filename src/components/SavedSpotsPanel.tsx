@@ -31,7 +31,11 @@ export default function SavedSpotsPanel() {
   if (spots.length === 0) return null;
 
   return (
-    <div className="fixed bottom-6 left-4 z-30 select-none">
+    // CartDrawer 와 같은 이유로 BottomNav 위로 올린다. 다만 둘 다 w-72(288px)라
+    // 390px 화면에서 같은 줄에 놓으면 가로로 겹친다 — 한 줄 위(7.75rem = nav 3.5rem
+    // + 간격 0.75rem + CartDrawer 한 줄 3.5rem)에 쌓는다. 데스크톱은 nav 가 없고
+    // 좌우 끝이 멀어 겹치지 않으므로 기존 위치를 유지한다.
+    <div className="fixed left-4 z-[45] select-none bottom-[calc(7.75rem+env(safe-area-inset-bottom))] md:bottom-6">
       {!expanded ? (
         // ── 접힌 상태: 작은 pill 버튼 ──────────────────────────────
         <button
