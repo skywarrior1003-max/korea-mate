@@ -1,0 +1,58 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "inputs": {
+    "en_manifest_count": 194,
+    "candidate_count": 1642
+  },
+  "preconditions": {
+    "overview_present": 171,
+    "overview_empty": 23,
+    "candidate_count": 1642,
+    "all_pass": true
+  },
+  "verdict_summary": {
+    "HIGH_CONFIDENCE_LINK": 43,
+    "MANUAL_REVIEW_LINK": 67,
+    "NO_MATCH": 22,
+    "AMBIGUOUS_BRANCH": 39,
+    "EMPTY_DETAIL": 23,
+    "total": 194
+  },
+  "linkage_stats": {
+    "unique_candidates_linked_hc": 43,
+    "hc_with_overview": 43,
+    "hc_with_image": 30,
+    "name_en_recoverable": 5,
+    "desc_en_recoverable": 36,
+    "hc_candidate_conflicts": 0,
+    "restaurant_weak_signal_auto_link": 0
+  },
+  "existing_links_revalidated": {
+    "count": 42,
+    "all_high_confidence": true,
+    "max_distance_m": 16.4
+  },
+  "new_matches": {
+    "target": 129,
+    "high_confidence": 1,
+    "manual_review": 67,
+    "no_match": 22,
+    "ambiguous": 39
+  },
+  "safety": {
+    "data_modified": false,
+    "candidates_modified": false,
+    "source_facts_modified": false,
+    "api_calls_made": 0,
+    "push": false
+  },
+  "output_files": [
+    "data\\tourapi\\manifests\\busan\\kto-en-high-confidence-links.json",
+    "data\\tourapi\\manifests\\busan\\kto-en-manual-review-links.json",
+    "data\\tourapi\\manifests\\busan\\kto-en-no-match-links.json",
+    "data\\tourapi\\manifests\\busan\\kto-en-ambiguous-branch-links.json",
+    "data\\tourapi\\manifests\\busan\\kto-en-empty-detail-links.json",
+    "data\\tourapi\\reports\\busan\\kto-en-candidate-field-preview.json"
+  ]
+}

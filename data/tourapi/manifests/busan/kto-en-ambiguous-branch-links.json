@@ -1,0 +1,1376 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "verdict": "AMBIGUOUS_BRANCH",
+  "count": 39,
+  "records": [
+    {
+      "contentid": "1054849",
+      "title_en": "Busan Museum of Art (부산시립미술관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 38.2,
+      "match_signals": [
+        "coord_dist=38.2m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00030",
+          "distance_m": 38.2,
+          "category": "attraction",
+          "title_ko": "부산시립미술관"
+        },
+        {
+          "candidate_id": "busan-VB-289",
+          "distance_m": 38.2,
+          "category": "attraction",
+          "title_ko": "벡스코 옆 미술관 부산시립미술관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1055405",
+      "title_en": "Gwangbok-dong Cultural & Fashion Street (광복로문화패션거리)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 18.6,
+      "match_signals": [
+        "coord_dist=18.6m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 5건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-E-00018",
+          "distance_m": 18.6,
+          "category": "event",
+          "title_ko": "광복로 겨울빛 트리축제(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-F-00009",
+          "distance_m": 19.9,
+          "category": "restaurant",
+          "title_ko": "할매가야밀면"
+        },
+        {
+          "candidate_id": "busan-F-00106",
+          "distance_m": 26.1,
+          "category": "restaurant",
+          "title_ko": "원산면옥"
+        },
+        {
+          "candidate_id": "busan-VB-1137",
+          "distance_m": 26.1,
+          "category": "restaurant",
+          "title_ko": "원산면옥 1953"
+        },
+        {
+          "candidate_id": "busan-F-00244",
+          "distance_m": 32.2,
+          "category": "restaurant",
+          "title_ko": "할매집회국수"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1079482",
+      "title_en": "BEXCO (벡스코)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 1.4,
+      "match_signals": [
+        "coord_dist=1.4m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-E-00033",
+          "distance_m": 1.4,
+          "category": "event",
+          "title_ko": "부산국제마케팅광고제(한)"
+        },
+        {
+          "candidate_id": "busan-E-00037",
+          "distance_m": 9.9,
+          "category": "event",
+          "title_ko": "2026 원아시아페스티벌(BOF)"
+        },
+        {
+          "candidate_id": "busan-A-00079",
+          "distance_m": 15.8,
+          "category": "attraction",
+          "title_ko": "벡스코"
+        },
+        {
+          "candidate_id": "busan-VB-420",
+          "distance_m": 15.8,
+          "category": "attraction",
+          "title_ko": "주말엔 방콕 말고 벡스코!"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1475231",
+      "title_en": "Busan Tower (부산타워)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00774",
+          "distance_m": 0.0,
+          "category": "event",
+          "title_ko": "부산중구반려동물축제"
+        },
+        {
+          "candidate_id": "busan-A-00100",
+          "distance_m": 5.4,
+          "category": "attraction",
+          "title_ko": "부산타워(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-539",
+          "distance_m": 20.2,
+          "category": "attraction",
+          "title_ko": "부산면세점 용두산점"
+        },
+        {
+          "candidate_id": "busan-E-00035",
+          "distance_m": 27.7,
+          "category": "event",
+          "title_ko": "2024 용두산 썸머 비치"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "1751530",
+      "title_en": "Haeundae Dongbaekseom Island (해운대 동백섬)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00135",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "해운대 동백섬"
+        },
+        {
+          "candidate_id": "busan-A-00197",
+          "distance_m": 11.1,
+          "category": "attraction",
+          "title_ko": "동백섬(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-2274",
+          "distance_m": 11.1,
+          "category": "attraction",
+          "title_ko": "화려한 자연경관과 오랜 역사가 한데 어우러진 ‘동백섬’"
+        },
+        {
+          "candidate_id": "busan-K-00021",
+          "distance_m": 38.9,
+          "category": "attraction",
+          "title_ko": "동백공원"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "1752895",
+      "title_en": "Suyeong Sajeok Park (수영사적공원)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 35.5,
+      "match_signals": [
+        "coord_dist=35.5m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00038",
+          "distance_m": 35.5,
+          "category": "attraction",
+          "title_ko": "수영사적공원"
+        },
+        {
+          "candidate_id": "busan-VB-301",
+          "distance_m": 35.5,
+          "category": "attraction",
+          "title_ko": "시원한 오솔길 걸어요 수영사적공원"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1849142",
+      "title_en": "National Maritime Museum (국립해양박물관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 8.0,
+      "match_signals": [
+        "coord_dist=8.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00143",
+          "distance_m": 8.0,
+          "category": "event",
+          "title_ko": "영도다리축제"
+        },
+        {
+          "candidate_id": "busan-A-00003",
+          "distance_m": 24.5,
+          "category": "attraction",
+          "title_ko": "국립해양박물관(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-257",
+          "distance_m": 24.5,
+          "category": "attraction",
+          "title_ko": "해양 문화의 꽃 국립해양박물관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1918039",
+      "title_en": "Hwangnyeongsan Mountain ()",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00314",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "황령산 전망대"
+        },
+        {
+          "candidate_id": "busan-A-00068",
+          "distance_m": 20.4,
+          "category": "attraction",
+          "title_ko": "황령산 전망쉼터(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-371",
+          "distance_m": 20.4,
+          "category": "attraction",
+          "title_ko": "눈부신 부산을 선물하다 황령산 전망쉼터"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "1970795",
+      "title_en": "Haeundae Amso Galbijip ( 해운대암소갈비집)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 3.5,
+      "match_signals": [
+        "coord_dist=3.5m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-F-00337",
+          "distance_m": 3.5,
+          "category": "restaurant",
+          "title_ko": "해운대소문난암소갈비집"
+        },
+        {
+          "candidate_id": "busan-F-00432",
+          "distance_m": 4.6,
+          "category": "restaurant",
+          "title_ko": "해운대암소갈비집"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "2382544",
+      "title_en": "Jagalchi Market (부산 자갈치시장)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00057",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "부산 자갈치시장"
+        },
+        {
+          "candidate_id": "busan-K-00201",
+          "distance_m": 1.6,
+          "category": "attraction",
+          "title_ko": "용두산 자갈치 관광특구"
+        },
+        {
+          "candidate_id": "busan-E-00011",
+          "distance_m": 6.2,
+          "category": "event",
+          "title_ko": "부산자갈치축제(한,영,중간,중번,일)"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    },
+    {
+      "contentid": "2401046",
+      "title_en": "Busan Fishing Village Folk Museum (부산어촌민속관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 36.0,
+      "match_signals": [
+        "coord_dist=36.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00044",
+          "distance_m": 36.0,
+          "category": "attraction",
+          "title_ko": "부산어촌민속관"
+        },
+        {
+          "candidate_id": "busan-VB-315",
+          "distance_m": 36.0,
+          "category": "attraction",
+          "title_ko": "어촌문화여행 부산어촌민속관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2405644",
+      "title_en": "Samgwangsa Temple (삼광사)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 27.0,
+      "match_signals": [
+        "coord_dist=27.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00054",
+          "distance_m": 27.0,
+          "category": "attraction",
+          "title_ko": "삼광사"
+        },
+        {
+          "candidate_id": "busan-E-00007",
+          "distance_m": 27.0,
+          "category": "event",
+          "title_ko": "삼광사 연등축제(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-347",
+          "distance_m": 27.0,
+          "category": "attraction",
+          "title_ko": "부처님의 세 가지 염원 삼광사"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "2503883",
+      "title_en": "Samjin Fish Cake History Museum · History Hall (삼진어묵체험·역사관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 4.7,
+      "match_signals": [
+        "coord_dist=4.7m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-F-00088",
+          "distance_m": 4.7,
+          "category": "restaurant",
+          "title_ko": "삼진어묵 본점"
+        },
+        {
+          "candidate_id": "busan-VB-2209",
+          "distance_m": 15.3,
+          "category": "attraction",
+          "title_ko": "부산의 향기를 담다, 로칼(rocarl)"
+        },
+        {
+          "candidate_id": "busan-K-00222",
+          "distance_m": 21.6,
+          "category": "attraction",
+          "title_ko": "삼진어묵 체험·역사과학관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "2589751",
+      "title_en": "Busan National Science Museum (국립부산과학관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 2.8,
+      "match_signals": [
+        "coord_dist=2.8m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00238",
+          "distance_m": 2.8,
+          "category": "event",
+          "title_ko": "헬로메이커"
+        },
+        {
+          "candidate_id": "busan-A-00050",
+          "distance_m": 7.4,
+          "category": "attraction",
+          "title_ko": "국립부산과학관"
+        },
+        {
+          "candidate_id": "busan-VB-340",
+          "distance_m": 7.4,
+          "category": "attraction",
+          "title_ko": "과학을 알면 미래가 보인다! 국립부산과학관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "264120",
+      "title_en": "Dalmaji Road (해운대 달맞이길)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 44.4,
+      "match_signals": [
+        "coord_dist=44.4m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-F-00399",
+          "distance_m": 44.4,
+          "category": "restaurant",
+          "title_ko": "달타이"
+        },
+        {
+          "candidate_id": "busan-F-00285",
+          "distance_m": 46.6,
+          "category": "restaurant",
+          "title_ko": "달타이"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264198",
+      "title_en": "Songjeong Beach (송정해수욕장)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 12.6,
+      "match_signals": [
+        "coord_dist=12.6m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00024",
+          "distance_m": 12.6,
+          "category": "attraction",
+          "title_ko": "송정해수욕장, 죽도공원"
+        },
+        {
+          "candidate_id": "busan-VB-280",
+          "distance_m": 12.6,
+          "category": "attraction",
+          "title_ko": "자연 그대로를 간직하다, 송정해수욕장"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264239",
+      "title_en": "Dongbaekseom Island (동백공원)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 10.9,
+      "match_signals": [
+        "coord_dist=10.9m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00135",
+          "distance_m": 10.9,
+          "category": "attraction",
+          "title_ko": "해운대 동백섬"
+        },
+        {
+          "candidate_id": "busan-A-00197",
+          "distance_m": 18.0,
+          "category": "attraction",
+          "title_ko": "동백섬(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-2274",
+          "distance_m": 18.0,
+          "category": "attraction",
+          "title_ko": "화려한 자연경관과 오랜 역사가 한데 어우러진 ‘동백섬’"
+        },
+        {
+          "candidate_id": "busan-K-00021",
+          "distance_m": 33.2,
+          "category": "attraction",
+          "title_ko": "동백공원"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "264404",
+      "title_en": "Haedong Yonggungsa Temple (해동 용궁사(부산))",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 34.5,
+      "match_signals": [
+        "coord_dist=34.5m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00007",
+          "distance_m": 34.5,
+          "category": "attraction",
+          "title_ko": "해동용궁사 (한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-261",
+          "distance_m": 34.5,
+          "category": "attraction",
+          "title_ko": "기장에 가면 해동용궁사"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "264405",
+      "title_en": "UN Memorial Cemetery (재한유엔기념공원 (UN기념공원))",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 22.7,
+      "match_signals": [
+        "coord_dist=22.7m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00111",
+          "distance_m": 22.7,
+          "category": "attraction",
+          "title_ko": "턴투워드부산(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-A-00021",
+          "distance_m": 34.8,
+          "category": "attraction",
+          "title_ko": "유엔기념공원, 유엔평화기념관(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-277",
+          "distance_m": 34.8,
+          "category": "attraction",
+          "title_ko": "세계인이 기억하는 땅 유엔기념공원"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "264539",
+      "title_en": "Yongdusan Park (용두산공원)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 8.0,
+      "match_signals": [
+        "coord_dist=8.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00194",
+          "distance_m": 8.0,
+          "category": "attraction",
+          "title_ko": "관수옥과 초량왜관 터"
+        },
+        {
+          "candidate_id": "busan-E-00025",
+          "distance_m": 26.4,
+          "category": "event",
+          "title_ko": "조선통신사축제(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-A-00065",
+          "distance_m": 27.0,
+          "category": "attraction",
+          "title_ko": "용두산공원(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-368",
+          "distance_m": 27.0,
+          "category": "attraction",
+          "title_ko": "부산여행의 이유 용두산공원"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "2656728",
+      "title_en": "Nurimaru APEC House (누리마루 APEC하우스)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 6.5,
+      "match_signals": [
+        "coord_dist=6.5m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00168",
+          "distance_m": 6.5,
+          "category": "attraction",
+          "title_ko": "누리마루 APEC하우스 (한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-2121",
+          "distance_m": 6.5,
+          "category": "attraction",
+          "title_ko": "멋진 야경과 함께 밤 산책, 누리마루 APEC하우스"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2812440",
+      "title_en": "Haeundae Blueline Park (해운대 블루라인파크)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 4.1,
+      "match_signals": [
+        "coord_dist=4.1m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00442",
+          "distance_m": 4.1,
+          "category": "attraction",
+          "title_ko": "해운대 그린레일웨이 (미포~송정 구간)"
+        },
+        {
+          "candidate_id": "busan-VB-2541",
+          "distance_m": 39.8,
+          "category": "attraction",
+          "title_ko": "청사포에서 인생샷 찍고 소품 쇼핑까지, 부산슈퍼 청사포점"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2946941",
+      "title_en": "AREA6 (AREA6)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 10.3,
+      "match_signals": [
+        "coord_dist=10.3m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-VB-2209",
+          "distance_m": 10.3,
+          "category": "attraction",
+          "title_ko": "부산의 향기를 담다, 로칼(rocarl)"
+        },
+        {
+          "candidate_id": "busan-F-00088",
+          "distance_m": 25.0,
+          "category": "restaurant",
+          "title_ko": "삼진어묵 본점"
+        },
+        {
+          "candidate_id": "busan-K-00222",
+          "distance_m": 33.0,
+          "category": "attraction",
+          "title_ko": "삼진어묵 체험·역사과학관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2947925",
+      "title_en": "Amisan Observatory (아미산 전망대)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 8.6,
+      "match_signals": [
+        "coord_dist=8.6m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00028",
+          "distance_m": 8.6,
+          "category": "attraction",
+          "title_ko": "아미산전망대"
+        },
+        {
+          "candidate_id": "busan-VB-287",
+          "distance_m": 8.6,
+          "category": "attraction",
+          "title_ko": "강과 바다가 만나는 곳 아미산전망대"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3035570",
+      "title_en": "Jeonpo Gonggu Street (전포공구길)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 12.3,
+      "match_signals": [
+        "coord_dist=12.3m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 5건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00120",
+          "distance_m": 12.3,
+          "category": "attraction",
+          "title_ko": "힙함 가득한 전포공구길(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-F-00194",
+          "distance_m": 14.8,
+          "category": "restaurant",
+          "title_ko": "굿모닝홍콩"
+        },
+        {
+          "candidate_id": "busan-VB-1733",
+          "distance_m": 16.4,
+          "category": "attraction",
+          "title_ko": "프라이빗하게 즐기는 커스텀 주얼리 클래스"
+        },
+        {
+          "candidate_id": "busan-F-00149",
+          "distance_m": 31.2,
+          "category": "restaurant",
+          "title_ko": "동백아가씨1961 서면점"
+        },
+        {
+          "candidate_id": "busan-F-00400",
+          "distance_m": 40.3,
+          "category": "restaurant",
+          "title_ko": "란아한"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3074034",
+      "title_en": "Hyeongje Jeontong Dwaeji Gukbap (형제전통돼지국밥)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 8.0,
+      "match_signals": [
+        "coord_dist=8.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-VB-2580",
+          "distance_m": 8.0,
+          "category": "attraction",
+          "title_ko": "1987년부터 운영된 전통있는 주방용품 전문점, 삼영그릇 탐방기"
+        },
+        {
+          "candidate_id": "busan-K-00303",
+          "distance_m": 34.3,
+          "category": "accommodation",
+          "title_ko": "라비드아틀란호텔2"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "3098938",
+      "title_en": "Urigeulbang (우리글방)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 27.3,
+      "match_signals": [
+        "coord_dist=27.3m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00016",
+          "distance_m": 27.3,
+          "category": "attraction",
+          "title_ko": "보수동책방골목"
+        },
+        {
+          "candidate_id": "busan-VB-272",
+          "distance_m": 27.3,
+          "category": "attraction",
+          "title_ko": "마음에 책갈피 하나를 꽂다 - 보수동책방골목"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3433027",
+      "title_en": "Subyeon Choego Dwaeji Gukbap Millak Main Store (수변최고돼지국밥 민락본점)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00281",
+          "distance_m": 0.0,
+          "category": "restaurant",
+          "title_ko": "수변최고돼지국밥 민락본점"
+        },
+        {
+          "candidate_id": "busan-K-00292",
+          "distance_m": 0.0,
+          "category": "accommodation",
+          "title_ko": "옐로우라이트하우스"
+        },
+        {
+          "candidate_id": "busan-F-00041",
+          "distance_m": 5.8,
+          "category": "restaurant",
+          "title_ko": "베지나랑"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "3450814",
+      "title_en": "Korea Medical Institute Busan Branch ((재)한국의학연구소 부산분사무소)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00625",
+          "distance_m": 0.0,
+          "category": "restaurant",
+          "title_ko": "클레이디뷔페 돌잔치"
+        },
+        {
+          "candidate_id": "busan-F-00053",
+          "distance_m": 4.9,
+          "category": "restaurant",
+          "title_ko": "백산키친"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3486394",
+      "title_en": "Hocheon Village (호천마을)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 16.8,
+      "match_signals": [
+        "coord_dist=16.8m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00057",
+          "distance_m": 16.8,
+          "category": "attraction",
+          "title_ko": "호천마을(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-358",
+          "distance_m": 16.8,
+          "category": "attraction",
+          "title_ko": "‘쌈마이 감성’ 가득한 호랑이마을 호천마을"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "349631",
+      "title_en": "Hotel Gwangjang (광장호텔)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 43.1,
+      "match_signals": [
+        "coord_dist=43.1m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00170",
+          "distance_m": 43.1,
+          "category": "attraction",
+          "title_ko": "부산 워케이션 거점센터(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-2138",
+          "distance_m": 43.1,
+          "category": "attraction",
+          "title_ko": "워케이셔너들의 성지, 부산 워케이션 거점센터"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "3516758",
+      "title_en": "Busan Modern & Contemporary History Museum - Main Building  (부산근현대역사관 본관)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 22.2,
+      "match_signals": [
+        "coord_dist=22.2m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-A-00146",
+          "distance_m": 22.2,
+          "category": "attraction",
+          "title_ko": "부산근현대역사관 본관(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-1881",
+          "distance_m": 22.2,
+          "category": "attraction",
+          "title_ko": "부산 근현대사를 한눈에!! 남포동 아이와 가볼 만한 곳"
+        },
+        {
+          "candidate_id": "busan-A-00124",
+          "distance_m": 24.9,
+          "category": "attraction",
+          "title_ko": "부산근현대역사관 별관(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-1444",
+          "distance_m": 24.9,
+          "category": "attraction",
+          "title_ko": "멋진 복합문화공간으로 변신한 부산근현대역사관 별관"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3517739",
+      "title_en": "Haewol Observatory (해월전망대)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00421",
+          "distance_m": 0.0,
+          "category": "nature",
+          "title_ko": "미포정거장"
+        },
+        {
+          "candidate_id": "busan-K-00701",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "청사포 기찻길"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3562082",
+      "title_en": "Busan Jung-gu Pet Festival (부산중구반려동물축제)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 4건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00774",
+          "distance_m": 0.0,
+          "category": "event",
+          "title_ko": "부산중구반려동물축제"
+        },
+        {
+          "candidate_id": "busan-A-00100",
+          "distance_m": 5.4,
+          "category": "attraction",
+          "title_ko": "부산타워(한,영,중간,중번,일)"
+        },
+        {
+          "candidate_id": "busan-VB-539",
+          "distance_m": 20.2,
+          "category": "attraction",
+          "title_ko": "부산면세점 용두산점"
+        },
+        {
+          "candidate_id": "busan-E-00035",
+          "distance_m": 27.7,
+          "category": "event",
+          "title_ko": "2024 용두산 썸머 비치"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "3562124",
+      "title_en": "Busan Street Festa in Gwangbok (부산 스트릿 페스타 인 광복)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00007",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "광복로패션거리"
+        },
+        {
+          "candidate_id": "busan-K-00775",
+          "distance_m": 0.0,
+          "category": "event",
+          "title_ko": "광복로 겨울빛 트리축제"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "495645",
+      "title_en": "SEVEN LUCK CASINO - Busan Lotte Branch (세븐럭 카지노(부산롯데점))",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 9.4,
+      "match_signals": [
+        "coord_dist=9.4m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-F-00303",
+          "distance_m": 9.4,
+          "category": "restaurant",
+          "title_ko": "무궁화"
+        },
+        {
+          "candidate_id": "busan-VB-541",
+          "distance_m": 25.2,
+          "category": "attraction",
+          "title_ko": "롯데백화점 부산본점"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "740322",
+      "title_en": "Busan International Film Festival (BIFF) (부산국제영화제)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 10건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00221",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "부산 영화의 전당"
+        },
+        {
+          "candidate_id": "busan-K-00732",
+          "distance_m": 23.2,
+          "category": "event",
+          "title_ko": "크리스마스 빌리지 부산 2025"
+        },
+        {
+          "candidate_id": "busan-K-00740",
+          "distance_m": 23.2,
+          "category": "attraction",
+          "title_ko": "영화의전당 라이브러리 자료실"
+        },
+        {
+          "candidate_id": "busan-K-00757",
+          "distance_m": 23.2,
+          "category": "event",
+          "title_ko": "부산국제AI영화제"
+        },
+        {
+          "candidate_id": "busan-E-00003",
+          "distance_m": 24.0,
+          "category": "event",
+          "title_ko": "센텀맥주축제(한,영,중간,중번,일)"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "769156",
+      "title_en": "Shinsegae Centum City (신세계 센텀시티)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 3건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00110",
+          "distance_m": 0.0,
+          "category": "attraction",
+          "title_ko": "신세계백화점 센텀시티점"
+        },
+        {
+          "candidate_id": "busan-K-00136",
+          "distance_m": 9.0,
+          "category": "attraction",
+          "title_ko": "광주요"
+        },
+        {
+          "candidate_id": "busan-K-00142",
+          "distance_m": 18.8,
+          "category": "attraction",
+          "title_ko": "센텀시티 아이스링크"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    },
+    {
+      "contentid": "992306",
+      "title_en": "Dadaepo Sunset Fountain of Dreams (다대포 꿈의 낙조분수)",
+      "verdict": "AMBIGUOUS_BRANCH",
+      "candidate_id": null,
+      "distance_m": 3.1,
+      "match_signals": [
+        "coord_dist=3.1m",
+        "multi_candidate_within_50m"
+      ],
+      "evidence": "50m 이내 candidate 2건 존재 — 지점 구분 불가",
+      "candidates_near": [
+        {
+          "candidate_id": "busan-K-00111",
+          "distance_m": 3.1,
+          "category": "attraction",
+          "title_ko": "다대포 꿈의 낙조분수"
+        },
+        {
+          "candidate_id": "busan-K-00758",
+          "distance_m": 3.1,
+          "category": "event",
+          "title_ko": "2025 서부산 슈퍼어싱 페스티벌"
+        }
+      ],
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    }
+  ]
+}

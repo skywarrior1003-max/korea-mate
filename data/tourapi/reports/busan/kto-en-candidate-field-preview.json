@@ -1,0 +1,886 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "count": 43,
+  "records": [
+    {
+      "candidate_id": "busan-K-00141",
+      "contentid_en": "1024670",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Gukje Market Food Street (국제시장 먹자골목)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Gukje Market Food Street (국제시장 먹자골목)",
+        "description_en_candidate": "Gukje Market Food Street has more than 60 years of history as one of Busan's traditional markets' most famous food streets. It is known for a number of dishes, such as Chungmu gimbap served with sweet",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/25/1020225_image2_1.jpg",
+        "homepage_domain_candidate": "eng.gukjemarket.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00003",
+      "contentid_en": "1054924",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Busan Songdo Beach (부산 송도해수욕장)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Busan Songdo Beach (부산 송도해수욕장)",
+        "description_en_candidate": "Songdo Beach is 800 meters long and 50 meters wide. The average water level is 1~1.5 meters. It was one of the first beaches to open in Korea in 1913. In 2000, the beach underwent a comprehensive 5-ye",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/86/2504686_image2_1.jpg",
+        "homepage_domain_candidate": "visitbusan.net"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00017",
+      "contentid_en": "1064834",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Busan Gwangandaegyo Bridge (부산광안대교)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Busan Gwangandaegyo Bridge (부산광안대교)",
+        "description_en_candidate": "Busan Gwangandaegyo Bridge (Busan 66, also called Gwangan-daero) stretches over 7.4 kilometers from Namcheon-dong in Suyeong-gu, Busan to Centum City in U-dong, Haeundae-gu. It is the longest bi-level",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/77/3368477_image2_1.jpg",
+        "homepage_domain_candidate": "bisco.or.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00294",
+      "contentid_en": "1385298",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": null,
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Busan Fireworks Festival (부산불꽃축제)",
+        "description_en_candidate": "Busan Fireworks Festival takes place every autumn along Gwangalli Beach. The festival’s diverse programs of cultural events, high-tech laser light shows, and myriad of unique and colorful fireworks ma",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/60/3559360_image2_1.jpg",
+        "tel_candidate": "82517135000",
+        "homepage_domain_candidate": "busanfireworks.com"
+      }
+    },
+    {
+      "candidate_id": "busan-F-00033",
+      "contentid_en": "1750980",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 1.0,
+      "match_signals": [
+        "coord_dist=1.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Halmae Bokguk (원조할매복국)",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Halmae Bokguk (할매복국)",
+        "description_en_candidate": "This pufferfish specialty restaurant was established in 1986. The restaurant is renowned for its bokguk or bokjiri. Its clean broth and generous serving of pufferfish fillets enhance the flavor. The c"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00131",
+      "contentid_en": "1950203",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Ilpum Hanwoo (일품한우)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Ilpum Hanwoo (일품한우)",
+        "description_en_candidate": "Ilpum Hanwoo is a restaurant near Haeundae Beach serving hanu galbi (grilled Korean galbi). Its signature dish, sanggang kkotgalbi (grilled whole boneless galbi), is a choice cut sourced from top-grad",
+        "homepage_domain_candidate": "ilpumhanwoo.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00210",
+      "contentid_en": "2351201",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔)",
+        "description_en_candidate": "Kolon Seacloud Hotel, in Haeundae, Busan, Gyeongsangnam-do, offers fine views of the South Sea from residents&rsquo; rooms. All rooms have cooking facilities, and visitors will find restaurants, massa",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/09/3544809_image2_1.jpg",
+        "homepage_domain_candidate": "seacloudhotel.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00192",
+      "contentid_en": "2401021",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Ebagu Crafts Workshop (이바구공작소)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Ebagu Crafts Workshop (이바구공작소)",
+        "description_en_candidate": "Ebagu Crafts Workshop was created as part of an urban regeneration project centered along Sanbok Road. The workshop serves as an archive center for the stories of local residents in Sanbok Road, and a",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/95/2365995_image2_1.jpg",
+        "homepage_domain_candidate": "2bagu.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00263",
+      "contentid_en": "2657019",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Marine City (마린시티)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Marine City (마린시티)",
+        "description_en_candidate": "When the lights are up after sundown, the nightscape of the Marine City can compete with world famous nightscape locations such as Hong Kong and Shanghai. With various restaurants, cafes and bars alon",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/12/3355112_image2_1.jpg"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00236",
+      "contentid_en": "2657026",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "current_fields": {
+        "name_en": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+        "description_en_candidate": "Songdo Cloud Walk is located on the eastern side of Songdo Beach, connecting to Geobukseom Island. The skywalk features sections with a clear glass floor that creates the feeling of walking on top of ",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/65/2687365_image2_1.jpg",
+        "homepage_domain_candidate": "bsseogu.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00078",
+      "contentid_en": "266910",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 2.7,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=2.7m"
+      ],
+      "current_fields": {
+        "name_en": "Paradise Casino Busan (파라다이스 카지노 부산)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Paradise Casino Busan (파라다이스 카지노 부산)",
+        "description_en_candidate": "Paradise Casino Busan is located right on the coast, offering a range of casino games. Located on the first floor of the main hotel building, the casino offers games including blackjack, baccarat, rou",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/42/3491442_image2_1.jpg",
+        "homepage_domain_candidate": "paradisecasino.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-VB-833",
+      "contentid_en": "2813150",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 9.9,
+      "match_signals": [
+        "coord_dist=9.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Songdo Yonggung Suspension Bridge",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Sondo Yonggung Suspension Bridge (송도용궁구름다리)",
+        "description_en_candidate": "Sondo Yonggung Suspension Bridge connects the renovated Songdo Cloud Bridge from Songdo Beach to Geobukseom Island and extended from Amnam Park to Dongseom Island. Visitors can enjoy the thrill of wal",
+        "homepage_domain_candidate": "bsseogu.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00299",
+      "contentid_en": "2814084",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "current_fields": {
+        "name_en": "Gwangalli SUP Zone (광안리 SUP Zone)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Gwangalli SUP Zone (광안리 SUP Zone)",
+        "description_en_candidate": "Gwangalli SUP Zone is a space to make Gwangalli Beach the mecca of water sports. The peaceful waves of Gwangalli Beach makes it a perfect condition for people to ride Stand Up Paddleboard. After being",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/07/2708007_image2_1.jpg",
+        "homepage_domain_candidate": "gwangallisuprise.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-A-00118",
+      "contentid_en": "2835516",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 19.0,
+      "match_signals": [
+        "coord_dist=19.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Lotte World Adventure Busan",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Lotte World Adventure Busan (롯데월드 어드벤처 부산)",
+        "description_en_candidate": "Lotte World Adventure opened in Busan, where visitors can experience fun and exciting performances and parades. Busan Lotte World is built in Busan and has convenient access using public transportatio",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/21/2815721_image2_1.jpg",
+        "homepage_domain_candidate": "adventurebusan.lotteworld.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00447",
+      "contentid_en": "2946741",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "current_fields": {
+        "name_en": "Yacht Tale (요트탈래)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Yacht Tale (요트탈래)",
+        "description_en_candidate": "The beautiful sunset and night tours offer an amazing view of Gwangandaegyo Bridge and Marine City from the sea. Passengers can enjoy a luxurious yacht trip in the beautiful Haeundae Gwangalli Beach a",
+        "homepage_domain_candidate": "yachttale.com"
+      }
+    },
+    {
+      "candidate_id": "busan-VB-1316",
+      "contentid_en": "2946907",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 9.6,
+      "match_signals": [
+        "coord_dist=9.6m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": null,
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Museum 1 (뮤지엄 원)",
+        "description_en_candidate": "Museum 1, located in Centum, Busan, is a media-specialized contemporary art museum established in 2019 by Kunst 1, an art agency. Museum 1, which consists of about 2,314 ㎡ in the form of a duplex, has",
+        "homepage_domain_candidate": "museum1.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00218",
+      "contentid_en": "2947858",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Ahopsan Forest (아홉산숲)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Ahopsan Forest (아홉산숲)",
+        "description_en_candidate": "Ahopsan Forest is a forest located at the foot of Ahopsan Mountain in Cheolma-myeon, Gijang-gun, Busan. It is a place where visitors can meet the undamaged natural environment and ecology. Diverse for",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/91/3309791_image2_1.jpg",
+        "homepage_domain_candidate": "ahopsan.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00678",
+      "contentid_en": "2953407",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "UN Sculpture Park (UN조각공원)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "UN Sculpture Park (UN조각공원)",
+        "description_en_candidate": "UN Sculpture Park is located next to the UN Memorial Cemetery where the souls of UN soldiers who served in the Korean War rest in peace. The sculpture park exhibits 34 pieces of artworks created and d",
+        "homepage_domain_candidate": "bsnamgu.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00010",
+      "contentid_en": "2997658",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Taejongdae Spa (태종대온천찜질방)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Taejongdae Spa (태종대온천찜질방)",
+        "description_en_candidate": "<br />Taejongdae Spa is located by the scenic Taejongdae Park. The nearby Yeongdo Island and Bongnaesan Mountain offer a beautiful view of the ocean and the mountains. The spa facility has hot springs",
+        "homepage_domain_candidate": "tjdspa.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00086",
+      "contentid_en": "3002402",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Jeoryeonghaean Coastal Walking Trail (절영해안산책로)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Jeoryeonghaean Coastal Walking Trail (절영해안산책로)",
+        "description_en_candidate": "Jeoryeonghaean Coastal Walking Trail, once a restricted military area, stretches for 3 kilometers along the rocky coast of Busan. The 2-hour walking trail offers different views of Busan as it wind in",
+        "homepage_domain_candidate": "yeongdo.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00249",
+      "contentid_en": "3002479",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Huin-yeoul Coastal Tunnel (영도 흰여울해안터널)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Huin-yeoul Coastal Tunnel (영도 흰여울해안터널)",
+        "description_en_candidate": "Huin-yeoul Coastal Tunnel was formed in December 2018 to help the elderly and the infirm walk smoothly without going through the steep stair section between the piano stairs and wave square near Jeory",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/89/2611589_image2_1.jpg",
+        "homepage_domain_candidate": "yeongdo.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00689",
+      "contentid_en": "3019795",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Blue Story Hotel (블루스토리 호텔)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Blue Story Hotel (블루스토리 호텔)",
+        "description_en_candidate": "Blue Story Hotel is located right on Haeundae Beach, perfect for travelers looking to enjoy both the city and the coast. The hotel is also just a short 5-minute walk from Haeundae Station on Busan Sub",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/24/3016424_image2_1.jpg",
+        "homepage_domain_candidate": "bluestoryhotel.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00301",
+      "contentid_en": "3026293",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 16.4,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=16.4m"
+      ],
+      "current_fields": {
+        "name_en": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+        "description_en_candidate": "Morundae-gil Trail, starting from Noeuljeong Pavilion and covering the coast of Morundae Peninsula, is a perfect location to watch the sunset. Memorable attractions along the trail include the point w",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/00/2646400_image2_1.jpg",
+        "homepage_domain_candidate": "durunubi.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00696",
+      "contentid_en": "3028273",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀)",
+        "description_en_candidate": "Sohyang Theater Shinhan Card Hall is located in front of Busan Cinema Center, in the middle of Centum City. The 1,100-seat theater specializes in musicals, but can also be rented out for concerts, pla",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/09/3023709_image2_1.JPG",
+        "homepage_domain_candidate": "sohyangtheater.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00684",
+      "contentid_en": "3045678",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Songdo Sky Park (송도스카이파크)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Songdo Sky Park (송도스카이파크)",
+        "description_en_candidate": "The Songdo Marine Cable Car offers a captivating 15-minute ride from Songdo Base Station to Songdo Sky Park, treating visitors to picturesque views of Songdo Beach and Yeongdo Island. In the basement,",
+        "homepage_domain_candidate": "busanaircruise.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00296",
+      "contentid_en": "3045684",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Haeundae River Cruise (해운대리버크루즈)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Haeundae River Cruise (해운대리버크루즈)",
+        "description_en_candidate": "Haeundae River Cruise is the first urban cruise ship in Busan that allows passengers to see both rivers and the sea from APEC Naru Park to Marine City and Gwangandaegyo Bridge. Cruises run weekdays, s",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/26/3041326_image2_1.JPG",
+        "homepage_domain_candidate": "haeundaerivercruise.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00422",
+      "contentid_en": "3078735",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "current_fields": {
+        "name_en": "Busan Yacht Tour 3355 Marine (부산요트투어 3355마린)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Busan Yacht Tour 3355 Marine (부산요트투어 3355마린)",
+        "description_en_candidate": "Busan Yacht Tour 3355 Marine allows visitors to enjoy freedom in the middle of the ocean aboard the yacht. The yacht cruises around the ocean waters facing Marine City, giving passengers an excellent ",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/71/2790371_image2_1.jpg",
+        "homepage_domain_candidate": "busan3355.modoo.at"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00459",
+      "contentid_en": "3078806",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 42.9,
+      "match_signals": [
+        "coord_dist=42.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": null,
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Ocean Spa Cimer (오션스파 씨메르)",
+        "description_en_candidate": "Ocean Spa Cimer is famous for its scenery where the open sky meets the emerald sea, like its name, Cimer, which combines the French words \"ciel\" meaning sky, and \"mer\" meaning sea. Cimer&rsquo;s seawa",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/27/3071927_image2_1.jpg",
+        "homepage_domain_candidate": "busanparadisehotel.co.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-A-00119",
+      "contentid_en": "3078939",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 35.3,
+      "match_signals": [
+        "coord_dist=35.3m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Hyundai Motorstudio Busan, a Complex Cultural Space",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "F1963",
+        "description_en_candidate": "F1963 is a representative cultural complex and an emerging landmark in Busan. This factory produced wires in the past for about 45 years from 1963 to 2008. 2016 Busan Biennale was a turning point for ",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/61/3350961_image2_1.jpg",
+        "homepage_domain_candidate": "f1963.org"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00084",
+      "contentid_en": "3098851",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Mangsando Island, Yujuam, Yujubigak (망산도·유주암·유주비각)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Mangsando Island, Yujuam, Yujubigak (망산도·유주암·유주비각)",
+        "description_en_candidate": "Mangsando Island, a small isle near Yongwon-dong, is noteworthy for its proximity to the rocky formation known as Yujuam, situated about 70 meters southeast. Approximately 1 kilometer from these locat",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/91/3031391_image2_1.JPG"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00287",
+      "contentid_en": "3098861",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Ttangmoesan Mountain (땅뫼산)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Ttangmoesan Mountain (땅뫼산)",
+        "description_en_candidate": "The Ttangmoesan Mountain Forest Trail, wrapping around the Hoedong Reservoir, is distinguished by its red clay path. This trail spans 1.7 kilometers and can be comfortably completed in approximately t",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/98/2674998_image2_1.jpg"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00012",
+      "contentid_en": "3098933",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Gwangalli Beach Theme Street (광안리해변 테마거리)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Gwangalli Beach Theme Street (광안리해변 테마거리)",
+        "description_en_candidate": "Gwangalli Beach Theme Street, stretching 1,250 meters along the Gwangalli coast, is lined with artificial palm trees, sculptures, benches, and lush green zones. This scenic road is a popular venue for",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/42/3071042_image2_1.JPG",
+        "homepage_domain_candidate": "visitbusan.net"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00154",
+      "contentid_en": "3098939",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Haeundae Rodeo Street (해운대 로데오거리)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Haeundae Rodeo Street (해운대 로데오거리)",
+        "description_en_candidate": "Haeundae Rodeo Street, a vibrant youth hub in Busan, features over 70 establishments including fashion stores, hair salons, skin care centers, and street food vendors. Known for its concentration of p",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/95/3032195_image2_1.JPG"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00331",
+      "contentid_en": "3335549",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "The Petel Premium Suite (더펫텔프리미엄스위트)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "The Petel Premium Suite (더펫텔프리미엄스위트)",
+        "description_en_candidate": "Korea's one and only hotel for both pets and pet owners. The Petel Premium Suite opened in 2016 to promote a healthy and enjoyable lifestyle with pets, offering facilites and services for guests on a ",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/16/2754616_image2_1.jpg",
+        "homepage_domain_candidate": "thepetel.com"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00682",
+      "contentid_en": "3336830",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "current_fields": {
+        "name_en": "Gwangalli Ocean Leports Center (광안리 해양레포츠센터)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Gwangalli Ocean Leports Center (광안리 해양레포츠센터)",
+        "description_en_candidate": "Gwangalli Ocean Leports Center is a large-scale water sports facility located at Gwangalli Beach in Busan. The center offers a wide range of water programs, such as jetboats, yachts, windsurfing, kaya",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/04/2991004_image2_1.jpg",
+        "homepage_domain_candidate": "gwanganli.imweb.me"
+      }
+    },
+    {
+      "candidate_id": "busan-VB-1323",
+      "contentid_en": "3403110",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 8.7,
+      "match_signals": [
+        "coord_dist=8.7m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "A market full of trends —Millac the Market",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Millac The Market (밀락더마켓)",
+        "description_en_candidate": "Millac The Market is a cultural complex located in Suyeong-gu, Busan. The main wall of the building is covered in graffiti, making it a great photo spot. The complex aims to be a new lifestyle space c",
+        "homepage_domain_candidate": "instagram.com"
+      }
+    },
+    {
+      "candidate_id": "busan-F-00010",
+      "contentid_en": "3433012",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 22.1,
+      "match_signals": [
+        "coord_dist=22.1m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Darin Geoin tongdak",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Yangsanjip (양산집)",
+        "description_en_candidate": "A long-standing dwaeji gukbap restaurant beloved by both vendors and visitors of the Kkangtong Market. The restaurant is small, so it&rsquo;s often necessary to wait for a seat. Despite this, it remai"
+      }
+    },
+    {
+      "candidate_id": "busan-VB-2397",
+      "contentid_en": "3521718",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 16.9,
+      "match_signals": [
+        "coord_dist=16.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Experience the Real Busan Sea at Gongsu Fishing Village",
+        "has_desc_en": true
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Osiria Coastal Walk (오시리아 해안산책로)",
+        "description_en_candidate": "Osiria Coastal Walk offers stunning panoramic views of the sea and plenty of resting stops along the way, making it a family-friendly path. The picturesque walking path, adorned with wildflowers, lead",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/00/3494300_image2_1.jpg",
+        "homepage_domain_candidate": "visitbusan.net"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00723",
+      "contentid_en": "3544716",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": null,
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Starry Night in Busan Night Festa",
+        "description_en_candidate": "Starry Night in Busan Night Festa is a themed night market centered on promoting a variety of food content and traditional alcohol, set against the backdrop of the beautiful sunset by the Nakdonggang ",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/89/3524089_image2_1.png",
+        "tel_candidate": "82517106948",
+        "homepage_domain_candidate": "instagram.com"
+      }
+    },
+    {
+      "candidate_id": "busan-VB-1066",
+      "contentid_en": "3547509",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 30.9,
+      "match_signals": [
+        "coord_dist=30.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": null,
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Medid (메디드)",
+        "description_en_candidate": "MEDID is a company operating a medical tourism platform for foreign patients.<br />We provide multilingual interpretation and translation services, and support hospital consultations and reservations "
+      }
+    },
+    {
+      "candidate_id": "busan-K-00773",
+      "contentid_en": "3562686",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "October Festa in Gwangalli (옥토버페스타 인 광안리)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "October Festa in Gwangalli (옥토버페스타 인 광안리)",
+        "description_en_candidate": "The festival takes place at Gwangalli Beach in Suyeong-gu, Busan, featuring a variety of programs that highlight the regional characteristics and lifestyle of Suyeong-gu. Visitors can enjoy workshops,",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/52/3555352_image2_1.png",
+        "tel_candidate": "82516104511"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00211",
+      "contentid_en": "3565954",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Haeundae Light Festival (해운대 빛축제)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Haeundae Light Festival (해운대 빛축제)",
+        "description_en_candidate": "The Haeundae Light Festival features light sculptures, media art exhibitions, and various performances, creating healing spaces and urban art spaces in the city center.",
+        "image_url_candidate": "http://tong.visitkorea.or.kr/cms/resource/06/3570106_image2_1.jpg",
+        "tel_candidate": "82517494062",
+        "homepage_domain_candidate": "haeundae.go.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-K-00058",
+      "contentid_en": "705873",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "current_fields": {
+        "name_en": "Gukje Market (국제시장)",
+        "has_desc_en": false
+      },
+      "recoverable_fields": {
+        "name_en_candidate": "Gukje Market (국제시장)",
+        "description_en_candidate": "The current marketplace of Gukje Market first formed after the liberation of Korea from the Japanese administration when people gathered to trade overseas products left by the Japanese and brought in ",
+        "homepage_domain_candidate": "gukjemarket.co.kr"
+      }
+    }
+  ]
+}

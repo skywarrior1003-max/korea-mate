@@ -1,0 +1,1053 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "verdict": "MANUAL_REVIEW_LINK",
+  "count": 67,
+  "records": [
+    {
+      "contentid": "1000428",
+      "title_en": "40-step Culture & Tourism Theme Street (40계단 문화관광테마거리)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00229",
+      "distance_m": 37.4,
+      "match_signals": [
+        "coord_dist=37.4m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=37.4m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1245275",
+      "title_en": "Busan Cultural Center (부산문화회관)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00029",
+      "distance_m": 144.4,
+      "match_signals": [
+        "coord_dist=144.4m",
+        "homepage_match",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=144.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1348725",
+      "title_en": "Hurshimchung (허심청)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00046",
+      "distance_m": 51.9,
+      "match_signals": [
+        "coord_dist=51.9m"
+      ],
+      "evidence": "coord_dist=51.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "1392313",
+      "title_en": "Millak Waterfront Park (민락수변공원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00026",
+      "distance_m": 82.6,
+      "match_signals": [
+        "coord_dist=82.6m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=82.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1436149",
+      "title_en": "Millak Hoe Center (민락어민활어직판장)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-1323",
+      "distance_m": 83.1,
+      "match_signals": [
+        "coord_dist=83.1m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=83.1m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    },
+    {
+      "contentid": "1941477",
+      "title_en": "Peace Park (평화공원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00135",
+      "distance_m": 80.6,
+      "match_signals": [
+        "coord_dist=80.6m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=80.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1973370",
+      "title_en": "Bosu-dong Book Street Cultural Center(보수동 책방골목 문화관)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00016",
+      "distance_m": 120.3,
+      "match_signals": [
+        "coord_dist=120.3m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=120.3m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "2021670",
+      "title_en": "Seomyeon Underground Shopping Center (서면지하도상가)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00216",
+      "distance_m": 131.5,
+      "match_signals": [
+        "coord_dist=131.5m"
+      ],
+      "evidence": "coord_dist=131.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    },
+    {
+      "contentid": "2025822",
+      "title_en": "Busan Hongbeopsa Temple (홍법사(부산))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00195",
+      "distance_m": 121.8,
+      "match_signals": [
+        "coord_dist=121.8m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=121.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "2401023",
+      "title_en": "168 Stairs (168계단)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00189",
+      "distance_m": 34.2,
+      "match_signals": [
+        "coord_dist=34.2m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=34.2m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "2492127",
+      "title_en": "Daejeo Eco Park (대저생태공원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00480",
+      "distance_m": 181.9,
+      "match_signals": [
+        "coord_dist=181.9m"
+      ],
+      "evidence": "coord_dist=181.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "2589248",
+      "title_en": "Cheongsapo Port (청사포)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00436",
+      "distance_m": 49.9,
+      "match_signals": [
+        "coord_dist=49.9m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=49.9m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "2596967",
+      "title_en": "Centum Primus Hotel (센텀프리머스 호텔)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00267",
+      "distance_m": 65.1,
+      "match_signals": [
+        "coord_dist=65.1m"
+      ],
+      "evidence": "coord_dist=65.1m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "264155",
+      "title_en": "Haeundae Beach (해운대해수욕장)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00082",
+      "distance_m": 66.4,
+      "match_signals": [
+        "coord_dist=66.4m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=66.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264250",
+      "title_en": "Gwangalli Beach (광안리해수욕장)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00294",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=0.0m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264602",
+      "title_en": "Busan Chinatown Special Zone (부산 차이나타운특구(상해문.상해거리))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00148",
+      "distance_m": 56.5,
+      "match_signals": [
+        "coord_dist=56.5m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=56.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "266887",
+      "title_en": "Suyeongman Bay Yachting Center (수영만 요트경기장)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-140",
+      "distance_m": 69.5,
+      "match_signals": [
+        "coord_dist=69.5m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=69.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "2695544",
+      "title_en": "Jeongeul Damda (정을담다)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00126",
+      "distance_m": 115.8,
+      "match_signals": [
+        "coord_dist=115.8m"
+      ],
+      "evidence": "coord_dist=115.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "2946894",
+      "title_en": "Cheongsapo Daritdol Observatory (청사포 다릿돌전망대)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00548",
+      "distance_m": 192.8,
+      "match_signals": [
+        "coord_dist=192.8m"
+      ],
+      "evidence": "coord_dist=192.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2946924",
+      "title_en": "Haeparang Trail Course 1 (해파랑길 1코스)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00022",
+      "distance_m": 80.1,
+      "match_signals": [
+        "coord_dist=80.1m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=80.1m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "2947862",
+      "title_en": "Jukseong Church (Filming Set) (죽성성당(드림세트장))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00005",
+      "distance_m": 72.2,
+      "match_signals": [
+        "coord_dist=72.2m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=72.2m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "2947885",
+      "title_en": "Gijang Haenyeo Village (Yeonhwari Hoetchon Village) (기장해녀촌(연화리횟촌))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00405",
+      "distance_m": 76.5,
+      "match_signals": [
+        "coord_dist=76.5m"
+      ],
+      "evidence": "coord_dist=76.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2990076",
+      "title_en": "Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00406",
+      "distance_m": 85.6,
+      "match_signals": [
+        "coord_dist=85.6m"
+      ],
+      "evidence": "coord_dist=85.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3002802",
+      "title_en": "Haneul Observatory (영도 하늘전망대)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00053",
+      "distance_m": 186.6,
+      "match_signals": [
+        "coord_dist=186.6m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=186.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3047063",
+      "title_en": "Busan Cine Road (부산 영화의 거리)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-2243",
+      "distance_m": 122.8,
+      "match_signals": [
+        "coord_dist=122.8m"
+      ],
+      "evidence": "coord_dist=122.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3047349",
+      "title_en": "Yeongdo Haenyeo Culture Exhibition Hall (영도해녀문화전시관)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-2097",
+      "distance_m": 37.0,
+      "match_signals": [
+        "coord_dist=37.0m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=37.0m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3078720",
+      "title_en": "Skyline Luge Busan (스카이라인 루지(부산))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00124",
+      "distance_m": 57.3,
+      "match_signals": [
+        "coord_dist=57.3m"
+      ],
+      "evidence": "coord_dist=57.3m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "3078807",
+      "title_en": "Busan Healing Forest (부산 치유의 숲)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00107",
+      "distance_m": 57.5,
+      "match_signals": [
+        "coord_dist=57.5m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=57.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3098936",
+      "title_en": "Yeongdo Cheonghak Reservoir Observatory (영도 청학배수지 전망대)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-2555",
+      "distance_m": 82.4,
+      "match_signals": [
+        "coord_dist=82.4m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=82.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3104517",
+      "title_en": "Hyewonjeongsa Temple (혜원정사)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00088",
+      "distance_m": 93.8,
+      "match_signals": [
+        "coord_dist=93.8m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=93.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "3115401",
+      "title_en": "Haeridan Street (해리단길)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-2581",
+      "distance_m": 80.5,
+      "match_signals": [
+        "coord_dist=80.5m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=80.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3364622",
+      "title_en": "Busan Wooridul Spine Hospital (부산우리들병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-1754",
+      "distance_m": 100.9,
+      "match_signals": [
+        "coord_dist=100.9m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=100.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3364765",
+      "title_en": "Kim Byoung Joon Ledas Varicose Vein Clinic (김병준 레다스 흉부외과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00005",
+      "distance_m": 90.7,
+      "match_signals": [
+        "coord_dist=90.7m"
+      ],
+      "evidence": "coord_dist=90.7m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3364801",
+      "title_en": "Galaxy Plastic Surgery (갤럭시성형외과)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00117",
+      "distance_m": 132.3,
+      "match_signals": [
+        "coord_dist=132.3m"
+      ],
+      "evidence": "coord_dist=132.3m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3365841",
+      "title_en": "Busan Adventist Hospital (삼육부산병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00083",
+      "distance_m": 146.4,
+      "match_signals": [
+        "coord_dist=146.4m"
+      ],
+      "evidence": "coord_dist=146.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366195",
+      "title_en": "KJ Globaltour.Co.,Ltd (케이제이글로벌투어 주식회사)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00427",
+      "distance_m": 84.9,
+      "match_signals": [
+        "coord_dist=84.9m"
+      ],
+      "evidence": "coord_dist=84.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366399",
+      "title_en": "Nunevit Eye Clinic (누네빛안과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00704",
+      "distance_m": 57.9,
+      "match_signals": [
+        "coord_dist=57.9m"
+      ],
+      "evidence": "coord_dist=57.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366484",
+      "title_en": "Busan JMJ (부산제이엠제이)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00472",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=0.0m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366551",
+      "title_en": "Funtour Inc. (주식회사 재미난투어)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00041",
+      "distance_m": 74.3,
+      "match_signals": [
+        "coord_dist=74.3m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=74.3m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366568",
+      "title_en": "Samsung Rehan Woman's Clinic (삼성리한여성의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-554",
+      "distance_m": 153.1,
+      "match_signals": [
+        "coord_dist=153.1m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=153.1m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366754",
+      "title_en": "BGN Eye Hospital (밝은눈안과병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00155",
+      "distance_m": 143.8,
+      "match_signals": [
+        "coord_dist=143.8m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=143.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3367727",
+      "title_en": "Golden Navis (골든나비스)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00663",
+      "distance_m": 191.4,
+      "match_signals": [
+        "coord_dist=191.4m"
+      ],
+      "evidence": "coord_dist=191.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3400947",
+      "title_en": "Gijang Jonggajip Gomjangeo (기장종가집곰장어)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00318",
+      "distance_m": 41.8,
+      "match_signals": [
+        "coord_dist=41.8m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "restaurant: dist=41.8m, 지점 신호(tel/homepage) 없음 — 수동 검토 필요",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "3441540",
+      "title_en": "Human Care Service ((주)휴먼케어서비스)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00023",
+      "distance_m": 72.4,
+      "match_signals": [
+        "coord_dist=72.4m"
+      ],
+      "evidence": "coord_dist=72.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3450964",
+      "title_en": "Sojunghannun Ophthalmology Clinic (센텀소중한눈안과)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00273",
+      "distance_m": 46.8,
+      "match_signals": [
+        "coord_dist=46.8m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=46.8m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3451721",
+      "title_en": "Goodwill Dental Hospital (굿윌치과병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00734",
+      "distance_m": 103.2,
+      "match_signals": [
+        "coord_dist=103.2m"
+      ],
+      "evidence": "coord_dist=103.2m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3466909",
+      "title_en": "Busan BGSS Eye Clinic (부산밝은세상안과)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00117",
+      "distance_m": 96.1,
+      "match_signals": [
+        "coord_dist=96.1m"
+      ],
+      "evidence": "coord_dist=96.1m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3466939",
+      "title_en": "Busan St Mary's Hospital (부산성모병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00225",
+      "distance_m": 154.4,
+      "match_signals": [
+        "coord_dist=154.4m"
+      ],
+      "evidence": "coord_dist=154.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3468740",
+      "title_en": "Oryukdo Sunrise Park (오륙도해맞이공원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00022",
+      "distance_m": 62.6,
+      "match_signals": [
+        "coord_dist=62.6m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=62.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3468785",
+      "title_en": "Dongsaengmal Observatory (동생말전망대)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00169",
+      "distance_m": 72.8,
+      "match_signals": [
+        "coord_dist=72.8m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=72.8m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3468797",
+      "title_en": "Haeundae Tourist Information Center (해운대관광안내소)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00082",
+      "distance_m": 65.9,
+      "match_signals": [
+        "coord_dist=65.9m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=65.9m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3477557",
+      "title_en": "Design Plastic Surgery Clinic (디자인성형외과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00117",
+      "distance_m": 49.5,
+      "match_signals": [
+        "coord_dist=49.5m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=49.5m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3486334",
+      "title_en": "Uam-dong Urban Forest (우암동 도시숲)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00125",
+      "distance_m": 119.2,
+      "match_signals": [
+        "coord_dist=119.2m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=119.2m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3486532",
+      "title_en": "DOMOHEON (도모헌)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-A-00174",
+      "distance_m": 105.4,
+      "match_signals": [
+        "coord_dist=105.4m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=105.4m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "349585",
+      "title_en": "The Westin Josun Busan (웨스틴 조선 부산)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00305",
+      "distance_m": 5.1,
+      "match_signals": [
+        "coord_dist=5.1m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=5.1m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "3516784",
+      "title_en": "B-Con Ground (비콘그라운드)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-VB-1695",
+      "distance_m": 98.5,
+      "match_signals": [
+        "coord_dist=98.5m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=98.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3517139",
+      "title_en": "Mangmidangil Street  (망미단길)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00279",
+      "distance_m": 172.2,
+      "match_signals": [
+        "coord_dist=172.2m"
+      ],
+      "evidence": "coord_dist=172.2m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3539436",
+      "title_en": "Slimfit Korean Medicine Clinic (슬림핏한의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00117",
+      "distance_m": 98.0,
+      "match_signals": [
+        "coord_dist=98.0m"
+      ],
+      "evidence": "coord_dist=98.0m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3539560",
+      "title_en": "First Eye Clinic (퍼스트안과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00134",
+      "distance_m": 52.7,
+      "match_signals": [
+        "coord_dist=52.7m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=52.7m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3539851",
+      "title_en": "Olive Skin Clinic (올리브피부과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00074",
+      "distance_m": 187.6,
+      "match_signals": [
+        "coord_dist=187.6m"
+      ],
+      "evidence": "coord_dist=187.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3539987",
+      "title_en": "Barog Clinic (Deokcheon) (바로그의원 (덕천))",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00074",
+      "distance_m": 169.5,
+      "match_signals": [
+        "coord_dist=169.5m"
+      ],
+      "evidence": "coord_dist=169.5m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3547521",
+      "title_en": "MediCaddy Korea (메디캐디코리아)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00095",
+      "distance_m": 106.7,
+      "match_signals": [
+        "coord_dist=106.7m"
+      ],
+      "evidence": "coord_dist=106.7m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3547900",
+      "title_en": "BASE DERMATOLOGY CLINIC (베이스피부과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00267",
+      "distance_m": 49.4,
+      "match_signals": [
+        "coord_dist=49.4m",
+        "unique_within_50m"
+      ],
+      "evidence": "coord_dist=49.4m, unique, category_incompatible",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3548871",
+      "title_en": "Gowoonsesang Kim Yang-Che & Jang Bong-Seok Skin Clinic (고운세상 김양제장봉석피부과의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00734",
+      "distance_m": 103.2,
+      "match_signals": [
+        "coord_dist=103.2m"
+      ],
+      "evidence": "coord_dist=103.2m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3548942",
+      "title_en": "Nell Clinic (넬의원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00365",
+      "distance_m": 57.0,
+      "match_signals": [
+        "coord_dist=57.0m"
+      ],
+      "evidence": "coord_dist=57.0m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3574754",
+      "title_en": "line-up dental hospital (라인업치과병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-K-00119",
+      "distance_m": 68.6,
+      "match_signals": [
+        "coord_dist=68.6m"
+      ],
+      "evidence": "coord_dist=68.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3580187",
+      "title_en": "Dong-A University Hospital (동아대학교병원)",
+      "verdict": "MANUAL_REVIEW_LINK",
+      "candidate_id": "busan-F-00084",
+      "distance_m": 125.6,
+      "match_signals": [
+        "coord_dist=125.6m"
+      ],
+      "evidence": "coord_dist=125.6m, within_200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    }
+  ]
+}
