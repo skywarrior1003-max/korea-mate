@@ -1,0 +1,1958 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-COLLECT-V1",
+  "phase": "1-EN-MANIFEST",
+  "created_at": "2026-08-01T06:55:45.312069+00:00",
+  "source_batch_pattern": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\2026-07-23\\batch\\kto-en-p*.json",
+  "source_batch_files": [
+    "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\2026-07-23\\batch\\kto-en-p001.json",
+    "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\2026-07-23\\batch\\kto-en-p002.json",
+    "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\tourapi\\raw\\busan\\2026-07-23\\batch\\kto-en-p003.json"
+  ],
+  "source_input_sha": "5ee55a4b98f68850af6be8ef3cae807b8a012f9a499569ce6eb3e49c236d7735",
+  "total": 194,
+  "records_sha256": "19cf8840eb9c480ab44cb7bee222a9eb07987862d3761074672c16d1680f252e",
+  "ko_cids_checked": 626,
+  "ko_en_overlap": 0,
+  "records": [
+    {
+      "contentid": "1000044",
+      "contenttypeid": "76",
+      "title": "Gukje Market Art Street (미술의 거리)",
+      "addr1": "31, Junggu-ro, Jung-gu, Busan",
+      "mapx": "0",
+      "mapy": "0",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/72/1009672_image2_1.jpg",
+      "modifiedtime": "20250323161506"
+    },
+    {
+      "contentid": "1000428",
+      "contenttypeid": "76",
+      "title": "40-step Culture & Tourism Theme Street (40계단 문화관광테마거리)",
+      "addr1": "Area of 40gyedan-gil, Jungang-gu, Jung-gu, Busan",
+      "mapx": "129.0354119335",
+      "mapy": "35.1040698693",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/77/2364277_image2_1.jpg",
+      "modifiedtime": "20230221102350"
+    },
+    {
+      "contentid": "1024670",
+      "contenttypeid": "76",
+      "title": "Gukje Market Food Street (국제시장 먹자골목)",
+      "addr1": "36, Junggu-ro, Jung-gu, Busan",
+      "mapx": "129.0280793175",
+      "mapy": "35.1011311741",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/25/1020225_image2_1.jpg",
+      "modifiedtime": "20240306150545"
+    },
+    {
+      "contentid": "1054849",
+      "contenttypeid": "78",
+      "title": "Busan Museum of Art (부산시립미술관)",
+      "addr1": "58, APEC-ro, Haeundae-gu, Busan",
+      "mapx": "129.1370458254",
+      "mapy": "35.1666980687",
+      "firstimage": "",
+      "modifiedtime": "20230109093855"
+    },
+    {
+      "contentid": "1054924",
+      "contenttypeid": "76",
+      "title": "Busan Songdo Beach (부산 송도해수욕장)",
+      "addr1": "100 Songdohaebyeon-ro, Seo-gu, Busan",
+      "mapx": "129.0164588470",
+      "mapy": "35.0739256715",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/86/2504686_image2_1.jpg",
+      "modifiedtime": "20240426145742"
+    },
+    {
+      "contentid": "1055405",
+      "contenttypeid": "76",
+      "title": "Gwangbok-dong Cultural & Fashion Street (광복로문화패션거리)",
+      "addr1": "Gwangbok-ro, Jung-gu, Busan",
+      "mapx": "129.0312902050",
+      "mapy": "35.0991036826",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/1804802_image2_1.jpg",
+      "modifiedtime": "20240306140102"
+    },
+    {
+      "contentid": "1064834",
+      "contenttypeid": "76",
+      "title": "Busan Gwangandaegyo Bridge (부산광안대교)",
+      "addr1": "203 Suyeonggangbyeon-daero, Haeundae-gu, Busan",
+      "mapx": "129.1270084045",
+      "mapy": "35.1449947568",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/77/3368477_image2_1.jpg",
+      "modifiedtime": "20250415143531"
+    },
+    {
+      "contentid": "1079482",
+      "contenttypeid": "78",
+      "title": "BEXCO (벡스코)",
+      "addr1": "55, APEC-ro, Haeundae-gu, Busan",
+      "mapx": "129.1363347095",
+      "mapy": "35.1691116738",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/183634_image2_1.jpg",
+      "modifiedtime": "20220908153618"
+    },
+    {
+      "contentid": "1245275",
+      "contenttypeid": "78",
+      "title": "Busan Cultural Center (부산문화회관)",
+      "addr1": "1, UN pyeonghwa-ro 76beon-gil, Nam-gu, Busan",
+      "mapx": "129.0933951468",
+      "mapy": "35.1272405672",
+      "firstimage": "",
+      "modifiedtime": "20210806222415"
+    },
+    {
+      "contentid": "1347054",
+      "contenttypeid": "80",
+      "title": "Central Hotel (부산 센트럴호텔)",
+      "addr1": "1122 , Jungang-daero, Yeonje-gu, Busan",
+      "mapx": "129.0815500745",
+      "mapy": "35.1877780140",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/1215816_image2_1.jpg",
+      "modifiedtime": "20240801111244"
+    },
+    {
+      "contentid": "1348725",
+      "contenttypeid": "76",
+      "title": "Hurshimchung (허심청)",
+      "addr1": "23 Geumganggongwon-ro 20beon-gil, Dongnae-gu, Busan",
+      "mapx": "129.0826296532",
+      "mapy": "35.2199410969",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/3329899_image2_1.jpg",
+      "modifiedtime": "20240705145806"
+    },
+    {
+      "contentid": "1348758",
+      "contenttypeid": "76",
+      "title": "Geumgang Park (금강공원)",
+      "addr1": "155 Ujangchun-ro, Dongnae-gu, Busan",
+      "mapx": "129.0762330134",
+      "mapy": "35.2190105271",
+      "firstimage": "",
+      "modifiedtime": "20240305143513"
+    },
+    {
+      "contentid": "1351815",
+      "contenttypeid": "76",
+      "title": "Samnak Eco Park (삼락생태공원)",
+      "addr1": "1231, Nakdong-daero, Sasang-gu, Busan",
+      "mapx": "128.9765958072",
+      "mapy": "35.1700530639",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/63/2488063_image2_1.jpg",
+      "modifiedtime": "20240315111132"
+    },
+    {
+      "contentid": "1385298",
+      "contenttypeid": "85",
+      "title": "Busan Fireworks Festival (부산불꽃축제)",
+      "addr1": "219 Gwanganhaebyeon-ro, Suyeong-gu, Busan",
+      "mapx": "129.1185477876",
+      "mapy": "35.1538130576",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/60/3559360_image2_1.jpg",
+      "modifiedtime": "20251030150205"
+    },
+    {
+      "contentid": "1392313",
+      "contenttypeid": "76",
+      "title": "Millak Waterfront Park (민락수변공원)",
+      "addr1": "Millak-dong, Suyeong-gu, Busan",
+      "mapx": "129.1331270526",
+      "mapy": "35.1546382351",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/66/3498366_image2_1.jpg",
+      "modifiedtime": "20250811142240"
+    },
+    {
+      "contentid": "1392329",
+      "contenttypeid": "76",
+      "title": "Yeongdo Lighthouse (영도 등대)",
+      "addr1": "181, Jeonmang-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0923639479",
+      "mapy": "35.0523933666",
+      "firstimage": "",
+      "modifiedtime": "20240306115657"
+    },
+    {
+      "contentid": "1436149",
+      "contenttypeid": "79",
+      "title": "Millak Hoe Center (민락어민활어직판장)",
+      "addr1": "60 Gwanganhaebyeon-ro 312beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1278914077",
+      "mapy": "35.1542381830",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/64/1572164_image2_1.jpg",
+      "modifiedtime": "20250811142926"
+    },
+    {
+      "contentid": "1475231",
+      "contenttypeid": "76",
+      "title": "Busan Tower (부산타워)",
+      "addr1": "37-30 Yongdusan-gil, Jung-gu, Busan",
+      "mapx": "129.0323594995",
+      "mapy": "35.1011951345",
+      "firstimage": "",
+      "modifiedtime": "20250806172641"
+    },
+    {
+      "contentid": "1750980",
+      "contenttypeid": "82",
+      "title": "Halmae Bokguk (할매복국)",
+      "addr1": "1, Dalmaji-gil 62beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1715207639",
+      "mapy": "35.1609243536",
+      "firstimage": "",
+      "modifiedtime": "20241227105714"
+    },
+    {
+      "contentid": "1751530",
+      "contenttypeid": "76",
+      "title": "Haeundae Dongbaekseom Island (해운대 동백섬)",
+      "addr1": "67 Dongbaek-ro, Haeundae-gu, Busan",
+      "mapx": "129.1521809693",
+      "mapy": "35.1539914380",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/47/3350847_image2_1.jpg",
+      "modifiedtime": "20250704110541"
+    },
+    {
+      "contentid": "1752895",
+      "contenttypeid": "76",
+      "title": "Suyeong Sajeok Park (수영사적공원)",
+      "addr1": "43, Suyeongseong-ro, Suyeong-gu, Busan",
+      "mapx": "129.1145032317",
+      "mapy": "35.1706944259",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/2677061_image2_1.jpg",
+      "modifiedtime": "20210806223428"
+    },
+    {
+      "contentid": "1849142",
+      "contenttypeid": "78",
+      "title": "National Maritime Museum (국립해양박물관)",
+      "addr1": "45 Haeyang-ro 301beon-gil, Yeongdo-gu, Busan",
+      "mapx": "129.0803198368",
+      "mapy": "35.0785402199",
+      "firstimage": "",
+      "modifiedtime": "20230110094435"
+    },
+    {
+      "contentid": "1918039",
+      "contenttypeid": "76",
+      "title": "Hwangnyeongsan Mountain ()",
+      "addr1": "391-39 Hwangnyeongsan-ro, Nam-gu, Busan",
+      "mapx": "129.0827285679",
+      "mapy": "35.1579341561",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/50/2732750_image2_1.jpg",
+      "modifiedtime": "20241025160009"
+    },
+    {
+      "contentid": "1941477",
+      "contenttypeid": "76",
+      "title": "Peace Park (평화공원)",
+      "addr1": "10, Sinseon-ro 447beon-gil, Nam-gu, Busan",
+      "mapx": "129.0995779953",
+      "mapy": "35.1253214518",
+      "firstimage": "",
+      "modifiedtime": "20210917020445"
+    },
+    {
+      "contentid": "1950203",
+      "contenttypeid": "82",
+      "title": "Ilpum Hanwoo (일품한우)",
+      "addr1": "49, Haeun-daero 570beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1594329447",
+      "mapy": "35.1602575377",
+      "firstimage": "",
+      "modifiedtime": "20241015104138"
+    },
+    {
+      "contentid": "1959107",
+      "contenttypeid": "76",
+      "title": "Yeongdodaegyo Bridge (영도대교)",
+      "addr1": "46, Taejong-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0367343133",
+      "mapy": "35.0940710125",
+      "firstimage": "",
+      "modifiedtime": "20230422134910"
+    },
+    {
+      "contentid": "1970795",
+      "contenttypeid": "82",
+      "title": "Haeundae Amso Galbijip ( 해운대암소갈비집)",
+      "addr1": "32-10, Jungdong 2-ro 10beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1663100420",
+      "mapy": "35.1632545515",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/1866057_image2_1.jpg",
+      "modifiedtime": "20241129105741"
+    },
+    {
+      "contentid": "1973370",
+      "contenttypeid": "76",
+      "title": "Bosu-dong Book Street Cultural Center(보수동 책방골목 문화관)",
+      "addr1": "8, Chaekbanggolmok-gil, Jung-gu, Busan",
+      "mapx": "129.0278431547",
+      "mapy": "35.1037975381",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/54/2559054_image2_1.jpg",
+      "modifiedtime": "20230109153732"
+    },
+    {
+      "contentid": "1981827",
+      "contenttypeid": "76",
+      "title": "Igidae Cliff [National Geopark] (이기대 (부산 국가지질공원))",
+      "addr1": "Yongho-dong, Nam-gu, Busan",
+      "mapx": "129.1271619566",
+      "mapy": "35.1162451995",
+      "firstimage": "",
+      "modifiedtime": "20240429144416"
+    },
+    {
+      "contentid": "2021670",
+      "contenttypeid": "79",
+      "title": "Seomyeon Underground Shopping Center (서면지하도상가)",
+      "addr1": "737 Jungang-daero, Busanjin-gu, Busan",
+      "mapx": "129.0611192742",
+      "mapy": "35.1602390548",
+      "firstimage": "",
+      "modifiedtime": "20241202102532"
+    },
+    {
+      "contentid": "2025822",
+      "contenttypeid": "76",
+      "title": "Busan Hongbeopsa Temple (홍법사(부산))",
+      "addr1": "202, Dugu-ro 33beon-gil, Geumjeong-gu, Busan",
+      "mapx": "129.1106443769",
+      "mapy": "35.3027517754",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/48/2023948_image2_1.jpg",
+      "modifiedtime": "20221227155035"
+    },
+    {
+      "contentid": "2351201",
+      "contenttypeid": "80",
+      "title": "KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔)",
+      "addr1": "287 , Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1622688032",
+      "mapy": "35.1604686777",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/09/3544809_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "2382544",
+      "contenttypeid": "79",
+      "title": "Jagalchi Market (부산 자갈치시장)",
+      "addr1": "52 Jagalchihaean-ro, Jung-gu, Busan",
+      "mapx": "129.0306042201",
+      "mapy": "35.0966511661",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/13/2941313_image2_1.bmp",
+      "modifiedtime": "20250415164058"
+    },
+    {
+      "contentid": "2401021",
+      "contenttypeid": "78",
+      "title": "Ebagu Crafts Workshop (이바구공작소)",
+      "addr1": "14-13, Mangyang-ro 486beon-gil, Dong-gu, Busan",
+      "mapx": "129.0338450468",
+      "mapy": "35.1171267121",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/2365995_image2_1.jpg",
+      "modifiedtime": "20250117142237"
+    },
+    {
+      "contentid": "2401023",
+      "contenttypeid": "76",
+      "title": "168 Stairs (168계단)",
+      "addr1": "9, Yeongcho-gil 197beon-gil, Dong-gu, Busan",
+      "mapx": "129.0353643591",
+      "mapy": "35.1171295181",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/2366034_image2_1.jpg",
+      "modifiedtime": "20230103152103"
+    },
+    {
+      "contentid": "2401046",
+      "contenttypeid": "78",
+      "title": "Busan Fishing Village Folk Museum (부산어촌민속관)",
+      "addr1": "128, Haksa-ro, Buk-gu, Busan",
+      "mapx": "129.0084662884",
+      "mapy": "35.2337659545",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/69/1982369_image2_1.jpg",
+      "modifiedtime": "20221229132915"
+    },
+    {
+      "contentid": "2405644",
+      "contenttypeid": "76",
+      "title": "Samgwangsa Temple (삼광사)",
+      "addr1": "77 Choeupcheon-ro 43beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0434426042",
+      "mapy": "35.1759314153",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/92/1571992_image2_1.jpg",
+      "modifiedtime": "20250206171032"
+    },
+    {
+      "contentid": "2447385",
+      "contenttypeid": "80",
+      "title": "HILLSIDE HOTEL / 힐사이드호텔",
+      "addr1": "160 , Junggu-ro, Jung-gu, Busan",
+      "mapx": "129.0360034065",
+      "mapy": "35.1092748529",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/2397995_image2_1.jpg",
+      "modifiedtime": "20250305132950"
+    },
+    {
+      "contentid": "2492127",
+      "contenttypeid": "76",
+      "title": "Daejeo Eco Park (대저생태공원)",
+      "addr1": "1246 Gonghang-ro, Gangseo-gu, Busan",
+      "mapx": "128.9845662470",
+      "mapy": "35.2098737478",
+      "firstimage": "",
+      "modifiedtime": "20240305104239"
+    },
+    {
+      "contentid": "2503883",
+      "contenttypeid": "76",
+      "title": "Samjin Fish Cake History Museum · History Hall (삼진어묵체험·역사관)",
+      "addr1": "36, Taejong-ro 99beon-gil, Yeongdo-gu, Busan",
+      "mapx": "129.0428032596",
+      "mapy": "35.0929934673",
+      "firstimage": "",
+      "modifiedtime": "20230110114223"
+    },
+    {
+      "contentid": "2542365",
+      "contenttypeid": "80",
+      "title": "Bcent Hotel (비센트호텔)",
+      "addr1": "64 , Chungjang-daero 9beon-gil, Jung-gu, Busan",
+      "mapx": "129.0393058555",
+      "mapy": "35.1108108531",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/2528799_image2_1.jpg",
+      "modifiedtime": "20241222173327"
+    },
+    {
+      "contentid": "2545446",
+      "contenttypeid": "80",
+      "title": "The Park Guesthouse (더파크 게스트하우스(The Park Guesthouse))",
+      "addr1": "151 , Gwangnam-ro, Suyeong-gu, Busan",
+      "mapx": "129.1178005996",
+      "mapy": "35.1549268080",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/59/2557359_image2_1.jpg",
+      "modifiedtime": "20241222172345"
+    },
+    {
+      "contentid": "2545460",
+      "contenttypeid": "80",
+      "title": "Central Park Hotel (센트럴파크 호텔)",
+      "addr1": "20 , Haegwan-ro, Jung-gu, Busan",
+      "mapx": "129.0359758692",
+      "mapy": "35.1005424968",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/77/2669477_image2_1.jpg",
+      "modifiedtime": "20240801110133"
+    },
+    {
+      "contentid": "2545473",
+      "contenttypeid": "80",
+      "title": "GnB HOTEL (지엔비호텔(GNB호텔))",
+      "addr1": "19 , Heukgyo-ro, Jung-gu, Busan",
+      "mapx": "129.0248379298",
+      "mapy": "35.1012588776",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/83/2808383_image2_1.png",
+      "modifiedtime": "20241030110328"
+    },
+    {
+      "contentid": "2546331",
+      "contenttypeid": "80",
+      "title": "Le IDEA Hotel Busan Station (르이데아호텔)",
+      "addr1": "16-10 , Jungang-daero 180beon-gil, Dong-gu, Busan",
+      "mapx": "129.0401307462",
+      "mapy": "35.1121634949",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/91/2544691_image2_1.JPG",
+      "modifiedtime": "20241222171456"
+    },
+    {
+      "contentid": "2589248",
+      "contenttypeid": "76",
+      "title": "Cheongsapo Port (청사포)",
+      "addr1": "Jung-dong, Haeundae-gu, Busan",
+      "mapx": "129.1922189785",
+      "mapy": "35.1604442358",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/2364312_image2_1.jpg",
+      "modifiedtime": "20230223111914"
+    },
+    {
+      "contentid": "2589751",
+      "contenttypeid": "78",
+      "title": "Busan National Science Museum (국립부산과학관)",
+      "addr1": "59 Dongbusangwangwang 6-ro, Gijang-gun, Busan",
+      "mapx": "129.2127159794",
+      "mapy": "35.2046146711",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/21/3511021_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "2596967",
+      "contenttypeid": "80",
+      "title": "Centum Primus Hotel (센텀프리머스 호텔)",
+      "addr1": "17 , Centum 1-ro, Haeundae-gu, Busan",
+      "mapx": "129.1316129571",
+      "mapy": "35.1669646046",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/62/2595462_image2_1.jpg",
+      "modifiedtime": "20241223113234"
+    },
+    {
+      "contentid": "2597153",
+      "contenttypeid": "80",
+      "title": "SOLARIA NISHITETSUHOTEL BUSAN（솔라리아 니시테츠호텔 부산）",
+      "addr1": "20 , Seomyeon-ro, Busanjin-gu, Busan",
+      "mapx": "129.0582002983",
+      "mapy": "35.1523732152",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/2595470_image2_1.jpg",
+      "modifiedtime": "20241222171743"
+    },
+    {
+      "contentid": "2597161",
+      "contenttypeid": "80",
+      "title": "THE B.S HOTEL, Busan station  / THE B.S호텔(더비에스호텔)",
+      "addr1": "7-11 , Jungang-daero 236beon-gil, Dong-gu, Busan",
+      "mapx": "129.0426359082",
+      "mapy": "35.1186044863",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/55/2595455_image2_1.jpg",
+      "modifiedtime": "20250305132700"
+    },
+    {
+      "contentid": "2597170",
+      "contenttypeid": "80",
+      "title": "Beach Motel (비치모텔)",
+      "addr1": "10-9 , Harihaean-gil, Yeongdo-gu, Busan",
+      "mapx": "129.0813283358",
+      "mapy": "35.0692440569",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/82/2595482_image2_1.jpg",
+      "modifiedtime": "20250418104418"
+    },
+    {
+      "contentid": "264108",
+      "contenttypeid": "76",
+      "title": "Geumjeongsanseong Fortress (금정산성)",
+      "addr1": "78-5 Bungmun-ro, Geumjeong-gu, Busan",
+      "mapx": "129.0559836837",
+      "mapy": "35.2587890268",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/44/1605344_image2_1.jpg",
+      "modifiedtime": "20240305123844"
+    },
+    {
+      "contentid": "264120",
+      "contenttypeid": "76",
+      "title": "Dalmaji Road (해운대 달맞이길)",
+      "addr1": "190, Dalmaji-gil, Haeundae-gu, Busan",
+      "mapx": "129.1825698917",
+      "mapy": "35.1577193620",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/2650837_image2_1.jpg",
+      "modifiedtime": "20240306163620"
+    },
+    {
+      "contentid": "264155",
+      "contenttypeid": "76",
+      "title": "Haeundae Beach (해운대해수욕장)",
+      "addr1": "264 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1603078991",
+      "mapy": "35.1591243474",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/67/2612467_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "264167",
+      "contenttypeid": "76",
+      "title": "Taejongdae Cliffed Coast [National Geopark] (태종대 (부산 국가지질공원))",
+      "addr1": "24 Jeonmang-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0850810864",
+      "mapy": "35.0582842405",
+      "firstimage": "",
+      "modifiedtime": "20240426142758"
+    },
+    {
+      "contentid": "264198",
+      "contenttypeid": "76",
+      "title": "Songjeong Beach (송정해수욕장)",
+      "addr1": "62 Songjeonghaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1996400523",
+      "mapy": "35.1787117732",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/02/3314902_image2_1.jpg",
+      "modifiedtime": "20241111134349"
+    },
+    {
+      "contentid": "264239",
+      "contenttypeid": "76",
+      "title": "Dongbaekseom Island (동백공원)",
+      "addr1": "U-dong, Haeundae-gu, Busan",
+      "mapx": "129.1521170882",
+      "mapy": "35.1539081129",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/566056_image2_1.jpg",
+      "modifiedtime": "20211217192501"
+    },
+    {
+      "contentid": "264250",
+      "contenttypeid": "76",
+      "title": "Gwangalli Beach (광안리해수욕장)",
+      "addr1": "219 Gwanganhaebyeon-ro, Suyeong-gu, Busan",
+      "mapx": "129.1185477876",
+      "mapy": "35.1538130576",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/3311245_image2_1.jpg",
+      "modifiedtime": "20250414111714"
+    },
+    {
+      "contentid": "264385",
+      "contenttypeid": "76",
+      "title": "Amnam Park (부산 암남공원)",
+      "addr1": "185, Amnamgongwon-ro, Seo-gu, Busan",
+      "mapx": "129.0151037432",
+      "mapy": "35.0616492424",
+      "firstimage": "",
+      "modifiedtime": "20230111141456"
+    },
+    {
+      "contentid": "264404",
+      "contenttypeid": "76",
+      "title": "Haedong Yonggungsa Temple (해동 용궁사(부산))",
+      "addr1": "86 Yonggung-gil, Gijang-gun, Busan",
+      "mapx": "129.2235599308",
+      "mapy": "35.1882833680",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/35/3499335_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "264405",
+      "contenttypeid": "76",
+      "title": "UN Memorial Cemetery (재한유엔기념공원 (UN기념공원))",
+      "addr1": "93 UN pyeonghwa-ro, Nam-gu, Busan",
+      "mapx": "129.0974419994",
+      "mapy": "35.1278850142",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/11/2668611_image2_1.jpg",
+      "modifiedtime": "20240306100328"
+    },
+    {
+      "contentid": "264539",
+      "contenttypeid": "76",
+      "title": "Yongdusan Park (용두산공원)",
+      "addr1": "37-55 Yongdusan-gil, Jung-gu, Busan",
+      "mapx": "129.0326928231",
+      "mapy": "35.1004841098",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/40/3494840_image2_1.jpg",
+      "modifiedtime": "20250806174022"
+    },
+    {
+      "contentid": "264602",
+      "contenttypeid": "76",
+      "title": "Busan Chinatown Special Zone (부산 차이나타운특구(상해문.상해거리))",
+      "addr1": "1, Jungang-daero 179beon-gil, Dong-gu, Busan",
+      "mapx": "129.0385614042",
+      "mapy": "35.1134327682",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/25/1571125_image2_1.jpg",
+      "modifiedtime": "20221024164536"
+    },
+    {
+      "contentid": "2656728",
+      "contenttypeid": "78",
+      "title": "Nurimaru APEC House (누리마루 APEC하우스)",
+      "addr1": "116 Dongbaek-ro, Haeundae-gu, Busan",
+      "mapx": "129.1513116443",
+      "mapy": "35.1523943787",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/20/3334420_image2_1.jpg",
+      "modifiedtime": "20250120180048"
+    },
+    {
+      "contentid": "2657019",
+      "contenttypeid": "76",
+      "title": "Marine City (마린시티)",
+      "addr1": "U-dong, Haeundae-gu, Busan",
+      "mapx": "129.1436566548",
+      "mapy": "35.1560327184",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/3355112_image2_1.jpg",
+      "modifiedtime": "20250721131723"
+    },
+    {
+      "contentid": "2657026",
+      "contenttypeid": "75",
+      "title": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+      "addr1": "129-4 Amnam-dong, Seo-gu, Busan",
+      "mapx": "129.0224999494",
+      "mapy": "35.0753645109",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/65/2687365_image2_1.jpg",
+      "modifiedtime": "20250415135231"
+    },
+    {
+      "contentid": "2657503",
+      "contenttypeid": "76",
+      "title": "Site of Dongnaeeupseong Walled Town (동래읍성지)",
+      "addr1": "48-2 Myeongnyun-dong, Dongnae-gu, Busan",
+      "mapx": "129.0930236281",
+      "mapy": "35.2041041750",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/08/3372808_image2_1.jpg",
+      "modifiedtime": "20240926142613"
+    },
+    {
+      "contentid": "266887",
+      "contenttypeid": "75",
+      "title": "Suyeongman Bay Yachting Center (수영만 요트경기장)",
+      "addr1": "84 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1405651222",
+      "mapy": "35.1609293352",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/90/1157090_image2_1.jpg",
+      "modifiedtime": "20240429093615"
+    },
+    {
+      "contentid": "266910",
+      "contenttypeid": "75",
+      "title": "Paradise Casino Busan (파라다이스 카지노 부산)",
+      "addr1": "296, Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1641325437",
+      "mapy": "35.1599632134",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/42/3491442_image2_1.jpg",
+      "modifiedtime": "20250516171334"
+    },
+    {
+      "contentid": "2695544",
+      "contenttypeid": "82",
+      "title": "Jeongeul Damda (정을담다)",
+      "addr1": "38 Jungang-daero 692beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0613110876",
+      "mapy": "35.1542536173",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/06/2675106_image2_1.jpg",
+      "modifiedtime": "20241014163222"
+    },
+    {
+      "contentid": "2709636",
+      "contenttypeid": "80",
+      "title": "Oia Hotel (오이아호텔)",
+      "addr1": "45 , Dadaedong-ro, Saha-gu, Busan",
+      "mapx": "128.9727742059",
+      "mapy": "35.0573933856",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/2709432_image2_1.jpg",
+      "modifiedtime": "20240807161409"
+    },
+    {
+      "contentid": "2710546",
+      "contenttypeid": "80",
+      "title": "Hotel Forêt Premier Nampo (호텔포레 프리미어 남포)",
+      "addr1": "54-1 , Gudeok-ro, Jung-gu, Busan",
+      "mapx": "129.0297320257",
+      "mapy": "35.0984203973",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/00/2708500_image2_1.jpg",
+      "modifiedtime": "20241222173032"
+    },
+    {
+      "contentid": "2710564",
+      "contenttypeid": "80",
+      "title": "La Valse Hotel Busan (라발스호텔)",
+      "addr1": "82 , Bongnaenaru-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0391563121",
+      "mapy": "35.0945376716",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/51/2709251_image2_1.jpg",
+      "modifiedtime": "20241222172726"
+    },
+    {
+      "contentid": "2710588",
+      "contenttypeid": "80",
+      "title": "Almond Hotel (아몬드호텔)",
+      "addr1": "12-5 , Jungang-daero 196beon-gil, Dong-gu, Busan",
+      "mapx": "129.0406862085",
+      "mapy": "35.1138105430",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/85/2709385_image2_1.jpg",
+      "modifiedtime": "20241222171248"
+    },
+    {
+      "contentid": "2710592",
+      "contenttypeid": "80",
+      "title": "Lavi de Atlan Hotel2 (라비드아틀란호텔2)",
+      "addr1": "37 , Gunam-ro, Haeundae-gu, Busan",
+      "mapx": "129.1615188489",
+      "mapy": "35.1611685856",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/2709453_image2_1.jpg",
+      "modifiedtime": "20241222173716"
+    },
+    {
+      "contentid": "2812440",
+      "contenttypeid": "76",
+      "title": "Haeundae Blueline Park (해운대 블루라인파크)",
+      "addr1": "116 Cheongsapo-ro, Haeundae-gu, Busan",
+      "mapx": "129.1913940274",
+      "mapy": "35.1612607960",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/3546099_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "2813150",
+      "contenttypeid": "76",
+      "title": "Sondo Yonggung Suspension Bridge (송도용궁구름다리)",
+      "addr1": "620-53, Amnam-dong, Seo-gu, Busan",
+      "mapx": "129.0220170229",
+      "mapy": "35.0619576685",
+      "firstimage": "",
+      "modifiedtime": "20220325105354"
+    },
+    {
+      "contentid": "2814084",
+      "contenttypeid": "76",
+      "title": "Gwangalli SUP Zone (광안리 SUP Zone)",
+      "addr1": "Namcheon-dong, Suyeong-gu, Busan",
+      "mapx": "129.1146732910",
+      "mapy": "35.1477386656",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/2708007_image2_1.jpg",
+      "modifiedtime": "20220406134717"
+    },
+    {
+      "contentid": "2814641",
+      "contenttypeid": "80",
+      "title": "Hound Hotel Busan Station (하운드호텔 부산역점)",
+      "addr1": "9 , Jungang-daero 236beon-gil, Dong-gu, Busan",
+      "mapx": "129.0427025928",
+      "mapy": "35.1177518053",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/82/2804082_image2_1.jpg",
+      "modifiedtime": "20250604225828"
+    },
+    {
+      "contentid": "2814665",
+      "contenttypeid": "80",
+      "title": "Baymond Hotel (베이몬드호텔)",
+      "addr1": "27 , Haeundaehaebyeon-ro 209beonga-gil, Haeundae-gu, Busan",
+      "mapx": "129.1567804158",
+      "mapy": "35.1595992286",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/28/2808328_image2_1.png",
+      "modifiedtime": "20241030154154"
+    },
+    {
+      "contentid": "2818163",
+      "contenttypeid": "80",
+      "title": "Felix by STX (펠릭스바이STX)",
+      "addr1": "620 , Haeun-daero, Haeundae-gu, Busan",
+      "mapx": "129.1584801742",
+      "mapy": "35.1630016570",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/69/2816269_image2_1.jpg",
+      "modifiedtime": "20241213121006"
+    },
+    {
+      "contentid": "2818183",
+      "contenttypeid": "80",
+      "title": "Gray Hotel 193 (그레이193호텔)",
+      "addr1": "42 , Gwanganhaebyeon-ro 278beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1245417048",
+      "mapy": "35.1540103687",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/2815961_image2_1.jpg",
+      "modifiedtime": "20241213120616"
+    },
+    {
+      "contentid": "2835497",
+      "contenttypeid": "76",
+      "title": "Huinnyeoul Culture Village (흰여울문화마을)",
+      "addr1": "Yeongseon-dong 4(sa)-ga, Yeongdo-gu, Busan",
+      "mapx": "129.0425202105",
+      "mapy": "35.0834611955",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/3495874_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "2835516",
+      "contenttypeid": "76",
+      "title": "Lotte World Adventure Busan (롯데월드 어드벤처 부산)",
+      "addr1": "42 Dongbusangwangwang-ro, Gijang-gun, Busan",
+      "mapx": "129.2129995240",
+      "mapy": "35.1960684107",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/21/2815721_image2_1.jpg",
+      "modifiedtime": "20251029095346"
+    },
+    {
+      "contentid": "2946741",
+      "contenttypeid": "75",
+      "title": "Yacht Tale (요트탈래)",
+      "addr1": "52 , Dongbaek-ro, Haeundae-gu, Busan",
+      "mapx": "129.1520975710",
+      "mapy": "35.1566216976",
+      "firstimage": "",
+      "modifiedtime": "20230307151619"
+    },
+    {
+      "contentid": "2946894",
+      "contenttypeid": "76",
+      "title": "Cheongsapo Daritdol Observatory (청사포 다릿돌전망대)",
+      "addr1": "167 Cheongsapo-ro, Haeundae-gu, Busan",
+      "mapx": "129.1954075101",
+      "mapy": "35.1633523032",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/2941195_image2_1.bmp",
+      "modifiedtime": "20250702164441"
+    },
+    {
+      "contentid": "2946907",
+      "contenttypeid": "78",
+      "title": "Museum 1 (뮤지엄 원)",
+      "addr1": "20 Centum seo-ro, Haeundae-gu, Busan",
+      "mapx": "129.1290602788",
+      "mapy": "35.1714112817",
+      "firstimage": "",
+      "modifiedtime": "20241126175711"
+    },
+    {
+      "contentid": "2946924",
+      "contenttypeid": "75",
+      "title": "Haeparang Trail Course 1 (해파랑길 1코스)",
+      "addr1": "137, Oryukdo-ro, Nam-gu, Busan",
+      "mapx": "129.1231321559",
+      "mapy": "35.1014773335",
+      "firstimage": "",
+      "modifiedtime": "20230203151948"
+    },
+    {
+      "contentid": "2946941",
+      "contenttypeid": "78",
+      "title": "AREA6 (AREA6)",
+      "addr1": "37-3, Taejong-ro 105beon-gil, Yeongdo-gu, Busan",
+      "mapx": "129.0430615725",
+      "mapy": "35.0929212578",
+      "firstimage": "",
+      "modifiedtime": "20230203162054"
+    },
+    {
+      "contentid": "2947858",
+      "contenttypeid": "76",
+      "title": "Ahopsan Forest (아홉산숲)",
+      "addr1": "37-1 Midong-gil, Gijang-gun, Busan",
+      "mapx": "129.1715589466",
+      "mapy": "35.2871407693",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/91/3309791_image2_1.jpg",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "2947862",
+      "contenttypeid": "76",
+      "title": "Jukseong Church (Filming Set) (죽성성당(드림세트장))",
+      "addr1": "Duho 1-gil, Gijang-eup, Gijang-gun, Busan",
+      "mapx": "129.2478869088",
+      "mapy": "35.2412223365",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/85/2704685_image2_1.jpg",
+      "modifiedtime": "20240429111712"
+    },
+    {
+      "contentid": "2947885",
+      "contenttypeid": "76",
+      "title": "Gijang Haenyeo Village (Yeonhwari Hoetchon Village) (기장해녀촌(연화리횟촌))",
+      "addr1": "184, Yeonhwa 1-gil, Gijang-gun, Busan",
+      "mapx": "129.2281142588",
+      "mapy": "35.2184217439",
+      "firstimage": "",
+      "modifiedtime": "20230206130612"
+    },
+    {
+      "contentid": "2947923",
+      "contenttypeid": "76",
+      "title": "Jangnim Port (장림포구)",
+      "addr1": "72, Jangnim-ro 93beon-gil, Saha-gu, Busan",
+      "mapx": "128.9513754709",
+      "mapy": "35.0793627568",
+      "firstimage": "",
+      "modifiedtime": "20230206163451"
+    },
+    {
+      "contentid": "2947925",
+      "contenttypeid": "76",
+      "title": "Amisan Observatory (아미산 전망대)",
+      "addr1": "77 , Dadaenakjo 2-gil, Saha-gu, Busan",
+      "mapx": "128.9607725966",
+      "mapy": "35.0528020123",
+      "firstimage": "",
+      "modifiedtime": "20230206164719"
+    },
+    {
+      "contentid": "2953407",
+      "contenttypeid": "76",
+      "title": "UN Sculpture Park (UN조각공원)",
+      "addr1": "Daeyeong-dong, Nam-gu, Busan",
+      "mapx": "129.0976280442",
+      "mapy": "35.1297375886",
+      "firstimage": "",
+      "modifiedtime": "20230404093525"
+    },
+    {
+      "contentid": "2990076",
+      "contenttypeid": "76",
+      "title": "Haeundae Green Railway (Mipo-Songjeong) (해운대 그린레일웨이 (미포~송정 구간))",
+      "addr1": "11 Dalmaji-gil 62beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1711874827",
+      "mapy": "35.1600938849",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/2822337_image2_1.png",
+      "modifiedtime": "20241010132555"
+    },
+    {
+      "contentid": "2997658",
+      "contenttypeid": "76",
+      "title": "Taejongdae Spa (태종대온천찜질방)",
+      "addr1": "808 , Taejong-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0787786847",
+      "mapy": "35.0645889744",
+      "firstimage": "",
+      "modifiedtime": "20230814154517"
+    },
+    {
+      "contentid": "3002402",
+      "contenttypeid": "76",
+      "title": "Jeoryeonghaean Coastal Walking Trail (절영해안산책로)",
+      "addr1": "52 Haeansanchaek-gil, Yeongdo-gu, Busan",
+      "mapx": "129.0411870536",
+      "mapy": "35.0812475294",
+      "firstimage": "",
+      "modifiedtime": "20240426094607"
+    },
+    {
+      "contentid": "3002479",
+      "contenttypeid": "76",
+      "title": "Huin-yeoul Coastal Tunnel (영도 흰여울해안터널)",
+      "addr1": "1044-6 Yeongseon-dong 4(sa)-ga, Yeongdo-gu, Busan",
+      "mapx": "129.0453201165",
+      "mapy": "35.0779590845",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/89/2611589_image2_1.jpg",
+      "modifiedtime": "20231123145358"
+    },
+    {
+      "contentid": "3002802",
+      "contenttypeid": "76",
+      "title": "Haneul Observatory (영도 하늘전망대)",
+      "addr1": "321 Jeoryeong-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0548555626",
+      "mapy": "35.0719627089",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/2740605_image2_1.jpg",
+      "modifiedtime": "20240426141504"
+    },
+    {
+      "contentid": "3019795",
+      "contenttypeid": "80",
+      "title": "Blue Story Hotel (블루스토리 호텔)",
+      "addr1": "11 Haeundaehaebyeon-ro 237beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1575108976",
+      "mapy": "35.1599464255",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/3016424_image2_1.jpg",
+      "modifiedtime": "20231018181545"
+    },
+    {
+      "contentid": "3026293",
+      "contenttypeid": "75",
+      "title": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+      "addr1": "734 Dadae-ro, Saha-gu, Busan",
+      "mapx": "128.9616087155",
+      "mapy": "35.0498162506",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/00/2646400_image2_1.jpg",
+      "modifiedtime": "20231113170046"
+    },
+    {
+      "contentid": "3028273",
+      "contenttypeid": "78",
+      "title": "Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀)",
+      "addr1": "55 Centum jungang-ro, Haeundae-gu, Busan",
+      "mapx": "129.1276353562",
+      "mapy": "35.1731360622",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/09/3023709_image2_1.JPG",
+      "modifiedtime": "20231030162806"
+    },
+    {
+      "contentid": "3035570",
+      "contenttypeid": "76",
+      "title": "Jeonpo Gonggu Street (전포공구길)",
+      "addr1": "20 Seojeon-ro 37beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0642801508",
+      "mapy": "35.1587281711",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/78/2994078_image2_1.JPG",
+      "modifiedtime": "20240329095022"
+    },
+    {
+      "contentid": "3045678",
+      "contenttypeid": "76",
+      "title": "Songdo Sky Park (송도스카이파크)",
+      "addr1": "181 Amnamgongwon-ro, Seo-gu, Busan",
+      "mapx": "129.0204310648",
+      "mapy": "35.0613910358",
+      "firstimage": "",
+      "modifiedtime": "20241203161253"
+    },
+    {
+      "contentid": "3045680",
+      "contenttypeid": "75",
+      "title": "Marine Adventure Park (마린어드벤처파크)",
+      "addr1": "727 Taejong-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0904384534",
+      "mapy": "35.0766545066",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/19/3045619_image2_1.jpg",
+      "modifiedtime": "20250106153420"
+    },
+    {
+      "contentid": "3045684",
+      "contenttypeid": "76",
+      "title": "Haeundae River Cruise (해운대리버크루즈)",
+      "addr1": "85 Suyeonggangbyeon-daero, Haeundae-gu, Busan",
+      "mapx": "129.1273244146",
+      "mapy": "35.1679171964",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/3041326_image2_1.JPG",
+      "modifiedtime": "20240329112830"
+    },
+    {
+      "contentid": "3047063",
+      "contenttypeid": "76",
+      "title": "Busan Cine Road (부산 영화의 거리)",
+      "addr1": "91, Marine city 1-ro, Haeundae-gu, Busan",
+      "mapx": "129.1406069008",
+      "mapy": "35.1566992538",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/47/2947047_image2_1.jpg",
+      "modifiedtime": "20251105153349"
+    },
+    {
+      "contentid": "3047349",
+      "contenttypeid": "78",
+      "title": "Yeongdo Haenyeo Culture Exhibition Hall (영도해녀문화전시관)",
+      "addr1": "",
+      "mapx": "129.0660713884",
+      "mapy": "35.0670412443",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/3017257_image2_1.JPG",
+      "modifiedtime": "20241227175214"
+    },
+    {
+      "contentid": "3061988",
+      "contenttypeid": "82",
+      "title": "Sarangbang (사랑방)",
+      "addr1": "816 Taejong-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0808729760",
+      "mapy": "35.0635002464",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/73/3046073_image2_1.jpg",
+      "modifiedtime": "20241227183015"
+    },
+    {
+      "contentid": "3074034",
+      "contenttypeid": "82",
+      "title": "Hyeongje Jeontong Dwaeji Gukbap (형제전통돼지국밥)",
+      "addr1": "",
+      "mapx": "129.1615021929",
+      "mapy": "35.1608602863",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/3048570_image2_1.jpg",
+      "modifiedtime": "20241210120704"
+    },
+    {
+      "contentid": "3078720",
+      "contenttypeid": "75",
+      "title": "Skyline Luge Busan (스카이라인 루지(부산))",
+      "addr1": "205 Gijanghaean-ro, Gijang-gun, Busan",
+      "mapx": "129.2202656051",
+      "mapy": "35.1943742915",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/3092824_image2_1.JPG",
+      "modifiedtime": "20250415142859"
+    },
+    {
+      "contentid": "3078735",
+      "contenttypeid": "75",
+      "title": "Busan Yacht Tour 3355 Marine (부산요트투어 3355마린)",
+      "addr1": "84 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1419844733",
+      "mapy": "35.1598405944",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/2790371_image2_1.jpg",
+      "modifiedtime": "20240105130636"
+    },
+    {
+      "contentid": "3078806",
+      "contenttypeid": "76",
+      "title": "Ocean Spa Cimer (오션스파 씨메르)",
+      "addr1": "296 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1639992023",
+      "mapy": "35.1606825749",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/27/3071927_image2_1.jpg",
+      "modifiedtime": "20240105155016"
+    },
+    {
+      "contentid": "3078807",
+      "contenttypeid": "76",
+      "title": "Busan Healing Forest (부산 치유의 숲)",
+      "addr1": "101 Cheolmacheon-ro, Gijang-gun, Busan",
+      "mapx": "129.1298103057",
+      "mapy": "35.2690086937",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/30/2661730_image2_1.jpg",
+      "modifiedtime": "20240105160127"
+    },
+    {
+      "contentid": "3078939",
+      "contenttypeid": "76",
+      "title": "F1963",
+      "addr1": "20 Gurak-ro 123beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1155140878",
+      "mapy": "35.1767854293",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/3350961_image2_1.jpg",
+      "modifiedtime": "20251117111815"
+    },
+    {
+      "contentid": "3098851",
+      "contenttypeid": "76",
+      "title": "Mangsando Island, Yujuam, Yujubigak (망산도·유주암·유주비각)",
+      "addr1": "188 Songjeong-dong, Gangseo-gu, Busan",
+      "mapx": "128.8209252451",
+      "mapy": "35.0967250919",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/91/3031391_image2_1.JPG",
+      "modifiedtime": "20240226102313"
+    },
+    {
+      "contentid": "3098861",
+      "contenttypeid": "76",
+      "title": "Ttangmoesan Mountain (땅뫼산)",
+      "addr1": "260-1 Oryundae-ro, Geumjeong-gu, Busan",
+      "mapx": "129.1174425369",
+      "mapy": "35.2472747896",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/98/2674998_image2_1.jpg",
+      "modifiedtime": "20240226103914"
+    },
+    {
+      "contentid": "3098884",
+      "contenttypeid": "78",
+      "title": "Gamman Creative Community Space (감만창의문화촌)",
+      "addr1": "84-1 Uam-ro, Nam-gu, Busan",
+      "mapx": "129.0813547668",
+      "mapy": "35.1184857691",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/3008261_image2_1.JPG",
+      "modifiedtime": "20240226112540"
+    },
+    {
+      "contentid": "3098929",
+      "contenttypeid": "76",
+      "title": "Seunghaksan Mountain (승학산)",
+      "addr1": "1-4 Dangni-dong, Saha-gu, Busan",
+      "mapx": "128.9795998493",
+      "mapy": "35.1140927207",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/46/3029246_image2_1.jpg",
+      "modifiedtime": "20240226114826"
+    },
+    {
+      "contentid": "3098933",
+      "contenttypeid": "76",
+      "title": "Gwangalli Beach Theme Street (광안리해변 테마거리)",
+      "addr1": "Millak-dong, Suyeong-gu, Busan",
+      "mapx": "129.1221363273",
+      "mapy": "35.1551657503",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/42/3071042_image2_1.JPG",
+      "modifiedtime": "20250811143711"
+    },
+    {
+      "contentid": "3098936",
+      "contenttypeid": "76",
+      "title": "Yeongdo Cheonghak Reservoir Observatory (영도 청학배수지 전망대)",
+      "addr1": "36 Wachi-ro, Yeongdo-gu, Busan",
+      "mapx": "129.0600713277",
+      "mapy": "35.0883915225",
+      "firstimage": "",
+      "modifiedtime": "20240213181445"
+    },
+    {
+      "contentid": "3098938",
+      "contenttypeid": "78",
+      "title": "Urigeulbang (우리글방)",
+      "addr1": "63 Daecheong-ro, Jung-gu, Busan",
+      "mapx": "129.0269099165",
+      "mapy": "35.1032781347",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/91/3064791_image2_1.JPG",
+      "modifiedtime": "20240213181727"
+    },
+    {
+      "contentid": "3098939",
+      "contenttypeid": "79",
+      "title": "Haeundae Rodeo Street (해운대 로데오거리)",
+      "addr1": "473 Jwadongsunhwan-ro, Haeundae-gu, Busan",
+      "mapx": "129.1696430809",
+      "mapy": "35.1634129289",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/3032195_image2_1.JPG",
+      "modifiedtime": "20250329162313"
+    },
+    {
+      "contentid": "3104517",
+      "contenttypeid": "76",
+      "title": "Hyewonjeongsa Temple (혜원정사)",
+      "addr1": "47 Gobun-ro 68beon-gil, Yeonje-gu, Busan",
+      "mapx": "129.0907132695",
+      "mapy": "35.1840174940",
+      "firstimage": "",
+      "modifiedtime": "20240222181142"
+    },
+    {
+      "contentid": "3115401",
+      "contenttypeid": "76",
+      "title": "Haeridan Street (해리단길)",
+      "addr1": "Udong 1-ro, Haeundae-gu, Busan",
+      "mapx": "129.1576801816",
+      "mapy": "35.1652541679",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/3492437_image2_1.jpg",
+      "modifiedtime": "20250811133723"
+    },
+    {
+      "contentid": "3335549",
+      "contenttypeid": "80",
+      "title": "The Petel Premium Suite (더펫텔프리미엄스위트)",
+      "addr1": "12 Haeundaehaebyeon-ro 197beon-gil, Haeundae-gu, Busan",
+      "mapx": "129.1531418525",
+      "mapy": "35.1592408683",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/2754616_image2_1.jpg",
+      "modifiedtime": "20240722094640"
+    },
+    {
+      "contentid": "3336830",
+      "contenttypeid": "75",
+      "title": "Gwangalli Ocean Leports Center (광안리 해양레포츠센터)",
+      "addr1": "222 Gwanganhaebyeon-ro 54beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1153538300",
+      "mapy": "35.1461832972",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/2991004_image2_1.jpg",
+      "modifiedtime": "20240724104949"
+    },
+    {
+      "contentid": "335473",
+      "contenttypeid": "76",
+      "title": "Amnam-Park (암남공원)",
+      "addr1": "",
+      "mapx": "129.0152705288",
+      "mapy": "35.0567386839",
+      "firstimage": "",
+      "modifiedtime": "20250718090000"
+    },
+    {
+      "contentid": "3364075",
+      "contenttypeid": "76",
+      "title": "Kosin University Gospel Hospital (고신대학교복음병원)",
+      "addr1": "262 Gamcheon-ro, Seo-gu, Busan",
+      "mapx": "129.0160309182",
+      "mapy": "35.0808387796",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3364622",
+      "contenttypeid": "76",
+      "title": "Busan Wooridul Spine Hospital (부산우리들병원)",
+      "addr1": "1523 Jungang-daero, Dongnae-gu, Busan",
+      "mapx": "129.0856043560",
+      "mapy": "35.2213298852",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3364700",
+      "contenttypeid": "76",
+      "title": "Thank You Korean Medicine Clinic (고마워한의원)",
+      "addr1": "(#505, Sewoong Building), 295 Suyeong-ro, Nam-gu, Busan",
+      "mapx": "129.0983472266",
+      "mapy": "35.1370201197",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3364765",
+      "contenttypeid": "76",
+      "title": "Kim Byoung Joon Ledas Varicose Vein Clinic (김병준 레다스 흉부외과의원)",
+      "addr1": "(11th-13th Floors, Youngkwang Bookstore Building), 10 Seomyeonmunhwa-ro, Busanjin-gu, Busan",
+      "mapx": "129.0576418365",
+      "mapy": "35.1588641444",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3364801",
+      "contenttypeid": "76",
+      "title": "Galaxy Plastic Surgery (갤럭시성형외과)",
+      "addr1": "(9th Floor, Noblesse Tower), 1 Seomyeon-ro 68beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0581001826",
+      "mapy": "35.1569143711",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3365275",
+      "contenttypeid": "76",
+      "title": "Kang Dong Hospital (강동병원)",
+      "addr1": "145 Dadae-ro, Saha-gu, Busan",
+      "mapx": "128.9784811731",
+      "mapy": "35.0894065745",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3365841",
+      "contenttypeid": "76",
+      "title": "Busan Adventist Hospital (삼육부산병원)",
+      "addr1": "(Seodaesin-dong 2(i)-ga),170 Daeti-ro, Seo-gu, Busan",
+      "mapx": "129.0115082254",
+      "mapy": "35.1125518126",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366062",
+      "contenttypeid": "76",
+      "title": "Yeon-San Dangdang Korean Medicine Hospital (연산당당한방병원)",
+      "addr1": "82 World cup-daero, Yeonje-gu, Busan",
+      "mapx": "129.0840028018",
+      "mapy": "35.1818398361",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366195",
+      "contenttypeid": "76",
+      "title": "KJ Globaltour.Co.,Ltd (케이제이글로벌투어 주식회사)",
+      "addr1": "(#303, Hando Building), 3-6 Jungang-daero 226beon-gil, Dong-gu, Busan",
+      "mapx": "129.0418526750",
+      "mapy": "35.1174351586",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366399",
+      "contenttypeid": "76",
+      "title": "Nunevit Eye Clinic (누네빛안과의원)",
+      "addr1": "(7th-13th Floors, Nune Medi Tower), 77 Bujeon-ro, Busanjin-gu, Busan",
+      "mapx": "129.0545393801",
+      "mapy": "35.1569642998",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366484",
+      "contenttypeid": "76",
+      "title": "Busan JMJ (부산제이엠제이)",
+      "addr1": "50 Jungang-daero 666beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0619694214",
+      "mapy": "35.1521316444",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366511",
+      "contenttypeid": "76",
+      "title": "DIRAMS Korea Cancer Center Hospital(KCCH) (동남권원자력의학원 원자력병원)",
+      "addr1": "40 Jwadong-gil, Jangan-eup, Gijang-gun, Busan",
+      "mapx": "129.2424018483",
+      "mapy": "35.3207161021",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366551",
+      "contenttypeid": "76",
+      "title": "Funtour Inc. (주식회사 재미난투어)",
+      "addr1": "(#803), 35 Centum dong-ro, Haeundae-gu, Busan",
+      "mapx": "129.1310156347",
+      "mapy": "35.1725000849",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366568",
+      "contenttypeid": "76",
+      "title": "Samsung Rehan Woman's Clinic (삼성리한여성의원)",
+      "addr1": "(#B-203, Ungsin Cine Art), 802 Haeundae-daero, Haeundae-gu, Busan",
+      "mapx": "129.1766811994",
+      "mapy": "35.1691790811",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3366754",
+      "contenttypeid": "76",
+      "title": "BGN Eye Hospital (밝은눈안과병원)",
+      "addr1": "729 Gaya-daero, Busanjin-gu, Busan",
+      "mapx": "129.0514007375",
+      "mapy": "35.1579502424",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3367727",
+      "contenttypeid": "76",
+      "title": "Golden Navis (골든나비스)",
+      "addr1": "(5th Floor), 128 Hwangnyeong-daero 319beon-gil, Nam-gu, Busan",
+      "mapx": "129.0913502747",
+      "mapy": "35.1493491662",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3400947",
+      "contenttypeid": "82",
+      "title": "Gijang Jonggajip Gomjangeo (기장종가집곰장어)",
+      "addr1": "72 Gijanghaean-ro Gijang-eup, Gijang-gun, Busan",
+      "mapx": "129.2113721741",
+      "mapy": "35.1856751003",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/65/2945865_image2_1.jpg",
+      "modifiedtime": "20251030102158"
+    },
+    {
+      "contentid": "3403110",
+      "contenttypeid": "76",
+      "title": "Millac The Market (밀락더마켓)",
+      "addr1": "56 Millaksubyeon-ro 17beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1270664784",
+      "mapy": "35.1542603874",
+      "firstimage": "",
+      "modifiedtime": "20241031142419"
+    },
+    {
+      "contentid": "3433012",
+      "contenttypeid": "82",
+      "title": "Yangsanjip (양산집)",
+      "addr1": "부산광역시 중구 중구로47번길 30",
+      "mapx": "129.0263627669",
+      "mapy": "35.1023476733",
+      "firstimage": "",
+      "modifiedtime": "20241226133329"
+    },
+    {
+      "contentid": "3433027",
+      "contenttypeid": "82",
+      "title": "Subyeon Choego Dwaeji Gukbap Millak Main Store (수변최고돼지국밥 민락본점)",
+      "addr1": "부산광역시 수영구 광안해변로370번길 9-32",
+      "mapx": "129.1343130018",
+      "mapy": "35.1567852389",
+      "firstimage": "",
+      "modifiedtime": "20241226141613"
+    },
+    {
+      "contentid": "3441540",
+      "contenttypeid": "76",
+      "title": "Human Care Service ((주)휴먼케어서비스)",
+      "addr1": "#1012, 10F, 1-dong, 99 Centum dong-ro, Haeundae-gu, Busan",
+      "mapx": "129.1258743142",
+      "mapy": "35.1761940203",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3450814",
+      "contenttypeid": "76",
+      "title": "Korea Medical Institute Busan Branch ((재)한국의학연구소 부산분사무소)",
+      "addr1": "5F, 14 Jobang-ro, Dong-gu, Busan",
+      "mapx": "129.0634807673",
+      "mapy": "35.1387665027",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3450964",
+      "contenttypeid": "76",
+      "title": "Sojunghannun Ophthalmology Clinic (센텀소중한눈안과)",
+      "addr1": "14F, 50 Centum nam-daero, Haeundae-gu, Busan",
+      "mapx": "129.1313296159",
+      "mapy": "35.1681477998",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3451721",
+      "contenttypeid": "76",
+      "title": "Goodwill Dental Hospital (굿윌치과병원)",
+      "addr1": "4F, 686 Jungang-daero, Busanjin-gu, Busan",
+      "mapx": "129.0596167976",
+      "mapy": "35.1539730619",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3466909",
+      "contenttypeid": "76",
+      "title": "Busan BGSS Eye Clinic (부산밝은세상안과)",
+      "addr1": "8F-11F, 74 Seomyeon-ro, Busanjin-gu, Busan",
+      "mapx": "129.0581557245",
+      "mapy": "35.1572448908",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3466939",
+      "contenttypeid": "76",
+      "title": "Busan St Mary's Hospital (부산성모병원)",
+      "addr1": "25-14 Yongho-ro 232beon-gil, Nam-gu, Busan",
+      "mapx": "129.1096608507",
+      "mapy": "35.1107566018",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3468740",
+      "contenttypeid": "76",
+      "title": "Oryukdo Sunrise Park (오륙도해맞이공원)",
+      "addr1": "Yongho-dong, Nam-gu, Busan",
+      "mapx": "129.1230988205",
+      "mapy": "35.1016495355",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/79/2870279_image2_1.JPG",
+      "modifiedtime": "20250120154259"
+    },
+    {
+      "contentid": "3468785",
+      "contenttypeid": "76",
+      "title": "Dongsaengmal Observatory (동생말전망대)",
+      "addr1": "57-167 Igidaegongwon-ro, Nam-gu, Busan",
+      "mapx": "129.1206593013",
+      "mapy": "35.1324293792",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/60/3008060_image2_1.JPG",
+      "modifiedtime": "20250120165823"
+    },
+    {
+      "contentid": "3468797",
+      "contenttypeid": "78",
+      "title": "Haeundae Tourist Information Center (해운대관광안내소)",
+      "addr1": "264 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1603106766",
+      "mapy": "35.1591465672",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/3027870_image2_1.JPG",
+      "modifiedtime": "20250315121835"
+    },
+    {
+      "contentid": "3477557",
+      "contenttypeid": "76",
+      "title": "Design Plastic Surgery Clinic (디자인성형외과의원)",
+      "addr1": "10F, 785, Gaya-daero, Busanjin-gu, Busan",
+      "mapx": "129.0574863151",
+      "mapy": "35.1580947831",
+      "firstimage": "",
+      "modifiedtime": "20251126104039"
+    },
+    {
+      "contentid": "3486334",
+      "contenttypeid": "76",
+      "title": "Uam-dong Urban Forest (우암동 도시숲)",
+      "addr1": "6-6 Donghang-ro 106beonga-gil, Nam-gu, Busan",
+      "mapx": "129.0726358346",
+      "mapy": "35.1274929334",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/3354023_image2_1.jpg",
+      "modifiedtime": "20250410094819"
+    },
+    {
+      "contentid": "3486394",
+      "contenttypeid": "76",
+      "title": "Hocheon Village (호천마을)",
+      "addr1": "491 Eomgwang-ro, Busanjin-gu, Busan",
+      "mapx": "129.0512372374",
+      "mapy": "35.1442517735",
+      "firstimage": "",
+      "modifiedtime": "20250410161301"
+    },
+    {
+      "contentid": "3486532",
+      "contenttypeid": "78",
+      "title": "DOMOHEON (도모헌)",
+      "addr1": "60 Hwangnyeongsan-ro 7beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1077767106",
+      "mapy": "35.1462164864",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/19/3416319_image2_1.jpg",
+      "modifiedtime": "20250411134432"
+    },
+    {
+      "contentid": "349585",
+      "contenttypeid": "80",
+      "title": "The Westin Josun Busan (웨스틴 조선 부산)",
+      "addr1": "67 Dongbaek-ro, Haeundae-gu, Busan",
+      "mapx": "129.1540696378",
+      "mapy": "35.1560329112",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/2821212_image2_1.jpg",
+      "modifiedtime": "20250724105732"
+    },
+    {
+      "contentid": "349631",
+      "contenttypeid": "80",
+      "title": "Hotel Gwangjang (광장호텔)",
+      "addr1": "7, Jungang-daero 214beon-gil, Dong-gu, Busan",
+      "mapx": "129.0413666394",
+      "mapy": "35.1162158418",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/88/1346188_image2_1.jpg",
+      "modifiedtime": "20250107104139"
+    },
+    {
+      "contentid": "3516758",
+      "contenttypeid": "78",
+      "title": "Busan Modern & Contemporary History Museum - Main Building  (부산근현대역사관 본관)",
+      "addr1": "112 Daecheong-ro, Jung-gu, Busan",
+      "mapx": "129.0321900270",
+      "mapy": "35.1027616225",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/3428637_image2_1.jpg",
+      "modifiedtime": "20250804174915"
+    },
+    {
+      "contentid": "3516784",
+      "contenttypeid": "76",
+      "title": "B-Con Ground (비콘그라운드)",
+      "addr1": "49-1 Mangmibeonyeong-ro, Suyeong-gu, Busan",
+      "mapx": "129.1096508423",
+      "mapy": "35.1719386413",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/3498770_image2_1.jpg",
+      "modifiedtime": "20251117112216"
+    },
+    {
+      "contentid": "3517139",
+      "contenttypeid": "76",
+      "title": "Mangmidangil Street  (망미단길)",
+      "addr1": "Suyeong-dong, Suyeong-gu, Busan",
+      "mapx": "129.1182806404",
+      "mapy": "35.1721721081",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/49/3033449_image2_1.JPG",
+      "modifiedtime": "20251117112447"
+    },
+    {
+      "contentid": "3517267",
+      "contenttypeid": "76",
+      "title": "Ppangcheon-dong (빵천동)",
+      "addr1": "Namcheon-dong, Suyeong-gu, Busan",
+      "mapx": "129.1037855189",
+      "mapy": "35.1415391590",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/77/3033377_image2_1.JPG",
+      "modifiedtime": "20250805163858"
+    },
+    {
+      "contentid": "3517739",
+      "contenttypeid": "76",
+      "title": "Haewol Observatory (해월전망대)",
+      "addr1": "Jung-dong, Haeundae-gu, Busan",
+      "mapx": "129.1728512790",
+      "mapy": "35.1581969059",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/28/3353828_image2_1.jpg",
+      "modifiedtime": "20250806134816"
+    },
+    {
+      "contentid": "3521718",
+      "contenttypeid": "76",
+      "title": "Osiria Coastal Walk (오시리아 해안산책로)",
+      "addr1": "Sirang-ri, Gijang-eup, Gijang-gun, Busan",
+      "mapx": "129.2115777716",
+      "mapy": "35.1834836830",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/00/3494300_image2_1.jpg",
+      "modifiedtime": "20250818110009"
+    },
+    {
+      "contentid": "3539436",
+      "contenttypeid": "76",
+      "title": "Slimfit Korean Medicine Clinic (슬림핏한의원)",
+      "addr1": "4th Floor, 784 Gaya-daero, Busanjin-gu, Busan",
+      "mapx": "129.0574280069",
+      "mapy": "35.1573726408",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3539560",
+      "contenttypeid": "76",
+      "title": "First Eye Clinic (퍼스트안과의원)",
+      "addr1": "6th–7th Floors, Eungwa & Medical Building, 5 Gudeok-ro, Jung-gu, Busan",
+      "mapx": "129.0350065894",
+      "mapy": "35.0976066965",
+      "firstimage": "",
+      "modifiedtime": "20250923105051"
+    },
+    {
+      "contentid": "3539851",
+      "contenttypeid": "76",
+      "title": "Olive Skin Clinic (올리브피부과의원)",
+      "addr1": "6th Floor, 3 Mandeok-daero 27beon-gil, Buk-gu, Busan",
+      "mapx": "129.0079752862",
+      "mapy": "35.2110712672",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3539891",
+      "contenttypeid": "76",
+      "title": "The First Skin Clinic (더퍼스트피부과의원 부산본점)",
+      "addr1": "#702–704, 287 Geumgok-daero, Buk-gu, Busan",
+      "mapx": "129.0133325186",
+      "mapy": "35.2342271037",
+      "firstimage": "",
+      "modifiedtime": "20251218160459"
+    },
+    {
+      "contentid": "3539987",
+      "contenttypeid": "76",
+      "title": "Barog Clinic (Deokcheon) (바로그의원 (덕천))",
+      "addr1": "4th Floor, 24 Mandeok-daero, Buk-gu, Busan",
+      "mapx": "129.0077919845",
+      "mapy": "35.2104991059",
+      "firstimage": "",
+      "modifiedtime": "20250923105051"
+    },
+    {
+      "contentid": "3544716",
+      "contenttypeid": "85",
+      "title": "Starry Night in Busan Night Festa",
+      "addr1": "270 Saengtaegongwon-gil, Buk-gu, Busan",
+      "mapx": "129.0078550672",
+      "mapy": "35.2397152762",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/89/3524089_image2_1.png",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3547509",
+      "contenttypeid": "76",
+      "title": "Medid (메디드)",
+      "addr1": "#110, 14th Floor, 133 Jeonpo-daero, Nam-gu, Busan",
+      "mapx": "129.0654997742",
+      "mapy": "35.1483210259",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3547521",
+      "contenttypeid": "76",
+      "title": "MediCaddy Korea (메디캐디코리아)",
+      "addr1": "5th Floor, 34 Sincheon-daero 62beon-gil, Busanjin-gu, Busan",
+      "mapx": "129.0586113750",
+      "mapy": "35.1523204502",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3547900",
+      "contenttypeid": "76",
+      "title": "BASE DERMATOLOGY CLINIC (베이스피부과의원)",
+      "addr1": "#203-#204, Centum Diamond Building, 24 Centum 2-ro, Haeundae-gu, Busan",
+      "mapx": "129.1324795555",
+      "mapy": "35.1667063162",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3547906",
+      "contenttypeid": "76",
+      "title": "Inje University Haeundae Paik Hospital (인제대학교 해운대백병원)",
+      "addr1": "875 Haeun-daero, Haeundae-gu, Busan",
+      "mapx": "129.1821917183",
+      "mapy": "35.1732981663",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3548871",
+      "contenttypeid": "76",
+      "title": "Gowoonsesang Kim Yang-Che & Jang Bong-Seok Skin Clinic (고운세상 김양제장봉석피부과의원)",
+      "addr1": "5th Floor, Gyeongnam Building, 686 Jungang-daero, Busanjin-gu, Busan",
+      "mapx": "129.0596167976",
+      "mapy": "35.1539730619",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3548942",
+      "contenttypeid": "76",
+      "title": "Nell Clinic (넬의원)",
+      "addr1": "1st Floor, Centum Medical Tower, 60 Seomyeon-ro, Busanjin-gu, Busan",
+      "mapx": "129.0580529855",
+      "mapy": "35.1561672317",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "3562082",
+      "contenttypeid": "85",
+      "title": "Busan Jung-gu Pet Festival (부산중구반려동물축제)",
+      "addr1": "37-30 Yongdusan-gil, Jung-gu, Busan",
+      "mapx": "129.0323594995",
+      "mapy": "35.1011951345",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/63/3559563_image2_1.jpg",
+      "modifiedtime": "20251105135300"
+    },
+    {
+      "contentid": "3562124",
+      "contenttypeid": "85",
+      "title": "Busan Street Festa in Gwangbok (부산 스트릿 페스타 인 광복)",
+      "addr1": "72-1 Gwangbok-ro, Jung-gu, Busan",
+      "mapx": "129.0327400915",
+      "mapy": "35.0986398717",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/44/3556944_image2_1.png",
+      "modifiedtime": "20251105160641"
+    },
+    {
+      "contentid": "3562686",
+      "contenttypeid": "85",
+      "title": "October Festa in Gwangalli (옥토버페스타 인 광안리)",
+      "addr1": "29 Millak-ro 6beon-gil, Suyeong-gu, Busan",
+      "mapx": "129.1239638996",
+      "mapy": "35.1568628164",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/52/3555352_image2_1.png",
+      "modifiedtime": "20251106142146"
+    },
+    {
+      "contentid": "3565954",
+      "contenttypeid": "85",
+      "title": "Haeundae Light Festival (해운대 빛축제)",
+      "addr1": "280 Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+      "mapx": "129.1626049105",
+      "mapy": "35.1595354549",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/06/3570106_image2_1.jpg",
+      "modifiedtime": "20251125101923"
+    },
+    {
+      "contentid": "3574754",
+      "contenttypeid": "76",
+      "title": "line-up dental hospital (라인업치과병원)",
+      "addr1": "3rd–4th Floors, 26 Seomyeonmunhwa-ro, Busanjin-gu, Busan",
+      "mapx": "129.0563558132",
+      "mapy": "35.1597306905",
+      "firstimage": "",
+      "modifiedtime": "20251128100702"
+    },
+    {
+      "contentid": "3580187",
+      "contenttypeid": "76",
+      "title": "Dong-A University Hospital (동아대학교병원)",
+      "addr1": "26 Daesingongwon-ro, Seo-gu, Busan",
+      "mapx": "129.0166131276",
+      "mapy": "35.1202399352",
+      "firstimage": "",
+      "modifiedtime": "20251210105919"
+    },
+    {
+      "contentid": "495645",
+      "contenttypeid": "75",
+      "title": "SEVEN LUCK CASINO - Busan Lotte Branch (세븐럭 카지노(부산롯데점))",
+      "addr1": "772, Gaya-daero, Busanjin-gu, Busan",
+      "mapx": "129.0564586602",
+      "mapy": "35.1568643465",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/2996853_image2_1.jpg",
+      "modifiedtime": "20230803135821"
+    },
+    {
+      "contentid": "705873",
+      "contenttypeid": "79",
+      "title": "Gukje Market (국제시장)",
+      "addr1": "Area of Sinchang-ro 4-ga, Jung-gu, Busan",
+      "mapx": "129.0285792599",
+      "mapy": "35.1016422372",
+      "firstimage": "",
+      "modifiedtime": "20251023143000"
+    },
+    {
+      "contentid": "740322",
+      "contenttypeid": "85",
+      "title": "Busan International Film Festival (BIFF) (부산국제영화제)",
+      "addr1": "120 Suyeonggangbyeon-daero, Haeundae-gu, Busan",
+      "mapx": "129.1270576924",
+      "mapy": "35.1707946470",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/03/3376603_image2_1.jpg",
+      "modifiedtime": "20250808134231"
+    },
+    {
+      "contentid": "769156",
+      "contenttypeid": "76",
+      "title": "Shinsegae Centum City (신세계 센텀시티)",
+      "addr1": "35 Centum nam-daero, Haeundae-gu, Busan",
+      "mapx": "129.1297408475",
+      "mapy": "35.1687865886",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/17/3026417_image2_1.JPG",
+      "modifiedtime": "20240523133720"
+    },
+    {
+      "contentid": "823620",
+      "contenttypeid": "76",
+      "title": "Hanwha Resort Haeundae (한화리조트 해운대)",
+      "addr1": "52, Marine city 3-ro, Haeundae-gu, Busan",
+      "mapx": "129.1451010152",
+      "mapy": "35.1544884734",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/1348043_image2_1.jpg",
+      "modifiedtime": "20250316200128"
+    },
+    {
+      "contentid": "992306",
+      "contenttypeid": "76",
+      "title": "Dadaepo Sunset Fountain of Dreams (다대포 꿈의 낙조분수)",
+      "addr1": "14 Morundae 1-gil, Saha-gu, Busan",
+      "mapx": "128.9680332493",
+      "mapy": "35.0464195263",
+      "firstimage": "http://tong.visitkorea.or.kr/cms/resource/08/3506208_image2_1.jpg",
+      "modifiedtime": "20250807105123"
+    }
+  ]
+}
