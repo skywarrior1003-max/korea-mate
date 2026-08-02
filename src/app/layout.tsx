@@ -4,7 +4,6 @@ import Script from "next/script";
 import { Suspense } from "react";
 import "./globals.css";
 import SavedSpotsPanel from "@/components/SavedSpotsPanel";
-import CartDrawer from "@/components/CartDrawer";
 import I18nProvider from "@/components/I18nProvider";
 import NavShell from "@/components/ui/NavShell";
 
@@ -136,9 +135,6 @@ gtag('config','${ga4Id}');
         {children}
         <Suspense fallback={null}>
           <SavedSpotsPanel />
-        </Suspense>
-        <Suspense fallback={null}>
-          <CartDrawer />
         </Suspense>
         <Suspense fallback={null}>
           <NavShell />

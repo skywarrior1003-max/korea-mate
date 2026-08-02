@@ -1,6 +1,11 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import UserSpotForm, {
+  EMPTY_USER_SPOT_FORM,
+  type UserSpotCategory,
+  type UserSpotFormState,
+} from "./UserSpotForm";
 import {
   apiGetUserSpots,
   apiCreateUserSpot,
@@ -36,15 +41,8 @@ function calcDefaultTime(places: { time?: string }[]): string {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const CATEGORIES = [
-  { value: "attraction",     label: "Attraction"     },
-  { value: "nature",         label: "Nature"         },
-  { value: "restaurant",     label: "Restaurant"     },
-  { value: "event",          label: "Event"          },
-  { value: "accommodation",  label: "Accommodation"  },
-] as const;
-
-type CategoryValue = typeof CATEGORIES[number]["value"];
+// 카테고리·폼 상태·폼 JSX 는 UserSpotForm 이 소유한다 — Picks > My Places 와 공용.
+type CategoryValue = UserSpotCategory;
 
 // ── Minimal place reference (structural subset of itinerary/page.tsx Place) ──
 
@@ -66,14 +64,9 @@ interface Props {
 
 // ── FormState ─────────────────────────────────────────────────────────────────
 
-interface FormState {
-  name:     string;
-  category: CategoryValue;
-  address:  string;
-  note:     string;
-}
+type FormState = UserSpotFormState;
 
-const EMPTY_FORM: FormState = { name: "", category: "attraction", address: "", note: "" };
+const EMPTY_FORM: FormState = EMPTY_USER_SPOT_FORM;
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -303,83 +296,15 @@ export default function UserSpotsPanel({
     submitLabel: string,
   ) {
     return (
-      <form onSubmit={(e) => void onSubmit(e)} className="space-y-3 mt-3">
-        {/* Name */}
-        <div>
-          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Name *</label>
-          <input
-            type="text"
-            required
-            value={form.name}
-            onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-            maxLength={300}
-            placeholder="e.g. My favourite café"
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D]"
-          />
-        </div>
-
-        {/* Category */}
-        <div>
-          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Category</label>
-          <select
-            value={form.category}
-            onChange={e => setForm(p => ({ ...p, category: e.target.value as CategoryValue }))}
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D]"
-          >
-            {CATEGORIES.map(c => (
-              <option key={c.value} value={c.value}>{c.label}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Address <span className="font-normal normal-case text-[#565D66]/60">(optional)</span></label>
-          <input
-            type="text"
-            value={form.address}
-            onChange={e => setForm(p => ({ ...p, address: e.target.value }))}
-            maxLength={500}
-            placeholder="Street address or neighbourhood"
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D]"
-          />
-        </div>
-
-        {/* Note */}
-        <div>
-          <label className="text-xs font-black text-[#565D66] uppercase tracking-wider">Note <span className="font-normal normal-case text-[#565D66]/60">(optional)</span></label>
-          <textarea
-            value={form.note}
-            onChange={e => setForm(p => ({ ...p, note: e.target.value }))}
-            maxLength={2000}
-            rows={2}
-            placeholder="Your tip, reservation note, etc."
-            className="mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D] resize-none"
-          />
-        </div>
-
-        {formError && (
-          <p className="text-xs text-red-500 font-medium">{formError}</p>
-        )}
-
-        <div className="flex gap-2 pt-1">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl text-sm font-black text-white transition-opacity disabled:opacity-60 cursor-pointer"
-            style={{ backgroundColor: "#FF4A2D" }}
-          >
-            {submitting ? "Saving…" : submitLabel}
-          </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            className="px-4 py-2.5 rounded-xl text-sm font-bold border border-[#E5E7EA] text-[#565D66] hover:bg-[#F6F7F8] transition-colors cursor-pointer"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+      <UserSpotForm
+        form={form}
+        setForm={setForm}
+        formError={formError}
+        submitting={submitting}
+        submitLabel={submitLabel}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+      />
     );
   }
 

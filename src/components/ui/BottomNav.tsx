@@ -1,6 +1,7 @@
-// GoKoreaMate UI 기반 — 모바일 하단 5-탭 내비 셸 (handoff §1 IA)
-// Home · Explore · My Trip · Saved(count badge) · More
-// S0에서는 어떤 페이지에도 마운트하지 않는다 — S1+에서 layout에 채택.
+// GoKoreaMate UI 기반 — 모바일 하단 5-탭 내비 셸
+// Home · Explore · Picks(count badge) · Trips · More
+// 배지는 Selected(cart) 개수다. Saved 개수가 아니다 — 사용자가 다음에 할 일
+// (일정 만들기)에 직접 연결된 숫자만 배지로 보여준다.
 // 라벨은 i18n shell.* — 4개 언어 확장 대응(고정폭 금지, truncate 금지).
 
 "use client";
@@ -10,18 +11,18 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 export interface BottomNavProps {
-  savedCount?: number; // 실측치만 — 없으면 배지 미표시 (no invented counts)
+  selectedCount?: number; // 실측치만 — 없으면 배지 미표시 (no invented counts)
 }
 
 const TABS = [
   { key: "home",    href: "/",         icon: "🏠" },
   { key: "explore", href: "/explore/busan", icon: "🧭" },
-  { key: "myTrip",  href: "/my-trips", icon: "🧳" },
-  { key: "saved",   href: "/saved",    icon: "🔖" },
+  { key: "picks",   href: "/picks",    icon: "🔖" },
+  { key: "trips",   href: "/my-trips", icon: "🧳" },
   { key: "more",    href: "/about",    icon: "☰" },
 ] as const;
 
-export default function BottomNav({ savedCount }: BottomNavProps) {
+export default function BottomNav({ selectedCount }: BottomNavProps) {
   const t = useTranslations("shell");
   const pathname = usePathname();
 
@@ -45,9 +46,9 @@ export default function BottomNav({ savedCount }: BottomNavProps) {
           >
             <span aria-hidden className="text-lg leading-none">{tab.icon}</span>
             <span className="text-[10.5px] font-medium leading-tight">{t(tab.key)}</span>
-            {tab.key === "saved" && typeof savedCount === "number" && savedCount > 0 && (
+            {tab.key === "picks" && typeof selectedCount === "number" && selectedCount > 0 && (
               <span className="absolute top-1 right-[22%] min-w-4 h-4 px-1 rounded-full bg-action text-white text-[10px] font-bold flex items-center justify-center">
-                {savedCount > 99 ? "99+" : savedCount}
+                {selectedCount > 99 ? "99+" : selectedCount}
               </span>
             )}
           </Link>

@@ -87,8 +87,8 @@
   "shell": {
     "home": "Home",
     "explore": "Explore",
-    "myTrip": "My Trip",
-    "saved": "Saved",
+    "picks": "Picks",
+    "trips": "Trips",
     "more": "More"
   },
   "saved": {
@@ -286,6 +286,35 @@
     "addedLive": "{name} added. {count} places picked.",
     "addedLiveOne": "{name} added. 1 place picked.",
     "addAria": "Add {name} to my trip",
-    "addedAria": "{name} is already in my trip"
+    "addedAria": "{name} is already in my trip",
+    "subtitle": "Curate your journey through Korea.",
+    "tabSelected": "Selected",
+    "tabSaved": "Saved",
+    "tabMine": "My Places",
+    "selectedCount": "{count} selected",
+    "remove": "Remove",
+    "build": "Build My Trip with AI",
+    "findMore": "Find more places",
+    "explore": "Explore places",
+    "selectedEmpty": "Nothing selected yet",
+    "selectedEmptyHint": "Add places from Explore to build your trip.",
+    "savedEmpty": "No saved places yet",
+    "savedEmptyHint": "Tap the bookmark on any place to keep it here.",
+    "mineEmpty": "No places of your own yet",
+    "mineEmptyHint": "Add places you know that aren't on the map yet.",
+    "addToSelected": "Add to Selected",
+    "inSelected": "In Selected",
+    "addPlace": "Add a place",
+    "editPlace": "Edit place",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Confirm delete",
+    "deleting": "Deleting…",
+    "privateLabel": "Private — only you",
+    "nameRequired": "Name is required.",
+    "saveFailed": "Could not save. Please try again.",
+    "loadFailed": "Could not load your places.",
+    "retry": "Retry"
   }
 }

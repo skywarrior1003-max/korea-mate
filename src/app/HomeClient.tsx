@@ -566,7 +566,7 @@ export default function HomeClient() {
   // ── /#planner 로 들어오면 플래너에 키보드 focus 를 준다 ──────────────────
   //
   // 브라우저 기본 앵커 이동은 스크롤만 하고 focus 는 직전에 누른 버튼에
-  // 남겨 둔다(실측: CartDrawer 의 Build 버튼). 키보드·스크린리더 사용자는
+  // 남겨 둔다(실측 당시: 전역 CartDrawer 의 Build 버튼). 키보드·스크린리더 사용자는
   // 화면은 플래너로 갔는데 Tab 은 헤더로 돌아가는 상태가 된다.
   //
   // preventScroll 로 브라우저 앵커 스크롤과 겹치는 두 번째 점프를 막는다.
@@ -2014,8 +2014,6 @@ export default function HomeClient() {
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
 
-      {/* CartDrawer 가림 방지 */}
-      <div className="h-20" />
 
       {/* ── EventDetailModal ─────────────────────────────────── */}
       {selectedEvent && (

@@ -4,3 +4,8 @@
 # - 일반 유저: env.ASSETS.fetch → /shared/ 정적 쉘 passthrough (TASK-026 보존)
 
 /explore-busan /explore/busan 301
+
+# /saved → /picks (Picks 3탭으로 통합). trailingSlash:true 라 목적지를 /picks/ 로
+# 직접 지정한다 — /picks 로 보내면 Cloudflare 가 다시 /picks/ 로 보내 2홉이 된다.
+/saved/  /picks/  308
+/saved   /picks/  308

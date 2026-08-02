@@ -87,8 +87,8 @@
   "shell": {
     "home": "ホーム",
     "explore": "探す",
-    "myTrip": "マイ旅行",
-    "saved": "保存済み",
+    "picks": "ピック",
+    "trips": "旅行",
     "more": "その他"
   },
   "saved": {
@@ -286,6 +286,35 @@
     "addedLive": "{name} を追加しました。全{count}か所。",
     "addedLiveOne": "{name} を追加しました。全1か所。",
     "addAria": "{name} を旅程に追加",
-    "addedAria": "{name} はすでに旅程にあります"
+    "addedAria": "{name} はすでに旅程にあります",
+    "subtitle": "韓国の旅を自分だけのリストに。",
+    "tabSelected": "選択中",
+    "tabSaved": "保存済み",
+    "tabMine": "マイプレイス",
+    "selectedCount": "{count}件選択中",
+    "remove": "削除",
+    "build": "AIで旅程を作成",
+    "findMore": "他の場所を探す",
+    "explore": "場所を探す",
+    "selectedEmpty": "まだ何も選んでいません",
+    "selectedEmptyHint": "探すから場所を追加すると旅程を作成できます。",
+    "savedEmpty": "保存した場所はまだありません",
+    "savedEmptyHint": "場所のブックマークを押すとここに集まります。",
+    "mineEmpty": "自分で登録した場所がありません",
+    "mineEmptyHint": "地図にない自分だけの場所を追加できます。",
+    "addToSelected": "選択に追加",
+    "inSelected": "選択済み",
+    "addPlace": "場所を追加",
+    "editPlace": "場所を編集",
+    "save": "保存",
+    "edit": "編集",
+    "delete": "削除",
+    "confirmDelete": "削除を確定",
+    "deleting": "削除中…",
+    "privateLabel": "非公開 — 自分のみ",
+    "nameRequired": "名前を入力してください。",
+    "saveFailed": "保存できませんでした。もう一度お試しください。",
+    "loadFailed": "マイプレイスを読み込めませんでした。",
+    "retry": "再試行"
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { getItemSourceKey } from "@/lib/place-identity";
@@ -8,6 +9,7 @@ import type { EventItem } from "@/lib/cart";
 import EventDetailModal from "@/components/EventDetailModal";
 
 export default function SavedSpotsPanel() {
+  const pathname = usePathname();
   const [spots, setSpots] = useState<EventItem[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState<EventItem | null>(null);
@@ -29,13 +31,15 @@ export default function SavedSpotsPanel() {
 
   // 저장된 Spot이 없으면 패널 숨김
   if (spots.length === 0) return null;
+  // /picks 에는 Saved 가 이미 탭으로 있다. 같은 목록을 부유 패널로 한 번 더
+  // 띄우면 중복일 뿐 아니라 Selected 탭의 Build CTA 를 덮는다(실측 겹침).
+  if (pathname.startsWith("/picks")) return null;
 
   return (
-    // CartDrawer 와 같은 이유로 BottomNav 위로 올린다. 다만 둘 다 w-72(288px)라
-    // 390px 화면에서 같은 줄에 놓으면 가로로 겹친다 — 한 줄 위(7.75rem = nav 3.5rem
-    // + 간격 0.75rem + CartDrawer 한 줄 3.5rem)에 쌓는다. 데스크톱은 nav 가 없고
-    // 좌우 끝이 멀어 겹치지 않으므로 기존 위치를 유지한다.
-    <div className="fixed left-4 z-[45] select-none bottom-[calc(7.75rem+env(safe-area-inset-bottom))] md:bottom-6">
+    // BottomNav 위로 올린다(4.25rem = nav 3.5rem + 간격 0.75rem).
+    // 전역 CartDrawer 가 사라져 한 줄 위로 쌓을 이유가 없어졌다 — 그대로 두면
+    // 아래가 빈 채로 떠 있는다. 데스크톱은 nav 가 없어 기존 위치를 유지한다.
+    <div className="fixed left-4 z-[45] select-none bottom-[calc(4.25rem+env(safe-area-inset-bottom))] md:bottom-6">
       {!expanded ? (
         // ── 접힌 상태: 작은 pill 버튼 ──────────────────────────────
         <button

@@ -1,5 +1,6 @@
-// GoKoreaMate UI 기반 — 데스크톱 상단 내비 셸 (handoff §1: 모바일 탭의 literal copy 금지)
-// logo · Explore · My Trip · Saved · More — S0에서는 마운트하지 않는다.
+// GoKoreaMate UI 기반 — 데스크톱 상단 내비 셸 (모바일 탭의 literal copy 금지)
+// logo · Explore · Picks(count badge) · Trips · More
+// 배지는 BottomNav 와 같은 Selected(cart) 개수다.
 
 "use client";
 
@@ -8,10 +9,10 @@ import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export interface TopNavProps {
-  savedCount?: number; // 실측치만
+  selectedCount?: number; // 실측치만
 }
 
-export default function TopNav({ savedCount }: TopNavProps) {
+export default function TopNav({ selectedCount }: TopNavProps) {
   const t = useTranslations("shell");
 
   return (
@@ -21,22 +22,22 @@ export default function TopNav({ savedCount }: TopNavProps) {
           <span aria-hidden className="text-2xl">🇰🇷</span>
           go<span className="font-extrabold">korea</span>mate
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-6">
-          <Link href="/explore/busan" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+        <nav aria-label="Primary desktop" className="flex items-center gap-6">
+          <Link href="/explore/busan/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("explore")}
           </Link>
-          <Link href="/my-trips" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
-            {t("myTrip")}
-          </Link>
-          <Link href="/saved" className="gkm-focus relative text-sm font-semibold text-sub hover:text-ink transition-colors">
-            {t("saved")}
-            {typeof savedCount === "number" && savedCount > 0 && (
+          <Link href="/picks/" className="gkm-focus relative text-sm font-semibold text-sub hover:text-ink transition-colors">
+            {t("picks")}
+            {typeof selectedCount === "number" && selectedCount > 0 && (
               <span className="ml-1.5 inline-flex min-w-4 h-4 px-1 rounded-full bg-action text-white text-[10px] font-bold items-center justify-center align-middle">
-                {savedCount > 99 ? "99+" : savedCount}
+                {selectedCount > 99 ? "99+" : selectedCount}
               </span>
             )}
           </Link>
-          <Link href="/about" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+          <Link href="/my-trips/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
+            {t("trips")}
+          </Link>
+          <Link href="/about/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">
             {t("more")}
           </Link>
           <LanguageSwitcher />

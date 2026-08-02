@@ -87,8 +87,8 @@
   "shell": {
     "home": "홈",
     "explore": "둘러보기",
-    "myTrip": "내 여행",
-    "saved": "저장됨",
+    "picks": "픽",
+    "trips": "내 여행",
     "more": "더보기"
   },
   "saved": {
@@ -286,6 +286,35 @@
     "addedLive": "{name} 추가됨. 총 {count}곳.",
     "addedLiveOne": "{name} 추가됨. 총 1곳.",
     "addAria": "{name} 내 일정에 추가",
-    "addedAria": "{name} 이미 일정에 있음"
+    "addedAria": "{name} 이미 일정에 있음",
+    "subtitle": "한국 여행을 나만의 목록으로 만들어 보세요.",
+    "tabSelected": "선택",
+    "tabSaved": "저장됨",
+    "tabMine": "내 장소",
+    "selectedCount": "{count}곳 선택",
+    "remove": "삭제",
+    "build": "AI로 일정 만들기",
+    "findMore": "장소 더 찾기",
+    "explore": "장소 둘러보기",
+    "selectedEmpty": "아직 선택한 곳이 없어요",
+    "selectedEmptyHint": "둘러보기에서 장소를 담으면 일정을 만들 수 있어요.",
+    "savedEmpty": "아직 저장한 곳이 없어요",
+    "savedEmptyHint": "장소의 북마크를 누르면 여기에 모여요.",
+    "mineEmpty": "직접 등록한 장소가 없어요",
+    "mineEmptyHint": "지도에 없는 나만의 장소를 추가해 보세요.",
+    "addToSelected": "선택에 추가",
+    "inSelected": "선택됨",
+    "addPlace": "장소 추가",
+    "editPlace": "장소 수정",
+    "save": "저장",
+    "edit": "수정",
+    "delete": "삭제",
+    "confirmDelete": "삭제 확인",
+    "deleting": "삭제 중…",
+    "privateLabel": "비공개 — 나만 보기",
+    "nameRequired": "이름을 입력해 주세요.",
+    "saveFailed": "저장하지 못했어요. 다시 시도해 주세요.",
+    "loadFailed": "내 장소를 불러오지 못했어요.",
+    "retry": "다시 시도"
   }
 }

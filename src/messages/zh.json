@@ -87,8 +87,8 @@
   "shell": {
     "home": "首页",
     "explore": "探索",
-    "myTrip": "我的行程",
-    "saved": "已保存",
+    "picks": "精选",
+    "trips": "行程",
     "more": "更多"
   },
   "saved": {
@@ -286,6 +286,35 @@
     "addedLive": "已添加 {name}。共 {count} 个地点。",
     "addedLiveOne": "已添加 {name}。共 1 个地点。",
     "addAria": "把 {name} 加入我的行程",
-    "addedAria": "{name} 已在行程中"
+    "addedAria": "{name} 已在行程中",
+    "subtitle": "把韩国之旅整理成自己的清单。",
+    "tabSelected": "已选择",
+    "tabSaved": "已保存",
+    "tabMine": "我的地点",
+    "selectedCount": "已选 {count} 个",
+    "remove": "移除",
+    "build": "用 AI 生成行程",
+    "findMore": "发现更多地点",
+    "explore": "探索地点",
+    "selectedEmpty": "还没有选择任何地点",
+    "selectedEmptyHint": "从探索中添加地点即可生成行程。",
+    "savedEmpty": "还没有保存的地点",
+    "savedEmptyHint": "点击地点上的书签即可收藏到这里。",
+    "mineEmpty": "还没有自己添加的地点",
+    "mineEmptyHint": "添加地图上还没有的专属地点。",
+    "addToSelected": "加入已选择",
+    "inSelected": "已加入",
+    "addPlace": "添加地点",
+    "editPlace": "编辑地点",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "confirmDelete": "确认删除",
+    "deleting": "删除中…",
+    "privateLabel": "私密 — 仅自己可见",
+    "nameRequired": "请输入名称。",
+    "saveFailed": "保存失败，请重试。",
+    "loadFailed": "无法加载我的地点。",
+    "retry": "重试"
   }
 }
