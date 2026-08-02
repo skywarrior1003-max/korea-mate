@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate | My Trips</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-utility {
+            background: rgba(250, 248, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf8ff;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        @media (min-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#eaedff",
+                    "surface-bright": "#faf8ff",
+                    "primary": "#0041c8",
+                    "on-surface-variant": "#434656",
+                    "on-primary-container": "#e3e6ff",
+                    "surface-container-highest": "#dae2fd",
+                    "outline-variant": "#c3c5d9",
+                    "surface": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eef0ff",
+                    "surface-dim": "#d2d9f4",
+                    "secondary-container": "#26fedc",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "surface-variant": "#dae2fd",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "secondary": "#006b5b",
+                    "on-primary-fixed": "#001551",
+                    "on-background": "#131b2e",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#283044",
+                    "surface-tint": "#004dea",
+                    "surface-container-low": "#f2f3ff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed-variant": "#005144",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b6c4ff",
+                    "tertiary-container": "#65686a",
+                    "outline": "#737688",
+                    "secondary-fixed-dim": "#00dfc1",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#e5e8ea",
+                    "primary-container": "#0055ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#26fedc",
+                    "on-primary-fixed-variant": "#0039b3",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dce1ff",
+                    "tertiary": "#4d5052",
+                    "on-surface": "#131b2e",
+                    "on-secondary-container": "#007261",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-secondary-fixed": "#00201a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "container-padding": "20px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-surface">
+<!-- Top AppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm fixed top-0 w-full h-16 z-40 flex justify-between items-center px-5 md:px-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="explore">explore</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">GoKoreaMate</h1>
+</div>
+<button class="active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</header>
+<main class="pt-20 pb-32 px-5 md:px-10 max-w-7xl mx-auto">
+<!-- Header Section -->
+<section class="mb-stack-lg">
+<h2 class="text-display-lg font-display-lg mb-2">My Trips</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Manage your journey and revisit the memories you've made across Korea.</p>
+</section>
+<!-- Current & Upcoming Section -->
+<section class="mb-12">
+<div class="flex justify-between items-end mb-stack-md">
+<h3 class="text-title-md font-title-md">Current &amp; Upcoming</h3>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider">2 ACTIVE TRIPS</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Current Trip Card -->
+<div class="group relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface shadow-[0px_4px_20px_rgba(0,85,255,0.08)] transition-all hover:shadow-lg">
+<div class="h-64 relative">
+<div class="w-full h-full bg-cover bg-center" data-alt="A cinematic, wide-angle shot of Seoul's skyline at dusk, with N Seoul Tower glowing in the background. The lighting is high-contrast with deep blues and bright city lights, reflecting a modern and efficient travel atmosphere. Pristine composition with high-end aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAA36uiB0_MXpgqnGXvRUoz4pRgOX_gPwKKa98xKcfy3RrOBnRgbrI6d4SL6rAQ2w8ZBgFTnUbvs-csXzos3AfOdK9AhJsUtiuvQkibXMFI0n8rbRKfC6Viw286C8OO5ySdJpb493nI6erV7btJ_-uWdHFUf7ZTp2kZfM4TcFETOrDE6l5gzvXcN-f1S9Ii7sDxxbUaBvg3bBGD0jUbJfDMLII4K3xnnUBe91ajju6qGGAGF0CXv8I')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary text-on-primary px-3 py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1">
+<span class="w-2 h-2 bg-secondary-container rounded-full animate-pulse"></span>
+                                BUILD: LIVE
+                            </span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="text-title-md font-title-md">Seoul Tech &amp; Tradition</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">May 15 - May 22, 2024</p>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="map">map</span>
+</div>
+<div class="flex gap-2 mt-4 pt-4 border-t border-outline-variant/20">
+<div class="flex-1 bg-surface-container-low p-3 rounded-lg">
+<p class="text-label-sm font-label-sm text-outline">CURRENT LOCATION</p>
+<p class="text-body-md font-semibold">Bukchon Hanok Village</p>
+</div>
+<div class="flex-1 bg-surface-container-low p-3 rounded-lg">
+<p class="text-label-sm font-label-sm text-outline">ETA TO NEXT</p>
+<p class="text-body-md font-semibold">14:30 · Gyeongbokgung</p>
+</div>
+</div>
+<button class="w-full mt-4 bg-primary text-on-primary py-3 rounded-lg font-semibold hover:bg-on-primary-fixed-variant transition-colors flex justify-center items-center gap-2">
+<span>Open Optimizer</span>
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+</button>
+</div>
+</div>
+<!-- Upcoming Trip Card -->
+<div class="group relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface transition-all hover:border-primary/30">
+<div class="h-64 relative">
+<div class="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A serene and minimalist view of Jeju Island's coastline with emerald waters and black volcanic rocks. The sun is shining brightly, creating a high-key, airy feeling that represents a calm planning state. The scene is crisp and clean with professional travel photography quality." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkXfkJb9eeq8G_i8wgt1SXufHUk1x0EW0iEDPbVETRK4p9Kgc7AuBTbkTuh0a-tNWdq1mE7vZufj0NUuFPaczKhNwTRLs5VHzkfyOxQFpPm5P0Z7YL0Ie3zECC-KIipxDSRYjmia0TkPX6VDTOiVrsE1RIj_9eKH09IsEYSuhvtvlMvF7YayMAml3bklWLKOQSF66x4DRGphB6CDLQCswS_FMvq7fZH0BxuFX63TXu4dqtHgvXSjY')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-label-sm">
+                                PLAN: SYNCED
+                            </span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="text-title-md font-title-md">Jeju Nature Retreat</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">June 10 - June 14, 2024</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="calendar_today">calendar_today</span>
+</div>
+<p class="mt-4 text-body-md text-on-surface-variant">Next Step: Confirm car rental at Jeju International Airport.</p>
+<button class="w-full mt-4 border border-primary text-primary py-3 rounded-lg font-semibold hover:bg-primary/5 transition-colors">
+                            Manage Itinerary
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Memory Archive Section -->
+<section>
+<div class="flex justify-between items-end mb-stack-md">
+<h3 class="text-title-md font-title-md">Memory Archive</h3>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant/30 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 border border-outline-variant/30 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="grid_view">grid_view</span>
+</button>
+</div>
+</div>
+<!-- Cinematic Grid -->
+<div class="bento-grid">
+<!-- Archive Card 1 -->
+<div class="group cursor-pointer relative aspect-[4/5] overflow-hidden rounded-xl bg-inverse-surface">
+<div class="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" data-alt="A beautiful cinematic shot of Busan's Haeundae beach at sunrise, showing the soft pastel colors of the sky reflecting on the calm ocean. The mood is nostalgic and peaceful, representing a precious past memory. High-quality landscape photography with deep focus." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXnCSP_pWSveauLREPAlgckGahKu3YRItK6H0bz8eaWGqGwcncViRx0R2XQPPN9L7Qfy4rxYzd0tcg3inyw6IIQHG5UM_Qdu9e7TVmn3PWZxDwHxR5K4j2HaeX579bbXrEqobdiM46sFrfq8yyePW41ci_515oxpKO1vtxa31EdGmjM8cspUH5xvQW2RmtaW3ao3HnIjVpTsqzFlRuzYo8Nv1y00bp8i7VPbvW543fqVFY6rCD55A')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-label-sm font-label-sm text-secondary-fixed bg-on-secondary-fixed-variant px-2 py-0.5 rounded">
+                                SYNC COMPLETE
+                            </span>
+</div>
+<h5 class="text-on-primary font-title-md text-title-md">Busan Seaside Escape</h5>
+<div class="flex justify-between items-center mt-3">
+<span class="text-on-primary/70 text-body-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="photo_library">photo_library</span>
+                                128 Photos
+                            </span>
+<span class="text-secondary-fixed text-label-sm font-label-sm bg-secondary-fixed/10 px-3 py-1 rounded-full backdrop-blur-md">
+                                12 Memory Stories
+                            </span>
+</div>
+</div>
+</div>
+<!-- Archive Card 2 -->
+<div class="group cursor-pointer relative aspect-[4/5] overflow-hidden rounded-xl bg-inverse-surface">
+<div class="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" data-alt="A detailed close-up of traditional Korean architecture in Gyeongju, showcasing intricate wooden patterns and tiled roofs under a clear blue sky. The lighting highlights the textures and history of the site. A professional architectural photograph with a clean and minimal aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyjZ0onni02Tkwc_HjV-Qv4NbIbuZPssAdWBHTvPYFSMPI3SOamlQt0J32RkubrOv1rhNXe8FGSILXag3w8ukVB922OgvUsBDlxFt9Kjlrma-tO_nfpGxK1NHUinH2Jk3_zuhyo-9YMJSO5784MeSzVDFXAAeaQjbnPR0hZdD2FqIaeBY9DNFGK2dpY1WmIuVO8xaA9fcpPhiAC_mwYk6UJoTSC8Ju4dEfICF8wBw6R1utJWcUwxg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<h5 class="text-on-primary font-title-md text-title-md">Ancient Capital Tour</h5>
+<div class="flex justify-between items-center mt-3">
+<span class="text-on-primary/70 text-body-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="photo_library">photo_library</span>
+                                85 Photos
+                            </span>
+<span class="text-secondary-fixed text-label-sm font-label-sm bg-secondary-fixed/10 px-3 py-1 rounded-full backdrop-blur-md">
+                                4 Memory Stories
+                            </span>
+</div>
+</div>
+</div>
+<!-- Archive Card 3 -->
+<div class="group cursor-pointer relative aspect-[4/5] overflow-hidden rounded-xl bg-inverse-surface">
+<div class="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" data-alt="A snowy landscape of Seoraksan Mountain, with jagged peaks covered in mist and frost. The colors are muted and cool, with shades of white, gray, and deep forest green. This captures a winter travel memory with an elegant and serene mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmIJ6t4tHu7WOU58AxhcGxVE25q230gDOktgMi06Ny99yPifC7ozLIvfZOI8RiPHnf6Sppl1eUS7Jb5qbStpvUwNLZwQm_DnscWupHaP-DAGIiprChkASsjlsrGo5s0_HdJdM9zKttPetJu9BRcnXGsMcs1SH-H6Qvox2BR6ZCsJW4njLFUewF6Woc3emAbaLfMw6NLP1yCf7-1oNTklO7hF1Kb9O5CQAY9fru49aZUkAnKXZuSE4')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<h5 class="text-on-primary font-title-md text-title-md">Winter Peak Trek</h5>
+<div class="flex justify-between items-center mt-3">
+<span class="text-on-primary/70 text-body-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="photo_library">photo_library</span>
+                                210 Photos
+                            </span>
+<span class="text-secondary-fixed text-label-sm font-label-sm bg-secondary-fixed/10 px-3 py-1 rounded-full backdrop-blur-md">
+                                8 Memory Stories
+                            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- See More Button -->
+<div class="mt-stack-lg flex justify-center">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary font-semibold transition-colors">
+<span>View all archives</span>
+<span class="material-symbols-outlined" data-icon="arrow_downward">arrow_downward</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Navigation Drawer (Hidden on mobile) -->
+<aside class="hidden md:flex flex-col h-full w-80 fixed left-0 top-0 bg-surface dark:bg-surface-dim border-r border-outline-variant/30 py-6 z-50 transform -translate-x-full transition-transform duration-300" id="side-drawer">
+<div class="px-6 mb-8 flex justify-between items-center">
+<span class="text-headline-md font-bold text-primary">GoKoreaMate</span>
+<button onclick="toggleDrawer()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="px-6 mb-10 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Annyeong, Enthusiast</p>
+<p class="text-sm text-on-surface-variant">Seoul Explorer</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-4 py-3 px-6 mx-2 text-on-surface-variant hover:bg-surface-container-low rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="location_city">location_city</span>
+<span>Seoul</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 mx-2 text-on-surface-variant hover:bg-surface-container-low rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="waves">waves</span>
+<span>Busan</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 mx-2 text-on-surface-variant hover:bg-surface-container-low rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="landscape">landscape</span>
+<span>Jeju</span>
+</a>
+<a class="flex items-center gap-4 py-3 px-6 mx-2 text-on-surface-variant hover:bg-surface-container-low rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="castle">castle</span>
+<span>Gyeongju</span>
+</a>
+</nav>
+</aside>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-label-sm font-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-label-sm font-label-sm">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="route" data-weight="fill">route</span>
+<span class="text-label-sm font-label-sm">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="person">more_horiz</span>
+<span class="text-label-sm font-label-sm">More</span>
+</a>
+</nav>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('side-drawer');
+            drawer.classList.toggle('-translate-x-full');
+        }
+
+        // Add some micro-interactions
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => el.classList.add('scale-95'));
+            el.addEventListener('mouseup', () => el.classList.remove('scale-95'));
+            el.addEventListener('mouseleave', () => el.classList.remove('scale-95'));
+        });
+    </script>
+</body></html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate | Memory Share</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter for UI, Playfair Display for Magazine, Caveat for Handwriting -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Caveat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .font-handwriting { font-family: 'Caveat', cursive; }
+        .font-magazine { font-family: 'Playfair Display', serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .canvas-container {
+            aspect-ratio: 9 / 16;
+            max-height: 80vh;
+        }
+
+        /* Animation for layout switching */
+        .layout-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        @media (max-width: 768px) {
+            .canvas-container {
+                max-height: 70vh;
+            }
+        }
+    </style>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f3f3f6",
+                    "on-tertiary-container": "#ffc6b2",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#6ef3f3",
+                    "outline-variant": "#c3c6d6",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2f3133",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "primary": "#003d9b",
+                    "on-secondary-container": "#006e6e",
+                    "primary-container": "#0052cc",
+                    "on-secondary-fixed": "#002020",
+                    "surface-container-high": "#e8e8ea",
+                    "surface-tint": "#0c56d0",
+                    "surface": "#f9f9fc",
+                    "surface-bright": "#f9f9fc",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "on-secondary-fixed-variant": "#004f4f",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "secondary-fixed-dim": "#50dad9",
+                    "on-primary-fixed": "#001848",
+                    "surface-container-highest": "#e2e2e5",
+                    "secondary": "#006a6a",
+                    "primary-fixed": "#dae2ff",
+                    "on-background": "#1a1c1e",
+                    "inverse-primary": "#b2c5ff",
+                    "secondary-fixed": "#72f6f6",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f9f9fc",
+                    "on-primary-container": "#c4d2ff",
+                    "surface-dim": "#dadadc",
+                    "surface-variant": "#e2e2e5",
+                    "on-tertiary-fixed": "#380d00",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeef0",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f0f0f3",
+                    "tertiary-fixed": "#ffdbcf",
+                    "tertiary": "#7b2600",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#1a1c1e",
+                    "tertiary-container": "#a33500",
+                    "outline": "#737685",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#434654"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "margin-desktop": "40px",
+                    "base": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation (Shell Implementation) -->
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop w-full h-16 z-40 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md sticky top-0 shadow-sm">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-high p-2 rounded-full transition-all" onclick="window.history.back()">arrow_back</button>
+<span class="text-headline-md font-headline-md font-bold text-primary">Share Memory</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+                Export
+            </button>
+</div>
+</nav>
+<main class="flex-grow flex flex-col md:flex-row items-center justify-center p-6 gap-8 bg-surface-container-low">
+<!-- Canvas Area -->
+<div class="canvas-container layout-transition relative w-full max-w-[400px] overflow-hidden rounded-2xl shadow-2xl bg-white border border-outline-variant/20" id="memoryCanvas">
+<!-- Dynamic Layout Content -->
+<div class="h-full w-full relative flex flex-col" id="canvasContent">
+<!-- Main Image -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-angle shot of Busan's Gamcheon Culture Village at sunset. The vibrant, pastel-colored houses are nestled into the lush green hillside, overlooking a sparkling harbor. The sky is a gradient of deep orange and soft violet. The image has a professional photography aesthetic with rich contrast and sharp details, perfectly capturing the coastal charm of South Korea's second city." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxAc56fZvcMqmJRQACXjZrSuNQ1lIv-_3P7eVfyWHSpFHvhSAOyRnNa6mJmvp9P7ApuEYscAcOZokYkvftHttsrhe1GvINUScszjC_Ry7StjOEsga0bEZXPGsHV81KZgOOIvCMjECJu0Vzke5881_QrxH-HnSnkrULf6sk0yjyrjLw3gwkJrbpT5nhOkoLBzO0LXqvUZro1lYa80gU8Xw9zW3yETNq0rt6NU7-YAm0upjQ1Cp8Bdo"/>
+</div>
+<!-- Overlay Layer -->
+<div class="relative z-10 h-full flex flex-col p-6 text-white bg-gradient-to-t from-black/60 via-transparent to-black/30">
+<!-- Header -->
+<div class="flex justify-between items-start">
+<div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-4 py-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="text-label-sm font-label-sm">Busan, South Korea</span>
+</div>
+<div class="font-magazine text-4xl italic opacity-90">2024</div>
+</div>
+<!-- Centered Typography (Magazine Style) -->
+<div class="mt-auto mb-12">
+<h1 class="font-magazine text-5xl md:text-6xl leading-tight mb-2 tracking-tight">3 Days in <br/>Busan</h1>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm">#OceanBreeze</span>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm">#SoulTrip</span>
+</div>
+</div>
+<!-- Personal Notes (Handwriting Style) -->
+<div class="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20">
+<p class="font-handwriting text-2xl text-white leading-snug">
+                            "Watching the sunset at Haeundae beach was the highlight of the year. The way the waves hit the shore while the city lights started to glow... Unforgettable."
+                        </p>
+</div>
+<!-- Footer Details -->
+<div class="mt-6 flex justify-between items-end border-t border-white/20 pt-4">
+<div>
+<div class="text-label-sm uppercase tracking-widest opacity-70">Memory Created</div>
+<div class="text-label-md font-bold">OCTOBER 14, 2024</div>
+</div>
+<div class="h-10 w-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-white">favorite</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side Panel (Preview/Stats) - Hidden on Mobile -->
+<div class="hidden lg:flex flex-col gap-6 w-80">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-outline-variant/30">
+<h3 class="text-headline-md font-headline-md mb-4">Trip Summary</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">photo_library</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Selected Photos</p>
+<p class="font-bold">12 Memories</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">map</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Top Spot</p>
+<p class="font-bold">Gamcheon Village</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Trip Mood</p>
+<p class="font-bold">Adventurous &amp; Serene</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Export Buttons -->
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 rounded-xl border border-outline-variant bg-white text-on-surface font-label-md hover:bg-surface-container-low flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">download</span>
+                    Download Image
+                </button>
+<button class="w-full py-4 rounded-xl bg-[#1DA1F2] text-white font-label-md flex items-center justify-center gap-2 transition-all hover:opacity-90">
+<span class="material-symbols-outlined">share</span>
+                    Post to Socials
+                </button>
+</div>
+</div>
+</main>
+<!-- Customization Drawer -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-md border-t border-outline-variant/20 py-6 px-margin-mobile md:px-margin-desktop shadow-2xl">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<!-- Layout Options -->
+<div>
+<h4 class="text-label-md font-label-md mb-3 text-on-surface-variant">Select Style</h4>
+<div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+<!-- Postcard -->
+<button class="layout-btn group flex flex-col items-center gap-2 min-w-[80px]" onclick="setLayout('postcard')">
+<div class="w-16 h-20 rounded-lg border-2 border-primary bg-primary/5 flex items-center justify-center group-hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-primary">article</span>
+</div>
+<span class="text-label-sm font-bold text-primary">Postcard</span>
+</button>
+<!-- Polaroid -->
+<button class="layout-btn group flex flex-col items-center gap-2 min-w-[80px]" onclick="setLayout('polaroid')">
+<div class="w-16 h-20 rounded-lg border-2 border-outline-variant bg-surface-container flex items-center justify-center group-hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">photo</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Polaroid</span>
+</button>
+<!-- Modern Grid -->
+<button class="layout-btn group flex flex-col items-center gap-2 min-w-[80px]" onclick="setLayout('grid')">
+<div class="w-16 h-20 rounded-lg border-2 border-outline-variant bg-surface-container flex items-center justify-center group-hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">grid_view</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Modern</span>
+</button>
+</div>
+</div>
+<!-- Control Buttons -->
+<div class="flex items-center gap-4 flex-wrap">
+<div class="flex flex-col gap-1">
+<span class="text-label-sm text-on-surface-variant">Canvas Aspect Ratio</span>
+<div class="flex p-1 bg-surface-container-high rounded-lg gap-1">
+<button class="px-4 py-1.5 rounded-md bg-white shadow-sm text-label-sm font-bold">9:16</button>
+<button class="px-4 py-1.5 rounded-md text-label-sm text-on-surface-variant hover:bg-white/50">4:5</button>
+<button class="px-4 py-1.5 rounded-md text-label-sm text-on-surface-variant hover:bg-white/50">1:1</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-label-sm text-on-surface-variant">Filter Theme</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-amber-200 border-2 border-white shadow-sm ring-2 ring-primary"></button>
+<button class="w-8 h-8 rounded-full bg-blue-200 border-2 border-white shadow-sm"></button>
+<button class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white shadow-sm"></button>
+<button class="w-8 h-8 rounded-full bg-rose-200 border-2 border-white shadow-sm"></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        function setLayout(style) {
+            const canvas = document.getElementById('memoryCanvas');
+            const content = document.getElementById('canvasContent');
+            
+            // Remove active classes from all buttons
+            document.querySelectorAll('.layout-btn').forEach(btn => {
+                const box = btn.querySelector('div');
+                const text = btn.querySelector('span:not(.material-symbols-outlined)');
+                box.classList.remove('border-primary', 'bg-primary/5');
+                box.classList.add('border-outline-variant', 'bg-surface-container');
+                text.classList.remove('text-primary', 'font-bold');
+                text.classList.add('text-on-surface-variant', 'font-label-sm');
+            });
+
+            // Set active state for selected button
+            const activeBtn = event.currentTarget;
+            const activeBox = activeBtn.querySelector('div');
+            const activeText = activeBtn.querySelector('span:not(.material-symbols-outlined)');
+            activeBox.classList.add('border-primary', 'bg-primary/5');
+            activeBox.classList.remove('border-outline-variant', 'bg-surface-container');
+            activeText.classList.add('text-primary', 'font-bold');
+            activeText.classList.remove('text-on-surface-variant', 'font-label-sm');
+
+            // Apply layout changes
+            if (style === 'polaroid') {
+                canvas.className = "canvas-container layout-transition relative w-full max-w-[400px] overflow-hidden rounded-none shadow-2xl bg-white border-[16px] border-white pb-20";
+                content.classList.add('opacity-0');
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="relative h-full w-full">
+                            <img src="placeholder" data-alt="A close-up, warm-toned photograph of a bowl of spicy Korean cold noodles (Milmyeon) on a wooden table in Busan. The sunlight streams in from a window, highlighting the textures of the cucumber garnish and the glistening sauce. The background is softly blurred, suggesting a cozy, local restaurant atmosphere. Professional food photography style with rich colors and a nostalgic vibe." class="w-full h-full object-cover shadow-inner">
+                            <div class="absolute -bottom-16 left-0 w-full text-center">
+                                <p class="font-handwriting text-4xl text-on-surface/80">Busan Flavors • 2024</p>
+                            </div>
+                        </div>
+                    `;
+                    content.classList.remove('opacity-0');
+                    content.classList.add('opacity-100');
+                }, 300);
+            } else if (style === 'grid') {
+                canvas.className = "canvas-container layout-transition relative w-full max-w-[400px] overflow-hidden rounded-2xl shadow-2xl bg-surface-container-highest p-1";
+                content.classList.add('opacity-0');
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="grid grid-cols-2 grid-rows-3 gap-1 h-full w-full">
+                            <div class="col-span-2 row-span-2 bg-gray-200 overflow-hidden">
+                                <img src="placeholder" data-alt="A wide, sweeping shot of Haeundae Beach at night. The curved shoreline is illuminated by neon city lights from skyscrapers, reflecting in the dark blue ocean water. A few tiny silhouettes of people walk along the sandy beach. The mood is modern, vibrant, and energetic, showcasing the urban beauty of Busan at night." class="w-full h-full object-cover">
+                            </div>
+                            <div class="bg-gray-300 overflow-hidden relative">
+                                <img src="placeholder" data-alt="A detail shot of intricate traditional Buddhist temple carvings at Haedong Yonggungsa Temple in Busan. The wood is painted in bright, traditional dancheong colors of emerald green, vermilion, and gold. The craftsmanship is sharp and detailed, emphasizing cultural heritage. Soft, natural morning light." class="w-full h-full object-cover">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+                                    <span class="material-symbols-outlined text-white text-4xl">favorite</span>
+                                </div>
+                            </div>
+                            <div class="bg-primary flex items-center justify-center p-4">
+                                <p class="text-white font-headline-md text-center leading-tight">BUSAN<br><span class="text-label-sm font-light tracking-[4px]">ESSENTIALS</span></p>
+                            </div>
+                        </div>
+                    `;
+                    content.classList.remove('opacity-0');
+                    content.classList.add('opacity-100');
+                }, 300);
+            } else {
+                location.reload(); // Quick reset for Postcard
+            }
+        }
+    </script>
+</body></html>

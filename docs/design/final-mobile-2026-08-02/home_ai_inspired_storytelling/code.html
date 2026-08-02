@@ -1,0 +1,406 @@
+<!DOCTYPE html><html class="light" lang="ko"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GoKoreaMate - AI Crafted Memories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#00dfc1",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary-fixed-variant": "#0039b3",
+                        "on-primary": "#ffffff",
+                        "outline": "#737688",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#006b5b",
+                        "inverse-primary": "#b6c4ff",
+                        "secondary-container": "#26fedc",
+                        "primary": "#0041c8",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-container": "#65686a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#00201a",
+                        "inverse-surface": "#283044",
+                        "on-primary-container": "#e3e6ff",
+                        "on-tertiary-container": "#e5e8ea",
+                        "outline-variant": "#c3c5d9",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary-fixed": "#dce1ff",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#dae2fd",
+                        "surface-container-high": "#e2e7ff",
+                        "on-primary-fixed": "#001551",
+                        "on-secondary-container": "#007261",
+                        "primary-container": "#0055ff",
+                        "tertiary": "#4d5052",
+                        "on-background": "#131b2e",
+                        "surface-tint": "#004dea",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#005144",
+                        "surface-container": "#eaedff",
+                        "secondary-fixed": "#26fedc",
+                        "background": "#faf8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "container-padding": "24px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "stack-lg": "40px"
+                    },
+                    "fontFamily": {
+                        "serif": ["Playfair Display", "serif"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-btn {
+            background: linear-gradient(90deg, #0041c8 0%, #3b82f6 50%, #0041c8 100%);
+            background-size: 200% 100%;
+            transition: all 0.3s ease;
+        }
+        .shimmer-btn:hover {
+            animation: shimmer 2s infinite linear;
+        }
+
+        .magazine-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .editorial-shadow {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-border {
+            position: relative;
+        }
+        .ai-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #0041c8, #26fedc, #0041c8);
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0.3;
+            filter: blur(4px);
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        
+        body {
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation -->
+<header class="flex justify-between items-center px-container-padding w-full fixed top-0 z-50 bg-white/80 backdrop-blur-md py-4">
+<div class="flex items-center gap-2 ml-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="auto_awesome">auto_awesome</span>
+<h1 class="font-display-lg text-xl font-extrabold tracking-tighter text-on-surface">GKM</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="search">search</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2ZKZFAljoAc_yYqTQrOAZHRH-tP0smAkCKrBrCVTcMzazXnMJl5cMlxeCyCLQwMKJN3nhG-MA_ssDlwfT-BhpS5pMGaSSbVqvFBRTThTNw43fL4LaPGez1dJ_OlGEBrN78njp73cUtXCzLeRf2-tkiCRliY737vh3T-Ag7ekFqn9yJoHMi0Gd4Ud4uucxr-pjTW9G8OjwsyTa1wnhD0GqC0JZIT8slR-NSUWXMTRrIyLWaYdaHVQ">
+</div>
+</div>
+</header>
+<main class="pb-32">
+<!-- 1. Cinematic Magazine Hero with AI Messaging -->
+<section class="relative w-full h-[90vh] overflow-hidden pt-24">
+<img alt="Busan Golden Hour Magazine Cover" class="absolute inset-0 w-full h-full object-cover object-center scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXT49uMuKapxATPRb4U4FFNjXGc0_7QQdB6OjPWTgXSJhtuADOV3gAifO0EGrGlG0f_mv5txw_gBYlVSROM2lWjl1TwL9qvGOr6TwwxyAgDPNInAzm32HD3MBah2C3SGD5SphOmMA5mFAeVgt3u35fSYwVsiadKrWEf8nIfnCzbrSKKZ150vkZ-duMjs7a5B4vyKHDYvj6EVfsl4tBT3hivZeDfaeIQ3DMKLuCg_0w_6caNoAwuaM">
+<div class="absolute inset-0 magazine-gradient flex flex-col justify-end px-container-padding pt-24 pb-32">
+<div class="animate-float">
+<div class="flex items-center gap-2 mb-4">
+<span class="font-label-sm text-[10px] tracking-widest text-white border border-primary/60 px-2 py-0.5 rounded-sm uppercase bg-primary/20 backdrop-blur-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" data-icon="auto_awesome">auto_awesome</span>
+                            AI Precision
+                        </span>
+<span class="font-label-sm text-[10px] tracking-widest text-white/80 px-2 py-0.5 uppercase">Designed for You</span>
+</div>
+<h2 class="font-serif text-5xl md:text-7xl text-white mb-4 italic tracking-tighter leading-tight">부산: 황금빛 시간</h2>
+<div class="space-y-1 mb-8">
+<p class="text-white/90 font-title-md text-lg leading-tight">Your Feelings, AI's Precision.</p>
+<p class="text-white/70 max-w-[300px] font-body-md text-sm leading-relaxed">
+                            "사용자의 취향을 읽고, AI가 최적의 여정을 설계합니다.<br>
+                            낭만은 당신이, 동선은 AI가."
+                        </p>
+</div>
+<button class="shimmer-btn text-white px-8 py-3.5 rounded-full font-title-md text-sm flex items-center gap-2 w-fit active:scale-95 shadow-lg shadow-primary/20">
+                        여정 시작하기
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. Elegant Storytelling Timeline with AI Insights -->
+<section class="px-container-padding py-stack-lg bg-white">
+<div class="max-w-screen-md mx-auto">
+<div class="flex flex-col items-center text-center mb-16">
+<span class="font-label-sm text-primary tracking-[0.2em] uppercase text-[11px] mb-2">Memory Timeline</span>
+<h3 class="font-serif text-3xl text-on-surface">기억의 조각들</h3>
+<div class="w-12 h-[1px] bg-outline-variant mt-6"></div>
+</div>
+<div class="space-y-24">
+<!-- Story Item 1 -->
+<article class="flex flex-col gap-6 group transition-all duration-1000 ease-out opacity-100 translate-y-0">
+<div class="relative editorial-shadow rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container ai-border">
+<img alt="Jagalchi Market Food" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkQRk-5EH2G-DGHX_P-U4bcoz8U9rUnKrORqUXsMnlNsw8vaQ4dBzEodo93zPRhgi06d3ZB2XZXtdtQm2maR5mlWt41wsXo_fAm4CRIfCJ-M3QlPVtLTDryimBEHbLbuJP7028byKFu31RI1VdznkP7BsEPetCWEO6sZie_QBW_nFvw1nXDb00hezSaoYW60BstyAv2fgbb2LTIxm8SDYOTnqU62HM9mEzKXeKgTw8sQqXW8Je0yA">
+<div class="absolute top-4 left-4">
+<span class="bg-white/90 backdrop-blur-md text-primary font-label-sm text-[10px] px-3 py-1 rounded-full flex items-center gap-1 shadow-sm border border-primary/10">
+<span class="material-symbols-outlined text-[12px] fill-1" data-icon="auto_awesome">auto_awesome</span>
+                                    AI Choice
+                                </span>
+</div>
+</div>
+<div class="px-2">
+<div class="flex items-center gap-3 mb-3">
+<span class="text-xs font-label-sm text-outline tracking-wider">10월 13일</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-xs font-label-sm text-outline tracking-wider uppercase">자갈치 시장</span>
+</div>
+<h4 class="font-serif text-2xl mb-3 text-on-surface">바다의 향기가 머무는 아침</h4>
+<p class="text-on-surface-variant font-body-md leading-relaxed italic text-lg mb-4">"우리가 먹어본 가장 신선한 해산물 아침 식사였습니다."</p>
+<!-- AI Insight Box -->
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary/40 space-y-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="insights">insights</span>
+<span class="font-label-sm text-[11px] text-primary uppercase font-bold tracking-wider">AI Insight</span>
+</div>
+<p class="text-[13px] text-on-surface-variant leading-relaxed">
+                                    오전의 혼잡을 피한 고요한 산책을 추천합니다. 동선 최적화를 통해 인근 송도 해상 케이블카와의 거리를 최소화했습니다.
+                                </p>
+</div>
+</div>
+</article>
+<!-- Story Item 2 -->
+<article class="flex flex-col gap-6 group transition-all duration-1000 ease-out opacity-100 translate-y-0">
+<div class="relative editorial-shadow rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container">
+<img alt="Gamcheon Culture Village" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnul4lodzo0Jk58ihFIEPUUTYJ7Hea49WvvGXFbH5SYgWy-sBDPoW9dJQLs7f6FBYgDypb34n4zZ6f04bCGAwXVdshNeNvHwxeZUuXUInpTg_Rd63CQGU5ddDIc6Mgra2UgFEGBRa2SSLvA_Ut8wUBq6Ms1CpTwnocPIRtvd47lWleeXvBtmGGY6LsgLAhs8AE-dpGvFRmsXi9bGe-dXANwcv5dldbVngpzh9Jdre6uD5LrUzS2-Q">
+<div class="absolute top-4 left-4">
+<span class="bg-white/90 backdrop-blur-md text-primary font-label-sm text-[10px] px-3 py-1 rounded-full flex items-center gap-1 shadow-sm border border-primary/10">
+<span class="material-symbols-outlined text-[12px] fill-1" data-icon="auto_awesome">auto_awesome</span>
+                                    AI Choice
+                                </span>
+</div>
+</div>
+<div class="px-2">
+<div class="flex items-center gap-3 mb-3">
+<span class="text-xs font-label-sm text-outline tracking-wider">10월 14일</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-xs font-label-sm text-outline tracking-wider uppercase">감천문화마을</span>
+</div>
+<h4 class="font-serif text-2xl mb-3 text-on-surface">색채의 미로 속에서 길을 잃다</h4>
+<p class="text-on-surface-variant font-body-md leading-relaxed italic text-lg mb-4">"다채로운 색감에 마음을 뺏겼습니다."</p>
+<!-- AI Insight Box -->
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-secondary/40 space-y-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="route">route</span>
+<span class="font-label-sm text-[11px] text-secondary uppercase font-bold tracking-wider">AI Optimized</span>
+</div>
+<p class="text-[13px] text-on-surface-variant leading-relaxed">
+                                    당신의 선호도를 반영한 맞춤형 일정입니다. 이동 거리를 최소화하여 에너지를 보존하고 경치에 집중할 수 있도록 동선을 설계했습니다.
+                                </p>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-20 text-center">
+<button class="text-primary font-label-sm text-xs tracking-widest uppercase hover:underline underline-offset-4 flex items-center gap-2 mx-auto">
+                        더 많은 AI 추천 보기
+                        <span class="material-symbols-outlined text-sm" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. AI Powered Editorial CTA -->
+<section class="px-container-padding py-stack-lg bg-surface-container-low">
+<div class="bg-white p-8 rounded-3xl editorial-shadow relative overflow-hidden text-center ai-border">
+<!-- Subtle Decorative Sparkles -->
+<div class="absolute top-4 right-4 animate-pulse">
+<span class="material-symbols-outlined text-primary/30 text-xl" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="absolute bottom-10 left-6 opacity-20">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="sparkles">sparkles</span>
+</div>
+<div class="relative z-10">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-serif text-3xl mb-4">AI 설계사가 만드는 맞춤형 매거진</h3>
+<p class="text-on-surface-variant font-body-md mb-8 max-w-xs mx-auto">당신의 취향을 데이터로 분석하여 세상에 단 하나뿐인 여정의 기록을 완성합니다.</p>
+<div class="flex flex-col gap-3">
+<button class="shimmer-btn text-white w-full py-4 rounded-xl font-title-md text-sm active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                            지금 시작하기
+                        </button>
+<button class="border border-outline-variant text-on-surface w-full py-4 rounded-xl font-title-md text-sm hover:bg-surface-container-low transition-colors">
+                            무료 프리뷰
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Footer Section -->
+<section class="px-container-padding py-24 text-center">
+<div class="mb-12">
+<span class="material-symbols-outlined text-primary mb-4 block" data-icon="travel_explore">travel_explore</span>
+<h3 class="font-serif text-4xl mb-4">다음 목적지는 어디인가요?</h3>
+<p class="text-on-surface-variant mb-10 max-w-xs mx-auto text-sm leading-relaxed">나보다 나를 더 잘 아는 AI 설계자가 기다리고 있습니다. 새로운 한국 여행을 계획해 볼까요?</p>
+<button class="bg-on-surface text-surface px-10 py-4 rounded-full font-title-md text-sm hover:bg-on-surface/90 transition-colors shadow-lg active:scale-95 flex items-center gap-2 mx-auto">
+                    AI와 새 여행 계획하기
+                    <span class="material-symbols-outlined text-sm" data-icon="magic_button">magic_button</span>
+</button>
+</div>
+<a class="text-outline font-label-sm text-[10px] tracking-[0.2em] uppercase hover:text-primary transition-colors" href="#">
+                Explore AI Recommended Spots
+            </a>
+</section>
+</main>
+<!-- 4. Minimalist Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-end px-container-padding pb-8 pt-4 bg-white/90 backdrop-blur-xl border-t border-outline-variant/10">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-primary transition-all active:scale-90" href="#">
+<div class="relative mb-1">
+<img alt="Home" class="w-7 h-7 object-contain grayscale-[0.8] brightness-50 opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="clip-path: inset(0 50% 50% 0);">
+<div class="absolute inset-0 bg-primary/10 rounded-full scale-150 -z-10 blur-sm"></div>
+</div>
+<span class="font-label-sm text-[10px] font-bold tracking-tighter">홈</span>
+</a>
+<!-- Explore -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-all active:scale-90" href="#">
+<div class="relative mb-1 overflow-hidden w-7 h-7">
+<img alt="Explore" class="w-14 h-14 max-w-none grayscale brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="margin-left: -28px; margin-top: 0px;">
+</div>
+<span class="font-label-sm text-[10px] tracking-tighter">탐색</span>
+</a>
+<!-- Picks -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-all active:scale-90" href="#">
+<div class="relative mb-1 overflow-hidden w-7 h-7">
+<img alt="Picks" class="w-14 h-14 max-w-none grayscale brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="margin-left: 0px; margin-top: -28px;">
+</div>
+<span class="font-label-sm text-[10px] tracking-tighter">추천</span>
+</a>
+<!-- Trips -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-all active:scale-90" href="#">
+<div class="relative mb-1 overflow-hidden w-7 h-7">
+<img alt="Trips" class="w-14 h-14 max-w-none grayscale brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="margin-left: -28px; margin-top: -28px;">
+</div>
+<span class="font-label-sm text-[10px] tracking-tighter">여행</span>
+</a>
+<!-- More -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-all active:scale-90" href="#">
+<div class="relative mb-1 w-7 h-7 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="more_horiz">more_horiz</span>
+</div>
+<span class="font-label-sm text-[10px] tracking-tighter">더보기</span>
+</a>
+</nav>
+<script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('article').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10', 'ease-out');
+            observer.observe(el);
+        });
+
+        // Header scroll behavior
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('shadow-sm');
+                if (currentScroll > lastScroll) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+            } else {
+                header.classList.remove('shadow-sm');
+                header.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+            header.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+    </script>
+
+
+
+
+
+
+</body></html>

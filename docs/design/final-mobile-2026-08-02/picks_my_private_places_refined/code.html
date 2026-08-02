@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Luminous Voyage - My Places</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Caveat:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: contain;
+            background-color: #FAFAFA; /* Warm white background */
+            font-family: 'Inter', sans-serif;
+        }
+        .personal-note {
+            font-family: 'Inter', sans-serif; /* Cleaner magazine style note */
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        .soft-shadow {
+            box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.04);
+        }
+        .text-coral { color: #FF6B6B; }
+        .bg-coral { background-color: #FF6B6B; }
+        .text-mint { color: #00BFA5; }
+        .bg-mint { background-color: #6ef3f3; }
+        .text-primary-magazine { color: #003d9b; }
+        .bg-primary-magazine { background-color: #003d9b; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#003d9b",
+                        "on-primary": "#ffffff",
+                        "background": "#FAFAFA",
+                        "surface": "#ffffff",
+                        "outline-variant": "#E0E0E0",
+                        "secondary": "#5a534c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "gutter": "16px",
+                        "container-padding": "24px"
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-neutral-900 min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-neutral-100 px-container-padding h-16 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-neutral-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] text-[20px] tracking-tight font-bold text-neutral-900">Luminous Voyage</h1>
+</div>
+<button class="active:scale-95 transition-transform text-neutral-400">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<main class="pt-24 px-container-padding max-w-md mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col gap-1 mb-8">
+<span class="font-semibold tracking-[0.15em] text-[10px] uppercase text-neutral-400">Treasured Memories</span>
+<h2 class="font-['Plus_Jakarta_Sans'] text-[32px] text-neutral-900 font-bold leading-none tracking-tight">Picks - Refined My Private Collection</h2>
+</div>
+<!-- Tab Navigation -->
+<nav class="flex border-b border-neutral-100 mb-8 overflow-x-auto no-scrollbar">
+<button class="pb-3 px-4 text-[13px] font-semibold text-neutral-400 whitespace-nowrap">
+                Selected
+            </button>
+<button class="pb-3 px-4 text-[13px] font-semibold text-neutral-400 whitespace-nowrap">
+                Saved
+            </button>
+<button class="pb-3 px-4 text-[13px] font-bold text-primary border-b-2 border-primary whitespace-nowrap">
+                My Places
+            </button>
+</nav>
+<!-- Places List -->
+<div class="space-y-10">
+<!-- Card 1 -->
+<article class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Sanctuary</span>
+<h3 class="font-['Plus_Jakarta_Sans'] text-[20px] font-bold text-neutral-900">Hidden Riverside Bench</h3>
+</div>
+<div class="flex gap-2">
+<button class="text-neutral-300 hover:text-neutral-600 transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="text-neutral-300 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-neutral-400 mb-4">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<p class="text-[12px] font-medium">Quai de la Tournelle, 75005 Paris</p>
+</div>
+<div class="relative pl-4 mb-6 border-l border-neutral-200">
+<p class="personal-note">Best view of the cathedral at sunset. Usually empty on Tuesday evenings.</p>
+</div>
+<button class="flex items-center gap-2 text-[13px] font-bold text-primary group-hover:translate-x-1 transition-transform duration-300">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                    Add to Selected
+                </button>
+</article>
+<!-- Card 2 -->
+<article class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Food &amp; Drink</span>
+<h3 class="font-['Plus_Jakarta_Sans'] text-[20px] font-bold text-neutral-900">Artisan Bakery Alley</h3>
+</div>
+<div class="flex gap-2">
+<button class="text-neutral-300">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="text-neutral-300">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-neutral-400 mb-4">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<p class="text-[12px] font-medium">12 Rue du Cherche-Midi, Paris</p>
+</div>
+<div class="relative pl-4 mb-6 border-l border-neutral-200">
+<p class="personal-note">The almond croissants are ready exactly at 8:15 AM. Cash only.</p>
+</div>
+<div class="flex items-center gap-2 text-[13px] font-bold text-mint">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'wght' 700;">check</span>
+                    Added to Collection
+                </div>
+</article>
+<!-- Card 3 -->
+<article class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Shopping</span>
+<h3 class="font-['Plus_Jakarta_Sans'] text-[20px] font-bold text-neutral-900">Vintage Vinyl Corner</h3>
+</div>
+<div class="flex gap-2">
+<button class="text-neutral-300">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="text-neutral-300">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-neutral-400 mb-4">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<p class="text-[12px] font-medium">Rue de Lappe, 75011 Paris</p>
+</div>
+<div class="relative pl-4 mb-6 border-l border-neutral-200">
+<p class="personal-note">Ask for the back-room jazz collection. Proprietor knows his bebop.</p>
+</div>
+<button class="flex items-center gap-2 text-[13px] font-bold text-primary group-hover:translate-x-1 transition-transform duration-300">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                    Add to Selected
+                </button>
+</article>
+</div>
+<!-- Primary CTA for the screen -->
+<!-- End of list marker -->
+<div class="mt-16 mb-8 flex flex-col items-center opacity-20">
+<div class="w-8 h-px bg-neutral-900 mb-4"></div>
+<p class="text-[9px] font-bold uppercase tracking-[0.3em] text-neutral-900">End of Voyage</p>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-white border border-neutral-100 text-primary rounded-full shadow-xl flex items-center justify-center active:scale-90 transition-all duration-200 z-[60]">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/90 backdrop-blur-xl border-t border-neutral-100 flex justify-around items-center h-20 pb-safe px-4">
+<a class="flex flex-col items-center justify-center text-neutral-300 transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[9px] font-bold uppercase tracking-wider mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-300 transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined text-[24px]">explore</span>
+<span class="text-[9px] font-bold uppercase tracking-wider mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[9px] font-bold uppercase tracking-wider mt-1">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-300 transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined text-[24px]">map</span>
+<span class="text-[9px] font-bold uppercase tracking-wider mt-1">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-300 transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+<span class="text-[9px] font-bold uppercase tracking-wider mt-1">More</span>
+</a>
+</nav>
+</body></html>

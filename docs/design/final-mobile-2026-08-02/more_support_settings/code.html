@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate - More Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#eaedff",
+                    "surface-bright": "#faf8ff",
+                    "primary": "#0041c8",
+                    "on-surface-variant": "#434656",
+                    "on-primary-container": "#e3e6ff",
+                    "surface-container-highest": "#dae2fd",
+                    "outline-variant": "#c3c5d9",
+                    "surface": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eef0ff",
+                    "surface-dim": "#d2d9f4",
+                    "secondary-container": "#26fedc",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "surface-variant": "#dae2fd",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "secondary": "#006b5b",
+                    "on-primary-fixed": "#001551",
+                    "on-background": "#131b2e",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#283044",
+                    "surface-tint": "#004dea",
+                    "surface-container-low": "#f2f3ff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed-variant": "#005144",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b6c4ff",
+                    "tertiary-container": "#65686a",
+                    "outline": "#737688",
+                    "secondary-fixed-dim": "#00dfc1",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#e5e8ea",
+                    "primary-container": "#0055ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#26fedc",
+                    "on-primary-fixed-variant": "#0039b3",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dce1ff",
+                    "tertiary": "#4d5052",
+                    "on-surface": "#131b2e",
+                    "on-secondary-container": "#007261",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-secondary-fixed": "#00201a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "container-padding": "20px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .backdrop-glass {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body {
+            background-color: #faf8ff;
+            color: #131b2e;
+            font-family: 'Inter', sans-serif;
+        }
+        .bento-card {
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            border-color: #0041c8;
+            background-color: #f2f3ff;
+        }
+        .premium-shadow {
+            box-shadow: 0px 4px 20px rgba(0, 85, 255, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm sticky top-0 z-40 w-full h-16 flex justify-between items-center px-5 md:px-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="explore">explore</span>
+<span class="text-headline-md font-bold text-primary">GoKoreaMate</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="shopping_bag">shopping_bag</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-5 mt-8 space-y-stack-lg">
+<!-- Header -->
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-lg text-headline-lg text-on-background">More</h1>
+<p class="font-body-md text-on-surface-variant">App settings and support information</p>
+</div>
+<!-- Menu List Section: Preferences -->
+<section class="bg-surface-container-lowest rounded-xl bento-card overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between">
+<h2 class="font-title-md text-title-md">Preferences</h2>
+<span class="font-label-sm text-label-sm text-primary">v2.4.0</span>
+</div>
+<div class="divide-y divide-outline-variant/30">
+<!-- Language & Currency -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Language &amp; Currency</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">English (US) • USD ($)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- App Theme (Kept as it is a standard preference) -->
+<div class="w-full px-6 py-5 flex items-center justify-between group text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">App Theme</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Currently Light Mode</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Menu List Section: Help & Support -->
+<section class="bg-surface-container-lowest rounded-xl bento-card overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant/30">
+<h2 class="font-title-md text-title-md">Help &amp; Support</h2>
+</div>
+<div class="divide-y divide-outline-variant/30">
+<!-- Email Support/Contact -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Email Support</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Contact our team for inquiries</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Customer Support -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Customer Support</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">24/7 Live Assistance, Help Center</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Menu List Section: Information -->
+<section class="bg-surface-container-lowest rounded-xl bento-card overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant/30">
+<h2 class="font-title-md text-title-md">Information</h2>
+</div>
+<div class="divide-y divide-outline-variant/30">
+<!-- About GoKoreaMate -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">About GoKoreaMate</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Our story and vision for travel</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Privacy Policy -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Privacy Policy</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">How we handle your data</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Terms of Service -->
+<button class="w-full px-6 py-5 flex items-center justify-between group hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Terms of Service</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Our terms and conditions</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-transform group-hover:translate-x-1" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Footer / Legal -->
+<footer class="pt-8 pb-12 text-center space-y-2">
+<p class="font-label-sm text-label-sm text-outline">Designed for modern explorers.</p>
+<p class="font-label-sm text-label-sm text-outline opacity-50">© 2024 GoKoreaMate Inc.</p>
+</footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center px-2 py-3 pb-safe rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform" data-icon="search">search</span>
+<span class="font-label-sm text-label-sm mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-sm text-label-sm mt-1">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform" data-icon="route">route</span>
+<span class="font-label-sm text-label-sm mt-1">Trips</span>
+</a>
+<!-- Active Tab: More -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-100 shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz" style="font-variation-settings: 'FILL' 1;">more_horiz</span>
+<span class="font-label-sm text-label-sm mt-1">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and UI Logic
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('click', function(e) {
+                if (this.classList.contains('group')) {
+                    const icon = this.querySelector('.material-symbols-outlined');
+                    if (icon) {
+                        icon.style.transform = 'scale(0.9)';
+                        setTimeout(() => icon.style.transform = 'scale(1)', 150);
+                    }
+                }
+            });
+        });
+
+        // Simple Toggle interaction for theme
+        const themeToggle = document.querySelector('input[type="checkbox"]');
+        if (themeToggle) {
+            themeToggle.addEventListener('change', function() {
+                const html = document.documentElement;
+                if (this.checked) {
+                    html.classList.add('dark');
+                } else {
+                    html.classList.remove('dark');
+                }
+            });
+        }
+    </script>
+</body></html>

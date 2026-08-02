@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Saved Picks - Luminous Voyage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            background-color: #ffffff;
+        }
+        .text-coral {
+            color: #FF7F50;
+        }
+        .bg-coral {
+            background-color: #FF7F50;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#007261",
+                      "surface-variant": "#dae2fd",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#26fedc",
+                      "primary-container": "#0055ff",
+                      "primary-fixed": "#dce1ff",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "surface-container-highest": "#dae2fd",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#d2d9f4",
+                      "on-secondary-fixed-variant": "#005144",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#4d5052",
+                      "on-secondary-fixed": "#00201a",
+                      "on-background": "#131b2e",
+                      "on-tertiary-container": "#e5e8ea",
+                      "on-surface": "#131b2e",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-primary-fixed-variant": "#0039b3",
+                      "secondary": "#006b5b",
+                      "secondary-fixed": "#26fedc",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#f2f3ff",
+                      "secondary-fixed-dim": "#00dfc1",
+                      "primary": "#0041c8",
+                      "outline": "#737688",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001551",
+                      "surface-tint": "#004dea",
+                      "inverse-surface": "#283044",
+                      "on-primary-container": "#e3e6ff",
+                      "surface-container": "#eaedff",
+                      "surface": "#faf8ff",
+                      "background": "#ffffff",
+                      "on-surface-variant": "#434656",
+                      "inverse-primary": "#b6c4ff",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#65686a",
+                      "surface-container-high": "#e2e7ff",
+                      "on-tertiary-fixed": "#191c1e",
+                      "outline-variant": "#c3c5d9",
+                      "surface-bright": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "gutter": "16px",
+                      "container-padding": "20px",
+                      "unit": "4px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "title-md": ["Plus Jakarta Sans"],
+                      "label-sm": ["JetBrains Mono"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/10 h-16 flex justify-between items-center px-container-padding">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface cursor-pointer active:scale-95 transition-transform" data-icon="menu">menu</span>
+<h1 class="font-display-lg text-[22px] tracking-tighter text-on-surface">Luminous Voyage</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer active:scale-95 transition-transform" data-icon="search">search</span>
+</div>
+</header>
+<main class="pt-16 pb-24 max-w-[390px] mx-auto min-h-screen flex flex-col bg-white">
+<!-- Sub-Tabs -->
+<div class="bg-white sticky top-16 z-40 px-container-padding pt-4">
+<div class="flex items-center justify-between border-b border-outline-variant/10 relative">
+<button class="pb-3 px-1 text-on-surface-variant font-body-md relative transition-colors">
+                    Selected (3)
+                </button>
+<button class="pb-3 px-1 text-on-surface font-bold font-body-md relative">
+                    Saved (12)
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-on-surface"></div>
+</button>
+<button class="pb-3 px-1 text-on-surface-variant font-body-md relative transition-colors">
+                    My Places (5)
+                </button>
+</div>
+</div>
+<!-- Section Header -->
+<div class="px-container-padding pt-8 flex justify-between items-baseline">
+<div>
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-widest">PERSONAL COLLECTION</span>
+<h2 class="font-headline-lg-mobile text-[32px] text-on-background mt-1">Your Saved Picks</h2>
+</div>
+<span class="font-label-sm text-[11px] text-outline uppercase">12 Items</span>
+</div>
+<!-- Cinematic Collection Grid -->
+<div class="px-container-padding pt-6 space-y-10">
+<!-- Card 1: Selected -->
+<div class="group">
+<div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden mb-4 shadow-sm">
+<img alt="The Eiger Monolith" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvOxhgNlT9c5qNNmpzQnVUWuWGTqFP_LNPdAq9Ge3yaQHKj7zb-PfKEQw_iG1q5bu_idpB9qllSq0bg4bw8cxoPgIcOO6WKt6LXVcty3pHLFCXGg53IxjwKInPV_YEVNZcPdUU7zAVuLunf6KbkuS0LsCwysQ1O-q2R9e6uUAnlFkSDIUmpg59ohdAqjqJ2Ff_LM1LSHTQ_rNwkPxhL9Yh1bv1JEdFqX3X0a1v6th1XMtFZVDv7u0"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="w-10 h-10 rounded-full glass-overlay flex items-center justify-center text-coral shadow-lg transition-transform active:scale-90">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-sm text-[10px] bg-white/90 backdrop-blur-md text-on-surface px-3 py-1 rounded-full uppercase tracking-wider">Stay</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-[22px] text-on-surface leading-tight">The Eiger Monolith</h3>
+<p class="font-body-md text-outline text-sm mt-0.5">Grindelwald, Switzerland</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-coral text-sm filled-icon" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface font-semibold">4.9</span>
+</div>
+</div>
+<div class="mt-3 flex items-center justify-between">
+<span class="font-body-md font-semibold text-on-surface">$540<span class="font-normal text-outline">/night</span></span>
+<div class="flex items-center gap-1.5 text-on-secondary-container opacity-80">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle">check_circle</span>
+<span class="font-label-sm text-[11px] tracking-tight">SELECTED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Actionable -->
+<div class="group">
+<div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden mb-4 shadow-sm">
+<img alt="Fragment Coffee Lab" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxGUaqgly5r091a9sETcOWNjCYdCw0DIh8ahw6IySsHM9OyEdjWcBDbV5_A_UO3jF80W9hd-y46BGL_YxVZV_ATabNefxQ0CE29n6y3P9Mfwt7Dxl6q2BciFETEqokQwY04OXvgik623DaJAUH1aCNDUno_1uOBS_kF5iRAnN2CXUWizkL2_mg62myrbbyKHsPQusMy4a2u32DmnNNivUU2EPLRvi0VTWhr7Nokz84zLaqa4IStAY"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="w-10 h-10 rounded-full glass-overlay flex items-center justify-center text-coral shadow-lg transition-transform active:scale-90">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-sm text-[10px] bg-white/90 backdrop-blur-md text-on-surface px-3 py-1 rounded-full uppercase tracking-wider">Cafe</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-[22px] text-on-surface leading-tight">Fragment Coffee Lab</h3>
+<p class="font-body-md text-outline text-sm mt-0.5">Shibuya, Tokyo</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-coral text-sm filled-icon" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface font-semibold">4.7</span>
+</div>
+</div>
+<div class="mt-3 flex items-center justify-between">
+<span class="font-body-md font-semibold text-on-surface">$12<span class="font-normal text-outline"> avg.</span></span>
+<button class="add-btn flex items-center gap-1.5 text-primary hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+<span class="font-label-sm text-[11px] font-bold tracking-tight">ADD TO TRIP</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3: Gallery -->
+<div class="group pb-10">
+<div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden mb-4 shadow-sm">
+<img alt="Obsidian Gallery" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtElpj4ms4w9SXom9nPyAE_vyrqDWXqE_LgAFjls8wBTgH5kcFeZT99bt1Gg1dLV6KVIt57KKuL1CLWke2z0xF3u4ET100JglcxidZvp7FN_Rc8aE-4gAT2VQHyjtqWDa0xFrPrRobmByESHGUItj91RRHESRAVLLkBTtYKIi9Aud10UUmfNHn5IAX7gs8zGr66G-5IOWObeuUXObQ0nySbBG5DIaQP8vtri5NJ1ijvwhgmCvALpg"/>
+<div class="absolute top-4 right-4 z-10">
+<button class="w-10 h-10 rounded-full glass-overlay flex items-center justify-center text-coral shadow-lg transition-transform active:scale-90">
+<span class="material-symbols-outlined filled-icon" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-sm text-[10px] bg-white/90 backdrop-blur-md text-on-surface px-3 py-1 rounded-full uppercase tracking-wider">Gallery</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-[22px] text-on-surface leading-tight">Obsidian Gallery</h3>
+<p class="font-body-md text-outline text-sm mt-0.5">Southbank, London</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-coral text-sm filled-icon" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface font-semibold">4.8</span>
+</div>
+</div>
+<div class="mt-3 flex items-center justify-between">
+<span class="font-body-md font-semibold text-on-surface">Free Entry</span>
+<button class="add-btn flex items-center gap-1.5 text-primary hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+<span class="font-label-sm text-[11px] font-bold tracking-tight">ADD TO TRIP</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/95 backdrop-blur-xl border-t border-outline-variant/10 h-20 pb-safe px-4 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-[10px] mt-1 uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-[10px] mt-1 uppercase tracking-tighter">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface font-bold transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined filled-icon" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm text-[10px] mt-1 uppercase tracking-tighter">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-sm text-[10px] mt-1 uppercase tracking-tighter">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+<span class="font-label-sm text-[10px] mt-1 uppercase tracking-tighter">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for "Add to Trip"
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const parent = this.parentElement;
+                this.style.opacity = '0';
+                setTimeout(() => {
+                    this.remove();
+                    const status = document.createElement('div');
+                    status.className = 'flex items-center gap-1.5 text-on-secondary-container transition-all duration-300 transform scale-95 opacity-0';
+                    status.innerHTML = `
+                        <span class="material-symbols-outlined text-[18px]" data-icon="check_circle">check_circle</span>
+                        <span class="font-label-sm text-[11px] tracking-tight">SELECTED</span>
+                    `;
+                    parent.appendChild(status);
+                    requestAnimationFrame(() => {
+                        status.classList.remove('opacity-0', 'scale-95');
+                        status.classList.add('opacity-80', 'scale-100');
+                    });
+                }, 200);
+            });
+        });
+
+        // Heart toggle logic with Coral color
+        document.querySelectorAll('.text-coral').forEach(heartBtn => {
+            heartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon.getAttribute('style').includes('FILL\' 1')) {
+                    icon.style.fontVariationSettings = "'FILL' 0";
+                    this.classList.remove('text-coral');
+                    this.classList.add('text-outline');
+                } else {
+                    icon.style.fontVariationSettings = "'FILL' 1";
+                    this.classList.add('text-coral');
+                    this.classList.remove('text-outline');
+                }
+            });
+        });
+    </script>
+</body></html>

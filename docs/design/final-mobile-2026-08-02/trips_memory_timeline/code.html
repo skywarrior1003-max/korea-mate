@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luminous Voyage - Your Journey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, #0041c8 0%, #0041c8 100%);
+            background-size: 2px 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .memory-dashed-line {
+            background-image: linear-gradient(to bottom, #737688 50%, rgba(255,255,255,0) 0%);
+            background-position: center;
+            background-size: 2px 10px;
+            background-repeat: repeat-y;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#00201a",
+                        "outline": "#737688",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-tint": "#004dea",
+                        "background": "#faf8ff",
+                        "secondary-fixed": "#26fedc",
+                        "inverse-surface": "#283044",
+                        "secondary-container": "#26fedc",
+                        "on-tertiary-fixed": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-primary-container": "#e3e6ff",
+                        "on-primary-fixed": "#001551",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "surface-dim": "#d2d9f4",
+                        "on-background": "#131b2e",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "outline-variant": "#c3c5d9",
+                        "primary-fixed": "#dce1ff",
+                        "primary": "#0041c8",
+                        "on-secondary-fixed-variant": "#005144",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary": "#4d5052",
+                        "on-tertiary-container": "#e5e8ea",
+                        "on-surface-variant": "#434656",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface-bright": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#0055ff",
+                        "secondary": "#006b5b",
+                        "surface-variant": "#dae2fd",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#0039b3",
+                        "surface-container-highest": "#dae2fd",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface-container": "#eaedff",
+                        "on-secondary-container": "#007261",
+                        "on-primary": "#ffffff",
+                        "surface": "#faf8ff",
+                        "secondary-fixed-dim": "#00dfc1",
+                        "surface-container-high": "#e2e7ff",
+                        "inverse-primary": "#b6c4ff",
+                        "on-surface": "#131b2e",
+                        "tertiary-container": "#65686a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-lg": "32px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center px-container-padding h-16">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-display-lg text-[24px] md:text-display-lg tracking-tighter text-primary">Luminous Voyage</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-container-padding max-w-4xl mx-auto">
+<!-- Header Hero Section -->
+<section class="mb-stack-lg">
+<div class="flex justify-between items-end mb-stack-md">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest bg-primary/10 px-2 py-1 rounded">Syncing Memories</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mt-2">Backpacking Asia</h2>
+<p class="text-on-surface-variant font-body-md">Completed: May 2025 • 14 nights • 6 destinations</p>
+</div>
+<div class="hidden md:flex gap-2">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-sm active:scale-95 transition-all">Export Journal</button>
+</div>
+</div>
+<!-- Summary Map Card -->
+<div class="relative w-full h-64 rounded-xl overflow-hidden border border-outline-variant/30 shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A professional satellite-style map visualization of Southeast Asia, featuring a glowing blue travel route connecting Bangkok, Siem Reap, and Ho Chi Minh City. The map has a clean, modern aesthetic with soft mint accents for coastal areas and a subtle grid overlay. The lighting is bright and airy, reflecting a high-end travel planning tool interface." data-location="Southeast Asia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAn2s_Y-2jiAFm2hxQieEUcGUix2QWLJ9D9XrMDovssPyyHWUftQM2RjNYOKeC7GC8rdULfGz6V6EmqNNXKTf-E2tCDi7rxxksrHFfVWy85j6lhZlRhEcMuZKpfZqjNE5a15_SFbPRARm-7iOGrX8L7cOCzmBmY0DWaGnIdk_ZxqwNOwqAFImJ841sqyniUBfv_ec8FP2Rdg6HYEqTBY0YhooRZmhrUIrKVjXc4Na3wv3WSUq2q6MM')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Ho Chi Minh City
+                    </span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-label-sm font-label-sm shadow-sm">6 Dest.</span>
+</div>
+</div>
+</section>
+<!-- Timeline Section -->
+<section class="relative">
+<div class="absolute left-[19px] top-4 bottom-4 w-[2px] memory-dashed-line z-0"></div>
+<!-- Day 14: Final Memory -->
+<div class="relative flex gap-6 mb-stack-lg z-10">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0 border-4 border-background shadow-sm">
+<span class="material-symbols-outlined text-on-primary text-[20px]">flag</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-title-md text-title-md">Day 14: The Final Sunset</h3>
+<span class="text-label-sm font-label-sm text-outline">28 May</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden transition-all hover:shadow-lg group">
+<div class="relative h-56 w-full">
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-quality photograph of two young backpackers sitting on a sandy beach in Vietnam during a vibrant pink and orange sunset. They are holding fresh coconuts and smiling warmly at the camera. The lighting is golden and soft, capturing a nostalgic and emotional atmosphere. The background shows the distant silhouettes of other travelers and calm ocean waves." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOGYK3Bts-W8OiMz9YdQro9o7_GXy35I5gzutUbbNcRrN3vRMwvVEdWhJHwSk6Bq-e9xGUrtgRVxW6w9qUAb8WVKRLNqnHphlK0TdN7_bwcTo77B28Xm5G8d94aJkHCcrLXRi3Tykw4vyDoA3jy-8NLR5gvrcrQyV4vArhuv00ULYyVjeBJpIwiVBSf--xTO8PphPCxtAxS-JuxHaEbsBMEhdAxn0aMgBQYAzBXN3sx3S-9vkfp8I"/>
+<div class="absolute top-4 right-4">
+<span class="bg-white/90 backdrop-blur text-primary text-label-sm font-label-sm px-3 py-1 rounded-full shadow-sm">SYNCED</span>
+</div>
+</div>
+<div class="p-stack-md">
+<p class="font-body-md text-on-surface-variant italic mb-stack-sm">"We ended our journey exactly how we started—exhausted but with hearts so full. Looking at the sunset in Mui Ne, it’s hard to believe how much we saw in just two weeks."</p>
+<div class="flex items-center gap-4 text-outline">
+<span class="flex items-center gap-1 text-label-sm font-label-sm"><span class="material-symbols-outlined text-[16px]">photo_library</span> 24 Photos</span>
+<span class="flex items-center gap-1 text-label-sm font-label-sm"><span class="material-symbols-outlined text-[16px]">favorite</span> 16 Likes</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Memory Placeholder -->
+<div class="relative flex gap-6 mb-stack-lg z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 border-4 border-background text-outline">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</div>
+<div class="flex-grow">
+<button class="w-full h-16 border-2 border-dashed border-outline-variant/50 rounded-xl flex items-center justify-center gap-2 text-outline hover:border-primary hover:text-primary transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined">add_photo_alternate</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Add Memory to Day 13</span>
+</button>
+</div>
+</div>
+<!-- Day 12: Adventure Card -->
+<div class="relative flex gap-6 mb-stack-lg z-10">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0 border-4 border-background shadow-sm">
+<span class="material-symbols-outlined text-[20px]">directions_bus</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-title-md text-title-md">Day 12: Arrived in Vietnam</h3>
+<span class="text-label-sm font-label-sm text-outline">26 May</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden transition-all hover:shadow-lg group">
+<div class="grid grid-cols-2 gap-px bg-outline-variant/20 h-48">
+<div class="h-full w-full">
+<img class="w-full h-full object-cover" data-alt="An interior shot of a vintage beige camper van parked in a lush green Vietnamese landscape. Two travelers are sitting in the doorway, smiling at each other. The scene is filled with authentic travel details like woven blankets, backpacks, and water bottles. The lighting is warm and natural, suggesting a midday stop during a road trip." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_YYt_J8Ix7QL6xS-j8I8q_ggUyQI_0RRDoRHhSlEXb2_7O3Cw7aXbMXYX3ibJx313hPFlbPfPCvygmB2T3CrIcR3KT70M4mhuPjTUsLqXrakvYAld_Wfpdobq7F8fVvtQmoTrA41-0ZwZ1-mZrcqvWTs_AmsaGVA6tV3bAr1lNN1t4W8XJoL9X4JG_8z8pNxovsxDOvWEgT6zKjeb90uOK58uF09i-P079_LTGzRBbkplFKHgEEU"/>
+</div>
+<div class="h-full w-full bg-surface-container-low flex flex-col items-center justify-center p-4">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary/10 px-2 py-1 rounded mb-2">OPTIMIZE</span>
+<p class="text-center text-[13px] leading-tight font-medium">Auto-synced route from Google Maps</p>
+<p class="text-center text-outline text-label-sm mt-1">12h transit duration</p>
+</div>
+</div>
+<div class="p-stack-md">
+<div class="flex items-center gap-2 mb-stack-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span class="text-label-sm font-label-sm text-on-surface">Route Optimized by AI</span>
+</div>
+<p class="font-body-md text-on-surface-variant">Crossed the border today. Long ride but seeing the rice fields of Vietnam for the first time was worth every hour. Settled into our first camp near Da Lat.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Earlier Memory Placeholder -->
+<div class="relative flex gap-6 mb-stack-lg z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 border-4 border-background text-outline">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</div>
+<div class="flex-grow flex items-center h-10">
+<div class="h-[1px] bg-outline-variant/30 flex-grow mr-4"></div>
+<span class="text-label-sm font-label-sm text-outline shrink-0">11 DAYS PREVIOUSLY</span>
+<div class="h-[1px] bg-outline-variant/30 flex-grow ml-4"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual "Add" Button (Custom Utility FAB) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/20 flex justify-around items-center h-20 pb-safe px-4">
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label-sm text-label-sm mt-1">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label-sm text-label-sm mt-1">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="font-label-sm text-label-sm mt-1">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for scrolling
+        let lastScroll = 0;
+        const topNav = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                topNav.classList.remove('shadow-md');
+                return;
+            }
+            if (currentScroll > lastScroll) {
+                topNav.style.transform = 'translateY(-100%)';
+            } else {
+                topNav.style.transform = 'translateY(0)';
+                topNav.classList.add('shadow-sm');
+            }
+            lastScroll = currentScroll;
+            topNav.style.transition = 'transform 0.3s ease-in-out';
+        });
+
+        // Simple animation trigger for cards entering viewport
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(card);
+        });
+    </script>
+</body></html>

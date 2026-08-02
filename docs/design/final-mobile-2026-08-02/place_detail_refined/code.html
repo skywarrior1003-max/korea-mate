@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate - Place Detail</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#eaedff",
+                    "surface-bright": "#faf8ff",
+                    "primary": "#0041c8",
+                    "on-surface-variant": "#434656",
+                    "on-primary-container": "#e3e6ff",
+                    "surface-container-highest": "#dae2fd",
+                    "outline-variant": "#c3c5d9",
+                    "surface": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eef0ff",
+                    "surface-dim": "#d2d9f4",
+                    "secondary-container": "#26fedc",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "surface-variant": "#dae2fd",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "secondary": "#006b5b",
+                    "on-primary-fixed": "#001551",
+                    "on-background": "#131b2e",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#283044",
+                    "surface-tint": "#004dea",
+                    "surface-container-low": "#f2f3ff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-container-high": "#e2e7ff",
+                    "on-secondary-fixed-variant": "#005144",
+                    "on-error": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b6c4ff",
+                    "tertiary-container": "#65686a",
+                    "outline": "#737688",
+                    "secondary-fixed-dim": "#00dfc1",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#e5e8ea",
+                    "primary-container": "#0055ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#26fedc",
+                    "on-primary-fixed-variant": "#0039b3",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dce1ff",
+                    "tertiary": "#4d5052",
+                    "on-surface": "#131b2e",
+                    "on-secondary-container": "#007261",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-secondary-fixed": "#00201a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "container-padding": "20px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "title-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-utility {
+            background: rgba(250, 248, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Optimized for high-end magazine feel */
+        .text-balanced {
+            text-wrap: balance;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- Top App Bar (Shared Component Style) -->
+<header class="fixed top-0 w-full h-16 z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm">
+<button aria-label="Go Back" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<span class="text-headline-md font-bold text-primary">GoKoreaMate</span>
+<button aria-label="Cart" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</button>
+</header>
+<main class="pb-20">
+<!-- Cinematic Hero Image -->
+<section class="relative w-full h-[442px] md:h-[574px] overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/20 z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A wide cinematic shot of a modern, minimalist Korean café in Seoul during a soft sunset. The architecture features clean lines, large glass windows, and warm wooden accents. Inside, the space is calm and dimly lit with designer lamps, while outside, the golden hour light creates a serene, high-end travel aesthetic. The atmosphere is quiet and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD206DCKEsOuHy9aI3rvsXTmIFa7meDX9wmB7FrKGe7FJJ9T5JusX2GcIqRMMQaFpQgp-hMmulM7UDlDHZe-QacJiqUhu83lF5aNEyoab3Fvs_g_-9U6lnXemm1fHYWh-cen3-tykyOcOr5ksjGyiy27qNij2dtyw5_leV9k237m2hjnHU6lSntUjvUYtJyZ5OstptsJmWTKTrtYkRTuM1zXRjan3DCV0D3O5Nm1o-j71QJihU6mag"/>
+</section>
+<!-- Place Information Section -->
+<section class="relative -mt-16 z-20 px-margin-mobile md:px-64 lg:px-[25%]">
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/30 shadow-sm">
+<!-- Labels & Badges -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="inline-flex items-center px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm rounded-full">
+                        CAFE
+                    </span>
+<span class="inline-flex items-center px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        BUILD
+                    </span>
+</div>
+<!-- Headline -->
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">테라로사 현대미술관점</h1>
+<!-- AI Recommendation Reason -->
+<div class="flex items-start gap-3 p-4 bg-surface-container-low rounded-lg border border-primary/10 mb-8">
+<span class="material-symbols-outlined text-primary mt-0.5">sentiment_satisfied</span>
+<p class="font-body-md text-on-surface-variant">
+                        "당신의 평소 취향을 분석한 결과, <span class="font-bold text-primary">조용하고 현대적인 건축미</span>를 즐길 수 있는 최적의 장소입니다. 전시 관람 후 여유를 즐기기 좋습니다."
+                    </p>
+</div>
+<!-- Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+<!-- Operating Hours -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-title-md text-title-md">운영 시간</span>
+</div>
+<ul class="space-y-2 text-on-surface-variant font-body-md">
+<li class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span>오늘</span>
+<span class="font-medium text-on-surface">10:00 - 21:00</span>
+</li>
+<li class="flex justify-between opacity-60">
+<span>화요일</span>
+<span>10:00 - 21:00</span>
+</li>
+<li class="flex justify-between opacity-60">
+<span>수요일</span>
+<span>10:00 - 21:00</span>
+</li>
+</ul>
+</div>
+<!-- Location Info -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-title-md text-title-md">위치 정보</span>
+</div>
+<p class="text-on-surface-variant font-body-md leading-relaxed mb-4">
+                            서울특별시 종로구 삼청로 30 국립현대미술관 서울관 1층
+                        </p>
+<div class="relative w-full h-40 rounded-lg overflow-hidden border border-outline-variant/30">
+<div class="w-full h-full bg-cover bg-center" data-location="Seoul Samcheong-ro" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpXCSmHaujq5zeWRomkXDQyCSEIu1auy1wBOB1P-aohgaUnWy_8XZEb6qaQD7_rAalqDtbV0MGf64HOCsY-x2HOf-NbC8vtqBp7kceDTRKpmlgJeFxEAi1K00jOwQtXYdRUnVqwmHdlZ3Q6cjZFcEAJSpSdAZjW7hmCTojs2opwgTlJqME9yc1c77_vXdzAyXu2RmlvHYV29aXlduGQALBA9cDAq4HMVZefl_ecsg-MAfnavcUDtE')"></div>
+</div>
+</div>
+</div><div class="flex gap-3 mb-8">
+<button class="flex-1 h-12 bg-primary text-on-primary rounded-lg flex items-center justify-center gap-2 font-bold transition-all active:scale-95 hover:bg-primary-container" id="add-to-picks-btn">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Add to Picks</span>
+</button>
+<button class="flex-1 h-12 border border-outline text-on-surface rounded-lg flex items-center justify-center gap-2 font-bold transition-all active:scale-95 hover:bg-surface-container-high">
+<span class="material-symbols-outlined">map</span>
+<span>View on Map</span>
+</button>
+</div>
+<!-- AI Analysis: Best Time to Visit -->
+<div class="space-y-6 pt-8 border-t border-outline-variant/20">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-title-md text-title-md">AI 분석: 방문하기 좋은 시간</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container font-label-sm text-[10px] border border-secondary-container rounded">OPTIMIZE</span>
+</div>
+<!-- Graph Layout -->
+<div class="relative h-48 w-full flex items-end justify-between gap-1 md:gap-4 px-2">
+<!-- Bar Items -->
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[20%] transition-all group-hover:bg-primary-fixed-dim"></div>
+<span class="font-label-sm text-[10px] text-outline">10h</span>
+</div>
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[35%] transition-all group-hover:bg-primary-fixed-dim"></div>
+<span class="font-label-sm text-[10px] text-outline">12h</span>
+</div>
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary-container rounded-t-sm h-[80%] transition-all relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-2 py-1 rounded text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Most Busy</div>
+</div>
+<span class="font-label-sm text-[10px] text-primary font-bold">14h</span>
+</div>
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary-container/60 rounded-t-sm h-[60%] transition-all group-hover:bg-primary-fixed-dim"></div>
+<span class="font-label-sm text-[10px] text-outline">16h</span>
+</div>
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-secondary-container rounded-t-sm h-[30%] transition-all">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-2 py-1 rounded text-[10px] font-bold whitespace-nowrap">AI Rec</div>
+</div>
+<span class="font-label-sm text-[10px] text-secondary font-bold">18h</span>
+</div>
+<div class="group relative flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[25%] transition-all group-hover:bg-primary-fixed-dim"></div>
+<span class="font-label-sm text-[10px] text-outline">20h</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant text-sm italic">
+                        * 오후 6시 이후가 가장 한적하며, 노을을 감상하기에 좋습니다.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Magazine Style Editorial Content -->
+<section class="mt-16 px-margin-mobile md:px-64 lg:px-[25%] space-y-12">
+<div class="prose max-w-none">
+<h2 class="font-title-md text-title-md text-primary mb-4">예술과 커피의 완벽한 결합</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed text-balanced">
+                    현대미술관의 차가운 금속성과 테라로사의 따뜻한 나무 소재가 어우러진 이 공간은 서울의 바쁜 리듬 속에서 잠시 멈춤을 선사합니다. 탁 트인 층고와 전면 유리창을 통해 들어오는 빛은 매 시간마다 공간의 표정을 바꿉니다.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A close-up shot of a perfectly poured caffè latte with intricate foam art on a minimalist gray table. Next to it is a small, modern dessert. The lighting is soft and artistic, highlighting the textures of the ceramic cup and the coffee's rich color." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbLgwUmRkUOHAXOxcgRL7DD40AaC2bLDe016H-QQuNqXizM7IIJ9UqGq8-4zBYEv8rmIZ0CYs3zRrSqgFrUprlMy3TLJtOZkrUZriaGCgrx-Ll_UfZyVoPpI9Q52U3VLdf81WMSSesO2mrtpcLKbzld3ZA4EpjAl81xl7LauHXdemUvko30JggGAJihKr7f0P717M6rERLXpY-Ed1VR2eKMcB8X2MLCpL6HBGJkKi5Go1OemTokOo"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="The architectural interior of Terarosa cafe in Seoul National Museum of Modern and Contemporary Art. High ceilings, industrial concrete walls mixed with warm wooden shelves filled with books and coffee beans. People are quietly reading or talking in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDybl9OqRgYBPXNfjBmH3_QsElcaydLhTx7oaxXmCGpr00lEGr0RyRAWna0NccQUj1qsbdgGZhZ9YSb8iaG4xJV7lk_-P2QqZ-UGaM2HCxQi2rc1sofaSl2-OscC7UQgpUL_djsj7FNBx7CWpnzIOKf-n2vI7L3Iv7jofXd9qXNToh0wBtnETid8k2wfDz-t2S5KdVw262XFkLEJFoBg50vmCl48Ocm6Z-TvyOTK54fov8X7t6W37o"/>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action Floating Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-md border-t border-outline-variant/30 px-margin-mobile py-2 flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 flex-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 flex-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</button>
+<button class="flex flex-col items-center gap-1 flex-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span class="text-[10px] font-medium">Picks</span>
+</button>
+<button class="flex flex-col items-center gap-1 flex-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">train</span>
+<span class="text-[10px] font-medium">Trips</span>
+</button>
+<button class="flex flex-col items-center gap-1 flex-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="text-[10px] font-medium">More</span>
+</button>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Subtle parallax effect on scroll
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('section img');
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+            });
+
+            // Smooth active state for buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('mousedown', () => btn.classList.add('scale-95'));
+                btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
+                btn.addEventListener('mouseleave', () => btn.classList.remove('scale-95'));
+            });
+        });
+    </script>
+</body></html>

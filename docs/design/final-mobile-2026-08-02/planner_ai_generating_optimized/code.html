@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate | AI Generating</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#26fedc",
+                    "on-primary-container": "#e3e6ff",
+                    "inverse-on-surface": "#eef0ff",
+                    "secondary-fixed": "#26fedc",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#004dea",
+                    "on-secondary-fixed": "#00201a",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "tertiary-container": "#65686a",
+                    "on-tertiary-container": "#e5e8ea",
+                    "on-secondary-container": "#007261",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#dae2fd",
+                    "primary-container": "#0055ff",
+                    "outline-variant": "#c3c5d9",
+                    "on-primary-fixed-variant": "#0039b3",
+                    "on-surface-variant": "#434656",
+                    "surface-container": "#eaedff",
+                    "inverse-primary": "#b6c4ff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#131b2e",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#005144",
+                    "outline": "#737688",
+                    "inverse-surface": "#283044",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#00dfc1",
+                    "surface-container-low": "#f2f3ff",
+                    "tertiary": "#4d5052",
+                    "tertiary-fixed": "#e0e3e5",
+                    "secondary": "#006b5b",
+                    "surface-dim": "#d2d9f4",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#dae2fd",
+                    "primary": "#0041c8",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "primary-fixed": "#dce1ff",
+                    "surface-container-high": "#e2e7ff",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "on-secondary": "#ffffff",
+                    "surface": "#faf8ff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-background": "#131b2e",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001551",
+                    "background": "#faf8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "title-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        .animate-pulse-ring {
+            animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .stagger-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: staggerIn 0.8s ease forwards;
+        }
+        @keyframes staggerIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar-shimmer {
+            background: linear-gradient(90deg, rgba(0,85,255,0) 0%, rgba(0,85,255,0.4) 50%, rgba(0,85,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        body {
+            height: 100dvh;
+            min-height: 100dvh;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden w-screen selection:bg-primary-fixed">
+<!-- Cinematic Background -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary-container/10 opacity-60"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center h-full w-full max-w-[390px] mx-auto overflow-hidden px-4">
+<!-- Brand Header -->
+<header class="w-full flex items-center justify-center h-14 shrink-0">
+<div class="text-xl font-bold text-primary tracking-tight">GoKoreaMate</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center justify-center w-full gap-6">
+<!-- AI Card Content -->
+<div class="glass-panel w-full p-6 py-8 rounded-[32px] flex flex-col items-center gap-6 shadow-xl stagger-in">
+<!-- AI Pulse Ring Animation -->
+<div class="relative w-20 h-20 shrink-0">
+<div class="absolute inset-0 rounded-full border-2 border-primary animate-pulse-ring"></div>
+<div class="absolute inset-2 rounded-full border-2 border-primary/40 animate-pulse-ring" style="animation-delay: 1s;"></div>
+<div class="absolute inset-0 flex items-center justify-center bg-primary rounded-full shadow-lg">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+</div>
+<!-- Typography & Status -->
+<div class="space-y-3 text-center">
+<h1 class="text-display-lg font-display-lg text-on-surface leading-tight">
+                    Crafting your <span class="text-primary italic">Luminous</span> voyage
+                </h1>
+<p class="text-body-md text-on-surface-variant px-2">
+                    Our AI is orchestrating your perfect itinerary using real-time local insights.
+                </p>
+</div>
+<!-- Dynamic Utility Tags & Progress -->
+<div class="w-full space-y-4">
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-label-sm px-2.5 py-0.5 bg-primary text-white rounded-full uppercase tracking-widest text-[10px]" id="utility-tag">BUILD</span>
+<span class="font-label-sm text-primary tracking-wide text-[11px] font-bold" id="ai-action-text">ANALYZING TRANSIT EFFICIENCY...</span>
+</div>
+<!-- Custom Progress Bar -->
+<div class="w-full h-1.5 bg-primary-fixed rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-primary transition-all duration-[2000ms] ease-out rounded-full" id="progress-bar" style="width: 15%;">
+<div class="progress-bar-shimmer absolute inset-0 w-full h-full"></div>
+</div>
+</div>
+<!-- Status List -->
+<div class="flex flex-col items-start gap-2.5 w-full bg-white/30 p-4 rounded-2xl">
+<div class="flex items-start gap-2 text-label-sm text-on-surface-variant text-[11px]" id="status-1">
+<span class="material-symbols-outlined text-[14px] text-secondary mt-0.5" data-icon="check_circle">check_circle</span>
+<span>Mapping 14 cultural landmarks</span>
+</div>
+<div class="flex items-start gap-2 text-label-sm text-on-surface-variant text-[11px]" id="status-2">
+<span class="material-symbols-outlined text-[14px] text-secondary mt-0.5" data-icon="check_circle">check_circle</span>
+<span>Syncing opening hours</span>
+</div>
+<div class="flex items-start gap-2 text-label-sm text-on-surface-variant text-[11px] animate-pulse" id="status-3">
+<span class="material-symbols-outlined text-[14px] text-primary mt-0.5" data-icon="sync">sync</span>
+<span>Optimizing subway transfer times</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Cancel Build -->
+<div class="flex flex-col items-center gap-4 w-full shrink-0 stagger-in" style="animation-delay: 0.3s;">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-[0.2em]">GoKorea Intelligence</p>
+<button class="w-full max-w-[200px] py-3 rounded-xl bg-white/60 text-on-surface-variant border border-outline-variant font-bold text-sm active:scale-95 transition-all shadow-sm" onclick="history.back()">
+                Cancel Build
+            </button>
+</div>
+</main>
+<!-- Decorative Accent -->
+<div class="absolute bottom-4 right-4 opacity-10 pointer-events-none stagger-in" style="animation-delay: 0.6s;">
+<div class="text-3xl font-extrabold text-primary select-none rotate-90 origin-bottom-right">GO KOREA</div>
+</div>
+</div>
+<script>
+    const actions = [
+        { tag: "BUILD", text: "Optimizing 14 locations...", progress: 35 },
+        { tag: "OPTIMIZE", text: "Analyzing transit efficiency...", progress: 58 },
+        { tag: "SYNC", text: "Checking opening hours...", progress: 82 },
+        { tag: "FINALIZE", text: "Polishing your guide...", progress: 95 }
+    ];
+
+    const statuses = [
+        "Calculating distance from Myeong-dong",
+        "Verifying dietary options",
+        "Integrating KTX schedules",
+        "Generating travel summaries",
+        "Fetching Jeju island weather"
+    ];
+
+    let index = 0;
+    const tagEl = document.getElementById('utility-tag');
+    const textEl = document.getElementById('ai-action-text');
+    const progressEl = document.getElementById('progress-bar');
+    const status3El = document.getElementById('status-3');
+
+    function updateSimulation() {
+        const current = actions[index % actions.length];
+        
+        textEl.style.opacity = 0;
+        tagEl.style.opacity = 0;
+        
+        setTimeout(() => {
+            tagEl.textContent = current.tag;
+            textEl.textContent = current.text;
+            progressEl.style.width = current.progress + '%';
+            
+            if(current.tag === 'OPTIMIZE') {
+                tagEl.className = "font-label-sm px-2.5 py-0.5 bg-secondary text-white rounded-full uppercase tracking-widest text-[10px]";
+                textEl.className = "font-label-sm text-secondary tracking-wide text-[11px] font-bold";
+            } else if(current.tag === 'SYNC') {
+                tagEl.className = "font-label-sm px-2.5 py-0.5 bg-tertiary-container text-on-tertiary-container rounded-full uppercase tracking-widest text-[10px]";
+                textEl.className = "font-label-sm text-on-surface-variant tracking-wide text-[11px] font-bold";
+            } else {
+                tagEl.className = "font-label-sm px-2.5 py-0.5 bg-primary text-white rounded-full uppercase tracking-widest text-[10px]";
+                textEl.className = "font-label-sm text-primary tracking-wide text-[11px] font-bold";
+            }
+
+            textEl.style.opacity = 1;
+            tagEl.style.opacity = 1;
+            
+            status3El.innerHTML = `<span class="material-symbols-outlined text-[14px] text-primary animate-spin mt-0.5" data-icon="sync">sync</span> <span>${statuses[Math.floor(Math.random() * statuses.length)]}</span>`;
+            
+            index++;
+        }, 300);
+    }
+
+    setInterval(updateSimulation, 3000);
+</script>
+</body></html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GoKoreaMate - Memories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;family=Libre+Baskerville:italic,400,700&amp;display=swap" rel="stylesheet">
+<link id="tailwind-config">
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d2d9f4",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#00dfc1",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary-fixed-variant": "#0039b3",
+                        "on-primary": "#ffffff",
+                        "outline": "#737688",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#006b5b",
+                        "inverse-primary": "#b6c4ff",
+                        "secondary-container": "#26fedc",
+                        "primary": "#0041c8",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef0ff",
+                        "tertiary-container": "#65686a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#00201a",
+                        "inverse-surface": "#283044",
+                        "on-primary-container": "#e3e6ff",
+                        "on-tertiary-container": "#e5e8ea",
+                        "outline-variant": "#c3c5d9",
+                        "error-container": "#ffdad6",
+                        "surface": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary-fixed": "#dce1ff",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#dae2fd",
+                        "surface-container-high": "#e2e7ff",
+                        "on-primary-fixed": "#001551",
+                        "on-secondary-container": "#007261",
+                        "primary-container": "#0055ff",
+                        "tertiary": "#4d5052",
+                        "on-background": "#131b2e",
+                        "surface-tint": "#004dea",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#005144",
+                        "surface-container": "#eaedff",
+                        "secondary-fixed": "#26fedc",
+                        "background": "#faf8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "container-padding": "20px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "serif": ["Libre Baskerville", "serif"]
+                    },
+                    "fontSize": {
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        .paper-texture {
+            background-color: #faf8ff;
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        }
+        .cinematic-gradient {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
+        }
+        .dashed-line {
+            background-image: repeating-linear-gradient(0deg, #c3c5d9, #c3c5d9 8px, transparent 8px, transparent 16px);
+        }
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(0, 65, 200, 0.15);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Anchor -->
+<header class="flex justify-between items-center px-container-padding w-full sticky top-0 z-50 bg-surface/90 backdrop-blur-md dark:bg-surface/90 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="travel_explore">travel_explore</span>
+<h1 class="font-display-lg text-display-lg font-extrabold text-primary dark:text-primary-fixed-dim">GoKoreaMate</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+</header>
+<main class="pb-32">
+<!-- 1. 'Your Latest Story' Hero -->
+<section class="relative w-full h-[580px] overflow-hidden">
+<div class="absolute inset-0 w-full h-full scale-105" data-alt="A breathtaking cinematic wide-angle photograph of the Haeundae beach skyline in Busan at dusk." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCEglgu8CU6SG9QC5Ytkz5VBbAv8k_xrwaWLZI7qHlIZXeEx2CAemA7K2YcAAf7ihVIExEo4QymMxxVxNhzqUK7FRl0ZaLLKb7MKmTokvpcYuI8dQIAJU2bQzdr3wYGVL62KMu9sekXG8Z5ZfI2JvlLcFSvu3c8ZXuCPOK6-hp0WXkthC1P2geeT2kV3ROyBTzpF_18NhbGr0TuGtVqL68ZsRwtVV8_OP7ogr1ZFjgPSIqObKF-VzA'); background-size: cover; background-position: center;">
+</div>
+<div class="absolute inset-0 cinematic-gradient flex flex-col justify-end p-container-padding pb-16">
+<div class="flex items-center gap-3 mb-4">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim bg-primary/40 px-3 py-1 rounded-full backdrop-blur-md border border-white/10 uppercase tracking-widest">Ai Curated</span>
+<span class="font-label-sm text-label-sm text-white/80">Oct 12 - Oct 15</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-white mb-3 font-serif italic">3 Days in Busan</h2>
+<p class="text-white/80 max-w-md font-body-md leading-relaxed mb-4">당신의 3일, AI가 가장 완벽한 페이지로 편집했습니다.</p>
+<p class="text-white/60 text-sm italic">"감성은 기록으로, 고민은 AI에게 맡기세요."</p>
+</div>
+</section>
+<!-- 2. 'Memory Timeline' Snippet -->
+<section class="px-container-padding py-12">
+<div class="flex items-center justify-between mb-10">
+<div class="space-y-1">
+<h3 class="font-title-md text-title-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+                    Memory Timeline
+                </h3>
+<p class="text-xs text-outline font-label-sm">AI-Optimized Journey flow</p>
+</div>
+<button class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-1">
+                View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="relative pl-8">
+<!-- Dashed Timeline Line -->
+<div class="absolute left-3 top-2 bottom-0 w-0.5 dashed-line"></div>
+<!-- Memory Item 1 -->
+<div class="relative mb-12 group">
+<div class="absolute -left-8 top-1 w-6 h-6 rounded-full bg-surface border-2 border-primary-fixed-dim flex items-center justify-center z-10 ai-glow">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+</div>
+<div class="paper-texture p-5 rounded-2xl border border-outline-variant/50 shadow-sm transition-all hover:shadow-md hover:-translate-y-1 relative overflow-hidden">
+<!-- AI Pick Badge -->
+<div class="absolute top-0 right-0 bg-primary text-white font-label-sm text-[10px] px-3 py-1 rounded-bl-xl flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1">stars</span>
+                        AI's Pick for your vibe
+                    </div>
+<div class="aspect-video w-full rounded-xl overflow-hidden mb-4">
+<img class="w-full h-full object-cover" data-alt="A close-up shot of steaming hot Korean street food" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkQRk-5EH2G-DGHX_P-U4bcoz8U9rUnKrORqUXsMnlNsw8vaQ4dBzEodo93zPRhgi06d3ZB2XZXtdtQm2maR5mlWt41wsXo_fAm4CRIfCJ-M3QlPVtLTDryimBEHbLbuJP7028byKFu31RI1VdznkP7BsEPetCWEO6sZie_QBW_nFvw1nXDb00hezSaoYW60BstyAv2fgbb2LTIxm8SDYOTnqU62HM9mEzKXeKgTw8sQqXW8Je0yA">
+</div>
+<p class="font-label-sm text-label-sm text-outline mb-2">Oct 13 • Jagalchi Market</p>
+<p class="text-on-surface-variant font-serif italic text-lg leading-relaxed">"The freshest seafood breakfast we've ever had. The Gukbap was soul-warming."</p>
+</div>
+<!-- AI Intervention Message -->
+<div class="mt-4 flex items-start gap-3 bg-primary/5 p-3 rounded-xl border border-primary/10">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">smart_toy</span>
+<p class="text-xs text-primary/80 font-medium leading-relaxed">
+                        시장의 활기를 충분히 느끼실 수 있도록, AI가 설계한 <span class="font-bold">25분의 여유로운 식후 산책 시간</span>입니다.
+                    </p>
+</div>
+</div>
+<!-- Memory Item 2 -->
+<div class="relative mb-8 group">
+<div class="absolute -left-8 top-1 w-6 h-6 rounded-full bg-surface border-2 border-outline-variant flex items-center justify-center z-10">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div class="paper-texture p-5 rounded-2xl border border-outline-variant/50 shadow-sm transition-all hover:shadow-md hover:-translate-y-1">
+<div class="aspect-square w-3/5 rounded-xl overflow-hidden mb-4 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A vertical portrait of a traveler in Gamcheon Culture Village" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnul4lodzo0Jk58ihFIEPUUTYJ7Hea49WvvGXFbH5SYgWy-sBDPoW9dJQLs7f6FBYgDypb34n4zZ6f04bCGAwXVdshNeNvHwxeZUuXUInpTg_Rd63CQGU5ddDIc6Mgra2UgFEGBRa2SSLvA_Ut8wUBq6Ms1CpTwnocPIRtvd47lWleeXvBtmGGY6LsgLAhs8AE-dpGvFRmsXi9bGe-dXANwcv5dldbVngpzh9Jdre6uD5LrUzS2-Q">
+</div>
+<p class="font-label-sm text-label-sm text-outline mb-2">Oct 14 • Gamcheon Village</p>
+<p class="text-on-surface-variant font-serif italic text-lg leading-relaxed">"Got lost in the colors. Worth every stair step."</p>
+</div>
+<!-- AI Intervention Message -->
+<div class="mt-4 flex items-start gap-3 bg-secondary/5 p-3 rounded-xl border border-secondary/10">
+<span class="material-symbols-outlined text-secondary text-xl mt-0.5">directions_run</span>
+<p class="text-xs text-secondary/80 font-medium leading-relaxed">
+                        다음 장소까지는 <span class="font-bold">AI가 추천하는 지름길</span>을 통해 이동 중입니다. 마을의 숨겨진 포토존을 지나가게 됩니다.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. 'Share My Journey' Card -->
+<section class="px-container-padding py-stack-lg">
+<div class="bg-primary text-on-primary p-8 rounded-[32px] relative overflow-hidden group shadow-xl">
+<!-- Background Subtle Pattern -->
+<div class="absolute -top-10 -right-10 p-4 opacity-10 transform group-hover:scale-110 transition-transform rotate-12">
+<span class="material-symbols-outlined text-[180px]" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-3 font-serif italic">Share Your Story</h3>
+<p class="mb-8 opacity-80 max-w-[260px] leading-relaxed">AI가 당신의 소중한 순간들을 모아 한 편의 영화같은 스토리를 만들었습니다.</p>
+<div class="flex gap-4">
+<button class="bg-white text-primary px-8 py-3.5 rounded-full font-title-md flex items-center gap-2 active:scale-95 transition-all shadow-lg hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+                        Share
+                    </button>
+<button class="border border-white/40 px-8 py-3.5 rounded-full font-title-md hover:bg-white/10 transition-colors backdrop-blur-sm">
+                        Preview
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. 'Ready for Another?' Section -->
+<section class="px-container-padding py-16 text-center bg-surface-container-low mt-12 rounded-t-[48px] border-t border-outline-variant/30">
+<div class="max-w-sm mx-auto">
+<div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-md border border-outline-variant/30 rotate-3 transition-transform hover:rotate-0">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="explore">explore</span>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-4 font-serif">Where to next?</h3>
+<p class="text-on-surface-variant mb-10 leading-relaxed">당신의 기록은 안전하게 보관되었습니다.<br>이제 AI와 함께 다음 여정을 기획해볼까요?</p>
+<div class="space-y-4">
+<button class="w-full bg-primary text-white py-4.5 rounded-2xl font-title-md hover:shadow-2xl transition-all flex items-center justify-center gap-2 active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    Plan New Trip with AI
+                </button>
+<button class="w-full text-primary font-label-sm text-sm hover:underline py-2 tracking-widest uppercase">
+                    Browse Inspiration
+                </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-container-padding py-4 bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-t border-outline-variant/20">
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-[10px] mt-1.5 uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-[10px] mt-1.5 uppercase tracking-tighter">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-sm text-[10px] mt-1.5 uppercase tracking-tighter">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-label-sm text-[10px] mt-1.5 uppercase tracking-tighter">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+<span class="font-label-sm text-[10px] mt-1.5 uppercase tracking-tighter">More</span>
+</a>
+</nav>
+<script>
+    // Micro-interaction for memory cards appearing on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-12');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.paper-texture, .bg-primary/5, .bg-secondary/5').forEach(el => {
+        el.classList.add('transition-all', 'duration-1000', 'ease-out', 'opacity-0', 'translate-y-12');
+        observer.observe(el);
+    });
+
+    // Toggle header visibility on scroll
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('shadow-sm');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
+            header.classList.add('shadow-sm');
+        }
+        lastScroll = currentScroll;
+        header.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+</script>
+
+
+</body></html>

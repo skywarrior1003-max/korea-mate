@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Explore Busan - GoKoreaMate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#dae2fd",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#e3e6ff",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#004dea",
+                        "on-secondary-fixed": "#00201a",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface-bright": "#faf8ff",
+                        "primary-container": "#0055ff",
+                        "on-secondary-container": "#007261",
+                        "on-tertiary-container": "#e5e8ea",
+                        "tertiary": "#4d5052",
+                        "surface-dim": "#d2d9f4",
+                        "background": "#faf8ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005144",
+                        "secondary-container": "#26fedc",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#26fedc",
+                        "on-primary-fixed": "#001551",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#131b2e",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-surface-variant": "#434656",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "secondary": "#006b5b",
+                        "tertiary-container": "#65686a",
+                        "surface-container-highest": "#dae2fd",
+                        "surface": "#faf8ff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-primary-fixed-variant": "#0039b3",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-fixed": "#dce1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#b6c4ff",
+                        "secondary-fixed-dim": "#00dfc1",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary": "#0041c8",
+                        "outline": "#737688",
+                        "on-surface": "#131b2e",
+                        "surface-container-high": "#e2e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "gutter": "16px",
+                        "container-padding": "20px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["JetBrains Mono"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-header {
+            background: rgba(250, 248, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24">
+<!-- Top Navigation Header -->
+<header class="glass-header sticky top-0 z-50 px-4 py-3 flex justify-between items-center h-16 shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-headline-md">explore</span>
+<h1 class="text-primary font-headline-lg-mobile md:text-headline-lg font-bold tracking-tight">GoKoreaMate</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</button>
+</header>
+<main class="max-w-3xl mx-auto px-4 mt-6">
+<!-- Floating Search Bar -->
+<div class="sticky top-20 z-40 mb-6 group">
+<div class="relative bg-surface-container-lowest rounded-full shadow-lg border border-outline-variant/30 flex items-center px-5 py-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary/20">
+<span class="material-symbols-outlined text-outline mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-md placeholder:text-outline/60" placeholder="Search experiences, cafes, or hidden gems" type="text"/>
+<span class="material-symbols-outlined text-primary ml-2 cursor-pointer">mic</span>
+</div>
+</div>
+<!-- View Toggle & Heading -->
+<div class="flex flex-col gap-6 mb-8">
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-lg-mobile text-on-surface">Explore Busan</h2>
+<p class="text-on-surface-variant font-body-md">Discover the soul of Korea's coastal gem.</p>
+</div>
+<div class="flex justify-center">
+<div class="inline-flex bg-surface-container-high rounded-full p-1 w-full max-w-xs shadow-inner">
+<button class="flex-1 flex items-center justify-center gap-2 py-2 rounded-full text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[20px]">map</span>
+<span class="font-title-md text-[14px]">Map</span>
+</button>
+<button class="flex-1 flex items-center justify-center gap-2 py-2 rounded-full bg-primary text-on-primary shadow-md transition-all">
+<span class="material-symbols-outlined text-[20px]">list</span>
+<span class="font-title-md text-[14px]">List</span>
+</button>
+</div>
+</div>
+<!-- Category Chips -->
+<div class="flex overflow-x-auto hide-scrollbar gap-2 -mx-4 px-4">
+<button class="flex items-center gap-2 px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container whitespace-nowrap shadow-sm hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-body-md">restaurant</span>
+<span class="font-label-sm">Gastronomy</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-body-md">visibility</span>
+<span class="font-label-sm">Sights</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-body-md">coffee</span>
+<span class="font-label-sm">Cafe</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-body-md">temple_buddhist</span>
+<span class="font-label-sm">Culture</span>
+</button>
+</div>
+</div>
+<!-- Destination Cards -->
+<section class="flex flex-col gap-8">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest rounded-[2rem] overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow group">
+<div class="relative h-[420px] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A wide angle, cinematic photograph of Haeundae Coastal Trail in Busan during a clear sunny day. The deep blue sea waves gently crash against the rocky shoreline while a wooden boardwalk winds along the lush green cliffs. In the distance, the modern glass skyscrapers of Marine City reflect the bright sunlight under a vast sky with wispy white clouds. The aesthetic is crisp, high-contrast, and evokes a sense of refreshing coastal luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV-UrpkWgTXHwd-yPpk_do4oAmUjGsZKfj013-_RAj-_Cio_NIvmH0L-y_LhGFcPZ3DYT38G0fs6H1dPVFOa1JkAZlaUctfpegFcbr1szDYPBs5Tgx_cvfE4snO5yDm8iBR7jm6IiWvZ-GLG3fEWYIltkm3AKVeGzECckG7Nfd1DVdqFxCz0yyBaphGB61MLvVDOAHl3syPKqpCPyiMAp2GrfrEfPnSBGA2kDAE--D-fSTDBGFfUk"/>
+<div class="absolute top-4 left-4 flex flex-wrap gap-2">
+<div class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface">4.9</span>
+</div>
+<div class="bg-primary/90 backdrop-blur-md px-3 py-1 rounded-full text-white">
+<span class="font-label-sm">Sights</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline-lg-mobile text-on-surface mb-2">Haeundae Coastal Trail</h3>
+<p class="text-on-surface-variant italic text-body-lg">"Absolutely breathtaking ocean views. The wooden boardwalk makes for an effortless walk through Busan's most iconic scenery."</p>
+</div>
+<button class="w-full bg-primary hover:bg-on-primary-fixed-variant text-white py-4 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined">add</span>
+<span class="font-title-md">Add to Picks</span>
+</button>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest rounded-[2rem] overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow group">
+<div class="relative h-[420px] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A vibrant, high-saturation photo of Gamcheon Culture Village in Busan at golden hour. The terraced hills are covered in countless small houses painted in pastel blues, pinks, and yellows, creating a colorful Mediterranean-style labyrinth. The warm sunset light casts long, soft shadows across the winding alleys and decorative street art. The composition captures the dense, artistic spirit of the community under a glowing orange and purple sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6PY8gZvDqjU_4CJsE55b2NkFSHEOcNkJLAXcEAo-h5pGyYKWA563Gd8JlfGPhKnB0FxokjoIZZrlZAdDZBbYyg5sFV1RtN5IoV0i6kaNiNNna4vXdvmeBqgrZXwRCs3jqjni5O4rHKxgEn_wuc5Pw-BJ8mY06k6aVaeuoCucbhZTdkVdzsK8xH-9SvihJWpgM-9WkuGHb62kS49BSzCArxAZymbsHHuBNG8Gm3dL6OdNdfoczlXQ"/>
+<div class="absolute top-4 left-4 flex flex-wrap gap-2">
+<div class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface">4.7</span>
+</div>
+<div class="bg-secondary/90 backdrop-blur-md px-3 py-1 rounded-full text-white">
+<span class="font-label-sm">Culture</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline-lg-mobile text-on-surface mb-2">Gamcheon Village</h3>
+<p class="text-on-surface-variant italic text-body-lg">"A labyrinth of color and art. Every corner is a photo opportunity with deep history and community spirit."</p>
+</div>
+<button class="w-full bg-surface-container-lowest border-2 border-primary text-primary hover:bg-primary/5 py-4 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span class="font-title-md">Add to Picks</span>
+</button>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest rounded-[2rem] overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow group">
+<div class="relative h-[420px] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="An interior shot of a minimalist, modern cafe in Busan with a massive floor-to-ceiling window overlooking the Gwangan Bridge at night. The bridge is illuminated in bright purple and blue LED lights, reflected perfectly on the dark sea surface. The cafe has warm, low-key lighting with designer wooden furniture and a single artisanal coffee cup on a concrete table. The atmosphere is quiet, sophisticated, and deeply romantic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgnywMEuMllK2SCNoMwaLIlU7z0jlvBmhDnNwDzzIiGJYmkEJntpyvIoUdRscW0gjRkB5kNV5bzTtox7INtQ6YMNoGUIuWU9dmGLo_xohXlncGUFw1I3YX0aDIj0tWuK_e4wStpsVDwT7dGlFoY19phxK1K7BUu9r9UpB0A_P6U_5slOphe9YW7Cb7nMPRmBeyW5pkE3CQeC2YACvnNpUKYdWV1rUjZ0MpFzEzzIV-TtmTbs1xEXc"/>
+<div class="absolute top-4 left-4 flex flex-wrap gap-2">
+<div class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-on-surface">4.8</span>
+</div>
+<div class="bg-tertiary-container/90 backdrop-blur-md px-3 py-1 rounded-full text-white">
+<span class="font-label-sm">Cafe</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline-lg-mobile text-on-surface mb-2">Gwangalli Night View Cafe</h3>
+<p class="text-on-surface-variant italic text-body-lg">"The best seat in the city. Watching the bridge light show with a perfect brew is the definition of Busan magic."</p>
+</div>
+<button class="w-full bg-surface-container-lowest border-2 border-primary text-primary hover:bg-primary/5 py-4 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span class="font-title-md">Add to Picks</span>
+</button>
+</div>
+</article>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 glass-header flex justify-around items-center px-2 py-3 pb-safe rounded-t-3xl shadow-[0px_-8px_24px_rgba(0,0,0,0.06)] border-t border-outline-variant/10">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-2 shadow-lg scale-105">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="text-label-sm font-label-sm font-bold mt-0.5">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-label-sm font-label-sm mt-1">Picks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2">
+<span class="material-symbols-outlined">route</span>
+<span class="text-label-sm font-label-sm mt-1">Trips</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all p-2">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-label-sm font-label-sm mt-1">More</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for Add to Picks button
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText.includes('Add to Picks')) {
+                btn.addEventListener('click', function() {
+                    const icon = this.querySelector('.material-symbols-outlined');
+                    const text = this.querySelector('.font-title-md');
+                    
+                    if (this.classList.contains('bg-primary')) {
+                        // Toggle back
+                        this.classList.replace('bg-primary', 'bg-surface-container-lowest');
+                        this.classList.add('border-2', 'border-primary', 'text-primary');
+                        icon.innerText = 'add';
+                        text.innerText = 'Add to Picks';
+                    } else {
+                        // Selected state
+                        this.classList.remove('bg-surface-container-lowest', 'border-2', 'border-primary', 'text-primary');
+                        this.classList.add('bg-primary', 'text-white');
+                        icon.innerText = 'check_circle';
+                        text.innerText = 'Added to Picks';
+                        
+                        // Small bounce animation
+                        this.animate([
+                            { transform: 'scale(1)' },
+                            { transform: 'scale(0.95)' },
+                            { transform: 'scale(1.05)' },
+                            { transform: 'scale(1)' }
+                        ], {
+                            duration: 400,
+                            easing: 'ease-out'
+                        });
+                    }
+                });
+            }
+        });
+
+        // Simple scroll reveal effect
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('article').forEach(card => {
+            card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

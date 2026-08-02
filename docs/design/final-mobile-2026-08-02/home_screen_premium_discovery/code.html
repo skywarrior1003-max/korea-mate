@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>GoKoreaMate - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#380d00",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e8e8ea",
+                    "on-surface-variant": "#434654",
+                    "error": "#ba1a1a",
+                    "tertiary": "#7b2600",
+                    "on-secondary-fixed-variant": "#004f4f",
+                    "inverse-primary": "#b2c5ff",
+                    "on-primary-fixed": "#001848",
+                    "surface-tint": "#0c56d0",
+                    "secondary-fixed": "#72f6f6",
+                    "surface-container": "#eeeef0",
+                    "tertiary-container": "#a33500",
+                    "on-background": "#1a1c1e",
+                    "secondary-fixed-dim": "#50dad9",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "surface-bright": "#f9f9fc",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#6ef3f3",
+                    "surface-container-low": "#f3f3f6",
+                    "outline-variant": "#c3c6d6",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e2e2e5",
+                    "inverse-on-surface": "#f0f0f3",
+                    "on-secondary-container": "#006e6e",
+                    "on-secondary-fixed": "#002020",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e2e2e5",
+                    "secondary": "#006a6a",
+                    "surface": "#f9f9fc",
+                    "on-primary-container": "#c4d2ff",
+                    "on-surface": "#1a1c1e",
+                    "on-tertiary-container": "#ffc6b2",
+                    "primary-container": "#0052cc",
+                    "primary-fixed": "#dae2ff",
+                    "surface-dim": "#dadadc",
+                    "primary": "#003d9b",
+                    "tertiary-fixed": "#ffdbcf",
+                    "on-secondary": "#ffffff",
+                    "background": "#f9f9fc",
+                    "inverse-surface": "#2f3133",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "outline": "#737685",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .glass-dark { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .shadow-glow { box-shadow: 0px 4px 20px rgba(0, 82, 204, 0.15); }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md sticky top-0 z-40 w-full h-16 shadow-sm flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-3 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="explore">explore</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">GoKoreaMate</h1>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:text-primary-fixed-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</header>
+<main class="max-w-container-max mx-auto">
+<!-- Hero Welcome Section -->
+<section class="px-margin-mobile mt-10 mb-8">
+<h2 class="font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight">안녕!</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">어디로 떠나볼까요?</p>
+</section>
+<!-- Search Bar -->
+<div class="px-margin-mobile mb-10">
+<div class="flex items-center bg-surface-container-low border border-outline-variant/30 px-4 py-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-outline-variant" placeholder="도시, 활동, 메이트 검색" type="text"/>
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+</div>
+</div>
+<!-- City Selection -->
+<section class="mb-16">
+<div class="flex justify-between items-end px-margin-mobile mb-4">
+<h3 class="font-headline-md text-headline-md">도시 탐색</h3>
+<button class="text-primary font-label-md hover:underline">전체보기</button>
+</div>
+<div class="flex overflow-x-auto gap-4 px-margin-mobile no-scrollbar">
+<!-- Seoul -->
+<div class="animate-fade-in-up relative min-w-[280px] h-[380px] rounded-3xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02] duration-300" style="animation-delay: 0.1s;">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-110" data-alt="A cinematic night view of the N Seoul Tower glowing in purple light" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcPcCF2MlesOxiT97BwPqrtMjmA_rUa_RaQpyT3NX0jFxHY4gdBN0vaqwJYXOer1zQ0Rpf0c_eTrbsVa0jv6kwMeaJ3QT7QpBYAP3CzgGi0bsDUwNULqFO2H7THC82RKtXyHMcWPBBEd2zcTkS2VK0HxNqsKepkCP81063iG_eUPhSimzxgCL0_LDsTA1o-8Fr4Sw2XxDb75H2ExLHUqamM1VE3XoY41nmZUXedhScb4zWXRExYAo')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+<div class="absolute top-4 left-4 glass px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="location_city">location_city</span>
+<span class="text-label-sm font-label-sm text-primary">서울</span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 glass-dark p-4 rounded-2xl border border-white/10 backdrop-blur-md">
+<p class="text-white/70 text-[10px] font-label-md mb-1 uppercase tracking-[0.2em]">도시의 리듬</p>
+<h4 class="text-white font-headline-md text-headline-md">역동적인 서울</h4>
+</div>
+</div>
+<!-- Busan -->
+<div class="animate-fade-in-up relative min-w-[280px] h-[380px] rounded-3xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02] duration-300" style="animation-delay: 0.2s;">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-110" data-alt="A breathtaking sunset at Haeundae Beach in Busan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOBPLW1tcOoQ7JxbIeDBRODcqiH5ZZe6pV9BfSU1GVngnToMoEGDS_82SxtJz2VVljumfi9mY0m3VSwnjdgcU8sGRyZR4sFoQIgHsvN7AUyGOyVK9LoE3SQKHbRzftcvb3VcK5s-IHKqkXVwfIqQStRzADAhry9nq0M6P79xbm-8sYai8xyG85n9lf_SXPQrfvAYuZHM-_MtNuZtUxqe-bIYYJMmWxVukE2uPYWEHPuYf3pT0erIA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+<div class="absolute top-4 left-4 glass px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="waves">waves</span>
+<span class="text-label-sm font-label-sm text-primary">부산</span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 glass-dark p-4 rounded-2xl border border-white/10 backdrop-blur-md">
+<p class="text-white/70 text-[10px] font-label-md mb-1 uppercase tracking-[0.2em]">바다의 에너지</p>
+<h4 class="text-white font-headline-md text-headline-md">해안의 부산</h4>
+</div>
+</div>
+<!-- Jeju -->
+<div class="animate-fade-in-up relative min-w-[280px] h-[380px] rounded-3xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02] duration-300" style="animation-delay: 0.3s;">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-110" data-alt="A lush green landscape of Hallasan Mountain in Jeju Island" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBETFDGCT-J01QlogLjAbrAF0Oh-5wswEIl6cmGyn4ZLrtgLOW8L2hM_coAhBuJcesdgzn_CWhnEvnA_ui2jJf6On6aTKda2Pn_WfCh_-giiphLYilKy_FXnX_U77obw1w8UMh0o7stDpRX5WmIKkMHM8iT7yiMWmU1UeOL4jvUYTgBpVh86l4iriCrucXYX2JPpAkKYtfv9j2c3fw62TXUbElzW_AHY07VMZL4u_CVrt1QnRCkt1E')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+<div class="absolute top-4 left-4 glass px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="landscape">landscape</span>
+<span class="text-label-sm font-label-sm text-primary">제주</span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 glass-dark p-4 rounded-2xl border border-white/10 backdrop-blur-md">
+<p class="text-white/70 text-[10px] font-label-md mb-1 uppercase tracking-[0.2em]">섬의 영혼</p>
+<h4 class="text-white font-headline-md text-headline-md">자연의 제주</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Cards -->
+<section class="px-margin-mobile grid grid-cols-2 gap-4 mb-20">
+<div class="bg-primary-container p-6 rounded-3xl relative overflow-hidden group shadow-glow">
+<div class="relative z-10 h-full flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-primary-container text-4xl" data-icon="explore">explore</span>
+<div>
+<h4 class="text-on-primary-container font-headline-md text-headline-md leading-tight mt-4">비밀 장소 발견</h4>
+<p class="text-on-primary-container/70 font-label-sm mt-1">로컬 추천 젬</p>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/10 text-[120px] group-hover:scale-110 transition-transform duration-500" data-icon="map">map</span>
+</div>
+<div class="bg-secondary-container p-6 rounded-3xl relative overflow-hidden group shadow-sm">
+<div class="relative z-10 h-full flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl" data-icon="route">route</span>
+<div>
+<h4 class="text-on-secondary-container font-headline-md text-headline-md leading-tight mt-4">나의 여행</h4>
+<p class="text-on-secondary-container/70 font-label-sm mt-1">저장된 아이템 3개</p>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/20 text-[120px] group-hover:scale-110 transition-transform duration-500" data-icon="luggage">luggage</span>
+</div>
+</section>
+<!-- Featured Recommendations -->
+<section class="mb-12">
+<div class="flex justify-between items-end px-margin-mobile mb-4">
+<h3 class="font-headline-md text-headline-md">인기 여행 일정</h3>
+<span class="material-symbols-outlined text-outline" data-icon="favorite">favorite</span>
+</div>
+<div class="px-margin-mobile space-y-4">
+<!-- Itinerary 1 -->
+<div class="flex bg-surface-container-low rounded-2xl overflow-hidden hover:bg-surface-container transition-colors p-3 gap-4 border border-outline-variant/20">
+<div class="w-24 h-24 rounded-xl overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Korean Bibimbap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzbFtVeJzqINHpw3xQ7re-FyuENV_zUd7iToFT2vyD3WtLEyaf_LWJ_T9biuwlWFhQsurRvVIc7QDhoJJ6Ch5BZ4q39IUDeNatzWC5T6Uit8RS7xydCVHOVZt81Kdz0Z37N6B-mT2FconvcNkEbqYPxv5MhkhJLRrmEj76ANYvalWjisbvaGujqq2KyidFCzkxFcdsXdkyNvFS87I-68QGx2GTTfzKYHnkwrJsv0Je1nevXLz_4KQ"/>
+</div>
+<div class="flex flex-col justify-between py-1 flex-1">
+<div>
+<h5 class="font-label-md text-on-surface">부산 3일 식도락 투어</h5>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-outline" data-icon="person">person</span>
+<span class="text-label-sm text-outline">@김치익스플로러</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-primary font-label-sm bg-primary-fixed px-2 py-0.5 rounded-full">미식가</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-error" data-icon="favorite" data-weight="fill">favorite</span>
+<span class="text-label-sm font-bold">1.2k</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Itinerary 2 -->
+<div class="flex bg-surface-container-low rounded-2xl overflow-hidden hover:bg-surface-container transition-colors p-3 gap-4 border border-outline-variant/20">
+<div class="w-24 h-24 rounded-xl overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Seoul Subway Station" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJpfv39AcqtCzVSClzYZG4Ta8D635xRU3SQ2_-VqyRKAArgeADSHX-5KBEMKUte0ggPeK2wD--vXyEWFkq0KuAg64xLHZ5f3s7XC1uPklzRYyTqozKuGaZ7TFcuzzYDeAiZXf0tkVVk5WntRdo3lo8x1BCRQBx0Kz0aunYplcywrEVnes3wckW_0IlWyMPmuheJNHxrZ-Pjol7abwvWn_Mc_4P_l-M_Tx023pp318rD1aQZw73Mjg"/>
+</div>
+<div class="flex flex-col justify-between py-1 flex-1">
+<div>
+<h5 class="font-label-md text-on-surface">서울의 숨겨진 사이버펑크 골목</h5>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-outline" data-icon="person">person</span>
+<span class="text-label-sm text-outline">@네오트래블러</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-secondary-container font-label-sm bg-secondary-container px-2 py-0.5 rounded-full">사진</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-error" data-icon="favorite" data-weight="fill">favorite</span>
+<span class="text-label-sm font-bold">856</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Micro-FAB -->
+<button class="fixed right-6 bottom-24 w-14 h-14 bg-primary text-on-primary rounded-full shadow-glow flex items-center justify-center active:scale-90 transition-all duration-200 z-30">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface/90 dark:bg-surface-dim/90 backdrop-blur-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe shadow-[0px_-8px_24px_rgba(0,0,0,0.08)] rounded-t-[32px] border-t border-outline-variant/10">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center gap-1 group" href="#">
+<div class="w-12 h-8 rounded-full bg-primary/10 flex items-center justify-center transition-all duration-300 group-hover:bg-primary/20">
+<div class="w-6 h-6 overflow-hidden flex items-center justify-center">
+<img alt="Home" class="w-[200%] max-w-none transform -translate-x-0 -translate-y-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="object-fit: none; object-position: 0 0;"/>
+</div>
+</div>
+<span class="text-label-sm font-bold text-primary">홈</span>
+</a>
+<!-- Explore -->
+<a class="flex flex-col items-center justify-center gap-1 group opacity-60 hover:opacity-100 transition-all" href="#">
+<div class="w-6 h-6 overflow-hidden flex items-center justify-center">
+<img alt="Explore" class="w-[200%] max-w-none transform -translate-x-1/2 -translate-y-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="object-fit: none; object-position: -512px 0;"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">탐색</span>
+</a>
+<!-- My Picks -->
+<a class="flex flex-col items-center justify-center gap-1 group opacity-60 hover:opacity-100 transition-all" href="#">
+<div class="w-6 h-6 overflow-hidden flex items-center justify-center">
+<img alt="Picks" class="w-[200%] max-w-none transform -translate-x-0 -translate-y-1/2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="object-fit: none; object-position: 0 -512px;"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">찜</span>
+</a>
+<!-- My Trips -->
+<a class="flex flex-col items-center justify-center gap-1 group opacity-60 hover:opacity-100 transition-all" href="#">
+<div class="w-6 h-6 overflow-hidden flex items-center justify-center">
+<img alt="Trips" class="w-[200%] max-w-none transform -translate-x-1/2 -translate-y-1/2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvzK2RgQVjcXbMEIFihXG10HWoJ_78LIKEntHAMmStwteXR7c0n4ZwpoK5dmO1abJTce7MEWSIqa6aKnSY4G4YX_Qh8kJEfTeddTNuQolWdT0e3_K489rS5kVu34gL8YiOTU8qBvhOpND3zTCc8a1BDLQIG7tmi7am79dXdReOkb8L5zo6g-oVG-LQfjxCeAVMTbnVdf0zxrOTBDQ7fpw5b5HmGp7gHKnfFokdplalTX7Y-vmO9E" style="object-fit: none; object-position: -512px -512px;"/>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">여행</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">프로필</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for city cards
+        const cityCards = document.querySelectorAll('.animate-fade-in-up');
+        cityCards.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Sticky header opacity on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.add('bg-surface/95');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.remove('bg-surface/95');
+            }
+        });
+    </script>
+</body></html>

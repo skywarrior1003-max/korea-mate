@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>GoKoreaMate - AI Trip Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#26fedc",
+                    "on-primary-container": "#e3e6ff",
+                    "inverse-on-surface": "#eef0ff",
+                    "secondary-fixed": "#26fedc",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#004dea",
+                    "on-secondary-fixed": "#00201a",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "tertiary-container": "#65686a",
+                    "on-tertiary-container": "#e5e8ea",
+                    "on-secondary-container": "#007261",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#dae2fd",
+                    "primary-container": "#0055ff",
+                    "outline-variant": "#c3c5d9",
+                    "on-primary-fixed-variant": "#0039b3",
+                    "on-surface-variant": "#434656",
+                    "surface-container": "#eaedff",
+                    "inverse-primary": "#b6c4ff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#131b2e",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#005144",
+                    "outline": "#737688",
+                    "inverse-surface": "#283044",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#00dfc1",
+                    "surface-container-low": "#f2f3ff",
+                    "tertiary": "#4d5052",
+                    "tertiary-fixed": "#e0e3e5",
+                    "secondary": "#006b5b",
+                    "surface-dim": "#d2d9f4",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#dae2fd",
+                    "primary": "#0041c8",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "primary-fixed": "#dce1ff",
+                    "surface-container-high": "#e2e7ff",
+                    "surface-bright": "#faf8ff",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "on-secondary": "#ffffff",
+                    "surface": "#faf8ff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-background": "#131b2e",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001551",
+                    "background": "#faf8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "title-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-day-tab {
+            position: relative;
+        }
+        .active-day-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #0041c8;
+            border-radius: 50%;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .timeline-line {
+            background: linear-gradient(180deg, #0041c8 0%, #0041c8 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm sticky top-0 z-40 flex justify-between items-center px-5 md:px-10 w-full h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="explore">explore</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">GoKoreaMate</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary-fixed-variant transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary-fixed-variant transition-colors font-label-md text-label-md" href="#">Explore</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold font-label-md text-label-md" href="#">Trips</a>
+</nav>
+<button class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</button>
+</div>
+<div class="md:hidden">
+<button class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-5 md:px-0 py-8 mb-32">
+<!-- Day Switcher -->
+<nav class="flex items-center justify-start gap-8 mb-8 overflow-x-auto custom-scrollbar pb-2 border-b border-outline-variant/30">
+<button class="flex flex-col items-center gap-1 active-day-tab group">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-primary">Day 1</span>
+<span class="text-title-md font-title-md text-on-surface">Oct 12</span>
+</button>
+<button class="flex flex-col items-center gap-1 opacity-40 group hover:opacity-100 transition-opacity">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-on-surface-variant">Day 2</span>
+<span class="text-title-md font-title-md text-on-surface">Oct 13</span>
+</button>
+<button class="flex flex-col items-center gap-1 opacity-40 group hover:opacity-100 transition-opacity">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-on-surface-variant">Day 3</span>
+<span class="text-title-md font-title-md text-on-surface">Oct 14</span>
+</button>
+<button class="flex flex-col items-center gap-1 opacity-20">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</nav>
+<!-- Header -->
+<div class="flex flex-col gap-4 mb-10">
+<div class="flex justify-between items-start">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface max-w-md">Busan: Coastal & Cultural Route</h2>
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="edit">edit</span>
+</button>
+</div>
+<!-- Logic Badges -->
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 bg-primary-container text-on-primary-container px-3 py-1.5 rounded-full">
+<span class="font-label-sm text-label-sm">BUILD</span>
+<span class="font-label-sm text-label-sm font-bold">15% Distance Saved</span>
+</div>
+<div class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-full">
+<span class="font-label-sm text-label-sm">OPTIMIZE</span>
+<span class="font-label-sm text-label-sm font-bold">Optimal Crowd Timing</span>
+</div>
+<div class="flex items-center gap-2 border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-full">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-label-sm text-label-sm">SYNC</span>
+<span class="font-label-sm text-label-sm">Live Traffic</span>
+</div>
+</div>
+</div>
+<!-- Mini Map Preview -->
+<div class="relative w-full h-48 rounded-xl overflow-hidden mb-12 shadow-sm border border-outline-variant/20">
+<div class="absolute inset-0 bg-surface-container" data-location="Busan, South Korea" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcLuUmnEodq6rA5kMyFHhjIX7HhX8QB9mvBQ_bQQHiM7Z8MTZCit8IPBxdR72RqAqAEkO0t5U1cUEMZmimeht6b7rlkUTuZiOaBNzg3dqN2rnol4h2DyUwm1vEkQ0UwuzEzufSemjnpRFOPojNTPq8gGRSF9s-XL7dWkaDIkF4HsEE-oAHy-SbXTejPx-fkZNsFNdZYlyIDC3W2kQgi87IUIhItob6-qOKKA3ff646pDMJm2MGEDk')"></div>
+<div class="absolute bottom-4 right-4 z-10">
+<button class="bg-primary text-on-primary px-6 py-3 rounded-full flex items-center gap-3 shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-title-md text-body-md font-semibold">View Route on Map</span>
+</button>
+</div>
+<div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<!-- Timeline -->
+<div class="relative pl-8 md:pl-12">
+<!-- Central Line -->
+<div class="absolute left-0 md:left-4 top-2 bottom-0 w-0.5 timeline-line opacity-20"></div>
+<!-- Location 1 -->
+<div class="relative mb-12 group">
+<div class="absolute -left-1 md:left-3 top-2 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-background"></div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase">09:00 AM</span>
+<h3 class="text-title-md font-title-md text-on-surface">Gamcheon Culture Village</h3>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors" data-icon="swap_horiz">swap_horiz</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant mb-4">Start your morning exploring the colorful alleyways and vibrant street art of Korea's 'Machu Picchu'.</p>
+<div class="w-full aspect-video rounded-xl overflow-hidden bg-surface-container border border-outline-variant/10 shadow-sm transition-transform hover:scale-[1.02]">
+<img class="w-full h-full object-cover" data-alt="A cinematic, wide-angle shot of Gamcheon Culture Village in Busan under soft morning light. The hillside is covered in brightly colored, cubist-style houses in shades of pastel blue, yellow, and pink. The sky is a clear, pale blue, and the atmosphere is serene and artistic. Professional photography style with high contrast and sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI2lwKXj0nQu2YyXTPbUfREjK9028KYZ0whk_XlW9nItnZIYzJHhIn890trZy6-2rpMfxBkx8z3lIkYpuMLaA_avFJO6hi1m6U-ZNMbhO7ZcNsNtH1nAT5Yd2rCapru_K-LawJmWGfngXy20HOPAM56z-lzgra-097nm_u4Qm6FcSYmtmL3XHndSXNpGM2Z_Zyg1di-6z9bHl17IOWXwRYeI5Y3X5Ee3ulVZ81xpt1Hiulqef_Yys"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Transit 1 -->
+<div class="relative my-8 pl-4 border-l-2 border-dashed border-outline-variant/40 ml-[-2px]">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="directions_bus">directions_bus</span>
+<span class="text-label-sm font-label-sm">25 min via Bus 87</span>
+<span class="text-outline-variant">•</span>
+<span class="text-label-sm font-label-sm">2.4 km</span>
+</div>
+</div>
+<!-- Location 2 -->
+<div class="relative mb-12 group">
+<div class="absolute -left-1 md:left-3 top-2 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-background"></div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase">11:30 AM</span>
+<h3 class="text-title-md font-title-md text-on-surface">Jagalchi Fish Market</h3>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors" data-icon="swap_horiz">swap_horiz</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant mb-4">Experience Korea's largest seafood market. Highly recommended for a fresh sashimi lunch by the harbor.</p>
+<div class="w-full h-48 rounded-xl overflow-hidden bg-surface-container border border-outline-variant/10 shadow-sm transition-transform hover:scale-[1.02]">
+<img class="w-full h-full object-cover" data-alt="A high-end commercial photograph of the interior of Jagalchi Fish Market in Busan. Sleek, clean stalls display a glistening variety of fresh seafood on beds of ice. The lighting is cool and professional, reflecting off wet floors and glass displays. The background shows a bustling but orderly market environment with a modern, high-tech travel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnPyyU-d229oi1dn4Duc6lcj5TwNpq-kYdrfo2RBbGHUJO0jn_SaPgvA3a40m_nLhFcfz7xz6ayQw0KDwcsuPcZtw_CtNVCAmOYdP4PK-cETiH-4zagSJfwSJSUG5Afo4nWFvw_Tk1_u1MrVbo53cmVNbOwC95e17898nusR4V4V2gv5soVQ5S17nksNa77kP21Et0pdgvym0XeOlXkCbmALkcYo5qYalf1piqm6hDB6Ol83Z861M"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Transit 2 -->
+<div class="relative my-8 pl-4 border-l-2 border-dashed border-outline-variant/40 ml-[-2px]">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="directions_walk">directions_walk</span>
+<span class="text-label-sm font-label-sm">8 min walk</span>
+<span class="text-outline-variant">•</span>
+<span class="text-label-sm font-label-sm">600 m</span>
+</div>
+</div>
+<!-- Location 3 -->
+<div class="relative mb-8 group">
+<div class="absolute -left-1 md:left-3 top-2 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-background"></div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase">02:00 PM</span>
+<h3 class="text-title-md font-title-md text-on-surface">BIFF Square & Gukje Market</h3>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors" data-icon="swap_horiz">swap_horiz</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant">A paradise for street food lovers and shoppers. Explore the historic market stalls and the handprints of movie stars.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Location Action -->
+<button class="w-full py-6 mt-4 border-2 border-dashed border-outline-variant/40 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary/40 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary" data-icon="add_location_alt">add_location_alt</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Add a location to this day</span>
+</button>
+</main>
+<!-- Floating Primary Action -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-6 md:px-0">
+<button class="w-full bg-primary text-on-primary py-5 rounded-full shadow-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="play_circle">play_circle</span>
+<span class="font-headline-md text-body-lg font-bold">Save & Start Journey</span>
+</button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-label-sm font-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-label-sm font-label-sm">My Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="route" style="font-variation-settings: 'FILL' 1;">route</span>
+<span class="text-label-sm font-label-sm">My Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high transition-all px-4 py-1 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for scrolling and state
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Simple day switcher logic (visual only)
+        const dayButtons = document.querySelectorAll('nav button');
+        dayButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                dayButtons.forEach(b => {
+                    b.classList.remove('active-day-tab');
+                    b.classList.add('opacity-40');
+                });
+                btn.classList.add('active-day-tab');
+                btn.classList.remove('opacity-40');
+            });
+        });
+    </script>
+</body></html>

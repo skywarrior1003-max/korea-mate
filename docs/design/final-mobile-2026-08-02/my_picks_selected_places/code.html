@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoKoreaMate - My Picks</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaedff",
+                        "on-surface": "#131b2e",
+                        "on-primary-fixed": "#001551",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#faf8ff",
+                        "on-primary-fixed-variant": "#0039b3",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "inverse-primary": "#b6c4ff",
+                        "secondary-container": "#26fedc",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-tertiary-container": "#e5e8ea",
+                        "surface-container-high": "#e2e7ff",
+                        "primary-fixed": "#dce1ff",
+                        "on-surface-variant": "#434656",
+                        "surface-container-low": "#f2f3ff",
+                        "primary-container": "#0055ff",
+                        "on-primary-container": "#e3e6ff",
+                        "background": "#faf8ff",
+                        "secondary-fixed-dim": "#00dfc1",
+                        "surface": "#faf8ff",
+                        "on-background": "#131b2e",
+                        "outline-variant": "#c3c5d9",
+                        "on-secondary-container": "#007261",
+                        "tertiary-container": "#65686a",
+                        "surface-tint": "#004dea",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#0041c8",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "secondary": "#006b5b",
+                        "outline": "#737688",
+                        "surface-dim": "#d2d9f4",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "inverse-surface": "#283044",
+                        "tertiary-fixed": "#e0e3e5",
+                        "tertiary": "#4d5052",
+                        "on-secondary-fixed-variant": "#005144",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed": "#00201a",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eef0ff",
+                        "surface-variant": "#dae2fd",
+                        "secondary-fixed": "#26fedc",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "container-padding": "20px",
+                        "unit": "4px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill {
+            box-shadow: 0px 4px 20px rgba(0, 85, 255, 0.08);
+        }
+        .glass-overlay {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body {
+            background-color: #faf8ff;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-on-surface/70 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-stack-md w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">menu</button>
+<span class="text-title-md font-title-md font-extrabold tracking-tight text-primary uppercase">GoKoreaMate</span>
+</div>
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">notifications</button>
+</div>
+</header>
+<main class="pt-[72px] pb-[100px] px-container-padding max-w-2xl mx-auto min-h-screen">
+<!-- Animated Background Element (Subtle atmosphere) -->
+<div class="fixed inset-0 -z-10 opacity-30 pointer-events-none">
+
+</div>
+<!-- Section Title -->
+<section class="mt-stack-lg mb-stack-md">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">My Picks</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Curate your journey through Korea.</p>
+</section>
+<!-- Segmented Tab Navigation -->
+<nav class="flex items-center gap-4 border-b border-outline-variant/30 mb-stack-lg sticky top-[72px] bg-background/90 backdrop-blur-sm py-2 z-40">
+<button class="pb-3 border-b-2 border-primary text-primary font-bold transition-all flex items-center gap-2">
+<span class="font-title-md text-[16px]">Selected</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 bg-primary-container text-white rounded-full">3</span>
+</button>
+<button class="pb-3 border-b-2 border-transparent text-outline hover:text-primary transition-all flex items-center gap-2">
+<span class="font-title-md text-[16px]">Saved</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 bg-surface-container-highest text-on-surface-variant rounded-full">12</span>
+</button>
+<button class="pb-3 border-b-2 border-transparent text-outline hover:text-primary transition-all flex items-center gap-2">
+<span class="font-title-md text-[16px]">My Places</span>
+</button>
+</nav>
+<!-- Utility Tag for AI State -->
+<div class="mb-stack-md">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary text-white rounded-full">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Build Mode Active</span>
+</div>
+</div>
+<!-- Places List (Selected Tab) -->
+<div class="flex flex-col gap-stack-md">
+<!-- Card 1: Gyeongbokgung -->
+<div class="group relative overflow-hidden rounded-xl bg-white border border-outline-variant/30 transition-all hover:active-pill">
+<div class="flex flex-col md:flex-row h-full">
+<div class="relative w-full md:w-32 h-40 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A cinematic, wide-angle shot of Gyeongbokgung Palace in Seoul during a vibrant sunset. The ancient wooden architecture with its intricate colorful dancheong patterns is bathed in golden light. In the background, modern skyscrapers rise behind the palace walls, creating a stunning contrast between tradition and modernity. The atmosphere is peaceful and majestic, with soft lens flares and deep orange hues reflecting off the stone courtyard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaBcyDDZaNcE9wa44nECYOZQcRIc3dmFOQKg40TLNE6eZTzj-Sm2pGpGcaK0x5oQZlaA2G-cVBHZK41LwfYlpOjCpg0yREAPZeh7as00A0N0Jq7AjkVGupDWHBugIYfO4_A1cIKxgIDFG6dAm7FPuJafkLuQooSNig4inXiGJIxIDKM2s9iKCHdlIiiMmo2QAi1ZJxDOXgQv8GDrFSdz1Sg3raCHgWvU3LU_AA98OSf5SsbAMrhi0"/>
+</div>
+<div class="flex-1 p-4 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-title-md text-title-md text-on-surface">Gyeongbokgung</h3>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1">close</button>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase mt-1">Palace &amp; History</span>
+<div class="flex items-center gap-1 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-body-md text-[14px]">Jongno-gu, Seoul</span>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#Traditional</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#MustVisit</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: N Seoul Tower -->
+<div class="group relative overflow-hidden rounded-xl bg-white border border-outline-variant/30 transition-all hover:active-pill">
+<div class="flex flex-col md:flex-row h-full">
+<div class="relative w-full md:w-32 h-40 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A striking night photograph of the N Seoul Tower glowing with brilliant blue light atop Namsan Mountain. The cityscape of Seoul unfolds below in a sea of glittering city lights under a deep indigo sky. The composition is clean and modern, focusing on the tower's iconic silhouette against the nocturnal atmosphere. The image evokes a sense of wonder and urban discovery, with a high-contrast corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDz1Ml4QA7FktQduuMMuDaalU-sI0I36qZoN4sWgbCMhEhmpXfp9_EC16Yq1_VJHFAWQf11XbLfocYA114DsB6-yoTkMbw_O0reGiIzOhpmHBHsX_7RXDs7EWwDOdnm4W0lfT9Lsvvg-xUn_OIXRkxXIaJJFZXi_jGAFNTmhMxCRZW9yC9REwO0IuV3m9KpMbMpYAqjGMEoa9Qf6wLgU2rs--TnPK9OZwnBkvOzk9gAbmOBRka9Gw"/>
+</div>
+<div class="flex-1 p-4 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-title-md text-title-md text-on-surface">N Seoul Tower</h3>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1">close</button>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase mt-1">Landmark &amp; View</span>
+<div class="flex items-center gap-1 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-body-md text-[14px]">Yongsan-gu, Seoul</span>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#Cityscape</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#Romantic</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Myeongdong -->
+<div class="group relative overflow-hidden rounded-xl bg-white border border-outline-variant/30 transition-all hover:active-pill">
+<div class="flex flex-col md:flex-row h-full">
+<div class="relative w-full md:w-32 h-40 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-density, energetic street scene in Myeongdong, Seoul, during the blue hour. Bright neon signs in Korean and English illuminate the bustling shopping district, with crowds of people blurred slightly to convey motion. Numerous street food stalls steam in the foreground, creating a warm, inviting atmosphere. The lighting is complex with vibrant purples, pinks, and yellows reflecting off the pavement, embodying a modern, efficient urban sprawl." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlogbNLoZeud_ju4r6B9gj5PzIN9FFmTjx9aspc12_ILkhIHNAUpYuw6G0oOlfl0IJf3BfO8H3RM17IQ7i_E8joe1m93pjpVEMWVE4c-Mk4nt1Nacwq9KRrHUKjaKgvwRAcAvEFZ8csU5QyGyTsO3UJrBJA5IJFwTSxykt4FbPkuSbgmHOmYFlmCkJvzpFb4X4G3V1IFSMLftWNcXXjMqY0R7vN6F6ihAJVrvP6BZoM3wKZDK_ArM"/>
+</div>
+<div class="flex-1 p-4 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-title-md text-title-md text-on-surface">Myeongdong</h3>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1">close</button>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase mt-1">Shopping &amp; Street Food</span>
+<div class="flex items-center gap-1 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-body-md text-[14px]">Jung-gu, Seoul</span>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#Foodie</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded">#Shopping</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty Space Filler -->
+<div class="py-8 flex flex-col items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-[48px] text-outline mb-2">add_circle</span>
+<p class="font-label-sm text-label-sm">ADD MORE PLACES TO YOUR LIST</p>
+</div>
+</div>
+</main>
+<!-- Contextual Floating Action Button -->
+<button class="fixed bottom-24 right-container-padding z-50 flex items-center gap-3 bg-primary-container text-white px-6 py-4 rounded-full shadow-lg active:scale-95 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">auto_awesome</span>
+<span class="font-title-md text-[16px] whitespace-nowrap">Build My Trip with AI</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest dark:bg-on-surface border-t border-outline-variant/30 shadow-sm rounded-t-xl py-2 pb-safe flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed-dim scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span class="font-label-sm text-label-sm">Picks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">train</span>
+<span class="font-label-sm text-label-sm">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="font-label-sm text-label-sm">More</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for tab switching
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', () => {
+                // This is a UI demo, so we'll just toggle visual state
+                document.querySelectorAll('nav button').forEach(b => {
+                    b.classList.remove('border-primary', 'text-primary', 'font-bold');
+                    b.classList.add('border-transparent', 'text-outline');
+                    b.querySelector('.bg-primary-container')?.classList.replace('bg-primary-container', 'bg-surface-container-highest');
+                    b.querySelector('.text-white')?.classList.replace('text-white', 'text-on-surface-variant');
+                });
+                button.classList.add('border-primary', 'text-primary', 'font-bold');
+                button.classList.remove('border-transparent', 'text-outline');
+                button.querySelector('.bg-surface-container-highest')?.classList.replace('bg-surface-container-highest', 'bg-primary-container');
+                button.querySelector('.text-on-surface-variant')?.classList.replace('text-on-surface-variant', 'text-white');
+            });
+        });
+
+        // Simple delete interaction for cards
+        document.querySelectorAll('button.hover\\:text-error').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.group');
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            });
+        });
+    </script>
+</body></html>
