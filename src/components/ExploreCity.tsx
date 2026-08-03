@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, Suspense } from "react";
+import { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -128,6 +128,12 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   // 기본값은 "list" — Explore 의 일감 목적은 장소 발견이고, 최종 디자인
   // explore_list_view_with_toggle_search 에서도 List 가 활성 상태다.
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
+  // NaverMap 은 마커를 [spots] 에만 의존해 다시 만든다. 그랬서 마커 클릭
+  // 콜백은 만들어질 당시의 viewMode 를 그대로 물고 있다 — 모드를 바꿔도
+  // 예전 값으로 동작한다(실측: Map 모드에서 상세 모달이 열렸다).
+  // 마커를 다시 만들지 않고 현재 값을 읽기 위해 ref 로 경유한다.
+  const viewModeRef = useRef<"list" | "map">("list");
+  useEffect(() => { viewModeRef.current = viewMode; }, [viewMode]);
   // 지도에서 고른 장소 — 하단 카드용. 상세 모달(selectedEvent)과는 별개다.
   const [mapPickedKey, setMapPickedKey] = useState<string | null>(null);
 
@@ -360,7 +366,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     if (!citySpot) return;
     // 모바일 Map 모드에서는 하단 카드를 열어 지도를 가리지 않게 한다.
     // 데스크톱 split 과 List 모드는 기존 상세 모달 동작을 그대로 유지한다.
-    if (viewMode === "map") setMapPickedKey(citySpot.sourceKey ?? String(citySpot.id));
+    if (viewModeRef.current === "map") setMapPickedKey(citySpot.sourceKey ?? String(citySpot.id));
     else setSelectedEvent(toEventItem(citySpot));
   }
 
