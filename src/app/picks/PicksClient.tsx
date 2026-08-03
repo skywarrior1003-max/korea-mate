@@ -248,7 +248,16 @@ export default function PicksClient() {
         <p className="md:hidden text-sm text-sub mb-4">{t("subtitle")}</p>
 
         {/* ── 탭 ── */}
-        <div role="tablist" aria-label={t("title")} onKeyDown={onTabKey} className="flex gap-2 mb-5">
+        {/* 밑줄형 탭 — 최종 디자인(my_picks_selected_places) 기준.
+            3등분 grid 로 두어 KO/JA/ZH 로 바뀌어도 탭 폭이 흔들리지 않게 한다.
+            비활성 탭에도 같은 두께의 투명 border 를 줘서 선택 시 내용이 1px 밀리지
+            않게 한다. 개수 배지는 tabular-nums 로 자릿수가 바뀜도 폭이 고정된다. */}
+        <div
+          role="tablist"
+          aria-label={t("title")}
+          onKeyDown={onTabKey}
+          className="grid grid-cols-3 border-b border-line mb-5"
+        >
           {TABS.map(k => (
             <button
               key={k}
@@ -258,12 +267,22 @@ export default function PicksClient() {
               aria-controls={panelId(k)}
               tabIndex={tab === k ? 0 : -1}
               onClick={() => setTab(k)}
-              className={`gkm-focus min-h-11 px-4 rounded-full text-sm font-semibold border transition-colors ${
-                tab === k ? "bg-ink text-white border-ink" : "bg-surface text-sub border-line"
+              className={`gkm-focus min-h-11 px-1 pb-2.5 -mb-px inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-sm font-bold border-b-[3px] transition-colors ${
+                tab === k
+                  ? "text-action border-action"
+                  : "text-sub border-transparent hover:text-ink"
               }`}
             >
               {t(k === "selected" ? "tabSelected" : k === "saved" ? "tabSaved" : "tabMine")}
-              {counts[k] > 0 && <span className="ml-1.5 text-xs opacity-70">{counts[k]}</span>}
+              {counts[k] > 0 && (
+                <span
+                  className={`inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full text-[11px] font-black tabular-nums ${
+                    tab === k ? "bg-action-tint text-action" : "bg-surface-dim text-faint"
+                  }`}
+                >
+                  {counts[k]}
+                </span>
+              )}
             </button>
           ))}
         </div>
