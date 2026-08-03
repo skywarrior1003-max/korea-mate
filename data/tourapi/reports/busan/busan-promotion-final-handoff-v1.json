@@ -1,0 +1,105 @@
+{
+  "report_id": "busan-promotion-final-handoff-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 프로모션 데이터 마감 핸드오프. 최종 확정 파일 목록, 다음 도시 작업 참고사항, 잔여 수동 항목 정리.",
+
+  "finalized": true,
+  "finalization_note": "부산 프로모션 수집 마감. 자동 수집 가능 범위 내 최종 확정. 잔여 항목은 manual queue로 이관.",
+
+  "confirmed_promotion_dataset": {
+    "current": {
+      "file": "busan-promotions-current-v2.json",
+      "count": 2,
+      "items": ["BTO_PRESS_5340 (ACTIVE)", "VB_EVENT_684 (ENDING_SOON)"]
+    },
+    "upcoming": {
+      "file": "busan-promotions-upcoming-v2.json",
+      "count": 0
+    },
+    "expired": {
+      "file": "busan-promotions-expired-v2.json",
+      "count": 6,
+      "items": ["VB_EVENT_201", "VB_EVENT_244", "VB_EVENT_1032", "VB_EVENT_1071", "BTO_PRESS_5226", "BTO_PRESS_5205"]
+    },
+    "unverified": {
+      "file": "busan-promotions-unverified-v2.json",
+      "count": 0
+    }
+  },
+
+  "discovery_datasets": {
+    "events": "busan-event-discovery-from-promotion-sources-v1.json (5건)",
+    "travel_products": "busan-travel-product-discovery-v1.json (17건)",
+    "reclassified": "busan-promotion-nonpromotion-reclassified-v1.json (6건 제거 기록)"
+  },
+
+  "policy_and_contract_files": {
+    "data_contract": "busan-promotion-data-contract-v1.json (v2 스키마 필드 추가)",
+    "source_registry": "busan-promotion-source-registry-v1.json",
+    "freshness_policy": "busan-promotion-freshness-policy-v1.json",
+    "dedup_policy": "busan-promotion-deduplication-policy-v1.json",
+    "multicity_template": "multicity-promotion-source-template-v1.json (Phase 6 분류 규칙 추가)"
+  },
+
+  "manual_queue": [
+    {
+      "id": "MB-001",
+      "description": "KKday 부산병 치유 프로모션 예약 URL 및 할인율 확인",
+      "target_promo_id": "BTO_PRESS_5340",
+      "field_to_update": "booking_url, discount_value, promotion_price",
+      "approach": "KKday 부산 페이지 직접 접근 또는 BTO 담당자 문의",
+      "priority": "HIGH",
+      "deadline": "2026-08-27 (프로모션 종료 전)"
+    },
+    {
+      "id": "MB-005",
+      "description": "visitbusanpass.com 현재 가격 및 한정 프로모션 확인",
+      "target_product": "VBP_PASS_001",
+      "approach": "브라우저 직접 접근 후 가격 확인. 한정 할인 존재 시 신규 PROMOTION 항목 생성.",
+      "priority": "HIGH"
+    },
+    {
+      "id": "VB-PAGE-2+",
+      "description": "VB-EVENT-SURVEY 2~13페이지 브라우저 수동 수집",
+      "url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002000000",
+      "estimated_items": 95,
+      "approach": "Playwright/Selenium 자동화 또는 수동 브라우저 페이지 이동",
+      "priority": "MEDIUM",
+      "note": "현재 약 95건 미수집. 추가 ACTIVE/UPCOMING 프로모션 존재 가능."
+    },
+    {
+      "id": "VB-SHOWS-SEP-DEC",
+      "description": "VB-SHOWS-EVENTS 9~12월 브라우저 수동 수집",
+      "url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304010000000",
+      "approach": "월별 클릭으로 이벤트 수집. Shows & Events는 주로 EVENT, PROMOTION 희박.",
+      "priority": "LOW"
+    }
+  ],
+
+  "known_technical_constraints": {
+    "vb_event_survey_pagination": "GET pageIndex/page 파라미터 무효 — JavaScript 클라이언트 사이드 렌더링 추정",
+    "vb_shows_month_filter": "GET year/month 파라미터로 8월 외 접근 불가 — 동일 이유",
+    "old_ueb_seq_detail": "ueb_seq 번호가 낮은 항목(~500 이하)은 detail URL이 관련 없는 콘텐츠 반환 — 시스템 마이그레이션 추정",
+    "kkday_403": "KKday 봇 차단 — 브라우저 수동 접근 필수",
+    "visitbusanpass_price": "가격 하위 페이지 404 — 홈페이지에서 클릭 유도 방식으로 추정"
+  },
+
+  "next_city_recommendations": [
+    "프로모션 소스 탐색 전 JavaScript 페이지네이션 여부 먼저 확인",
+    "shows/events 소스에서는 PROMOTION이 아닌 EVENT만 나올 가능성 높음 — 우선순위 낮게",
+    "BTO 유사 기관 보도자료에서 B2C 수율이 낮음 (~4%) — 제목 키워드 필터 필수",
+    "old detail URL 불일치 가능성 항상 고려 — 샘플 확인 후 수집",
+    "상시 패스·상품은 PROMOTION과 구별해 별도 TRAVEL_PRODUCT 데이터셋으로 관리"
+  ],
+
+  "multicity_template_status": "DRAFT_VALIDATED_IN_BUSAN",
+  "next_city": "경주 (재현 후 ACTIVE 승격)",
+
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "59ce9c9",
+    "commit_message": "data(content): complete and clean Busan promotion dataset"
+  }
+}

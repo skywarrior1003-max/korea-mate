@@ -1,0 +1,16 @@
+{
+  "report_id": "busan-promotions-upcoming-v2",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "schema_version": "2.0",
+  "supersedes": "busan-promotions-upcoming-v1.json",
+  "description": "2026-08-03 기준 예정(UPCOMING) 부산 B2C 프로모션. v1의 VB_SHOWS_6228(광안리 드론쇼)은 EVENT로 재분류 — 이 파일에 포함하지 않음.",
+  "count": 0,
+  "removed_from_v1": 1,
+  "note": "VB_SHOWS_6228(Gwangalli M Drone Light Show)는 무료 공공 드론쇼 — 관광객 금전적 혜택 없음. EVENT로 재분류 → busan-event-discovery-from-promotion-sources-v1.json 이동.",
+
+  "items": [],
+
+  "collection_gap": "VB-SHOWS-EVENTS 9~12월 및 VB-EVENT-SURVEY 2~13페이지 수집 불가 (JavaScript 렌더링 필요). 추가 UPCOMING 프로모션 존재 가능. manual-browser-required-items-v1.json 참조."
+}

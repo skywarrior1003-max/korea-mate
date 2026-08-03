@@ -1,8 +1,9 @@
 {
   "report_id": "busan-promotion-data-contract-v1",
-  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
   "generated_at": "2026-08-03T00:00:00Z",
-  "version": "1.0",
+  "version": "2.0",
+  "changelog": "v2: Phase 5 필드 추가 — content_class, promotion_mechanism, regular_price, promotion_price, discount_value, benefit_condition, evidence_urls, classification_reason",
   "description": "부산 프로모션 데이터셋 스키마 계약. 모든 collect/generate 스크립트는 이 계약을 따른다.",
 
   "promotion_item_schema": {
@@ -113,6 +114,53 @@
       "type": "string",
       "format": "ISO8601",
       "required": true
+    },
+    "content_class": {
+      "type": "string",
+      "enum": ["PROMOTION", "EVENT", "TRAVEL_PRODUCT", "TRAVEL_NOTICE", "B2B", "IRRELEVANT"],
+      "description": "콘텐츠 종류 최종 분류. PROMOTION만 데이터셋 포함.",
+      "required": true
+    },
+    "promotion_mechanism": {
+      "type": "string",
+      "enum": [
+        "PRICE_DISCOUNT",
+        "COUPON",
+        "FREE_GIFT",
+        "FREE_ACCESS",
+        "BUNDLE_BENEFIT",
+        "TARGETED_OFFER",
+        "MISSION_REWARD",
+        "LIMITED_CAMPAIGN",
+        "BOOKING_BENEFIT"
+      ],
+      "description": "프로모션 제공 방식. FREE_ACCESS는 원래 유료 서비스가 프로모션 기간 무료가 된 경우만. 일반 무료 공연·행사 사용 금지.",
+      "required": true
+    },
+    "regular_price": {
+      "type": "integer | null",
+      "description": "정상가(KRW). 프로모션 전 원래 가격. 미확인=null."
+    },
+    "promotion_price": {
+      "type": "integer | null",
+      "description": "프로모션 가격(KRW). 무료=0. 미확인=null."
+    },
+    "discount_value": {
+      "type": "integer | null",
+      "description": "할인액(KRW) 또는 증정 금액 상당. 예: 요트권 ₩30,000 무료 증정 → 30000."
+    },
+    "benefit_condition": {
+      "type": "string | null",
+      "description": "혜택 수령 조건 (기간, 수량 한도, 대상 자격, 예약 방법)."
+    },
+    "evidence_urls": {
+      "type": "array | null",
+      "items": "string (URL)",
+      "description": "공식 근거 URL 목록. 뉴스·블로그 URL 불허."
+    },
+    "classification_reason": {
+      "type": "string | null",
+      "description": "PROMOTION으로 분류한 근거 서술. 무엇이 혜택이고 왜 일반 행사/상품과 구별되는지."
     }
   },
 

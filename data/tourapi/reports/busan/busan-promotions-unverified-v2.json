@@ -1,0 +1,16 @@
+{
+  "report_id": "busan-promotions-unverified-v2",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "schema_version": "2.0",
+  "supersedes": "busan-promotions-unverified-v1.json",
+  "description": "2026-08-03 기준 미확인(UNVERIFIED) 부산 B2C 프로모션. v1의 VBP_PASS_001은 TRAVEL_PRODUCT로 재분류 — 이 파일에 포함하지 않음.",
+  "count": 0,
+  "removed_from_v1": 1,
+  "note": "VBP_PASS_001(비짓부산패스): 상시 판매 관광 패스 — TRAVEL_PRODUCT로 재분류 → busan-travel-product-discovery-v1.json 이동. 현재 한정 프로모션·할인 미확인. 만약 visitbusanpass.com에서 기간한정 할인·쿠폰 확인 시 해당 항목만 신규 PROMOTION으로 생성.",
+
+  "items": [],
+
+  "collection_gap_note": "VB-EVENT-SURVEY 페이지 2~13(약 95건)·VB-SHOWS-EVENTS 9~12월 수집 불가. 추가 UNVERIFIED 프로모션 존재 가능."
+}

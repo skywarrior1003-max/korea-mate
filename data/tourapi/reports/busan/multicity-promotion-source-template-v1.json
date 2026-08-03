@@ -1,8 +1,11 @@
 {
   "report_id": "multicity-promotion-source-template-v1",
-  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
   "generated_at": "2026-08-03T00:00:00Z",
-  "version": "1.0",
+  "version": "2.0",
+  "status": "DRAFT_VALIDATED_IN_BUSAN",
+  "status_note": "부산에서 1회 검증 완료. 경주에서 재현 후 ACTIVE로 승격.",
+  "changelog": "v2: Phase 6 추가 — 분류 규칙, 무료 행사 구분, JavaScript 페이지네이션 주의사항, 수집 방식 원칙",
   "description": "한국 도시별 프로모션 소스 레지스트리 템플릿. 부산(busan) 구현 기준. 신규 도시 추가 시 이 구조를 복사하여 city_code와 URL 항목을 교체.",
 
   "usage": "이 파일을 복사 후 city_code, city_name_ko, city_name_en 및 각 sources[].list_url과 detail_pattern을 해당 도시 공식 사이트로 교체. 미해당 source_id는 삭제.",
@@ -71,6 +74,60 @@
     "data_contract_reference": "busan-promotion-data-contract-v1.json",
     "dedup_policy_reference": "busan-promotion-deduplication-policy-v1.json",
     "freshness_policy_reference": "busan-promotion-freshness-policy-v1.json"
+  },
+
+  "classification_rules": {
+    "promotion_required_conditions": [
+      "할인(금액 또는 비율)",
+      "쿠폰 제공",
+      "추가 증정(BUNDLE_BENEFIT)",
+      "무료 제공(원래 유료 서비스가 프로모션 기간 무료화)",
+      "정상 상품과 구별되는 한정 특별가",
+      "대상자 전용 혜택(TARGETED_OFFER)",
+      "예약 특전",
+      "기간 한정 관광 캠페인(LIMITED_CAMPAIGN)",
+      "구매·방문·미션 참여에 따른 보상(MISSION_REWARD)"
+    ],
+    "not_promotion": [
+      "일반 축제·공연·전시",
+      "드론쇼·불꽃놀이 등 공공 무료 관람 행사",
+      "일반 관광상품(상시 판매)",
+      "상시 운영 관광 패스 (기간한정 할인 없는 경우)",
+      "상시 운영 체험 프로그램",
+      "단순 관광 뉴스·소개",
+      "장소 소개",
+      "예약 가능한 일반 상품"
+    ],
+    "free_access_rule": "FREE_ACCESS는 원래 유료인 상품·서비스가 프로모션 기간 무료가 된 경우만 사용. 처음부터 무료인 공공 행사에 사용 금지.",
+    "travel_product_vs_promotion": "상시 판매 관광상품은 TRAVEL_PRODUCT. 기간한정 특별가·번들·할인이 공식 확인된 경우만 PROMOTION.",
+    "official_source_only": "뉴스·블로그 기사를 기간·가격·혜택의 1차 근거로 사용 금지. 주최기관 공식 페이지 또는 공식 예약 페이지만 인정.",
+    "b2b_exclude": "사업자 모집·입찰·용역·협약 등 B2B 항목 수집 대상 아님.",
+    "audience_type_rule": "B2B 항목 제외. B2C 또는 MIXED(관광객 직접 사용 가능) 항목만 포함.",
+    "content_class_enum": ["PROMOTION", "EVENT", "TRAVEL_PRODUCT", "TRAVEL_NOTICE", "B2B", "IRRELEVANT"]
+  },
+
+  "collection_method": {
+    "step_1": "목록 페이지 전체 수집 (페이지네이션 완전성 확인)",
+    "step_2": "source_id·URL·제목·게시일 중복 제거",
+    "step_3": "제목과 목록 요약으로 1차 콘텐츠 분류 (PROMOTION 후보 선별)",
+    "step_4": "PROMOTION 후보만 상세 페이지 수집 (일반 행사·공연은 상세 불필요)",
+    "step_5": "공식 혜택 근거 확인 후 최종 분류",
+    "javascript_pagination_warning": "많은 한국 관광 사이트가 JavaScript 클라이언트 렌더링 페이지네이션 사용. GET 파라미터 불작동 확인 후 브라우저 자동화 필요 여부 판단.",
+    "old_record_url_warning": "같은 사이트라도 오래된 레코드는 detail URL 패턴이 다를 수 있음 — 샘플 확인 후 수집."
+  },
+
+  "verification_steps": {
+    "booking_page_check": "공식 예약·판매 페이지 URL 직접 접근 확인",
+    "price_comparison": "정가(regular_price) vs 프로모션 가격(promotion_price) 모두 확인. 하나라도 없으면 classification_reason에 명시.",
+    "period_confirmation": "기간 한정 여부 및 정확한 시작·종료일 공식 확인",
+    "target_eligibility": "대상 자격 조건(외국인·가족·선착순 등) 공식 확인",
+    "news_source_check": "뉴스 기사 단독 근거 여부 검토 — 있으면 UNVERIFIED_OFFICIAL_DETAIL"
+  },
+
+  "staleness_rechecks": {
+    "active_status": "7일 이내 재확인",
+    "ending_soon": "종료 48시간 전 재확인",
+    "sold_out_detection": "예약 페이지 접근 가능 여부 정기 확인"
   },
 
   "implemented_cities": [

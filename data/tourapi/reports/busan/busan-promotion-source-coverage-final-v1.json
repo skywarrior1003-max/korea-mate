@@ -1,0 +1,106 @@
+{
+  "report_id": "busan-promotion-source-coverage-final-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 프로모션 수집 소스별 최종 커버리지 현황. 수집 완전성 및 접근 제약 기록.",
+
+  "sources": [
+    {
+      "source_id": "VB-EVENT-SURVEY",
+      "name": "VisitBusan Event & Survey (EN)",
+      "total_items_listed": 103,
+      "total_pages": 13,
+      "pages_collected": 1,
+      "items_collected": 8,
+      "items_classified": {
+        "PROMOTION": 5,
+        "EVENT": 1,
+        "EVENT_UNCERTAIN": 2
+      },
+      "collection_status": "INCOMPLETE",
+      "blocking_issue": "페이지네이션 GET 파라미터 불작동",
+      "detail": "pageIndex=2, page=2 모두 페이지1 내용 반환. JavaScript 렌더링 또는 POST 방식 페이지네이션 추정.",
+      "workaround": "브라우저 자동화(Selenium/Playwright) 또는 수동 브라우저 접근 필요",
+      "detail_url_issue": "ueb_seq 번호가 낮은 항목(190, 201, 207, 244, 656)은 detail URL이 관련 없는 콘텐츠 반환 — URL 매핑 불일치. 최신 항목(684, 1032, 1071)은 정상 동작."
+    },
+    {
+      "source_id": "BTO-PRESS",
+      "name": "BTO 보도자료",
+      "total_pages": 116,
+      "pages_scanned": 7,
+      "pages_recommended": 10,
+      "items_scanned_approx": 70,
+      "items_classified": {
+        "PROMOTION": 3,
+        "B2B": 58,
+        "EVENT": 4,
+        "OTHER": 5
+      },
+      "b2c_promotions_found": [
+        {"board_seq": 5340, "title": "부산병 치유 프로모션", "status": "ACTIVE"},
+        {"board_seq": 5226, "title": "달빛 SUP 투어", "status": "EXPIRED"},
+        {"board_seq": 5205, "title": "시티투어 어린이날 비밀티켓", "status": "EXPIRED"}
+      ],
+      "collection_status": "PARTIAL",
+      "detail": "페이지 1~7 스캔 완료. 페이지 8~10 미스캔 (과거 2026년 초 또는 2025년 하반기 콘텐츠 예상).",
+      "b2c_yield_rate": "약 4% (70건 중 3건 B2C 프로모션)"
+    },
+    {
+      "source_id": "VB-SHOWS-EVENTS",
+      "name": "VisitBusan Shows & Events (EN)",
+      "months_attempted": ["2026-08", "2026-09", "2026-10"],
+      "months_collected": ["2026-08"],
+      "months_failed": ["2026-09", "2026-10"],
+      "items_collected": 2,
+      "items_classified": {
+        "EVENT": 2
+      },
+      "collection_status": "PARTIAL",
+      "blocking_issue": "월별 필터 GET 파라미터 불작동",
+      "detail": "year=2026&month=9 파라미터로 8월 콘텐츠가 반환됨. 각 월 필터는 클라이언트 사이드 JavaScript로 동작하는 것으로 추정.",
+      "conclusion": "Shows & Events에서 PROMOTION 분류 항목 0건. 이 소스는 EVENT 정보 소스로만 적합."
+    },
+    {
+      "source_id": "VBP-PASS",
+      "name": "Visit Busan Pass",
+      "items_found": 1,
+      "items_classified": {
+        "TRAVEL_PRODUCT": 1
+      },
+      "collection_status": "CLASSIFIED",
+      "detail": "비짓부산패스는 상시 판매 TRAVEL_PRODUCT. 현재 기간한정 프로모션 미확인. 가격 하위 페이지 접근 불가 (404). 수동 확인 필요 (MB-005).",
+      "conclusion": "PROMOTION 건수 0."
+    },
+    {
+      "source_id": "VB-TRAVEL-PRODUCTS",
+      "name": "VisitBusan Busan Travel Products (EN)",
+      "total_items": 27,
+      "items_collected": 16,
+      "pages_collected": 1,
+      "collection_status": "PARTIAL",
+      "detail": "상시 판매 관광상품 — 프로모션 데이터셋 제외. 가격 미확인. 별도 travel_products 데이터셋 권장.",
+      "conclusion": "PROMOTION 건수 0."
+    }
+  ],
+
+  "overall_coverage": {
+    "total_promotions_confirmed": 8,
+    "active_promotions": 2,
+    "expired_promotions": 6,
+    "upcoming_promotions": 0,
+    "sources_with_promotions": 2,
+    "inaccessible_pages": {
+      "VB-EVENT-SURVEY": "2~13페이지 (약 95건)",
+      "VB-SHOWS-EVENTS": "9~12월"
+    },
+    "pagination_issue": "VB-EVENT-SURVEY 및 VB-SHOWS-EVENTS 모두 GET 파라미터 페이지네이션 불작동 — JavaScript 렌더링 필요"
+  },
+
+  "manual_queue_remaining": [
+    {"id": "MB-001", "description": "KKday 부산병 예약 링크 확인", "priority": "HIGH"},
+    {"id": "MB-005", "description": "visitbusanpass.com 가격·한정 프로모션 확인", "priority": "HIGH"},
+    {"id": "VB-PAGE-2+", "description": "VB-EVENT-SURVEY 2~13페이지 브라우저 수동 수집", "priority": "MEDIUM"},
+    {"id": "VB-SHOWS-SEP-DEC", "description": "VB-SHOWS-EVENTS 9~12월 브라우저 수동 수집", "priority": "LOW"}
+  ]
+}
