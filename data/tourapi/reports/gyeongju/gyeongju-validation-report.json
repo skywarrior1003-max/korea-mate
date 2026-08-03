@@ -1,0 +1,71 @@
+{
+  "task": "TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3",
+  "phase": "Phase12_validation",
+  "executed_at": "2026-08-03T13:00:41Z",
+  "input_file": "gyeongju-enriched-candidates-v1.jsonl",
+  "output_file": "gyeongju-candidates-reviewed-v1.jsonl",
+  "output_sha256": "0f67d7ebcb8b04675d43f070ac37d6a254e277a4f8dad7eb03b48a0a1c03aa36",
+  "total_candidates": 831,
+  "total_reviewed": 831,
+  "parse_errors": 0,
+  "validation_summary": {
+    "duplicate_candidate_ids": 0,
+    "coord_out_of_range": 0,
+    "coord_missing": 152,
+    "html_residual": 0,
+    "city_contamination_suspects": 0,
+    "past_events_excluded": 0,
+    "no_title_ko": 0
+  },
+  "publishability_distribution": {
+    "review_required": 807,
+    "excluded": 24
+  },
+  "flag_distribution": {
+    "needs_content": 723,
+    "needs_image": 301,
+    "needs_hours": 508,
+    "needs_arrival": 152,
+    "needs_district": 673,
+    "needs_identity": 1
+  },
+  "issues_detail": {},
+  "samples": {
+    "needs_arrival_sample": [
+      {
+        "id": "gyeongju-GJ01-0010",
+        "title": "금장대",
+        "source": "gyeongju-city/touristDestinationService"
+      },
+      {
+        "id": "gyeongju-GJ01-0017",
+        "title": "동궁과 월지",
+        "source": "gyeongju-city/touristDestinationService"
+      },
+      {
+        "id": "gyeongju-GJ01-0033",
+        "title": "월정교",
+        "source": "gyeongju-city/touristDestinationService"
+      },
+      {
+        "id": "gyeongju-GJ01-0055",
+        "title": "서출지",
+        "source": "gyeongju-city/touristDestinationService"
+      },
+      {
+        "id": "gyeongju-GJ01-0097",
+        "title": "동대봉산 무장봉(억새군락지)",
+        "source": "gyeongju-city/touristDestinationService"
+      }
+    ],
+    "past_events_sample": [],
+    "coord_out_of_range_sample": []
+  },
+  "data_quality_notes": [
+    "EN 데이터 없음 — EngService2 0건 확인, MISSING_SOURCE 상태",
+    "GJ-01/06/07 좌표 없음 — API 미제공, needs_arrival 부여",
+    "이미지 권리 상태 RIGHTS_UNKNOWN — 모든 이미지 needs_image",
+    "GJ-08 description HTML 스트립 완료 (strip_html 적용)",
+    "GJ-09 CON_DESC1 주소 따옴표 제거 완료"
+  ]
+}

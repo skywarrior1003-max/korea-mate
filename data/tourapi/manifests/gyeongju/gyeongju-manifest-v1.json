@@ -1,0 +1,185 @@
+{
+  "task": "TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3",
+  "city": "경주",
+  "version": "v1",
+  "created_at": "2026-08-03T13:01:54Z",
+  "branch": "data/gyeongju-enrichment-v1",
+  "collection_summary": {
+    "gyeongju_city_api_primary": 351,
+    "gyeongju_city_api_image_supplementary": 1292,
+    "kto_korservice2": 559,
+    "total_primary_collected": 910,
+    "source_facts": 907,
+    "enriched_candidates": 831,
+    "excluded_candidates": 24,
+    "review_required_candidates": 807
+  },
+  "data_gaps": {
+    "kto_engservice2": "MISSING_SOURCE — areaCode=35, sigunguCode=2 조회 0건 확인",
+    "gj02_district_tourist": "SKIP — totalCount=0 (구역 코드 미제공)",
+    "coord_missing": "152건 — GJ-01/06/07 API 미제공",
+    "image_rights": "RIGHTS_UNKNOWN — 모든 이미지 권리 미확인"
+  },
+  "design_decisions": {
+    "A_image_api_strategy": "GJ-03/04/05 = IMAGE_SUPPLEMENTARY, 독립 candidate 생성 안 함",
+    "B_source_priority": "경주시 API > KTO; 설명은 출처우선순위+최신성+언어적합도 (길이 기준 아님)",
+    "C_review_queue_flags": "needs_* 시리즈만 사용; release 제외는 HOLD_* 별도"
+  },
+  "files": [
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-01-tourist-destination-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "8e9c0c816c9aa8909960a42598282833ba9a4701f856924bc5a5c5d7227b846a",
+      "size_bytes": 29140,
+      "note": "primary/attraction — 159건, 좌표 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-06-night-view-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "d2a079a8f9323e4b9a09af8ada178c2e83b144fa5fb1cebdeb0a45dc6ee05030",
+      "size_bytes": 3412,
+      "note": "primary/attraction — 10건, 좌표 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-07-observation-point-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "6efdd3a7eb3ace3e4ce5fa0a7d1984fc710e8c0c180f0bcdb99bc21cc960cafa",
+      "size_bytes": 3097,
+      "note": "primary/attraction — 10건, 좌표 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-08-menu-restaurant-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "a3be484aa0bc732ccaaab54d6a04981804b7d2e1650dfd3de2266ba3ded71468",
+      "size_bytes": 327163,
+      "note": "primary/restaurant — 111건(원본), 좌표 있음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-09-eat-hotplace-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "d9d7b2e7cd61a387bdf2e2f6c0ae8c88a4efb9d69e569c3534bc5601ae36ae3a",
+      "size_bytes": 49519,
+      "note": "primary/restaurant — 61건, 좌표 있음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-03-image-시내권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "e8178f54d2c2ebc18382c33f2822a4c4d8c6b359124fea15b2774c81d9255158",
+      "size_bytes": 1134162,
+      "note": "IMAGE_SUPPLEMENTARY — 680건, 독립 candidate 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-04-image-보문권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "03838f71cda2bc74a7ae075a63c36bc2b0d44d276f2d278629a475bc14303b97",
+      "size_bytes": 957386,
+      "note": "IMAGE_SUPPLEMENTARY — 560건, 독립 candidate 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-05-image-남산권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "sha256": "8b90910642e040a6e8f4dc5fc54b101254907e4ac85c5e9c7daa940be34fe571",
+      "size_bytes": 84464,
+      "note": "IMAGE_SUPPLEMENTARY — 52건, 독립 candidate 없음"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type12-tourist-spot-full.json",
+      "category": "raw/kto-list",
+      "sha256": "76204647c770202feb8ae115dbb9f17263f061c2743b8fc0c5481c964d14c182",
+      "size_bytes": 124859,
+      "note": "KTO/attraction — 143건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type14-cultural-facility-full.json",
+      "category": "raw/kto-list",
+      "sha256": "56ed996f210b7810ba230cca5b418427a75d26b25a735b8ae28889628a876968",
+      "size_bytes": 12259,
+      "note": "KTO/attraction — 14건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type15-festival-event-full.json",
+      "category": "raw/kto-list",
+      "sha256": "fdc6b3af103b06eef6cf97a994bc1190a2907d68ded9643dc503b0f0dec78a30",
+      "size_bytes": 21452,
+      "note": "KTO/event — 24건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type28-leisure-sport-full.json",
+      "category": "raw/kto-list",
+      "sha256": "efa99442ee916987895e2af5f8931e0916e69887b04f6dbf0e8bf2e00bf476e5",
+      "size_bytes": 52353,
+      "note": "KTO/nature — 59건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type32-accommodation-full.json",
+      "category": "raw/kto-list",
+      "sha256": "444c90652aa8106d70dea4beb732870a539e7d4fb1558ade8e33aef84bcccd53",
+      "size_bytes": 104775,
+      "note": "KTO/accommodation — 127건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type38-shopping-full.json",
+      "category": "raw/kto-list",
+      "sha256": "57c7d110bc1a9dc074a4320ceb281dcc8a57eff30e24784c93e0004fb82d3ca3",
+      "size_bytes": 8743,
+      "note": "KTO/attraction — 10건"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type39-restaurant-full.json",
+      "category": "raw/kto-list",
+      "sha256": "4866f80f124d35de27b7ef5808bf64585fd6f165a918591963de15f8aeac1e44",
+      "size_bytes": 156704,
+      "note": "KTO/restaurant — 182건"
+    },
+    {
+      "path": "data/tourapi/candidates/gyeongju/gyeongju-source-facts-v1.jsonl",
+      "category": "candidates",
+      "sha256": "db9bb2be8e07fe26750228df2f09a9c2787b32a13219bbfa45adab66ea0ed96f",
+      "size_bytes": 942092,
+      "note": "907건 정규화 소스 팩트"
+    },
+    {
+      "path": "data/tourapi/enriched/gyeongju/gyeongju-enriched-candidates-v1.jsonl",
+      "category": "enriched",
+      "sha256": "000b016bb395ca1ff488d97a817a5746ea8659181a8572d8b4afe0cf58c37d64",
+      "size_bytes": 961148,
+      "note": "831건 초기 후보 (동일성 병합 후)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-candidates-reviewed-v1.jsonl",
+      "category": "validation",
+      "sha256": "0f67d7ebcb8b04675d43f070ac37d6a254e277a4f8dad7eb03b48a0a1c03aa36",
+      "size_bytes": 1092132,
+      "note": "831건 Review Queue 플래그 부여"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-api-pilot-report.json",
+      "category": "reports",
+      "sha256": "d7d567ea3027e06bde395bbf2262217022b96eb637be810c50254b63128acf64",
+      "size_bytes": 19289,
+      "note": "API 파일럿 결과"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-collection-summary.json",
+      "category": "reports",
+      "sha256": "152b956155af6032ecf85e8bd7d2813a30b48d0e0b0e97500b234399d06f175f",
+      "size_bytes": 3706,
+      "note": "전체 수집 요약"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-normalization-stats.json",
+      "category": "reports",
+      "sha256": "57ebf0b3d2ea245c3046813352231076f7ac4edfe61e50a34c3b63aa5bc08e17",
+      "size_bytes": 11106,
+      "note": "정규화 통계"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-validation-report.json",
+      "category": "reports",
+      "sha256": "bcad3178c92df72a4e0773aa71369ef8a224ebdd0e6ecf4f743bb72a9dc3eb45",
+      "size_bytes": 2274,
+      "note": "품질 검증 보고서"
+    }
+  ],
+  "manifest_sha256": "a775560710dfdd039ab34a5678e76ca95aea469f708b167499c3fd6ff8d6ed1c"
+}
