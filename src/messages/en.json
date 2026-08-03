@@ -142,7 +142,12 @@
     "provenanceOfficial": "Official tourism source",
     "provenanceCurated": "Curated by GoKoreaMate",
     "provenanceCommunity": "Community-submitted · Reviewed by GoKoreaMate",
-    "provenanceCatalog": "GoKoreaMate catalog"
+    "provenanceCatalog": "GoKoreaMate catalog",
+    "officialInfo": "Official information",
+    "officialUnavailable": "Official information unavailable",
+    "hoursMayChange": "Opening hours may change.",
+    "checkLatest": "Check the latest information using the links below.",
+    "openExternal": "Opens {service} in a new tab"
   },
   "adaptive": {
     "inTripTitle": "You're traveling now",

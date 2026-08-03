@@ -13,7 +13,7 @@ import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
 import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
 import { addToCart, isInCart, getCart, CART_EVENT } from "@/lib/cart";
-import { getItemSourceKey } from "@/lib/place-identity";
+import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget, nextPickedKey } from "@/lib/explore/map-selection-core";
 import { trackEvent } from "@/lib/analytics";
 import type { EventItem } from "@/lib/cart";
@@ -628,12 +628,16 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                     </button>
                   );
                 })()}
-                <button
-                  onClick={() => setSelectedEvent(toEventItem(mapPickedSpot))}
-                  className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-gray-600 border border-gray-200"
-                >
-                  {tE("viewDetails")}
-                </button>
+                {/* 장소 전체 상세의 기준 화면은 /place/[id] 다. 단 상세 페이지는
+                    city_spots 로만 정적 생성되므로(dynamicParams:false), 다른 소스의
+                    장소는 route 로 보내면 404 다 — 그 때만 기존 미리보기 모달을 쓴다. */}
+                {(() => {
+                  const placeId = parseCitySpotId(selectionKey(mapPickedSpot));
+                  const cls = "gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-gray-600 border border-gray-200 inline-flex items-center";
+                  return placeId
+                    ? <Link href={`/place/${placeId}/`} className={cls}>{tE("viewDetails")}</Link>
+                    : <button onClick={() => setSelectedEvent(toEventItem(mapPickedSpot))} className={cls}>{tE("viewDetails")}</button>;
+                })()}
               </div>
             </div>
           </div>

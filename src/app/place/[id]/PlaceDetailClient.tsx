@@ -160,33 +160,66 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   const addLabel = inCart ? `✓ ${t("inItinerary")}` : `+ ${t("addToItinerary")}`;
 
-  const mapButtons = (
-    <div className="flex gap-2">
+  // 외부 연결 3개 — 네이버·구글·공식 정보를 항상 같은 자리에 둘다.
+  //
+  // 우선순위가 아니라 여행자가 비교해 고르는 병렬 수단이다. 공식 URL 이
+  // 없는 장소도 자리를 숨기지 않고 비활성으로 남긴다 — 어떤 장소는 링크가
+  // 있고 어떤 장소는 없다는 것 자체가 정보다. 빈 href 나 # 를 넣지 않는다.
+  const EXT_LINK =
+    "gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink";
+
+  const externalLinks = (
+    <div className="flex flex-col sm:flex-row gap-2">
       {maps.naver && (
         <a href={maps.naver} target="_blank" rel="noopener noreferrer"
+           aria-label={t("openExternal", { service: t("naverMaps") })}
            onClick={() => handleMapOpen("naver")}
-           className="gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink">
+           className={EXT_LINK}>
           {t("naverMaps")} ↗
         </a>
       )}
       {maps.google && (
         <a href={maps.google} target="_blank" rel="noopener noreferrer"
+           aria-label={t("openExternal", { service: t("googleMaps") })}
            onClick={() => handleMapOpen("google")}
-           className="gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink">
+           className={EXT_LINK}>
           {t("googleMaps")} ↗
         </a>
+      )}
+      {spot.official_url ? (
+        <a href={spot.official_url} target="_blank" rel="noopener noreferrer"
+           aria-label={t("openExternal", { service: officialSourceName(spot.official_url) })}
+           className={`${EXT_LINK} bg-official-tint text-official border-transparent hover:text-official`}>
+          {t("officialInfo")} ↗
+        </a>
+      ) : (
+        <span
+          aria-disabled="true"
+          className="flex-1 min-h-11 inline-flex items-center justify-center rounded-control border border-line border-dashed text-sm font-medium text-faint cursor-default"
+        >
+          {t("officialUnavailable")}
+        </span>
       )}
     </div>
   );
 
   const essentials = (
     <dl className="flex flex-col gap-3 text-sm">
-      {spot.opening_hours && (
-        <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-faint font-medium">{t("hours")}</dt>
+      {/* 운영시간은 값이 없다고 영역을 지우지 않는다. 여행자가 가장 먼저 찾는
+          정보인데 칸이 사라지면 "없다"인지 "안 보여준다"인지 알 수 없다.
+          가짜 Open now 나 휴무일을 만드는 대신 바뀔 수 있다고 말하고 아래
+          외부 연결로 보낸다. */}
+      <div className="flex gap-3">
+        <dt className="w-24 shrink-0 text-faint font-medium">{t("hours")}</dt>
+        {spot.opening_hours ? (
           <dd className="text-ink font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</dd>
-        </div>
-      )}
+        ) : (
+          <dd className="text-sub">
+            {t("hoursMayChange")}<br />
+            <span className="text-faint">{t("checkLatest")}</span>
+          </dd>
+        )}
+      </div>
       {spot.entry_fee && (
         <div className="flex gap-3">
           <dt className="w-24 shrink-0 text-faint font-medium">{t("entryFee")}</dt>
@@ -294,22 +327,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
               {(maps.naver || maps.google) && (
                 <section className="mt-6 md:hidden">
                   <h2 className="text-base font-bold text-ink mb-2">{t("openInMaps")}</h2>
-                  {mapButtons}
+                  {externalLinks}
                 </section>
               )}
 
               {/* 공식 원문 링크 — 기관명 명시 */}
-              {spot.official_url && (
-                <a
-                  href={spot.official_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="gkm-focus mt-6 flex items-center justify-between gap-3 p-4 rounded-control bg-official-tint text-official font-semibold text-sm"
-                >
-                  <span>{t("officialLink", { source: officialSourceName(spot.official_url) })}</span>
-                  <span aria-hidden>↗</span>
-                </a>
-              )}
 
               <div className="mt-8 pt-5 border-t border-line flex items-center justify-between gap-3">
                 <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sm font-semibold text-sub hover:text-ink">
@@ -344,7 +366,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 {saved ? `✓ ${t("savedState")}` : `🔖 ${t("save")}`}
               </button>
 
-              {(maps.naver || maps.google) && mapButtons}
+              {externalLinks}
 
               <button
                 onClick={handleShare}

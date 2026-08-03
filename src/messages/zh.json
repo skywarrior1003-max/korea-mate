@@ -142,7 +142,12 @@
     "provenanceOfficial": "官方旅游信息来源",
     "provenanceCurated": "GoKoreaMate 精选",
     "provenanceCommunity": "用户提交 · 已由 GoKoreaMate 审核",
-    "provenanceCatalog": "GoKoreaMate 目录"
+    "provenanceCatalog": "GoKoreaMate 目录",
+    "officialInfo": "官方信息",
+    "officialUnavailable": "暂无官方信息",
+    "hoursMayChange": "营业时间可能变更。",
+    "checkLatest": "请通过下方链接查看最新信息。",
+    "openExternal": "在新标签页打开{service}"
   },
   "adaptive": {
     "inTripTitle": "您正在旅行中",

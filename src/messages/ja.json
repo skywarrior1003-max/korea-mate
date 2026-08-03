@@ -142,7 +142,12 @@
     "provenanceOfficial": "公式観光情報ソース",
     "provenanceCurated": "GoKoreaMate キュレーション",
     "provenanceCommunity": "ユーザー投稿 · GoKoreaMate 確認済み",
-    "provenanceCatalog": "GoKoreaMate カタログ"
+    "provenanceCatalog": "GoKoreaMate カタログ",
+    "officialInfo": "公式情報",
+    "officialUnavailable": "公式情報なし",
+    "hoursMayChange": "営業時間は変更されることがあります。",
+    "checkLatest": "下のリンクで最新情報をご確認ください。",
+    "openExternal": "新しいタブで{service}を開く"
   },
   "adaptive": {
     "inTripTitle": "旅行中ですね",
