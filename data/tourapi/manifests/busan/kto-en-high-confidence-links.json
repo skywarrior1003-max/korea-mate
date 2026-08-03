@@ -1,0 +1,732 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "verdict": "HIGH_CONFIDENCE_LINK",
+  "count": 43,
+  "records": [
+    {
+      "contentid": "1024670",
+      "title_en": "Gukje Market Food Street (국제시장 먹자골목)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00141",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "1054924",
+      "title_en": "Busan Songdo Beach (부산 송도해수욕장)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00003",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "1064834",
+      "title_en": "Busan Gwangandaegyo Bridge (부산광안대교)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00017",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1385298",
+      "title_en": "Busan Fireworks Festival (부산불꽃축제)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00294",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=0.0m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "1750980",
+      "title_en": "Halmae Bokguk (할매복국)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-F-00033",
+      "distance_m": 1.0,
+      "match_signals": [
+        "coord_dist=1.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "restaurant: dist=1.0m , dist<=30m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "1950203",
+      "title_en": "Ilpum Hanwoo (일품한우)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00131",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "2351201",
+      "title_en": "KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00210",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "2401021",
+      "title_en": "Ebagu Crafts Workshop (이바구공작소)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00192",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2657019",
+      "title_en": "Marine City (마린시티)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00263",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2657026",
+      "title_en": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00236",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "266910",
+      "title_en": "Paradise Casino Busan (파라다이스 카지노 부산)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00078",
+      "distance_m": 2.7,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=2.7m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2813150",
+      "title_en": "Sondo Yonggung Suspension Bridge (송도용궁구름다리)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-VB-833",
+      "distance_m": 9.9,
+      "match_signals": [
+        "coord_dist=9.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=9.9m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2814084",
+      "title_en": "Gwangalli SUP Zone (광안리 SUP Zone)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00299",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "2835516",
+      "title_en": "Lotte World Adventure Busan (롯데월드 어드벤처 부산)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-A-00118",
+      "distance_m": 19.0,
+      "match_signals": [
+        "coord_dist=19.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=19.0m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2946741",
+      "title_en": "Yacht Tale (요트탈래)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00447",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "2946907",
+      "title_en": "Museum 1 (뮤지엄 원)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-VB-1316",
+      "distance_m": 9.6,
+      "match_signals": [
+        "coord_dist=9.6m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=9.6m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2947858",
+      "title_en": "Ahopsan Forest (아홉산숲)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00218",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "2953407",
+      "title_en": "UN Sculpture Park (UN조각공원)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00678",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2997658",
+      "title_en": "Taejongdae Spa (태종대온천찜질방)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00010",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3002402",
+      "title_en": "Jeoryeonghaean Coastal Walking Trail (절영해안산책로)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00086",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3002479",
+      "title_en": "Huin-yeoul Coastal Tunnel (영도 흰여울해안터널)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00249",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3019795",
+      "title_en": "Blue Story Hotel (블루스토리 호텔)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00689",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "3026293",
+      "title_en": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00301",
+      "distance_m": 16.4,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=16.4m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "3028273",
+      "title_en": "Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00696",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3045678",
+      "title_en": "Songdo Sky Park (송도스카이파크)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00684",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3045684",
+      "title_en": "Haeundae River Cruise (해운대리버크루즈)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00296",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3078735",
+      "title_en": "Busan Yacht Tour 3355 Marine (부산요트투어 3355마린)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00422",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "3078806",
+      "title_en": "Ocean Spa Cimer (오션스파 씨메르)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00459",
+      "distance_m": 42.9,
+      "match_signals": [
+        "coord_dist=42.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=42.9m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3078939",
+      "title_en": "F1963",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-A-00119",
+      "distance_m": 35.3,
+      "match_signals": [
+        "coord_dist=35.3m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=35.3m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3098851",
+      "title_en": "Mangsando Island, Yujuam, Yujubigak (망산도·유주암·유주비각)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00084",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "3098861",
+      "title_en": "Ttangmoesan Mountain (땅뫼산)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00287",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3098933",
+      "title_en": "Gwangalli Beach Theme Street (광안리해변 테마거리)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00012",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3098939",
+      "title_en": "Haeundae Rodeo Street (해운대 로데오거리)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00154",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    },
+    {
+      "contentid": "3335549",
+      "title_en": "The Petel Premium Suite (더펫텔프리미엄스위트)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00331",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "B02",
+      "en_lclssystm1": "AC"
+    },
+    {
+      "contentid": "3336830",
+      "title_en": "Gwangalli Ocean Leports Center (광안리 해양레포츠센터)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00682",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "3403110",
+      "title_en": "Millac The Market (밀락더마켓)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-VB-1323",
+      "distance_m": 8.7,
+      "match_signals": [
+        "coord_dist=8.7m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=8.7m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3433012",
+      "title_en": "Yangsanjip (양산집)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-F-00010",
+      "distance_m": 22.1,
+      "match_signals": [
+        "coord_dist=22.1m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "restaurant: dist=22.1m , dist<=30m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "3521718",
+      "title_en": "Osiria Coastal Walk (오시리아 해안산책로)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-VB-2397",
+      "distance_m": 16.9,
+      "match_signals": [
+        "coord_dist=16.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=16.9m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3544716",
+      "title_en": "Starry Night in Busan Night Festa",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00723",
+      "distance_m": 0.0,
+      "match_signals": [
+        "coord_dist=0.0m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=0.0m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "3547509",
+      "title_en": "Medid (메디드)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-VB-1066",
+      "distance_m": 30.9,
+      "match_signals": [
+        "coord_dist=30.9m",
+        "unique_within_50m",
+        "category_compat"
+      ],
+      "evidence": "coord_dist=30.9m, unique, category_compat",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3562686",
+      "title_en": "October Festa in Gwangalli (옥토버페스타 인 광안리)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00773",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "3565954",
+      "title_en": "Haeundae Light Festival (해운대 빛축제)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00211",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EV"
+    },
+    {
+      "contentid": "705873",
+      "title_en": "Gukje Market (국제시장)",
+      "verdict": "HIGH_CONFIDENCE_LINK",
+      "candidate_id": "busan-K-00058",
+      "distance_m": 0.0,
+      "match_signals": [
+        "existing_kto_en_link",
+        "coord_dist=0.0m",
+        "category_compat"
+      ],
+      "evidence": "기존 kto_en_link_note (EngService2 batch 매칭)",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A04",
+      "en_lclssystm1": "SH"
+    }
+  ]
+}

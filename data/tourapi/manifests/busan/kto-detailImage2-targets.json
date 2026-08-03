@@ -1,0 +1,575 @@
+{
+  "task": "TASK-KTO-DETAIL-IMAGE-RAW-BATCH-V1",
+  "created_at": "2026-07-31T06:38:34.024243Z",
+  "source": "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl",
+  "filter": "needs_image flag + curated_images=0 + KorService2 source",
+  "sort_key": "candidate_id",
+  "total": 94,
+  "candidates_sha256": "eb6bad19da70b6f465a2076649410f0d3ce574388810a44294b9f6079216e7f7",
+  "candidates": [
+    {
+      "candidate_id": "busan-K-00005",
+      "contentid": "126814",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00035",
+      "contentid": "130382",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00052",
+      "contentid": "131452",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00053",
+      "contentid": "131943",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00068",
+      "contentid": "133525",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00070",
+      "contentid": "133997",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00072",
+      "contentid": "134718",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00073",
+      "contentid": "134949",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00074",
+      "contentid": "135004",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00075",
+      "contentid": "135287",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00102",
+      "contentid": "403929",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00109",
+      "contentid": "688610",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00117",
+      "contentid": "850093",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00119",
+      "contentid": "850217",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00120",
+      "contentid": "850466",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00121",
+      "contentid": "850558",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00122",
+      "contentid": "850847",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00123",
+      "contentid": "850880",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00124",
+      "contentid": "850891",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00125",
+      "contentid": "850932",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00126",
+      "contentid": "851073",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00128",
+      "contentid": "851286",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00130",
+      "contentid": "851907",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00131",
+      "contentid": "851955",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00150",
+      "contentid": "1280921",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00169",
+      "contentid": "1805656",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00170",
+      "contentid": "1805792",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00171",
+      "contentid": "1805853",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00173",
+      "contentid": "1826034",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00175",
+      "contentid": "1855868",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00227",
+      "contentid": "2512488",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00239",
+      "contentid": "2563357",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00249",
+      "contentid": "2606221",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00255",
+      "contentid": "2610815",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00256",
+      "contentid": "2613988",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00264",
+      "contentid": "2622969",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00265",
+      "contentid": "2622984",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00266",
+      "contentid": "2624014",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00267",
+      "contentid": "2626043",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00280",
+      "contentid": "2663616",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00281",
+      "contentid": "2668102",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00289",
+      "contentid": "2696456",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00290",
+      "contentid": "2696504",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00291",
+      "contentid": "2699332",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00292",
+      "contentid": "2699563",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00299",
+      "contentid": "2708019",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00321",
+      "contentid": "2741535",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00322",
+      "contentid": "2742601",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00327",
+      "contentid": "2752168",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00354",
+      "contentid": "2775556",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00362",
+      "contentid": "2778443",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00365",
+      "contentid": "2778503",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00420",
+      "contentid": "2789451",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00430",
+      "contentid": "2807607",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00431",
+      "contentid": "2807808",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00432",
+      "contentid": "2808104",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00434",
+      "contentid": "2810909",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00438",
+      "contentid": "2818714",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00469",
+      "contentid": "2838755",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00543",
+      "contentid": "2854887",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00565",
+      "contentid": "2861958",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00566",
+      "contentid": "2862337",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00678",
+      "contentid": "2945389",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00685",
+      "contentid": "2999905",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00704",
+      "contentid": "3044610",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00720",
+      "contentid": "3336600",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00741",
+      "contentid": "3464876",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00742",
+      "contentid": "3465024",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00743",
+      "contentid": "3469447",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00744",
+      "contentid": "3469691",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00745",
+      "contentid": "3469763",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00746",
+      "contentid": "3470441",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00747",
+      "contentid": "3470558",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00748",
+      "contentid": "3470763",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00749",
+      "contentid": "3470765",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00750",
+      "contentid": "3474149",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00751",
+      "contentid": "3474164",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00752",
+      "contentid": "3510987",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00753",
+      "contentid": "3511011",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00754",
+      "contentid": "3511018",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00755",
+      "contentid": "3511057",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00756",
+      "contentid": "3511071",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00760",
+      "contentid": "3532572",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00761",
+      "contentid": "3532608",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00762",
+      "contentid": "3532630",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00763",
+      "contentid": "3532667",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00764",
+      "contentid": "3532715",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00765",
+      "contentid": "3532722",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00767",
+      "contentid": "3533137",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00768",
+      "contentid": "3533138",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00769",
+      "contentid": "3533143",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00770",
+      "contentid": "3533147",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00771",
+      "contentid": "3533150",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    },
+    {
+      "candidate_id": "busan-K-00772",
+      "contentid": "3533169",
+      "source_type": "KorService2",
+      "target_endpoint": "detailImage2"
+    }
+  ]
+}

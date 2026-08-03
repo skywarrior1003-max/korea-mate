@@ -1,0 +1,27 @@
+{
+  "verdict": "RAW_ALREADY_EXISTS",
+  "verdict_detail": "기존 raw 파일이 부산광역시_부산축제정보 서비스(apis.data.go.kr/6260000/FestivalService)의 수집 결과임. 별도 부산축제정보 API raw가 없다는 이전 감사 결론은 파일명 패턴 탐색 범위 오류로 인한 오판.",
+  "source_classification": {
+    "type": "BUSAN_OPENAPI_FESTIVAL",
+    "base_url": "https://apis.data.go.kr/6260000",
+    "service_name": "부산광역시_부산축제정보 서비스",
+    "content_platform": "visitbusan.net (이미지 URL 기반, 부산관광공사 운영)",
+    "auth_key": "TOUR_API_KEY (동일 data.go.kr serviceKey)"
+  },
+  "evidence": {
+    "raw_response_key": "getFestivalKr / getFestivalEn / ... (FestivalService 패턴)",
+    "busan_base_in_batch_script": "line 302: const BUSAN_BASE = 'https://apis.data.go.kr/6260000'",
+    "batch_state_confirms_collection": "busan-festival-ko ~ zht: status=completed, 2026-07-24T00:26:*Z",
+    "image_url_pattern": "https://www.visitbusan.net/uploadImgs/files/cntnts/..."
+  },
+  "previous_audit_error": {
+    "task": "TASK-BUSAN-OFFICIAL-SOURCE-AND-EVENT-FRESHNESS-AUDIT-V1",
+    "error": "raw 파일 탐색 시 'busan-city', 'busan_openapi', 'bsm-' 패턴만 검색 → busan-festival-*.json 파일 누락",
+    "correction": "실제 raw는 2026-07-24/batch/ 하위에 정상 존재"
+  },
+  "script_gap_finding": {
+    "issue": "현재 scripts/tourapi-busan-batch.mjs SOURCES 배열에 festival 항목 없음",
+    "impact": "스크립트 재실행 시 festival 데이터 재수집 안 됨",
+    "recommendation": "festival 5개 언어 endpoint를 SOURCES에 재추가 필요"
+  }
+}

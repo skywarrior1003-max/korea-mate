@@ -1,0 +1,23 @@
+{
+  "report_id": "kto-detail-hardening-file-hashes",
+  "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+  "generated_ts": "2026-07-29T08:11:37Z",
+  "files": {
+    "scripts/tourapi-busan-detail.mjs": "cf6063938003e42a121c7f4bade3a10ac1423e8915d24eb3451eb5db3caf6ba8",
+    "data/tourapi/reports/busan/kto-detail-hardening-verify.json": "a663952670920ecbbdc52227d9c95e37048e25c8655a9b13e45e590ccd743aa7",
+    "data/tourapi/reports/busan/kto-detail-hardening-dry-run.json": "c7a35cf9b9092d1c4744a6ac22dd5462b9a3187a78d8fcd7552bb17d9a0886e2",
+    "data/tourapi/reports/busan/kto-detail-hardening-feature-matrix.json": "e7d138a4a3c3eef48f62cdb69e9fc75536176d6de76bcd4e05c2d9cc9f068b9e",
+    "data/tourapi/reports/busan/kto-detail-hardening-secret-scan.json": "cece01ba62360fbb4b6021cf7455ff5f330a6d7d321d244d69310fb997b31ef1",
+    "data/tourapi/reports/busan/kto-detail-hardening-checkpoint-verify.json": "d28568623957101529c890bd0ca1ead91da3e9ae15c27482f1010b0156c9a636",
+    "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+  },
+  "safety": {
+    "enriched_candidates_sha": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "source_facts_sha": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "expected_enriched_sha": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "expected_source_sha": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "enriched_unchanged": true,
+    "source_unchanged": true
+  }
+}

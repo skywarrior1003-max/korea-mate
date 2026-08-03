@@ -1,0 +1,639 @@
+{
+  "task_id": "TASK-BUSAN-SOURCE-SEARCH-COVERAGE-AUDIT-V1",
+  "generated_at": "2026-08-01T05:30:31.764945+00:00",
+  "verdict": "COMPLETE",
+  "summary": {
+    "total_api_sources_audited": 4,
+    "api_sources": [
+      "KTO KorService2",
+      "KTO EngService2",
+      "VisitBusan API",
+      "KTO PhotoGalleryService1"
+    ],
+    "total_endpoints_executed": 24,
+    "total_endpoints_not_executed": 13,
+    "total_matrix_rows": 37,
+    "total_uncollected_paths": 10,
+    "high_priority_uncollected": [
+      "U-03"
+    ],
+    "data_modified": false,
+    "api_calls_made": 0
+  },
+  "key_findings": [
+    {
+      "finding_id": "F-01",
+      "title": "KTO KO/EN contentId namespace 완전 분리",
+      "detail": "KorService2(KO) 775건과 EngService2(EN) 194건의 contentId는 교집합 0건. 두 서비스는 별도 ID 체계를 사용하며 KO ID로 EN 상세정보를 조회할 수 없음. EngService2 194건에 대한 detailCommon2 EN 호출을 미실행한 것은 gap임.",
+      "severity": "HIGH"
+    },
+    {
+      "finding_id": "F-02",
+      "title": "VisitBusan ZhS/ZhT 콘텐츠 격차 (플랫폼 제한)",
+      "detail": "food ZhS: KO 437건 대비 338건 (gap=99, 22.7%). food ZhT: 286건 (gap=151, 34.6%). 이는 VisitBusan 플랫폼이 ZhS/ZhT 콘텐츠를 더 적게 제공하는 것이며 추가 수집으로 해소 불가.",
+      "severity": "INFO"
+    },
+    {
+      "finding_id": "F-03",
+      "title": "KTO 상세 API 수집 완료 (KO IDs 대상)",
+      "detail": "detailCommon2 640건 수집, overview 618건 확보. detailIntro2 543건 수집. detailImage2 95건 요청, 실제 이미지 2건 (실수율 낮음). 단 EngService2(EN) 194건 대상 detail 수집은 미실행.",
+      "severity": "MEDIUM"
+    },
+    {
+      "finding_id": "F-04",
+      "title": "PhotoGallery 완전 수집 (3,920건)",
+      "detail": "40페이지 × 100건 = 3920건 unique 수집. API totalCount=3920건과 일치. 완전성 COMPLETE.",
+      "severity": "INFO"
+    },
+    {
+      "finding_id": "F-05",
+      "title": "키워드 검색 미사용 — 누락 가능성 낮음",
+      "detail": "KTO KorService2/EngService2 양쪽 모두 keyword 검색(searchKeyword 파라미터) 미사용. areaCode=6 전체 목록이 keyword 검색의 superset이므로 신규 엔티티 누락 가능성 없음. 단, 특정 키워드로 추가 필터링이 필요한 경우 사용 고려.",
+      "severity": "INFO"
+    },
+    {
+      "finding_id": "F-06",
+      "title": "VB 숙박 섹션 미수집",
+      "detail": "KTO KorService2(ctid=32, 숙박 79건)로는 공식 숙박 데이터만 수집됨. VisitBusan accommodation 섹션(게스트하우스·부티크 호텔 등)은 API 배치 미실행. 현재 enriched candidates 숙박=82건은 KTO 기반.",
+      "severity": "LOW"
+    },
+    {
+      "finding_id": "F-07",
+      "title": "VB Experience/Shopping EN SSR 완료 — 다국어 API 배치 미실행",
+      "detail": "Experience 93건·Shopping 38건은 EN SSR scrape으로 수집 완료. KO/JA/ZhS/ZhT API 배치는 미실행 (신규 엔티티 없음, 다국어 메타데이터만 추가 가능).",
+      "severity": "LOW"
+    },
+    {
+      "finding_id": "F-08",
+      "title": "VB API totalCount=null — pagination 완전성은 last_page 기준 판정",
+      "detail": "VisitBusan API는 response에 totalCount를 제공하지 않음. pagination 완전성은 마지막 페이지 items 수 < numOfRows(100) 기준으로 판정. 전체 15개 VB batch source 중 13개 COMPLETE, food-zht 수집 86건(< 100) → COMPLETE.",
+      "severity": "INFO"
+    }
+  ],
+  "pagination_report": {
+    "method": "KTO: response.body.totalCount vs 수집 items 합계 비교. VB: API totalCount=null이므로 마지막 페이지 items 수 < numOfRows(100) 기준으로 COMPLETE 판정. PhotoGallery: totalCount 비교.",
+    "kto_ko": {
+      "endpoint": "KorService2/areaBasedList2 areaCode=6",
+      "pages": 9,
+      "total_collected": 775,
+      "total_count_api": 775,
+      "status": "COMPLETE",
+      "page_detail": [
+        {
+          "file": "kto-ko-p001.json",
+          "pageNo": 1,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p002.json",
+          "pageNo": 2,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p003.json",
+          "pageNo": 3,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p004.json",
+          "pageNo": 4,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p005.json",
+          "pageNo": 5,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p006.json",
+          "pageNo": 6,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p007.json",
+          "pageNo": 7,
+          "numOfRows": 100,
+          "totalCount": 775,
+          "items_count": 100
+        },
+        {
+          "file": "kto-ko-p008.json",
+          "pageNo": 8,
+          "numOfRows": 75,
+          "totalCount": 775,
+          "items_count": 75
+        },
+        {
+          "file": "kto-ko-p009.json",
+          "pageNo": 9,
+          "numOfRows": 0,
+          "totalCount": 775,
+          "items_count": 0
+        }
+      ]
+    },
+    "kto_en": {
+      "endpoint": "EngService2/areaBasedList2 areaCode=6",
+      "pages": 3,
+      "total_collected": 194,
+      "total_count_api": 194,
+      "status": "COMPLETE",
+      "page_detail": [
+        {
+          "file": "kto-en-p001.json",
+          "pageNo": 1,
+          "numOfRows": 100,
+          "totalCount": 194,
+          "items_count": 100,
+          "ctids_on_page": [
+            "78",
+            "80",
+            "75",
+            "79",
+            "85",
+            "82",
+            "76"
+          ]
+        },
+        {
+          "file": "kto-en-p002.json",
+          "pageNo": 2,
+          "numOfRows": 94,
+          "totalCount": 194,
+          "items_count": 94,
+          "ctids_on_page": [
+            "78",
+            "80",
+            "75",
+            "79",
+            "85",
+            "82",
+            "76"
+          ]
+        },
+        {
+          "file": "kto-en-p003.json",
+          "pageNo": 3,
+          "numOfRows": 0,
+          "totalCount": 194,
+          "items_count": 0,
+          "ctids_on_page": []
+        }
+      ]
+    },
+    "photo_gallery": {
+      "endpoint": "PhotoGalleryService1/galleryList1 busan 2026-07-27",
+      "pages": 40,
+      "total_collected": 3920,
+      "total_count_api": 3920,
+      "status": "COMPLETE",
+      "gap": 0
+    },
+    "vb_batch_summary": {
+      "attraction-ko": {
+        "pages": 3,
+        "total": 213,
+        "last_page_count": 13,
+        "status": "COMPLETE"
+      },
+      "attraction-en": {
+        "pages": 3,
+        "total": 208,
+        "last_page_count": 8,
+        "status": "COMPLETE"
+      },
+      "attraction-ja": {
+        "pages": 3,
+        "total": 209,
+        "last_page_count": 9,
+        "status": "COMPLETE"
+      },
+      "attraction-zhs": {
+        "pages": 3,
+        "total": 209,
+        "last_page_count": 9,
+        "status": "COMPLETE"
+      },
+      "attraction-zht": {
+        "pages": 3,
+        "total": 209,
+        "last_page_count": 9,
+        "status": "COMPLETE"
+      },
+      "food-ko": {
+        "pages": 5,
+        "total": 437,
+        "last_page_count": 37,
+        "status": "COMPLETE"
+      },
+      "food-en": {
+        "pages": 5,
+        "total": 436,
+        "last_page_count": 36,
+        "status": "COMPLETE"
+      },
+      "food-ja": {
+        "pages": 5,
+        "total": 438,
+        "last_page_count": 38,
+        "status": "COMPLETE"
+      },
+      "food-zhs": {
+        "pages": 4,
+        "total": 338,
+        "last_page_count": 38,
+        "status": "COMPLETE"
+      },
+      "food-zht": {
+        "pages": 3,
+        "total": 286,
+        "last_page_count": 86,
+        "status": "COMPLETE"
+      },
+      "festival-ko": {
+        "pages": 1,
+        "total": 40,
+        "last_page_count": 40,
+        "status": "COMPLETE"
+      },
+      "festival-en": {
+        "pages": 1,
+        "total": 37,
+        "last_page_count": 37,
+        "status": "COMPLETE"
+      },
+      "festival-ja": {
+        "pages": 1,
+        "total": 35,
+        "last_page_count": 35,
+        "status": "COMPLETE"
+      },
+      "festival-zhs": {
+        "pages": 1,
+        "total": 35,
+        "last_page_count": 35,
+        "status": "COMPLETE"
+      },
+      "festival-zht": {
+        "pages": 1,
+        "total": 36,
+        "last_page_count": 36,
+        "status": "COMPLETE"
+      }
+    }
+  },
+  "id_comparison": {
+    "kto_ko_unique": 775,
+    "kto_en_unique": 194,
+    "kto_ko_en_intersection": 0,
+    "kto_ko_only": 775,
+    "kto_en_only": 194,
+    "kto_ko_en_overlap_pct": 0.0,
+    "finding": "KorService2(KO)와 EngService2(EN)는 contentId namespace가 완전히 분리됨. 교집합 0건. KO ID로는 EN 정보 조회 불가 (별도 EN contentId 필요).",
+    "kto_ko_ctid_distribution": {
+      "39": {
+        "count": 348,
+        "label": "음식점"
+      },
+      "12": {
+        "count": 155,
+        "label": "관광지"
+      },
+      "32": {
+        "count": 79,
+        "label": "숙박"
+      },
+      "38": {
+        "count": 56,
+        "label": "쇼핑"
+      },
+      "14": {
+        "count": 44,
+        "label": "문화시설"
+      },
+      "28": {
+        "count": 39,
+        "label": "레포츠"
+      },
+      "15": {
+        "count": 31,
+        "label": "축제공연행사"
+      },
+      "25": {
+        "count": 23,
+        "label": "여행코스"
+      }
+    },
+    "kto_en_ctid_distribution": {
+      "76": 120,
+      "80": 25,
+      "78": 17,
+      "75": 11,
+      "82": 9,
+      "85": 7,
+      "79": 5
+    },
+    "vb_food_zhs_gap": {
+      "food_ko": 437,
+      "food_zhs": 338,
+      "gap": 99,
+      "gap_pct": 22.7,
+      "finding": "ZhS 콘텐츠가 KO보다 99건(22.7%) 적음. VisitBusan 플랫폼 자체 제공 격차"
+    },
+    "vb_food_zht_gap": {
+      "food_ko": 437,
+      "food_zht": 286,
+      "gap": 151,
+      "gap_pct": 34.6,
+      "finding": "ZhT 콘텐츠가 KO보다 151건(34.6%) 적음. 플랫폼 제공 격차 (추가 수집으로 해소 불가)"
+    },
+    "vb_attraction_zhs_gap": {
+      "attraction_ko": 213,
+      "attraction_zhs": 209,
+      "gap": 4,
+      "finding": "관광지 ZhS 4건 부족. 소규모 격차"
+    }
+  },
+  "uncollected_paths": [
+    {
+      "path_id": "U-01",
+      "source": "KTO",
+      "endpoint": "KorService2/areaBasedList2",
+      "method": "keyword 검색 (searchKeyword=부산 관련 키워드)",
+      "lang": "KO",
+      "reason_not_collected": "areaCode=6 전체 목록 수집으로 대체. 키워드 검색은 부분 집합 반환",
+      "expected_new_yield": 0,
+      "expected_yield_basis": "areaCode 쿼리가 superset이므로 신규 엔티티 기대 없음",
+      "recommendation": "수집 불필요"
+    },
+    {
+      "path_id": "U-02",
+      "source": "KTO",
+      "endpoint": "KorService2/areaBasedList2",
+      "method": "sigunguCode별 분리 쿼리 (구군 단위)",
+      "lang": "KO",
+      "reason_not_collected": "areaCode=6 전체 쿼리가 모든 sigungu를 포함",
+      "expected_new_yield": 0,
+      "expected_yield_basis": "검증 목적으로만 유효 (totalCount 구군별 세분화). 신규 ID 없음",
+      "recommendation": "검증 목적으로만 실행 고려"
+    },
+    {
+      "path_id": "U-03",
+      "source": "KTO",
+      "endpoint": "detailCommon2",
+      "method": "EngService2 194건 contentId 대상 호출",
+      "lang": "EN",
+      "reason_not_collected": "KTO EN overview 수집 미계획. 별도 pipeline 미구성",
+      "expected_new_yield": 194,
+      "expected_yield_basis": "EngService2 194건에 대한 EN overview/title 전체. 부산 관광지의 공식 EN 설명 추가 가능",
+      "recommendation": "고우선순위 — 공식 영문 설명 확보 가능"
+    },
+    {
+      "path_id": "U-04",
+      "source": "KTO",
+      "endpoint": "detailIntro2",
+      "method": "EngService2 194건 contentId 대상 호출",
+      "lang": "EN",
+      "reason_not_collected": "EN 상세 정보 pipeline 미구성",
+      "expected_new_yield": 194,
+      "expected_yield_basis": "194건 운영시간·전화번호 EN 버전 (KO 대비 다를 수 있음)",
+      "recommendation": "중간 우선순위 — U-03 이후 검토"
+    },
+    {
+      "path_id": "U-05",
+      "source": "KTO",
+      "endpoint": "PhotoGalleryService1/galleryList1",
+      "method": "galContentTypeId != 17 쿼리",
+      "lang": "KO",
+      "reason_not_collected": "17(관광지사진) 이외 타입 쿼리 미실행",
+      "expected_new_yield": 200,
+      "expected_yield_basis": "음식점·문화시설 등 타입의 공식 갤러리 사진 존재 가능. 규모 불명확 (추정 200건+)",
+      "recommendation": "저우선순위 — 이미지 보강 단계에서 검토"
+    },
+    {
+      "path_id": "U-06",
+      "source": "VisitBusan",
+      "endpoint": "getAccommodationKr/En/Ja/ZhS/ZhT",
+      "method": "busan accommodation 전체 수집",
+      "lang": "ALL",
+      "reason_not_collected": "숙박은 현재 KTO KorService2(ctid=32, 79건)로만 수집됨. VB 숙박 섹션 미탐색",
+      "expected_new_yield": 50,
+      "expected_yield_basis": "VB 숙박 섹션이 KTO 미등록 게스트하우스·boutique 숙소 추가 포함 가능. 규모 추정 50건+",
+      "recommendation": "중간 우선순위 — 숙박 데이터 보강 시 필요"
+    },
+    {
+      "path_id": "U-07",
+      "source": "VisitBusan",
+      "endpoint": "getExperienceKr/Ja/ZhS/ZhT",
+      "method": "experience 다국어 API 배치 수집",
+      "lang": "KO/JA/ZhS/ZhT",
+      "reason_not_collected": "EN SSR 수집으로 93건 확보 완료. 다국어 API 배치 미실행",
+      "expected_new_yield": 0,
+      "expected_yield_basis": "신규 엔티티 없음 (동일 93건의 다국어 버전). 다국어 이름/설명 보강 목적",
+      "recommendation": "선택적 — 다국어 name/description 보강 목적으로만 유효"
+    },
+    {
+      "path_id": "U-08",
+      "source": "VisitBusan",
+      "endpoint": "getShoppingKr/Ja/ZhS/ZhT",
+      "method": "shopping 다국어 API 배치 수집",
+      "lang": "KO/JA/ZhS/ZhT",
+      "reason_not_collected": "EN SSR 수집으로 38건 확보 완료. 다국어 API 배치 미실행",
+      "expected_new_yield": 0,
+      "expected_yield_basis": "신규 엔티티 없음 (동일 38건의 다국어 버전). 다국어 보강 목적",
+      "recommendation": "선택적 — 다국어 name/description 보강 목적으로만 유효"
+    },
+    {
+      "path_id": "U-09",
+      "source": "VisitBusan",
+      "endpoint": "getFoodZhT (busan-food-zht)",
+      "method": "food ZhT 추가 페이지 확인",
+      "lang": "ZhT",
+      "reason_not_collected": "배치 수집 3페이지 완료됐으나 마지막 페이지 86건(< 100)으로 COMPLETE 판정. 단 실제로는 KO 437건 대비 151건 부족",
+      "expected_new_yield": 0,
+      "expected_yield_basis": "VisitBusan 자체가 ZhT 콘텐츠 커버리지를 더 낮게 제공하는 것으로 판단. 신규 페이지 추가 수집으로 해소 불가 (API 미제공)",
+      "recommendation": "불필요 — ZhT 콘텐츠 격차는 플랫폼 제한으로 확인됨"
+    },
+    {
+      "path_id": "U-10",
+      "source": "KTO",
+      "endpoint": "KorService2/areaBasedList2",
+      "method": "modifiedtime 기반 delta 수집",
+      "lang": "KO",
+      "reason_not_collected": "최초 전체 수집 이후 delta 쿼리 미구현",
+      "expected_new_yield": 10,
+      "expected_yield_basis": "수집일(2026-07-23) 이후 신규 등록 또는 수정된 장소. 정기 갱신 주기로 추정 10건+/월",
+      "recommendation": "다음 도시 이후 nightly pipeline에서 구현"
+    }
+  ],
+  "standard_search_order_next_city": [
+    {
+      "step": 1,
+      "source": "KTO",
+      "endpoint": "KorService2/areaBasedList2",
+      "params": "areaCode={city_code}&numOfRows=100&pageNo=1..",
+      "lang": "KO",
+      "purpose": "기본 장소 목록 전체 수집. pagination: totalCount 기반 pageNo 순차 증가",
+      "expected_yield_class": "핵심 (음식점·관광지·숙박 등 전 카테고리)"
+    },
+    {
+      "step": 2,
+      "source": "KTO",
+      "endpoint": "EngService2/areaBasedList2",
+      "params": "areaCode={city_code}&numOfRows=100&pageNo=1..",
+      "lang": "EN",
+      "purpose": "EN contentId 목록 수집. KO와 별도 namespace. EN overview 수집의 전제",
+      "expected_yield_class": "보조 (EN 공식 데이터)"
+    },
+    {
+      "step": 3,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getAttractionKr (도시 해당 endpoint)",
+      "params": "pageIndex=1.., numOfRows=100 (auto-pagination: 빈 페이지까지)",
+      "lang": "KO",
+      "purpose": "VB 관광지 목록 전체 수집. KTO 미등재 편집팀 큐레이션 장소 포함",
+      "expected_yield_class": "핵심 (비KTO 관광지·편집 큐레이션)"
+    },
+    {
+      "step": 4,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getAttractionEn/Ja/ZhS/ZhT",
+      "params": "pageIndex=1..",
+      "lang": "EN/JA/ZhS/ZhT",
+      "purpose": "다국어 name·description 수집. 동일 UC_SEQ, 언어별 별도 호출",
+      "expected_yield_class": "보조 (다국어 메타데이터)"
+    },
+    {
+      "step": 5,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getFoodKr/En/Ja/ZhS/ZhT",
+      "params": "pageIndex=1..",
+      "lang": "ALL",
+      "purpose": "음식점 목록 전체 (VB 편집 맛집 포함). ZhS/ZhT gap 존재 가능",
+      "expected_yield_class": "핵심 (음식점 보조 소스)"
+    },
+    {
+      "step": 6,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getFestivalKr/En/Ja/ZhS/ZhT",
+      "params": "pageIndex=1..",
+      "lang": "ALL",
+      "purpose": "축제·이벤트 목록 (시즌 의존)",
+      "expected_yield_class": "보조 (이벤트 카테고리)"
+    },
+    {
+      "step": 7,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getAccommodationKr/En/... (도시 제공 시)",
+      "params": "pageIndex=1..",
+      "lang": "KO/EN",
+      "purpose": "숙박 목록. KTO 미등재 소형 숙소 포함 가능",
+      "expected_yield_class": "선택적 (숙박 보강)"
+    },
+    {
+      "step": 8,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "getExperience/getShopping 등",
+      "params": "pageIndex=1..",
+      "lang": "EN (SSR 우선)",
+      "purpose": "체험·쇼핑 섹션. SSR 방식으로 EN 수집 후 API 배치 병행",
+      "expected_yield_class": "선택적 (카테고리 확장)"
+    },
+    {
+      "step": 9,
+      "source": "KTO",
+      "endpoint": "detailCommon2",
+      "params": "contentId (KO 및 EN IDs 각각 호출)",
+      "lang": "KO/EN",
+      "purpose": "description(overview) 수집. call limit 확인 후 실행. EN ID 대상도 별도 실행",
+      "expected_yield_class": "핵심 (description 보강)",
+      "caution": "일일 호출 한도 공식 확인 필수 (data.go.kr 마이페이지)"
+    },
+    {
+      "step": 10,
+      "source": "KTO",
+      "endpoint": "detailIntro2",
+      "params": "contentId + contentTypeId (ctid 15·38 제외 권장)",
+      "lang": "KO",
+      "purpose": "운영시간·전화번호·편의시설 정보",
+      "expected_yield_class": "핵심 (hours 보강)",
+      "caution": "contentTypeId 필수 파라미터. 15/38 호출 시 empty 반환"
+    },
+    {
+      "step": 11,
+      "source": "KTO",
+      "endpoint": "detailImage2",
+      "params": "contentId + imageYN=Y (needs_image 대상만)",
+      "lang": "KO",
+      "purpose": "KTO 공식 이미지. 실수율 낮음 (부산 기준 2/94건) → 대상 사전 필터링 권장",
+      "expected_yield_class": "저우선순위 (이미지 보강, 실수율 낮음)"
+    },
+    {
+      "step": 12,
+      "source": "KTO",
+      "endpoint": "PhotoGalleryService1/galleryList1",
+      "params": "galPhotographyLocation={city_name}&galContentTypeId=17&numOfRows=100&pageNo=1..",
+      "lang": "KO",
+      "purpose": "공식 사진 갤러리. 부산 3,920건 COMPLETE. 장소 매칭으로 이미지 보강",
+      "expected_yield_class": "핵심 (이미지 소스)"
+    },
+    {
+      "step": 13,
+      "source": "VisitBusan_equivalent",
+      "endpoint": "SSR HTML scrape (attraction·food·experience·shopping)",
+      "params": "lang_cd=en 치환, uc_seq 기반 URL",
+      "lang": "EN",
+      "purpose": "VB EN 공식 영문 제목·설명 수집. API에 EN 콘텐츠 없는 경우 대안",
+      "expected_yield_class": "핵심 (name_en·description_en 보강)"
+    }
+  ],
+  "source_facts_summary": {
+    "total": 2625,
+    "by_prefix": {
+      "AttractionService": 419,
+      "FestivalService": 72,
+      "FoodService": 873,
+      "KorService2": 644,
+      "VisitBusanContent": 617
+    }
+  },
+  "enriched_candidates_summary": {
+    "total": 1642,
+    "by_category": {
+      "attraction": 717,
+      "event": 72,
+      "restaurant": 721,
+      "nature": 50,
+      "accommodation": 82
+    },
+    "source_combination_top10": {
+      "('KorService2',)": 643,
+      "('FoodService', 'VisitBusanContent')": 325,
+      "('VisitBusanContent',)": 311,
+      "('AttractionService',)": 176,
+      "('FoodService',)": 112,
+      "('FestivalService',)": 38,
+      "('AttractionService', 'VisitBusanContent')": 36,
+      "('KorService2', 'VisitBusanContent')": 1
+    }
+  },
+  "safety": {
+    "data_modified": false,
+    "api_calls_made": 0,
+    "flags_created": false,
+    "gates_created": false,
+    "push_performed": false
+  }
+}

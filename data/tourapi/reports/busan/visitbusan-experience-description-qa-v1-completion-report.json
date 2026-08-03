@@ -1,0 +1,230 @@
+{
+  "report_id": "visitbusan-experience-description-qa-v1-completion-report",
+  "task": "TASK-VISITBUSAN-EXPERIENCE-DESCRIPTION-QA",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T00:00:00+00:00",
+  "branch": "data/busan-enrichment-v1",
+
+  "prompt_validation": {
+    "issues_found": true,
+    "improvements_found": false,
+    "notes": [
+      "프롬프트 명세대로 감사 수행. EN_USEFUL 43건 전수 검토.",
+      "문제(TOO_GENERIC 설명 5건) 발견 → 프롬프트 지침에 따라 description_en 취소 + needs_content 복원 실행.",
+      "개선 아이디어 없음 — 현행 has_visit_value() 함수가 자동 탐지했으나 2건(VB-1860, VB-446)은 누락함. 자동화 한계 확인."
+    ]
+  },
+
+  "audit_scope": {
+    "input": "visitbusan-experience-en-full-v1-parsed.jsonl (EN_USEFUL 43건)",
+    "method": "10-sample 수동 감사 + 전수 43건 확장 자동 검사",
+    "manual_audited": 10,
+    "auto_expanded": 43,
+    "external_http_requests": 0,
+    "images_downloaded": false
+  },
+
+  "defect_criteria": {
+    "TOO_GENERIC": "장소 특징 없음: 시설 이름 미언급 OR 일반 활동 설명만 존재 OR 계절/감성 후크만 존재하여 방문 가치 전달 불가",
+    "CONFIRMED_USEFUL": "장소/시설명 명시, 위치·제품·프로그램 등 구체적 정보 포함",
+    "pass_threshold": "43건 중 TOO_GENERIC ≥ 10건이면 전면 재검토 권고. 실제 5건(11.6%)로 선별 취소 처리."
+  },
+
+  "manual_audit_10_sample": {
+    "sample_indices": [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
+    "verdicts": [
+      {
+        "candidate_id": "busan-VB-482",
+        "title_ko": "Templestay / 사찰 관련",
+        "en_desc_len": 155,
+        "verdict": "TOO_GENERIC",
+        "reason": "시설명 미언급, 'take a rest, escape from hustle and bustle' 일반 휴식 후크, 문장 중간 절단"
+      },
+      {
+        "candidate_id": "busan-VB-1860",
+        "title_ko": "K-POP 댄스 체험",
+        "en_desc_len": 369,
+        "verdict": "TOO_GENERIC",
+        "reason": "체크리스트 형식 ①②③④⑤, 전체 텍스트의 80%가 일반 K-POP 팬 설문, 시설명(KT&G Sangsangmadang)이 마지막 30자에만 등장"
+      },
+      {
+        "candidate_id": "busan-VB-839",
+        "title_ko": "카약 체험",
+        "en_desc_len": 373,
+        "verdict": "TOO_GENERIC",
+        "reason": "운영자·시설명 없음, COVID 사회적 거리두기 언급(구 정보), 'Kayaking, how does that sound?' 일반 권유로 마무리"
+      },
+      {
+        "candidate_id": "busan-VB-1157",
+        "title_ko": "가을 자연 체험",
+        "en_desc_len": 393,
+        "verdict": "TOO_GENERIC",
+        "reason": "시설명 없음, 계절 감성 시적 표현만, 'ride through an unforgettable memory' 등 구체적 정보 전무"
+      },
+      {
+        "candidate_id": "busan-VB-2586",
+        "title_ko": "Breakout 방탈출",
+        "en_desc_len": 229,
+        "verdict": "CONFIRMED_USEFUL",
+        "reason": "시설명 'Breakout' 명시, 광안리/해운대 지역 컨텍스트, 체험 내용 구체적"
+      },
+      {
+        "candidate_id": "busan-VB-2557",
+        "title_ko": "Sabai Sabai",
+        "en_desc_len": 243,
+        "verdict": "CONFIRMED_USEFUL",
+        "reason": "'Sabai Sabai in Jeonpo' 명시, 제품·문화·워크숍 구체적 설명"
+      },
+      {
+        "candidate_id": "busan-VB-1855",
+        "title_ko": "Ryan Holiday Kakao Friends",
+        "en_desc_len": 221,
+        "verdict": "CONFIRMED_USEFUL",
+        "reason": "시설명 명시, 캐릭터 디저트·체험존 구체적 설명"
+      },
+      {
+        "candidate_id": "busan-VB-2249",
+        "title_ko": "베이킹 하루 / Baking class",
+        "en_desc_len": 167,
+        "verdict": "CONFIRMED_USEFUL",
+        "reason": "'BAKING HARU' 명시, 수영구 위치, 베이킹 클래스 내용"
+      },
+      {
+        "candidate_id": "busan-VB-446",
+        "title_ko": "산악 자전거 체험",
+        "en_desc_len": 336,
+        "verdict": "TOO_GENERIC",
+        "reason": "시설명/운영자 없음, 산악 자전거 일반 설명('riding bicycles on off-road trails'), 위치 특정 없음"
+      },
+      {
+        "candidate_id": "busan-VB-2270",
+        "title_ko": "Wyndham Grand 호텔",
+        "en_desc_len": 186,
+        "verdict": "CONFIRMED_USEFUL",
+        "reason": "호텔명 명시, 남항대교·송도해수욕장 뷰 구체적 언급",
+        "note": "category=accommodation, experience 범주에 포함됨"
+      }
+    ],
+    "manual_summary": {
+      "CONFIRMED_USEFUL": 5,
+      "TOO_GENERIC": 5
+    }
+  },
+
+  "expanded_automated_check_43": {
+    "risk_signals_detected": 6,
+    "risk_signal_definition": "generic_start=True AND (no_has_venue OR is_low_density)",
+    "flagged": [
+      {"candidate_id": "busan-VB-482",  "verdict": "TOO_GENERIC",      "note": "수동 감사 일치"},
+      {"candidate_id": "busan-VB-839",  "verdict": "TOO_GENERIC",      "note": "수동 감사 일치"},
+      {"candidate_id": "busan-VB-1157", "verdict": "TOO_GENERIC",      "note": "수동 감사 일치"},
+      {"candidate_id": "busan-VB-1853", "verdict": "CONFIRMED_USEFUL", "note": "'Classic Camper' 캠핑테마 카페 명시"},
+      {"candidate_id": "busan-VB-518",  "verdict": "CONFIRMED_USEFUL", "note": "Busan Local Food Cooking Class, 5단계 프로그램, 자갈치 시장 명시"},
+      {"candidate_id": "busan-VB-530",  "verdict": "CONFIRMED_USEFUL", "note": "'Durufarm' 명시, 계절별 과일 체험, 서부산 산 위치"}
+    ],
+    "not_detected_by_auto": [
+      {"candidate_id": "busan-VB-1860", "verdict": "TOO_GENERIC", "reason": "has_venue=True로 오판(마지막 30자에 시설명 존재), 수동 감사에서만 TOO_GENERIC 확인"},
+      {"candidate_id": "busan-VB-446",  "verdict": "TOO_GENERIC", "reason": "generic_start=False로 오판, 수동 감사에서 시설명 부재 확인"}
+    ]
+  },
+
+  "defects_confirmed": {
+    "count": 5,
+    "defect_rate": "5/43 = 11.6%",
+    "records": [
+      {"candidate_id": "busan-VB-482",  "defect_type": "TOO_GENERIC", "desc_len": 155, "pattern": "truncated_generic_hook"},
+      {"candidate_id": "busan-VB-1860", "defect_type": "TOO_GENERIC", "desc_len": 369, "pattern": "checklist_venue_buried"},
+      {"candidate_id": "busan-VB-839",  "defect_type": "TOO_GENERIC", "desc_len": 373, "pattern": "no_venue_covid_dated"},
+      {"candidate_id": "busan-VB-1157", "defect_type": "TOO_GENERIC", "desc_len": 393, "pattern": "seasonal_poetry_no_facts"},
+      {"candidate_id": "busan-VB-446",  "defect_type": "TOO_GENERIC", "desc_len": 336, "pattern": "activity_description_no_venue"}
+    ]
+  },
+
+  "changes_applied": {
+    "description_en_revoked": 5,
+    "needs_content_restored": 5,
+    "name_en_kept": 5,
+    "source_facts_kept": "both KO and EN source facts preserved for all 5",
+    "validation_status_unchanged": "single_source preserved for all 5",
+    "external_http_requests": 0,
+    "images_downloaded": false,
+    "push": false
+  },
+
+  "publishability_impact": {
+    "gate_version": "BUSAN_PUBLISHABILITY_EN_V5",
+    "note": "EN_V5 재생성 (QA 보정 반영). V4가 protected이므로 delta는 V4 대비 기준.",
+    "env4_distribution": {
+      "publishable": 301,
+      "publishable_with_caveat": 448,
+      "pending_source": 820,
+      "pending_review": 73
+    },
+    "env5_pre_qa_distribution": {
+      "publishable": 303,
+      "publishable_with_caveat": 488,
+      "pending_source": 777,
+      "pending_review": 74
+    },
+    "env5_post_qa_distribution": {
+      "publishable": 303,
+      "publishable_with_caveat": 483,
+      "pending_source": 782,
+      "pending_review": 74
+    },
+    "qa_delta": {
+      "publishable": 0,
+      "publishable_with_caveat": -5,
+      "pending_source": "+5",
+      "pending_review": 0
+    },
+    "final_publishable_total": 786,
+    "final_publishable_total_note": "publishable(303) + publishable_with_caveat(483) = 786건 공개 가능"
+  },
+
+  "quality_notes": {
+    "has_visit_value_detection_gap": "자동 has_visit_value() 함수가 VB-1860(venue buried at end), VB-446(no venue but generic_start=False)을 탐지 실패. 자동화 F2 miss rate = 2/5 = 40%.",
+    "recommendation": "향후 experience 설명 수집 시 venue_name_check (시설명이 첫 절반에 등장하는지)를 추가 기준으로 검토 가능. 단, 현재 37건 CONFIRMED_USEFUL은 정상.",
+    "editorial_pattern_note": "VisitBusan experience 설명의 약 11%는 편집팀 계절 훅(seasonal hook) 패턴으로 작성됨. 시설명이 없거나 마지막 줄에만 등장하는 경우 방문 가치 전달 부족."
+  },
+
+  "file_integrity": {
+    "candidate_count_1642": true,
+    "protected_files_unchanged": true,
+    "protected_files": [
+      "busan-publishability-baseline-v1.json",
+      "busan-publishability-baseline-v1-details.jsonl",
+      "busan-publishability-en-v2.json",
+      "busan-publishability-en-v3.json",
+      "busan-publishability-en-v3-details.jsonl",
+      "busan-publishability-en-v4.json",
+      "busan-publishability-en-v4-details.jsonl"
+    ]
+  },
+
+  "validation_checks": {
+    "candidate_count_1642": true,
+    "defect_count_5": true,
+    "description_en_removed_5": true,
+    "needs_content_restored_5": true,
+    "name_en_preserved_5": true,
+    "source_facts_preserved": true,
+    "protected_files_unchanged": true,
+    "external_requests": 0,
+    "push": false,
+    "new_review_flags_created": false,
+    "arbitrary_translation_performed": false,
+    "verdict_result": "PASS"
+  },
+
+  "outputs": {
+    "updated_files": [
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/reports/busan/busan-publishability-en-v5.json",
+      "data/tourapi/reports/busan/busan-publishability-en-v5-details.jsonl"
+    ],
+    "new_report_files": [
+      "data/tourapi/reports/busan/visitbusan-experience-description-qa-v1-completion-report.json"
+    ]
+  }
+}

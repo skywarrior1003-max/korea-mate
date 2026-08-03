@@ -1,0 +1,203 @@
+{
+  "report_id": "busan-promotion-data-contract-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "2.0",
+  "changelog": "v2: Phase 5 필드 추가 — content_class, promotion_mechanism, regular_price, promotion_price, discount_value, benefit_condition, evidence_urls, classification_reason",
+  "description": "부산 프로모션 데이터셋 스키마 계약. 모든 collect/generate 스크립트는 이 계약을 따른다.",
+
+  "promotion_item_schema": {
+    "promo_id": {
+      "type": "string",
+      "format": "{SOURCE_ID}_{INTERNAL_ID}",
+      "example": "VB_EVENT_684",
+      "required": true
+    },
+    "source_id": {
+      "type": "string",
+      "enum": ["VB-EVENT-SURVEY", "VB-SHOWS-EVENTS", "VB-TRAVEL-PRODUCTS", "VB-NOTICE", "BTO-PRESS", "BTO-NOTICE", "VBP-PASS"],
+      "required": true
+    },
+    "source_url": {
+      "type": "string",
+      "description": "공식 원천 직접 URL (뉴스·블로그 URL 불허)",
+      "required": true
+    },
+    "title_en": {
+      "type": "string | null",
+      "description": "영문 제목. 공식 영문 게시 없을 경우 null."
+    },
+    "title_ko": {
+      "type": "string | null",
+      "description": "한국어 제목."
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "discount",
+        "coupon",
+        "campaign",
+        "freebie",
+        "transport_deal",
+        "accommodation_deal",
+        "activity_deal",
+        "tourist_pass",
+        "special_experience",
+        "travel_notice"
+      ],
+      "required": true
+    },
+    "audience_type": {
+      "type": "string",
+      "enum": ["B2C", "MIXED"],
+      "description": "B2B 항목은 수집 대상 아님",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "enum": ["UPCOMING", "ACTIVE", "ENDING_SOON", "EXPIRED", "SOLD_OUT", "UNVERIFIED"],
+      "description": "reference_date 기준 상태",
+      "required": true
+    },
+    "period_start": {
+      "type": "string | null",
+      "format": "YYYY-MM-DD",
+      "description": "프로모션 시작일"
+    },
+    "period_end": {
+      "type": "string | null",
+      "format": "YYYY-MM-DD",
+      "description": "프로모션 종료일"
+    },
+    "price_krw": {
+      "type": "integer | null",
+      "description": "KRW 단위 가격. 할인 후 가격. 무료=0. 미확인=null."
+    },
+    "price_display": {
+      "type": "string | null",
+      "description": "원문 가격 표시 (예: '₩20,000/인', '50% 할인')"
+    },
+    "benefit": {
+      "type": "string | null",
+      "description": "관광객이 얻는 혜택 요약"
+    },
+    "target": {
+      "type": "string | null",
+      "description": "대상 관광객 (예: '외국인 관광객', '중화권 포함')"
+    },
+    "booking_url": {
+      "type": "string | null",
+      "description": "예약·구매 직접 URL. 미확인='MANUAL_BROWSER_REQUIRED'."
+    },
+    "location": {
+      "type": "string | null",
+      "description": "행사·적용 장소"
+    },
+    "reference_date": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "description": "상태 판단 기준일",
+      "required": true
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "UNVERIFIED_PRICING",
+        "UNVERIFIED_OFFICIAL_DETAIL",
+        "DETAIL_ERROR"
+      ],
+      "description": "공식 원천 확인 수준",
+      "required": true
+    },
+    "collected_at": {
+      "type": "string",
+      "format": "ISO8601",
+      "required": true
+    },
+    "content_class": {
+      "type": "string",
+      "enum": ["PROMOTION", "EVENT", "TRAVEL_PRODUCT", "TRAVEL_NOTICE", "B2B", "IRRELEVANT"],
+      "description": "콘텐츠 종류 최종 분류. PROMOTION만 데이터셋 포함.",
+      "required": true
+    },
+    "promotion_mechanism": {
+      "type": "string",
+      "enum": [
+        "PRICE_DISCOUNT",
+        "COUPON",
+        "FREE_GIFT",
+        "FREE_ACCESS",
+        "BUNDLE_BENEFIT",
+        "TARGETED_OFFER",
+        "MISSION_REWARD",
+        "LIMITED_CAMPAIGN",
+        "BOOKING_BENEFIT"
+      ],
+      "description": "프로모션 제공 방식. FREE_ACCESS는 원래 유료 서비스가 프로모션 기간 무료가 된 경우만. 일반 무료 공연·행사 사용 금지.",
+      "required": true
+    },
+    "regular_price": {
+      "type": "integer | null",
+      "description": "정상가(KRW). 프로모션 전 원래 가격. 미확인=null."
+    },
+    "promotion_price": {
+      "type": "integer | null",
+      "description": "프로모션 가격(KRW). 무료=0. 미확인=null."
+    },
+    "discount_value": {
+      "type": "integer | null",
+      "description": "할인액(KRW) 또는 증정 금액 상당. 예: 요트권 ₩30,000 무료 증정 → 30000."
+    },
+    "benefit_condition": {
+      "type": "string | null",
+      "description": "혜택 수령 조건 (기간, 수량 한도, 대상 자격, 예약 방법)."
+    },
+    "evidence_urls": {
+      "type": "array | null",
+      "items": "string (URL)",
+      "description": "공식 근거 URL 목록. 뉴스·블로그 URL 불허."
+    },
+    "classification_reason": {
+      "type": "string | null",
+      "description": "PROMOTION으로 분류한 근거 서술. 무엇이 혜택이고 왜 일반 행사/상품과 구별되는지."
+    }
+  },
+
+  "status_rules": {
+    "UPCOMING": "period_start > reference_date",
+    "ACTIVE": "period_start <= reference_date AND period_end >= reference_date AND days_remaining > 7",
+    "ENDING_SOON": "period_end >= reference_date AND days_remaining <= 7",
+    "EXPIRED": "period_end < reference_date",
+    "SOLD_OUT": "명시적 매진 공지",
+    "UNVERIFIED": "공식 원천 핵심 필드 미확인 (기간·가격 중 하나 이상 미확인)"
+  },
+
+  "content_type_rules": {
+    "discount": "특정 상품·서비스 할인율 명시",
+    "coupon": "쿠폰 코드 또는 물리적 쿠폰 배포",
+    "campaign": "여러 혜택을 묶은 캠페인 (단일 상품 할인이 아닌 것)",
+    "freebie": "무료 제공 (입장료 0원, 서비스 무료)",
+    "transport_deal": "교통 관련 할인·패스",
+    "accommodation_deal": "숙박 관련 할인·혜택",
+    "activity_deal": "체험·액티비티 관련 할인·패키지",
+    "tourist_pass": "복수 시설 입장 통합 패스",
+    "special_experience": "한정 특별 체험 (좌석 제한, 기간 제한)",
+    "travel_notice": "관광객 유용 정보 공지 (무료 이벤트, 공연 안내 등)"
+  },
+
+  "forbidden_sources": [
+    "뉴스 기사 (단독 근거 불허)",
+    "블로그·카페",
+    "SNS 게시물",
+    "여행사 광고",
+    "AI 생성 요약"
+  ],
+
+  "allowed_primary_sources": [
+    "주최기관 공식 상세 페이지",
+    "공식 첨부문서",
+    "부산시·관광공사 공식 재게시",
+    "공식 예약·판매·쿠폰 페이지"
+  ]
+}

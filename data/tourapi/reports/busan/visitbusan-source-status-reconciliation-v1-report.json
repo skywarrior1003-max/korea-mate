@@ -1,0 +1,79 @@
+{
+  "report_id": "visitbusan-source-status-reconciliation-v1",
+  "task": "TASK-VISITBUSAN-SOURCE-STATUS-RECONCILIATION-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T08:22:13.437200+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "1a83ac0",
+  "analysis": {
+    "target_candidates": 221,
+    "already_single_source_before": 3,
+    "root_cause_distribution": {
+      "already_correct": 3,
+      "has_en_sf_no_ko_sf_no_vs_update": 213,
+      "parse_failed_no_sf": 5
+    },
+    "root_cause_explanation": {
+      "has_en_sf_no_ko_sf_no_vs_update": "EN source fact exists but KO source fact not created, validation_status not updated after SSR collection",
+      "parse_failed_no_sf": "PARSE_FAILED during SSR/shopping: neither EN nor KO source fact created, validation_status not updated",
+      "has_both_sf_no_vs_update": "Both source facts exist but validation_status never recalculated",
+      "other_stale": "Other stale states"
+    }
+  },
+  "changes": {
+    "validation_status_upgraded": 218,
+    "old_status": "source_data_missing",
+    "new_status": "single_source",
+    "ko_sf_created": 218,
+    "identity_evidence_used": "identity_confirmed_uc_seq (SSR) + url_uc_seq (shopping)"
+  },
+  "publishability": {
+    "env3_distribution": {
+      "publishable_with_caveat": 286,
+      "pending_source": 994,
+      "pending_review": 72,
+      "publishable": 290
+    },
+    "env4_distribution": {
+      "publishable_with_caveat": 448,
+      "pending_source": 820,
+      "pending_review": 73,
+      "publishable": 301
+    },
+    "delta": {
+      "publishable": 11,
+      "publishable_with_caveat": 162,
+      "pending_source": -174,
+      "pending_review": 1
+    },
+    "status_changed_count": 174,
+    "change_types": {
+      "pending_source→publishable_with_caveat": 162,
+      "pending_source→publishable": 11,
+      "pending_source→pending_review": 1
+    },
+    "publishable_increase": 11,
+    "caveat_increase": 162,
+    "kto_not_needed_upgrades": 173
+  },
+  "file_shas": {
+    "ec_before": "0e76badb84dc96ae",
+    "ec_after": "49b74fc719612ef2",
+    "sf_before": "02d90c6f3220d754",
+    "sf_after": "a4577012085eca1a",
+    "protected_unchanged": true
+  },
+  "validation_checks": {
+    "candidate_count_1642": true,
+    "target_221_processed": true,
+    "zero_identity_conflict_upgrades": true,
+    "protected_files_unchanged": true,
+    "external_requests": 0,
+    "push": false
+  },
+  "safety": {
+    "external_requests": 0,
+    "images_modified": false,
+    "push": false
+  }
+}

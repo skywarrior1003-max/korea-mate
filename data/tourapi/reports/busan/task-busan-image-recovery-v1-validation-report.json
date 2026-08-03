@@ -1,0 +1,185 @@
+{
+  "report_id": "task-busan-image-recovery-v1-validation-report",
+  "task": "TASK-BUSAN-IMAGE-RECOVERY-V1",
+  "verdict": "IMPROVEMENT_FOUND",
+  "executed": false,
+  "run_ts": "2026-07-30",
+  "branch": "data/busan-enrichment-v1",
+
+  "prompt_validation": {
+    "structural_soundness": "PASS",
+    "target_count_accuracy": "FAIL",
+    "recovery_order_accuracy": "PARTIAL",
+    "issues_found": true,
+    "improvements_found": true
+  },
+
+  "issues": [
+    {
+      "id": "I-001",
+      "severity": "CRITICAL",
+      "title": "대상 수 오류: 31건 → 37건",
+      "description": "프롬프트는 EN_V6에서 image_gate 단독 차단 pending_source가 '정확히 31건'이라고 명시했으나, 실제 EN_V6 기준 image_gate가 유일한 block_reason인 pending_source 후보는 37건이다.",
+      "evidence": {
+        "en_v5_image_gate_only_count": 31,
+        "en_v6_image_gate_only_count": 37,
+        "new_6_candidates": ["busan-F-00253","busan-F-00262","busan-F-00269","busan-F-00273","busan-F-00285","busan-F-00315"],
+        "why_6_added_in_v6": "TASK-BUSAN-RESTAURANT-DUPLICATE-ADJUDICATION-V1 실행 결과 30개 canonical 후보에서 needs_restaurant_branch 제거. 이 중 6건은 image_gate만 남아 pending_review→pending_source로 변경됨. EN_V5 시점에는 branch_gate FAIL로 pending_review에 있어 image_gate 단독 차단 목록에 포함되지 않았음.",
+        "v5_status_of_6": "pending_review (block_reasons=['branch_gate'])",
+        "v6_status_of_6": "pending_source (block_reasons=['image_gate'])"
+      },
+      "impact": "31건으로 실행 시 6건 누락. 프롬프트 조건 '후보 수 중복·누락 0' 위반.",
+      "correction": "EN_V6 기준 image_gate ONLY 후보 37건 전수 처리. 6건 추가 목록 위 참조."
+    },
+    {
+      "id": "I-002",
+      "severity": "MEDIUM",
+      "title": "복구 단계 1-3 이미 사전 소진됨 — 불필요한 재검색 방지 필요",
+      "description": "프롬프트의 복구 순서 1-3단계(기존 raw/source facts, curated_images/raw image URL, KTO firstimage)는 enrichment 단계에서 이미 전수 확인됐고 결과가 없음이 확정됐다. 37건 전원 image_assessment.image_status='source_exhausted'. 이를 명시하지 않으면 실행자가 단계 1-3을 다시 검색해 불필요한 작업을 반복한다.",
+      "evidence": {
+        "image_status_all_37": "source_exhausted",
+        "foodservice_batch_MAIN_IMG_NORMAL_empty_count": 37,
+        "source_facts_image_fields": "image_ids 필드 존재하나 37건 전원 공백",
+        "kto_en_linked_count": 0,
+        "kto_raw_items_matching_targets": 0,
+        "raw_top_level_items": 20,
+        "batch_items_total": 437,
+        "batch_image_fields": ["MAIN_IMG_NORMAL","MAIN_IMG_THUMB"],
+        "batch_MAIN_IMG_NORMAL_non_empty_for_targets": 0,
+        "note": "배치 파일(busan-food-ko-p001~p005)의 MAIN_IMG_NORMAL이 3건(UC_SEQ 1626/1632/1637)에 존재하나, 이 3건은 37개 대상과 다른 후보이며 이미 image_sufficient 상태."
+      },
+      "impact": "실행 시 단계 1-3을 재확인해도 결과 0. 실제 조회 가능 소스는 단계 4-6(외부 요청)만 해당.",
+      "correction": "프롬프트에 명시 추가: '단계 1-3은 enrichment 시점에 이미 소진. 37건 전원 FoodService 배치 MAIN_IMG_NORMAL 공백, KTO 미연결, VisitBusan API 이미지 필드 없음 확인. 단계 4부터 실질 조회 시작.'"
+    },
+    {
+      "id": "I-003",
+      "severity": "MEDIUM",
+      "title": "VisitBusan 공식 페이지 URL 패턴 미명시",
+      "description": "복구 단계 4 '(VisitBusan 동일 uc_seq 공식 페이지)'를 실행하려면 UC_SEQ별 음식 상세 페이지 URL 패턴이 필요하다. 프롬프트에 패턴이 없어 실행자가 URL을 추정하거나 탐색해야 한다.",
+      "evidence": {
+        "source_keys_format": "FoodService:{UC_SEQ}:ko (예: FoodService:1539:ko)",
+        "uc_seq_range": "1539~1639 (37건)",
+        "uc_seq_origin": "busan-food-ko-raw.json / batch 파일의 UC_SEQ 필드"
+      },
+      "impact": "URL 패턴 미확정 상태로 실행 시 이미지 수집 불가 또는 URL 오류 가능성.",
+      "correction": "단계 4 실행 전 VisitBusan 음식 상세 페이지 URL 패턴 확인 및 명시 필요 (예: https://www.visitbusan.net/.../uc_seq={UC_SEQ} 형태)."
+    },
+    {
+      "id": "I-004",
+      "severity": "MEDIUM",
+      "title": "HOMEPAGE_URL 전원 공백 — 단계 6 탐색 기점 없음",
+      "description": "복구 단계 6 '장소·업체 공식 홈페이지'는 HOMEPAGE_URL을 기점으로 해야 하나, FoodService 배치 데이터의 HOMEPAGE_URL 필드가 37건 전원 공백이다. 탐색 기점이 없는 상태에서 단계 6을 실행하면 검색엔진 기반 발견에 의존해야 한다.",
+      "evidence": {
+        "HOMEPAGE_URL_non_empty_for_targets": 0,
+        "HOMEPAGE_URL_field_exists": true,
+        "HOMEPAGE_URL_empty_for_all_37": true
+      },
+      "impact": "단계 6 실행 시 37건 전부 검색 기반 발견이 필요. 음식점별 공식 웹사이트 탐색에 상당한 외부 요청 수 및 시간 소요.",
+      "correction": "단계 6에서 HOMEPAGE_URL 공백 시 처리 방식을 명시해야 함: (a) 검색엔진으로 식당명+주소 검색 허용 여부, (b) 공식 SNS (인스타그램 공식 계정) 인정 여부, (c) SOURCE_NOT_COLLECTED 판정 후 스킵 허용 여부."
+    },
+    {
+      "id": "I-005",
+      "severity": "LOW",
+      "title": "단계 5 '부산 공식 API' 범위 불명확",
+      "description": "복구 단계 5 '부산 공식 API'가 어느 API를 지칭하는지 불명확하다. FoodService(getFoodKr)는 이미 단계 1-2에서 소진됐고 이미지 필드가 없음. 다른 공식 Busan API가 대상이라면 명시 필요.",
+      "evidence": {
+        "foodservice_api": "getFoodKr - MAIN_IMG_NORMAL 존재하나 37건 전원 공백",
+        "other_official_apis_in_raw": "kto-ko-raw/kto-en-raw (KTO), busan-attraction-* (KTO 관광지 — 음식점 아님)"
+      },
+      "impact": "불명확한 API 범위로 인해 실행자가 잘못된 소스를 조회하거나 중복 조회할 가능성.",
+      "correction": "단계 5를 'KTO 음식점 상세 API' 또는 'VisitBusan 공식 이미지 API'로 구체화, 또는 해당 단계 제거 (FoodService 배치 확인으로 이미 포함)."
+    }
+  ],
+
+  "target_population_analysis": {
+    "en_v5_image_gate_only": 31,
+    "en_v6_image_gate_only": 37,
+    "all_category": "restaurant (100%)",
+    "all_image_status": "source_exhausted (100%)",
+    "kto_linked": 0,
+    "visitbusan_linked": 0,
+    "curated_images_count": 0,
+    "batch_MAIN_IMG_NORMAL_populated": 0,
+    "batch_HOMEPAGE_URL_populated": 0,
+    "expected_recovery_from_local_sources": 0,
+    "expected_recovery_from_step4_visitbusan_website": "미확인 (외부 요청 37건 필요)",
+    "expected_recovery_from_step6_restaurant_website": "미확인 (탐색 기점 없음, 검색 기반 필요)"
+  },
+
+  "v6_targets_full_list": [
+    {"candidate_id": "busan-F-00251", "title_ko": "은하갈비",             "uc_seq": 1539, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00253", "title_ko": "기장손칼국수",          "uc_seq": 1541, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00255", "title_ko": "삼오불고기",            "uc_seq": 1543, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00256", "title_ko": "언양불고기부산집",       "uc_seq": 1544, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00259", "title_ko": "새총횟집",              "uc_seq": 1547, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00260", "title_ko": "초필살돼지구이",         "uc_seq": 1548, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00262", "title_ko": "부다면옥",              "uc_seq": 1550, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00264", "title_ko": "영남돼지",              "uc_seq": 1552, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00269", "title_ko": "산동완탕교자관",         "uc_seq": 1557, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00273", "title_ko": "스시시안",              "uc_seq": 1561, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00275", "title_ko": "야키토리해공",           "uc_seq": 1563, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00278", "title_ko": "라꽁띠",               "uc_seq": 1566, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00279", "title_ko": "리오네",               "uc_seq": 1567, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00281", "title_ko": "음주양식당오스테리아어부", "uc_seq": 1569, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00282", "title_ko": "이재모피자",             "uc_seq": 1570, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00285", "title_ko": "달타이",               "uc_seq": 1573, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00288", "title_ko": "거북선횟집",             "uc_seq": 1576, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00289", "title_ko": "고스락",               "uc_seq": 1577, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00290", "title_ko": "규우정",               "uc_seq": 1578, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00292", "title_ko": "뉼리",                 "uc_seq": 1580, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00297", "title_ko": "칠성횟집",              "uc_seq": 1585, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00305", "title_ko": "셔블",                 "uc_seq": 1593, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00307", "title_ko": "아오모리",              "uc_seq": 1595, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00309", "title_ko": "차오란",               "uc_seq": 1597, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00310", "title_ko": "팔레드신",              "uc_seq": 1598, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00315", "title_ko": "구포촌국수",             "uc_seq": 1603, "v5_note": "V6 신규 (canonical)"},
+    {"candidate_id": "busan-F-00317", "title_ko": "금용",                 "uc_seq": 1605, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00318", "title_ko": "기장곰장어",             "uc_seq": 1606, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00326", "title_ko": "새진주식당",             "uc_seq": 1614, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00328", "title_ko": "송정3대국밥",            "uc_seq": 1616, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00333", "title_ko": "원조할매낙지",           "uc_seq": 1621, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00336", "title_ko": "할매재첩국",             "uc_seq": 1625, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00338", "title_ko": "레망파티쓰리",           "uc_seq": 1627, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00342", "title_ko": "브레드365",             "uc_seq": 1631, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00344", "title_ko": "옵스",                 "uc_seq": 1633, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00349", "title_ko": "쥬가정효",              "uc_seq": 1638, "v5_note": "기존 31건"},
+    {"candidate_id": "busan-F-00350", "title_ko": "톤쇼우",               "uc_seq": 1639, "v5_note": "기존 31건"}
+  ],
+
+  "recommended_v2_changes": [
+    {
+      "section": "대상",
+      "original": "EN_V6 기준 image_gate 단독 또는 핵심 차단으로 남은 후보 정확히 31건",
+      "corrected": "EN_V6 기준 image_gate가 유일한 block_reason인 pending_source 후보 정확히 37건 (31건 기존 + 6건 V6 신규 canonical: busan-F-00253/00262/00269/00273/00285/00315)"
+    },
+    {
+      "section": "복구 순서 전문",
+      "add_before_step1": "사전 확인: 37건 전원 image_assessment.image_status='source_exhausted' — FoodService(getFoodKr) 배치 MAIN_IMG_NORMAL 공백, KTO 미연결(kto_en_linked=false), VisitBusan API 이미지 없음. 단계 1-3은 재확인 목적으로만 포함하며 결과 0 예상. 실질 복구 시작은 단계 4."
+    },
+    {
+      "section": "복구 순서 4단계",
+      "add": "VisitBusan 음식 상세 페이지 URL 패턴 확인 및 명시 후 UC_SEQ별 조회 (37건 × 1회 = 37 요청)"
+    },
+    {
+      "section": "복구 순서 6단계",
+      "add": "HOMEPAGE_URL이 공백인 경우(37건 전원 해당) 식당명+주소 기반 탐색 허용 여부 명시. 허용 시 요청 수 상당히 증가. 미허용 시 해당 건 SOURCE_NOT_COLLECTED 판정."
+    },
+    {
+      "section": "단계 5 부산 공식 API",
+      "clarify": "getFoodKr는 이미 단계 1에서 소진. '부산 공식 API'를 다른 API로 지칭하는 경우 구체적 API명과 엔드포인트 명시 필요. 해당 없으면 단계 5 제거."
+    }
+  ],
+
+  "expected_outcome_analysis": {
+    "step_1_to_3_yield": "0 (사전 소진 확인)",
+    "step_4_visitbusan_website_yield": "미확인 — VisitBusan 음식 페이지 존재 여부 및 이미지 보유 여부 미확인. 37 HTTP 요청 필요.",
+    "step_5_official_api_yield": "FoodService 재조회 시 0. 다른 API 존재 시 미확인.",
+    "step_6_restaurant_website_yield": "HOMEPAGE_URL 공백으로 탐색 기점 없음. 검색 기반 시 불확실.",
+    "overall_likely_outcome": "대부분 NO_OFFICIAL_IMAGE_FOUND 또는 SOURCE_NOT_COLLECTED. VisitBusan 웹페이지에서 일부 IMAGE_PROPOSED_MANUAL_CHECK 가능성."
+  },
+
+  "data_unchanged": true,
+  "external_requests": 0,
+  "push": false,
+  "commit": null
+}

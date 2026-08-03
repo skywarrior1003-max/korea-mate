@@ -185,6 +185,7 @@
 - **정규화**: raw 합계 ≥ normalized 합계 (중복 제거 반영), normalized 합계 > 0, 필수 컬럼 존재
 - **매칭**: match CSV 행 수 = normalized 합계, confidence 값이 허용 목록(high/manual_review/no_match) 이내, 경로가 `data/tourapi/` 하위
 - **집계**: auto_ready + manual_review + unresolved = 활성 후보 합계, 장소당 대표 사진 최대 1장, 결정성(동일 입력 → 동일 출력)
+- **보강 (⑥~⑪단계)**: candidate/source/join 급락 탐지, 좌표 sanity bounds 검증, invalid 좌표 + arrival_resolved=true 금지, unresolved_reason 미기록 FAIL → `schema-independent-enrichment-rules.md` § K · § N · § O · § R 적용
 
 ### 파이프라인 Checkpoint
 
@@ -259,3 +260,28 @@
 | `link_outdated` 항목을 최신 정보로 자동 노출 | `FAIL` |
 | `verification_required` 항목을 현재 배지로 표시 | `REVISE_REQUIRED` |
 | `link_verified_at` 누락 (link_verified 상태에서) | `PASS_WITH_WARNINGS` |
+
+---
+
+## 전체 도시 데이터 파이프라인 순서
+
+수집 단계 이후를 포함한 전체 파이프라인 순서다.  
+①~② 단계에는 위 규칙(다단계 파이프라인 원칙, Preflight 등)을 적용한다.  
+⑥~⑪ 단계는 → `docs/automation/schema-independent-enrichment-rules.md` 를 읽고 실행한다.
+
+```
+① collection           → 공공 API·공식 원천 수집         [이 문서: 다단계 파이프라인 원칙]
+② normalization        → raw → normalized JSONL           [이 문서: 다단계 파이프라인 원칙]
+③ multilingual linkage → KO·EN·JA·ZhS·ZhT source 연결
+④ candidate linkage    → 중복 제거, canonical candidate 구성
+⑤ image and rights     → 이미지 수집·권리 분류·큐레이션   [image-curation-rules.md]
+⑥ schema-independent enrichment                           [schema-independent-enrichment-rules.md]
+⑦ identity and branch validation
+⑧ district and arrival validation
+⑨ review queue separation
+⑩ deterministic validation
+⑪ checkpoint and handoff
+```
+
+각 도시의 파이프라인 실행 전 `schema-independent-enrichment-rules.md`를 읽는다.  
+도시별 좌표·유사도 임계값은 표본 검증 후 run manifest에 기록한다.

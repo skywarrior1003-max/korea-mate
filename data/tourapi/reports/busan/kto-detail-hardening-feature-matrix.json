@@ -1,0 +1,93 @@
+{
+  "report_id": "kto-detail-hardening-feature-matrix",
+  "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+  "generated_ts": "2026-07-29T08:11:37Z",
+  "script": "scripts/tourapi-busan-detail.mjs",
+  "version_before": "v1 (aff9e82 — dry-run bug fixed only)",
+  "version_after": "v2 (this commit — hardened)",
+  "features": {
+    "A_skip_existing": {
+      "v1": "MISSING — 기존 raw 파일 재다운로드",
+      "v2": "IMPLEMENTED — isValidExistingRaw(): JSON 파싱+resultCode+XML 감지",
+      "status": "NEW",
+      "detail": "파일 존재만으로 skip 금지. resultCode=0000+JSON 파싱+비-XML 확인 후 skip. 손상·오류 응답 reprocess:true."
+    },
+    "B_timeout": {
+      "v1": "MISSING — fetch() 무한 대기 가능",
+      "v2": "IMPLEMENTED — fetchWithTimeout(): AbortController, FETCH_TIMEOUT_MS=30,000ms",
+      "status": "NEW",
+      "detail": "isTimeout 플래그로 TIMEOUT vs HTTP_OR_NETWORK 오류 구분. retry 시 error_type 기록."
+    },
+    "C_checkpoint": {
+      "v1": "MISSING — 중단 시 전체 재실행",
+      "v2": "IMPLEMENTED — writeCheckpoint() atomic (tmp→rename), CHECKPOINT_INTERVAL=50",
+      "status": "NEW",
+      "detail": "per-endpoint done/failed/skipped 추적. 중간 종료 후 재개 가능. 손상 checkpoint 감지 시 safe abort."
+    },
+    "D_consecutive_failure_abort": {
+      "v1": "MISSING — API 오류 반복 시 전체 호출 낭비",
+      "v2": "IMPLEMENTED — CONSECUTIVE_FAILURE_LIMIT=5, checkConsecutiveFailure()",
+      "status": "NEW",
+      "detail": "HTTP 오류/timeout/API resultCode 실패 모두 카운트. 성공·유효 skip 시 초기화. 중단 시 checkpoint+실패목록 보존."
+    },
+    "E_manifest_input": {
+      "v1": "MISSING — PILOT_SAMPLE 하드코딩, 임의 candidate 탐색",
+      "v2": "IMPLEMENTED — --manifest <path>, loadManifest() + buildTargetListFromManifest()",
+      "status": "NEW",
+      "detail": "manifest hash 기록. 변경 시 checkpoint와 불일치 감지. endpoint/contentId/contentTypeId/candidate_id 검증. 중복 제거."
+    },
+    "F_full_output_path": {
+      "v1": "MISSING — PILOT_RAW_DIR 하드코딩, full/pilot 경로 동일",
+      "v2": "IMPLEMENTED — FULL_RAW_DIR 분리, getRawPath() endpoint/contentId 파일명",
+      "status": "NEW",
+      "detail": "pilot: data/tourapi/raw/busan/kto-detail-pilot/ | full: data/tourapi/raw/busan/kto-detail-full/. tmp→rename 원자적 쓰기."
+    },
+    "call_limit_gate": {
+      "v1": "MISSING — CALL_LIMIT_UNVERIFIED 상태에서도 full 실행 가능성",
+      "v2": "IMPLEMENTED — CALL_LIMIT_STATUS='UNVERIFIED' → full 실행 차단 (dry-run 예외)",
+      "status": "NEW",
+      "detail": "명확한 오류 메시지 출력. 임의 기본값 숫자 없음. VERIFIED로 변경 시에만 full 허용."
+    },
+    "allow_full_standalone_block": {
+      "v1": "PARTIAL — --full 단독만 차단, --allow-full 단독 시 usage error만",
+      "v2": "IMPLEMENTED — --allow-full 단독 실행 명시적 차단 메시지",
+      "status": "IMPROVED"
+    },
+    "resume_mode": {
+      "v1": "MISSING",
+      "v2": "IMPLEMENTED — --resume: checkpoint에서 이어서, manifest hash mismatch 감지 후 safe abort",
+      "status": "NEW"
+    },
+    "dry_run_bug": {
+      "v1": "FIXED (aff9e82) — DRY_RUN 시 fs.writeFileSync 미차단 버그 수정",
+      "v2": "MAINTAINED — DRY_RUN guard 유지 + dry-run 리포트 저장",
+      "status": "MAINTAINED"
+    },
+    "dry_run_plan_output": {
+      "v1": "PARTIAL — 호출 수만 출력",
+      "v2": "IMPROVED — target/skip/new_calls/reprocess/batch 상세 출력 + JSON report 저장",
+      "status": "IMPROVED"
+    },
+    "secret_scan": {
+      "v1": "MISSING",
+      "v2": "IMPLEMENTED — secretScan() API key 노출 감지",
+      "status": "NEW"
+    },
+    "raw_file_atomic_write": {
+      "v1": "DIRECT — fs.writeFileSync() 직접",
+      "v2": "ATOMIC — writeRawFile(): .tmp → unlinkSync → renameSync",
+      "status": "IMPROVED"
+    }
+  },
+  "mode_safety": {
+    "--sample": "pilot 15건 (항상 허용)",
+    "--full": "--allow-full 없으면 즉시 차단",
+    "--allow-full": "--full 없으면 즉시 차단",
+    "--full --allow-full (no --dry-run)": "CALL_LIMIT_STATUS=VERIFIED 아니면 차단",
+    "--full --allow-full --dry-run": "CALL_LIMIT_UNVERIFIED여도 계획 출력 허용 (API 호출 없음)",
+    "--resume": "checkpoint에서 재개 + manifest hash 불일치 시 안전 중단"
+  },
+  "implemented_count": 6,
+  "improved_count": 3,
+  "total_new_or_improved": 9
+}

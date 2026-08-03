@@ -1,0 +1,48 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "142853",
+            "contenttypeid": "32",
+            "roomcount": "532실",
+            "roomtype": "디럭스 시티 / 디럭스 오션 / 디럭스 테라스 등",
+            "refundregulation": "",
+            "checkintime": "15:00",
+            "checkouttime": "11:00",
+            "chkcooking": "불가",
+            "seminar": "1",
+            "sports": "0",
+            "sauna": "1",
+            "beauty": "0",
+            "beverage": "1",
+            "karaoke": "0",
+            "barbecue": "0",
+            "campfire": "0",
+            "bicycle": "0",
+            "fitness": "1",
+            "publicpc": "0",
+            "publicbath": "0",
+            "subfacility": "",
+            "foodplace": "",
+            "reservationurl": "",
+            "pickup": "",
+            "infocenterlodging": "051-742-2121",
+            "parkinglodging": "가능",
+            "reservationlodging": "",
+            "scalelodging": "",
+            "accomcountlodging": ""
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

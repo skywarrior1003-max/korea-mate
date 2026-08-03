@@ -1,0 +1,104 @@
+{
+  "report_id": "busan-final-publish-qa-v1",
+  "task_id": "TASK-BUSAN-FINAL-PUBLISH-CANDIDATE-QA-V1",
+  "generated_at": "2026-07-31T10:31:58.133290Z",
+  "git": {
+    "head": "09376994fadad18247ebacace13efc29f07df561",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V8",
+  "verdict": "PASS",
+  "input_count": 810,
+  "distribution": {
+    "AUTO_PASS": 301,
+    "MANUAL_REVIEW_REQUIRED": 509,
+    "EXCLUDE_FROM_RELEASE": 0
+  },
+  "publishability_breakdown": {
+    "publishable": {
+      "AUTO_PASS": 301,
+      "MANUAL_REVIEW": 2
+    },
+    "publishable_with_caveat": {
+      "MANUAL_REVIEW": 507
+    }
+  },
+  "category_breakdown": {
+    "accommodation": {
+      "MANUAL_REVIEW": 3
+    },
+    "attraction": {
+      "MANUAL_REVIEW": 389
+    },
+    "event": {
+      "MANUAL_REVIEW": 33
+    },
+    "nature": {
+      "MANUAL_REVIEW": 10
+    },
+    "restaurant": {
+      "AUTO_PASS": 301,
+      "MANUAL_REVIEW": 74
+    }
+  },
+  "exclude_reasons": {},
+  "manual_review_reasons": {
+    "has_caveat_flags": 507,
+    "near_duplicate_needs_adjudication": 4
+  },
+  "caveat_flag_distribution": {
+    "needs_arrival_verification": 457,
+    "needs_hours": 347
+  },
+  "near_duplicate_same_source_pairs": [
+    {
+      "id_a": "busan-F-00050",
+      "id_b": "busan-F-00313",
+      "name_ko": "60년전통할매국밥",
+      "prefix": "busan-F"
+    },
+    {
+      "id_a": "busan-F-00299",
+      "id_b": "busan-F-00386",
+      "name_ko": "랩24바이쿠무다",
+      "prefix": "busan-F"
+    }
+  ],
+  "cross_prefix_colocation_groups_count": 143,
+  "cross_prefix_colocation_note": "busan-A-* (TourAPI 공식) 와 busan-VB-* (에디토리얼) 가 같은 장소에 공존하는 것은 플랫폼 설계 의도입니다.",
+  "safety_checks": {
+    "input_count": 810,
+    "output_total": 810,
+    "no_duplicate_ids": true,
+    "no_missing_ids": true,
+    "restaurant_sibling_in_public": 0,
+    "address_gate_fail_in_public": 0,
+    "coordinate_gate_fail_in_public": 0,
+    "candidate_total": 1642,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "new_flags_created": false,
+    "api_calls": false,
+    "push": false
+  },
+  "qa_dimensions": [
+    "identity_and_duplicate",
+    "required_info",
+    "image_gate_consistency",
+    "gate_data_consistency",
+    "regression_protection"
+  ],
+  "thresholds": {
+    "desc_en_exclude_len": 15,
+    "desc_en_manual_len": 50,
+    "coord_near_threshold_deg": 0.0001,
+    "busan_lat_bounds": [
+      34.8,
+      35.5
+    ],
+    "busan_lng_bounds": [
+      128.65,
+      129.4
+    ]
+  }
+}

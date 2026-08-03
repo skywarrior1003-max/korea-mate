@@ -1,0 +1,729 @@
+{
+  "report_id": "busan-arrival-provenance-qa-a1",
+  "description": "Provenance audit of 22 source_count=0 candidates auto-resolved in Stage A1 arrival QA",
+  "run_ts": "2026-07-29T06:30:44.287969Z",
+  "ssot_version": "v1.1",
+  "task": "TASK-BUSAN-ENRICH-STAGE-A1-ARRIVAL-PROVENANCE-QA",
+  "input_sha": {
+    "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "eligibility_report": "e8ab37a32a332fcdbe2595079e322f4c949d8214743b6c82be8cddc6c1bf1ed2",
+    "arrival_qa_report": "8229962caddf95a0ea982da26c43ea2f5c73edf522fbe5920d0a9e322c87445c"
+  },
+  "scope": {
+    "resolved_set_size": 731,
+    "audited_count": 22,
+    "criterion": "source_count=0 AND arrival_resolved=True in Stage A1 auto-resolution"
+  },
+  "finding": {
+    "provenance_status_distribution": {
+      "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY": 22
+    },
+    "all_vb_web_direct": true,
+    "traceable_via_primary_source_ref": 22,
+    "source_count_bug_found": false,
+    "source_count_bug_cases": [],
+    "explanation": "All 22 candidates carry src_type=visitbusan_web with linked_source_keys=[]. Their coordinates are embedded directly in the enriched candidate record from the VisitBusan web collection pipeline — they do NOT flow through busan-source-facts-v1.jsonl. source_count=0 is structurally correct for this cohort. Provenance is traceable for all 22 via provenance.primary_source_ref (commit SHA) and provenance.primary_source_file (collection file path). No counting logic bug was found; no enriched record modification is required."
+  },
+  "decisions": {
+    "total": 22,
+    "keep_resolved": 18,
+    "manual_review_confirmed": 3,
+    "restore_verification_already_done": 1,
+    "new_require_arrival": 0,
+    "enriched_candidates_modified": false
+  },
+  "source_count_integrity_note": "source_count in the Stage A1 validation report counts entries in busan-source-facts-v1.jsonl per candidate_id. VB-web-direct candidates have source_count=0 by design — their provenance chain uses primary_source_ref/file rather than the source_facts sidecar. The count field is accurate; interpretation requires awareness of this structural distinction between KTO/VB-linked candidates and VB-web-direct candidates.",
+  "per_candidate": [
+    {
+      "candidate_id": "busan-VB-1133",
+      "title": "도날드즉석떡볶이",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.085815,
+      "src_lng": 129.04295,
+      "address_source": "영도구 꿈나무길 267(1층)",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1137",
+      "title": "원산면옥 1953",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.098976,
+      "src_lng": 129.03105,
+      "address_source": "중구 광복로 56-8",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1248",
+      "title": "GAB148 Steak & Pasta",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.145763,
+      "src_lng": 129.11497,
+      "address_source": "광안해변로 122, 삼익비치B상가 2층",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_district",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1262",
+      "title": "홍성방",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.113834,
+      "src_lng": 129.03781,
+      "address_source": "동구 중앙대로 179번길 16",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1489",
+      "title": "석기시대",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.106155,
+      "src_lng": 129.03487,
+      "address_source": "중구 동광길 75-1",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1508",
+      "title": "부산약콩밀면",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.123108,
+      "src_lng": 129.11333,
+      "address_source": "남구 동명로145번길 80 1층",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1721",
+      "title": "코리아쿠킹클래스 밥상 인 부산",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.160378,
+      "src_lng": 129.14865,
+      "address_source": "부산광역시 해운대구 마린시티3로 37 한일오르듀",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "MANUAL_REVIEW",
+      "provenance_verdict": "MANUAL_REVIEW",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1808",
+      "title": "올바릇 본점",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.282795,
+      "src_lng": 129.25926,
+      "address_source": "기장군 일광읍 문오성길61",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-1853",
+      "title": "감성 캠핑소품샵이 있는 캠핑 컨셉 카페, 클래식 캠퍼",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.147255,
+      "src_lng": 128.98535,
+      "address_source": "부산광역시 사상구 대동로 224",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2097",
+      "title": "신선한 해산물과 함께 느끼는 영도의 정취, 영도해녀촌",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.067368,
+      "src_lng": 129.06615,
+      "address_source": "부산광역시 영도구 중리남로 2-35 영도해녀문화전시관 1층",
+      "current_arrival_resolved": false,
+      "prior_qa_decision": "RESTORE_VERIFICATION",
+      "provenance_verdict": "RESTORE_VERIFICATION",
+      "current_flags": [
+        "needs_content",
+        "needs_translation",
+        "needs_arrival_verification"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-218",
+      "title": "초원복국 대연본점",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.137794,
+      "src_lng": 129.10591,
+      "address_source": "남구 황령대로492번길 30",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2243",
+      "title": "해운대 도심 속 화려한 웰니스, ‘파크 하얏트 부산’",
+      "category": "accommodation",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.156578,
+      "src_lng": 129.14195,
+      "address_source": "부산광역시 해운대구 마린시티1로 51",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2270",
+      "title": "송도 바다를 품은 럭셔리 스테이, 윈덤 그랜드 부산",
+      "category": "accommodation",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.078472,
+      "src_lng": 129.02432,
+      "address_source": "부산광역시 서구 등대로 27 윈덤 그랜드 부산",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2273",
+      "title": "기장 오션뷰를 품은 화려한 특급호텔, ‘아난티  코브’",
+      "category": "accommodation",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.197933,
+      "src_lng": 129.22829,
+      "address_source": "부산광역시 기장군 기장읍 기장해안로 268-32 아난티 앳 부산 코브",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2277",
+      "title": "자연의 편안함을 품은 료칸 호텔, ‘이제 부산’",
+      "category": "accommodation",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.219868,
+      "src_lng": 129.22676,
+      "address_source": "부산광역시 기장군 기장읍 연화길 70",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2401",
+      "title": "부산 오키친 쿠킹하우스",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.174942,
+      "src_lng": 129.12723,
+      "address_source": "부산광역시 해운대구 센텀북대로 60 센텀IS타워 12층 오키친 쿠킹하우스",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2579",
+      "title": "달콤한 부산의 매력,",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.163223,
+      "src_lng": 129.15552,
+      "address_source": "부산 해운대구 우동1로 13-29 1층",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-2704",
+      "title": "부산에서 만나는 특별한 한식 쿠킹클래스, 배로모디",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.100166,
+      "src_lng": 129.0357,
+      "address_source": "부산광역시 중구 중앙대로 29번길 8, B1 배로모디",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "MANUAL_REVIEW",
+      "provenance_verdict": "MANUAL_REVIEW",
+      "current_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-293",
+      "title": "광안리 바다의 참맛 민락회타운",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.155643,
+      "src_lng": 129.1237,
+      "address_source": "부산광역시 수영구 민락수변로 1",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-294",
+      "title": "텔레비전에 나온 시장맛집 해운대시장",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.16165,
+      "src_lng": 129.1621,
+      "address_source": "부산 해운대구 중동1로 42-16",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-518",
+      "title": "부산 로컬푸드 쿠킹클래스",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.101288,
+      "src_lng": 129.0207,
+      "address_source": "부산광역시 서구 구덕로 186번길 15 2층",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "MANUAL_REVIEW",
+      "provenance_verdict": "MANUAL_REVIEW",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    },
+    {
+      "candidate_id": "busan-VB-960",
+      "title": "디에이블 부산송도점",
+      "category": "restaurant",
+      "linked_source_keys": [],
+      "alt_source_key_matches": [],
+      "primary_source_type": "visitbusan_web",
+      "provenance_keys_present": [
+        "primary_source_ref",
+        "primary_source_commit",
+        "primary_source_file",
+        "enriched_at",
+        "enrichment_run",
+        "qa_run",
+        "ssot_version"
+      ],
+      "provenance_traceable": true,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+      "coord_valid": true,
+      "src_lat": 35.076706,
+      "src_lng": 129.01715,
+      "address_source": "부산 서구 충무대로 47 3층",
+      "current_arrival_resolved": true,
+      "prior_qa_decision": "KEEP_RESOLVED",
+      "provenance_verdict": "KEEP_RESOLVED",
+      "current_flags": [
+        "needs_content",
+        "needs_translation"
+      ],
+      "rationale": "VB web collection candidate: coordinates embedded directly from VisitBusan web scrape, NOT via source_facts pipeline. source_count=0 is structurally correct. Provenance traceable via primary_source_ref + primary_source_file."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "report_id": "busan-publishability-en-v4",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V4",
+  "task": "TASK-VISITBUSAN-SOURCE-STATUS-RECONCILIATION-V1",
+  "run_ts": "2026-07-30T08:22:13.437200+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 448,
+    "pending_source": 820,
+    "pending_review": 73,
+    "publishable": 301
+  },
+  "env3_distribution": {
+    "publishable_with_caveat": 286,
+    "pending_source": 994,
+    "pending_review": 72,
+    "publishable": 290
+  },
+  "delta_vs_env3": {
+    "publishable": 11,
+    "publishable_with_caveat": 162,
+    "pending_source": -174,
+    "pending_review": 1
+  },
+  "status_changed_count": 174,
+  "change_types": {
+    "pending_source→publishable_with_caveat": 162,
+    "pending_source→publishable": 11,
+    "pending_source→pending_review": 1
+  },
+  "kto_not_needed_upgrades": 173,
+  "gate_change_note": "EN_V4 uses identical gate logic to EN_V2/V3. Input change: 218 VB candidates upgraded from source_data_missing to single_source. VisitBusan KO+EN official pages confirmed identity (KTO API not required)."
+}

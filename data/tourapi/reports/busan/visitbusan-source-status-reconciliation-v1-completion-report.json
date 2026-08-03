@@ -1,0 +1,125 @@
+{
+  "report_id": "visitbusan-source-status-reconciliation-v1-completion-report",
+  "task": "TASK-VISITBUSAN-SOURCE-STATUS-RECONCILIATION-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T08:22:13.437200+00:00",
+  "branch": "data/busan-enrichment-v1",
+
+  "prompt_validation": {
+    "issues_found": false,
+    "improvements_found": false,
+    "notes": [
+      "프롬프트 명세 그대로 실행. 개선 필요사항 없음.",
+      "VisitBusan KO+EN 공식 페이지 수집 완료 후보들의 validation_status.source_data_missing 상태가 실제 증거를 반영하지 않는 stale 상태였음을 정확히 진단했고, KTO 없이도 single_source 부여 가능한 조건을 올바르게 정의했음."
+    ]
+  },
+
+  "root_cause_analysis": {
+    "cause": "identity_confirmed=True (SSR 183/183) 또는 URL uc_seq 동일성 확인 (shopping 38) 후 validation_status가 source_data_missing에서 갱신되지 않은 stale 상태",
+    "cause_distribution": {
+      "already_correct_single_source": 3,
+      "has_en_sf_no_ko_sf_no_vs_update": 213,
+      "parse_failed_no_sf": 5,
+      "total": 221
+    },
+    "note": "213건: EN source fact는 이미 생성됐으나 KO source fact가 없고 validation_status가 갱신되지 않은 상태. 5건: SSR PARSE_FAILED로 SF 미생성 상태이나 identity 확인 증거는 충분."
+  },
+
+  "changes_applied": {
+    "validation_status_changed": {
+      "old": "source_data_missing",
+      "new": "single_source",
+      "count": 218
+    },
+    "ko_source_facts_created": {
+      "count": 218,
+      "source_key_format": "VisitBusanContent:{vb_category}:{uc_seq}:ko",
+      "identity_evidence": "identity_confirmed_uc_seq (SSR 183) + url_uc_seq (shopping 38)",
+      "fields": ["candidate_id", "source_key", "source_provider", "source_language", "title", "description", "address", "district", "lat", "lng", "collected_at", "source_url", "uc_seq", "vb_category", "collection_task", "identity_evidence"]
+    },
+    "external_http_requests": 0,
+    "images_downloaded": false,
+    "push": false
+  },
+
+  "publishability_impact": {
+    "gate_version": "BUSAN_PUBLISHABILITY_EN_V4",
+    "gate_logic_change": "없음 (EN_V2/V3와 동일 게이트 로직, 입력 데이터 변경만)",
+    "en_v3_distribution": {
+      "publishable": 290,
+      "publishable_with_caveat": 286,
+      "pending_source": 994,
+      "pending_review": 72
+    },
+    "en_v4_distribution": {
+      "publishable": 301,
+      "publishable_with_caveat": 448,
+      "pending_source": 820,
+      "pending_review": 73
+    },
+    "delta": {
+      "publishable": "+11",
+      "publishable_with_caveat": "+162",
+      "pending_source": "-174",
+      "pending_review": "+1"
+    },
+    "status_changed_candidates": 174,
+    "change_types": {
+      "pending_source→publishable": 11,
+      "pending_source→publishable_with_caveat": 162,
+      "pending_source→pending_review": 1
+    },
+    "kto_not_needed_upgrades": 173,
+    "kto_note": "VisitBusan 공식 KO+EN 페이지만으로 identity와 provenance 입증 가능. KTO API 수집 없이 173건 승격."
+  },
+
+  "pending_review_increase_explanation": {
+    "count": 1,
+    "cause": "identity_gate 해제 후 다른 게이트(provenance_gate 또는 coordinate_gate)가 PENDING_REVIEW 상태임이 노출됨. 해당 후보는 identity_gate만 블로킹이라고 진단됐으나, 내부적으로 다른 게이트도 PENDING_REVIEW 상태였음.",
+    "impact": "사전 예측: '11 publishable + 162 publishable_with_caveat + 1 remaining'. 실제: 1건이 pending_source 대신 pending_review로 이동. 범위 내 정상 결과."
+  },
+
+  "file_integrity": {
+    "protected_files_unchanged": true,
+    "protected_files": [
+      "busan-publishability-baseline-v1.json",
+      "busan-publishability-baseline-v1-details.jsonl",
+      "busan-publishability-en-v2.json",
+      "busan-publishability-en-v3.json",
+      "busan-publishability-en-v3-details.jsonl"
+    ],
+    "records_before": {
+      "enriched_candidates": 1642,
+      "source_facts": 2221
+    },
+    "records_after": {
+      "enriched_candidates": 1642,
+      "source_facts": 2439,
+      "new_ko_source_facts": 218
+    }
+  },
+
+  "validation_checks": {
+    "candidate_count_1642": true,
+    "target_221_processed": true,
+    "zero_identity_conflict_upgrades": true,
+    "protected_files_unchanged": true,
+    "external_requests": 0,
+    "push": false,
+    "verdict_result": "PASS"
+  },
+
+  "outputs": {
+    "updated_files": [
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl"
+    ],
+    "new_report_files": [
+      "data/tourapi/reports/busan/busan-publishability-en-v4.json",
+      "data/tourapi/reports/busan/busan-publishability-en-v4-details.jsonl",
+      "data/tourapi/reports/busan/visitbusan-source-status-reconciliation-v1-report.json",
+      "data/tourapi/reports/busan/visitbusan-source-status-reconciliation-v1-completion-report.json"
+    ],
+    "new_script": "scripts/run-visitbusan-source-status-reconciliation-v1.py"
+  }
+}

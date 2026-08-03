@@ -1,0 +1,2997 @@
+{
+  "file_check": {
+    "enriched_candidates": {
+      "exists": true,
+      "path": "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl",
+      "size": 6148949
+    },
+    "source_facts": {
+      "exists": true,
+      "path": "data\\tourapi\\enriched\\busan\\busan-source-facts-v1.jsonl",
+      "size": 2133448
+    },
+    "v8_details": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-publishability-en-v8-details.jsonl",
+      "size": 1080154
+    },
+    "v8_summary": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-publishability-en-v8.json",
+      "size": 3095
+    },
+    "release_manifest": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-final-place-event-release-manifest.json",
+      "size": 1057422
+    },
+    "handoff_manifest": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-final-data-handoff-manifest.json",
+      "size": 9545
+    },
+    "promotions_public": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-promotions-public-final.json",
+      "size": 5289
+    },
+    "promotions_archive": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-promotions-archive-final.json",
+      "size": 15876
+    },
+    "quality_report": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-final-data-quality-report.json",
+      "size": 3002
+    },
+    "current_events": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-current-event-release-manifest.json",
+      "size": 2678
+    },
+    "past_events": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-past-event-manifest.json",
+      "size": 8765
+    },
+    "stale_events": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-event-stale-hold-manifest.json",
+      "size": 10900
+    },
+    "missing_date_events": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-event-date-missing-hold-manifest.json",
+      "size": 9362
+    },
+    "no_source_events_audit": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-event-72-source-gap-audit-v1.json",
+      "size": 25116
+    },
+    "dup_adjudication": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-restaurant-duplicate-adjudication-v1.json",
+      "size": 40200
+    },
+    "category_summary": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\busan-final-category-summary.json",
+      "size": 1212
+    },
+    "multicity_standard": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\multicity-data-collection-standard-v1.json",
+      "size": 2186
+    },
+    "gyeongju_checklist": {
+      "exists": true,
+      "path": "data\\tourapi\\reports\\busan\\next-city-gyeongju-readiness-checklist-v1.json",
+      "size": 3231
+    },
+    "multicity_multicity-data-collection-standard-v1.json": {
+      "exists": true,
+      "size": 2186
+    },
+    "multicity_multicity-source-contract-template-v1.json": {
+      "exists": true,
+      "size": 2012
+    },
+    "multicity_multicity-place-collection-template-v1.json": {
+      "exists": true,
+      "size": 1323
+    },
+    "multicity_multicity-event-freshness-template-v1.json": {
+      "exists": true,
+      "size": 1710
+    },
+    "multicity_multicity-promotion-collection-template-v1.json": {
+      "exists": true,
+      "size": 1776
+    },
+    "multicity_multicity-browser-fallback-template-v1.json": {
+      "exists": true,
+      "size": 1660
+    },
+    "multicity_multicity-release-contract-v1.json": {
+      "exists": true,
+      "size": 1903
+    },
+    "multicity_next-city-gyeongju-readiness-checklist-v1.json": {
+      "exists": true,
+      "size": 3231
+    }
+  },
+  "count_verification": {
+    "candidates": {
+      "expected": 1642,
+      "actual": 1642,
+      "pass": true
+    },
+    "source_facts": {
+      "expected": 2714,
+      "actual": 1642,
+      "pass": false
+    },
+    "release": {
+      "expected": 1533,
+      "actual": 1533,
+      "pass": true
+    },
+    "hold_exclude": {
+      "expected": 109,
+      "actual": 109,
+      "pass": true
+    },
+    "current_events": {
+      "expected": 4,
+      "actual": 4,
+      "pass": true
+    },
+    "promo_public": {
+      "expected": 2,
+      "actual": 2,
+      "pass": true
+    },
+    "promo_archive": {
+      "expected": 8,
+      "actual": 8,
+      "pass": true
+    }
+  },
+  "count_all_pass": false,
+  "id_duplicates": {
+    "candidate_dups": [],
+    "v8_dups": [],
+    "release_dups": []
+  },
+  "structural_review": {
+    "structural_hold_ids": [
+      "busan-F-00299",
+      "busan-F-00313",
+      "busan-F-00050",
+      "busan-F-00386"
+    ],
+    "structural_in_release": 0,
+    "duplicate_sibling_count": 37,
+    "duplicate_sibling_in_release": 0
+  },
+  "coordinate_check": {
+    "place_count": 1529,
+    "no_coord_release": 0,
+    "issues": [
+      {
+        "type": "LNG_OUT_OF_RANGE",
+        "id": "busan-F-00341",
+        "lat": 35.195267,
+        "lng": 35.195267,
+        "category": "restaurant"
+      },
+      {
+        "type": "LAT_OUT_OF_RANGE",
+        "id": "busan-K-00674",
+        "lat": 19.69442748,
+        "lng": 117.9925662504,
+        "category": "attraction"
+      },
+      {
+        "type": "LNG_OUT_OF_RANGE",
+        "id": "busan-K-00674",
+        "lat": 19.69442748,
+        "lng": 117.9925662504,
+        "category": "attraction"
+      }
+    ],
+    "total_issues": 3
+  },
+  "category_check": {
+    "actual": {
+      "attraction": 717,
+      "event": 4,
+      "restaurant": 680,
+      "nature": 50,
+      "accommodation": 82
+    },
+    "expected": {
+      "attraction": 717,
+      "restaurant": 680,
+      "accommodation": 82,
+      "nature": 50,
+      "event": 4
+    },
+    "match": true,
+    "invalid": {}
+  },
+  "event_freshness": {
+    "current_event_count": 4,
+    "past_in_release": 0,
+    "stale_in_release": 0,
+    "missing_date_in_release": 0,
+    "no_source_in_release": 0,
+    "event_field_issues": [],
+    "pass": true
+  },
+  "promotion_check": {
+    "public_count": 2,
+    "archive_count": 8,
+    "issues": [
+      "BTO_PRESS_5340: missing organizer",
+      "BTO_PRESS_5340: missing official_url",
+      "VB_EVENT_684: missing organizer",
+      "VB_EVENT_684: missing official_url"
+    ],
+    "pass": false
+  },
+  "multilingual": {
+    "en_title_in_release": 953,
+    "ko_only_places": 580,
+    "ko_in_en_title": [
+      {
+        "id": "busan-F-00001",
+        "title_en": "Mandeuri Gondeurebap (만드리곤드레밥)"
+      },
+      {
+        "id": "busan-F-00002",
+        "title_en": "Manho-galmi Shabu Shabu (만호갈미 샤브샤브)"
+      },
+      {
+        "id": "busan-F-00003",
+        "title_en": "MinmulGarden (민물가든)"
+      },
+      {
+        "id": "busan-F-00004",
+        "title_en": "Booheung Sikdang (부흥식당)"
+      },
+      {
+        "id": "busan-F-00005",
+        "title_en": "Samihun (사미헌)"
+      }
+    ],
+    "hc_links": 43,
+    "mr_links": 67,
+    "nm_links": 22,
+    "unlinked": 1
+  },
+  "description_check": {
+    "total_issues": 69,
+    "sample": [
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00067",
+        "excerpt": "The Democracy Park and Jungang Park embodies the living spirit and philosophy of"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00073",
+        "excerpt": "Before the Busan Citizens Park was created, Geumgang Park and Geumgang Botanical"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00110",
+        "excerpt": "Busan is famous for its diverse natural resources. Although it is a big city ful"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00111",
+        "excerpt": "On November 11th at 11 am every year, an alarm sounds for a minute in Busan. Thi"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00115",
+        "excerpt": "Seated at the bottom of Bongnaesan Mountain in Yeongdo, Busan, Bongsan Village i"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00116",
+        "excerpt": "Did someone say that all roads in Busan lead to Seomyeon? We don’t know exactly "
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00117",
+        "excerpt": "Finally, the summer vacation season is upon us. Busan's sea is a great place to "
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00119",
+        "excerpt": "“Hyundai Motorstudio Busan” of Hyundai Motor Company was established in F1963, t"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00123",
+        "excerpt": "The days are getting longer, so it's a perfect time to enjoy a late evening driv"
+      },
+      {
+        "type": "HTML_IN_DESC_EN",
+        "id": "busan-A-00124",
+        "excerpt": "The area around Jung-gu, Busan, where the Gukje Market, the Bosu Book Alley, and"
+      }
+    ]
+  },
+  "provenance_check": {
+    "no_provenance_count": 0,
+    "provenance_rate_pct": 100.0,
+    "image_url_issues": 0
+  },
+  "quality_metrics": {
+    "total_candidates": 1642,
+    "total_source_facts": 1642,
+    "total_release": 1533,
+    "field_completeness": {
+      "title_ko": {
+        "count": 1533,
+        "rate_pct": 100.0
+      },
+      "title_en": {
+        "count": 953,
+        "rate_pct": 62.2
+      },
+      "address": {
+        "count": 1532,
+        "rate_pct": 99.9
+      },
+      "lat": {
+        "count": 1533,
+        "rate_pct": 100.0
+      },
+      "lng": {
+        "count": 1533,
+        "rate_pct": 100.0
+      },
+      "description_ko": {
+        "count": 1206,
+        "rate_pct": 78.7
+      },
+      "description_en": {
+        "count": 858,
+        "rate_pct": 56.0
+      },
+      "images": {
+        "count": 1404,
+        "rate_pct": 91.6
+      },
+      "provenance_summary": {
+        "count": 1533,
+        "rate_pct": 100.0
+      },
+      "district": {
+        "count": 1530,
+        "rate_pct": 99.8
+      }
+    },
+    "v8_publishability": {
+      "publishable_with_caveat": 507,
+      "pending_source": 788,
+      "pending_review": 44,
+      "publishable": 303
+    },
+    "release_class": {
+      "RELEASE_READY_OPTIONAL_MISSING": 1228,
+      "RELEASE_READY_CURRENT_EVENT": 4,
+      "RELEASE_READY_COMPLETE": 301
+    },
+    "candidate_id_dups": 0,
+    "v8_parse_errors": 0,
+    "enc_parse_errors": 0
+  },
+  "high_risk_samples": [
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-A-00002",
+      "title_ko": "깡깡이 예술마을",
+      "title_en": "Kangkangee Arts Village where history lives on",
+      "district": "영도구",
+      "lat": 35.092648,
+      "lng": 129.03255,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-K-00232",
+      "title_ko": "깡깡이 예술마을",
+      "title_en": null,
+      "district": "영도구",
+      "lat": 35.0932043968,
+      "lng": 129.0342206663,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-A-00049",
+      "title_ko": "렛츠런파크 부산경남",
+      "title_en": "LetsRun Park offers a feeling of enjoyment, comfort, and excitement!",
+      "district": "강서구",
+      "lat": 35.1566,
+      "lng": 128.87521,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-K-00220",
+      "title_ko": "렛츠런파크 부산경남",
+      "title_en": null,
+      "district": "강서구",
+      "lat": 35.1546447184,
+      "lng": 128.8819239173,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-A-00072",
+      "title_ko": "금정산",
+      "title_en": "Geumjeongsan Mountain makes Busan even more beautiful  ",
+      "district": "금정구",
+      "lat": 35.280136,
+      "lng": 129.0512,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_id": "busan-K-00001",
+      "title_ko": "금정산",
+      "title_en": null,
+      "district": "금정구",
+      "lat": 35.268448978,
+      "lng": 129.0518587773,
+      "category": "attraction",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "question": "동명 장소 — 실제 다른 지점인지, 동일 장소인지 확인 필요"
+    },
+    {
+      "risk_type": "COORD_BOUNDARY_EDGE",
+      "candidate_id": "busan-F-00341",
+      "title_ko": "보느파티쓰 리",
+      "title_en": "Bonheur Pâtisserie",
+      "lat": 35.195267,
+      "lng": 35.195267,
+      "category": "restaurant",
+      "question": "좌표가 부산 경계 근접 — 실제 위치 확인 필요"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00001",
+      "title_ko": "만드리곤드레밥",
+      "title_en": "Mandeuri Gondeurebap (만드리곤드레밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00002",
+      "title_ko": "만호갈미샤브샤브",
+      "title_en": "Manho-galmi Shabu Shabu (만호갈미 샤브샤브)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00003",
+      "title_ko": "민물가든",
+      "title_en": "MinmulGarden (민물가든)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00004",
+      "title_ko": "부흥식당",
+      "title_en": "Booheung Sikdang (부흥식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00005",
+      "title_ko": "사미헌",
+      "title_en": "Samihun (사미헌)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00006",
+      "title_ko": "원조할매집",
+      "title_en": "Wonjo Halmaejip (원조할매집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00007",
+      "title_ko": "가야할매밀면",
+      "title_en": "GayaHalmaeMaemilmyeon (가야할매밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00008",
+      "title_ko": "국제밀면본점",
+      "title_en": "Gukje Milmyeon Main Branch (국제밀면본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00009",
+      "title_ko": "할매가야밀면",
+      "title_en": "Gaya Milmyeon (가야밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00011",
+      "title_ko": "김해식당",
+      "title_en": "Gimhae Sikdang (김해식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00015",
+      "title_ko": "이재모피자 본점",
+      "title_en": "Lee Jaemo Pizza (이재모피자)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00017",
+      "title_ko": "배비장보쌈구서본점",
+      "title_en": "Baebijang Bossam Guseo Branch (배비장보쌈)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00018",
+      "title_ko": "장수장 꼬리곰탕",
+      "title_en": "Jangsujang Kkorigomtang (장수장꼬리곰탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00019",
+      "title_ko": "거대갈비",
+      "title_en": "Geodae-Galbi (거대갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00020",
+      "title_ko": "금수복국 해운대본점",
+      "title_en": "Geumsubokguk Haeundae Branch (금수복국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00021",
+      "title_ko": "다온 한정식",
+      "title_en": "Daon (다온)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00023",
+      "title_ko": "르꽁비브",
+      "title_en": "Le Convive (르꽁비브)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00024",
+      "title_ko": "파니니브런치본점",
+      "title_en": "Panini Brunch (파니니브런치)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00025",
+      "title_ko": "문스시",
+      "title_en": "Moon Sushi (문스시)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00026",
+      "title_ko": "할매재첩국집",
+      "title_en": "Halmae Jaecheopguk (할매재첩국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00027",
+      "title_ko": "예이제",
+      "title_en": "Yeije (예이제)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00028",
+      "title_ko": "합천일류돼지국밥",
+      "title_en": "Hapcheon Illyu Dwaejigukbap (합천일류돼지국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00029",
+      "title_ko": "원조석대추어탕",
+      "title_en": "Wonjo Seokdae Chueotang (원조석대추어탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00030",
+      "title_ko": "웨이브온커피",
+      "title_en": "Waveon Coffee (웨이브온커피)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00031",
+      "title_ko": "대티물꽁",
+      "title_en": "DaetiMulkkong (대티물꽁)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00032",
+      "title_ko": "원조18번완당",
+      "title_en": "Wonjo 18beon Wandang (원조 18번 완당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00033",
+      "title_ko": "할매복국",
+      "title_en": "Halmae Bokguk (원조할매복국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00034",
+      "title_ko": "젠스시",
+      "title_en": "Zen Sushi (젠스시)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00035",
+      "title_ko": "신창국밥 본점",
+      "title_en": "Sinchang Gukbap (신창국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00037",
+      "title_ko": "평안도족발",
+      "title_en": "Pyeongan-do Jokbal (평안도족발)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00038",
+      "title_ko": "한우숯불양곱창",
+      "title_en": "Hanwoo Sootbul Yanggopchang (한우숯불양곱창)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00039",
+      "title_ko": "쌍둥이돼지국밥 본점",
+      "title_en": "Ssangdungi  Dwaejigukbap  Main Store(쌍둥이돼지국밥 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00040",
+      "title_ko": "국이네낙지볶음",
+      "title_en": "Gugine Nakjibokkeum (국이네낙지볶음)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00041",
+      "title_ko": "베지나랑",
+      "title_en": "Vegenarang (베지나랑)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00042",
+      "title_ko": "광안리신라횟집",
+      "title_en": "Silla Hoetjip (신라횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00045",
+      "title_ko": "석화한정식",
+      "title_en": "Seokhwa Hanjeongsik (석화한정식)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00046",
+      "title_ko": "내당",
+      "title_en": "Naedang (내당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00047",
+      "title_ko": "봉식당",
+      "title_en": "Bong Sikdang (봉식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00049",
+      "title_ko": "초량1941",
+      "title_en": "Choryang 1941 (초량 1941)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00051",
+      "title_ko": "함경면옥",
+      "title_en": "Hamgyeong Myeonok (함경면옥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00052",
+      "title_ko": "김유순대구뽈찜",
+      "title_en": "Kim Yu-sun Daegu Ppoljjim (김유순대구뽈찜)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00053",
+      "title_ko": "백산키친",
+      "title_en": "Baeksan Kitchen (백산키친)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00054",
+      "title_ko": "왔다식당",
+      "title_en": "Wakda Sikdang (왔다식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00055",
+      "title_ko": "영변횟집",
+      "title_en": "Yeongbyeon Hoejip (영변횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00056",
+      "title_ko": "방코",
+      "title_en": "BANCO (방코)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00059",
+      "title_ko": "탐복",
+      "title_en": "Tambok  (탐복)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00060",
+      "title_ko": "곤국",
+      "title_en": "Gonguk (곤국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00061",
+      "title_ko": "다이닝센 부산본점",
+      "title_en": "Dining Sen Busan (다이닝센 부산본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00063",
+      "title_ko": "해남식당 부산용호동W스퀘어점",
+      "title_en": "Haenam Kimchi Sikdang (해남식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00064",
+      "title_ko": "범일빈대떡",
+      "title_en": "Bomil Bindaeddeok (범일빈대떡)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00065",
+      "title_ko": "금강만두",
+      "title_en": "Geumgang Mandu (금강만두)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00066",
+      "title_ko": "석화정",
+      "title_en": "Seokhwajeong (석화정)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00067",
+      "title_ko": "에테르",
+      "title_en": "Aether (에테르)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00068",
+      "title_ko": "디저트시네마",
+      "title_en": "Dessert Cinema (디저트시네마)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00069",
+      "title_ko": "북경",
+      "title_en": "Bukgyeong (Beijing) (북경)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00070",
+      "title_ko": "연산낙지해물탕",
+      "title_en": "Yeonsan Nakji Haemultang (연산낙지해물탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00071",
+      "title_ko": "옻바다전복삼계탕",
+      "title_en": "Otbada Jeonbok Samgyetang (옻바다 전복삼계탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00072",
+      "title_ko": "팔미초밥",
+      "title_en": "Palmi Chobap (팔미초밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00073",
+      "title_ko": "다리집 본점",
+      "title_en": "Darijip (다리집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00074",
+      "title_ko": "남촌",
+      "title_en": "Namchon (남촌)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00075",
+      "title_ko": "북경의자전거",
+      "title_en": "Beijing Bicycle (북경의 자전거)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00077",
+      "title_ko": "식당 3선 덕천점",
+      "title_en": "Sikdang Samseon (식당 3선)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00078",
+      "title_ko": "함경면옥 덕천점",
+      "title_en": "Hamgyeong Myeonok (함경면옥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00081",
+      "title_ko": "몽실종가돼지국밥 감천문화마을 본점",
+      "title_en": "Mongsil Jongga Dwaejigukbap (몽실종가돼지국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00082",
+      "title_ko": "식당 토성동",
+      "title_en": "Sikdang Toseong-dong (식당 토성동)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00083",
+      "title_ko": "청죽",
+      "title_en": "Cheongjuk (청죽)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00084",
+      "title_ko": "편의방",
+      "title_en": "Pyeonuibang (편의방)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00086",
+      "title_ko": "포항가자미물회국수말이전문점",
+      "title_en": "Pohang Gajami Mulhoe (포항가자미물회)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00087",
+      "title_ko": "괘법쭈꾸미전문점",
+      "title_en": "Gwaebeop Jjukkumi (괘법쭈꾸미)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00089",
+      "title_ko": "광명집",
+      "title_en": "Gwangmyeongjip (광명집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00090",
+      "title_ko": "명지첫집 국제신도시본점",
+      "title_en": "Myeongjicheotjip (명지첫집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00091",
+      "title_ko": "명품외식 육면정",
+      "title_en": "Yukmyeonjeong (명품외식 육면정)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00092",
+      "title_ko": "호포갈비 문현점",
+      "title_en": "Hopogalbi Munhyeon Branch (호포갈비 문현점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00094",
+      "title_ko": "공감식당",
+      "title_en": "Gonggamsikdang (공감식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00095",
+      "title_ko": "다옴 서면 삼정타워점",
+      "title_en": "Daom (Samjeong Tower Branch, Seomyeon) (다옴)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00096",
+      "title_ko": "당감밀면",
+      "title_en": "Danggammilmyeon (당감밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00097",
+      "title_ko": "버거샵 서면",
+      "title_en": "Burger Shop (버거샵)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00098",
+      "title_ko": "소수인",
+      "title_en": "Sosuin (소수인)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00099",
+      "title_ko": "양평칼국수 본점",
+      "title_en": "Yangpyeong Kalguksu (양평칼국수)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00101",
+      "title_ko": "신흥반점",
+      "title_en": "Sinheungbanjeom (신흥반점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00102",
+      "title_ko": "동원숯불갈비",
+      "title_en": "Dongwon Sutbul Galbi (동원 숯불 갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00103",
+      "title_ko": "도날드",
+      "title_en": "Donald Tteokbokki(도날드즉석떡볶이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00104",
+      "title_ko": "영도우",
+      "title_en": "Young Dough (영도우)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00105",
+      "title_ko": "함흥보쌈사계절냉면",
+      "title_en": "Hamheung Bossam (함흥보쌈)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00107",
+      "title_ko": "개미집신도시점",
+      "title_en": "Gaemijip Sindosi Branch (개미집신도시점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00108",
+      "title_ko": "오리한상 명지본점",
+      "title_en": "Orihansang (오리한상)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00109",
+      "title_ko": "만포밀면옥",
+      "title_en": "Manpo Milmyeon (만포밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00110",
+      "title_ko": "맛사랑채",
+      "title_en": "Matsarangchae (맛사랑채)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00111",
+      "title_ko": "우정까망촌돼지",
+      "title_en": "Ujeong Kkamangchon Dwaeji (우정까망촌돼지)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00112",
+      "title_ko": "금랑횟집 광안리본점",
+      "title_en": "Geumnang Hoetjip, Gwanalli Main Store (금랑횟집 광안리 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00114",
+      "title_ko": "화국반점",
+      "title_en": "Hwaguk Banjeom (화국반점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00118",
+      "title_ko": "어가초밥",
+      "title_en": "Eoga Chobap (어가초밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00119",
+      "title_ko": "배꼽시계",
+      "title_en": "Baekkopsigye (배꼽시계)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00120",
+      "title_ko": "사랑도횟집",
+      "title_en": "Sarangdo Hoetjip (사랑도 횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00121",
+      "title_ko": "삼송초밥 부산남포본점",
+      "title_en": "Samsong Chobap (삼송초밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00122",
+      "title_ko": "솔리보",
+      "title_en": "Solivo (솔리보)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00123",
+      "title_ko": "부산족발",
+      "title_en": "Busan Jokbal (부산족발)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00124",
+      "title_ko": "포에버얌 부산기장점",
+      "title_en": "PHOever Yum (포에버얌)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00125",
+      "title_ko": "물레방아 즉석구이",
+      "title_en": "Mullebanga Jeukseokgui (물레방아 즉석구이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00127",
+      "title_ko": "고민끝에여기",
+      "title_en": "Gominkkeute Yeogi (고민끝에여기)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00128",
+      "title_ko": "명송초밥",
+      "title_en": "Myeongsong Chobap (명송초밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00129",
+      "title_ko": "다께",
+      "title_en": "Take (다께)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00130",
+      "title_ko": "남포삼계탕",
+      "title_en": "Nampo Samgyetang (남포삼계탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00132",
+      "title_ko": "대수정",
+      "title_en": "Daesujeong (대수정)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00135",
+      "title_ko": "그라치에",
+      "title_en": "Grazie (그라치에)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00136",
+      "title_ko": "동촌황정순수육전골",
+      "title_en": "Dongchon Hwang Jeong-sun Suyuk Jeongol (동촌황정순수육전골)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00137",
+      "title_ko": "소우닭계",
+      "title_en": "Soudakgye (소우닭계)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00138",
+      "title_ko": "양지추어탕",
+      "title_en": "Yangji Chueotang (양지추어탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00139",
+      "title_ko": "초량통닭",
+      "title_en": "Choryang Tongdak (초량통닭)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00140",
+      "title_ko": "홍성방 본점",
+      "title_en": "Hongseongbang (홍성방)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00141",
+      "title_ko": "먹음직 온천천점",
+      "title_en": "Meogeumjik (먹음직)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00143",
+      "title_ko": "밀보스79",
+      "title_en": "Milboss 79 (밀보스79)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00144",
+      "title_ko": "세연정",
+      "title_en": "Seyeonjeong (세연정)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00145",
+      "title_ko": "조방낙지마당",
+      "title_en": "Jobang Nakji Madang (조방낙지마당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00146",
+      "title_ko": "초록담미역국",
+      "title_en": "Chorokdam Miyeokguk (초록담미역국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00147",
+      "title_ko": "타이빈",
+      "title_en": "Thai Bin (타이빈)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00148",
+      "title_ko": "경찰서옆초밥집",
+      "title_en": "Gyeongchalseo Yeop Chobapjip (경찰서 옆 초밥집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00149",
+      "title_ko": "동백아가씨1961 서면점",
+      "title_en": "Dongbaek Agassi 1961 (동백아가씨1961)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00150",
+      "title_ko": "장어촌",
+      "title_en": "Jangeochon (장어촌)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00151",
+      "title_ko": "전통음식점 원양",
+      "title_en": "Traditional Restaurant Wonyang (전통음식점 원양)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00153",
+      "title_ko": "금용만두",
+      "title_en": "Geumyong Dumpling (금용만두)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00154",
+      "title_ko": "웅천집",
+      "title_en": "Ungcheonjip (웅천집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00155",
+      "title_ko": "평양집",
+      "title_en": "Pyeongyangjip (평양집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00156",
+      "title_ko": "대왕불맛",
+      "title_en": "Daewang Bulmat (대왕불맛)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00157",
+      "title_ko": "전골그집 주례본점",
+      "title_en": "Jeongol[Geujip] (전골[그집])",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00158",
+      "title_ko": "함양본가어탕국수",
+      "title_en": "Hamyang Bonga Eotang Guksu (함양본가어탕국수)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00159",
+      "title_ko": "오공떵번",
+      "title_en": "50 Tan Binh (오공떵번)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00160",
+      "title_ko": "우연횟집",
+      "title_en": "Uyeon Hoetjip (우연횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00161",
+      "title_ko": "마파람해물찜해물탕 구서본점",
+      "title_en": "Maparam Haemuljjim Haemultang Guseo Main Branch (마파람 해물찜 해물탕 구서본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00162",
+      "title_ko": "청해수산",
+      "title_en": "Cheonghae Susan (청해수산)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00163",
+      "title_ko": "궁중해물탕 조씨집 대연본점",
+      "title_en": "Gungjung Haemultang Jossijip (궁중해물탕 조씨집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00164",
+      "title_ko": "까치횟집",
+      "title_en": "Kkachi Hoetjip (까치횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00165",
+      "title_ko": "미청식당",
+      "title_en": "Micheong Sikdang (미청식당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00167",
+      "title_ko": "큐제",
+      "title_en": "QG (큐제)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00168",
+      "title_ko": "커피스가모 인 서면",
+      "title_en": "Coffee Sugamo in Seomyeon (커피스가모 인 서면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00169",
+      "title_ko": "칠암사계",
+      "title_en": "Chiramsagye (칠암사계)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00170",
+      "title_ko": "초량온당",
+      "title_en": "Choryang Ondang (초량온당)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00171",
+      "title_ko": "원조 바다집",
+      "title_en": "Wonjo Badajip (원조 바다집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00172",
+      "title_ko": "이흥용과자점 부산대직영점",
+      "title_en": "Lee Heung-yong Bakery PSU Branch (이흥용과자점 부산대점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00173",
+      "title_ko": "소문난원조조방낙지본점",
+      "title_en": "Somunnan Wonjo Jobangnakji (소문난 원조 조방낙지)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00174",
+      "title_ko": "오대양횟집",
+      "title_en": "Odaeyang Hoetjip (오대양횟집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00175",
+      "title_ko": "오륙도낙지 범일본점",
+      "title_en": "Oryukdo Nakji Beomil Main Branch (오륙도 낙지 범일본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00176",
+      "title_ko": "일미아구찜",
+      "title_en": "Ilmi Agujjim (일미아구찜)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00177",
+      "title_ko": "제주복국",
+      "title_en": "Jeju Bokguk (제주복국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00178",
+      "title_ko": "1966정원 천성항점",
+      "title_en": "1966 Jungwon (1966정원)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00179",
+      "title_ko": "용호동할매팥빙수단팥죽 본점",
+      "title_en": "Yongho Halmae Patbingsu Danpatjuk (용호할매팥빙수단팥죽)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00181",
+      "title_ko": "아데초이",
+      "title_en": "A’de Choi (아데초이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00182",
+      "title_ko": "빌라빌레쿨라",
+      "title_en": "Villa Villekulla (빌라 빌레쿨라)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00183",
+      "title_ko": "브리타니",
+      "title_en": "Brittany (브리타니)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00184",
+      "title_ko": "브레이크인커피",
+      "title_en": "Break in Coffee (브레이크인 커피)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00186",
+      "title_ko": "보리종파티세리 본점",
+      "title_en": "Borison Patisserie Main Branch (보리종파티세리 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00187",
+      "title_ko": "바우노바",
+      "title_en": "Baunova (바우노바)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00188",
+      "title_ko": "부산대 포맨티코 본점",
+      "title_en": "Phomantico PNU Branch (부산대 포맨티코)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00189",
+      "title_ko": "명란브랜드연구소",
+      "title_en": "Myeongnan Brand Laboratory (명란브랜드연구소)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00191",
+      "title_ko": "어밤부",
+      "title_en": "A bamboo (어밤부)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00193",
+      "title_ko": "우봉",
+      "title_en": "Ubong (우봉)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00194",
+      "title_ko": "굿모닝홍콩",
+      "title_en": "Good Morning Hong Kong (굿모닝홍콩)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00195",
+      "title_ko": "버거인뉴욕",
+      "title_en": "Burger in New York (버거인뉴욕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00196",
+      "title_ko": "반핀 서면전포점",
+      "title_en": "Banpin (반핀)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00197",
+      "title_ko": "복성반점",
+      "title_en": "Bokseong Banjeom (복성반점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00202",
+      "title_ko": "삼형제오리 부산1호점",
+      "title_en": "Samhyeongje Ori (삼형제오리)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00203",
+      "title_ko": "동광동 석기시대 본점",
+      "title_en": "Seokgisidae (석기시대)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00204",
+      "title_ko": "음주양식당 오스테리아 어부",
+      "title_en": "Osteria Aboo (음주양식당 오스테리아 어부)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00205",
+      "title_ko": "칸웨이",
+      "title_en": "Can Wei (칸웨이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00206",
+      "title_ko": "고옥",
+      "title_en": "Go-ok (고옥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00207",
+      "title_ko": "글라스앤보틀",
+      "title_en": "Glass and Bottle (글라스 앤 보틀)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00208",
+      "title_ko": "앙탄",
+      "title_en": "Angtan (앙탄)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00209",
+      "title_ko": "교토돈부리 본점",
+      "title_en": "Kyoto Donburi Main Branch (교토돈부리본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00210",
+      "title_ko": "나가하마만게츠",
+      "title_en": "Nagahama Mangetsu (나가하마 만게츠)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00211",
+      "title_ko": "노는바다",
+      "title_en": "Noneun Bada (노는바다)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00213",
+      "title_ko": "슌",
+      "title_en": "Shun (슌)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00214",
+      "title_ko": "스시미르네 본점",
+      "title_en": "Sushi Mireune (스시미르네)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00215",
+      "title_ko": "스시심 타카이",
+      "title_en": "Sushi Sim Takai (스시심 타카이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00216",
+      "title_ko": "야스마루 쇼쿠도",
+      "title_en": "Yasumaru (야스마루)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00217",
+      "title_ko": "중앙모밀",
+      "title_en": "Jungang Momil (중앙모밀)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00218",
+      "title_ko": "킹콩스시",
+      "title_en": "King Kong Sushi (킹콩스시)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00219",
+      "title_ko": "타이가 텐푸라",
+      "title_en": "Taiga Tempura (타이가 텐푸라)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00220",
+      "title_ko": "톤쇼우 부산대점",
+      "title_en": "Tonshou PNU Branch(톤쇼우 부산대점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00221",
+      "title_ko": "삼성밀면",
+      "title_en": "Samseong Milmyeon (삼성밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00222",
+      "title_ko": "부산약콩밀면 이기대본점",
+      "title_en": "Busak Yakkong Milmyeon (부산약콩밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00223",
+      "title_ko": "면채움",
+      "title_en": "Myeonchaeum (면채움)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00224",
+      "title_ko": "대연밀면",
+      "title_en": "Daeyeon Milmyeon (대연밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00226",
+      "title_ko": "정짓간 돼지국밥 & 막국수",
+      "title_en": "Jeongjitgan (정짓간)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00227",
+      "title_ko": "우리돼지국밥",
+      "title_en": "Uri Dwaejigukbap (우리돼지국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00228",
+      "title_ko": "수복돼지국밥",
+      "title_en": "Subok Dwaejigukbap (수복돼지국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00229",
+      "title_ko": "부광돼지국밥전문점",
+      "title_en": "Bugwang Dwaejigukbap (부광돼지국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00230",
+      "title_ko": "행복을 짓는 수향촌밥상",
+      "title_en": "Suhyang Bapsang (수향밥상)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00231",
+      "title_ko": "해물왕창칼국수",
+      "title_en": "Haemul Wangchang Kalguksu (해물왕창칼국수)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00232",
+      "title_ko": "할매재첩국부산본점",
+      "title_en": "Halmae Jaecheopguk (할매재첩국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00234",
+      "title_ko": "박해윤통영해물밥상",
+      "title_en": "Park Hae-yun Tongyeong Bapsang (박해윤 통영 해물밥상)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00235",
+      "title_ko": "원조꼬리곰집",
+      "title_en": "Wonjo Kkorigomjip (원조꼬리곰집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00237",
+      "title_ko": "하기연진주냉면",
+      "title_en": "Ha Gi-yeon Jinju Naengmyeon (하기연진주냉면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00238",
+      "title_ko": "장안집",
+      "title_en": "Janganjip (장안집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00239",
+      "title_ko": "이가네칼국수",
+      "title_en": "Lee Family’s Kalguksu (이가네 칼국수)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00240",
+      "title_ko": "이가네떡볶이",
+      "title_en": "Lee Family’s Tteokbokki (이가네 떡볶이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00241",
+      "title_ko": "우성삼계탕",
+      "title_en": "Useong Samgyetang (우성삼계탕)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00242",
+      "title_ko": "몽뜰",
+      "title_en": "Mongtteul (몽뜰)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00243",
+      "title_ko": "조광심민속왕순대",
+      "title_en": "Cho Gwangsim Minsok Wangsundae (조광심민속왕순대)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00244",
+      "title_ko": "할매집회국수",
+      "title_en": "Halamejip Hoeguksu (할매집회국수)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00245",
+      "title_ko": "나탄약선요리",
+      "title_en": "Natan Yakseonyori (나탄약선요리)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00247",
+      "title_ko": "본 고갈비",
+      "title_en": "Bon Gogalbi (본 고갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00248",
+      "title_ko": "88돼지갈비",
+      "title_en": "88 Dwaejigalbi (88돼지갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00249",
+      "title_ko": "돌솥밥집",
+      "title_en": "Dolsotbapjip (돌솥밥집)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00250",
+      "title_ko": "맹여사육전육회",
+      "title_en": "Maengyeosa Yukjeon Yukhoe (맹여사육전육회)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00351",
+      "title_ko": "토북베이커리",
+      "title_en": "TOBUK BAKERY (토북 베이커리)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00352",
+      "title_ko": "카페호밀",
+      "title_en": "Cafe Homil (카페호밀)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00356",
+      "title_ko": "올바릇식당 본점",
+      "title_en": "Olbareut Main Branch(올바릇 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00358",
+      "title_ko": "태화반점",
+      "title_en": "Taehwa  Banjeom (태화반점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00362",
+      "title_ko": "신가네 호떡 김밥 떡볶이",
+      "title_en": "Singane Hotteok  Gimbap Tteokbokki (신가네 호떡 김밥 떡볶이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00363",
+      "title_ko": "칙투칙",
+      "title_en": "Cheek to Cheek (칙투칙)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00364",
+      "title_ko": "프랑스 과자점  브리앙",
+      "title_en": "Biscuiterie Française BRILLANT (프랑스 과자점 브리앙)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00373",
+      "title_ko": "다이도코로 광안리본점",
+      "title_en": "DAIDOKORO (다이도코로)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00395",
+      "title_ko": "백가백반",
+      "title_en": "Baekgabaekban(백가백반)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00396",
+      "title_ko": "밀양갈비",
+      "title_en": "Miryang Galbi(밀양갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00397",
+      "title_ko": "가야포차선지국밥 본점",
+      "title_en": "Gayapocha Seonjigukbap Main Branch(가야포차선지국밥 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00398",
+      "title_ko": "30년전통가마솥석쇠돼지갈비",
+      "title_en": "Gamasot(30년전통가마솥석쇠돼지갈비)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00400",
+      "title_ko": "란아한",
+      "title_en": "RAN A HAN(란아한)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00401",
+      "title_ko": "바오하우스",
+      "title_en": "BAOHAUS(바오하우스)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00402",
+      "title_ko": "롯데호텔 부산 블루헤이븐",
+      "title_en": "Blue Haven(롯데호텔 부산 블루헤이븐）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00403",
+      "title_ko": "못난이식당 해운대점",
+      "title_en": "Monnani Sikdang Haeundae Branch(못난이식당 해운대점）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00404",
+      "title_ko": "손내향미",
+      "title_en": "Sonnae hyangmi(손내향미)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00405",
+      "title_ko": "선창횟집",
+      "title_en": "Seonchang Hoetjip（선창횟집）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00406",
+      "title_ko": "수블",
+      "title_en": "Sooble（수블）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00408",
+      "title_ko": "쥬가",
+      "title_en": "JYUGA（쥬가）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00409",
+      "title_ko": "쿠지라멘",
+      "title_en": "Kuziramen（쿠지라멘）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00411",
+      "title_ko": "1969부원동칼국수 부산본점",
+      "title_en": "1969 Buwondong Kalguksu Busan Main Branch(1969부원동칼국수 부산본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00412",
+      "title_ko": "고등어연구소 본점",
+      "title_en": "Mackerel Research Institute Main Branch(고등어연구소 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00413",
+      "title_ko": "동삼정",
+      "title_en": "DONGSAMJUNG(동삼정)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00414",
+      "title_ko": "유원",
+      "title_en": "Yuwon(유원)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00418",
+      "title_ko": "델리봉",
+      "title_en": "DELI BONG(델리봉)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00419",
+      "title_ko": "보느파티쓰리",
+      "title_en": "Bonheur Patisserie(보느파티쓰리)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00420",
+      "title_ko": "남천면가",
+      "title_en": "Namcheonmeonga(남천면가)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00421",
+      "title_ko": "닭발의 지존",
+      "title_en": "Dakbaljizon(닭발의 지존)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00423",
+      "title_ko": "백일평냉",
+      "title_en": "100.1.pyeongnaeng(백일평냉)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00424",
+      "title_ko": "아펙트",
+      "title_en": "Afekt(아펙트)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00425",
+      "title_ko": "야키토리 백탄",
+      "title_en": "Yakitori BAEKTAN(야키토리 백탄)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00426",
+      "title_ko": "야키토리 해공",
+      "title_en": "Yakitori HAEGONG (야키토리 해공）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00427",
+      "title_ko": "우리포차",
+      "title_en": "Wooripocha（우리포차）",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00428",
+      "title_ko": "으뜸이로리바타",
+      "title_en": "EUTTEUM Iroribata(으뜸이로리바타)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00429",
+      "title_ko": "자매국밥",
+      "title_en": "Jamae Gukbap(자매국밥)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00430",
+      "title_ko": "조이풀조이풀(골드핀치by조이풀조이풀)",
+      "title_en": "Goldfinch by joyful joyful(조이풀조이풀)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00431",
+      "title_ko": "청산1954",
+      "title_en": "Cheongsan1954(청산1954)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00434",
+      "title_ko": "대성갈치찌개구이",
+      "title_en": "Daeseong Galchi Jjigaegui (대성갈치찌개구이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00435",
+      "title_ko": "고기형",
+      "title_en": "GOGIHYUNG(고기형)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-F-00437",
+      "title_ko": "히떼로스터리 전포점",
+      "title_en": "Hytte roastery Jeonpo Branch (히떼로스터리 전포점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00003",
+      "title_ko": "부산 송도해수욕장",
+      "title_en": "Busan Songdo Beach (부산 송도해수욕장)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00010",
+      "title_ko": "태종대온천찜질방",
+      "title_en": "Taejongdae Spa (태종대온천찜질방)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00012",
+      "title_ko": "광안리해변 테마거리",
+      "title_en": "Gwangalli Beach Theme Street (광안리해변 테마거리)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00017",
+      "title_ko": "부산광안대교",
+      "title_en": "Busan Gwangandaegyo Bridge (부산광안대교)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00058",
+      "title_ko": "국제시장",
+      "title_en": "Gukje Market (국제시장)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00078",
+      "title_ko": "파라다이스 호텔 부산",
+      "title_en": "Paradise Casino Busan (파라다이스 카지노 부산)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00084",
+      "title_ko": "망산도·유주암",
+      "title_en": "Mangsando Island, Yujuam, Yujubigak (망산도·유주암·유주비각)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00086",
+      "title_ko": "절영해안산책로",
+      "title_en": "Jeoryeonghaean Coastal Walking Trail (절영해안산책로)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00131",
+      "title_ko": "일품한우",
+      "title_en": "Ilpum Hanwoo (일품한우)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00141",
+      "title_ko": "국제시장 먹자골목",
+      "title_en": "Gukje Market Food Street (국제시장 먹자골목)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00147",
+      "title_ko": "부산 센트럴호텔",
+      "title_en": "Central Hotel (부산 센트럴호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00154",
+      "title_ko": "해운대 로데오거리",
+      "title_en": "Haeundae Rodeo Street (해운대 로데오거리)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00192",
+      "title_ko": "이바구공작소",
+      "title_en": "Ebagu Crafts Workshop (이바구공작소)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00210",
+      "title_ko": "코오롱 씨클라우드 호텔",
+      "title_en": "KOLON SEACLOUD HOTEL (코오롱 씨클라우드 호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00218",
+      "title_ko": "아홉산숲",
+      "title_en": "Ahopsan Forest (아홉산숲)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00226",
+      "title_ko": "지엔비호텔(GNB호텔)",
+      "title_en": "GnB HOTEL (지엔비호텔(GNB호텔))",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00236",
+      "title_ko": "송도 구름산책로",
+      "title_en": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00245",
+      "title_ko": "비치모텔",
+      "title_en": "Beach Motel (비치모텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00246",
+      "title_ko": "더 비에스 호텔",
+      "title_en": "THE B.S HOTEL, Busan station  / THE B.S호텔(더비에스호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00249",
+      "title_ko": "영도 흰여울해안터널",
+      "title_en": "Huin-yeoul Coastal Tunnel (영도 흰여울해안터널)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00263",
+      "title_ko": "마린시티",
+      "title_en": "Marine City (마린시티)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00287",
+      "title_ko": "땅뫼산",
+      "title_en": "Ttangmoesan Mountain (땅뫼산)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00296",
+      "title_ko": "해운대리버크루즈",
+      "title_en": "Haeundae River Cruise (해운대리버크루즈)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00298",
+      "title_ko": "오이아호텔",
+      "title_en": "Oia Hotel (오이아호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00299",
+      "title_ko": "광안리 SUP Zone",
+      "title_en": "Gwangalli SUP Zone (광안리 SUP Zone)",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00301",
+      "title_ko": "해안누리길 몰운대길",
+      "title_en": "Morundae-gil Trail [Haean Nuri-gil] (해안누리길 몰운대길)",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00302",
+      "title_ko": "호텔포레 프리미어 남포",
+      "title_en": "Hotel Forêt Premier Nampo (호텔포레 프리미어 남포)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00303",
+      "title_ko": "라비드아틀란호텔2",
+      "title_en": "Lavi de Atlan Hotel2 (라비드아틀란호텔2)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00312",
+      "title_ko": "펠릭스바이STX",
+      "title_en": "Felix by STX (펠릭스바이STX)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00331",
+      "title_ko": "더펫텔프리미엄스위트",
+      "title_en": "The Petel Premium Suite (더펫텔프리미엄스위트)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00422",
+      "title_ko": "부산요트투어 3355마린",
+      "title_en": "Busan Yacht Tour 3355 Marine (부산요트투어 3355마린)",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00427",
+      "title_ko": "하운드호텔 부산역점",
+      "title_en": "Hound Hotel Busan Station (하운드호텔 부산역점)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00435",
+      "title_ko": "베이몬드호텔",
+      "title_en": "Baymond Hotel (베이몬드호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00437",
+      "title_ko": "그레이193호텔",
+      "title_en": "Gray Hotel 193 (그레이193호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00447",
+      "title_ko": "요트탈래",
+      "title_en": "Yacht Tale (요트탈래)",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00678",
+      "title_ko": "UN조각공원",
+      "title_en": "UN Sculpture Park (UN조각공원)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00682",
+      "title_ko": "광안리 해양레포츠센터",
+      "title_en": "Gwangalli Ocean Leports Center (광안리 해양레포츠센터)",
+      "category": "nature",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00684",
+      "title_ko": "송도스카이파크",
+      "title_en": "Songdo Sky Park (송도스카이파크)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00689",
+      "title_ko": "블루스토리 호텔",
+      "title_en": "Blue Story Hotel (블루스토리 호텔)",
+      "category": "accommodation",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-K-00696",
+      "title_ko": "동서대학교 소향씨어터 신한카드홀",
+      "title_en": "Sohyang Theater Shinhan Card Hall (소향씨어터신한카드홀)",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-1133",
+      "title_ko": "도날드즉석떡볶이",
+      "title_en": "Donald Tteokbokki(도날드즉석떡볶이)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-1262",
+      "title_ko": "홍성방",
+      "title_en": "Hongseongbang (홍성방)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-1489",
+      "title_ko": "석기시대",
+      "title_en": "Seokgisidae (석기시대)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-1508",
+      "title_ko": "부산약콩밀면",
+      "title_en": "Busak Yakkong Milmyeon (부산약콩밀면)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-1808",
+      "title_ko": "올바릇 본점",
+      "title_en": "Olbareut Main Branch(올바릇 본점)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-218",
+      "title_ko": "초원복국 대연본점",
+      "title_en": "Chowonbokguk (초원복국)",
+      "category": "restaurant",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "KOREAN_IN_EN_TITLE",
+      "candidate_id": "busan-VB-2580",
+      "title_ko": "1987년부터 운영된 전통있는 주방용품 전문점, 삼영그릇 탐방기",
+      "title_en": "Exploring 'Samyeong Jubang(삼영그릇)', a Kitchenware Specialty Store Since 1987",
+      "category": "attraction",
+      "question": "EN title에 한글 — 잘못된 언어 연결 또는 미번역"
+    },
+    {
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00299",
+      "title_ko": "랩24바이쿠무다",
+      "category": "restaurant",
+      "lat": 35.177433,
+      "lng": 129.19717,
+      "district": "해운대구",
+      "release_status": "HOLD_STRUCTURAL_REVIEW — in release: False",
+      "v8_publishability": "publishable",
+      "question": "near-duplicate 동일 소스 쌍 — adjudication 완료 여부 확인"
+    },
+    {
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00313",
+      "title_ko": "60년전통할매국밥",
+      "category": "restaurant",
+      "lat": 35.141018,
+      "lng": 129.05618,
+      "district": "동구",
+      "release_status": "HOLD_STRUCTURAL_REVIEW — in release: False",
+      "v8_publishability": "publishable_with_caveat",
+      "question": "near-duplicate 동일 소스 쌍 — adjudication 완료 여부 확인"
+    },
+    {
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00050",
+      "title_ko": "60년 전통 할매국밥",
+      "category": "restaurant",
+      "lat": 35.141018,
+      "lng": 129.05618,
+      "district": "동구",
+      "release_status": "HOLD_STRUCTURAL_REVIEW — in release: False",
+      "v8_publishability": "publishable",
+      "question": "near-duplicate 동일 소스 쌍 — adjudication 완료 여부 확인"
+    },
+    {
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00386",
+      "title_ko": "랩24 바이 쿠무다",
+      "category": "restaurant",
+      "lat": 35.177433,
+      "lng": 129.19717,
+      "district": "해운대구",
+      "release_status": "HOLD_STRUCTURAL_REVIEW — in release: False",
+      "v8_publishability": "publishable_with_caveat",
+      "question": "near-duplicate 동일 소스 쌍 — adjudication 완료 여부 확인"
+    },
+    {
+      "risk_type": "PROMO_BOOKING_BLOCKED",
+      "promo_id": "BTO_PRESS_5340",
+      "title_ko": "부산병 치유 프로모션 (중화권 외국인 관광객 대상)",
+      "status": "ACTIVE",
+      "booking_url": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED",
+      "end_date": "2026-08-27",
+      "question": "KKday 차단 — 예약 경로 없음. 공개 시 사용자 혼란 가능성. 표시 방식 결정 필요."
+    }
+  ],
+  "review_queue": [
+    {
+      "id": "RQ-STRUCT-busan-F-00299",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00299",
+      "status": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "main_review_needed": true,
+      "reason": "near-duplicate 동일 소스 쌍 — adjudication 필요"
+    },
+    {
+      "id": "RQ-STRUCT-busan-F-00313",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00313",
+      "status": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "main_review_needed": true,
+      "reason": "near-duplicate 동일 소스 쌍 — adjudication 필요"
+    },
+    {
+      "id": "RQ-STRUCT-busan-F-00050",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00050",
+      "status": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "main_review_needed": true,
+      "reason": "near-duplicate 동일 소스 쌍 — adjudication 필요"
+    },
+    {
+      "id": "RQ-STRUCT-busan-F-00386",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00386",
+      "status": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "main_review_needed": true,
+      "reason": "near-duplicate 동일 소스 쌍 — adjudication 필요"
+    },
+    {
+      "id": "RQ-PROMO-VB_EVENT_201",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "VB_EVENT_201",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-VB_EVENT_244",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "VB_EVENT_244",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-VB_EVENT_1032",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "VB_EVENT_1032",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-VB_EVENT_1071",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "VB_EVENT_1071",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-BTO_PRESS_5226",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "BTO_PRESS_5226",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-BTO_PRESS_5205",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "BTO_PRESS_5205",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-BTO_PRESS_4916",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "BTO_PRESS_4916",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    },
+    {
+      "id": "RQ-PROMO-BTO_PRESS_4971",
+      "type": "PROMOTION_ARCHIVE",
+      "promo_id": "BTO_PRESS_4971",
+      "status": "EXPIRED",
+      "in_release": false,
+      "main_review_needed": false,
+      "reason": "EXPIRED 보존 — 전시 불필요. 정기 갱신 시 만료 확인."
+    }
+  ],
+  "overall_pass": false,
+  "summary": {
+    "count_pass": false,
+    "id_no_dups": true,
+    "structural_clean": true,
+    "event_freshness_clean": true,
+    "promotion_clean": false,
+    "category_match": true,
+    "coord_issues": 3,
+    "description_issues": 69,
+    "high_risk_count": 304,
+    "review_queue_count": 12
+  }
+}

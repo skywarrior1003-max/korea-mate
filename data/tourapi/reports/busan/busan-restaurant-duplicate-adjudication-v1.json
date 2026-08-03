@@ -1,0 +1,1374 @@
+{
+  "report_id": "busan-restaurant-duplicate-adjudication-v1",
+  "task": "TASK-BUSAN-RESTAURANT-DUPLICATE-ADJUDICATION-V1",
+  "run_ts": "2026-07-30T10:14:08.578587+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "verdict_distribution": {
+    "VERIFIED_DUPLICATE": 30,
+    "DISTINCT_BRANCHES_VERIFIED": 2,
+    "UNRESOLVED": 1
+  },
+  "total_groups": 33,
+  "total_candidates": 67,
+  "canonical_selected": 30,
+  "branch_flags_removed": 30,
+  "records": [
+    {
+      "title_ko": "구포촌국수",
+      "candidate_ids": [
+        "busan-F-00057",
+        "busan-F-00315"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00315",
+      "canonical_selection_reason": "addr_score=6 field_score=5 > 5/8",
+      "sibling_ids": [
+        "busan-F-00057"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 1.9,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00057",
+          "addr_raw": "부산 금정구 금샘로 490",
+          "addr_norm": "금정구 금샘로 490",
+          "phone": "",
+          "lat": 35.266575,
+          "lng": 129.08475,
+          "addr_score": 5,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00315",
+          "addr_raw": "부산 금정구 금샘로 490 (남산동)",
+          "addr_norm": "금정구 금샘로 490",
+          "phone": "",
+          "lat": 35.26658,
+          "lng": 129.08473,
+          "addr_score": 6,
+          "field_score": 5
+        }
+      ]
+    },
+    {
+      "title_ko": "기장손칼국수",
+      "candidate_ids": [
+        "busan-F-00365",
+        "busan-F-00253"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00253",
+      "canonical_selection_reason": "addr_score=6 field_score=5 > 5/8",
+      "sibling_ids": [
+        "busan-F-00365"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 22.1,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00365",
+          "addr_raw": "부산진구 서면로 56",
+          "addr_norm": "진구 서면로 56",
+          "phone": "",
+          "lat": 35.15566,
+          "lng": 129.05814,
+          "addr_score": 5,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00253",
+          "addr_raw": "부산 부산진구 서면로 56 (부전동)",
+          "addr_norm": "진구 서면로 56",
+          "phone": "",
+          "lat": 35.15551,
+          "lng": 129.0583,
+          "addr_score": 6,
+          "field_score": 5
+        }
+      ]
+    },
+    {
+      "title_ko": "달타이",
+      "candidate_ids": [
+        "busan-F-00285",
+        "busan-F-00399"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00285",
+      "canonical_selection_reason": "addr_score=6 field_score=5 >= 3/8",
+      "sibling_ids": [
+        "busan-F-00399"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 2.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00285",
+          "addr_raw": "부산 해운대구 달맞이길 193 (중동)",
+          "addr_norm": "해운대구 달맞이길 193",
+          "phone": "",
+          "lat": 35.158127,
+          "lng": 129.18245,
+          "addr_score": 6,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00399",
+          "addr_raw": "해운대구 달맞이길 193 1층",
+          "addr_norm": "해운대구 달맞이길 193 1층",
+          "phone": "",
+          "lat": 35.158108,
+          "lng": 129.18246,
+          "addr_score": 3,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "동경밥상",
+      "candidate_ids": [
+        "busan-F-00212",
+        "busan-F-00270"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00270",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00212"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00212",
+          "addr_raw": "수영구 남천바다로 34-6",
+          "addr_norm": "수영구 남천바다로 34-6",
+          "phone": "",
+          "lat": 35.148396,
+          "lng": 129.11385,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00270",
+          "addr_raw": "부산 수영구 남천바다로 34-6 (남천동)",
+          "addr_norm": "수영구 남천바다로 34-6",
+          "phone": "",
+          "lat": 35.148396,
+          "lng": 129.11385,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "동래할매파전",
+      "candidate_ids": [
+        "busan-F-00319",
+        "busan-F-00233"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00319",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00233"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 3.5,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00319",
+          "addr_raw": "부산 동래구 명륜로94번길 43-10 (복천동)",
+          "addr_norm": "동래구 명륜로94번길 43-10",
+          "phone": "",
+          "lat": 35.204605,
+          "lng": 129.08386,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00233",
+          "addr_raw": "동래구 명륜로 94번길 43-10",
+          "addr_norm": "동래구 명륜로 94번길 43-10",
+          "phone": "",
+          "lat": 35.204575,
+          "lng": 129.08385,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "동백섬횟집",
+      "candidate_ids": [
+        "busan-F-00022",
+        "busan-F-00258"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00258",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00022"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 2.8,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00022",
+          "addr_raw": "해운대구 해운대해변로209번나길 17",
+          "addr_norm": "해운대구 해운대해변로209번나길 17",
+          "phone": "",
+          "lat": 35.160427,
+          "lng": 129.15468,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00258",
+          "addr_raw": "부산 해운대구 해운대해변로209번나길 17 (우동)",
+          "addr_norm": "해운대구 해운대해변로209번나길 17",
+          "phone": "",
+          "lat": 35.160408,
+          "lng": 129.15466,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "르도헤",
+      "candidate_ids": [
+        "busan-F-00300",
+        "busan-F-00387"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00300",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 3/7",
+      "sibling_ids": [
+        "busan-F-00387"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00300",
+          "addr_raw": "부산광역시 해운대구 마린시티3로 37 (우동)",
+          "addr_norm": "해운대구 마린시티3로 37",
+          "phone": "",
+          "lat": 35.15545,
+          "lng": 129.1466,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00387",
+          "addr_raw": "해운대구 마린시티3로 37 213,214호",
+          "addr_norm": "해운대구 마린시티3로 37 213,214호",
+          "phone": "",
+          "lat": 35.15545,
+          "lng": 129.1466,
+          "addr_score": 3,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "모리",
+      "candidate_ids": [
+        "busan-F-00388",
+        "busan-F-00302"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00302",
+      "canonical_selection_reason": "addr_score=6 field_score=8 > 4/7",
+      "sibling_ids": [
+        "busan-F-00388"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00388",
+          "addr_raw": "해운대구 해운대해변로 298번길 24 \n팔레드시즈 2층2-4호",
+          "addr_norm": "해운대구 해운대해변로 298번길 24 팔레드시즈 2층2-4호",
+          "phone": "",
+          "lat": 35.160202,
+          "lng": 129.16658,
+          "addr_score": 4,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00302",
+          "addr_raw": "부산 해운대구 해운대해변로298번길 24  (중동)",
+          "addr_norm": "해운대구 해운대해변로298번길 24",
+          "phone": "",
+          "lat": 35.160202,
+          "lng": 129.16658,
+          "addr_score": 6,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "모모스커피",
+      "candidate_ids": [
+        "busan-F-00016",
+        "busan-F-00345"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00345",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00016"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 6.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00016",
+          "addr_raw": "금정구 오시게로 20",
+          "addr_norm": "금정구 오시게로 20",
+          "phone": "",
+          "lat": 35.21928,
+          "lng": 129.08643,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00345",
+          "addr_raw": "부산 금정구 오시게로 20 (부곡동)",
+          "addr_norm": "금정구 오시게로 20",
+          "phone": "",
+          "lat": 35.219234,
+          "lng": 129.08647,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "목장원",
+      "candidate_ids": [
+        "busan-F-00294",
+        "busan-F-00133"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00294",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00133"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 2.2,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00294",
+          "addr_raw": "부산 영도구 절영로 355 (동삼동)",
+          "addr_norm": "영도구 절영로 355",
+          "phone": "",
+          "lat": 35.07164,
+          "lng": 129.05736,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00133",
+          "addr_raw": "영도구 절영로 355",
+          "addr_norm": "영도구 절영로 355",
+          "phone": "",
+          "lat": 35.07162,
+          "lng": 129.05736,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "무궁화",
+      "candidate_ids": [
+        "busan-F-00303",
+        "busan-F-00117"
+      ],
+      "group_size": 2,
+      "verdict": "DISTINCT_BRANCHES_VERIFIED",
+      "canonical_id": null,
+      "canonical_selection_reason": null,
+      "sibling_ids": [],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 4907.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00303",
+          "addr_raw": "부산 부산진구 가야대로 772 (부전동)",
+          "addr_norm": "진구 가야대로 772",
+          "phone": "",
+          "lat": 35.15679,
+          "lng": 129.05641,
+          "addr_score": 6,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00117",
+          "addr_raw": "황령산로8번길 5",
+          "addr_norm": "황령산로8번길 5",
+          "phone": "",
+          "lat": 35.14778,
+          "lng": 129.10925,
+          "addr_score": 0,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "무슈뱅상",
+      "candidate_ids": [
+        "busan-F-00340",
+        "busan-F-00376"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00340",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 2/7",
+      "sibling_ids": [
+        "busan-F-00376"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00340",
+          "addr_raw": "부산 수영구 광남로48번길 19 (남천동)",
+          "addr_norm": "수영구 광남로48번길 19",
+          "phone": "",
+          "lat": 35.146374,
+          "lng": 129.11293,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00376",
+          "addr_raw": "수영구 광남로 48번길 19",
+          "addr_norm": "수영구 광남로 48번길 19",
+          "phone": "",
+          "lat": 35.146374,
+          "lng": 129.11293,
+          "addr_score": 2,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "물꽁식당",
+      "candidate_ids": [
+        "busan-F-00012",
+        "busan-F-00320"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00320",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00012"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 2.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00012",
+          "addr_raw": "중구 흑교로59번길 3",
+          "addr_norm": "중구 흑교로59번길 3",
+          "phone": "",
+          "lat": 35.104504,
+          "lng": 129.0244,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00320",
+          "addr_raw": "부산 중구 흑교로59번길 3 (보수동2가)",
+          "addr_norm": "중구 흑교로59번길 3",
+          "phone": "",
+          "lat": 35.104496,
+          "lng": 129.02438,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "미미루",
+      "candidate_ids": [
+        "busan-F-00267",
+        "busan-F-00142"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00267",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 0/8",
+      "sibling_ids": [
+        "busan-F-00142"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 1.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00267",
+          "addr_raw": "부산 동래구 온천장로 91-1 (온천동)",
+          "addr_norm": "동래구 온천장로 91-1",
+          "phone": "",
+          "lat": 35.219494,
+          "lng": 129.08295,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00142",
+          "addr_raw": "온천장로 91-1",
+          "addr_norm": "온천장로 91-1",
+          "phone": "",
+          "lat": 35.219486,
+          "lng": 129.08296,
+          "addr_score": 0,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "배종관동래삼계탕",
+      "candidate_ids": [
+        "busan-F-00322",
+        "busan-F-00361"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00322",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 2/7",
+      "sibling_ids": [
+        "busan-F-00361"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00322",
+          "addr_raw": "부산 동래구 동래로116번길 39 (복천동)",
+          "addr_norm": "동래구 동래로116번길 39",
+          "phone": "",
+          "lat": 35.20526,
+          "lng": 129.08475,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00361",
+          "addr_raw": "동래구 동래로 116번길 39",
+          "addr_norm": "동래구 동래로 116번길 39",
+          "phone": "",
+          "lat": 35.20526,
+          "lng": 129.08475,
+          "addr_score": 2,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "베르크로스터스",
+      "candidate_ids": [
+        "busan-F-00346",
+        "busan-F-00367"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00346",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 6/7",
+      "sibling_ids": [
+        "busan-F-00367"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00346",
+          "addr_raw": "부산 부산진구 서전로58번길 115 (전포동)",
+          "addr_norm": "진구 서전로58번길 115",
+          "phone": "",
+          "lat": 35.152615,
+          "lng": 129.06628,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00367",
+          "addr_raw": "부산진구 서전로58번길 115 1층-2층",
+          "addr_norm": "진구 서전로58번길 115 1층-2층",
+          "phone": "",
+          "lat": 35.152615,
+          "lng": 129.06628,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "부다면옥",
+      "candidate_ids": [
+        "busan-F-00262",
+        "busan-F-00246"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00262",
+      "canonical_selection_reason": "addr_score=6 field_score=5 >= 3/8",
+      "sibling_ids": [
+        "busan-F-00246"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00262",
+          "addr_raw": "부산 해운대구 중동1로 36 (중동)",
+          "addr_norm": "해운대구 중동1로 36",
+          "phone": "",
+          "lat": 35.162384,
+          "lng": 129.16298,
+          "addr_score": 6,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00246",
+          "addr_raw": "해운대구 중동1로 36 2층",
+          "addr_norm": "해운대구 중동1로 36 2층",
+          "phone": "",
+          "lat": 35.162384,
+          "lng": 129.16298,
+          "addr_score": 3,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "부산명물횟집",
+      "candidate_ids": [
+        "busan-F-00324",
+        "busan-F-00013"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00324",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00013"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 8.6,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00324",
+          "addr_raw": "부산 중구 자갈치해안로 55 (남포동4가)",
+          "addr_norm": "중구 자갈치해안로 55",
+          "phone": "",
+          "lat": 35.097115,
+          "lng": 129.03111,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00013",
+          "addr_raw": "중구 자갈치해안로 55",
+          "addr_norm": "중구 자갈치해안로 55",
+          "phone": "",
+          "lat": 35.09714,
+          "lng": 129.0312,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "부우사안",
+      "candidate_ids": [
+        "busan-F-00268",
+        "busan-F-00199"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00268",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00199"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00268",
+          "addr_raw": "부산 해운대구 해운대해변로209번나길 16 (우동)",
+          "addr_norm": "해운대구 해운대해변로209번나길 16",
+          "phone": "",
+          "lat": 35.160133,
+          "lng": 129.1545,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00199",
+          "addr_raw": "해운대구 해운대해변로209번나길 16",
+          "addr_norm": "해운대구 해운대해변로209번나길 16",
+          "phone": "",
+          "lat": 35.160133,
+          "lng": 129.1545,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "산동완탕교자관",
+      "candidate_ids": [
+        "busan-F-00269",
+        "busan-F-00201"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00269",
+      "canonical_selection_reason": "addr_score=6 field_score=5 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00201"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00269",
+          "addr_raw": "부산 동구 중앙대로248번길 3-11 (초량동)",
+          "addr_norm": "동구 중앙대로248번길 3-11",
+          "phone": "",
+          "lat": 35.119602,
+          "lng": 129.04268,
+          "addr_score": 6,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00201",
+          "addr_raw": "동구 중앙대로296번길 11",
+          "addr_norm": "동구 중앙대로296번길 11",
+          "phone": "",
+          "lat": 35.119602,
+          "lng": 129.04268,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "서울깍두기",
+      "candidate_ids": [
+        "busan-K-00365",
+        "busan-F-00327"
+      ],
+      "group_size": 2,
+      "verdict": "DISTINCT_BRANCHES_VERIFIED",
+      "canonical_id": null,
+      "canonical_selection_reason": null,
+      "sibling_ids": [],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 15264.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-K-00365",
+          "addr_raw": "부산광역시 금정구 장전온천천로 75",
+          "addr_norm": "금정구 장전온천천로 75",
+          "phone": "",
+          "lat": 35.2317537744,
+          "lng": 129.0887065771,
+          "addr_score": 5,
+          "field_score": 0
+        },
+        {
+          "cid": "busan-F-00327",
+          "addr_raw": "부산 중구 남포길 33 (남포동2가)",
+          "addr_norm": "중구 남포길 33",
+          "phone": "",
+          "lat": 35.104774,
+          "lng": 129.0249,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "쇼진",
+      "candidate_ids": [
+        "busan-F-00272",
+        "busan-F-00391"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00272",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 3/7",
+      "sibling_ids": [
+        "busan-F-00391"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00272",
+          "addr_raw": "부산 해운대구 구남로 9 (우동)",
+          "addr_norm": "해운대구 구남로 9",
+          "phone": "",
+          "lat": 35.163307,
+          "lng": 129.1596,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00391",
+          "addr_raw": "해운대구 구남로 9, 라마다앙코르호텔 214호",
+          "addr_norm": "해운대구 구남로 9, 라마다앙코르호텔 214호",
+          "phone": "",
+          "lat": 35.163307,
+          "lng": 129.1596,
+          "addr_score": 3,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "쉐프리",
+      "candidate_ids": [
+        "busan-F-00280",
+        "busan-F-00198"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00280",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 3/8",
+      "sibling_ids": [
+        "busan-F-00198"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00280",
+          "addr_raw": "부산 해운대구 해운대해변로209번길 13 (우동)",
+          "addr_norm": "해운대구 해운대해변로209번길 13",
+          "phone": "",
+          "lat": 35.159615,
+          "lng": 129.15382,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00198",
+          "addr_raw": "해운대구 해운대해변로209번길 13 바게트호텔 3층",
+          "addr_norm": "해운대구 해운대해변로209번길 13 바게트호텔 3층",
+          "phone": "",
+          "lat": 35.159615,
+          "lng": 129.15382,
+          "addr_score": 3,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "스시시안",
+      "candidate_ids": [
+        "busan-F-00273",
+        "busan-F-00407"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00273",
+      "canonical_selection_reason": "addr_score=6 field_score=5 >= 4/8",
+      "sibling_ids": [
+        "busan-F-00407"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 19.3,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00273",
+          "addr_raw": "부산 해운대구 센텀1로 9 (우동)",
+          "addr_norm": "해운대구 센텀1로 9",
+          "phone": "",
+          "lat": 35.167847,
+          "lng": 129.13097,
+          "addr_score": 6,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00407",
+          "addr_raw": "해운대구 센텀1로 9 E동상가 2층 210호",
+          "addr_norm": "해운대구 센텀1로 9 e동상가 2층 210호",
+          "phone": "",
+          "lat": 35.167683,
+          "lng": 129.13104,
+          "addr_score": 4,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "신발원",
+      "candidate_ids": [
+        "busan-F-00329",
+        "busan-F-00048"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00329",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 5/8",
+      "sibling_ids": [
+        "busan-F-00048"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 1.9,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00329",
+          "addr_raw": "부산 동구 대영로243번길 62 (초량동)",
+          "addr_norm": "동구 대영로243번길 62",
+          "phone": "",
+          "lat": 35.11481,
+          "lng": 129.03871,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00048",
+          "addr_raw": "부산 동구 대영로243번길62",
+          "addr_norm": "동구 대영로243번길62",
+          "phone": "",
+          "lat": 35.114815,
+          "lng": 129.03873,
+          "addr_score": 5,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "옛날오막집",
+      "candidate_ids": [
+        "busan-F-00036",
+        "busan-F-00332"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00332",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00036"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 20.4,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00036",
+          "addr_raw": "서구 구덕로274번길 14",
+          "addr_norm": "서구 구덕로274번길 14",
+          "phone": "",
+          "lat": 35.108913,
+          "lng": 129.0199,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00332",
+          "addr_raw": "부산 서구 구덕로274번길 14 (동대신동1가)",
+          "addr_norm": "서구 구덕로274번길 14",
+          "phone": "",
+          "lat": 35.10883,
+          "lng": 129.0197,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "제로베이스",
+      "candidate_ids": [
+        "busan-F-00276",
+        "busan-F-00379"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00276",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 3/7",
+      "sibling_ids": [
+        "busan-F-00379"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00276",
+          "addr_raw": "부산 수영구 민락로33번길 17 (민락동)",
+          "addr_norm": "수영구 민락로33번길 17",
+          "phone": "",
+          "lat": 35.15741,
+          "lng": 129.12096,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00379",
+          "addr_raw": "수영구 민락로33번길 17 202호",
+          "addr_norm": "수영구 민락로33번길 17 202호",
+          "phone": "",
+          "lat": 35.15741,
+          "lng": 129.12096,
+          "addr_score": 3,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "초원복국",
+      "candidate_ids": [
+        "busan-F-00044",
+        "busan-F-00334"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00334",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/7",
+      "sibling_ids": [
+        "busan-F-00044"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 2.8,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00044",
+          "addr_raw": "남구 황령대로492번길 30",
+          "addr_norm": "남구 황령대로492번길 30",
+          "phone": "",
+          "lat": 35.137794,
+          "lng": 129.10591,
+          "addr_score": 2,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00334",
+          "addr_raw": "부산 남구 황령대로492번길 30 (대연동)",
+          "addr_norm": "남구 황령대로492번길 30",
+          "phone": "",
+          "lat": 35.13777,
+          "lng": 129.1059,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "탐복",
+      "candidate_ids": [
+        "busan-F-00266",
+        "busan-F-00059"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00059",
+      "canonical_selection_reason": "addr_score=3 field_score=8 > 3/5",
+      "sibling_ids": [
+        "busan-F-00266"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 2.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00266",
+          "addr_raw": "부산 기장군 일광읍 문오성길 31",
+          "addr_norm": "기장군 일광읍 문오성길 31",
+          "phone": "",
+          "lat": 35.28275,
+          "lng": 129.25766,
+          "addr_score": 3,
+          "field_score": 5
+        },
+        {
+          "cid": "busan-F-00059",
+          "addr_raw": "부산 기장군 일광읍 문오성길 31",
+          "addr_norm": "기장군 일광읍 문오성길 31",
+          "phone": "",
+          "lat": 35.282757,
+          "lng": 129.25768,
+          "addr_score": 3,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "팔레트",
+      "candidate_ids": [
+        "busan-F-00311",
+        "busan-F-00359",
+        "busan-F-00410"
+      ],
+      "group_size": 3,
+      "verdict": "UNRESOLVED",
+      "canonical_id": null,
+      "canonical_selection_reason": null,
+      "sibling_ids": [],
+      "evidence": {
+        "normalized_address_match": false,
+        "max_coord_distance_m": 6000.9
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00311",
+          "addr_raw": "부산 해운대구 달맞이길65번길 154 3층",
+          "addr_norm": "해운대구 달맞이길65번길 154 3층",
+          "phone": "",
+          "lat": 35.131638,
+          "lng": 129.11977,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00359",
+          "addr_raw": "부산 해운대구 달맞이길65번길 154 3층",
+          "addr_norm": "해운대구 달맞이길65번길 154 3층",
+          "phone": "",
+          "lat": 35.131638,
+          "lng": 129.11977,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00410",
+          "addr_raw": "해운대구  달맞이길65번길 154, 3층",
+          "addr_norm": "해운대구 달맞이길65번길 154, 3층",
+          "phone": "",
+          "lat": 35.156513,
+          "lng": 129.17834,
+          "addr_score": 3,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "평산옥",
+      "candidate_ids": [
+        "busan-F-00335",
+        "busan-F-00093"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00335",
+      "canonical_selection_reason": "addr_score=6 field_score=7 >= 2/8",
+      "sibling_ids": [
+        "busan-F-00093"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 0.2,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00335",
+          "addr_raw": "부산 동구 초량중로 26 (초량동)",
+          "addr_norm": "동구 초량중로 26",
+          "phone": "",
+          "lat": 35.11429,
+          "lng": 129.0371,
+          "addr_score": 6,
+          "field_score": 7
+        },
+        {
+          "cid": "busan-F-00093",
+          "addr_raw": "동구 초량중로 26",
+          "addr_norm": "동구 초량중로 26",
+          "phone": "",
+          "lat": 35.114292,
+          "lng": 129.0371,
+          "addr_score": 2,
+          "field_score": 8
+        }
+      ]
+    },
+    {
+      "title_ko": "하레마",
+      "candidate_ids": [
+        "busan-F-00312",
+        "busan-F-00394"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00312",
+      "canonical_selection_reason": "addr_score=6 field_score=8 >= 4/7",
+      "sibling_ids": [
+        "busan-F-00394"
+      ],
+      "evidence": {
+        "normalized_address_match": false,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00312",
+          "addr_raw": "부산 해운대구 마린시티2로 33 (우동)",
+          "addr_norm": "해운대구 마린시티2로 33",
+          "phone": "",
+          "lat": 35.157204,
+          "lng": 129.14482,
+          "addr_score": 6,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00394",
+          "addr_raw": "해운대구 마린시티2로 33 두산 위브더제니스 지하 1층 106호",
+          "addr_norm": "해운대구 마린시티2로 33 두산 위브더제니스 지하 1층 106호",
+          "phone": "",
+          "lat": 35.157204,
+          "lng": 129.14482,
+          "addr_score": 4,
+          "field_score": 7
+        }
+      ]
+    },
+    {
+      "title_ko": "합천국밥집",
+      "candidate_ids": [
+        "busan-F-00225",
+        "busan-F-00252"
+      ],
+      "group_size": 2,
+      "verdict": "VERIFIED_DUPLICATE",
+      "canonical_id": "busan-F-00252",
+      "canonical_selection_reason": "addr_score=6 field_score=7 > 2/8",
+      "sibling_ids": [
+        "busan-F-00225"
+      ],
+      "evidence": {
+        "normalized_address_match": true,
+        "coord_distance_m": 0.0,
+        "phone_match": false
+      },
+      "member_details": [
+        {
+          "cid": "busan-F-00225",
+          "addr_raw": "남구 용호로 235",
+          "addr_norm": "남구 용호로 235",
+          "phone": "",
+          "lat": 35.111244,
+          "lng": 129.11125,
+          "addr_score": 2,
+          "field_score": 8
+        },
+        {
+          "cid": "busan-F-00252",
+          "addr_raw": "부산 남구 용호로 235 (용호동)",
+          "addr_norm": "남구 용호로 235",
+          "phone": "",
+          "lat": 35.111244,
+          "lng": 129.11125,
+          "addr_score": 6,
+          "field_score": 7
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "report_id": "busan-promotion-collection-report-v2",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "supersedes": "busan-promotion-collection-report-v1.json",
+
+  "summary": {
+    "result": "PARTIAL",
+    "classification_cleanup_result": "PASS",
+    "total_promotions_confirmed": 8,
+    "active_and_ending_soon": 2,
+    "upcoming": 0,
+    "expired": 6,
+    "unverified": 0,
+    "items_removed_from_v1": 6,
+    "items_added_new": 2,
+    "events_discovered": 5,
+    "travel_products_discovered": 17,
+    "webfetch_calls_this_task": 18,
+    "partial_reason": "VB-EVENT-SURVEY 페이지 2~13 및 VB-SHOWS-EVENTS 9~12월 JavaScript 페이지네이션으로 접근 불가"
+  },
+
+  "phase_1_reclassification": {
+    "status": "PASS",
+    "items_reviewed": 12,
+    "promotions_retained": 6,
+    "promotions_removed": 6,
+    "removal_breakdown": {
+      "EVENT": 3,
+      "EVENT_UNCERTAIN": 2,
+      "TRAVEL_PRODUCT": 1
+    },
+    "key_decisions": [
+      "VB_SHOWS_6160 (Balcony Music Show): EVENT — 정기 야외 공연, 금전적 혜택 없음",
+      "VB_SHOWS_6228 (Gwangalli Drone Show): EVENT — 공공 무료 관람, 프로모션 기준 미충족",
+      "VBP_PASS_001 (Visit Busan Pass): TRAVEL_PRODUCT — 상시 판매, 한정 프로모션 미확인",
+      "VB_EVENT_656 (드론쇼 투표): EVENT — 투표 참여형, 금전적 혜택 미확인",
+      "VB_EVENT_207 (Busan Super): EVENT_UNCERTAIN — 배달서비스 론칭 이벤트, 상세 접근 불가",
+      "VB_EVENT_190 (Busan Super 설날): EVENT_UNCERTAIN — 참여형 이벤트, 상세 접근 불가"
+    ]
+  },
+
+  "phase_2_new_collection": {
+    "status": "PARTIAL",
+    "bto_pages_scanned": "1~7 (누적)",
+    "new_promotions_found": 2,
+    "new_promotions": [
+      "BTO_PRESS_5226: 달빛 SUP 투어 (₩20,000 + ₩30,000 요트권, BUNDLE_BENEFIT, EXPIRED)",
+      "BTO_PRESS_5205: 시티투어 어린이날 비밀티켓 (선착순 120매 + 랜덤박스, LIMITED_CAMPAIGN, EXPIRED)"
+    ],
+    "inaccessible": [
+      "VB-EVENT-SURVEY 2~13페이지: GET pageIndex 불작동",
+      "VB-SHOWS-EVENTS 9~12월: GET month 파라미터 불작동"
+    ]
+  },
+
+  "phase_3_verification": {
+    "status": "PASS_WITH_MANUAL_ITEMS",
+    "busanbyeong": {
+      "result": "VERIFIED",
+      "promotion_mechanism": "TARGETED_OFFER",
+      "evidence": "BTO 보도자료 직접 확인. 중화권 외국인 대상 KKday 연동 맞춤형 상품 할인.",
+      "pending": "KKday 구체 할인율·예약 URL (MB-001, 403 차단)"
+    },
+    "visitbusan_pass": {
+      "result": "TRAVEL_PRODUCT",
+      "reason": "상시 판매 패스, 기간한정 프로모션 미확인",
+      "pending": "가격 상세 수동 확인 필요 (MB-005)"
+    },
+    "starry_night_cruise": {
+      "result": "PROMOTION_CONFIRMED",
+      "promotion_mechanism": "BUNDLE_BENEFIT",
+      "evidence": "VisitBusan 공식 'Summer Promotion' 타이틀. 한정 18일+35석. 크루즈+콘서트+불꽃+간식+사진 번들.",
+      "note": "정가 vs 할인가 비교 근거 없음 — BUNDLE_BENEFIT으로 분류. VERIFIED 유지."
+    },
+    "balcony_music_show": {
+      "result": "EVENT",
+      "reason": "정기 야외 공연 시리즈. 금전적 혜택 없음."
+    },
+    "gwangalli_drone_show": {
+      "result": "EVENT",
+      "reason": "공공 무료 드론쇼. 금전적 혜택 없음."
+    }
+  },
+
+  "final_promotion_count": {
+    "total": 8,
+    "by_status": {
+      "ACTIVE": 1,
+      "ENDING_SOON": 1,
+      "UPCOMING": 0,
+      "EXPIRED": 6,
+      "UNVERIFIED": 0
+    },
+    "by_source": {
+      "BTO-PRESS": 3,
+      "VB-EVENT-SURVEY": 5
+    },
+    "by_mechanism": {
+      "TARGETED_OFFER": 1,
+      "BUNDLE_BENEFIT": 2,
+      "LIMITED_CAMPAIGN": 3,
+      "FREE_ACCESS": 1,
+      "UNVERIFIED_OFFICIAL_DETAIL": 3
+    }
+  },
+
+  "data_quality_checks": {
+    "EVENT_in_promotion_dataset": 0,
+    "TRAVEL_PRODUCT_in_promotion_dataset": 0,
+    "free_event_only_as_promotion": 0,
+    "no_official_evidence_in_promotion": 0,
+    "news_only_source": 0,
+    "b2b_contamination": 0,
+    "active_without_dates": 0,
+    "duplicate_promo_ids": 0,
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "push": false
+  }
+}

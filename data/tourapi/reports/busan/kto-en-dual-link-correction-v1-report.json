@@ -1,0 +1,48 @@
+{
+  "task": "TASK-KTO-EN-DUAL-LINK-CORRECTION-V1",
+  "created_at": "2026-08-03T01:11:35Z",
+  "verdict": "PASS",
+  "final_judgment": "ONE_CORRECT_ONE_MISLINKED",
+  "target_candidate": "busan-A-00022",
+  "decisions": {
+    "3468740": {
+      "title_en": "Oryukdo Sunrise Park (오륙도해맞이공원)",
+      "action": "RETAINED",
+      "reason": "VE-category park at Oryukdo promontory (63m). Same physical area as Oryukdo Islets."
+    },
+    "2946924": {
+      "title_en": "Haeparang Trail Course 1 (해파랑길 1코스)",
+      "action": "REMOVED_FROM_CANDIDATE",
+      "reason": "LS-category trail starting at Oryukdo, extending 18km to Mipo (Haeundae). Different tourism object from islets/park. No suitable dedicated candidate.",
+      "moved_to": "data\\tourapi\\manifests\\busan\\kto-en-unlinked-no-candidate.json"
+    }
+  },
+  "changes": {
+    "source_keys_removed": [
+      "EngService2:2946924:en"
+    ],
+    "source_keys_retained": [
+      "EngService2:3468740:en"
+    ],
+    "provenance_entries_removed": 1,
+    "provenance_entries_retained": 1,
+    "source_facts_removed": 1,
+    "description_en_changed": 0,
+    "name_en_changed": 0
+  },
+  "safety": {
+    "candidate_total_after": 1642,
+    "source_facts_before": 2715,
+    "source_facts_after": 2714,
+    "other_candidates_modified": 0,
+    "flags_modified": 0,
+    "publishability_modified": 0,
+    "api_calls": 0,
+    "push": false
+  },
+  "output_files": [
+    "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl",
+    "data\\tourapi\\enriched\\busan\\busan-source-facts-v1.jsonl",
+    "data\\tourapi\\manifests\\busan\\kto-en-unlinked-no-candidate.json"
+  ]
+}

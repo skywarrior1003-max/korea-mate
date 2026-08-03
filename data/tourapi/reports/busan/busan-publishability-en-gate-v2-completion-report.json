@@ -1,0 +1,135 @@
+{
+  "report_id": "busan-publishability-en-gate-v2-completion-report",
+  "task": "TASK-BUSAN-PUBLISHABILITY-LANGUAGE-GATE-V2",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T07:47:53.724925+00:00",
+  "branch": "data/busan-enrichment-v1",
+
+  "executive_summary": {
+    "gate_version_new": "BUSAN_PUBLISHABILITY_EN_V2",
+    "gate_change": "description_gate (has_ko_description) → description_en_gate (bool(proposed_values.description_en))",
+    "total_candidates": 1642,
+    "description_en_gate_pass": 820,
+    "net_status_changes": 1,
+    "downgraded_to_pending_source": 1,
+    "upgraded_to_publishable": 0,
+    "protected_files_unchanged": true
+  },
+
+  "gate_design_change": {
+    "before_v1": {
+      "gate_name": "description_gate",
+      "condition": "source_summary.has_ko_description == True",
+      "problem": "KO 설명 보유 = 영어 공개 준비 완료로 판정 (잘못됨). EN 설명 144건 추가 후에도 판정 변화 없음."
+    },
+    "after_en_v2": {
+      "gate_name": "description_en_gate",
+      "condition": "bool(proposed_values.description_en)",
+      "source_support": "has_ko_description는 source_support 필드에 정보 기록 (게이트 영향 없음)",
+      "rationale": "영어 이용자 기준 공개 준비도 측정. 영어 설명이 없으면 PENDING_SOURCE."
+    }
+  },
+
+  "distribution_comparison": {
+    "v1_baseline": {
+      "publishable": 291,
+      "publishable_with_caveat": 286,
+      "pending_review": 72,
+      "pending_source": 993
+    },
+    "en_v2": {
+      "publishable": 290,
+      "publishable_with_caveat": 286,
+      "pending_review": 72,
+      "pending_source": 994
+    },
+    "delta": {
+      "publishable": -1,
+      "publishable_with_caveat": 0,
+      "pending_review": 0,
+      "pending_source": 1
+    }
+  },
+
+  "key_metrics": {
+    "description_en_gate_pass": 820,
+    "description_en_gate_pass_note": "V1 description_gate PASS(687, KO 설명 기준)보다 133건 더 많은 범위 반영 (EN 설명 보유 820건 전체)",
+    "vb_en_useful_desc_gate_pass": 144,
+    "vb_en_useful_desc_gate_pass_note": "EN_USEFUL 144건 전부 description_en_gate PASS. V1에서는 전부 description_gate PENDING_SOURCE였음.",
+    "vb_en_useful_overall_status": "pending_source (identity_gate 블로킹, 아래 설명 참조)",
+    "title_only_24_not_publishable": true,
+    "desc_weak_9_not_publishable": true,
+    "parse_failed_6_not_publishable": true,
+    "no_publishable_without_en_desc": true
+  },
+
+  "downgraded_record": {
+    "candidate_id": "busan-F-00096",
+    "title_ko": "당감밀면",
+    "category": "restaurant",
+    "v1_status": "publishable",
+    "en_v2_status": "pending_source",
+    "reason": "has_ko_description=True이지만 description_en=None. V1 description_gate는 KO 설명으로 PASS 처리했으나 EN_V2 description_en_gate는 EN 설명 부재를 정확히 포착. 영어 설명 추가 시 즉시 publishable 복귀 가능.",
+    "other_gates": "identity/name_ko/name_en/address/coordinate/branch/image/provenance 모두 PASS"
+  },
+
+  "vb_en_useful_identity_gate_analysis": {
+    "count": 144,
+    "description_en_gate": "PASS (전원)",
+    "overall_status": "pending_source (전원)",
+    "blocking_gate": "identity_gate",
+    "reason": "VB 후보들은 validation_status=source_data_missing. KTO TourAPI detail API 호출 미완료(API 한도 제한). identity_gate PENDING_SOURCE.",
+    "other_gates_for_vb": "name_ko/name_en/address/coordinate/image/provenance/branch 모두 PASS",
+    "unlock_condition": "KTO API 호출 완료 시 identity_gate PASS → 144건 즉시 publishable/publishable_with_caveat 승격 가능",
+    "kto_api_unblock_target": "2026-08-02"
+  },
+
+  "upgrade_potential_analysis": {
+    "currently_pending_source_with_en_desc": 175,
+    "breakdown": {
+      "vb_en_useful_blocked_by_identity": 144,
+      "others_blocked_by_other_gates": 31
+    },
+    "note": "175건 모두 description_en_gate는 이제 PASS. identity_gate 또는 다른 게이트 해소 시 즉시 승격 대상."
+  },
+
+  "vb_ssr_cross_check": {
+    "EN_USEFUL": {"pending_source": 144, "description_en_gate": "PASS for all"},
+    "EN_DESCRIPTION_WEAK": {"pending_source": 9, "description_en_gate": "PENDING_SOURCE (expected, 설명 부족으로 미적용)"},
+    "EN_TITLE_ONLY": {"pending_source": 24, "description_en_gate": "PENDING_SOURCE (expected, 설명 없음)"},
+    "PARSE_FAILED": {"pending_source": 6, "description_en_gate": "PENDING_SOURCE (expected, 파싱 실패)"}
+  },
+
+  "output_files": {
+    "new": [
+      "data/tourapi/reports/busan/busan-publishability-en-v2.json",
+      "data/tourapi/reports/busan/busan-publishability-en-v2-details.jsonl",
+      "data/tourapi/reports/busan/busan-publishability-en-v2-vs-baseline.json",
+      "scripts/run-busan-publishability-en-gate-v2.py"
+    ],
+    "preserved_unchanged": [
+      "data/tourapi/reports/busan/busan-publishability-baseline-v1.json (SHA: 775e134aac36e3d8)",
+      "data/tourapi/reports/busan/busan-publishability-baseline-v1-details.jsonl (SHA: c8a9a914d4fa34d6)",
+      "data/tourapi/reports/busan/busan-publishability-v2-post-vb-en-ssr.json",
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl (SHA: 8a38da4ceb63bca5)"
+    ],
+    "not_modified": "enriched candidates 및 source facts 변경 없음"
+  },
+
+  "safety_checks": {
+    "data_modified": false,
+    "external_requests": 0,
+    "push": false,
+    "protected_files_unchanged": true,
+    "candidate_count": 1642
+  },
+
+  "next_steps_enabled": {
+    "now_measurable": [
+      "shopping 38건 추가 시 description_en 확보 효과 비교 가능",
+      "experience 93건 추가 시 효과 비교 가능",
+      "KTO detail API (2026-08-02) 호출 시 identity_gate 해소 → VB 144건 즉시 승격 효과 예측 가능"
+    ],
+    "unlock_order_recommendation": "KTO API 한도 해소(2026-08-02) → VB identity_gate 해소 → 144건 승격이 가장 효과적. shopping/experience 수집은 그 다음 비교 대상."
+  }
+}

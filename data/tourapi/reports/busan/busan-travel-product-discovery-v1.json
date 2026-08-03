@@ -1,0 +1,58 @@
+{
+  "report_id": "busan-travel-product-discovery-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "프로모션 소스 수집 중 발견된 TRAVEL_PRODUCT 항목. 프로모션 데이터셋에서 제외. 향후 travel_products 데이터셋 구성 시 참고용.",
+  "note": "이 파일은 프로모션 수집 부산물. 별도 travel_products 데이터셋으로 확장 필요.",
+  "count": 17,
+
+  "reclassified_from_promotions": [
+    {
+      "product_id": "VBP_PASS_001",
+      "source_id": "VBP-PASS",
+      "source_url": "https://www.visitbusanpass.com",
+      "title_en": "Visit Busan Pass",
+      "title_ko": "비짓부산패스",
+      "content_class": "TRAVEL_PRODUCT",
+      "product_type": "tourist_pass",
+      "audience_type": "B2C",
+      "pass_types": ["24hr", "48hr", "Big3", "Big5"],
+      "price_krw": null,
+      "price_note": "가격 미확인 — visitbusanpass.com 가격 페이지 WebFetch 불가 (수동 확인 필요, MB-005)",
+      "sale_type": "상시 판매",
+      "languages": ["EN", "JA", "ZHS", "ZHT", "KO"],
+      "contact": "+82-1660-1122 / visitbusanpass@tourpass.kr",
+      "reason_not_promotion": "상시 판매 패스 — 기간한정 할인·쿠폰 미확인. 현재 특별 프로모션 없음. 가격 확인 후 한정 할인 존재 시 별도 PROMOTION 항목 생성.",
+      "manual_action": "MB-005: visitbusanpass.com 가격 상세 수동 확인"
+    }
+  ],
+
+  "discovered_from_vb_travel_products": {
+    "source": "VB-TRAVEL-PRODUCTS",
+    "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304004000000",
+    "total_items": 27,
+    "collected_count": 16,
+    "pages_collected": 1,
+    "pages_total": 2,
+    "note": "가격 미포함. 상시 판매 관광 상품. 프로모션 데이터셋 제외. 별도 travel_products 데이터셋 필요.",
+    "items": [
+      {"title_en": "ASSi Camellia Mask Pack", "uc_seq": 2797, "category": "Souvenir"},
+      {"title_en": "Organic Grape Farm Tour & Harvesting Experience with a Docent at Lovely Garden", "uc_seq": 2792, "category": "Experience"},
+      {"title_en": "Make Your Own Traditional Korean Rice Wine!", "uc_seq": 2781, "category": "Experience"},
+      {"title_en": "Busan Gwangalli Luggage Storage – Gwangan Is Good", "uc_seq": 2766, "category": "Experience"},
+      {"title_en": "Mother-of-Pearl Lacquerware Goods Making One-Day Class + Tea Ceremony Experience", "uc_seq": 2764, "category": "Experience"},
+      {"title_en": "city bowl Busan", "uc_seq": 2761, "category": "Souvenir"},
+      {"title_en": "24 hours paid luggage storage service", "uc_seq": 2711, "category": "Experience"},
+      {"title_en": "Medical Travel Korea", "uc_seq": 2707, "category": "Experience"},
+      {"title_en": "Tea Meditation & Korean Tea Therapy One-Day Class", "uc_seq": 2706, "category": "Experience"},
+      {"title_en": "Baeromodi Korean Cooking & Cultural Experience", "uc_seq": 2702, "category": "Experience"},
+      {"title_en": "Storage Locker in Jeonpo-dong", "uc_seq": 2680, "category": "Experience"},
+      {"title_en": "Busan Gwangalli Travel Souvenir Custom T-Shirt Making", "uc_seq": 2671, "category": "Experience"},
+      {"title_en": "Same-Day Luggage Storage in Seomyeon by ParkZim Storage", "uc_seq": 2664, "category": "Experience"},
+      {"title_en": "Dr. Moagen: Premium Scalp & Hair Loss Solutions", "uc_seq": 2605, "category": "Experience"},
+      {"title_en": "K-POP One-Day Class: IDOL for a Day", "uc_seq": 2600, "category": "Experience"},
+      {"title_en": "Busan Gwangalli Trip Ring Making Workshop", "uc_seq": 2596, "category": "Experience"}
+    ]
+  }
+}

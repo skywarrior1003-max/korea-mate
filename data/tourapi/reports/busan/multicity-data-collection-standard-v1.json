@@ -1,0 +1,66 @@
+{
+  "standard_id": "multicity-data-collection-standard-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "validated_in": "Busan (data/busan-enrichment-v1)",
+  "status": "VALIDATED_IN_BUSAN_READY_FOR_GYEONGJU",
+  "description": "부산 데이터 구축에서 검증된 다도시 데이터 수집 표준.",
+  "collection_pipeline_stages": [
+    "source_discovery",
+    "raw_collection",
+    "normalization",
+    "multilingual_linking",
+    "identity_matching",
+    "enrichment",
+    "review_queue",
+    "release_classification",
+    "handoff"
+  ],
+  "source_priority": {
+    "1": "지자체·지역 관광공사·관광재단 공식 API/페이지",
+    "2": "한국관광공사 공식 API/VisitKorea",
+    "3": "공식 축제·문화·교통·관광패스 운영기관",
+    "4": "공식 예약·제휴 플랫폼",
+    "5": "언론은 공식 원문 탐색 단서만 사용 — 뉴스 단독 사실 확정 금지"
+  },
+  "content_classes": {
+    "PLACE": [
+      "attraction",
+      "restaurant",
+      "accommodation",
+      "nature"
+    ],
+    "EVENT": "기간이 있는 축제·공연·행사 — 공식 날짜 확인된 현재·예정만 공개",
+    "PROMOTION": "할인·쿠폰·증정·예약 특전·한정 패키지·대상자 혜택",
+    "TRAVEL_PRODUCT": "상시 관광패스·상시 체험·일반 판매상품",
+    "TRAVEL_NOTICE": "교통·휴장·정책 등 여행자 행동 직접 영향 공지"
+  },
+  "safety_rules": [
+    "raw 데이터 덮어쓰기 금지",
+    "manifest/SHA256 기록",
+    "요청 수 기록",
+    "API 키 출력 금지",
+    "partial failure 보존",
+    "pagination completeness 확인",
+    "checkpoint/resume 구현",
+    "atomic save"
+  ],
+  "release_contract_required": [
+    "identity",
+    "공식 표시명",
+    "category/content class",
+    "주소 또는 좌표",
+    "provenance",
+    "구조 오류 없음"
+  ],
+  "release_contract_optional": [
+    "영문명",
+    "설명",
+    "이미지",
+    "운영시간",
+    "상세 도착정보",
+    "전화",
+    "홈페이지"
+  ]
+}

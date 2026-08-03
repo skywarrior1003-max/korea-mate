@@ -79,6 +79,8 @@
 
 ## B. 부산 현황 — 커버·미커버·보완 필요
 
+> **[DEPRECATED]** enrichment v1 실행 전 초기 city_spots 기준 현황이다. enrichment v1(1,642건) 완료 후 데이터 구조가 변경되어 이 섹션의 수치는 더 이상 유효하지 않다. 현재 상태는 `data/tourapi/enriched/busan/` 및 run manifest를 참조한다.
+
 ### 현재 city_spots 처리 현황
 
 | 상태 | 건수 | 내용 |
@@ -244,6 +246,8 @@ city_spots 테이블:
 
 ## F. 서비스 데이터 구조 방향
 
+> **[DEPRECATED]** enrichment v1 이전 초기 계획 문서다. 현재 공식 데이터 계약은 SSOT `docs/architecture/gokoreamate-data-contract-v*.md`를 참조한다. 이 섹션의 city_spots 필드 목표·이미지 전략은 SSOT로 대체되었다.
+
 ### city_spots 필드 목표
 
 KorService2 + EngService2 + 부산광역시 API 조합으로 확보 가능한 필드:
@@ -276,6 +280,8 @@ KorService2 + EngService2 + 부산광역시 API 조합으로 확보 가능한 �
 ---
 
 ## G. 자동화 방향 및 스크립트 현황
+
+> **[DEPRECATED]** 초기 스크립트 계획 문서다. scripts/tourapi-busan-detail.mjs는 v2 hardened 버전으로 교체되었고 (commit `a3d9980`), 현재 스크립트 현황과 기능 목록은 `data/tourapi/reports/busan/kto-detail-hardening-feature-matrix.json`을 참조한다.
 
 ### 현재 스크립트 파일
 

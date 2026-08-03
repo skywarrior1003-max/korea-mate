@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-08-03T00:00:00Z",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "reference_date": "2026-08-03",
+  "total_events_input": 72,
+  "classification": "SOURCE_DATE_CONFLICT",
+  "description": "소스 간 날짜 충돌 미해소. 이번 분류에서는 해당 건 없음 — bfo 날짜는 항상 FestivalService raw보다 우선 적용됨으로써 충돌이 해소됨.",
+  "count": 0,
+  "items": [],
+  "note": "raw vs bfo 날짜 차이는 모두 'FestivalService raw=2025 stale / bfo=2026 업데이트' 패턴으로 충돌 아님 — bfo 우선으로 CURRENT_OR_UPCOMING 또는 PAST로 분류 완료."
+}

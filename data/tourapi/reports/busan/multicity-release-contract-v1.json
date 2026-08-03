@@ -1,0 +1,45 @@
+{
+  "contract_id": "multicity-release-contract-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "validated_in": "Busan (BUSAN_RELEASE_CONTRACT_REALISTIC_V1)",
+  "description": "다도시 장소 데이터 release 계약. 부산 release contract audit에서 검증.",
+  "required_fields": {
+    "identity": "candidate_id 구조 오류 없음",
+    "official_name_ko": "공식 한국어 표시명",
+    "category": "PLACE / EVENT / PROMOTION / TRAVEL_PRODUCT / TRAVEL_NOTICE",
+    "location": "주소 또는 좌표 (address or lat/lng)",
+    "provenance": "원천 ref + enriched_at",
+    "structural_integrity": "구조 오류 없음 (중복 ID, 좌표 범위 이탈 없음)"
+  },
+  "optional_fields": {
+    "name_en": "영문명",
+    "description_ko": "한국어 설명",
+    "description_en": "영문 설명",
+    "images": "이미지 (공식 원천)",
+    "hours": "운영시간",
+    "arrival_info": "도착 정보",
+    "phone": "전화번호",
+    "homepage": "홈페이지"
+  },
+  "release_classes": {
+    "RELEASE_READY_COMPLETE": "모든 선택 필드 포함",
+    "RELEASE_READY_OPTIONAL_MISSING": "필수 필드 충족, 선택 필드 일부 누락",
+    "RELEASE_READY_CURRENT_EVENT": "날짜 확인된 현재·예정 행사"
+  },
+  "hold_classes": {
+    "HOLD_STRUCTURAL_REVIEW": "구조 검토 필요",
+    "EXCLUDE_DUPLICATE_SIBLING": "중복 시블링 제외",
+    "HOLD_PAST_EVENT": "과거 행사 (날짜 확인됨)",
+    "HOLD_STALE_EVENT": "날짜 stale",
+    "HOLD_DATE_MISSING_EVENT": "날짜 없음",
+    "HOLD_NO_CURRENT_SOURCE_EVENT": "소스 없음"
+  },
+  "prohibited": [
+    "공식 원천 없는 선택 정보 생성",
+    "중복 ID",
+    "structural hold를 release에 포함",
+    "past/stale/date-missing event를 release에 포함"
+  ]
+}

@@ -1,0 +1,5906 @@
+{
+  "manifest_id": "busan-final-manual-review-v1",
+  "task_id": "TASK-BUSAN-FINAL-PUBLISH-CANDIDATE-QA-V1",
+  "generated_at": "2026-07-31T10:31:58.133290Z",
+  "git": {
+    "head": "09376994fadad18247ebacace13efc29f07df561",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "count": 509,
+  "records": [
+    {
+      "candidate_id": "busan-A-00001",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00002",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00003",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00004",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00005",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00006",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00007",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00008",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00009",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00010",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00011",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00012",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00013",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00014",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00015",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00016",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00017",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00018",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00019",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00020",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00021",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00022",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00023",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00024",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00025",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00026",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00027",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00028",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00029",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00030",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00031",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00032",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00033",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00034",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00035",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00036",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00037",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00038",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00039",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00040",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00041",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00042",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00043",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00044",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00045",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00046",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00047",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00048",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00049",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00050",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00051",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00052",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00053",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00054",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00055",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00056",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00057",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00058",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00059",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00060",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00061",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00062",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00063",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00064",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00065",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00066",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00067",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00068",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00069",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00070",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00071",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00072",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00073",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00074",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00075",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00076",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00077",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00078",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00079",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00080",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00081",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00082",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00083",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00084",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00085",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00086",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00087",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00088",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00089",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00090",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00091",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00092",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00093",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00094",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00095",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00096",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00097",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00098",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00099",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00100",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00101",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00106",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00107",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00109",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00110",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00111",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00112",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00113",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00114",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00115",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00116",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00117",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00118",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00119",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00120",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00121",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00122",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00123",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00124",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00125",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00126",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00127",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00128",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00129",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00130",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00131",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00132",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00133",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00134",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00135",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00136",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00137",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00138",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00139",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00140",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00141",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00142",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00143",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00144",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00145",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00146",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00147",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00148",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00149",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00150",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00151",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00152",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00153",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00154",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00155",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00156",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00157",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00158",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00159",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00160",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00161",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00162",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00163",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00164",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00165",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00166",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00167",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00168",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00169",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00170",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00171",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00172",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00173",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00174",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00175",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00176",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00177",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00178",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00179",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00180",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00181",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00182",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00183",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00184",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00185",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00186",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00187",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00188",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00189",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00190",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00191",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00192",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00193",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00194",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00195",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00196",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00197",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00198",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00199",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00200",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00201",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00202",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00203",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00204",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00205",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00206",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00207",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00208",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00209",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00210",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00211",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00212",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00002",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00003",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00004",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00005",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00006",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00007",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00008",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00009",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00010",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00011",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00012",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00013",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00014",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00015",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00016",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00017",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00018",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00019",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00020",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00021",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00022",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00023",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00024",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00025",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00026",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00027",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00029",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00030",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00034",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00036",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00039",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-E-00040",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00001",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00050",
+      "category": "restaurant",
+      "publishability_v8": "publishable",
+      "effective_flags": [],
+      "review_reasons": [
+        "near_duplicate_needs_adjudication"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00059",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00080",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00103",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00106",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00131",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00140",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00203",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00213",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00222",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00229",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00236",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00252",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00254",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00257",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00258",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00261",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00263",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00265",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00267",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00268",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00270",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00271",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00272",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00274",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00276",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00277",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00280",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00283",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00284",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00286",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00287",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00291",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00293",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00294",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00295",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00296",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00298",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00299",
+      "category": "restaurant",
+      "publishability_v8": "publishable",
+      "effective_flags": [],
+      "review_reasons": [
+        "near_duplicate_needs_adjudication"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00300",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00301",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00302",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00304",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00306",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00308",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00312",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00313",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags",
+        "near_duplicate_needs_adjudication"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00314",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00316",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00319",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00320",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00321",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00322",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00323",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00324",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00325",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00329",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00330",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00331",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00332",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00334",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00335",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00337",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00339",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00340",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00343",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00345",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00346",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00347",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00348",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00356",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00386",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags",
+        "near_duplicate_needs_adjudication"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1031",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1063",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1142",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1179",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1185",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1315",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1323",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1364",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-139",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-140",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1422",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1434",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1444",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1449",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1624",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1666",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1667",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1733",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1742",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1743",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1747",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1748",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1753",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1754",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1772",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1799",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1855",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1857",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1862",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1866",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1867",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1868",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1890",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1955",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1964",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2013",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2019",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2024",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2066",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2077",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2095",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2172",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2173",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2186",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2187",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2188",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2189",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2191",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2200",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2202",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2204",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2210",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2241",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2243",
+      "category": "accommodation",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2249",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2270",
+      "category": "accommodation",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2273",
+      "category": "accommodation",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2274",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2275",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2284",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2294",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2299",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2309",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2314",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2397",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2398",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2401",
+      "category": "restaurant",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2408",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-255",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2551",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2555",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-256",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-257",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-258",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2580",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2581",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2586",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2587",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2588",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2589",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-259",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2598",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-260",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-261",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2612",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-262",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-264",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2662",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2678",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-268",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-272",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-273",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-274",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-275",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-276",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-277",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-278",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-279",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-280",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-281",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-285",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-286",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-287",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-288",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-289",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-290",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-291",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-292",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-295",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-296",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-297",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-298",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-299",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-301",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-302",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-313",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-314",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-315",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-325",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-326",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-328",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-333",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-334",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-335",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-336",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-339",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-340",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-343",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-344",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-347",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-348",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-354",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-359",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-361",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-362",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-364",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-365",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-366",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-368",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-369",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-371",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-372",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-373",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-377",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-396",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-397",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-402",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-409",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-413",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-415",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-418",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-419",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-420",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-421",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-422",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-425",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-426",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-429",
+      "category": "event",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-43",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-430",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-432",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-433",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-436",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-439",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-44",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-444",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-445",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-448",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-450",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-456",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-457",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-458",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-459",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-463",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-483",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-501",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-506",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-508",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-511",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-527",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-530",
+      "category": "nature",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-537",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-539",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-540",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-541",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-545",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-546",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-547",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-548",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-552",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-554",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-555",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-757",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-833",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-838",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-876",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification",
+        "needs_hours"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-996",
+      "category": "attraction",
+      "publishability_v8": "publishable_with_caveat",
+      "effective_flags": [
+        "needs_arrival_verification"
+      ],
+      "review_reasons": [
+        "has_caveat_flags"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "report_id": "kto-detail-preflight-report",
+  "task": "TASK-BUSAN-KTO-DETAIL-FULL-PREFLIGHT",
+  "run_ts": "2026-07-29T07:40:00Z",
+  "branch": "data/busan-enrichment-v1",
+  "head": "911c892",
+  "ssot_version": "v1.1",
+  "verdict": "PARTIAL_PASS",
+  "full_run_blocked": true,
+  "block_reasons": [
+    "CALL_LIMIT_UNVERIFIED: 공식 일일 호출 한도 미확인 — data.go.kr 로그인 필요",
+    "collector_script_missing_6_features: skip_existing, timeout, checkpoint, consecutive_failure_abort, manifest_input, full_output_path"
+  ],
+  "input_sha": {
+    "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "pilot_report": "b38d7531ed5943ff90359fc8322e045e9aaec26d8609f0e3ddf779f35429120e",
+    "pilot_field_matrix": "6780b3cd6d7de282b6996bafc14c9d45dc253764fbd04abca7b4d126636af2ac",
+    "pilot_manifest": "f999c64efc708ae3aae0b7d07fe620a37ba708ef2047c9b9e5266e6b1927bf10"
+  },
+  "section_1_start_checks": {
+    "branch": "data/busan-enrichment-v1",
+    "head": "911c892",
+    "worktree": "clean",
+    "pilot_commit_present": true,
+    "api_key_env": "TOUR_API_KEY confirmed (value hidden)",
+    "ssot_status": "v1.1 ACTIVE",
+    "auxiliary_rules_read": true
+  },
+  "section_2_prohibited": {
+    "full_api_execution": "BLOCKED",
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "review_flags_modified": false,
+    "master_modified": false,
+    "db_migration_modified": false,
+    "push_executed": false,
+    "git_add_all_used": false
+  },
+  "section_3_call_limit": {
+    "status": "CALL_LIMIT_UNVERIFIED",
+    "inventory_note": "추정: 상세기능별 1,000회/일 (approved-api-inventory.md 기재, 공식 미확인)",
+    "response_headers_checked": true,
+    "rate_limit_headers_found": false,
+    "official_source": "확인 불가 (사용자 로그인 필요)",
+    "user_action_required": {
+      "url": "https://www.data.go.kr",
+      "path": "로그인 → 마이페이지 → 개발계정 관리 → 활용신청 현황",
+      "target_api": "한국관광공사_국문 관광정보 서비스_GW",
+      "field_to_check": "트래픽 허용량 (일일 요청 허용 건수)"
+    },
+    "programmatic_verification_attempted": true,
+    "programmatic_verification_result": "FAILED (requires authenticated session on data.go.kr)"
+  },
+  "section_4_target_manifest": {
+    "kto_candidates_total": 644,
+    "source_key_format": "KorService2:<contentId>:ko",
+    "detailIntro2": {
+      "target_count": 557,
+      "excluded_type_15_festivals": 31,
+      "excluded_type_38_shopping": 56,
+      "excluded_no_content_type_id": 0,
+      "by_content_type": {
+        "12_attraction": 138,
+        "14_culture": 37,
+        "28_leports": 38,
+        "32_accommodation": 78,
+        "39_food": 266
+      },
+      "needs_hours_flagged": 556,
+      "already_has_hours": 1,
+      "inclusion_criterion": "busan-K candidate with contentId AND contentTypeId in {12,14,28,32,39}",
+      "note": "type 15(축제/행사)와 type 38(쇼핑)은 detailIntro2 response schema 미정의 → 제외"
+    },
+    "detailCommon2": {
+      "target_count": 644,
+      "excluded_has_description": 0,
+      "excluded_no_needs_content_flag": 0,
+      "needs_content_flagged": 644,
+      "already_has_description": 0,
+      "inclusion_criterion": "needs_content in validation.review_flags AND proposed_values.description_ko is null",
+      "note": "전체 644건 needs_content, description 기보유 0건 → 전체 대상"
+    },
+    "detailImage2": {
+      "target_count": 94,
+      "excluded_has_curated_image": 2,
+      "excluded_no_needs_image_flag": 548,
+      "image_sufficient_count": 548,
+      "inclusion_criterion": "needs_image in validation.review_flags AND image_assessment.curated_images empty",
+      "note": "548건 image_sufficient(기존 이미지 보유), 2건 needs_image이나 curated_images 있음 → 제외"
+    }
+  },
+  "section_5_call_reconciliation": {
+    "original_estimate_1929": 1929,
+    "detailIntro2_new_calls": 542,
+    "detailCommon2_new_calls": 639,
+    "detailImage2_new_calls": 94,
+    "pilot_reuse_intro": 15,
+    "pilot_reuse_common": 5,
+    "pilot_reuse_image": 0,
+    "pilot_reuse_total": 20,
+    "total_new_calls": 1275,
+    "reduction_from_estimate": 654,
+    "reduction_reasons": {
+      "detailIntro2": "type 15/38 제외(87건) → 557건 (not 643)",
+      "detailCommon2": "644건 전체 대상 (not 643) — 1건 증가",
+      "detailImage2": "실제 needs_image 94건만 대상 (not 643) — image_sufficient 548건 제외로 549건 감소"
+    },
+    "duplicate_content_ids": {
+      "detailIntro2": 0,
+      "detailCommon2": 0,
+      "detailImage2": 0
+    },
+    "note_1929_invalid": "643×3 계산은 실제 flag 분포와 type 분포를 반영하지 않음. 실제 신규 호출: 1,275"
+  },
+  "section_6_type28_classification": {
+    "target_count": 38,
+    "pilot_sample_result": {
+      "busan-K-00050_용호동일대_바다낚시": "SOURCE_VALUE_EMPTY (item_count=0, 낚시터 — KTO hours 미등록)",
+      "busan-K-00051_부산광역시교육청학생인성교육원": "SOURCE_VALUE_EMPTY (item_count=0, 교육기관)",
+      "busan-K-00052_함지골청소년수련관": "SOURCE_VALUE_EMPTY (item_count=0, 수련관)"
+    },
+    "facility_types_in_full_38": {
+      "LEISURE_SPORT": ["낚시","사격","아이스링크","서핑학교","수상레포츠","빙상장","인라인스케이트장"],
+      "EDUCATION_TRAINING": ["교육청학생인성교육원","청소년수련관"],
+      "TRAIL_OUTDOOR": ["갈맷길","해파랑길","둘레길","산책로","볼레길"],
+      "CAMPING_GLAMPING": ["캠핑장","글램핑","카라반"],
+      "WATER_ACTIVITY": ["요트투어","SUP","수상레포츠"],
+      "OTHER": ["컨트리클럽","레이저태그"]
+    },
+    "classification_rules": {
+      "SOURCE_VALUE_PRESENT": "API item_count>0 AND at least 1 hours field has value",
+      "SOURCE_VALUE_EMPTY": "API item_count=0 OR all hours fields empty (KTO 미등록)",
+      "NOT_APPLICABLE": "해당 없음 — 이 분류 사용 시 개별 판정 근거 필요",
+      "UNRESOLVED": "API 오류 또는 판정 불가"
+    },
+    "prohibition": "3건 파일럿 기반 전체 38건 일괄 NOT_APPLICABLE 처리 금지. 실내 스포츠/캠핑 등은 SOURCE_VALUE_PRESENT 가능",
+    "required_action": "전체 수집 후 item_count 및 필드값 기반 개별 분류"
+  },
+  "section_7_collector_audit": {
+    "script": "scripts/tourapi-busan-detail.mjs",
+    "mode_flags_present": {
+      "--sample": true,
+      "--full": true,
+      "--allow-full": true,
+      "--dry-run": true
+    },
+    "safety_gates": {
+      "--full requires --allow-full": true,
+      "sample mode runs without --allow-full": true,
+      "api_key_masked_in_logs": true,
+      "api_key_not_in_raw_files": true,
+      "xml_response_detection": true,
+      "result_code_check": true,
+      "retry_limit": "MAX_RETRIES=2",
+      "rate_limit_header_collection": true
+    },
+    "bug_found_and_fixed": {
+      "bug": "DRY_RUN mode was writing output files (overwriting pilot reports)",
+      "fix": "Added DRY_RUN guards around all fs.writeFileSync for report/manifest/matrix",
+      "fix_commit": "pending (this task commit)",
+      "verified": "pilot SHA unchanged after dry-run post-fix"
+    },
+    "missing_features_for_full_run": {
+      "skip_existing": "기존 정상 raw 파일 존재 시 재다운로드하지 않는 skip 로직 없음 → 중단 후 재시작 시 전체 재호출",
+      "timeout": "fetch()에 AbortController timeout 없음 → 네트워크 hang 시 무한 대기",
+      "checkpoint_resume": "중간 진행 상태 저장 없음 → 중단 시 전체 재실행 필요",
+      "consecutive_failure_abort": "연속 실패 시 중단 로직 없음 → API 오류 반복 시 전체 호출 낭비",
+      "manifest_input": "PILOT_SAMPLE 하드코딩 — full 모드에서 파일 기반 target manifest 입력 없음",
+      "full_output_path": "PILOT_RAW_DIR 하드코딩(kto-detail-pilot/) — full 모드용 별도 출력 경로 없음"
+    },
+    "required_before_full_run": [
+      "skip_existing 구현 (rawPath 존재 시 API 호출 건너뜀)",
+      "fetch timeout 구현 (AbortController, 10~30초)",
+      "checkpoint 파일 저장 (N건마다 진행 상태 기록)",
+      "resume 모드 (checkpoint에서 이어서 시작)",
+      "consecutive failure abort (N회 연속 실패 시 중단, 기본값 5)",
+      "manifest_input 파라미터 (--manifest=<path>로 target JSON 로드)",
+      "full 모드 전용 출력 경로 설정"
+    ]
+  },
+  "section_8_batch_plan": {
+    "call_limit_basis": "CALL_LIMIT_UNVERIFIED — 시뮬레이션 값 (확정 아님)",
+    "estimated_limit_per_day": 1000,
+    "safe_threshold_pct": 80,
+    "safe_calls_per_day": 800,
+    "total_new_calls": 1275,
+    "estimated_days_at_80pct": 2,
+    "proposed_schedule_simulation": {
+      "day1": {
+        "endpoints": ["detailCommon2 (639건)", "detailIntro2 파트1 (최대 161건 — 800 - 639)"],
+        "calls": 800
+      },
+      "day2": {
+        "endpoints": ["detailIntro2 파트2 (381건)", "detailImage2 (94건)"],
+        "calls": 475
+      }
+    },
+    "alternative_single_day": {
+      "note": "한도 1,000회 + 다른 야간 API 없는 경우 단일 배치 검토 가능 (1,275 > 1,000 → 불가)",
+      "feasible": false
+    },
+    "nightly_pipeline_impact": "approved-api-inventory.md 기준 다른 야간 API 호출량 미파악 → 공유 한도 차감 주의"
+  },
+  "section_9_stage_separation": {
+    "A_RAW_COLLECTION": {
+      "status": "PENDING — call limit 확인 + script 보강 후 실행",
+      "output": "data/tourapi/raw/busan/kto-detail-full/",
+      "enriched_candidates_change": "NONE"
+    },
+    "B_ENRICHMENT_APPLICATION": {
+      "status": "NOT_STARTED — RAW_COLLECTION PASS 후 별도 TASK",
+      "planned_fields": {
+        "detailIntro2": "proposed_values.hours (by contentTypeId)",
+        "detailCommon2": "proposed_values.description_ko",
+        "detailImage2": "image_assessment.curated_images 보완"
+      }
+    }
+  },
+  "section_11_pass_criteria": {
+    "endpoint_targets_confirmed": true,
+    "duplicate_content_ids_removed": true,
+    "pilot_raw_reuse_counted": true,
+    "new_call_count_calculated": true,
+    "call_limit_status_clear": "CALL_LIMIT_UNVERIFIED",
+    "type28_empty_value_rules_corrected": true,
+    "full_safety_gate_verified": true,
+    "dry_run_executed": true,
+    "dry_run_bug_fixed": true,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "review_flags_modified": false,
+    "api_key_exposed": false,
+    "prohibited_paths_modified": false,
+    "overall": "PARTIAL_PASS (call limit unverified + 6 script features missing)"
+  },
+  "safety_checks": {
+    "enriched_candidates_sha_unchanged": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "source_facts_sha_unchanged": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "pilot_reports_sha_unchanged": true,
+    "api_key_in_saved_files": false,
+    "master_modified": false,
+    "db_migration_modified": false,
+    "push_executed": false
+  }
+}

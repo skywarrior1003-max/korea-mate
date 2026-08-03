@@ -1,0 +1,107 @@
+{
+  "report_id": "busan-promotion-final-handoff-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 프로모션 데이터 마감 핸드오프. 최종 확정 파일 목록, 다음 도시 작업 참고사항, 잔여 수동 항목 정리.",
+
+  "finalized": true,
+  "finalization_note": "부산 프로모션 수집 마감. 자동 수집 가능 범위 내 최종 확정. 잔여 항목은 manual queue로 이관.",
+
+  "confirmed_promotion_dataset": {
+    "current": {
+      "file": "busan-promotions-current-v2.json",
+      "count": 2,
+      "items": ["BTO_PRESS_5340 (ACTIVE)", "VB_EVENT_684 (ENDING_SOON)"]
+    },
+    "upcoming": {
+      "file": "busan-promotions-upcoming-v2.json",
+      "count": 0
+    },
+    "expired": {
+      "file": "busan-promotions-expired-v2.json",
+      "count": 6,
+      "items": ["VB_EVENT_201", "VB_EVENT_244", "VB_EVENT_1032", "VB_EVENT_1071", "BTO_PRESS_5226", "BTO_PRESS_5205"]
+    },
+    "unverified": {
+      "file": "busan-promotions-unverified-v2.json",
+      "count": 0
+    }
+  },
+
+  "discovery_datasets": {
+    "events": "busan-event-discovery-from-promotion-sources-v1.json (5건)",
+    "travel_products": "busan-travel-product-discovery-v1.json (17건)",
+    "reclassified": "busan-promotion-nonpromotion-reclassified-v1.json (6건 제거 기록)"
+  },
+
+  "policy_and_contract_files": {
+    "data_contract": "busan-promotion-data-contract-v1.json (v2 스키마 필드 추가)",
+    "source_registry": "busan-promotion-source-registry-v1.json",
+    "freshness_policy": "busan-promotion-freshness-policy-v1.json",
+    "dedup_policy": "busan-promotion-deduplication-policy-v1.json",
+    "multicity_template": "multicity-promotion-source-template-v1.json (Phase 6 분류 규칙 추가)"
+  },
+
+  "manual_queue": [],
+  "manual_queue_status": "ALL_CLOSED",
+  "manual_queue_resolved": [
+    {
+      "id": "MB-001",
+      "description": "KKday 부산병 치유 프로모션 예약 URL 및 할인율 확인",
+      "resolution": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED",
+      "detail": "Playwright Chromium headless 브라우저로 3개 URL 시도 — 전부 HTTP 403 + Cloudflare 차단. 브라우저 우회 금지 원칙에 따라 차단 수용. BTO_PRESS_5340 프로모션은 BTO 공식 보도자료 기준 VERIFIED 유지. booking_url 필드 = BLOCKED_OFFICIAL_PLATFORM_RESTRICTED.",
+      "resolved_at": "2026-08-03",
+      "resolved_by": "TASK-BUSAN-PROMOTION-MANUAL-BROWSER-CLOSURE-V1"
+    },
+    {
+      "id": "MB-005",
+      "description": "visitbusanpass.com 현재 가격 및 한정 프로모션 확인",
+      "resolution": "SITE_PERMANENTLY_INACCESSIBLE_VIA_AUTOMATION",
+      "detail": "메인 페이지 타임아웃 (20s, heavy JS/CDN). /en/pass 404. Playwright 환경에서도 pricing 페이지 접근 불가. VBP는 TRAVEL_PRODUCT 재분류 완료 — 현재 기간한정 프로모션 확인 안 됨.",
+      "resolved_at": "2026-08-03",
+      "resolved_by": "TASK-BUSAN-PROMOTION-MANUAL-BROWSER-CLOSURE-V1"
+    },
+    {
+      "id": "VB-PAGE-2+",
+      "description": "VB-EVENT-SURVEY 2~13페이지 브라우저 수동 수집",
+      "resolution": "COMPLETE_NO_NEW_PROMOTIONS",
+      "detail": "Playwright(paging_text, js_goPage 방식) + WebFetch(page_no=N) 병행 수집. 13페이지 전수 확인. 항목 103건 전수 검토. 신규 ACTIVE/UPCOMING 프로모션 0건. 1개 후보(2025 Busan Wellness Special Offer, 2025-11-01~11-30) 발견이나 상세 접근 불가(onclick=alert) + BTO 교차확인 불일치로 데이터셋 미포함.",
+      "resolved_at": "2026-08-03",
+      "resolved_by": "TASK-BUSAN-PROMOTION-MANUAL-BROWSER-CLOSURE-V1"
+    },
+    {
+      "id": "VB-SHOWS-SEP-DEC",
+      "description": "VB-SHOWS-EVENTS 9~12월 브라우저 수동 수집",
+      "resolution": "COMPLETE_CONFIRMED_ZERO_PROMOTIONS",
+      "detail": "Playwright 월탭 클릭(click_a:text('N') 방식)으로 9, 10, 11, 12월 전수 접근. 결과: 모든 월 = Balcony Music Show & Street Festa(EVENT)만 표시. PROMOTION 0건 확정.",
+      "resolved_at": "2026-08-03",
+      "resolved_by": "TASK-BUSAN-PROMOTION-MANUAL-BROWSER-CLOSURE-V1"
+    }
+  ],
+
+  "known_technical_constraints": {
+    "vb_event_survey_pagination": "실제 파라미터 = page_no=N (pageIndex 아님). WebFetch page_no=N 작동 확인. 브라우저: paging_text/js_goPage 방식으로 접근 가능.",
+    "vb_shows_month_filter": "GET year/month 불가. 브라우저 click_a:text('N') 방식으로 월탭 클릭 가능.",
+    "old_ueb_seq_detail": "ueb_seq 번호가 낮은 항목(~500 이하)은 onclick=showAlertAndScrollToTop('This event has ended.') — 상세 페이지 없음. 최신 항목(684, 1032, 1071)은 상세 접근 가능하나 1071은 서버 오류 페이지(PERMANENTLY_INACCESSIBLE_DETAIL).",
+    "kkday_403": "Playwright Chromium 브라우저에서도 Cloudflare 차단 지속 — 우회 불가(우회 금지 원칙). BLOCKED_OFFICIAL_PLATFORM_RESTRICTED 처리.",
+    "visitbusanpass_price": "메인 페이지 heavy JS 타임아웃. 가격 하위 페이지 404. 브라우저 자동화로도 접근 불가."
+  },
+
+  "next_city_recommendations": [
+    "프로모션 소스 탐색 전 JavaScript 페이지네이션 여부 먼저 확인",
+    "shows/events 소스에서는 PROMOTION이 아닌 EVENT만 나올 가능성 높음 — 우선순위 낮게",
+    "BTO 유사 기관 보도자료에서 B2C 수율이 낮음 (~4%) — 제목 키워드 필터 필수",
+    "old detail URL 불일치 가능성 항상 고려 — 샘플 확인 후 수집",
+    "상시 패스·상품은 PROMOTION과 구별해 별도 TRAVEL_PRODUCT 데이터셋으로 관리"
+  ],
+
+  "multicity_template_status": "DRAFT_VALIDATED_IN_BUSAN",
+  "next_city": "경주 (재현 후 ACTIVE 승격)",
+
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "59ce9c9",
+    "commit_message": "data(content): complete and clean Busan promotion dataset"
+  }
+}

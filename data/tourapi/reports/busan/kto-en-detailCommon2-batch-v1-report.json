@@ -1,0 +1,80 @@
+{
+  "task_id": "TASK-KTO-EN-DETAIL-COLLECT-V1",
+  "report_type": "COMPLETION",
+  "verdict": "PASS",
+  "generated_at": "2026-08-01T06:59:22.987293+00:00",
+  "dry_run": false,
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "head": "9b00840a8fce5aea9b4d3cb6cccf84ac5ea0952a"
+  },
+  "phase0_ko_reconcile": {
+    "verdict": "PASS",
+    "canonical": {
+      "total_targets": 644,
+      "pilot_files": 5,
+      "pilot_unique_cids": 5,
+      "full_dir_total_files": 639,
+      "full_dir_sha_files": 1,
+      "full_dir_api_files": 639,
+      "full_valid_with_content": 621,
+      "full_empty_response": 18,
+      "full_rc_fail": 0,
+      "pilot_full_overlap": 0,
+      "all_unique_cids": 626
+    },
+    "issues": []
+  },
+  "phase1_manifest": {
+    "verdict": "PASS",
+    "total": 194,
+    "sha": "19cf8840eb9c480ab44cb7bee222a9eb07987862d3761074672c16d1680f252e"
+  },
+  "phase2_collection": {
+    "run_id": "run_2",
+    "run_calls": 194,
+    "skip_existing": 0,
+    "skip_resume": 0,
+    "success": 194,
+    "fail_api": 0,
+    "fail_atomic_save": 0,
+    "limit_reached": false,
+    "limit_reached_at": null,
+    "failures": [],
+    "call_limit_status": "UNVERIFIED"
+  },
+  "phase3_verification": {
+    "total_targets": 194,
+    "valid_files": 194,
+    "invalid_files": 0,
+    "pass_all_checks": true,
+    "overview_present": 171,
+    "empty_overview": 23,
+    "title_present": 171,
+    "addr_present": 169,
+    "image_present": 101,
+    "contentid_mismatch": 0,
+    "error_groups": {},
+    "invalid_sample": []
+  },
+  "output_files": {
+    "manifest": "data\\tourapi\\manifests\\busan\\kto-en-detailCommon2-targets.json",
+    "raw_dir": "data\\tourapi\\raw\\kto\\detailCommon2En\\full",
+    "checkpoint": "data\\tourapi\\checkpoints\\busan\\kto-en-detailCommon2-checkpoint.json",
+    "sha_manifest": "data\\tourapi\\raw\\kto\\detailCommon2En\\full\\sha-manifest.json",
+    "reconcile_report": "data\\tourapi\\reports\\busan\\kto-ko-raw-count-reconciliation-v1.json",
+    "collection_report": "data\\tourapi\\reports\\busan\\kto-en-detailCommon2-batch-v1-report.json"
+  },
+  "safety_checks": {
+    "ko_raw_modified": false,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "flags_modified": false,
+    "publishability_remeasured": false,
+    "api_key_logged": false,
+    "push_performed": false,
+    "git_add_A_used": false,
+    "master_branch_touched": false,
+    "detailIntro2_collected": false
+  }
+}

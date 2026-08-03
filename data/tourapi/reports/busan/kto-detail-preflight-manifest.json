@@ -1,0 +1,108 @@
+{
+  "manifest_type": "kto-detail-full-preflight",
+  "task": "TASK-BUSAN-KTO-DETAIL-FULL-PREFLIGHT",
+  "generated_ts": "2026-07-29T07:40:00Z",
+  "branch": "data/busan-enrichment-v1",
+  "head": "911c892",
+  "ssot_version": "v1.1",
+  "input_sha": {
+    "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+  },
+  "kto_candidates_total": 644,
+  "endpoints": {
+    "detailIntro2": {
+      "target_count": 557,
+      "pilot_reuse": 15,
+      "new_calls": 542,
+      "by_content_type": {
+        "12": 138,
+        "14": 37,
+        "28": 38,
+        "32": 78,
+        "39": 266
+      },
+      "excluded": {
+        "type_15_festival": 31,
+        "type_38_shopping": 56,
+        "no_content_type_id": 0
+      },
+      "params": {
+        "contentId": "required",
+        "contentTypeId": "required",
+        "YN_params": "PROHIBITED (KorService2 invalid)"
+      }
+    },
+    "detailCommon2": {
+      "target_count": 644,
+      "pilot_reuse": 5,
+      "new_calls": 639,
+      "excluded": {
+        "has_description": 0,
+        "no_needs_content_flag": 0
+      },
+      "params": {
+        "contentId": "required",
+        "YN_params": "PROHIBITED (KorService2 invalid — contentId-only returns all fields)"
+      },
+      "output_field": "overview → proposed_values.description_ko"
+    },
+    "detailImage2": {
+      "target_count": 94,
+      "pilot_reuse": 0,
+      "new_calls": 94,
+      "excluded": {
+        "image_sufficient": 548,
+        "needs_image_but_has_image": 2
+      },
+      "params": {
+        "contentId": "required",
+        "imageYN": "Y",
+        "subImageYN": "PROHIBITED (KorService2 invalid)"
+      },
+      "output_fields": ["originimgurl", "smallimageurl", "imgname", "cpyrhtDivCd", "serialnum"]
+    }
+  },
+  "call_reconciliation": {
+    "original_estimate": 1929,
+    "actual_new_calls": 1275,
+    "pilot_reuse_total": 20,
+    "total_targets": 1295,
+    "reduction": 654
+  },
+  "call_limit": {
+    "status": "CALL_LIMIT_UNVERIFIED",
+    "inventory_estimate": "1,000회/일 (approved-api-inventory.md)",
+    "official_confirmed": false
+  },
+  "type28_classification_rules": {
+    "SOURCE_VALUE_PRESENT": "item_count>0 AND hours 필드에 값",
+    "SOURCE_VALUE_EMPTY": "item_count=0 OR 모든 hours 필드 빈 값",
+    "NOT_APPLICABLE": "개별 판정 필요 (일괄 적용 금지)",
+    "pilot_sample": "3/3 SOURCE_VALUE_EMPTY (낚시터/교육원/수련관)",
+    "full_38_reclassification": "수집 후 필요"
+  },
+  "script_status": {
+    "dry_run_bug_fixed": true,
+    "missing_features": [
+      "skip_existing",
+      "timeout",
+      "checkpoint",
+      "consecutive_failure_abort",
+      "manifest_input",
+      "full_output_path"
+    ]
+  },
+  "batch_plan_simulation": {
+    "basis": "추정 1,000회/일 (미확인)",
+    "day1": "detailCommon2(639) + detailIntro2 일부 → ~800",
+    "day2": "detailIntro2 나머지 + detailImage2(94) → ~475",
+    "total_days": 2
+  },
+  "full_run_status": "BLOCKED",
+  "unblocking_requirements": [
+    "사용자 data.go.kr 로그인 → 한국관광공사_국문 관광정보 서비스_GW 일일 트래픽 허용량 확인",
+    "collector script 6개 기능 구현 완료",
+    "--full --allow-full 명시적 실행 승인"
+  ]
+}

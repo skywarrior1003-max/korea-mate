@@ -1,0 +1,124 @@
+{
+  "report_type": "district_resolution_a1",
+  "task": "TASK-BUSAN-ENRICH-STAGE-A1",
+  "run_ts": "2026-07-29T05:48:03.735158Z",
+  "needs_district_before": 311,
+  "resolved": {
+    "method": "address_direct",
+    "count": 308,
+    "description": "Busan district name (구/군) found in proposed_values.address",
+    "samples": [
+      {
+        "candidate_id": "busan-VB-1031",
+        "district": "사상구",
+        "address_excerpt": "부산광역시 사상구 사상로310번길 33"
+      },
+      {
+        "candidate_id": "busan-VB-1034",
+        "district": "부산진구",
+        "address_excerpt": "부산광역시 부산진구 시민공원로 73 (범전동)"
+      },
+      {
+        "candidate_id": "busan-VB-1057",
+        "district": "기장군",
+        "address_excerpt": "부산 기장군 철마면 송정리 585-11 민속마당"
+      },
+      {
+        "candidate_id": "busan-VB-1063",
+        "district": "해운대구",
+        "address_excerpt": "부산광역시 해운대구 우동 마린시티2로 2, 마린파크 406호"
+      },
+      {
+        "candidate_id": "busan-VB-1066",
+        "district": "남구",
+        "address_excerpt": "부산시 남구 전포대로 133, 3층 드림씨어터 (문현동, IFC부산 오슬로파크)"
+      },
+      {
+        "candidate_id": "busan-VB-1093",
+        "district": "기장군",
+        "address_excerpt": "부산광역시 기장군 기장읍 기장해안로 172 스타테라스 2F"
+      },
+      {
+        "candidate_id": "busan-VB-1133",
+        "district": "영도구",
+        "address_excerpt": "영도구 꿈나무길 267(1층)"
+      },
+      {
+        "candidate_id": "busan-VB-1137",
+        "district": "중구",
+        "address_excerpt": "중구 광복로 56-8"
+      },
+      {
+        "candidate_id": "busan-VB-1142",
+        "district": "해운대구",
+        "address_excerpt": "부산광역시 해운대구 석대동 77"
+      },
+      {
+        "candidate_id": "busan-VB-1157",
+        "district": "기장군",
+        "address_excerpt": "화명생태공원 부산광역시 북구 화명동 1718-17 스카이라인루지 부산 부산광역시 기장군 기장읍 시랑리 산60-1"
+      },
+      {
+        "candidate_id": "busan-VB-1179",
+        "district": "영도구",
+        "address_excerpt": "영도구 오동꽃길 32 베리베리굿봉산센터"
+      },
+      {
+        "candidate_id": "busan-VB-1185",
+        "district": "부산진구",
+        "address_excerpt": "부산광역시 부산진구 서면로 39"
+      },
+      {
+        "candidate_id": "busan-VB-1262",
+        "district": "동구",
+        "address_excerpt": "동구 중앙대로 179번길 16"
+      },
+      {
+        "candidate_id": "busan-VB-1315",
+        "district": "영도구",
+        "address_excerpt": "부산광역시 영도구 감지길87번길 19"
+      },
+      {
+        "candidate_id": "busan-VB-1316",
+        "district": "해운대구",
+        "address_excerpt": "부산광역시 해운대구 센텀서로 20, 뮤지엄 원"
+      },
+      {
+        "candidate_id": "busan-VB-1323",
+        "district": "수영구",
+        "address_excerpt": "부산광역시 수영구 민락수변로17번길 56"
+      },
+      {
+        "candidate_id": "busan-VB-1364",
+        "district": "해운대구",
+        "address_excerpt": "부산광역시 해운대구 수영강변대로 85"
+      },
+      {
+        "candidate_id": "busan-VB-139",
+        "district": "해운대구",
+        "address_excerpt": "부산 해운대구 송정해변로 50 1층, 2층 서프홀릭"
+      },
+      {
+        "candidate_id": "busan-VB-140",
+        "district": "해운대구",
+        "address_excerpt": "부산광역시 해운대구 동백로52 더베이101 요트투어 매표소"
+      },
+      {
+        "candidate_id": "busan-VB-1422",
+        "district": "서구",
+        "address_excerpt": "부산광역시 서구 송도해변로 171"
+      }
+    ]
+  },
+  "unresolvable": {
+    "count": 3,
+    "candidate_ids": [
+      "busan-VB-1248",
+      "busan-VB-2165",
+      "busan-VB-2557"
+    ],
+    "reason": "address present but no Busan district name found; requires polygon or manual review"
+  },
+  "needs_district_after": 3,
+  "priority_used": "1 (address_direct) — address_direct was available for 308/311"
+}

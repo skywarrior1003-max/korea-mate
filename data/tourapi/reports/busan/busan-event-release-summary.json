@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-08-03T00:00:00Z",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "reference_date": "2026-08-03",
+  "total_events_input": 72,
+  "summary": {
+    "CURRENT_OR_UPCOMING_VERIFIED": 4,
+    "PAST_EVENT_VERIFIED": 14,
+    "STALE_DATE": 25,
+    "DATE_MISSING": 26,
+    "SOURCE_DATE_CONFLICT": 0,
+    "NO_CURRENT_SOURCE_MATCH": 3,
+    "TOTAL": 72
+  },
+  "date_source_hierarchy": [
+    "1st: bfo.or.kr (부산축제조직위원회) — 2026년 확정 날짜",
+    "2nd: FestivalService raw 2026년 명시 날짜",
+    "3rd: FestivalService raw 2025 이전 날짜 → STALE",
+    "4th: KTO KorService2 raw → 날짜 없음 → DATE_MISSING 또는 STALE(타이틀/중복 기준)",
+    "5th: 소스 없음 → NO_CURRENT_SOURCE_MATCH"
+  ],
+  "release_recommendation": {
+    "immediate_release": "CURRENT_OR_UPCOMING_VERIFIED 4건",
+    "hold_for_date_verification": "STALE_DATE 25건 — bfo.or.kr 또는 공식 사이트에서 2026 날짜 확인 후 재분류",
+    "hold_for_source_search": "DATE_MISSING 26건 — 날짜 출처 발굴 필요",
+    "no_source_action_required": "NO_CURRENT_SOURCE_MATCH 3건 — 소스 연결 후 재검토",
+    "past_display_policy": "PAST_EVENT_VERIFIED 14건 — 종료 표시 정책 결정 후 게시 여부 결정"
+  },
+  "candidates_modified": 0,
+  "source_facts_modified": 0,
+  "push": false
+}

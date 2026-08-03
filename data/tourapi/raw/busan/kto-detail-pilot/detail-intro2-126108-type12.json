@@ -1,0 +1,36 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "126108",
+            "contenttypeid": "12",
+            "heritage1": "0",
+            "heritage2": "0",
+            "heritage3": "0",
+            "infocenter": "051-740-7000",
+            "opendate": "2006년 9월 18일",
+            "restdate": "매주 수요일 / 설·추석 연휴 / 센터 점검 날",
+            "expguide": "",
+            "expagerange": "",
+            "accomcount": "",
+            "useseason": "",
+            "usetime": "- 평일 04:00~23:59<br>\n- 목요일 06:00~23:59<br>\n- 주말 04:00~23:59",
+            "parking": "가능",
+            "chkbabycarriage": "없음",
+            "chkpet": "",
+            "chkcreditcard": "가능"
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

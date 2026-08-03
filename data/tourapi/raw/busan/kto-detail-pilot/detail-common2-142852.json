@@ -1,0 +1,47 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "142852",
+            "contenttypeid": "32",
+            "title": "코모도 호텔 부산",
+            "createdtime": "20051130090000",
+            "modifiedtime": "20251120111244",
+            "tel": "",
+            "telname": "",
+            "homepage": "<a href=\"http://www.commodore.co.kr/html/main/index.php\" target=\"_blank\" title=\"새창 : 코모도 호텔 부산 홈페이지로 이동\">http://www.commodore.co.kr</a>",
+            "firstimage": "http://tong.visitkorea.or.kr/cms/resource/49/2722649_image2_1.JPG",
+            "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/49/2722649_image2_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "areacode": "6",
+            "sigungucode": "15",
+            "lDongRegnCd": "26",
+            "lDongSignguCd": "110",
+            "lclsSystm1": "AC",
+            "lclsSystm2": "AC01",
+            "lclsSystm3": "AC010100",
+            "cat1": "B02",
+            "cat2": "B0201",
+            "cat3": "B02010100",
+            "addr1": "부산광역시 중구 중구로 151 (영주동)",
+            "addr2": "",
+            "zipcode": "48912",
+            "mapx": "129.0353034800",
+            "mapy": "35.1088165580",
+            "mlevel": "6",
+            "overview": "1979년 7월 7일에 개관한 코모도호텔부산은 '조선왕궁'을 주제로 설계되었다. 한국의 전통미와 현대의 고급스러움이 조화를 이룬 특급호텔이다. 코모도(Commodore)의 뜻은 해군제독을 의미하며, 왜구의 침입이 빈번했던 시기 에 나라를 지킨 이순신장군을 상징화한 호텔이다. 최근 성황리에 종영된 드라마 '사랑의 불시착' 촬영지 호텔로 다양한 관광객들에게 관심과 사랑을 받고 있다. 총 311개의 객실, 5개의 연회장, 한식당, 뷔페식당, 로비라운지 등등의 식음 시설을 보유하고 있다."
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

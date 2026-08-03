@@ -1,0 +1,72 @@
+{
+  "report_id": "busan-final-source-coverage-summary",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 데이터 수집 공식 원천별 최종 커버리지 요약.",
+  "total_candidates": 1642,
+  "total_source_facts": 2714,
+  "place_sources": {
+    "busan_official_api": {
+      "note": "AttractionService, VisitBusanContent, ExperienceService, ShoppingService 등",
+      "candidates_approx": 717
+    },
+    "kto_korservice2": {
+      "note": "KTO 한국관광공사 API",
+      "candidates_approx": 1100
+    },
+    "kto_engservice2": {
+      "note": "KTO 영문 API — 한국어 원천과 링크",
+      "candidates_approx": 507
+    },
+    "visitbusan_content": {
+      "note": "VisitBusan SSR 수집",
+      "candidates_approx": 311
+    }
+  },
+  "event_sources": {
+    "festival_service": {
+      "linked": 38,
+      "total_events": 72
+    },
+    "kto_only": {
+      "count": 31
+    },
+    "no_source": {
+      "count": 3,
+      "ids": [
+        "busan-VB-1769",
+        "busan-VB-1965",
+        "busan-VB-429"
+      ]
+    },
+    "bfo_date_verification": {
+      "verified": 4,
+      "note": "bfo.or.kr 2026 날짜 확인"
+    }
+  },
+  "promotion_sources": {
+    "BTO_PRESS": {
+      "url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047",
+      "pages_scanned": 14,
+      "promotions_found": 4,
+      "b2c_yield_pct": 4
+    },
+    "VB_EVENT_SURVEY": {
+      "url": "https://www.visitbusan.net/en/...",
+      "pages_scanned": 13,
+      "promotions_found": 1,
+      "pagination_param": "page_no"
+    },
+    "VB_SHOWS_EVENTS": {
+      "months_scanned": 5,
+      "promotions_found": 0,
+      "note": "PROMOTION 없음 — EVENT 정보 소스"
+    }
+  },
+  "multilingual_linking": {
+    "ko_en_linked": 507,
+    "ko_only": 1026,
+    "note": "busan-batch-language-links.csv 기준"
+  }
+}

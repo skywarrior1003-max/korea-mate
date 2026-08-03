@@ -1,0 +1,205 @@
+{
+  "fixture_set_id": "busan-regression-fixtures-v1",
+  "task": "TASK-DATA-QUALITY-RULES-UPGRADE-V1",
+  "created": "2026-07-30",
+  "rule_doc": "docs/automation/schema-independent-enrichment-rules.md",
+  "enriched_candidates_sha256": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+  "description": "부산 enrichment v1 회귀 테스트 fixture. 규칙 강화 전후 판정 일관성을 보장한다.",
+  "fixtures": [
+    {
+      "fixture_id": "case-01",
+      "name": "KTO-EN 자동 연결 성공 (bijective 조건 통과)",
+      "rule_ref": "schema-independent §E",
+      "type": "kto_en_link_pass",
+      "auto_testable": false,
+      "description": "부산 KTO KO↔EN bijective 연결 표본. 42쌍 QA-02 실측값 기준.",
+      "input": {
+        "example_pair": { "ko_key": "KorService2:126081:ko", "en_key": "EngService2:264155:en" },
+        "distance_m": 0.0,
+        "jaccard": 1.0,
+        "bijective": true,
+        "category_match": true
+      },
+      "expected_decision": "EN 연결 확정 (kto_en_linked)",
+      "forbidden_decision": "needs_translation 부여",
+      "notes": "QA-02에서 42쌍 자동 연결 완료. 해운대해수욕장 KO contentId=126081, EN contentId=264155."
+    },
+    {
+      "fixture_id": "case-02",
+      "name": "KTO-EN 자동 연결 실패 (bijective 조건 불통과)",
+      "rule_ref": "schema-independent §E",
+      "type": "kto_en_link_fail",
+      "auto_testable": false,
+      "description": "EN source key가 이미 다른 candidate에 사용된 경우 bijective 실패.",
+      "input": {
+        "bijective": false,
+        "reason": "EN key already linked to another candidate"
+      },
+      "expected_decision": "EN 연결 보류, needs_translation 유지",
+      "forbidden_decision": "bijective 검사 없이 EN 연결 확정"
+    },
+    {
+      "fixture_id": "case-03",
+      "name": "음식점 지점 자동 해소 (단독 상호)",
+      "rule_ref": "schema-independent §F",
+      "type": "restaurant_branch_cleared",
+      "auto_testable": false,
+      "description": "dataset 내 동일 exact 제목 1건 + 고유 좌표 → needs_restaurant_branch 불필요. QA-02에서 654건 해소.",
+      "input": {
+        "same_title_count": 1,
+        "unique_address": true,
+        "unique_coords": true,
+        "explicit_branch_name": false
+      },
+      "expected_decision": "needs_restaurant_branch 제거",
+      "forbidden_decision": "음식점이라는 이유만으로 flag 유지"
+    },
+    {
+      "fixture_id": "case-04",
+      "name": "음식점 지점 flag 유지 (동일 브랜드 복수)",
+      "rule_ref": "schema-independent §F",
+      "type": "restaurant_branch_flagged",
+      "auto_testable": false,
+      "description": "동일 브랜드 이름의 후보가 복수 존재하고 주소·좌표 충돌 → flag 유지.",
+      "input": {
+        "same_title_count": 3,
+        "address_conflict": true,
+        "unique_coords": false
+      },
+      "expected_decision": "needs_restaurant_branch 유지",
+      "forbidden_decision": "표본 검증 없이 전건 일괄 해소"
+    },
+    {
+      "fixture_id": "case-05",
+      "name": "Hours 유효값 통과",
+      "rule_ref": "schema-independent §G",
+      "type": "hours_valid",
+      "auto_testable": false,
+      "description": "실제 운영시간 문자열 (4자 초과, '-'·'0'·'무'가 아님) → 유효 판정.",
+      "input": {
+        "hours_value": "09:00~18:00",
+        "length": 10,
+        "is_placeholder": false
+      },
+      "expected_decision": "유효 hours 적용",
+      "forbidden_decision": "유효 값을 무효로 필터링"
+    },
+    {
+      "fixture_id": "case-06",
+      "name": "Hours 무효값 제거",
+      "rule_ref": "schema-independent §G",
+      "type": "hours_invalid",
+      "auto_testable": false,
+      "description": "플레이스홀더 값('-', '0', '무', 길이≤3) → 무효로 필터링.",
+      "input": {
+        "hours_value": "-",
+        "length": 1,
+        "is_placeholder": true
+      },
+      "expected_decision": "무효값 제거 (hours 미적용)",
+      "forbidden_decision": "플레이스홀더 값을 유효 운영시간으로 기록"
+    },
+    {
+      "fixture_id": "case-07",
+      "name": "busan-F-00341 좌표 동일값 탐지",
+      "rule_ref": "schema-independent §N",
+      "type": "coord_duplicate_value",
+      "auto_testable": true,
+      "candidate_id": "busan-F-00341",
+      "description": "lat == lng (35.195267 == 35.195267) → 동일값 오류 탐지 필수.",
+      "input": {
+        "candidate_id": "busan-F-00341",
+        "source_lat": 35.195267,
+        "source_lng": 35.195267,
+        "category": "restaurant"
+      },
+      "expected_decision": "coordinate_error_type=duplicate_coordinate_value, needs_arrival 부여, arrival_resolved=false",
+      "forbidden_decision": "좌표를 유효로 판정, arrival_resolved=true 허용",
+      "busan_bounds": { "lat": [34.88, 35.39], "lng": [128.74, 129.31] },
+      "detection_rule": "lat == lng → PASS_WITH_WARNINGS + needs_arrival"
+    },
+    {
+      "fixture_id": "case-08",
+      "name": "busan-K-00674 좌표 bounds 이탈 탐지",
+      "rule_ref": "schema-independent §N",
+      "type": "coord_out_of_bounds",
+      "auto_testable": true,
+      "candidate_id": "busan-K-00674",
+      "description": "lat=19.69, lng=117.99 → 부산 bounds (34.88~35.39, 128.74~129.31) 완전 이탈.",
+      "input": {
+        "candidate_id": "busan-K-00674",
+        "source_lat": 19.69442748,
+        "source_lng": 117.9925662504,
+        "category": "attraction"
+      },
+      "expected_decision": "coordinate_error_type=out_of_busan_bounds, needs_arrival 부여, arrival_resolved=false",
+      "forbidden_decision": "bounds 이탈 좌표를 유효로 판정, arrival_resolved=true 허용",
+      "busan_bounds": { "lat": [34.88, 35.39], "lng": [128.74, 129.31] },
+      "detection_rule": "lat < 34.88 → out_of_busan_bounds → PASS_WITH_WARNINGS + needs_arrival"
+    },
+    {
+      "fixture_id": "case-09",
+      "name": "arrival 자동 해소 (restaurant/accommodation)",
+      "rule_ref": "schema-independent §H, Stage-A1",
+      "type": "arrival_auto_resolved",
+      "auto_testable": false,
+      "description": "공식 매장·숙박 좌표가 충분한 경우 needs_arrival_verification 자동 해소. Stage-A1에서 726건 해소.",
+      "input": {
+        "category": "restaurant",
+        "has_valid_coords": true,
+        "official_address_confirmed": true
+      },
+      "expected_decision": "needs_arrival_verification 제거 (arrival_resolved=true)",
+      "forbidden_decision": "공식 좌표가 충분한데 arrival_verification 유지"
+    },
+    {
+      "fixture_id": "case-10",
+      "name": "arrival RESTORE (busan-K-00585, busan-VB-2097)",
+      "rule_ref": "schema-independent §H, Stage-A1 Arrival QA",
+      "type": "arrival_restore",
+      "auto_testable": false,
+      "description": "Stage-A1에서 자동 해소됐으나 Arrival QA에서 needs_arrival_verification 복원 결정.",
+      "input": {
+        "candidate_ids": ["busan-K-00585", "busan-VB-2097"],
+        "stage_a1_decision": "KEEP_RESOLVED",
+        "qa_decision": "RESTORE_VERIFICATION",
+        "reason": "복합시설·문화전시관 — 공식 입구 좌표 확인 필요"
+      },
+      "expected_decision": "needs_arrival_verification 복원",
+      "forbidden_decision": "Stage-A1 자동 해소 결과를 QA 없이 최종으로 처리"
+    },
+    {
+      "fixture_id": "case-11",
+      "name": "arrival REQUIRE_ARRIVAL (busan-F-00341, busan-K-00674)",
+      "rule_ref": "schema-independent §H, §N, Stage-A1 Arrival QA",
+      "type": "arrival_require",
+      "auto_testable": false,
+      "description": "invalid 좌표(동일값·bounds 이탈) → needs_arrival 부여. Case-07·08과 연동.",
+      "input": {
+        "candidate_ids": ["busan-F-00341", "busan-K-00674"],
+        "coordinate_errors": ["duplicate_coordinate_value", "out_of_busan_bounds"]
+      },
+      "expected_decision": "needs_arrival 부여, arrival_resolved=false 강제",
+      "forbidden_decision": "invalid 좌표 상태에서 arrival_resolved=true 허용"
+    },
+    {
+      "fixture_id": "case-12",
+      "name": "source_count=0 provenance 추적 (VB direct embed)",
+      "rule_ref": "schema-independent §R, Arrival Provenance QA",
+      "type": "source_count_zero_provenance",
+      "auto_testable": false,
+      "description": "VisitBusan 웹 직접 수집분은 source_facts를 경유하지 않아 source_count=0이 정상. primary_source_ref+primary_source_file로 추적 가능. Provenance QA에서 22건 확인.",
+      "input": {
+        "source_count": 0,
+        "provenance_type": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY",
+        "primary_source_ref": "non-null",
+        "primary_source_file": "non-null"
+      },
+      "expected_decision": "source_count=0 정상 (오류 아님), provenance_traceable=true",
+      "forbidden_decision": "source_count=0을 join 오류 또는 데이터 부재로 판정"
+    }
+  ],
+  "auto_testable_cases": ["case-07", "case-08"],
+  "validator_script": "scripts/validate-coord-fixtures.py",
+  "test_note": "case-07·08은 validate-coord-fixtures.py로 자동 실행 가능. 나머지 10건은 enrichment 로직 코드 리뷰 또는 수동 판정 기록 확인 필요."
+}

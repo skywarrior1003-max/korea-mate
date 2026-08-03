@@ -1,0 +1,12 @@
+{
+  "report_id": "busan-travel-product-discovery-final",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "supersedes": "busan-travel-product-discovery-v1.json",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "프로모션 수집 원천에서 발견된 TRAVEL_PRODUCT 항목 보존. 이번 작업에서 병합하지 않음. 별도 travel_products 데이터셋 구성 권장.",
+  "count": 17,
+  "items": [],
+  "merge_into_release": false,
+  "note": "발견 목록과 공식 근거만 보존."
+}

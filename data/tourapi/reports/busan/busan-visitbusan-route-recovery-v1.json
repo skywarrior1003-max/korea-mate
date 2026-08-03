@@ -1,0 +1,121 @@
+{
+  "report_id": "busan-visitbusan-route-recovery-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "organization": "부산관광공사 VisitBusan 공식 관광 포털",
+  "base_url": "https://www.visitbusan.net",
+
+  "root_cause_of_previous_errors": {
+    "cause": "WRONG_MENU_CD_AND_SERVER_UPDATE",
+    "detail_1": "이전 세션에서 사용한 한국어 menuCd(DOM_000000101004000000, DOM_000000302001000000 등)는 명소·테마여행 계열로 이벤트·프로모션 게시판과 무관. 올바른 이벤트/공지 menuCd는 영문 사이트 메뉴 파싱으로 확인 필요.",
+    "detail_2": "Notice 게시판 확인 결과: 2026-06-05자 공지 '서버 업데이트로 인한 VisitBusan 웹사이트 일시 중단' — 한국어 버전 일부 페이지가 서버 업데이트 후 불안정한 상태. 영문 버전은 정상 작동.",
+    "resolution": "영문 버전(visitbusan.net/en) 기준 menuCd 사용. 한국어 버전 복구 시 동일 menuCd로 접근 시도."
+  },
+
+  "routes_recovered": {
+    "event_and_survey": {
+      "name": "Event & Survey",
+      "menu_path": "Useful Information > Event & Survey",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002000000",
+      "detail_url_pattern": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq={ueb_seq}",
+      "total_items": 103,
+      "total_pages": 13,
+      "list_access": "PASS — 정적 HTML",
+      "detail_access": "PASS — ueb_seq 추출 후 접근 가능",
+      "fields_available": ["title", "period_start", "period_end", "status(End/Active)", "view_count"],
+      "detail_fields": ["title", "period", "target", "benefit", "price", "booking_url", "location", "image_url"],
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "HIGH",
+      "sample": {
+        "title": "Starry Night Busan Midnight River Cruise Summer Promotion",
+        "period": "2026-07-23 ~ 2026-08-09",
+        "ueb_seq": 684,
+        "price": "₩20,000/person",
+        "booking_url": "https://smartstore.naver.com/rivercruise/products/13673189862",
+        "seats": "35석 한정",
+        "status": "ACTIVE"
+      }
+    },
+    "shows_and_events": {
+      "name": "Shows & Events",
+      "menu_path": "Useful Information > Shows & Events",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304010000000",
+      "detail_url_pattern": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid={dataSid}",
+      "list_access": "PASS — 정적 HTML, 연도·월별 필터 포함",
+      "detail_access": "LIKELY_PASS (동일 패턴 추정)",
+      "fields_available": ["title", "period_start", "period_end", "thumbnail_url"],
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "HIGH — 공연·전시 일정",
+      "pagination": "월별 필터(year+month 파라미터) 방식",
+      "sample": {
+        "title": "Gwangalli M Drone Light Show — August Performance",
+        "period": "2026-08-08 ~ 2026-08-29"
+      }
+    },
+    "notice": {
+      "name": "Notice",
+      "menu_path": "Useful Information > Notice",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304001000000",
+      "detail_url_pattern": "https://www.visitbusan.net/en/board/view.do?{params}",
+      "total_items": 14,
+      "total_pages": 2,
+      "list_access": "PASS — 정적 HTML",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "MEDIUM — 서비스 공지, BTS 연계 숙박 혜택 등",
+      "sample_b2c": {
+        "title": "BTS World Tour accommodation offers",
+        "date": "2026-05-22"
+      }
+    },
+    "busan_travel_products": {
+      "name": "Busan Travel Products",
+      "menu_path": "Useful Information > Busan Travel Products",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304004000000",
+      "total_items": 27,
+      "total_pages": 2,
+      "list_access": "PASS — 정적 HTML",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "HIGH — 체험·기념품 등 관광상품",
+      "product_types": ["Souvenir", "Experience"],
+      "note": "가격은 상세 페이지에서만 확인 가능"
+    }
+  },
+
+  "routes_not_found": {
+    "korean_version_promo_boards": {
+      "status": "NOT_ACCESSIBLE",
+      "reason": "서버 업데이트 영향으로 한국어 버전 이벤트·프로모션 게시판 URL 불안정. 영문 버전으로 대체.",
+      "fallback": "영문 버전 동일 menuCd 사용 (DOM_000000304002000000 등)"
+    },
+    "discount_dedicated_page": {
+      "status": "NOT_FOUND",
+      "note": "별도 할인/쿠폰 전용 게시판 없음. 할인 정보는 Event & Survey 또는 Travel Products에 혼재."
+    },
+    "tourist_pass_on_visitbusan": {
+      "status": "NOT_FOUND_ON_VISITBUSAN",
+      "external_site": "https://www.visitbusanpass.com (별도 도메인 운영)",
+      "access_method": "AUTOMATABLE"
+    }
+  },
+
+  "sitemap": {
+    "sitemap_xml": "NOT_FOUND — 404",
+    "robots_txt": "FOUND — Allow: / (no sitemap directive)",
+    "alternative_discovery": "영문 메뉴 HTML 파싱으로 menuCd 추출 성공"
+  },
+
+  "language_support": {
+    "korean": "불안정 (서버 업데이트 영향)",
+    "english": "정상 — 권장 수집 경로",
+    "japanese": "미테스트",
+    "chinese_simplified": "미테스트",
+    "chinese_traditional": "미테스트"
+  },
+
+  "summary": {
+    "routes_recovered": 4,
+    "routes_not_found": 2,
+    "recommended_collection_base": "https://www.visitbusan.net/en",
+    "key_insight": "영문 버전은 한국어 버전과 동일한 menuCd를 공유하며 안정적으로 접근 가능. 한국어 버전 서버 업데이트가 완료되면 동일 menuCd로 한국어 데이터 수집 가능."
+  }
+}

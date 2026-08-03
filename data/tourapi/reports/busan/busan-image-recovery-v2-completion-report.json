@@ -1,0 +1,70 @@
+{
+  "report_id": "busan-image-recovery-v2-completion-report",
+  "task": "TASK-BUSAN-IMAGE-RECOVERY-V2",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T11:00:59.731633+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "2a05f3d data(validation): validate Busan image recovery task prompt",
+  "head_after": "(pre-commit)",
+  "total_candidates": 1642,
+  "candidate_total_ok": true,
+  "protected_sha_ok": true,
+  "external_requests": 38,
+  "push": false,
+  "target_count": 37,
+  "targets_processed": 37,
+  "verdict_distribution": {
+    "IMAGE_VERIFIED": 0,
+    "OFFICIAL_PAGE_NO_IMAGE": 0,
+    "OFFICIAL_SITE_NOT_FOUND": 37,
+    "IMAGE_CANDIDATE": 0,
+    "WRONG_PLACE": 0,
+    "IMAGE_URL_INACCESSIBLE": 0,
+    "FETCH_FAILED": 0
+  },
+  "image_verified_count": 0,
+  "manual_check_pending_count": 0,
+  "no_official_image_count": 37,
+  "needs_image_removed_count": 0,
+  "en_v6_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "en_v7_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "delta_vs_env6": {
+    "publishable": 0,
+    "publishable_with_caveat": 0,
+    "pending_source": 0,
+    "pending_review": 0
+  },
+  "status_changed_count": 0,
+  "change_types": {},
+  "publishable_or_caveat_gain": 0,
+  "prompt_validation": {
+    "issues_found": false,
+    "improvements_found": false,
+    "notes": [
+      "V2 대상 수 37건 정확 (V1의 31건 오류 수정됨).",
+      "사전 소진 원천(FoodService MAIN_IMG_NORMAL, KTO firstimage) 명시 적절.",
+      "VisitBusan URL 패턴 linkage index에서 확인: menuCd=DOM_000000201002001000.",
+      "HOMEPAGE_URL 전원 공백 → OFFICIAL_SITE_NOT_FOUND 처리 (이번 실행 단계 C 스킵).",
+      "권리 기준: operational_assumed (VisitBusan 공식 관광 페이지)."
+    ]
+  },
+  "files_modified": [
+    null,
+    "data\\tourapi\\reports\\busan\\busan-publishability-en-v7.json",
+    "data\\tourapi\\reports\\busan\\busan-publishability-en-v7-details.jsonl",
+    "data\\tourapi\\reports\\busan\\busan-image-recovery-v2-evidence.json",
+    "data\\tourapi\\reports\\busan\\busan-image-recovery-v2-completion-report.json"
+  ],
+  "commit": null,
+  "verdict_fix_note": "All 37 UC_SEQ URLs returned generic food category page (no individual detail pages). WRONG_PLACE corrected to OFFICIAL_SITE_NOT_FOUND: no dedicated VisitBusan food detail page exists for these UC_SEQs (they are FoodService-API-only, not VisitBusan-web type)."
+}

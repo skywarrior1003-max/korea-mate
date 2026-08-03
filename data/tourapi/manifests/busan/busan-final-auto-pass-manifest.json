@@ -1,0 +1,1517 @@
+{
+  "manifest_id": "busan-final-auto-pass-v1",
+  "task_id": "TASK-BUSAN-FINAL-PUBLISH-CANDIDATE-QA-V1",
+  "generated_at": "2026-07-31T10:31:58.133290Z",
+  "git": {
+    "head": "09376994fadad18247ebacace13efc29f07df561",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "count": 301,
+  "records": [
+    {
+      "candidate_id": "busan-F-00002",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00003",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00004",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00005",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00006",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00007",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00008",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00009",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00010",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00011",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00014",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00015",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00017",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00018",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00019",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00020",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00021",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00023",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00024",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00025",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00026",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00027",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00028",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00029",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00030",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00031",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00032",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00033",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00034",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00035",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00037",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00038",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00039",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00040",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00041",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00042",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00043",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00045",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00046",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00047",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00049",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00051",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00052",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00053",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00054",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00055",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00056",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00058",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00060",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00061",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00062",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00063",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00064",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00065",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00066",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00067",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00068",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00069",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00070",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00071",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00072",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00073",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00074",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00075",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00076",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00077",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00078",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00079",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00081",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00082",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00083",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00084",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00085",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00086",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00087",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00089",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00090",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00091",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00092",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00094",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00095",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00097",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00098",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00099",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00100",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00101",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00102",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00104",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00105",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00107",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00108",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00109",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00110",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00111",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00112",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00113",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00114",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00115",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00116",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00118",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00119",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00120",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00121",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00122",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00123",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00124",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00125",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00126",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00127",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00128",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00129",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00130",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00132",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00134",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00135",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00136",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00137",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00138",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00139",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00141",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00143",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00144",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00145",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00146",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00147",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00148",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00149",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00150",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00151",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00152",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00153",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00154",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00155",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00156",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00157",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00158",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00159",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00160",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00161",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00162",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00163",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00164",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00165",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00166",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00167",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00168",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00169",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00170",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00171",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00172",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00173",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00174",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00175",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00176",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00177",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00178",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00179",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00180",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00181",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00182",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00183",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00184",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00185",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00186",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00187",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00188",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00189",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00190",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00191",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00192",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00193",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00194",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00195",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00196",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00197",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00200",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00202",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00204",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00205",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00206",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00207",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00208",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00209",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00210",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00211",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00214",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00215",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00216",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00217",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00218",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00219",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00220",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00221",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00223",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00224",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00226",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00227",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00228",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00230",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00231",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00232",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00234",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00235",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00237",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00238",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00239",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00240",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00241",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00242",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00243",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00244",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00245",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00247",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00248",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00249",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00250",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00351",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00352",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00353",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00354",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00355",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00357",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00358",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00360",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00362",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00363",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00364",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00366",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00368",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00369",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00370",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00371",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00372",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00373",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00374",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00375",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00377",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00378",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00380",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00381",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00382",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00383",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00384",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00385",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00389",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00390",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00392",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00393",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00395",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00396",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00397",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00398",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00400",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00401",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00402",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00403",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00404",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00405",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00406",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00408",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00409",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00411",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00412",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00413",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00414",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00415",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00416",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00417",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00418",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00419",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00420",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00421",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00422",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00423",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00424",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00425",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00426",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00427",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00428",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00429",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00430",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00431",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00432",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00433",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00434",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00435",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00436",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-F-00437",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1133",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1137",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1262",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1489",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1508",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1808",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-1853",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-218",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-2579",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-293",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-294",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-518",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    },
+    {
+      "candidate_id": "busan-VB-960",
+      "category": "restaurant",
+      "publishability_v8": "publishable"
+    }
+  ]
+}

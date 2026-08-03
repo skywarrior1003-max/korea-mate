@@ -1,0 +1,237 @@
+{
+  "task_id": "TASK-BUSAN-FOODSERVICE-OFFICIAL-IMAGE-PILOT",
+  "task_version": "pilot-v1",
+  "report_type": "COMPLETION",
+  "overall_result": "PARTIAL_PASS",
+  "pilot_verdict": "IMAGE_TRACK_CLOSED",
+  "generated_at": "2026-07-30T00:00:00+09:00",
+  "report_correction": {
+    "corrected_at": "2026-07-30T00:00:00+09:00",
+    "correction_reason": "초기 보고서의 IMAGE_FOUND 판정이 재사용 권한 및 장소 대표성 기준을 충족하지 못함을 확인하여 교정",
+    "original_verdict": "SELECTIVE_PROCESSING",
+    "corrected_verdict": "IMAGE_TRACK_CLOSED",
+    "corrected_stats": {
+      "original_IMAGE_FOUND": 2,
+      "corrected_official_site_found": 2,
+      "corrected_place_representative_candidates": 1,
+      "corrected_IMAGE_VERIFIED": 0,
+      "corrected_immediately_applicable": 0
+    }
+  },
+  "context": {
+    "background": "37건 FoodService-only 후보의 공식 홈페이지 이미지 존재 가능성을 표본 조사하여 전체 확대 여부 판단",
+    "prior_exhausted_paths": [
+      "raw_image (MAIN_IMG_NORMAL: 37건 전부 비어 있음)",
+      "curated_images (37건 모두 빈 배열)",
+      "kto_linked (37건 모두 kto_en_linked=false)",
+      "visitbusan_detail_page (37건 전부 generic 카테고리 페이지 반환, V2에서 확인)"
+    ],
+    "full_scope_count": 37,
+    "pilot_scope_count": 10,
+    "decision_rules": {
+      "3_or_more": "37건 전체 확대 (TASK-BUSAN-IMAGE-RECOVERY-V3 실행)",
+      "1_to_2": "선택적 처리 (개별 후보만 처리)",
+      "0": "이미지 트랙 종료, 37건 pending_source 유지"
+    }
+  },
+  "pilot_design": {
+    "sample_size": 10,
+    "selection_criteria_applied": [
+      "체인 가능성 있는 음식점: 4건 전부 포함 (지명+브랜드명 조합, 점/호점/본점 없는 체인형)",
+      "단독 매장 공식 사이트 가능성: 파인다이닝·베이커리·현대식 레스토랑 6건",
+      "영어명 존재 혼합: 10건 전부 영어명 있음 (37건 전부 보유)",
+      "주소·전화 완전도: 10건 전부 completeness=4/4 (37건 전부 동일)",
+      "재현 가능성: candidate_id 기준 고정 선정"
+    ],
+    "sample_breakdown": {
+      "chain_possible_4": [
+        "busan-F-00253 기장손칼국수 (지명+메뉴형, 부산진구 서면로 56)",
+        "busan-F-00256 언양불고기부산집 (지명+메뉴형, 수영구 남천바다로 32)",
+        "busan-F-00318 기장곰장어 (지명+메뉴형, 기장군 기장읍 기장해안로 70)",
+        "busan-F-00328 송정3대국밥 (지명+대수형, 부산진구 서면로68번길 33)"
+      ],
+      "modern_upscale_3": [
+        "busan-F-00310 팔레드신 PALAIS DE CHINE (파인다이닝 중식, 해운대구 해운대해변로 292)",
+        "busan-F-00307 아오모리 AOMORI (스시 오마카세, 해운대구 센텀3로 20)",
+        "busan-F-00278 라꽁띠 La ConTi (프렌치, 해운대구 청사포로 85)"
+      ],
+      "bakery_modern_3": [
+        "busan-F-00338 레망파티쓰리 lesmains patisserie (파티쓰리, 동래구 온천천로471번가길 38)",
+        "busan-F-00342 브레드365 bread365 (베이커리, 남구 못골로41번길 13)",
+        "busan-F-00344 옵스 Ops (부산 대표 베이커리 체인, 수영구 황령대로489번길 37)"
+      ]
+    }
+  },
+  "search_method": {
+    "tool": "WebSearch (Google)",
+    "query_pattern": "음식점명 + 주소/지역 + 공식홈페이지 official website",
+    "followup": "WebFetch로 이미지 URL 추출 및 HTTP 200 접근 확인",
+    "language": "한국어 + 영어 혼합",
+    "note": "검색 엔진이 미국 기반이므로 한국어 Naver 검색 효율 낮을 수 있음"
+  },
+  "pilot_results": {
+    "total_searched": 10,
+    "official_site_found": 2,
+    "place_representative_candidates": 1,
+    "IMAGE_VERIFIED": 0,
+    "SOURCE_NOT_FOUND": 8,
+    "immediately_applicable": 0,
+    "note": "공식 사이트 발견 2건 중 재사용 권한까지 확인된 건 0건. 장소 대표성 충족은 1건(팔레드신)뿐."
+  },
+  "image_candidates": [
+    {
+      "candidate_id": "busan-F-00310",
+      "title_ko": "팔레드신",
+      "name_en": "PALAIS DE CHINE",
+      "district": "해운대구",
+      "address": "부산 해운대구 해운대해변로 292",
+      "verdict": "IMAGE_PROPOSED_MANUAL_CHECK",
+      "rejection_reason": "RIGHTS_UNCONFIRMED",
+      "rejection_detail": "공식 사이트 게시 사실만으로 GoKoreaMate의 재사용 권한이 확인되지 않음. 이용약관·저작권 정책 또는 별도 허가 근거 필요. curated_images 반영 및 needs_image 제거 금지.",
+      "official_site_url": "https://gjb.josunhotel.com/dining/palais.do",
+      "official_site_type": "hotel_official_dining_page",
+      "site_operator": "그랜드 조선 부산 (Grand Josun Busan / 조선호텔앤리조트)",
+      "evidence_image_url": "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252085&cntntsSn=252083",
+      "evidence_additional_urls": [
+        "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252097&cntntsSn=252083",
+        "https://gjb.josunhotel.com/revolution/content/fileImage.do?fileId=252099&cntntsSn=252083"
+      ],
+      "image_type": "restaurant_interior",
+      "image_description": "고급 중식당 인테리어 (amber 벨벳 의자, 대리석 원형 테이블, 중국풍 바, 펜던트 조명). 전문 프로모션 촬영본.",
+      "image_accessible": true,
+      "image_size_kb": 130,
+      "place_representativeness": "HIGH",
+      "place_match_note": "gjb.josunhotel.com PALAIS DE CHINE 다이닝 섹션 이미지. 장소 일치 확실.",
+      "immediately_applicable": false,
+      "evidence_preserved_for": "KTO detailImage2 수집 후 또는 저작권 확인 후 재판정"
+    },
+    {
+      "candidate_id": "busan-F-00344",
+      "title_ko": "옵스",
+      "name_en": "Ops",
+      "district": "수영구",
+      "address": "부산 수영구 황령대로489번길 37",
+      "verdict": "DISQUALIFIED",
+      "rejection_reason": "LOGO_OR_PRODUCT_IMAGE / WRONG_LEVEL_OF_IDENTITY",
+      "rejection_detail": "ops.co.kr에서 발견된 이미지는 OPS 브랜드 제품(쿠키세트) 및 로고가 포함된 상품 사진. 특정 부산 남천점의 외관·내부가 아니며, 해당 후보(candidate) 지점을 증명하지 못함. 브랜드 제품 사진을 특정 지점의 장소 대표 이미지로 사용하면 실제 매장 사진으로 오해 가능. 반영 금지.",
+      "official_site_url": "https://www.ops.co.kr/",
+      "official_site_type": "chain_official_ecommerce",
+      "site_operator": "OPS (BREAD & CAKE PATTISERIE OPS 옵스)",
+      "examined_image_url": "https://www.ops.co.kr/web/product/medium/202506/4c26af9d6d73c2fd049c760bfc472998.jpg",
+      "image_type": "brand_product_photo_with_logo",
+      "image_description": "OPS 쿠키세트 S 제품 사진. 하늘색 OPS 브랜드 박스, OPS 로고 선명. 남천점 매장 외관/내부 아님.",
+      "place_representativeness": "NONE",
+      "immediately_applicable": false
+    }
+  ],
+  "source_not_found_cases": [
+    {
+      "candidate_id": "busan-F-00253",
+      "title_ko": "기장손칼국수",
+      "reason": "공식 홈페이지 없음. 식신, DiningCode, VisitBusan 등 제3자 플랫폼만 존재. TV 출연(백종원 3대천왕) 맛집이나 자체 웹사이트 운영 없음.",
+      "found_platforms": ["siksinhot.com", "diningcode.com", "visitbusan.net", "triple.guide", "busan.grandculture.net"]
+    },
+    {
+      "candidate_id": "busan-F-00256",
+      "title_ko": "언양불고기부산집",
+      "reason": "modoo.at 기반 공식 사이트(busangib.modoo.at) 운영했으나 2025년 6월 26일 Naver의 Modoo 서비스 종료로 폐쇄됨. 현재 공식 웹사이트 없음. 미쉐린 가이드 등재 맛집임에도 독자 웹사이트 부재.",
+      "found_platforms": ["modoo.at (종료)", "guide.michelin.com", "diningcode.com", "catchtable.co.kr", "siksinhot.com"],
+      "special_note": "미쉐린 등재 확인. 단, 미쉐린 페이지는 공식 이미지 사용 불가."
+    },
+    {
+      "candidate_id": "busan-F-00318",
+      "title_ko": "기장곰장어",
+      "reason": "공식 홈페이지 없음. Instagram(@gijanggomjangeo), Facebook 보유하나 SNS는 이미지 사용 불가 기준 적용. 기장군청 관광 페이지(gijang.go.kr)에 안내 등재되어 있으나 공식 이미지 소스 아님. 120년 전통 업소로 웹 진출 없음.",
+      "found_platforms": ["instagram.com/gijanggomjangeo", "facebook.com", "gijang.go.kr", "siksinhot.com"]
+    },
+    {
+      "candidate_id": "busan-F-00328",
+      "title_ko": "송정3대국밥",
+      "reason": "공식 홈페이지 없음. 1946년 개업, 80년 역사 업소. 식신, DiningCode 등 리뷰 플랫폼만 존재. newiki.net 항목 있으나 공식 이미지 소스 아님.",
+      "found_platforms": ["siksinhot.com", "diningcode.com", "instagram.com", "brunch.co.kr", "newiki.net"]
+    },
+    {
+      "candidate_id": "busan-F-00307",
+      "title_ko": "아오모리",
+      "reason": "공식 홈페이지 없음. 해운대 센텀호텔(ecentumhotel.com) 3층 입점 업소이나, 호텔 공식 사이트가 SSL 인증서 오류로 접근 불가. 여러 번 검색에서도 호텔 다이닝 전용 페이지 미발견. DiningCode, Siksin, Triple, Tabling 등 제3자 예약·리뷰 플랫폼만 존재.",
+      "found_platforms": ["diningcode.com", "siksinhot.com", "triple.guide", "tabling.co.kr", "autoreserve.com", "bluer.co.kr"],
+      "attempted_hotel_site": "https://www.ecentumhotel.com/ (SSL 인증서 오류)"
+    },
+    {
+      "candidate_id": "busan-F-00278",
+      "title_ko": "라꽁띠",
+      "reason": "공식 홈페이지 없음. Naver Blog(blog.naver.com/la_conti)와 Facebook(facebook.com/laconti.lee/)만 존재. 블로그·SNS는 이미지 사용 불가 기준 적용. 자체 도메인 없음.",
+      "found_platforms": ["blog.naver.com/la_conti", "facebook.com/laconti.lee", "diningcode.com", "siksinhot.com", "tripadvisor.co.kr"]
+    },
+    {
+      "candidate_id": "busan-F-00338",
+      "title_ko": "레망파티쓰리",
+      "reason": "공식 홈페이지 없음. 검색 결과 매우 미약. 한국어 검색에서 관련 결과 거의 없음 (동명의 싱가포르 'Les Mains Patisserie'만 노출). 소규모 독립 파티쓰리로 웹 진출 없음.",
+      "found_platforms": []
+    },
+    {
+      "candidate_id": "busan-F-00342",
+      "title_ko": "브레드365",
+      "reason": "공식 홈페이지 없음. Instagram(@bread.365) 활성 계정 보유하나 SNS는 이미지 사용 불가. VisitBusan에 등재(uc_seq=1465 링크 노출)되나 V2 조사에서 해당 UC_SEQ URL이 generic 카테고리 페이지 반환함을 이미 확인. 자체 도메인 없음.",
+      "found_platforms": ["instagram.com/bread.365", "visitbusan.net", "diningcode.com", "siksinhot.com", "mangoplate.com"],
+      "special_note": "VisitBusan URL(uc_seq=1465) 검색결과에서 노출됐으나 V2에서 이미 generic 페이지임 확인됨."
+    }
+  ],
+  "decision": {
+    "applied_rule": "IMAGE_VERIFIED 0건: 공식 홈페이지 이미지 트랙 종료",
+    "official_site_found": 2,
+    "IMAGE_VERIFIED": 0,
+    "action": "IMAGE_TRACK_CLOSED",
+    "rationale": "공식 사이트 발견 2건 중 즉시 반영 가능한 이미지 0건. 팔레드신은 장소 대표성 있으나 재사용 권한 미확인, 옵스는 장소 대표성 자체가 없는 브랜드 제품 사진. 이미지 기준 완화 금지 원칙에 따라 이 상태로는 반영 불가. 추가 27건 수작업 탐색도 효율이 낮을 것으로 판단하여 종료.",
+    "next_steps": [
+      {
+        "step": 1,
+        "action": "busan-F-00310 팔레드신: evidence URL 보존, 반영 금지",
+        "description": "gjb.josunhotel.com/dining/palais.do URL을 evidence로만 기록. curated_images 추가 및 needs_image 제거 금지. KTO detailImage2 수집 또는 저작권 확인 후 재판정.",
+        "prohibited": ["curated_images 수정", "needs_image 플래그 제거", "image_gate 변경"]
+      },
+      {
+        "step": 2,
+        "action": "busan-F-00344 옵스: 부적합 이미지로 기록",
+        "description": "LOGO_OR_PRODUCT_IMAGE / WRONG_LEVEL_OF_IDENTITY로 기록. 반영 금지.",
+        "prohibited": ["어떤 형태로도 enriched candidates 수정"]
+      },
+      {
+        "step": 3,
+        "action": "37건 전부 pending_source 유지",
+        "description": "추가 공식 홈페이지 조사 없음. image_status, image_gate, needs_image 현 상태 유지.",
+        "affected_count": 37
+      },
+      {
+        "step": 4,
+        "action": "KTO detailImage2 수집 후 재판정",
+        "description": "2026-08-02 18:00 이후 KTO 공식 호출 한도 확인. KTO 공식 관광 이미지와 권리 코드가 확보되는 후보만 다시 판정. 신규 데이터 수정·push 없음.",
+        "scheduled_check": "2026-08-02T18:00:00+09:00"
+      }
+    ]
+  },
+  "pattern_insights": {
+    "high_probability_of_official_site": [
+      "호텔 부속 레스토랑 (hotel restaurant): 호텔 공식 다이닝 페이지 보유 가능성 높음",
+      "전국 유통 베이커리/카페 체인: 공식 쇼핑몰 보유 가능성 높음"
+    ],
+    "low_probability_of_official_site": [
+      "지명 기반 전통 음식점 (기장손칼국수, 기장곰장어): 오래된 업소일수록 웹 부재",
+      "소규모 독립 파티쓰리·베이커리: Instagram 위주 운영",
+      "가족 경영 국밥·불고기 업소: 웹사이트 운영 없음",
+      "단독 매장 파인다이닝 (라꽁띠, 아오모리): 예약 플랫폼 의존, 독자 사이트 없음"
+    ],
+    "note_for_remaining_35": "파일럿 미포함 27건 중에서도 호텔 부속 레스토랑이나 전국 브랜드 체인이 있다면 선택적으로 조사 가능. 그러나 대부분 전통 음식점으로 기대 수확이 낮음. 이미지 트랙 종료 결정에 따라 추가 조사 없음."
+  },
+  "safety_compliance": {
+    "enriched_candidates_modified": false,
+    "push_performed": false,
+    "git_add_dash_A_used": false,
+    "master_branch_touched": false,
+    "new_review_flags_created": false,
+    "candidate_deleted": false,
+    "unofficial_image_used": false,
+    "blog_sns_map_image_used": false,
+    "image_file_downloaded": false
+  }
+}

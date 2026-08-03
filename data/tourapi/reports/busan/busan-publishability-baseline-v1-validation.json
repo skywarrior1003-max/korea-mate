@@ -1,0 +1,597 @@
+{
+  "report_id": "busan-publishability-baseline-v1-validation",
+  "task": "TASK-BUSAN-PUBLISHABILITY-BASELINE-V1",
+  "gate_version": "BUSAN_PUBLISHABILITY_BASELINE_V1",
+  "run_ts": "2026-07-30T05:40:21.401274+00:00",
+  "overall_verdict": "PASS",
+  "verdict_reason": "unexplained_conflict=0. 32건 차이는 모두 BUSAN_PUBLISHABILITY_BASELINE_V1 게이트 재정의로 설명됨 (description/image 부재 → PENDING_SOURCE 재분류 등).",
+  "golden_dataset_cross_validation": {
+    "exact_match": [
+      {
+        "candidate_id": "busan-VB-2284",
+        "golden_id": "GD-BUSAN-009",
+        "publishability": "pending_source"
+      },
+      {
+        "candidate_id": "busan-K-00674",
+        "golden_id": "GD-BUSAN-010",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-A-00001",
+        "golden_id": "GD-BUSAN-012",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-F-00341",
+        "golden_id": "GD-BUSAN-025",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-VB-2097",
+        "golden_id": "GD-BUSAN-026",
+        "publishability": "pending_source"
+      },
+      {
+        "candidate_id": "busan-VB-1721",
+        "golden_id": "GD-BUSAN-027",
+        "publishability": "pending_source"
+      },
+      {
+        "candidate_id": "busan-VB-2704",
+        "golden_id": "GD-BUSAN-028",
+        "publishability": "pending_source"
+      },
+      {
+        "candidate_id": "busan-VB-518",
+        "golden_id": "GD-BUSAN-029",
+        "publishability": "pending_source"
+      },
+      {
+        "candidate_id": "busan-F-00002",
+        "golden_id": "GD-BUSAN-031",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00004",
+        "golden_id": "GD-BUSAN-032",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00005",
+        "golden_id": "GD-BUSAN-033",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00003",
+        "golden_id": "GD-BUSAN-034",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00046",
+        "golden_id": "GD-BUSAN-035",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00015",
+        "golden_id": "GD-BUSAN-036",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00020",
+        "golden_id": "GD-BUSAN-037",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00068",
+        "golden_id": "GD-BUSAN-038",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00008",
+        "golden_id": "GD-BUSAN-039",
+        "publishability": "publishable"
+      },
+      {
+        "candidate_id": "busan-F-00012",
+        "golden_id": "GD-BUSAN-040",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-F-00013",
+        "golden_id": "GD-BUSAN-041",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-F-00016",
+        "golden_id": "GD-BUSAN-042",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-F-00022",
+        "golden_id": "GD-BUSAN-043",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-F-00036",
+        "golden_id": "GD-BUSAN-044",
+        "publishability": "pending_review"
+      },
+      {
+        "candidate_id": "busan-E-00026",
+        "golden_id": "GD-BUSAN-052",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-E-00029",
+        "golden_id": "GD-BUSAN-053",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-E-00014",
+        "golden_id": "GD-BUSAN-054",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-E-00034",
+        "golden_id": "GD-BUSAN-058",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-E-00006",
+        "golden_id": "GD-BUSAN-059",
+        "publishability": "publishable_with_caveat"
+      },
+      {
+        "candidate_id": "busan-E-00037",
+        "golden_id": "GD-BUSAN-060",
+        "publishability": "pending_review"
+      }
+    ],
+    "explained_gate_version_difference": [
+      {
+        "candidate_id": "busan-K-00003",
+        "golden_id": "GD-BUSAN-001",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00017",
+        "golden_id": "GD-BUSAN-002",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00058",
+        "golden_id": "GD-BUSAN-003",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "IMAGE_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00141",
+        "golden_id": "GD-BUSAN-004",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00192",
+        "golden_id": "GD-BUSAN-005",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00249",
+        "golden_id": "GD-BUSAN-006",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "IMAGE_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate",
+          "image_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00684",
+        "golden_id": "GD-BUSAN-007",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00678",
+        "golden_id": "GD-BUSAN-008",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "IMAGE_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate",
+          "image_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00740",
+        "golden_id": "GD-BUSAN-011",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00696",
+        "golden_id": "GD-BUSAN-013",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-VB-2165",
+        "golden_id": "GD-BUSAN-014",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "DISTRICT_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "identity_gate",
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-VB-2557",
+        "golden_id": "GD-BUSAN-015",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "DISTRICT_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "identity_gate",
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00216",
+        "golden_id": "GD-BUSAN-016",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00236",
+        "golden_id": "GD-BUSAN-017",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00177",
+        "golden_id": "GD-BUSAN-018",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00278",
+        "golden_id": "GD-BUSAN-019",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00295",
+        "golden_id": "GD-BUSAN-020",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00299",
+        "golden_id": "GD-BUSAN-021",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "IMAGE_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate",
+          "image_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00301",
+        "golden_id": "GD-BUSAN-022",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00309",
+        "golden_id": "GD-BUSAN-023",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00422",
+        "golden_id": "GD-BUSAN-024",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00131",
+        "golden_id": "GD-BUSAN-030",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "IMAGE_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate",
+          "image_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-VB-1248",
+        "golden_id": "GD-BUSAN-045",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT",
+          "DISTRICT_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "identity_gate",
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00077",
+        "golden_id": "GD-BUSAN-046",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00078",
+        "golden_id": "GD-BUSAN-047",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00147",
+        "golden_id": "GD-BUSAN-048",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00210",
+        "golden_id": "GD-BUSAN-049",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00302",
+        "golden_id": "GD-BUSAN-050",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00245",
+        "golden_id": "GD-BUSAN-051",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00211",
+        "golden_id": "GD-BUSAN-055",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00773",
+        "golden_id": "GD-BUSAN-056",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "description_gate"
+        ]
+      },
+      {
+        "candidate_id": "busan-K-00757",
+        "golden_id": "GD-BUSAN-057",
+        "gd_publishability": "pending_review",
+        "baseline_publishability": "pending_source",
+        "explanation": "description_or_image_absent_reclassified_as_pending_source",
+        "gd_block_reasons": [
+          "DESCRIPTION_ABSENT"
+        ],
+        "baseline_block_reasons": [
+          "name_en_gate",
+          "description_gate"
+        ]
+      }
+    ],
+    "unexplained_conflict": []
+  }
+}

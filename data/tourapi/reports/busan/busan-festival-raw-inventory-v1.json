@@ -1,0 +1,73 @@
+{
+  "raw_directory": "C:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data/tourapi/raw/busan/2026-07-24/batch",
+  "collection_date": "2026-07-24",
+  "batch_state_run_date": "2026-07-24",
+  "batch_state_started_at": "2026-07-23T07:56:34.217Z",
+  "files": {
+    "ko": {
+      "filename": "busan-festival-ko-p001.json",
+      "path": "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-ko-p001.json",
+      "size_bytes": 107637,
+      "items_in_file": 40,
+      "items_in_state": 40,
+      "status": "completed",
+      "pages_completed": 1,
+      "request_count": 1,
+      "state_updated_at": "2026-07-24T00:26:21.787Z",
+      "response_root_key": "getFestivalKr",
+      "endpoint": "https://apis.data.go.kr/6260000/FestivalService/getFestivalKr"
+    },
+    "en": {
+      "filename": "busan-festival-en-p001.json",
+      "path": "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-en-p001.json",
+      "size_bytes": 97324,
+      "items_in_file": 37,
+      "items_in_state": 37,
+      "status": "completed",
+      "pages_completed": 1,
+      "request_count": 1,
+      "state_updated_at": "2026-07-24T00:26:22.232Z",
+      "response_root_key": "getFestivalEn",
+      "endpoint": "https://apis.data.go.kr/6260000/FestivalService/getFestivalEn"
+    },
+    "ja": {
+      "filename": "busan-festival-ja-p001.json",
+      "path": "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-ja-p001.json",
+      "size_bytes": 99426,
+      "items_in_file": 35,
+      "items_in_state": 35,
+      "status": "completed",
+      "pages_completed": 1,
+      "request_count": 1,
+      "state_updated_at": "2026-07-24T00:26:22.889Z",
+      "response_root_key": "getFestivalJa",
+      "endpoint": "https://apis.data.go.kr/6260000/FestivalService/getFestivalJa"
+    },
+    "zhs": {
+      "filename": "busan-festival-zhs-p001.json",
+      "path": "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-zhs-p001.json",
+      "size_bytes": 86982,
+      "items_in_file": 35,
+      "items_in_state": 35,
+      "status": "completed",
+      "pages_completed": 1,
+      "request_count": 1,
+      "state_updated_at": "2026-07-24T00:26:28.163Z",
+      "response_root_key": "getFestivalZhs",
+      "endpoint": "https://apis.data.go.kr/6260000/FestivalService/getFestivalZhs"
+    },
+    "zht": {
+      "filename": "busan-festival-zht-p001.json",
+      "path": "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-zht-p001.json",
+      "size_bytes": 87021,
+      "items_in_file": 36,
+      "items_in_state": 36,
+      "status": "completed",
+      "pages_completed": 1,
+      "request_count": 1,
+      "state_updated_at": "2026-07-24T00:26:28.729Z",
+      "response_root_key": "getFestivalZht",
+      "endpoint": "https://apis.data.go.kr/6260000/FestivalService/getFestivalZht"
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "report_id": "busan-promotion-official-source-registry-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "city": "busan",
+  "reference_date": "2026-08-03",
+
+  "sources": [
+    {
+      "source_id": "BTO-PRESS",
+      "organization": "부산관광공사 (BTO)",
+      "source_type": "city_tourism_organization_press",
+      "official_url": "https://bto.or.kr",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047",
+      "detail_pattern": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047&mode=view&mgr_seq=22&board_seq={board_seq}",
+      "pagination_pattern": "?robot=Y&mCode=MN047&page={page}",
+      "attachment_pattern": "HWP/이미지 — 상세 페이지 내 다운로드 링크",
+      "published_at_field": "작성일자 (YYYY-MM-DD)",
+      "promotion_period_field": "본문 내 텍스트 (비정형)",
+      "target_field": "본문 내 텍스트 (비정형)",
+      "benefit_field": "본문 내 텍스트 (비정형)",
+      "booking_url_field": "본문 내 링크 (비정형)",
+      "language_support": ["KO"],
+      "access_method": "AUTOMATABLE",
+      "board_seq_source": "목록 HTML a[href] 파싱",
+      "update_frequency": "주 2~4회",
+      "primary_role": "PRIMARY — 부산 관광 프로모션 공식 발표 1차 소스",
+      "audience_type_mix": "B2C + B2B (B2C 필터링 필요)",
+      "total_items": 1160,
+      "verified_promo_sample": "부산병 치유 프로모션 (board_seq=5340, 2026-07-27)"
+    },
+    {
+      "source_id": "BTO-NOTICE",
+      "organization": "부산관광공사 (BTO)",
+      "source_type": "city_tourism_organization_notice",
+      "official_url": "https://bto.or.kr",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090",
+      "detail_pattern": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090&mode=view&mgr_seq=65&board_seq={board_seq}",
+      "published_at_field": "작성일자",
+      "language_support": ["KO"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "주 1~2회",
+      "primary_role": "SECONDARY — 행사·사업 공고 (B2B 다수)",
+      "audience_type_mix": "B2B 위주 (B2C 건별 판단 필요)",
+      "b2c_filter_rule": "관광객이 직접 신청·사용·예약 가능한 혜택만"
+    },
+    {
+      "source_id": "VB-EVENT-SURVEY",
+      "organization": "VisitBusan (부산관광공사 공식 관광 포털)",
+      "source_type": "city_tourism_portal_event",
+      "official_url": "https://www.visitbusan.net",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002000000",
+      "detail_pattern": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq={ueb_seq}",
+      "pagination_pattern": "?menuCd=DOM_000000304002000000&page={page}",
+      "published_at_field": "게시 날짜 (비표시, 기간으로 대체)",
+      "promotion_period_field": "YYYY-MM-DD ~ YYYY-MM-DD 형식 (목록 표시)",
+      "target_field": "상세 페이지 본문",
+      "benefit_field": "상세 페이지 본문 + 가격 정보",
+      "booking_url_field": "상세 페이지 내 링크",
+      "language_support": ["EN", "KO(불안정)", "JA(미확인)", "ZHS(미확인)", "ZHT(미확인)"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "수시",
+      "primary_role": "PRIMARY — 관광객 대상 이벤트·프로모션 직접 게시",
+      "audience_type_mix": "B2C 전용",
+      "total_items": 103,
+      "status_field": "목록에 'End' 또는 활성 상태 표시",
+      "verified_sample": "Starry Night Busan Midnight River Cruise Summer Promotion (ueb_seq=684, 2026-07-23~08-09, ₩20,000)"
+    },
+    {
+      "source_id": "VB-SHOWS-EVENTS",
+      "organization": "VisitBusan",
+      "source_type": "city_tourism_portal_schedule",
+      "official_url": "https://www.visitbusan.net",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304010000000",
+      "detail_pattern": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid={dataSid}",
+      "pagination_pattern": "연도·월 파라미터 방식 (year={YYYY}&month={MM})",
+      "promotion_period_field": "YYYY-MM-DD ~ YYYY-MM-DD",
+      "language_support": ["EN"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "수시",
+      "primary_role": "PRIMARY — 공연·전시·행사 일정",
+      "audience_type_mix": "B2C 전용",
+      "verified_sample": "Gwangalli M Drone Light Show (2026-08-08~08-29)"
+    },
+    {
+      "source_id": "VB-TRAVEL-PRODUCTS",
+      "organization": "VisitBusan",
+      "source_type": "city_tourism_portal_products",
+      "official_url": "https://www.visitbusan.net",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304004000000",
+      "total_items": 27,
+      "language_support": ["EN"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "월 1회 추정",
+      "primary_role": "PRIMARY — 관광상품 (체험·기념품)",
+      "audience_type_mix": "B2C",
+      "note": "가격은 상세 페이지에서만 확인"
+    },
+    {
+      "source_id": "VB-NOTICE",
+      "organization": "VisitBusan",
+      "source_type": "city_tourism_portal_notice",
+      "official_url": "https://www.visitbusan.net",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304001000000",
+      "detail_pattern": "https://www.visitbusan.net/en/board/view.do?{params}",
+      "total_items": 14,
+      "language_support": ["EN"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "수시",
+      "primary_role": "SECONDARY — 공지 (서비스 장애, BTS 연계 혜택 등 산발적 B2C 포함)",
+      "audience_type_mix": "MIXED"
+    },
+    {
+      "source_id": "VBP-PASS",
+      "organization": "Visit Busan Pass (부산관광공사 운영)",
+      "source_type": "tourist_pass_operator",
+      "official_url": "https://www.visitbusanpass.com",
+      "list_url": "https://www.visitbusanpass.com",
+      "language_support": ["EN", "JA", "ZHS", "ZHT", "KO"],
+      "access_method": "AUTOMATABLE",
+      "update_frequency": "정책 변경 시",
+      "primary_role": "PRIMARY — 관광패스 혜택 공식 소스",
+      "audience_type_mix": "B2C (외국인 개별 관광객 대상)",
+      "pass_types": ["24시간", "48시간", "Big 3", "Big 5"],
+      "benefit_scope": "주요 관광지 무료 입장, 100개 이상 할인 가맹점, 교통 충전"
+    },
+    {
+      "source_id": "BTO-SITEMAP",
+      "organization": "부산관광공사",
+      "source_type": "sitemap",
+      "official_url": "https://bto.or.kr/kor/CMS/SiteMap/SiteMap.do?mCode=MN013",
+      "access_method": "AUTOMATABLE",
+      "primary_role": "REFERENCE — mCode 전체 목록 파악용"
+    }
+  ],
+
+  "sources_not_found": [
+    {
+      "source_id": "BUSAN-METRO-TOURISM",
+      "organization": "부산광역시",
+      "attempted_urls": ["https://www.busan.go.kr/bhpr/index", "https://www.busan.go.kr/tour/index", "https://www.busan.go.kr/newsreport/index"],
+      "status": "NOT_FOUND — 모든 시도 오류",
+      "note": "busan.go.kr 관광 보도자료 정확한 URL 미발굴. 다음 단계에서 메인 메뉴 파싱으로 재탐색 필요.",
+      "priority": "MEDIUM"
+    },
+    {
+      "source_id": "KTO-VISITKOREA-BUSAN",
+      "organization": "한국관광공사 VisitKorea",
+      "attempted_urls": ["https://www.visitkorea.or.kr/kor/itn/busan/main.do", "https://korean.visitkorea.or.kr/kor/itn/busan/main.do"],
+      "status": "NOT_FOUND — 404",
+      "note": "KTO 부산 전용 페이지 URL 변경 추정. 재탐색 필요.",
+      "priority": "MEDIUM"
+    },
+    {
+      "source_id": "KKDAY-BUSAN",
+      "organization": "KKday (공식 제휴 OTA)",
+      "attempted_urls": ["https://www.kkday.com/ko/country/south-korea/city/busan"],
+      "status": "403 FORBIDDEN",
+      "note": "KKday는 WebFetch 접근 차단. MANUAL_BROWSER_REQUIRED 또는 공식 API 계약 필요.",
+      "priority": "LOW — BTO 공식 발표에 KKday 링크 포함되므로 BTO 소스로 대체 가능"
+    },
+    {
+      "source_id": "BFO-PROMOTION",
+      "organization": "부산축제조직위원회 (bfo.or.kr)",
+      "attempted_urls": ["https://bfo.or.kr/bfo/main/bbs/selectBbsList.do?bbsCd=BBS001"],
+      "status": "NOT_FOUND — 404",
+      "note": "bfo.or.kr 게시판 URL 패턴 미확인. 이전 세션에서 행사 날짜 확인 성공한 URL 패턴 재탐색 필요.",
+      "priority": "LOW — 이벤트 날짜 소스로는 활용 중, 프로모션 정보는 별도"
+    }
+  ],
+
+  "summary": {
+    "total_sources_confirmed": 8,
+    "automatable": 7,
+    "manual_browser_required": 1,
+    "not_found": 4,
+    "b2c_primary_sources": ["BTO-PRESS", "VB-EVENT-SURVEY", "VB-SHOWS-EVENTS", "VBP-PASS", "VB-TRAVEL-PRODUCTS"],
+    "b2c_secondary_sources": ["BTO-NOTICE", "VB-NOTICE"],
+    "excluded_from_promotion": ["BTO-SITEMAP"]
+  }
+}

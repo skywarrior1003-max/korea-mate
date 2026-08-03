@@ -1,0 +1,165 @@
+{
+  "report_id": "kto-detail-full-execution-gate",
+  "task": "TASK-BUSAN-KTO-DETAIL-FULL-EXECUTION-GATE",
+  "run_ts": "2026-07-30T04:07:30.000Z",
+  "branch": "data/busan-enrichment-v1",
+  "head": "7f99b30",
+
+  "section_1_gate_verdict": {
+    "verdict": "BLOCKED_LIMIT_UNVERIFIED",
+    "full_execution_allowed": false,
+    "dry_run_allowed": true,
+    "block_reason": "공공데이터포털 전환 작업 — 2026-08-02T18:00:00+09:00까지 마이페이지 접근 불가",
+    "unblock_condition": "data.go.kr 마이페이지 → 개발계정 관리 → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량 확인 후 kto-detail-call-limit.json status=VERIFIED + daily_limit + verified_at 기재"
+  },
+
+  "section_2_config_migration": {
+    "change": "CALL_LIMIT_STATUS 하드코딩 → config 파일 읽기",
+    "config_path": "data/tourapi/config/kto-detail-call-limit.json",
+    "schema": "kto-detail-call-limit-v1",
+    "current_status": "UNVERIFIED",
+    "verified_at": null,
+    "daily_limit": null,
+    "safety_checks": [
+      "config 파일 없음 → UNVERIFIED 안전 처리 (ENOENT 무시)",
+      "schema 불일치 → UNVERIFIED 유지 + warn",
+      "VERIFIED인데 verified_at 또는 daily_limit 누락 → 강제 UNVERIFIED + error log",
+      "full 실행 게이트: FULL_MODE && ALLOW_FULL && !DRY_RUN && status != VERIFIED → process.exit(1)"
+    ],
+    "verdict": "PASS — config 읽기 정상, UNVERIFIED 유지 확인"
+  },
+
+  "section_3_consecutive_failure_test": {
+    "test_script": "scripts/test-consecutive-failure-dynamic.mjs",
+    "report": "data/tourapi/reports/busan/kto-detail-consecutive-failure-dynamic-test.json",
+    "external_api_calls": 0,
+    "verdict": "PASS",
+    "scenarios_passed": 4,
+    "scenarios_total": 4,
+    "summary": [
+      { "id": "scenario-A", "desc": "5회 연속 실패 → 5번째 직후 중단", "pass": true },
+      { "id": "scenario-B", "desc": "중간 성공으로 counter 초기화 → 4회 연속 실패, 중단 없음", "pass": true },
+      { "id": "scenario-C", "desc": "5회 연속 타임아웃 → 동일 중단", "pass": true },
+      { "id": "scenario-D", "desc": "skip으로 counter 초기화 → 3회 연속 실패, 중단 없음", "pass": true }
+    ],
+    "key_findings": [
+      "checkConsecutiveFailure(counter, limit): counter >= limit 에서 중단 (limit=5이면 5번째 실패에서 즉시)",
+      "timeout은 failure와 동일 분기 — 별도 타임아웃 카운터 없음",
+      "skip(VALID_EXISTS)은 fetch 미실행 + counter 초기화",
+      "detailIntro2/detailCommon2/detailImage2 루프 각 시작 시 consecutiveFailures=0 리셋"
+    ]
+  },
+
+  "section_4_call_reconciliation": {
+    "measured_ts": "2026-07-30T04:07:22.289Z",
+    "method": "dry-run v2 (node tourapi-busan-detail.mjs --full --allow-full --dry-run --manifest ...)",
+    "manifest": "kto-detail-preflight-manifest.json",
+    "manifest_sha": "544bfd9a21e6b7e8...",
+    "full_raw_dir_state": "empty (kto-detail-full/ 파일 0건)",
+    "endpoints": {
+      "detailIntro2":  { "total_targets": 557, "skip_existing": 0, "new_calls": 557 },
+      "detailCommon2": { "total_targets": 644, "skip_existing": 0, "new_calls": 644 },
+      "detailImage2":  { "total_targets": 94,  "skip_existing": 0, "new_calls": 94  }
+    },
+    "total_new_calls": 1295,
+    "total_skip": 0,
+    "reconciliation_note": "task 본문 '1,295회'와 일치. 이전 preflight 1,275건은 pilot 20건 skip 포함 수치였음.",
+    "pilot_reuse_analysis": {
+      "pilot_files_available": 20,
+      "pilot_dir": "data/tourapi/raw/busan/kto-detail-pilot/",
+      "full_dir": "data/tourapi/raw/busan/kto-detail-full/",
+      "reuse_verdict": "안전 재사용 가능 (same endpoint, contentId, rc:0000, parser 구조 동일)",
+      "reuse_mechanism": "없음 — 현재 isValidExistingRaw()는 full raw dir만 검사",
+      "if_precopied": { "new_calls": 1275, "skip": 20, "calls_saved": 20 },
+      "decision": "full 실행 전 pre-copy 여부는 사용자 판단 — 이번 TASK에서는 full 실행 차단"
+    }
+  },
+
+  "section_5_batch_plan": {
+    "status": "BLOCKED_LIMIT_UNVERIFIED",
+    "total_calls_needed": 1295,
+    "formula": "batches_needed = ceil(total_calls / daily_limit)",
+    "hypothetical_scenarios": [
+      { "daily_limit": 1000, "batches": 2, "day1": 1000, "day2": 295, "note": "비공식 추정값 — 공식 확인 필수" },
+      { "daily_limit": 2000, "batches": 1, "day1": 1295, "note": "공식 확인 필요" },
+      { "daily_limit": 500,  "batches": 3, "day1": 500, "day2": 500, "day3": 295, "note": "공식 확인 필요" }
+    ],
+    "safety_buffer": "15%",
+    "recommended_batch_size_formula": "floor(daily_limit * 0.85)",
+    "call_interval_ms": 300,
+    "estimated_duration_formula": "total_calls * 300ms / 1000 = seconds (API 호출만, 처리 시간 미포함)",
+    "estimated_duration_at_1295_calls": "6.5분 (API 호출만)",
+    "note": "일일 호출 한도 공식 확인 전까지 배치 계획 확정 불가"
+  },
+
+  "section_6_dry_run_gate_scenarios": {
+    "description": "가상 fixture 값으로 gate 동작 검증 (테스트 전용 — 운영 설정에 반영 없음)",
+    "scenarios": [
+      {
+        "scenario": "gate-A",
+        "config_input": { "status": "UNVERIFIED", "daily_limit": null },
+        "gate_decision": "BLOCKED_LIMIT_UNVERIFIED",
+        "full_execution": false,
+        "dry_run": true,
+        "pass": true
+      },
+      {
+        "scenario": "gate-B",
+        "config_input": { "status": "VERIFIED", "daily_limit": 2000, "verified_at": "2026-08-03T10:00:00+09:00" },
+        "gate_decision": "READY_SINGLE_BATCH",
+        "full_execution": true,
+        "dry_run": true,
+        "pass": true,
+        "note": "가상 값 — 운영 설정 아님"
+      },
+      {
+        "scenario": "gate-C",
+        "config_input": { "status": "VERIFIED", "daily_limit": 500, "verified_at": "2026-08-03T10:00:00+09:00" },
+        "gate_decision": "READY_MULTI_BATCH",
+        "full_execution": true,
+        "batches_needed": 3,
+        "pass": true,
+        "note": "가상 값 — 운영 설정 아님"
+      },
+      {
+        "scenario": "gate-D",
+        "config_input": { "status": "VERIFIED", "daily_limit": null, "verified_at": null },
+        "gate_decision": "BLOCKED_INCOMPLETE_CONFIG",
+        "full_execution": false,
+        "note": "VERIFIED인데 evidence 없음 → 강제 UNVERIFIED 처리",
+        "pass": true
+      }
+    ],
+    "verdict": "4/4 PASS"
+  },
+
+  "section_7_secret_scan": {
+    "scan_scope": [
+      "scripts/tourapi-busan-detail.mjs (modified)",
+      "scripts/test-consecutive-failure-dynamic.mjs (new)",
+      "data/tourapi/config/kto-detail-call-limit.json (new)",
+      "data/tourapi/reports/busan/kto-detail-consecutive-failure-dynamic-test.json (new)",
+      "data/tourapi/reports/busan/kto-detail-full-execution-gate.json (new)"
+    ],
+    "findings": [],
+    "verdict": "CLEAN — API key, 개인정보, 비밀값 없음",
+    "note": "config 파일은 값이 모두 null — 운영 설정 없음"
+  },
+
+  "section_8_full_execution_status": {
+    "blocked": true,
+    "block_reason": "CALL_LIMIT_STATUS=UNVERIFIED",
+    "unblock_date_estimate": "2026-08-02T18:00:00+09:00 이후 (공공데이터포털 전환 완료 후)",
+    "unblock_steps": [
+      "1. data.go.kr 마이페이지 접속",
+      "2. 개발계정 관리 → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량 확인",
+      "3. kto-detail-call-limit.json 업데이트: status=VERIFIED, daily_limit=<확인값>, verified_at=<확인일시>, verified_by, source_url",
+      "4. node scripts/tourapi-busan-detail.mjs --full --allow-full --dry-run --manifest ... (최종 검증)",
+      "5. node scripts/tourapi-busan-detail.mjs --full --allow-full --manifest ... (실행)"
+    ],
+    "pilot_pre_copy_option": "선택사항: kto-detail-pilot/ → kto-detail-full/ 파일 복사 시 20회 절약 (1295→1275)"
+  },
+
+  "overall_verdict": "PASS",
+  "summary": "execution gate 검증 완료. consecutive failure 4/4 PASS, config 읽기 PASS, dry-run 1,295건 실측 확인. full 실행은 공공데이터포털 전환 완료(2026-08-02 18:00) 후 호출 한도 공식 확인 시 해제."
+}

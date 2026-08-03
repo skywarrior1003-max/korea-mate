@@ -1,0 +1,97 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/18/3026518_image2_1.JPG",
+            "imgname": "해운대온천센터 (2)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/18/3026518_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026518_8"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/19/3026519_image2_1.JPG",
+            "imgname": "해운대온천센터 (3)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/19/3026519_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026519_1"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/20/3026520_image2_1.JPG",
+            "imgname": "해운대온천센터 (4)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/20/3026520_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026520_5"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/21/3026521_image2_1.JPG",
+            "imgname": "해운대온천센터 (5)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/21/3026521_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026521_6"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/22/3026522_image2_1.JPG",
+            "imgname": "해운대온천센터 (6)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/22/3026522_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026522_2"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/24/3026524_image2_1.JPG",
+            "imgname": "해운대온천센터 (8)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/24/3026524_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026524_4"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/25/3026525_image2_1.JPG",
+            "imgname": "해운대온천센터 (9)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/25/3026525_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026525_3"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/27/3026527_image2_1.JPG",
+            "imgname": "해운대온천센터 (11)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/27/3026527_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026527_7"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/28/3026528_image2_1.JPG",
+            "imgname": "해운대온천센터 (12)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/28/3026528_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026528_9"
+          },
+          {
+            "contentid": "126108",
+            "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/26/3026526_image2_1.JPG",
+            "imgname": "해운대온천센터 (10)",
+            "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/26/3026526_image3_1.JPG",
+            "cpyrhtDivCd": "Type3",
+            "serialnum": "3026526_10"
+          }
+        ]
+      },
+      "numOfRows": 10,
+      "pageNo": 1,
+      "totalCount": 13
+    }
+  }
+}

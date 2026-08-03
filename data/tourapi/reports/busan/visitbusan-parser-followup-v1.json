@@ -1,0 +1,169 @@
+{
+  "report_id": "visitbusan-parser-followup-v1",
+  "task": "TASK-VISITBUSAN-EN-SSR-APPLY-V1",
+  "run_ts": "2026-07-30T07:29:19.803529+00:00",
+  "count": 6,
+  "reason": "h4.tit pattern not found in EN HTML; HTTP 200 returned but title absent",
+  "note": "identity_confirmed=True for all 6. en_image_seqs captured but not applied this task.",
+  "records": [
+    {
+      "candidate_id": "busan-A-00104",
+      "vb_category": "attraction",
+      "uc_seq": "832",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=832&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=832&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "13125",
+        "12891",
+        "12893",
+        "13113",
+        "13115",
+        "13117",
+        "13119",
+        "13121",
+        "12905",
+        "12907"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_arrival_verification",
+        "needs_translation"
+      ]
+    },
+    {
+      "candidate_id": "busan-A-00213",
+      "vb_category": "attraction",
+      "uc_seq": "2753",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=2753&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=2753&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "47996",
+        "47997",
+        "47998",
+        "47999",
+        "48000",
+        "48001",
+        "48002",
+        "48003",
+        "48004",
+        "48005"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_arrival_verification",
+        "needs_translation"
+      ]
+    },
+    {
+      "candidate_id": "busan-F-00088",
+      "vb_category": "food",
+      "uc_seq": "1065",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1065&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1065&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "17518",
+        "17520",
+        "17514",
+        "17515",
+        "17516"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_translation"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-804",
+      "vb_category": "attraction",
+      "uc_seq": "804",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=804&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=804&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "12575",
+        "12543",
+        "12545",
+        "12547",
+        "12549",
+        "12551",
+        "12553",
+        "12555",
+        "12557",
+        "12559"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_arrival_verification",
+        "needs_content",
+        "needs_translation"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-813",
+      "vb_category": "attraction",
+      "uc_seq": "813",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=813&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=813&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "12487",
+        "22465",
+        "12493",
+        "12495",
+        "12497",
+        "12499",
+        "12501",
+        "12503",
+        "12505",
+        "12507"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_arrival_verification",
+        "needs_content",
+        "needs_translation"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-859",
+      "vb_category": "attraction",
+      "uc_seq": "859",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=859&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=859&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "identity_confirmed": true,
+      "en_image_seqs": [
+        "14281",
+        "14283",
+        "14285",
+        "14287",
+        "14289",
+        "14291",
+        "14293",
+        "14295",
+        "14297",
+        "14299"
+      ],
+      "reason": "h4.tit_pattern_not_found",
+      "current_flags": [
+        "needs_arrival_verification",
+        "needs_content",
+        "needs_translation"
+      ]
+    }
+  ]
+}

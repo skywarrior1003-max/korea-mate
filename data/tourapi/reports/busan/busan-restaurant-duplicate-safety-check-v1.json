@@ -1,0 +1,93 @@
+{
+  "report_id": "busan-restaurant-duplicate-safety-check-v1",
+  "task": "TASK-BUSAN-RESTAURANT-DUPLICATE-SAFETY-CHECK",
+  "verdict": "PASS",
+  "condition": "A",
+  "run_ts": "2026-07-30",
+  "branch": "data/busan-enrichment-v1",
+  "data_modified": false,
+  "push": false,
+
+  "prompt_validation": {
+    "issues_found": false,
+    "improvements_found": false,
+    "notes": [
+      "확인 범위가 명확하고 데이터 무변경 원칙이 적절히 명시됨.",
+      "Gate 로직 분석으로 즉시 실행 가능한 검증 작업."
+    ]
+  },
+
+  "canonical_30_check": {
+    "count": 30,
+    "needs_restaurant_branch_removed": 30,
+    "publishability_en_v6": {
+      "publishable_with_caveat": 24,
+      "pending_source": 6
+    },
+    "branch_gate": "PASS (전원)",
+    "verdict": "PASS — 30건 정상 공개 후보로 재판정됨"
+  },
+
+  "sibling_30_check": {
+    "count": 30,
+    "needs_restaurant_branch_retained": 30,
+    "publishability_en_v6": {
+      "pending_review": 30
+    },
+    "publishable_or_caveat_count": 0,
+    "branch_gate": "FAIL (전원 — block_reasons=['branch_gate'])",
+    "verdict": "PASS — 30건 전원 pending_review, 공개 후보 진입 불가"
+  },
+
+  "gate_mechanism_analysis": {
+    "qa02_restaurant_branch_note": {
+      "role": "문서화 전용",
+      "gate_connection": false,
+      "get_effective_flags_connection": false,
+      "explanation": "qa02_corrections.restaurant_branch_note는 get_effective_flags()에 연결되어 있지 않음. hours_applied와 kto_en_linked만 gate에 영향. note는 차단 게이트가 아닌 adjudication 기록 필드."
+    },
+    "actual_block_mechanism": {
+      "field": "validation.review_flags",
+      "flag": "needs_restaurant_branch",
+      "gate": "branch_gate = FAIL when needs_restaurant_branch in eff_flags AND category == restaurant",
+      "result": "pending_review (가장 강한 차단 — FAIL gate는 PASS/PENDING_SOURCE/PENDING_REVIEW 중 최우선)"
+    }
+  },
+
+  "future_promotion_risk": {
+    "hypothetical_scenario": "sibling 30건에서 needs_restaurant_branch 제거 시",
+    "would_promote_count": 29,
+    "would_not_promote_count": 1,
+    "not_promote_reason": "needs_image 등 다른 비-freshness flag 보유",
+    "risk_level": "LOW",
+    "risk_condition": "enrichment 프로세스가 restaurant category의 needs_restaurant_branch를 일괄 제거하는 경우",
+    "current_protection": "현재 enrichment 흐름에서 needs_restaurant_branch는 QA-02 또는 명시적 branch resolution에서만 제거. 임의 일괄 제거 프로세스 없음.",
+    "adjudication_note_role": "qa02_corrections.restaurant_branch_note='VERIFIED_DUPLICATE:sibling of {cid}'가 향후 프로세스가 sibling임을 인식하는 참조 기록 역할. 자동 gate는 아니지만 수동 검토 시 가시성 확보."
+  },
+
+  "sibling_other_flags": {
+    "needs_arrival_verification": 30,
+    "needs_hours": 10,
+    "needs_image": 1,
+    "note": "이 flags는 freshness 또는 pending_source 범주로, 단독으로는 publishable_with_caveat에서 caveat 역할을 하거나 pending_source로 남는 것이며 pending_review를 유발하지 않음. needs_restaurant_branch 제거 없이는 이들이 승격 경로에 영향 없음."
+  },
+
+  "overall_assessment": {
+    "canonical_30_safe": true,
+    "sibling_30_currently_blocked": true,
+    "sibling_future_risk": "LOW (구조적 차단, 의도치 않은 일괄 제거 시 위험)",
+    "note_as_gate": false,
+    "note_as_documentation": true,
+    "recommendation": "현재 구조 안전. 향후 branch resolution 프로세스 작성 시 restaurant_branch_note='VERIFIED_DUPLICATE:sibling of ...' 기록 확인을 조건으로 포함하도록 문서화 권고."
+  },
+
+  "validation_checks": {
+    "canonical_30_branch_gate_pass": true,
+    "sibling_30_branch_gate_fail": true,
+    "sibling_publishable_or_caveat_count_0": true,
+    "sibling_all_have_needs_restaurant_branch": true,
+    "data_modified": false,
+    "new_flags_created": false,
+    "push": false
+  }
+}

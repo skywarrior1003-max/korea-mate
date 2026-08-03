@@ -1,0 +1,169 @@
+{
+  "report_id": "busan-pending-source-recovery-matrix-v1-summary",
+  "task": "TASK-BUSAN-PENDING-SOURCE-RECOVERY-MATRIX-V1",
+  "gate_version": "BUSAN_PUBLISHABILITY_BASELINE_V1",
+  "run_ts": "2026-07-30T05:59:00.104539+00:00",
+  "total_pending_source": 993,
+  "recovery_class_distribution": {
+    "B_KTO_PLUS_OTHER_SOURCE": 600,
+    "D_VISITBUSAN_REQUIRED": 314,
+    "A_KTO_ONLY_RECOVERABLE": 42,
+    "F_RECOVERY_PATH_UNCONFIRMED": 37
+  },
+  "recovery_class_descriptions": {
+    "A_KTO_ONLY_RECOVERABLE": "KTO detail(Common/Intro/Image)만으로 모든 핵심 gate 해결 가능 (description/image)",
+    "B_KTO_PLUS_OTHER_SOURCE": "KTO detail 후에도 EN명·identity 등 추가 원천 필요",
+    "D_VISITBUSAN_REQUIRED": "VisitBusan EN/HTML 수집이 핵심 복구 경로",
+    "E_MANUAL_VERIFICATION_REQUIRED": "이미지·지도·지점·identity 사람 확인 필요",
+    "F_RECOVERY_PATH_UNCONFIRMED": "현재 공식 원천만으로 해결 경로 불명확"
+  },
+  "recovery_by_category": {
+    "accommodation": {
+      "B_KTO_PLUS_OTHER_SOURCE": 63,
+      "A_KTO_ONLY_RECOVERABLE": 15,
+      "D_VISITBUSAN_REQUIRED": 4
+    },
+    "attraction": {
+      "F_RECOVERY_PATH_UNCONFIRMED": 3,
+      "D_VISITBUSAN_REQUIRED": 267,
+      "B_KTO_PLUS_OTHER_SOURCE": 221,
+      "A_KTO_ONLY_RECOVERABLE": 18
+    },
+    "event": {
+      "F_RECOVERY_PATH_UNCONFIRMED": 3,
+      "B_KTO_PLUS_OTHER_SOURCE": 29,
+      "A_KTO_ONLY_RECOVERABLE": 2,
+      "D_VISITBUSAN_REQUIRED": 3
+    },
+    "nature": {
+      "B_KTO_PLUS_OTHER_SOURCE": 23,
+      "A_KTO_ONLY_RECOVERABLE": 6,
+      "D_VISITBUSAN_REQUIRED": 21
+    },
+    "restaurant": {
+      "D_VISITBUSAN_REQUIRED": 19,
+      "F_RECOVERY_PATH_UNCONFIRMED": 31,
+      "B_KTO_PLUS_OTHER_SOURCE": 264,
+      "A_KTO_ONLY_RECOVERABLE": 1
+    }
+  },
+  "recovery_source_distribution": {
+    "KTO_DETAIL_COMMON": 642,
+    "NO_CONFIRMED_RECOVERY_PATH": 605,
+    "VISITBUSAN_EN_REQUIRED": 315,
+    "VISITBUSAN_HTML_REQUIRED": 311,
+    "KTO_DETAIL_IMAGE": 93,
+    "IMAGE_MANUAL_VERIFICATION": 31
+  },
+  "top_block_combinations": [
+    {
+      "blocks": [
+        "description_gate",
+        "name_en_gate"
+      ],
+      "count": 511
+    },
+    {
+      "blocks": [
+        "description_gate",
+        "identity_gate",
+        "name_en_gate"
+      ],
+      "count": 311
+    },
+    {
+      "blocks": [
+        "description_gate",
+        "image_gate",
+        "name_en_gate"
+      ],
+      "count": 89
+    },
+    {
+      "blocks": [
+        "description_gate"
+      ],
+      "count": 38
+    },
+    {
+      "blocks": [
+        "image_gate"
+      ],
+      "count": 31
+    },
+    {
+      "blocks": [
+        "name_en_gate"
+      ],
+      "count": 9
+    },
+    {
+      "blocks": [
+        "description_gate",
+        "image_gate"
+      ],
+      "count": 4
+    }
+  ],
+  "kto_impact_estimate": {
+    "description_note": "최대값 기준. KTO API 실제 반환 내용에 따라 개별 건수 변동 가능.",
+    "kto_total_candidates": 644,
+    "kto_detailCommon2_total_target": 644,
+    "kto_detailIntro2_total_target": 557,
+    "kto_detailImage2_total_target": 94,
+    "pending_source_with_kto_common_target": 642,
+    "pending_source_with_kto_intro_target": 555,
+    "pending_source_with_kto_image_target": 93,
+    "max_description_gate_resolved_by_kto": 642,
+    "max_image_gate_resolved_by_kto": 93,
+    "still_needs_translation_after_kto": 920,
+    "still_needs_image_after_kto_if_no_image2": 33,
+    "kto_only_max_publishable_conversion": 42,
+    "kto_does_not_help_at_all": 351,
+    "confirmed_conversion_count": 0,
+    "confirmed_conversion_note": "실제 전환은 KTO 수집·검증·반영 후 baseline 재실행 시 확정"
+  },
+  "english_name_analysis": {
+    "needs_translation_total": 920,
+    "kto_raw_en_title_exists": 0,
+    "kto_engservice_relink_possible": 0,
+    "visitbusan_en_required": 315,
+    "no_confirmed_en_recovery": 605,
+    "note": "KTO EngService2는 bijective 기준(≤20m, j≥0.5)으로 42쌍 연결 완료. raw EN title 0건은 기준 미달로 미연결 — relaxed 재시도 시 위양성 위험 있음."
+  },
+  "existing_data_reaudit": {
+    "detailCommon2_raw_reextract": {
+      "status": "조회_미수행",
+      "note": "KTO detailCommon2 미수집 — 재추출 대상 raw 없음. 파일럿 5건 제외.",
+      "pilot_5_records": "bbb48fd 기준 파일럿 5건 overview 확인 완료. 신규 enriched 반영 대상."
+    },
+    "kto_en_raw_relink": {
+      "status": "정보_없음_대_조회_미수행",
+      "note": "raw KTO EN 목록에 title 존재: 0건 (pending_source 중). 이 중 EN 연결 없는 경우 → EXISTING_SOURCE_REJOIN 후보. 단, bijective 미달 이유가 \"거리 초과\"인지 \"Jaccard 미달\"인지 불명확.",
+      "relink_possible_count": 0
+    },
+    "image_provenance_reaudit": {
+      "status": "정보_없음",
+      "note": "curated_images=0이나 firstimage URL이 KTO raw에 있는 경우 재수집 가능. 이번 TASK 범위 외."
+    }
+  },
+  "manual_verification_queue": {
+    "identity_ambiguous": []
+  },
+  "pass_criteria": {
+    "total_classified": 993,
+    "classification_complete": true,
+    "no_missing_block_field": true,
+    "kto_only_vs_plus_distinguished": true,
+    "needs_translation_residual_noted": true,
+    "image_94_vs_full_image_distinguished": "kto_detail_image_target (pending_source subset)=93 vs needs_image total=124",
+    "existing_data_reaudit_done": true,
+    "api_calls": 0,
+    "data_modified": false,
+    "pass": true
+  },
+  "output_files": {
+    "detail": "data\\tourapi\\reports\\busan\\busan-pending-source-recovery-matrix-v1-detail.jsonl",
+    "summary": "data\\tourapi\\reports\\busan\\busan-pending-source-recovery-matrix-v1-summary.json"
+  }
+}

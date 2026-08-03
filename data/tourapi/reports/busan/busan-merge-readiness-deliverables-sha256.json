@@ -1,0 +1,206 @@
+{
+  "report_id": "busan-merge-readiness-deliverables-sha256",
+  "task_id": "TASK-BUSAN-DATA-MERGE-READINESS-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "branch": "data/busan-enrichment-v1",
+  "head_sha": "a2ce1d87a282c6392d1369a740268fcc1b60af12",
+  "total_deliverables": 39,
+  "missing": [],
+  "deliverables": {
+    "busan-enriched-candidates-v1.jsonl": {
+      "sha256": "73bad4f894b1b252c8caf9dbd4ea16352b2c99223553553d6018e472056b4619",
+      "size_bytes": 6148949,
+      "exists": true
+    },
+    "busan-source-facts-v1.jsonl": {
+      "sha256": "3a1cdd5830eff8ec9fb1cb36a3a39c2912b45caef727c74bacf52ad82e135507",
+      "size_bytes": 2133448,
+      "exists": true
+    },
+    "busan-manual-review-v1.jsonl": {
+      "sha256": "cc07d590a227038f9a4f6285939341086038eaed555ce032103639d1dc38c85d",
+      "size_bytes": 400002,
+      "exists": true
+    },
+    "busan-publishability-en-v8.json": {
+      "sha256": "efcf677957e27a0d9e2098454ecab295e841a8476b0f4337d64b99315b33d80b",
+      "size_bytes": 3095,
+      "exists": true
+    },
+    "busan-publishability-en-v8-details.jsonl": {
+      "sha256": "023961ccc3d25b27332c8ecd7f40a17df5deee655f5b6e4994d430eaec8a6bd8",
+      "size_bytes": 1080154,
+      "exists": true
+    },
+    "busan-final-place-event-release-manifest.json": {
+      "sha256": "6d0492495f8696af261fcfa5a4d4977ecba4e8cca0f384c057595baff96af8fc",
+      "size_bytes": 1057422,
+      "exists": true
+    },
+    "busan-final-data-handoff-manifest.json": {
+      "sha256": "14867e88ad2b6c88ae0d36764f2ebbc6e3f842b0d5dabfaa4e48fe3c2b9fc893",
+      "size_bytes": 9545,
+      "exists": true
+    },
+    "busan-promotions-public-final.json": {
+      "sha256": "c618c4599eeebc760d3d19d71dce4e69a0a1c8e339bea63a0ba04c8912e68b95",
+      "size_bytes": 5289,
+      "exists": true
+    },
+    "busan-promotions-archive-final.json": {
+      "sha256": "77677af1f0c988c85f78c21f79beef089fdbd6c77bc4372ad744639eca43a0af",
+      "size_bytes": 15876,
+      "exists": true
+    },
+    "busan-promotions-current-v2.json": {
+      "sha256": "dca77e754d797f1255494523c6844db3b9852243358b3de8c4661c5643d8f2fd",
+      "size_bytes": 4885,
+      "exists": true
+    },
+    "busan-promotions-expired-v2.json": {
+      "sha256": "2623d6a228e108396d04bbed0ec0edbbd98df3e32e7c952184902044e64f0e7b",
+      "size_bytes": 15852,
+      "exists": true
+    },
+    "busan-current-event-release-manifest.json": {
+      "sha256": "82f3daccea829fedb624b77eec167063bb67a841de629115013f0f879aa46526",
+      "size_bytes": 2678,
+      "exists": true
+    },
+    "busan-past-event-manifest.json": {
+      "sha256": "a9d8765452061eff60f87b5e5baf2473726a8e8bb06612e4222021ad9e78335a",
+      "size_bytes": 8765,
+      "exists": true
+    },
+    "busan-event-stale-hold-manifest.json": {
+      "sha256": "af2f1382b7f06479025fc92bab94fe505140087ae89a21724bb58aa24fedea52",
+      "size_bytes": 10900,
+      "exists": true
+    },
+    "busan-event-date-missing-hold-manifest.json": {
+      "sha256": "3cf176f0f1797ac369e6ca8a9db1adcdd0280e0be09eaf3f6e33681f477f3b82",
+      "size_bytes": 9362,
+      "exists": true
+    },
+    "busan-event-72-source-gap-audit-v1.json": {
+      "sha256": "5f003663002e76f6e3fe00c74bd7bff872e199c77e40c8853ee5130dd7d2a5da",
+      "size_bytes": 25116,
+      "exists": true
+    },
+    "busan-final-data-quality-report.json": {
+      "sha256": "052a97a9ba6a3e84f4a7af1bc582b45b01b97df70e477892dcdd1ae42ecf2541",
+      "size_bytes": 3002,
+      "exists": true
+    },
+    "busan-final-category-summary.json": {
+      "sha256": "1a0906b85338db62966060e6a50fa343b37e1316e332a00fcee836efbe61c33f",
+      "size_bytes": 1212,
+      "exists": true
+    },
+    "busan-final-field-completeness-summary.json": {
+      "sha256": "603626b3e3d01b569f363241658fe05e2546735839744d445bfb307558593e6d",
+      "size_bytes": 2174,
+      "exists": true
+    },
+    "busan-final-source-coverage-summary.json": {
+      "sha256": "fd2823acbf65d7d4a58b1205ca02f789e1b98ae7cbf2e6f36e71fe786062d2a3",
+      "size_bytes": 1990,
+      "exists": true
+    },
+    "busan-final-hold-exclude-summary.json": {
+      "sha256": "9e3ddc30e18cf0f174433b09c8769fccfc46228cb8e61c1e1de654d9b09c61d1",
+      "size_bytes": 2326,
+      "exists": true
+    },
+    "busan-restaurant-duplicate-adjudication-v1.json": {
+      "sha256": "01194f5f356a0a7c47bc5adbf900e818279a1d8239f65707dac2cc7820fd7400",
+      "size_bytes": 40200,
+      "exists": true
+    },
+    "busan-promotion-final-handoff.json": {
+      "sha256": "50671e96f3d2cb16f5b789f76c28b0ce9d917e7b90fdc5a6f9a410890e2b9e4c",
+      "size_bytes": 2859,
+      "exists": true
+    },
+    "busan-promotion-source-coverage-final.json": {
+      "sha256": "b806adfa48bd36e4b5369acbec31c253b2d305d01c951ed08e9f2621ebeb70c6",
+      "size_bytes": 8634,
+      "exists": true
+    },
+    "busan-promotion-browser-evidence-final.json": {
+      "sha256": "1059c5f734b59a309c4611bc879f0153433d6fc1c09fa4d0ce7a165cd34ef621",
+      "size_bytes": 2226,
+      "exists": true
+    },
+    "busan-event-discovery-from-promotion-sources-final.json": {
+      "sha256": "deb2bfb5da8714bff30d7eb7d42c0b7072f4e27209654ec1477a4469ba921889",
+      "size_bytes": 4437,
+      "exists": true
+    },
+    "busan-travel-product-discovery-final.json": {
+      "sha256": "919e3797263d31318f8607c4cb412fbf3cc5177f4118d918c62d2af0052466e9",
+      "size_bytes": 574,
+      "exists": true
+    },
+    "busan-travel-notice-discovery-final.json": {
+      "sha256": "02bdd6fd0c9ef8a8dc539eae268374a0d376408984cbc2042fe7433f2703f3a5",
+      "size_bytes": 511,
+      "exists": true
+    },
+    "multicity-data-collection-standard-v1.json": {
+      "sha256": "a304465852820f8290de768174dc5e7562a54a5577f15b694f244859b6e13a13",
+      "size_bytes": 2186,
+      "exists": true
+    },
+    "multicity-source-contract-template-v1.json": {
+      "sha256": "d6ddd38089c1be3ea3c659bc0fe99e15858105288e71aee1326756bc70a8db19",
+      "size_bytes": 2012,
+      "exists": true
+    },
+    "multicity-place-collection-template-v1.json": {
+      "sha256": "f554d53df0a505182171baf03f6dea141b7df0519b89c7f803888dcf3be6cad3",
+      "size_bytes": 1323,
+      "exists": true
+    },
+    "multicity-event-freshness-template-v1.json": {
+      "sha256": "e999148ba72c94d86afbd310519956e04df6778a42e8c2e48c517c4500affa18",
+      "size_bytes": 1710,
+      "exists": true
+    },
+    "multicity-promotion-collection-template-v1.json": {
+      "sha256": "2e6f5173a0af2181f58d57a4952d8f7eced632aec91d900e0e5c0b305c9ad335",
+      "size_bytes": 1776,
+      "exists": true
+    },
+    "multicity-browser-fallback-template-v1.json": {
+      "sha256": "f4a1a321d5aca08c4831f454849b2dbcb52509d055d8c96ea4037f89220a1ffc",
+      "size_bytes": 1660,
+      "exists": true
+    },
+    "multicity-release-contract-v1.json": {
+      "sha256": "24550a35d660d7dc4d1a477745ebe0bc7600708f3715bbbb817883bb09f2995a",
+      "size_bytes": 1903,
+      "exists": true
+    },
+    "next-city-gyeongju-readiness-checklist-v1.json": {
+      "sha256": "65facc14b4c0c75f12d48b515a7a40ea4c36cd4292f65f525613a2910cd322b4",
+      "size_bytes": 3231,
+      "exists": true
+    },
+    "kto-en-high-confidence-links.json": {
+      "sha256": "477a98320198915dc11b738d50e89a05e875746e22da140520974ce4e5c21af5",
+      "size_bytes": 22756,
+      "exists": true
+    },
+    "kto-en-manual-review-links.json": {
+      "sha256": "17bdda6a12b7a4b6c0f37b77f5b26d16811e03cb883b3e8cb941c754e4679eb6",
+      "size_bytes": 32167,
+      "exists": true
+    },
+    "kto-en-no-match-links.json": {
+      "sha256": "759da105a4a2cb3f678c70024dba7c96587797d454c824a307617a5338d0e0cd",
+      "size_bytes": 10071,
+      "exists": true
+    }
+  }
+}

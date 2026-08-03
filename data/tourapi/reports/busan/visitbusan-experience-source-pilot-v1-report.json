@@ -1,0 +1,376 @@
+{
+  "report_id": "visitbusan-experience-source-pilot-v1",
+  "task": "TASK-VISITBUSAN-EXPERIENCE-SOURCE-PILOT",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T08:32:25.357621+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head": "bb48973",
+  "pilot_summary": {
+    "total_experience_vb_candidates": 93,
+    "pilot_sample_count": 5,
+    "sample_indices": [
+      0,
+      23,
+      46,
+      69,
+      92
+    ],
+    "en_page_200": 5,
+    "en_title_found": 4,
+    "en_description_useful": 2,
+    "en_images_metadata_found": 5,
+    "identity_confirmed": 5,
+    "internal_api_detected": 5,
+    "status_distribution": {
+      "SSR_USEFUL": 2,
+      "SSR_TITLE_ONLY": 2,
+      "SSR_NO_EN_CONTENT": 1
+    },
+    "source_type_distribution": {
+      "STATIC_HTML": 5
+    },
+    "content_source_type": "STATIC_HTML",
+    "image_source_type": "VISITBUSAN_INTERNAL_API",
+    "no_playwright_needed": true,
+    "all_5_ssr": true
+  },
+  "expand_recommendation": "EXPAND_FULL_93",
+  "expand_method": "plain_http_ssr",
+  "expand_note": "5/5 SSR 확인 (0 CLIENT_RENDERED). EN 제목 4건 (1건은 VB 미번역), EN 설명 2건. 콘텐츠 원천: STATIC_HTML (h4.tit + JS meta_description). 이미지: imgLoadComm2 패턴. Playwright 불필요. 전체 93건 plain HTTP 수집 권장.",
+  "data_source_finding": {
+    "primary_source_type": "STATIC_HTML",
+    "menu_cd": "DOM_000000202008001000",
+    "url_pattern_confirmed": true,
+    "en_lang_cd_works": true,
+    "identity_method": "url_uc_seq",
+    "hidden_uc_seq_input": "not_expected_based_on_shopping_precedent",
+    "content_parsing": {
+      "title": "h4.tit element (same as attraction/shopping)",
+      "description": "JS $('#meta_description').attr('content', '...') pattern (same as attraction)",
+      "image_id": "imgLoadComm2('/ubicont/getCntntsImgThumbM.do', IMAGE_ID, ...) — IMAGE_ID differs from uc_seq"
+    },
+    "image_api_endpoints": [
+      "/ubicont/getCntntsImgThumbM.do",
+      "/ubicont/getCntntsImgThumbTF.do",
+      "/ubicont/getCntntsImgThumbO.do"
+    ],
+    "content_api_endpoints": "none_detected_content_is_ssr"
+  },
+  "parse_notes_distribution": {
+    "js_meta_description_not_found": 3,
+    "imgLoadComm2_pattern_detected": 5,
+    "uc_seq_input_not_found": 5
+  },
+  "sample_results": [
+    {
+      "candidate_id": "busan-VB-1034",
+      "uc_seq": "1034",
+      "title_ko": "문화예술촌 공방",
+      "category": "attraction",
+      "result_status": "SSR_NO_EN_CONTENT",
+      "source_type": "STATIC_HTML",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1034&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1034&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_render_type": "SSR",
+      "en_render_type": "SSR",
+      "identity_method": "url_uc_seq",
+      "identity_confirmed": true,
+      "uc_seq_in_hidden_input": null,
+      "has_identity_conflict": false,
+      "ko_title": "문화예술촌 공방",
+      "en_title": "",
+      "en_description": null,
+      "en_description_raw": null,
+      "en_description_len": 0,
+      "en_description_preview": null,
+      "en_image_seqs": [
+        "17293"
+      ],
+      "has_en_page": true,
+      "has_en_title": false,
+      "has_en_description": false,
+      "internal_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ],
+      "embedded_json": null,
+      "parse_notes_ko": [
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "parse_notes_en": [
+        "js_meta_description_not_found",
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "content_source_type": "STATIC_HTML",
+      "image_source_type": "VISITBUSAN_INTERNAL_API",
+      "en_no_translation_note": "KO title found in SSR (h4.tit). EN page returned 200 but h4.tit is absent — content not translated on VB site.",
+      "image_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-1748",
+      "uc_seq": "1748",
+      "title_ko": "손끝에서 빛나는 예술, 도자기 만들기 체험 그린온더브라운",
+      "category": "attraction",
+      "result_status": "SSR_USEFUL",
+      "source_type": "STATIC_HTML",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1748&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=1748&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_render_type": "SSR",
+      "en_render_type": "SSR",
+      "identity_method": "url_uc_seq",
+      "identity_confirmed": true,
+      "uc_seq_in_hidden_input": null,
+      "has_identity_conflict": false,
+      "ko_title": "손끝에서 빛나는 예술, 도자기 만들기 체험 그린온더브라운",
+      "en_title": "Let your fingers do some art in the pottery class at Green on the Brown",
+      "en_description": "Green on the Brown is very popular as a pottery studio that makes clay pots without glaze. In addition to customizing earthenware pots and selling ceramic works, the studio offers a variety of classes, including the Adult Hobby Class, Kids Class, Family & Friends Class, and Business Class. Ceramics, which originated from the earthenware of the Three Kingdoms, are widely used today as both household items and unique artworks. Pottery making has always been a favorite pastime activity for many people, because it",
+      "en_description_raw": "Green on the Brown is very popular as a pottery studio that makes clay pots without glaze. <br/><br/>In addition to customizing earthenware pots and selling ceramic works, the studio offers a variety of classes, including the Adult Hobby Class, Kids Class, Family & Friends Class, and Business Class. <br/><br/>Ceramics, which originated from the earthenware of the Three Kingdoms, are widely used today as both household items and unique artworks. Pottery making has always been a favorite pastime activity for many people, because it",
+      "en_description_len": 515,
+      "en_description_preview": "Green on the Brown is very popular as a pottery studio that makes clay pots without glaze. In addition to customizing ea",
+      "en_image_seqs": [
+        "31582"
+      ],
+      "has_en_page": true,
+      "has_en_title": true,
+      "has_en_description": true,
+      "internal_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ],
+      "embedded_json": null,
+      "parse_notes_ko": [
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "parse_notes_en": [
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "content_source_type": "STATIC_HTML",
+      "image_source_type": "VISITBUSAN_INTERNAL_API",
+      "image_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2134",
+      "uc_seq": "2134",
+      "title_ko": "몸과 마음을 깨우는 자연의 선물, 명지 ‘너울 공원 맨발 산책로’",
+      "category": "nature",
+      "result_status": "SSR_TITLE_ONLY",
+      "source_type": "STATIC_HTML",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2134&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2134&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_render_type": "SSR",
+      "en_render_type": "SSR",
+      "identity_method": "url_uc_seq",
+      "identity_confirmed": true,
+      "uc_seq_in_hidden_input": null,
+      "has_identity_conflict": false,
+      "ko_title": "몸과 마음을 깨우는 자연의 선물, 명지 ‘너울 공원 맨발 산책로’",
+      "en_title": "Myeongji Neoul Park Barefoot Trail : A Natural Gift to Awaken the Mind and Body",
+      "en_description": null,
+      "en_description_raw": null,
+      "en_description_len": 0,
+      "en_description_preview": null,
+      "en_image_seqs": [
+        "38073"
+      ],
+      "has_en_page": true,
+      "has_en_title": true,
+      "has_en_description": false,
+      "internal_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ],
+      "embedded_json": null,
+      "parse_notes_ko": [
+        "js_meta_description_not_found",
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "parse_notes_en": [
+        "js_meta_description_not_found",
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "content_source_type": "STATIC_HTML",
+      "image_source_type": "VISITBUSAN_INTERNAL_API",
+      "image_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-2308",
+      "uc_seq": "2308",
+      "title_ko": "강아지를 위한 넓은 천연잔디 운동장&카페 ‘그랑독’",
+      "category": "attraction",
+      "result_status": "SSR_TITLE_ONLY",
+      "source_type": "STATIC_HTML",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2308&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=2308&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_render_type": "SSR",
+      "en_render_type": "SSR",
+      "identity_method": "url_uc_seq",
+      "identity_confirmed": true,
+      "uc_seq_in_hidden_input": null,
+      "has_identity_conflict": false,
+      "ko_title": "강아지를 위한 넓은 천연잔디 운동장&카페 ‘그랑독’",
+      "en_title": "Grandog: A Large Natural Grass Playground and Cafe for Dogs",
+      "en_description": null,
+      "en_description_raw": null,
+      "en_description_len": 0,
+      "en_description_preview": null,
+      "en_image_seqs": [
+        "41014"
+      ],
+      "has_en_page": true,
+      "has_en_title": true,
+      "has_en_description": false,
+      "internal_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do",
+        "/ubicont/getCntntsImgThumbO.do"
+      ],
+      "embedded_json": null,
+      "parse_notes_ko": [
+        "js_meta_description_not_found",
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "parse_notes_en": [
+        "js_meta_description_not_found",
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "content_source_type": "STATIC_HTML",
+      "image_source_type": "VISITBUSAN_INTERNAL_API",
+      "image_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do",
+        "/ubicont/getCntntsImgThumbO.do"
+      ]
+    },
+    {
+      "candidate_id": "busan-VB-996",
+      "uc_seq": "996",
+      "title_ko": "부산엑스더스카이 전망대",
+      "category": "attraction",
+      "result_status": "SSR_USEFUL",
+      "source_type": "STATIC_HTML",
+      "ko_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=996&lang_cd=ko",
+      "en_url": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq=996&lang_cd=en",
+      "ko_status": 200,
+      "en_status": 200,
+      "ko_render_type": "SSR",
+      "en_render_type": "SSR",
+      "identity_method": "url_uc_seq",
+      "identity_confirmed": true,
+      "uc_seq_in_hidden_input": null,
+      "has_identity_conflict": false,
+      "ko_title": "부산엑스더스카이 전망대",
+      "en_title": "Busan X the Sky Observatory",
+      "en_description": "BUSAN X the SKY is located at Haeundae LCT Landmark Tower, the second tallest tower (411.6m) in Korea, and is the largest observatory in Korea, where you can see both the Sea Side View and the City View. Each floor of the observatory boasts a",
+      "en_description_raw": "BUSAN X the SKY is located at Haeundae LCT Landmark Tower, the second tallest tower (411.6m) in Korea, and is the largest observatory in Korea, where you can see both the Sea Side View and the City View. Each floor of the observatory boasts a ",
+      "en_description_len": 242,
+      "en_description_preview": "BUSAN X the SKY is located at Haeundae LCT Landmark Tower, the second tallest tower (411.6m) in Korea, and is the larges",
+      "en_image_seqs": [
+        "16021"
+      ],
+      "has_en_page": true,
+      "has_en_title": true,
+      "has_en_description": true,
+      "internal_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ],
+      "embedded_json": null,
+      "parse_notes_ko": [
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "parse_notes_en": [
+        "imgLoadComm2_pattern_detected",
+        "uc_seq_input_not_found"
+      ],
+      "content_source_type": "STATIC_HTML",
+      "image_source_type": "VISITBUSAN_INTERNAL_API",
+      "image_api_endpoints": [
+        "/ubicont/getCntntsImgThumbM.do",
+        "/ubicont/getCntntsImgThumbTF.do"
+      ]
+    }
+  ],
+  "pass_criteria": {
+    "sample_count": true,
+    "no_candidate_data_modified": true,
+    "no_images_downloaded": true,
+    "no_push": true,
+    "http_requests_recorded": true
+  },
+  "safety": {
+    "data_modified": false,
+    "images_downloaded": false,
+    "push": false,
+    "external_requests": 10,
+    "ec_sha_preserved": true,
+    "sf_sha_preserved": true
+  },
+  "data_source_corrections": {
+    "source_type_misclassification": {
+      "original": "VISITBUSAN_INTERNAL_API (all 5)",
+      "corrected": "STATIC_HTML (all 5)",
+      "reason": "determine_source_type() returned VISITBUSAN_INTERNAL_API whenever ANY internal API was detected. The detected APIs (/ubicont/getCntntsImgThumbM.do etc.) are ALL image-loading APIs, not content APIs. Title and description are in the SSR HTML (STATIC_HTML). Fix: distinguish content_source_type vs image_source_type in full run script."
+    },
+    "client_rendered_misclassification": {
+      "original": "CLIENT_RENDERED (busan-VB-1034)",
+      "corrected": "SSR_NO_EN_CONTENT",
+      "reason": "KO h4.tit is present (SSR confirmed). EN page returned 200 but h4.tit is empty. This is 'no English translation on VB site', not client-side rendering. Fix: add SSR_NO_EN_CONTENT status for SSR pages where EN title is absent."
+    },
+    "internal_api_regex_pollution": {
+      "issue": "Regex matched multiline JS code fragments as API endpoints",
+      "fix": "Tighten regex to only match strings starting with '/' and length < 100"
+    }
+  },
+  "parser_findings_for_full_run": {
+    "menu_cd": "DOM_000000202008001000",
+    "url_pattern": "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000202008001000&uc_seq={uc_seq}&lang_cd={en|ko}",
+    "identity_check": {
+      "method": "url_uc_seq",
+      "note": "No hidden <input name='uc_seq'> detected — same as shopping pages"
+    },
+    "content_parsing": {
+      "title": "h4.tit (same as attraction/shopping — confirmed working)",
+      "description": "JS meta_description pattern — confirmed for 2/5. 3/5 had js_meta_description_not_found (likely no description on VB site)",
+      "expected_distribution": "SSR_USEFUL: ~40%, SSR_TITLE_ONLY: ~40-50%, SSR_NO_EN_CONTENT: ~10%"
+    },
+    "image_parsing": {
+      "pattern": "imgLoadComm2('/ubicont/getCntntsImgThumbM.do', IMAGE_ID, element)",
+      "confirmed": "5/5",
+      "note": "IMAGE_ID from imgLoadComm2 ≠ uc_seq. Record as metadata only, do not download."
+    },
+    "en_translation_coverage": {
+      "en_title_present": "4/5 (80%)",
+      "en_description_present": "2/5 (40%)",
+      "note": "Some experience pages (older/local venue types) may lack EN translation on VB site"
+    },
+    "no_playwright_needed": true,
+    "html_in_description": "Not observed in this sample — but apply strip_html() as per shopping precedent",
+    "api_regex_fix": "Filter internal_api_endpoints to clean URL patterns only (starts with '/', len < 100)"
+  }
+}

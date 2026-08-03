@@ -1,0 +1,63 @@
+{
+  "report_id": "busan-final-hold-exclude-summary",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 1,642 candidates 중 release 제외·보류 109건 상세.",
+  "total_candidates": 1642,
+  "total_release": 1533,
+  "total_held_excluded": 109,
+  "holds_by_type": {
+    "EXCLUDE_DUPLICATE_SIBLING": {
+      "count": 37,
+      "category": "restaurant",
+      "source": "busan-restaurant-duplicate-adjudication-v1.json (33그룹 67후보) + branch_gate FAIL 확인",
+      "gate": "branch_gate: FAIL in v8-details",
+      "restoration_path": "canonical 선택 후 sibling 최종 확인 필요"
+    },
+    "HOLD_STRUCTURAL_REVIEW": {
+      "count": 4,
+      "category": "restaurant",
+      "ids": [
+        "busan-F-00050",
+        "busan-F-00299",
+        "busan-F-00313",
+        "busan-F-00386"
+      ],
+      "reason": "near-duplicate 동일 소스 쌍 — adjudication 미완료",
+      "source": "busan-final-publish-qa-report.json near_duplicate_same_source_pairs"
+    },
+    "HOLD_PAST_EVENT": {
+      "count": 14,
+      "source": "busan-past-event-manifest.json",
+      "reason": "2026 날짜 확인됐으나 기준일(2026-08-03) 이전 종료",
+      "display_policy": "미결정 — 표시 후 별도 정책 필요"
+    },
+    "HOLD_STALE_DATE": {
+      "count": 25,
+      "source": "busan-event-stale-hold-manifest.json",
+      "reason": "raw 날짜 2025 이전, 반복 가능성 있으나 2026 미확인",
+      "action": "bfo.or.kr 또는 공식 채널에서 2026 날짜 확인 후 해제"
+    },
+    "HOLD_DATE_MISSING": {
+      "count": 26,
+      "source": "busan-event-date-missing-hold-manifest.json",
+      "reason": "모든 소스에 날짜 없음",
+      "action": "공식 채널 날짜 확인 후 해제 — 날짜 없이 공개 금지"
+    },
+    "HOLD_NO_CURRENT_SOURCE": {
+      "count": 3,
+      "source": "busan-event-72-source-gap-audit-v1.json",
+      "ids": [
+        "busan-VB-1769",
+        "busan-VB-1965",
+        "busan-VB-429"
+      ],
+      "reason": "FestivalService/KTO 원천 없음 — VisitBusan 원천만"
+    }
+  },
+  "verification": {
+    "release_plus_holds": 1642,
+    "equals_total": true
+  }
+}

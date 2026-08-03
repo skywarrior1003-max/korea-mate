@@ -1,0 +1,23 @@
+{
+  "task_id": "TASK-KTO-EN-DETAIL-COLLECT-V1",
+  "phase": "0-KO-RECONCILE",
+  "generated_at": "2026-08-01T06:55:45.197494+00:00",
+  "verdict": "PASS",
+  "issues": [],
+  "canonical": {
+    "total_targets": 644,
+    "pilot_files": 5,
+    "pilot_unique_cids": 5,
+    "full_dir_total_files": 639,
+    "full_dir_sha_files": 1,
+    "full_dir_api_files": 639,
+    "full_valid_with_content": 621,
+    "full_empty_response": 18,
+    "full_rc_fail": 0,
+    "pilot_full_overlap": 0,
+    "all_unique_cids": 626
+  },
+  "discrepancy_explanation": "coverage_audit에서 detailCommon2=640은 full/ 디렉토리 파일 수(639 API파일 + 1 sha-manifest.json)이며, 이전 보고 644는 전체 수집 대상 수(5 pilot + 639 full)임. 두 수치 모두 정확하나 집계 기준이 다름. coverage_audit의 640은 1 under-count (sha-manifest.json을 포함, pilot 5건 미포함). canonical: 644개 target = 5 pilot + 639 full API calls. 실제 데이터 있는 건: 626건 (5 pilot + 621 full). empty response(rc=0000, items=''): 18건 — 정상(API 레벨 빈 응답).",
+  "detailIntro2_summary": "557 targets = 15 pilot + 542 full API calls (43 empty response, type28 레포츠 많음)",
+  "detailImage2_summary": "94 full + 5 pilot = 99 targets (실이미지 2건, 92건 empty)"
+}

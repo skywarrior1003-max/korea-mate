@@ -1,0 +1,38 @@
+{
+  "report_id": "busan-promotions-upcoming-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "schema_version": "1.0",
+  "description": "2026-08-03 기준 예정(UPCOMING) 부산 프로모션·이벤트. 시작일이 reference_date 이후인 항목.",
+  "count": 1,
+
+  "items": [
+    {
+      "promo_id": "VB_SHOWS_6228",
+      "source_id": "VB-SHOWS-EVENTS",
+      "source_url": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid=6228",
+      "title_en": "'Gwangalli M Drone Light Show' August Performance Program",
+      "title_ko": null,
+      "content_type": "travel_notice",
+      "audience_type": "B2C",
+      "status": "UPCOMING",
+      "period_start": "2026-08-08",
+      "period_end": "2026-08-29",
+      "price_krw": null,
+      "price_display": null,
+      "benefit": "광안리 해수욕장 드론 라이트쇼 — 테마별 4회 공연 (Capturing Summer / 광복절 / NAVER WEBTOON / Space Adventure). 무료 관람.",
+      "target": null,
+      "booking_url": null,
+      "booking_url_note": "사전 예약 불필요 (야외 무료 관람)",
+      "location": "광안리해수욕장, 광안해변로 219, 수영구, 부산",
+      "reference_date": "2026-08-03",
+      "verification_status": "VERIFIED",
+      "verification_note": "VisitBusan Shows & Events 상세 페이지 직접 확인. 날짜·장소·공연 테마 확정. 8월 1일 공연 취소(2026 Night Race 동시개최). 기상 취소 가능.",
+      "external_website": "https://www.gwangallimdrone.co.kr/en/home",
+      "collected_at": "2026-08-03T00:00:00Z"
+    }
+  ],
+
+  "collection_note": "VisitBusan Shows & Events 9~12월 페이지 접근 오류(Do not have permission). 추가 UPCOMING 항목 존재 가능 — 재수집 필요."
+}

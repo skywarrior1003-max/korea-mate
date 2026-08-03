@@ -1,0 +1,28 @@
+{
+  "report_id": "busan-publishability-en-v7",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V7",
+  "task": "TASK-BUSAN-IMAGE-RECOVERY-V2",
+  "run_ts": "2026-07-30T11:00:59.731633+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "env6_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "delta_vs_env6": {
+    "publishable": 0,
+    "publishable_with_caveat": 0,
+    "pending_source": 0,
+    "pending_review": 0
+  },
+  "status_changed_count": 0,
+  "change_types": {}
+}

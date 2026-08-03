@@ -1,0 +1,27 @@
+{
+  "manifest_id": "visitbusan-en-ssr-apply-v1",
+  "task": "TASK-VISITBUSAN-EN-SSR-APPLY-V1",
+  "run_ts": "2026-07-30T07:29:19.803529+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "4b8fcf9",
+  "head_after": null,
+  "name_en_applied": 177,
+  "description_en_applied": 144,
+  "needs_translation_removed": 177,
+  "needs_content_removed": 144,
+  "en_source_facts_created": 177,
+  "parse_failed_skipped": 6,
+  "v1_preserved": true,
+  "v2_distribution": {
+    "publishable": 577,
+    "pending_source": 1065
+  },
+  "candidate_count": 1642,
+  "push": false,
+  "data_modified_files": [
+    "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl",
+    "data\\tourapi\\enriched\\busan\\busan-source-facts-v1.jsonl"
+  ],
+  "report_sha256": "09b596728150d67d51244b9dbec315ed11347636fd3c2eaa054589a832ac6d67"
+}

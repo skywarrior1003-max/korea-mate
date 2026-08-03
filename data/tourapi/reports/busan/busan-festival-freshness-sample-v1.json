@@ -1,0 +1,74 @@
+{
+  "analysis_date": "2026-08-03",
+  "raw_collection_date": "2026-07-24",
+  "freshness_source_reference": "bfo.or.kr (부산축제조직위원회 공식 홈페이지) — 2026-08-03 WebFetch",
+  "samples": [
+    {
+      "name": "부산바다축제",
+      "uc_seq": 71,
+      "raw_date": "2025. 8. 1. ~ 8. 3.",
+      "official_2026_date": "2026년 8월 7일(금) ~ 8월 13일(목)",
+      "official_place": "다대포 해수욕장 일원",
+      "verdict": "DATE_STALE",
+      "detail": "raw에 2025년 날짜가 기록됨. bfo.or.kr 기준 2026년은 8월 7~13일로 날짜와 기간이 다름."
+    },
+    {
+      "name": "부산항축제",
+      "uc_seq": 406,
+      "raw_date": "(없음)",
+      "official_2026_date": "2026년 6월 19~20일 (bfo.or.kr)",
+      "official_place": "북항 친수공원",
+      "verdict": "MISSING_DATE",
+      "detail": "raw에 날짜 없음. bfo.or.kr에 6월 19~20일로 기재 (이미 2026-08-03 기준 과거)."
+    },
+    {
+      "name": "부산국제록페스티벌",
+      "uc_seq": 470,
+      "raw_date": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+      "official_2026_date": "2026년 10월 2~4일 (bfo.or.kr)",
+      "official_place": "삼락생태공원",
+      "verdict": "DATE_STALE",
+      "detail": "raw에 2025년 날짜 기록. bfo.or.kr 기준 2026년은 10월 2~4일(미래 행사)."
+    },
+    {
+      "name": "부산불꽃축제",
+      "uc_seq": 395,
+      "raw_date": "2025.11.15.(토)",
+      "official_2026_date": "2026년 11월 7일 (bfo.or.kr)",
+      "official_place": "광안리해수욕장",
+      "verdict": "DATE_STALE",
+      "detail": "raw에 2025년 날짜. bfo.or.kr 기준 2026년은 11월 7일(미래 행사)."
+    },
+    {
+      "name": "부산인디커넥트페스티벌",
+      "uc_seq": null,
+      "raw_date": "N/A",
+      "official_2026_date": "확인 불가 (bfo.or.kr 목록 없음)",
+      "official_place": "N/A",
+      "verdict": "NOT_IN_RAW",
+      "detail": "부산광역시_부산축제정보 API raw에 부산인디커넥트페스티벌 없음. KTO 또는 별도 출처 필요."
+    },
+    {
+      "name": "금정산성축제",
+      "uc_seq": 330,
+      "raw_date": "2026. 10. 16. ~ 10. 18.",
+      "official_2026_date": "미확인 (bfo.or.kr 별도 목록 없음)",
+      "official_place": "금정산성 일원",
+      "verdict": "RAW_DATE_CURRENT",
+      "detail": "raw에 2026년 날짜 기재. 유일하게 2026 미래 행사 날짜가 raw에 정확히 있는 사례(KO 기준)."
+    }
+  ],
+  "freshness_summary": {
+    "stale_date_count": 3,
+    "missing_date_count": 1,
+    "not_in_raw_count": 1,
+    "current_date_count": 1,
+    "total_sampled": 6
+  },
+  "conclusion": {
+    "api_date_reliability": "LOW",
+    "detail": "부산광역시_부산축제정보 API의 USAGE_DAY_WEEK_AND_TIME 필드는 편집자가 수동 갱신하는 구조로 보이며, 현재(2026-08-03) 기준 대다수가 2025년 날짜 그대로 방치됨. 콘텐츠(설명·이미지·장소)는 신뢰할 수 있으나 날짜는 bfo.or.kr 또는 개별 주최기관 페이지에서 별도 검증 필요.",
+    "content_reliability": "HIGH — 설명·이미지·장소 정보는 안정적",
+    "date_source_recommendation": "bfo.or.kr (부산축제조직위원회) 또는 개별 주최기관 사이트를 날짜 우선 원천으로 사용"
+  }
+}

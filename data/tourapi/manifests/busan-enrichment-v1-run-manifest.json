@@ -1,0 +1,283 @@
+{
+  "manifest_type": "enrichment_run",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+  "branch": "data/busan-enrichment-v1",
+  "base_commit": "64a330555ff53b5ec7d9e1d1f9ad38f0f99b6f34",
+  "ssot_version": "1.1",
+  "ssot_ref": "origin/master",
+  "ssot_commit": "369d4cc",
+  "run_start": "2026-07-28T08:51:58.446815Z",
+  "run_end": "2026-07-28T08:51:58.628127Z",
+  "duration_s": 0.2,
+  "total_candidates": 1642,
+  "checkpoint_count": 33,
+  "input_assets": [
+    {
+      "id": "linkage_index",
+      "ref": "origin/integration/busan-linkage-index-20260727",
+      "commit": "c19ea21f658968c8fba35a14652e5d3d4286b817",
+      "path": "data/tourapi/reports/busan/busan-linkage-index-21r.csv",
+      "sha256": "118f3b89fc8c8dca7838eb37fd43239ae5753e1bd3d17a2ee4a413ad0d95695f",
+      "bytes": 753150,
+      "row_count": 1642
+    },
+    {
+      "id": "batch_normalized",
+      "ref": "origin/research/tourapi-nightly-20260722",
+      "commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "path": "data/tourapi/normalized/busan/busan-batch-normalized.json",
+      "sha256": "b7d9e2dc9dff0bf2fa72a7ecff5d7dd923ac0e27c962e2ddbae9417e98f6aa68",
+      "bytes": 5814602,
+      "row_count": 4135
+    },
+    {
+      "id": "curated_images_21q",
+      "ref": "origin/research/tourapi-nightly-20260722",
+      "commit": "fe43388a7250b5162dc08478976ef7c8fff753df",
+      "path": "data/tourapi/reports/busan/busan-curated-images-21q.jsonl",
+      "sha256": "12d0d8c4be21262112b9d437954a8334e0a6c7fdca1b0f04bd7b3d76d4912d48",
+      "bytes": 646460,
+      "row_count": 1642
+    }
+  ],
+  "output_assets": [
+    {
+      "id": "enriched_candidates",
+      "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "sha256": "f1f39fded850ccb319d766faf2327ad9d591b5896c4e1b9d5233673834d93404",
+      "bytes": 4403950,
+      "row_count": 1642
+    },
+    {
+      "id": "source_facts",
+      "path": "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl",
+      "sha256": "c009ccf47fe5f4e2b4a40c6359965089377b3e4c8d2f163bac698b02616eea9a",
+      "bytes": 1079815,
+      "row_count": 2008
+    },
+    {
+      "id": "manual_review",
+      "path": "data/tourapi/enriched/busan/busan-manual-review-v1.jsonl",
+      "sha256": "41df48119b546f8a1d066b018e9246ccc4418e4182d0ea143d10f312a004ff3e",
+      "bytes": 466314,
+      "row_count": 1401
+    },
+    {
+      "id": "validation_report",
+      "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
+      "sha256": "a0a789dd0017c0893264cbfa927c7ee39a0da28bf673606e67e7d695b35c029f",
+      "bytes": 5259
+    },
+    {
+      "id": "asset_manifest",
+      "path": "data/tourapi/manifests/busan-enrichment-v1-asset-manifest.json",
+      "sha256": "1fe77b5b25dcde540a288887abe6192ae0aac4f74b24e86cd4d57ed8e2d0757d",
+      "bytes": 2430
+    }
+  ],
+  "district_mapping_used": {
+    "method": "empirical_from_kto_english_addresses",
+    "codes": {
+      "1": "강서구",
+      "2": "금정구",
+      "3": "기장군",
+      "4": "남구",
+      "5": "동구",
+      "6": "동래구",
+      "7": "부산진구",
+      "8": "북구",
+      "9": "사상구",
+      "10": "사하구",
+      "11": "서구",
+      "12": "수영구",
+      "13": "연제구",
+      "14": "영도구",
+      "15": "중구",
+      "16": "해운대구"
+    }
+  },
+  "english_name_strategy": {
+    "vb_candidates": "Derive English source_key by replacing :ko with :en in AttractionService/FoodService key",
+    "kto_candidates": "No English equivalent (EngService2 IDs do not overlap with KorService2 IDs); flag as needs_translation"
+  },
+  "qa02_run": {
+    "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
+    "run_ts": "2026-07-29T03:44:16.470799Z",
+    "corrections": {
+      "hours_from_ic": {
+        "applied": 571,
+        "source": "integrated_candidates.hours"
+      },
+      "restaurant_branch_cleared": 654,
+      "kto_en_linked": 42
+    },
+    "output_sha256": {
+      "enriched": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+      "manual_review": "cc07d590a227038f9a4f6285939341086038eaed555ce032103639d1dc38c85d",
+      "validation": "d9bf15493b87b0732a72ef25476bc754e126a63d8c141c683e3b528c5f46d2f0",
+      "asset_manifest": "f6969a3696d7131f7c815c4b10d581612801e869effc96c4b90370233dc33100"
+    }
+  },
+  "stage_a1": {
+    "task": "TASK-BUSAN-ENRICH-STAGE-A1",
+    "run_ts": "2026-07-29T05:48:03.735158Z",
+    "input_sha256": {
+      "enriched_candidates": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "output_sha256": {
+      "enriched_candidates": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "changes": {
+      "arrival_flags_removed": 732,
+      "district_fixed": 308,
+      "en_join_fixed": 0,
+      "content_fixed": 0,
+      "event_arrival_held": "gate_failed_multi_venue"
+    },
+    "output_assets": [
+      {
+        "id": "enriched_candidates",
+        "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+        "sha256": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+        "row_count": 1642
+      },
+      {
+        "id": "stage_a1_validation",
+        "path": "data/tourapi/reports/busan/busan-stage-a1-validation.json"
+      },
+      {
+        "id": "arrival_eligibility",
+        "path": "data/tourapi/reports/busan/busan-arrival-eligibility-a1.json"
+      },
+      {
+        "id": "event_hours_classification",
+        "path": "data/tourapi/reports/busan/busan-event-hours-classification-a1.json"
+      },
+      {
+        "id": "district_resolution",
+        "path": "data/tourapi/reports/busan/busan-district-resolution-a1.json"
+      }
+    ]
+  },
+  "stage_a1_arrival_qa": {
+    "run_ts": "2026-07-29T06:16:08.259604Z",
+    "input_sha256_enriched": "91d7a985e501a6b0ae20af24b548d939716d3ec999f07882e92914ee48933907",
+    "output_sha256_enriched": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "gate_status": "PASS",
+    "changes": {
+      "restore_verification": [
+        "busan-K-00585",
+        "busan-VB-2097"
+      ],
+      "require_arrival": [
+        "busan-F-00341",
+        "busan-K-00674"
+      ],
+      "manual_review": [
+        "busan-VB-1721",
+        "busan-VB-2704",
+        "busan-VB-518"
+      ]
+    },
+    "flag_changes": {
+      "needs_arrival_verification": {
+        "before": 911,
+        "after": 911
+      },
+      "needs_arrival": {
+        "before": 0,
+        "after": 2
+      }
+    },
+    "output_assets": [
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/reports/busan/busan-arrival-qa-a1.json",
+      "data/tourapi/reports/busan/busan-arrival-qa-a1-sample.json",
+      "data/tourapi/reports/busan/busan-stage-a1-validation.json"
+    ]
+  },
+  "stage_a1_arrival_provenance_qa": {
+    "run_ts": "2026-07-29T06:30:44.287969Z",
+    "task": "TASK-BUSAN-ENRICH-STAGE-A1-ARRIVAL-PROVENANCE-QA",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "output_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "provenance_qa_report": "a0d8d3e1c31f999671a8b1ff1c0b2607f0541368f7db86012785a9629e210b44",
+      "validation_report": "b38b4401d2ab8034480551b24667de0c14914060a3696188dc7b03de6df1384b"
+    },
+    "summary": {
+      "audited": 22,
+      "provenance_status": "VB_WEB_DIRECT_EMBED_NO_SOURCE_KEY (22/22)",
+      "source_count_bug": false,
+      "new_require_arrival": 0,
+      "enriched_modified": false,
+      "verdict": "PASS"
+    }
+  },
+  "kto_detail_full_preflight": {
+    "run_ts": "2026-07-29T07:40:00Z",
+    "task": "TASK-BUSAN-KTO-DETAIL-FULL-PREFLIGHT",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "summary": {
+      "kto_candidates_total": 644,
+      "detailIntro2_target": 557,
+      "detailCommon2_target": 644,
+      "detailImage2_target": 94,
+      "pilot_reuse_total": 20,
+      "new_calls_total": 1275,
+      "original_estimate_1929_corrected_to": 1275,
+      "call_limit_status": "CALL_LIMIT_UNVERIFIED",
+      "dry_run_executed": true,
+      "dry_run_bug_fixed": true,
+      "collector_missing_features": 6,
+      "type28_full_reclassification_required": true,
+      "full_run_blocked": true,
+      "verdict": "PARTIAL_PASS"
+    },
+    "output_assets": [
+      "data/tourapi/reports/busan/kto-detail-preflight-report.json",
+      "data/tourapi/reports/busan/kto-detail-preflight-manifest.json"
+    ]
+  },
+  "kto_detail_collector_hardening": {
+    "run_ts": "2026-07-29T08:10:00Z",
+    "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+    "input_sha": {
+      "enriched_candidates": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+      "source_facts": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64"
+    },
+    "summary": {
+      "script_version": "v2-hardened",
+      "features_implemented": 6,
+      "features": ["skip_existing", "timeout", "checkpoint", "consecutive_failure_abort", "manifest_input", "full_output_path"],
+      "verification_scenarios": 9,
+      "verification_passed": 9,
+      "dry_run_api_calls": 0,
+      "call_limit_status": "UNVERIFIED",
+      "full_run_still_blocked": true,
+      "enriched_candidates_modified": false,
+      "source_facts_modified": false,
+      "review_flags_modified": false,
+      "api_key_exposed": false,
+      "verdict": "PASS"
+    },
+    "output_assets": [
+      "scripts/tourapi-busan-detail.mjs",
+      "data/tourapi/reports/busan/kto-detail-hardening-verify.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-dry-run.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-feature-matrix.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-secret-scan.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-checkpoint-verify.json",
+      "data/tourapi/reports/busan/kto-detail-hardening-file-hashes.json"
+    ]
+  }
+}

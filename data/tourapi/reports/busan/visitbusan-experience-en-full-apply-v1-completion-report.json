@@ -1,0 +1,85 @@
+{
+  "report_id": "visitbusan-experience-en-full-apply-v1-completion-report",
+  "task": "TASK-VISITBUSAN-EXPERIENCE-EN-FULL-APPLY-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T08:52:11.458320+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "2d39ab0",
+  "head_after": "2d39ab0",
+  "experience_93_status_distribution": {
+    "EN_NO_CONTENT": 9,
+    "EN_USEFUL": 43,
+    "EN_DESCRIPTION_WEAK": 15,
+    "EN_TITLE_ONLY": 26
+  },
+  "applied": {
+    "name_en_applied": 84,
+    "description_en_applied": 43,
+    "needs_translation_removed": 84,
+    "needs_content_removed": 43,
+    "ko_sf_created": 93,
+    "ko_sf_already_existed": 0,
+    "en_sf_created": 93,
+    "source_data_missing_removed": 93,
+    "validation_status_upgraded_to": "single_source",
+    "kto_not_needed_upgrades": 42,
+    "en_no_content": 9,
+    "parse_failed_skipped": 0,
+    "conflict_skipped": 0
+  },
+  "publishability": {
+    "env4_distribution": {
+      "publishable_with_caveat": 448,
+      "pending_source": 820,
+      "pending_review": 73,
+      "publishable": 301
+    },
+    "env5_distribution": {
+      "publishable_with_caveat": 488,
+      "pending_source": 777,
+      "pending_review": 74,
+      "publishable": 303
+    },
+    "delta": {
+      "publishable_with_caveat": 40,
+      "pending_review": 1,
+      "publishable": 2,
+      "pending_source": -43
+    },
+    "publishable_increase": 2,
+    "caveat_increase": 40,
+    "status_changed": 43,
+    "change_types": {
+      "pending_source→publishable_with_caveat": 40,
+      "pending_source→publishable": 2,
+      "pending_source→pending_review": 1
+    }
+  },
+  "file_shas": {
+    "ec_before": "49b74fc719612ef2",
+    "ec_after": "535fd501cbff1705",
+    "sf_before": "a4577012085eca1a",
+    "sf_after": "1306b8d1641ef523",
+    "protected_unchanged": true,
+    "sf_total_after": 2625,
+    "sf_new_records": 186
+  },
+  "validation_checks": {
+    "candidate_count_1642": true,
+    "experience_target_93": true,
+    "zero_identity_conflict": true,
+    "parse_failed_ok": true,
+    "source_fact_duplicates": 0,
+    "protected_files_unchanged": true,
+    "external_requests": 186,
+    "push": false
+  },
+  "safety": {
+    "external_requests": 186,
+    "images_downloaded": false,
+    "push": false,
+    "candidate_count": 1642,
+    "sf_duplicates": 0
+  },
+  "commit_message_last_line": "TASK-VISITBUSAN-EXPERIENCE-EN-FULL-APPLY-V1 완료 — VisitBusan 체험 93건의 영어 원천 전수 수집·검증·반영 완료."
+}

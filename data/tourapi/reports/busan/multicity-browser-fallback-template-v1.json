@@ -1,0 +1,32 @@
+{
+  "template_id": "multicity-browser-fallback-template-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "다도시 브라우저 폴백 실행 표준. 부산 Playwright 격리 설치에서 검증.",
+  "setup": {
+    "tool": "Playwright (Python)",
+    "install_location": "임시 venv — repository 밖 (예: %TEMP%\\gkm-playwright-audit)",
+    "commands": [
+      "py -m venv %TEMP%\\gkm-playwright-audit",
+      "%TEMP%\\gkm-playwright-audit\\Scripts\\pip install playwright",
+      "%TEMP%\\gkm-playwright-audit\\Scripts\\python -m playwright install chromium"
+    ],
+    "repo_package_modified": false,
+    "node_modules_in_repo": false
+  },
+  "usage_rules": [
+    "JS 페이지네이션 파라미터 브라우저에서 확인 후 WebFetch로 전환",
+    "실제 페이지 클릭·페이지네이션 확인 필수 (coverage 가정 금지)",
+    "스크린샷 증거 저장 (scratchpad, 미커밋)",
+    "접근 차단(Cloudflare/CAPTCHA/로그인) 우회 금지",
+    "공식 플랫폼 제한은 BLOCKED_OFFICIAL_PLATFORM_RESTRICTED로 명시 종결",
+    "키·쿠키·세션 출력 금지"
+  ],
+  "busan_findings": {
+    "VB_EVENT_SURVEY_pagination": "page_no=N (pageIndex 아님) — 브라우저 확인 후 WebFetch 전환 성공",
+    "VB_SHOWS_EVENTS_month_filter": "click_a:text('N') 방식으로 월탭 클릭 성공",
+    "KKday_cloudflare": "Playwright에서도 HTTP 403 — 우회 불가, BLOCKED로 종결",
+    "VBP_timeout": "heavy JS — 브라우저에서도 타임아웃, INACCESSIBLE로 종결"
+  }
+}

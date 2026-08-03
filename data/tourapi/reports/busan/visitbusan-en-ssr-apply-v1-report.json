@@ -1,0 +1,63 @@
+{
+  "report_id": "visitbusan-en-ssr-apply-v1",
+  "task": "TASK-VISITBUSAN-EN-SSR-APPLY-V1",
+  "run_ts": "2026-07-30T07:29:19.803529+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "4b8fcf9",
+  "head_after": null,
+  "application_results": {
+    "name_en_applied": 177,
+    "description_en_applied": 144,
+    "needs_translation_removed": 177,
+    "needs_content_removed": 144,
+    "title_only_kept_needs_content": 24,
+    "desc_weak_kept_needs_content": 9,
+    "parse_failed_skipped": 6,
+    "en_source_facts_created": 177,
+    "en_source_fact_duplicate_skipped": 0,
+    "source_summary_has_english_updated": 177,
+    "identity_errors": 0
+  },
+  "publishability": {
+    "v1_distribution": {
+      "publishable_with_caveat": 286,
+      "pending_source": 993,
+      "pending_review": 72,
+      "publishable": 291
+    },
+    "v2_distribution": {
+      "publishable_with_caveat": 286,
+      "pending_source": 993,
+      "pending_review": 72,
+      "publishable": 291
+    },
+    "delta": {
+      "publishable_with_caveat": 0,
+      "pending_source": 0,
+      "pending_review": 0,
+      "publishable": 0
+    },
+    "v1_files_preserved": true,
+    "v2_note": "description_gate checks has_ko_description (unchanged for VB candidates). EN description applied but description_gate not triggered. PARSE_FAILED 3 candidates with has_ko_description=True were not updated. V2 = V1 by design."
+  },
+  "safety_checks": {
+    "candidate_count": 1642,
+    "candidate_count_ok": true,
+    "curated_images_modified": false,
+    "new_review_flags_added": false,
+    "push": false,
+    "external_requests": 0,
+    "source_facts_schema_modified": false
+  },
+  "file_shas": {
+    "ec_input": "76c63fcc7ed866b8a3699c058487699c0e43ce073c03f8760f4352cd8a9e9150",
+    "ec_output": "8a38da4ceb63bca5dc94a1702597750aab184f4b03861f8ff2733a47f2b62e0b",
+    "sf_input": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+    "sf_output": "2bcc18546d16d8016904a31e4fb55b7232245bc56c89ecf686ce608c3dbb957c",
+    "v1_summary_before": "775e134aac36e3d83d410a3e6ccd60e297d4848509802e698cf6209096ba9e0a",
+    "v1_summary_after": "775e134aac36e3d83d410a3e6ccd60e297d4848509802e698cf6209096ba9e0a",
+    "v1_detail_before": "c8a9a914d4fa34d680a1c6d32812575b6164d8ed2465003faf417df91f64c33b",
+    "v1_detail_after": "c8a9a914d4fa34d680a1c6d32812575b6164d8ed2465003faf417df91f64c33b"
+  }
+}

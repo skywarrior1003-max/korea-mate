@@ -1,0 +1,42 @@
+{
+  "manifest_type": "enrichment_output_assets",
+  "version": "v1-qa02",
+  "task": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
+  "branch": "data/busan-enrichment-v1",
+  "created_at": "2026-07-29T03:44:16.470799Z",
+  "total_candidates": 1642,
+  "assets": [
+    {
+      "id": "enriched_candidates",
+      "path": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "sha256": "8a88afc3df6674b709e0aa3ee332d8c96caa3912b7ed4791d6aecfb57f6d2469",
+      "bytes": 5155460,
+      "row_count": 1642
+    },
+    {
+      "id": "source_facts",
+      "path": "data/tourapi/enriched/busan/busan-source-facts-v1.jsonl",
+      "sha256": "3d9ff4c341f806907366d2c17e442e34016881b3a4b60a81832b10fbb7918a64",
+      "bytes": 1079730,
+      "row_count": 2008
+    },
+    {
+      "id": "manual_review",
+      "path": "data/tourapi/enriched/busan/busan-manual-review-v1.jsonl",
+      "sha256": "cc07d590a227038f9a4f6285939341086038eaed555ce032103639d1dc38c85d",
+      "bytes": 400002,
+      "row_count": 989
+    },
+    {
+      "id": "validation_report",
+      "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
+      "sha256": "d9bf15493b87b0732a72ef25476bc754e126a63d8c141c683e3b528c5f46d2f0",
+      "bytes": 8869
+    }
+  ],
+  "coverage_summary": {
+    "english_name_pct": 43.8,
+    "description_pct": 41.8,
+    "district_pct": 81.1
+  }
+}

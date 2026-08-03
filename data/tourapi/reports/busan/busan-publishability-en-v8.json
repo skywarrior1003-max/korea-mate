@@ -1,0 +1,115 @@
+{
+  "report_id": "busan-publishability-en-v8",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V8",
+  "task": "TASK-BUSAN-PUBLISHABILITY-REMEASURE-V1",
+  "run_ts": "2026-07-31T09:16:06.832430+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "prev_head": "342e62df3beb5356d006d0225565c94334f022b0",
+  "head": "d8b09adb5220bcfd0ec656064e14012bd10c185c",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "v7_distribution": {
+    "publishable_with_caveat": 507,
+    "pending_source": 788,
+    "pending_review": 44,
+    "publishable": 303
+  },
+  "delta_vs_v7": {
+    "pending_review": 0,
+    "publishable_with_caveat": 0,
+    "publishable": 0,
+    "pending_source": 0
+  },
+  "status_changed_count": 0,
+  "status_change_breakdown": {},
+  "regressions": {
+    "count": 0,
+    "detail": []
+  },
+  "kto_apply_contribution": {
+    "image_gate_improved": 0,
+    "description_ko_filled_gate_not_affected": 0,
+    "hours_filled_gate_not_affected": 0,
+    "note": "description_ko 채움(621건)과 hours 채움(440건)은 현재 게이트 로직에 영향을 주지 않는다. description_en_gate는 proposed_values.description_en만 확인하고, needs_hours는 get_effective_flags에서 qa02_corrections.hours_applied로만 해제된다. image_gate 개선(2건)만 실질적 기여."
+  },
+  "gate_block_distribution": {
+    "identity_gate": {
+      "PASS": 1642
+    },
+    "name_ko_gate": {
+      "PASS": 1642
+    },
+    "name_en_gate": {
+      "PASS": 1016,
+      "PENDING_SOURCE": 626
+    },
+    "address_gate": {
+      "PASS": 1639,
+      "FAIL": 3
+    },
+    "coordinate_gate": {
+      "PASS": 1640,
+      "FAIL": 2
+    },
+    "branch_gate": {
+      "NOT_APPLICABLE": 921,
+      "PASS": 684,
+      "FAIL": 37
+    },
+    "description_en_gate": {
+      "PASS": 888,
+      "PENDING_SOURCE": 754
+    },
+    "image_gate": {
+      "PASS": 1510,
+      "PENDING_SOURCE": 132
+    },
+    "provenance_gate": {
+      "PASS": 1642
+    }
+  },
+  "category_distribution": {
+    "accommodation": {
+      "pending_source": 79,
+      "publishable_with_caveat": 3
+    },
+    "attraction": {
+      "publishable_with_caveat": 389,
+      "pending_source": 326,
+      "pending_review": 2
+    },
+    "event": {
+      "pending_review": 3,
+      "publishable_with_caveat": 33,
+      "pending_source": 36
+    },
+    "nature": {
+      "pending_source": 40,
+      "publishable_with_caveat": 10
+    },
+    "restaurant": {
+      "publishable_with_caveat": 72,
+      "publishable": 303,
+      "pending_review": 39,
+      "pending_source": 307
+    }
+  },
+  "validation_checks": {
+    "candidate_count_1642": true,
+    "v8_total_1642": true,
+    "regression_count": 0,
+    "no_regression": true,
+    "protected_files_unchanged": true,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "push": false,
+    "api_calls": 0
+  },
+  "verdict": "PASS",
+  "push": false
+}

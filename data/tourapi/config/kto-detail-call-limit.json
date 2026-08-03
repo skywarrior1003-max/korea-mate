@@ -1,0 +1,14 @@
+{
+  "_schema": "kto-detail-call-limit-v1",
+  "_note": "공식 일일 호출 한도 확인 후 status를 VERIFIED로 변경. 임의 숫자 기본값 입력 금지.",
+  "_confirm_step": "data.go.kr → 마이페이지 → 개발계정 관리 → 한국관광공사_국문 관광정보 서비스_GW → 트래픽 허용량",
+  "_blocked_until": "2026-08-02T18:00:00+09:00",
+  "_block_reason": "공공데이터포털 전환 작업으로 마이페이지 접근 제한",
+  "status": "UNVERIFIED",
+  "daily_limit": null,
+  "verified_at": null,
+  "verified_by": null,
+  "source_url": null,
+  "notes": null,
+  "last_updated": "2026-07-30"
+}

@@ -1,0 +1,201 @@
+{
+  "task_id": "TASK-KTO-DETAIL-APPLY-V2",
+  "verdict": "PASS",
+  "generated_at": "2026-07-31T07:48:43.303895Z",
+  "dry_run": false,
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "3ad454d4f1d71e0bb9a0b2576f47a4f1b3d17270",
+    "head": "4d2755cc3bd4074cf11af8668abbc006d26877f2"
+  },
+  "push": false,
+  "phase0_image_verification": {
+    "raw_file_count": 94,
+    "resultcode_ok": 94,
+    "totalcount_0": 92,
+    "items_exist": 2,
+    "items_total": 3,
+    "no_file": [],
+    "pilot_only": [],
+    "cross_check": {
+      "run_script_reported_with_images": 2,
+      "current_with_images": 2,
+      "match": true,
+      "explanation": "validate 스크립트 7건은 pilot 파일(5건) 혼입, full dir만 기준 2건 일치"
+    },
+    "pass": true
+  },
+  "phase1_detailCommon2": {
+    "candidate_description_ko": {
+      "applied": 621,
+      "stronger_skip": 0,
+      "empty_overview_skip": 21,
+      "short_skip": 2,
+      "html_residue_skip": 0
+    },
+    "source_facts_description": {
+      "applied": 621,
+      "no_match": 0,
+      "skip_nonempty": 0
+    }
+  },
+  "phase2_detailIntro2": {
+    "hours_applied": 440,
+    "stronger_skip": 0,
+    "empty_field_skip": 39,
+    "type32_report_only": 78,
+    "unknown_type": 0,
+    "by_contenttype": {
+      "12": 135,
+      "14": 37,
+      "39": 262,
+      "28": 6
+    },
+    "type32_list": [
+      {
+        "candidate_id": "busan-K-00077",
+        "contentid": "142852"
+      },
+      {
+        "candidate_id": "busan-K-00078",
+        "contentid": "142853"
+      },
+      {
+        "candidate_id": "busan-K-00079",
+        "contentid": "142861"
+      },
+      {
+        "candidate_id": "busan-K-00080",
+        "contentid": "142978"
+      },
+      {
+        "candidate_id": "busan-K-00081",
+        "contentid": "142998"
+      },
+      {
+        "candidate_id": "busan-K-00146",
+        "contentid": "1162526"
+      },
+      {
+        "candidate_id": "busan-K-00147",
+        "contentid": "1215432"
+      },
+      {
+        "candidate_id": "busan-K-00158",
+        "contentid": "1428723"
+      },
+      {
+        "candidate_id": "busan-K-00210",
+        "contentid": "2039866"
+      },
+      {
+        "candidate_id": "busan-K-00213",
+        "contentid": "2378912"
+      },
+      {
+        "candidate_id": "busan-K-00224",
+        "contentid": "2503780"
+      },
+      {
+        "candidate_id": "busan-K-00226",
+        "contentid": "2509838"
+      },
+      {
+        "candidate_id": "busan-K-00228",
+        "contentid": "2531399"
+      },
+      {
+        "candidate_id": "busan-K-00240",
+        "contentid": "2569922"
+      },
+      {
+        "candidate_id": "busan-K-00241",
+        "contentid": "2570213"
+      },
+      {
+        "candidate_id": "busan-K-00242",
+        "contentid": "2571959"
+      },
+      {
+        "candidate_id": "busan-K-00243",
+        "contentid": "2572851"
+      },
+      {
+        "candidate_id": "busan-K-00244",
+        "contentid": "2574073"
+      },
+      {
+        "candidate_id": "busan-K-00245",
+        "contentid": "2595879"
+      },
+      {
+        "candidate_id": "busan-K-00246",
+        "contentid": "2596750"
+      }
+    ],
+    "unknown_type_list": []
+  },
+  "phase3_detailImage2": {
+    "files_with_images": 2,
+    "files_empty": 92,
+    "raw_items_total": 3,
+    "type3_candidates": 3,
+    "type1_manual_review": 0,
+    "imgname_filtered": 1,
+    "url_not_accessible": 0,
+    "url_unverifiable": 2,
+    "duplicate_url_skip": 0,
+    "images_applied": 2,
+    "candidates_applied": 2,
+    "needs_image_removed": 2,
+    "type1_items": [],
+    "applied_items": [
+      {
+        "photo_id": "busan-K-00249_kto_2611590_4",
+        "photo_url": "http://tong.visitkorea.or.kr/cms/resource/90/2611590_image2_1.jpg",
+        "source": "KTO/detailImage2",
+        "cpyrhtDivCd": "Type3",
+        "imgname": "영도 흰여울해안터널(2)",
+        "url_status": "UNVERIFIABLE"
+      },
+      {
+        "photo_id": "busan-K-00299_kto_2708007_2",
+        "photo_url": "http://tong.visitkorea.or.kr/cms/resource/07/2708007_image2_1.jpg",
+        "source": "KTO/detailImage2",
+        "cpyrhtDivCd": "Type3",
+        "imgname": "광안리 SUP Zone_1",
+        "url_status": "UNVERIFIABLE"
+      }
+    ],
+    "skipped_items": [
+      {
+        "cid": "2606221",
+        "reason": "imgname_filtered",
+        "imgname": "전국_냥 집사 전격 소환! 이색 고양이 여행지, 나만 없어! 야옹이! 지친 마음 위로 받는 길냥이와의 하루 48"
+      }
+    ]
+  },
+  "phase4_validation": {
+    "pass": true,
+    "errors": [],
+    "candidate_count": 1642,
+    "sf_count": 2625,
+    "dup_candidate_ids": 0,
+    "dup_sf_keys": 0,
+    "type32_wrong_apply": 0,
+    "missing_provenance": 0,
+    "source_reconciliation_ok": true
+  },
+  "safety_checks": {
+    "additional_api_calls": false,
+    "publishability_remeasured": false,
+    "new_flag_created": false,
+    "candidate_deleted": false,
+    "schema_expanded": false,
+    "git_add_A_used": false,
+    "push_performed": false,
+    "master_touched": false,
+    "provenance_overwritten": false,
+    "nonallowed_files_modified": false
+  }
+}

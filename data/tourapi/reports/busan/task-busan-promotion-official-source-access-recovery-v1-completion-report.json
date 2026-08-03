@@ -1,0 +1,132 @@
+{
+  "report_id": "task-busan-promotion-official-source-access-recovery-v1-completion-report",
+  "report_type": "COMPLETION",
+  "task_id": "TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-03T00:00:00Z",
+
+  "validation_included": {
+    "pre_execution_check": "PASS — 태스크 구조 및 방법론 검토. 문제 없음. 즉시 실행.",
+    "issues_found": 0,
+    "improvements_proposed": 0,
+    "reason_executed": "태스크 범위(소스 탐색만), 방법론(URL-first 발굴), 금지 목록(뉴스 단독 금지·B2B 제외), 산출물 구성 모두 타당. 이전 검증보고서 이슈를 정확히 타겟팅한 선행 태스크."
+  },
+
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "05c31a2",
+    "new_head": "pending_commit"
+  },
+
+  "phase_results": {
+    "phase_1_bto_access_recovery": {
+      "status": "PASS",
+      "root_cause_of_previous_500": "잘못된 board_seq 값(3994) 사용 — 서버 오류 아님",
+      "resolution": "목록 HTML에서 실제 board_seq 추출 후 상세 URL 접근 → 정상 응답 확인",
+      "detail_access_confirmed": true,
+      "detail_access_sample": "부산병 치유 프로모션 board_seq=5340 — 기간·대상·혜택 수집 완료",
+      "automatable_boards": ["MN047 보도자료", "MN090 공고·행사", "MN154 비짓부산패스"],
+      "rss_found": false,
+      "sitemap_found": "https://bto.or.kr/kor/CMS/SiteMap/SiteMap.do?mCode=MN013"
+    },
+    "phase_2_visitbusan_recovery": {
+      "status": "PASS",
+      "root_cause_1": "이전 세션에서 명소·테마여행 menuCd를 이벤트 게시판으로 오인",
+      "root_cause_2": "한국어 버전 서버 업데이트(2026-06-05) 후 일부 페이지 불안정",
+      "routes_recovered": [
+        "Event & Survey: DOM_000000304002000000 (103건, 13페이지)",
+        "Shows & Events: DOM_000000304010000000 (월별 필터)",
+        "Notice: DOM_000000304001000000 (14건)",
+        "Busan Travel Products: DOM_000000304004000000 (27건)"
+      ],
+      "sitemap_xml": "NOT_FOUND",
+      "robots_txt": "Allow: / (no sitemap directive)",
+      "discovery_method": "영문 메뉴 HTML 파싱으로 menuCd 목록 추출",
+      "recommended_base": "https://www.visitbusan.net/en (한국어 버전 불안정 대체)"
+    },
+    "phase_3_source_registry": {
+      "status": "PASS",
+      "total_sources_confirmed": 8,
+      "automatable": 7,
+      "manual_browser_required": 6,
+      "not_found": 4,
+      "b2c_primary": ["VB-EVENT-SURVEY", "BTO-PRESS", "VB-SHOWS-EVENTS", "VBP-PASS", "VB-TRAVEL-PRODUCTS"],
+      "b2c_secondary": ["BTO-NOTICE", "VB-NOTICE"]
+    },
+    "phase_4_content_scope": {
+      "status": "DEFINED",
+      "audience_type_field_defined": true,
+      "b2c_filter_rule_defined": true,
+      "excluded_categories": ["사업자 모집", "관광기업 지원사업", "용역·입찰", "단순 기관 홍보"]
+    },
+    "phase_5_official_evidence_rules": {
+      "status": "DEFINED",
+      "applied_example": "부산병 치유 프로모션 — BTO 보도자료(공식 1차)에서 기간·대상·혜택 확정. KKday 예약 링크는 본문 미기재로 MANUAL_BROWSER_REQUIRED.",
+      "news_only_items": 0
+    }
+  },
+
+  "mandatory_verification": {
+    "official_promo_candidates_from_bto": 2,
+    "detail_auto_accessible": 2,
+    "attachment_accessible": true,
+    "busan_metro_official_repost": 0,
+    "official_partner_pages_found": 1,
+    "visitbusan_valid_source_urls": 4,
+    "automatable_count": 7,
+    "manual_browser_required_count": 6,
+    "news_only_items": 0,
+    "b2b_contamination": 0,
+    "data_modification": 0,
+    "push": false
+  },
+
+  "confirmed_active_promos": [
+    {
+      "title": "부산병 치유 프로모션",
+      "source": "BTO 보도자료 board_seq=5340",
+      "period": "2026-07-28 ~ 2026-08-27",
+      "target": "중화권 포함 외국인 관광객",
+      "platform": "KKday",
+      "status": "ACTIVE",
+      "detail_confirmed": true,
+      "booking_url": "MANUAL_BROWSER_REQUIRED (KKday)"
+    },
+    {
+      "title": "Starry Night Busan Midnight River Cruise Summer Promotion",
+      "source": "VisitBusan Event & Survey ueb_seq=684",
+      "period": "2026-07-23 ~ 2026-08-09",
+      "price": "₩20,000/인, 35석 한정",
+      "booking_url": "https://smartstore.naver.com/rivercruise/products/13673189862",
+      "status": "ACTIVE",
+      "detail_confirmed": true
+    }
+  ],
+
+  "next_collection_readiness": {
+    "verdict": "READY",
+    "ready_sources": ["VB-EVENT-SURVEY (103건)", "BTO-PRESS (최근 100건)", "VB-SHOWS-EVENTS (하반기)", "VB-TRAVEL-PRODUCTS (27건)", "VBP-PASS"],
+    "pending": ["KKday 직접 링크", "visitbusanpass.com 가격 상세", "busan.go.kr 관광 보도자료 URL"],
+    "next_task": "TASK-BUSAN-PROMOTION-NEWS-DATA-FINALIZE-V1 재개 — 이번 태스크의 확정 소스 매니페스트 사용"
+  },
+
+  "output_files": [
+    "busan-bto-access-recovery-v1.json",
+    "busan-visitbusan-route-recovery-v1.json",
+    "busan-promotion-official-source-registry-v1.json",
+    "busan-promotion-source-fixed-manifest-v1.json",
+    "manual-browser-required-items-v1.json",
+    "busan-promotion-source-access-report-v1.json",
+    "scripts/busan-promotion-source-discovery-v1.py",
+    "task-busan-promotion-official-source-access-recovery-v1-completion-report.json"
+  ],
+
+  "changes": {
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "new_report_files": 7,
+    "new_script_files": 1,
+    "webfetch_calls": 17,
+    "push": false
+  }
+}

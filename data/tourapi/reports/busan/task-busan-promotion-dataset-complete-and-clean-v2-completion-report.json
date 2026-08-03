@@ -1,0 +1,163 @@
+{
+  "report_id": "task-busan-promotion-dataset-complete-and-clean-v2-completion-report",
+  "report_type": "COMPLETION",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COMPLETE-AND-CLEAN-V2",
+  "result": "PARTIAL",
+  "generated_at": "2026-08-03T00:00:00Z",
+
+  "validation_included": {
+    "pre_execution_check": "PASS — 태스크 구조 및 분류 원칙 검토. 블로킹 이슈 없음. 즉시 실행.",
+    "issues_found": 0,
+    "improvements_proposed": 0,
+    "reason_executed": "Phase 1~6 설계가 전 작업 오분류(EVENT·TRAVEL_PRODUCT 혼입)를 정확히 타겟팅. 분류 원칙 명확. 블로킹 이슈 없음."
+  },
+
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "59ce9c9",
+    "new_head": "pending_commit"
+  },
+
+  "source_collection_final": {
+    "VB-EVENT-SURVEY": {
+      "pages_collected": 1,
+      "pages_total": 13,
+      "items_collected": 8,
+      "items_total_estimated": 103,
+      "accessibility": "페이지 2~13 GET 파라미터 불작동 (JavaScript 페이지네이션)"
+    },
+    "BTO-PRESS": {
+      "pages_scanned": 7,
+      "pages_recommended": 10,
+      "items_scanned": "약 70건",
+      "b2c_promotions_found": 3
+    },
+    "VB-SHOWS-EVENTS": {
+      "months_collected": ["2026-08"],
+      "months_failed": ["2026-09", "2026-10", "2026-11", "2026-12"],
+      "accessibility": "월별 필터 GET 불작동 (JavaScript)"
+    },
+    "VBP-PASS": "TRAVEL_PRODUCT 재분류",
+    "VB-TRAVEL-PRODUCTS": "프로모션 해당 없음 (TRAVEL_PRODUCT 목록)"
+  },
+
+  "reclassification_results": {
+    "total_v1_items": 12,
+    "promotions_retained": 6,
+    "promotions_removed": 6,
+    "breakdown_retained": [
+      "BTO_PRESS_5340 (부산병 치유 — ACTIVE, TARGETED_OFFER)",
+      "VB_EVENT_684 (Starry Night 크루즈 — ENDING_SOON, BUNDLE_BENEFIT)",
+      "VB_EVENT_201 (Fair Prices Round 4 — EXPIRED, LIMITED_CAMPAIGN)",
+      "VB_EVENT_244 (Fair Prices Round 3 — EXPIRED, LIMITED_CAMPAIGN)",
+      "VB_EVENT_1032 (Fair Prices Round 2 — EXPIRED, LIMITED_CAMPAIGN)",
+      "VB_EVENT_1071 (BTS FREE 숙박 — EXPIRED, FREE_ACCESS, DETAIL_ERROR)"
+    ],
+    "breakdown_removed": [
+      "VB_SHOWS_6160 (Balcony Music Show → EVENT)",
+      "VB_SHOWS_6228 (광안리 드론쇼 → EVENT)",
+      "VBP_PASS_001 (비짓부산패스 → TRAVEL_PRODUCT)",
+      "VB_EVENT_656 (드론쇼 투표 → EVENT)",
+      "VB_EVENT_207 (Busan Super 론칭 → EVENT_UNCERTAIN)",
+      "VB_EVENT_190 (Busan Super 설날 → EVENT_UNCERTAIN)"
+    ]
+  },
+
+  "new_promotions_added": [
+    {
+      "promo_id": "BTO_PRESS_5226",
+      "title": "달빛 SUP 투어 (5월 한정)",
+      "mechanism": "BUNDLE_BENEFIT",
+      "status": "EXPIRED",
+      "highlight": "₩20,000 + ₩30,000 상당 요트권 무료 = 총 ₩50,000 가치 번들"
+    },
+    {
+      "promo_id": "BTO_PRESS_5205",
+      "title": "시티투어 어린이날 비밀티켓",
+      "mechanism": "LIMITED_CAMPAIGN",
+      "status": "EXPIRED",
+      "highlight": "선착순 120매 + 랜덤박스 이벤트"
+    }
+  ],
+
+  "phase_verification": {
+    "phase_1": "PASS — 12건 전수 재분류. 오분류 6건 제거. 근거 기록 완료.",
+    "phase_2": "PARTIAL — BTO 7페이지 스캔 완료 (10 중). VB Event 2~13, Shows 9~12월 JavaScript 페이지네이션으로 접근 불가.",
+    "phase_3": "PASS_WITH_MANUAL — 부산병(VERIFIED), Starry Night(PROMOTION), VBP(TRAVEL_PRODUCT), Balcony(EVENT), Drone(EVENT). KKday URL·VBP 가격은 manual queue 이관.",
+    "phase_4": "PASS — v2 데이터셋 4개 + 보조 파일 6개 생성.",
+    "phase_5": "PASS — data contract v2: 8개 필드 추가 (content_class, promotion_mechanism, regular/promotion_price, discount_value, benefit_condition, evidence_urls, classification_reason).",
+    "phase_6": "PASS — multicity template v2: 분류 규칙·수집 방식·검증 절차·재확인 주기 추가. 상태 DRAFT_VALIDATED_IN_BUSAN."
+  },
+
+  "mandatory_checks": {
+    "EVENT_in_final_promotion": 0,
+    "TRAVEL_PRODUCT_in_final_promotion": 0,
+    "free_event_only_as_promotion": 0,
+    "official_evidence_missing_in_promotion": 0,
+    "news_only_source": 0,
+    "b2b_contamination": 0,
+    "active_without_dates": 0,
+    "duplicate_promo_ids": 0,
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "src_functions_supabase_modified": 0,
+    "api_key_exposed": 0,
+    "push": false
+  },
+
+  "final_promotion_distribution": {
+    "ACTIVE": 1,
+    "ENDING_SOON": 1,
+    "UPCOMING": 0,
+    "EXPIRED": 6,
+    "UNVERIFIED": 0,
+    "TOTAL": 8
+  },
+
+  "content_class_distribution": {
+    "PROMOTION": 8,
+    "EVENT": 5,
+    "EVENT_UNCERTAIN": 2,
+    "TRAVEL_PRODUCT": 17
+  },
+
+  "partial_reason": "VB-EVENT-SURVEY 페이지 2~13(약 95건)·VB-SHOWS-EVENTS 9~12월 — GET 파라미터 페이지네이션 불작동. JavaScript 렌더링 필요. Manual queue 이관 완료.",
+  "finalized": true,
+  "busan_promotion_closed": true,
+
+  "remaining_manual_queue": [
+    {"id": "MB-001", "description": "KKday 부산병 예약 URL·할인율", "priority": "HIGH"},
+    {"id": "MB-005", "description": "visitbusanpass.com 가격·프로모션", "priority": "HIGH"},
+    {"id": "VB-PAGE-2+", "description": "VB-EVENT-SURVEY 2~13페이지 브라우저 수집", "priority": "MEDIUM"},
+    {"id": "VB-SHOWS-SEP-DEC", "description": "VB-SHOWS-EVENTS 9~12월 브라우저 수집", "priority": "LOW"}
+  ],
+
+  "output_files": {
+    "new": [
+      "busan-promotions-current-v2.json",
+      "busan-promotions-upcoming-v2.json",
+      "busan-promotions-expired-v2.json",
+      "busan-promotions-unverified-v2.json",
+      "busan-promotion-nonpromotion-reclassified-v1.json",
+      "busan-event-discovery-from-promotion-sources-v1.json",
+      "busan-travel-product-discovery-v1.json",
+      "busan-promotion-source-coverage-final-v1.json",
+      "busan-promotion-collection-report-v2.json",
+      "busan-promotion-final-handoff-v1.json",
+      "task-busan-promotion-dataset-complete-and-clean-v2-completion-report.json"
+    ],
+    "updated": [
+      "busan-promotion-data-contract-v1.json (v1→v2, 8필드 추가)",
+      "multicity-promotion-source-template-v1.json (v1→v2, Phase 6 규칙 추가)"
+    ]
+  },
+
+  "changes": {
+    "new_files": 11,
+    "updated_files": 2,
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "webfetch_calls": 18,
+    "push": false
+  }
+}

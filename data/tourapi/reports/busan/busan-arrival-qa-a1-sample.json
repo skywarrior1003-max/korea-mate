@@ -1,0 +1,1101 @@
+{
+  "report_type": "arrival_qa_a1_deterministic_sample",
+  "task": "TASK-BUSAN-ENRICH-STAGE-A1-ARRIVAL-QA",
+  "run_ts": "2026-07-29T06:16:08.259604Z",
+  "gate_status": "PASS",
+  "sample_size": 40,
+  "composition": {
+    "restaurant_keep_resolved": 15,
+    "accommodation_keep_resolved": 10,
+    "restore_verification_plus_borderline": 10,
+    "require_arrival_plus_manual": 5
+  },
+  "gate_checks": {
+    "keep_resolved_misclassified": 0,
+    "risk_not_detected": 0,
+    "coord_error_missed": 0,
+    "complex_facility_missed": 0
+  },
+  "records": [
+    {
+      "candidate_id": "busan-F-00002",
+      "category": "restaurant",
+      "title_ko": "만호갈미샤브샤브",
+      "address": "강서구 르노삼성대로 602",
+      "coordinates": {
+        "lat": 35.101425,
+        "lng": 128.92914
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:72:ko",
+          "addr": "강서구 르노삼성대로 602",
+          "lat": 35.101425,
+          "lng": 128.92914
+        },
+        {
+          "key": "FoodService:72:en",
+          "addr": "602 Renault Samsung-daero, Gangseo-gu",
+          "lat": 35.101425,
+          "lng": 128.92914
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00052",
+      "category": "restaurant",
+      "title_ko": "김유순대구뽈찜",
+      "address": "남구 진남로15",
+      "coordinates": {
+        "lat": 35.136368,
+        "lng": 129.09152
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:564:ko",
+          "addr": "남구 진남로15",
+          "lat": 35.136368,
+          "lng": 129.09152
+        },
+        {
+          "key": "FoodService:564:en",
+          "addr": "15, Jinnam-ro, Nam-gu",
+          "lat": 35.136368,
+          "lng": 129.09152
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00098",
+      "category": "restaurant",
+      "title_ko": "소수인",
+      "address": "부산진구 가야대로750번길 17",
+      "coordinates": {
+        "lat": 35.156677,
+        "lng": 129.05383
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1111:ko",
+          "addr": "부산진구 가야대로750번길 17",
+          "lat": 35.156677,
+          "lng": 129.05383
+        },
+        {
+          "key": "FoodService:1111:en",
+          "addr": "17, Gaya-daero 750beon-gil, Busanjin-gu",
+          "lat": 35.156677,
+          "lng": 129.05383
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00144",
+      "category": "restaurant",
+      "title_ko": "세연정",
+      "address": "충렬대로 149",
+      "coordinates": {
+        "lat": 35.20514,
+        "lng": 129.07704
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1268:ko",
+          "addr": "충렬대로 149",
+          "lat": 35.20514,
+          "lng": 129.07704
+        },
+        {
+          "key": "FoodService:1268:en",
+          "addr": "149, Chungnyeol-daero",
+          "lat": 35.20514,
+          "lng": 129.07704
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00187",
+      "category": "restaurant",
+      "title_ko": "바우노바",
+      "address": "중구 광복로 97번길 6",
+      "coordinates": {
+        "lat": 35.099163,
+        "lng": 129.03558
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1467:ko",
+          "addr": "중구 광복로 97번길 6",
+          "lat": 35.099163,
+          "lng": 129.03558
+        },
+        {
+          "key": "FoodService:1467:en",
+          "addr": "6, Gwangbok-ro 97beon-gil, Jung-gu",
+          "lat": 35.099163,
+          "lng": 129.03558
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00236",
+      "category": "restaurant",
+      "title_ko": "하동재첩국",
+      "address": "사상구 낙동대로1518번길 33",
+      "coordinates": {
+        "lat": 35.19344,
+        "lng": 128.98584
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1523:ko",
+          "addr": "사상구 낙동대로1518번길 33",
+          "lat": 35.19344,
+          "lng": 128.98584
+        },
+        {
+          "key": "FoodService:1523:en",
+          "addr": "33, Nakdong-daero 1518beon-gil, Sasang-gu",
+          "lat": 35.19344,
+          "lng": 128.98584
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00295",
+      "category": "restaurant",
+      "title_ko": "오륙도가원",
+      "address": "부산 남구 백운포로 14 (용호동)",
+      "coordinates": {
+        "lat": 35.106842,
+        "lng": 129.11136
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1583:ko",
+          "addr": "부산 남구 백운포로 14 (용호동)",
+          "lat": 35.106842,
+          "lng": 129.11136
+        },
+        {
+          "key": "FoodService:1583:en",
+          "addr": "14, Baegunpo-ro, Nam-gu, Busan",
+          "lat": 35.106842,
+          "lng": 129.11136
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00357",
+      "category": "restaurant",
+      "title_ko": "알천순대곱창전골전문점",
+      "address": "남구 용소로 7번길 88",
+      "coordinates": {
+        "lat": 35.138542,
+        "lng": 129.1047
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1809:ko",
+          "addr": "남구 용소로 7번길 88",
+          "lat": 35.138542,
+          "lng": 129.1047
+        },
+        {
+          "key": "FoodService:1809:en",
+          "addr": "88 Yongso-ro 7beon-gil, Nam-gu",
+          "lat": 35.138542,
+          "lng": 129.1047
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00413",
+      "category": "restaurant",
+      "title_ko": "동삼정",
+      "address": "중구 광복중앙로 14-62 1층",
+      "coordinates": {
+        "lat": 35.10059,
+        "lng": 129.03143
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:2347:ko",
+          "addr": "중구 광복중앙로 14-62 1층",
+          "lat": 35.10059,
+          "lng": 129.03143
+        },
+        {
+          "key": "FoodService:2347:en",
+          "addr": "1F, 14-62, Gwangbokjungang-ro, Jung-gu",
+          "lat": 35.10059,
+          "lng": 129.03143
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00125",
+      "category": "restaurant",
+      "title_ko": "원조 범일동 매떡",
+      "address": "부산광역시 부산진구 골드테마길 52-2",
+      "coordinates": {
+        "lat": 35.1440852924,
+        "lng": 129.0602642345
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:850932:ko",
+          "addr": "부산광역시 부산진구 골드테마길 52-2",
+          "lat": 35.1440852924,
+          "lng": 129.0602642345
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00382",
+      "category": "restaurant",
+      "title_ko": "러브얼스",
+      "address": "부산광역시 수영구 광안로49번길 32-1 (광안동)",
+      "coordinates": {
+        "lat": 35.1564683169,
+        "lng": 129.118606043
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2783646:ko",
+          "addr": "부산광역시 수영구 광안로49번길 32-1 (광안동)",
+          "lat": 35.1564683169,
+          "lng": 129.118606043
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00474",
+      "category": "restaurant",
+      "title_ko": "고관함박",
+      "address": "부산광역시 동구 중앙대로349번길 14 (수정동)",
+      "coordinates": {
+        "lat": 35.1270313878,
+        "lng": 129.0462742511
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2838907:ko",
+          "addr": "부산광역시 동구 중앙대로349번길 14 (수정동)",
+          "lat": 35.1270313878,
+          "lng": 129.0462742511
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00523",
+      "category": "restaurant",
+      "title_ko": "덕산명가 참소국밥",
+      "address": "부산광역시 남구 유엔로 187 (대연동)",
+      "coordinates": {
+        "lat": 35.1304208304,
+        "lng": 129.0968253177
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2852312:ko",
+          "addr": "부산광역시 남구 유엔로 187 (대연동)",
+          "lat": 35.1304208304,
+          "lng": 129.0968253177
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00578",
+      "category": "restaurant",
+      "title_ko": "영남냉면밀면",
+      "address": "부산광역시 서구 보수대로201번길 7",
+      "coordinates": {
+        "lat": 35.1131685724,
+        "lng": 129.0203018886
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2867626:ko",
+          "addr": "부산광역시 서구 보수대로201번길 7",
+          "lat": 35.1131685724,
+          "lng": 129.0203018886
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00643",
+      "category": "restaurant",
+      "title_ko": "광복경양식",
+      "address": "부산광역시 강서구 명지국제6로220번길 19 (명지동)",
+      "coordinates": {
+        "lat": 35.0953632435,
+        "lng": 128.9241107421
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2872590:ko",
+          "addr": "부산광역시 강서구 명지국제6로220번길 19 (명지동)",
+          "lat": 35.0953632435,
+          "lng": 128.9241107421
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00077",
+      "category": "accommodation",
+      "title_ko": "코모도 호텔 부산",
+      "address": "부산광역시 중구 중구로 151 (영주동)",
+      "coordinates": {
+        "lat": 35.108816558,
+        "lng": 129.03530348
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:142852:ko",
+          "addr": "부산광역시 중구 중구로 151 (영주동)",
+          "lat": 35.108816558,
+          "lng": 129.03530348
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00213",
+      "category": "accommodation",
+      "title_ko": "호텔포레 더 스파",
+      "address": "부산광역시 동구 중앙대로296번길 6",
+      "coordinates": {
+        "lat": 35.1226151856,
+        "lng": 129.0446439572
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2378912:ko",
+          "addr": "부산광역시 동구 중앙대로296번길 6",
+          "lat": 35.1226151856,
+          "lng": 129.0446439572
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00244",
+      "category": "accommodation",
+      "title_ko": "윙민박",
+      "address": "부산광역시 해운대구 송정중앙로6번길 36",
+      "coordinates": {
+        "lat": 35.1822391732,
+        "lng": 129.200550987
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2574073:ko",
+          "addr": "부산광역시 해운대구 송정중앙로6번길 36",
+          "lat": 35.1822391732,
+          "lng": 129.200550987
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00279",
+      "category": "accommodation",
+      "title_ko": "해운대센텀호텔",
+      "address": "부산광역시 해운대구 센텀3로 20 (우동)",
+      "coordinates": {
+        "lat": 35.1678506389,
+        "lng": 129.1328433813
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2663379:ko",
+          "addr": "부산광역시 해운대구 센텀3로 20 (우동)",
+          "lat": 35.1678506389,
+          "lng": 129.1328433813
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00298",
+      "category": "accommodation",
+      "title_ko": "오이아호텔",
+      "address": "부산광역시 사하구 다대동로 45 (다대동)",
+      "coordinates": {
+        "lat": 35.0573878305,
+        "lng": 128.9727742061
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2706774:ko",
+          "addr": "부산광역시 사하구 다대동로 45 (다대동)",
+          "lat": 35.0573878305,
+          "lng": 128.9727742061
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00435",
+      "category": "accommodation",
+      "title_ko": "베이몬드호텔",
+      "address": "부산광역시 해운대구 해운대해변로209번가길 27",
+      "coordinates": {
+        "lat": 35.1595992286,
+        "lng": 129.1567804158
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2811461:ko",
+          "addr": "부산광역시 해운대구 해운대해변로209번가길 27",
+          "lat": 35.1595992286,
+          "lng": 129.1567804158
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00704",
+      "category": "accommodation",
+      "title_ko": "브라운도트 호텔 서면역점 비즈니스",
+      "address": "부산광역시 부산진구 가야대로756번길 16 (부전동)",
+      "coordinates": {
+        "lat": 35.156639327,
+        "lng": 129.0540422103
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:3044610:ko",
+          "addr": "부산광역시 부산진구 가야대로756번길 16 (부전동)",
+          "lat": 35.156639327,
+          "lng": 129.0540422103
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00743",
+      "category": "accommodation",
+      "title_ko": "덴바스타호텔 동래점",
+      "address": "부산광역시 동래구 명륜로112번가길 28 (명륜동)",
+      "coordinates": {
+        "lat": 35.2049039,
+        "lng": 129.0829994784
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:3469447:ko",
+          "addr": "부산광역시 동래구 명륜로112번가길 28 (명륜동)",
+          "lat": 35.2049039,
+          "lng": 129.0829994784
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00751",
+      "category": "accommodation",
+      "title_ko": "힐스테이호텔",
+      "address": "부산광역시 북구 만덕고개길 83 (만덕동)",
+      "coordinates": {
+        "lat": 35.2116802763,
+        "lng": 129.0482717602
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:3474164:ko",
+          "addr": "부산광역시 북구 만덕고개길 83 (만덕동)",
+          "lat": 35.2116802763,
+          "lng": 129.0482717602
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00768",
+      "category": "accommodation",
+      "title_ko": "샌드스테이",
+      "address": "부산광역시 수영구 광안해변로279번길 29 (민락동, 유정)",
+      "coordinates": {
+        "lat": 35.1569128366,
+        "lng": 129.1253526663
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:3533138:ko",
+          "addr": "부산광역시 수영구 광안해변로279번길 29 (민락동, 유정)",
+          "lat": 35.1569128366,
+          "lng": 129.1253526663
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-K-00585",
+      "category": "restaurant",
+      "title_ko": "불끈낙지",
+      "address": "부산광역시 부산진구 가야대로410번길 4 하이마트개금점",
+      "coordinates": {
+        "lat": 35.1516753219,
+        "lng": 129.01760385
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2867903:ko",
+          "addr": "부산광역시 부산진구 가야대로410번길 4 하이마트개금점",
+          "lat": 35.1516753219,
+          "lng": 129.01760385
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "HIGH",
+      "branch_risk": "LOW",
+      "qa_decision": "RESTORE_VERIFICATION",
+      "qa_reason": "complex_facility:하이마트_electronics_store: coordinates point to complex facility; specific restaurant arrival point needs verification"
+    },
+    {
+      "candidate_id": "busan-VB-2097",
+      "category": "restaurant",
+      "title_ko": "신선한 해산물과 함께 느끼는 영도의 정취, 영도해녀촌",
+      "address": "부산광역시 영도구 중리남로 2-35 영도해녀문화전시관 1층",
+      "coordinates": {
+        "lat": 35.067368,
+        "lng": 129.06615
+      },
+      "source_count": 0,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "HIGH",
+      "branch_risk": "LOW",
+      "qa_decision": "RESTORE_VERIFICATION",
+      "qa_reason": "complex_facility:문화전시관_cultural_facility: coordinates point to complex facility; specific restaurant arrival point needs verification"
+    },
+    {
+      "candidate_id": "busan-F-00023",
+      "category": "restaurant",
+      "title_ko": "르꽁비브",
+      "address": "해운대구 센텀북대로 60 센텀아이에스타워 110호",
+      "coordinates": {
+        "lat": 35.176777,
+        "lng": 129.12552
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:156:ko",
+          "addr": "해운대구 센텀북대로 60 센텀아이에스타워 110호",
+          "lat": 35.176777,
+          "lng": 129.12552
+        },
+        {
+          "key": "FoodService:156:en",
+          "addr": "60, Centum buk-daero, Haeundae-gu",
+          "lat": 35.176777,
+          "lng": 129.12552
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00053",
+      "category": "restaurant",
+      "title_ko": "백산키친",
+      "address": "동구 조방로14 동일타워",
+      "coordinates": {
+        "lat": 35.13873,
+        "lng": 129.06345
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:566:ko",
+          "addr": "동구 조방로14 동일타워",
+          "lat": 35.13873,
+          "lng": 129.06345
+        },
+        {
+          "key": "FoodService:566:en",
+          "addr": "(Dongil Tower), 14 Jobang-ro, Dong-gu",
+          "lat": 35.13873,
+          "lng": 129.06345
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00085",
+      "category": "restaurant",
+      "title_ko": "동원장수촌",
+      "address": "사하구 동매로 117 건우리안 상가 B 201호",
+      "coordinates": {
+        "lat": 35.10194,
+        "lng": 128.97113
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:966:ko",
+          "addr": "사하구 동매로 117 건우리안 상가 B 201호",
+          "lat": 35.10194,
+          "lng": 128.97113
+        },
+        {
+          "key": "FoodService:966:en",
+          "addr": "#201, B, 117, Dongmae-ro, Saha-gu",
+          "lat": 35.10194,
+          "lng": 128.97113
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00095",
+      "category": "restaurant",
+      "title_ko": "다옴 서면 삼정타워점",
+      "address": "부산진구 중앙대로 672, 삼정타워 5층",
+      "coordinates": {
+        "lat": 35.152874,
+        "lng": 129.05957
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1107:ko",
+          "addr": "부산진구 중앙대로 672, 삼정타워 5층",
+          "lat": 35.152874,
+          "lng": 129.05957
+        },
+        {
+          "key": "FoodService:1107:en",
+          "addr": "5th floor, Samjeong Tower, 672, Jungang-daero, Busanjin-gu",
+          "lat": 35.152874,
+          "lng": 129.05957
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00096",
+      "category": "restaurant",
+      "title_ko": "당감밀면",
+      "address": "부산진구 당감로 5 삼익아파트상가 B동 1층",
+      "coordinates": {
+        "lat": 35.162247,
+        "lng": 129.03975
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1108:ko",
+          "addr": "부산진구 당감로 5 삼익아파트상가 B동 1층",
+          "lat": 35.162247,
+          "lng": 129.03975
+        },
+        {
+          "key": "FoodService:1108:en",
+          "addr": "B-1F, Samik Apt., 5, Danggam-ro, Busanjin-gu",
+          "lat": 35.162247,
+          "lng": 129.03975
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00108",
+      "category": "restaurant",
+      "title_ko": "오리한상 명지본점",
+      "address": "명지국제9로 66, 지봉빌딩 2층",
+      "coordinates": {
+        "lat": 35.097855,
+        "lng": 128.92471
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1219:ko",
+          "addr": "명지국제9로 66, 지봉빌딩 2층",
+          "lat": 35.097855,
+          "lng": 128.92471
+        },
+        {
+          "key": "FoodService:1219:en",
+          "addr": "2F, Jibong Building, 66, Myongjigukje9-ro",
+          "lat": 35.097855,
+          "lng": 128.92471
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00131",
+      "category": "restaurant",
+      "title_ko": "지에이비148",
+      "address": "광안해변로 122, 삼익비치B상가 2층",
+      "coordinates": {
+        "lat": 35.145763,
+        "lng": 129.11497
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1248:ko",
+          "addr": "광안해변로 122, 삼익비치B상가 2층",
+          "lat": 35.145763,
+          "lng": 129.11497
+        },
+        {
+          "key": "FoodService:1248:en",
+          "addr": "2F, Samik Beach B Shopping Mall, 122, Gwanganhaebyeon-ro",
+          "lat": 35.145763,
+          "lng": 129.11497
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00164",
+      "category": "restaurant",
+      "title_ko": "까치횟집",
+      "address": "수영구 광안해변로344번길 17-20 풍경타워",
+      "coordinates": {
+        "lat": 35.155018,
+        "lng": 129.13171
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1439:ko",
+          "addr": "수영구 광안해변로344번길 17-20 풍경타워",
+          "lat": 35.155018,
+          "lng": 129.13171
+        },
+        {
+          "key": "FoodService:1439:en",
+          "addr": "Punggyeong Tower, 17-20, Gwanganhaebyeon-ro 344beon-gil, Suyeong-gu",
+          "lat": 35.155018,
+          "lng": 129.13171
+        }
+      ],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "KEEP_RESOLVED",
+      "qa_reason": "all_conditions_met: address present, coordinates valid and in Busan bounds, no complex facility risk, no coordinate conflicts"
+    },
+    {
+      "candidate_id": "busan-F-00341",
+      "category": "restaurant",
+      "title_ko": "보느파티쓰 리",
+      "address": "부산 연제구 교대로 7 (거제동)",
+      "coordinates": {
+        "lat": 35.195267,
+        "lng": 35.195267
+      },
+      "source_count": 2,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "FoodService:1630:ko",
+          "addr": "부산 연제구 교대로 7 (거제동)",
+          "lat": 35.195267,
+          "lng": 35.195267
+        },
+        {
+          "key": "FoodService:1630:en",
+          "addr": "7, Gyodae-ro, Yeonje-gu, Busan",
+          "lat": 35.195267,
+          "lng": 35.195267
+        }
+      ],
+      "coordinate_validity": "DUPLICATE_COORD_VALUE",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "REQUIRE_ARRIVAL",
+      "qa_reason": "duplicate_coordinate_value: lat(35.195267)==lng(35.195267); SSOT needs_arrival: coordinates are clearly wrong"
+    },
+    {
+      "candidate_id": "busan-K-00674",
+      "category": "attraction",
+      "title_ko": "반송공원",
+      "address": "부산광역시 해운대구 반송순환로 100-53 (반송동)",
+      "coordinates": {
+        "lat": 19.69442748,
+        "lng": 117.9925662504
+      },
+      "source_count": 1,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [
+        {
+          "key": "KorService2:2907087:ko",
+          "addr": "부산광역시 해운대구 반송순환로 100-53 (반송동)",
+          "lat": 19.69442748,
+          "lng": 117.9925662504
+        }
+      ],
+      "coordinate_validity": "OUT_OF_BUSAN_BOUNDS",
+      "complex_facility_risk": "LOW",
+      "branch_risk": "LOW",
+      "qa_decision": "REQUIRE_ARRIVAL",
+      "qa_reason": "out_of_busan_bounds: lat=19.69442748, lng=117.9925662504 outside Busan [34.8,35.5]x[128.7,129.4]; SSOT needs_arrival: coordinates are clearly wrong"
+    },
+    {
+      "candidate_id": "busan-VB-1721",
+      "category": "restaurant",
+      "title_ko": "코리아쿠킹클래스 밥상 인 부산",
+      "address": "부산광역시 해운대구 마린시티3로 37 한일오르듀",
+      "coordinates": {
+        "lat": 35.160378,
+        "lng": 129.14865
+      },
+      "source_count": 0,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "MEDIUM",
+      "branch_risk": "LOW",
+      "qa_decision": "MANUAL_REVIEW",
+      "qa_reason": "identity:cooking_class_in_restaurant_category: cooking class experience service in restaurant category; arrival coordinates valid but identity requires review"
+    },
+    {
+      "candidate_id": "busan-VB-2704",
+      "category": "restaurant",
+      "title_ko": "부산에서 만나는 특별한 한식 쿠킹클래스, 배로모디",
+      "address": "부산광역시 중구 중앙대로 29번길 8, B1 배로모디",
+      "coordinates": {
+        "lat": 35.100166,
+        "lng": 129.0357
+      },
+      "source_count": 0,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "MEDIUM",
+      "branch_risk": "LOW",
+      "qa_decision": "MANUAL_REVIEW",
+      "qa_reason": "identity:cooking_class_in_restaurant_category: cooking class experience service in restaurant category; arrival coordinates valid but identity requires review"
+    },
+    {
+      "candidate_id": "busan-VB-518",
+      "category": "restaurant",
+      "title_ko": "부산 로컬푸드 쿠킹클래스",
+      "address": "부산광역시 서구 구덕로 186번길 15 2층",
+      "coordinates": {
+        "lat": 35.101288,
+        "lng": 129.0207
+      },
+      "source_count": 0,
+      "coordinate_spread_m": 0.0,
+      "source_addresses": [],
+      "coordinate_validity": "VALID",
+      "complex_facility_risk": "MEDIUM",
+      "branch_risk": "LOW",
+      "qa_decision": "MANUAL_REVIEW",
+      "qa_reason": "identity:cooking_class_in_restaurant_category: cooking class experience service in restaurant category; arrival coordinates valid but identity requires review"
+    }
+  ]
+}

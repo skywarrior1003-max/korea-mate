@@ -1,0 +1,248 @@
+{
+  "report_id": "busan-release-contract-audit-v1",
+  "task_id": "TASK-BUSAN-RELEASE-CONTRACT-AUDIT-V1",
+  "generated_at": "2026-08-01T04:45:14.904793Z",
+  "git": {
+    "head": "9fbe5392933125777038380a8c74d150203a9b0a",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "contract_version": "BUSAN_RELEASE_CONTRACT_REALISTIC_V1",
+  "new_contract_required_fields": [
+    "identity_gate==PASS",
+    "name_ko_gate==PASS",
+    "address_gate==PASS OR coordinate_gate==PASS",
+    "branch_gate!=FAIL",
+    "provenance_gate==PASS"
+  ],
+  "new_contract_optional_fields": [
+    "name_en",
+    "description_en",
+    "image",
+    "hours",
+    "arrival_verification"
+  ],
+  "analysis_1_total_category_distribution": {
+    "restaurant": {
+      "count": 721,
+      "share_pct": 43.9
+    },
+    "attraction": {
+      "count": 717,
+      "share_pct": 43.7
+    },
+    "accommodation": {
+      "count": 82,
+      "share_pct": 5.0
+    },
+    "event": {
+      "count": 72,
+      "share_pct": 4.4
+    },
+    "nature": {
+      "count": 50,
+      "share_pct": 3.0
+    }
+  },
+  "analysis_2_v8_810_category_distribution": {
+    "attraction": {
+      "count": 389,
+      "share_pct": 48.0
+    },
+    "restaurant": {
+      "count": 375,
+      "share_pct": 46.3
+    },
+    "event": {
+      "count": 33,
+      "share_pct": 4.1
+    },
+    "nature": {
+      "count": 10,
+      "share_pct": 1.2
+    },
+    "accommodation": {
+      "count": 3,
+      "share_pct": 0.4
+    }
+  },
+  "analysis_3_new_contract_release_count": {
+    "RELEASE_READY": 302,
+    "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 1299,
+    "total_releasable": 1601,
+    "STRUCTURAL_REVIEW_REQUIRED": 4,
+    "EXCLUDE": 37,
+    "grand_total": 1642
+  },
+  "analysis_4_category_release_breakdown": {
+    "accommodation": {
+      "total": 82,
+      "RELEASE_READY": 0,
+      "RELEASE_READY_WITH_OPTIONAL": 82,
+      "releasable": 82,
+      "releasable_pct": 100.0,
+      "STRUCTURAL_REVIEW": 0,
+      "EXCLUDE": 0
+    },
+    "attraction": {
+      "total": 717,
+      "RELEASE_READY": 0,
+      "RELEASE_READY_WITH_OPTIONAL": 717,
+      "releasable": 717,
+      "releasable_pct": 100.0,
+      "STRUCTURAL_REVIEW": 0,
+      "EXCLUDE": 0
+    },
+    "event": {
+      "total": 72,
+      "RELEASE_READY": 0,
+      "RELEASE_READY_WITH_OPTIONAL": 72,
+      "releasable": 72,
+      "releasable_pct": 100.0,
+      "STRUCTURAL_REVIEW": 0,
+      "EXCLUDE": 0
+    },
+    "nature": {
+      "total": 50,
+      "RELEASE_READY": 0,
+      "RELEASE_READY_WITH_OPTIONAL": 50,
+      "releasable": 50,
+      "releasable_pct": 100.0,
+      "STRUCTURAL_REVIEW": 0,
+      "EXCLUDE": 0
+    },
+    "restaurant": {
+      "total": 721,
+      "RELEASE_READY": 302,
+      "RELEASE_READY_WITH_OPTIONAL": 378,
+      "releasable": 680,
+      "releasable_pct": 94.3,
+      "STRUCTURAL_REVIEW": 4,
+      "EXCLUDE": 37
+    }
+  },
+  "analysis_5_hours_only_missing": 48,
+  "analysis_6_arrival_only_missing": 160,
+  "analysis_7_both_hours_and_arrival_missing": 300,
+  "analysis_8_structural_risk_candidates": {
+    "branch_gate_fail_restaurant_sibling": 37,
+    "no_valid_location": 0,
+    "near_duplicate": 4,
+    "total_structural_risk": 41
+  },
+  "analysis_9_near_duplicate_4_candidates": [
+    {
+      "candidate_id": "busan-F-00050",
+      "v8_publishability": "publishable",
+      "note": "same-prefix same-name same-coords, needs adjudication"
+    },
+    {
+      "candidate_id": "busan-F-00299",
+      "v8_publishability": "publishable",
+      "note": "same-prefix same-name same-coords, needs adjudication"
+    },
+    {
+      "candidate_id": "busan-F-00313",
+      "v8_publishability": "publishable_with_caveat",
+      "note": "same-prefix same-name same-coords, needs adjudication"
+    },
+    {
+      "candidate_id": "busan-F-00386",
+      "v8_publishability": "publishable_with_caveat",
+      "note": "same-prefix same-name same-coords, needs adjudication"
+    }
+  ],
+  "analysis_10_comparison_v8_pub_vs_new": {
+    "v8_publishable_303": 303,
+    "v8_qa_auto_pass_301_note": "303건 publishable - 2건 near_dup_demoted = 301건 QA AUTO_PASS (모두 restaurant)",
+    "new_contract_release_ready": 302,
+    "new_contract_total_releasable": 1601,
+    "delta_total_releasable_vs_v8_pub": 1298,
+    "v8_pub_restaurant_pct": 100.0,
+    "new_releasable_restaurant_pct": 42.5,
+    "v8_pub_attraction_pct": 0.0,
+    "new_releasable_attraction_pct": 44.8,
+    "category_bias_note": "V8 publishable 303건은 restaurant 100%. 새 계약 기준에서는 attraction 44.8%, restaurant 42.5%로 균형 회복."
+  },
+  "optional_field_missing_distribution": {
+    "arrival_verification": 874,
+    "description_en": 753,
+    "name_en": 625,
+    "hours": 616,
+    "image": 129
+  },
+  "optional_field_missing_details": {
+    "no_name_en": 625,
+    "no_description_en": 753,
+    "no_image": 129,
+    "no_hours_total": 616,
+    "no_arrival_verified_total": 874,
+    "hours_only_missing": 48,
+    "arrival_only_missing": 160,
+    "both_hours_and_arrival": 300
+  },
+  "category_verdict_breakdown": {
+    "accommodation": {
+      "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 82
+    },
+    "attraction": {
+      "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 717
+    },
+    "event": {
+      "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 72
+    },
+    "nature": {
+      "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 50
+    },
+    "restaurant": {
+      "RELEASE_READY_WITH_OPTIONAL_FIELDS_MISSING": 378,
+      "RELEASE_READY": 302,
+      "EXCLUDE": 37,
+      "STRUCTURAL_REVIEW_REQUIRED": 4
+    }
+  },
+  "v8_category_bias_analysis": {
+    "v8_publishable_303": {
+      "restaurant": {
+        "count": 303,
+        "share_pct": 100.0
+      }
+    },
+    "new_contract_releasable_1601": {
+      "attraction": {
+        "count": 717,
+        "share_pct": 44.8
+      },
+      "restaurant": {
+        "count": 680,
+        "share_pct": 42.5
+      },
+      "accommodation": {
+        "count": 82,
+        "share_pct": 5.1
+      },
+      "event": {
+        "count": 72,
+        "share_pct": 4.5
+      },
+      "nature": {
+        "count": 50,
+        "share_pct": 3.1
+      }
+    },
+    "note": "V8 publishable 303건은 전부 restaurant (100%). 새 계약 기준에서는 attraction 44.8%, restaurant 42.5%로 균형 회복."
+  },
+  "human_review_minimum": {
+    "near_duplicate_adjudication": 4,
+    "branch_gate_fail_sibling_confirmation": 37,
+    "total_minimum_human_review": 41,
+    "note": "STRUCTURAL_REVIEW 4건은 adjudication, EXCLUDE 37건은 sibling 최종 확인"
+  },
+  "safety_checks": {
+    "total_candidates_1642": true,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "gate_flags_modified": false,
+    "api_calls": false,
+    "push": false
+  }
+}

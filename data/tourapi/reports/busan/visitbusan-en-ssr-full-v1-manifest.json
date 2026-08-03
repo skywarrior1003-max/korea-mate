@@ -1,0 +1,32 @@
+{
+  "manifest_id": "visitbusan-en-ssr-full-v1",
+  "task": "TASK-VISITBUSAN-EN-SSR-FULL-V1",
+  "run_ts": "2026-07-30T07:00:15.315728+00:00",
+  "verdict": "PASS",
+  "branch": "data/busan-enrichment-v1",
+  "head_before": "b7cd8c4",
+  "head_after": "5b968e5",
+  "target_count": 183,
+  "processed": 183,
+  "en_title_found": 177,
+  "en_useful": 144,
+  "en_image": 183,
+  "status_distribution": {
+    "PARSE_FAILED": 6,
+    "EN_USEFUL": 144,
+    "EN_DESCRIPTION_WEAK": 9,
+    "EN_TITLE_ONLY": 24
+  },
+  "api_calls": 0,
+  "http_requests": 367,
+  "data_modified": false,
+  "push": false,
+  "parsed_sha256": "f9def6566fc66f7fd93276782190777a6b8f052c62762a261817a62e1ae708d5",
+  "report_sha256": "e43894c2328b13114d4cd8ab8bd8bc5116e6f8310790cdddeaaeaa34d325afc6",
+  "output_files": {
+    "script": "scripts/run-visitbusan-en-ssr-full-v1.py",
+    "parsed": "data\\tourapi\\reports\\busan\\visitbusan-en-ssr-full-v1-parsed.jsonl",
+    "report": "data\\tourapi\\reports\\busan\\visitbusan-en-ssr-full-v1-report.json",
+    "raw_dir": "data\\tourapi\\raw\\busan\\visitbusan-en-ssr-full"
+  }
+}

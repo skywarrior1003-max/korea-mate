@@ -1,0 +1,34 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "129725",
+            "contenttypeid": "14",
+            "scale": "",
+            "usefee": "공연 및 전시별 상이",
+            "discountinfo": "",
+            "spendtime": "공연 및 전시별 상이",
+            "parkingfee": "[일반]<br>\n- 일일 2,000원<br>\n- 월주차 40,000원<br>\n[아카데미 수강생] 일일 1,000원<br>\n※ 50% 할인 : 경차, 국가유공자, 장애인, 다자녀 가정, 친환경 자동차(중복할인 불가)",
+            "infocenterculture": "051-607-6000",
+            "accomcountculture": "",
+            "usetimeculture": "공연 및 전시별 상이",
+            "restdateculture": "연중무휴",
+            "parkingculture": "가능<br>※ 주차장 운영시간 : 08:00~23:00(유인) / 23:00~익일 09:00(무인)",
+            "chkbabycarriageculture": "없음",
+            "chkpetculture": "",
+            "chkcreditcardculture": "가능"
+          }
+        ]
+      },
+      "numOfRows": 1,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

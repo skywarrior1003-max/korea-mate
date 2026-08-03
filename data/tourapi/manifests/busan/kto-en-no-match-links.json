@@ -1,0 +1,338 @@
+{
+  "task": "TASK-KTO-EN-DETAIL-LINK-AUDIT-V1",
+  "created_at": "2026-08-01T10:00:04Z",
+  "verdict": "NO_MATCH",
+  "count": 22,
+  "records": [
+    {
+      "contentid": "1348758",
+      "title_en": "Geumgang Park (금강공원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 200.3,
+      "match_signals": [
+        "nearest_dist=200.3m"
+      ],
+      "evidence": "가장 가까운 candidate 200.3m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1351815",
+      "title_en": "Samnak Eco Park (삼락생태공원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 274.2,
+      "match_signals": [
+        "nearest_dist=274.2m"
+      ],
+      "evidence": "가장 가까운 candidate 274.2m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "1392329",
+      "title_en": "Yeongdo Lighthouse (영도 등대)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 416.4,
+      "match_signals": [
+        "nearest_dist=416.4m"
+      ],
+      "evidence": "가장 가까운 candidate 416.4m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "1981827",
+      "title_en": "Igidae Cliff [National Geopark] (이기대 (부산 국가지질공원))",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 1471.4,
+      "match_signals": [
+        "nearest_dist=1471.4m"
+      ],
+      "evidence": "가장 가까운 candidate 1471.4m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264108",
+      "title_en": "Geumjeongsanseong Fortress (금정산성)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 391.3,
+      "match_signals": [
+        "nearest_dist=391.3m"
+      ],
+      "evidence": "가장 가까운 candidate 391.3m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "264167",
+      "title_en": "Taejongdae Cliffed Coast [National Geopark] (태종대 (부산 국가지질공원))",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 374.0,
+      "match_signals": [
+        "nearest_dist=374.0m"
+      ],
+      "evidence": "가장 가까운 candidate 374.0m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "264385",
+      "title_en": "Amnam Park (부산 암남공원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 320.4,
+      "match_signals": [
+        "nearest_dist=320.4m"
+      ],
+      "evidence": "가장 가까운 candidate 320.4m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "2657503",
+      "title_en": "Site of Dongnaeeupseong Walled Town (동래읍성지)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 317.9,
+      "match_signals": [
+        "nearest_dist=317.9m"
+      ],
+      "evidence": "가장 가까운 candidate 317.9m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "HS"
+    },
+    {
+      "contentid": "2835497",
+      "title_en": "Huinnyeoul Culture Village (흰여울문화마을)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 264.6,
+      "match_signals": [
+        "nearest_dist=264.6m"
+      ],
+      "evidence": "가장 가까운 candidate 264.6m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "2947923",
+      "title_en": "Jangnim Port (장림포구)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 528.6,
+      "match_signals": [
+        "nearest_dist=528.6m"
+      ],
+      "evidence": "가장 가까운 candidate 528.6m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3045680",
+      "title_en": "Marine Adventure Park (마린어드벤처파크)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 950.1,
+      "match_signals": [
+        "nearest_dist=950.1m"
+      ],
+      "evidence": "가장 가까운 candidate 950.1m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A03",
+      "en_lclssystm1": "LS"
+    },
+    {
+      "contentid": "3061988",
+      "title_en": "Sarangbang (사랑방)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 225.8,
+      "match_signals": [
+        "nearest_dist=225.8m"
+      ],
+      "evidence": "가장 가까운 candidate 225.8m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A05",
+      "en_lclssystm1": "FD"
+    },
+    {
+      "contentid": "3098884",
+      "title_en": "Gamman Creative Community Space (감만창의문화촌)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 987.2,
+      "match_signals": [
+        "nearest_dist=987.2m"
+      ],
+      "evidence": "가장 가까운 candidate 987.2m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3098929",
+      "title_en": "Seunghaksan Mountain (승학산)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 279.3,
+      "match_signals": [
+        "nearest_dist=279.3m"
+      ],
+      "evidence": "가장 가까운 candidate 279.3m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A01",
+      "en_lclssystm1": "NA"
+    },
+    {
+      "contentid": "3364075",
+      "title_en": "Kosin University Gospel Hospital (고신대학교복음병원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 271.3,
+      "match_signals": [
+        "nearest_dist=271.3m"
+      ],
+      "evidence": "가장 가까운 candidate 271.3m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3364700",
+      "title_en": "Thank You Korean Medicine Clinic (고마워한의원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 484.9,
+      "match_signals": [
+        "nearest_dist=484.9m"
+      ],
+      "evidence": "가장 가까운 candidate 484.9m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3365275",
+      "title_en": "Kang Dong Hospital (강동병원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 399.9,
+      "match_signals": [
+        "nearest_dist=399.9m"
+      ],
+      "evidence": "가장 가까운 candidate 399.9m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366062",
+      "title_en": "Yeon-San Dangdang Korean Medicine Hospital (연산당당한방병원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 357.3,
+      "match_signals": [
+        "nearest_dist=357.3m"
+      ],
+      "evidence": "가장 가까운 candidate 357.3m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3366511",
+      "title_en": "DIRAMS Korea Cancer Center Hospital(KCCH) (동남권원자력의학원 원자력병원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 698.0,
+      "match_signals": [
+        "nearest_dist=698.0m"
+      ],
+      "evidence": "가장 가까운 candidate 698.0m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3517267",
+      "title_en": "Ppangcheon-dong (빵천동)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 343.4,
+      "match_signals": [
+        "nearest_dist=343.4m"
+      ],
+      "evidence": "가장 가까운 candidate 343.4m > 200m",
+      "en_has_overview": true,
+      "en_has_image": true,
+      "en_cat1": "A02",
+      "en_lclssystm1": "VE"
+    },
+    {
+      "contentid": "3539891",
+      "title_en": "The First Skin Clinic (더퍼스트피부과의원 부산본점)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 390.8,
+      "match_signals": [
+        "nearest_dist=390.8m"
+      ],
+      "evidence": "가장 가까운 candidate 390.8m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    },
+    {
+      "contentid": "3547906",
+      "title_en": "Inje University Haeundae Paik Hospital (인제대학교 해운대백병원)",
+      "verdict": "NO_MATCH",
+      "candidate_id": null,
+      "distance_m": 211.4,
+      "match_signals": [
+        "nearest_dist=211.4m"
+      ],
+      "evidence": "가장 가까운 candidate 211.4m > 200m",
+      "en_has_overview": true,
+      "en_has_image": false,
+      "en_cat1": "A02",
+      "en_lclssystm1": "EX"
+    }
+  ]
+}

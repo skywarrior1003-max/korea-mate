@@ -1,0 +1,166 @@
+{
+  "report_id": "task-busan-festival-source-reconciliation-v1-completion-report",
+  "report_type": "COMPLETION",
+  "task_id": "TASK-BUSAN-FESTIVAL-SOURCE-RECONCILIATION-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "75db747",
+    "new_head": "pending_commit"
+  },
+
+  "phase_results": {
+    "phase_1_api_auth": {
+      "status": "PASS",
+      "approved_7_apis_confirmed": "저장소 스크립트 기반 확인 — data.go.kr 전체 서비스에 TOUR_API_KEY 단일키 사용. 로그인 없는 자동화로는 승인 목록 7개 전체 목록 확인 불가 → MANUAL_OFFICIAL_DOC_REQUIRED 항목 포함",
+      "festival_api_in_approved": "포함 (apis.data.go.kr/6260000/FestivalService — TOUR_API_KEY로 2026-07-24 수집 성공 확인)",
+      "separate_key_required": false,
+      "separate_key_evidence": "batch-state.json: busan-festival-* 5개 언어 status=completed, request_count=1 — 기존 TOUR_API_KEY 단독 사용"
+    },
+    "phase_2_raw_inventory": {
+      "status": "PASS",
+      "raw_exists": true,
+      "raw_directory": "data/tourapi/raw/busan/2026-07-24/batch/",
+      "raw_files": [
+        "busan-festival-ko-p001.json (107,637 bytes)",
+        "busan-festival-en-p001.json (97,324 bytes)",
+        "busan-festival-ja-p001.json (99,426 bytes)",
+        "busan-festival-zhs-p001.json (86,982 bytes)",
+        "busan-festival-zht-p001.json (87,021 bytes)"
+      ],
+      "collection_date": "2026-07-24",
+      "raw_type": "단일 파일 (1페이지 완전 수집)",
+      "endpoint_base": "https://apis.data.go.kr/6260000/FestivalService/getFestival{Lang}",
+      "script_gap": "현재 scripts/tourapi-busan-batch.mjs SOURCES에 festival 항목 없음 → 재수집 시 스크립트 수정 필요"
+    },
+    "phase_3_raw_content_audit": {
+      "status": "PASS",
+      "lang_item_counts": {"ko": 40, "en": 37, "ja": 35, "zhs": 35, "zht": 36},
+      "ko_date_classification": {
+        "2026_future": 1,
+        "2026_past_or_current": 13,
+        "pre_2026_expired": 19,
+        "no_date": 6,
+        "other": 1
+      },
+      "ko_field_completeness": {
+        "has_title": "40/40 (100%)",
+        "has_date": "34/40 (85%)",
+        "has_desc": "40/40 (100%)",
+        "has_image": "40/40 (100%)",
+        "has_tel": "33/40 (83%)"
+      },
+      "duplicate_ids": "없음",
+      "ko_en_common_ids": 35,
+      "ko_only_ids": [1698, 1705, 1807, 1961, 2373],
+      "en_only_ids": [1699, 2049]
+    },
+    "phase_3b_event_candidate_gap": {
+      "status": "PASS",
+      "total_event_candidates": 72,
+      "festival_service_linked": 38,
+      "kto_tourapi_only": 31,
+      "no_source": 3,
+      "date_not_applied_to_hours": 32,
+      "unlinked_raw_events": 2,
+      "unlinked_raw_detail": [
+        {"id": 807, "title": "부산푸드필름페스타", "date": "2026. 06. 26.(금) ~ 06. 28.(일)"},
+        {"id": 1705, "title": "별바다부산 나이트페스타", "date": "2025.07. ~ 2025.10."}
+      ],
+      "note_hours_gap": "FestivalService 연결된 38건 중 32건이 raw에 날짜 있음에도 candidate hours=null. event 기간 필드 처리 정책 미결."
+    },
+    "phase_4_freshness_sample": {
+      "status": "PASS",
+      "samples_checked": 6,
+      "date_stale": 3,
+      "missing_date": 1,
+      "not_in_raw": 1,
+      "current_date_ok": 1,
+      "key_findings": [
+        "부산바다축제: raw '2025. 8. 1.~8. 3.' → bfo.or.kr 2026년 8월 7~13일 (STALE)",
+        "부산항축제: raw 날짜없음 → bfo.or.kr '6월 19~20일' (MISSING_DATE, 이미 과거)",
+        "부산국제록페스티벌: raw '2025. 9. 26.~28.' → bfo.or.kr '10월 2~4일' (STALE, 미래)",
+        "부산인디커넥트페스티벌: raw에 없음 (NOT_IN_RAW)"
+      ],
+      "api_date_reliability": "LOW — 콘텐츠(설명·이미지·장소)는 HIGH, 날짜는 수동갱신 지연 구조",
+      "web_fetch_calls": 4,
+      "successful_fetch": "bfo.or.kr — 2026년 주요 행사 일정 확인"
+    },
+    "phase_5_source_identity": {
+      "status": "PASS",
+      "verdict": "RAW_ALREADY_EXISTS",
+      "source": "BUSAN_OPENAPI_FESTIVAL",
+      "previous_audit_correction": "TASK-BUSAN-OFFICIAL-SOURCE-AND-EVENT-FRESHNESS-AUDIT-V1의 '부산축제정보 API raw 없음' 결론은 오판 — raw는 정상 존재, 파일명 패턴 탐색 범위 오류였음"
+    },
+    "phase_6_source_priority": {
+      "status": "PASS",
+      "event_primary": "부산광역시_부산축제정보 서비스 (콘텐츠)",
+      "event_date_source": "bfo.or.kr (날짜 최신성 검증)",
+      "event_secondary": "KTO KorService2",
+      "attraction_primary": "부산광역시_부산명소정보 서비스",
+      "food_primary": "부산광역시_부산맛집정보 서비스",
+      "image_primary": "visitbusan.net/uploadImgs (FestivalService/AttractionService/FoodService)"
+    }
+  },
+
+  "key_discoveries": [
+    {
+      "discovery": "이전 감사 오판 수정",
+      "detail": "TASK-BUSAN-OFFICIAL-SOURCE-AND-EVENT-FRESHNESS-AUDIT-V1에서 '부산축제정보 OpenAPI raw 없음'으로 판정했으나 실제로는 data/tourapi/raw/busan/2026-07-24/batch/busan-festival-*.json으로 정상 수집됨. 탐색 패턴 오류('busan-city', 'bsm-' 등)가 원인."
+    },
+    {
+      "discovery": "단일 TOUR_API_KEY로 전체 부산광역시 OpenAPI 접근",
+      "detail": "apis.data.go.kr의 KTO(B551011)와 부산광역시(6260000) 서비스 모두 동일 serviceKey로 접근 가능. 별도 키 불필요."
+    },
+    {
+      "discovery": "festival 항목이 현재 batch 스크립트에서 제거됨",
+      "detail": "scripts/tourapi-busan-batch.mjs SOURCES 배열에 festival 5개 언어가 없음. 2026-07-24 이전 버전으로 수집 후 삭제된 것으로 추정. 재수집 시 재추가 필요."
+    },
+    {
+      "discovery": "행사 날짜 신선도 구조적 문제",
+      "detail": "APIs.data.go.kr/6260000/FestivalService의 USAGE_DAY_WEEK_AND_TIME은 수동 갱신 구조로, 주요 행사(부산바다축제·부산항축제·부산국제록페스티벌 등)가 2025년 날짜 그대로임. 날짜는 bfo.or.kr 등 외부 원천으로 보완 필요."
+    },
+    {
+      "discovery": "event candidates 날짜 미반영 38건 중 32건",
+      "detail": "FestivalService에 연결된 38개 event candidates 중 32건이 raw에 날짜가 있음에도 candidate hours=null. 행사 기간 처리 정책(hours 필드 vs event_period 별도) 결정 후 반영 필요."
+    }
+  ],
+
+  "busan_release_readiness": {
+    "verdict": "MINIMAL_COLLECTION_REQUIRED",
+    "detail": "관광지·맛집·숙박 1,529건은 영향 없음. 행사 72건 중 FestivalService 연결 38건의 날짜 미반영(32건) 및 날짜 신선도 문제가 존재하나 release를 완전 blocking하지는 않음. 만료 행사를 필터링하거나 날짜 없는 행사를 별도 처리하는 정책 결정이 선행되어야 함.",
+    "blocking_for_event_72": "날짜 처리 정책 미결 → 이벤트 release 전 결정 필요",
+    "non_blocking_for_others": "관광지·맛집·숙박·nature candidates는 이번 이슈와 무관"
+  },
+
+  "gyeongju_start_readiness": {
+    "verdict": "READY",
+    "detail": "부산 행사 날짜 정책 결정은 경주 작업과 병렬 진행 가능. 경주 pipeline은 별도 source 체계를 사용하므로 부산 event 정책 미결이 경주 착수를 block하지 않음."
+  },
+
+  "output_files": {
+    "busan-festival-approved-api-reconciliation-v1.json": "Phase 1 — API 승인 및 인증 확인 결과",
+    "busan-festival-raw-inventory-v1.json": "Phase 2 — raw 파일 재고 및 경로",
+    "busan-festival-source-identity-v1.json": "Phase 5 — 원천 정체 확정 (RAW_ALREADY_EXISTS)",
+    "busan-festival-raw-content-audit-v1.json": "Phase 3 — 언어별 raw 내용 전수 감사",
+    "busan-event-72-source-gap-audit-v1.json": "Phase 3b — event candidates 72건 raw 연결 분석",
+    "busan-festival-freshness-sample-v1.json": "Phase 4 — 최신성 표본 비교 (bfo.or.kr 기준)",
+    "busan-festival-source-priority-decision-v1.json": "Phase 6 — 원천 우선순위 정책 제안",
+    "task-busan-festival-source-reconciliation-v1-completion-report.json": "완료보고서"
+  },
+  "audit_script": "scripts/audit-busan-festival-source-reconciliation-v1.py",
+
+  "changes": {
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "enriched_modified": 0,
+    "flags_modified": 0,
+    "publishability_modified": 0,
+    "api_calls_made": 4,
+    "api_calls_detail": "WebFetch to bfo.or.kr, visitbusan.net festival pages (public only)",
+    "new_files_created": 9,
+    "git_commit": "pending",
+    "push": false
+  }
+}

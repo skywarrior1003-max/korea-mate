@@ -1,0 +1,36 @@
+{
+  "report_id": "busan-promotions-unverified-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "schema_version": "1.0",
+  "description": "공식 원천 확인이 불완전한 부산 프로모션 항목. 핵심 필드(기간·가격 중 하나 이상) 미확인 상태. 별도 수동 확인 후 해당 파일로 이동 필요.",
+  "count": 1,
+
+  "items": [
+    {
+      "promo_id": "VBP_PASS_001",
+      "source_id": "VBP-PASS",
+      "source_url": "https://www.visitbusanpass.com",
+      "title_en": "Visit Busan Pass (All Types)",
+      "title_ko": "비짓부산패스",
+      "content_type": "tourist_pass",
+      "audience_type": "B2C",
+      "status": "UNVERIFIED",
+      "period_start": null,
+      "period_end": null,
+      "price_krw": null,
+      "price_display": "미확인 — 24hr / 48hr / Big3 / Big5 종류별 상이",
+      "benefit": "부산 주요 관광지 무료 입장 + 쇼핑·식음료 할인 + 교통 편의. 24시간·48시간·Big3·Big5 4종 패스.",
+      "target": "외국인 관광객 포함 일반 관광객",
+      "booking_url": "https://www.visitbusanpass.com",
+      "booking_url_note": "구매 페이지 URL 패턴 미확인 — /ticket, /pass 등 하위 경로 404 반환",
+      "location": "부산 전역",
+      "reference_date": "2026-08-03",
+      "verification_status": "UNVERIFIED_PRICING",
+      "verification_note": "visitbusanpass.com 공식 운영 확인. 패스 종류(24hr/48hr/Big3/Big5)·다국어 지원(EN/JA/ZHS/ZHT/KO)·고객센터(+82-1660-1122) 확인. 구체적 가격 및 포함 시설 목록 미확인 — 가격 하위 페이지 WebFetch 불가 (404).",
+      "manual_action_required": "visitbusanpass.com 가격 페이지를 브라우저로 직접 방문하여 종류별 가격(KRW) 및 포함 시설 목록 확인 (manual-browser-required-items-v1.json MB-005)",
+      "collected_at": "2026-08-03T00:00:00Z"
+    }
+  ]
+}

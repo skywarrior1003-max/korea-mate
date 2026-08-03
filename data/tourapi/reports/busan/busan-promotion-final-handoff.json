@@ -1,0 +1,82 @@
+{
+  "report_id": "busan-promotion-final-handoff",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "supersedes": "busan-promotion-final-handoff-v1.json",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 프로모션 데이터 최종 핸드오프. Browser closure 완료 후 확정.",
+  "finalized": true,
+  "confirmed_promotion_dataset": {
+    "public": {
+      "file": "busan-promotions-public-final.json",
+      "count": 2,
+      "items": [
+        "BTO_PRESS_5340 (ACTIVE)",
+        "VB_EVENT_684 (ENDING_SOON)"
+      ]
+    },
+    "archive": {
+      "file": "busan-promotions-archive-final.json",
+      "count": 8,
+      "items": [
+        "VB_EVENT_201",
+        "VB_EVENT_244",
+        "VB_EVENT_1032",
+        "VB_EVENT_1071",
+        "BTO_PRESS_5226",
+        "BTO_PRESS_5205",
+        "BTO_PRESS_4916",
+        "BTO_PRESS_4971"
+      ]
+    },
+    "upcoming": {
+      "file": "busan-promotions-upcoming-v2.json",
+      "count": 0
+    },
+    "unverified": {
+      "file": "busan-promotions-unverified-v2.json",
+      "count": 0
+    }
+  },
+  "discovery_datasets": {
+    "events": "busan-event-discovery-from-promotion-sources-final.json (5건)",
+    "travel_products": "busan-travel-product-discovery-final.json (17건)",
+    "travel_notices": "busan-travel-notice-discovery-final.json (0건)",
+    "reclassified": "busan-promotion-nonpromotion-reclassified-v1.json (6건 제거 기록)"
+  },
+  "manual_queue": [],
+  "manual_queue_status": "ALL_CLOSED",
+  "manual_queue_resolved": [
+    {
+      "id": "MB-001",
+      "resolution": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED",
+      "detail": "KKday Cloudflare 403 — Playwright 포함 전부 차단. 우회 금지 원칙."
+    },
+    {
+      "id": "MB-005",
+      "resolution": "SITE_PERMANENTLY_INACCESSIBLE_VIA_AUTOMATION",
+      "detail": "visitbusanpass.com 타임아웃/404. TRAVEL_PRODUCT 재분류 완료."
+    },
+    {
+      "id": "VB-PAGE-2+",
+      "resolution": "COMPLETE_NO_NEW_PROMOTIONS",
+      "detail": "13페이지 전수 확인. 신규 PROMOTION 0건."
+    },
+    {
+      "id": "VB-SHOWS-SEP-DEC",
+      "resolution": "COMPLETE_CONFIRMED_ZERO_PROMOTIONS",
+      "detail": "9~12월 전수 확인. PROMOTION 0건."
+    }
+  ],
+  "next_city_recommendations": [
+    "프로모션 소스 탐색 전 JS 페이지네이션 여부 먼저 확인",
+    "shows/events 소스에서 PROMOTION 아닌 EVENT만 나올 가능성 높음 — 우선순위 낮게",
+    "BTO 유사 기관 보도자료 B2C 수율 약 4% — 제목 키워드 필터 필수",
+    "상시 패스·상품은 TRAVEL_PRODUCT 별도 관리"
+  ],
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "head": "d2e7eb2471623131a793f3b80f1c7d1534742e8e",
+    "push": false
+  }
+}

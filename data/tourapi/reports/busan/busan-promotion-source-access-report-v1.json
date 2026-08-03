@@ -1,0 +1,127 @@
+{
+  "report_id": "busan-promotion-source-access-report-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "result": "PASS",
+
+  "phase_results": {
+    "phase_1_bto_access_recovery": {
+      "status": "PASS",
+      "root_cause_resolved": true,
+      "root_cause": "이전 세션의 HTTP 500은 잘못된 board_seq 값(3994) 사용이 원인 — 서버 오류 아님. 실제 최신 board_seq는 5300~5360 범위.",
+      "list_access": "PASS — 정적 HTML, board_seq 추출 가능",
+      "detail_access": "PASS — 정확한 board_seq 사용 시 정상 응답 확인",
+      "content_verified": "부산병 치유 프로모션 (board_seq=5340) 상세 내용 확인 — 기간·대상·혜택·첨부파일 정상 수집",
+      "automatable_boards": ["MN047 보도자료", "MN090 공고·행사", "MN154 비짓부산패스"],
+      "rss_available": false,
+      "sitemap_available": "https://bto.or.kr/kor/CMS/SiteMap/SiteMap.do?mCode=MN013"
+    },
+    "phase_2_visitbusan_recovery": {
+      "status": "PASS",
+      "root_cause_resolved": true,
+      "root_cause_1": "이전 세션에서 명소·테마여행 menuCd를 이벤트 게시판으로 오인 — 실제 이벤트/공지 menuCd는 DOM_000000304002000000 등",
+      "root_cause_2": "한국어 버전 서버 업데이트(2026-06-05 Notice 확인) 후 일부 페이지 불안정 — 영문 버전은 정상 작동",
+      "routes_recovered": ["Event & Survey (EN)", "Shows & Events (EN)", "Notice (EN)", "Busan Travel Products (EN)"],
+      "sitemap_xml": "NOT_FOUND — robots.txt에 sitemap 지시어 없음",
+      "alternative_discovery": "영문 메뉴 HTML 파싱으로 menuCd 목록 추출 성공",
+      "korean_version_status": "불안정 — 영문 버전으로 대체 수집"
+    },
+    "phase_3_source_registry": {
+      "status": "PASS",
+      "total_sources_confirmed": 8,
+      "automatable": 7,
+      "manual_browser_required": 1,
+      "not_found": 4,
+      "b2c_primary_count": 5,
+      "b2c_secondary_count": 2
+    },
+    "phase_4_content_scope": {
+      "status": "PASS",
+      "audience_filter_defined": true,
+      "b2c_filter_rule": "관광객이 직접 신청·사용·예약 가능한 혜택",
+      "excluded_categories": ["사업자 모집", "관광기업 지원사업", "용역·입찰", "단순 기관 홍보"],
+      "bto_notice_b2c_ratio": "최근 10건 중 1건 — B2C 건별 필터링 필요"
+    },
+    "phase_5_official_evidence_rules": {
+      "status": "DEFINED",
+      "primary_sources": ["주최기관 공식 상세", "공식 첨부문서", "부산시·관광공사 공식 재게시", "공식 예약·판매·쿠폰 페이지"],
+      "news_article_as_primary": "금지",
+      "unverified_classification": "UNVERIFIED_OFFICIAL_DETAIL",
+      "example_applied": "부산병 치유 프로모션 — BTO 보도자료 상세(공식 1차 소스)에서 기간·대상·혜택 확정. KKday 예약 링크는 본문 미기재로 MANUAL_BROWSER_REQUIRED 처리."
+    }
+  },
+
+  "confirmed_promo_discovery": {
+    "total_official_promo_candidates_identified": 2,
+    "detail_auto_accessible": 2,
+    "detail_manual_required": 1,
+    "news_only_items": 0,
+    "b2b_items_found": 9,
+    "b2b_items_excluded": 9,
+    "items": [
+      {
+        "title": "부산병 치유 프로모션 (중화권 외국인 관광객 대상)",
+        "source": "BTO 보도자료 board_seq=5340",
+        "period": "2026-07-28 ~ 2026-08-27",
+        "target": "중화권 포함 외국인 관광객",
+        "platform": "KKday",
+        "benefit": "부산병 진단 맞춤형 상품 할인",
+        "official_url_confirmed": "BTO 보도자료 (공식 1차)",
+        "booking_url_status": "MANUAL_BROWSER_REQUIRED — KKday 직접 링크 BTO 본문 미기재",
+        "audience_type": "B2C",
+        "content_type": "campaign",
+        "status": "ACTIVE (2026-08-03 기준)"
+      },
+      {
+        "title": "Starry Night Busan Midnight River Cruise Summer Promotion",
+        "source": "VisitBusan Event & Survey ueb_seq=684",
+        "period": "2026-07-23 ~ 2026-08-09",
+        "target": "일반 (성인·어린이)",
+        "benefit": "수영강 야간 크루즈, 문라이트 콘서트, 불꽃놀이, 간식·음료, 포토 프린트 무료",
+        "price": "₩20,000/인",
+        "seats": "35석 한정",
+        "booking_url": "https://smartstore.naver.com/rivercruise/products/13673189862",
+        "official_url_confirmed": "VisitBusan Event & Survey (공식 1차)",
+        "audience_type": "B2C",
+        "content_type": "special_experience",
+        "status": "ACTIVE (2026-08-03 기준)"
+      }
+    ]
+  },
+
+  "mandatory_verification": {
+    "bto_promo_candidates_identified": 2,
+    "detail_auto_accessible": 2,
+    "attachment_accessible": true,
+    "busan_metro_repost_found": 0,
+    "official_partner_pages_found": 1,
+    "visitbusan_valid_source_urls": 4,
+    "automatable_count": 7,
+    "manual_browser_required_count": 6,
+    "news_only_items": 0,
+    "b2b_contamination": 0,
+    "data_modification": 0,
+    "push": false
+  },
+
+  "next_step_readiness": {
+    "verdict": "READY — 다음 수집 태스크 착수 가능",
+    "ready_sources": ["VB-EVENT-SURVEY", "BTO-PRESS", "VB-SHOWS-EVENTS", "VBP-PASS", "VB-TRAVEL-PRODUCTS"],
+    "pending_before_full_collection": [
+      "KKday 부산병 프로모션 직접 링크 확인 (MB-001)",
+      "visitbusanpass.com 가격 상세 확인 (MB-005)",
+      "busan.go.kr 관광 보도자료 URL 발굴 (MB-002)"
+    ],
+    "blocking_next_task": false,
+    "collection_possible_now": "VB-EVENT-SURVEY 103건, BTO-PRESS 최근 100건, VB-SHOWS-EVENTS 2026년 하반기"
+  },
+
+  "webfetch_calls": 17,
+  "changes": {
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "new_report_files": 5,
+    "new_script_files": 1,
+    "push": false
+  }
+}

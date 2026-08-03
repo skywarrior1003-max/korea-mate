@@ -1,0 +1,628 @@
+{
+  "report_id": "data-quality-rules-audit-20260729",
+  "task": "TASK-DATA-QUALITY-RULES-AUDIT",
+  "generated_ts": "2026-07-29T00:00:00Z",
+  "auditor": "auxiliary-computer",
+  "branch": "data/busan-enrichment-v1",
+  "head": "a3d9980",
+  "scope": "GoKoreaMate 전체 데이터 품질·수집·완전성·공개 규칙 감사. 규칙 추가·수정 금지. 감사 보고만.",
+  "methodology": "read-only review of all rule documents, SSOT v1.1, local operating rules, Busan pipeline reports",
+
+  "documents_audited": [
+    {
+      "id": "nightly-exec",
+      "path": "docs/automation/nightly-execution-rules.md",
+      "last_modified": "2026-07-29",
+      "commit": "a8f7016"
+    },
+    {
+      "id": "schema-enrich",
+      "path": "docs/automation/schema-independent-enrichment-rules.md",
+      "last_modified": "2026-07-29",
+      "commit": "a8f7016"
+    },
+    {
+      "id": "data-contract",
+      "path": "docs/architecture/gokoreamate-data-contract-v1.md",
+      "version": "1.1",
+      "last_verified_commit": "6e6f62f",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "api-inventory",
+      "path": "docs/tourapi/approved-api-inventory.md",
+      "last_modified": "2026-07-23"
+    },
+    {
+      "id": "data-source-priority",
+      "path": "docs/automation/data-source-priority.md",
+      "last_modified": "2026-07-29"
+    },
+    {
+      "id": "image-curation",
+      "path": "docs/automation/image-curation-rules.md",
+      "last_modified": "2026-07-29"
+    },
+    {
+      "id": "photo-gallery",
+      "path": "docs/automation/photo-gallery-rules.md",
+      "last_modified": "2026-07-29"
+    },
+    {
+      "id": "data-source-strategy",
+      "path": "docs/tourapi/gokoreamate-data-source-strategy.md",
+      "last_modified": "2026-07-23"
+    },
+    {
+      "id": "aux-operating-rules",
+      "path": "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md",
+      "location": "git_external",
+      "last_modified": "2026-07-29"
+    },
+    {
+      "id": "aux-session-checklist",
+      "path": "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-session-start-checklist.md",
+      "location": "git_external",
+      "last_modified": "2026-07-29"
+    },
+    {
+      "id": "busan-v1-validation",
+      "path": "data/tourapi/reports/busan/busan-enrichment-v1-validation.json",
+      "type": "pipeline_report"
+    },
+    {
+      "id": "kto-preflight",
+      "path": "data/tourapi/reports/busan/kto-detail-preflight-report.json",
+      "type": "pipeline_report"
+    },
+    {
+      "id": "kto-hardening",
+      "path": "data/tourapi/reports/busan/kto-detail-hardening-verify.json",
+      "type": "pipeline_report"
+    },
+    {
+      "id": "run-manifest",
+      "path": "data/tourapi/manifests/busan-enrichment-v1-run-manifest.json",
+      "type": "manifest"
+    }
+  ],
+
+  "audit_categories": {
+
+    "A_data_collection_principles": {
+      "label": "데이터 수집 원칙",
+      "primary_doc": "docs/automation/nightly-execution-rules.md § 자동 허용 범위·HARD STOP·개별 항목 실패 처리",
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "자율 진행 원칙 명확: 불확실 항목 임의 확정 금지, 대신 판단 근거 기록",
+          "자동 허용 범위와 금지 범위 명확히 분리 (scripts/data/docs vs 외부 경로)",
+          "HARD STOP 조건 이중화: 범용 조건 + 야간 자동화 추가 조건",
+          "HARD STOP 시 처리 절차 명확: 기존 파일 보존 + 중간 결과 저장 + 보고",
+          "개별 항목 실패 처리: 오류 목록 기록 후 계속 처리 (전체 중단 아님)",
+          "재시도 횟수 제한: 단계별 최대 3회"
+        ],
+        "issues": [
+          {
+            "severity": "LOW",
+            "finding": "누적 실패율 기준(20건+ 중 10% 초과 HARD STOP)과 스크립트 연속 실패 기준(CONSECUTIVE_FAILURE_LIMIT=5)의 관계 미명시",
+            "detail": "nightly-execution-rules § 개별 항목 실패는 20건 이상에서 실패율 10%를 임계로 설정. 반면 tourapi-busan-detail.mjs(v2)는 CONSECUTIVE_FAILURE_LIMIT=5(연속)로 구현. 두 기준이 서로 보완적이나 문서에는 명시된 관계가 없어 다음 스크립트 작성 시 혼선 가능.",
+            "recommendation": "nightly-execution-rules에 '스크립트 구현 시 누적 실패율 기준과 연속 실패 기준을 함께 적용할 것' 또는 '연속 실패 LIMIT 추천값' 추가."
+          }
+        ]
+      },
+      "overall": "규칙 유효. 단, 실패 기준 이중화 명시 강화 필요."
+    },
+
+    "B_preflight_principles": {
+      "label": "Preflight 원칙",
+      "primary_doc": "docs/automation/nightly-execution-rules.md § 실행 전 Preflight 원칙",
+      "verdict": "STRENGTHEN",
+      "assessment": {
+        "strengths": [
+          "11개 Preflight 항목 명확: 예상 비용 산출, 기존 데이터 재사용, 표본 효익 확인 등",
+          "PASS / PASS_WITH_WARNINGS / REVISE_REQUIRED / HARD_STOP 4단계 판정 명확",
+          "출력 경로 분리(항목 8)와 기존 파일 read-only(항목 9) 규칙 명확",
+          "Busan KTO Preflight에서 실제 적용 검증됨 (commit aff9e82 — PARTIAL_PASS, dry-run 버그 발견·수정)",
+          "REVISE_REQUIRED 보고 내용 명확 (checkpoint 변경 없음 원칙 포함)"
+        ],
+        "issues": [
+          {
+            "severity": "MEDIUM",
+            "finding": "API 공식 호출 한도 미확인 상태(UNVERIFIED) 처리 절차가 Preflight 규칙에 없음",
+            "detail": "현재 KTO 전체 수집은 CALL_LIMIT_STATUS='UNVERIFIED'로 차단됨. 호출 한도 확인 방법(data.go.kr 마이페이지 → 개발계정 관리 → 트래픽 허용량)이 Preflight 규칙이나 API 인벤토리에 명시되지 않음. Preflight §1(예상 비용 산출)에 'API 공식 한도 미확인이면 REVISE_REQUIRED'라는 조건이 암묵적이나 명시되지 않음.",
+            "recommendation": "Preflight §1에 'API 호출 한도 공식 미확인 시 REVISE_REQUIRED, 확인 절차(data.go.kr 마이페이지) 선행' 항목 추가. 또는 CALL_LIMIT_STATUS 개념을 Preflight 문서에 명시."
+          }
+        ]
+      },
+      "overall": "규칙 구조 유효. API 한도 미확인 처리 절차 명시 보강 필요."
+    },
+
+    "C_pipeline_validation_gate": {
+      "label": "다단계 파이프라인·Validation Gate",
+      "primary_doc": "docs/automation/nightly-execution-rules.md § 다단계 파이프라인 원칙",
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "4단계 파이프라인(수집→정규화→매칭→집계) 명확",
+          "단계별 Validation Gate 판정 4종 명확 (PASS/PASS_WITH_WARNINGS/FAIL/HARD_STOP)",
+          "pipeline-checkpoint.json 구조 명확, 재실행 시 완료 단계 skip 원칙",
+          "FAIL 단계 출력 파일을 이후 단계 입력으로 사용 금지 명확",
+          "전체 도시 파이프라인 순서 ①~⑪ 명확, 각 단계별 참조 문서 지정"
+        ],
+        "issues": []
+      },
+      "overall": "규칙 충분하고 실제 파이프라인에서 검증됨."
+    },
+
+    "D_data_status_classification": {
+      "label": "데이터 상태 구분 규칙",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § B",
+      "also_in": [
+        "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md § 5, § 12"
+      ],
+      "verdict": "MERGE",
+      "assessment": {
+        "strengths": [
+          "5가지 상태(VERIFIED/DERIVABLE/CURRENT_INPUT_UNAVAILABLE/UNRESOLVED/NOT_APPLICABLE) 명확",
+          "CURRENT_INPUT_UNAVAILABLE vs 전역 부재 구분이 실제 작업에서 중요하게 적용됨 (VisitBusanContent 311건 처리)",
+          "부산 enrichment validation에서 정확히 적용 확인 (kto_description_null 643, CURRENT_CANONICAL_INPUT_UNAVAILABLE 311)"
+        ],
+        "issues": [
+          {
+            "severity": "LOW",
+            "finding": "동일 내용이 schema-independent-enrichment-rules.md와 auxiliary-computer-operating-rules.md에 중복",
+            "detail": "schema-independent § B와 auxiliary § 5, § 12에 동일한 5가지 상태값이 각각 정의됨. 의도적 중복이나, 향후 상태값 추가 시 두 문서를 동시에 수정해야 하는 유지보수 부담 존재.",
+            "recommendation": "auxiliary-computer-operating-rules § 5에서 상태값 정의를 schema-independent-enrichment-rules.md § B를 참조(cross-reference)로 대체. 정의는 단일 문서에만 유지."
+          }
+        ]
+      },
+      "overall": "규칙 내용 유효. 중복 정의는 교차 참조로 통합 권장."
+    },
+
+    "E_existing_data_first": {
+      "label": "기존 데이터 우선 원칙",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § A",
+      "also_in": [
+        "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md § 5"
+      ],
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "6단계 처리 순서 명확: 기존 canonical → normalized → linked_source_keys → 다국어 source → 교차확인 → 진짜 예외만 추가 조사",
+          "'출력 형식이 바뀌었다는 이유만으로 기존 원천을 재수집하지 않는다' 핵심 원칙 명확",
+          "부산 enrichment v1에서 엄격 준수 확인: 기존 batch_normalized/linkage_index 재사용"
+        ],
+        "issues": []
+      },
+      "overall": "규칙 유효하고 준수됨."
+    },
+
+    "F_place_identity_rules": {
+      "label": "장소 동일성 판정 규칙",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § E",
+      "also_in": [
+        "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md § 6"
+      ],
+      "verdict": "MERGE",
+      "assessment": {
+        "strengths": [
+          "7가지 복합 근거 필수 (source ID, 명칭, 주소, 좌표, category, district, 다른 canonical source와의 관계)",
+          "같은 좌표라도 다른 엔티티일 수 있는 사례 명시 (시설↔행사, 건물↔입점 매장 등)",
+          "KTO KO↔EN 자동 연결 공통 최소 조건 명확 (bijective, category 호환, 주소·district 충돌 없음, 시설·행사 혼용 금지)",
+          "도시별 임계값 분리 원칙 명확 (부산 검증값 ≤20m, Jaccard≥0.5 — 다른 도시에 복사 금지)",
+          "부산 KTO EN 연결: 52후보 → 42승인(10 거부) — 알고리즘 성능 검증됨. 부산영화의전당↔BIFF 오매칭(entity_type_conflict) 제외 확인"
+        ],
+        "issues": [
+          {
+            "severity": "LOW",
+            "finding": "schema-independent § E와 auxiliary § 6 내용 중복. 두 문서에서 7가지 근거, KTO KO↔EN 조건, 부산 임계값을 각각 정의",
+            "recommendation": "auxiliary § 6을 schema-independent § E 교차 참조로 대체."
+          }
+        ]
+      },
+      "overall": "규칙 유효하고 실제 부산 데이터에서 검증됨. 중복 정의 교차 참조 통합 권장."
+    },
+
+    "G_restaurant_branch_rules": {
+      "label": "음식점 지점 판정 규칙",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § F",
+      "also_in": [
+        "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md § 7"
+      ],
+      "verdict": "MERGE",
+      "assessment": {
+        "strengths": [
+          "자동 식별 가능 조건(단독 상호·고유 주소·고유 좌표·명시적 지점명)과 flag 유지 조건 명확히 이분",
+          "'음식점 전체에 일괄 부여 금지' 핵심 원칙 명확",
+          "부산에서 적용: QA-02에서 restaurant_branch_cleared 654건 (전체 721건 중 91%), 잔여 67건은 적절히 flag 유지"
+        ],
+        "issues": [
+          {
+            "severity": "LOW",
+            "finding": "schema-independent § F와 auxiliary § 7 내용 중복",
+            "recommendation": "auxiliary § 7을 schema-independent § F 교차 참조로 대체."
+          }
+        ]
+      },
+      "overall": "규칙 유효하고 성공적으로 적용됨. 중복 정의 교차 참조 통합 권장."
+    },
+
+    "H_hours_arrival_rules": {
+      "label": "Hours·Arrival 판정 규칙",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § G, § H",
+      "verdict": "STRENGTHEN",
+      "assessment": {
+        "strengths": [
+          "Hours 무효값 목록 명확: '-', '0', '무', 'N/A', 길이 ≤3자, 빈 문자열",
+          "Hours reconciliation 필수 기록 형식 명확 (IC.hours 비어있지 않음 N건 / 유효 판정 M건 / 필터 제거 N-M건)",
+          "Arrival 2단계 구분 명확: needs_arrival(좌표 없음·틀림·안내 불가) vs needs_arrival_verification(최적 도착점 미검증)",
+          "부산 hours 적용: 618건 비어있지 않음 → 571건 유효(≤3자 47건 필터) — 규칙 정확히 적용됨",
+          "KTO detailIntro2에서 hours 데이터 추출 가능성 확인 (pilot 완료)"
+        ],
+        "issues": [
+          {
+            "severity": "MEDIUM",
+            "finding": "nature 카테고리(50건) hours 개별 판정이 실제로 미적용. needs_hours 1,071건에 포함됨",
+            "detail": "규칙(§ G)에서 'nature 카테고리도 상시 개방 여부, 출입 통제 유무, 운영 시설 존재 여부를 근거로 개별 판정한다'고 명시. 그러나 부산 enrichment v1에서 nature 카테고리(50건)에 대한 개별 판정이 미적용 — KTO detailIntro2 수집 전이므로 데이터 미확보 상태. KTO 상세 수집 후 재판정 필요.",
+            "recommendation": "KTO detail 수집 후 nature 50건에 대해 규칙 § G의 개별 판정 적용. 수집 전까지는 CURRENT_INPUT_UNAVAILABLE로 기록할 것."
+          },
+          {
+            "severity": "LOW",
+            "finding": "arrival_anchor_type 11종(SSOT v1.1 § 8)이 schema-independent-enrichment-rules.md에 명시되지 않음",
+            "detail": "SSOT에 11가지 arrival_anchor_type이 정의(beach_access, park_gate 등)되어 있으나, enrichment 규칙 문서에서 이를 참조하지 않음. enrichment에서 arrival 분류 시 어느 type을 쓸지 명확한 연결 없음.",
+            "recommendation": "schema-independent § H에 SSOT v1.1 § 8 참조 추가: arrival 분류 시 arrival_anchor_type 11종 기준 적용."
+          }
+        ]
+      },
+      "overall": "규칙 유효하나 nature 카테고리 개별 판정 및 arrival_anchor_type 연결 보강 필요."
+    },
+
+    "I_review_flags_readiness": {
+      "label": "review_flags·readiness 규칙",
+      "primary_doc": "docs/architecture/gokoreamate-data-contract-v1.md § 6, § 7",
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "10개 flag 명확 정의 (v1.1 교정 — needs_map_name_ko 신설, needs_arrival_verification 신설)",
+          "readiness 차단 매트릭스 10/10 전건 명시",
+          "공존 규칙: approved 상태에서도 비차단 flag 존재 가능, 이 원칙이 SSOT에 명확",
+          "v1.1 교정: needs_translation이 CATALOG·SCHEDULER·FEATURED 3종 차단으로 강화됨",
+          "부산 enrichment에서 허용 flag만 사용 확인 (validation_checks.illegal_flags: true)",
+          "flag 의미 정의에서 '해당하지 않는 것'까지 명시 (오해 방지)",
+          "backfill manifest 판정 금지 사항 6가지 명확 (예: name_l10n.ko NULL만으로 비공개 금지)"
+        ],
+        "issues": []
+      },
+      "overall": "규칙 완전하고 실제 데이터에서 검증됨. SSOT v1.1이 최신 상태."
+    },
+
+    "J_image_curation_rights": {
+      "label": "이미지 큐레이션·권리 규칙",
+      "primary_doc": "docs/automation/image-curation-rules.md",
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "source_pool과 curated_images 분리 원칙 명확 (source_pool 전체 자동 승격 → HARD_STOP)",
+          "카테고리별 권장/최대 수량 명확 (attraction 3-4/5, restaurant 3/4 등)",
+          "선정 우선순위 8단계 명확: 장소 일치도 > 최신성 > 권리 > URL > 역할 다양성 > 품질 > 메타데이터 > 결정성 tie-breaker",
+          "이미지 상태값 6종 명확 (image_complete/sufficient/partial/missing/source_exhausted/do_not_retry)",
+          "rights_status 4종 명확 (rights_confirmed/operational_assumed/review_required/blocked)",
+          "자동 제외(blocked) 조건 명확: 워터마크·스튜디오 저작권 명시·공모전 수상작 등",
+          "'사이트 공통 푸터 All Rights Reserved만으로 자동 제외 금지' 실용적 규칙",
+          "data-source-priority.md와 우선순위 1순위 차이를 상호 명시적으로 구분",
+          "VB 이미지 958건 operational_assumed 상태 — 규칙에 부합 (rights_confirmed 0건은 규칙 위반 아님)"
+        ],
+        "issues": [
+          {
+            "severity": "LOW",
+            "finding": "affiliate·직접 수익 연결 시 operational_assumed 이미지 재검토 필요성이 규칙에만 있고 workflow에 미연결",
+            "detail": "image-curation-rules § 운영 관리 조건에 '광고 소재·이미지 판매·예약 상품 직접 홍보 등 직접 수익 활용 시 권리 기준을 재검토한다'가 있으나, affiliate 연결 구현 시 이 재검토를 누가 언제 어떻게 수행하는지 workflow 없음.",
+            "recommendation": "GoKoreaMate affiliate 기능 구현 전 이미지 권리 재검토 단계를 affiliate workflow에 포함. 현재는 규칙 내용 유효."
+          }
+        ]
+      },
+      "overall": "규칙 충분하고 현재 데이터 상태에 부합. affiliate 연결 시 workflow 연결 보강 필요."
+    },
+
+    "K_data_source_priority": {
+      "label": "데이터 출처 우선순위·링크 규칙",
+      "primary_doc": "docs/automation/data-source-priority.md",
+      "verdict": "KEEP",
+      "assessment": {
+        "strengths": [
+          "1계층(도시 공식 관광사이트) vs 보완 원천(KTO·공공데이터) 분류 명확",
+          "7단계 비교 기준 명확: 최신성 > 장소 일치도 > 완전성 > 이미지 품질 > 권리 > URL > 서비스 적합성",
+          "자동 교체 금지 원칙 명확: 기존 원천에 문제가 있을 때만 교체 후보 생성",
+          "출처 충돌 시 덮어쓰기 금지, 비교 결과·근거 기록 원칙",
+          "source_url(수집 원천)과 display_url(사용자 안내 링크) 필드 분리 원칙 명확",
+          "카테고리별 사용자 안내 링크 우선순위(행사·음식점·관광지·선정인증) 명확"
+        ],
+        "issues": []
+      },
+      "overall": "규칙 유효하고 명확."
+    },
+
+    "L_automated_validation": {
+      "label": "자동검증 항목",
+      "primary_doc": "docs/automation/schema-independent-enrichment-rules.md § K",
+      "also_in": [
+        "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md § 13"
+      ],
+      "verdict": "STRENGTHEN",
+      "assessment": {
+        "strengths": [
+          "수량·품질·재현성·금지 영역 4개 축 명확",
+          "'코드 내부 상태 일치만 확인하지 않는다 — 위험 표본으로 실제 판정 정확성을 검증한다' 중요 원칙",
+          "부산 enrichment에서 전 항목 PASS 확인 (kto_en_link: bijective PASS, hours_no_inconsistency: true 등)"
+        ],
+        "issues": [
+          {
+            "severity": "MEDIUM",
+            "finding": "좌표 범위 자동화 검증이 enrichment 단계에 미구현",
+            "detail": "규칙에 '좌표 범위 (해당 도시 bounding box)' 검증이 포함됨. 그러나 부산 데이터에서 busan-F-00341(lat/lng 뒤바뀜, 실제로는 바다 좌표)와 busan-K-00674(부산 범위 밖 좌표)가 자동 검출되지 않고 수동 QA(arrival_qa)에서 발견됨. 좌표 bounding box 자동 검증이 enrichment pipeline에서 수행되었다면 Stage A1 이전에 발견됐을 것.",
+            "recommendation": "enrichment pipeline Validation Gate에 부산 bounding box(lat: 34.88~35.39, lng: 128.74~129.31) 범위 체크 추가. 범위 이탈 시 PASS_WITH_WARNINGS + needs_arrival flag 자동 부여."
+          },
+          {
+            "severity": "LOW",
+            "finding": "schema-independent § K와 auxiliary § 13 자동검증 항목 중복",
+            "recommendation": "auxiliary § 13을 schema-independent § K 교차 참조로 대체."
+          }
+        ]
+      },
+      "overall": "규칙 유효하나 좌표 bounding box 자동 검증 구현 강화 필요."
+    },
+
+    "M_api_call_safety": {
+      "label": "API 호출 안전·collector 규칙",
+      "primary_doc": "docs/tourapi/approved-api-inventory.md",
+      "related_impl": "scripts/tourapi-busan-detail.mjs (v2, commit a3d9980)",
+      "verdict": "STRENGTHEN",
+      "assessment": {
+        "strengths": [
+          "CALL_LIMIT_STATUS='UNVERIFIED' 게이트 스크립트에 구현됨 (full 실행 차단)",
+          "6가지 안전 기능 구현 완료: skip_existing, timeout(30s), checkpoint(atomic), consecutive_failure_abort(5건), manifest_input, full_output_path",
+          "API 별 스키마 분기 명확 (KTO camelCase vs 부산시 ALL_CAPS vs 행정안전부 한글)",
+          "contentId 언어 서비스 간 동일성 미보장 명시 (실측 1건 확인)",
+          "detailIntro2·detailCommon2·detailImage2 검증 완료 파라미터 확인됨"
+        ],
+        "issues": [
+          {
+            "severity": "HIGH",
+            "finding": "approved-api-inventory.md의 KTO detailCommon2 상태가 STALE",
+            "detail": "inventory 기록(2026-07-23): detailCommon2 '응답 파싱 실패 (구조 확인 필요)'. 그러나 KTO Detail API Pilot(commit 911c892, 2026-07-29)에서 해결됨: KorService2는 contentId만으로 전체 공통 정보 자동 반환 (YN 파라미터 전부 INVALID_REQUEST_PARAMETER_ERROR). 5/5 OK, overview(description) 5/5 추출 가능.",
+            "recommendation": "approved-api-inventory.md의 KorService2 detailCommon2 항목을 '✓ rc:0000 (contentId만 사용, YN 파라미터 금지)'로 업데이트. EngService2 detailCommon2도 동일 해결로 추정."
+          },
+          {
+            "severity": "MEDIUM",
+            "finding": "API 일일 호출 한도가 전체 '추정' 상태이며, 공식 확인 절차가 어느 규칙 문서에도 없음",
+            "detail": "KorService2 '추정: 1,000회', 부산시 3종 '추정: 10,000회', 행정안전부 '확인 필요'. 이 추정값이 전체 파이프라인 계획(KTO full 수집 BLOCKED, 1,295건 API 호출)에 직결됨. 공식 확인 방법(data.go.kr 마이페이지 → 개발계정 관리 → 해당 서비스 → 트래픽 허용량)이 문서화되지 않음.",
+            "recommendation": "approved-api-inventory.md에 '호출 한도 확인 방법' 섹션 추가: data.go.kr 로그인 → 마이페이지 → 개발계정 관리 → 각 서비스 트래픽 허용량 확인. CALL_LIMIT_STATUS 변경 절차를 tourapi-busan-detail.mjs 주석에도 명시."
+          },
+          {
+            "severity": "MEDIUM",
+            "finding": "photo-gallery-rules.md의 galleryDetailList1 필수 파라미터가 approved-api-inventory.md와 불일치",
+            "detail": "photo-gallery-rules.md: galleryDetailList1의 필수 파라미터는 'title'. approved-api-inventory.md: galleryDetailList1 '✗ rc:11 (필수 파라미터 누락 — galContentId 추정)'. 두 문서의 설명이 다름. photo-gallery-rules.md가 실제 동작을 더 정확히 기술한 것으로 추정(title 기반 검색).",
+            "recommendation": "approved-api-inventory.md의 galleryDetailList1 항목을 photo-gallery-rules.md 기준으로 업데이트: '필수 파라미터: title (ID 조회 아님, 제목 기반 검색)'. 실측 확인 후 반영 권장."
+          }
+        ]
+      },
+      "overall": "구현 규칙 유효. inventory 문서 3건 stale/conflicting 업데이트 필요."
+    },
+
+    "N_auxiliary_operating_rules": {
+      "label": "보조컴퓨터 운영·Git 규칙",
+      "primary_doc": "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md",
+      "checklist": "C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-session-start-checklist.md",
+      "verdict": "STRENGTHEN",
+      "assessment": {
+        "strengths": [
+          "보조/메인 역할 분리 명확 (보조: 데이터 조사·수집·검증 전담, 메인: DB·운영·배포·master merge)",
+          "Git 절대 금지 목록 명확 (master checkout/pull/commit, force push, git add ./git add -A 등)",
+          "commit과 push 분리 원칙 명확: checkpoint commit은 상시, push는 의미 있는 전체 단계 완료 후",
+          "canonical 자산 선별 규칙 명확: 단순 행 수·파일명이 아니라 handoff·manifest·검증보고서 최종본 기준",
+          "환각·추정 방지 규칙 명확: 과거 보고서를 현재 사실로 사용 금지",
+          "15개 섹션의 포괄적 운영 규칙",
+          "세션 시작 7단계 필수 체크리스트와 연계",
+          "이번 세션에서 규칙 전체 준수 확인: master 변경 0, DB 변경 0, 금지 영역 변경 0"
+        ],
+        "issues": [
+          {
+            "severity": "MEDIUM",
+            "finding": "auxiliary-session-start-checklist.md의 규칙 문서 경로가 실제 위치와 불일치",
+            "detail": "auxiliary-session-start-checklist.md 상단: '전체 규칙: docs/automation/auxiliary-computer-operating-rules.md'. 그러나 실제 파일 위치는 C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md (Git 저장소 밖). docs/automation/ 경로에는 해당 파일 없음. 새 세션에서 체크리스트를 처음 읽을 경우 잘못된 경로를 따를 위험.",
+            "recommendation": "auxiliary-session-start-checklist.md § 1의 경로 참조를 실제 경로로 수정: 'C:\\GoKoreaMate-Local-Rules\\auxiliary\\auxiliary-computer-operating-rules.md'. 또는 '로컬 전용 경로(Git 밖)에서 관리 — 각 장비 설치 위치 확인 후 읽기'로 일반화."
+          },
+          {
+            "severity": "LOW",
+            "finding": "auxiliary-computer-operating-rules.md § 15 상태 기록이 stale (commit 8bed5fb, push 미실행)",
+            "detail": "§ 15에 'latest local commit: 8bed5fb'로 기록됨. 현재 HEAD는 a3d9980 (13번째 commit). 이 섹션은 세션 상태 기록 용도이므로 매 세션마다 최신화가 필요하나, 구조적으로 자동 갱신 방법 없음.",
+            "recommendation": "§ 15를 'dynamic runtime context' (세션마다 최신화)로 명확히 표시. 또는 § 15를 session-start-checklist로 이동해 git log --oneline -1로 항상 최신 확인하는 방식으로 구조 변경."
+          }
+        ]
+      },
+      "overall": "규칙 내용 견고하고 이번 세션에서 준수됨. 경로 불일치 수정 필요."
+    }
+  },
+
+  "cross_cutting_findings": [
+    {
+      "id": "CCF-01",
+      "severity": "MEDIUM",
+      "title": "규칙 중복 — schema-independent-enrichment-rules.md ↔ auxiliary-computer-operating-rules.md",
+      "detail": "5개 주요 섹션이 양쪽 문서에 중복 정의됨: 데이터 상태 구분(D), 장소 동일성(F), 음식점 지점(G), 개별 review vs 전체 중단 분리(J에 해당), 자동검증 항목(L). 의도적 중복이나 유지보수 시 양쪽 동시 수정 필요.",
+      "recommendation": "auxiliary-computer-operating-rules.md에서 해당 섹션들을 schema-independent-enrichment-rules.md 교차 참조로 대체. 중복 제거 후 규칙 변경은 schema-independent에서만 이루어지도록 단일 SSOT화."
+    },
+    {
+      "id": "CCF-02",
+      "severity": "HIGH",
+      "title": "gokoreamate-data-source-strategy.md 주요 섹션 deprecated 대상",
+      "detail": "2026-07-23 작성, 이후 파이프라인 대규모 진행으로 다수 섹션이 구식:\n- §B '부산 현황': no_match 7건 해소됨(enrichment v1에서 KTO 644건 연결), city_spots 86건 상태는 SSOT v1.1에 업데이트됨\n- §F '서비스 데이터 구조 방향': kor_content_id/eng_content_id 등 컬럼 제안이 SSOT v1.1 city_spot_sources 구조와 충돌\n- §G '자동화 스크립트 현황': tourapi-batch.mjs·nightly.mjs 코드 문제 지적 — 현재 파이프라인과 관련성 낮음\n- 유효 유지: §A(소스 계층), §C(신청 API 현황), §D(도시 확장 areaCode), §E(다국어 연결 GPS 매칭 원칙)",
+      "recommendation": "§B, §F, §G 섹션에 DEPRECATED 또는 SEE_SSOT_V1.1 마킹 추가. 또는 문서 상단에 'v1 legacy document — §A·C·D·E만 유효, §B·F·G는 SSOT v1.1 § 2, 11, 19 참조' 주의사항 추가."
+    },
+    {
+      "id": "CCF-03",
+      "severity": "MEDIUM",
+      "title": "API 인벤토리 3건 stale/conflicting",
+      "findings": [
+        "detailCommon2: '파싱 실패' → 실제로는 해결됨 (contentId만 사용)",
+        "galleryDetailList1: galContentId 추정 → 실제 필수 파라미터는 title (제목 기반 검색)",
+        "KTO 호출 한도: 1,000회/일 추정 — 공식 확인 절차 미문서화"
+      ],
+      "recommendation": "pilot 보고서(commit 911c892) 기준으로 approved-api-inventory.md 3건 업데이트 필요."
+    }
+  ],
+
+  "busan_pipeline_rules_compliance": {
+    "assessment": "부산 파이프라인 전체에서 규칙 준수 확인됨",
+    "key_validations": [
+      {
+        "rule": "기존 데이터 우선 원칙",
+        "status": "PASS",
+        "evidence": "enrichment v1: batch_normalized 재사용, linkage_index 재사용, 중복 수집 없음"
+      },
+      {
+        "rule": "장소 동일성 판정 — bijective 조건",
+        "status": "PASS",
+        "evidence": "KTO EN: 52후보 → 42승인(10 거부), 부산영화의전당↔BIFF 오매칭 제외"
+      },
+      {
+        "rule": "음식점 지점 flag 개별 판정",
+        "status": "PASS",
+        "evidence": "restaurant_branch_cleared 654건, 잔여 67건 적절히 flag 유지"
+      },
+      {
+        "rule": "Hours 무효값 필터",
+        "status": "PASS",
+        "evidence": "618건 비어있지 않음 → 571건 유효 (≤3자 47건 필터)"
+      },
+      {
+        "rule": "review_flags 허용값 준수",
+        "status": "PASS",
+        "evidence": "validation_checks.illegal_flags: true (v1.1 10개 flag만 사용)"
+      },
+      {
+        "rule": "API 호출 안전 (CALL_LIMIT_STATUS)",
+        "status": "PASS",
+        "evidence": "full 수집 BLOCKED, UNVERIFIED 상태에서 차단 게이트 동작"
+      },
+      {
+        "rule": "Git 금지 사항 준수",
+        "status": "PASS",
+        "evidence": "master 변경 0, force push 0, git add . 미사용"
+      },
+      {
+        "rule": "좌표 bounding box 자동 검증",
+        "status": "PARTIAL_FAIL",
+        "evidence": "busan-F-00341(좌표 뒤바뀜), busan-K-00674(범위 밖) — 자동 아닌 수동 QA에서 발견"
+      }
+    ]
+  },
+
+  "summary": {
+    "total_categories": 14,
+    "verdicts": {
+      "KEEP": {
+        "count": 7,
+        "categories": ["A (데이터 수집 원칙)", "C (파이프라인 Validation Gate)", "E (기존 데이터 우선)", "I (review_flags·readiness)", "J (이미지 큐레이션·권리)", "K (데이터 출처 우선순위)"],
+        "note": "C는 명시적 KEEP으로 분류됨 — 합계 7이 되어야 하나 C는 6개 목록에 없어 7번째를 추가. 정정: KEEP 6개."
+      },
+      "STRENGTHEN": {
+        "count": 4,
+        "categories": ["B (Preflight)", "H (Hours·Arrival)", "L (자동검증)", "M (API 호출 안전)", "N (보조컴퓨터 운영)"],
+        "note": "N 포함 시 5개. M과 N 모두 STRENGTHEN."
+      },
+      "MERGE": {
+        "count": 3,
+        "categories": ["D (데이터 상태 구분)", "F (장소 동일성)", "G (음식점 지점)"]
+      },
+      "DEPRECATE": {
+        "count": 0,
+        "detail": "gokoreamate-data-source-strategy.md § B, F, G 섹션은 문서 전체 deprecate보다 부분 섹션 마킹 권장 (CCF-02)"
+      }
+    },
+    "verdicts_corrected": {
+      "KEEP": ["A", "C", "E", "I", "J", "K"],
+      "STRENGTHEN": ["B", "H", "L", "M", "N"],
+      "MERGE": ["D", "F", "G"],
+      "DEPRECATE_SECTION": ["gokoreamate-data-source-strategy.md §B §F §G"]
+    }
+  },
+
+  "prioritized_action_items": [
+    {
+      "priority": 1,
+      "id": "ACT-01",
+      "type": "STRENGTHEN",
+      "category": "M",
+      "action": "approved-api-inventory.md 업데이트: KorService2 detailCommon2 상태 수정 (파싱 실패 → 해결됨)",
+      "detail": "pilot commit 911c892 결과 기반. contentId만 사용, YN 파라미터 금지. EngService2 동일 예상."
+    },
+    {
+      "priority": 2,
+      "id": "ACT-02",
+      "type": "STRENGTHEN",
+      "category": "M",
+      "action": "approved-api-inventory.md 업데이트: galleryDetailList1 필수 파라미터 수정 (galContentId 추정 → title)",
+      "detail": "photo-gallery-rules.md 기준. 실측 확인 후 반영."
+    },
+    {
+      "priority": 3,
+      "id": "ACT-03",
+      "type": "STRENGTHEN",
+      "category": "B+M",
+      "action": "API 호출 한도 공식 확인 절차 문서화",
+      "detail": "data.go.kr 로그인 → 마이페이지 → 개발계정 관리 → 트래픽 허용량. CALL_LIMIT_STATUS 변경 조건 명시. Preflight 규칙 §1에 반영."
+    },
+    {
+      "priority": 4,
+      "id": "ACT-04",
+      "type": "STRENGTHEN",
+      "category": "N",
+      "action": "auxiliary-session-start-checklist.md 경로 수정",
+      "detail": "'전체 규칙: docs/automation/auxiliary-computer-operating-rules.md' → 실제 경로(로컬 전용) 또는 '각 장비 로컬 전용 경로에서 관리' 표현으로 수정."
+    },
+    {
+      "priority": 5,
+      "id": "ACT-05",
+      "type": "STRENGTHEN",
+      "category": "L",
+      "action": "enrichment pipeline에 좌표 bounding box 자동 검증 추가",
+      "detail": "부산 bounding box(lat 34.88~35.39, lng 128.74~129.31). 이탈 시 PASS_WITH_WARNINGS + needs_arrival 자동 부여."
+    },
+    {
+      "priority": 6,
+      "id": "ACT-06",
+      "type": "MERGE",
+      "category": "D+F+G+L",
+      "action": "auxiliary-computer-operating-rules.md 중복 섹션(§5 §6 §7 §13) → schema-independent-enrichment-rules.md 교차 참조로 대체",
+      "detail": "정의는 schema-independent에만 유지. auxiliary에서는 섹션 제목 + '상세: schema-independent-enrichment-rules.md § X 참조' 형식으로 단순화."
+    },
+    {
+      "priority": 7,
+      "id": "ACT-07",
+      "type": "STRENGTHEN",
+      "category": "H",
+      "action": "KTO detail 수집 후 nature 카테고리(50건) hours 개별 판정 적용",
+      "detail": "규칙 § G의 nature 개별 판정 절차. KTO detailIntro2에서 수집된 hours 데이터로 판정. 수집 전까지 CURRENT_INPUT_UNAVAILABLE 상태 유지."
+    },
+    {
+      "priority": 8,
+      "id": "ACT-08",
+      "type": "DEPRECATE_SECTION",
+      "category": "CCF-02",
+      "action": "gokoreamate-data-source-strategy.md §B §F §G 섹션에 deprecated 마킹",
+      "detail": "§B: enrichment v1에서 해소됨. §F: SSOT v1.1 city_spot_sources와 충돌. §G: 현재 파이프라인과 무관. 유효 섹션: §A §C §D §E."
+    }
+  ],
+
+  "no_action_required": {
+    "items": [
+      "enriched candidates SHA 일관성: 76c63fcc...로 안정 (preflight·hardening·provenance-qa에서 변경 없음)",
+      "source facts SHA 일관성: 3d9ff4c3...로 안정 (QA-02 이후 변경 없음)",
+      "SSOT v1.1 review_flags 10개 정의: 완전하고 현재 데이터와 일치",
+      "image rights VB 958건 operational_assumed: 규칙에 부합 (rights_confirmed 0건은 위반 아님)",
+      "pipeline checkpoint 구조: nightly-rules § 파이프라인과 tourapi-busan-detail.mjs의 별도 checkpoint 설계는 충돌 없음"
+    ]
+  }
+}

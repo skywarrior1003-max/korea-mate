@@ -1,0 +1,98 @@
+{
+  "report_id": "busan-restaurant-duplicate-adjudication-v1-completion-report",
+  "task": "TASK-BUSAN-RESTAURANT-DUPLICATE-ADJUDICATION-V1",
+  "verdict": "PASS",
+  "run_ts": "2026-07-30T10:14:08.578587+00:00",
+  "branch": "data/busan-enrichment-v1",
+  "prompt_validation": {
+    "issues_found": false,
+    "improvements_found": false,
+    "notes": [
+      "이전 검증보고서(V1)의 75건 수량 오류 수정 완료: 67건 정확히 33그룹 분할 확인.",
+      "Schema 안전 확인: 기존 validation.review_flags 직접 수정 + qa02_corrections.restaurant_branch_note 갱신으로 새 필드 불필요.",
+      "주소 유사도 단독 중복 확정 없음: addr_norm 일치 또는 좌표 100m 미만 + 500m 이상 충돌 없음 조건 충족 후 판정."
+    ]
+  },
+  "count_verification": {
+    "branch_fail_67": true,
+    "groups_33": true,
+    "sum_of_group_candidates_67": true,
+    "no_duplicate_cids": true
+  },
+  "classification": {
+    "VERIFIED_DUPLICATE": 30,
+    "DISTINCT_BRANCHES_VERIFIED": 2,
+    "UNRESOLVED": 1,
+    "distinct_branch_groups": [
+      "무궁화",
+      "서울깍두기"
+    ]
+  },
+  "changes_applied": {
+    "canonical_candidates": 30,
+    "needs_restaurant_branch_removed": 30,
+    "sibling_notes_applied": 30,
+    "candidate_count": 1642,
+    "candidate_deleted": 0,
+    "new_review_flags_created": false,
+    "new_schema_fields_created": false,
+    "external_requests": 0,
+    "push": false
+  },
+  "publishability": {
+    "env5_distribution": {
+      "publishable_with_caveat": 483,
+      "pending_source": 782,
+      "pending_review": 74,
+      "publishable": 303
+    },
+    "env6_distribution": {
+      "publishable_with_caveat": 507,
+      "pending_source": 788,
+      "pending_review": 44,
+      "publishable": 303
+    },
+    "delta_vs_env5": {
+      "pending_source": 6,
+      "publishable": 0,
+      "publishable_with_caveat": 24,
+      "pending_review": -30
+    },
+    "status_changed": 30,
+    "change_types": {
+      "pending_review→publishable_with_caveat": 24,
+      "pending_review→pending_source": 6
+    },
+    "publishable_total_v6": 810
+  },
+  "file_integrity": {
+    "protected_unchanged": true,
+    "candidate_count_1642": true
+  },
+  "validation_checks": {
+    "target_67": true,
+    "group_count_33": true,
+    "total_candidates_67": true,
+    "no_dup_cid_in_groups": true,
+    "candidate_count_1642": true,
+    "branch_flags_removed": 30,
+    "DISTINCT_BRANCHES_count": 2,
+    "UNRESOLVED_count": 1,
+    "protected_unchanged": true,
+    "external_requests": 0,
+    "push": false,
+    "schema_safe": true
+  },
+  "outputs": {
+    "updated_files": [
+      "data\\tourapi\\enriched\\busan\\busan-enriched-candidates-v1.jsonl"
+    ],
+    "new_files": [
+      "data\\tourapi\\reports\\busan\\busan-publishability-en-v6.json",
+      "data\\tourapi\\reports\\busan\\busan-publishability-en-v6-details.jsonl",
+      "data\\tourapi\\reports\\busan\\busan-restaurant-duplicate-adjudication-v1.json",
+      "data\\tourapi\\reports\\busan\\busan-restaurant-duplicate-adjudication-v1-completion-report.json"
+    ]
+  },
+  "commit_message_last_line": "TASK-BUSAN-RESTAURANT-DUPLICATE-ADJUDICATION-V1 완료 — 부산 음식점 67건의 중복 판정 및 canonical 선정, branch_gate 제거 반영 완료."
+}

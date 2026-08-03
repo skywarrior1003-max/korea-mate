@@ -1,0 +1,38 @@
+{
+  "template_id": "multicity-event-freshness-template-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "도시별 행사 최신성 검증 템플릿. 부산 이벤트 릴리즈 파이프라인에서 검증.",
+  "date_source_hierarchy": [
+    "1st: 지자체·공식 축제위원회 공식 사이트 (부산: bfo.or.kr)",
+    "2nd: FestivalService raw 당해년 날짜",
+    "3rd: FestivalService raw 전년 날짜 → STALE 처리",
+    "4th: KTO KorService2 raw (날짜 없으면 DATE_MISSING 또는 STALE)",
+    "5th: 소스 없음 → NO_CURRENT_SOURCE_MATCH"
+  ],
+  "classification_rules": {
+    "CURRENT_OR_UPCOMING_VERIFIED": "당해년 공식 날짜 확인 + 기준일 이후",
+    "PAST_EVENT_VERIFIED": "당해년 공식 날짜 확인 + 기준일 이전 종료",
+    "STALE_DATE": "날짜 전년도 또는 불명확, 반복 가능 — 공개 불가",
+    "DATE_MISSING": "모든 소스 날짜 없음 — 공개 불가",
+    "SOURCE_DATE_CONFLICT": "소스 간 날짜 충돌 미해소 — 공식 기관 날짜 우선",
+    "NO_CURRENT_SOURCE_MATCH": "FestivalService/KTO 원천 없음"
+  },
+  "safety_rules": [
+    "과거 행사 삭제 금지 — hold로 보존",
+    "날짜 없이 공개 금지",
+    "반복 행사에서 전년도 날짜 사용 금지",
+    "원천 충돌 자동 공개 금지",
+    "공식 원문 없는 날짜 사용 금지"
+  ],
+  "busan_statistics": {
+    "total_events": 72,
+    "release_current": 4,
+    "hold_past": 14,
+    "hold_stale": 25,
+    "hold_date_missing": 26,
+    "hold_no_source": 3,
+    "hold_source_conflict": 0
+  }
+}

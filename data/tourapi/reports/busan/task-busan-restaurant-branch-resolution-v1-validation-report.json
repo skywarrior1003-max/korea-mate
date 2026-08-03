@@ -1,0 +1,168 @@
+{
+  "report_id": "task-busan-restaurant-branch-resolution-v1-validation-report",
+  "task": "TASK-BUSAN-RESTAURANT-BRANCH-RESOLUTION-V1",
+  "verdict": "IMPROVEMENT_FOUND",
+  "executed": false,
+  "run_ts": "2026-07-30",
+  "branch": "data/busan-enrichment-v1",
+
+  "prompt_validation": {
+    "structural_soundness": "PASS",
+    "root_cause_diagnosis": "INCORRECT",
+    "implementation_approach": "SUBOPTIMAL",
+    "risk_level_as_written": "MEDIUM",
+    "issues_found": true,
+    "improvements_found": true
+  },
+
+  "root_cause_finding": {
+    "prompt_assumption": "67건이 체인 음식점의 다중 지점 문제",
+    "actual_root_cause": "FoodService 원천 데이터에 동일 음식점을 2건씩 중복 입력. QA-02가 '동일 상호 N건 - 지점 명시 없음'으로 flagging.",
+    "evidence": {
+      "qa02_note_distribution": {
+        "동일 상호 2건 - 지점 명시 없음": 64,
+        "동일 상호 3건 - 지점 명시 없음": 3
+      },
+      "sibling_groups": "33쌍 + 1 트리오 = 34개 그룹 (68개 후보, 그 중 67건이 branch_gate 실패)"
+    }
+  },
+
+  "address_classification": {
+    "method": "정규화 비교 (부산광역시·괄호 제거) + 기본 도로 주소 비교 (층·호·건물명 제거)",
+    "classification": {
+      "TRUE_DUP_identical_normalized_address": {
+        "count_groups": 14,
+        "approx_candidates": 28,
+        "description": "정규화 후 완전히 동일한 주소. 같은 건물, 같은 위치.",
+        "examples": [
+          "구포촌국수: '부산 금정구 금샘로 490' vs '부산 금정구 금샘로 490 (남산동)'",
+          "모모스커피: '금정구 오시게로 20' vs '부산 금정구 오시게로 20 (부곡동)'",
+          "물꽁식당: '중구 흑교로59번길 3' vs '부산 중구 흑교로59번길 3 (보수동2가)'"
+        ],
+        "resolution": "DUPLICATE_CANDIDATE — 더 완전한 주소를 가진 쪽을 PRIMARY로 선정, needs_restaurant_branch 제거"
+      },
+      "SAME_BASE_different_detail": {
+        "count_groups": 19,
+        "approx_candidates": 38,
+        "description": "기본 도로주소 동일, 한쪽에만 층·호·건물명이 추가된 형태. 실제 동일 장소.",
+        "examples": [
+          "달타이: '달맞이길 193 (중동)' vs '달맞이길 193 1층'",
+          "쇼진: '구남로 9 (우동)' vs '구남로 9, 라마다앙코르호텔 214호'",
+          "스시시안: '센텀1로 9 (우동)' vs '센텀1로 9 E동상가 2층 210호'",
+          "하레마: '마린시티2로 33 (우동)' vs '마린시티2로 33 두산 위브더제니스 지하 1층 106호'",
+          "무슈뱅상: '광남로48번길 19 (남천동)' vs '광남로 48번길 19'",
+          "신발원: '대영로243번길62' vs '대영로243번길 62 (초량동)'"
+        ],
+        "resolution": "DUPLICATE_CANDIDATE — 더 상세한 주소(층·호 포함)를 가진 쪽을 PRIMARY로 선정",
+        "note": "팔레트 트리오(00311·00359·00410)도 모두 '달맞이길65번길 154 3층' — 3건 중복"
+      },
+      "TRULY_DIFFERENT_address": {
+        "count_groups": 3,
+        "approx_candidates": 6,
+        "description": "기본 도로 주소 자체가 완전히 다름. 실제로 다른 지점이거나 데이터 오류.",
+        "cases": [
+          {
+            "name": "무궁화",
+            "cids": ["busan-F-00117", "busan-F-00303"],
+            "addresses": ["황령산로8번길 5 (남구 추정)", "부산진구 가야대로 772"],
+            "assessment": "완전히 다른 구·도로. 실제 다른 지점이거나 동명이인 식당.",
+            "required_action": "외부 검증 필요"
+          },
+          {
+            "name": "산동완탕교자관",
+            "cids": ["busan-F-00201", "busan-F-00269"],
+            "addresses": ["동구 중앙대로296번길 11", "동구 중앙대로248번길 3-11"],
+            "assessment": "같은 구(동구)지만 다른 번길(296 vs 248). 데이터 오류 가능성 높음.",
+            "required_action": "외부 검증 또는 원천 데이터 재확인 필요"
+          },
+          {
+            "name": "서울깍두기",
+            "cids": ["busan-F-00327", "busan-K-00365"],
+            "addresses": ["중구 남포길 33 (남포동2가)", "금정구 장전온천천로 75"],
+            "assessment": "완전히 다른 구(중구 vs 금정구). 실제 2개 지점.",
+            "note": "busan-K-00365는 category=K(국내 관광). 별도 처리 정책 필요.",
+            "required_action": "각각 해당 주소로 SINGLE_LOCATION_VERIFIED 처리 가능 — VisitBusan 원천 확인 필요"
+          }
+        ]
+      }
+    }
+  },
+
+  "better_implementation_approach": {
+    "title": "주소 정규화 우선 처리 후 외부 검증 최소화",
+    "estimated_external_requests": {
+      "original_prompt": "100~200건 (67건 × 1~3개 외부 소스)",
+      "better_approach": "0~10건 (진짜 다른 주소 3쌍 × 1~3회 검증)"
+    },
+    "phases": [
+      {
+        "phase": 1,
+        "name": "주소 정규화 비교 (외부 요청 0건)",
+        "input": "67건의 형제 쌍(siblings) 주소를 정규화·기본주소 추출 후 비교",
+        "output": {
+          "TRUE_DUP_14_groups_28_candidates": "DUPLICATE_CANDIDATE — 즉시 판정 가능",
+          "SAME_BASE_19_groups_38_candidates": "DUPLICATE_CANDIDATE — 즉시 판정 가능",
+          "TRULY_DIFF_3_groups_6_candidates": "외부 검증 대상으로 이관"
+        },
+        "resolution_rule": "각 그룹에서 PRIMARY 선정: (1) 구·동 단위 주소 포함 여부, (2) 층·호 등 상세 정보 포함 여부, (3) 더 긴 주소 우선. Primary → needs_restaurant_branch 제거 (branch_gate PASS). Duplicate → qa02_corrections.restaurant_branch_note에 'DUPLICATE_CANDIDATE: primary={cid}' 기록, needs_restaurant_branch 유지."
+      },
+      {
+        "phase": 2,
+        "name": "진짜 다른 주소 3쌍 VisitBusan 원천 확인 (선택, ~6건)",
+        "input": "무궁화·산동완탕교자관·서울깍두기 각 쌍",
+        "method": "기존 VisitBusan source_keys 페이지 재방문 OR 기존 FoodService 원천 파일 확인",
+        "output": "SINGLE_LOCATION_VERIFIED (각자 해당 주소 확인 시) 또는 MULTIPLE_BRANCHES_UNRESOLVED (외부 근거 부족 시)"
+      }
+    ]
+  },
+
+  "publishability_impact_estimate": {
+    "branch_gate_resolvable": "~64건 (32그룹에서 PRIMARY 1건씩 = 32건의 needs_restaurant_branch 제거)",
+    "remaining_gate_check": "branch_gate 제거 후에도 needs_arrival_verification 등 다른 플래그에 따라 publishable vs publishable_with_caveat 결정",
+    "note": "needs_arrival_verification이 67건 전체에 있어 publishable_with_caveat 이상은 어려움. 실제 상태 변화는 pending_review → pending_source (image/name_en 등 나머지 게이트 검사 필요) 또는 publishable_with_caveat 일부."
+  },
+
+  "issues_with_original_prompt": [
+    {
+      "issue": "root_cause_misidentification",
+      "severity": "HIGH",
+      "description": "프롬프트가 67건을 '체인 음식점 지점 확인 문제'로 정의했으나, 실제 원인은 FoodService 원천 데이터의 동일 음식점 중복 입력. 체인 브랜치 검색보다 중복 식별이 우선되어야 함."
+    },
+    {
+      "issue": "excessive_external_requests",
+      "severity": "MEDIUM",
+      "description": "64/67건은 주소 비교만으로 0 HTTP요청에 해결 가능. 네이버지도·구글지도 전체 크롤링은 불필요하고 오탐 위험 증가."
+    },
+    {
+      "issue": "duplicate_candidate_marking_protocol",
+      "severity": "LOW",
+      "description": "DUPLICATE_CANDIDATE 판정 시 needs_restaurant_branch를 PRIMARY에서만 제거하고 DUPLICATE에는 유지하는 것이 맞으나, 프롬프트에 PRIMARY vs DUPLICATE 선정 기준이 없음. 구체적 선정 규칙 필요 (더 상세한 주소를 가진 쪽이 PRIMARY 등)."
+    },
+    {
+      "issue": "팔레트_trio_handling",
+      "severity": "LOW",
+      "description": "팔레트 3건(00311·00359·00410)이 트리오인 경우 PRIMARY 1건 + DUPLICATE 2건 처리 방식이 프롬프트에 없음."
+    }
+  ],
+
+  "recommendation": {
+    "action": "프롬프트를 수정하여 주소 정규화 1차 처리를 명시하고, 외부 검증 범위를 진짜 다른 주소 3쌍(6건)으로 한정한 후 재실행",
+    "revised_task_name": "TASK-BUSAN-RESTAURANT-BRANCH-RESOLUTION-V2",
+    "key_changes": [
+      "PHASE 0: 주소 정규화 비교 — 64건 DUPLICATE_CANDIDATE 즉시 판정 (0 HTTP요청)",
+      "PHASE 1: PRIMARY 선정 기준 명시 — 더 상세한 주소(구·동·층·호 포함) 우선",
+      "PHASE 2: PRIMARY에서 needs_restaurant_branch 제거, DUPLICATE에 qa02_corrections 기록",
+      "PHASE 3: 진짜 다른 주소 3쌍만 외부 검증 (선택적, ~10건 요청)",
+      "PRIMARY 선정 규칙 추가 — 더 상세한 주소, 더 긴 source_keys 보유, 더 최신 collected_at"
+    ],
+    "estimated_benefit": {
+      "external_requests_reduction": "100~200건 → 0~10건",
+      "false_confirmation_risk": "낮음 (주소 비교는 결정적)",
+      "publishability_gain": "pending_review → publishable_with_caveat 전환 ~32건 (needs_arrival_verification 잔류로 최대 caveat)"
+    }
+  },
+
+  "data_unchanged": true,
+  "external_requests": 0,
+  "push": false
+}

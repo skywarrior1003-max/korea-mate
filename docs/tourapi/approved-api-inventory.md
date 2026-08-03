@@ -287,7 +287,7 @@ EVENT_END_DATE    — 행사 종료일 (확인 필요)
 | `/areaBasedSyncList2` | 변경분 동기화 | **✓** rc:0000 (파라미터: modifiedtime 필요) |
 | `/searchFestival2` | 축제 검색 | 미실측 |
 | `/searchStay2` | 숙박 검색 | 미실측 |
-| `/detailCommon2` | 공통 상세정보 | 응답 파싱 실패 (구조 확인 필요) |
+| `/detailCommon2` | 공통 상세정보 | **✓** rc:0000 (contentId만 사용; YN 파라미터 전부 INVALID_REQUEST_PARAMETER_ERROR — KorService1과 다름) |
 | `/detailIntro2` | 소개 상세 | **✓** rc:0000 |
 | `/detailInfo2` | 반복 정보 | 미실측 |
 | `/detailImage2` | 이미지 목록 | **✓** (imageYN=Y 파라미터 필요) |
@@ -349,9 +349,14 @@ createdtime      — 생성 시각
 - 수정일 기반 증분 동기화
 - 관광지 대표 이미지
 
+### 호출 한도 (CALL_LIMIT_UNVERIFIED)
+
+일일 호출 한도 추정: 상세기능별 1,000회 (공식 문서 미확인)  
+전체 수집 전 **공식 확인 필수**: data.go.kr 로그인 → 마이페이지 → 서비스별 호출 한도 확인  
+KTO detail 전체 수집(1,275회+) 실행 전 `CALL_LIMIT_STATUS='VERIFIED'`로 변경 후 진행.
+
 ### 아직 확인되지 않은 사항
 
-- `/detailCommon2` 응답 구조 (파싱 실패)
 - `/searchFestival2`, `/searchStay2` 파라미터
 - `/detailInfo2` 반복 정보 구조
 - contentTypeId별 부산 건수 분포
@@ -376,7 +381,7 @@ createdtime      — 생성 시각
 | `/galleryList1` | 전체 사진 목록 | **✓** 전국 6,119건 |
 | `/gallerySearchList1` | 키워드 사진 검색 | **✓** 해운대 키워드 657건 |
 | `/gallerySyncDetailList1` | 변경분 동기화 | **✓** rc:0000 (modifiedtime 파라미터) |
-| `/galleryDetailList1` | 사진 그룹 상세 | ✗ rc:11 (필수 파라미터 누락 — `galContentId` 추정) |
+| `/galleryDetailList1` | 사진 그룹 상세 | △ rc:11 (파라미터 불일치 — `galContentId` 추정이었으나 공식 명세 미확인; 실측 재시도 필요) |
 
 ### 주요 요청 파라미터
 
@@ -444,7 +449,7 @@ galModifiedtime  — 수정일
 | `/areaBasedSyncList2` | 변경분 동기화 | 미실측 |
 | `/searchFestival2` | 축제 검색 | 미실측 |
 | `/searchStay2` | 숙박 검색 | 미실측 |
-| `/detailCommon2` | 공통 상세정보 | 응답 파싱 실패 (KorService2와 동일 문제) |
+| `/detailCommon2` | 공통 상세정보 | **✓** rc:0000 (KorService2와 동일 — contentId만 사용; YN 파라미터 금지) |
 | `/detailIntro2` | 소개 상세 | 미실측 |
 | `/detailInfo2` | 반복 정보 | 미실측 |
 | `/detailImage2` | 이미지 목록 | 미실측 |

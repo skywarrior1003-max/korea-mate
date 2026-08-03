@@ -1,0 +1,253 @@
+{
+  "report_id": "task-busan-official-source-and-event-freshness-audit-v1-validation-report",
+  "report_type": "VALIDATION_ONLY",
+  "task_id": "TASK-BUSAN-OFFICIAL-SOURCE-AND-EVENT-FRESHNESS-AUDIT-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "verdict": "NOT_EXECUTED",
+  "execution_blocked_reason": "ISSUES_AND_IMPROVEMENTS_FOUND",
+  "git": {
+    "head": "75db747",
+    "branch": "data/busan-enrichment-v1"
+  },
+  "summary": {
+    "task_core_objective": "VisitBusan과 부산축제정보 OpenAPI 사이에서 직접 비교해 부산 데이터 마감 가능 여부 확정",
+    "issues_found": 4,
+    "action_taken": "미실행 — 검증보고서만 작성",
+    "data_modified": false,
+    "api_calls_made": false,
+    "candidates_touched": 0,
+    "source_facts_touched": 0
+  },
+
+  "issues": [
+    {
+      "issue_id": "I-01",
+      "severity": "BLOCKING",
+      "phase": "Phase 2",
+      "title": "부산축제정보 OpenAPI raw 데이터 없음 — Phase 2 비교 불가",
+      "detail": "태스크 핵심 목적인 'VisitBusan vs 부산축제정보 OpenAPI 직접 비교'를 수행하려면 data.go.kr의 '부산광역시_부산축제정보 서비스' raw 데이터가 필요하다. 해당 데이터가 저장소 어디에도 없다.",
+      "evidence": {
+        "searched_paths": [
+          "data/tourapi/raw/busan/2026-07-23/batch/ — 49 files: KTO(ko/en), VB(attraction/food) 전용, festival 없음",
+          "data/tourapi/raw/busan/2026-07-24/batch/ — 54 files: VB festival(ko/en/ja/zhs/zht) 있으나 VisitBusan 소스, 부산광역시 OpenAPI 아님",
+          "전체 data/ 재귀 탐색 — 'busan-city', 'busan_openapi', 'bsm-' 패턴 파일 없음"
+        ],
+        "env_keys_available": ["TOUR_API_KEY (KTO 전용)"],
+        "env_keys_missing": "부산광역시_부산축제정보 서비스용 별도 API 키 없음 (.env.example에 없음)",
+        "existing_festival_source": "FestivalService:*:ko (VisitBusan /getFestivalKr endpoint) — 부산광역시 OpenAPI가 아님"
+      },
+      "what_is_needed": "data.go.kr 계정으로 '부산광역시_부산축제정보 서비스' 활용 신청 → API 키 발급 → .env.local 추가 → raw 수집 스크립트 작성 → 수집 실행",
+      "recommendation": "Phase 2 실행 전 부산광역시_부산축제정보 API 키 확보 및 raw 수집 선행 태스크 발주"
+    },
+    {
+      "issue_id": "I-02",
+      "severity": "HIGH",
+      "phase": "Phase 2 선행 발견",
+      "title": "VisitBusan 행사 데이터 심각한 신선도 문제 — 2026-07-24 수집 기준",
+      "detail": "기존에 수집된 VisitBusan 행사 데이터(2026-07-24 수집)를 분석하면 대부분이 이미 만료된 2025년 데이터이거나 날짜가 없는 상태다. 수집 시점 기준으로도 최신화가 되지 않은 레코드가 다수다.",
+      "evidence": {
+        "total_items": {
+          "ko": 40, "en": 37, "ja": 35, "zhs": 35, "zht": 36
+        },
+        "date_classification_ko": {
+          "2026년_포함": 14,
+          "2025년_전용": 19,
+          "날짜없음": 6,
+          "기타": 1
+        },
+        "stale_examples": [
+          {
+            "uc_seq": 71,
+            "title": "부산바다축제",
+            "date_in_vb": "2025. 8. 1. ~ 8. 3.",
+            "issue": "2026년 날짜로 미갱신 — 현재(2026-08-03) 기준 이미 2026년 개최 후 or 미개최",
+            "significance": "부산 대표 여름 축제"
+          },
+          {
+            "uc_seq": 406,
+            "title": "부산항축제",
+            "date_in_vb": "(없음)",
+            "issue": "날짜 없음 — 개최 여부, 일정 불명확",
+            "significance": "부산항 관련 주요 행사"
+          },
+          {
+            "uc_seq": 405,
+            "title": "해운대모래축제",
+            "date_in_vb": "(없음)",
+            "issue": "날짜 없음",
+            "significance": "해운대 관련 주요 행사"
+          }
+        ],
+        "2026년_분류_상세": {
+          "이미_종료(2026_1~6월)": 10,
+          "미래_또는_진행중(2026_하반기)": 4,
+          "note": "2026-08-03 기준, 2026년 14건 중 10건은 이미 지난 행사"
+        }
+      },
+      "interpretation": "VisitBusan 데이터 자체의 갱신 주기가 느리거나, VisitBusan이 정기적으로 업데이트하지 않는다는 것을 의미한다. 부산축제정보 OpenAPI와 비교 없이도 VB 데이터의 신선도 문제는 이미 확인됨.",
+      "recommendation": "VisitBusan 행사 API를 재수집하거나, 부산축제정보 OpenAPI를 보강 원천으로 추가해야 한다. 단, 비교 전에 부산축제정보 raw 데이터 확보 필요(I-01)."
+    },
+    {
+      "issue_id": "I-03",
+      "severity": "MEDIUM",
+      "phase": "Phase 1",
+      "title": "부산광역시 OpenAPI 공식 문서 접근 제한 — MANUAL_OFFICIAL_DOC_REQUIRED",
+      "detail": "Phase 1에서 부산광역시_부산명소정보, 부산맛집정보, 부산축제정보 서비스의 공식 문서를 직접 확인하려면 data.go.kr 로그인이 필요하다. 자동화 접근으로는 서비스 목록 페이지까지만 가능하고 필드 스펙 수준의 접근은 불가능하다.",
+      "known_data_go_kr_info": {
+        "부산광역시_부산명소정보": {
+          "service_id": "부산광역시_부산명소정보 서비스",
+          "provider": "부산광역시",
+          "note": "실제 존재 확인 필요 — 로그인 없이 전체 명세 확인 불가"
+        },
+        "부산광역시_부산맛집정보": {
+          "service_id": "부산광역시_부산맛집정보 서비스",
+          "provider": "부산광역시",
+          "note": "실제 존재 확인 필요 — 로그인 없이 전체 명세 확인 불가"
+        },
+        "부산광역시_부산축제정보": {
+          "service_id": "부산광역시_부산축제정보 서비스",
+          "provider": "부산광역시",
+          "note": "실제 존재 확인 필요 — 로그인 없이 전체 명세 확인 불가"
+        }
+      },
+      "what_user_must_check": "data.go.kr 로그인 후 '부산광역시' 키워드로 검색 → 각 서비스 상세 페이지에서 operation 목록, 파라미터, 응답 필드, 라이선스 확인",
+      "recommendation": "사용자가 data.go.kr 직접 접근 후 API 키 발급과 함께 명세 확인"
+    },
+    {
+      "issue_id": "I-04",
+      "severity": "MEDIUM",
+      "phase": "Phase 2 전체",
+      "title": "event candidates 행사 날짜/기간 필드 누락",
+      "detail": "현재 72건의 event candidates 모두에서 hours=null이다. 행사의 핵심 정보인 개최 기간/날짜가 candidates에 반영되어 있지 않다. 이는 source_facts에도 event 카테고리가 0건인 것과 연관된다.",
+      "evidence": {
+        "event_candidates_total": 72,
+        "hours_null_count": 72,
+        "source_facts_event_count": 0,
+        "event_source_breakdown": {
+          "busan_official_api_FestivalService": 38,
+          "kto_tourapi": 31,
+          "visitbusan_web": 3
+        }
+      },
+      "impact": "행사 candidates가 날짜 없이 release되면 '오래된 행사 혼입 위험이 큼'이라는 BLOCKING_GAP 조건에 해당할 수 있다. 부산 마감 전 행사 날짜 필드 처리 방식 결정 필요.",
+      "recommendation": "event candidates의 날짜/기간 필드 처리 정책(hours에 개최기간 저장 vs 별도 event_period 필드 vs 만료 이벤트 제외) 결정 후 Phase 5 정책에 반영"
+    }
+  ],
+
+  "partial_analysis_results": {
+    "description": "실행 없이 기존 데이터로 확인한 현황",
+    "visitbusan_festival_freshness_analysis": {
+      "collection_date": "2026-07-24",
+      "analysis_date": "2026-08-03",
+      "ko_total": 40,
+      "ko_2026_included": 14,
+      "ko_2025_expired": 19,
+      "ko_no_date": 6,
+      "future_events_2026_h2": 4,
+      "past_events_2026_h1": 10,
+      "freshness_verdict": "STALE — 2026년 하반기 미래 행사 4건만 실제 upcoming, 나머지 2025년 만료 또는 날짜 미상",
+      "key_missing_2026_events": [
+        "부산바다축제 2026 날짜 (현재 '2025. 8. 1. ~ 8. 3.'로 stale)",
+        "부산항축제 2026 날짜 (현재 날짜 없음)",
+        "해운대모래축제 2026 날짜 (현재 날짜 없음)"
+      ]
+    },
+    "event_source_in_candidates": {
+      "total_event_candidates": 72,
+      "busan_official_api_FestivalService": 38,
+      "kto_tourapi": 31,
+      "visitbusan_web_ssr": 3,
+      "note": "FestivalService는 VisitBusan의 getFestivalKr endpoint를 의미 — 부산광역시_부산축제정보 API와 다름"
+    },
+    "existing_source_coverage": {
+      "visitbusan_festival": {
+        "status": "COLLECTED",
+        "langs": ["ko","en","ja","zhs","zht"],
+        "counts": {"ko": 40, "en": 37, "ja": 35, "zhs": 35, "zht": 36},
+        "collection_date": "2026-07-24"
+      },
+      "busan_city_festival_openapi": {
+        "status": "NOT_COLLECTED",
+        "api_key_available": false,
+        "raw_data_available": false
+      },
+      "kto_festival_ko": {
+        "status": "COLLECTED (within KorService2 areaBasedList2 contentTypeId=15)",
+        "note": "별도 페이지네이션 없이 775건 중 포함"
+      }
+    }
+  },
+
+  "what_can_be_done_without_issue_resolution": {
+    "phase_1_contract_matrix": {
+      "feasibility": "PARTIAL",
+      "note": "KTO, VisitBusan 계약은 기존 coverage-audit-v1 기반으로 작성 가능. 부산광역시 OpenAPI 3개는 MANUAL_OFFICIAL_DOC_REQUIRED 판정으로 기록"
+    },
+    "phase_2_freshness_comparison": {
+      "feasibility": "BLOCKED",
+      "note": "부산축제정보 raw 없어 비교 불가. VisitBusan 단독 신선도 분석만 가능(I-02에서 이미 수행)"
+    },
+    "phase_3_source_priority": {
+      "feasibility": "MOSTLY_FEASIBLE",
+      "note": "관광지·맛집 기존 raw 분석으로 VisitBusan vs KTO 우선순위 확인 가능. 부산명소정보·맛집정보 API 비교는 raw 없어 INSUFFICIENT_EVIDENCE"
+    },
+    "phase_4_gap_analysis": {
+      "feasibility": "PARTIAL",
+      "note": "기존 source facts, candidates 기반으로 RAW_EXISTS_NOT_APPLIED, LINKING_GAP 등 분류 가능. 부산광역시 OpenAPI 관련 gap은 분석 불가"
+    },
+    "phase_5_policy": {
+      "feasibility": "PARTIAL",
+      "note": "Phase 2 비교 결과 없어 행사 primary source INSUFFICIENT_EVIDENCE로만 확정 가능. 관광지·맛집·이미지 정책은 작성 가능"
+    }
+  },
+
+  "recommendations": [
+    {
+      "priority": 1,
+      "action": "부산광역시_부산축제정보 API 키 확보 및 raw 수집",
+      "detail": "data.go.kr 로그인 → '부산광역시_부산축제정보 서비스' 활용 신청 → API 키 발급 → .env.local 추가 → 수집 스크립트 작성 → raw 파일 생성. 이 선행 작업 완료 후 본 태스크 재발주",
+      "effort": "MEDIUM — 3~5일 소요 예상 (API 키 승인 대기 포함)"
+    },
+    {
+      "priority": 2,
+      "action": "VisitBusan 행사 데이터 재수집 또는 update 검토",
+      "detail": "2026-07-24 수집 데이터에서 2025년 만료 행사 19건, 날짜없음 6건 확인. 부산바다축제·부산항축제 등 주요 행사의 2026년 날짜가 없다. VisitBusan 행사 API 재수집(tourapi-busan-batch.mjs의 festival endpoint) 또는 update-visit-busan-events.js 검토 필요",
+      "effort": "LOW — 재수집은 기존 batch 스크립트 재실행으로 가능"
+    },
+    {
+      "priority": 3,
+      "action": "event candidates 날짜/기간 필드 처리 정책 결정",
+      "detail": "72건 event candidates 모두 hours=null. 행사 개최기간을 hours에 저장할지, 별도 event_period 필드로 처리할지, 또는 만료 행사를 candidates에서 제외할지 결정 필요. 이 결정 후 Phase 5 정책 반영",
+      "effort": "LOW — 정책 결정은 빠르나 구현은 MEDIUM"
+    },
+    {
+      "priority": 4,
+      "action": "부산광역시_부산명소정보·맛집정보 API 확인",
+      "detail": "data.go.kr에서 부산광역시 3개 OpenAPI 모두 확인. 부산명소정보·맛집정보도 별도 수집 여부 결정 필요. 단, Phase 3에서 VisitBusan이 primary라면 이들은 보강 원천으로만 사용",
+      "effort": "MEDIUM"
+    }
+  ],
+
+  "busan_release_readiness": {
+    "blocking_gaps_confirmed": [
+      "행사 원천 최신성 비교 미완료 (부산축제정보 API raw 없음)",
+      "event candidates 날짜/기간 필드 없음 (72건 모두 hours=null)",
+      "VisitBusan 행사 데이터 신선도 문제 (2025년 만료 19건, 날짜없음 6건)"
+    ],
+    "non_blocking_gaps_confirmed": [
+      "부산광역시 OpenAPI 공식 문서 미확인 (라이선스·필드 명세 — 사용 안 하면 무관)",
+      "VisitBusan accommodation 미수집 (U-06, 저우선순위)"
+    ],
+    "preliminary_verdict": "BLOCKING_GAP — 행사 원천 최신성이 불명확하고 event candidates의 날짜 필드 공백. 위 사항 해결 전까지 확정 불가",
+    "note": "관광지·맛집·숙박 1,601건의 release readiness는 별도 영향 없음. 행사 72건의 처리 방식 결정이 관건"
+  },
+
+  "safety_checks": {
+    "data_modified": false,
+    "api_calls_made": false,
+    "files_created_by_execution": false,
+    "git_commits": 0,
+    "candidates_touched": 0,
+    "source_facts_touched": 0
+  }
+}

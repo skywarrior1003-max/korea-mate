@@ -1,0 +1,48 @@
+{
+  "report_id": "kto-detail-hardening-dry-run",
+  "task": "TASK-BUSAN-KTO-DETAIL-COLLECTOR-HARDENING",
+  "run_ts": "2026-07-30T04:07:22.289Z",
+  "branch": "data/busan-enrichment-v1",
+  "mode": "FULL",
+  "dry_run": true,
+  "call_limit_status": "UNVERIFIED",
+  "plan": {
+    "endpoints": {
+      "detailIntro2": {
+        "total_targets": 557,
+        "skip_existing": 0,
+        "new_calls": 557,
+        "reprocess": 0,
+        "reprocess_list": []
+      },
+      "detailCommon2": {
+        "total_targets": 644,
+        "skip_existing": 0,
+        "new_calls": 644,
+        "reprocess": 0,
+        "reprocess_list": []
+      },
+      "detailImage2": {
+        "total_targets": 94,
+        "skip_existing": 0,
+        "new_calls": 94,
+        "reprocess": 0,
+        "reprocess_list": []
+      }
+    },
+    "summary": {
+      "total_new_calls": 1295,
+      "total_skip": 0,
+      "call_limit_status": "UNVERIFIED",
+      "batch_plan": "UNVERIFIED",
+      "manifest_hash": "544bfd9a21e6b7e8b8156f3723622c4f049dec85461604a3db9853dba7c28c77"
+    }
+  },
+  "safety_checks": {
+    "api_calls_made": 0,
+    "enriched_candidates_modified": false,
+    "source_facts_modified": false,
+    "review_flags_modified": false,
+    "api_key_in_files": false
+  }
+}

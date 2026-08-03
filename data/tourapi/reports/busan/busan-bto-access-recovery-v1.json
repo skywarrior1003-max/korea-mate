@@ -1,0 +1,107 @@
+{
+  "report_id": "busan-bto-access-recovery-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "organization": "부산관광공사 (BTO, Busan Tourism Organization)",
+  "base_url": "https://bto.or.kr",
+
+  "root_cause_of_previous_500": {
+    "cause": "WRONG_BOARD_SEQ",
+    "detail": "이전 세션에서 board_seq=3994를 사용했으나, 실제 최신 board_seq는 5340~5355 범위. board_seq는 단순 sequential이 아니며 게시물별로 불연속 값이 할당됨. BTO 개별 기사 접근 자체는 정상 작동 — 이전 500은 서버 오류가 아니라 잘못된 파라미터 사용이 원인.",
+    "resolution": "BTO 목록 페이지에서 실제 board_seq 값을 추출한 뒤 상세 URL에 사용해야 함"
+  },
+
+  "boards": {
+    "press_release": {
+      "name": "보도자료",
+      "mCode": "MN047",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047",
+      "detail_url_pattern": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047&mode=view&mgr_seq=22&board_seq={board_seq}",
+      "pagination_pattern": "?robot=Y&mCode=MN047&page={page_num}",
+      "total_items": 1160,
+      "total_pages": 116,
+      "items_per_page": 10,
+      "latest_date": "2026-07-31",
+      "list_access": "PASS — 정적 HTML",
+      "detail_access": "PASS — board_seq 정확히 사용 시 정상 응답",
+      "attachment_types": ["HWP", "이미지(PNG/JPG)"],
+      "board_seq_discovery": "목록 HTML의 a[href] 속성에서 board_seq 추출",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "HIGH — 프로모션 공식 발표 1차 소스",
+      "sample_promo": {
+        "title": "부산관광공사, 중화권 관광객 대상 부산병 치유 프로모션 전격 추진",
+        "date": "2026-07-27",
+        "board_seq": 5340,
+        "content_confirmed": true,
+        "promo_period": "2026-07-28 ~ 2026-08-27",
+        "target": "중화권 포함 외국인 관광객",
+        "platform": "KKday",
+        "benefit": "부산병 진단 맞춤형 상품 할인",
+        "offline": "김해공항 치유 부스 2026-07-31~2026-08-02"
+      }
+    },
+    "notice_event": {
+      "name": "공고·행사(우리공사)",
+      "mCode": "MN090",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090",
+      "detail_url_pattern": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090&mode=view&mgr_seq=65&board_seq={board_seq}",
+      "pagination_pattern": "?robot=Y&mCode=MN090&page={page_num}",
+      "list_access": "PASS — 정적 HTML",
+      "detail_access": "UNTESTED (동일 구조 추정 — PASS 예상)",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "LOW — 대부분 B2B 공모·사업 공고",
+      "b2c_filter_required": true,
+      "b2c_filter_rule": "audience_type=B2C인 항목만 — 관광객이 직접 신청·사용·예약 가능한 혜택",
+      "sample": {
+        "title": "2026 부산 고메 셀렉션 하반기 참가업체 공모",
+        "date": "2026-08-03",
+        "board_seq": 5359,
+        "audience_type": "B2B",
+        "note": "업체 공모 성격 — B2C 프로모션 아님"
+      }
+    },
+    "notice_external": {
+      "name": "공고·행사(타기관)",
+      "mCode": "MN091",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN091",
+      "access_method": "LIKELY_AUTOMATABLE",
+      "detail": "동일 CMS 구조 추정 — 미테스트",
+      "b2c_relevance": "MEDIUM — 타기관 프로모션·이벤트 포함 가능"
+    },
+    "tourism_trend": {
+      "name": "관광동향",
+      "mCode": "MN102",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN102",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "NONE — 통계·경기동향 보고서만",
+      "recommendation": "EXCLUDE_FROM_PROMOTION_COLLECTION"
+    },
+    "visit_busan_pass": {
+      "name": "비짓부산패스",
+      "mCode": "MN154",
+      "url": "https://bto.or.kr/kor/CMS/Contents/Contents.do?mCode=MN154",
+      "external_site": "https://www.visitbusanpass.com",
+      "access_method": "AUTOMATABLE",
+      "b2c_relevance": "HIGH — 외국인 개별 관광객 대상",
+      "pass_types": ["24시간", "48시간", "Big 3", "Big 5"],
+      "language_support": ["KO", "EN", "JA", "ZHS", "ZHT"]
+    },
+    "sitemap": {
+      "url": "https://bto.or.kr/kor/CMS/SiteMap/SiteMap.do?mCode=MN013",
+      "access": "PASS",
+      "note": "모든 mCode 목록 확인 가능 — 추가 게시판 탐색 기준점"
+    }
+  },
+
+  "rss": {
+    "available": false,
+    "note": "RSS 링크 미발견"
+  },
+
+  "summary": {
+    "blockers_resolved": 1,
+    "previous_issue": "board_seq 잘못된 값 사용으로 HTTP 500 오판 — 실제 서버 오류 아님",
+    "now_automatable": ["MN047 보도자료", "MN090 공고·행사", "MN154 비짓부산패스"],
+    "pending_verification": ["MN091 타기관 공고·행사"]
+  }
+}

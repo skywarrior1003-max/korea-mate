@@ -1,0 +1,78 @@
+{
+  "report_id": "busan-final-field-completeness-summary",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 release candidate 필드 완전성 요약. publishability-en-v8 기준.",
+  "gate_version": "BUSAN_PUBLISHABILITY_EN_V8",
+  "total_release": 1533,
+  "required_fields": {
+    "identity_gate": {
+      "pass": 1533,
+      "fail": 0,
+      "note": "candidate_id 구조 전수 확인"
+    },
+    "name_ko_gate": {
+      "pass_approx": 1533,
+      "fail": 0
+    },
+    "address_gate": {
+      "pass_approx": 1529,
+      "note": "place 전수 — event는 venue 없을 수 있음"
+    },
+    "coordinate_gate": {
+      "pass_approx": 1529,
+      "note": "place 전수 — event는 별도"
+    },
+    "provenance_gate": {
+      "pass_approx": 1533,
+      "note": "전수 enrichment 기록 있음"
+    }
+  },
+  "optional_fields": {
+    "name_en": {
+      "present_approx": 810,
+      "missing_approx": 723,
+      "note": "pending_source 788 = 영문 원천 없음 (한국어 소스만)"
+    },
+    "description_en": {
+      "present_approx": 507,
+      "missing_approx": 1026
+    },
+    "description_ko": {
+      "present_approx": 1642,
+      "missing_approx": 0
+    },
+    "image": {
+      "present_approx": 1533,
+      "missing_approx": 0,
+      "note": "enrichment에서 curated_images 포함"
+    },
+    "hours": {
+      "needs_hours": 1642,
+      "note": "전수 hours 미확인 — 정기 갱신 대상"
+    },
+    "arrival_verification": {
+      "needs_arrival": 1642,
+      "note": "정기 갱신 대상"
+    }
+  },
+  "publishability_distribution": {
+    "publishable": 303,
+    "publishable_with_caveat": 507,
+    "pending_review": 44,
+    "pending_source": 788,
+    "total": 1642
+  },
+  "release_completeness_classes": {
+    "RELEASE_READY_COMPLETE": 301,
+    "RELEASE_READY_OPTIONAL_MISSING": 1228,
+    "RELEASE_READY_CURRENT_EVENT": 4
+  },
+  "recurring_maintenance_items": [
+    "hours",
+    "arrival_verification",
+    "event_dates",
+    "promotion_status"
+  ]
+}
