@@ -1,0 +1,88 @@
+{
+  "report_id": "busan-final-data-quality-report",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 데이터 구축 최종 품질 평가 및 상태 선언.",
+  "build_status": {
+    "INITIAL_BUILD_COMPLETE": true,
+    "RELEASE_DATA_READY": true,
+    "RECURRING_FRESHNESS_MAINTENANCE_REQUIRED": true
+  },
+  "quality_verdict": "PASS",
+  "key_metrics": {
+    "total_candidates": 1642,
+    "total_source_facts": 2714,
+    "release_total": 1533,
+    "place_release": 1529,
+    "event_release_current": 4,
+    "promotion_public": 2,
+    "promotion_archive": 8,
+    "manual_queue": 0
+  },
+  "current_public_content": {
+    "events": [
+      {
+        "candidate_id": "busan-E-00001",
+        "title_ko": "부산바다축제",
+        "dates": "2026-08-07~2026-08-13",
+        "source": "bfo.or.kr"
+      },
+      {
+        "candidate_id": "busan-E-00004",
+        "title_ko": "금정산성축제",
+        "dates": "2026-10-16~2026-10-18",
+        "source": "FestivalService_raw_2026"
+      },
+      {
+        "candidate_id": "busan-E-00006",
+        "title_ko": "부산불꽃축제",
+        "dates": "2026-11-07",
+        "source": "bfo.or.kr"
+      },
+      {
+        "candidate_id": "busan-E-00019",
+        "title_ko": "부산국제록페스티벌",
+        "dates": "2026-10-02~2026-10-04",
+        "source": "bfo.or.kr"
+      }
+    ],
+    "promotions": [
+      {
+        "promo_id": "BTO_PRESS_5340",
+        "title_ko": "부산병 치유 프로모션",
+        "status": "ACTIVE",
+        "end": "2026-08-27",
+        "note": "KKday 예약 URL BLOCKED_OFFICIAL_PLATFORM_RESTRICTED"
+      },
+      {
+        "promo_id": "VB_EVENT_684",
+        "title_en": "Starry Night Busan Midnight River Cruise Summer Promotion",
+        "status": "ENDING_SOON",
+        "end": "2026-08-09"
+      }
+    ]
+  },
+  "recurring_maintenance_required": {
+    "event_dates": "매 시즌 bfo.or.kr + FestivalService 재확인. 68건 보류 중.",
+    "promotion_freshness": "만료 확인 + 신규 발굴. 현재 ACTIVE 2건. 만료 후 archive 이동.",
+    "hours_verification": "전수 hours 미확인 — 정기 갱신.",
+    "arrival_verification": "전수 arrival 미검증 — 정기 갱신."
+  },
+  "data_lineage": {
+    "enrichment_run": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-EXECUTE",
+    "qa_run": "TASK-GOKOREAMATE-BUSAN-ENRICHMENT-V1-QA-02",
+    "publishability_gate": "BUSAN_PUBLISHABILITY_EN_V8",
+    "event_freshness": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+    "promotion_closure": "TASK-BUSAN-PROMOTION-MANUAL-BROWSER-CLOSURE-V1",
+    "final_release": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1"
+  },
+  "safety_checks": {
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "api_calls": 0,
+    "push": false,
+    "news_only_source": 0,
+    "fabricated_data": 0
+  }
+}

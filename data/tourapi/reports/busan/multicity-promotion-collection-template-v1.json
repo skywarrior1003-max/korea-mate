@@ -1,0 +1,58 @@
+{
+  "template_id": "multicity-promotion-collection-template-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "도시별 프로모션 수집 템플릿. 부산 2종 소스(BTO+VB) 검증 포함.",
+  "promotion_status_lifecycle": [
+    "ACTIVE",
+    "ENDING_SOON",
+    "UPCOMING",
+    "EXPIRED",
+    "SOLD_OUT",
+    "UNVERIFIED"
+  ],
+  "classification_rules": {
+    "PROMOTION": "할인·쿠폰·증정·예약 특전·한정 패키지·대상자 혜택",
+    "EVENT": "무료 공개 행사 — PROMOTION 아님",
+    "TRAVEL_PRODUCT": "상시 판매 패스·체험 — PROMOTION 아님",
+    "TRAVEL_NOTICE": "교통·휴장·정책 공지"
+  },
+  "required_fields": [
+    "promotion_id",
+    "title",
+    "content_class=PROMOTION",
+    "promotion_mechanism",
+    "benefit",
+    "audience",
+    "start_at",
+    "end_at",
+    "status",
+    "organizer",
+    "official_url",
+    "booking_url_or_status",
+    "source_checked_at",
+    "evidence_urls",
+    "provenance",
+    "classification_reason"
+  ],
+  "safety_rules": [
+    "뉴스 단독 근거 금지",
+    "공식 원문 없는 사실 확정 금지",
+    "만료 후 자동 공개 제외",
+    "차단 플랫폼 우회 금지",
+    "차단값 추정 금지 — BLOCKED_OFFICIAL_PLATFORM_RESTRICTED 명시"
+  ],
+  "browser_fallback_triggers": [
+    "JS 페이지네이션 확인 (page_no vs pageIndex)",
+    "월별 필터 JS 클릭 필요",
+    "상세 페이지 HTTP 500 재시도"
+  ],
+  "busan_statistics": {
+    "sources_scanned": 3,
+    "promotions_found_active": 2,
+    "promotions_found_expired": 8,
+    "b2c_yield_bto": "~4%",
+    "browser_pages": 17
+  }
+}

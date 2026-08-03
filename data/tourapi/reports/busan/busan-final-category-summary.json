@@ -1,0 +1,44 @@
+{
+  "report_id": "busan-final-category-summary",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 release candidate 카테고리별 최종 분포.",
+  "total_candidates": 1642,
+  "total_release": 1533,
+  "release_by_category": {
+    "attraction": 717,
+    "restaurant": 680,
+    "accommodation": 82,
+    "nature": 50,
+    "event": 4
+  },
+  "release_by_class": {
+    "RELEASE_READY_COMPLETE": 301,
+    "RELEASE_READY_OPTIONAL_MISSING": 1228,
+    "RELEASE_READY_CURRENT_EVENT": 4
+  },
+  "holds_and_excludes": {
+    "EXCLUDE_DUPLICATE_SIBLING": 37,
+    "HOLD_STRUCTURAL_REVIEW": 4,
+    "HOLD_PAST_EVENT": 14,
+    "HOLD_STALE_EVENT": 25,
+    "HOLD_DATE_MISSING_EVENT": 26,
+    "HOLD_NO_CURRENT_SOURCE_EVENT": 3,
+    "total": 109
+  },
+  "grand_total_check": true,
+  "place_categories": {
+    "attraction": 717,
+    "restaurant": 721,
+    "accommodation": 82,
+    "nature": 50,
+    "total_place_candidates": 1570,
+    "place_release": 1529
+  },
+  "event_category": {
+    "total_event_candidates": 72,
+    "event_release": 4,
+    "event_holds": 68
+  }
+}

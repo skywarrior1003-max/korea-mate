@@ -1,0 +1,46 @@
+{
+  "template_id": "multicity-place-collection-template-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "도시별 장소 데이터 수집 체크리스트 템플릿.",
+  "place_collection_checklist": [
+    "공식 API 원천 목록 확보 (지자체 + KTO)",
+    "list/detail URL 패턴 확인",
+    "pagination 방식 확인 (JS 여부)",
+    "언어별 수집 (ko + en 분리)",
+    "identity matching (동일 장소 다중 소스 통합)",
+    "주소 정규화 + 좌표 확인",
+    "이미지 수집 + 권리 검토",
+    "영문 설명 링크 또는 번역 계획",
+    "duplicate adjudication (동일 원천 중복 제거)",
+    "enrichment 완료 후 publishability gate 적용"
+  ],
+  "required_fields": [
+    "candidate_id",
+    "title_ko",
+    "category",
+    "address",
+    "lat",
+    "lng",
+    "provenance"
+  ],
+  "optional_fields": [
+    "title_en",
+    "description_ko",
+    "description_en",
+    "district",
+    "hours",
+    "phone",
+    "homepage",
+    "images",
+    "arrival_info"
+  ],
+  "busan_statistics": {
+    "place_candidates": 1570,
+    "place_release": 1529,
+    "duplicate_exclude": 37,
+    "structural_hold": 4,
+    "source_facts": 2714
+  }
+}

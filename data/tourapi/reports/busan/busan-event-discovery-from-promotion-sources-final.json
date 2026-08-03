@@ -1,0 +1,97 @@
+{
+  "report_id": "busan-event-discovery-from-promotion-sources-final",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "supersedes": "busan-event-discovery-from-promotion-sources-v1.json",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "프로모션 수집 원천(VB-EVENT-SURVEY, VB-SHOWS-EVENTS)에서 발견된 EVENT 항목 보존. 이번 작업에서 장소·행사 candidate에 병합하지 않음. release 1,533건에 미포함.",
+  "count": 5,
+  "items": [
+    {
+      "event_id": "VB_SHOWS_6160",
+      "source_id": "VB-SHOWS-EVENTS",
+      "source_url": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid=6160",
+      "title_en": "2026 Balcony Music Show & Street Festa",
+      "content_class": "EVENT",
+      "status": "ACTIVE",
+      "period_start": "2026-07-25",
+      "period_end": "2026-12-19",
+      "location": "부산 (상세 장소 미확인)",
+      "price_krw": null,
+      "admission": "FREE (야외 공연)",
+      "reason_not_promotion": "공공 무료 야외 공연 시리즈. 관광객 금전적 혜택 없음. 원래 유료 서비스가 무료화된 것이 아님."
+    },
+    {
+      "event_id": "VB_SHOWS_6228",
+      "source_id": "VB-SHOWS-EVENTS",
+      "source_url": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid=6228",
+      "title_en": "'Gwangalli M Drone Light Show' August Performance Program",
+      "content_class": "EVENT",
+      "status": "UPCOMING",
+      "period_start": "2026-08-08",
+      "period_end": "2026-08-29",
+      "location": "광안리해수욕장, 광안해변로 219, 수영구, 부산",
+      "price_krw": null,
+      "admission": "FREE (야외 관람)",
+      "performances": [
+        {
+          "date": "2026-08-08",
+          "theme": "Capturing Summer"
+        },
+        {
+          "date": "2026-08-15",
+          "theme": "National Liberation Day"
+        },
+        {
+          "date": "2026-08-22",
+          "theme": "NAVER WEBTOON in Gwangalli"
+        },
+        {
+          "date": "2026-08-29",
+          "theme": "Space Adventure"
+        }
+      ],
+      "cancellation_note": "8월 1일 취소(2026 Night Race 동시개최). 기상 취소 가능.",
+      "external_website": "https://www.gwangallimdrone.co.kr/en/home",
+      "reason_not_promotion": "공공 무료 드론쇼. 관광객 금전적 혜택 없음."
+    },
+    {
+      "event_id": "VB_EVENT_656",
+      "source_id": "VB-EVENT-SURVEY",
+      "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq=656",
+      "title_en": "Gwangalli Drone Light Show Pick Your Favorite Scene Event",
+      "content_class": "EVENT",
+      "status": "EXPIRED",
+      "period_start": "2026-06-04",
+      "period_end": "2026-06-07",
+      "price_krw": null,
+      "reason_not_promotion": "드론쇼 장면 선호도 투표 참여 이벤트. 관광객 금전적 혜택 미확인."
+    },
+    {
+      "event_id": "VB_EVENT_207",
+      "source_id": "VB-EVENT-SURVEY",
+      "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq=207",
+      "title_en": "Special Event Celebrating the Launch of the Busan Super Delivery Service",
+      "content_class": "EVENT_UNCERTAIN",
+      "status": "EXPIRED",
+      "period_start": "2026-05-06",
+      "period_end": "2026-05-31",
+      "price_krw": null,
+      "reason_not_promotion": "배달 플랫폼 론칭 기념 이벤트 추정. 관광객 직접 혜택 미확인. 상세 페이지 URL 불일치로 접근 불가."
+    },
+    {
+      "event_id": "VB_EVENT_190",
+      "source_id": "VB-EVENT-SURVEY",
+      "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq=190",
+      "title_en": "Make a Wish for the Lunar New Year at Busan Super!",
+      "content_class": "EVENT_UNCERTAIN",
+      "status": "EXPIRED",
+      "period_start": "2026-02-14",
+      "period_end": "2026-02-22",
+      "price_krw": null,
+      "reason_not_promotion": "설날 연계 참여형 이벤트(소원 빌기). 관광객 직접 혜택 미확인. 상세 접근 불가."
+    }
+  ],
+  "merge_into_release": false,
+  "note": "발견 목록과 공식 근거만 보존. 향후 이벤트 데이터셋 구성 시 참고용."
+}

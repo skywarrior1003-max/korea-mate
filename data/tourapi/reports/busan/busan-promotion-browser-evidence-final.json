@@ -1,0 +1,66 @@
+{
+  "report_id": "busan-promotion-browser-evidence-final",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "부산 프로모션 브라우저 자동화 접근 증거 최종 기록.",
+  "playwright_setup": {
+    "venv_path": "C:\\Users\\USER\\AppData\\Local\\Temp\\gkm-playwright-audit",
+    "is_outside_repo": true,
+    "browser": "Chromium headless",
+    "repo_package_modified": false
+  },
+  "evidence_summary": {
+    "total_screenshots": 23,
+    "screenshot_location": "C:\\Users\\...\\scratchpad\\20260803_134732_*.png (temp, not committed)",
+    "total_pages_accessed": 17
+  },
+  "phase_evidence": {
+    "VB_EVENT_SURVEY_pages_2_13": {
+      "method": "Playwright + WebFetch page_no=N",
+      "pages": 12,
+      "key_finding": "page_no=N 파라미터 확인. 신규 PROMOTION 0건.",
+      "screenshots": [
+        "20260803_134732_vb_event_survey_p*.png"
+      ]
+    },
+    "VB_SHOWS_EVENTS_months_9_12": {
+      "method": "Playwright click_a:text('N') 월탭",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "key_finding": "Balcony Music Show(EVENT)만. PROMOTION 0건.",
+      "screenshots": [
+        "20260803_134732_vb_shows_2026_{09,10,11,12}.png"
+      ]
+    },
+    "VB_EVENT_1071": {
+      "method": "Playwright direct detail page",
+      "result": "HTTP 200 but server error content → PERMANENTLY_INACCESSIBLE_DETAIL",
+      "screenshots": [
+        "20260803_134732_vb_event_1071_detail.png"
+      ]
+    },
+    "KKDAY": {
+      "method": "Playwright Chromium headless",
+      "urls_tried": 3,
+      "result": "HTTP 403 + Cloudflare 차단 전부. 우회 미시도.",
+      "status": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED"
+    },
+    "VBP": {
+      "method": "Playwright Chromium headless",
+      "result": "메인 타임아웃(heavy JS). /en/pass 404.",
+      "status": "SITE_INACCESSIBLE_VIA_AUTOMATION"
+    }
+  },
+  "safety": {
+    "credentials_exposed": false,
+    "login_bypassed": false,
+    "captcha_bypassed": false,
+    "cloudflare_bypassed": false,
+    "repo_files_modified": false
+  }
+}

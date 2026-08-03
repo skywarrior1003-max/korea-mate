@@ -1,0 +1,10 @@
+{
+  "report_id": "busan-travel-notice-discovery-final",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "reference_date": "2026-08-03",
+  "description": "프로모션 수집 원천에서 발견된 TRAVEL_NOTICE 항목. 이번 부산 프로모션 수집에서 해당 항목 없음.",
+  "count": 0,
+  "items": [],
+  "note": "VB-NOTICE·BTO-NOTICE 소스는 이번 수집 범위 외(DEFERRED). 다음 도시 수집에서 포함 예정."
+}

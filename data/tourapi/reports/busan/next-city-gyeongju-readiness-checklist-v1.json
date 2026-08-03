@@ -1,0 +1,85 @@
+{
+  "checklist_id": "next-city-gyeongju-readiness-checklist-v1",
+  "task_id": "TASK-BUSAN-DATA-FINAL-RELEASE-AND-MULTICITY-HANDOFF-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "city": "경주",
+  "description": "경주 데이터 구축 착수 준비도 체크리스트. 부산 표준 재사용.",
+  "template_status": "VALIDATED_IN_BUSAN_READY_FOR_GYEONGJU",
+  "official_sources_to_investigate": {
+    "gyeongju_city": {
+      "institution": "경주시 관광문화",
+      "url_to_check": "https://www.gyeongju.go.kr",
+      "note": "공식 관광 API/페이지 URL 확인 필요"
+    },
+    "gyeongbuk_culture_tourism": {
+      "institution": "경북문화관광공사",
+      "url_to_check": "https://www.gtc.or.kr",
+      "note": "경북 지역 공식 관광공사"
+    },
+    "kto_korservice2": {
+      "institution": "한국관광공사",
+      "url": "https://apis.data.go.kr/B551011/KorService2",
+      "area_code": "35 (경상북도)",
+      "sigungu_code": "1 (경주시 예상)",
+      "note": "부산과 동일 API — area/sigungu 코드 확인 필요"
+    },
+    "kto_engservice2": {
+      "institution": "한국관광공사 영문",
+      "url": "https://apis.data.go.kr/B551011/EngService2",
+      "note": "부산과 동일 API"
+    },
+    "gyeongju_cultural_foundation": {
+      "institution": "경주문화재단 or 경주세계문화엑스포",
+      "note": "축제·행사 공식 원천 확인 필요"
+    },
+    "heritage_site": {
+      "institution": "국가유산청 / 경주국립공원",
+      "note": "유네스코 문화유산 관련 공식 정보"
+    }
+  },
+  "language_support_plan": {
+    "ko": "KTO KorService2 (필수)",
+    "en": "KTO EngService2 + 공식 영문 페이지",
+    "ja_zh": "추후 검토"
+  },
+  "expected_content": {
+    "place_types": [
+      "문화유산·사적지",
+      "사찰·불교유적",
+      "자연경관",
+      "박물관·전시관",
+      "음식·숙박"
+    ],
+    "event_types": [
+      "문화재 체험",
+      "야간 특별 개방",
+      "축제"
+    ],
+    "raw_size_estimate": "KTO 기준 경주시 약 500~900건 예상"
+  },
+  "branch_rule": "data/gyeongju-collection-v1 (신규 브랜치)",
+  "completion_criteria": {
+    "candidate_count": "TBD after source discovery",
+    "source_facts": "TBD",
+    "release_target": "TBD",
+    "event_freshness": "당해년 날짜 확인 필수",
+    "promotion_sources": "경주시 관광공사 보도자료 + 지역 플랫폼"
+  },
+  "reuse_from_busan": [
+    "multicity-data-collection-standard-v1.json",
+    "multicity-source-contract-template-v1.json",
+    "multicity-place-collection-template-v1.json",
+    "multicity-event-freshness-template-v1.json",
+    "multicity-promotion-collection-template-v1.json",
+    "multicity-browser-fallback-template-v1.json",
+    "multicity-release-contract-v1.json"
+  ],
+  "pre_build_actions": [
+    "경주시 관광 공식 API/URL 탐색",
+    "KTO area_code 35 + sigungu 1 테스트 호출",
+    "경북문화관광공사 소스 접근 확인",
+    "예상 raw 규모 파악 후 호출 계획 수립",
+    "브랜치 생성: data/gyeongju-collection-v1"
+  ]
+}
