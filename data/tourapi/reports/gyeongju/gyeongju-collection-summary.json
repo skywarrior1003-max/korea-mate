@@ -1,0 +1,120 @@
+{
+  "task": "TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3",
+  "phase": "Phase10_full_collection",
+  "collected_at": "2026-08-03T12:52:54Z",
+  "credential_values_exposed": false,
+  "gyeongju_city_api_primary": {
+    "GJ-01": {
+      "total": 159,
+      "collected": 159,
+      "sha256": "8e9c0c816c9aa8909960a42598282833ba9a4701f856924bc5a5c5d7227b846a",
+      "errors": 0
+    },
+    "GJ-06": {
+      "total": 10,
+      "collected": 10,
+      "sha256": "d2a079a8f9323e4b9a09af8ada178c2e83b144fa5fb1cebdeb0a45dc6ee05030"
+    },
+    "GJ-07": {
+      "total": 10,
+      "collected": 10,
+      "sha256": "6efdd3a7eb3ace3e4ce5fa0a7d1984fc710e8c0c180f0bcdb99bc21cc960cafa"
+    },
+    "GJ-08": {
+      "total": 111,
+      "collected": 111,
+      "sha256": "a3be484aa0bc732ccaaab54d6a04981804b7d2e1650dfd3de2266ba3ded71468"
+    },
+    "GJ-09": {
+      "total": 61,
+      "collected": 61,
+      "sha256": "d9d7b2e7cd61a387bdf2e2f6c0ae8c88a4efb9d69e569c3534bc5601ae36ae3a"
+    },
+    "total_collected": 351
+  },
+  "gyeongju_city_api_image_supplementary": {
+    "GJ-03": {
+      "total": 680,
+      "collected": 680,
+      "sha256": "e8178f54d2c2ebc18382c33f2822a4c4d8c6b359124fea15b2774c81d9255158",
+      "type": "IMAGE_SUPPLEMENTARY"
+    },
+    "GJ-04": {
+      "total": 560,
+      "collected": 560,
+      "sha256": "03838f71cda2bc74a7ae075a63c36bc2b0d44d276f2d278629a475bc14303b97",
+      "type": "IMAGE_SUPPLEMENTARY"
+    },
+    "GJ-05": {
+      "total": 52,
+      "collected": 52,
+      "sha256": "8b90910642e040a6e8f4dc5fc54b101254907e4ac85c5e9c7daa940be34fe571",
+      "type": "IMAGE_SUPPLEMENTARY"
+    },
+    "total_image_records": 1292,
+    "note": "설계 결정 A: 독립 candidate 생성 안 함"
+  },
+  "kto_korservice2": {
+    "area_code": "35",
+    "sigungu_code": "2",
+    "types": {
+      "12": {
+        "name": "tourist-spot",
+        "total": 143,
+        "collected": 143,
+        "sha256": "76204647c770202feb8ae115dbb9f17263f061c2743b8fc0c5481c964d14c182",
+        "errors": 0
+      },
+      "14": {
+        "name": "cultural-facility",
+        "total": 14,
+        "collected": 14,
+        "sha256": "56ed996f210b7810ba230cca5b418427a75d26b25a735b8ae28889628a876968",
+        "errors": 0
+      },
+      "15": {
+        "name": "festival-event",
+        "total": 24,
+        "collected": 24,
+        "sha256": "fdc6b3af103b06eef6cf97a994bc1190a2907d68ded9643dc503b0f0dec78a30",
+        "errors": 0
+      },
+      "28": {
+        "name": "leisure-sport",
+        "total": 59,
+        "collected": 59,
+        "sha256": "efa99442ee916987895e2af5f8931e0916e69887b04f6dbf0e8bf2e00bf476e5",
+        "errors": 0
+      },
+      "32": {
+        "name": "accommodation",
+        "total": 127,
+        "collected": 127,
+        "sha256": "444c90652aa8106d70dea4beb732870a539e7d4fb1558ade8e33aef84bcccd53",
+        "errors": 0
+      },
+      "38": {
+        "name": "shopping",
+        "total": 10,
+        "collected": 10,
+        "sha256": "57c7d110bc1a9dc074a4320ceb281dcc8a57eff30e24784c93e0004fb82d3ca3",
+        "errors": 0
+      },
+      "39": {
+        "name": "restaurant",
+        "total": 182,
+        "collected": 182,
+        "sha256": "4866f80f124d35de27b7ef5808bf64585fd6f165a918591963de15f8aeac1e44",
+        "errors": 0
+      }
+    },
+    "total_collected": 559
+  },
+  "engservice2": {
+    "status": "MISSING_SOURCE",
+    "total_count": 0,
+    "note": "이전 탐색 및 파일럿 재확인: areaCode=35, sigunguCode=2 기준 0건"
+  },
+  "gj02_status": "SKIP — getDstrctsTrrsrt totalCount=0, 추가 파라미터 필요",
+  "grand_total_primary": 910
+}
