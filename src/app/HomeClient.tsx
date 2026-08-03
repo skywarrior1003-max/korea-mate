@@ -19,6 +19,7 @@ import { citySpotSourceKey } from "@/lib/place-identity";
 import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
+import HomeExperience from "@/components/home/HomeExperience";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -929,135 +930,12 @@ export default function HomeClient() {
       {/* ══════════════════════════════════════════════════════════
           HERO — TASK-025: 바이럴 루프 전환 랜딩
       ══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden py-16 sm:py-28" style={{ backgroundColor: "#1a1a2e" }}>
-        {/* 배경 글로우 */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 18% 65%, rgba(212,175,55,0.13) 0%, transparent 50%), radial-gradient(circle at 82% 18%, rgba(59,130,246,0.11) 0%, transparent 45%)",
-          }}
-        />
-
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
-
-          {/* 배지 */}
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold text-white/55 border border-white/15 tracking-widest uppercase">
-              🇰🇷 Plan · Capture · Share
-            </span>
-          </div>
-
-          {/* 메인 헤드라인 */}
-          <h1 className="text-center text-5xl sm:text-[5.5rem] font-black text-white tracking-tight leading-[1.05] mb-5">
-            Your Korea Story,<br />
-            <span style={{ color: "#FF6A50" }}>Captured &amp; Shared</span>
-          </h1>
-
-          {/* 서브헤드라인 */}
-          <p className="text-center text-base sm:text-xl text-white/58 max-w-2xl mx-auto leading-relaxed mb-10">
-            AI builds your perfect Korea itinerary in seconds. Capture GPS moments on the go, share to Instagram · TikTok · X in one tap.
-          </p>
-
-          {/* Primary CTA — 중앙 고정 */}
-          <div className="flex justify-center mb-12">
-            <button
-              onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center justify-center px-10 py-4 rounded-2xl text-lg font-black shadow-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer"
-              style={{ backgroundColor: "#FF4A2D", color: "#ffffff" }}
-            >
-              ✨ Plan My Korea Trip
-            </button>
-          </div>
-
-          {/* 3단계 플로우 시각화 */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 mb-12">
-            {[
-              { num: "01", icon: "📅", label: "AI Plans",    sub: "City · dates · style" },
-              { num: "02", icon: "📸", label: "Capture",    sub: "GPS + photo + memo" },
-              { num: "03", icon: "🎴", label: "1-tap Share", sub: "Instagram · TikTok · X" },
-            ].map((s, i) => (
-              <div key={s.num} className="flex items-center gap-2 sm:gap-3">
-                <div
-                  className="flex flex-col items-center px-5 py-4 rounded-2xl w-44 sm:w-48 text-center"
-                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(212,175,55,0.22)" }}
-                >
-                  <span className="text-2xl mb-1">{s.icon}</span>
-                  <span className="text-[10px] font-black tracking-widest mb-0.5" style={{ color: "#FF4A2D" }}>
-                    STEP {s.num}
-                  </span>
-                  <span className="text-sm font-black text-white">{s.label}</span>
-                  <span className="text-[11px] text-white/38 mt-0.5 leading-tight">{s.sub}</span>
-                </div>
-                {i < 2 && (
-                  <span className="text-white/18 text-xl hidden sm:block">→</span>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* 스토리 카드 미리보기 (CSS 모크업) */}
-          <div className="flex items-end justify-center gap-0 mb-10">
-            {/* 카드 1 — 전면 */}
-            <div
-              className="relative rounded-2xl overflow-hidden shadow-2xl z-10"
-              style={{
-                width: "120px",
-                aspectRatio: "9/16",
-                background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%)",
-                border: "1px solid rgba(212,175,55,0.3)",
-              }}
-            >
-              <div
-                className="absolute inset-x-2 top-2 rounded-xl"
-                style={{ height: "52%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
-              />
-              <span className="absolute top-[20%] left-0 right-0 text-center text-xs text-white/15">📸</span>
-              <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
-                <div className="w-full h-[1px] mb-1" style={{ background: "#FF4A2D", opacity: 0.45 }} />
-                <span className="text-white/75 text-[7px] font-black">✨ My Busan Trip</span>
-                <span className="text-[7px] font-bold" style={{ color: "#FF4A2D" }}>3 Days · 12 Spots</span>
-                <span className="text-white/25 text-[6px]">gokoreamate.com</span>
-              </div>
-            </div>
-            {/* 카드 2 — 배경 */}
-            <div
-              className="relative rounded-2xl overflow-hidden shadow-xl -ml-8 mb-6 opacity-60"
-              style={{
-                width: "100px",
-                aspectRatio: "9/16",
-                background: "linear-gradient(180deg, #0f3460 0%, #16213e 60%, #1a1a2e 100%)",
-                border: "1px solid rgba(212,175,55,0.15)",
-              }}
-            >
-              <div
-                className="absolute inset-x-2 top-2 rounded-xl"
-                style={{ height: "50%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.05)" }}
-              />
-              <span className="absolute top-[18%] left-0 right-0 text-center text-xs text-white/10">🏖️</span>
-              <div className="absolute inset-x-0 bottom-0 px-2 pb-2 flex flex-col items-center gap-0.5">
-                <div className="w-full h-[1px] mb-1" style={{ background: "#FF4A2D", opacity: 0.2 }} />
-                <span className="text-white/40 text-[6px] font-black">🌿 Nature Wanderer</span>
-                <span className="text-white/20 text-[5px]">gokoreamate.com</span>
-              </div>
-            </div>
-          </div>
-
-          {/* 소셜 프루프 + 서브 링크 */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
-            <p className="text-white/28 text-sm font-medium">
-              Free · No sign-up · 30-sec itinerary
-            </p>
-            <span className="hidden sm:block text-white/15 text-lg">·</span>
-            <Link
-              href="/survival-guide"
-              className="text-sm font-semibold text-white/38 hover:text-white/65 transition-colors"
-            >
-              Korea Survival Guide →
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ── Home Experience ─────────────────────────────────────────────
+          상단 수동 가로 2페이지. Page 1 은 브랜드 에디토리얼(또는 사용자가
+          마무리한 여행), Page 2 는 발견이다. 예전 Hero(베이지·골드 그라디언트)
+          자리를 그대로 대체한다 — 페이저는 이 블록 안에서만 움직이고 아래
+          Planner·섹션들은 평소처럼 세로로 이어진다. */}
+      <HomeExperience />
 
       {/* Adaptive Home — 여행 상태(pre/in/post) 실데이터 기반 조건부 모듈 (S1) */}
       <AdaptiveHomeCard />

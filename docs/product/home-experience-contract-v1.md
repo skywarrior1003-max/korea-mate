@@ -15,11 +15,13 @@ TASK-GOKOREAMATE-HOME-CONTRACT-ASSET-GATE-V1
 ## 1. 최종 Home 구조
 
 ```
-/ Home  (route 1개, 가로 carousel 없음)
-├─ HomeExperience              ← 신설. Hero 자리를 대체한다
-│   ├─ Premium Discovery       기본
-│   ├─ Memory Synergy          실제 Memory 가 있을 때
-│   └─ Inspired Storytelling   Memory Synergy 에서 "View My Story" 선택 시
+/ Home  (route 1개)
+├─ HomeExperience              ← 신설. 기존 Hero 자리를 대체한다
+│   │                            상단만 수동 가로 2페이지. Home 전체가 아니다
+│   ├─ Page 1
+│   │    ├─ 기본        Inspired Storytelling   (브랜드 에디토리얼)
+│   │    └─ 개인화      Memory Synergy          (명시적 여행 마무리 신호 필요)
+│   └─ Page 2           Premium Discovery
 ├─ AdaptiveHomeCard            기존 유지
 ├─ #planner                    기존 유지
 ├─ #essential                  기존 유지
@@ -29,7 +31,11 @@ TASK-GOKOREAMATE-HOME-CONTRACT-ASSET-GATE-V1
 └─ BottomNav (layout 전역)      기존 유지
 ```
 
-가로 2패널 구조는 폐기했다. 세 화면은 같은 세로 위치에서 **상태로** 갈린다.
+Page 1·Page 2 는 **HomeExperience 내부에서만** 가로로 넘어간다. Planner 이하
+섹션은 그 아래로 평소처럼 세로로 이어진다. Home 전체를 carousel 에 넣지 않는다.
+
+자동 슬라이드·타이머·URL 변경·history entry 는 전부 금지다.
+
 
 ### 1-1. 현재 Home 실측 구조
 
@@ -85,63 +91,103 @@ src/lib/home/
 
 ## 2. Home 상태 계약
 
-### 2-A. Premium Discovery — 기본
+> **정정 이력 (R1)**
+> 이 문서의 초판은 Premium Discovery 를 기본 Home 으로, Storytelling 을 개인
+> Story 로 해석했다. 그 해석은 폐기한다. Storytelling 은 개인 데이터가 아니라
+> **브랜드 에디토리얼 콘텐츠**이고, 그래서 첫 방문자에게 보여줄 수 있다.
+> Memory Synergy 만 개인 데이터를 쓰며, Memory 존재가 아니라 **명시적 마무리
+> 신호**로 켜진다.
 
-다음 중 하나라도 해당하면 Discovery 다.
+### 2-A. Page 1 기본 — Inspired Storytelling
 
-- 소유 itinerary 없음
-- 소유 itinerary 는 있으나 Memory 0건
-- `/api/itineraries` 실패·타임아웃
-- localStorage 접근 불가 (프라이빗 모드 등)
-- 판정 진행 중 (loading)
+`home_ai_inspired_storytelling` 은 첫 방문자와 일반 방문자에게 보여주는
+GoKoreaMate 의 브랜드·영감 콘텐츠다. **특정 사용자의 실제 Memory 가 아니다.**
 
-즉 **Discovery 는 판정 실패의 안전 착지점이며 신규 사용자의 정상 화면**이다.
+전하는 것: "한국 여행은 이런 기억과 이야기로 남을 수 있습니다."
 
-### 2-B. Memory Synergy — 활성 조건
+- PNG 의 날짜·장소·여행 단편·감성 문구는 **초기 편집형 콘텐츠**로 사용한다
+- 계절·도시·축제·K-POP·캠페인별로 통째 교체 가능해야 한다
+- 문구를 `HomeClient` 안에 흩지 않고 typed config 한 곳에 모은다
+  → `src/data/home/editorial-story.ts`
 
-두 조건을 **모두** 만족해야 한다.
+표현 규칙:
 
-1. `GET /api/itineraries` (헤더 `x-device-id`) 가 돌려준 소유 itinerary 가 1건 이상
-2. 그중 실제 `trip_moments` 가 1건 이상인 itinerary 가 존재
+| 허용 | 금지 |
+|---|---|
+| `A journey in Busan` | `Your saved memory` |
+| `Moments from Korea` | `You wrote this` |
+| `Your trip can become a story` | `Your actual trip record` |
 
-날짜는 판정에 쓰지 않는다. `end_date < 오늘`, 최근 7·30·90일 기준 전부 사용 금지.
-"완료 여행"이 아니라 **"기록이 남은 여행"** 이 활성 조건이다.
+에디토리얼 문구가 **사용자가 직접 쓴 글처럼 보이게** 하지 않는다.
 
-#### deterministic selector
+### 2-B. Page 1 개인화 — Memory Synergy
+
+세 조건을 **모두** 만족할 때만 Page 1 을 교체한다.
+
+1. 사용자가 소유한 itinerary
+2. 그 itinerary 의 실제 `trip_moments` 1건 이상
+3. **사용자가 명시적으로 실행한 여행 마무리 또는 Story 생성 신호**
+
+금지:
+
+- `end_date` 가 지났다는 이유만으로 완료 추정
+- 최근 7·30·90일 기준
+- **Memory 가 생겼다는 이유만으로 자동 전환**
+- 공개 여행을 개인 여행처럼 표시
+- query parameter 로 production 상태 강제
+- 임의 localStorage 완료 플래그 신설
+
+#### 마무리 신호 조사 결과 — 없음
+
+`finish` / `wrapUp` / `trip_end` / `createStory` / `story_created` /
+`generateStory` / `shareStory` 를 `src/` `functions/` 전체에서 검색한 결과,
+여행 마무리를 뜻하는 신호는 **0건**이다. 검색에 걸린 항목은 전부 무관하다
+(`tripStart`/`tripEnd` 날짜 파라미터, Gemini `finishReason`).
+
+`itineraries` 스키마에도 해당 필드가 없다:
+`id · city · start_date · end_date · travelers · travel_style · days ·
+trip_title · device_id · created_at · updated_at · view_count · helpful_count ·
+is_public · copy_of · copy_count · cover_kind · cover_moment_id`
+
+따라서:
+
+- **production selector 는 항상 `false`** — Memory Synergy 는 운영에서 켜지지 않는다
+- 기본 Page 1 은 Inspired Storytelling 을 유지한다
+- 컴포넌트와 selector 계약은 구현하고 **fixture·unit test 로 검증**한다
+- 신호를 새로 만들지 않는다 (DB·localStorage 모두)
+- 활성화 blocker 로 기록한다 (§10 B1)
+
+#### selector 계약
 
 ```
-1. rows = GET /api/itineraries      (서버가 updated_at DESC 로 정렬해 준다)
-                                     functions/api/itineraries.ts:52
-2. 각 row 에 대해 moments = loadMoments(row.id)   ← localStorage, 네트워크 0
-3. withMemory = rows.filter(r => moments(r).length > 0)
-4. withMemory 가 비면 → Discovery
-5. 정렬 키 (전부 기존 필드):
-     1순위  해당 itinerary Memory 중 가장 늦은 captured_at  DESC
-     2순위  itinerary.updated_at                            DESC
-     3순위  itinerary.id                                    ASC   (완전 결정론용)
-6. 첫 항목을 selectedTrip 으로 확정
+selectHomeExperience({ trips, momentsOf, finishSignalOf }) →
+  { page1: "storytelling" | "memory", trip?: ItineraryRow }
+
+  finishSignalOf 가 true 인 소유 itinerary 중
+  실제 Memory 가 1건 이상인 것만 후보다.
+
+  정렬 (전부 기존 필드):
+    1순위  해당 itinerary Memory 중 가장 늦은 captured_at  DESC
+    2순위  itinerary.updated_at                            DESC
+    3순위  itinerary.id                                    ASC
+
+  후보가 없으면 page1 = "storytelling"
 ```
 
-같은 입력이면 항상 같은 결과가 나온다. 임의 기간·임의 최근성 정의가 없다.
+production 에서는 `finishSignalOf` 가 상수 `false` 를 반환한다. 신호 계약이
+생기면 그 함수 하나만 교체하면 된다 — selector·컴포넌트·테스트는 그대로다.
 
-#### N+1 회피 근거
+#### 데이터 접근
 
-- `GET /api/itineraries` → **1회**
-- Memory 존재 판정은 `loadMoments(itinId)` = `localStorage["koreamate_moments_<id>"]`
-  동기 읽기. `src/lib/trip-moments/storage.ts:22`. 네트워크 0회.
-- 사진(`photo_data`) 도 localStorage 에만 있다. 서버는 사진을 내려주지 않는다
-  (`storage.ts` 주석: "photo_data 는 서버에 전송하지 않음").
+- 소유 itinerary: `GET /api/itineraries` (헤더 `x-device-id`) — 서버가
+  `updated_at DESC` 정렬 (`functions/api/itineraries.ts:52`). **네트워크 1회**
+- Memory 존재: `loadMoments(itinId)` = `localStorage["koreamate_moments_<id>"]`
+  동기 읽기 (`src/lib/trip-moments/storage.ts:22`). **네트워크 0회 → N+1 없음**
+- 사진 `photo_data` 는 localStorage 전용. 서버는 사진을 내려주지 않는다
 
-#### 알려진 한계 — blocker 로 기록
-
-`GET /api/trip-moments?itinerary_id=` 는 **itinerary 1건 전용**이다
-(`functions/api/trip-moments/index.ts:74`). 기기 전체의 Memory 보유 여부를 서버에
-한 번에 물어보는 엔드포인트가 없다. 따라서:
-
-- **기록을 남긴 그 기기**: 정상 동작 (localStorage 히트)
-- **다른 기기 / 캐시 삭제 후**: 서버에 Memory 가 있어도 로컬이 비어 Discovery 로 떨어짐
-
-이번 작업에서 API 는 만들지 않는다. 해소하려면 아래 **최소 aggregate 계약**이 필요하다.
+`GET /api/trip-moments?itinerary_id=` 는 itinerary 1건 전용이라
+(`functions/api/trip-moments/index.ts:74`) 기기 전체 Memory 보유 여부를 한 번에
+묻는 엔드포인트가 없다. 마무리 신호가 생길 때 함께 필요한 최소 계약:
 
 ```
 GET /api/trip-moments/summary        헤더 x-device-id
@@ -150,72 +196,89 @@ GET /api/trip-moments/summary        헤더 x-device-id
    사진·memo·좌표는 반환하지 않는다
 ```
 
-이 API 가 생기기 전까지 cross-device Memory Synergy 는 미지원으로 둔다.
-사용자에게 오류로 보이지 않는다 — Discovery 가 정상 화면이기 때문이다.
+### 2-C. Page 2 — Premium Discovery
 
-### 2-C. Inspired Storytelling — 진입·종료
+`home_screen_premium_discovery` 는 **항상 두 번째 페이지**다. Page 1 이 어떤
+상태든 Page 2 는 바뀌지 않는다.
 
-신규 사용자 기본 화면이 **아니다.**
+역할: 도시 발견 · 공개 여행 발견 · Explore·City Entry 진입 ·
+Saved·Selected·Planner 흐름 연결.
 
-```
-Memory Synergy ── "View My Story" ──▶ Inspired Storytelling
-       ▲                                        │
-       └────────── Back / Close ────────────────┘
-```
+### 2-D. Memory Timeline 에 표시 가능한 필드
 
-- Home 내부 로컬 state (`useState`) 로만 전환한다
-- `pushState` / `replaceState` / URL 변경 / history entry **전부 금지**
-- 새로고침 시 Story 자동 복원 불필요 → Memory Synergy 로 돌아간다
-- Memory Synergy 가 고른 **같은 itinerary** 만 대상으로 한다
-- Memory Synergy 가 비활성이면 Storytelling 진입 경로 자체가 없다
+`TripMoment` (`src/lib/trip-moments/types.ts`):
 
-#### Timeline 에 실제로 표시 가능한 필드
-
-`TripMoment` (`src/lib/trip-moments/types.ts`) 전 필드:
-
-| 필드 | Story 사용 | 비고 |
+| 필드 | 사용 | 비고 |
 |---|---|---|
-| `captured_at` | 날짜·시각 | ISO datetime. 기존 `TripMomentTimeline` 은 `ko-KR` 로케일 포맷 |
+| `captured_at` | 날짜·시각 | ISO datetime |
 | `memo` | 사용자 기록 본문 | **번역 금지** |
 | `photo_data` | 사진 | data URL, localStorage 전용 |
 | `has_photo` | 서버 동기화 여부 | 표시용 아님 |
-| `category` | 5종 (food/scenery/people/culture/random) | 이모지·라벨은 `MOMENT_CATEGORIES` |
-| `location_label` | 위치 힌트 | `"35.1°N 129.0°E"` 형태. **장소명이 아니다** |
+| `category` | 5종 food/scenery/people/culture/random | `MOMENT_CATEGORIES` |
+| `location_label` | 위치 힌트 | `"35.1°N 129.0°E"` — **장소명이 아니다** |
 | `lat` / `lng` | 좌표 | 표시 선택 |
 | `day_number` | Day N | nullable |
 
-itinerary 쪽: `city`, `start_date`, `end_date`, `trip_title`, `cover_kind`, `cover_moment_id`.
+itinerary 쪽: `city` · `start_date` · `end_date` · `trip_title` · `cover_kind` ·
+`cover_moment_id`.
 
-**장소명은 없다.** PNG 의 `Jagalchi Market`·`Gamcheon Village` 같은 캡션에 대응하는
-필드가 `trip_moments` 에 없다. `location_label` 은 좌표 문자열이다. 따라서 Timeline
-캡션은 `날짜 + 카테고리` 조합으로 가고, 장소명은 표시하지 않는다.
+**장소명 필드가 없다.** PNG 의 `Jagalchi Market` 같은 캡션에 대응하는 값이
+`trip_moments` 에 없으므로 Memory 캡션은 `날짜 + 카테고리` 로만 구성하고
+장소명을 만들어내지 않는다. 사용자 인용문으로 쓸 수 있는 실제 필드는 `memo`
+하나뿐이다.
 
-**사용자 인용문**으로 쓸 수 있는 실제 필드는 `memo` 하나뿐이다. PNG 의 큰따옴표
-인용 스타일은 `memo` 를 그대로 인용부호 안에 넣어 구현한다. 없는 문장을 만들지 않는다.
+사진이 없는 Memory 는 회색 박스가 아니라 카테고리 이모지 + 토큰 배경(§7)으로
+그리고 고정 비율을 유지해 CLS 를 막는다.
 
-#### 사진 없는 Memory
+### 2-E. AI 감성 문구 — 이번 범위 밖, 확장점만 남긴다
 
-`photo_data === null` 인 Memory 는 텍스트 전용이다. 회색 박스를 쓰지 않고
-`category` 이모지 + 토큰 배경(§7)으로 그린다. 고정 비율을 유지해 CLS 를 막는다.
+저장된 AI 분석 계약이 **존재하지 않는다.** `ai_insight` / `aiInsight` /
+`insight` 검색 0건, `trip_moments` select 컬럼에도 없다
+(`functions/api/trip-moments/index.ts:87`).
 
-### 2-D. AI Insight — 제거
+따라서 PNG 의 `AI INSIGHT` · `AI OPTIMIZED` · `AI CURATED` · `AI's Pick` 블록은
+구현하지 않는다. 가짜 AI 문장 생성, 사용자 `memo` 를 AI 결과로 표시,
+결정론적 템플릿을 "AI" 라고 표기 — 전부 금지.
 
-저장된 AI 분석 계약이 **존재하지 않는다.** `src/` `functions/` 전체에서
-`ai_insight` / `aiInsight` / `insight` 검색 결과 0건. `trip_moments` 테이블 select
-컬럼에도 없다 (`functions/api/trip-moments/index.ts:87`).
+#### 제품 방향 (후속 작업용 기록)
 
-따라서 PNG 의 `AI INSIGHT` / `AI OPTIMIZED` 블록은 **구현하지 않는다.**
+AI 감성 문구는 여행 마무리 전용 기능이 아니다. 장소·맛집·My Places·Memory
+**하나마다** 문구를 제안할 수 있어야 한다. 입력 후보:
 
-- 가짜 AI 문장 생성 금지
-- 사용자 `memo` 를 AI 결과처럼 표시 금지
-- 결정론적 템플릿 문장을 "AI" 라고 표기 금지
-- 새 AI API 를 이번에 만들지 않는다
+장소 · 사진 · 날짜 · 시간대 · 짧은 메모 · 여행 분위기 · 같은 날 앞뒤 일정 · 동행 유형
 
-대체: 해당 자리는 **여행 요약 영역**으로 바꾼다. 표시 항목은 실제 값만 —
-도시, 기간(`start_date`~`end_date`), Memory 수, 카테고리 분포. "AI" 라는 표현을
-쓰지 않는다.
+```
+장소 하나      → 장소별 감성 문구
+장소 여러 개   → 하루 여행 이야기
+여러 날        → 전체 여행 Story
+여행 마무리    → Memory Synergy 에서 장소별 문구와 Memory 를 모아 정리·공유
+```
 
----
+사용자 선택권: AI 제안 그대로 사용 · 수정 · 다시 생성 · 직접 작성 · 저장 ·
+Story 에서 제외.
+
+#### 비용 최적화 단계
+
+| 단계 | 내용 | AI 호출 |
+|---|---|---|
+| 1 | 장소 ID + 언어 + 분위기 + 시간대 + 장소 유형으로 **저장된 공용 문구** 반환 | 없음 |
+| 2 | 저장된 다른 공용 문구 후보 제공 | 없음 |
+| 3 | 사용자 사진·메모·하루 일정이 반영될 때만 **개인화 호출** | 있음 |
+
+#### 공용 문구 / 개인화 문구 구분
+
+| 구분 | 저장 | 재사용 |
+|---|---|---|
+| 공용 문구 | 장소·상황 기준 공용 저장 | 같은 조건의 다른 사용자에게 재사용 가능 |
+| 개인화 문구 | 사용자 사진·메모가 들어가므로 **사용자별 저장** | **다른 사용자에게 재사용 금지** |
+
+#### 이번 구현이 남기는 확장점
+
+- Memory Synergy 에 장소별 saved story copy 를 받을 **typed slot** 을 둔다
+- 값이 없으면 **해당 블록을 숨긴다.** 빈 가짜 문구를 만들지 않는다
+- 브랜드 Storytelling 의 편집형 문구는 그대로 표시한다 (AI 산출물이 아니다)
+- AI API·문구 저장 테이블·생성 기능은 만들지 않는다
+
 
 ## 3. Premium Discovery 데이터 계약
 
@@ -496,34 +559,33 @@ docs/product/city-image-rights-v1.md          권리 증빙 기록 (필수 동�
 
 ```
 mount
- └─ loading ──────────────▶ Premium Discovery  (판정 중에도 Discovery 를 그린다)
+ └─ Page 1 = Inspired Storytelling   (에디토리얼. 데이터 조회와 무관하게 즉시 렌더)
       │
-      ├─ 소유 itinerary 0 / Memory 0 / 조회 실패 ──▶ Premium Discovery
-      │
-      └─ Memory ≥ 1 ──▶ Memory Synergy ──"View My Story"──▶ Inspired Storytelling
-                              ▲                                      │
-                              └──────── Back / Close ────────────────┘
+      └─ 마무리 신호 + Memory 있음 ──▶ Page 1 = Memory Synergy
+                                        (현재 production 에서는 발생하지 않음)
+
+Page 2 = Premium Discovery           (Page 1 상태와 무관하게 항상 동일)
 ```
 
-오류는 전부 Discovery 로 흡수한다. 에러 화면을 따로 만들지 않는다.
-loading 중 Discovery 를 먼저 그리므로 **깜빡임 없이 Memory Synergy 로 교체**된다
-(정적 export 는 Discovery 를 프리렌더한다).
+Page 1 판정은 에디토리얼을 먼저 그린 뒤에만 교체하므로 첫 페인트가 지연되지
+않고, 조회 실패는 그대로 Storytelling 유지로 흡수된다. 별도 에러 화면을
+만들지 않는다.
 
 ### 상태별 데이터 흐름
 
-| 항목 | Discovery | Memory Synergy | Storytelling |
+| 항목 | Storytelling (P1 기본) | Memory Synergy (P1 개인화) | Discovery (P2) |
 |---|---|---|---|
-| API | `/api/trips/popular` | `/api/itineraries` | (추가 호출 없음) |
-| 로컬 | Selected/favorites | `loadMoments()` | 같은 Memory 재사용 |
-| selector | 없음 (기본) | `home-experience-core.ts` | 부모 state |
-| ownership | 불필요 | `x-device-id` 헤더 | 상위 판정 승계 |
-| cache | 세션 내 1회 | 세션 내 1회 | 재조회 없음 |
-| loading | 즉시 렌더 | Discovery 유지 | 즉시 |
-| empty | 인기 여행 섹션 숨김 | 해당 없음 | Memory 0이면 진입 불가 |
-| error | 그대로 렌더 | Discovery 로 | Memory Synergy 로 |
-| image fallback | CityCardArt | 토큰 아트 | 카테고리 아트 |
-| i18n | 신규 `home` 네임스페이스 | 동일 | 동일 |
-| a11y | 카드 링크 44px, focus visible | 상태 전환 `aria-live` | Back 버튼 focus 복귀 |
+| API | 없음 (에디토리얼 상수) | `/api/itineraries` | `/api/trips/popular` |
+| 로컬 | 없음 | `loadMoments()` | Selected/favorites |
+| selector | 기본값 | `home-experience-selector.ts` | 없음 |
+| ownership | 불필요 | `x-device-id` 헤더 | 불필요 (public 전용) |
+| cache | 정적 | 세션 내 1회 | 세션 내 1회 |
+| loading | 즉시 렌더 | Storytelling 유지 | 스켈레톤 없이 섹션 숨김 |
+| empty | 해당 없음 | 신호 없으면 미활성 | 인기 여행 섹션 숨김 |
+| error | 해당 없음 | Storytelling 유지 | 섹션 숨김 |
+| image fallback | KOGL 밴드 또는 토큰 아트 | 토큰·카테고리 아트 | CityCardArt |
+| i18n | `home` 네임스페이스 + 에디토리얼 4개 언어 config | `home` | `home` |
+| a11y | 페이저 `aria-label`·indicator | 상태 전환 `aria-live` | 카드 링크 44px |
 
 ### i18n
 
@@ -553,13 +615,15 @@ HomeExperience → AdaptiveHomeCard → #planner → #essential → #spots-main
 **신규**
 
 ```
-src/components/home/HomeExperience.tsx
-src/components/home/PremiumDiscoveryHome.tsx
-src/components/home/MemorySynergyHome.tsx
-src/components/home/InspiredStoryHome.tsx
-src/components/home/CityCardArt.tsx
-src/lib/home/home-experience-core.ts
-src/lib/home/home-experience-core.test.ts
+src/components/home/HomeExperience.tsx            2페이지 페이저 + 상태 분기
+src/components/home/InspiredStorytellingHome.tsx  Page 1 기본
+src/components/home/MemorySynergyHome.tsx         Page 1 개인화
+src/components/home/PremiumDiscoveryHome.tsx      Page 2
+src/components/home/CityCardArt.tsx               사진 없는 도시 fallback
+src/components/home/home-experience-types.ts      공용 타입
+src/components/home/home-experience-selector.ts   순수 selector
+src/components/home/home-experience-selector.test.ts
+src/data/home/editorial-story.ts                  에디토리얼 콘텐츠 (4개 언어)
 ```
 
 **수정**
@@ -582,18 +646,21 @@ Share·Copy / `device_id` / BottomNav 정보구조 / Naver·Google Maps.
 
 ### 테스트 계약
 
-`home-experience-core.test.ts` 가 고정할 규칙:
+`home-experience-selector.test.ts` 가 고정할 규칙:
 
-1. itinerary 0건 → `discovery`
-2. itinerary 있고 Memory 0건 → `discovery`
-3. Memory 1건 이상 → `memory`, 선택된 itinerary id 확인
-4. Memory 최신 `captured_at` 이 늦은 itinerary 가 선택된다
-5. `captured_at` 동률 → `updated_at` 늦은 쪽
-6. 둘 다 동률 → `id` 오름차순 (결정론)
-7. 조회 실패(빈 배열) → `discovery`
-8. 같은 입력 반복 호출 시 항상 같은 결과
-9. 날짜 기반 판정 없음 — `end_date` 를 미래로 바꿔도 결과 불변
-10. 사진 없는 Memory 도 Memory 로 계산된다
+1. itinerary 0건 → `storytelling`
+2. itinerary 있고 Memory 0건 → `storytelling`
+3. **Memory 만 있고 마무리 신호 없음 → `storytelling`** (자동 전환 금지)
+4. 마무리 신호 + Memory 1건 이상 → `memory`, 선택된 itinerary id 확인
+5. 마무리 신호 있으나 Memory 0건 → `storytelling`
+6. 후보 여럿 → Memory 최신 `captured_at` 이 늦은 itinerary 선택
+7. `captured_at` 동률 → `updated_at` 늦은 쪽
+8. 둘 다 동률 → `id` 오름차순 (결정론)
+9. 조회 실패(빈 배열) → `storytelling`
+10. 같은 입력 반복 호출 시 항상 같은 결과
+11. 날짜 기반 판정 없음 — `end_date` 를 미래로 바꿔도 결과 불변
+12. 사진 없는 Memory 도 Memory 로 계산된다
+13. production 기본 신호 함수는 항상 `false`
 
 selector 는 순수 함수로 두고 fixture 를 주입한다. production 전역 테스트 hook 을
 추가하지 않는다.
@@ -604,14 +671,16 @@ selector 는 순수 함수로 두고 fixture 를 주입한다. production 전역
 
 | # | 내용 | 영향 | 해소 조건 |
 |---|---|---|---|
-| B1 | 기기 전체 Memory 집계 API 없음 | cross-device Memory Synergy 미동작 | `GET /api/trip-moments/summary` 신설 |
+| B1 | **명시적 여행 마무리·Story 생성 신호 없음** | Memory Synergy production 미활성 | 마무리 신호 계약 신설 + `GET /api/trip-moments/summary` |
 | B2 | `trip_moments` 에 장소명 필드 없음 | Timeline 캡션이 날짜+카테고리로 제한 | DB 스키마 변경 |
 | B3 | AI 분석 저장 계약 없음 | AI Insight 블록 전면 제거 | AI 결과 저장 계약 신설 |
 | B4 | 도시 사진 4장 부재 | Seoul·Jeju·Gyeongju·Jeonju 는 토큰 아트 | §5 자산 + 권리 증빙 |
 | B5 | 부산 1,533건 이미지 권리 미검증 | 해당 이미지 사용 불가 | HR-PROVENANCE-001 해소 |
 | B6 | `public/images/spots/*.png` 1건 출처 불명 | 사용 보류 | 출처·권리 기록 |
 
-B1~B3 은 Home 구현을 막지 않는다. 해당 요소를 빼고 구현하면 된다.
+B1 은 Memory Synergy 를 운영에서 끄는 것으로 흡수한다 — 컴포넌트·selector·테스트는
+구현되어 있으므로 신호가 생기면 함수 하나 교체로 켜진다. B2·B3 은 해당 요소를
+빼고 구현하면 된다.
 B4 는 fallback 으로 대체되며, 자산 확보 시 `CityCardArt` 를 사진 카드로 바꾸는
 것만으로 교체된다.
 
@@ -619,9 +688,10 @@ B4 는 fallback 으로 대체되며, 자산 확보 시 `CityCardArt` 를 사진 
 
 ## 11. 다음 실행 작업
 
-```
-TASK-GOKOREAMATE-HOME-EXPERIENCE-IMPLEMENT-V1
-```
+이 문서 §9 는 `TASK-GOKOREAMATE-HOME-EXPERIENCE-IMPLEMENT-V1-R1` 에서 구현했다.
 
-이 문서의 §9 를 그대로 구현한다. 추가 설계 질문 없이 착수 가능하다.
-자산(§5)은 구현과 병행해서 받아도 되며, 없으면 §7 fallback 으로 완성한다.
+이어서 권장하는 작업:
+
+1. **여행 마무리 신호 계약** — Memory Synergy 를 켜는 유일한 조건 (B1)
+2. **장소별 AI 감성 문구** — §2-E 의 3단계 비용 구조부터
+3. **도시 사진 4장 + 권리 증빙** — §5. 확보 시 `CityCardArt` 를 사진 카드로 교체
