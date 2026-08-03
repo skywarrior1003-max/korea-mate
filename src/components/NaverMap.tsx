@@ -25,7 +25,7 @@ interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: n
 interface NaverShapeObj    { setMap: (m: NaverMapObj | null) => void; }
 interface NaverBoundsObj   { extend: (l: NaverLatLng) => void; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
-interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; }
+interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; setIcon?: (icon: Record<string, unknown>) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
 
 export interface MapSpot {
@@ -35,6 +35,8 @@ export interface MapSpot {
   lng:      number;
   category: string;
   address:  string;
+  /** 선택 강조용 키. 병합 목록에서 같은 숫자 id 를 쓰는 다른 소스와 구분한다. */
+  sourceKey?: string;
 }
 
 // S2 trip 레이어 — 선택한 Day의 방문 순서 장소 (번호 마커 + 순서선)
@@ -57,6 +59,8 @@ interface Props {
   dayPlaces?:    DayPlace[];
   /** true면 마커 클릭 시 Naver InfoWindow를 열지 않음 — 자체 프리뷰 UI를 쓰는 화면용(일정 지도). */
   hideInfoWindow?: boolean;
+  /** 강조할 마커의 선택 키(sourceKey ?? id). 지정하면 그 마커만 크게 그린다. */
+  selectedKey?: string | null;
 }
 
 // 한국 영토 경계 — GPS가 이 범위를 벗어나면 지도를 재중심하지 않음
@@ -74,6 +78,24 @@ const CATEGORY_COLOR: Record<string, string> = {
   accommodation: "#1d4ed8",
 };
 
+// 마커 아이콘 — 44×44 투명 통탐 안에 작은 핀을 가운데 둔다.
+//
+// 예전엔 94개 전부를 장소명 텍스트 pill 로 그렸다. 390px 에서 화면 내
+// 마커 6개 중 8/15 쌍이 겹쳐 도로와 지명을 가렸고, 1440px 에선 지도
+// 면적의 38% 를 덮었다(실측). 이름은 하단 선택 카드가 맡는다.
+//
+// 시각적으로는 작지만 터치 영역은 44×44 로 유지한다 — 손가락으로
+// 누를 수 있어야 하고, 투명 여백은 지도를 가리지 않는다.
+const MARKER_HIT = 44;
+
+function markerIcon(color: string, selected: boolean): string {
+  const d = selected ? 22 : 14;
+  const ring = selected ? 3 : 2;
+  return `<div style="width:${MARKER_HIT}px;height:${MARKER_HIT}px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent">`
+    + `<span style="display:block;width:${d}px;height:${d}px;border-radius:50%;background:${color};border:${ring}px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.3)"></span>`
+    + `</div>`;
+}
+
 export default function NaverMap({
   spots,
   userLocation,
@@ -85,10 +107,16 @@ export default function NaverMap({
   onSpotClick,
   dayPlaces,
   hideInfoWindow,
+  selectedKey,
 }: Props) {
   const mapDivRef     = useRef<HTMLDivElement>(null);
   const mapRef        = useRef<NaverMapObj | null>(null);
   const markersRef    = useRef<NaverMarkerObj[]>([]);
+  // 선택 강조를 바꿀 때 마커 94개를 다시 만들지 않기 위해 키로 찾아 아이콘만
+  // 갈아끼운다. selectedKey 를 마커 effect 의 deps 에 넣으면 탭할 때마다
+  // 전체가 재생성된다.
+  const markerByKeyRef = useRef<Map<string, { marker: NaverMarkerObj; color: string }>>(new Map());
+  const selectedKeyRef = useRef<string | null>(null);
   const userMarkerRef = useRef<NaverMarkerObj | null>(null);
   const openInfoRef   = useRef<NaverInfoWindowObj | null>(null);
   const dayMarkersRef = useRef<NaverMarkerObj[]>([]);
@@ -122,6 +150,7 @@ export default function NaverMap({
     if (!mapRef.current || !window.naver) return;
     markersRef.current.forEach(m => m.setMap(null));
     markersRef.current = [];
+    markerByKeyRef.current.clear();
     openInfoRef.current?.close();
     openInfoRef.current = null;
     setActiveSpot(null);
@@ -131,16 +160,17 @@ export default function NaverMap({
 
     spots.filter(s => s.lat && s.lng).forEach(spot => {
       const color = CATEGORY_COLOR[spot.category] ?? "#1a1a2e";
-      const label = spot.name.length > 14 ? spot.name.slice(0, 13) + "…" : spot.name;
+      const key = spot.sourceKey ?? String(spot.id);
 
       const marker = new map.Marker({
         position: new map.LatLng(spot.lat, spot.lng),
         map: nmap as unknown as Record<string, unknown>,
         icon: {
-          content: `<div style="background:${color};color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.25);cursor:pointer;border:2px solid rgba(255,255,255,0.25)">${label}</div>`,
-          anchor: new map.Point(40, 12),
+          content: markerIcon(color, key === selectedKeyRef.current),
+          anchor: new map.Point(MARKER_HIT / 2, MARKER_HIT / 2),
         },
       });
+      markerByKeyRef.current.set(key, { marker, color });
 
       const info = new map.InfoWindow({
         content: `<div style="padding:10px 14px;font-size:13px;max-width:220px"><b style="color:#1a1a2e">${spot.name}</b><br/><span style="font-size:11px;color:#565D66">${spot.address.slice(0, 55)}</span></div>`,
@@ -164,6 +194,25 @@ export default function NaverMap({
       markersRef.current.push(marker);
     });
   }, [spots]);
+
+  // 선택 마커만 아이콘 교체 — 이전 선택은 기본으로 되돌린다.
+  useEffect(() => {
+    const prev = selectedKeyRef.current;
+    selectedKeyRef.current = selectedKey ?? null;
+    if (!window.naver) return;
+    const map = window.naver.maps;
+    const paint = (k: string | null, on: boolean) => {
+      if (!k) return;
+      const entry = markerByKeyRef.current.get(k);
+      if (!entry) return;
+      entry.marker.setIcon?.({
+        content: markerIcon(entry.color, on),
+        anchor: new map.Point(MARKER_HIT / 2, MARKER_HIT / 2),
+      });
+    };
+    if (prev && prev !== selectedKey) paint(prev, false);
+    paint(selectedKey ?? null, true);
+  }, [selectedKey, spots]);
 
   // 컨테이너 실제 크기를 지도에 반영 — Naver v3 정식 API setSize() 사용.
   // center를 먼저 저장하고 setSize 후 복원해야 확장 영역 타일이 즉시 로드된다.

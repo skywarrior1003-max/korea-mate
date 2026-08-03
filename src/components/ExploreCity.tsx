@@ -14,6 +14,7 @@ import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/pla
 import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
 import { addToCart, isInCart, getCart, CART_EVENT } from "@/lib/cart";
 import { getItemSourceKey } from "@/lib/place-identity";
+import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget } from "@/lib/explore/map-selection-core";
 import { trackEvent } from "@/lib/analytics";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
@@ -327,9 +328,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   }, [spots, selectedCategory, search, nearMeActive, userLocation, distances, city.name]);
 
   const mapSpots = useMemo(
-    () => filteredSpots.filter((s): s is CitySpot & { lat: number; lng: number } =>
-      s.lat != null && s.lng != null
-    ) as unknown as MapSpot[],
+    () => filteredSpots
+      .filter((s): s is CitySpot & { lat: number; lng: number } => s.lat != null && s.lng != null)
+      // 선택 강조는 sourceKey 로 맞춘다 — 같은 숫자 id 를 쓰는 다른 소스와 섞이지 않게.
+      .map(s => ({ ...s, sourceKey: selectionKey(s) })) as unknown as MapSpot[],
     [filteredSpots]
   );
 
@@ -358,24 +360,19 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   }
 
   function handleMapSpotClick(spot: MapSpot) {
-    // 병합 목록에는 같은 숫자 id 를 가진 다른 소스의 장소가 있다. 숫자로 찾으면
-    // 마커를 눌렀을 때 엉뚱한 장소가 열린다. 좌표까지 함께 대조한다.
-    const citySpot =
-      filteredSpots.find(s => s.id === spot.id && s.lat === spot.lat && s.lng === spot.lng)
-      ?? filteredSpots.find(s => s.id === spot.id);
+    // 판정은 map-selection-core 가 한다 — SDK 를 흉내 낸 테스트가 같은 함수를 통과한다.
+    const citySpot = resolveClickedSpot(filteredSpots, spot);
     if (!citySpot) return;
     // 모바일 Map 모드에서는 하단 카드를 열어 지도를 가리지 않게 한다.
     // 데스크톱 split 과 List 모드는 기존 상세 모달 동작을 그대로 유지한다.
-    if (viewModeRef.current === "map") setMapPickedKey(citySpot.sourceKey ?? String(citySpot.id));
+    if (clickTarget(viewModeRef.current) === "card") setMapPickedKey(selectionKey(citySpot));
     else setSelectedEvent(toEventItem(citySpot));
   }
 
   // 선택 장소는 키를 보관하되 항상 현재 결과에서 파생시킨다. 검색·카테고리가
   // 바뀌어 결과에서 빠지면 자동으로 null 이 돼 하단 카드가 사라진다 — 별도로
   // 상태를 지우는 effect 를 두지 않는다.
-  const mapPickedSpot = mapPickedKey
-    ? filteredSpots.find(s => (s.sourceKey ?? String(s.id)) === mapPickedKey) ?? null
-    : null;
+  const mapPickedSpot = resolveSelection(filteredSpots, mapPickedKey);
 
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
   const viewToggle = (
@@ -538,6 +535,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               className="relative w-full h-full overflow-hidden"
               relayoutKey={mapExpanded ? 1 : 0}
               onSpotClick={handleMapSpotClick}
+              selectedKey={mapPickedKey}
+              // Map 모드에선 하단 카드가 장소 정보를 맡는다. Naver 기본 말풍선까지
+              // 뜨면 같은 내용이 두 곳에 겹쳐 지도를 더 가린다. List·데스크톱 split 은
+              // 기존 상세 모달 흐름이라 말풍선을 그대로 둔다.
+              hideInfoWindow={viewMode === "map"}
             />
             <button
               onClick={() => setMapExpanded(e => !e)}
