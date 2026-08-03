@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-08-03",
+  "policy_version": "busan-festival-source-priority-v1",
+  "event_policy": {
+    "primary": {
+      "source": "부산광역시_부산축제정보 서비스 (apis.data.go.kr/6260000/FestivalService)",
+      "role": "행사 기본 정보 — 제목(다국어), 설명(다국어), 이미지, 장소, 문의처",
+      "reliability": "HIGH (콘텐츠), LOW (날짜 — 수동 갱신 지연)"
+    },
+    "secondary": {
+      "source": "KTO KorService2 (apis.data.go.kr/B551011/KorService2, contentTypeId=15)",
+      "role": "FestivalService에 없는 행사 보강 (31건 KTO only event candidates 존재)",
+      "reliability": "MEDIUM (KTO 날짜도 갱신 지연 가능)"
+    },
+    "date_freshness_source": {
+      "source": "bfo.or.kr (부산축제조직위원회) 또는 개별 주최기관 공식 사이트",
+      "role": "FestivalService API 날짜의 최신성 검증용 외부 참조",
+      "collection_method": "WebFetch 또는 사용자 수동 확인",
+      "trigger": "FestivalService raw 날짜가 전년도이거나 없을 때"
+    },
+    "conflict_rule": "날짜 충돌 시 bfo.or.kr 날짜 우선. 콘텐츠(설명·이미지) 충돌 시 FestivalService 우선(다국어 완성도).",
+    "stale_date_handling": "원본 raw 보존, candidate에 date_verified=false 플래그. 배포 시 '날짜 미확인' 상태로 표시하거나 미래 행사만 노출.",
+    "past_event_handling": "삭제 금지, 보존. 현재 추천에서 제외 기준: raw 날짜가 분석일 기준 1년 이상 과거 AND 갱신 근거 없음.",
+    "nightly_update_rule": "부산 완료 후 다음 도시 전에 festival raw 재수집 주기 설정 권고 (최소 월 1회)."
+  },
+  "attraction_policy": {
+    "primary": "부산광역시_부산명소정보 서비스 (apis.data.go.kr/6260000/AttractionService) — 다국어 KO/EN/JA/ZhS/ZhT",
+    "secondary": "KTO KorService2 (설명·이미지 보강)",
+    "conflict_rule": "AttractionService 우선. KTO는 AttractionService에 없는 보강 필드만 사용."
+  },
+  "food_policy": {
+    "primary": "부산광역시_부산맛집정보 서비스 (apis.data.go.kr/6260000/FoodService) — 다국어",
+    "secondary": "KTO KorService2 (contentTypeId=39) — 보강",
+    "branch_rule": "주소·좌표·전화번호 모두 동일 → 동일 지점. 하나라도 다르면 별도 지점으로 취급.",
+    "stale_data_rule": "폐업·이전 의심 시 전화번호 변경 여부 확인 후 candidate 상태 업데이트."
+  },
+  "image_policy": {
+    "primary": "visitbusan.net/uploadImgs (AttractionService/FoodService/FestivalService MAIN_IMG_NORMAL)",
+    "secondary": "KTO PhotoGalleryService1",
+    "rights_verification": "공공데이터 개방 원칙에 따라 상업적 이용 가능 여부 data.go.kr 라이선스 확인 권고",
+    "missing_image_policy": "MAIN_IMG_NORMAL 없으면 KTO PhotoGallery 매칭 시도. 없으면 no_image 유지."
+  }
+}

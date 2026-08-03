@@ -1,0 +1,949 @@
+{
+  "analysis_date": "2026-08-03",
+  "total_event_candidates": 72,
+  "festival_service_linked": 38,
+  "kto_only": 31,
+  "no_source": 3,
+  "date_not_applied_to_hours": 32,
+  "image_not_applied": 38,
+  "2026_future_raw_linked": 1,
+  "pre_2026_expired_linked": 19,
+  "no_date_raw_linked": 6,
+  "raw_not_linked_to_any_candidate": 2,
+  "unlinked_raw_events": [
+    {
+      "id": 807,
+      "title": "부산푸드필름페스타(한, 영)",
+      "date": "2026. 06. 26.(금) ~ 06. 28.(일)"
+    },
+    {
+      "id": 1705,
+      "title": "별바다부산 나이트페스타(한)//영,중간,중번,일",
+      "date": "2025.07. ~ 2025.10."
+    }
+  ],
+  "linked_detail": [
+    {
+      "candidate_id": "busan-E-00001",
+      "title": "부산바다축제(한,영, 중간,중번,일)",
+      "fest_ids": [
+        71
+      ],
+      "in_raw": [
+        71
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 8. 1. ~ 8. 3.",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00002",
+      "title": "수국축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        253
+      ],
+      "in_raw": [
+        253
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 7. 5.(토) ~ 7. 13.(일) ",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00003",
+      "title": "센텀맥주축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        329
+      ],
+      "in_raw": [
+        329
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 05. 22. ~ 05. 31.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00004",
+      "title": "금정산성축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        330
+      ],
+      "in_raw": [
+        330
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 10. 16. ~ 10. 18.",
+      "raw_date_class": "2026_future",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00005",
+      "title": "낙동강구포나루축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        331
+      ],
+      "in_raw": [
+        331
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00006",
+      "title": "부산불꽃축제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        395
+      ],
+      "in_raw": [
+        395
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.11.15.(토)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00007",
+      "title": "삼광사 연등축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        403
+      ],
+      "in_raw": [
+        403
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 5. 15. ~  5. 24. 점등시간 매일 저녁 7시~새벽 1시",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00008",
+      "title": "해운대모래축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        405
+      ],
+      "in_raw": [
+        405
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00009",
+      "title": "부산항축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        406
+      ],
+      "in_raw": [
+        406
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00010",
+      "title": "동래읍성 역사축제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        407
+      ],
+      "in_raw": [
+        407
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.10.24. (금) ~ 2025.10.26. (일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00011",
+      "title": "부산자갈치축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        411
+      ],
+      "in_raw": [
+        411
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 10. 23. ~ 10. 06.",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00012",
+      "title": "차이나타운특구 문화축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        414
+      ],
+      "in_raw": [
+        414
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 10. 17 ~ 10. 19.",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00013",
+      "title": "부산바다미술제(한,영,중간,중번,일)",
+      "fest_ids": [
+        427
+      ],
+      "in_raw": [
+        427
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 9. 27.(토) ~ 2025. 11. 2.(일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00014",
+      "title": "해운대 빛축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        440
+      ],
+      "in_raw": [
+        440
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025년 11월 29일 ~ 2026년 1월 18일\n점등시간 : 18:00~23:00",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00015",
+      "title": "기장미역다시마축제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        441
+      ],
+      "in_raw": [
+        441
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026.04.17.~04.19.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00016",
+      "title": "광안리어방축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        442
+      ],
+      "in_raw": [
+        442
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 06. 12. ~ 06. 14.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00017",
+      "title": "기장멸치축제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        443
+      ],
+      "in_raw": [
+        443
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 04. 24. ~ 04. 26.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00018",
+      "title": "광복로 겨울빛 트리축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        449
+      ],
+      "in_raw": [
+        449
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.12.05(금) ~ 2026.02.22(일)",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00019",
+      "title": "부산국제록페스티벌(한,영, 중간,중번,일)",
+      "fest_ids": [
+        470
+      ],
+      "in_raw": [
+        470
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00020",
+      "title": "대저토마토축제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        497
+      ],
+      "in_raw": [
+        497
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 3. 21. ~ 3. 22.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00021",
+      "title": "낙동강 정원 벚꽃축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        499
+      ],
+      "in_raw": [
+        499
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 03. 27. ~ 04. 12.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00022",
+      "title": "사상강변축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        500
+      ],
+      "in_raw": [
+        500
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025년 9월 20일(토) ~ 9월 21일(일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00023",
+      "title": "해운대달맞이온천축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        502
+      ],
+      "in_raw": [
+        502
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.2.12",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00024",
+      "title": "해운대북극곰축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        503
+      ],
+      "in_raw": [
+        503
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 01. 17. ~ 01. 18.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00025",
+      "title": "조선통신사축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        523
+      ],
+      "in_raw": [
+        523
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.4.25.(금) ~ 4.27.(일)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00026",
+      "title": "부산국제영화제(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        524
+      ],
+      "in_raw": [
+        524
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 09. 17. (수) ~ 2025. 09. 26. (금)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00027",
+      "title": "감천문화마을골목축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        531
+      ],
+      "in_raw": [
+        531
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 10. 24. ~ 10. 25.",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00029",
+      "title": "부산연등회(한,영,중간,중번,일)",
+      "fest_ids": [
+        1432
+      ],
+      "in_raw": [
+        1432
+      ],
+      "not_in_raw": [],
+      "raw_date": "2026. 05. 01 ~ 05. 17.",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00030",
+      "title": "부산수제맥주마스터스챌린지(한,영,중간,중번,일)",
+      "fest_ids": [
+        1694
+      ],
+      "in_raw": [
+        1694
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 9. 20.(토) ~ 2025. 9. 24.(수)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00031",
+      "title": "나이트레이스 인 부산(한, 영, 중간, 중번, 일)",
+      "fest_ids": [
+        1698
+      ],
+      "in_raw": [
+        1698
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025년 8월 2일 (토)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00033",
+      "title": "부산국제마케팅광고제(한)",
+      "fest_ids": [
+        1807
+      ],
+      "in_raw": [
+        1807
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025. 8. 27 ~ 8.29. / 상시운영",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00034",
+      "title": "부산국제어린이청소년영화제",
+      "fest_ids": [
+        1897
+      ],
+      "in_raw": [
+        1897
+      ],
+      "not_in_raw": [],
+      "raw_date": "2025.7.8.(화) ~ 7.19.(토)",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00035",
+      "title": "2024 용두산 썸머 비치",
+      "fest_ids": [
+        1961
+      ],
+      "in_raw": [
+        1961
+      ],
+      "not_in_raw": [],
+      "raw_date": "2024. 7. 27.(토) ~ 9. 21.(토), 매주 토요일 16:00 ~ 20:00",
+      "raw_date_class": "pre_2026_expired",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00036",
+      "title": "서면 빛 축제(한,영,중간,중번,일)",
+      "fest_ids": [
+        2136
+      ],
+      "in_raw": [
+        2136
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00037",
+      "title": "2026 원아시아페스티벌(BOF)",
+      "fest_ids": [
+        2368
+      ],
+      "in_raw": [
+        2368
+      ],
+      "not_in_raw": [],
+      "raw_date": "Big CONCERT: 2026. 6. 27.(토) ~ 6. 28.(일) 13:00~21:00\nPARK CO",
+      "raw_date_class": "2026_past_or_current",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": true,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00038",
+      "title": "택슐랭",
+      "fest_ids": [
+        2373
+      ],
+      "in_raw": [
+        2373
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00039",
+      "title": "부산콘서트홀 개관 페스티벌",
+      "fest_ids": [
+        2383
+      ],
+      "in_raw": [
+        2383
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    },
+    {
+      "candidate_id": "busan-E-00040",
+      "title": "김해공항 Welcome to Busan 환대 행사",
+      "fest_ids": [
+        2730
+      ],
+      "in_raw": [
+        2730
+      ],
+      "not_in_raw": [],
+      "raw_date": "",
+      "raw_date_class": "no_date",
+      "raw_has_image": true,
+      "raw_has_desc": true,
+      "cand_has_hours": false,
+      "date_not_applied": false,
+      "image_not_applied": true
+    }
+  ],
+  "kto_only_detail": [
+    {
+      "candidate_id": "busan-K-00143",
+      "title": "영도다리축제",
+      "source_keys": [
+        "KorService2:1080734:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00157",
+      "title": "부산고등어축제",
+      "source_keys": [
+        "KorService2:1399532:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00204",
+      "title": "대한민국 국제해양레저위크(KIMA WEEK)",
+      "source_keys": [
+        "KorService2:2019366:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00206",
+      "title": "사상강변축제",
+      "source_keys": [
+        "KorService2:2032436:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00211",
+      "title": "해운대 빛축제",
+      "source_keys": [
+        "KorService2:2048902:ko",
+        "EngService2:3565954:en"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00237",
+      "title": "부산국제공연예술제",
+      "source_keys": [
+        "KorService2:2558735:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00238",
+      "title": "헬로메이커",
+      "source_keys": [
+        "KorService2:2560161:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00294",
+      "title": "카운트다운 부산",
+      "source_keys": [
+        "KorService2:2702333:ko",
+        "EngService2:1385298:en"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00546",
+      "title": "부산수제맥주마스터스챌린지",
+      "source_keys": [
+        "KorService2:2856938:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00562",
+      "title": "기장붕장어축제in칠암",
+      "source_keys": [
+        "KorService2:2860868:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00591",
+      "title": "2025 영호남 전통시장 박람회",
+      "source_keys": [
+        "KorService2:2868776:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00648",
+      "title": "부산글로벌웹툰페스티벌",
+      "source_keys": [
+        "KorService2:2873292:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00686",
+      "title": "유라리 건맥축제",
+      "source_keys": [
+        "KorService2:3001170:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00687",
+      "title": "부산국제공연예술마켓",
+      "source_keys": [
+        "KorService2:3006246:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00690",
+      "title": "부산종합민속예술제",
+      "source_keys": [
+        "KorService2:3016659:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00694",
+      "title": "전포커피축제",
+      "source_keys": [
+        "KorService2:3018117:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00695",
+      "title": "글로컬 문화 in(人) 남산 페스티벌",
+      "source_keys": [
+        "KorService2:3020552:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00721",
+      "title": "부산국제아동도서전",
+      "source_keys": [
+        "KorService2:3345610:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00722",
+      "title": "중구민의 날 페스타",
+      "source_keys": [
+        "KorService2:3351515:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00723",
+      "title": "2025 별바다부산 나이트마켓",
+      "source_keys": [
+        "KorService2:3356047:ko",
+        "EngService2:3544716:en"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00724",
+      "title": "페스티벌 시월",
+      "source_keys": [
+        "KorService2:3370514:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00730",
+      "title": "게임 체험 팝업 전시 ‘Game-Playground’",
+      "source_keys": [
+        "KorService2:3422647:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00731",
+      "title": "온천천 빛 축제",
+      "source_keys": [
+        "KorService2:3434800:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00732",
+      "title": "크리스마스 빌리지 부산 2025",
+      "source_keys": [
+        "KorService2:3437916:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00757",
+      "title": "부산국제AI영화제",
+      "source_keys": [
+        "KorService2:3515311:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00758",
+      "title": "2025 서부산 슈퍼어싱 페스티벌",
+      "source_keys": [
+        "KorService2:3524130:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00759",
+      "title": "2025 부산세일페스타 부대앞으로",
+      "source_keys": [
+        "KorService2:3528964:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00766",
+      "title": "부산 서구 의료관광축제",
+      "source_keys": [
+        "KorService2:3532971:ko"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00773",
+      "title": "옥토버페스타 인 광안리",
+      "source_keys": [
+        "KorService2:3555363:ko",
+        "EngService2:3562686:en"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00774",
+      "title": "부산중구반려동물축제",
+      "source_keys": [
+        "KorService2:3559571:ko",
+        "EngService2:3562082:en"
+      ]
+    },
+    {
+      "candidate_id": "busan-K-00775",
+      "title": "광복로 겨울빛 트리축제",
+      "source_keys": [
+        "KorService2:3576410:ko"
+      ]
+    }
+  ],
+  "no_source_detail": [
+    {
+      "candidate_id": "busan-VB-1769",
+      "title": "대한민국 메가 트렌드의 중심! 광안리 M 드론라이트쇼"
+    },
+    {
+      "candidate_id": "busan-VB-1965",
+      "title": "모래사장 위에서 낭만 한 편, 광안리 해변영화관"
+    },
+    {
+      "candidate_id": "busan-VB-429",
+      "title": "바다와 음악, 버스커와 관객이 만드는 최고의 무대"
+    }
+  ]
+}

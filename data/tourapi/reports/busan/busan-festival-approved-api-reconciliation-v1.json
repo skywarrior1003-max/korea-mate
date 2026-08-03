@@ -1,0 +1,38 @@
+{
+  "busan_metropolitan_city_base": "https://apis.data.go.kr/6260000",
+  "service_group_id": "6260000",
+  "service_group_name": "부산광역시 공공데이터 서비스 그룹",
+  "festival_service": {
+    "name": "부산광역시_부산축제정보 서비스",
+    "service_id": "FestivalService",
+    "endpoints": {
+      "ko": "https://apis.data.go.kr/6260000/FestivalService/getFestivalKr",
+      "en": "https://apis.data.go.kr/6260000/FestivalService/getFestivalEn",
+      "ja": "https://apis.data.go.kr/6260000/FestivalService/getFestivalJa",
+      "zhs": "https://apis.data.go.kr/6260000/FestivalService/getFestivalZhs",
+      "zht": "https://apis.data.go.kr/6260000/FestivalService/getFestivalZht"
+    }
+  },
+  "companion_services": {
+    "attraction": "부산광역시_부산명소정보 서비스 (AttractionService)",
+    "food": "부산광역시_부산맛집정보 서비스 (FoodService)"
+  },
+  "auth_method": {
+    "env_var": "TOUR_API_KEY",
+    "key_present_in_env": false,
+    "shared_with_kto": true,
+    "note": "apis.data.go.kr 전체 서비스(KTO B551011 포함 6260000)에 동일 serviceKey 사용 가능"
+  },
+  "separate_key_required": false,
+  "separate_key_evidence": "batch-state.json에 busan-festival 5개 언어 모두 status=completed — 추가 키 없이 기존 TOUR_API_KEY로 수집 성공",
+  "manual_verification_required": "data.go.kr 로그인 후 '부산광역시_부산축제정보 서비스' 상세 페이지에서 라이선스·필드 명세 최종 확인 권고",
+  "festival_in_current_batch_script_sources": false,
+  "festival_collected_via_state": [
+    "busan-festival-ko",
+    "busan-festival-en",
+    "busan-festival-ja",
+    "busan-festival-zhs",
+    "busan-festival-zht"
+  ],
+  "note_script_gap": "현재 scripts/tourapi-busan-batch.mjs SOURCES 배열에 festival 항목이 없음 — 이전 버전 스크립트로 2026-07-24 수집 후 제거된 것으로 추정. 재수집 시 스크립트에 festival 재추가 필요."
+}
