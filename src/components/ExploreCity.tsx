@@ -123,6 +123,14 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [locationError,   setLocationError]   = useState<string | null>(null);
   const [mapExpanded,     setMapExpanded]     = useState(false);
 
+  // 모바일은 List ↔ Map 을 전환해 보여준다. 데스크톱은 기존 split 이
+  // 둘 다 보여주므로 이 상태를 쓰지 않는다.
+  // 기본값은 "list" — Explore 의 일감 목적은 장소 발견이고, 최종 디자인
+  // explore_list_view_with_toggle_search 에서도 List 가 활성 상태다.
+  const [viewMode, setViewMode] = useState<"list" | "map">("list");
+  // 지도에서 고른 장소 — 하단 카드용. 상세 모달(selectedEvent)과는 별개다.
+  const [mapPickedKey, setMapPickedKey] = useState<string | null>(null);
+
   useEffect(() => {
     const sync = () => setPickedKeys(new Set(getCart().map(getItemSourceKey)));
     sync();
@@ -349,12 +357,45 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     const citySpot =
       filteredSpots.find(s => s.id === spot.id && s.lat === spot.lat && s.lng === spot.lng)
       ?? filteredSpots.find(s => s.id === spot.id);
-    if (citySpot) setSelectedEvent(toEventItem(citySpot));
+    if (!citySpot) return;
+    // 모바일 Map 모드에서는 하단 카드를 열어 지도를 가리지 않게 한다.
+    // 데스크톱 split 과 List 모드는 기존 상세 모달 동작을 그대로 유지한다.
+    if (viewMode === "map") setMapPickedKey(citySpot.sourceKey ?? String(citySpot.id));
+    else setSelectedEvent(toEventItem(citySpot));
   }
 
+  // 선택 장소는 키를 보관하되 항상 현재 결과에서 파생시킨다. 검색·카테고리가
+  // 바뀌어 결과에서 빠지면 자동으로 null 이 돼 하단 카드가 사라진다 — 별도로
+  // 상태를 지우는 effect 를 두지 않는다.
+  const mapPickedSpot = mapPickedKey
+    ? filteredSpots.find(s => (s.sourceKey ?? String(s.id)) === mapPickedKey) ?? null
+    : null;
+
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
+  const viewToggle = (
+    <div
+      role="group"
+      aria-label={tE("viewToggle")}
+      className="lg:hidden inline-flex p-1 rounded-full bg-gray-100 border border-gray-200 mb-3"
+    >
+      {(["map", "list"] as const).map(m => (
+        <button
+          key={m}
+          onClick={() => setViewMode(m)}
+          aria-pressed={viewMode === m}
+          className={`gkm-focus min-h-11 px-5 rounded-full text-sm font-bold transition-colors ${
+            viewMode === m ? "bg-white text-gray-900 shadow-sm" : "text-gray-500"
+          }`}
+        >
+          {m === "map" ? `\u{1F5FA} ${tE("viewMap")}` : `\u2630 ${tE("viewList")}`}
+        </button>
+      ))}
+    </div>
+  );
+
   const controls = (
     <div className="mb-4">
+      {viewToggle}
       <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} />
       <div className="flex flex-wrap items-center gap-2 mt-3">
         {spotCategories.map(cat => (
@@ -473,11 +514,13 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
        */}
       <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
 
-        {/* ── Map column: top on mobile, right sticky on desktop ── */}
-        {/* Full Screen: fixed overlay so Naver SDK gets guaranteed 100vw×100vh */}
+        {/* ── Map column ──
+            모바일: viewMode==="map" 일 때만, 남은 영역 전체를 차지한다.
+            데스크톱(lg+): 기존 split 그대로 오른쪽 460px 상시 표시.
+            Full Screen: fixed overlay so Naver SDK gets guaranteed 100vw×100vh */}
         <div className={mapExpanded
           ? "fixed inset-0 z-40 bg-white"
-          : "h-72 lg:h-full lg:w-[460px] shrink-0 lg:order-2 lg:border-l lg:border-gray-200"
+          : `${viewMode === "map" ? "flex-1 min-h-[60vh]" : "hidden"} lg:block lg:h-full lg:w-[460px] lg:flex-none shrink-0 lg:order-2 lg:border-l lg:border-gray-200`
         }>
           <div className="relative w-full h-full">
             <NaverMap
@@ -503,14 +546,74 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
         {/* ── Cards column: below on mobile, left scrollable on desktop ── */}
         {!mapExpanded && (
-          <div className="flex-1 lg:overflow-y-auto lg:h-full lg:order-1 px-4 lg:px-6 py-5 lg:py-6">
+          <div className={`${viewMode === "map" ? "shrink-0" : "flex-1"} lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 px-4 lg:px-6 py-5 lg:py-6`}>
             {pageHeader}
             {controls}
-            {cardsGrid}
-            <div className="h-8" /> {/* bottom spacing */}
+            {/* Map 모드에서는 검색·필터만 남기고 카드 목록은 지도가 대신한다.
+                데스크톱은 split 이므로 항상 함께 보인다. */}
+            <div className={viewMode === "map" ? "hidden lg:block" : ""}>
+              {cardsGrid}
+              <div className="h-8" /> {/* bottom spacing */}
+            </div>
           </div>
         )}
       </div>
+
+      {/* 지도 선택 장소 하단 카드 — BottomNav(3.5rem+safe-area) 위에 둔다.
+          마커를 바꿔 누르면 이 카드 내용만 갱신된다. */}
+      {viewMode === "map" && !mapExpanded && mapPickedSpot && (
+        <div className="lg:hidden fixed left-3 right-3 z-[45] bottom-[calc(4.25rem+env(safe-area-inset-bottom))]">
+          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex">
+            <div className="w-24 shrink-0 bg-gray-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={mapPickedSpot.image ?? "/images/placeholder-spot.svg"}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/placeholder-spot.svg"; }}
+              />
+            </div>
+            <div className="flex-1 min-w-0 p-3">
+              <div className="flex items-start gap-2">
+                <div className="min-w-0 flex-1">
+                  <p className="font-black text-gray-900 text-sm leading-snug truncate">{mapPickedSpot.name}</p>
+                  <p className="text-[11px] text-gray-400 mt-0.5 truncate">
+                    📍 {mapPickedSpot.district || mapPickedSpot.city}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setMapPickedKey(null)}
+                  aria-label={tE("turnOff")}
+                  className="gkm-focus shrink-0 w-7 h-7 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center text-sm"
+                >✕</button>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                {(() => {
+                  const added = pickedKeys.has(getItemSourceKey(toEventItem(mapPickedSpot)));
+                  return (
+                    <button
+                      onClick={() => handleAddSpot(mapPickedSpot)}
+                      disabled={added}
+                      className={`gkm-focus flex-1 min-h-10 rounded-xl text-xs font-black transition-colors ${
+                        added ? "bg-emerald-50 text-emerald-600 cursor-default" : "text-white"
+                      }`}
+                      style={added ? undefined : { backgroundColor: "#FF4A2D" }}
+                    >
+                      {added ? `\u2713 ${tE("addedToPicks")}` : `+ ${tE("addToPicks")}`}
+                    </button>
+                  );
+                })()}
+                <button
+                  onClick={() => setSelectedEvent(toEventItem(mapPickedSpot))}
+                  className="gkm-focus shrink-0 min-h-10 px-3 rounded-xl text-xs font-bold text-gray-600 border border-gray-200"
+                >
+                  {tE("viewDetails")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {selectedEvent && (
         <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />

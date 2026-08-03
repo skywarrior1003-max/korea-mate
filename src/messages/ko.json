@@ -39,7 +39,13 @@
       "title": "준비 중",
       "description": "{city}의 최고 명소를 엄선 중입니다. 곧 업데이트 됩니다!",
       "guide": "{city} 여행 가이드가 곧 공개됩니다."
-    }
+    },
+    "viewList": "목록",
+    "viewMap": "지도",
+    "viewToggle": "보기 방식",
+    "addToPicks": "픽에 담기",
+    "addedToPicks": "담김",
+    "mapNoSpots": "이 필터에는 지도에 표시할 수 있는 장소가 없어요."
   },
   "badges": {
     "soloOk": "👤 혼자 OK",

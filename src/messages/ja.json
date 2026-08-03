@@ -39,7 +39,13 @@
       "title": "近日公開",
       "description": "{city}のおすすめスポットを厳選中です。もうしばらくお待ちください！",
       "guide": "{city}の旅行ガイドは近日公開予定です。"
-    }
+    },
+    "viewList": "リスト",
+    "viewMap": "地図",
+    "viewToggle": "表示切替",
+    "addToPicks": "ピックに追加",
+    "addedToPicks": "追加済み",
+    "mapNoSpots": "この絞り込みで地図に表示できる場所はありません。"
   },
   "badges": {
     "soloOk": "👤 一人旅OK",

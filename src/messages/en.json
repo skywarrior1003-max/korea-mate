@@ -39,7 +39,13 @@
       "title": "Coming Soon",
       "description": "We're curating the best spots in {city}. Check back soon!",
       "guide": "View our {city} travel guide coming soon."
-    }
+    },
+    "viewList": "List",
+    "viewMap": "Map",
+    "viewToggle": "View mode",
+    "addToPicks": "Add to Picks",
+    "addedToPicks": "Added",
+    "mapNoSpots": "No places with map locations match this filter."
   },
   "badges": {
     "soloOk": "👤 Solo OK",

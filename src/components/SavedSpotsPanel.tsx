@@ -33,7 +33,9 @@ export default function SavedSpotsPanel() {
   if (spots.length === 0) return null;
   // /picks 에는 Saved 가 이미 탭으로 있다. 같은 목록을 부유 패널로 한 번 더
   // 띄우면 중복일 뿐 아니라 Selected 탭의 Build CTA 를 덮는다(실측 겹침).
-  if (pathname.startsWith("/picks")) return null;
+  // /explore 는 최종 디자인(list/map) 두 화면 어디에도 이 패널이 없고, 지도
+  // 하단 선택 카드와 같은 자리를 다툰다. 기능은 Picks > Saved 가 대체한다.
+  if (pathname.startsWith("/picks") || pathname.startsWith("/explore")) return null;
 
   return (
     // BottomNav 위로 올린다(4.25rem = nav 3.5rem + 간격 0.75rem).

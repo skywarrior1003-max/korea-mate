@@ -39,7 +39,13 @@
       "title": "即将推出",
       "description": "我们正在精选{city}最好的景点，请稍候！",
       "guide": "{city}旅游指南即将推出。"
-    }
+    },
+    "viewList": "列表",
+    "viewMap": "地图",
+    "viewToggle": "显示方式",
+    "addToPicks": "加入精选",
+    "addedToPicks": "已加入",
+    "mapNoSpots": "当前筛选下没有可在地图上显示的地点。"
   },
   "badges": {
     "soloOk": "👤 单人友好",
