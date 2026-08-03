@@ -1,0 +1,383 @@
+{
+  "task": "TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3",
+  "phase": "Phase11_normalization",
+  "executed_at": "2026-08-03T12:59:10Z",
+  "source_facts_total": 907,
+  "source_facts_sha256": "db9bb2be8e07fe26750228df2f09a9c2787b32a13219bbfa45adab66ea0ed96f",
+  "candidates_total": 831,
+  "candidates_sha256": "000b016bb395ca1ff488d97a817a5746ea8659181a8572d8b4afe0cf58c37d64",
+  "duplicate_groups": 69,
+  "secondary_removed": 76,
+  "category_distribution": {
+    "attraction": 317,
+    "restaurant": 305,
+    "accommodation": 126,
+    "event": 24,
+    "nature": 59
+  },
+  "coord_available": 679,
+  "coord_missing": 152,
+  "image_url_available": 530,
+  "description_available": 108,
+  "address_available": 830,
+  "duplicate_groups_detail": [
+    {
+      "normalized_name": "경주읍성",
+      "members": [
+        "gyeongju-GJ01-0005",
+        "gyeongju-GJ06-0004",
+        "gyeongju-KTO12-2756611"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시동문로31",
+        "경상북도경주시동문로31",
+        "경상북도경주시동문로31"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "금장대",
+      "members": [
+        "gyeongju-GJ01-0010",
+        "gyeongju-GJ06-0008",
+        "gyeongju-GJ07-0009"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService",
+        "gyeongju-city/observationPointService"
+      ],
+      "addresses": [
+        "경상북도경주시석장동산38-9",
+        "경상북도경주시석장동산38-9",
+        "경상북도경주시석장동산38-9"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "대릉원",
+      "members": [
+        "gyeongju-GJ01-0014",
+        "gyeongju-KTO12-3101699"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시황남동31-1",
+        "경상북도경주시계림로9"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "동궁과월지",
+      "members": [
+        "gyeongju-GJ01-0017",
+        "gyeongju-GJ06-0001"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService"
+      ],
+      "addresses": [
+        "경상북도경주시원화로102",
+        "경상북도경주시원화로102"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "신라왕경숲",
+      "members": [
+        "gyeongju-GJ01-0030",
+        "gyeongju-KTO12-2778053"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시경주시구황동885-6",
+        "경상북도경주시구황동"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "월정교",
+      "members": [
+        "gyeongju-GJ01-0033",
+        "gyeongju-GJ06-0003"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService"
+      ],
+      "addresses": [
+        "경상북도경주시교동274",
+        "경상북도경주시교동274"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "첨성대",
+      "members": [
+        "gyeongju-GJ01-0036",
+        "gyeongju-GJ06-0002",
+        "gyeongju-KTO12-3101689"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시인왕동839-1",
+        "경상북도경주시인왕동839-1",
+        "경상북도경주시첨성로140-25"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "서출지",
+      "members": [
+        "gyeongju-GJ01-0055",
+        "gyeongju-GJ06-0007"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/theNightViewService"
+      ],
+      "addresses": [
+        "경상북도경주시남산1길17",
+        "경상북도경주시남산1길17"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "감포공설시장",
+      "members": [
+        "gyeongju-GJ01-0064",
+        "gyeongju-KTO38-2756602"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type38"
+      ],
+      "addresses": [
+        "경상북도경주시감포읍감포로115",
+        "경상북도경주시감포읍감포로115"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "경주이견대",
+      "members": [
+        "gyeongju-GJ01-0069",
+        "gyeongju-KTO12-128651"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시감포읍동해안로1480-1",
+        "경상북도경주시감포읍대밑길12-14"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "기림사",
+      "members": [
+        "gyeongju-GJ01-0073",
+        "gyeongju-KTO12-126167"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시문무대왕면기림로437-1",
+        "경상북도경주시양북면기림로437-17"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "봉길대왕암해변",
+      "members": [
+        "gyeongju-GJ01-0077",
+        "gyeongju-KTO12-126095"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시문무대왕면봉길해안길",
+        "경상북도경주시양북면봉길해안길"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "송대말등대",
+      "members": [
+        "gyeongju-GJ01-0078",
+        "gyeongju-KTO12-129166"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시감포읍척사길18-94",
+        "경상북도경주시감포읍척사길18-94"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "오류고아라해변",
+      "members": [
+        "gyeongju-GJ01-0079",
+        "gyeongju-KTO12-129161"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시감포읍오류리277-8",
+        "경상북도경주시감포읍오류리"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "전촌항",
+      "members": [
+        "gyeongju-GJ01-0084",
+        "gyeongju-KTO12-2756667"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시감포읍전촌리1245-11",
+        "경상북도경주시감포읍전촌리1245-11"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "경주엑스포대공원",
+      "members": [
+        "gyeongju-GJ01-0091",
+        "gyeongju-KTO12-127487"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시경감로614(천군동)",
+        "경상북도경주시경감로614(천군동)"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "경주힐링테마파크",
+      "members": [
+        "gyeongju-GJ01-0096",
+        "gyeongju-KTO12-2756668"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type12"
+      ],
+      "addresses": [
+        "경상북도경주시천북남로101(신평동)",
+        "경상북도경주시천북남로101"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "동대봉산무장봉억새군락지",
+      "members": [
+        "gyeongju-GJ01-0097",
+        "gyeongju-GJ01-0139"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "gyeongju-city/touristDestinationService"
+      ],
+      "addresses": [
+        "경상북도경주시보덕로478-1(암곡동)",
+        "경상북도경주시보덕로478-1(암곡동)"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "키덜트뮤지엄",
+      "members": [
+        "gyeongju-GJ01-0117",
+        "gyeongju-KTO14-2756965"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type14"
+      ],
+      "addresses": [
+        "경상북도경주시보문로132-16번지콜로",
+        "경상북도경주시보문로132-16"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    },
+    {
+      "normalized_name": "한국대중음악박물관",
+      "members": [
+        "gyeongju-GJ01-0119",
+        "gyeongju-KTO14-2049478"
+      ],
+      "sources": [
+        "gyeongju-city/touristDestinationService",
+        "kto/KorService2/type14"
+      ],
+      "addresses": [
+        "경상북도경주시엑스포로9",
+        "경상북도경주시엑스포로9"
+      ],
+      "identity_confidence": "high",
+      "link_type": "duplicate_candidate"
+    }
+  ],
+  "kto_counts_by_type": {
+    "12": 143,
+    "14": 14,
+    "15": 24,
+    "28": 59,
+    "32": 127,
+    "38": 10,
+    "39": 182
+  }
+}
