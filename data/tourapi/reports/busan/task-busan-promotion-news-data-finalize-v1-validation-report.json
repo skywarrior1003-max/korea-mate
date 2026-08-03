@@ -1,0 +1,216 @@
+{
+  "report_id": "task-busan-promotion-news-data-finalize-v1-validation-report",
+  "report_type": "VALIDATION_ONLY",
+  "task_id": "TASK-BUSAN-PROMOTION-NEWS-DATA-FINALIZE-V1",
+  "result": "BLOCKED_IMPROVEMENT_REQUIRED",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "executed": false,
+  "reason_not_executed": "Phase 1-2 핵심 원천 접근 제약 및 태스크 구조 개선 필요. 아래 이슈 해결 후 재실행 권장.",
+
+  "validation_summary": {
+    "webfetch_pilot_calls": 10,
+    "sources_tested": [
+      "visitbusan.net (이벤트·프로모션 다수 URL)",
+      "bto.or.kr 보도자료 목록",
+      "bto.or.kr 개별 보도자료 상세",
+      "bto.or.kr 공고·행사 목록",
+      "busan.go.kr 관광 페이지"
+    ],
+    "accessible": [
+      "bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047 (보도자료 목록) — 정적 HTML, board_seq 패턴 확인",
+      "bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090 (공고·행사 목록) — 정적 HTML, board_seq 확인",
+      "visitbusan.net 명소 목록, 테마여행 목록 — 부분 접근 가능"
+    ],
+    "inaccessible": [
+      "bto.or.kr 개별 기사 상세 (board_seq 파라미터) → HTTP 500",
+      "visitbusan.net 이벤트·설문·여행뉴스·공지 게시판 다수 URL → eGovFramework 에러 페이지",
+      "busan.go.kr 관광 페이지 → HTTP 404"
+    ]
+  },
+
+  "term_clarification": {
+    "term": "부산병 (釜山病)",
+    "status": "확인 완료 — 모호하지 않음",
+    "definition": "'부산 그리움 증후군' — 부산을 경험한 관광객이 다시 방문하고 싶어지는 강렬한 감정을 마케팅 언어로 표현한 캠페인 용어. 파리 증후군의 긍정적 변형 개념.",
+    "evidence": "BTO 보도자료 #2 (2026-07-27): '부산관광공사, 중화권 관광객 대상 부산병 치유 프로모션 전격 추진' — BTO 공식 캠페인 용어로 확인",
+    "campaign_detail_accessible": false,
+    "campaign_detail_block": "보도자료 상세 HTTP 500 에러로 기간·혜택·공식 URL 미확인"
+  },
+
+  "issues": [
+    {
+      "issue_id": "I-01",
+      "severity": "BLOCKER",
+      "phase_affected": "Phase 2 (최근 프로모션 실제 수집)",
+      "title": "BTO 보도자료 개별 기사 상세 접근 불가 (HTTP 500)",
+      "detail": "BTO 보도자료 게시판 목록(mCode=MN047)은 정적 HTML로 접근 가능하며 제목·날짜·board_seq를 읽을 수 있음. 그러나 개별 기사 상세 URL(?mode=view&mgr_seq=22&board_seq=N) 호출 시 HTTP 500 Internal Server Error 반환. Phase 2 '필수 포함 검증'의 부산병 치유 프로모션 세부 내용(기간·혜택·대상·공식 URL)을 수집 불가. 프로모션 데이터 필수 필드(start_at, end_at, benefit_summary, eligibility, official_url)가 목록만으로는 채워지지 않음.",
+      "impact": "Phase 2 수집 결과물의 핵심 필드 대량 누락 가능성. 태스크 '중단 조건'(날짜·혜택·대상 중 핵심 필드 대량 누락) 해당 가능성 있음.",
+      "workaround_candidate": "네이버뉴스 검색 또는 Google 검색으로 보도자료 내용 보완 — 단, 공식 원천이 아닌 기사 단독 정보는 '보조 근거'만 사용 가능(Phase 6 규칙). 공식 URL 확인 경로 별도 탐색 필요."
+    },
+    {
+      "issue_id": "I-02",
+      "severity": "BLOCKER",
+      "phase_affected": "Phase 1 (부산 공식 원천 전수 확인)",
+      "title": "VisitBusan 프로모션·이벤트·여행뉴스 게시판 URL 접근 불안정",
+      "detail": "Phase 1 필수 확인 대상인 VisitBusan의 '이벤트·설문', '여행뉴스', '공지', '관광상품·프로모션 페이지' URL 탐색 시 eGovFramework 표준 에러 페이지('알 수 없는 오류가 발생했습니다') 반환. 테스트한 visitbusan.net URL 7개 중 정상 응답 2개(명소 목록, 테마여행 목록)이며 이벤트·프로모션 성격 페이지 0건 확인. VisitBusan의 정확한 프로모션 게시판 URL 구조 미발굴 상태.",
+      "impact": "Phase 1 'VisitBusan' 원천 전수 확인 불가. 이벤트·할인·쿠폰 관련 최신 정보가 VisitBusan에 존재할 경우 수집 누락.",
+      "workaround_candidate": "visitbusan.net/sitemap.xml 또는 robots.txt 조회로 유효 URL 목록 우선 확보. VisitBusan 영문 이벤트 페이지(https://www.visitbusan.net/en/ 계열) 별도 탐색."
+    },
+    {
+      "issue_id": "I-03",
+      "severity": "MEDIUM",
+      "phase_affected": "Phase 1 (원천 전수 확인), Phase 2 (수집 대상 필터링)",
+      "title": "BTO 공고·행사 게시판이 B2B 공모 중심 — 관광객 대상 필터 기준 미정의",
+      "detail": "BTO 공고·행사 게시판(mCode=MN090) 최근 10개 중 관광객 직접 혜택 항목 1건(2026 부산 고메 셀렉션 참가업체 공모)이며 나머지 9건은 B2B 공모·사업. '참가업체 공모'도 직접 혜택보다는 업체 공모 성격. 태스크 데이터 모델의 content_type 중 'tourism_news', 'campaign'과 B2B 공모를 구분하는 필터 기준이 현재 태스크에 명시되어 있지 않아 Phase 2 수집 시 과도한 B2B 항목 포함 위험.",
+      "impact": "관광객 대상 PROMOTION과 B2B 공모·사업이 혼입되어 데이터 품질 저하. 별도 필터 기준 없이 수집 시 '단순 홍보성 보도자료와 실제 사용 가능한 혜택을 구분'하는 Phase 원칙 위반 위험.",
+      "workaround_candidate": "Phase 3 데이터 모델에 'audience_type: B2C/B2B/B2G' 필드 추가. 수집 대상을 '관광객이 직접 신청·사용·예약 가능한 혜택'으로 제한하는 필터 기준 명문화."
+    },
+    {
+      "issue_id": "I-04",
+      "severity": "MEDIUM",
+      "phase_affected": "Phase 8 (다도시 재사용 기준)",
+      "title": "Phase 8 다도시 템플릿 설계의 시기상조성",
+      "detail": "Phase 8는 부산 1개 도시 파이프라인 경험을 바탕으로 다도시 표준 템플릿을 설계한다. 그러나 Phase 1~2 수집 결과 없이 설계하면 실제 파이프라인 요구사항(페이지네이션 방식, 자동 수집 가능 여부, 필드 완전성 패턴)이 반영되지 않은 추상적 문서가 될 위험. 부산 수집 결과를 보고 템플릿을 귀납적으로 도출하는 것이 더 견고함.",
+      "impact": "다도시 적용 시 실제 파이프라인과 맞지 않는 템플릿 수정 비용 발생 위험.",
+      "recommendation": "Phase 1~2 완료 후 실제 수집 패턴을 토대로 Phase 8 작성. 현재 태스크 범위에서는 Phase 8을 '템플릿 초안'으로 명시하고 후속 도시 적용 시 검증·수정 예정임을 문서화."
+    },
+    {
+      "issue_id": "I-05",
+      "severity": "LOW",
+      "phase_affected": "전체 태스크 구조",
+      "title": "8개 Phase 단일 실행 구조 — 중간 승인 게이트 없음",
+      "detail": "현재 태스크는 Phase 1(소스 구조 확인)부터 Phase 8(다도시 템플릿)까지 단일 실행으로 묶여 있음. Phase 1 결과(어떤 원천이 접근 가능한지, URL 구조가 어떻게 되는지)에 따라 Phase 2 수집 범위가 크게 달라지는 구조. Phase 1 결과 확인 없이 Phase 2 이후를 계획하면 범위 조정이 어려움.",
+      "recommendation": "Phase 1 + 소스 URL 목록 → 사용자 확인 → Phase 2~8 실행. 이번 실행에서 Phase 1 결과 보고 후 Phase 2 착수 여부를 결정하는 중간 게이트 삽입."
+    }
+  ],
+
+  "improvement_proposals": [
+    {
+      "proposal_id": "P-01",
+      "title": "BTO 개별 기사 상세 접근 대안 경로 확보 후 실행",
+      "detail": "WebFetch로 BTO 보도자료 목록에서 board_seq를 추출하고, Google 검색('site:bto.or.kr board_seq=N')으로 기사 캐시 접근을 시도하거나 네이버뉴스에서 BTO 공식 발표 기사를 보조 원천으로 사용. 단, 기사 단독 내용은 '보조 근거'로 한정하고 공식 페이지 URL 확인이 완료된 항목만 status=ACTIVE로 등록.",
+      "implementation_step": "Phase 1 실행 전 BTO 개별 기사 대안 접근 경로 pilot 1회 테스트 → 성공 시 Phase 2 착수"
+    },
+    {
+      "proposal_id": "P-02",
+      "title": "VisitBusan sitemap 기반 유효 URL 발굴",
+      "detail": "Phase 1 시작 시 visitbusan.net/sitemap.xml 또는 visitbusan.net/robots.txt 조회로 이벤트·프로모션·뉴스 게시판 URL 구조를 먼저 확인. 영문 이벤트 페이지(visitbusan.net/en 계열)가 한글보다 안정적일 가능성 있음 — 영문 URL 우선 탐색.",
+      "implementation_step": "Phase 1 첫 단계에서 sitemap.xml 조회를 필수로 추가"
+    },
+    {
+      "proposal_id": "P-03",
+      "title": "수집 대상 'B2C only' 필터 기준 Phase 3 데이터 모델에 반영",
+      "detail": "audience_type 필드 추가: B2C(관광객 직접 사용), B2B(업체 대상), MIXED. 수집 대상은 B2C 또는 MIXED만. B2B 공모·사업은 source_registry에 원천 기록만 하고 프로모션 데이터셋에서 제외. Phase 2 '공개 금지' 조건에 'audience_type=B2B 항목' 추가.",
+      "implementation_step": "Phase 3 데이터 계약에 audience_type 추가 — 코드 수정 없이 JSON 스키마만 변경"
+    },
+    {
+      "proposal_id": "P-04",
+      "title": "Phase 8 다도시 템플릿을 '검증 전 초안' 상태로 생성",
+      "detail": "Phase 8 산출물 multcity-promotion-source-template-v1.json을 'template_status: DRAFT_PENDING_VALIDATION'으로 명시하고, 실제 경주 등 후속 도시 파이프라인 적용 후 v2로 업데이트하는 방침 기록. 이번 태스크에서는 부산 패턴 기반 초안만 생성.",
+      "implementation_step": "Phase 8 산출물 frontmatter에 template_status 필드 추가"
+    }
+  ],
+
+  "confirmed_findings": {
+    "bto_board_accessible": [
+      {
+        "source": "BTO 보도자료",
+        "url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047",
+        "list_access": "가능 — 정적 HTML",
+        "detail_access": "불가 — HTTP 500",
+        "link_pattern": "?mCode=MN047&mode=view&mgr_seq=22&board_seq={N}",
+        "recent_item_sample": "부산관광공사, 중화권 관광객 대상 부산병 치유 프로모션 전격 추진 (2026-07-27)",
+        "total_items": 1160,
+        "latest_date": "2026-07-31"
+      },
+      {
+        "source": "BTO 공고·행사",
+        "url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090",
+        "list_access": "가능 — 정적 HTML",
+        "detail_access": "미테스트",
+        "link_pattern": "?mCode=MN090&mode=view&mgr_seq=65&board_seq={N}",
+        "recent_b2c_sample": "2026 부산 고메 셀렉션 하반기 참가업체 공모 (2026-08-03, board_seq=5359)",
+        "b2b_ratio_estimate": "최근 10건 중 9건 B2B 공모·사업"
+      }
+    ],
+    "busan_byeong_promo": {
+      "confirmed": true,
+      "campaign_name": "중화권 관광객 대상 부산병 치유 프로모션",
+      "organizer": "부산관광공사",
+      "announcement_date": "2026-07-27",
+      "detail_accessible": false,
+      "note": "보도자료 목록 제목으로만 확인. 기간·혜택·URL은 HTTP 500으로 미수집."
+    },
+    "visitbusan_status": {
+      "promo_event_boards": "URL 탐색 실패 — 에러 페이지 반환",
+      "content_pages_accessible": ["명소 목록", "테마여행 목록"],
+      "promotion_board_url_found": false
+    }
+  },
+
+  "execution_prerequisite_checklist": [
+    {
+      "check": "BTO 개별 기사 상세 접근 대안 경로 확보",
+      "status": "미완",
+      "required_for": "Phase 2 프로모션 세부 내용 수집"
+    },
+    {
+      "check": "VisitBusan 이벤트·프로모션 게시판 유효 URL 발굴",
+      "status": "미완",
+      "required_for": "Phase 1 VisitBusan 원천 전수 확인"
+    },
+    {
+      "check": "부산광역시 관광 게시판 유효 URL 확인",
+      "status": "미완",
+      "required_for": "Phase 1 부산광역시 원천 확인"
+    },
+    {
+      "check": "B2C 필터 기준 Phase 3 데이터 모델 반영",
+      "status": "미완",
+      "required_for": "Phase 2 수집 대상 구분"
+    },
+    {
+      "check": "Phase 1 결과 중간 승인 게이트",
+      "status": "구조 개선 필요",
+      "required_for": "Phase 2 범위 확정"
+    }
+  ],
+
+  "blockers_vs_stoppers": {
+    "blockers_requiring_resolution": [
+      "I-01: BTO 개별 기사 HTTP 500 — Phase 2 핵심 필드 수집 차단",
+      "I-02: VisitBusan 프로모션 게시판 URL 미발굴 — Phase 1 전수 확인 차단"
+    ],
+    "improvements_that_change_execution": [
+      "I-03: B2C/B2B 필터 — 데이터 모델에 추가하면 수집 품질 보장",
+      "I-04: Phase 8 초안 상태 명시 — 과대 약속 방지",
+      "I-05: Phase 1 중간 게이트 — 범위 조정 가능성 확보"
+    ],
+    "task_stopper_conditions_triggered": [
+      "태스크 '중단 조건' 중 '공식 페이지 구조를 재현할 수 없음' — BTO 상세 + VisitBusan 이벤트 해당",
+      "태스크 '중단 조건' 중 '날짜·혜택·대상 중 핵심 필드 대량 누락' — BTO 상세 접근 차단 시 해당"
+    ]
+  },
+
+  "recommended_next_action": {
+    "immediate": [
+      "BTO 개별 기사 접근 대안 pilot: Google 캐시 또는 네이버뉴스 검색으로 '부산병 치유 프로모션' 상세 확인 시도",
+      "VisitBusan sitemap.xml 조회로 이벤트·프로모션 게시판 유효 URL 탐색",
+      "busan.go.kr 관광 메뉴 유효 URL 탐색"
+    ],
+    "after_pilot": [
+      "접근 가능한 원천과 불가한 원천 구분 확정 → Phase 1 범위 재정의",
+      "Phase 3 데이터 모델에 audience_type(B2C/B2B/MIXED) 추가 확정 후 Phase 2 착수",
+      "Phase 8 산출물을 'DRAFT' 상태로 명시한 채 생성"
+    ]
+  },
+
+  "integrity_check": {
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "push": false,
+    "new_files_created": 1,
+    "api_calls_made": 10,
+    "api_calls_detail": "WebFetch to bto.or.kr (4), visitbusan.net (5), busan.go.kr (1)"
+  }
+}
