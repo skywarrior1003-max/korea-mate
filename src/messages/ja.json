@@ -327,5 +327,11 @@
     "saveFailed": "保存できませんでした。もう一度お試しください。",
     "loadFailed": "マイプレイスを読み込めませんでした。",
     "retry": "再試行"
+  },
+  "cityEntry": {
+    "exploreCity": "{city}を探す",
+    "planTrip": "AIで旅程を作る",
+    "plannerComingSoon": "AIプラナー準備中",
+    "otherCities": "他の都市"
   }
 }

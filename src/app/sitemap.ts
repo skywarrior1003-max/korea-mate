@@ -35,6 +35,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/jeju/`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/gyeongju/`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/busan/`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // 전주는 진입 화면만 있고 검증된 장소·실용 정보가 아직 없다. 색인은 하되
+    // 콘텐츠가 갖춰진 도시들과 같은 우선순위로 올리지 않는다.
+    { url: `${siteUrl}/jeonju/`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     // TASK-042: explore city pages
     { url: `${siteUrl}/explore/busan/`,         lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     { url: `${siteUrl}/explore/seoul/`,         lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },

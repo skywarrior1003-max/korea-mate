@@ -327,5 +327,11 @@
     "saveFailed": "保存失败，请重试。",
     "loadFailed": "无法加载我的地点。",
     "retry": "重试"
+  },
+  "cityEntry": {
+    "exploreCity": "探索{city}",
+    "planTrip": "用 AI 规划行程",
+    "plannerComingSoon": "AI 规划器即将上线",
+    "otherCities": "其他城市"
   }
 }

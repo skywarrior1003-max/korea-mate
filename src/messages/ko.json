@@ -327,5 +327,11 @@
     "saveFailed": "저장하지 못했어요. 다시 시도해 주세요.",
     "loadFailed": "내 장소를 불러오지 못했어요.",
     "retry": "다시 시도"
+  },
+  "cityEntry": {
+    "exploreCity": "{city} 둘러보기",
+    "planTrip": "AI로 일정 만들기",
+    "plannerComingSoon": "AI 플래너 준비 중",
+    "otherCities": "다른 도시"
   }
 }

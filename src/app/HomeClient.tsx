@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from "react";
+import { resolveCityParam, stripCityParam } from "@/lib/home-city-param-core";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -452,6 +453,10 @@ function SectionHeader({
 //  PAGE COMPONENT
 // ═══════════════════════════════════════════════
 
+// 정적 프리렌더 중에는 레이아웃 이펙트가 의미도 없고 경고만 낸다.
+// 브라우저에서만 레이아웃 이펙트를 쓴다 — 페인트 전 판정이 필요한 쪽은 거기뿐이다.
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export default function HomeClient() {
 
   // ── 로컬 스팟 상태 ────────────────────────────
@@ -468,6 +473,8 @@ export default function HomeClient() {
 
   // ── AI 플래너 폼 ──────────────────────────────
   const [city,          setCity]          = useState("Busan");
+  // ?city= 가 플래너 미지원 도시를 가리킬 때. 그 프레임부터 Home 을 그리지 않는다.
+  const [redirecting,   setRedirecting]   = useState(false);
   const [startDate,     setStartDate]     = useState("");
   const [endDate,       setEndDate]       = useState("");
   const [travelers,     setTravelers]     = useState("1");
@@ -520,24 +527,6 @@ export default function HomeClient() {
     setStartLocation(CITY_ARRIVAL_DEFAULTS[city] ?? city);
   }, [city]);
 
-  // ── 클론 파라미터 처리 (?city=&from=&to=&style=&ref=clone) ──────────────
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const p = new URLSearchParams(window.location.search);
-    if (p.get("ref") !== "clone") return;
-    const ct   = p.get("city");
-    const from = p.get("from");
-    const to   = p.get("to");
-    const st   = p.get("style");
-    if (ct && ["Busan", "Seoul", "Jeju", "Gyeongju"].includes(ct)) setCity(ct);
-    if (from) setStartDate(from);
-    if (to)   setEndDate(to);
-    if (st && ["Solo", "Couple", "Family", "Group"].includes(st)) setStyle(st);
-    setShowCloneBanner(true);
-    setTimeout(() =>
-      document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })
-    , 300);
-  }, []);
 
   useEffect(() => {
     if (!showBTSGuide) return;
@@ -562,6 +551,55 @@ export default function HomeClient() {
   }
 
   const router = useRouter();
+
+  // ── 클론 파라미터 처리 (?city=&from=&to=&style=&ref=clone) ──────────────
+  //
+  // ?city= 는 도시 진입 화면의 CTA 가 넘긴다. 판정은 resolveCityParam 한 곳에
+  // 맡긴다 — 여기에 도시 목록을 적어두면 도시가 늘 때마다 빠뜨린다. 실제로
+  // jeonju 가 빠져 있어서 /jeonju/ 에서 온 요청이 Busan 으로 흘렀다.
+  //
+  // 레이아웃 이펙트인 이유: redirect 로 판정된 경우 Busan 플래너가 한 프레임
+  // 이라도 그려지면 안 된다. 레이아웃 이펙트의 상태 갱신은 페인트 전에
+  // 반영되므로 화면에 Busan 이 스치지 않는다.
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    const isClone = p.get("ref") === "clone";
+
+    const resolved = resolveCityParam(p.get("city"));
+    if (resolved.kind === "redirect") {
+      // 플래너가 없는 도시다. 그 도시의 진입 화면이 정답이므로 그리로 보낸다.
+      // replace 라 뒤로가기가 이 URL 로 되돌아오지 않는다 = 루프가 없다.
+      setRedirecting(true);
+      router.replace(resolved.href);
+      return;
+    }
+    if (resolved.kind === "planner") setCity(resolved.city);
+    if (resolved.kind === "ignore") {
+      // 모르는 도시다. Busan 으로 해석하지 않고 주소에서 지우기만 한다.
+      // 도시 선택·일정은 건드리지 않으므로 평소 Home 그대로다.
+      //
+      // router.replace 가 아니라 history.replaceState 인 이유: 같은 route 로의
+      // replace 는 주소를 그대로 두는 경우가 있어 실측에서 ?city= 가 남았다.
+      // 여기서 필요한 건 라우팅이 아니라 주소 정리뿐이라 재렌더도 없는 쪽이 낫다.
+      window.history.replaceState(
+        null, "",
+        stripCityParam(window.location.pathname, window.location.search) + window.location.hash,
+      );
+    }
+
+    if (!isClone) return;
+    const from = p.get("from");
+    const to   = p.get("to");
+    const st   = p.get("style");
+    if (from) setStartDate(from);
+    if (to)   setEndDate(to);
+    if (st && ["Solo", "Couple", "Family", "Group"].includes(st)) setStyle(st);
+    setShowCloneBanner(true);
+    setTimeout(() =>
+      document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })
+    , 300);
+  }, []);
 
   // ── /#planner 로 들어오면 플래너에 키보드 focus 를 준다 ──────────────────
   //
@@ -840,6 +878,13 @@ export default function HomeClient() {
   // ════════════════════════════════════════════════════════════════
   //  RENDER
   // ════════════════════════════════════════════════════════════════
+
+  // 도시 진입 화면으로 넘기는 중이다. 플래너를 그리면 Busan 도착지 목록이
+  // 잠깐 보이고, 그건 그 도시를 고른 사용자에게 틀린 화면이다.
+  if (redirecting) {
+    return <div className="min-h-screen bg-white" aria-hidden />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased overflow-x-clip">
 

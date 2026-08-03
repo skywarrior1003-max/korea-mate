@@ -327,5 +327,11 @@
     "saveFailed": "Could not save. Please try again.",
     "loadFailed": "Could not load your places.",
     "retry": "Retry"
+  },
+  "cityEntry": {
+    "exploreCity": "Explore {city}",
+    "planTrip": "Plan my trip with AI",
+    "plannerComingSoon": "AI planner coming soon",
+    "otherCities": "Other cities"
   }
 }
