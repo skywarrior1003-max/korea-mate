@@ -1,0 +1,20 @@
+{
+  "task": "TASK-KTO-EN-DUAL-LINK-CORRECTION-V1",
+  "updated_at": "2026-08-03T01:11:35Z",
+  "description": "EN KTO contents with no suitable candidate — awaiting dedicated candidate creation",
+  "count": 1,
+  "records": [
+    {
+      "contentid": "2946924",
+      "title_en": "Haeparang Trail Course 1 (해파랑길 1코스)",
+      "original_verdict": "MANUAL_REVIEW_LINK",
+      "resolution_verdict": "HIGH_CONFIDENCE_LINK",
+      "corrected_verdict": "NO_SUITABLE_CANDIDATE",
+      "was_linked_to": "busan-A-00022",
+      "correction_reason": "trail_course_not_same_as_islets: 오륙도 islets와 별개 관광 객체. 좌표 근접만으로 연결, 해파랑길 1코스 전용 candidate 없음.",
+      "removed_source_key": "EngService2:2946924:en",
+      "removed_at": "2026-08-03T01:11:35Z",
+      "task": "TASK-KTO-EN-DUAL-LINK-CORRECTION-V1"
+    }
+  ]
+}
