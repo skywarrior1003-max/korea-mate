@@ -1,0 +1,140 @@
+{
+  "report_id": "busan-promotion-source-registry-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "부산 프로모션 수집 공식 소스 레지스트리. busan-promotion-official-source-registry-v1.json 내용을 통합·확정한 정규 파일.",
+  "supersedes": "busan-promotion-official-source-registry-v1.json",
+
+  "sources": [
+    {
+      "source_id": "VB-EVENT-SURVEY",
+      "name": "VisitBusan Event & Survey (EN)",
+      "priority": 1,
+      "audience_type": "B2C",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002000000",
+      "detail_pattern": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq={ueb_seq}",
+      "id_field": "ueb_seq",
+      "total_items": 103,
+      "total_pages": 13,
+      "page_param": "pageIndex",
+      "b2c_filter": null,
+      "content_types": ["discount", "campaign", "special_experience", "tourist_pass"],
+      "language": "EN",
+      "status": "STABLE",
+      "notes": "영문 버전 안정. 한국어 버전 서버 업데이트(2026-06-05) 후 불안정 — 영문 전용 수집."
+    },
+    {
+      "source_id": "BTO-PRESS",
+      "name": "BTO 보도자료 (부산관광공사)",
+      "priority": 2,
+      "audience_type": "B2C+B2B",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047",
+      "detail_pattern": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047&mode=view&mgr_seq=22&board_seq={board_seq}",
+      "id_field": "board_seq",
+      "page_param": "page",
+      "pagination_prefix": "?robot=Y&mCode=MN047&",
+      "recommended_pages": 10,
+      "b2c_filter": "제목·본문 키워드: 프로모션|할인|쿠폰|혜택|패스|이벤트|외국인|관광객",
+      "b2b_exclude": "모집|입찰|용역|채용|공모|사업자|협약|협력|업무협약",
+      "content_types": ["campaign", "discount", "travel_notice"],
+      "language": "KO",
+      "status": "STABLE",
+      "notes": "핵심 필드(기간·혜택·URL)는 본문 비정형 텍스트 추출 필요. 공식 원문 확인 필수. board_seq는 최근 5300~5360 범위."
+    },
+    {
+      "source_id": "VB-SHOWS-EVENTS",
+      "name": "VisitBusan Shows & Events (EN)",
+      "priority": 3,
+      "audience_type": "B2C",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304010000000",
+      "detail_pattern": "https://www.visitbusan.net/en/schedule/view.do?boardId=BBS_0000010&menuCd=DOM_000000304010000000&dataSid={dataSid}",
+      "id_field": "dataSid",
+      "pagination": "year=2026&month={MM}",
+      "months_to_collect": ["2026-08", "2026-09", "2026-10", "2026-11", "2026-12"],
+      "content_types": ["travel_notice"],
+      "language": "EN",
+      "status": "PARTIAL",
+      "notes": "8월 데이터 수집 완료. 9~12월 /schedule/list.do 경로 접근 시 'Do not have permission' 오류. /index.do 경로로 재시도 필요."
+    },
+    {
+      "source_id": "VBP-PASS",
+      "name": "Visit Busan Pass",
+      "priority": 4,
+      "audience_type": "B2C",
+      "access_method": "MANUAL_BROWSER_REQUIRED",
+      "list_url": "https://www.visitbusanpass.com",
+      "content_types": ["tourist_pass"],
+      "language": "EN/JA/ZHS/ZHT/KO",
+      "status": "PARTIAL",
+      "notes": "패스 종류 확인. 가격 하위 페이지(/ticket, /pass, /pass-info) WebFetch 불가 — 브라우저 직접 접근 필요. MB-005 참조."
+    },
+    {
+      "source_id": "VB-TRAVEL-PRODUCTS",
+      "name": "VisitBusan Busan Travel Products (EN)",
+      "priority": 5,
+      "audience_type": "B2C",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304004000000",
+      "total_items": 27,
+      "total_pages": 2,
+      "content_types": ["activity_deal", "special_experience"],
+      "language": "EN",
+      "status": "COLLECTED_NO_PRICE",
+      "notes": "16건(1페이지) 제목·카테고리 수집. 가격 미제공 — 상세 페이지 개별 접근 필요. 이번 프로모션 데이터셋에서 제외; 별도 travel_products 데이터셋으로 분리 권장."
+    },
+    {
+      "source_id": "BTO-NOTICE",
+      "name": "BTO 공고·행사(우리공사)",
+      "priority": 6,
+      "audience_type": "B2B 위주",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN090",
+      "content_types": ["campaign"],
+      "language": "KO",
+      "status": "DEFERRED",
+      "notes": "B2C 비율 최근 10건 중 1건 수준 — 개별 B2C 필터 개발 필요. 이번 수집에서 제외."
+    },
+    {
+      "source_id": "VB-NOTICE",
+      "name": "VisitBusan Notice (EN)",
+      "priority": 7,
+      "audience_type": "MIXED",
+      "access_method": "AUTOMATABLE",
+      "list_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304001000000",
+      "total_items": 14,
+      "total_pages": 2,
+      "b2c_filter": "관광객 직접 혜택 포함 항목만",
+      "content_types": ["travel_notice", "campaign"],
+      "language": "EN",
+      "status": "DEFERRED",
+      "notes": "서버 업데이트 공지(2026-06-05) 확인 소스. B2C 건별 필터 적용 후 수집 예정."
+    }
+  ],
+
+  "deferred_sources": [
+    {
+      "source_id": "KKDAY-BUSAN",
+      "reason": "403 Forbidden — bot 차단. BTO 보도자료 링크로 간접 접근만 가능.",
+      "manual_action": "MB-001"
+    },
+    {
+      "source_id": "BUSAN-METRO-TOURISM",
+      "reason": "busan.go.kr 관광 보도자료 URL 미확인.",
+      "manual_action": "MB-002"
+    },
+    {
+      "source_id": "KTO-VISITKOREA-BUSAN",
+      "reason": "URL 변경으로 404 반환.",
+      "manual_action": "MB-003"
+    },
+    {
+      "source_id": "BFO-BOARD",
+      "reason": "게시판 URL 패턴 미확인. 행사 날짜 소스로만 현재 활용.",
+      "manual_action": "MB-004"
+    }
+  ]
+}

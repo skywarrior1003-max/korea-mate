@@ -1,0 +1,92 @@
+{
+  "report_id": "multicity-promotion-source-template-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "한국 도시별 프로모션 소스 레지스트리 템플릿. 부산(busan) 구현 기준. 신규 도시 추가 시 이 구조를 복사하여 city_code와 URL 항목을 교체.",
+
+  "usage": "이 파일을 복사 후 city_code, city_name_ko, city_name_en 및 각 sources[].list_url과 detail_pattern을 해당 도시 공식 사이트로 교체. 미해당 source_id는 삭제.",
+
+  "template": {
+    "city_code": "{CITY}",
+    "city_name_ko": "{도시명}",
+    "city_name_en": "{CityName}",
+    "schema_version": "1.0",
+    "reference_implementation": "busan-promotion-source-registry-v1.json",
+
+    "sources": [
+      {
+        "source_id": "{CITY}-OFFICIAL-TOURISM",
+        "name": "{도시} 공식 관광 포털",
+        "priority": 1,
+        "audience_type": "B2C",
+        "access_method": "AUTOMATABLE | MANUAL_BROWSER_REQUIRED",
+        "list_url": "https://visit{city}.{tld}/en/events",
+        "detail_pattern": "https://visit{city}.{tld}/en/events/view?id={item_id}",
+        "id_field": "item_id",
+        "content_types": ["campaign", "discount", "special_experience", "tourist_pass"],
+        "language": "EN",
+        "b2c_filter": null,
+        "notes": ""
+      },
+      {
+        "source_id": "{CITY}-TOURISM-ORG-PRESS",
+        "name": "{도시} 관광 기관 보도자료",
+        "priority": 2,
+        "audience_type": "B2C+B2B",
+        "access_method": "AUTOMATABLE",
+        "list_url": "https://{city}tourismorg.or.kr/press",
+        "detail_pattern": "https://{city}tourismorg.or.kr/press/view?seq={board_seq}",
+        "id_field": "board_seq",
+        "b2c_filter": "프로모션|할인|혜택|패스|이벤트|외국인|관광객",
+        "b2b_exclude": "모집|입찰|용역|채용|공모|사업자",
+        "content_types": ["campaign", "discount", "travel_notice"],
+        "language": "KO",
+        "notes": "B2C 필터 필수. 비정형 본문 파싱 필요."
+      },
+      {
+        "source_id": "{CITY}-TOURIST-PASS",
+        "name": "{도시} 관광 패스",
+        "priority": 3,
+        "audience_type": "B2C",
+        "access_method": "AUTOMATABLE | MANUAL_BROWSER_REQUIRED",
+        "list_url": "https://visit{city}pass.com",
+        "content_types": ["tourist_pass"],
+        "notes": "가격 하위 페이지 확인 필요"
+      }
+    ],
+
+    "output_files": [
+      "{city}-promotions-current-v1.json",
+      "{city}-promotions-upcoming-v1.json",
+      "{city}-promotions-expired-v1.json",
+      "{city}-promotions-unverified-v1.json",
+      "{city}-promotion-source-registry-v1.json",
+      "{city}-promotion-data-contract-v1.json",
+      "{city}-promotion-freshness-policy-v1.json",
+      "{city}-promotion-deduplication-policy-v1.json",
+      "{city}-promotion-collection-report-v1.json"
+    ],
+
+    "data_contract_reference": "busan-promotion-data-contract-v1.json",
+    "dedup_policy_reference": "busan-promotion-deduplication-policy-v1.json",
+    "freshness_policy_reference": "busan-promotion-freshness-policy-v1.json"
+  },
+
+  "implemented_cities": [
+    {
+      "city_code": "busan",
+      "city_name_ko": "부산",
+      "city_name_en": "Busan",
+      "registry_file": "busan-promotion-source-registry-v1.json",
+      "implemented_at": "2026-08-03"
+    }
+  ],
+
+  "planned_cities": [
+    "seoul",
+    "jeju",
+    "gyeongju",
+    "incheon"
+  ]
+}

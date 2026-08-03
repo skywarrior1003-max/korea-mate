@@ -1,0 +1,57 @@
+{
+  "report_id": "busan-promotion-deduplication-policy-v1",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "version": "1.0",
+  "description": "부산 프로모션 데이터셋 중복 제거 정책. 동일 프로모션이 복수 소스에서 수집될 때 적용.",
+
+  "primary_key": "(source_id, internal_id)",
+  "primary_key_examples": [
+    "('VB-EVENT-SURVEY', '684') → promo_id='VB_EVENT_684'",
+    "('BTO-PRESS', '5340') → promo_id='BTO_PRESS_5340'"
+  ],
+
+  "cross_source_dedup_rules": [
+    {
+      "rule_id": "DEDUP-01",
+      "description": "동일 캠페인 다소스 수집 시 1차 소스 우선",
+      "condition": "title 유사도 > 80% AND period_start 동일 AND period_end 동일",
+      "action": "1차 소스(VB-EVENT-SURVEY > BTO-PRESS > 기타) 항목 보존. 2차 소스 항목 삭제. 삭제된 promo_id를 보존 항목 secondary_source_ids에 기록.",
+      "example": "VisitBusan Event(VB_EVENT_684)와 BTO 보도자료가 동일 크루즈 프로모션 수집 시 → VB_EVENT_684 보존"
+    },
+    {
+      "rule_id": "DEDUP-02",
+      "description": "동일 캠페인 연속 라운드 보존",
+      "condition": "title에 'Round N' 또는 '라운드 N' 포함",
+      "action": "라운드별 별개 항목으로 유지. dedup 대상 아님.",
+      "example": "Fair Prices Round 2 / Round 3 / Round 4 → 모두 개별 항목 보존"
+    },
+    {
+      "rule_id": "DEDUP-03",
+      "description": "중복 의심 항목 처리",
+      "condition": "title 유사도 > 60% AND period 겹침 > 50% AND source 다름",
+      "action": "UNVERIFIED 파일로 이동 후 수동 검토. 자동 삭제 금지.",
+      "example": "BTO 보도자료와 VisitBusan Notice가 비슷한 이름의 프로모션 수집 시"
+    }
+  ],
+
+  "source_priority_order": [
+    "1. VB-EVENT-SURVEY (VisitBusan 공식 이벤트 게시판 — B2C 전용, 영문)",
+    "2. BTO-PRESS (부산관광공사 공식 보도자료 — 원천 기관)",
+    "3. VBP-PASS (비짓부산패스 공식 사이트)",
+    "4. VB-SHOWS-EVENTS (VisitBusan 공연·이벤트)",
+    "5. VB-NOTICE (VisitBusan 공지)",
+    "6. BTO-NOTICE (BTO 공고)"
+  ],
+
+  "field_merge_rules": {
+    "description": "두 소스에서 같은 프로모션의 다른 필드를 보완할 수 있을 때",
+    "allowed_merge": ["booking_url", "price_krw", "price_display", "benefit"],
+    "not_allowed_merge": ["title_en", "title_ko", "period_start", "period_end"],
+    "merge_condition": "필드 값이 null인 경우에만 2차 소스 값으로 보완. 비null 값은 1차 소스 값 유지.",
+    "record_keeping": "merged_from 필드에 보완 소스 기록"
+  },
+
+  "known_duplicates": [],
+  "known_duplicates_note": "이번 수집에서 발견된 크로스소스 중복 없음 — 부산병 치유 프로모션은 BTO에서만 수집됨."
+}

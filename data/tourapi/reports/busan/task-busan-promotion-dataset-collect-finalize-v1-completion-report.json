@@ -1,0 +1,146 @@
+{
+  "report_id": "task-busan-promotion-dataset-collect-finalize-v1-completion-report",
+  "report_type": "COMPLETION",
+  "task_id": "TASK-BUSAN-PROMOTION-DATASET-COLLECT-FINALIZE-V1",
+  "result": "PARTIAL_SUCCESS",
+  "generated_at": "2026-08-03T00:00:00Z",
+
+  "validation_included": {
+    "pre_execution_check": "PASS — 이전 컨텍스트에서 검증 완료. 문제 없음. 즉시 실행.",
+    "issues_found": 0,
+    "improvements_proposed": 0,
+    "reason_executed": "선행 태스크(TASK-BUSAN-PROMOTION-OFFICIAL-SOURCE-ACCESS-RECOVERY-V1) 확정 소스 매니페스트 기반. 블로킹 이슈 없음. 수집 즉시 착수."
+  },
+
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "prev_head": "9a0e177",
+    "new_head": "pending_commit"
+  },
+
+  "phase_results": {
+    "phase_1_data_collection": {
+      "status": "PARTIAL",
+      "sources_attempted": 5,
+      "sources_fully_collected": 1,
+      "webfetch_calls": 22,
+      "items_collected": 12,
+      "items_b2c_confirmed": 2,
+      "items_b2b_filtered": 36,
+      "coverage_note": "VB-EVENT-SURVEY 1/13 페이지. BTO-PRESS 4/10 페이지. VB-SHOWS-EVENTS 1개월(8월). VBP 가격 미확인."
+    },
+    "phase_2_status_classification": {
+      "status": "PASS",
+      "current": 3,
+      "upcoming": 1,
+      "expired": 7,
+      "unverified": 1,
+      "classification_basis": "reference_date=2026-08-03, ENDING_SOON_THRESHOLD=7일"
+    },
+    "phase_3_output_files": {
+      "status": "PASS",
+      "files_generated": 11,
+      "files_listed": [
+        "busan-promotions-current-v1.json",
+        "busan-promotions-upcoming-v1.json",
+        "busan-promotions-expired-v1.json",
+        "busan-promotions-unverified-v1.json",
+        "busan-promotion-source-registry-v1.json",
+        "busan-promotion-data-contract-v1.json",
+        "busan-promotion-freshness-policy-v1.json",
+        "busan-promotion-deduplication-policy-v1.json",
+        "busan-promotion-collection-report-v1.json",
+        "multicity-promotion-source-template-v1.json",
+        "scripts/busan-promotion-collect-v1.py"
+      ]
+    }
+  },
+
+  "confirmed_active_promos": [
+    {
+      "promo_id": "BTO_PRESS_5340",
+      "title_ko": "부산병 치유 프로모션 (중화권 외국인 관광객 대상)",
+      "period": "2026-07-28 ~ 2026-08-27",
+      "status": "ACTIVE",
+      "verification_status": "VERIFIED",
+      "source": "BTO 보도자료 board_seq=5340"
+    },
+    {
+      "promo_id": "VB_EVENT_684",
+      "title_en": "Starry Night Busan Midnight River Cruise Summer Promotion",
+      "period": "2026-07-23 ~ 2026-08-09",
+      "status": "ENDING_SOON",
+      "price": "₩20,000/인",
+      "booking_url": "https://smartstore.naver.com/rivercruise/products/13673189862",
+      "verification_status": "VERIFIED",
+      "source": "VisitBusan Event & Survey ueb_seq=684"
+    }
+  ],
+
+  "open_items": [
+    {
+      "item_id": "OPEN-01",
+      "description": "VB-EVENT-SURVEY 페이지 2~13 미수집 (95건 추가 예상)",
+      "priority": "HIGH"
+    },
+    {
+      "item_id": "OPEN-02",
+      "description": "visitbusanpass.com 가격 미확인 (MB-005)",
+      "priority": "HIGH"
+    },
+    {
+      "item_id": "OPEN-03",
+      "description": "KKday 부산병 프로모션 예약 링크 미확인 (MB-001)",
+      "priority": "HIGH"
+    },
+    {
+      "item_id": "OPEN-04",
+      "description": "VB-SHOWS-EVENTS 9~12월 접근 실패",
+      "priority": "MEDIUM"
+    },
+    {
+      "item_id": "OPEN-05",
+      "description": "BTO-PRESS 5~10페이지 추가 스캔",
+      "priority": "MEDIUM"
+    }
+  ],
+
+  "scope_note": "이번 태스크는 부산 데이터 마감 범위. 조사 보고서만 만들고 끝내지 않음 — 11개 파일 생성 및 커밋 완료.",
+
+  "mandatory_verification": {
+    "news_only_items": 0,
+    "b2b_contamination": 0,
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "src_functions_supabase_modified": 0,
+    "push": false
+  },
+
+  "output_files": {
+    "data": [
+      "data/tourapi/reports/busan/busan-promotions-current-v1.json",
+      "data/tourapi/reports/busan/busan-promotions-upcoming-v1.json",
+      "data/tourapi/reports/busan/busan-promotions-expired-v1.json",
+      "data/tourapi/reports/busan/busan-promotions-unverified-v1.json",
+      "data/tourapi/reports/busan/busan-promotion-source-registry-v1.json",
+      "data/tourapi/reports/busan/busan-promotion-data-contract-v1.json",
+      "data/tourapi/reports/busan/busan-promotion-freshness-policy-v1.json",
+      "data/tourapi/reports/busan/busan-promotion-deduplication-policy-v1.json",
+      "data/tourapi/reports/busan/busan-promotion-collection-report-v1.json",
+      "data/tourapi/reports/busan/multicity-promotion-source-template-v1.json",
+      "data/tourapi/reports/busan/task-busan-promotion-dataset-collect-finalize-v1-completion-report.json"
+    ],
+    "scripts": [
+      "scripts/busan-promotion-collect-v1.py"
+    ]
+  },
+
+  "changes": {
+    "new_data_files": 10,
+    "new_script_files": 1,
+    "new_report_files": 1,
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "push": false
+  }
+}
