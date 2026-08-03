@@ -43,11 +43,9 @@ export function clickTarget(viewMode: "list" | "map"): "card" | "modal" {
 }
 
 /**
- * 현재 선택을 결과 목록에 비추어 되돌린다.
+ * 현재 선택 키에 해당하는 장소를 결과 목록에서 찾는다.
  *
- * 검색어나 카테고리가 바뀌어 선택한 장소가 결과에서 빠지면 하단 카드는 목록에
- * 없는 장소를 가리키게 된다. 상태를 지우는 effect 를 두는 대신 매 렌더에서
- * 파생시킨다 — 필터가 되돌아오면 선택도 자연히 살아난다.
+ * 렌더용 파생값이다. 상태 정리는 nextPickedKey 가 따로 맡는다.
  */
 export function resolveSelection<T extends SelectableSpot>(
   spots: readonly T[],
@@ -55,4 +53,22 @@ export function resolveSelection<T extends SelectableSpot>(
 ): T | null {
   if (!pickedKey) return null;
   return spots.find(s => selectionKey(s) === pickedKey) ?? null;
+}
+
+/**
+ * 필터가 바뀜 뒤 유지해야 할 선택 키.
+ *
+ * 결과에서 사라진 장소를 키만 남겨 두면, 검색어를 지우는 순간 예전
+ * 카드가 다시 떠오른다. 사용자는 이미 다른 것을 찾고 있는데 지나간 선택이
+ * 되살아나는 셈이다. 그래서 빠지는 순간 키를 끊는다.
+ *
+ * 같은 장소가 결과에 계속 있으면 같은 키를 그대로 돌려준다 — 호출부가
+ * functional setter 로 쓰면 React 가 값이 같아 재렌더를 건너뛴다.
+ */
+export function nextPickedKey<T extends SelectableSpot>(
+  spots: readonly T[],
+  currentKey: string | null,
+): string | null {
+  if (!currentKey) return null;
+  return spots.some(s => selectionKey(s) === currentKey) ? currentKey : null;
 }

@@ -9,7 +9,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  selectionKey, resolveClickedSpot, resolveSelection, clickTarget,
+  selectionKey, resolveClickedSpot, resolveSelection, clickTarget, nextPickedKey,
   type SelectableSpot,
 } from "./map-selection-core.ts";
 
@@ -105,11 +105,73 @@ test("★선택한 장소가 검색·카테고리 결과에서 빠지면 카드�
   assert.equal(m.card([A]), null, "B 가 결과에서 빠지면 카드는 null");
 });
 
-test("필터가 되돌아오면 선택도 되살아난다 — 상태를 지우지 않기 때문", () => {
+// ── nextPickedKey — 필터 변경 후 선택 상태 정리 ───────────────────
+
+test("선택 키가 없으면 null 이다", () => {
+  assert.equal(nextPickedKey([A, B], null), null);
+  assert.equal(nextPickedKey([], null), null);
+});
+
+test("선택 장소가 결과에 남아 있으면 키를 그대로 유지한다", () => {
+  assert.equal(nextPickedKey([A, B], "city_spot:31"), "city_spot:31");
+  // 같은 문자열 참조를 돌려줘야 functional setter 에서 재렌더가 생기지 않는다
+  const key = "city_spot:24";
+  assert.equal(nextPickedKey([A, B], key), key);
+});
+
+test("★선택 장소가 결과에서 제외되면 null 로 끊는다", () => {
+  assert.equal(nextPickedKey([A], "city_spot:31"), null);
+  assert.equal(nextPickedKey([], "city_spot:24"), null);
+});
+
+test("★필터를 복구해도 이전 선택이 자동으로 부활하지 않는다", () => {
+  // A · B 중 B 를 고른 뒤 필터로 B 가 빠졌다
+  let key: string | null = "city_spot:31";
+  key = nextPickedKey([A], key);          // 필터 적용 → 끊김
+  assert.equal(key, null);
+  key = nextPickedKey([A, B], key);       // 필터 복구
+  assert.equal(key, null, "복구해도 선택은 돌아오지 않는다");
+  assert.equal(resolveSelection([A, B], key), null, "카드도 다시 떠오르지 않는다");
+});
+
+test("다시 명시적으로 선택하면 카드가 다시 보인다", () => {
   const m = mountMap([A, B], "map");
   m.ev.clickMarker(m.markers[1]);
-  assert.equal(m.card([A]), null);
-  assert.equal(m.card([A, B])?.name, "Gamcheon Village");
+  // 필터로 빠졌다가 복구된 상황을 재현 — 상태는 이미 끊겨 있다
+  m.state.pickedKey = nextPickedKey([A], m.state.pickedKey);
+  m.state.pickedKey = nextPickedKey([A, B], m.state.pickedKey);
+  assert.equal(m.card(), null);
+  m.ev.clickMarker(m.markers[1]);         // 사용자가 다시 누른다
+  assert.equal(m.card()?.name, "Gamcheon Village");
+});
+
+test("같은 숫자 ID · 다른 source 를 동일 장소로 오인하지 않는다", () => {
+  // A(city_spot:24) 를 고른 상태에서 결과에 A2(local_info:busan:24) 만 남으면
+  // 숫자 id 가 같더라도 다른 장소이므로 끊어야 한다
+  assert.equal(nextPickedKey([A2], "city_spot:24"), null);
+  assert.equal(nextPickedKey([A],  "local_info:busan:24"), null);
+  assert.equal(nextPickedKey([A, A2], "city_spot:24"), "city_spot:24");
+});
+
+test("좌표 없는 장소도 결과에 있으면 키 계약은 그대로다", () => {
+  // 지도에는 안 보이지만(마커 미생성) 목록 계약은 selectionKey 로 일관된다
+  const noCoord = { id: 99, name: "No Coord", lat: null, lng: null, sourceKey: "local_info:busan:99" };
+  assert.equal(nextPickedKey([noCoord], "local_info:busan:99"), "local_info:busan:99");
+  assert.equal(nextPickedKey([A], "local_info:busan:99"), null);
+});
+
+test("★List/Map 전환만으로는 선택이 초기화되지 않는다", () => {
+  // 전환은 filteredSpots 를 바꾸지 않는다 — 같은 목록으로 두 번 평가해도 동일
+  const spots = [A, B];
+  let key: string | null = "city_spot:24";
+  key = nextPickedKey(spots, key);
+  assert.equal(key, "city_spot:24");
+  key = nextPickedKey(spots, key);
+  assert.equal(key, "city_spot:24");
+  // clickTarget 만 바뀌고 선택은 유지된다
+  assert.equal(clickTarget("map"), "card");
+  assert.equal(clickTarget("list"), "modal");
+  assert.equal(nextPickedKey(spots, key), "city_spot:24");
 });
 
 // ── 5. viewMode 분기 ──────────────────────────────────────────────────────────

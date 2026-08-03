@@ -14,7 +14,7 @@ import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/pla
 import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
 import { addToCart, isInCart, getCart, CART_EVENT } from "@/lib/cart";
 import { getItemSourceKey } from "@/lib/place-identity";
-import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget } from "@/lib/explore/map-selection-core";
+import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget, nextPickedKey } from "@/lib/explore/map-selection-core";
 import { trackEvent } from "@/lib/analytics";
 import type { EventItem } from "@/lib/cart";
 import type { CityConfig, CitySpot } from "@/data/cities/types";
@@ -372,6 +372,23 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   // 선택 장소는 키를 보관하되 항상 현재 결과에서 파생시킨다. 검색·카테고리가
   // 바뀌어 결과에서 빠지면 자동으로 null 이 돼 하단 카드가 사라진다 — 별도로
   // 상태를 지우는 effect 를 두지 않는다.
+  // 검색·카테고리가 바뀌어 선택 장소가 결과에서 빠지면 키를 실제로 끊는다.
+  //
+  // 예전엔 키를 남겨 두고 렌더에서만 감추었다. 그러면 검색어를 지우는 순간
+  // 지나간 카드가 다시 떠올라 사용자가 고르지 않은 장소가 선택된 것처럼 보인다.
+  //
+  // filteredSpots 는 useMemo 라 검색·카테고리가 바난 때만 정체성이 바뀜다 —
+  // List/Map 전환은 이 effect 를 건드리지 않는다. 같은 키가 유효하면
+  // nextPickedKey 가 같은 값을 돌려줘 React 가 재렌더를 건너뛴다.
+  useEffect(() => {
+    // 규칙이 경계하는 연쇄 렌더는 여기서 생기지 않는다: 선택이 유효하면
+    // nextPickedKey 가 같은 문자열 참조를 그대로 돌려주고, React 는 값이 같으면
+    // 재렌더를 건너뛴다. 실제로 값이 바뀌는 경우는 선택 장소가 결과에서 빠진
+    // 1회뿐이고, 그때는 상태가 바뀌는 것이 이 effect 의 목적이다.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMapPickedKey(current => nextPickedKey(filteredSpots, current));
+  }, [filteredSpots]);
+
   const mapPickedSpot = resolveSelection(filteredSpots, mapPickedKey);
 
   // ── Shared controls (search + filter tabs) ──────────────────────────────────
