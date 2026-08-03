@@ -1,0 +1,330 @@
+{
+  "report_id": "busan-merge-readiness-high-risk-samples",
+  "task_id": "TASK-BUSAN-DATA-MERGE-READINESS-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "total": 23,
+  "merge_blockers": [
+    {
+      "risk_id": "HR-COORD-001",
+      "risk_type": "COORD_ERROR_LAT_EQUALS_LNG",
+      "candidate_id": "busan-F-00341",
+      "title_ko": "보느파티쓰 리",
+      "category": "restaurant",
+      "current_lat": 35.195267,
+      "current_lng": 35.195267,
+      "correct_lng_estimate": "129.0~129.3 (연제구 교대로 7)",
+      "address": "부산 연제구 교대로 7 (거제동)",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "in_release": true,
+      "question": "lat=lng=35.195267 — 경도 오류. 부산 연제구 주소 기준 실제 lng 확인 필요. 주소는 정상.",
+      "action_needed": "올바른 경도값 확인 후 수정 필요. 주소가 있으므로 release 계약 위반은 아님."
+    },
+    {
+      "risk_id": "HR-COORD-002",
+      "risk_type": "COORD_ERROR_OUT_OF_BUSAN",
+      "candidate_id": "busan-K-00674",
+      "title_ko": "반송공원",
+      "category": "attraction",
+      "current_lat": 19.69442748,
+      "current_lng": 117.9925662504,
+      "address": "부산광역시 해운대구 반송순환로 100-53 (반송동)",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "in_release": true,
+      "question": "좌표가 부산이 아닌 동남아시아 해역 (lat≈19.7, lng≈118.0). KTO 원천 좌표 오류 의심. 주소는 정상.",
+      "action_needed": "정확한 좌표 확인 필수. 해운대구 반송동 기준 lat≈35.21, lng≈129.13 예상."
+    }
+  ],
+  "maintenance_items": [
+    {
+      "risk_id": "HR-MAINT-001",
+      "risk_type": "RECURRING_FRESHNESS_MAINTENANCE",
+      "items": [
+        "행사 날짜: 매 시즌 bfo.or.kr + FestivalService 재확인",
+        "프로모션 만료: BTO/VB 정기 스캔 (BTO_PRESS_5340 만료일 2026-08-27)",
+        "운영시간: 전수 hours 미확인",
+        "도착 검증: 전수 arrival 미검증"
+      ],
+      "is_merge_blocker": false,
+      "question": "정기 유지관리 항목. 초기 구축 완료 상태. 반복 운영 일정 수립 필요.",
+      "action_needed": "정기 갱신 스케줄 수립. merge 조건에는 해당 없음."
+    },
+    {
+      "risk_id": "HR-RELEASE-001",
+      "risk_type": "OPTIONAL_FIELDS_COMPLETENESS",
+      "release_ready_complete": 301,
+      "release_ready_optional_missing": 1228,
+      "note": "release 1,533건 중 84%가 OPTIONAL_MISSING. EN title 62.2%, description_en 56.0%",
+      "is_merge_blocker": false,
+      "question": "optional 필드 미완성 장소가 다수. UI에서 빈 필드 처리 방식 결정 필요.",
+      "action_needed": "UI fallback 정책 확인 (빈 EN title → KO title 표시 등)."
+    },
+    {
+      "risk_id": "HR-RELEASE-002",
+      "risk_type": "SINGLE_ADDRESS_MISSING",
+      "candidate_id": "unknown — 1개",
+      "note": "address 없는 release 후보 1건 (lat/lng 있음). release 계약 '주소 또는 좌표' 충족.",
+      "in_release": true,
+      "is_merge_blocker": false,
+      "question": "주소 없지만 좌표 있어 release 계약 충족. 주소 추가 권장."
+    }
+  ],
+  "samples": [
+    {
+      "risk_id": "HR-COORD-001",
+      "risk_type": "COORD_ERROR_LAT_EQUALS_LNG",
+      "candidate_id": "busan-F-00341",
+      "title_ko": "보느파티쓰 리",
+      "category": "restaurant",
+      "current_lat": 35.195267,
+      "current_lng": 35.195267,
+      "correct_lng_estimate": "129.0~129.3 (연제구 교대로 7)",
+      "address": "부산 연제구 교대로 7 (거제동)",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "in_release": true,
+      "question": "lat=lng=35.195267 — 경도 오류. 부산 연제구 주소 기준 실제 lng 확인 필요. 주소는 정상.",
+      "action_needed": "올바른 경도값 확인 후 수정 필요. 주소가 있으므로 release 계약 위반은 아님."
+    },
+    {
+      "risk_id": "HR-COORD-002",
+      "risk_type": "COORD_ERROR_OUT_OF_BUSAN",
+      "candidate_id": "busan-K-00674",
+      "title_ko": "반송공원",
+      "category": "attraction",
+      "current_lat": 19.69442748,
+      "current_lng": 117.9925662504,
+      "address": "부산광역시 해운대구 반송순환로 100-53 (반송동)",
+      "release_class": "RELEASE_READY_OPTIONAL_MISSING",
+      "in_release": true,
+      "question": "좌표가 부산이 아닌 동남아시아 해역 (lat≈19.7, lng≈118.0). KTO 원천 좌표 오류 의심. 주소는 정상.",
+      "action_needed": "정확한 좌표 확인 필수. 해운대구 반송동 기준 lat≈35.21, lng≈129.13 예상."
+    },
+    {
+      "risk_id": "HR-STRUCT-001",
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00050",
+      "category": "restaurant",
+      "hold_class": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "question": "busan-F-00050/busan-F-00313 쌍 — near-duplicate 동일 소스. adjudication 미완료. release 제외됨.",
+      "action_needed": "동일 장소 여부 확인 후 canonical 선택 또는 distinct 확인."
+    },
+    {
+      "risk_id": "HR-STRUCT-002",
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00313",
+      "category": "restaurant",
+      "hold_class": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "question": "busan-F-00050/busan-F-00313 쌍. 위 참조.",
+      "action_needed": "위 동일."
+    },
+    {
+      "risk_id": "HR-STRUCT-003",
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00299",
+      "category": "restaurant",
+      "hold_class": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "question": "busan-F-00299/busan-F-00386 쌍 — near-duplicate 동일 소스. adjudication 미완료.",
+      "action_needed": "동일 장소 여부 확인 후 canonical 선택 또는 distinct 확인."
+    },
+    {
+      "risk_id": "HR-STRUCT-004",
+      "risk_type": "STRUCTURAL_HOLD",
+      "candidate_id": "busan-F-00386",
+      "category": "restaurant",
+      "hold_class": "HOLD_STRUCTURAL_REVIEW",
+      "in_release": false,
+      "question": "busan-F-00299/busan-F-00386 쌍. 위 참조.",
+      "action_needed": "위 동일."
+    },
+    {
+      "risk_id": "HR-PROMO-001",
+      "risk_type": "PROMO_BOOKING_URL_BLOCKED",
+      "promo_id": "BTO_PRESS_5340",
+      "title_ko": "부산병 치유 프로모션 (중화권 외국인 관광객 대상)",
+      "status": "ACTIVE",
+      "end_date": "2026-08-27",
+      "booking_url": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED",
+      "in_release": true,
+      "question": "KKday 예약 URL Cloudflare 영구 차단. 공개 시 사용자가 예약 경로를 찾을 수 없음. 표시 방식 결정 필요.",
+      "action_needed": "UI에서 차단 상태 표시 방식 결정. '현장 부스 참여' 등 대안 안내 문구 설계."
+    },
+    {
+      "risk_id": "HR-DESC-001",
+      "risk_type": "HTML_IN_EN_DESCRIPTION",
+      "candidate_id": "busan-A-00067",
+      "category": "attraction",
+      "tag_found": "<p class=\"font-size28 colorDarkBlue medium\">",
+      "source": "VisitBusan EN SSR",
+      "in_release": true,
+      "count_total": 69,
+      "question": "description_en에 HTML 태그 포함 (69건). VisitBusan 원천의 HTML 미제거. UI에서 raw HTML 렌더링 또는 텍스트 오염 발생 가능.",
+      "action_needed": "UI에서 HTML strip 처리 또는 데이터 정제 스크립트 실행. 69건 전수 확인 필요."
+    },
+    {
+      "risk_id": "HR-LANG-001",
+      "risk_type": "KOREAN_IN_EN_TITLE_DESIGN_PATTERN",
+      "candidate_id": "busan-F-00001",
+      "title_ko": "만드리곤드레밥",
+      "title_en": "Mandeuri Gondeurebap (만드리곤드레밥)",
+      "category": "restaurant",
+      "in_release": true,
+      "count_total": 292,
+      "question": "EN title에 한글 포함 (292건). 레스토랑의 경우 'EN_Transliteration (한글원문)' 패턴은 프로젝트 설계 결정으로 확인됨. UI 렌더링에서 한글 표시 의도 여부 재확인 필요.",
+      "action_needed": "설계 의도대로라면 조치 불필요. UI에서 괄호 내 한글 제거 처리 여부 결정."
+    },
+    {
+      "risk_id": "HR-LANG-002",
+      "risk_type": "KOREAN_IN_EN_TITLE_ATTRACTION",
+      "candidate_id": "busan-K-00003",
+      "title_ko": "부산 송도해수욕장",
+      "title_en": "Busan Songdo Beach (부산 송도해수욕장)",
+      "category": "attraction",
+      "in_release": true,
+      "question": "attraction도 일부 동일 패턴. 관광지는 영문명이 별도로 있는 경우가 많으므로 이 패턴이 적절한지 확인.",
+      "action_needed": "KTO EN 원천 TITLE 필드 확인 — 실제 공식 영문명이 다를 경우 교체 필요."
+    },
+    {
+      "risk_id": "HR-IDENT-001",
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_ids": [
+        "busan-A-00002",
+        "busan-K-00232"
+      ],
+      "note": "동일 한국어 이름 공유 후보. 소스별 수집 결과 동일 장소가 2개 ID로 나뉜 가능성.",
+      "question": "이름 기반 중복 여부 확인. 주소/좌표/소스 대조 필요.",
+      "action_needed": "동일 장소이면 canonical 선택 후 나머지 EXCLUDE. 다른 장소이면 무시."
+    },
+    {
+      "risk_id": "HR-IDENT-002",
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_ids": [
+        "busan-A-00049",
+        "busan-K-00220"
+      ],
+      "note": "동일 이름 공유.",
+      "question": "위와 동일 확인 절차.",
+      "action_needed": "주소/좌표 대조."
+    },
+    {
+      "risk_id": "HR-IDENT-003",
+      "risk_type": "SAME_NAME_MULTIPLE_IDS",
+      "candidate_ids": [
+        "busan-A-00072",
+        "busan-K-00001"
+      ],
+      "note": "동일 이름 공유.",
+      "question": "위와 동일 확인 절차.",
+      "action_needed": "주소/좌표 대조."
+    },
+    {
+      "risk_id": "HR-PROMO-002",
+      "risk_type": "PROMO_MISSING_ORGANIZER_FIELD",
+      "promo_ids": [
+        "BTO_PRESS_5340",
+        "VB_EVENT_684"
+      ],
+      "field": "organizer",
+      "note": "공개 프로모션 2건 모두 organizer 필드 없음. 원본 스키마(busan-promotions-current-v2.json)에 organizer가 없음. UI 표시 정책과 스키마 불일치.",
+      "in_release": true,
+      "question": "organizer 필드 필요 여부 결정. BTO_PRESS_5340 = BTO (부산관광재단), VB_EVENT_684 = VisitBusan 운영 민간 업체.",
+      "action_needed": "UI에서 organizer 표시 여부 결정. 필요시 busan-promotions-current-v2.json에 organizer 추가."
+    },
+    {
+      "risk_id": "HR-EVENT-001",
+      "risk_type": "EVENT_DATE_SOURCE_SINGLE",
+      "candidate_id": "busan-E-00004",
+      "title_ko": "금정산성축제",
+      "dates": "2026-10-16~2026-10-18",
+      "date_source": "FestivalService_raw_2026",
+      "bfo_verified": false,
+      "in_release": true,
+      "question": "FestivalService raw 2026 날짜만 확인. bfo.or.kr 2차 검증 없음. 날짜 변경 가능성 있음.",
+      "action_needed": "행사 전 bfo.or.kr 또는 공식 채널에서 날짜 재확인 권장."
+    },
+    {
+      "risk_id": "HR-HOLD-001",
+      "risk_type": "EVENT_HOLD_STALE_DATE_SAMPLE",
+      "candidate_id": "unknown — 25건 중 대표",
+      "hold_class": "HOLD_STALE_DATE",
+      "count": 25,
+      "in_release": false,
+      "question": "STALE_DATE 25건: 날짜가 2025 이전으로 2026 미확인. 반복 행사 가능성 있으나 공개 불가.",
+      "action_needed": "2026 시즌 날짜 확인 후 해제 가능. 해제 시 별도 freshness 검증 필요."
+    },
+    {
+      "risk_id": "HR-HOLD-002",
+      "risk_type": "EVENT_HOLD_DATE_MISSING_SAMPLE",
+      "hold_class": "HOLD_DATE_MISSING",
+      "count": 26,
+      "in_release": false,
+      "question": "DATE_MISSING 26건: 모든 소스에서 날짜 없음. 날짜 없이 공개 금지.",
+      "action_needed": "공식 채널에서 날짜 확인 후 해제. 날짜 추정 금지."
+    },
+    {
+      "risk_id": "HR-HOLD-003",
+      "risk_type": "EVENT_HOLD_NO_SOURCE_SAMPLE",
+      "ids": [
+        "busan-VB-1769",
+        "busan-VB-1965",
+        "busan-VB-429"
+      ],
+      "hold_class": "HOLD_NO_CURRENT_SOURCE",
+      "count": 3,
+      "in_release": false,
+      "question": "NO_CURRENT_SOURCE 3건: FestivalService/KTO 원천 없음. VisitBusan 원천만. 날짜 출처 불명확.",
+      "action_needed": "공식 원천 확인 후 해제 가능."
+    },
+    {
+      "risk_id": "HR-PROVENANCE-001",
+      "risk_type": "IMAGE_RIGHTS_UNVERIFIED",
+      "note": "이미지 권리(image_rights_status) 전수 미검증. VisitBusan, KTO 등 공식 원천 이미지 사용 정책 별도 확인 필요.",
+      "in_release": true,
+      "count_with_images": 1404,
+      "question": "공개 서비스에서 이미지 저작권 확인이 필요. KTO 이미지 공공 라이선스 여부 별도 확인.",
+      "action_needed": "KTO 이미지 사용 약관, VisitBusan 이미지 출처 정책 확인 후 이미지 표시 정책 결정."
+    },
+    {
+      "risk_id": "HR-LANG-003",
+      "risk_type": "KO_ONLY_580_PLACES",
+      "count": 580,
+      "in_release": true,
+      "note": "EN title 없는 장소 580건 (38%). 주로 restaurant(F-series)에서 한국어 원천만 있는 경우.",
+      "question": "영어권 사용자에게 제공 가능한 EN 이름 없음. 한글 표기 그대로 노출 또는 romanization 추가 필요.",
+      "action_needed": "romanization 방침 결정 (현재 F-series는 괄호 패턴 사용 중)."
+    },
+    {
+      "risk_id": "HR-MAINT-001",
+      "risk_type": "RECURRING_FRESHNESS_MAINTENANCE",
+      "items": [
+        "행사 날짜: 매 시즌 bfo.or.kr + FestivalService 재확인",
+        "프로모션 만료: BTO/VB 정기 스캔 (BTO_PRESS_5340 만료일 2026-08-27)",
+        "운영시간: 전수 hours 미확인",
+        "도착 검증: 전수 arrival 미검증"
+      ],
+      "is_merge_blocker": false,
+      "question": "정기 유지관리 항목. 초기 구축 완료 상태. 반복 운영 일정 수립 필요.",
+      "action_needed": "정기 갱신 스케줄 수립. merge 조건에는 해당 없음."
+    },
+    {
+      "risk_id": "HR-RELEASE-001",
+      "risk_type": "OPTIONAL_FIELDS_COMPLETENESS",
+      "release_ready_complete": 301,
+      "release_ready_optional_missing": 1228,
+      "note": "release 1,533건 중 84%가 OPTIONAL_MISSING. EN title 62.2%, description_en 56.0%",
+      "is_merge_blocker": false,
+      "question": "optional 필드 미완성 장소가 다수. UI에서 빈 필드 처리 방식 결정 필요.",
+      "action_needed": "UI fallback 정책 확인 (빈 EN title → KO title 표시 등)."
+    },
+    {
+      "risk_id": "HR-RELEASE-002",
+      "risk_type": "SINGLE_ADDRESS_MISSING",
+      "candidate_id": "unknown — 1개",
+      "note": "address 없는 release 후보 1건 (lat/lng 있음). release 계약 '주소 또는 좌표' 충족.",
+      "in_release": true,
+      "is_merge_blocker": false,
+      "question": "주소 없지만 좌표 있어 release 계약 충족. 주소 추가 권장."
+    }
+  ]
+}

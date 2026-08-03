@@ -1,0 +1,145 @@
+{
+  "report_id": "busan-merge-readiness-review-queue",
+  "task_id": "TASK-BUSAN-DATA-MERGE-READINESS-V1",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "total": 9,
+  "merge_blockers": 0,
+  "main_review_needed": 6,
+  "items": [
+    {
+      "id": "RQ-COORD-001",
+      "type": "COORD_ERROR",
+      "candidate_id": "busan-F-00341",
+      "title_ko": "보느파티쓰 리",
+      "current_value": {
+        "lat": 35.195267,
+        "lng": 35.195267
+      },
+      "expected_range": {
+        "lat": "34.8~35.5",
+        "lng": "128.7~129.4"
+      },
+      "evidence": "lat == lng (latitude copied to longitude field)",
+      "in_release": true,
+      "release_impact": "release 포함 — 주소 정상이므로 계약 위반 아님. 좌표 수정 권장.",
+      "main_review": true,
+      "auto_fix": false,
+      "reason_no_auto_fix": "좌표 선택은 자동 수정 금지 항목"
+    },
+    {
+      "id": "RQ-COORD-002",
+      "type": "COORD_ERROR",
+      "candidate_id": "busan-K-00674",
+      "title_ko": "반송공원",
+      "current_value": {
+        "lat": 19.69442748,
+        "lng": 117.9925662504
+      },
+      "expected_range": {
+        "lat": "35.2±0.1 (해운대구)",
+        "lng": "129.1±0.1"
+      },
+      "evidence": "좌표가 동남아시아 해역 — KTO 원천 오류",
+      "in_release": true,
+      "release_impact": "release 포함 — 주소 정상이므로 계약 위반 아님. 좌표 수정 필수.",
+      "main_review": true,
+      "auto_fix": false,
+      "reason_no_auto_fix": "좌표 선택은 자동 수정 금지 항목"
+    },
+    {
+      "id": "RQ-STRUCT-001",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_ids": [
+        "busan-F-00050",
+        "busan-F-00313"
+      ],
+      "issue": "near-duplicate 동일 소스 쌍 — adjudication 미완료",
+      "in_release": false,
+      "release_impact": "release 제외됨. 병합 blocker 아님.",
+      "main_review": true,
+      "auto_fix": false,
+      "reason_no_auto_fix": "장소 동일성 판단은 자동 수정 금지"
+    },
+    {
+      "id": "RQ-STRUCT-002",
+      "type": "STRUCTURAL_HOLD",
+      "candidate_ids": [
+        "busan-F-00299",
+        "busan-F-00386"
+      ],
+      "issue": "near-duplicate 동일 소스 쌍 — adjudication 미완료",
+      "in_release": false,
+      "release_impact": "release 제외됨. 병합 blocker 아님.",
+      "main_review": true,
+      "auto_fix": false,
+      "reason_no_auto_fix": "장소 동일성 판단은 자동 수정 금지"
+    },
+    {
+      "id": "RQ-PROMO-001",
+      "type": "PROMO_BOOKING_BLOCKED",
+      "promo_id": "BTO_PRESS_5340",
+      "issue": "KKday 예약 URL 영구 차단 (BLOCKED_OFFICIAL_PLATFORM_RESTRICTED)",
+      "in_release": true,
+      "release_impact": "공개 프로모션 포함. UI 표시 정책 미결정.",
+      "main_review": true,
+      "auto_fix": false
+    },
+    {
+      "id": "RQ-PROMO-002",
+      "type": "PROMO_MISSING_FIELD",
+      "promo_ids": [
+        "BTO_PRESS_5340",
+        "VB_EVENT_684"
+      ],
+      "field": "organizer",
+      "issue": "원본 스키마에 organizer 필드 없음",
+      "in_release": true,
+      "release_impact": "공개 프로모션 포함. UI organizer 표시 불가.",
+      "main_review": false,
+      "auto_fix": false,
+      "note": "UI 표시 정책 결정 후 선택적 추가 가능"
+    },
+    {
+      "id": "RQ-DESC-001",
+      "type": "HTML_IN_DESCRIPTION",
+      "count": 69,
+      "issue": "description_en에 HTML 태그 포함 (VisitBusan 원천 미제거)",
+      "sample_ids": [
+        "busan-A-00067",
+        "busan-A-00073",
+        "busan-A-00110"
+      ],
+      "in_release": true,
+      "release_impact": "UI에서 raw HTML 렌더링 가능. 정제 스크립트 필요.",
+      "main_review": true,
+      "auto_fix": false,
+      "reason_no_auto_fix": "enriched 원본 수정에 해당 — 범위 외 수정 금지"
+    },
+    {
+      "id": "RQ-LANG-001",
+      "type": "KOREAN_IN_EN_TITLE",
+      "count": 292,
+      "issue": "EN title에 한글 포함 — 의도적 설계 패턴으로 확인됨",
+      "sample_pattern": "\"EN_Transliteration (한글원문)\"",
+      "in_release": true,
+      "release_impact": "UI에서 괄호 내 한글 표시. 설계 의도 재확인 필요.",
+      "main_review": false,
+      "auto_fix": false,
+      "note": "설계 결정 사항 — merge blocker 아님"
+    },
+    {
+      "id": "RQ-MAINT-001",
+      "type": "RECURRING_MAINTENANCE",
+      "items": [
+        "행사 날짜 갱신 — 매 시즌",
+        "프로모션 만료 확인 — BTO_PRESS_5340 만료일 2026-08-27",
+        "운영시간 정기 갱신",
+        "도착 좌표 정기 갱신"
+      ],
+      "in_release": false,
+      "is_merge_blocker": false,
+      "main_review": false,
+      "note": "정기 유지관리 항목. 초기 구축 완료 상태."
+    }
+  ]
+}
