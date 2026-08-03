@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-08-03T00:00:00Z",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "reference_date": "2026-08-03",
+  "total_events_input": 72,
+  "classification": "CURRENT_OR_UPCOMING_VERIFIED",
+  "description": "2026년 날짜 공식 확인, 기준일 이후 예정/진행 행사 (release 가능)",
+  "count": 4,
+  "items": [
+    {
+      "candidate_id": "busan-E-00001",
+      "title_ko": "부산바다축제(한,영, 중간,중번,일)",
+      "classification": "CURRENT_OR_UPCOMING_VERIFIED",
+      "reason": "bfo.or.kr 공식 확인: 2026년 8월 7일 ~ 8월 13일 (미래 또는 진행 중)",
+      "source_keys": [
+        "FestivalService:71:ko"
+      ],
+      "raw_date_text": "2025. 8. 1. ~ 8. 3.",
+      "verified_date": {
+        "date_text": "2026년 8월 7일 ~ 8월 13일",
+        "start": "2026-08-07",
+        "end": "2026-08-13",
+        "via": "bfo.or.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00004",
+      "title_ko": "금정산성축제(한,영,중간,중번,일)",
+      "classification": "CURRENT_OR_UPCOMING_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 10. 16. ~ 10. 18. (미래)",
+      "source_keys": [
+        "FestivalService:330:ko"
+      ],
+      "raw_date_text": "2026. 10. 16. ~ 10. 18.",
+      "verified_date": {
+        "date_text": "2026. 10. 16. ~ 10. 18.",
+        "start": "2026-10-16",
+        "end": "2026-10-18",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00006",
+      "title_ko": "부산불꽃축제(한, 영, 중간, 중번, 일)",
+      "classification": "CURRENT_OR_UPCOMING_VERIFIED",
+      "reason": "bfo.or.kr 공식 확인: 2026년 11월 7일 (미래 또는 진행 중)",
+      "source_keys": [
+        "FestivalService:395:ko"
+      ],
+      "raw_date_text": "2025.11.15.(토)",
+      "verified_date": {
+        "date_text": "2026년 11월 7일",
+        "start": "2026-11-07",
+        "end": "2026-11-07",
+        "via": "bfo.or.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00019",
+      "title_ko": "부산국제록페스티벌(한,영, 중간,중번,일)",
+      "classification": "CURRENT_OR_UPCOMING_VERIFIED",
+      "reason": "bfo.or.kr 공식 확인: 2026년 10월 2일 ~ 10월 4일 (미래 또는 진행 중)",
+      "source_keys": [
+        "FestivalService:470:ko"
+      ],
+      "raw_date_text": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+      "verified_date": {
+        "date_text": "2026년 10월 2일 ~ 10월 4일",
+        "start": "2026-10-02",
+        "end": "2026-10-04",
+        "via": "bfo.or.kr"
+      }
+    }
+  ]
+}

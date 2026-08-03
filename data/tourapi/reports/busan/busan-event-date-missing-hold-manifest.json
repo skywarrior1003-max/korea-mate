@@ -1,0 +1,300 @@
+{
+  "generated_at": "2026-08-03T00:00:00Z",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "reference_date": "2026-08-03",
+  "total_events_input": 72,
+  "classification": "DATE_MISSING",
+  "description": "어떤 소스에도 날짜 정보 없음 (hold)",
+  "count": 26,
+  "items": [
+    {
+      "candidate_id": "busan-E-00008",
+      "title_ko": "해운대모래축제(한,영,중간,중번,일)",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "FestivalService:405:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-E-00036",
+      "title_ko": "서면 빛 축제(한,영,중간,중번,일)",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "FestivalService:2136:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-E-00039",
+      "title_ko": "부산콘서트홀 개관 페스티벌",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "FestivalService:2383:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-E-00040",
+      "title_ko": "김해공항 Welcome to Busan 환대 행사",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "FestivalService:2730:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00143",
+      "title_ko": "영도다리축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:1080734:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00157",
+      "title_ko": "부산고등어축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:1399532:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00204",
+      "title_ko": "대한민국 국제해양레저위크(KIMA WEEK)",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2019366:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00237",
+      "title_ko": "부산국제공연예술제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2558735:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00238",
+      "title_ko": "헬로메이커",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2560161:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00294",
+      "title_ko": "카운트다운 부산",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2702333:ko",
+        "EngService2:1385298:en"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00562",
+      "title_ko": "기장붕장어축제in칠암",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2860868:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00648",
+      "title_ko": "부산글로벌웹툰페스티벌",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:2873292:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00686",
+      "title_ko": "유라리 건맥축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3001170:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00687",
+      "title_ko": "부산국제공연예술마켓",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3006246:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00690",
+      "title_ko": "부산종합민속예술제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3016659:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00694",
+      "title_ko": "전포커피축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3018117:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00695",
+      "title_ko": "글로컬 문화 in(人) 남산 페스티벌",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3020552:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00721",
+      "title_ko": "부산국제아동도서전",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3345610:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00722",
+      "title_ko": "중구민의 날 페스타",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3351515:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00724",
+      "title_ko": "페스티벌 시월",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3370514:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00730",
+      "title_ko": "게임 체험 팝업 전시 ‘Game-Playground’",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3422647:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00731",
+      "title_ko": "온천천 빛 축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3434800:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00757",
+      "title_ko": "부산국제AI영화제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3515311:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00766",
+      "title_ko": "부산 서구 의료관광축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3532971:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00773",
+      "title_ko": "옥토버페스타 인 광안리",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3555363:ko",
+        "EngService2:3562686:en"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    },
+    {
+      "candidate_id": "busan-K-00774",
+      "title_ko": "부산중구반려동물축제",
+      "classification": "DATE_MISSING",
+      "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+      "source_keys": [
+        "KorService2:3559571:ko",
+        "EngService2:3562082:en"
+      ],
+      "raw_date_text": null,
+      "verified_date": null
+    }
+  ]
+}

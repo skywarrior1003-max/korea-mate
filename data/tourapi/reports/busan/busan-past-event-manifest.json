@@ -1,0 +1,235 @@
+{
+  "generated_at": "2026-08-03T00:00:00Z",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "reference_date": "2026-08-03",
+  "total_events_input": 72,
+  "classification": "PAST_EVENT_VERIFIED",
+  "description": "2026년 날짜 확인됐으나 기준일 이전 이미 종료 (날짜 표시 후 별도 정책 결정)",
+  "count": 14,
+  "items": [
+    {
+      "candidate_id": "busan-E-00003",
+      "title_ko": "센텀맥주축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 05. 22. ~ 05. 31. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:329:ko"
+      ],
+      "raw_date_text": "2026. 05. 22. ~ 05. 31.",
+      "verified_date": {
+        "date_text": "2026. 05. 22. ~ 05. 31.",
+        "start": "2026-05-22",
+        "end": "2026-05-31",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00007",
+      "title_ko": "삼광사 연등축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 5. 15. ~ 5. 24. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:403:ko"
+      ],
+      "raw_date_text": "2026. 5. 15. ~  5. 24. 점등시간 매일 저녁 7시~새벽 1시",
+      "verified_date": {
+        "date_text": "2026. 5. 15. ~ 5. 24.",
+        "start": "2026-05-15",
+        "end": "2026-05-24",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00009",
+      "title_ko": "부산항축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "bfo.or.kr 공식 확인: 2026년 6월 19일 ~ 6월 20일 (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:406:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": {
+        "date_text": "2026년 6월 19일 ~ 6월 20일",
+        "start": "2026-06-19",
+        "end": "2026-06-20",
+        "via": "bfo.or.kr"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00014",
+      "title_ko": "해운대 빛축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2025년 11월 29일 ~ 2026년 1월 18일 (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:440:ko"
+      ],
+      "raw_date_text": "2025년 11월 29일 ~ 2026년 1월 18일\n점등시간 : 18:00~23:00",
+      "verified_date": {
+        "date_text": "2025년 11월 29일 ~ 2026년 1월 18일",
+        "start": "2025-11-29",
+        "end": "2026-01-18",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00015",
+      "title_ko": "기장미역다시마축제(한, 영, 중간, 중번, 일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 04. 17. ~ 04. 19. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:441:ko"
+      ],
+      "raw_date_text": "2026.04.17.~04.19.",
+      "verified_date": {
+        "date_text": "2026. 04. 17. ~ 04. 19.",
+        "start": "2026-04-17",
+        "end": "2026-04-19",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00016",
+      "title_ko": "광안리어방축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 06. 12. ~ 06. 14. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:442:ko"
+      ],
+      "raw_date_text": "2026. 06. 12. ~ 06. 14.",
+      "verified_date": {
+        "date_text": "2026. 06. 12. ~ 06. 14.",
+        "start": "2026-06-12",
+        "end": "2026-06-14",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00017",
+      "title_ko": "기장멸치축제(한, 영, 중간, 중번, 일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 04. 24. ~ 04. 26. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:443:ko"
+      ],
+      "raw_date_text": "2026. 04. 24. ~ 04. 26.",
+      "verified_date": {
+        "date_text": "2026. 04. 24. ~ 04. 26.",
+        "start": "2026-04-24",
+        "end": "2026-04-26",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00018",
+      "title_ko": "광복로 겨울빛 트리축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2025. 12. 05. ~ 2026. 02. 22. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:449:ko"
+      ],
+      "raw_date_text": "2025.12.05(금) ~ 2026.02.22(일)",
+      "verified_date": {
+        "date_text": "2025. 12. 05. ~ 2026. 02. 22.",
+        "start": "2025-12-05",
+        "end": "2026-02-22",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00020",
+      "title_ko": "대저토마토축제(한, 영, 중간, 중번, 일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 3. 21. ~ 3. 22. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:497:ko"
+      ],
+      "raw_date_text": "2026. 3. 21. ~ 3. 22.",
+      "verified_date": {
+        "date_text": "2026. 3. 21. ~ 3. 22.",
+        "start": "2026-03-21",
+        "end": "2026-03-22",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00021",
+      "title_ko": "낙동강 정원 벚꽃축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 03. 27. ~ 04. 12. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:499:ko"
+      ],
+      "raw_date_text": "2026. 03. 27. ~ 04. 12.",
+      "verified_date": {
+        "date_text": "2026. 03. 27. ~ 04. 12.",
+        "start": "2026-03-27",
+        "end": "2026-04-12",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00024",
+      "title_ko": "해운대북극곰축제(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 01. 17. ~ 01. 18. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:503:ko"
+      ],
+      "raw_date_text": "2026. 01. 17. ~ 01. 18.",
+      "verified_date": {
+        "date_text": "2026. 01. 17. ~ 01. 18.",
+        "start": "2026-01-17",
+        "end": "2026-01-18",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00029",
+      "title_ko": "부산연등회(한,영,중간,중번,일)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 05. 01 ~ 05. 17. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:1432:ko"
+      ],
+      "raw_date_text": "2026. 05. 01 ~ 05. 17.",
+      "verified_date": {
+        "date_text": "2026. 05. 01 ~ 05. 17.",
+        "start": "2026-05-01",
+        "end": "2026-05-17",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00037",
+      "title_ko": "2026 원아시아페스티벌(BOF)",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "FestivalService raw 2026년 날짜: 2026. 6. 27. ~ 6. 28. (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:2368:ko"
+      ],
+      "raw_date_text": "Big CONCERT: 2026. 6. 27.(토) ~ 6. 28.(일) 13:00~21:00\nPARK CONCERT: 6. 20(토) 18:00",
+      "verified_date": {
+        "date_text": "2026. 6. 27. ~ 6. 28.",
+        "start": "2026-06-27",
+        "end": "2026-06-28",
+        "via": "FestivalService_raw_2026"
+      }
+    },
+    {
+      "candidate_id": "busan-E-00038",
+      "title_ko": "택슐랭",
+      "classification": "PAST_EVENT_VERIFIED",
+      "reason": "bfo.or.kr 공식 확인: 2026년 5월 22일 ~ 5월 24일 (종료, 기준일 2026-08-03)",
+      "source_keys": [
+        "FestivalService:2373:ko"
+      ],
+      "raw_date_text": null,
+      "verified_date": {
+        "date_text": "2026년 5월 22일 ~ 5월 24일",
+        "start": "2026-05-22",
+        "end": "2026-05-24",
+        "via": "bfo.or.kr"
+      }
+    }
+  ]
+}

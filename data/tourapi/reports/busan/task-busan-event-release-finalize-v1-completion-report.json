@@ -1,0 +1,55 @@
+{
+  "report_id": "task-busan-event-release-finalize-v1-completion-report",
+  "report_type": "COMPLETION",
+  "task_id": "TASK-BUSAN-EVENT-RELEASE-FINALIZE-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "git": {
+    "branch": "data/busan-enrichment-v1",
+    "commit": "pending"
+  },
+  "input": {
+    "event_candidates_total": 72,
+    "festival_service_linked": 38,
+    "kto_only": 31,
+    "no_source": 3
+  },
+  "output": {
+    "CURRENT_OR_UPCOMING_VERIFIED": 4,
+    "PAST_EVENT_VERIFIED": 14,
+    "STALE_DATE": 25,
+    "DATE_MISSING": 26,
+    "SOURCE_DATE_CONFLICT": 0,
+    "NO_CURRENT_SOURCE_MATCH": 3,
+    "TOTAL_CLASSIFIED": 72
+  },
+  "integrity": {
+    "input_count_check": "72 == 72 PASS",
+    "output_sum_check": "72 == 72 PASS",
+    "candidates_modified": 0,
+    "source_facts_modified": 0,
+    "push": false
+  },
+  "date_authority": {
+    "primary": "bfo.or.kr (부산축제조직위원회) — 5건 확인 (E-00001, E-00006, E-00009, E-00019, E-00038)",
+    "secondary": "FestivalService raw 2026년 날짜 — 13건 직접 사용",
+    "stale_pattern": "FestivalService raw 2025 이전 날짜 16건, KTO 중복/2025타이틀 9건 → STALE_DATE",
+    "no_date_pattern": "FestivalService 날짜없음 4건, KTO 독립 날짜없음 22건 → DATE_MISSING"
+  },
+  "conflict_resolution": "raw vs bfo 날짜 차이 5건 — 모두 'FestivalService=2025 stale, bfo=2026 업데이트' 패턴으로 충돌 아님. bfo 우선 적용으로 정상 분류 완료. SOURCE_DATE_CONFLICT = 0.",
+  "output_files": [
+    "busan-current-event-release-manifest.json",
+    "busan-past-event-manifest.json",
+    "busan-event-stale-hold-manifest.json",
+    "busan-event-date-missing-hold-manifest.json",
+    "busan-event-source-conflict-hold-manifest.json",
+    "busan-event-release-summary.json",
+    "task-busan-event-release-finalize-v1-completion-report.json"
+  ],
+  "next_steps": [
+    "STALE_DATE 25건: bfo.or.kr 전체 행사 목록에서 2026 날짜 조회 → 확인되면 CURRENT_OR_UPCOMING 또는 PAST로 재분류",
+    "DATE_MISSING 26건: 공식 홈페이지/SNS 검색으로 날짜 발굴",
+    "PAST_EVENT_VERIFIED 14건: '이미 종료된 행사' 표시 정책 결정 후 게시 여부 결정",
+    "NO_CURRENT_SOURCE_MATCH 3건: 소스 데이터 확보 후 재검토"
+  ]
+}
