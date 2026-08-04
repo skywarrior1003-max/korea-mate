@@ -342,8 +342,8 @@
     "pageStatus": "Page {current} of {total}: {name}",
     "storyFragments": "Travel moments",
     "planTrip": "Build My Trip with AI",
-    "greeting": "Where to next?",
-    "greetingSub": "Pick a city and let AI plan the days.",
+    "greeting": "Hello!",
+    "greetingSub": "Where shall we go?",
     "exploreCities": "Explore cities",
     "viewAll": "View all",
     "comingSoon": "Coming soon",
@@ -363,6 +363,19 @@
     "summaryCity": "City",
     "summaryMemories": "Memories",
     "summaryPhotos": "Photos",
-    "openTrips": "Open my trips"
+    "openTrips": "Open my trips",
+    "storyBadge": "AI PRECISION",
+    "storyEyebrow": "DESIGNED FOR YOU",
+    "storyTitle": "Busan, Golden Hour",
+    "storyLead": "Your Feelings, AI's Precision.",
+    "storyQuote": "“We read what you like, and AI designs the route.\nThe romance is yours; the logistics are ours.”",
+    "storyCta": "Start the journey",
+    "heroAlt": "A traveler on a Busan beach at sunset, with the city skyline behind",
+    "heroCoverNote": "Editorial cover art",
+    "storySectionTitle": "Fragments of a trip",
+    "cardMarketAlt": "Steaming gukbap and hotteok on a market counter",
+    "cardVillageAlt": "A traveler on a stepped alley in a colorful hillside village",
+    "swipeHint": "Swipe for Discover",
+    "searchHint": "Search cities, activities, places"
   }
 }

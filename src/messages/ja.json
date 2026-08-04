@@ -342,8 +342,8 @@
     "pageStatus": "{total}ページ中{current}ページ目：{name}",
     "storyFragments": "旅の瞬間",
     "planTrip": "AIで旅程を作る",
-    "greeting": "次はどこへ？",
-    "greetingSub": "都市を選べば AI が日ごとに組み立てます。",
+    "greeting": "こんにちは！",
+    "greetingSub": "どこへ行きましょうか？",
     "exploreCities": "都市を探す",
     "viewAll": "すべて見る",
     "comingSoon": "準備中",
@@ -363,6 +363,19 @@
     "summaryCity": "都市",
     "summaryMemories": "記録",
     "summaryPhotos": "写真",
-    "openTrips": "マイ旅行を開く"
+    "openTrips": "マイ旅行を開く",
+    "storyBadge": "AI PRECISION",
+    "storyEyebrow": "DESIGNED FOR YOU",
+    "storyTitle": "釜山：黄金の時間",
+    "storyLead": "Your Feelings, AI's Precision.",
+    "storyQuote": "“好みを読み取り、AI が最適な旅程を設計します。\nロマンはあなたに、動線は AI に。”",
+    "storyCta": "旅を始める",
+    "heroAlt": "夕暮れの釜山のビーチに立つ旅行者、背景に街のスカイライン",
+    "heroCoverNote": "エディトリアル表紙アート",
+    "storySectionTitle": "旅の断片",
+    "cardMarketAlt": "市場のカウンターに湯気の立つクッパとホットク",
+    "cardVillageAlt": "カラフルな丘の村の階段路地に立つ旅行者",
+    "swipeHint": "横スワイプで発見",
+    "searchHint": "都市・アクティビティ・場所を検索"
   }
 }

@@ -1,15 +1,19 @@
 // Page 2 — 발견.
 //
-// 장소 목록이 아니라 여행을 시작할 지점이다. 도시 → City Entry, 공개 여행 →
-// 그 일정으로 이어진다.
+// 시안(home_screen_premium_discovery)의 구성·색·모양을 그대로 따른다:
+// 큰 인사 → 검색 진입 → 도시 카드 가로 스크롤 → 파랑/민트 타일 두 장 →
+// 인기 공개 여행.
 //
-// 사진이 있는 도시는 부산뿐이다. 나머지 네 도시에 다른 도시 사진을 돌려쓰거나
-// 생성 이미지를 넣지 않고 CityCardArt 로 그린다. 사진 유무가 곧 준비 상태를
-// 드러내는 셈이라, 숨기는 것보다 정직하다.
+// 시안에서 빼는 것과 이유:
+//   @사용자명·하트 수치 — itineraries 에 작성자 필드가 없고 좋아요 기능도 없다
+//   FAB(+)            — 전역 FAB 추가 금지
+//   목업 하단탭       — 기존 BottomNav 정보구조를 유지한다
+// 지표는 실제 컬럼 이름 그대로 Views / Helpful / Copies 로 쓴다.
 //
-// 목업에 있던 @사용자명·하트 수치는 만들지 않는다. itineraries 스키마에
-// 작성자 필드가 없고 좋아요 기능도 없다. 있는 값만 있는 이름으로 쓴다 —
-// Views / Helpful / Copies.
+// 도시 카드 사진은 저장소의 권리 확인 자산(KOGL Type 1)만 쓴다. 그 자산은 전부
+// 940x627 가로이고 metadata 에 vertical_fit:"unsuitable" 이 박혀 있어, 시안처럼
+// 세로 사진으로 꽉 채우면 2배 가까이 확대돼 흐려진다. 그래서 카드는 시안처럼
+// 세로로 길게 두되 사진은 위쪽에 원본 비율로 놓고 아래를 텍스트 패널로 채운다.
 
 "use client";
 
@@ -20,23 +24,27 @@ import { CITY_ENTRY_CONTENT } from "@/data/cities/entry-content";
 import { CITY_CONFIGS, CITY_SLUGS } from "@/data/cities";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
 import type { PopularTrip } from "@/lib/supabase";
-import { assetsByTheme } from "@/lib/trip-cover/assets.data";
+import { assetById } from "@/lib/trip-cover/assets.data";
 import { coverProxyPath } from "@/lib/trip-cover/cover-core";
 import CityCardArt from "./CityCardArt";
+import {
+  DESIGN_PRIMARY, DESIGN_INK, DESIGN_SURFACE, DESIGN_SURFACE_LOW,
+  DESIGN_OUTLINE, DESIGN_LINE, DESIGN_MINT, DESIGN_MINT_INK, HERO_MAX_WIDTH,
+} from "./home-visual";
 
 const CITY_LABEL: Record<string, string> = {
   busan: "Busan", seoul: "Seoul", jeju: "Jeju", gyeongju: "Gyeongju", jeonju: "Jeonju",
 };
 
-/** 권리가 확인된 도시 이미지. 지금은 부산만 있다. */
+// 도시 대표 사진. 권리가 확인된 자산이 있는 도시만. 광안대교 컷은 밝고 넓어서
+// 카드 한 장으로 부산을 설명한다 — 예전처럼 테마 첫 자산을 자동으로 집으면
+// 흐린 시장 골목이나 도서관 자료실이 걸린다.
+const CITY_ASSET: Record<string, string> = { busan: "busan-v1-night_view-023" };
+
 function cityImage(slug: string): { src: string; note: string } | null {
-  if (slug !== "busan") return null;
-  // 940x627 가로 자산이라(vertical_fit: unsuitable) 세로 카드로 쓰지 않는다.
-  // 카드 비율을 4:3 으로 잡은 이유가 이것이다.
-  const asset = assetsByTheme("beach_ocean")[0];
-  return asset
-    ? { src: coverProxyPath(asset.asset_id), note: asset.attribution_text }
-    : null;
+  const id = CITY_ASSET[slug];
+  const asset = id ? assetById(id) : undefined;
+  return asset ? { src: coverProxyPath(asset.asset_id), note: asset.attribution_text } : null;
 }
 
 function dayCount(t: PopularTrip): number | null {
@@ -69,112 +77,148 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
   const shown = (trips ?? []).filter(
     x => (x.view_count ?? 0) > 0 || (x.helpful_count ?? 0) > 0 || (x.copy_count ?? 0) > 0,
   );
+  const attribution = cities.find(c => c.image)?.image?.note;
 
   return (
-    <div className="min-h-full bg-surface-dim">
-      {/* ── 인사 ───────────────────────────────────────────────────────── */}
-      <section className="px-5 pt-10 pb-6">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-black text-ink leading-tight mb-2">
+    <div style={{ backgroundColor: DESIGN_SURFACE }}>
+      <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
+
+        {/* ── 인사 ─────────────────────────────────────────────────────── */}
+        <section className="px-6 pt-10 pb-6">
+          <h1 className="font-black mb-2" style={{ color: DESIGN_INK, fontSize: "clamp(2.1rem,10vw,2.9rem)", lineHeight: 1.06 }}>
             {t("greeting")}
           </h1>
-          <p className="text-sm sm:text-base text-sub">{t("greetingSub")}</p>
-        </div>
-      </section>
+          <p className="text-[15px]" style={{ color: DESIGN_OUTLINE }}>{t("greetingSub")}</p>
+        </section>
 
-      {/* ── 도시 탐색 ──────────────────────────────────────────────────── */}
-      <section className="pb-8" aria-label={t("exploreCities")}>
-        <div className="max-w-2xl mx-auto px-5 flex items-baseline justify-between mb-4">
-          <h2 className="text-lg font-black text-ink">{t("exploreCities")}</h2>
-          <Link href="/explore/busan/" className="gkm-focus text-xs font-black text-kpop">
-            {t("viewAll")} →
-          </Link>
-        </div>
+        {/* ── 검색 진입 — 새 검색 로직을 만들지 않고 기존 섹션으로 보낸다 ── */}
+        <section className="px-6 pb-8">
+          <a
+            href="#spots-main"
+            className="gkm-focus flex items-center gap-3 w-full h-14 px-5"
+            style={{ backgroundColor: DESIGN_SURFACE_LOW, borderRadius: 16 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden
+                 stroke={DESIGN_OUTLINE} strokeWidth="2.2" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7" /><path d="M20 20l-3.6-3.6" />
+            </svg>
+            <span className="flex-1 text-[14.5px]" style={{ color: DESIGN_OUTLINE }}>{t("searchHint")}</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden
+                 stroke={DESIGN_PRIMARY} strokeWidth="2.2" strokeLinecap="round">
+              <path d="M4 7h10M18 7h2M4 17h4M12 17h8" /><circle cx="16" cy="7" r="2" /><circle cx="10" cy="17" r="2" />
+            </svg>
+          </a>
+        </section>
 
-        {/* 가로 스크롤러. overscroll-x: contain 으로 안쪽 스크롤이 끝나도 바깥
-            페이저로 넘어가지 않게 잡는다 — 안 그러면 도시 카드를 넘기다가
-            Page 1 로 튕긴다. */}
-        <ul
-          className="flex gap-3 overflow-x-auto px-5 pb-2 snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", overscrollBehaviorX: "contain" }}
-        >
-          {cities.map(c => (
-            <li key={c.slug} className="snap-start shrink-0 w-[68vw] max-w-[280px]">
-              <Link
-                href={`/${c.slug}/`}
-                className="gkm-focus block rounded-card overflow-hidden shadow-card"
-                aria-label={t("cityCardAria", { city: c.label })}
-              >
-                <div className="relative w-full" style={{ aspectRatio: "4 / 3" }}>
-                  {c.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={c.image.src}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                      width={940}
-                      height={627}
-                    />
-                  ) : (
-                    <CityCardArt slug={c.slug} label={c.label} />
-                  )}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0"
-                    style={{ background: "linear-gradient(to top, rgba(25,28,33,0.88) 0%, rgba(25,28,33,0.10) 60%, transparent 100%)" }}
-                  />
-                  {!c.plannerReady && (
-                    <span className="absolute right-3 top-3 px-2.5 py-1 rounded-full text-[10px] font-black text-white"
-                          style={{ backgroundColor: "rgba(25,28,33,0.7)", border: "1px dashed rgba(255,255,255,0.35)" }}>
-                      {t("comingSoon")}
+        {/* ── 도시 탐색 ────────────────────────────────────────────────── */}
+        <section className="pb-9" aria-label={t("exploreCities")}>
+          <div className="px-6 flex items-baseline justify-between mb-4">
+            <h2 className="text-[22px] font-black" style={{ color: DESIGN_INK }}>{t("exploreCities")}</h2>
+            <Link href="/explore/busan/" className="gkm-focus text-[13.5px] font-bold" style={{ color: DESIGN_PRIMARY }}>
+              {t("viewAll")}
+            </Link>
+          </div>
+
+          {/* overscroll-x: contain — 안쪽 스크롤이 끝나도 바깥 페이저로 넘어가지
+              않게 잡는다. 안 그러면 도시 카드를 넘기다가 Page 1 로 튕긴다 */}
+          <ul
+            className="flex gap-4 overflow-x-auto px-6 pb-1 snap-x snap-mandatory"
+            style={{ scrollbarWidth: "none", overscrollBehaviorX: "contain" }}
+          >
+            {cities.map(c => (
+              <li key={c.slug} className="snap-start shrink-0 w-[70vw] max-w-[268px]">
+                <Link
+                  href={`/${c.slug}/`}
+                  className="gkm-focus block h-full overflow-hidden"
+                  style={{ borderRadius: 24, backgroundColor: DESIGN_INK, boxShadow: "0 14px 32px rgba(19,27,46,0.16)" }}
+                  aria-label={t("cityCardAria", { city: c.label })}
+                >
+                  <div className="relative w-full" style={{ aspectRatio: "3 / 2" }}>
+                    {c.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={c.image.src}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        width={940}
+                        height={627}
+                      />
+                    ) : (
+                      <CityCardArt slug={c.slug} label={c.label} />
+                    )}
+                    <span
+                      className="absolute left-3 top-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black"
+                      style={{ backgroundColor: "rgba(250,248,255,0.92)", color: DESIGN_PRIMARY }}
+                    >
+                      {c.label}
                     </span>
-                  )}
-                  <div className="absolute inset-x-0 bottom-0 p-4">
-                    <p className="text-lg font-black text-white leading-tight">{c.label}</p>
-                    {c.tagline && (
-                      <p className="text-[11px] text-white/60 leading-snug mt-0.5 line-clamp-2">{c.tagline}</p>
+                    {!c.plannerReady && (
+                      <span
+                        className="absolute right-3 top-3 px-2.5 py-1.5 rounded-full text-[10px] font-black text-white"
+                        style={{ backgroundColor: "rgba(19,27,46,0.72)" }}
+                      >
+                        {t("comingSoon")}
+                      </span>
                     )}
                   </div>
-                </div>
-              </Link>
-              {c.image && (
-                <p className="px-1 pt-1.5 text-[10px] text-faint leading-tight">{c.image.note}</p>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+                  <div className="px-5 pt-4 pb-5">
+                    <p className="text-[19px] font-black text-white leading-tight mb-1.5">{c.label}</p>
+                    {c.tagline && (
+                      <p className="text-[12px] leading-snug line-clamp-2" style={{ color: "rgba(250,248,255,0.62)" }}>
+                        {c.tagline}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {attribution && (
+            <p className="px-6 pt-3 text-[10px]" style={{ color: DESIGN_OUTLINE }}>{attribution}</p>
+          )}
+        </section>
 
-      {/* ── 바로가기 ───────────────────────────────────────────────────── */}
-      <section className="px-5 pb-8">
-        <div className="max-w-2xl mx-auto grid grid-cols-2 gap-3">
-          <Link
-            href="/picks"
-            className="gkm-focus rounded-card p-5 min-h-[104px] flex flex-col justify-end shadow-card"
-            style={{ backgroundColor: "var(--gkm-ink)" }}
-          >
-            <span className="text-xl mb-1.5" aria-hidden>🧭</span>
-            <span className="text-base font-black text-white leading-tight">{t("myPicks")}</span>
-            <span className="text-[11px] text-white/50 mt-0.5">{t("myPicksSub")}</span>
-          </Link>
-          <Link
-            href="/my-trips"
-            className="gkm-focus rounded-card p-5 min-h-[104px] flex flex-col justify-end shadow-card border border-line bg-surface"
-          >
-            <span className="text-xl mb-1.5" aria-hidden>🧳</span>
-            <span className="text-base font-black text-ink leading-tight">{t("myTrips")}</span>
-            <span className="text-[11px] text-sub mt-0.5">{t("myTripsSub")}</span>
-          </Link>
-        </div>
-      </section>
+        {/* ── 타일 두 장 ───────────────────────────────────────────────── */}
+        <section className="px-6 pb-9">
+          <div className="grid grid-cols-2 gap-4">
+            <Link
+              href="/picks"
+              className="gkm-focus relative overflow-hidden p-5 min-h-[148px] flex flex-col justify-between"
+              style={{ backgroundColor: DESIGN_PRIMARY, borderRadius: 24 }}
+            >
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden
+                   stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" /><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z" />
+              </svg>
+              <span>
+                <span className="block text-[19px] font-black text-white leading-[1.2]">{t("myPicks")}</span>
+                <span className="block text-[12px] mt-1.5" style={{ color: "rgba(255,255,255,0.72)" }}>{t("myPicksSub")}</span>
+              </span>
+            </Link>
+            <Link
+              href="/my-trips"
+              className="gkm-focus relative overflow-hidden p-5 min-h-[148px] flex flex-col justify-between"
+              style={{ backgroundColor: DESIGN_MINT, borderRadius: 24 }}
+            >
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden
+                   stroke={DESIGN_MINT_INK} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="7.5" width="18" height="12.5" rx="2.5" />
+                <path d="M9 7.5V6a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0115 6v1.5" />
+              </svg>
+              <span>
+                <span className="block text-[19px] font-black leading-[1.2]" style={{ color: DESIGN_MINT_INK }}>{t("myTrips")}</span>
+                <span className="block text-[12px] mt-1.5" style={{ color: "rgba(0,32,26,0.62)" }}>{t("myTripsSub")}</span>
+              </span>
+            </Link>
+          </div>
+        </section>
 
-      {/* ── 인기 공개 여행 ─────────────────────────────────────────────── */}
-      {shown.length > 0 && (
-        <section className="px-5 pb-12" aria-label={t("popularTrips")}>
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-lg font-black text-ink mb-4">{t("popularTrips")}</h2>
+        {/* ── 인기 공개 여행 ───────────────────────────────────────────── */}
+        {shown.length > 0 && (
+          <section className="px-6 pb-12" aria-label={t("popularTrips")}>
+            <h2 className="text-[22px] font-black mb-4" style={{ color: DESIGN_INK }}>{t("popularTrips")}</h2>
             <ul className="flex flex-col gap-3">
               {shown.map(x => {
                 const days = dayCount(x);
@@ -182,9 +226,10 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
                   <li key={x.id}>
                     <Link
                       href={`/itinerary?id=${encodeURIComponent(x.id)}`}
-                      className="gkm-focus flex gap-3 rounded-card border border-line bg-surface p-3 shadow-card"
+                      className="gkm-focus flex gap-4 p-3"
+                      style={{ backgroundColor: DESIGN_SURFACE_LOW, borderRadius: 20 }}
                     >
-                      <div className="relative shrink-0 w-24 rounded-control overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
+                      <div className="relative shrink-0 w-[92px] overflow-hidden" style={{ aspectRatio: "1 / 1", borderRadius: 14 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`/img/trip-cover/${encodeURIComponent(x.id)}`}
@@ -194,15 +239,15 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
                           decoding="async"
                         />
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-black text-ink leading-snug line-clamp-2">
+                      <div className="min-w-0 flex-1 py-1">
+                        <p className="text-[15px] font-black leading-snug line-clamp-2" style={{ color: DESIGN_INK }}>
                           {x.trip_title || x.city}
                         </p>
-                        <p className="text-[11px] text-sub mt-1">
+                        <p className="text-[12.5px] mt-1" style={{ color: DESIGN_OUTLINE }}>
                           {x.city}{days ? ` · ${t("days", { n: days })}` : ""}
                         </p>
                         {/* 실제 컬럼 이름 그대로. helpful 을 Like 로 바꾸지 않는다 */}
-                        <p className="text-[11px] text-faint mt-1.5 flex flex-wrap gap-x-3">
+                        <p className="text-[11.5px] mt-2 flex flex-wrap gap-x-3" style={{ color: DESIGN_OUTLINE }}>
                           {(x.view_count ?? 0) > 0    && <span>{t("views",   { n: x.view_count })}</span>}
                           {(x.helpful_count ?? 0) > 0 && <span>{t("helpful", { n: x.helpful_count })}</span>}
                           {(x.copy_count ?? 0) > 0    && <span>{t("copies",  { n: x.copy_count ?? 0 })}</span>}
@@ -213,9 +258,10 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
                 );
               })}
             </ul>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
+        <div aria-hidden style={{ height: 1, backgroundColor: DESIGN_LINE, opacity: 0 }} />
+      </div>
     </div>
   );
 }

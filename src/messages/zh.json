@@ -342,8 +342,8 @@
     "pageStatus": "第 {current} 页，共 {total} 页：{name}",
     "storyFragments": "旅途瞬间",
     "planTrip": "用 AI 规划我的行程",
-    "greeting": "下一站去哪？",
-    "greetingSub": "选一座城市，AI 按天安排。",
+    "greeting": "你好！",
+    "greetingSub": "想去哪里？",
     "exploreCities": "探索城市",
     "viewAll": "查看全部",
     "comingSoon": "即将推出",
@@ -363,6 +363,19 @@
     "summaryCity": "城市",
     "summaryMemories": "记录",
     "summaryPhotos": "照片",
-    "openTrips": "打开我的旅行"
+    "openTrips": "打开我的旅行",
+    "storyBadge": "AI PRECISION",
+    "storyEyebrow": "DESIGNED FOR YOU",
+    "storyTitle": "釜山：黄金时刻",
+    "storyLead": "Your Feelings, AI's Precision.",
+    "storyQuote": "“读懂你的偏好，由 AI 设计最合适的路线。\n浪漫交给你，动线交给 AI。”",
+    "storyCta": "开始旅程",
+    "heroAlt": "黄昏时分站在釜山海滩的旅行者，身后是城市天际线",
+    "heroCoverNote": "编辑封面美术",
+    "storySectionTitle": "旅途的片段",
+    "cardMarketAlt": "市场摊位上冒着热气的汤饭与糖饼",
+    "cardVillageAlt": "站在色彩缤纷山坡村落石阶小巷的旅行者",
+    "swipeHint": "左右滑动查看发现",
+    "searchHint": "搜索城市、活动、地点"
   }
 }

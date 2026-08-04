@@ -20,6 +20,7 @@ import MemorySynergyHome from "./MemorySynergyHome";
 import PremiumDiscoveryHome from "./PremiumDiscoveryHome";
 import { selectHomeExperience, NO_FINISH_SIGNAL } from "./home-experience-selector";
 import type { HomeExperienceState } from "./home-experience-types";
+import { DESIGN_PRIMARY, DESIGN_OUTLINE, DESIGN_SURFACE, DESIGN_LINE } from "./home-visual";
 
 const PAGES = 2;
 
@@ -28,6 +29,7 @@ const FINISH_SIGNAL_AVAILABLE = false;
 
 export default function HomeExperience() {
   const t = useTranslations("home");
+  const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [page, setPage] = useState(0);
@@ -69,6 +71,10 @@ export default function HomeExperience() {
     if (!el) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     el.scrollTo({ left: i * el.clientWidth, behavior: reduce ? "auto" : "smooth" });
+    // 두 페이지의 길이가 달라서, 아래쪽까지 내려간 상태로 페이지를 바꾸면
+    // 새 페이지의 중간이나 그 아래 섹션이 보인다. 새 페이지는 처음부터 보여준다.
+    const top = sectionRef.current?.getBoundingClientRect().top ?? 0;
+    if (top < 0) window.scrollBy({ top, behavior: reduce ? "auto" : "smooth" });
   }, []);
 
   // 트랙 높이를 지금 보이는 페이지에 맞춘다.
@@ -103,7 +109,46 @@ export default function HomeExperience() {
   const pageLabel = [t("pageStory"), t("pageDiscover")];
 
   return (
-    <section aria-label={t("experienceLabel")} className="relative">
+    <section ref={sectionRef} aria-label={t("experienceLabel")} className="relative">
+      {/* ── 페이지 표시기 ──────────────────────────────────────────────
+          두 페이지 이름을 나란히 놓고 현재 쪽을 파란 알약으로 채운다. 점만
+          찍어두면 "넘길 수 있다" 는 걸 모른 채 지나간다. 반대쪽 라벨과 화살표가
+          다음 페이지가 있다는 신호다. */}
+      <div
+        role="tablist"
+        aria-label={t("pagerLabel")}
+        onKeyDown={onKeyDown}
+        className="flex items-center justify-center gap-1.5 py-3"
+        style={{ backgroundColor: DESIGN_SURFACE, borderTop: `1px solid ${DESIGN_LINE}55` }}
+      >
+        {Array.from({ length: PAGES }, (_, i) => (
+          <button
+            key={i}
+            id={`home-tab-${i}`}
+            role="tab"
+            type="button"
+            aria-selected={page === i}
+            aria-controls={`home-page-${i}`}
+            tabIndex={page === i ? 0 : -1}
+            onClick={() => goTo(i)}
+            className="gkm-focus inline-flex items-center gap-2 min-h-11 px-4 rounded-full transition-all"
+            style={
+              page === i
+                ? { backgroundColor: DESIGN_PRIMARY, color: "#fff" }
+                : { color: DESIGN_OUTLINE }
+            }
+          >
+            <span className="text-[12.5px] font-black">{pageLabel[i]}</span>
+            {page !== i && (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
+                   stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d={i > page ? "M9 5l7 7-7 7" : "M15 5l-7 7 7 7"} />
+              </svg>
+            )}
+          </button>
+        ))}
+      </div>
+
       <div
         ref={trackRef}
         onScroll={onScroll}
@@ -146,39 +191,6 @@ export default function HomeExperience() {
         </div>
       </div>
 
-      {/* ── 페이지 표시기 ──────────────────────────────────────────────── */}
-      <div
-        role="tablist"
-        aria-label={t("pagerLabel")}
-        onKeyDown={onKeyDown}
-        className="flex items-center justify-center gap-2 py-3 bg-surface-dim border-t border-line"
-      >
-        {Array.from({ length: PAGES }, (_, i) => (
-          <button
-            key={i}
-            id={`home-tab-${i}`}
-            role="tab"
-            type="button"
-            aria-selected={page === i}
-            aria-controls={`home-page-${i}`}
-            tabIndex={page === i ? 0 : -1}
-            onClick={() => goTo(i)}
-            className="gkm-focus inline-flex items-center gap-2 min-h-11 px-4 rounded-full transition-colors"
-          >
-            <span
-              aria-hidden
-              className="block rounded-full transition-all"
-              style={{
-                width: page === i ? 22 : 8, height: 8,
-                backgroundColor: page === i ? "var(--gkm-action-primary)" : "var(--gkm-line)",
-              }}
-            />
-            <span className={`text-xs font-black ${page === i ? "text-ink" : "text-faint"}`}>
-              {pageLabel[i]}
-            </span>
-          </button>
-        ))}
-      </div>
 
       <p className="sr-only" aria-live="polite">
         {t("pageStatus", { current: page + 1, total: PAGES, name: pageLabel[page] })}

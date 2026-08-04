@@ -17,6 +17,10 @@ import { MOMENT_CATEGORIES } from "@/lib/trip-moments";
 import type { TripMoment } from "@/lib/trip-moments";
 import type { ItineraryRow } from "@/lib/supabase";
 import type { SavedStoryCopy } from "./home-experience-types";
+import {
+  DESIGN_PRIMARY, DESIGN_INK, DESIGN_SURFACE, DESIGN_SURFACE_LOW,
+  DESIGN_OUTLINE, HERO_MAX_WIDTH,
+} from "./home-visual";
 
 interface Props {
   trip:    ItineraryRow;
@@ -38,10 +42,11 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
   const withPhoto = moments.filter(m => m.photo_data);
 
   return (
-    <div className="min-h-full bg-surface-dim">
+    <div style={{ backgroundColor: DESIGN_SURFACE }}>
+      <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
       {/* ── 여행 표지 ──────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        <div className="relative w-full" style={{ aspectRatio: "16 / 10" }}>
+        <div className="relative w-full" style={{ aspectRatio: "4 / 5" }}>
           {/* 서버가 종류를 정해 돌려주는 표지. 개인 사진이면 개인 사진이,
               아니면 KOGL 테마 이미지가 나온다. 여기서 추론하지 않는다. */}
           {coverFailed ? (
@@ -69,13 +74,18 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
           <div
             aria-hidden
             className="absolute inset-0"
-            style={{ background: "linear-gradient(to top, rgba(25,28,33,0.92) 0%, rgba(25,28,33,0.25) 55%, transparent 100%)" }}
+            style={{ background: "linear-gradient(to top, rgba(10,12,20,0.86) 0%, rgba(10,12,20,0.3) 46%, rgba(10,12,20,0) 66%)" }}
           />
           <div className="absolute inset-x-0 bottom-0 p-5">
             {period && (
-              <p className="text-[11px] font-black tracking-widest text-white/60 mb-1.5">{period}</p>
+              <span
+                className="inline-block px-3 py-1.5 rounded-full text-[11px] font-black tracking-wider text-white mb-3"
+                style={{ backgroundColor: "rgba(0,65,200,0.55)", border: "1px solid rgba(182,196,255,0.5)" }}
+              >
+                {period}
+              </span>
             )}
-            <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+            <h1 className="font-black text-white leading-[1.12]" style={{ fontSize: "clamp(1.9rem,7.6vw,2.5rem)" }}>
               {trip.trip_title || trip.city}
             </h1>
           </div>
@@ -84,10 +94,10 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
 
       {/* ── Memory Timeline ────────────────────────────────────────────── */}
       <section className="px-5 py-8" aria-label={t("memoryTimeline")}>
-        <div className="max-w-2xl mx-auto">
+        <div>
           <div className="flex items-baseline justify-between mb-5">
-            <h2 className="text-lg font-black text-ink">{t("memoryTimeline")}</h2>
-            <span className="text-xs font-bold text-faint">
+            <h2 className="text-[20px] font-black" style={{ color: DESIGN_INK }}>{t("memoryTimeline")}</h2>
+            <span className="text-xs font-bold" style={{ color: DESIGN_OUTLINE }}>
               {t("memoryCount", { n: moments.length })}
             </span>
           </div>
@@ -100,7 +110,7 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
                 month: "short", day: "numeric",
               });
               return (
-                <li key={m.moment_id} className="rounded-card border border-line bg-surface shadow-card overflow-hidden">
+                <li key={m.moment_id} className="overflow-hidden" style={{ borderRadius: 20, backgroundColor: DESIGN_SURFACE_LOW }}>
                   <div className="relative w-full" style={{ aspectRatio: "4 / 3" }}>
                     {m.photo_data ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -127,12 +137,12 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
                   </div>
 
                   <div className="p-4">
-                    <p className="text-[11px] font-black tracking-wide text-faint mb-1.5">
+                    <p className="text-[11px] font-black tracking-wide mb-1.5" style={{ color: DESIGN_OUTLINE }}>
                       {when} · {cat.emoji} {cat.label}
                     </p>
                     {/* 사용자가 쓴 글. 번역하지 않고 그대로 둔다 */}
                     {m.memo && (
-                      <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">{m.memo}</p>
+                      <p className="text-[14.5px] leading-relaxed whitespace-pre-wrap" style={{ color: DESIGN_INK }}>{m.memo}</p>
                     )}
                     {/* 저장된 문구가 있을 때만. 없으면 이 블록 자체가 없다 */}
                     {copy && (
@@ -150,8 +160,8 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
 
       {/* ── 여행 요약 ──────────────────────────────────────────────────── */}
       <section className="px-5 pb-6">
-        <div className="max-w-2xl mx-auto rounded-card border border-line bg-surface p-5">
-          <h2 className="text-sm font-black text-ink mb-3">{t("tripSummary")}</h2>
+        <div className="p-5" style={{ borderRadius: 20, backgroundColor: DESIGN_SURFACE_LOW }}>
+          <h2 className="text-sm font-black mb-3" style={{ color: DESIGN_INK }}>{t("tripSummary")}</h2>
           <dl className="grid grid-cols-3 gap-3 text-center">
             {[
               { k: t("summaryCity"),    v: trip.city },
@@ -159,8 +169,8 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
               { k: t("summaryPhotos"),  v: String(withPhoto.length) },
             ].map(x => (
               <div key={x.k}>
-                <dt className="text-[10px] font-black uppercase tracking-wide text-faint mb-1">{x.k}</dt>
-                <dd className="text-base font-black text-ink">{x.v}</dd>
+                <dt className="text-[10px] font-black uppercase tracking-wide mb-1" style={{ color: DESIGN_OUTLINE }}>{x.k}</dt>
+                <dd className="text-base font-black" style={{ color: DESIGN_INK }}>{x.v}</dd>
               </div>
             ))}
           </dl>
@@ -169,22 +179,25 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
 
       {/* ── 다음 여행 ──────────────────────────────────────────────────── */}
       <section className="px-5 pb-12">
-        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             type="button"
             onClick={onPlanTrip}
-            className="gkm-focus flex-1 inline-flex items-center justify-center min-h-12 px-6 rounded-control bg-action text-white text-base font-black shadow-cta hover:bg-action-hover transition-colors"
+            className="gkm-focus flex-1 inline-flex items-center justify-center min-h-14 h-14 px-6 rounded-full text-white text-[15px] font-black transition-transform active:scale-95"
+            style={{ background: `linear-gradient(100deg, ${DESIGN_PRIMARY} 0%, #2f6bff 100%)`, boxShadow: "0 10px 26px rgba(0,65,200,0.28)" }}
           >
             ✨ {t("planTrip")}
           </button>
           <Link
             href="/my-trips"
-            className="gkm-focus flex-1 inline-flex items-center justify-center min-h-12 px-6 rounded-control border border-line bg-surface text-ink text-base font-bold hover:bg-surface-dim transition-colors"
+            className="gkm-focus flex-1 inline-flex items-center justify-center min-h-14 h-14 px-6 rounded-full text-[15px] font-bold"
+            style={{ backgroundColor: DESIGN_SURFACE_LOW, color: DESIGN_INK }}
           >
             {t("openTrips")}
           </Link>
         </div>
       </section>
+      </div>
     </div>
   );
 }
