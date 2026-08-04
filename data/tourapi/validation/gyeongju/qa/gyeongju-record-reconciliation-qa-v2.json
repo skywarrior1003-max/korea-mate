@@ -1,0 +1,44 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "section": "5_reconciliation",
+  "executed_at": "2026-08-04T02:02:14Z",
+  "flow_raw_to_source_facts": {
+    "raw_primary_total": 910,
+    "gj_city_raw": 351,
+    "kto_raw": 559,
+    "gj08_duplicate_uid_removed": 3,
+    "gj08_duplicate_uid_detail": "UID 7496 → 4건 중 3건 제거",
+    "source_facts_total": 907,
+    "check": "907 + 3 = 910 == 910 → True",
+    "verdict": "PASS"
+  },
+  "flow_source_facts_to_enriched": {
+    "source_facts_total": 907,
+    "identity_merged_groups": 69,
+    "secondary_removed": 76,
+    "enriched_candidates": 831,
+    "check": "831 + 76 = 907 == 907 → True",
+    "verdict": "PASS"
+  },
+  "coord_enrichment_note": "GJ-01/06/07 source_fact lat=None이지만 KTO identity merge로 candidate가 좌표 보유하는 것은 정상 동작. source_fact 원본은 보존됨.",
+  "needs_identity_analysis": {
+    "candidate_id": "gyeongju-GJ09-733",
+    "title_ko": "이조한정식",
+    "gj08_733_exists": true,
+    "gj09_733_exists": true,
+    "name_normalized_match": false,
+    "gj08_norm": "고도벌한정식",
+    "gj09_norm": "이조한정식",
+    "judgment": "INSUFFICIENT_EVIDENCE",
+    "note": "CON_UID 733이 GJ-08과 GJ-09 양쪽에 존재. 이름 비교로 판정 필요."
+  },
+  "gj02_analysis": {
+    "result_code": "00",
+    "result_msg": "NORMAL_SERVICE",
+    "total_count": 0,
+    "pilot_file": "GJ-02-권역별_관광지-pilot.json",
+    "judgment": "CONFIRMED_EMPTY_SOURCE",
+    "collection_note": "SKIP — getDstrctsTrrsrt totalCount=0, 추가 파라미터 필요"
+  },
+  "overall_verdict": "PASS"
+}

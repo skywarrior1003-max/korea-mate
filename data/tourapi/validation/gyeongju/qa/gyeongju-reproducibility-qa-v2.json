@@ -1,0 +1,16 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "section": "11_reproducibility",
+  "executed_at": "2026-08-04T01:59:37Z",
+  "verdict": "PARTIAL_REPRODUCIBILITY",
+  "reason": "수집·정규화 스크립트가 scratchpad에만 존재, repo에 없음",
+  "repo_scripts": false,
+  "scratchpad_scripts": {
+    "gyeongju_full_collect.py": true,
+    "gyeongju_normalize.py": true,
+    "gyeongju_validate.py": true
+  },
+  "sha_consistency": "22/22 파일 SHA 일치",
+  "deterministic_order": true,
+  "manifest_sha_check": "6588f0aa60e3edab"
+}

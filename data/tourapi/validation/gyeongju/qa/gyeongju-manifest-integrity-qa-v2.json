@@ -1,0 +1,253 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "section": "1_manifest_integrity",
+  "executed_at": "2026-08-04T01:59:37Z",
+  "manifest_path": "data\\tourapi\\manifests\\gyeongju\\gyeongju-manifest-v1.json",
+  "manifest_sha_recorded": "a775560710dfdd03",
+  "manifest_sha_actual": "6588f0aa60e3edab",
+  "total_tracked_files": 22,
+  "missing_files": [],
+  "sha_mismatches": [],
+  "raw_files_local": 15,
+  "raw_files_missing": 0,
+  "jsonl_count_checks": {
+    "source_facts": {
+      "expected": 907,
+      "actual": 907,
+      "match": true
+    },
+    "enriched_candidates": {
+      "expected": 831,
+      "actual": 831,
+      "match": true
+    },
+    "reviewed_candidates": {
+      "expected": 831,
+      "actual": 831,
+      "match": true
+    }
+  },
+  "file_detail": [
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-01-tourist-destination-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 29140,
+      "sha_recorded": "8e9c0c816c9aa890",
+      "sha_actual": "8e9c0c816c9aa890",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-06-night-view-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 3412,
+      "sha_recorded": "d2a079a8f9323e4b",
+      "sha_actual": "d2a079a8f9323e4b",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-07-observation-point-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 3097,
+      "sha_recorded": "6efdd3a7eb3ace3e",
+      "sha_actual": "6efdd3a7eb3ace3e",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-08-menu-restaurant-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 327163,
+      "sha_recorded": "a3be484aa0bc732c",
+      "sha_actual": "a3be484aa0bc732c",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-09-eat-hotplace-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 49519,
+      "sha_recorded": "d9d7b2e7cd61a387",
+      "sha_actual": "d9d7b2e7cd61a387",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-03-image-시내권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 1134162,
+      "sha_recorded": "e8178f54d2c2ebc1",
+      "sha_actual": "e8178f54d2c2ebc1",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-04-image-보문권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 957386,
+      "sha_recorded": "03838f71cda2bc74",
+      "sha_actual": "03838f71cda2bc74",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-05-image-남산권-full.json",
+      "category": "raw/gyeongju-city-api",
+      "exists": true,
+      "size_bytes": 84464,
+      "sha_recorded": "8b90910642e040a6",
+      "sha_actual": "8b90910642e040a6",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type12-tourist-spot-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 124859,
+      "sha_recorded": "76204647c770202f",
+      "sha_actual": "76204647c770202f",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type14-cultural-facility-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 12259,
+      "sha_recorded": "56ed996f210b7810",
+      "sha_actual": "56ed996f210b7810",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type15-festival-event-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 21452,
+      "sha_recorded": "fdc6b3af103b06ee",
+      "sha_actual": "fdc6b3af103b06ee",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type28-leisure-sport-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 52353,
+      "sha_recorded": "efa99442ee916987",
+      "sha_actual": "efa99442ee916987",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type32-accommodation-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 104775,
+      "sha_recorded": "444c90652aa8106d",
+      "sha_actual": "444c90652aa8106d",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type38-shopping-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 8743,
+      "sha_recorded": "57c7d110bc1a9dc0",
+      "sha_actual": "57c7d110bc1a9dc0",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type39-restaurant-full.json",
+      "category": "raw/kto-list",
+      "exists": true,
+      "size_bytes": 156704,
+      "sha_recorded": "4866f80f124d35de",
+      "sha_actual": "4866f80f124d35de",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/candidates/gyeongju/gyeongju-source-facts-v1.jsonl",
+      "category": "candidates",
+      "exists": true,
+      "size_bytes": 942092,
+      "sha_recorded": "db9bb2be8e07fe26",
+      "sha_actual": "db9bb2be8e07fe26",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/enriched/gyeongju/gyeongju-enriched-candidates-v1.jsonl",
+      "category": "enriched",
+      "exists": true,
+      "size_bytes": 961148,
+      "sha_recorded": "000b016bb395ca1f",
+      "sha_actual": "000b016bb395ca1f",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-candidates-reviewed-v1.jsonl",
+      "category": "validation",
+      "exists": true,
+      "size_bytes": 1092132,
+      "sha_recorded": "0f67d7ebcb8b0467",
+      "sha_actual": "0f67d7ebcb8b0467",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-api-pilot-report.json",
+      "category": "reports",
+      "exists": true,
+      "size_bytes": 19289,
+      "sha_recorded": "d7d567ea3027e06b",
+      "sha_actual": "d7d567ea3027e06b",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-collection-summary.json",
+      "category": "reports",
+      "exists": true,
+      "size_bytes": 3706,
+      "sha_recorded": "152b956155af6032",
+      "sha_actual": "152b956155af6032",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-normalization-stats.json",
+      "category": "reports",
+      "exists": true,
+      "size_bytes": 11106,
+      "sha_recorded": "57ebf0b3d2ea245c",
+      "sha_actual": "57ebf0b3d2ea245c",
+      "sha_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-validation-report.json",
+      "category": "reports",
+      "exists": true,
+      "size_bytes": 2274,
+      "sha_recorded": "bcad3178c92df72a",
+      "sha_actual": "bcad3178c92df72a",
+      "sha_match": true,
+      "verdict": "PASS"
+    }
+  ],
+  "verdict": "PASS"
+}

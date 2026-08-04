@@ -1,0 +1,45 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "section": "9_image_supplementary",
+  "executed_at": "2026-08-04T01:59:37Z",
+  "total_expected": 1292,
+  "total_actual": 1292,
+  "breakdown": {
+    "GJ-03": {
+      "exists": true,
+      "expected": 680,
+      "actual": 680,
+      "count_match": true,
+      "url_available": 676,
+      "title_linked_to_candidate": 128,
+      "unlinked": 552,
+      "rights_status": "RIGHTS_UNKNOWN"
+    },
+    "GJ-04": {
+      "exists": true,
+      "expected": 560,
+      "actual": 560,
+      "count_match": true,
+      "url_available": 560,
+      "title_linked_to_candidate": 0,
+      "unlinked": 560,
+      "rights_status": "RIGHTS_UNKNOWN"
+    },
+    "GJ-05": {
+      "exists": true,
+      "expected": 52,
+      "actual": 52,
+      "count_match": true,
+      "url_available": 52,
+      "title_linked_to_candidate": 28,
+      "unlinked": 24,
+      "rights_status": "RIGHTS_UNKNOWN"
+    }
+  },
+  "title_linked_estimate": 156,
+  "unlinked_estimate": 1136,
+  "candidate_independent_release": false,
+  "rights_status": "RIGHTS_UNKNOWN",
+  "verdict": "CONDITIONAL_PASS",
+  "note": "title 기반 연결은 추정치. 공식 연결 ID 없음. 실제 연결 작업은 별도 단계 필요."
+}

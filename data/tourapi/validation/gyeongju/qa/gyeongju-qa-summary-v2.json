@@ -1,0 +1,47 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "branch": "research/gyeongju-independent-qa-v2",
+  "base_branch": "data/gyeongju-enrichment-v1",
+  "head_commit": "0742009",
+  "qa_executed_at": "2026-08-04T02:06:51Z",
+  "overall_verdict": "CONDITIONAL_PASS",
+  "next_state": "MERGE_READY_WITH_FIXES",
+  "section_verdicts": {
+    "1_manifest": "PASS",
+    "2_api_completeness": "PASS",
+    "3_type25": "DOCUMENTED_EXCLUSION + DOCUMENTATION_DEFECT",
+    "4_visitgyeongju": "NOT_COLLECTED",
+    "5_reconciliation": "PASS",
+    "6_identity": "PASS",
+    "7_field_accuracy": "CONDITIONAL_PASS",
+    "8_events": "HOLD",
+    "9_image": "CONDITIONAL_PASS",
+    "10_engservice2": "MISSING_SOURCE",
+    "11_reproducibility": "PARTIAL_REPRODUCIBILITY",
+    "12_prohibited": "PASS"
+  },
+  "release_counts": {
+    "total_candidates": 831,
+    "review_required": 807,
+    "excluded_hold_date_missing_event": 24,
+    "release_possible_after_event_dates": "807 + (24건 날짜 확인 후 일부 가능)",
+    "release_blocked": 24
+  },
+  "defects_summary": {
+    "total": 9,
+    "HIGH": 0,
+    "MEDIUM": 2,
+    "LOW": 3,
+    "INFO": 4
+  },
+  "required_fixes_before_merge": [
+    "D-01: collection_summary.json에 KTO type 25 제외 사유 기록",
+    "D-02: KTO detail 수집으로 24건 이벤트 날짜 확인",
+    "D-03: 수집·정규화 스크립트 scripts/ 하위 커밋"
+  ],
+  "recommended_next_steps": [
+    "비지트경주 음식점·관광지 데이터 수집 (visitgyeongju.or.kr/kr/cuisine, /map)",
+    "KTO detailCommon2 + detailIntro2 수집 (raw/gyeongju/kto-detail/)",
+    "이미지 권리 상태 확인 (경주시 공공데이터 이용약관)"
+  ]
+}

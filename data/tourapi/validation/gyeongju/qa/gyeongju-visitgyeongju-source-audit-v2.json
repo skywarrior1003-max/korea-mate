@@ -1,0 +1,112 @@
+{
+  "task": "TASK-GYEONGJU-DATA-INDEPENDENT-QA-V2",
+  "section": "4_visitgyeongju_source_audit",
+  "executed_at": "2026-08-04T02:06:51Z",
+  "verdict": "NOT_COLLECTED",
+  "v3_collection_status": "NOT_COLLECTED",
+  "source_priority_implication": "source_priority 완전 적용 미완료 — 비지트경주 데이터 미수집 상태",
+  "site_accessible": true,
+  "language_channels": {
+    "ko": "https://visitgyeongju.or.kr/kr",
+    "en": "https://visitgyeongju.or.kr/",
+    "jp": "https://visitgyeongju.or.kr/jp",
+    "chs": "https://visitgyeongju.or.kr/zh",
+    "cht": "https://visitgyeongju.or.kr/tw"
+  },
+  "content_structure": {
+    "restaurant_list_url": "/kr/cuisine/search",
+    "restaurant_detail_url": "/kr/cuisine/view/[hex_id]",
+    "attraction_list_url": "/kr/map/search",
+    "attraction_detail_url": "/kr/map/view/[hex_id]",
+    "theme_url": "/kr/tema",
+    "event_url": "/kr/highlights/event",
+    "content_id_format": "hex-encoded alphanumeric string (예: 535f404006030940084003464c51464449)",
+    "content_id_compatible_with_tourapi": false,
+    "linkage_method_required": "업체명+주소 퍼지 매칭 (contentId 직접 조인 불가)"
+  },
+  "restaurant_filters": {
+    "food_type": [
+      "한식",
+      "중식",
+      "일식",
+      "양식",
+      "아시아음식",
+      "중동음식",
+      "뷔페식",
+      "카페",
+      "기타"
+    ],
+    "district": [
+      "황리단길",
+      "경주시내권",
+      "보문관광단지",
+      "불국사권"
+    ],
+    "atmosphere": [
+      "로맨틱",
+      "캐주얼",
+      "아늑함",
+      "조용함",
+      "유행하는스타일",
+      "현대적",
+      "한국전통적",
+      "레트로"
+    ],
+    "service": [
+      "예약",
+      "배달",
+      "주차",
+      "아침식사",
+      "화장실",
+      "WiFi",
+      "유아의자",
+      "놀이방",
+      "반려동물",
+      "휠체어석",
+      "1인석",
+      "개인룸",
+      "단체석",
+      "야외석"
+    ],
+    "dietary_foreign": [
+      "할랄",
+      "채식(베지테리안)",
+      "알레르기정보",
+      "영어서비스",
+      "외국어메뉴"
+    ],
+    "payment": [
+      "지역화폐",
+      "국제카드",
+      "알리페이"
+    ],
+    "trend": [
+      "드라마·영화촬영지",
+      "뷰맛집",
+      "사진맛집",
+      "TV출연",
+      "신규개업",
+      "특별메뉴",
+      "주류다양성"
+    ]
+  },
+  "v3_candidate_link_check": {
+    "any_candidate_has_visitgyeongju_source": false,
+    "any_candidate_has_visitgyeongju_url": null,
+    "note": "enriched candidates source 필드에 visitgyeongju 없음. 연결 관계 없음."
+  },
+  "next_collection_notes": {
+    "endpoint_cuisine": "https://visitgyeongju.or.kr/kr/cuisine/search",
+    "endpoint_cuisine_detail": "https://visitgyeongju.or.kr/kr/cuisine/view/[id]",
+    "endpoint_map": "https://visitgyeongju.or.kr/kr/map/search",
+    "linkage_key": "업체명+주소 매칭 (CON_UID/contentId 직접 조인 불가)",
+    "filter_attributes_for_candidates": [
+      "district (황리단길/시내권/보문/불국사)",
+      "food_type",
+      "dietary_foreign (할랄/채식/영어서비스/외국어메뉴)",
+      "service (예약/주차/아침식사/휠체어 등)",
+      "payment (국제카드/알리페이)"
+    ],
+    "not_in_scope_v3": true
+  }
+}
