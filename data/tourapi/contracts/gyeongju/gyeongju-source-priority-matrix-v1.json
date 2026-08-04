@@ -1,0 +1,166 @@
+{
+  "task": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
+  "created_at": "2026-08-04T09:00:00Z",
+  "fields": [
+    {
+      "field": "관광지_목록_및_공식_존재여부",
+      "primary": "경주시 GJ01 (touristDestinationService)",
+      "secondary": [
+        "KTO KorService2 type12",
+        "KTO type14"
+      ],
+      "web_role": "HOLD_DYNAMIC_CONTENT — JS 렌더링으로 현재 공개 여부 웹 확인 불가",
+      "conflict_rule": "GJ01에 있으면 공식 관광지로 처리. KTO에만 있으면 보강 후 candidate 유지."
+    },
+    {
+      "field": "권역_district_gyeongju",
+      "primary": "경주시 GJ01 TURSM_DSTRCT",
+      "secondary": [
+        "웹사이트 메뉴 구조 (HOLD)"
+      ],
+      "note": "GJ01이 6개 권역으로 분류(경주시내권/남산권/동해권/보문관광단지권/불국사권/서악북부권). 서악권·북부권 분리 필요 시 수동 보강."
+    },
+    {
+      "field": "관광지_이름_title_ko",
+      "primary": "경주시 GJ01 TRRSRT",
+      "secondary": [
+        "KTO title",
+        "웹사이트 (HOLD)"
+      ],
+      "conflict_rule": "GJ01 이름 우선. KTO 이름이 더 일반적이면 alias로 보존."
+    },
+    {
+      "field": "주소_address",
+      "primary": "경주시 GJ01 ADRES",
+      "secondary": [
+        "KTO addr1+addr2"
+      ],
+      "conflict_rule": "GJ01 우선. 도로명 vs 지번 충돌 시 도로명 우선."
+    },
+    {
+      "field": "좌표_lat_lng",
+      "primary": "KTO KorService2 type12/14 (mapx/mapy)",
+      "secondary": [],
+      "note": "GJ01이 좌표 미제공. KTO 좌표가 유일한 공식 구조화 좌표 원천. KTO 미수록 장소는 좌표 MISSING.",
+      "conflict_rule": "좌표 원천이 하나이므로 충돌 없음. KTO 없으면 null 처리."
+    },
+    {
+      "field": "전화번호_phone",
+      "primary": "경주시 GJ01 TELNO",
+      "secondary": [
+        "KTO tel"
+      ],
+      "conflict_rule": "GJ01 우선. 둘 다 있으면 GJ01을 primary로 기록하고 KTO를 secondary로 보존."
+    },
+    {
+      "field": "운영시간_opening_hours",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "KTO detailIntro2"
+      ],
+      "web_role": "현재 운영시간의 최신성 기준. JS 렌더링으로 현재 파일럿에서 접근 불가.",
+      "conflict_rule": "KTO detailIntro2 값 사용. 웹사이트 접근 가능 시 웹 값을 최신성 우선값으로 갱신."
+    },
+    {
+      "field": "입장료_admission",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "KTO detailIntro2 usefee"
+      ],
+      "conflict_rule": "웹이 최신. 현재 파일럿에서는 KTO 값 사용."
+    },
+    {
+      "field": "휴무일_closed",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "KTO restdate"
+      ],
+      "conflict_rule": "웹이 최신. 현재 파일럿에서는 KTO 값 사용."
+    },
+    {
+      "field": "관광지_설명_description_ko",
+      "primary": "경주시 GJ01 (이번 파일럿에서 null — API 필드 미제공)",
+      "secondary": [
+        "KTO detailCommon2 overview"
+      ],
+      "note": "GJ01 API가 설명 필드를 제공하지 않음. KTO overview를 설명 원천으로 사용. 이용허락범위 제한 없음.",
+      "conflict_rule": "KTO overview 사용. 공공누리 유형 기록."
+    },
+    {
+      "field": "관광지_이미지_image_url",
+      "primary": "경주시 GJ03·GJ04·GJ05 이미지 API (이용허락범위 제한 없음)",
+      "secondary": [
+        "KTO firstimage (Type1만)"
+      ],
+      "note": "GJ03-05가 이미지 API 직접 제공. 이미지와 장소 연결은 관광지명 기준 매칭 필요.",
+      "conflict_rule": "GJ 이미지 API 우선. 없으면 KTO Type1 이미지 사용."
+    },
+    {
+      "field": "이달의_추천여행지",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [],
+      "note": "JS 렌더링으로 현재 파일럿에서 접근 불가. 추후 정적 URL 또는 headless browser 필요."
+    },
+    {
+      "field": "여행코스",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "KTO type25 (단일 POI 아님 — DOCUMENTED_EXCLUSION)"
+      ],
+      "note": "코스는 단일 POI candidate가 아닌 코스 레코드로 별도 처리."
+    },
+    {
+      "field": "세계유산_UNESCO",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "KTO 특수 분류",
+        "GJ01 (세계유산 구분 미제공)"
+      ],
+      "note": "세계유산 지정 여부는 UNESCO 및 국가유산청 공식 지정 목록 기준. GJ01 API는 분류 없음."
+    },
+    {
+      "field": "문화관광해설",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [],
+      "note": "해설 운영 정보는 경주시 공식 해설 프로그램 안내 페이지 기준. JS 렌더링으로 접근 불가."
+    },
+    {
+      "field": "야경정보",
+      "primary": "경주시 GJ06 (theNightViewService) — 이용허락범위 제한 없음",
+      "secondary": [
+        "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)"
+      ],
+      "note": "GJ06이 야경 장소 10건 직접 제공. API 직접 원천으로 사용."
+    },
+    {
+      "field": "행사_축제_현재_예정",
+      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "secondary": [
+        "경주시 행사 공공데이터 API (미발견)",
+        "KTO type15 (모두 과거·날짜 미확인)"
+      ],
+      "note": "현재 KTO type15 24건 전부 HOLD_PAST_EVENT 또는 HOLD_DATE_MISSING_EVENT. 현재·예정 행사는 웹 또는 별도 API 필요."
+    },
+    {
+      "field": "식당_및_기념품",
+      "primary": "비지트경주 (visitgyeongju.or.kr) — 이전 파일럿 완료",
+      "secondary": [
+        "경주시 GJ08·GJ09",
+        "KTO type39"
+      ],
+      "note": "식당·기념품은 이전 visitgyeongju 파일럿 범위. 이번 태스크 비중 낮음."
+    },
+    {
+      "field": "식당_다국어_속성",
+      "primary": "비지트경주 (visitgyeongju.or.kr) — 5개 언어 hexID 구조",
+      "secondary": [],
+      "note": "이전 파일럿 완료."
+    },
+    {
+      "field": "전국_공통_ID_및_누락_보강",
+      "primary": "KTO KorService2",
+      "secondary": [],
+      "note": "KTO contentId가 전국 통합 ID. 경주시 API 미수록 장소의 보강 원천."
+    }
+  ]
+}

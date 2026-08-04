@@ -1,12 +1,12 @@
 {
-  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
-  "base_task": "TASK-GYEONGJU-REPRODUCIBILITY-FINALIZE-V1",
+  "task": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
+  "base_task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
   "city": "경주",
-  "version": "v1-visitgyeongju-pilot",
+  "version": "v1-culture-tourism-pilot",
   "created_at": "2026-08-04T03:28:03Z",
-  "branch": "data/gyeongju-visitgyeongju-pilot-v1",
-  "base_branch": "data/gyeongju-reproducibility-finalize-v1",
-  "base_head": "44b2c4f",
+  "branch": "data/gyeongju-culture-tourism-pilot-v1",
+  "base_branch": "data/gyeongju-visitgyeongju-pilot-v1",
+  "base_head": "5a90439",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",
     "D-02": "행사 24건 KTO detailCommon2+detailIntro2 수집, 날짜현재성 보강",
@@ -327,7 +327,84 @@
       "sha256": "bf8c003800ea9b01848ab771837b2c175d0f20c9724a18a6fd3ce0c54a850a61",
       "size_bytes": 6252,
       "note": "PENDING: 작업 문서"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v1.json",
+      "category": "contracts",
+      "sha256": "5e281edac4f8b3af5eb2f9623ad67264ab756cebf9e7818b7d63157af36a6786",
+      "size_bytes": 7903,
+      "note": "경주문화관광 소스 계약 v1"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-source-priority-matrix-v1.json",
+      "category": "contracts",
+      "sha256": "b65da6b5ad69dd38ce659bc75e49c6d982aa893700dfc9f62f3bb7d7fe9ddc67",
+      "size_bytes": 6822,
+      "note": "분야별 소스 우선순위 매트릭스"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-tourism-place-pilot-v1.jsonl",
+      "category": "pilot",
+      "sha256": "5f72979209546f32d429e3205ecedc4910f3e64d2275913d422e077593b78cfa",
+      "size_bytes": 23297,
+      "note": "관광지 파일럿 20건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v1.jsonl",
+      "category": "pilot",
+      "sha256": "c323324c9a64197604f040c775ddc6500664f03ad2136310a95f775be5b4cf6f",
+      "size_bytes": 17659,
+      "note": "행사 파일럿 (KTO24건+웹HOLD)"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-recommendation-course-pilot-v1.jsonl",
+      "category": "pilot",
+      "sha256": "72b3dfd41b5e146b098eb55985d8c74e1ffc6ad58f246ebfc76ebaff1cf1ca29",
+      "size_bytes": 9825,
+      "note": "야경·전망포인트·코스(HOLD) 파일럿"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-api-web-link-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "6a22a9c30e8e88edc8d2b380faffab96c59b45183dcd4228f7fc4e8da636a4c8",
+      "size_bytes": 16794,
+      "note": "API↔웹 연결 감사 20건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-candidate-link-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "3d695985f55efd4659ebabe5af7298bc4fb5241f8d5bf38ee49560ec950ce903",
+      "size_bytes": 10273,
+      "note": "candidate 연결 감사 20건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "7a9fcff0776ddfa3ca7e4ef272b243125cc8062a29a77b1139a68f06213e7dd8",
+      "size_bytes": 11981,
+      "note": "행사 현재성 감사 24건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-image-description-rights-audit-v1.json",
+      "category": "validation",
+      "sha256": "c86772d080e9e2ae937b2f43bd7fa6a0471f55b82b0ce5084af0ee6d5e844f06",
+      "size_bytes": 4942,
+      "note": "이미지·설명 권리 감사"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-culture-tourism-pilot-summary-v1.json",
+      "category": "reports",
+      "sha256": "64d8ad7a4595ad0de8140f48b3d55b024a0e36ee55937823f6eaa5fa6a393e8a",
+      "size_bytes": 7595,
+      "note": "파일럿 요약 보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-source-contract-and-pilot-v1.md",
+      "category": "docs",
+      "sha256": "d6345406ed364e738e661cbf77394d2fd66b1a98376ac4016b493b7ee943cf8b",
+      "size_bytes": 9993,
+      "note": "작업 문서"
     }
   ],
-  "manifest_sha256": "141483f3a8950af157863564d96d9e6c71464934b90107327678933ff6b22621"
+  "manifest_sha256": "d35a93a3d7d484220041b4580dc19ca21b511c5312efb5ea93dcdb59a4ff3556"
 }

@@ -1,0 +1,131 @@
+{
+  "task": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
+  "created_at": "2026-08-04T09:00:00Z",
+  "gj_image_api_coverage": {
+    "GJ03_시내권": {
+      "total": 680,
+      "rights": "이용허락범위: 제한 없음",
+      "verdict": "OFFICIAL_API_IMAGE_USABLE"
+    },
+    "GJ04_보문권": {
+      "total": 560,
+      "rights": "이용허락범위: 제한 없음",
+      "verdict": "OFFICIAL_API_IMAGE_USABLE"
+    },
+    "GJ05_남산권": {
+      "total": 52,
+      "rights": "이용허락범위: 제한 없음",
+      "verdict": "OFFICIAL_API_IMAGE_USABLE"
+    },
+    "동해권": {
+      "total": 0,
+      "note": "이미지 API 없음"
+    },
+    "불국사권": {
+      "total": 0,
+      "note": "이미지 API 없음"
+    },
+    "서악북부권": {
+      "total": 0,
+      "note": "이미지 API 없음"
+    }
+  },
+  "gj_image_total": 1292,
+  "gj_image_place_link_method": "관광지명 기반 매칭 필요 (장소-이미지 직접 연결 키 없음)",
+  "kto12_image_stats": {
+    "total_type12": 143,
+    "with_image": 121,
+    "without_image": 22,
+    "cpyright_dist": {
+      "": 22,
+      "Type1": 47,
+      "Type3": 74
+    },
+    "Type1_verdict": "KTO_IMAGE_USABLE (공공누리 1유형 — 출처 표시 후 자유 이용)",
+    "Type3_verdict": "HOLD — 저작권 확인 필요",
+    "NONE_verdict": "HOLD — 권리 정보 없음"
+  },
+  "web_image_policy": "WEB_ONLY_IMAGE_NOT_COLLECTED — 웹사이트 전용 이미지 저장 금지",
+  "description_policy": {
+    "GJ01_API": "설명 필드 미제공 (description_ko=null)",
+    "KTO_overview": "OFFICIAL_API_IMAGE_USABLE — 이용허락범위 제한 없음",
+    "web_description": "웹페이지 장문 설명 직접 복제 금지 — JS 렌더링이므로 현재 파일럿에서 해당 없음"
+  },
+  "image_url_validity": "미확인 (이번 파일럿에서 URL 다운로드 금지)",
+  "pilot_sample": [
+    {
+      "place": "첨성대",
+      "district": "경주시내권",
+      "gj_image_api": "GJ03",
+      "gj_image_total_in_area": 680,
+      "gj_image_place_linked": "이름 기반 연결 필요 — 직접 검증 미완료",
+      "gj_image_rights": "OFFICIAL_API_IMAGE_USABLE (이용허락범위: 제한 없음)",
+      "kto_image": true,
+      "kto_cpyright": "Type1",
+      "broken_url_check": "미확인 (이번 파일럿에서 URL 다운로드 금지)",
+      "verdict": "OFFICIAL_API_IMAGE_USABLE",
+      "note": "GJ03 시내권 이미지 API에서 장소명 매칭 필요. 이용허락범위 제한 없음."
+    },
+    {
+      "place": "불국사",
+      "district": "불국사권",
+      "gj_image_api": null,
+      "gj_image_total_in_area": 0,
+      "gj_image_place_linked": null,
+      "gj_image_rights": null,
+      "kto_image": false,
+      "kto_cpyright": null,
+      "broken_url_check": "해당 없음",
+      "verdict": "IMAGE_IDENTITY_REVIEW",
+      "note": "불국사권 이미지 API(GJ03~GJ05) 없음. KTO type12에 불국사 미수록. 이미지 원천 미확인."
+    },
+    {
+      "place": "석굴암",
+      "district": "불국사권",
+      "gj_image_api": null,
+      "gj_image_total_in_area": 0,
+      "gj_image_place_linked": null,
+      "gj_image_rights": null,
+      "kto_image": false,
+      "kto_cpyright": null,
+      "broken_url_check": "해당 없음",
+      "verdict": "IMAGE_IDENTITY_REVIEW",
+      "note": "석굴암 이미지 원천 미확인. KTO type12 미수록."
+    },
+    {
+      "place": "동궁과 월지",
+      "district": "경주시내권",
+      "gj_image_api": "GJ03",
+      "gj_image_total_in_area": 680,
+      "gj_image_place_linked": "이름 기반 연결 필요",
+      "gj_image_rights": "OFFICIAL_API_IMAGE_USABLE",
+      "kto_image": true,
+      "kto_cpyright": "Type3",
+      "broken_url_check": "미확인",
+      "verdict": "OFFICIAL_API_IMAGE_USABLE",
+      "note": "GJ03 API 이미지 사용 가능. KTO Type3는 HOLD."
+    },
+    {
+      "place": "양동마을",
+      "district": "서악북부권",
+      "gj_image_api": null,
+      "gj_image_total_in_area": 0,
+      "gj_image_place_linked": null,
+      "gj_image_rights": null,
+      "kto_image": true,
+      "kto_cpyright": "미확인",
+      "broken_url_check": "미확인",
+      "verdict": "IMAGE_IDENTITY_REVIEW",
+      "note": "서악북부권 이미지 API 없음. KTO 이미지 권리 유형 확인 필요."
+    }
+  ],
+  "pilot_verdicts": {
+    "OFFICIAL_API_IMAGE_USABLE": 2,
+    "IMAGE_IDENTITY_REVIEW": 3,
+    "KTO_IMAGE_USABLE": 0,
+    "BROKEN_IMAGE_URL": 0,
+    "WEB_ONLY_IMAGE_NOT_COLLECTED": 0,
+    "NO_IMAGE": 0
+  },
+  "note": "GJ01 API가 이미지를 제공하지 않음. GJ03-05는 구역별 이미지를 제공하지만 개별 장소와의 직접 연결 키가 없어 이름 기반 매칭 필요. 불국사권·동해권·서악북부권은 GJ 이미지 API 없음."
+}
