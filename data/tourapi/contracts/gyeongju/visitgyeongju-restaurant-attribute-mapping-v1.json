@@ -1,0 +1,419 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "verified_at": "2026-08-04",
+  "source": "visitgyeongju.or.kr/cuisine/search (KO/EN/JP 전수 확인)",
+  "note": "태스크에서 '27종'으로 언급된 필터는 서비스 필터 24종 기준 추정. 실제 전체 옵션: 59종.",
+  "filter_groups": {
+    "메뉴": {
+      "ko": "메뉴",
+      "en": "Menu/Cuisine Type",
+      "jp": "メニュー",
+      "type": "multi_select_category",
+      "options": [
+        {
+          "ko": "한식",
+          "en": "Korean",
+          "jp": "韓国料理",
+          "zh": "韩式料理",
+          "tw": "韓式料理"
+        },
+        {
+          "ko": "중식",
+          "en": "Chinese",
+          "jp": "中華料理",
+          "zh": "中华料理",
+          "tw": "中華料理"
+        },
+        {
+          "ko": "일식",
+          "en": "Japanese",
+          "jp": "日本料理",
+          "zh": "日式料理",
+          "tw": "日式料理"
+        },
+        {
+          "ko": "양식",
+          "en": "Western",
+          "jp": "洋食",
+          "zh": "西餐",
+          "tw": "西餐"
+        },
+        {
+          "ko": "아시아음식",
+          "en": "Asian",
+          "jp": "アジア料理",
+          "zh": "亚洲料理",
+          "tw": "亞洲料理"
+        },
+        {
+          "ko": "중동음식",
+          "en": "Middle Eastern",
+          "jp": "中東料理",
+          "zh": "中东料理",
+          "tw": "中東料理"
+        },
+        {
+          "ko": "뷔페식",
+          "en": "Buffet",
+          "jp": "ビュッフェ形式",
+          "zh": "自助餐",
+          "tw": "自助餐"
+        },
+        {
+          "ko": "카페",
+          "en": "Cafe",
+          "jp": "カフェ",
+          "zh": "咖啡馆",
+          "tw": "咖啡館"
+        },
+        {
+          "ko": "기타",
+          "en": "Others",
+          "jp": "その他",
+          "zh": "其他",
+          "tw": "其他"
+        }
+      ]
+    },
+    "지역": {
+      "ko": "지역",
+      "en": "Region",
+      "jp": "地域",
+      "type": "multi_select_category",
+      "options": [
+        {
+          "ko": "황리단길",
+          "en": "Hwangnidan-gil",
+          "jp": "ファンニダンギル"
+        },
+        {
+          "ko": "경주시내권",
+          "en": "Gyeongju Downtown",
+          "jp": "慶州市街地"
+        },
+        {
+          "ko": "보문관광단지",
+          "en": "Bomun Tourist Complex",
+          "jp": "普門観光団地"
+        },
+        {
+          "ko": "불국사권",
+          "en": "Bulguksa Temple Area",
+          "jp": "仏国寺エリア"
+        }
+      ]
+    },
+    "분위기": {
+      "ko": "분위기",
+      "en": "Atmosphere",
+      "jp": "雰囲気",
+      "type": "multi_select_category",
+      "options": [
+        {
+          "ko": "로맨틱",
+          "en": "Romantic",
+          "jp": "ロマンチック"
+        },
+        {
+          "ko": "캐주얼",
+          "en": "Casual",
+          "jp": "カジュアル"
+        },
+        {
+          "ko": "아늑함",
+          "en": "Cozy",
+          "jp": "居心地がよい"
+        },
+        {
+          "ko": "조용함",
+          "en": "Quiet",
+          "jp": "静か"
+        },
+        {
+          "ko": "유행하는 스타일",
+          "en": "Trendy",
+          "jp": "トレンディ"
+        },
+        {
+          "ko": "현대적",
+          "en": "Modern",
+          "jp": "モダン"
+        },
+        {
+          "ko": "한국전통적",
+          "en": "Traditional Korean",
+          "jp": "韓国伝統の雰囲気"
+        },
+        {
+          "ko": "레트로",
+          "en": "Retro",
+          "jp": "レトロ"
+        }
+      ]
+    },
+    "서비스": {
+      "ko": "서비스",
+      "en": "Service Features",
+      "jp": "サービス",
+      "type": "multi_select_boolean",
+      "note": "개별 식당 상세에 체크된 항목으로 실제 제공 여부 확인 가능. 전체 24종.",
+      "options": [
+        {
+          "ko": "예약",
+          "en": "Reservation",
+          "gokm_attr": "reservation",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "배달가능",
+          "en": "Delivery Available",
+          "gokm_attr": "delivery",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "주차가능",
+          "en": "Parking Available",
+          "gokm_attr": "parking",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "아침식사 가능",
+          "en": "Breakfast Available",
+          "gokm_attr": "meal_period.breakfast",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "남/여 화장실 구분",
+          "en": "Separate Restrooms",
+          "gokm_attr": "restroom_separated",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "무선인터넷",
+          "en": "Wi-Fi",
+          "gokm_attr": "wifi",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "유아의자",
+          "en": "High Chair",
+          "gokm_attr": "family_support.high_chair",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "놀이방",
+          "en": "Playroom",
+          "gokm_attr": "family_support.playroom",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "반려동물 동반",
+          "en": "Pet-Friendly",
+          "gokm_attr": "pet_friendly",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "좌석 휠체어",
+          "en": "Wheelchair Seating",
+          "gokm_attr": "accessibility.wheelchair_seating",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "1인석",
+          "en": "Single Seat",
+          "gokm_attr": "seating.single_seat",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "룸",
+          "en": "Private Rooms",
+          "gokm_attr": "seating.private_room",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "단체석",
+          "en": "Group Seating",
+          "gokm_attr": "seating.group",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "야외 좌석",
+          "en": "Outdoor Seating",
+          "gokm_attr": "seating.outdoor",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "할랄푸드",
+          "en": "Halal",
+          "gokm_attr": "dietary_support.halal",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "베지테리안",
+          "en": "Vegetarian",
+          "gokm_attr": "dietary_support.vegetarian",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "알러지 정보 제공",
+          "en": "Allergen Info",
+          "gokm_attr": "dietary_support.allergen_info",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "영어 응대 가능",
+          "en": "English Service",
+          "gokm_attr": "language_support.english",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "외국어 메뉴",
+          "en": "Foreign Language Menu",
+          "gokm_attr": "language_support.foreign_menu",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "커피",
+          "en": "Coffee",
+          "gokm_attr": "menu_type.coffee",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "베이커리",
+          "en": "Bakery",
+          "gokm_attr": "menu_type.bakery",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "지역화폐",
+          "en": "Gyeongju Pay",
+          "gokm_attr": "payment_support.local_currency",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "해외카드",
+          "en": "International Cards",
+          "gokm_attr": "payment_support.international_card",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "알리페이",
+          "en": "Alipay",
+          "gokm_attr": "payment_support.alipay",
+          "mapping": "VALIDATED_MAPPING"
+        }
+      ]
+    },
+    "트렌딩": {
+      "ko": "트렌딩",
+      "en": "Trending/Featured",
+      "jp": "Trending Picks",
+      "type": "multi_select_category",
+      "options": [
+        {
+          "ko": "K-드라마, 영화",
+          "en": "K-Drama/Film",
+          "gokm_attr": "traveler_context.kdrama_location",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "뷰 맛집",
+          "en": "Great View",
+          "gokm_attr": "atmosphere.view",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "사진 맛집",
+          "en": "Instagrammable Spot",
+          "gokm_attr": "atmosphere.photogenic",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "TV맛집",
+          "en": "Featured on TV",
+          "gokm_attr": "traveler_context.tv_featured",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "새로 오픈",
+          "en": "Newly Opened",
+          "gokm_attr": "traveler_context.newly_opened",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "특별한 메뉴",
+          "en": "Special Menu",
+          "gokm_attr": "menu_type.special",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "다양한 술",
+          "en": "Wide Selection of Drinks",
+          "gokm_attr": "menu_type.alcohol_variety",
+          "mapping": "PROVISIONAL_MAPPING"
+        }
+      ]
+    },
+    "purpose_tags": {
+      "ko": "이용 목적 (상세 페이지 전용)",
+      "en": "Purpose/Occasion Tags (detail page only)",
+      "type": "multi_select_category",
+      "note": "검색 필터에 없고 상세 페이지에만 표시. 수집 시 detail page fetch 필요.",
+      "options": [
+        {
+          "ko": "가족",
+          "en": "Family",
+          "gokm_attr": "traveler_context.family",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "모임",
+          "en": "Gathering",
+          "gokm_attr": "traveler_context.group",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "데이트",
+          "en": "Date",
+          "gokm_attr": "traveler_context.couple",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "어린이",
+          "en": "Children",
+          "gokm_attr": "traveler_context.children",
+          "mapping": "VALIDATED_MAPPING"
+        },
+        {
+          "ko": "비즈니스",
+          "en": "Business",
+          "gokm_attr": "traveler_context.business",
+          "mapping": "MEANING_REVIEW_REQUIRED",
+          "meaning_note": "원천에 '비즈니스' 레이블만 있음. business_friendly=true 자동 확정 금지. 실제 의미 추가 확인 필요."
+        },
+        {
+          "ko": "회식",
+          "en": "Company Dinner",
+          "gokm_attr": "traveler_context.company_dinner",
+          "mapping": "PROVISIONAL_MAPPING"
+        },
+        {
+          "ko": "기념일",
+          "en": "Anniversary",
+          "gokm_attr": "traveler_context.anniversary",
+          "mapping": "PROVISIONAL_MAPPING"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "filter_groups_count": 6,
+    "total_options": 59,
+    "service_filter_count": 24,
+    "VALIDATED_MAPPING": 21,
+    "PROVISIONAL_MAPPING": 12,
+    "MEANING_REVIEW_REQUIRED": 1,
+    "NOT_APPLICABLE": 0,
+    "task_27_note": "태스크 '27종' = 서비스 필터 24종 + 주요 목적 태그 일부의 근사치로 추정. 실제 서비스: 24종, 전체: 59종."
+  }
+}

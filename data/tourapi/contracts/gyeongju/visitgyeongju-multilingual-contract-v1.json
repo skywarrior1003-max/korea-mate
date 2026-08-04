@@ -1,0 +1,101 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "verified_at": "2026-08-04",
+  "language_channels": {
+    "KO": {
+      "prefix": "/kr",
+      "base_url": "https://visitgyeongju.or.kr/kr",
+      "verified": true
+    },
+    "EN": {
+      "prefix": "/",
+      "base_url": "https://visitgyeongju.or.kr",
+      "verified": true
+    },
+    "JP": {
+      "prefix": "/jp",
+      "base_url": "https://visitgyeongju.or.kr/jp",
+      "verified": true
+    },
+    "CHS": {
+      "prefix": "/zh",
+      "base_url": "https://visitgyeongju.or.kr/zh",
+      "verified": true
+    },
+    "CHT": {
+      "prefix": "/tw",
+      "base_url": "https://visitgyeongju.or.kr/tw",
+      "verified": true
+    }
+  },
+  "id_consistency": {
+    "verdict": "SHARED_HEX_ID",
+    "note": "동일 hexID가 5개 언어 prefix에서 모두 동작. 언어별 별도 ID 없음.",
+    "link_method_rank": 1,
+    "link_method": "공식 공통 콘텐츠 ID (hexID) 사용",
+    "verified_example": {
+      "hexID": "535f4040060509400a4903494651464c4d",
+      "KO_name": "향화정",
+      "EN_name": "Hyanghwajeong",
+      "JP_name": "ヒャンファジョン",
+      "CHS_name": "乡花亭",
+      "CHT_name": "鄉花亭",
+      "KO_address": "경주시 사정로 57번길 17",
+      "EN_address": "17 Sajeong-ro 57beon-gil, Gyeongju-si",
+      "JP_address": "慶州市沙正路57番キル17",
+      "CHS_address": "庆州市沙正路57号街17",
+      "CHT_address": "慶州市沙正路57號街17",
+      "phone_consistent": true,
+      "hours_consistent": true
+    }
+  },
+  "translation_coverage_pilot": {
+    "sample_size": 1,
+    "name_translated": {
+      "KO": true,
+      "EN": true,
+      "JP": true,
+      "CHS": true,
+      "CHT": true
+    },
+    "address_translated": {
+      "KO": true,
+      "EN": true,
+      "JP": true,
+      "CHS": true,
+      "CHT": true
+    },
+    "phone_same_across_langs": true,
+    "hours_same_across_langs": true,
+    "service_tags_translated": {
+      "KO": true,
+      "EN": true,
+      "JP": true,
+      "CHS": true,
+      "CHT": true
+    },
+    "description_available": {
+      "KO": true,
+      "EN": true,
+      "JP": "미확인",
+      "CHS": "미확인",
+      "CHT": "미확인"
+    },
+    "note": "단일 샘플(향화정) 기준. 전체 번역 완성도는 전수 수집 후 재평가 필요."
+  },
+  "language_switch": {
+    "mechanism": "URL prefix 변경",
+    "direct_navigation": true,
+    "note": "상세 페이지 내 언어 전환 링크 확인됨. 동일 hexID로 다국어 직접 접근 가능."
+  },
+  "known_gaps": [
+    "번역 완성도 미전수 확인",
+    "언어별 콘텐츠 수 차이 미확인 (JS 로딩으로 목록 수 파악 불가)",
+    "JP/CHS/CHT 설명 번역 완성도 미확인"
+  ],
+  "kto_comparison": {
+    "kto_engservice2_gyeongju": "0건 (areaCode=35, sigunguCode=2)",
+    "visitgyeongju_en": "EN 채널 독자 콘텐츠 존재. 혼동 금지.",
+    "note": "KTO EngService2 경주 0건과 visitgyeongju 영어 채널은 완전히 별개의 데이터 소스."
+  }
+}

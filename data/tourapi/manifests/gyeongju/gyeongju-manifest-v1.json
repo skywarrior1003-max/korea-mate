@@ -1,12 +1,12 @@
 {
-  "task": "TASK-GYEONGJU-REPRODUCIBILITY-FINALIZE-V1",
-  "base_task": "TASK-GYEONGJU-QA-FIXES-AND-EVENT-DETAIL-V1",
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "base_task": "TASK-GYEONGJU-REPRODUCIBILITY-FINALIZE-V1",
   "city": "경주",
-  "version": "v1-reproducibility",
+  "version": "v1-visitgyeongju-pilot",
   "created_at": "2026-08-04T03:28:03Z",
-  "branch": "data/gyeongju-reproducibility-finalize-v1",
-  "base_branch": "data/gyeongju-qa-fixes-v1",
-  "base_head": "6811749",
+  "branch": "data/gyeongju-visitgyeongju-pilot-v1",
+  "base_branch": "data/gyeongju-reproducibility-finalize-v1",
+  "base_head": "44b2c4f",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",
     "D-02": "행사 24건 KTO detailCommon2+detailIntro2 수집, 날짜현재성 보강",
@@ -264,7 +264,70 @@
       "sha256": "7d33b91c2da2f5e02853fd69b841e3bce39b82dc5d79d7ee85422fa848bfa3a5",
       "size_bytes": 11046,
       "note": "D-03 저장소 편입 스크립트"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-source-contract-v1.json",
+      "category": "contracts",
+      "sha256": "b2d378b1fba1aa6b5569cd0bbe3198edc6e48c6404b0d63798fbb89486193d1c",
+      "size_bytes": 4865,
+      "note": "소스 계약 v1"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-multilingual-contract-v1.json",
+      "category": "contracts",
+      "sha256": "0b535d08e49ea9f4a7a11ab0c0b7691ce57dd98b1d4d113a903e2f2f8f57e18a",
+      "size_bytes": 3139,
+      "note": "다국어 계약 v1"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-restaurant-attribute-mapping-v1.json",
+      "category": "contracts",
+      "sha256": "5b26ea83848377692035c673fcc74b453bde5442f45782fcad4e7dec2475b5ad",
+      "size_bytes": 12176,
+      "note": "식당 필터 속성 매핑"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/visitgyeongju-pilot-records-v1.jsonl",
+      "category": "pilot",
+      "sha256": "ddee994d2829b7f8cd91415572725d2787e595da3c9642c9826f738f6dcd4e57",
+      "size_bytes": 20322,
+      "note": "파일럿 레코드 23건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-language-link-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "7433c3adb2a332da5fbd172240ed3d3085330e7a1e2f038e74df8ac83671d28b",
+      "size_bytes": 13120,
+      "note": "언어 연결 감사 10건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-candidate-link-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "ffad7cd8022aa0d46527472f5a677db83e0c77e7303d7c4ef3691953062dcc7c",
+      "size_bytes": 5150,
+      "note": "candidate 연결 감사 10건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-filter-audit-v1.json",
+      "category": "validation",
+      "sha256": "6e58ede491e51528be0ef187cdbfa7a3a75b54d46f48e20bdd396f09af0ffbef",
+      "size_bytes": 972,
+      "note": "필터 감사"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/visitgyeongju-pilot-summary-v1.json",
+      "category": "reports",
+      "sha256": "70c08c1462e4ffb7bab68a9abc2e5f722e13a19832dbf114ca835869c38987bd",
+      "size_bytes": 6081,
+      "note": "파일럿 요약"
+    },
+    {
+      "path": "docs/tourapi/visitgyeongju-source-contract-and-pilot-v1.md",
+      "category": "docs",
+      "sha256": "bf8c003800ea9b01848ab771837b2c175d0f20c9724a18a6fd3ce0c54a850a61",
+      "size_bytes": 6252,
+      "note": "PENDING: 작업 문서"
     }
   ],
-  "manifest_sha256": "9771523cecec918548fe809d86c00bd27e3939e7d2f4a377b2df7dfc0da7b1c7"
+  "manifest_sha256": "141483f3a8950af157863564d96d9e6c71464934b90107327678933ff6b22621"
 }

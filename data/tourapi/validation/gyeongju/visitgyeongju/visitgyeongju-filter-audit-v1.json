@@ -1,0 +1,27 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "verified_at": "2026-08-04",
+  "total_filter_groups": 6,
+  "total_options": 59,
+  "service_filter_count": 24,
+  "ambiguous_filters": [
+    {
+      "filter_ko": "비즈니스",
+      "status": "MEANING_REVIEW_REQUIRED",
+      "reason": "공식 원천에 '비즈니스' 태그만 있고 설명 없음. business_friendly=true 자동 확정 금지.",
+      "observed_on": [
+        "어향원",
+        "요석궁식당",
+        "맷돌순두부",
+        "진수성찬"
+      ]
+    }
+  ],
+  "unknown_handling": "value_absent → field_omitted (false 변환 금지)",
+  "filters_search_only": [],
+  "filters_detail_only": [
+    "purpose_tags (가족/모임/데이트/어린이/비즈니스/회식/기념일)"
+  ],
+  "arbitrary_interpretation_count": 0,
+  "verification_method": "KO/EN/JP 검색 페이지 필터 전수 대조 + 개별 상세 페이지 활성 태그 확인"
+}

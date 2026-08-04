@@ -1,0 +1,120 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "source_name": "Visit Gyeongju Official",
+  "source_type": "official_tourism_portal",
+  "operator": "경상북도 경주시 문화관광과 / HICO (경주화백컨벤션뷰로)",
+  "contact": "hjjoe06@hico.or.kr | 054-702-1059",
+  "base_url": "https://visitgyeongju.or.kr",
+  "verified_at": "2026-08-04",
+  "scope_focus": "식당·기념품·테마·행사 (관광지·숙박 별도 DB 없음)",
+  "access_conditions": {
+    "robots_txt": {
+      "url": "https://visitgyeongju.or.kr/robots.txt",
+      "content": "User-agent: *\nAllow: /",
+      "verdict": "COLLECTION_ALLOWED",
+      "note": "전체 허용. Disallow 없음. Crawl-delay 없음."
+    },
+    "terms_of_service": {
+      "explicit_scraping_prohibition": false,
+      "email_collection_prohibited": true,
+      "email_collection_note": "이메일 자동 수집 명시적 금지 (정보통신망법). 일반 콘텐츠 수집 금지 조항 없음.",
+      "copyright": "© 2025 VISIT GYEONGJU. All rights reserved.",
+      "copyright_note": "별도 공공누리 표시 없음. 이미지·설명 전문 재사용 권리 불명확.",
+      "privacy_policy_url": "https://knto.or.kr/helpdeskPolicyPrivacyHomepage",
+      "verdict": "RIGHTS_REVIEW_REQUIRED",
+      "structured_metadata_verdict": "METADATA_ONLY_ALLOWED",
+      "image_verdict": "RIGHTS_REVIEW_REQUIRED",
+      "description_verdict": "RIGHTS_REVIEW_REQUIRED",
+      "note": "robots.txt 전체 허용이나 All rights reserved 명시. 이미지·설명 전문 복제 불허. 구조화 메타데이터(ID·URL·주소·전화·운영시간·필터)는 METADATA_ONLY_ALLOWED."
+    },
+    "javascript_dependency": {
+      "verdict": "SIGNIFICANT",
+      "note": "이벤트·테마 목록이 JS 동적 렌더링으로 정적 HTML 접근 불가.",
+      "static_accessible": [
+        "cuisine/view/[hexID]",
+        "souvenir/view/[hexID]",
+        "map/view/[areaID]"
+      ],
+      "dynamic_only": [
+        "highlights/event",
+        "tema/search",
+        "highlights/media",
+        "highlights/video"
+      ]
+    },
+    "rate_limit_observed": "없음",
+    "login_required": false,
+    "api_endpoint_public": false
+  },
+  "content_scope": {
+    "in_scope_static": [
+      "cuisine",
+      "souvenir"
+    ],
+    "in_scope_hold_dynamic": [
+      "event",
+      "tema_story"
+    ],
+    "not_in_scope": [
+      "attraction",
+      "accommodation",
+      "cultural_site",
+      "museum",
+      "nature"
+    ],
+    "note": "visitgyeongju.or.kr는 식당·기념품 특화 포털. 관광지 DB 없음. 관광지 파일럿 요건은 이 소스에서 충족 불가."
+  },
+  "url_patterns": {
+    "lang_prefixes": {
+      "KO": "/kr",
+      "EN": "/",
+      "JP": "/jp",
+      "CHS": "/zh",
+      "CHT": "/tw"
+    },
+    "cuisine_list": "/{lang}/cuisine/search",
+    "cuisine_detail": "/{lang}/cuisine/view/{hexID}",
+    "souvenir_list": "/{lang}/souvenir/search",
+    "souvenir_detail": "/{lang}/souvenir/view/{hexID}",
+    "area_map": "/{lang}/map/view/{areaHexID}",
+    "hexID_example": "535f4040060509400a4903494651464c4d",
+    "area_hex_ids": {
+      "황리단길": "535f4040060309470b4500464251414c4c",
+      "경주시내권": "535f40410701084c0d4403434051464641",
+      "보문관광단지": "535f404006030940084003464c51464449",
+      "불국사권": "535f404006030940084002444551414140"
+    }
+  },
+  "content_id_system": {
+    "format": "hexadecimal string (34 chars)",
+    "cross_language": true,
+    "note": "동일 hexID가 5개 언어 모두에서 동작. 언어 prefix만 변경. 검증: 향화정 535f4040060509400a4903494651464c4d를 5개 언어에서 확인."
+  },
+  "collection_method": {
+    "approach": "HTTP GET 정적 HTML 파싱",
+    "js_rendering_required": false,
+    "requires_session_or_auth": false,
+    "image_download": "PROHIBITED (권리 불명확)",
+    "description_fulltext": "HOLD (권리 불명확)",
+    "recommended_interval_sec": 0.5,
+    "max_retries": 3,
+    "timeout_sec": 15
+  },
+  "estimated_scale": {
+    "황리단길_cuisine": "약 16건",
+    "경주시내권_cuisine": "약 40건",
+    "보문관광단지_cuisine": "약 31건",
+    "불국사권_cuisine": "미수집",
+    "total_cuisine_lower_bound": "87건+",
+    "souvenir_visible": "9건 이상",
+    "events": "미확인 (JS 동적)",
+    "themes": "미확인 (JS 동적)"
+  },
+  "full_collection_verdict": "READY_WITH_LIMITATIONS",
+  "full_collection_notes": [
+    "식당·기념품은 hexID 목록 확보 후 개별 fetch 가능",
+    "이벤트·테마는 JS 렌더링 필요 — headless browser 또는 API endpoint 탐색 후 판단",
+    "이미지·설명 전문 수집은 권리 확인 전 HOLD",
+    "관광지는 소스 외 범위"
+  ]
+}
