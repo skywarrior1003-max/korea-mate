@@ -19,8 +19,7 @@ export default function TopNav({ selectedCount }: TopNavProps) {
     <header className="hidden md:block bg-surface border-b border-line sticky top-0 z-40">
       <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="gkm-focus text-xl font-normal text-ink flex items-center gap-1.5">
-          <span aria-hidden className="text-2xl">🇰🇷</span>
-          go<span className="font-extrabold">korea</span>mate
+          <span className="font-black tracking-tight">gokoreamate</span>
         </Link>
         <nav aria-label="Primary desktop" className="flex items-center gap-6">
           <Link href="/explore/busan/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink transition-colors">

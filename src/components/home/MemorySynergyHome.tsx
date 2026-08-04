@@ -20,6 +20,7 @@ import type { SavedStoryCopy } from "./home-experience-types";
 import {
   DESIGN_PRIMARY, DESIGN_INK, DESIGN_SURFACE, DESIGN_SURFACE_LOW,
   DESIGN_OUTLINE, HERO_MAX_WIDTH,
+  FONT_SANS,
 } from "./home-visual";
 
 interface Props {
@@ -42,7 +43,7 @@ export default function MemorySynergyHome({ trip, moments, savedCopy = [], onPla
   const withPhoto = moments.filter(m => m.photo_data);
 
   return (
-    <div style={{ backgroundColor: DESIGN_SURFACE }}>
+    <div style={{ backgroundColor: DESIGN_SURFACE, fontFamily: FONT_SANS }}>
       <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
       {/* ── 여행 표지 ──────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">

@@ -2676,8 +2676,7 @@ export default function ItineraryPage() {
       <header className="border-b border-[#E5E7EA] bg-[#F6F7F8]/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
-            <span className="text-[#FF4A2D] text-3xl">🇰🇷</span>
-            go<span className="font-extrabold">korea</span>mate
+            <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
         </div>
       </header>

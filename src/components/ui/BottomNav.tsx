@@ -19,6 +19,13 @@ export interface BottomNavProps {
   selectedCount?: number; // 실측치만 — 없으면 배지 미표시 (no invented counts)
 }
 
+/**
+ * Home 승인 시안의 활성 색은 파랑이다. 다른 확정 화면은 코랄 체계를 쓰고 있어
+ * 전역으로 바꾸면 색 언어가 화면마다 어긋난다. 그래서 경로로만 갈라 준다 —
+ * Home 에서는 시안 파랑, 나머지는 기존 코랄.
+ */
+const HOME_ACTIVE = "#0041c8";
+
 /** 24x24 그리드, stroke 기반. 채우기를 쓰지 않아 얇은 인상을 유지한다 */
 const ICON: Record<string, React.ReactNode> = {
   home:    <><path d="M4 10.5L12 4l8 6.5" /><path d="M6 9.8V19a1 1 0 001 1h10a1 1 0 001-1V9.8" /></>,
@@ -39,6 +46,7 @@ const TABS = [
 export default function BottomNav({ selectedCount }: BottomNavProps) {
   const t = useTranslations("shell");
   const pathname = usePathname();
+  const onHome = pathname === "/";
 
   return (
     <nav
@@ -55,8 +63,9 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
             href={tab.href}
             aria-current={active ? "page" : undefined}
             className={`gkm-focus relative flex-1 flex flex-col items-center justify-center gap-1 min-h-15 py-2 ${
-              active ? "text-action" : "text-faint"
+              active ? (onHome ? "" : "text-action") : "text-faint"
             }`}
+            style={active && onHome ? { color: HOME_ACTIVE } : undefined}
           >
             <svg
               width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden
@@ -69,7 +78,10 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
               {t(tab.key)}
             </span>
             {tab.key === "picks" && typeof selectedCount === "number" && selectedCount > 0 && (
-              <span className="absolute top-1 right-[22%] min-w-4 h-4 px-1 rounded-full bg-action text-white text-[10px] font-bold flex items-center justify-center">
+              <span
+                className="absolute top-1 right-[22%] min-w-4 h-4 px-1 rounded-full text-white text-[10px] font-bold flex items-center justify-center"
+                style={{ backgroundColor: onHome ? HOME_ACTIVE : "var(--gkm-action-primary)" }}
+              >
                 {selectedCount > 99 ? "99+" : selectedCount}
               </span>
             )}

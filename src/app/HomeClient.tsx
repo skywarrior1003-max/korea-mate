@@ -895,19 +895,20 @@ export default function HomeClient() {
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
           <Link href="/" className="text-lg sm:text-xl font-normal text-gray-900 flex items-center gap-1 sm:gap-1.5 shrink min-w-0">
-            <span className="text-xl sm:text-2xl">🇰🇷</span>
-            go<span className="font-extrabold">korea</span>mate
+            <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
-            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">🍽️ Food Guide</Link>
+            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Food Guide</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
             <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
-            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">🧳 My Trips</Link>
+            <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">My Trips</Link>
+            {/* 데스크톱 CTA 도 Home 시안 색을 따른다. 이모지 라벨과 주황 버튼은
+                구버전 인상이 강해 Hero 보다 메뉴가 먼저 읽혔다 */}
             <button
               onClick={() => document.getElementById("planner")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#FF4A2D" }}
+              className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
+              style={{ backgroundColor: "#0041c8" }}
             >
               Plan My Trip
             </button>
@@ -1926,8 +1927,7 @@ export default function HomeClient() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
             <span className="text-xl font-normal text-white flex items-center gap-1.5">
-              <span className="text-2xl">🇰🇷</span>
-              go<span className="font-extrabold">korea</span>mate
+              <span className="font-black tracking-tight">gokoreamate</span>
             </span>
             <div className="flex items-center gap-6">
               <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>
@@ -1945,7 +1945,7 @@ export default function HomeClient() {
             </p>
           </div>
           <div className="border-t border-white/5 pt-6 text-center">
-            <p className="text-xs text-gray-600">© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+            <p className="text-xs text-gray-600">© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
           </div>
         </div>
       </footer>

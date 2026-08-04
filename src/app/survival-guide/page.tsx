@@ -37,7 +37,7 @@ export default function SurvivalGuidePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="text-2xl font-normal tracking-tight text-[#2C2520] flex items-center gap-1.5">
-              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> go<span className="font-extrabold">korea</span>mate
+              <span className="font-black tracking-tight">gokoreamate</span>
             </Link>
           </div>
           <nav className="flex items-center gap-8">

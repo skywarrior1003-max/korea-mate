@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 import "./globals.css";
@@ -16,6 +16,29 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Home 시안이 지정한 두 서체.
+//
+// next/font/google 은 빌드 때 폰트를 받아 우리 도메인에서 서빙한다 — 런타임에
+// Google 을 부르지 않고 외부 CDN 에도 의존하지 않는다. 둘 다 OFL 이라 라이선스도
+// 걸림돌이 없다. Geist 를 이미 같은 방식으로 쓰고 있어 빌드 경로도 검증돼 있다.
+//
+// 전역 body 서체는 건드리지 않는다. 이 변수는 Home Experience 안에서만 쓴다 —
+// 앱 전체 서체를 바꾸는 건 별개 작업이다.
+const playfair = Playfair_Display({
+  variable: "--font-display-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-display-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -107,7 +130,7 @@ gtag('config','${ga4Id}');
           />
         ) : null;
       })()}
-      <body className="min-h-full flex flex-col">
+      <body className={`min-h-full flex flex-col ${playfair.variable} ${jakarta.variable}`}>
         <I18nProvider>
         <script
           type="application/ld+json"
@@ -115,7 +138,7 @@ gtag('config','${ga4Id}');
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": ["TravelAgency", "TouristInformationCenter"],
-              name: "KoreaMate",
+              name: "gokoreamate",
               description:
                 "Free AI-powered Korea tour guide and itinerary planner for foreign tourists. Build day-by-day trip schedules for Busan, Seoul, and beyond.",
               url: "https://gokoreamate.com",

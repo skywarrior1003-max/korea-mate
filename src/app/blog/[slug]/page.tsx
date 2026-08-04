@@ -176,7 +176,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="text-2xl font-black tracking-tight text-[#2C2520] flex items-center gap-1.5">
-              <span className="text-[#D4AF37] text-3xl">🇰🇷</span> <span className="text-[#D4AF37]">gokoreamate</span>.com
+              <span className="text-[#D4AF37] font-black tracking-tight">gokoreamate</span>.com
             </Link>
           </div>
           <nav className="flex items-center gap-8">
@@ -263,7 +263,7 @@ export default async function BlogPostPage({ params }: Props) {
             return (
               <div className="mt-8 mb-2">
                 <p className="text-[10px] font-black uppercase tracking-widest text-[#8C6239] mb-3 flex items-center gap-1.5">
-                  🇰🇷 gokoreamate partner network
+                  gokoreamate partner network
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {cards.map((card) => (

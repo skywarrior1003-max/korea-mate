@@ -669,8 +669,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
       <header className="bg-white shadow-sm sticky top-0 z-30 shrink-0">
         <div className="max-w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
-            <span className="text-2xl">🇰🇷</span>
-            go<span className="font-extrabold">korea</span>mate
+            <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("blog")}</Link>

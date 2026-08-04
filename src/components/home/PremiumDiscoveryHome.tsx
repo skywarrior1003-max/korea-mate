@@ -10,10 +10,12 @@
 //   목업 하단탭       — 기존 BottomNav 정보구조를 유지한다
 // 지표는 실제 컬럼 이름 그대로 Views / Helpful / Copies 로 쓴다.
 //
-// 도시 카드 사진은 저장소의 권리 확인 자산(KOGL Type 1)만 쓴다. 그 자산은 전부
-// 940x627 가로이고 metadata 에 vertical_fit:"unsuitable" 이 박혀 있어, 시안처럼
-// 세로 사진으로 꽉 채우면 2배 가까이 확대돼 흐려진다. 그래서 카드는 시안처럼
-// 세로로 길게 두되 사진은 위쪽에 원본 비율로 놓고 아래를 텍스트 패널로 채운다.
+// 도시 카드는 시안 그대로 세로 3:4 사진 카드다(시안: min-w-280 h-380 rounded-3xl,
+// bg-cover). 사진은 승인된 Stitch 원본을 로컬 편입해서 쓴다 — 서울·부산·제주 3장.
+// 원본이 없는 경주·전주만 토큰 아트로 둔다.
+//
+// 1408x768 가로 원본을 3:4 로 crop 해도 280px 카드에서는 확대가 없다
+// (필요 760px, 원본 768px). 시안도 같은 방식으로 crop 한다.
 
 "use client";
 
@@ -24,28 +26,23 @@ import { CITY_ENTRY_CONTENT } from "@/data/cities/entry-content";
 import { CITY_CONFIGS, CITY_SLUGS } from "@/data/cities";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
 import type { PopularTrip } from "@/lib/supabase";
-import { assetById } from "@/lib/trip-cover/assets.data";
-import { coverProxyPath } from "@/lib/trip-cover/cover-core";
 import CityCardArt from "./CityCardArt";
 import {
   DESIGN_PRIMARY, DESIGN_INK, DESIGN_SURFACE, DESIGN_SURFACE_LOW,
   DESIGN_OUTLINE, DESIGN_LINE, DESIGN_MINT, DESIGN_MINT_INK, HERO_MAX_WIDTH,
+  FONT_SANS,
 } from "./home-visual";
 
 const CITY_LABEL: Record<string, string> = {
   busan: "Busan", seoul: "Seoul", jeju: "Jeju", gyeongju: "Gyeongju", jeonju: "Jeonju",
 };
 
-// 도시 대표 사진. 권리가 확인된 자산이 있는 도시만. 광안대교 컷은 밝고 넓어서
-// 카드 한 장으로 부산을 설명한다 — 예전처럼 테마 첫 자산을 자동으로 집으면
-// 흐린 시장 골목이나 도서관 자료실이 걸린다.
-const CITY_ASSET: Record<string, string> = { busan: "busan-v1-night_view-023" };
-
-function cityImage(slug: string): { src: string; note: string } | null {
-  const id = CITY_ASSET[slug];
-  const asset = id ? assetById(id) : undefined;
-  return asset ? { src: coverProxyPath(asset.asset_id), note: asset.attribution_text } : null;
-}
+// 승인된 Stitch 시안이 실제로 쓴 도시 사진. 다른 도시 사진을 돌려쓰지 않는다.
+const CITY_IMAGE: Record<string, { src: string; w: number; h: number }> = {
+  seoul: { src: "/images/home/city-seoul.jpg", w: 1408, h: 768 },
+  busan: { src: "/images/home/city-busan.jpg", w: 1408, h: 768 },
+  jeju:  { src: "/images/home/city-jeju.jpg",  w: 704,  h: 1520 },
+};
 
 function dayCount(t: PopularTrip): number | null {
   if (!t.start_date || !t.end_date) return null;
@@ -70,17 +67,16 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
     label: CITY_LABEL[slug] ?? slug,
     plannerReady: CITY_ENTRY_CONTENT[slug]?.plannerReady ?? false,
     tagline: CITY_ENTRY_CONTENT[slug]?.tagline || CITY_CONFIGS[slug]?.seoDescription || "",
-    image: cityImage(slug),
+    image: CITY_IMAGE[slug] ?? null,
   }));
 
   // 모든 지표가 0인 목록은 인기라고 부를 근거가 없다. 그러면 섹션을 숨긴다.
   const shown = (trips ?? []).filter(
     x => (x.view_count ?? 0) > 0 || (x.helpful_count ?? 0) > 0 || (x.copy_count ?? 0) > 0,
   );
-  const attribution = cities.find(c => c.image)?.image?.note;
 
   return (
-    <div style={{ backgroundColor: DESIGN_SURFACE }}>
+    <div style={{ backgroundColor: DESIGN_SURFACE, fontFamily: FONT_SANS }}>
       <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
 
         {/* ── 인사 ─────────────────────────────────────────────────────── */}
@@ -126,58 +122,59 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
             style={{ scrollbarWidth: "none", overscrollBehaviorX: "contain" }}
           >
             {cities.map(c => (
-              <li key={c.slug} className="snap-start shrink-0 w-[70vw] max-w-[268px]">
+              <li key={c.slug} className="snap-start shrink-0 w-[74vw] max-w-[280px]">
                 <Link
                   href={`/${c.slug}/`}
-                  className="gkm-focus block h-full overflow-hidden"
-                  style={{ borderRadius: 24, backgroundColor: DESIGN_INK, boxShadow: "0 14px 32px rgba(19,27,46,0.16)" }}
+                  className="gkm-focus relative block overflow-hidden"
+                  style={{ height: 380, borderRadius: 24, boxShadow: "0 14px 32px rgba(19,27,46,0.18)" }}
                   aria-label={t("cityCardAria", { city: c.label })}
                 >
-                  <div className="relative w-full" style={{ aspectRatio: "3 / 2" }}>
-                    {c.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={c.image.src}
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                        width={940}
-                        height={627}
-                      />
-                    ) : (
-                      <CityCardArt slug={c.slug} label={c.label} />
-                    )}
+                  {c.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={c.image.src}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width={c.image.w}
+                      height={c.image.h}
+                    />
+                  ) : (
+                    <CityCardArt slug={c.slug} label={c.label} />
+                  )}
+
+                  <span
+                    className="absolute left-3.5 top-3.5 inline-flex items-center px-3 py-1.5 rounded-full text-[11.5px] font-black"
+                    style={{ backgroundColor: "rgba(250,248,255,0.92)", color: DESIGN_PRIMARY }}
+                  >
+                    {c.label}
+                  </span>
+                  {!c.plannerReady && (
                     <span
-                      className="absolute left-3 top-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black"
-                      style={{ backgroundColor: "rgba(250,248,255,0.92)", color: DESIGN_PRIMARY }}
+                      className="absolute right-3.5 top-3.5 px-2.5 py-1.5 rounded-full text-[10px] font-black text-white"
+                      style={{ backgroundColor: "rgba(19,27,46,0.72)" }}
                     >
-                      {c.label}
+                      {t("comingSoon")}
                     </span>
-                    {!c.plannerReady && (
-                      <span
-                        className="absolute right-3 top-3 px-2.5 py-1.5 rounded-full text-[10px] font-black text-white"
-                        style={{ backgroundColor: "rgba(19,27,46,0.72)" }}
-                      >
-                        {t("comingSoon")}
-                      </span>
-                    )}
-                  </div>
-                  <div className="px-5 pt-4 pb-5">
-                    <p className="text-[19px] font-black text-white leading-tight mb-1.5">{c.label}</p>
+                  )}
+
+                  {/* 시안의 하단 다크 패널 — 카드 안쪽에 떠 있는 둥근 판 */}
+                  <div
+                    className="absolute inset-x-3 bottom-3 px-4 py-3.5"
+                    style={{ backgroundColor: "rgba(11,14,24,0.62)", backdropFilter: "blur(6px)", borderRadius: 16 }}
+                  >
                     {c.tagline && (
-                      <p className="text-[12px] leading-snug line-clamp-2" style={{ color: "rgba(250,248,255,0.62)" }}>
+                      <p className="text-[11px] mb-1 line-clamp-1" style={{ color: "rgba(250,248,255,0.68)" }}>
                         {c.tagline}
                       </p>
                     )}
+                    <p className="text-[19px] font-black text-white leading-tight">{c.label}</p>
                   </div>
                 </Link>
               </li>
             ))}
           </ul>
-          {attribution && (
-            <p className="px-6 pt-3 text-[10px]" style={{ color: DESIGN_OUTLINE }}>{attribution}</p>
-          )}
         </section>
 
         {/* ── 타일 두 장 ───────────────────────────────────────────────── */}

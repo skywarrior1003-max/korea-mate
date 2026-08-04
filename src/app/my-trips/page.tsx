@@ -176,8 +176,7 @@ export default function MyTripsPage() {
       <header className="sticky top-0 z-40 border-b border-[#E5E7EA] backdrop-blur-md" style={{ backgroundColor: "rgba(250,247,242,0.92)" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
           <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
-            <span className="text-[#FF4A2D] text-3xl">🇰🇷</span>
-            go<span className="font-extrabold">korea</span>mate
+            <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
           <Link
             href="/"

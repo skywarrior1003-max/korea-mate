@@ -18,13 +18,14 @@
 import { useTranslations } from "next-intl";
 import {
   DESIGN_PRIMARY, DESIGN_INK, DESIGN_SURFACE, DESIGN_OUTLINE, HERO_MAX_WIDTH,
+  FONT_SERIF, FONT_SANS,
 } from "./home-visual";
 
 export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: () => void }) {
   const t = useTranslations("home");
 
   return (
-    <div style={{ backgroundColor: DESIGN_SURFACE }}>
+    <div style={{ backgroundColor: DESIGN_SURFACE, fontFamily: FONT_SANS }}>
       <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
 
         {/* ── Hero — 표지 이미지 + 실제 HTML 오버레이 ───────────────────── */}
@@ -72,9 +73,15 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
               </span>
             </div>
 
+            {/* 시안의 대제목은 Playfair Display 이탤릭이다. 굵은 산세리프로
+                두면 매거진 인상이 통째로 사라진다 */}
             <h1
-              className="text-white font-black mb-4"
-              style={{ fontSize: "clamp(2rem, 8.6vw, 2.75rem)", lineHeight: 1.14, letterSpacing: "-0.01em" }}
+              className="text-white mb-4"
+              style={{
+                fontFamily: FONT_SERIF, fontStyle: "italic", fontWeight: 700,
+                fontSize: "clamp(2.2rem, 9.6vw, 3.1rem)", lineHeight: 1.08,
+                letterSpacing: "-0.02em",
+              }}
             >
               {t("storyTitle")}
             </h1>
@@ -104,7 +111,7 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
 
         {/* ── 여행의 조각들 ─────────────────────────────────────────────── */}
         <section className="px-6 pt-10 pb-12">
-          <h2 className="text-[13px] font-black tracking-[0.18em] uppercase mb-6" style={{ color: DESIGN_OUTLINE }}>
+          <h2 className="text-[13px] font-black tracking-[0.18em] uppercase mb-6" style={{ color: DESIGN_OUTLINE, fontFamily: FONT_SANS }}>
             {t("storySectionTitle")}
           </h2>
 

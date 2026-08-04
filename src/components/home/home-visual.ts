@@ -28,3 +28,23 @@ export const DESIGN_MINT_INK = "#00201a";
  * 화면을 꽉 채우는 대신 여기서 멈춘다.
  */
 export const HERO_MAX_WIDTH = 768;
+
+/**
+ * 시안이 지정한 서체.
+ *
+ * 시안 tailwind.config:
+ *   serif       Playfair Display   ← Hero 대제목(이탤릭)
+ *   headline/display  Plus Jakarta Sans
+ *   body        Inter
+ *
+ * next/font 가 빌드 때 받아 우리 도메인에서 서빙하므로 런타임 외부 호출이 없다.
+ * 한글은 Playfair 에 글리프가 없어 시스템 한글 세리프로 떨어진다 — 그래서
+ * fallback 에 본명조 계열을 명시해 세리프 인상이 유지되게 한다.
+ */
+export const FONT_SERIF =
+  'var(--font-display-serif), "Nanum Myeongjo", "Apple SD Gothic Neo", ' +
+  '"Noto Serif KR", "Songti SC", Georgia, serif';
+
+export const FONT_SANS =
+  'var(--font-display-sans), "Pretendard", "Apple SD Gothic Neo", ' +
+  '"Noto Sans KR", system-ui, sans-serif';
