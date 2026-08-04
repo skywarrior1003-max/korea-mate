@@ -474,6 +474,13 @@
       "sha256": "4f072af0211f8cabfe7513f2ade5669423c53e495a1ca1ff0427b5188dd3e472",
       "size_bytes": 9186,
       "note": "TASK-GYEONGJU-FULL-COLLECTION-PRECONDITIONS-FIX-V1 완료보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-v1-verification.md",
+      "category": "docs",
+      "sha256": "e5095f0a63e71c6bddd0a926e80f1fac98040ee42077a5dd882b4e732282f33c",
+      "size_bytes": 12381,
+      "note": "TASK-GYEONGJU-FULL-COLLECTION-V1 검증보고서 (실행 보류)"
     }
   ],
   "correction_tasks": [
@@ -492,7 +499,15 @@
       "verified_at": "2026-08-04",
       "verdict": "CONDITIONAL_PASS",
       "summary": "수정태스크 7건 산출물 검증. 매트릭스 6개 필드 보정. 조건: origin push 및 이미지권리확인."
+    },
+    {
+      "task": "TASK-GYEONGJU-FULL-COLLECTION-V1",
+      "branch": "data/gyeongju-culture-tourism-pilot-correction-v1",
+      "base_task": "TASK-GYEONGJU-FULL-COLLECTION-PRECONDITIONS-FIX-V1",
+      "verified_at": "2026-08-04",
+      "verdict": "EXECUTION_HOLD",
+      "summary": "하드 블로커 2건(웹 수집 스크립트 미존재·문화관광해설 17개소 경로 미정) + 구조적 개선 5건. 4단계 재구성 권장."
     }
   ],
-  "manifest_sha256": "0e51d55eedfb9069ef4382987b3c3c13173237f7d0e2fc100597e112c5d78e87"
+  "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f"
 }
