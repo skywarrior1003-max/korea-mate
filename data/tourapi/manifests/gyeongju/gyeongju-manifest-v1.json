@@ -345,8 +345,8 @@
     {
       "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-tourism-place-pilot-v1.jsonl",
       "category": "pilot",
-      "sha256": "5f72979209546f32d429e3205ecedc4910f3e64d2275913d422e077593b78cfa",
-      "size_bytes": 23297,
+      "sha256": "6a5d9c79f3800dbb5cabb7df21227315b96690113a6bf4ce0b55a5bacf99bc47",
+      "size_bytes": 28800,
       "note": "관광지 파일럿 20건"
     },
     {
@@ -366,8 +366,8 @@
     {
       "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-api-web-link-audit-v1.jsonl",
       "category": "validation",
-      "sha256": "6a22a9c30e8e88edc8d2b380faffab96c59b45183dcd4228f7fc4e8da636a4c8",
-      "size_bytes": 16794,
+      "sha256": "1f6997245b24e2e548d0592ad05f64d4f00739b1c76dbc0ae6c1cca8941780c7",
+      "size_bytes": 20558,
       "note": "API↔웹 연결 감사 20건"
     },
     {
@@ -415,8 +415,8 @@
     {
       "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v2.jsonl",
       "category": "pilot",
-      "sha256": "3db1728b642e3447c79bc5578de2e9560eddb6aab57769ebb2256440557391d4",
-      "size_bytes": 7556,
+      "sha256": "2315aa38db04abef0070ebd59d5e30b6dd556fb4848f1032c72a7ca15ba25426",
+      "size_bytes": 7682,
       "note": "행사 파일럿 v2 — 7건 (현재4·예정3)"
     },
     {
@@ -436,8 +436,8 @@
     {
       "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v2.jsonl",
       "category": "validation",
-      "sha256": "2c36e0efb77fe404c4d18ee0f8d8dddd1bceb36176ad0a7e70f6269c3a813ac0",
-      "size_bytes": 4282,
+      "sha256": "7e0b0ceccc9e44d8e6ac7b659d6687fe333056b2b9a485879e50e632259d22f3",
+      "size_bytes": 4315,
       "note": "행사 최신성 감사 v2"
     },
     {
@@ -460,6 +460,20 @@
       "sha256": "795f7b1ab3adf4ccc524f33815459da5cf61524a2d27648d44bf6457ea71ec06",
       "size_bytes": 15409,
       "note": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-FINAL-VERIFY-V1 완료보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-preconditions-fix-v1-verification.md",
+      "category": "docs",
+      "sha256": "bc2d7a06908b167ef320071a1d3ad11d6eb491efbba6fd17b6fbc65fc853e689",
+      "size_bytes": 7629,
+      "note": "TASK-GYEONGJU-FULL-COLLECTION-PRECONDITIONS-FIX-V1 검증보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-preconditions-fix-v1.md",
+      "category": "docs",
+      "sha256": "4f072af0211f8cabfe7513f2ade5669423c53e495a1ca1ff0427b5188dd3e472",
+      "size_bytes": 9186,
+      "note": "TASK-GYEONGJU-FULL-COLLECTION-PRECONDITIONS-FIX-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -480,5 +494,5 @@
       "summary": "수정태스크 7건 산출물 검증. 매트릭스 6개 필드 보정. 조건: origin push 및 이미지권리확인."
     }
   ],
-  "manifest_sha256": "a913bb259666a85b6ffdeaf2fdeff38b9f66644a5b07f2253203de35a856add8"
+  "manifest_sha256": "0e51d55eedfb9069ef4382987b3c3c13173237f7d0e2fc100597e112c5d78e87"
 }
