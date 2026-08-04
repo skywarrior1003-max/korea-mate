@@ -1,12 +1,12 @@
 {
-  "task": "TASK-GYEONGJU-QA-FIXES-AND-EVENT-DETAIL-V1",
-  "base_task": "TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3",
+  "task": "TASK-GYEONGJU-REPRODUCIBILITY-FINALIZE-V1",
+  "base_task": "TASK-GYEONGJU-QA-FIXES-AND-EVENT-DETAIL-V1",
   "city": "경주",
-  "version": "v1-fixes",
+  "version": "v1-reproducibility",
   "created_at": "2026-08-04T03:28:03Z",
-  "branch": "data/gyeongju-qa-fixes-v1",
-  "base_branch": "data/gyeongju-enrichment-v1",
-  "base_head": "0742009",
+  "branch": "data/gyeongju-reproducibility-finalize-v1",
+  "base_branch": "data/gyeongju-qa-fixes-v1",
+  "base_head": "6811749",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",
     "D-02": "행사 24건 KTO detailCommon2+detailIntro2 수집, 날짜현재성 보강",
@@ -43,12 +43,17 @@
     "scripts/gyeongju_event_detail.py"
   ],
   "reproducibility": {
-    "verdict": "PASS_WITH_NOTE",
+    "verdict": "PASS",
     "source_fact_ids": "DETERMINISTIC",
     "candidate_ids": "DETERMINISTIC",
+    "byte_identical_runs": 2,
     "category_distribution": "IDENTICAL",
-    "sha_difference_reason": "enriched_at timestamp 정상",
-    "note": "gyeongju-KTO39-2831862/403847 primary 선택 차이: 원본 비결정적, 신규 결정적. IDs 동일 831건.",
+    "tiebreak_rule": "source_priority → numeric_source_record_id asc → source_fact_id string",
+    "tiebreak_example": "gyeongju-KTO39-403847 (2008) primary over gyeongju-KTO39-2831862 (2022)",
+    "timestamp_policy": "--as-of 필수, 누락 시 오류 종료",
+    "as_of_used": "2026-08-03T12:59:10Z",
+    "source_facts_sha256_prefix": "a3d17db0901e507e",
+    "enriched_sha256_prefix": "4e4e1b0279de84a4",
     "non_event_changed": 0
   },
   "collection_summary": {
@@ -221,9 +226,9 @@
     {
       "path": "data/tourapi/reports/gyeongju/gyeongju-collection-summary.json",
       "category": "reports",
-      "sha256": "654c18148b8c520f8aa146b18f00dd707ac558f5a50f8f39c9d4ea8510875de9",
-      "size_bytes": 4050,
-      "note": "전체 수집 요약 (type 25 제외 기록 추가)"
+      "sha256": "5d03fa7c50521f683036872d211f1ae77bc82a5ad805c52a657b532393282b3d",
+      "size_bytes": 6132,
+      "note": "전체 수집 요약 (type 25 제외 기록 + reproducibility 섹션 추가)"
     },
     {
       "path": "data/tourapi/reports/gyeongju/gyeongju-normalization-stats.json",
@@ -249,9 +254,9 @@
     {
       "path": "scripts/gyeongju_normalize.py",
       "category": "scripts",
-      "sha256": "8595301faba47c7e6cb49d2e9475567a8feab2b4d898d0e027a990a89e06c08c",
-      "size_bytes": 23111,
-      "note": "D-03 저장소 편입 스크립트"
+      "sha256": "a70136dd00a34aff522ff61e3001a20f54db4c7631a794ee557c2ea422f57523",
+      "size_bytes": 24723,
+      "note": "D-03 저장소 편입 스크립트 (--as-of 재현성 파라미터 추가)"
     },
     {
       "path": "scripts/gyeongju_event_detail.py",
@@ -261,5 +266,5 @@
       "note": "D-03 저장소 편입 스크립트"
     }
   ],
-  "manifest_sha256": "8ace1bf9c185f8781f49dfc4b60a664c6531bab7aff67ea9e1ce432588e824e8"
+  "manifest_sha256": "9771523cecec918548fe809d86c00bd27e3939e7d2f4a377b2df7dfc0da7b1c7"
 }

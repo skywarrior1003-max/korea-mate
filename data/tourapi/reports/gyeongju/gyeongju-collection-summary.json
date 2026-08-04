@@ -126,5 +126,58 @@
     "note": "이전 탐색 및 파일럿 재확인: areaCode=35, sigunguCode=2 기준 0건"
   },
   "gj02_status": "SKIP — getDstrctsTrrsrt totalCount=0, 추가 파라미터 필요",
-  "grand_total_primary": 910
+  "grand_total_primary": 910,
+  "reproducibility": {
+    "task": "TASK-GYEONGJU-REPRODUCIBILITY-FINALIZE-V1",
+    "verdict": "PASS",
+    "verified_at": "2026-08-04",
+    "timestamp_policy": {
+      "field": "enriched_at",
+      "parameter": "--as-of",
+      "format": "ISO-8601 UTC (예: 2026-08-03T12:59:10Z)",
+      "rule": "--as-of 누락 시 오류 종료. 임의 현재 시각 기본값 사용 금지.",
+      "reference_timestamp": "2026-08-03T12:59:10Z",
+      "collection_timestamp_source": "gyeongju-collection-summary.json collected_at (2026-08-03T12:52:54Z)"
+    },
+    "tiebreak_rule": {
+      "order": ["source_priority ascending", "numeric_source_record_id ascending", "source_fact_id string ascending"],
+      "rationale": "numeric_source_record_id 오름차순 = 더 오래된 레코드 우선. 안정적이고 결정적인 primary 선택.",
+      "example": {
+        "candidate": "맷돌순두부",
+        "primary_chosen": "gyeongju-KTO39-403847",
+        "primary_created": "2008-01-20",
+        "secondary_rejected": "gyeongju-KTO39-2831862",
+        "secondary_created": "2022-08-03",
+        "result": "int(403847) < int(2831862) → 403847 primary 선택 (canonical 일치)"
+      }
+    },
+    "run_comparison": {
+      "as_of_timestamp": "2026-08-03T12:59:10Z",
+      "run1": {
+        "source_facts_sha256_prefix": "a3d17db0901e507e",
+        "enriched_candidates_sha256_prefix": "4e4e1b0279de84a4"
+      },
+      "run2": {
+        "source_facts_sha256_prefix": "a3d17db0901e507e",
+        "enriched_candidates_sha256_prefix": "4e4e1b0279de84a4"
+      },
+      "byte_identical": true
+    },
+    "canonical_comparison": {
+      "candidate_ids_match": true,
+      "source_fact_ids_match": true,
+      "total_candidates": 831,
+      "total_source_facts": 907,
+      "category_distribution": {
+        "accommodation": 126,
+        "attraction": 317,
+        "event": 24,
+        "nature": 59,
+        "restaurant": 305
+      },
+      "dup_groups": 69,
+      "secondary_removed": 76,
+      "non_event_records_unchanged": 807
+    }
+  }
 }

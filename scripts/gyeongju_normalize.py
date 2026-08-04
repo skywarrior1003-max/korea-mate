@@ -6,13 +6,17 @@
 - gyeongju-enriched-candidates-v1.jsonl 생성
 - 이미지 API (GJ-03/04/05)는 supplementary 처리 (설계 결정 A)
 
-결정적 정렬: source_fact_id 기준 정렬로 동일 raw → 동일 출력 보장
+결정적 출력 조건:
+  --as-of 타임스탬프 필수 (임의 현재 시각 사용 금지)
+  같은 raw + 같은 --as-of → byte-identical 출력
+  source_fact_id / candidate_id 기준 정렬
+  tie-break: (source_priority, numeric_source_record_id, source_fact_id_string)
 
 사용법:
-  python gyeongju_normalize.py [옵션]
+  python gyeongju_normalize.py --as-of 2026-08-03T12:59:10Z [옵션]
   python gyeongju_normalize.py --help
 """
-import argparse, json, os, re, sys, hashlib, time
+import argparse, json, os, re, sys, hashlib
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -23,6 +27,9 @@ def parse_args():
         description='경주 raw → source facts → enriched candidates 정규화',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    p.add_argument('--as-of', default=None,
+                   help='재현성 타임스탬프 ISO-8601 (예: 2026-08-03T12:59:10Z). '
+                        '필수. 임의 현재 시각 사용 금지 — 누락 시 오류.')
     p.add_argument('--in-city-raw', default='data/tourapi/raw/gyeongju/gyeongju-city-api',
                    help='경주시 API raw 입력 디렉터리')
     p.add_argument('--in-kto-raw', default='data/tourapi/raw/gyeongju/kto-list',
@@ -96,14 +103,42 @@ SOURCE_PRIORITY = {
 }
 
 
+def tiebreak_key(sid: str, sf: dict) -> tuple:
+    """동일 우선순위 내 결정적 tie-break.
+    순서: (source_priority, numeric_source_record_id, source_fact_id_string)
+    numeric_source_record_id: 수치형 source_record_id 오름차순 (낮을수록 오래된 레코드)
+    비수치형은 inf 처리 후 source_fact_id 문자열 fallback.
+    """
+    priority = SOURCE_PRIORITY.get(sf.get('source', ''), 99)
+    rec_id = sf.get('source_record_id', '')
+    try:
+        numeric_id = int(rec_id)
+    except (ValueError, TypeError):
+        numeric_id = float('inf')
+    return (priority, numeric_id, sid)
+
+
 def main():
     args = parse_args()
+
+    # --as-of 필수 검증 (임의 현재 시각 사용 금지)
+    if not args.as_of:
+        print(
+            '[ERROR] --as-of 타임스탬프가 필요합니다.\n'
+            '예: python gyeongju_normalize.py --as-of 2026-08-03T12:59:10Z\n'
+            '임의 현재 시각을 기본값으로 사용하면 byte-identical 재현성이 깨집니다.',
+            file=sys.stderr
+        )
+        sys.exit(1)
+
+    now_iso = args.as_of  # 모든 타임스탬프 이 값 사용
     raw_city = Path(args.in_city_raw)
     raw_kto  = Path(args.in_kto_raw)
     cand_dir = Path(args.out_candidates)
     enrich   = Path(args.out_enriched)
     report   = Path(args.out_report)
-    now_iso  = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+
+    print(f'as-of: {now_iso}')
 
     source_facts = []
     sf_id_set = set()
@@ -378,7 +413,7 @@ def main():
             return ''
         return re.sub(r'[\s\-_()（）\[\]]+', '', s.lower())
 
-    def norm_addr(s) -> str:
+    def norm_addr_prefix(s) -> str:
         if not s:
             return ''
         return re.sub(r'\s+', '', str(s))[:20]
@@ -391,15 +426,15 @@ def main():
 
     dup_groups = []
     seen_in_group = set()
-    for nk, sfids in sorted(name_idx.items()):  # 결정적 정렬
+    sf_map = {sf['source_fact_id']: sf for sf in source_facts}
+
+    for nk in sorted(name_idx.keys()):  # 결정적 정렬
+        sfids = name_idx[nk]
         if len(sfids) < 2:
             continue
         if any(sfid in seen_in_group for sfid in sfids):
             continue
-        addrs = []
-        sf_map = {sf['source_fact_id']: sf for sf in source_facts}
-        for sfid in sfids:
-            addrs.append(norm_addr(sf_map[sfid].get('address')))
+        addrs = [norm_addr_prefix(sf_map[sid].get('address')) for sid in sfids]
         has_addr_match = len(set(a for a in addrs if a)) < len(addrs)
         dup_groups.append({
             'normalized_name': nk,
@@ -413,15 +448,11 @@ def main():
 
     print(f'동일성 그룹: {len(dup_groups)}건')
 
-    # candidates 생성
-    sf_map = {sf['source_fact_id']: sf for sf in source_facts}
+    # candidates 생성 (tie-break: priority, numeric_source_record_id, source_fact_id)
     dup_sfids = set()
     for g in dup_groups:
-        members_p = sorted(
-            [(SOURCE_PRIORITY.get(sf_map[sid]['source'], 99), sid) for sid in g['members']],
-            key=lambda x: (x[0], x[1])  # 결정적: priority 후 ID
-        )
-        for _, sid in members_p[1:]:
+        members_sorted = sorted(g['members'], key=lambda sid: tiebreak_key(sid, sf_map[sid]))
+        for sid in members_sorted[1:]:
             dup_sfids.add(sid)
 
     def candidate_from_sf(sf: dict, identity_status: str, linked_sfs=None) -> dict:
@@ -461,13 +492,10 @@ def main():
     cand_id_set = set()
 
     for g in dup_groups:
-        members_p = sorted(
-            [(SOURCE_PRIORITY.get(sf_map[sid]['source'], 99), sid) for sid in g['members']],
-            key=lambda x: (x[0], x[1])
-        )
-        primary_sf = sf_map[members_p[0][1]]
-        linked = [m[1] for m in members_p[1:]]
-        for _, sid in members_p[1:]:
+        members_sorted = sorted(g['members'], key=lambda sid: tiebreak_key(sid, sf_map[sid]))
+        primary_sf = sf_map[members_sorted[0]]
+        linked = members_sorted[1:]
+        for sid in linked:
             sec = sf_map[sid]
             if primary_sf['lat'] is None and sec.get('lat') is not None:
                 primary_sf['lat'] = sec['lat']
@@ -504,18 +532,20 @@ def main():
     has_img   = sum(1 for c in candidates if c.get('image_url'))
     has_desc  = sum(1 for c in candidates if c.get('description_ko'))
     has_addr  = sum(1 for c in candidates if c.get('address'))
+    dup_sec   = len(dup_sfids)
     print(f'좌표: {has_coord}/{len(candidates)}, 이미지: {has_img}, 설명: {has_desc}, 주소: {has_addr}')
+    print(f'동일성 그룹: {len(dup_groups)}, secondary 제거: {dup_sec}')
 
     norm_stats = {
         'task': 'TASK-GYEONGJU-HOLD-RESOLUTION-AND-OFFICIAL-API-BOOTSTRAP-V3',
         'phase': 'Phase11_normalization',
-        'executed_at': now_iso,
+        'executed_as_of': now_iso,
         'source_facts_total': len(source_facts),
         'source_facts_sha256': sf_sha,
         'candidates_total': len(candidates),
         'candidates_sha256': enrich_sha,
         'duplicate_groups': len(dup_groups),
-        'secondary_removed': len(dup_sfids),
+        'secondary_removed': dup_sec,
         'category_distribution': cat_dist,
         'coord_available': has_coord,
         'coord_missing': len(candidates) - has_coord,
@@ -523,6 +553,8 @@ def main():
         'description_available': has_desc,
         'address_available': has_addr,
         'kto_counts_by_type': kto_counts,
+        'tiebreak_rule': '(source_priority, numeric_source_record_id, source_fact_id_string)',
+        'reproducibility': 'DETERMINISTIC — 같은 raw + 같은 --as-of → byte-identical 출력',
     }
     out = report / 'gyeongju-normalization-stats.json'
     out.parent.mkdir(parents=True, exist_ok=True)
