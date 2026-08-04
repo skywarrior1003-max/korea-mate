@@ -1,6 +1,21 @@
 {
   "task": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
   "created_at": "2026-08-04T09:00:00Z",
+  "correction_history": [
+    {
+      "correction_task": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-FINAL-VERIFY-V1",
+      "corrected_at": "2026-08-04T12:00:00Z",
+      "reason": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-CORRECTION-V1에서 확인된 웹 접근 판정 변경 사항이 본 매트릭스에 반영되지 않은 상태로 유지됨. 최종 검증 단계에서 계약 보완 차원으로 수정.",
+      "changed_fields": [
+        "관광지_목록_및_공식_존재여부 (web_role)",
+        "권역_district_gyeongju (secondary)",
+        "이달의_추천여행지 (primary, note)",
+        "여행코스 (primary, note)",
+        "문화관광해설 (primary, note)",
+        "행사_축제_현재_예정 (primary, note)"
+      ]
+    }
+  ],
   "fields": [
     {
       "field": "관광지_목록_및_공식_존재여부",
@@ -9,14 +24,14 @@
         "KTO KorService2 type12",
         "KTO type14"
       ],
-      "web_role": "HOLD_DYNAMIC_CONTENT — JS 렌더링으로 현재 공개 여부 웹 확인 불가",
+      "web_role": "PARTIAL_STATIC_HTML — mnu_uid=2266(권역별관광지) 권역 목록 페이지 접근 가능. 개별 장소 상세 URL 패턴 미검증.",
       "conflict_rule": "GJ01에 있으면 공식 관광지로 처리. KTO에만 있으면 보강 후 candidate 유지."
     },
     {
       "field": "권역_district_gyeongju",
       "primary": "경주시 GJ01 TURSM_DSTRCT",
       "secondary": [
-        "웹사이트 메뉴 구조 (HOLD)"
+        "경주문화관광 웹사이트 mnu_uid=2266 (STATIC_HTML_AVAILABLE)"
       ],
       "note": "GJ01이 6개 권역으로 분류(경주시내권/남산권/동해권/보문관광단지권/불국사권/서악북부권). 서악권·북부권 분리 필요 시 수동 보강."
     },
@@ -54,16 +69,16 @@
     },
     {
       "field": "운영시간_opening_hours",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 (HOLD — 개별 장소 상세 URL 패턴 미검증)",
       "secondary": [
         "KTO detailIntro2"
       ],
-      "web_role": "현재 운영시간의 최신성 기준. JS 렌더링으로 현재 파일럿에서 접근 불가.",
-      "conflict_rule": "KTO detailIntro2 값 사용. 웹사이트 접근 가능 시 웹 값을 최신성 우선값으로 갱신."
+      "web_role": "mnu_uid=2266 권역 목록 접근 가능하나 개별 장소 상세 페이지 운영시간 필드 접근은 미검증. 후속 태스크 필요.",
+      "conflict_rule": "KTO detailIntro2 값 사용. 웹사이트 개별 상세 접근 확인 시 웹 값을 최신성 우선값으로 갱신."
     },
     {
       "field": "입장료_admission",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 (HOLD — 개별 장소 상세 URL 패턴 미검증)",
       "secondary": [
         "KTO detailIntro2 usefee"
       ],
@@ -71,7 +86,7 @@
     },
     {
       "field": "휴무일_closed",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 (HOLD — 개별 장소 상세 URL 패턴 미검증)",
       "secondary": [
         "KTO restdate"
       ],
@@ -97,32 +112,32 @@
     },
     {
       "field": "이달의_추천여행지",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 mnu_uid=4185 (STATIC_HTML_AVAILABLE)",
       "secondary": [],
-      "note": "JS 렌더링으로 현재 파일럿에서 접근 불가. 추후 정적 URL 또는 headless browser 필요."
+      "note": "월별 추천여행지 페이지. 2026년 8월 기준 12건 수집 완료('8월 경주, 푸름에 머물다'). 매월 갱신되므로 월별 재수집 필요."
     },
     {
       "field": "여행코스",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 mnu_uid=2297~2301 (STATIC_HTML_AVAILABLE)",
       "secondary": [
         "KTO type25 (단일 POI 아님 — DOCUMENTED_EXCLUSION)"
       ],
-      "note": "코스는 단일 POI candidate가 아닌 코스 레코드로 별도 처리."
+      "note": "5개 코스 수집 완료(핵심바이블·미술문학·야경산책·자전거·버스). 코스는 단일 POI candidate가 아닌 코스 레코드로 별도 처리."
     },
     {
       "field": "세계유산_UNESCO",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 (HOLD — 전용 mnu_uid 미확인)",
       "secondary": [
         "KTO 특수 분류",
-        "GJ01 (세계유산 구분 미제공)"
+        "GJ01 is_unesco 필드 (경주역사유적지구·양동마을)"
       ],
-      "note": "세계유산 지정 여부는 UNESCO 및 국가유산청 공식 지정 목록 기준. GJ01 API는 분류 없음."
+      "note": "세계유산 지정 여부는 UNESCO 및 국가유산청 공식 지정 목록 기준. GJ01 파일럿에서 is_unesco=true 10건 확인. 경주역사유적지구(2000)·양동마을(2010). 전용 웹 mnu_uid 미발견."
     },
     {
       "field": "문화관광해설",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 mnu_uid=2262 (STATIC_HTML_AVAILABLE — 부분적)",
       "secondary": [],
-      "note": "해설 운영 정보는 경주시 공식 해설 프로그램 안내 페이지 기준. JS 렌더링으로 접근 불가."
+      "note": "mnu_uid=2262 접근 가능(신청 안내 페이지). 해설 운영 일반 정보 확인. 17개 해설 장소 목록 개별 수집은 미완료 — 후속 태스크 필요."
     },
     {
       "field": "야경정보",
@@ -134,12 +149,12 @@
     },
     {
       "field": "행사_축제_현재_예정",
-      "primary": "경주문화관광 웹사이트 (HOLD_DYNAMIC_CONTENT)",
+      "primary": "경주문화관광 웹사이트 mnu_uid=2393 (STATIC_HTML_AVAILABLE)",
       "secondary": [
         "경주시 행사 공공데이터 API (미발견)",
-        "KTO type15 (모두 과거·날짜 미확인)"
+        "KTO type15 (모두 과거·날짜 미확인 — HOLD)"
       ],
-      "note": "현재 KTO type15 24건 전부 HOLD_PAST_EVENT 또는 HOLD_DATE_MISSING_EVENT. 현재·예정 행사는 웹 또는 별도 API 필요."
+      "note": "mnu_uid=2393 접근 가능. 2026년 8월 기준 7건 수집(현재4·예정3). 월별 내비게이션: mnu_uid=2393&initYear={y}&initMonth={m}. 개별 행사 상세: mnu_uid=2393&con_uid={id}&cmd=2."
     },
     {
       "field": "식당_및_기념품",

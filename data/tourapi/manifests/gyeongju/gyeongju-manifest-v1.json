@@ -338,9 +338,9 @@
     {
       "path": "data/tourapi/contracts/gyeongju/gyeongju-source-priority-matrix-v1.json",
       "category": "contracts",
-      "sha256": "b65da6b5ad69dd38ce659bc75e49c6d982aa893700dfc9f62f3bb7d7fe9ddc67",
-      "size_bytes": 6822,
-      "note": "분야별 소스 우선순위 매트릭스"
+      "sha256": "de853bc135556f04461fe444eb1032f218c8bf676ffeaebc9c5d9522e42ad933",
+      "size_bytes": 8137,
+      "note": "FINAL-VERIFY에서 6개 HOLD 필드 수정"
     },
     {
       "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-tourism-place-pilot-v1.jsonl",
@@ -453,6 +453,13 @@
       "sha256": "320d5b36afd0b1494c6127ce2c11057581a163d1bbd00d9dddf6b52fa40d0205",
       "size_bytes": 6767,
       "note": "수정 작업 문서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-pilot-final-verify-v1.md",
+      "category": "docs",
+      "sha256": "795f7b1ab3adf4ccc524f33815459da5cf61524a2d27648d44bf6457ea71ec06",
+      "size_bytes": 15409,
+      "note": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-FINAL-VERIFY-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -463,7 +470,15 @@
       "verified_at": "2026-08-04",
       "verdict": "PASS",
       "summary": "v1 HOLD_DYNAMIC_CONTENT 판정 오류 수정. 행사 7건·추천여행지 12건·코스 5개 실데이터 수집."
+    },
+    {
+      "task": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-FINAL-VERIFY-V1",
+      "branch": "data/gyeongju-culture-tourism-pilot-correction-v1",
+      "base_task": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-CORRECTION-V1",
+      "verified_at": "2026-08-04",
+      "verdict": "CONDITIONAL_PASS",
+      "summary": "수정태스크 7건 산출물 검증. 매트릭스 6개 필드 보정. 조건: origin push 및 이미지권리확인."
     }
   ],
-  "manifest_sha256": "8c10ed7d181be09c87dcb89ea29b7b31455e39a48dc728f763e3f6ba313fa1a8"
+  "manifest_sha256": "a913bb259666a85b6ffdeaf2fdeff38b9f66644a5b07f2253203de35a856add8"
 }
