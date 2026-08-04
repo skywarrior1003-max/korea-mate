@@ -117,6 +117,15 @@ export default function NaverMap({
   // 전체가 재생성된다.
   const markerByKeyRef = useRef<Map<string, { marker: NaverMarkerObj; color: string }>>(new Map());
   const selectedKeyRef = useRef<string | null>(null);
+  // 마커 클릭 콜백은 마커를 만들던 순간의 hideInfoWindow 를 그대로 물고 있다.
+  // 마커 effect 는 spots 로만 다시 도는데 List↔Map 전환은 spots 를 바꾸지 않으므로,
+  // Explore 가 Map 으로 넘어가도 콜백은 "List 시절의 false" 를 계속 읽어
+  // 같은 장소가 말풍선과 하단 카드에 겹쳐 떴다.
+  //
+  // deps 에 넣지 않는 이유는 selectedKey 와 같다 — 토글할 때마다 마커 94개가
+  // 통째로 다시 만들어진다. 최신 값만 ref 로 흘려보낸다.
+  const hideInfoWindowRef = useRef<boolean>(!!hideInfoWindow);
+  useEffect(() => { hideInfoWindowRef.current = !!hideInfoWindow; }, [hideInfoWindow]);
   const userMarkerRef = useRef<NaverMarkerObj | null>(null);
   const openInfoRef   = useRef<NaverInfoWindowObj | null>(null);
   const dayMarkersRef = useRef<NaverMarkerObj[]>([]);
@@ -175,12 +184,15 @@ export default function NaverMap({
       const info = new map.InfoWindow({
         content: `<div style="padding:10px 14px;font-size:13px;max-width:220px"><b style="color:#1a1a2e">${spot.name}</b><br/><span style="font-size:11px;color:#565D66">${spot.address.slice(0, 55)}</span></div>`,
         borderWidth: 1,
-        borderColor: "#FF4A2D",
+        // 데스크톱 split 은 여전히 말풍선을 쓴다. 코랄은 B1 에서 보조 accent 로
+        // 내려갔으므로 action primary 로 맞춘다. SDK 옵션이라 CSS 변수를 쓸 수
+        // 없어 --gkm-action-primary 와 같은 값을 직접 적는다.
+        borderColor: "#0041c8",
       });
 
       map.Event.addListener(marker, "click", () => {
         openInfoRef.current?.close();
-        if (!hideInfoWindow) {
+        if (!hideInfoWindowRef.current) {
           info.open(nmap, marker);
           openInfoRef.current = info;
         }
