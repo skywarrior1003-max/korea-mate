@@ -1058,6 +1058,9 @@ export default function HomeClient() {
                 <select
                   value={style}
                   onChange={(e) => setStyle(e.target.value)}
+                  // 이 select 는 눈에 보이는 <label> 이 없다. 화면을 못 보는 사용자에겐
+                  // 이름 없는 콤보박스로만 읽혀 무엇을 고르는 칸인지 알 수 없었다.
+                  aria-label="Travel style"
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors"
                 >
                   <option value="" disabled>— Select your travel style —</option>
@@ -1087,7 +1090,10 @@ export default function HomeClient() {
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Number of Travelers</label>
+                {/* 위 <label> 은 for/id 로 묶여 있지 않아 보조기술이 연결하지 못한다.
+                    보이는 문구는 그대로 두고 접근 가능한 이름만 붙인다. */}
                 <input type="number" min="1" max="50" value={travelers} onChange={(e) => setTravelers(e.target.value)}
+                  aria-label="Number of travelers"
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
               </div>
 
