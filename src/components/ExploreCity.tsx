@@ -579,6 +579,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               // 뜨면 같은 내용이 두 곳에 겹쳐 지도를 더 가린다. List·데스크톱 split 은
               // 기존 상세 모달 흐름이라 말풍선을 그대로 둔다.
               hideInfoWindow={viewMode === "map"}
+              // 부산 94곳은 초기 줌(13)에서 뷰포트 안 평균 13.5곳·마커 겹침 43쌍이라
+              // 점만 뿌리면 어디에 무엇이 있는지 읽히지 않는다. 줌에 따라 숫자
+              // 클러스터 ↔ 개별 마커 + 이름 pill 로 갈라 그린다.
+              clusterZoomLabels
             />
             <button
               onClick={() => setMapExpanded(e => !e)}
@@ -668,7 +672,14 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                       }`}
                       style={added ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
                     >
-                      {added ? `\u2713 ${tE("addedToPicks")}` : `+ ${tE("addToPicks")}`}
+                      {/* \uae30\ud638\ub9cc \uacf5\ud1b5 SVG \ub85c \ubc14\uafbc\ub2e4 \u2014 \ubb38\uad6c\u00b7\uc0c1\ud0dc\u00b7\ub3d9\uc791\u00b7\ud130\uce58 \uc601\uc5ed\uc740 \uadf8\ub300\ub85c */}
+                      <span className="inline-flex items-center justify-center gap-1.5">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0"
+                             stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                          {added ? <path d="M4.5 12.5l5 5 10-11" /> : <path d="M12 5v14M5 12h14" />}
+                        </svg>
+                        {added ? tE("addedToPicks") : tE("addToPicks")}
+                      </span>
                     </button>
                   );
                 })()}
