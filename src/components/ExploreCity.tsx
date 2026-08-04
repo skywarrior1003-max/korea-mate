@@ -75,7 +75,7 @@ function toEventItem(spot: CitySpot): EventItem {
 function SearchBar({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) {
   return (
     <div className="relative w-full">
-      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-lg">🔍</span>
+      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.1" strokeLinecap="round"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg></span>
       <input
         type="text"
         value={value}
@@ -86,8 +86,8 @@ function SearchBar({ value, onChange, placeholder }: { value: string; onChange: 
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors text-xs font-bold"
-        >✕</button>
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors"
+        ><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.8" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg></button>
       )}
     </div>
   );
@@ -396,18 +396,26 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     <div
       role="group"
       aria-label={tE("viewToggle")}
-      className="lg:hidden inline-flex p-1 rounded-full bg-gray-100 border border-gray-200 mb-3"
+      className="lg:hidden inline-flex w-full p-1 rounded-full mb-3"
+      style={{ backgroundColor: "var(--gkm-action-tint)" }}
     >
-      {(["map", "list"] as const).map(m => (
+      {(["list", "map"] as const).map(m => (
         <button
           key={m}
           onClick={() => setViewMode(m)}
           aria-pressed={viewMode === m}
-          className={`gkm-focus min-h-11 px-5 rounded-full text-sm font-bold transition-colors ${
-            viewMode === m ? "bg-white text-gray-900 shadow-sm" : "text-gray-500"
-          }`}
+          className="gkm-focus flex-1 inline-flex items-center justify-center gap-2 min-h-11 rounded-full text-sm font-bold transition-colors"
+          style={viewMode === m
+            ? { backgroundColor: "var(--gkm-action-primary)", color: "#fff" }
+            : { color: "var(--gkm-text-sub)" }}
         >
-          {m === "map" ? `\u{1F5FA} ${tE("viewMap")}` : `\u2630 ${tE("viewList")}`}
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden
+               stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+            {m === "map"
+              ? <><path d="M9 4.5L3.5 7v12.5L9 17l6 2.5 5.5-2.5V4.5L15 7z" /><path d="M9 4.5V17M15 7v12.5" /></>
+              : <><path d="M4 7h16M4 12h16M4 17h16" /></>}
+          </svg>
+          {m === "map" ? tE("viewMap") : tE("viewList")}
         </button>
       ))}
     </div>
@@ -415,17 +423,19 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
   const controls = (
     <div className="mb-4">
-      {viewToggle}
+      {/* 시안 순서: 검색 → List/Map 토글 → 필터. 예전엔 토글이 검색 위에 있어
+          "무엇을 찾을지" 보다 "어떻게 볼지" 를 먼저 묻고 있었다. */}
       <SearchBar value={search} onChange={setSearch} placeholder={tE("search.placeholder")} />
-      <div className="flex flex-wrap items-center gap-2 mt-3">
+      <div className="mt-3">{viewToggle}</div>
+      <div className="flex flex-wrap items-center gap-2 mt-1">
         {spotCategories.map(cat => (
           <button
             key={cat.value}
             onClick={() => setSelectedCategory(cat.value)}
             className="gkm-focus px-4 py-2 min-h-11 rounded-full text-sm font-bold transition-all border cursor-pointer"
             style={selectedCategory === cat.value
-              ? { backgroundColor: "var(--gkm-ink)", color: "white", borderColor: "var(--gkm-ink)" }
-              : { backgroundColor: "var(--gkm-surface)", color: "var(--gkm-text-sub)", borderColor: "var(--gkm-line)" }
+              ? { backgroundColor: "#26fedc", color: "#00201a", borderColor: "#26fedc" }
+              : { backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-text-sub)", borderColor: "transparent" }
             }
           >{cat.label}</button>
         ))}
@@ -438,12 +448,20 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
             : { backgroundColor: "var(--gkm-surface)", color: "var(--gkm-text-sub)", borderColor: "var(--gkm-line)" }
           }
         >
+          {/* 활성 상태를 색으로만 알리지 않는다 — 체크 표시를 함께 붙인다 */}
+          {nearMeActive && (
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden
+                 stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4.5 12.5l5 5 10-11" />
+            </svg>
+          )}
           {locationLoading ? tE("locating") : nearMeActive ? tE("nearMeActive") : tE("nearMe")}
         </button>
       </div>
       {locationError && (
-        <div className="mt-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 font-semibold">
-          ⚠️ {locationError}
+        <div className="mt-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 font-semibold flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4.5L21 20H3z" /><path d="M12 10v4M12 17h.01" /></svg>
+          {locationError}
         </div>
       )}
       {nearMeActive && userLocation && (
@@ -482,14 +500,14 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     <div className="text-center py-16">
       {spots.length === 0 ? (
         <>
-          <p className="text-4xl mb-3">🚧</p>
+          <p className="mb-3 flex justify-center text-gray-300"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg></p>
           <p className="text-gray-900 font-black text-lg mb-2">{tE("comingSoon.title")}</p>
           <p className="text-sm text-gray-400 mb-4">{tE("comingSoon.description", { city: city.name })}</p>
           <p className="text-sm text-gray-400">{tE("comingSoon.guide", { city: city.name })}</p>
         </>
       ) : (
         <>
-          <p className="text-4xl mb-3">🔍</p>
+          <p className="mb-3 flex justify-center text-gray-300"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg></p>
           <p className="text-gray-600 font-semibold">{tE("search.noResults", { query: search })}</p>
           <button onClick={() => setSearch("")} className="mt-3 text-sm text-orange-500 font-bold underline">{tE("search.clearSearch")}</button>
         </>
@@ -519,7 +537,11 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           : tE("spotCountPlural", { count: filteredSpots.length })}
         {nearMeActive ? ` ${tE("sortedByDistance")}` : ` ${tE("clickForDetails")}`}
       </p>
-      <Link href="/" className="shrink-0 text-sm font-bold text-gray-500 border border-gray-200 px-3 py-2 rounded-xl hover:border-gray-400 transition-colors">
+      <Link href="/" className="gkm-focus shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-gray-500 border border-gray-200 px-3 min-h-11 rounded-xl hover:border-gray-400 transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden
+             stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M15 5l-7 7 7 7" />
+        </svg>
         {tN("home")}
       </Link>
     </div>
@@ -540,7 +562,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
             Full Screen: fixed overlay so Naver SDK gets guaranteed 100vw×100vh */}
         <div className={mapExpanded
           ? "fixed inset-0 z-40 bg-white"
-          : `${viewMode === "map" ? "flex-1 min-h-[60vh]" : "hidden"} lg:block lg:h-full lg:w-[460px] lg:flex-none shrink-0 lg:order-2 lg:border-l lg:border-gray-200`
+          : `${viewMode === "map" ? "fixed inset-x-0 top-16 bottom-0 z-20" : "hidden"} lg:static lg:inset-auto lg:z-auto lg:block lg:h-full lg:w-[460px] lg:flex-none shrink-0 lg:order-2 lg:border-l lg:border-gray-200`
         }>
           <div className="relative w-full h-full">
             <NaverMap
@@ -561,21 +583,38 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
             <button
               onClick={() => setMapExpanded(e => !e)}
               className="absolute top-3 right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95"
-              style={{ backgroundColor: mapExpanded ? "#ef4444" : "#1a1f36", opacity: 0.9 }}
-              title={mapExpanded ? "Exit full screen" : "Full screen map"}
+              style={{ backgroundColor: mapExpanded ? "var(--gkm-status-error)" : "var(--gkm-ink)", opacity: 0.92 }}
+              title={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
+              aria-label={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
             >
-              {mapExpanded ? "✕ Exit" : "⛶ Full Screen"}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
+                   stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                {mapExpanded
+                  ? <><path d="M6 6l12 12M18 6L6 18" /></>
+                  : <><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></>}
+              </svg>
+              {mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
             </button>
           </div>
         </div>
 
         {/* ── Cards column: below on mobile, left scrollable on desktop ── */}
         {!mapExpanded && (
-          <div className={`${viewMode === "map" ? "shrink-0" : "flex-1"} lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 px-4 lg:px-6 py-5 lg:py-6`}>
-            {pageHeader}
-            {controls}
-            {/* Map 모드에서는 검색·필터만 남기고 카드 목록은 지도가 대신한다.
-                데스크톱은 split 이므로 항상 함께 보인다. */}
+          /* Map 모드(모바일)에서는 이 열이 지도 위에 뜨는 컨트롤 패널이 된다.
+             controls 를 여기 두는 대신 따로 한 벌 더 렌더하면 검색 input 이
+             DOM 에 두 개 생겨 라벨·포커스가 중복된다. 그래서 열을 옮긴다.
+             pointer-events 는 패널에만 주어 그 옆 여백으로 지도를 잡을 수 있다. */
+          <div className={viewMode === "map"
+            ? "fixed inset-x-0 top-16 z-[34] px-3 pt-3 pointer-events-none lg:pointer-events-auto lg:static lg:z-auto lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 lg:px-6 lg:py-6"
+            : "flex-1 px-4 py-5 lg:flex-1 lg:overflow-y-auto lg:h-full lg:order-1 lg:px-6 lg:py-6"
+          }>
+            <div className={viewMode === "map" ? "hidden lg:block" : ""}>{pageHeader}</div>
+            <div className={viewMode === "map"
+              ? "pointer-events-auto max-h-[48vh] overflow-y-auto rounded-2xl shadow-lg px-3 pt-2.5 pb-1 lg:max-h-none lg:overflow-visible lg:rounded-none lg:shadow-none lg:p-0 lg:bg-transparent"
+              : ""
+            } style={viewMode === "map" ? { backgroundColor: "rgba(255,255,255,0.96)", backdropFilter: "blur(8px)" } : undefined}>
+              {controls}
+            </div>
             <div className={viewMode === "map" ? "hidden lg:block" : ""}>
               {cardsGrid}
               <div className="h-8" /> {/* bottom spacing */}
@@ -603,14 +642,19 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                 <div className="min-w-0 flex-1">
                   <p className="font-black text-gray-900 text-sm leading-snug truncate">{mapPickedSpot.name}</p>
                   <p className="text-[11px] text-gray-400 mt-0.5 truncate">
-                    📍 {mapPickedSpot.district || mapPickedSpot.city}
+                    {mapPickedSpot.district || mapPickedSpot.city}
                   </p>
                 </div>
                 <button
                   onClick={() => setMapPickedKey(null)}
                   aria-label={tE("turnOff")}
-                  className="gkm-focus shrink-0 w-7 h-7 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center text-sm"
-                >✕</button>
+                  className="gkm-focus shrink-0 w-7 h-7 rounded-full text-gray-300 hover:text-gray-600 flex items-center justify-center"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </button>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 {(() => {
@@ -622,7 +666,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                       className={`gkm-focus flex-1 min-h-10 rounded-xl text-xs font-black transition-colors ${
                         added ? "bg-emerald-50 text-emerald-600 cursor-default" : "text-white"
                       }`}
-                      style={added ? undefined : { backgroundColor: "#FF4A2D" }}
+                      style={added ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
                     >
                       {added ? `\u2713 ${tE("addedToPicks")}` : `+ ${tE("addToPicks")}`}
                     </button>
@@ -660,6 +704,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 export default function ExploreCity({ city }: { city: CityConfig }) {
   const tE = useTranslations("explore");
   const tN = useTranslations("nav");
+  const tD = useTranslations("discovery");
   const tF = useTranslations("footer");
 
   return (
@@ -675,14 +720,29 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("blog")}</Link>
             <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
-            <Link href="/my-trips"       className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors">{tN("myTrips")}</Link>
-            <Link href="/" className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#FF4A2D" }}>
+            <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("myTrips")}</Link>
+            <Link
+              href="/"
+              className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: "var(--gkm-action-primary)" }}
+            >
               {tN("planMyTrip")}
             </Link>
           </nav>
-          <div className="sm:hidden flex items-center gap-2">
-            <Link href="/my-trips" className="px-3 py-2 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50">🧳</Link>
-            <Link href="/" className="px-3 py-2 rounded-lg text-sm font-bold text-white" style={{ backgroundColor: "#FF4A2D" }}>{tN("plan")}</Link>
+          {/* 모바일 헤더는 시안처럼 얇게. 예전엔 주황 Plan 버튼과 이모지 배지가
+              첫 화면을 눌러 검색·토글이 아래로 밀려 있었다. */}
+          <div className="sm:hidden flex items-center gap-1">
+            <Link
+              href="/my-trips"
+              aria-label={tN("myTrips")}
+              className="gkm-focus w-11 h-11 inline-flex items-center justify-center rounded-full text-gray-700"
+            >
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden
+                   stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3.5" y="7.5" width="17" height="12.5" rx="2.4" />
+                <path d="M9 7.5V6a1.6 1.6 0 011.6-1.6h2.8A1.6 1.6 0 0115 6v1.5" />
+              </svg>
+            </Link>
           </div>
         </div>
       </header>
@@ -690,13 +750,16 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
       {/* Main content: flex-1 so map fills remaining viewport on desktop */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* SEO: h1 + city description — server-rendered outside Suspense BAILOUT */}
-        <div className="shrink-0 bg-white border-b border-gray-100 px-4 lg:px-6 py-3">
-          <h1 className="text-lg font-black text-gray-900">{tE("title", { city: city.name })}</h1>
-          <p className="text-sm text-gray-500 mt-0.5 max-w-2xl leading-relaxed">{city.seoDescription}</p>
+        {/* 시안은 제목 + 한 줄 보조 문구다. 예전엔 여기에 seoDescription 이
+            통째로 들어가 첫 화면의 절반을 산문이 먹었다. SEO 문구는 metadata
+            에서 이미 제공한다. */}
+        <div className="shrink-0 bg-white px-4 lg:px-6 pt-4 pb-1">
+          <h1 className="text-[22px] font-black text-gray-900 leading-tight">{tE("title", { city: city.name })}</h1>
+          <p className="text-[14px] text-gray-500 mt-1">{tD("cityTagline")}</p>
         </div>
         <Suspense fallback={
           <div className="flex-1 flex items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2" style={{ borderColor: "#FF4A2D" }} />
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2" style={{ borderColor: "var(--gkm-action-primary)" }} />
           </div>
         }>
           <ExploreCityContent city={city} />

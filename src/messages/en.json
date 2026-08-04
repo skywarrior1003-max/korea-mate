@@ -1,12 +1,12 @@
 {
   "nav": {
     "blog": "Blog",
-    "foodGuide": "🍽️ Food Guide",
+    "foodGuide": "Food Guide",
     "survivalGuide": "Survival Guide",
-    "myTrips": "🧳 My Trips",
+    "myTrips": "My Trips",
     "planMyTrip": "Plan My Trip",
     "plan": "Plan",
-    "home": "← Home"
+    "home": "Home"
   },
   "explore": {
     "title": "Explore {city}",
@@ -16,9 +16,9 @@
     "clickForDetails": "· click any card for details",
     "categories": {
       "all": "All Spots",
-      "attraction": "🏯 Attractions",
-      "restaurant": "🍜 Food & Drink",
-      "nature": "🌿 Nature & Trails"
+      "attraction": "Attractions",
+      "restaurant": "Food & Drink",
+      "nature": "Nature & Trails"
     },
     "search": {
       "placeholder": "Search spots, beaches, hiking…",
@@ -27,14 +27,14 @@
       "noResults": "No spots found for \"{query}\"",
       "clearSearch": "Clear search"
     },
-    "nearMe": "📍 Near Me",
-    "nearMeActive": "📍 Near Me ✓",
+    "nearMe": "Near Me",
+    "nearMeActive": "Near Me",
     "locating": "⏳ Locating…",
-    "sortedByDistanceBanner": "📍 Sorted by distance from your location.",
+    "sortedByDistanceBanner": "Sorted by distance from your location.",
     "turnOff": "Turn off",
     "locationError": "Unable to get your location. Please enable location access.",
     "locationUnsupported": "Geolocation is not supported by your browser.",
-    "viewDetails": "View Details →",
+    "viewDetails": "View Details",
     "comingSoon": {
       "title": "Coming Soon",
       "description": "We're curating the best spots in {city}. Check back soon!",
@@ -45,23 +45,25 @@
     "viewToggle": "View mode",
     "addToPicks": "Add to Picks",
     "addedToPicks": "Added",
-    "mapNoSpots": "No places with map locations match this filter."
+    "mapNoSpots": "No places with map locations match this filter.",
+    "fullScreen": "Full screen",
+    "exitFullScreen": "Exit"
   },
   "badges": {
-    "soloOk": "👤 Solo OK",
-    "cashOnly": "💵 Cash Only",
-    "cardOk": "💳 Card OK",
-    "free": "🆓 Free",
-    "nature": "🌿 Nature",
-    "easy": "🟢 Easy",
-    "moderate": "🟡 Moderate",
-    "hard": "🔴 Hard"
+    "soloOk": "Solo OK",
+    "cashOnly": "Cash Only",
+    "cardOk": "Card OK",
+    "free": "Free",
+    "nature": "Nature",
+    "easy": "Easy",
+    "moderate": "Moderate",
+    "hard": "Hard"
   },
   "map": {
-    "google": "🗺️ Google",
-    "naver": "🟢 Naver",
+    "google": "Google",
+    "naver": "Naver",
     "loading": "Loading map…",
-    "official": "🏔️ Official Info",
+    "official": "Official Info",
     "bookStay": "🏨 Book Stay",
     "bookTour": "🎟️ Book Tour"
   },
@@ -78,12 +80,12 @@
     "openGoogle": "Open in Google Maps",
     "openNaver": "Open in Naver Maps",
     "addToTrip": "Add to My Trip",
-    "added": "Added ✓",
+    "added": "Added",
     "duration": "{min} min",
     "openNow": "Open",
     "closed": "Closed",
     "openHours": "{open} – {close}",
-    "inTrip": "✓ In Itinerary",
+    "inTrip": "In Itinerary",
     "remove": "Remove",
     "like": "🤍 Like",
     "liked": "❤️ Liked",
@@ -377,5 +379,27 @@
     "cardVillageAlt": "A traveler on a stepped alley in a colorful hillside village",
     "swipeHint": "Swipe for Discover",
     "searchHint": "Search cities, activities, places"
+  },
+  "discovery": {
+    "cityTagline": "Explore the city",
+    "cityPlannerChip": "AI TRIP PLANNER",
+    "cityBuildChip": "BUILD YOUR TRIP",
+    "cityHeroAlt": "{city} cityscape",
+    "cityComingSoonState": "Places coming soon",
+    "backToHome": "Home",
+    "whyVisit": "WHY VISIT",
+    "addToTrip": "Add to trip",
+    "viewDetail": "View detail",
+    "mapView": "Map",
+    "listView": "List",
+    "searchPlaces": "Search places, food, trails",
+    "filters": "Filters",
+    "allSpots": "All",
+    "resultsCount": "{n} places",
+    "officialUnavailableShort": "No official page",
+    "openMap": "Open map",
+    "catAttraction": "Attraction",
+    "catRestaurant": "Food",
+    "catNature": "Nature"
   }
 }

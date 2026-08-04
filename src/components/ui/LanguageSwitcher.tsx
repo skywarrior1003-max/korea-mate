@@ -27,7 +27,12 @@ export default function LanguageSwitcher({ className = "" }: { className?: strin
 
   return (
     <label className={`inline-flex items-center gap-1.5 ${className}`}>
-      <span aria-hidden className="text-sm">🌐</span>
+      {/* 이모지는 OS 마다 그림이 달라 같은 화면이 기기별로 다르게 보인다 */}
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0"
+           stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17" />
+        <path d="M12 3.5c2.2 2.4 3.3 5.4 3.3 8.5s-1.1 6.1-3.3 8.5c-2.2-2.4-3.3-5.4-3.3-8.5S9.8 5.9 12 3.5z" />
+      </svg>
       <select
         aria-label="Language"
         value={locale}

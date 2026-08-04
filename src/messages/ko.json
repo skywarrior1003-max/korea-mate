@@ -1,12 +1,12 @@
 {
   "nav": {
     "blog": "블로그",
-    "foodGuide": "🍽️ 맛집 가이드",
+    "foodGuide": "맛집 가이드",
     "survivalGuide": "여행 생존 가이드",
-    "myTrips": "🧳 내 여행",
+    "myTrips": "내 여행",
     "planMyTrip": "여행 계획하기",
     "plan": "계획",
-    "home": "← 홈"
+    "home": "홈"
   },
   "explore": {
     "title": "{city} 탐험하기",
@@ -16,9 +16,9 @@
     "clickForDetails": "· 카드를 클릭하면 상세 정보를 볼 수 있어요",
     "categories": {
       "all": "전체 명소",
-      "attraction": "🏯 관광명소",
-      "restaurant": "🍜 음식 & 음료",
-      "nature": "🌿 자연 & 트레일"
+      "attraction": "관광명소",
+      "restaurant": "음식 & 음료",
+      "nature": "자연 & 트레일"
     },
     "search": {
       "placeholder": "명소, 해변, 하이킹 검색…",
@@ -27,14 +27,14 @@
       "noResults": "\"{query}\"에 대한 검색 결과가 없습니다",
       "clearSearch": "검색 초기화"
     },
-    "nearMe": "📍 내 주변",
-    "nearMeActive": "📍 내 주변 ✓",
+    "nearMe": "내 주변",
+    "nearMeActive": "내 주변",
     "locating": "⏳ 위치 확인 중…",
-    "sortedByDistanceBanner": "📍 현재 위치 기준으로 가까운 순서로 정렬되었습니다.",
+    "sortedByDistanceBanner": "현재 위치 기준으로 가까운 순서로 정렬되었습니다.",
     "turnOff": "끄기",
     "locationError": "위치를 가져올 수 없습니다. 위치 접근 권한을 허용해 주세요.",
     "locationUnsupported": "이 브라우저는 위치 서비스를 지원하지 않습니다.",
-    "viewDetails": "상세 보기 →",
+    "viewDetails": "상세 보기",
     "comingSoon": {
       "title": "준비 중",
       "description": "{city}의 최고 명소를 엄선 중입니다. 곧 업데이트 됩니다!",
@@ -45,23 +45,25 @@
     "viewToggle": "보기 방식",
     "addToPicks": "픽에 담기",
     "addedToPicks": "담김",
-    "mapNoSpots": "이 필터에는 지도에 표시할 수 있는 장소가 없어요."
+    "mapNoSpots": "이 필터에는 지도에 표시할 수 있는 장소가 없어요.",
+    "fullScreen": "전체 화면",
+    "exitFullScreen": "닫기"
   },
   "badges": {
-    "soloOk": "👤 혼자 OK",
-    "cashOnly": "💵 현금만 가능",
-    "cardOk": "💳 카드 가능",
-    "free": "🆓 무료",
-    "nature": "🌿 자연",
-    "easy": "🟢 쉬움",
-    "moderate": "🟡 보통",
-    "hard": "🔴 어려움"
+    "soloOk": "혼자 OK",
+    "cashOnly": "현금만 가능",
+    "cardOk": "카드 가능",
+    "free": "무료",
+    "nature": "자연",
+    "easy": "쉬움",
+    "moderate": "보통",
+    "hard": "어려움"
   },
   "map": {
-    "google": "🗺️ 구글",
-    "naver": "🟢 네이버",
+    "google": "구글",
+    "naver": "네이버",
     "loading": "지도 불러오는 중…",
-    "official": "🏔️ 공식 정보",
+    "official": "공식 정보",
     "bookStay": "🏨 숙박 예약",
     "bookTour": "🎟️ 투어 예약"
   },
@@ -78,12 +80,12 @@
     "openGoogle": "구글 지도에서 보기",
     "openNaver": "네이버 지도에서 보기",
     "addToTrip": "일정에 추가",
-    "added": "추가됨 ✓",
+    "added": "추가됨",
     "duration": "{min}분",
     "openNow": "영업 중",
     "closed": "영업 종료",
     "openHours": "{open} – {close}",
-    "inTrip": "✓ 일정에 있음",
+    "inTrip": "일정에 있음",
     "remove": "삭제",
     "like": "🤍 찜하기",
     "liked": "❤️ 찜함",
@@ -377,5 +379,27 @@
     "cardVillageAlt": "알록달록한 언덕 마을 골목 계단에 선 여행자",
     "swipeHint": "옆으로 넘기면 발견",
     "searchHint": "도시, 활동, 장소 검색"
+  },
+  "discovery": {
+    "cityTagline": "도시 둘러보기",
+    "cityPlannerChip": "AI 일정 생성",
+    "cityBuildChip": "여행 만들기",
+    "cityHeroAlt": "{city} 도시 전경",
+    "cityComingSoonState": "장소 준비 중",
+    "backToHome": "홈",
+    "whyVisit": "가볼 이유",
+    "addToTrip": "일정에 담기",
+    "viewDetail": "자세히",
+    "mapView": "지도",
+    "listView": "목록",
+    "searchPlaces": "장소·맛집·산책로 검색",
+    "filters": "필터",
+    "allSpots": "전체",
+    "resultsCount": "{n}곳",
+    "officialUnavailableShort": "공식 페이지 없음",
+    "openMap": "지도 열기",
+    "catAttraction": "관광명소",
+    "catRestaurant": "음식",
+    "catNature": "자연"
   }
 }

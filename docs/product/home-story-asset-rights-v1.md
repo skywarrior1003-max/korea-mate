@@ -27,6 +27,12 @@ Google Stitch 로 생성한 **GoKoreaMate 디자인 산출물**이다. 시안을
 | `public/images/home/city-seoul.jpg` | Discovery 서울 카드 | 1408×768 | `870b6eff8c74bd442c0cb76bd408883c859f695bd3ad4f5f16f3435a97ded177` |
 | `public/images/home/city-busan.jpg` | Discovery 부산 카드 | 1408×768 | `213f6a3f466578c368d5bd98b54a31f0a8c6fafaca762081890d162970a3a2aa` |
 | `public/images/home/city-jeju.jpg` | Discovery 제주 카드 | 704×1520 | `c5ea9867fb1103d3b7864efb4b4eb7cb8ccda5156a0300862f2d43a9e8b21d61` |
+| `public/images/home/city-busan-hero.jpg` | City Entry 부산 Hero (해안 골든아워) | 1408×768 | `e68c74a7fd3da607d126de5ad22ccd720f03af321eca3c3a7e5adf5fa1cfef27` |
+
+`city-busan-hero.jpg` 는 2026-08-04 City Entry 시안(`code.html`)의 Hero
+`background-image` 원본을 같은 `=s2048` 방식으로 받은 것이며, 위 자산들과 동일한
+약관·사용 규칙을 그대로 따른다. 시안 Hero 에는 문구가 구워져 있지 않아 제목·칩은
+전부 HTML 로 렌더한다(EN/KO/JA/ZH).
 
 원본 URL 은 각 297자의 `https://lh3.googleusercontent.com/aida-public/AB6AXu…`
 형태이며 `code.html` 에 그대로 남아 있어 대조 가능하다.

@@ -1,12 +1,12 @@
 {
   "nav": {
     "blog": "博客",
-    "foodGuide": "🍽️ 美食指南",
+    "foodGuide": "美食指南",
     "survivalGuide": "旅行指南",
-    "myTrips": "🧳 我的行程",
+    "myTrips": "我的行程",
     "planMyTrip": "规划行程",
     "plan": "规划",
-    "home": "← 首页"
+    "home": "首页"
   },
   "explore": {
     "title": "探索{city}",
@@ -16,9 +16,9 @@
     "clickForDetails": "· 点击卡片查看详情",
     "categories": {
       "all": "所有景点",
-      "attraction": "🏯 旅游景点",
-      "restaurant": "🍜 美食与饮品",
-      "nature": "🌿 自然与步道"
+      "attraction": "旅游景点",
+      "restaurant": "美食与饮品",
+      "nature": "自然与步道"
     },
     "search": {
       "placeholder": "搜索景点、海滩、徒步…",
@@ -27,14 +27,14 @@
       "noResults": "未找到\"{query}\"的相关景点",
       "clearSearch": "清除搜索"
     },
-    "nearMe": "📍 附近景点",
-    "nearMeActive": "📍 附近景点 ✓",
+    "nearMe": "附近景点",
+    "nearMeActive": "附近景点",
     "locating": "⏳ 定位中…",
-    "sortedByDistanceBanner": "📍 已按距离从近到远排列。",
+    "sortedByDistanceBanner": "已按距离从近到远排列。",
     "turnOff": "关闭",
     "locationError": "无法获取您的位置，请允许位置访问权限。",
     "locationUnsupported": "您的浏览器不支持定位服务。",
-    "viewDetails": "查看详情 →",
+    "viewDetails": "查看详情",
     "comingSoon": {
       "title": "即将推出",
       "description": "我们正在精选{city}最好的景点，请稍候！",
@@ -45,23 +45,25 @@
     "viewToggle": "显示方式",
     "addToPicks": "加入精选",
     "addedToPicks": "已加入",
-    "mapNoSpots": "当前筛选下没有可在地图上显示的地点。"
+    "mapNoSpots": "当前筛选下没有可在地图上显示的地点。",
+    "fullScreen": "全屏",
+    "exitFullScreen": "关闭"
   },
   "badges": {
-    "soloOk": "👤 单人友好",
-    "cashOnly": "💵 仅限现金",
-    "cardOk": "💳 可刷卡",
-    "free": "🆓 免费",
-    "nature": "🌿 自然",
-    "easy": "🟢 简单",
-    "moderate": "🟡 中等",
-    "hard": "🔴 困难"
+    "soloOk": "单人友好",
+    "cashOnly": "仅限现金",
+    "cardOk": "可刷卡",
+    "free": "免费",
+    "nature": "自然",
+    "easy": "简单",
+    "moderate": "中等",
+    "hard": "困难"
   },
   "map": {
-    "google": "🗺️ 谷歌地图",
-    "naver": "🟢 Naver地图",
+    "google": "谷歌地图",
+    "naver": "Naver地图",
     "loading": "地图加载中…",
-    "official": "🏔️ 官方信息",
+    "official": "官方信息",
     "bookStay": "🏨 预订住宿",
     "bookTour": "🎟️ 预订行程"
   },
@@ -78,12 +80,12 @@
     "openGoogle": "在谷歌地图中打开",
     "openNaver": "在Naver地图中打开",
     "addToTrip": "添加到行程",
-    "added": "已添加 ✓",
+    "added": "已添加",
     "duration": "{min}分钟",
     "openNow": "营业中",
     "closed": "已打烊",
     "openHours": "{open} – {close}",
-    "inTrip": "✓ 已在行程中",
+    "inTrip": "已在行程中",
     "remove": "移除",
     "like": "🤍 收藏",
     "liked": "❤️ 已收藏",
@@ -377,5 +379,27 @@
     "cardVillageAlt": "站在色彩缤纷山坡村落石阶小巷的旅行者",
     "swipeHint": "左右滑动查看发现",
     "searchHint": "搜索城市、活动、地点"
+  },
+  "discovery": {
+    "cityTagline": "漫步城市",
+    "cityPlannerChip": "AI 行程规划",
+    "cityBuildChip": "开始规划",
+    "cityHeroAlt": "{city}城市风景",
+    "cityComingSoonState": "地点筹备中",
+    "backToHome": "首页",
+    "whyVisit": "值得一去",
+    "addToTrip": "加入行程",
+    "viewDetail": "查看详情",
+    "mapView": "地图",
+    "listView": "列表",
+    "searchPlaces": "搜索地点、美食、步道",
+    "filters": "筛选",
+    "allSpots": "全部",
+    "resultsCount": "{n} 个地点",
+    "officialUnavailableShort": "无官方页面",
+    "openMap": "打开地图",
+    "catAttraction": "景点",
+    "catRestaurant": "美食",
+    "catNature": "自然"
   }
 }

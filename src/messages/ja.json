@@ -1,12 +1,12 @@
 {
   "nav": {
     "blog": "ブログ",
-    "foodGuide": "🍽️ グルメガイド",
+    "foodGuide": "グルメガイド",
     "survivalGuide": "旅行サバイバルガイド",
-    "myTrips": "🧳 マイトリップ",
+    "myTrips": "マイトリップ",
     "planMyTrip": "旅行を計画する",
     "plan": "計画",
-    "home": "← ホーム"
+    "home": "ホーム"
   },
   "explore": {
     "title": "{city}を探索",
@@ -16,9 +16,9 @@
     "clickForDetails": "· カードをクリックして詳細を見る",
     "categories": {
       "all": "すべてのスポット",
-      "attraction": "🏯 観光スポット",
-      "restaurant": "🍜 グルメ & ドリンク",
-      "nature": "🌿 自然 & トレイル"
+      "attraction": "観光スポット",
+      "restaurant": "グルメ & ドリンク",
+      "nature": "自然 & トレイル"
     },
     "search": {
       "placeholder": "スポット、ビーチ、ハイキングを検索…",
@@ -27,14 +27,14 @@
       "noResults": "「{query}」の検索結果が見つかりませんでした",
       "clearSearch": "検索をクリア"
     },
-    "nearMe": "📍 近くのスポット",
-    "nearMeActive": "📍 近くのスポット ✓",
+    "nearMe": "近くのスポット",
+    "nearMeActive": "近くのスポット",
     "locating": "⏳ 位置情報取得中…",
-    "sortedByDistanceBanner": "📍 現在地からの距離順に並べ替えました。",
+    "sortedByDistanceBanner": "現在地からの距離順に並べ替えました。",
     "turnOff": "オフにする",
     "locationError": "位置情報を取得できません。位置情報のアクセスを許可してください。",
     "locationUnsupported": "このブラウザは位置情報サービスに対応していません。",
-    "viewDetails": "詳細を見る →",
+    "viewDetails": "詳細を見る",
     "comingSoon": {
       "title": "近日公開",
       "description": "{city}のおすすめスポットを厳選中です。もうしばらくお待ちください！",
@@ -45,23 +45,25 @@
     "viewToggle": "表示切替",
     "addToPicks": "ピックに追加",
     "addedToPicks": "追加済み",
-    "mapNoSpots": "この絞り込みで地図に表示できる場所はありません。"
+    "mapNoSpots": "この絞り込みで地図に表示できる場所はありません。",
+    "fullScreen": "全画面",
+    "exitFullScreen": "閉じる"
   },
   "badges": {
-    "soloOk": "👤 一人旅OK",
-    "cashOnly": "💵 現金のみ",
-    "cardOk": "💳 カード可",
-    "free": "🆓 無料",
-    "nature": "🌿 自然",
-    "easy": "🟢 やさしい",
-    "moderate": "🟡 普通",
-    "hard": "🔴 きつい"
+    "soloOk": "一人旅OK",
+    "cashOnly": "現金のみ",
+    "cardOk": "カード可",
+    "free": "無料",
+    "nature": "自然",
+    "easy": "やさしい",
+    "moderate": "普通",
+    "hard": "きつい"
   },
   "map": {
-    "google": "🗺️ Google",
-    "naver": "🟢 Naver",
+    "google": "Google",
+    "naver": "Naver",
     "loading": "地図を読み込み中…",
-    "official": "🏔️ 公式情報",
+    "official": "公式情報",
     "bookStay": "🏨 宿泊予約",
     "bookTour": "🎟️ ツアー予約"
   },
@@ -78,12 +80,12 @@
     "openGoogle": "Google マップで開く",
     "openNaver": "Naver マップで開く",
     "addToTrip": "旅程に追加",
-    "added": "追加済み ✓",
+    "added": "追加済み",
     "duration": "{min}分",
     "openNow": "営業中",
     "closed": "営業終了",
     "openHours": "{open} – {close}",
-    "inTrip": "✓ 旅程に追加済み",
+    "inTrip": "旅程に追加済み",
     "remove": "削除",
     "like": "🤍 お気に入り",
     "liked": "❤️ お気に入り済み",
@@ -377,5 +379,27 @@
     "cardVillageAlt": "カラフルな丘の村の階段路地に立つ旅行者",
     "swipeHint": "横スワイプで発見",
     "searchHint": "都市・アクティビティ・場所を検索"
+  },
+  "discovery": {
+    "cityTagline": "街を歩く",
+    "cityPlannerChip": "AI 旅程作成",
+    "cityBuildChip": "旅をつくる",
+    "cityHeroAlt": "{city}の街並み",
+    "cityComingSoonState": "スポット準備中",
+    "backToHome": "ホーム",
+    "whyVisit": "訪れる理由",
+    "addToTrip": "旅程に追加",
+    "viewDetail": "詳細",
+    "mapView": "地図",
+    "listView": "リスト",
+    "searchPlaces": "場所・グルメ・散歩道を検索",
+    "filters": "フィルター",
+    "allSpots": "すべて",
+    "resultsCount": "{n}件",
+    "officialUnavailableShort": "公式ページなし",
+    "openMap": "地図を開く",
+    "catAttraction": "観光スポット",
+    "catRestaurant": "グルメ",
+    "catNature": "自然"
   }
 }

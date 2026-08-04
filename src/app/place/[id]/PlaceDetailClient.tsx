@@ -55,10 +55,6 @@ function officialSourceName(url: string): string {
   }
 }
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  attraction: "🏛️", restaurant: "🍽️", nature: "🌿", event: "🎉", accommodation: "🏨",
-};
-
 // 표시용 첫 글자 대문자 (DB 값은 소문자 저장 — "busan" → "Busan")
 function cap(s: string): string {
   return s.length > 0 ? s[0].toUpperCase() + s.slice(1) : s;
@@ -66,6 +62,7 @@ function cap(s: string): string {
 
 export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const t = useTranslations("place");
+  const tD = useTranslations("discovery");
   const tSaved = useTranslations("saved");
   const locale = useLocale();
 
@@ -81,7 +78,9 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const oneLiner  = resolvePublicPlaceSummary(text); // 내부 운영 메모 차단
   const maps      = resolveMapLinks(spot, text.name);
   const provKind  = resolveProvenance(spot);
-  const catLabel  = [cap(spot.category), spot.subcategory].filter(Boolean).join(" · ");
+  // 시안의 chip 열 — 카테고리·세부카테고리·행정구는 실제 값만 쓴다.
+  // 값이 없는 칩은 만들지 않는다(빈 칩은 정보가 아니라 잡음이다).
+  const chips = [cap(spot.category), spot.subcategory, spot.district].filter(Boolean) as string[];
   const safeImage = resolveDisplayImage(spot.image_url); // 죽은 호스트는 시도조차 하지 않는다
   const showImage = Boolean(safeImage) && !imgFailed;
 
@@ -158,7 +157,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   // ── 재사용 조각 ────────────────────────────────────────────────────────────
 
-  const addLabel = inCart ? `✓ ${t("inItinerary")}` : `+ ${t("addToItinerary")}`;
+  // 라벨은 문자열, 아이콘은 JSX 로 분리한다 (버튼 두 곳이 같은 조합을 쓴다)
+  const addLabel = inCart ? t("inItinerary") : t("addToItinerary");
+  const addIcon = inCart
+    ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>
+    : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>;
 
   // 외부 연결 3개 — 네이버·구글·공식 정보를 항상 같은 자리에 둘다.
   //
@@ -175,7 +178,8 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
            aria-label={t("openExternal", { service: t("naverMaps") })}
            onClick={() => handleMapOpen("naver")}
            className={EXT_LINK}>
-          {t("naverMaps")} ↗
+          {t("naverMaps")}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
         </a>
       )}
       {maps.google && (
@@ -183,14 +187,16 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
            aria-label={t("openExternal", { service: t("googleMaps") })}
            onClick={() => handleMapOpen("google")}
            className={EXT_LINK}>
-          {t("googleMaps")} ↗
+          {t("googleMaps")}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
         </a>
       )}
       {spot.official_url ? (
         <a href={spot.official_url} target="_blank" rel="noopener noreferrer"
            aria-label={t("openExternal", { service: officialSourceName(spot.official_url) })}
            className={`${EXT_LINK} bg-official-tint text-official border-transparent hover:text-official`}>
-          {t("officialInfo")} ↗
+          {t("officialInfo")}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
         </a>
       ) : (
         <span
@@ -250,11 +256,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     <div className="min-h-screen bg-surface-dim flex flex-col">
       <TopNav />
 
-      {/* 모바일 상단 바 */}
-      <header className="md:hidden bg-surface border-b border-line px-4 h-14 flex items-center gap-3">
-        <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sub text-lg" aria-label={t("backExplore")}>←</Link>
-        <p className="font-bold text-ink truncate">{text.name ?? spot.name}</p>
-      </header>
 
       {/* 화면 breadcrumb — BreadcrumbList JSON-LD 와 같은 경로 */}
       <nav aria-label="Breadcrumb" className="hidden md:block w-full max-w-[1100px] mx-auto px-4 pt-5">
@@ -272,9 +273,12 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         <div className="md:grid md:grid-cols-[minmax(0,1fr)_340px] md:gap-6 md:items-start">
 
           {/* ── 왼쪽: 내용 ────────────────────────────────────────────────── */}
-          <Card className="md:rounded-card rounded-none border-x-0 md:border-x">
-            {/* 대표 사진 — NULL 과 로드 실패 모두 같은 fallback (레이아웃 높이 유지) */}
-            <div className="relative h-56 md:h-72 bg-surface-dim flex items-center justify-center overflow-hidden">
+          <Card className="md:rounded-card rounded-none border-x-0 md:border-x overflow-hidden">
+            {/* 대표 사진 — NULL 과 로드 실패 모두 같은 fallback (레이아웃 높이 유지).
+                시안처럼 사진을 먼저 크게 보여주고 제목 카드가 그 위로 올라온다.
+                예전엔 사진 아래에 제목이 그냥 이어 붙어 어느 장소의 사진인지
+                스크롤 위치에 따라 끊겨 보였다. */}
+            <div className="relative h-64 md:h-80 bg-surface-dim flex items-center justify-center overflow-hidden">
               {showImage ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
@@ -285,19 +289,48 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 />
               ) : (
                 <div className="flex flex-col items-center gap-2 text-faint">
-                  <span className="text-4xl" aria-hidden>{CATEGORY_EMOJI[spot.category] ?? "📍"}</span>
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                    <circle cx="8.5" cy="10" r="1.6" />
+                    <path d="M3.5 17.5l4.8-4.4a2 2 0 012.7 0l6.4 5.9" />
+                  </svg>
                   <span className="text-xs font-medium">{t("photoComingSoon")}</span>
                 </div>
               )}
+              {/* 사진 위 글자가 어떤 사진에서도 읽히도록 아래쪽만 어둡게 */}
+              {showImage && (
+                <div aria-hidden className="absolute inset-x-0 bottom-0 h-24"
+                     style={{ background: "linear-gradient(to top, rgba(19,27,46,0.35), transparent)" }} />
+              )}
+              {/* 모바일 뒤로가기 — 별도 바를 두면 사진이 그만큼 눌린다 */}
+              <Link
+                href={`/explore/${spot.city.toLowerCase()}/`}
+                aria-label={t("backExplore")}
+                className="gkm-focus md:hidden absolute left-3 top-3 w-10 h-10 rounded-full inline-flex items-center justify-center text-ink shadow-lg"
+                style={{ backgroundColor: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)" }}
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden
+                     stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 5l-7 7 7 7" />
+                </svg>
+              </Link>
             </div>
 
-            <div className="p-5 md:p-7">
+            {/* 사진 위로 6px 올라오는 정보 카드 */}
+            <div className="relative -mt-6 rounded-t-[24px] bg-surface p-5 md:p-7">
+              <div className="flex flex-wrap gap-1.5 mb-2.5">
+                {chips.map(c => (
+                  <span key={c} className="inline-flex items-center px-2.5 py-1 rounded-pill text-[11px] font-bold uppercase tracking-wide"
+                        style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}>
+                    {c}
+                  </span>
+                ))}
+              </div>
               <h1 className="text-2xl font-extrabold text-ink leading-tight" style={{ textWrap: "balance" }}>
                 {text.name ?? spot.name}
               </h1>
-              <p className="text-sm text-faint mt-1.5">
-                {[spot.district, cap(spot.city), catLabel].filter(Boolean).join(" · ")}
-              </p>
+              <p className="text-sm text-faint mt-1.5">{cap(spot.city)}</p>
               <div className="mt-2">{provenanceLine}</div>
 
               {oneLiner && (
@@ -318,7 +351,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
               {text.description && (
                 <section className="mt-6">
-                  <h2 className="text-base font-bold text-ink mb-2">{t("details")}</h2>
+                  <h2 className="text-[11px] font-black text-faint uppercase tracking-[0.14em] mb-2">{tD("whyVisit")}</h2>
                   <p className="text-sm text-sub leading-relaxed">{text.description}</p>
                 </section>
               )}
@@ -335,7 +368,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
               <div className="mt-8 pt-5 border-t border-line flex items-center justify-between gap-3">
                 <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sm font-semibold text-sub hover:text-ink">
-                  ← {t("backExplore")}
+                  {t("backExplore")}
                 </Link>
                 {/* primary 를 반복하지 않는다 — 여기서는 quiet 링크만 */}
                 <Link href="/itinerary/" className="gkm-focus text-sm font-semibold text-sub hover:text-ink border border-line rounded-control min-h-11 px-4 inline-flex items-center">
@@ -355,7 +388,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   inCart ? "bg-action-tint text-action" : "bg-action text-white hover:bg-action-hover shadow-cta"
                 }`}
               >
-                {addLabel}
+                <span className="inline-flex items-center justify-center gap-1.5">{addIcon}{addLabel}</span>
               </button>
 
               <button
@@ -363,7 +396,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 aria-pressed={saved}
                 className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
               >
-                {saved ? `✓ ${t("savedState")}` : `🔖 ${t("save")}`}
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
+                  {saved ? t("savedState") : t("save")}
+                </span>
               </button>
 
               {externalLinks}
@@ -372,7 +408,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                 onClick={handleShare}
                 className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
               >
-                ↗ {t("share")}
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5" /><path d="M5 14v4.5a1.5 1.5 0 001.5 1.5h11a1.5 1.5 0 001.5-1.5V14" /></svg>
+                  {t("share")}
+                </span>
               </button>
 
               <div className="pt-3 mt-1 border-t border-line">{essentials}</div>
@@ -394,29 +433,29 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
             inCart ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
           }`}
         >
-          {addLabel}
+          <span className="inline-flex items-center justify-center gap-1.5">{addIcon}{addLabel}</span>
         </button>
         <button
           onClick={handleSave}
           aria-pressed={saved}
           aria-label={t("save")}
-          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line text-lg"
+          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line inline-flex items-center justify-center text-sub"
         >
-          {saved ? "✓" : "🔖"}
+          {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
         </button>
         <button
           onClick={handleShare}
           aria-label={t("share")}
-          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line text-lg"
+          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line inline-flex items-center justify-center text-sub"
         >
-          ↗
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5" /><path d="M5 14v4.5a1.5 1.5 0 001.5 1.5h11a1.5 1.5 0 001.5-1.5V14" /></svg>
         </button>
       </div>
 
       {/* Add 성공 → 다음 행동 제시 */}
       {addedToast && (
         <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
-          <span>✓ {t("addedToTrip")}</span>
+          <span className="inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>{t("addedToTrip")}</span>
           <Link
             href="/itinerary/"
             className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
@@ -436,7 +475,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
       {/* Save → 일정 브리지 토스트 */}
       {savedToast && !addedToast && (
         <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
-          <span>✓ {t("savedState")}</span>
+          <span className="inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>{t("savedState")}</span>
           <Link
             href="/#planner"
             className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
