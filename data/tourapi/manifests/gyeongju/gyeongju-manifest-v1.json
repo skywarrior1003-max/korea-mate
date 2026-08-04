@@ -404,7 +404,66 @@
       "sha256": "d6345406ed364e738e661cbf77394d2fd66b1a98376ac4016b493b7ee943cf8b",
       "size_bytes": 9993,
       "note": "작업 문서"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
+      "category": "contracts",
+      "sha256": "8c08b2f4c15a7667a30f14a5dbd07e7886d116db2e019b68fb3064c85654818c",
+      "size_bytes": 5655,
+      "note": "소스 계약 v2 (v1 HOLD 오류 수정)"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v2.jsonl",
+      "category": "pilot",
+      "sha256": "3db1728b642e3447c79bc5578de2e9560eddb6aab57769ebb2256440557391d4",
+      "size_bytes": 7556,
+      "note": "행사 파일럿 v2 — 7건 (현재4·예정3)"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-recommendation-pilot-v1.jsonl",
+      "category": "pilot",
+      "sha256": "541e2f018c6d8993378a5e2ebc3454836488d8a2ed53d9f6c3cb123e883e7088",
+      "size_bytes": 8527,
+      "note": "이달의 추천여행지 파일럿 v1 — 2026년 8월 12건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-course-pilot-v1.jsonl",
+      "category": "pilot",
+      "sha256": "c8cba2d2f478c4b54e1f9ded5728ed45031355063e5d21e483d1dc1918e43e3a",
+      "size_bytes": 6696,
+      "note": "여행코스 파일럿 v1 — 5개 코스"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v2.jsonl",
+      "category": "validation",
+      "sha256": "2c36e0efb77fe404c4d18ee0f8d8dddd1bceb36176ad0a7e70f6269c3a813ac0",
+      "size_bytes": 4282,
+      "note": "행사 최신성 감사 v2"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-culture-tourism-pilot-correction-summary-v1.json",
+      "category": "reports",
+      "sha256": "9241d54781f028c326fbb6e258f83ea7871f0a7a125f298aa346a25afc5af287",
+      "size_bytes": 4227,
+      "note": "수정 요약 보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-source-contract-and-pilot-correction-v1.md",
+      "category": "docs",
+      "sha256": "320d5b36afd0b1494c6127ce2c11057581a163d1bbd00d9dddf6b52fa40d0205",
+      "size_bytes": 6767,
+      "note": "수정 작업 문서"
     }
   ],
-  "manifest_sha256": "d35a93a3d7d484220041b4580dc19ca21b511c5312efb5ea93dcdb59a4ff3556"
+  "correction_tasks": [
+    {
+      "task": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-CORRECTION-V1",
+      "branch": "data/gyeongju-culture-tourism-pilot-correction-v1",
+      "base_task": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
+      "verified_at": "2026-08-04",
+      "verdict": "PASS",
+      "summary": "v1 HOLD_DYNAMIC_CONTENT 판정 오류 수정. 행사 7건·추천여행지 12건·코스 5개 실데이터 수집."
+    }
+  ],
+  "manifest_sha256": "8c10ed7d181be09c87dcb89ea29b7b31455e39a48dc728f763e3f6ba313fa1a8"
 }

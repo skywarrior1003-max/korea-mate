@@ -1,0 +1,87 @@
+{
+  "task": "TASK-GYEONGJU-CULTURE-TOURISM-PILOT-CORRECTION-V1",
+  "based_on": "TASK-GYEONGJU-CULTURE-TOURISM-SOURCE-CONTRACT-AND-PILOT-V1",
+  "verified_at": "2026-08-04T10:00:00Z",
+  "branch": "data/gyeongju-culture-tourism-pilot-correction-v1",
+  "base_branch": "data/gyeongju-culture-tourism-pilot-v1",
+  "overall_verdict": "PASS",
+  "overall_note": "v1의 HOLD_DYNAMIC_CONTENT 판정 오류 수정 완료. 행사 7건(현재 4·예정 3), 이달의 추천여행지 12건, 여행코스 5개 실제 데이터 수집.",
+  "v1_error_summary": {
+    "root_cause": "gyeongju.go.kr/tour 메인 인덱스(SPA 셸)만 확인. 하위 /tour/page.do?mnu_uid=XXXX 정적 페이지 미확인.",
+    "incorrect_verdicts": {
+      "이달의_추천여행지": "HOLD_DYNAMIC_CONTENT → STATIC_HTML_AVAILABLE",
+      "추천코스_4종": "HOLD_DYNAMIC_CONTENT → STATIC_HTML_AVAILABLE",
+      "문화관광해설": "HOLD_DYNAMIC_CONTENT → STATIC_HTML_AVAILABLE",
+      "축제_행사_공연_전시": "HOLD_DYNAMIC_CONTENT → STATIC_HTML_AVAILABLE",
+      "권역별_관광지": "HOLD_DYNAMIC_CONTENT → STATIC_HTML_AVAILABLE"
+    }
+  },
+  "robots_txt_correction": {
+    "v1": "UNVERIFIED_DUE_TO_JS_RENDERING",
+    "v2": "COLLECTION_ALLOWED",
+    "robots_url": "https://www.gyeongju.go.kr/robots.txt",
+    "detail": "User-agent: * Allow: / — 수집 허용"
+  },
+  "event_correction": {
+    "v1_status": "0 현재·예정 행사 (KTO 24건 모두 과거·날짜미확인)",
+    "v2_status": "7건 수집 (CURRENT_EVENT 4건 + UPCOMING_EVENT 3건)",
+    "source": "gyeongju.go.kr/tour/page.do?mnu_uid=2393",
+    "months_collected": [
+      "2026-08",
+      "2026-09"
+    ],
+    "existing_kto24_modified": 0,
+    "new_events_vs_kto24": "완전히 별개 — KTO 24건은 주로 연례 축제(날짜 미확인), 웹 7건은 2026 실제 전시·공연"
+  },
+  "recommendation_correction": {
+    "v1_status": "HOLD_DYNAMIC_CONTENT — 0건",
+    "v2_status": "12건 수집 (2026년 8월)",
+    "mnu_uid": "4185",
+    "categories": {
+      "landscape": 2,
+      "nature": 2,
+      "culture": 3,
+      "event": 1,
+      "experience": 2,
+      "cafe": 2
+    }
+  },
+  "course_correction": {
+    "v1_status": "HOLD_DYNAMIC_CONTENT — 4종 모두 미수집",
+    "v2_status": "5개 코스 수집",
+    "courses": [
+      "경주 시내권 핵심 바이블 (7 stops)",
+      "예인의 도시 경주 미술·문학기행 (6 stops)",
+      "달빛테라피 경주야경산책 (7 stops, 4.75km)",
+      "삼릉가는 길 자전거코스 (7 stops, 12km)",
+      "10번 버스타GO 알짜배기 경주여행 (8 stops)"
+    ]
+  },
+  "new_discovery": {
+    "gyeongju_image_download_system": {
+      "url": "https://www.gyeongju.go.kr/gyeongjuimage/index.do",
+      "name": "경주관광영상이미지 다운로드 시스템",
+      "operator": "경주시 관광컨벤션과",
+      "contact": "054-779-6832",
+      "verdict": "RIGHTS_REVIEW_REQUIRED",
+      "note": "무료 다운로드 명시. 공공누리 등 명시적 이용허락 조건 추가 확인 필요."
+    }
+  },
+  "unchanged_from_v1": [
+    "관광지 파일럿 20건 (gyeongju-tourism-place-pilot-v1.jsonl) — 수정 없음",
+    "831건 candidate 연결 결과 — 수정 없음",
+    "KTO 24건 — 수정 없음 (KTO event audit v1 유지)",
+    "GJ01~GJ09 API 판정 — 수정 없음",
+    "GJ01 좌표 미제공 결함 — 미해결 (후속 태스크 필요)",
+    "KTO Type3 이미지 HOLD — 미해결"
+  ],
+  "output_files": [
+    "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
+    "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v2.jsonl",
+    "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-recommendation-pilot-v1.jsonl",
+    "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-course-pilot-v1.jsonl",
+    "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v2.jsonl",
+    "data/tourapi/reports/gyeongju/gyeongju-culture-tourism-pilot-correction-summary-v1.json",
+    "docs/tourapi/gyeongju-culture-tourism-source-contract-and-pilot-correction-v1.md"
+  ]
+}
