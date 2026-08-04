@@ -1,0 +1,47 @@
+{
+  "task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+  "version": "v1",
+  "created_at": "2026-08-04T12:30:00Z",
+  "overall_readiness": "READY_FOR_FULL_COLLECTION",
+  "collector_scripts": {
+    "gyeongju_culture_web_collect.py": {
+      "version": "1.0.0",
+      "status": "READY",
+      "sample_run_result": "PASS",
+      "content_types_covered": [
+        "attractions",
+        "monthly-recommendations",
+        "courses",
+        "heritage",
+        "cultural-guides",
+        "events"
+      ]
+    },
+    "visitgyeongju_collect.py": {
+      "version": "1.0.0",
+      "status": "READY",
+      "sample_run_result": "PASS",
+      "content_types_covered": [
+        "restaurants",
+        "souvenirs"
+      ]
+    }
+  },
+  "source_discovery": {
+    "gyeongju_go_kr_tour": "COMPLETE",
+    "visitgyeongju_or_kr": "COMPLETE",
+    "mnu_uid_confirmed": true,
+    "heritage_path_confirmed": true,
+    "cultural_guides_17_confirmed": true,
+    "visitgyeongju_pagination_strategy": "SITEMAP_ENUM",
+    "gj06_gj07_status": "VALID_OFFICIAL_SOURCE"
+  },
+  "blockers": [],
+  "known_limitations": [
+    "관광지 name_ko: 목록 페이지 링크 텍스트에 주소·전화 혼입 — 전체 수집 단계에서 상세 페이지 파싱으로 교체 권장",
+    "행사 name_ko: 목록 링크가 상세보기 고정 — 전체 수집 단계에서 상세 페이지 title 추출 필요",
+    "visitgyeongju title: OG title이 사이트명 고정(VISIT GYEONGJU) — 전체 수집 단계에서 h1/h2 직접 추출 필요",
+    "비즈니스 필터 옵션: MEANING_REVIEW_REQUIRED — 의미 확정 전 자동 정규화 금지"
+  ],
+  "next_phase_recommendation": "TASK-GYEONGJU-WEB-FULL-COLLECTION-V1 (collector-foundation 스크립트 기반)"
+}

@@ -1,0 +1,150 @@
+{
+  "task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+  "version": "v1",
+  "created_at": "2026-08-04T12:30:00Z",
+  "branch": "data/gyeongju-web-collector-foundation-v1",
+  "overall_status": "COMPLETE",
+  "discovery": {
+    "gyeongju_go_kr_tour": {
+      "status": "COMPLETE",
+      "content_types_discovered": 6,
+      "mnu_uid_confirmed": {
+        "관광명소_보문": 2291,
+        "관광명소_시내": 2292,
+        "관광명소_불국사": 2293,
+        "관광명소_동해": 2294,
+        "관광명소_남산": 2295,
+        "관광명소_서악북부": 2296,
+        "여행코스_시내핵심": 2297,
+        "여행코스_미술문학": 2298,
+        "여행코스_야경산책": 2299,
+        "여행코스_자전거": 2300,
+        "여행코스_버스": 2301,
+        "세계문화유산_메인": 2275,
+        "세계문화유산_불국사석굴암": 2349,
+        "세계문화유산_양동마을": 2508,
+        "세계문화유산_옥산서원": 2509,
+        "세계문화유산_남산지구": 2510,
+        "문화관광해설": 2262,
+        "문화관광해설_예약": 2396,
+        "행사_축제": 2393,
+        "이달의추천여행지": 4185
+      },
+      "total_attraction_items": 159,
+      "cultural_guides_sites": 17,
+      "events_august_2026": 6
+    },
+    "visitgyeongju_or_kr": {
+      "status": "COMPLETE",
+      "collection_strategy": "SITEMAP_ENUM",
+      "sitemap_total_urls": 1044,
+      "restaurants_ko_hexids": 84,
+      "souvenirs_ko_hexids": 8,
+      "language_availability": {
+        "ko": "VERIFIED_HTTP200",
+        "en": "VERIFIED_HTTP200",
+        "ja": "VERIFIED_HTTP200",
+        "zh-CN": "VERIFIED_HTTP200",
+        "zh-TW": "VERIFIED_HTTP200"
+      },
+      "all_5_locales_available": true
+    }
+  },
+  "scripts": {
+    "gyeongju_culture_web_collect.py": {
+      "version": "1.0.0",
+      "path": "scripts/gyeongju_culture_web_collect.py",
+      "sample_run": "PASS",
+      "content_types": [
+        "attractions",
+        "monthly-recommendations",
+        "courses",
+        "heritage",
+        "cultural-guides",
+        "events"
+      ],
+      "output_format": "JSONL + JSON summary",
+      "sha256_tracking": true,
+      "resume_support": true
+    },
+    "visitgyeongju_collect.py": {
+      "version": "1.0.0",
+      "path": "scripts/visitgyeongju_collect.py",
+      "sample_run": "PASS",
+      "content_types": [
+        "restaurants",
+        "souvenirs"
+      ],
+      "output_format": "JSONL + JSON summary + language audit JSONL",
+      "sha256_tracking": true,
+      "locale_support": [
+        "ko",
+        "en",
+        "ja",
+        "zh-CN",
+        "zh-TW"
+      ]
+    }
+  },
+  "sample_collections": {
+    "gyeongju_culture_web": {
+      "attractions": {
+        "count": 5,
+        "status": "PASS"
+      },
+      "monthly_recommendations": {
+        "count": 1,
+        "status": "PASS"
+      },
+      "courses": {
+        "count": 5,
+        "status": "PASS"
+      },
+      "heritage": {
+        "count": 5,
+        "status": "PASS"
+      },
+      "cultural_guides": {
+        "count": 1,
+        "status": "PASS"
+      },
+      "events": {
+        "count": 5,
+        "status": "PASS"
+      }
+    },
+    "visitgyeongju": {
+      "restaurants_ko": {
+        "count": 5,
+        "status": "PASS"
+      },
+      "souvenirs_ko": {
+        "count": 3,
+        "status": "PASS"
+      },
+      "language_audit_restaurants": {
+        "locales_checked": 5,
+        "all_200": true
+      },
+      "language_audit_souvenirs": {
+        "locales_checked": 5,
+        "all_200": true
+      }
+    }
+  },
+  "verification": {
+    "gj06_status": "VALID_OFFICIAL_SOURCE (야간관광 10개소)",
+    "gj07_status": "VALID_OFFICIAL_SOURCE (경관조망점 10개소)",
+    "heritage_path_status": "DEDICATED_WEB_SOURCE_FOUND (mnu_uid=2275+sub-pages)",
+    "cultural_guides_path": "CONFIRMED (mnu_uid=2262, 단일 목록, 개별 상세 없음)",
+    "visitgyeongju_language_strategy": "SITEMAP_ENUM + locale_prefix_substitution"
+  },
+  "known_limitations": [
+    "name_ko (관광지): 목록 링크 텍스트에 주소·전화 혼입",
+    "name_ko (행사): 상세보기 고정 텍스트",
+    "title (visitgyeongju): OG title 사이트명 고정",
+    "비즈니스 필터: MEANING_REVIEW_REQUIRED"
+  ],
+  "output_files_count": 20,
+  "next_recommended_task": "TASK-GYEONGJU-WEB-FULL-COLLECTION-V1"
+}

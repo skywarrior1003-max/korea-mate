@@ -1,0 +1,25 @@
+{
+  "source": "visitgyeongju.or.kr",
+  "collector": "visitgyeongju_collect.py",
+  "collector_version": "1.0.0",
+  "content_type": "souvenirs",
+  "locale": "ko",
+  "command": "scripts/visitgyeongju_collect.py --content-type souvenirs --locale ko --out data\\tourapi\\pilot\\gyeongju\\visitgyeongju\\collector-sample --max-items 3 --delay 0.8 --check-languages --as-of 2026-08-04T12:00:00Z",
+  "as_of": "2026-08-04T12:00:00Z",
+  "collected_at": "2026-08-04T12:27:11Z",
+  "finished_at": "2026-08-04T12:27:32Z",
+  "sitemap_hex_ids_total": 8,
+  "requested_url_count": 3,
+  "success_url_count": 3,
+  "failed_url_count": 0,
+  "http_status_distribution": {
+    "200": 3
+  },
+  "record_count": 3,
+  "output_file": "data\\tourapi\\pilot\\gyeongju\\visitgyeongju\\collector-sample\\souvenirs-ko-raw.jsonl",
+  "output_sha256": "4d4c7547bee0d4346b3ea65accbb61d2e2740cff0be1119956aa6d7a2a933a76",
+  "failed_urls": [],
+  "dry_run": false,
+  "collection_strategy": "sitemap.xml hexID 열거 → 언어별 상세 URL 직접 수집. 목록 페이지는 JavaScript 동적 로딩으로 WebFetch 불가. 웹 전용 이미지 다운로드 없음. 장문 설명 저장 없음.",
+  "reproducibility_note": "같은 hexID 목록 + 같은 --as-of + 같은 정규화 규칙 → 정규화 단계 byte-identical. raw 수집은 사이트 변경에 따라 달라질 수 있음."
+}

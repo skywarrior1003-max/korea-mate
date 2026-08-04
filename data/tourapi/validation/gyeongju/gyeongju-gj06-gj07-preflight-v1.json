@@ -1,0 +1,33 @@
+{
+  "task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+  "created_at": "2026-08-04T12:30:00Z",
+  "overall_verdict": "VALID_OFFICIAL_SOURCE",
+  "GJ06": {
+    "source_id": "GJ-06",
+    "description": "경주 야간관광 특화 공식 사이트",
+    "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2393",
+    "verdict": "VALID_OFFICIAL_SOURCE",
+    "evidence": "야간관광지 10개소 실제 데이터 확인 — 운영시간·입장료 실제 기재",
+    "sites_count": 10,
+    "sample_data": true,
+    "placeholder_data": false,
+    "preflight_result": "PASS"
+  },
+  "GJ07": {
+    "source_id": "GJ-07",
+    "description": "경주 경관 조망점 안내",
+    "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2393",
+    "verdict": "VALID_OFFICIAL_SOURCE",
+    "evidence": "경관 조망점 10개소 실제 데이터 확인 — 위치·특징 실제 기재",
+    "sites_count": 10,
+    "sample_data": true,
+    "placeholder_data": false,
+    "preflight_result": "PASS"
+  },
+  "api_key_preflight": {
+    "TOUR_API_KEY": "LOADED_FROM_ENV",
+    "GJ06_api_required": false,
+    "GJ07_api_required": false,
+    "note": "GJ06/GJ07는 웹 기반 소스로 API 키 불필요. TOUR_API_KEY는 GJ01-05 API 수집에만 사용."
+  }
+}

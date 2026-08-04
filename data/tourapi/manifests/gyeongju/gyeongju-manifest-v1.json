@@ -481,6 +481,195 @@
       "sha256": "e5095f0a63e71c6bddd0a926e80f1fac98040ee42077a5dd882b4e732282f33c",
       "size_bytes": 12381,
       "note": "TASK-GYEONGJU-FULL-COLLECTION-V1 검증보고서 (실행 보류)"
+    },
+    {
+      "path": "scripts/gyeongju_culture_web_collect.py",
+      "category": "script",
+      "sha256": "feb17cc65b7544c9810628971c5e4a25c07920447043516d7622db397d0af020",
+      "size_bytes": 27624,
+      "note": "web 수집기: gyeongju.go.kr/tour 6 content-types"
+    },
+    {
+      "path": "scripts/visitgyeongju_collect.py",
+      "category": "script",
+      "sha256": "01ac7eab0fb35b5b324fd7bc8cf7088a398e7719fa7dc70a458065c4426570b1",
+      "size_bytes": 22426,
+      "note": "web 수집기: visitgyeongju.or.kr restaurants+souvenirs 5개 언어"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-source-contract-v2.json",
+      "category": "contract",
+      "sha256": "d42e84c10c6ceaae57fbee3dce98ff762d6c618bdca430e5d96769ba3e581420",
+      "size_bytes": 2718,
+      "note": "visitgyeongju.or.kr 소스 계약 v2 (sitemap 전략 확정)"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-web-collection-readiness-v1.json",
+      "category": "contract",
+      "sha256": "d515e44a0d3ee0b62efa822a61d89604aeaf4cd05ea80638890b9e46546eae25",
+      "size_bytes": 1801,
+      "note": "웹 수집 준비 상태 요약 (READY_FOR_FULL_COLLECTION)"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/attractions-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "943867ef19ca9e6fc513d3793761aa3b71f19fd88cfd6a71180084a3d23839a5",
+      "size_bytes": 3175,
+      "note": "관광명소 표본 5건 (보문권)"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/attractions-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "3c1a62ce15c6d8a5279109e889709dbe37f1c3fbb0c5655be12fc56038aaadcd",
+      "size_bytes": 1128,
+      "note": "관광명소 표본 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/courses-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "f73936b6a9c72e4cca3e7c59da29b4ebf3f03035d7980d1265fd815f245226df",
+      "size_bytes": 7595,
+      "note": "여행코스 표본 5건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/courses-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "e4eb44da0c3e4569b948fce8aa58c3f0b269034f9a1680e484f1a77b68fd8b18",
+      "size_bytes": 1102,
+      "note": "여행코스 표본 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/heritage-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "c6624314a637703cad315aa8590d14f4960711a4c84f3ba95f8605eb89030e18",
+      "size_bytes": 2762,
+      "note": "세계유산 표본 5건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/heritage-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "7673a64ae1e437d50d08e532d3e50e037c42d1ebfdf37935b5f7fc3ad4476650",
+      "size_bytes": 1105,
+      "note": "세계유산 표본 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/cultural-guides-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "97ff490f317f18717d6ea38f1ecfbb83b0559334aa7de4bc23a9f97041d6e7a8",
+      "size_bytes": 850,
+      "note": "문화관광해설 17개소 표본"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/cultural-guides-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "830a493654d39aa3d1d393e64c573a24e84be91b9bab8b098e534f53d1a627f2",
+      "size_bytes": 1112,
+      "note": "문화관광해설 표본 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/events-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "4553a31bf204311e3e67796efd2fa9b002f843b60cf63230eddbab0ecc902ae7",
+      "size_bytes": 2255,
+      "note": "행사 표본 5건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/events-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "b803c76bc765185f93c679a610d7e602b951d1b7cfd88b59c666307e724d8505",
+      "size_bytes": 1099,
+      "note": "행사 표본 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/monthly-recommendations-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "af00c2969bb379d51a0f68b23445db2b5a760c18979bba407382091eff32aec7",
+      "size_bytes": 541,
+      "note": "이달 추천여행지 표본"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/monthly-recommendations-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "93aa961998b9f09c9221c3b0bd5ea9493fc46f8b966c7f2589270a3b68079c35",
+      "size_bytes": 1136,
+      "note": "이달 추천여행지 snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-ko-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "3656d9700eec4b85ed672a62636a1df46576a4a2b1dfd48b57cbc7b69990c26f",
+      "size_bytes": 2893,
+      "note": "visitgyeongju 식당 ko 표본 5건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-ko-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "6a704c042c148828b0d166b6eb732e369f4680fe62343f29cc0474467e56e8db",
+      "size_bytes": 1379,
+      "note": "visitgyeongju 식당 ko snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-language-audit.jsonl",
+      "category": "pilot-sample",
+      "sha256": "644bb62c4e9e55456cccabdf33d18729123967100c54c29a567d35bcf2ab508c",
+      "size_bytes": 5265,
+      "note": "visitgyeongju 식당 5개 언어 가용 감사"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-ko-raw.jsonl",
+      "category": "pilot-sample",
+      "sha256": "4d4c7547bee0d4346b3ea65accbb61d2e2740cff0be1119956aa6d7a2a933a76",
+      "size_bytes": 1693,
+      "note": "visitgyeongju 기념품 ko 표본 3건"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-ko-snapshot-summary.json",
+      "category": "pilot-sample",
+      "sha256": "d03387134c2ad2c214cc70b5869c32b466103c82936d259847f1bfd2fd5ac0ea",
+      "size_bytes": 1372,
+      "note": "visitgyeongju 기념품 ko snapshot 요약"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-language-audit.jsonl",
+      "category": "pilot-sample",
+      "sha256": "e9c60f2ecf71352a726c195dcd4c95471a08da21485e80b27b382c333047979d",
+      "size_bytes": 3168,
+      "note": "visitgyeongju 기념품 5개 언어 가용 감사"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-web-path-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "5579c14b3e2c39fcffd947755e84752e86801bfb88334f0911b2c1aca44b97a0",
+      "size_bytes": 6137,
+      "note": "웹 경로 감사 19건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-pagination-language-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "47c1a04443be305aaa7af5261b1f0c7d4c4cdcd680f38b4a494a7e643a396a19",
+      "size_bytes": 8431,
+      "note": "visitgyeongju 언어 가용 감사 8건"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-gj06-gj07-preflight-v1.json",
+      "category": "validation",
+      "sha256": "609942bff7d0a639be46cfeb6747df7ec69bba27c304766886837465d3ea598c",
+      "size_bytes": 1296,
+      "note": "GJ06/GJ07 사전검증 결과"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-web-collector-foundation-summary-v1.json",
+      "category": "report",
+      "sha256": "e51558966a25a9ac5d80129f0fb4e38437dabdc6ab8592c2e0e6e7d051317618",
+      "size_bytes": 4536,
+      "note": "웹 수집기 foundation 전체 요약"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-source-discovery-and-collector-foundation-v1.md",
+      "category": "report",
+      "sha256": "b7a03ba26d8be891c34881fd2e62a45a2659d1ab981c44569ffd863a510395b7",
+      "size_bytes": 7180,
+      "note": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -507,7 +696,20 @@
       "verified_at": "2026-08-04",
       "verdict": "EXECUTION_HOLD",
       "summary": "하드 블로커 2건(웹 수집 스크립트 미존재·문화관광해설 17개소 경로 미정) + 구조적 개선 5건. 4단계 재구성 권장."
+    },
+    {
+      "task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+      "verdict": "COMPLETE",
+      "completed_at": "2026-08-04T12:30:00Z",
+      "branch": "data/gyeongju-web-collector-foundation-v1",
+      "scripts_added": [
+        "scripts/gyeongju_culture_web_collect.py",
+        "scripts/visitgyeongju_collect.py"
+      ],
+      "files_added": 27
     }
   ],
-  "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f"
+  "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
+  "last_updated_task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+  "last_updated_at": "2026-08-04T12:30:00Z"
 }

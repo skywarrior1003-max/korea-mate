@@ -1,0 +1,67 @@
+{
+  "task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
+  "version": "v2",
+  "created_at": "2026-08-04T12:30:00Z",
+  "source": "https://visitgyeongju.or.kr",
+  "robots_policy": "Allow: / (제한 없음)",
+  "collector_script": "scripts/visitgyeongju_collect.py",
+  "collection_strategy": "sitemap.xml hexID 열거 → 언어별 상세 URL 직접 수집 (목록 페이지는 JS 동적)",
+  "content_types": {
+    "restaurants": {
+      "status": "STATIC_HTML_AVAILABLE (detail) / DYNAMIC_LIST (list)",
+      "sitemap_ko_count": 84,
+      "known_count_note": "사이트맵 기준 KO 84건. WebFetch 이전 추정 96건과 차이는 사이트맵 파싱 방식 차이.",
+      "souvenir_detail_url_template": "{locale_prefix}/cuisine/view/{hex_id}",
+      "locale_prefixes": {
+        "ko": "/kr",
+        "en": "",
+        "ja": "/jp",
+        "zh-CN": "/zh",
+        "zh-TW": "/tw"
+      },
+      "hex_id_length": 34,
+      "sample_verified": true,
+      "sample_count": 5,
+      "language_availability": "ALL 5 LOCALES HTTP 200 (표본 5건 확인)"
+    },
+    "souvenirs": {
+      "status": "STATIC_HTML_AVAILABLE (detail) / DYNAMIC_LIST (list)",
+      "sitemap_ko_count": 8,
+      "detail_url_template": "{locale_prefix}/souvenir/view/{hex_id}",
+      "sample_verified": true,
+      "sample_count": 3,
+      "language_availability": "ALL 5 LOCALES HTTP 200 (표본 3건 확인)"
+    }
+  },
+  "filter_reconciliation": {
+    "raw_filter_options_total": 59,
+    "by_category": {
+      "메뉴_subcategory": 9,
+      "지역_region": 4,
+      "분위기_atmosphere": 8,
+      "서비스_service": 24,
+      "트렌딩_trending": 7,
+      "이용목적_purpose": 7
+    },
+    "unique_source_attributes": 59,
+    "search_only_attributes": 25,
+    "detail_only_attributes": 0,
+    "duplicate_or_alias_attributes": 0,
+    "validated_mapping_total": 33,
+    "meaning_review_required_total": 1,
+    "provisional_mapping_total": 0,
+    "unmapped_total": 0,
+    "reconciliation_check": {
+      "detail_addressable_total": 34,
+      "breakdown": "33 validated + 1 meaning_review = 34",
+      "search_only_note": "25건은 검색 필터 전용으로 상세 페이지에 직접 노출 안 됨 (메뉴 9 + 지역 4 + 일부 서비스 12)",
+      "check": "34 + 25 = 59 ✓"
+    },
+    "meaning_review_required": [
+      "비즈니스"
+    ],
+    "meaning_review_policy": "비즈니스는 의미 확정 전 자동 정규화 금지"
+  },
+  "image_policy": "웹 전용 이미지 다운로드 없음. 이미지 URL 메타데이터만 허용.",
+  "description_policy": "장문 설명 원문 저장 없음. 필드 존재 여부와 길이만 기록."
+}
