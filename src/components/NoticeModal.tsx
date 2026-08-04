@@ -106,14 +106,14 @@ export default function NoticeModal() {
             id="notice-modal-title"
             className="text-lg sm:text-xl font-black text-gray-900 mb-4 tracking-tight pr-8"
           >
-            Notice from KoreaMate
+            Notice from gokoreamate
           </h2>
 
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
             To ARMY and travelers visiting Busan,
           </p>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
-            We created KoreaMate because we wanted to help you enjoy Busan with
+            We created gokoreamate because we wanted to help you enjoy Busan with
             better food, travel, and map information.
           </p>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
@@ -125,7 +125,7 @@ export default function NoticeModal() {
             We have now rebuilt our Busan Food Guide using the official 2026
             Busan food guide data, and{" "}
             <strong>194 selected restaurants</strong> are currently available on
-            KoreaMate.
+            gokoreamate.
           </p>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
             Some images, coordinates, and travel route features may still need
@@ -140,10 +140,10 @@ export default function NoticeModal() {
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-3">
             Thank you for your understanding.
             <br />
-            We will keep improving KoreaMate step by step.
+            We will keep improving gokoreamate step by step.
           </p>
           <p className="text-sm sm:text-base text-gray-500 mt-3 font-medium">
-            — KoreaMate
+            — gokoreamate
           </p>
 
           {/* Action buttons */}

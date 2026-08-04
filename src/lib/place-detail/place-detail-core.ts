@@ -509,7 +509,7 @@ export function buildBreadcrumbJsonLd(
   const cityKey = spot.city.toLowerCase();
   const cityLabel = spot.city.charAt(0).toUpperCase() + spot.city.slice(1);
   const items = [
-    { name: "GoKoreaMate", item: `${SITE_ORIGIN}/` },
+    { name: "gokoreamate", item: `${SITE_ORIGIN}/` },
     { name: cityLabel,     item: `${SITE_ORIGIN}/explore/${cityKey}/` },
     { name: displayName ?? spot.name, item: placeUrl(spot.id) },
   ];
@@ -545,7 +545,7 @@ export function buildShareContent(
   const cityLabel = spot.city.charAt(0).toUpperCase() + spot.city.slice(1);
   return {
     title: `${name} — ${cityLabel}`,
-    text:  `${name} · ${cityLabel} · GoKoreaMate`,
+    text:  `${name} · ${cityLabel} · gokoreamate`,
     url:   placeUrl(spot.id),
   };
 }

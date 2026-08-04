@@ -9,9 +9,17 @@
      primary 팔레트는 토큰 값 교체만으로 스왑 가능해야 한다. */
 
   /* action */
-  --gkm-action-primary: #FF4A2D;
-  --gkm-action-hover:   #D93317;
-  --gkm-action-tint:    #FFF0EC;
+  /* 승인 시안(final-mobile-2026-08-02)의 primary. 코랄에서 파랑으로 옮겼다 —
+     주요 CTA·선택 상태·내비 활성이 화면마다 다른 색이던 문제를 여기서 끊는다.
+     이 값이 SSOT 라 bg-action / text-action 을 쓰는 화면은 전부 따라온다. */
+  --gkm-action-primary: #0041c8;
+  --gkm-action-hover:   #00339e;
+  --gkm-action-tint:    #E8EDFB;
+
+  /* 코랄은 primary 자리에서 내려오되 버리지 않는다. 승인 화면에서 강조가
+     필요한 곳(하트·삭제 경고 등)에만 쓰는 보조 accent 다. */
+  --gkm-accent-coral:      #FF4A2D;
+  --gkm-accent-coral-tint: #FFF0EC;
 
   /* structure / text */
   --gkm-ink:        #191C21;
@@ -42,20 +50,45 @@
   --gkm-overlay-scrim: rgba(16, 18, 22, 0.45);
 
   /* radius */
-  --gkm-radius-control: 12px;
-  --gkm-radius-card:    16px;
-  --gkm-radius-frame:   24px;
+  --gkm-font-sans:  var(--font-display-sans), "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", system-ui, sans-serif;
+  --gkm-font-serif: var(--font-display-serif), "Nanum Myeongjo", "Noto Serif KR", "Noto Serif JP", "Songti SC", Georgia, serif;
+
+  --gkm-radius-sm:   8px;
+  --gkm-radius-md:   12px;
+  --gkm-radius-lg:   16px;
+  --gkm-radius-xl:   24px;
+  --gkm-radius-pill: 999px;
+  /* 기존 이름은 그대로 둔다 — 이미 여러 화면이 쓰고 있어 지우면 전부 깨진다 */
+  --gkm-radius-control: var(--gkm-radius-md);
+  --gkm-radius-card:    var(--gkm-radius-lg);
+  --gkm-radius-frame:   var(--gkm-radius-xl);
+
+  /* 표면·경계 */
+  --gkm-surface-raised: #FFFFFF;
+  --gkm-border-subtle:  #E5E7EA;
+
+  /* 레이아웃 — 고정 내비가 콘텐츠를 가리지 않게 하는 공통 계약 */
+  --gkm-gutter-mobile:  24px;
+  --gkm-header-height:  56px;
+  --gkm-bottomnav-height: 61px;
+  --gkm-content-bottom: calc(var(--gkm-bottomnav-height) + env(safe-area-inset-bottom));
+  --gkm-desktop-max:    1280px;
 
   /* shadow */
   --gkm-shadow-card:  0 2px 8px rgba(0, 0, 0, 0.07);
-  --gkm-shadow-cta:   0 2px 8px rgba(255, 74, 45, 0.3);
+  --gkm-shadow-cta:      0 2px 8px rgba(0, 65, 200, 0.28);
+  --gkm-shadow-floating: 0 12px 32px rgba(19, 27, 46, 0.16);
   --gkm-shadow-modal: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* preflight 가 html 에 거는 값이자 font-sans 유틸리티의 값.
+     @theme inline 은 빌드 때 값을 굽기 때문에 여기서는 스택을 직접 적는다 —
+     다른 커스텀 변수를 var() 로 가리키면 해석되지 않고 기본값으로 떨어진다. */
+  --font-sans:  var(--font-display-sans), "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", system-ui, sans-serif;
+  --font-serif: var(--font-display-serif), "Nanum Myeongjo", "Noto Serif KR", "Noto Serif JP", "Songti SC", Georgia, serif;
   --font-mono: var(--font-geist-mono);
 
   /* Tailwind 유틸리티 생성용 semantic 매핑 (예: bg-action, text-ink, border-line) */
@@ -81,12 +114,23 @@
   --color-error:      var(--gkm-status-error);
   --color-error-tint: var(--gkm-status-error-tint);
 
+  --color-accent-coral:      var(--gkm-accent-coral);
+  --color-accent-coral-tint: var(--gkm-accent-coral-tint);
+  --color-surface-raised:    var(--gkm-surface-raised);
+  --color-border-subtle:     var(--gkm-border-subtle);
+
+  --radius-sm:      var(--gkm-radius-sm);
+  --radius-md:      var(--gkm-radius-md);
+  --radius-lg:      var(--gkm-radius-lg);
+  --radius-xl:      var(--gkm-radius-xl);
+  --radius-pill:    var(--gkm-radius-pill);
   --radius-control: var(--gkm-radius-control);
   --radius-card:    var(--gkm-radius-card);
   --radius-frame:   var(--gkm-radius-frame);
 
   --shadow-card:  var(--gkm-shadow-card);
-  --shadow-cta:   var(--gkm-shadow-cta);
+  --shadow-cta:      var(--gkm-shadow-cta);
+  --shadow-floating: var(--gkm-shadow-floating);
   --shadow-modal: var(--gkm-shadow-modal);
 }
 
@@ -97,10 +141,24 @@
   }
 }
 
+/* 서체.
+   예전엔 body 가 Arial 로 강제돼 next/font 로 받아온 서체가 전부 무력화됐다.
+   본문은 시안의 산세리프, 세리프는 명시한 곳에서만 쓴다 — 모든 제목을
+   세리프로 바꾸지 않는다. 런타임 외부 폰트 호출은 없다(next/font 자체 호스팅). */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--gkm-font-sans);
+}
+
+/* 에디토리얼 강조 제목에만 붙인다. 시안에서 세리프가 확인된 화면 전용 */
+.gkm-display-serif {
+  font-family: var(--gkm-font-serif);
+}
+
+/* 고정 하단 내비가 콘텐츠를 가리지 않게 하는 공통 여백 */
+.gkm-nav-safe {
+  padding-bottom: var(--gkm-content-bottom);
 }
 
 /* 접근성: 모든 인터랙티브 요소 공통 포커스 링 (design-system.md §3) */

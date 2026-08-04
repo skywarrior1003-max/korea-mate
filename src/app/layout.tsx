@@ -88,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jakarta.variable} h-full antialiased`}
     >
       {(() => {
         const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
@@ -130,7 +130,7 @@ gtag('config','${ga4Id}');
           />
         ) : null;
       })()}
-      <body className={`min-h-full flex flex-col ${playfair.variable} ${jakarta.variable}`}>
+      <body className="min-h-full flex flex-col">
         <I18nProvider>
         <script
           type="application/ld+json"

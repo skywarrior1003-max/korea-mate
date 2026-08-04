@@ -498,7 +498,7 @@ export default function AllSpotsPage() {
 
       {/* 푸터 */}
       <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400">
-        <Link href="/" className="text-orange-500 font-bold hover:underline">← Back to KoreaMate Home</Link>
+        <Link href="/" className="text-orange-500 font-bold hover:underline">← Back to gokoreamate Home</Link>
       </footer>
 
       {/* 상세 모달 */}

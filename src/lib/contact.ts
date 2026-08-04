@@ -143,7 +143,7 @@ function mapRow(r: Record<string, unknown>): ContactInquiry {
 export async function sendAdminNotification(inquiry: ContactInquiry): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const to     = process.env.ADMIN_NOTIFICATION_EMAIL;
-  const from   = process.env.CONTACT_FROM_EMAIL || "GoKoreaMate <noreply@gokoreamate.com>";
+  const from   = process.env.CONTACT_FROM_EMAIL || "gokoreamate <noreply@gokoreamate.com>";
 
   if (!apiKey || !to) {
     console.warn(
@@ -152,7 +152,7 @@ export async function sendAdminNotification(inquiry: ContactInquiry): Promise<vo
     return;
   }
 
-  const subject = `[GoKoreaMate Inquiry] ${inquiry.type}`;
+  const subject = `[gokoreamate Inquiry] ${inquiry.type}`;
   const text = [
     "A new inquiry has been submitted.",
     "",

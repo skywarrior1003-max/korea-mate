@@ -2,8 +2,8 @@ import Link from "next/link";
 import ContactSection from "@/components/ContactSection";
 
 export const metadata = {
-  title: "About KoreaMate - KoreaMate",
-  description: "Learn about the mission, data sources, and AI technologies powering KoreaMate.",
+  title: "About gokoreamate",
+  description: "Learn about the mission, data sources, and AI technologies powering gokoreamate.",
 };
 
 export default function AboutPage() {
@@ -17,7 +17,9 @@ export default function AboutPage() {
               <span className="font-black tracking-tight">gokoreamate</span>
             </Link>
           </div>
-          <nav className="flex items-center gap-8">
+          {/* 모바일에서는 이 메뉴가 브랜드와 붙어 "gokoreamateBlog" 처럼 읽혔다.
+              좁은 화면에서는 하단 내비가 같은 곳으로 데려가므로 숨긴다. */}
+          <nav className="hidden sm:flex items-center gap-8">
             <Link
               href="/blog"
               className="text-base font-bold hover:text-[#D4AF37] transition-colors"
@@ -44,7 +46,7 @@ export default function AboutPage() {
       <section className="bg-gradient-to-b from-[#F3EEE3] to-[#FAF7F2] border-b border-[#E6DFD5] py-20 text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl sm:text-6xl font-black text-[#2C2520] tracking-tight leading-tight">
-            About KoreaMate
+            About gokoreamate
           </h1>
           <p className="mt-5 text-xl sm:text-2xl text-[#61554D] font-bold">
             Empowering foreign independent travelers to explore Korea worry-free
@@ -62,7 +64,7 @@ export default function AboutPage() {
               🎯 Our Mission
             </h2>
             <p className="text-lg text-[#61554D] leading-relaxed">
-              KoreaMate is an AI-powered travel guide designed specifically for foreign travelers visiting Korea. We help you plan your trip, find solo-friendly spots, and navigate Korea without getting stuck.
+              gokoreamate is an AI-powered travel guide designed specifically for foreign travelers visiting Korea. We help you plan your trip, find solo-friendly spots, and navigate Korea without getting stuck.
             </p>
           </section>
 
@@ -122,7 +124,7 @@ export default function AboutPage() {
       {/* Footer */}
       <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
           <p className="font-bold tracking-wide">
             Data provided by Korea Tourism Organization. AI-powered by Gemini.
           </p>

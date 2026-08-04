@@ -176,7 +176,7 @@ async function sendAdminEmail(
 ): Promise<void> {
   const apiKey = env.RESEND_API_KEY;
   const to     = env.ADMIN_NOTIFICATION_EMAIL;
-  const from   = env.CONTACT_FROM_EMAIL ?? "GoKoreaMate <noreply@gokoreamate.com>";
+  const from   = env.CONTACT_FROM_EMAIL ?? "gokoreamate <noreply@gokoreamate.com>";
 
   if (!apiKey || !to) {
     console.warn("[contact fn] RESEND_API_KEY or ADMIN_NOTIFICATION_EMAIL not set — skipping notification");
@@ -184,7 +184,7 @@ async function sendAdminEmail(
   }
 
   const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://gokoreamate.com";
-  const subject = `[GoKoreaMate Inquiry] ${data.type}`;
+  const subject = `[gokoreamate Inquiry] ${data.type}`;
   const text = [
     "A new inquiry has been submitted.",
     "",

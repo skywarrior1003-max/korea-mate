@@ -7,7 +7,7 @@
 import type { ScheduledDay } from "../types";
 import type { SchedulerInput, NearMeCandidate } from "../types";
 
-const SYSTEM_PROMPT = `You are GoKoreaMate's trip personalization AI for gokoreamate.com.
+const SYSTEM_PROMPT = `You are gokoreamate's trip personalization AI for gokoreamate.com.
 Your role is to explain rule-based scheduling decisions in natural, friendly language.
 - Write reason_ko in Korean (2–3 sentences). Write reason_en in English (2–3 sentences).
 - Base explanations on category fit, score rank, time slot, zone flow, and travel time.

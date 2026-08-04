@@ -641,7 +641,7 @@ export default function RestaurantsClient() {
       {/* 푸터 */}
       <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400 space-y-2">
         <p>
-          <Link href="/" className="text-orange-500 font-bold hover:underline">← KoreaMate Home</Link>
+          <Link href="/" className="text-orange-500 font-bold hover:underline">← gokoreamate Home</Link>
           &nbsp;·&nbsp;
           <Link href="/all-spots" className="text-orange-500 font-bold hover:underline">View All Spots</Link>
         </p>

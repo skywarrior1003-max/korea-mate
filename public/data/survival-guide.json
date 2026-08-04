@@ -48,11 +48,11 @@
         "id": "aff-esim",
         "name": "Korea eSIM — Airalo",
         "tagline": "Stay connected from the moment you land",
-        "description": "Get a Korean data eSIM before departure. Activate in 2 minutes, no SIM swap needed. Works on all major Korean carriers (SKT, KT, LG). 10% off with KoreaMate link.",
+        "description": "Get a Korean data eSIM before departure. Activate in 2 minutes, no SIM swap needed. Works on all major Korean carriers (SKT, KT, LG). 10% off with gokoreamate link.",
         "url": "https://www.airalo.com/south-korea-esim",
         "partner": "Airalo",
         "category": "connectivity",
-        "discountNote": "10% discount via KoreaMate partner link",
+        "discountNote": "10% discount via gokoreamate partner link",
         "ctaLabel": "Get Korea eSIM →",
         "isPrimary": true
       },
@@ -256,7 +256,7 @@
         "url": "https://www.airalo.com/south-korea-esim",
         "partner": "Airalo",
         "category": "connectivity",
-        "discountNote": "10% off with KoreaMate partner link",
+        "discountNote": "10% off with gokoreamate partner link",
         "ctaLabel": "Get Korea eSIM →",
         "isPrimary": false
       }

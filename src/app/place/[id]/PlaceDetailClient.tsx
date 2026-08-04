@@ -259,7 +259,7 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
       {/* 화면 breadcrumb — BreadcrumbList JSON-LD 와 같은 경로 */}
       <nav aria-label="Breadcrumb" className="hidden md:block w-full max-w-[1100px] mx-auto px-4 pt-5">
         <ol className="flex items-center gap-1.5 text-xs text-faint">
-          <li><Link href="/" className="gkm-focus hover:text-ink">GoKoreaMate</Link></li>
+          <li><Link href="/" className="gkm-focus hover:text-ink">gokoreamate</Link></li>
           <li aria-hidden>/</li>
           <li><Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus hover:text-ink">{cap(spot.city)}</Link></li>
           <li aria-hidden>/</li>

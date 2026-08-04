@@ -1363,8 +1363,8 @@ function ItineraryResult() {
   // ── 브라우저 탭 제목 동기화 ────────────────────────────────
   useEffect(() => {
     document.title = tripTitle
-      ? `${tripTitle} — KoreaMate`
-      : `My ${city} Trip — KoreaMate`;
+      ? `${tripTitle} — gokoreamate`
+      : `My ${city} Trip — gokoreamate`;
   }, [tripTitle, city]);
 
   // ── 로딩 페이즈 사이클링 (2.5~3.5s 강제 드웰 타임) ─────────
@@ -1823,7 +1823,7 @@ function ItineraryResult() {
         <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-amber-50 border border-amber-200">
           <span className="text-lg">✨</span>
           <p className="text-sm font-bold text-amber-700 flex-1">
-            AI is busy right now, so we prepared a safe KoreaMate recommended plan for you.
+            AI is busy right now, so we prepared a safe gokoreamate recommended plan for you.
           </p>
         </div>
       )}
@@ -2694,7 +2694,7 @@ export default function ItineraryPage() {
 
       <footer className="mt-auto border-t border-[#E5E7EA] bg-[#F6F7F8] py-8 text-center text-sm text-[#565D66] px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
           <p className="font-bold tracking-wide">Data provided by Korea Tourism Organization. AI-powered by Gemini.</p>
         </div>
       </footer>

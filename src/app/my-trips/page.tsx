@@ -458,7 +458,7 @@ export default function MyTripsPage() {
 
       {/* ── 푸터 ── */}
       <footer className="mt-auto border-t border-[#E5E7EA] py-8 text-center text-sm text-[#565D66] px-4" style={{ backgroundColor: "#F6F7F8" }}>
-        <p>© {new Date().getFullYear()} KoreaMate · Trip data stored on your device</p>
+        <p>© {new Date().getFullYear()} gokoreamate · Trip data stored on your device</p>
       </footer>
 
       <EmailCaptureModal

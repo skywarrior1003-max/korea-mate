@@ -126,7 +126,7 @@ export default function AdminInquiriesPage() {
         <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-sm border border-gray-700 shadow-2xl">
           <div className="text-center mb-6">
             <span className="text-4xl">📬</span>
-            <h1 className="text-xl font-black text-white mt-3">GoKoreaMate Admin</h1>
+            <h1 className="text-xl font-black text-white mt-3">gokoreamate Admin</h1>
             <p className="text-gray-400 text-sm mt-1">Inquiry Management</p>
           </div>
           <input
@@ -316,7 +316,7 @@ export default function AdminInquiriesPage() {
         </div>
 
         <p className="text-center text-xs text-gray-700 pb-6">
-          GoKoreaMate Admin · Private · Do not share
+          gokoreamate Admin · Private · Do not share
         </p>
       </div>
     </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
 
 export const metadata = {
-  title: "Korea Survival Guide - KoreaMate",
+  title: "Korea Survival Guide - gokoreamate",
   description: "Everything foreign travelers need to know before and during their trip to Korea.",
 };
 
@@ -183,7 +183,7 @@ export default function SurvivalGuidePage() {
       {/* Footer */}
       <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
           <p className="font-bold tracking-wide">
             Data provided by Korea Tourism Organization. AI-powered by Gemini.
           </p>

@@ -403,7 +403,7 @@ export default function TrendingPage() {
 
       {/* ── Footer ─────────────────────────────────── */}
       <footer className="mt-auto py-8 px-4 border-t border-gray-100 text-center text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} KoreaMate. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
       </footer>
     </div>
   );
