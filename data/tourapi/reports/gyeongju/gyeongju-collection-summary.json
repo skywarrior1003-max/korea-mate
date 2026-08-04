@@ -108,7 +108,17 @@
         "errors": 0
       }
     },
-    "total_collected": 559
+    "total_collected": 559,
+    "excluded_types": {
+      "25": {
+        "content_type_id": 25,
+        "name": "여행코스",
+        "status": "DOCUMENTED_EXCLUSION",
+        "reason": "단일 장소가 아닌 코스 단위로 city_spots POI 계약 범위 외",
+        "current_source_count": 16,
+        "checked_at": "2026-08-04T03:16:24Z"
+      }
+    }
   },
   "engservice2": {
     "status": "MISSING_SOURCE",
