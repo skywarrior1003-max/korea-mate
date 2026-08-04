@@ -28,15 +28,44 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
     <div style={{ backgroundColor: DESIGN_SURFACE, fontFamily: FONT_SANS }}>
       <div className="mx-auto" style={{ maxWidth: HERO_MAX_WIDTH }}>
 
-        {/* ── Hero — 표지 이미지 + 실제 HTML 오버레이 ───────────────────── */}
-        <section className="relative w-full overflow-hidden" style={{ aspectRatio: "768 / 1376" }}>
+        {/* ── Hero — 표지 이미지 + 실제 HTML 카피 ───────────────────────
+            시안(390px)은 사진 위에 글을 얹는 구성이다. 그런데 그 구성은 사진
+            구간이 글자 묶음만큼 높을 때만 성립한다. 표지 제목이 이미지 높이의
+            41% 를 차지하기 때문이다.
+
+              폭 320px  사진 구간 340px < 글자 묶음 420px  → 글이 표지 위로 올라탐
+              폭 390px  사진 구간 412px ≈ 글자 묶음        → 시안대로 성립
+              폭 768px+ 비율대로면 높이 1376px            → 글·CTA 가 첫 화면 밖
+
+            그래서 겹치는 구성은 360~639px 에서만 쓴다. 그 밖에서는 표지를 위에,
+            글을 아래 잉크 배경에 놓는다. 흰 글자와 파란 CTA 는 그대로라 인상이
+            유지되고, 표지의 BUSAN: GOLDEN HOUR 와 칩도 잘리지 않는다.
+
+            640px 이상은 표지와 글을 좌우로 나눈다. 표지를 세로로 잘라 높이를
+            맞추는 방법도 시도했지만, 위에서 자르면 사진이 사라지고 곧이어
+            DAY 3 / ISSUE 04 칩까지 잘렸다. 좌우로 나누면 표지를 통째로 두고도
+            글과 CTA 가 첫 화면에 들어온다. */}
+        <section className={
+          "relative w-full overflow-hidden bg-[#131b2e] " +
+          // 640px 이상은 표지와 글을 좌우로 나눈다(아래 설명 참고)
+          "sm:flex sm:items-stretch " +
+          "[@media(min-width:360px)_and_(max-width:639px)]:block [@media(min-width:360px)_and_(max-width:639px)]:aspect-[768/1376]"
+        }>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/home/story-hero.jpg"
             alt={t("heroAlt")}
             width={768}
             height={1376}
-            className="absolute inset-0 w-full h-full object-cover"
+            className={
+              // 넓은 화면에서는 자르지 않는다. 잘라서 높이를 맞추면 표지의
+              // DAY 3 / ISSUE 04 칩이 먼저 사라진다 — 실제로 그렇게 잘렸다.
+              "block w-full object-cover object-top h-[35vh] " +
+              "sm:w-auto sm:h-[min(62vh,560px)] sm:object-contain sm:shrink-0 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:absolute " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:inset-0 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:w-full [@media(min-width:360px)_and_(max-width:639px)]:h-full [@media(min-width:360px)_and_(max-width:639px)]:object-cover"
+            }
             style={{ objectPosition: "center top" }}
             loading="eager"
             decoding="async"
@@ -46,29 +75,38 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
               화면에는 다시 그리지 않는다 */}
           <p className="sr-only">{t("heroCoverNote")}: {t("storyTitle")}</p>
 
-          {/* 아래쪽만 어둡게 — 오버레이 글자가 읽히도록 */}
+          {/* 겹치는 구성일 때만 아래쪽을 어둡게 — 글자가 읽히도록 */}
           <div
             aria-hidden
-            className="absolute inset-0"
+            className="hidden [@media(min-width:360px)_and_(max-width:639px)]:block absolute inset-0"
             style={{ background: "linear-gradient(to top, rgba(10,12,20,0.82) 0%, rgba(10,12,20,0.34) 42%, rgba(10,12,20,0) 62%)" }}
           />
 
-          {/* 하단 내비가 겹치지 않게 safe-area 만큼 더 띄운다 */}
+          {/* BottomNav 는 md 미만에서만 뜨므로 데스크톱에서는 아래 여백을 줄인다 */}
           <div
-            className="absolute inset-x-0 bottom-0 px-6"
-            style={{ paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom))" }}
+            className={
+              "relative px-6 pt-5 pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-10 " +
+              "sm:flex sm:flex-col sm:justify-center sm:flex-1 sm:min-w-0 sm:pt-8 sm:px-8 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:absolute " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:inset-x-0 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:bottom-0 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:pt-0 " +
+              "[@media(min-width:360px)_and_(max-width:639px)]:pb-[calc(4.5rem+env(safe-area-inset-bottom))]"
+            }
           >
-            <div className="flex items-center gap-3 mb-4">
+            {/* 배지는 좁은 화면에서 두 줄로 늘어나 표지 칩과 겹쳤다. 줄바꿈을
+                막고 자간·여백만 줄여 한 줄에 넣는다 — 글자 크기는 유지한다. */}
+            <div className="flex items-center gap-2 min-[360px]:gap-3 mb-3 min-[360px]:mb-4">
               <span
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black tracking-[0.14em] text-white"
+                className="inline-flex items-center gap-1.5 px-2.5 min-[360px]:px-3 py-1.5 rounded-full text-[11px] font-black tracking-[0.06em] min-[360px]:tracking-[0.14em] text-white whitespace-nowrap"
                 style={{ backgroundColor: "rgba(0,65,200,0.55)", border: "1px solid rgba(182,196,255,0.55)" }}
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="shrink-0">
                   <path d="M12 2l2.2 5.9L20 10l-5.8 2.1L12 18l-2.2-5.9L4 10l5.8-2.1z" />
                 </svg>
                 {t("storyBadge")}
               </span>
-              <span className="text-[11px] font-bold tracking-[0.18em] text-white/70">
+              <span className="text-[11px] font-bold tracking-[0.08em] min-[360px]:tracking-[0.18em] text-white/70 whitespace-nowrap overflow-hidden text-ellipsis">
                 {t("storyEyebrow")}
               </span>
             </div>
@@ -76,10 +114,10 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
             {/* 시안의 대제목은 Playfair Display 이탤릭이다. 굵은 산세리프로
                 두면 매거진 인상이 통째로 사라진다 */}
             <h1
-              className="text-white mb-4"
+              className="text-white mb-3 min-[360px]:mb-4"
               style={{
                 fontFamily: FONT_SERIF, fontStyle: "italic", fontWeight: 700,
-                fontSize: "clamp(2.2rem, 9.6vw, 3.1rem)", lineHeight: 1.08,
+                fontSize: "clamp(1.85rem, 9.6vw, 3.1rem)", lineHeight: 1.08,
                 letterSpacing: "-0.02em",
               }}
             >
@@ -87,7 +125,7 @@ export default function InspiredStorytellingHome({ onPlanTrip }: { onPlanTrip: (
             </h1>
 
             <p className="text-[17px] text-white font-semibold mb-2">{t("storyLead")}</p>
-            <p className="text-[13.5px] leading-[1.65] text-white/75 mb-7" style={{ whiteSpace: "pre-line" }}>
+            <p className="text-[13.5px] leading-[1.6] text-white/75 mb-5 min-[360px]:mb-7" style={{ whiteSpace: "pre-line" }}>
               {t("storyQuote")}
             </p>
 
