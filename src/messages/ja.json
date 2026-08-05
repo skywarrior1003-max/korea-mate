@@ -171,6 +171,17 @@
     "visited": "訪問済み",
     "progress": "{done}/{total} 訪問"
   },
+  "planner": {
+    "dayOfTotal": "Day {n} / {total}",
+    "openSelector": "Dayを選ぶ — 現在は{total}日中 Day {n}",
+    "selectorTitle": "Dayを選ぶ",
+    "dayTabList": "Day一覧",
+    "close": "閉じる",
+    "weather": "天気を見る",
+    "weatherAria": "韓国気象庁のサイトで天気を見る (新しいタブで開きます)",
+    "places": "{n}件",
+    "dayAria": "Day {n}, {date}"
+  },
   "common": {
     "language": "言語"
   },

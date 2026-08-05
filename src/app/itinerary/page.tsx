@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
@@ -36,6 +36,9 @@ import UserSpotsPanel from "@/components/UserSpotsPanel";
 import ItineraryDayMap from "@/components/ItineraryDayMap";
 import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
+import PlannerDayNav from "@/components/planner/PlannerDayNav";
+import TimelineIcon from "@/components/planner/TimelineIcon";
+import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 
@@ -914,6 +917,8 @@ function ItineraryResult() {
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
   const [editDay,       setEditDay]       = useState(0);
   const [mapDay,        setMapDay]        = useState(0);           // S2: Day 지도 선택 인덱스
+  // STAGE A: Full View 는 하루씩만 본다. 1-based — Day 번호와 그대로 맞춘다.
+  const [plannerDay,    setPlannerDay]    = useState(1);
   const [visited,       setVisited]       = useState<Set<string>>(new Set()); // S2: 로컬 방문 체크 (DB 무변경)
   // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -925,6 +930,8 @@ function ItineraryResult() {
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
   const tMemo = useTranslations("memo");
+  const tPlanner = useTranslations("planner");
+  const locale = useLocale();
   const [itinId,      setItinId]      = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [syncFading,  setSyncFading]  = useState(false);
@@ -2257,17 +2264,52 @@ function ItineraryResult() {
       ) : (
         /* ── Full View ── */
         <div className="space-y-12 mb-16">
-          {/* S2: 선택 Day 지도 — 번호 마커·순서선·Add to this day */}
+          {/* STAGE A: 하루씩 본다. 14일 일정에서 전체를 세로로 쌓으면 아무것도 못 찾는다.
+              선택 Day 는 지도와도 같이 움직인다 — 두 곳이 서로 다른 날을 가리키면 안 된다. */}
+          {days.length > 0 && (() => {
+            const currentDay = clampDay(days.length, plannerDay);
+            const selectDay = (n: number) => {
+              const d = clampDay(days.length, n);
+              setPlannerDay(d);
+              setMapDay(d - 1);
+            };
+            return (
+              <PlannerDayNav
+                days={days.map(d => ({
+                  dayNumber: d.dayNumber,
+                  dateLabel: formatDayChipDate(d.date, locale),
+                  placeCount: d.places.length,
+                }))}
+                currentDay={currentDay}
+                onSelectDay={selectDay}
+                labels={{
+                  dayOfTotal:    tPlanner("dayOfTotal", { n: currentDay, total: days.length }),
+                  dayTabList:    tPlanner("dayTabList"),
+                  openSelector:  tPlanner("openSelector", { n: currentDay, total: days.length }),
+                  selectorTitle: tPlanner("selectorTitle"),
+                  close:         tPlanner("close"),
+                  weather:       tPlanner("weather"),
+                  weatherAria:   tPlanner("weatherAria"),
+                  placesLabel:   (n: number) => tPlanner("places", { n }),
+                  dayAria:       (n: number, date: string) => tPlanner("dayAria", { n, date }),
+                }}
+              />
+            );
+          })()}
+          {/* S2: 선택 Day 지도 — 번호 마커·순서선·Add to this day.
+              Day 칩은 끈다 — 위 PlannerDayNav 가 선택을 맡는다. 두 벌이 같이 보이면
+              어느 쪽이 진짜 선택인지 알 수 없고 스크린리더도 Day 탭을 두 번 읽는다. */}
           {days.length > 0 && (
             <ItineraryDayMap
               days={days}
               city={city}
               selectedDay={Math.min(mapDay, days.length - 1)}
-              onSelectDay={setMapDay}
+              onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
               onAddToDay={(!shareId || isOwner) ? addCitySpotToDay : undefined}
+              showDayTabs={false}
             />
           )}
-          {days.map((day) => {
+          {days.filter(day => day.dayNumber === clampDay(days.length, plannerDay)).map((day) => {
             // Layer 3: 공항 저녁 도착 + Day 1 → 도착 시간 이전 장소 렌더링 완전 제거
             const visiblePlaces =
               isAirportEvening && day.dayNumber === 1
@@ -2339,7 +2381,7 @@ function ItineraryResult() {
                         </div>
 
                         <div className="divide-y divide-[#E5E7EA]/50">
-                            {slotItems.map(({ place, idx }) => {
+                            {slotItems.map(({ place, idx }, rowIdx) => {
                               const naverUrl = buildNaverUrl(place.name, city);
                               const googleUrl =
                                 place.googleMapsUrl ||
@@ -2351,8 +2393,24 @@ function ItineraryResult() {
                                   key={idx}
                                   className="flex flex-col hover:bg-[#F6F7F8]/40 transition-colors group relative"
                                 >
+                                  {/* STAGE A 타임라인 레일 — 아이콘이 기준점, 점선이 다음 장소로 이어진다.
+                                      의미는 옆의 category 배지가 이미 글자로 전하므로 여기서는 숨긴다. */}
+                                  <div
+                                    aria-hidden
+                                    className="absolute left-5 top-5 bottom-0 flex flex-col items-center pointer-events-none"
+                                  >
+                                    <span
+                                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                      style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}
+                                    >
+                                      <TimelineIcon category={place.category} size={16} />
+                                    </span>
+                                    {rowIdx < slotItems.length - 1 && (
+                                      <span className="flex-1 mt-1 border-l-2 border-dotted border-[#E5E7EA]" />
+                                    )}
+                                  </div>
                                   {/* 장소 정보 + 지도 버튼 행 */}
-                                  <div className="flex flex-col sm:flex-row justify-between gap-4 p-5">
+                                  <div className="flex flex-col sm:flex-row justify-between gap-4 py-5 pr-5 pl-[68px]">
                                     <div
                                       className="space-y-2 flex-1 cursor-pointer min-w-0"
                                       onClick={() => setSelectedPlace(place)}

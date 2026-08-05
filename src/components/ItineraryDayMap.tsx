@@ -26,6 +26,12 @@ interface Props {
   onSelectDay: (idx: number) => void;
   /** 소유자일 때만 전달 — base 핀 프리뷰에 Add to this day 노출 */
   onAddToDay?: (spot: CitySpot, dayIdx: number) => void;
+  /**
+   * 바깥에 이미 Day 탐색이 있으면 false. 두 벌이 같이 보이면 어느 쪽이 진짜
+   * 선택인지 알 수 없고, 스크린리더에는 Day 탭이 두 번 낭독된다.
+   * 기본값 true — 이 컴포넌트를 단독으로 쓰던 곳은 그대로 동작한다.
+   */
+  showDayTabs?: boolean;
 }
 
 const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
@@ -35,7 +41,7 @@ const CITY_CENTERS: Record<string, { lat: number; lng: number }> = {
   gyeongju: { lat: 35.8562, lng: 129.2247 },
 };
 
-export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay }: Props) {
+export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, onAddToDay, showDayTabs = true }: Props) {
   const t = useTranslations("itin");
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
   const [preview, setPreview] = useState<CitySpot | null>(null);
@@ -98,6 +104,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
   return (
     <section aria-label={t("dayMap")} className="mb-10">
       {/* Day 칩 */}
+      {showDayTabs && (
       <div className="flex gap-2 overflow-x-auto pb-2 mb-3" role="tablist" aria-label={t("dayMap")}>
         {days.map((d, i) => (
           <button
@@ -116,6 +123,7 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
           </button>
         ))}
       </div>
+      )}
 
       <div className="relative rounded-card overflow-hidden border border-line">
         <NaverMap

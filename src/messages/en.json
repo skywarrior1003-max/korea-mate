@@ -171,6 +171,17 @@
     "visited": "Visited",
     "progress": "{done}/{total} visited"
   },
+  "planner": {
+    "dayOfTotal": "Day {n} / {total}",
+    "openSelector": "Choose a day — now on Day {n} of {total}",
+    "selectorTitle": "Choose a day",
+    "dayTabList": "Days",
+    "close": "Close",
+    "weather": "View weather",
+    "weatherAria": "View weather on the Korea Meteorological Administration site (opens in a new tab)",
+    "places": "{n} places",
+    "dayAria": "Day {n}, {date}"
+  },
   "common": {
     "language": "Language"
   },

@@ -171,6 +171,17 @@
     "visited": "방문함",
     "progress": "{done}/{total} 방문"
   },
+  "planner": {
+    "dayOfTotal": "Day {n} / {total}",
+    "openSelector": "Day 선택 — 현재 {total}일 중 Day {n}",
+    "selectorTitle": "전체 Day 선택",
+    "dayTabList": "Day 목록",
+    "close": "닫기",
+    "weather": "날씨 보기",
+    "weatherAria": "기상청 날씨누리에서 날씨 보기 (새 탭에서 열림)",
+    "places": "{n}곳",
+    "dayAria": "Day {n}, {date}"
+  },
   "common": {
     "language": "언어"
   },

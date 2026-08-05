@@ -171,6 +171,17 @@
     "visited": "已访问",
     "progress": "{done}/{total} 已访问"
   },
+  "planner": {
+    "dayOfTotal": "第{n}天 / 共{total}天",
+    "openSelector": "选择日期 — 当前为第{n}天，共{total}天",
+    "selectorTitle": "选择日期",
+    "dayTabList": "日期列表",
+    "close": "关闭",
+    "weather": "查看天气",
+    "weatherAria": "在韩国气象厅网站查看天气 (在新标签页打开)",
+    "places": "{n}个地点",
+    "dayAria": "第{n}天，{date}"
+  },
   "common": {
     "language": "语言"
   },
