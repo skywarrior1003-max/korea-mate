@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { cityVisual, citiesWithVisual } from "./city-visual.ts";
 
@@ -37,6 +37,21 @@ test("★지원하지 않는 도시는 null — 다른 도시 사진으로 메�
 test("대소문자·공백 차이를 흡수한다", () => {
   assert.equal(cityVisual("Seoul")!.src,   cityVisual("seoul")!.src);
   assert.equal(cityVisual(" JEJU ")!.src,  cityVisual("jeju")!.src);
+});
+
+test("★신규 도시 자산은 WebP 이고 전송 용량이 400KB 아래다", () => {
+  for (const c of ["seoul", "gyeongju", "jeju", "jeonju"]) {
+    const src = cityVisual(c)!.src;
+    assert.match(src, /\.webp$/, `${c}: ${src}`);
+    const bytes = statSync(join(ROOT, "public", src.replace(/^\//, ""))).size;
+    assert.ok(bytes < 400 * 1024, `${c}: ${(bytes / 1024).toFixed(0)}KB`);
+  }
+});
+
+test("★교체한 PNG 원본이 저장소에 남아 있지 않다 — 중복 자산 0", () => {
+  for (const c of ["seoul", "gyeongju", "jeju", "jeonju"]) {
+    assert.ok(!existsSync(join(ROOT, `public/images/cities/city-${c}-v1.png`)), c);
+  }
 });
 
 test("★layout shift 방지용 크기가 모두 있다", () => {

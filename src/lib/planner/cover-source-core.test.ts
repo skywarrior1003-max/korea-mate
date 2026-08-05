@@ -8,10 +8,10 @@ import {
 // 실제 resolver 와 같은 모양의 테스트용 도시 표
 const CITIES: Record<string, CityVisualLike> = {
   busan:    { src: "/images/home/city-busan-hero.jpg", w: 1408, h: 768,  objectPosition: "center 45%" },
-  seoul:    { src: "/images/cities/city-seoul-v1.png",    w: 1024, h: 1024, objectPosition: "center 42%" },
-  gyeongju: { src: "/images/cities/city-gyeongju-v1.png", w: 1024, h: 1024, objectPosition: "center 52%" },
-  jeju:     { src: "/images/cities/city-jeju-v1.png",     w: 1024, h: 1024, objectPosition: "center 40%" },
-  jeonju:   { src: "/images/cities/city-jeonju-v1.png",   w: 1024, h: 1024, objectPosition: "center 58%" },
+  seoul:    { src: "/images/cities/city-seoul-v1.webp",    w: 1024, h: 1024, objectPosition: "center 42%" },
+  gyeongju: { src: "/images/cities/city-gyeongju-v1.webp", w: 1024, h: 1024, objectPosition: "center 52%" },
+  jeju:     { src: "/images/cities/city-jeju-v1.webp",     w: 1024, h: 1024, objectPosition: "center 40%" },
+  jeonju:   { src: "/images/cities/city-jeonju-v1.webp",   w: 1024, h: 1024, objectPosition: "center 58%" },
 };
 const resolve = (s?: string | null) =>
   (typeof s === "string" ? CITIES[s.trim().toLowerCase()] ?? null : null);

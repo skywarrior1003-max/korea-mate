@@ -756,9 +756,14 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
             <span className="px-2.5 py-0.5 rounded-lg text-xs font-black uppercase tracking-wide text-white" style={{ backgroundColor: badgeColor }}>
               {place.category}
             </span>
-            <span className="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-black/50 text-white backdrop-blur-sm">
-              🕒 {place.time} · {place.duration}
-            </span>
+            {/* 방문 시각을 표시하지 않는다.
+                place.time 은 세 경로에서 온다 — 스케줄러가 배정한 start_time,
+                보관함 추가 시의 고정 기본값("19:30"), 내 장소 추가 시의 시간 입력.
+                그런데 세 번째도 UserSpotsPanel 이 timeMap 을 기본값으로 미리
+                채워 두기 때문에, 저장된 데이터만 보고는 "사용자가 정한 시각"과
+                "앱이 채워 넣은 시각"을 구분할 수 없다. 구분할 계약이 없으므로
+                숨긴다. 저장된 값 자체는 그대로 두고 슬롯 판정·정렬에 계속 쓴다.
+                장소의 공식 운영시간·행사시간은 다른 경로이며 그대로 표시한다. */}
           </div>
         </div>
 
@@ -2160,7 +2165,9 @@ function ItineraryResult() {
                   key={pi}
                   className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 group transition-colors"
                 >
-                  <span className="text-xs font-bold text-[#565D66] w-12 shrink-0 tabular-nums">{p.time}</span>
+                  {/* 방문 시각 대신 순서 번호. ↑↓ 로 바꾸는 것이 바로 이 순서다.
+                      시각은 출처를 구분할 계약이 없어 표시하지 않는다(상세 모달과 같은 이유). */}
+                  <span className="text-xs font-bold text-[#565D66] w-6 shrink-0 tabular-nums text-right">{pi + 1}</span>
                   <span
                     className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
                     style={{ backgroundColor: getCategoryColor(p.category) }}

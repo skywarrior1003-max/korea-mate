@@ -418,7 +418,9 @@ export default function SharedTripPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm font-black text-[#191C21] truncate">{place.name}</p>
-                        <span className="text-xs font-bold text-[#565D66] shrink-0">{place.time}</span>
+                        {/* 방문 시각을 표시하지 않는다 — 저장된 값만으로는 사용자가
+                            정한 시각인지 앱이 채운 값인지 구분할 수 없다. 공개 일정과
+                            복사 일정도 같은 규칙을 따른다. 값 자체는 정렬용으로 남는다. */}
                       </div>
                       <p className="text-xs text-[#9C8575] mt-0.5">{place.location}</p>
                       {place.tips && (

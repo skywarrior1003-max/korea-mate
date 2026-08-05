@@ -45,25 +45,25 @@ const CITY_VISUALS: Readonly<Record<string, CityVisual>> = Object.freeze({
   },
   seoul: {
     // N서울타워가 오른쪽 위에 있어 가로로 자르면 첨탑이 먼저 잘린다
-    src: "/images/cities/city-seoul-v1.png",
+    src: "/images/cities/city-seoul-v1.webp",
     w: 1024, h: 1024,
     objectPosition: "center 42%",
   },
   gyeongju: {
     // 누각과 수면 반영이 가운데 아래쪽에 몰려 있다
-    src: "/images/cities/city-gyeongju-v1.png",
+    src: "/images/cities/city-gyeongju-v1.webp",
     w: 1024, h: 1024,
     objectPosition: "center 52%",
   },
   jeju: {
     // 수평선과 현무암이 만나는 지점이 위쪽 1/3
-    src: "/images/cities/city-jeju-v1.png",
+    src: "/images/cities/city-jeju-v1.webp",
     w: 1024, h: 1024,
     objectPosition: "center 40%",
   },
   jeonju: {
     // 기와 지붕이 화면 아래 절반에 있다
-    src: "/images/cities/city-jeonju-v1.png",
+    src: "/images/cities/city-jeonju-v1.webp",
     w: 1024, h: 1024,
     objectPosition: "center 58%",
   },
