@@ -985,6 +985,181 @@
       "sha256": "90690768a8806c23e21771631bb07bea1a5bbf5c8014badd2d74661c6aa47a62",
       "size_bytes": 2286,
       "note": "V3 전체 수집 요약 — 9/9 ASSERT PASS"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl",
+      "category": "normalized",
+      "sha256": "fb1953066f5596d51a79ec216c921aace7cc41c8f72b12258b3e99812a85be2a",
+      "size_bytes": 1325143,
+      "note": "정규화된 source facts 1158건 (907 기존 + 251 신규 웹)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-baseline-831-identity-link-audit.jsonl",
+      "category": "audit",
+      "sha256": "58494e5d39f27aa2258be68d3866dbc5a9fec5eda9bf00245af971ac6a6b4b7e",
+      "size_bytes": 200713,
+      "note": "기존 831 candidates × 웹 source fact 연결 감사"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-attraction-identity-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d",
+      "size_bytes": 87351,
+      "note": "웹 관광지 159건 identity 판정 — HIGH_CONFIDENCE 145/MANUAL_REVIEW 4/NEW 10"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-restaurant-identity-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "feee35c58400ba07dad5029e7b57185480f60265c3ce0991d4031436223f6a99",
+      "size_bytes": 40970,
+      "note": "visitgyeongju 식당 84건 identity 판정 — HC5/MR13/NEW66"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-souvenir-classification-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "4db0963fd74734fe7e3e32bb0abd03686cf3668a8101a78cad5154565ae8c345",
+      "size_bytes": 4759,
+      "note": "visitgyeongju 기념품 8건 PHYSICAL_PLACE 분류"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-multilingual-entity-link-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "c017a1555511749db0afb17543e65ad643583cf818e66d3337804a89e8af07c7",
+      "size_bytes": 263754,
+      "note": "다국어 엔티티 연결 감사 92건 (식당84+기념품8) × 5언어"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-field-conflict-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "5a93e7699ac0d2c5b6723609bcad86e4c9d9e9d3706ca383a3a92dab11ea0c5b",
+      "size_bytes": 1375,
+      "note": "필드 충돌 감사 5건 (HIGH_CONFIDENCE 연결 비교)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-collections-v1.jsonl",
+      "category": "normalized",
+      "sha256": "8fbd271588cae0b7358747da5f5e6b37b70a2f40302e57b1242b8fe422f728d6",
+      "size_bytes": 2867,
+      "note": "이달의추천여행지 컬렉션 7건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-place-relations-v1.jsonl",
+      "category": "normalized",
+      "sha256": "93178e4504edf5fb05ab3d0f69e8af7cd0b019a85ec684b19c433c20bc8da051",
+      "size_bytes": 4572,
+      "note": "추천여행지 장소 관계 14건 (place_links area_uid 기반)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-course-entities-v1.jsonl",
+      "category": "normalized",
+      "sha256": "a1f63b3a69bbea68c8e09c3799a683bb3ccb1f29f98f9adcd43c02b02e402f83",
+      "size_bytes": 1697,
+      "note": "여행코스 엔티티 5건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-course-waypoint-relations-v1.jsonl",
+      "category": "normalized",
+      "sha256": "178f955dfb5a17a083c5c2400edf9d196a6ee694012f6a2571fecc212df23bc8",
+      "size_bytes": 8299,
+      "note": "코스 웨이포인트 관계 29건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-heritage-entities-v1.jsonl",
+      "category": "normalized",
+      "sha256": "a70aeadb4698525e5962356b7c40dd3069a9fda4229c846d046970d20a9b1bc3",
+      "size_bytes": 1946,
+      "note": "세계문화유산 엔티티 5건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-heritage-relations-v1.jsonl",
+      "category": "normalized",
+      "sha256": "7c56b419cad5dc77363232d789ea98652dfb4ab97d7d1d449b1f75433a509aab",
+      "size_bytes": 15599,
+      "note": "세계유산 parent/child+관련관광지 관계 53건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-cultural-guide-relations-v1.jsonl",
+      "category": "normalized",
+      "sha256": "0c82c5de0c64265fe6da945366b682ff3a88a5f981119ad8ac6af93a62d69716",
+      "size_bytes": 5504,
+      "note": "문화관광해설 관계 17건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-event-entities-v1.jsonl",
+      "category": "normalized",
+      "sha256": "aafae5151dd469f1999e1ee4dd1d93e360f2f3508a1237187ed9d80f50d30d82",
+      "size_bytes": 5381,
+      "note": "행사 엔티티 7건 (10건→7고유 con_uid)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-event-listing-relations-v1.jsonl",
+      "category": "normalized",
+      "sha256": "45d05c4f2b5f81e420ae02d82cdc700ca9c156a0689ade0ba4c2ba0a32d6cb46",
+      "size_bytes": 2840,
+      "note": "행사 목록 관계 10건 (교차월 포함)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-source-filter-taxonomy-v1.json",
+      "category": "normalized",
+      "sha256": "f4abc5d36b6b291485184efd612f90aa36ace1e86951db80a7b57ccb7d41a925",
+      "size_bytes": 818,
+      "note": "visitgyeongju 필터 분류체계 (6그룹/59옵션 출처 감사 기반)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-entity-attribute-evidence-v1.jsonl",
+      "category": "audit",
+      "sha256": "f745cbe30ac652a3c403ef6daabd2430683e15bcb64438897ea712fcf4e28f99",
+      "size_bytes": 19236,
+      "note": "엔티티 속성 근거 84건 — 상세페이지 필터태그 미노출"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-attribute-mapping-audit-v1.json",
+      "category": "audit",
+      "sha256": "2b340238292823690619b021d8261c7ecd1118205b870f4e8bdd61523afcc8ca",
+      "size_bytes": 300,
+      "note": "속성 매핑 감사 — 자동 적용 0건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl",
+      "category": "normalized",
+      "sha256": "794dab0b8a1819996725d6405cbd427171509487d5577388d551749d81a6f523",
+      "size_bytes": 1082079,
+      "note": "full-v1 candidate 결과 914건 (831+83신규)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-manual-review-queue-v1.jsonl",
+      "category": "audit",
+      "sha256": "1113a724fae25cb2d1be45a550ee0334deb13c9a28e9818c4faa593d6d9bae4e",
+      "size_bytes": 9660,
+      "note": "수동 검토 큐 30건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-normalization-summary-v1.json",
+      "category": "summary",
+      "sha256": "b91f2b46a5ff4a6bae90920101d41dde08e0801c86741e28ae5035226ec4317a",
+      "size_bytes": 1057,
+      "note": "정규화 요약 — 22출력파일, 914candidates, 22/22 재현성 PASS"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-run1-run2-sha-audit.json",
+      "category": "audit",
+      "sha256": "c22936b8b315a42761e38ee61f0b143f35aa7daac8185deac8552cefb7eee8fe",
+      "size_bytes": 6917,
+      "note": "Run1/Run2 SHA 감사 — 22/22 BYTE_IDENTICAL"
+    },
+    {
+      "path": "scripts/gyeongju_normalize_full_v1.py",
+      "category": "script",
+      "sha256": "6d82080324c51ed0a312eb6256076a55b8fd0afa16bc00eb5c3b6a16f15b687a",
+      "size_bytes": 82143,
+      "note": "경주 공식 데이터 정규화 v1.0.0 — 907+251=1158 source facts, 914 candidates"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-normalization-identity-v1.md",
+      "category": "doc",
+      "sha256": "532de84561140871e1a0d19d65584ff915d968d62dcae762097e47661f472ba2",
+      "size_bytes": 9745,
+      "note": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -1111,11 +1286,38 @@
       },
       "assert_summary": "9/9 PASS",
       "note": "경주 공식 웹 raw 전수 수집 완료. 전체 ASSERT 통과."
+    },
+    {
+      "task": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1",
+      "status": "COMPLETED",
+      "base_branch": "data/gyeongju-web-raw-collection-v3",
+      "base_head": "2c6756a",
+      "work_branch": "data/gyeongju-normalization-identity-v1",
+      "script": "scripts/gyeongju_normalize_full_v1.py",
+      "script_version": "1.0.0",
+      "as_of": "2026-08-05T04:08:00Z",
+      "normalization_results": {
+        "source_facts_enriched": 1158,
+        "attraction_HIGH_CONFIDENCE": 145,
+        "attraction_MANUAL_REVIEW": 4,
+        "attraction_NEW_OFFICIAL_PLACE": 10,
+        "restaurant_HIGH_CONFIDENCE": 5,
+        "restaurant_MANUAL_REVIEW": 13,
+        "restaurant_NEW_OFFICIAL_PLACE": 66,
+        "souvenir_PHYSICAL_PLACE": 8,
+        "event_unique_entities": 7,
+        "full_v1_candidates_total": 914,
+        "new_candidates_added": 83,
+        "manual_review_queue": 30
+      },
+      "reproducibility": "Run1=Run2 BYTE_IDENTICAL (22/22)",
+      "output_files": 23,
+      "note": "경주 공식 데이터 정규화 완료. 831→914 candidates. 수동검토 30건 별도."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 129
+  "files_count": 154
 }

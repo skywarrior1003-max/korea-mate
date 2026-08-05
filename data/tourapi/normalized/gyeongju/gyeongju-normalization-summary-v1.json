@@ -1,0 +1,43 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "attraction_identity": {
+    "HIGH_CONFIDENCE": 145,
+    "MANUAL_REVIEW": 4,
+    "NEW_OFFICIAL_PLACE": 10,
+    "total": 159
+  },
+  "baseline_candidates": 831,
+  "collections": {
+    "course_waypoints": 29,
+    "courses": 5,
+    "cultural_guides": 17,
+    "heritage_entities": 5,
+    "heritage_relations": 53,
+    "monthly_rec": 7,
+    "monthly_rec_place_relations": 14
+  },
+  "events": {
+    "listings_total": 10,
+    "unique_entities": 7
+  },
+  "field_conflicts": 5,
+  "full_v1_candidates_total": 914,
+  "manual_review_queue": 30,
+  "multilingual_entities": 92,
+  "new_candidates_added": 83,
+  "output_files": 21,
+  "restaurant_identity": {
+    "HIGH_CONFIDENCE": 5,
+    "MANUAL_REVIEW": 13,
+    "NEW_OFFICIAL_PLACE": 66,
+    "total": 84
+  },
+  "script_version": "1.0.0",
+  "source_facts_enriched_total": 1158,
+  "source_facts_input": 907,
+  "souvenir_classification": {
+    "PHYSICAL_PLACE": 8,
+    "total": 8
+  },
+  "task": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1"
+}

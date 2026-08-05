@@ -1,0 +1,23 @@
+{
+  "ambiguous_filters": [
+    {
+      "filter_ko": "비즈니스",
+      "observed_on": [
+        "어향원",
+        "요석궁식당",
+        "맷돌순두부",
+        "진수성찬"
+      ],
+      "reason": "공식 원천에 '비즈니스' 태그만 있고 설명 없음. business_friendly=true 자동 확정 금지.",
+      "status": "MEANING_REVIEW_REQUIRED"
+    }
+  ],
+  "note": "Filter labels not extractable from detail page HTML. This taxonomy is from list page audit only.",
+  "service_filter_count": 24,
+  "source": "visitgyeongju-filter-audit-v1",
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-SOURCE-CONTRACT-AND-PILOT-V1",
+  "total_filter_groups": 6,
+  "total_options": 59,
+  "unknown_handling": "value_absent → field_omitted (false 변환 금지)",
+  "verified_at": "2026-08-04"
+}
