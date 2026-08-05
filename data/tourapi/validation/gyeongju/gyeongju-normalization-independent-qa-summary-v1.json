@@ -1,0 +1,195 @@
+{
+  "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+  "script_version": "1.0.0",
+  "qa_ran_at": "2026-08-05T08:39:18Z",
+  "as_of": "2026-08-05T04:08:00Z",
+  "base_task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
+  "base_branch": "data/gyeongju-monthly-rec-relation-fix-alt-v1",
+  "base_head": "44e5a48",
+  "input_counts": {
+    "baseline_candidates": 831,
+    "full_v1_candidates": 914,
+    "source_facts": 1158,
+    "manual_review_queue": 38,
+    "attraction_audit": 159,
+    "restaurant_audit": 84,
+    "souvenir_audit": 8,
+    "multilingual_entities": 92,
+    "event_entities": 7,
+    "event_listings": 10,
+    "courses": 5,
+    "waypoints": 29,
+    "heritage_entities": 5,
+    "heritage_relations_total": 53,
+    "heritage_related_attraction_links": 33,
+    "guide_relations": 17,
+    "rec_collections": 7,
+    "rec_relations": 14
+  },
+  "integrity_checks": {
+    "all_counts_match_expected": false,
+    "candidate_id_duplicates": 10,
+    "source_fact_id_duplicates": 10,
+    "foreign_key_errors": 0,
+    "manifest_sha_mismatches": 4,
+    "new_candidates_count": 83
+  },
+  "attraction_qa": {
+    "HC_total": 145,
+    "HC_evidence_valid": 145,
+    "HC_weak_evidence": 0,
+    "HC_gps_only": 0,
+    "HC_fuzzy_only": 0,
+    "MR_total": 4,
+    "NEW_total": 10
+  },
+  "restaurant_qa": {
+    "HC_total": 5,
+    "HC_evidence_valid": 5,
+    "HC_weak_evidence": 0,
+    "MR_total": 13,
+    "NEW_total": 66
+  },
+  "souvenir_qa": {
+    "total": 8,
+    "physical_place_confirmed": 8,
+    "baseline_linked": 1,
+    "new_candidates": 7,
+    "data_fix_required": 0
+  },
+  "new_candidate_qa": {
+    "total": 83,
+    "no_duplicate_signal": 33,
+    "possible_duplicate": 9,
+    "likely_duplicate": 41,
+    "colocated_separate": 0,
+    "manual_review_required": 50
+  },
+  "multilingual_qa": {
+    "total": 92,
+    "all_locale_valid": 92,
+    "locale_missing": 0,
+    "distribution": {
+      "MULTI_VALID": 91,
+      "POSSIBLE_FALLBACK": 1
+    }
+  },
+  "event_qa": {
+    "entities": 7,
+    "listings": 10,
+    "reconciliation": "PASS",
+    "date_reversed": 0,
+    "date_in_opening_hours": 0,
+    "no_official_url": 0
+  },
+  "relation_qa": {
+    "recommendation": {
+      "collections": 7,
+      "mutable_source_page": 7,
+      "mutable_source_page_all": true,
+      "official_relations": 8,
+      "source_limitation_collections": 6,
+      "ui_label_relations": 0,
+      "relation_id_duplicates": 0,
+      "pass": true
+    },
+    "courses": {
+      "course_count": 5,
+      "waypoint_count": 29,
+      "order_errors": 0,
+      "missing_candidate_refs": 0,
+      "pass": true
+    },
+    "heritage": {
+      "entity_count": 5,
+      "total_relations": 53,
+      "related_attraction_links": 33,
+      "parent_child_links": 20,
+      "coverage_limitation_area_uids": 25,
+      "fk_errors": 0,
+      "note": "RELATED_ATTRACTION web_source_fact_ids reference heritage-specific area_uids outside web_att_159 collection; classified as SOURCE_COVERAGE_LIMITATION",
+      "pass": true
+    },
+    "guides": {
+      "guide_count": 17,
+      "hc_count": 11,
+      "manual_review_count": 6,
+      "missing_candidate_refs": 0,
+      "pass": true
+    }
+  },
+  "quality_coverage": {
+    "total_candidates": 914,
+    "coverage_percentages": {
+      "name_ko": 100.0,
+      "official_url": 25.9,
+      "address": 99.1,
+      "lat_lng": 74.3,
+      "phone": 36.4,
+      "opening_hours": 13.6,
+      "admission": 1.4,
+      "image": 58.0,
+      "district": 17.3,
+      "description": 11.8
+    },
+    "category_distribution": {
+      "attraction": 334,
+      "restaurant": 371,
+      "event": 24,
+      "nature": 59,
+      "accommodation": 126
+    },
+    "coordinate_issues": 0,
+    "rights_issues": 0
+  },
+  "field_conflict_qa": {
+    "total_conflicts": 5,
+    "distribution": {
+      "SELECTION_VALID": 5
+    }
+  },
+  "release_readiness": {
+    "immediately_classifiable": 830,
+    "needs_targeted_fix": 1,
+    "normalization_fix_required": 83,
+    "event_classifiable": 2
+  },
+  "defect_counts": {
+    "CRITICAL": 2,
+    "HIGH": 1,
+    "MEDIUM": 1,
+    "LOW": 1,
+    "TOTAL": 5
+  },
+  "qa_verdict": "FAIL",
+  "readiness_status": "GYEONGJU_NORMALIZATION_QA_HOLD",
+  "invariants_verified": {
+    "candidate_id_duplicates_zero": false,
+    "source_fact_id_duplicates_zero": false,
+    "broken_foreign_keys_zero": true,
+    "gps_only_hc_zero": true,
+    "fuzzy_only_hc_zero": true,
+    "ui_label_rec_relation_zero": true,
+    "event_date_reversed_zero": true,
+    "date_in_opening_hours_zero": true,
+    "rights_violation_zero": true
+  },
+  "output_files": [
+    "gyeongju-normalization-input-integrity-qa-v1.json",
+    "gyeongju-manual-review-independent-qa-v1.jsonl",
+    "gyeongju-recommendation-area-uid-qa-v1.jsonl",
+    "gyeongju-attraction-identity-independent-qa-v1.jsonl",
+    "gyeongju-restaurant-identity-independent-qa-v1.jsonl",
+    "gyeongju-souvenir-independent-qa-v1.jsonl",
+    "gyeongju-new-candidate-duplicate-audit-v1.jsonl",
+    "gyeongju-multilingual-independent-qa-v1.jsonl",
+    "gyeongju-event-independent-qa-v1.jsonl",
+    "gyeongju-relation-integrity-qa-v1.json",
+    "gyeongju-candidate-quality-coverage-v1.json",
+    "gyeongju-coordinate-anomaly-audit-v1.jsonl",
+    "gyeongju-field-selection-provenance-qa-v1.jsonl",
+    "gyeongju-independent-qa-defect-register-v1.jsonl",
+    "gyeongju-release-readiness-assessment-v1.json",
+    "gyeongju-normalization-independent-qa-summary-v1.json"
+  ]
+}

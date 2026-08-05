@@ -1,0 +1,43 @@
+{
+  "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+  "qa_ran_at": "2026-08-05T08:39:18Z",
+  "results": {
+    "recommendation": {
+      "collections": 7,
+      "mutable_source_page": 7,
+      "mutable_source_page_all": true,
+      "official_relations": 8,
+      "source_limitation_collections": 6,
+      "ui_label_relations": 0,
+      "relation_id_duplicates": 0,
+      "pass": true
+    },
+    "courses": {
+      "course_count": 5,
+      "waypoint_count": 29,
+      "order_errors": 0,
+      "missing_candidate_refs": 0,
+      "pass": true
+    },
+    "heritage": {
+      "entity_count": 5,
+      "total_relations": 53,
+      "related_attraction_links": 33,
+      "parent_child_links": 20,
+      "coverage_limitation_area_uids": 25,
+      "fk_errors": 0,
+      "note": "RELATED_ATTRACTION web_source_fact_ids reference heritage-specific area_uids outside web_att_159 collection; classified as SOURCE_COVERAGE_LIMITATION",
+      "pass": true
+    },
+    "guides": {
+      "guide_count": 17,
+      "hc_count": 11,
+      "manual_review_count": 6,
+      "missing_candidate_refs": 0,
+      "pass": true
+    }
+  },
+  "wp_order_errors": [],
+  "heritage_fk_errors": [],
+  "rec_rel_id_duplicates": []
+}

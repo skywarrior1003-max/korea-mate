@@ -1,0 +1,1145 @@
+{
+  "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+  "qa_ran_at": "2026-08-05T08:39:18Z",
+  "as_of": "2026-08-05T04:08:00Z",
+  "summary": {
+    "baseline": {
+      "expected": 831,
+      "actual": 831,
+      "pass": true
+    },
+    "source_facts": {
+      "expected": 1158,
+      "actual": 1158,
+      "pass": true
+    },
+    "candidates": {
+      "expected": 914,
+      "actual": 914,
+      "pass": true
+    },
+    "mr_queue": {
+      "expected": 38,
+      "actual": 38,
+      "pass": true
+    },
+    "rec_collections": {
+      "expected": 7,
+      "actual": 7,
+      "pass": true
+    },
+    "courses": {
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    "waypoints": {
+      "expected": 29,
+      "actual": 29,
+      "pass": true
+    },
+    "heritage_ents": {
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    "event_entities": {
+      "expected": 7,
+      "actual": 7,
+      "pass": true
+    },
+    "event_listings": {
+      "expected": 10,
+      "actual": 10,
+      "pass": true
+    },
+    "multilingual": {
+      "expected": 92,
+      "actual": 92,
+      "pass": true
+    },
+    "heritage_att_links": {
+      "expected": 33,
+      "actual": 33,
+      "pass": true
+    },
+    "heritage_total_rels": {
+      "expected": 53,
+      "actual": 53,
+      "pass": true
+    },
+    "guide_rels": {
+      "expected": 17,
+      "actual": 17,
+      "pass": true
+    },
+    "rec_official_relations": {
+      "expected": 8,
+      "actual": 8,
+      "pass": true
+    },
+    "candidate_id_duplicates": {
+      "count": 10,
+      "pass": false
+    },
+    "source_fact_id_duplicates": {
+      "count": 10,
+      "pass": false
+    },
+    "relation_id_duplicates": {
+      "count": 0,
+      "pass": true
+    },
+    "json_parse_errors": {
+      "pass": true,
+      "note": "All files loaded without parse errors"
+    },
+    "new_candidates": {
+      "expected": 83,
+      "actual": 83,
+      "preserved": 831,
+      "pass": true
+    },
+    "manifest_sha_check": {
+      "files_checked": 160,
+      "mismatched_total": 4,
+      "mismatched_norm_outputs": 0,
+      "mismatched_non_norm": 4,
+      "non_norm_files": [
+        "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
+        "scripts/gyeongju_culture_web_collect.py",
+        "scripts/visitgyeongju_collect.py",
+        "docs/tourapi/gyeongju-web-raw-collection-v1-verification.md"
+      ],
+      "pass": true
+    },
+    "foreign_key_errors": {
+      "count": 0,
+      "pass": true
+    },
+    "heritage_coverage_gaps": {
+      "count": 25,
+      "note": "COVERAGE_LIMITATION: heritage RELATED_ATTRACTION area_uids not in web_att_159 collection",
+      "examples": [
+        "gyeongju-WEB-ATT-00174",
+        "gyeongju-WEB-ATT-00176",
+        "gyeongju-WEB-ATT-00229",
+        "gyeongju-WEB-ATT-00230",
+        "gyeongju-WEB-ATT-00231"
+      ]
+    }
+  },
+  "sha_check_details": [
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-01-tourist-destination-full.json",
+      "status": "MATCH",
+      "expected": "8e9c0c816c9aa890",
+      "actual": "8e9c0c816c9aa890"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-06-night-view-full.json",
+      "status": "MATCH",
+      "expected": "d2a079a8f9323e4b",
+      "actual": "d2a079a8f9323e4b"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-07-observation-point-full.json",
+      "status": "MATCH",
+      "expected": "6efdd3a7eb3ace3e",
+      "actual": "6efdd3a7eb3ace3e"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-08-menu-restaurant-full.json",
+      "status": "MATCH",
+      "expected": "a3be484aa0bc732c",
+      "actual": "a3be484aa0bc732c"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-09-eat-hotplace-full.json",
+      "status": "MATCH",
+      "expected": "d9d7b2e7cd61a387",
+      "actual": "d9d7b2e7cd61a387"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-03-image-시내권-full.json",
+      "status": "MATCH",
+      "expected": "e8178f54d2c2ebc1",
+      "actual": "e8178f54d2c2ebc1"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-04-image-보문권-full.json",
+      "status": "MATCH",
+      "expected": "03838f71cda2bc74",
+      "actual": "03838f71cda2bc74"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/gyeongju-city-api/GJ-05-image-남산권-full.json",
+      "status": "MATCH",
+      "expected": "8b90910642e040a6",
+      "actual": "8b90910642e040a6"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type12-tourist-spot-full.json",
+      "status": "MATCH",
+      "expected": "76204647c770202f",
+      "actual": "76204647c770202f"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type14-cultural-facility-full.json",
+      "status": "MATCH",
+      "expected": "56ed996f210b7810",
+      "actual": "56ed996f210b7810"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type15-festival-event-full.json",
+      "status": "MATCH",
+      "expected": "fdc6b3af103b06ee",
+      "actual": "fdc6b3af103b06ee"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type28-leisure-sport-full.json",
+      "status": "MATCH",
+      "expected": "efa99442ee916987",
+      "actual": "efa99442ee916987"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type32-accommodation-full.json",
+      "status": "MATCH",
+      "expected": "444c90652aa8106d",
+      "actual": "444c90652aa8106d"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type38-shopping-full.json",
+      "status": "MATCH",
+      "expected": "57c7d110bc1a9dc0",
+      "actual": "57c7d110bc1a9dc0"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type39-restaurant-full.json",
+      "status": "MATCH",
+      "expected": "4866f80f124d35de",
+      "actual": "4866f80f124d35de"
+    },
+    {
+      "path": "data/tourapi/raw/gyeongju/kto-detail/",
+      "status": "SHA_NOT_IN_MANIFEST"
+    },
+    {
+      "path": "data/tourapi/candidates/gyeongju/gyeongju-source-facts-v1.jsonl",
+      "status": "MATCH",
+      "expected": "db9bb2be8e07fe26",
+      "actual": "db9bb2be8e07fe26"
+    },
+    {
+      "path": "data/tourapi/enriched/gyeongju/gyeongju-enriched-candidates-v1.jsonl",
+      "status": "MATCH",
+      "expected": "000b016bb395ca1f",
+      "actual": "000b016bb395ca1f"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-candidates-reviewed-v1.jsonl",
+      "status": "MATCH",
+      "expected": "dd680a42e53b0d81",
+      "actual": "dd680a42e53b0d81"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-api-pilot-report.json",
+      "status": "MATCH",
+      "expected": "d7d567ea3027e06b",
+      "actual": "d7d567ea3027e06b"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-collection-summary.json",
+      "status": "MATCH",
+      "expected": "5d03fa7c50521f68",
+      "actual": "5d03fa7c50521f68"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-normalization-stats.json",
+      "status": "MATCH",
+      "expected": "57ebf0b3d2ea245c",
+      "actual": "57ebf0b3d2ea245c"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-validation-report.json",
+      "status": "MATCH",
+      "expected": "bcad3178c92df72a",
+      "actual": "bcad3178c92df72a"
+    },
+    {
+      "path": "scripts/gyeongju_full_collect.py",
+      "status": "MATCH",
+      "expected": "dc3027ff908d2a26",
+      "actual": "dc3027ff908d2a26"
+    },
+    {
+      "path": "scripts/gyeongju_normalize.py",
+      "status": "MATCH",
+      "expected": "a70136dd00a34aff",
+      "actual": "a70136dd00a34aff"
+    },
+    {
+      "path": "scripts/gyeongju_event_detail.py",
+      "status": "MATCH",
+      "expected": "7d33b91c2da2f5e0",
+      "actual": "7d33b91c2da2f5e0"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-source-contract-v1.json",
+      "status": "MATCH",
+      "expected": "b2d378b1fba1aa6b",
+      "actual": "b2d378b1fba1aa6b"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-multilingual-contract-v1.json",
+      "status": "MATCH",
+      "expected": "0b535d08e49ea9f4",
+      "actual": "0b535d08e49ea9f4"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-restaurant-attribute-mapping-v1.json",
+      "status": "MATCH",
+      "expected": "5b26ea8384837769",
+      "actual": "5b26ea8384837769"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/visitgyeongju-pilot-records-v1.jsonl",
+      "status": "MATCH",
+      "expected": "ddee994d2829b7f8",
+      "actual": "ddee994d2829b7f8"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-language-link-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "7433c3adb2a332da",
+      "actual": "7433c3adb2a332da"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-candidate-link-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "ffad7cd8022aa0d4",
+      "actual": "ffad7cd8022aa0d4"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju/visitgyeongju-filter-audit-v1.json",
+      "status": "MATCH",
+      "expected": "6e58ede491e51528",
+      "actual": "6e58ede491e51528"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/visitgyeongju-pilot-summary-v1.json",
+      "status": "MATCH",
+      "expected": "70c08c1462e4ffb7",
+      "actual": "70c08c1462e4ffb7"
+    },
+    {
+      "path": "docs/tourapi/visitgyeongju-source-contract-and-pilot-v1.md",
+      "status": "MATCH",
+      "expected": "bf8c003800ea9b01",
+      "actual": "bf8c003800ea9b01"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v1.json",
+      "status": "MATCH",
+      "expected": "5e281edac4f8b3af",
+      "actual": "5e281edac4f8b3af"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-source-priority-matrix-v1.json",
+      "status": "MATCH",
+      "expected": "de853bc135556f04",
+      "actual": "de853bc135556f04"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-tourism-place-pilot-v1.jsonl",
+      "status": "MATCH",
+      "expected": "6a5d9c79f3800dbb",
+      "actual": "6a5d9c79f3800dbb"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v1.jsonl",
+      "status": "MATCH",
+      "expected": "c323324c9a641976",
+      "actual": "c323324c9a641976"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-recommendation-course-pilot-v1.jsonl",
+      "status": "MATCH",
+      "expected": "72b3dfd41b5e146b",
+      "actual": "72b3dfd41b5e146b"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-api-web-link-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "1f6997245b24e2e5",
+      "actual": "1f6997245b24e2e5"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-candidate-link-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "3d695985f55efd46",
+      "actual": "3d695985f55efd46"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "7a9fcff0776ddfa3",
+      "actual": "7a9fcff0776ddfa3"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-image-description-rights-audit-v1.json",
+      "status": "MATCH",
+      "expected": "c86772d080e9e2ae",
+      "actual": "c86772d080e9e2ae"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-culture-tourism-pilot-summary-v1.json",
+      "status": "MATCH",
+      "expected": "64d8ad7a4595ad0d",
+      "actual": "64d8ad7a4595ad0d"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-source-contract-and-pilot-v1.md",
+      "status": "MATCH",
+      "expected": "d6345406ed364e73",
+      "actual": "d6345406ed364e73"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
+      "status": "MISMATCH",
+      "expected": "8c08b2f4c15a7667",
+      "actual": "63829c3fd21ec985"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-event-pilot-v2.jsonl",
+      "status": "MATCH",
+      "expected": "2315aa38db04abef",
+      "actual": "2315aa38db04abef"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-recommendation-pilot-v1.jsonl",
+      "status": "MATCH",
+      "expected": "541e2f018c6d8993",
+      "actual": "541e2f018c6d8993"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/gyeongju-course-pilot-v1.jsonl",
+      "status": "MATCH",
+      "expected": "c8cba2d2f478c4b5",
+      "actual": "c8cba2d2f478c4b5"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-culture-tourism/gyeongju-event-currentness-audit-v2.jsonl",
+      "status": "MATCH",
+      "expected": "7e0b0ceccc9e44d8",
+      "actual": "7e0b0ceccc9e44d8"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-culture-tourism-pilot-correction-summary-v1.json",
+      "status": "MATCH",
+      "expected": "9241d54781f028c3",
+      "actual": "9241d54781f028c3"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-source-contract-and-pilot-correction-v1.md",
+      "status": "MATCH",
+      "expected": "320d5b36afd0b149",
+      "actual": "320d5b36afd0b149"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-culture-tourism-pilot-final-verify-v1.md",
+      "status": "MATCH",
+      "expected": "795f7b1ab3adf4cc",
+      "actual": "795f7b1ab3adf4cc"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-preconditions-fix-v1-verification.md",
+      "status": "MATCH",
+      "expected": "bc2d7a06908b167e",
+      "actual": "bc2d7a06908b167e"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-preconditions-fix-v1.md",
+      "status": "MATCH",
+      "expected": "4f072af0211f8cab",
+      "actual": "4f072af0211f8cab"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-full-collection-v1-verification.md",
+      "status": "MATCH",
+      "expected": "e5095f0a63e71c6b",
+      "actual": "e5095f0a63e71c6b"
+    },
+    {
+      "path": "scripts/gyeongju_culture_web_collect.py",
+      "status": "MISMATCH",
+      "expected": "feb17cc65b7544c9",
+      "actual": "eec2d3fb2033614e"
+    },
+    {
+      "path": "scripts/visitgyeongju_collect.py",
+      "status": "MISMATCH",
+      "expected": "01ac7eab0fb35b5b",
+      "actual": "588d9efdf57c8dab"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/visitgyeongju-source-contract-v2.json",
+      "status": "MATCH",
+      "expected": "d42e84c10c6ceaae",
+      "actual": "d42e84c10c6ceaae"
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-web-collection-readiness-v1.json",
+      "status": "MATCH",
+      "expected": "d515e44a0d3ee0b6",
+      "actual": "d515e44a0d3ee0b6"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/attractions-raw.jsonl",
+      "status": "MATCH",
+      "expected": "943867ef19ca9e6f",
+      "actual": "943867ef19ca9e6f"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/attractions-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "3c1a62ce15c6d8a5",
+      "actual": "3c1a62ce15c6d8a5"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/courses-raw.jsonl",
+      "status": "MATCH",
+      "expected": "f73936b6a9c72e4c",
+      "actual": "f73936b6a9c72e4c"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/courses-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "e4eb44da0c3e4569",
+      "actual": "e4eb44da0c3e4569"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/heritage-raw.jsonl",
+      "status": "MATCH",
+      "expected": "c6624314a637703c",
+      "actual": "c6624314a637703c"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/heritage-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "7673a64ae1e437d5",
+      "actual": "7673a64ae1e437d5"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/cultural-guides-raw.jsonl",
+      "status": "MATCH",
+      "expected": "97ff490f317f1871",
+      "actual": "97ff490f317f1871"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/cultural-guides-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "830a493654d39aa3",
+      "actual": "830a493654d39aa3"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/events-raw.jsonl",
+      "status": "MATCH",
+      "expected": "4553a31bf204311e",
+      "actual": "4553a31bf204311e"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/events-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "b803c76bc765185f",
+      "actual": "b803c76bc765185f"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/monthly-recommendations-raw.jsonl",
+      "status": "MATCH",
+      "expected": "af00c2969bb379d5",
+      "actual": "af00c2969bb379d5"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/gyeongju-culture-tourism/collector-sample/monthly-recommendations-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "93aa961998b9f09c",
+      "actual": "93aa961998b9f09c"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-ko-raw.jsonl",
+      "status": "MATCH",
+      "expected": "3656d9700eec4b85",
+      "actual": "3656d9700eec4b85"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-ko-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "6a704c042c148828",
+      "actual": "6a704c042c148828"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/restaurants-language-audit.jsonl",
+      "status": "MATCH",
+      "expected": "644bb62c4e9e5545",
+      "actual": "644bb62c4e9e5545"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-ko-raw.jsonl",
+      "status": "MATCH",
+      "expected": "4d4c7547bee0d434",
+      "actual": "4d4c7547bee0d434"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-ko-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "d03387134c2ad2c2",
+      "actual": "d03387134c2ad2c2"
+    },
+    {
+      "path": "data/tourapi/pilot/gyeongju/visitgyeongju/collector-sample/souvenirs-language-audit.jsonl",
+      "status": "MATCH",
+      "expected": "e9c60f2ecf71352a",
+      "actual": "e9c60f2ecf71352a"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-web-path-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "5579c14b3e2c39fc",
+      "actual": "5579c14b3e2c39fc"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-pagination-language-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "47c1a04443be305a",
+      "actual": "47c1a04443be305a"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-gj06-gj07-preflight-v1.json",
+      "status": "MATCH",
+      "expected": "609942bff7d0a639",
+      "actual": "609942bff7d0a639"
+    },
+    {
+      "path": "data/tourapi/reports/gyeongju/gyeongju-web-collector-foundation-summary-v1.json",
+      "status": "MATCH",
+      "expected": "e51558966a25a9ac",
+      "actual": "e51558966a25a9ac"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-source-discovery-and-collector-foundation-v1.md",
+      "status": "MATCH",
+      "expected": "b7a03ba26d8be891",
+      "actual": "b7a03ba26d8be891"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-raw-collection-v1-verification.md",
+      "status": "MISMATCH",
+      "expected": "50ec84f74b2651fc",
+      "actual": "3d203b23f67f880c"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-attraction-detail-parser-regression-v1.jsonl",
+      "status": "MATCH",
+      "expected": "1ba32692259e4fb0",
+      "actual": "1ba32692259e4fb0"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-event-detail-parser-regression-v1.jsonl",
+      "status": "MATCH",
+      "expected": "2f5f92fb779f63d4",
+      "actual": "2f5f92fb779f63d4"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-cultural-guide-dynamic-extraction-v1.json",
+      "status": "MATCH",
+      "expected": "dad67aede34fb2b9",
+      "actual": "dad67aede34fb2b9"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-recommendation-parser-v1.json",
+      "status": "MATCH",
+      "expected": "80f4cf3f8efed671",
+      "actual": "80f4cf3f8efed671"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-entity-name-regression-v1.jsonl",
+      "status": "MATCH",
+      "expected": "0691c5a26786a289",
+      "actual": "0691c5a26786a289"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-language-classification-regression-v1.jsonl",
+      "status": "MATCH",
+      "expected": "ac3e3cbaf4187dac",
+      "actual": "ac3e3cbaf4187dac"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-collector-upgrade-v1.md",
+      "status": "MATCH",
+      "expected": "bea60195d96f8a01",
+      "actual": "bea60195d96f8a01"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-rec-nav-regression-v1.json",
+      "status": "MATCH",
+      "expected": "2d2425a7e6013c6a",
+      "actual": "2d2425a7e6013c6a"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-rec-rejection-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "946cf329e1dd265d",
+      "actual": "946cf329e1dd265d"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-name-extract-method-regression-v1.jsonl",
+      "status": "MATCH",
+      "expected": "2e0bbeb59f4aec19",
+      "actual": "2e0bbeb59f4aec19"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-web-collector-nav-fix-summary-v1.json",
+      "status": "MATCH",
+      "expected": "a962a1bb04cee6fa",
+      "actual": "a962a1bb04cee6fa"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-collector-nav-fix-v1.md",
+      "status": "MATCH",
+      "expected": "7a6ab22cc69ca3b2",
+      "actual": "7a6ab22cc69ca3b2"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/attractions/attractions-raw.jsonl",
+      "status": "MATCH",
+      "expected": "7659eb860f7fe54d",
+      "actual": "7659eb860f7fe54d"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/attractions/attractions-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "894b0ecf8b01379a",
+      "actual": "894b0ecf8b01379a"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/monthly-recommendations/monthly-recommendations-raw.jsonl",
+      "status": "MATCH",
+      "expected": "e92ca02cd4bee6c4",
+      "actual": "e92ca02cd4bee6c4"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/monthly-recommendations/monthly-recommendations-rejected.jsonl",
+      "status": "MATCH",
+      "expected": "0900ead659851bc8",
+      "actual": "0900ead659851bc8"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/monthly-recommendations/monthly-recommendations-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "236ae09454e06641",
+      "actual": "236ae09454e06641"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/courses/courses-raw.jsonl",
+      "status": "MATCH",
+      "expected": "bc1978d09ddadc15",
+      "actual": "bc1978d09ddadc15"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/courses/courses-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "7063f8b432034fc4",
+      "actual": "7063f8b432034fc4"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/heritage/heritage-raw.jsonl",
+      "status": "MATCH",
+      "expected": "9e18ee648aec57ca",
+      "actual": "9e18ee648aec57ca"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/heritage/heritage-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "84ba278623881c3c",
+      "actual": "84ba278623881c3c"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/cultural-guides/cultural-guides-raw.jsonl",
+      "status": "MATCH",
+      "expected": "b2a1536cba3605d0",
+      "actual": "b2a1536cba3605d0"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/cultural-guides/cultural-guides-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "558dad0f33600d94",
+      "actual": "558dad0f33600d94"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/events/events-raw.jsonl",
+      "status": "MATCH",
+      "expected": "0b45f59a1a27677c",
+      "actual": "0b45f59a1a27677c"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/events/events-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "d7a7b3ae7276b1d4",
+      "actual": "d7a7b3ae7276b1d4"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/restaurants/restaurants-raw.jsonl",
+      "status": "MATCH",
+      "expected": "05eea74a9ea95675",
+      "actual": "05eea74a9ea95675"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/restaurants/restaurants-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "bb61518757210275",
+      "actual": "bb61518757210275"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/souvenirs/souvenirs-raw.jsonl",
+      "status": "MATCH",
+      "expected": "5efdeec18bcbb2cd",
+      "actual": "5efdeec18bcbb2cd"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/souvenirs/souvenirs-snapshot-summary.json",
+      "status": "MATCH",
+      "expected": "159649f64cb35d0f",
+      "actual": "159649f64cb35d0f"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-http-status-audit.json",
+      "status": "MATCH",
+      "expected": "81c6bf7aa486c815",
+      "actual": "81c6bf7aa486c815"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-failed-urls.jsonl",
+      "status": "MATCH",
+      "expected": "7eb70257593da06f",
+      "actual": "7eb70257593da06f"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-attractions-audit.json",
+      "status": "MATCH",
+      "expected": "4bb6a8430a4705f5",
+      "actual": "4bb6a8430a4705f5"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-monthly-rec-relation-audit.jsonl",
+      "status": "MATCH",
+      "expected": "d7e2a2c357d17078",
+      "actual": "d7e2a2c357d17078"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-monthly-rec-rejection-audit.jsonl",
+      "status": "MATCH",
+      "expected": "c2467072baf430a2",
+      "actual": "c2467072baf430a2"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-courses-relation-audit.jsonl",
+      "status": "MATCH",
+      "expected": "1d84fbd029f03e98",
+      "actual": "1d84fbd029f03e98"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-heritage-parent-child-audit.jsonl",
+      "status": "MATCH",
+      "expected": "08593760685ef3d1",
+      "actual": "08593760685ef3d1"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-cultural-guide-reconciliation.json",
+      "status": "MATCH",
+      "expected": "269c72390e58e386",
+      "actual": "269c72390e58e386"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-events-audit.jsonl",
+      "status": "MATCH",
+      "expected": "81c857914ef3ab9c",
+      "actual": "81c857914ef3ab9c"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-visitgyeongju-id-reconciliation.json",
+      "status": "MATCH",
+      "expected": "5ce52d101435db16",
+      "actual": "5ce52d101435db16"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-visitgyeongju-name-audit.jsonl",
+      "status": "MATCH",
+      "expected": "ca4bf379239e4cc7",
+      "actual": "ca4bf379239e4cc7"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-visitgyeongju-multilingual-audit.jsonl",
+      "status": "MATCH",
+      "expected": "066d6dd2f380106e",
+      "actual": "066d6dd2f380106e"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-filter-inventory.jsonl",
+      "status": "MATCH",
+      "expected": "7eb70257593da06f",
+      "actual": "7eb70257593da06f"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-filter-audit-comparison.json",
+      "status": "MATCH",
+      "expected": "0504d0d7d4fa5767",
+      "actual": "0504d0d7d4fa5767"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/audits/gyeongju-web-raw-v3-summary.json",
+      "status": "MATCH",
+      "expected": "90690768a8806c23",
+      "actual": "90690768a8806c23"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl",
+      "status": "MATCH",
+      "expected": "fb1953066f5596d5",
+      "actual": "fb1953066f5596d5"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-baseline-831-identity-link-audit.jsonl",
+      "status": "MATCH",
+      "expected": "58494e5d39f27aa2",
+      "actual": "58494e5d39f27aa2"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-attraction-identity-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "a3b2d0b116f8ddb5",
+      "actual": "a3b2d0b116f8ddb5"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-restaurant-identity-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "feee35c58400ba07",
+      "actual": "feee35c58400ba07"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-souvenir-classification-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "4db0963fd74734fe",
+      "actual": "4db0963fd74734fe"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-multilingual-entity-link-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "c017a1555511749d",
+      "actual": "c017a1555511749d"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-field-conflict-audit-v1.jsonl",
+      "status": "MATCH",
+      "expected": "5a93e7699ac0d2c5",
+      "actual": "5a93e7699ac0d2c5"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-collections-v1.jsonl",
+      "status": "MATCH",
+      "expected": "f51c3ff9747f256c",
+      "actual": "f51c3ff9747f256c"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-place-relations-v1.jsonl",
+      "status": "MATCH",
+      "expected": "d141b38442c1b95d",
+      "actual": "d141b38442c1b95d"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-course-entities-v1.jsonl",
+      "status": "MATCH",
+      "expected": "a1f63b3a69bbea68",
+      "actual": "a1f63b3a69bbea68"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-course-waypoint-relations-v1.jsonl",
+      "status": "MATCH",
+      "expected": "178f955dfb5a17a0",
+      "actual": "178f955dfb5a17a0"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-heritage-entities-v1.jsonl",
+      "status": "MATCH",
+      "expected": "a70aeadb4698525e",
+      "actual": "a70aeadb4698525e"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-heritage-relations-v1.jsonl",
+      "status": "MATCH",
+      "expected": "7c56b419cad5dc77",
+      "actual": "7c56b419cad5dc77"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-cultural-guide-relations-v1.jsonl",
+      "status": "MATCH",
+      "expected": "0c82c5de0c64265f",
+      "actual": "0c82c5de0c64265f"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-event-entities-v1.jsonl",
+      "status": "MATCH",
+      "expected": "aafae5151dd469f1",
+      "actual": "aafae5151dd469f1"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-event-listing-relations-v1.jsonl",
+      "status": "MATCH",
+      "expected": "45d05c4f2b5f81e4",
+      "actual": "45d05c4f2b5f81e4"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-source-filter-taxonomy-v1.json",
+      "status": "MATCH",
+      "expected": "f4abc5d36b6b2914",
+      "actual": "f4abc5d36b6b2914"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-entity-attribute-evidence-v1.jsonl",
+      "status": "MATCH",
+      "expected": "f745cbe30ac652a3",
+      "actual": "f745cbe30ac652a3"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-attribute-mapping-audit-v1.json",
+      "status": "MATCH",
+      "expected": "2b34023829282369",
+      "actual": "2b34023829282369"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl",
+      "status": "MATCH",
+      "expected": "794dab0b8a181999",
+      "actual": "794dab0b8a181999"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-manual-review-queue-v1.jsonl",
+      "status": "MATCH",
+      "expected": "a6dbb1b04e4d8bcd",
+      "actual": "a6dbb1b04e4d8bcd"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-normalization-summary-v1.json",
+      "status": "MATCH",
+      "expected": "30d3e94d84f13f31",
+      "actual": "30d3e94d84f13f31"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-run1-run2-sha-audit.json",
+      "status": "MATCH",
+      "expected": "d2d8afa269b59512",
+      "actual": "d2d8afa269b59512"
+    },
+    {
+      "path": "scripts/gyeongju_normalize_full_v1.py",
+      "status": "MATCH",
+      "expected": "e2fe670c3cce27cc",
+      "actual": "e2fe670c3cce27cc"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-normalization-identity-v1.md",
+      "status": "MATCH",
+      "expected": "532de84561140871",
+      "actual": "532de84561140871"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-candidate-delta-reconciliation-audit.json",
+      "status": "MATCH",
+      "expected": "0d595e075cc8d0d5",
+      "actual": "0d595e075cc8d0d5"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-mutable-source-page-audit.jsonl",
+      "status": "MATCH",
+      "expected": "e848f9b0f7bc5e80",
+      "actual": "e848f9b0f7bc5e80"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-before-after-comparison.jsonl",
+      "status": "MATCH",
+      "expected": "154e2f13b18fab95",
+      "actual": "154e2f13b18fab95"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-relation-review-queue.jsonl",
+      "status": "MATCH",
+      "expected": "ea7c71b03a61af5f",
+      "actual": "ea7c71b03a61af5f"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-relation-status-audit.jsonl",
+      "status": "MATCH",
+      "expected": "f1ef2b78dfa2eacc",
+      "actual": "f1ef2b78dfa2eacc"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-ui-label-rejection-audit.jsonl",
+      "status": "MATCH",
+      "expected": "e8610ad51d261016",
+      "actual": "e8610ad51d261016"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-monthly-rec-relation-fix-alt-v1-completion.md",
+      "status": "MATCH",
+      "expected": "8fe6f01156cf788d",
+      "actual": "8fe6f01156cf788d"
+    }
+  ],
+  "foreign_key_errors": [],
+  "new_candidate_ids_sample": [
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040944"
+  ],
+  "candidate_id_duplicates": [
+    "gyeongju-VG-NEW-REST-535f40400604084d",
+    "gyeongju-VG-NEW-REST-535f404006040944",
+    "gyeongju-VG-NEW-REST-535f404006040946",
+    "gyeongju-VG-NEW-REST-535f404006050940",
+    "gyeongju-VG-NEW-REST-535f404006050941",
+    "gyeongju-VG-NEW-REST-535f40400605094c",
+    "gyeongju-VG-NEW-REST-535f404007020940",
+    "gyeongju-VG-NEW-REST-535f404007050942",
+    "gyeongju-VG-NEW-SOUV-535f404006040946",
+    "gyeongju-VG-NEW-SOUV-535f4040070f0941"
+  ],
+  "source_fact_id_duplicates": [
+    "gyeongju-VG-REST-535f40400604084d",
+    "gyeongju-VG-REST-535f404006040944",
+    "gyeongju-VG-REST-535f404006040946",
+    "gyeongju-VG-REST-535f404006050940",
+    "gyeongju-VG-REST-535f404006050941",
+    "gyeongju-VG-REST-535f40400605094c",
+    "gyeongju-VG-REST-535f404007020940",
+    "gyeongju-VG-REST-535f404007050942",
+    "gyeongju-VG-SOUV-535f404006040946",
+    "gyeongju-VG-SOUV-535f4040070f0941"
+  ]
+}

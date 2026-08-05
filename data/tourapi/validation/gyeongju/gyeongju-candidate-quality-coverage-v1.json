@@ -1,0 +1,39 @@
+{
+  "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+  "qa_ran_at": "2026-08-05T08:39:18Z",
+  "total_candidates": 914,
+  "coverage_counts": {
+    "name_ko": 914,
+    "official_url": 237,
+    "address": 906,
+    "lat_lng": 679,
+    "phone": 333,
+    "opening_hours": 124,
+    "admission": 13,
+    "image": 530,
+    "district": 158,
+    "description": 108
+  },
+  "coverage_percentages": {
+    "name_ko": 100.0,
+    "official_url": 25.9,
+    "address": 99.1,
+    "lat_lng": 74.3,
+    "phone": 36.4,
+    "opening_hours": 13.6,
+    "admission": 1.4,
+    "image": 58.0,
+    "district": 17.3,
+    "description": 11.8
+  },
+  "category_distribution": {
+    "attraction": 334,
+    "restaurant": 371,
+    "event": 24,
+    "nature": 59,
+    "accommodation": 126
+  },
+  "coordinate_issues": [],
+  "category_issues": [],
+  "rights_issues": []
+}

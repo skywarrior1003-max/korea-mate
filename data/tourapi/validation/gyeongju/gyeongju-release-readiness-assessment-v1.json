@@ -1,0 +1,23 @@
+{
+  "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+  "qa_ran_at": "2026-08-05T08:39:18Z",
+  "candidate_readiness": {
+    "READY_FOR_RELEASE_HOLD_CLASSIFICATION": 830,
+    "READY_WITH_TARGETED_FIXES": 1,
+    "NORMALIZATION_FIX_REQUIRED": 83
+  },
+  "immediately_classifiable": 830,
+  "needs_targeted_fix": 1,
+  "normalization_fix_required": 83,
+  "event_classifiable": 2,
+  "heritage_att_relation_classifiable": 33,
+  "guide_hc_relation_classifiable": 11,
+  "overall_status": "GYEONGJU_NORMALIZATION_QA_HOLD",
+  "qa_verdict": "FAIL",
+  "defect_counts": {
+    "CRITICAL": 2,
+    "MEDIUM": 1,
+    "LOW": 1,
+    "HIGH": 1
+  }
+}

@@ -1209,6 +1209,132 @@
       "sha256": "8fe6f01156cf788d8b81002ead59410a3bab999676cd64cbb15016b93a0fb332",
       "size_bytes": 10291,
       "note": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1 완료보고서"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-normalization-input-integrity-qa-v1.json",
+      "category": "qa",
+      "sha256": "1c0d471d5aef57be818520db0798c1fbd81b509599ecc0cdfddeff475a891a75",
+      "size_bytes": 38954,
+      "note": "Input integrity: counts, SHA, ID uniqueness, FK"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-manual-review-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "f77997356c9deb066e150fceb190cb66f338aabc924dfe764e10fe445d044f12",
+      "size_bytes": 19143,
+      "note": "Manual review queue 38-item independent QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-recommendation-area-uid-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "713da28bdd05632632f6d920758c9b835637dc3c8517e4a0f8dd14e25aa405c1",
+      "size_bytes": 5712,
+      "note": "Recommendation area_uid 8-item QA (local evidence)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-attraction-identity-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "58f53c12b383f38e5ea8f6a43617774adef7c7d1d40c53d1e090e66aa0b38b14",
+      "size_bytes": 41767,
+      "note": "Attraction identity: HC145/MR4/NEW10 independent QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-restaurant-identity-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "3d7049589423daca84f685c6118601f232ffa765a116da6badaa28aaed919e76",
+      "size_bytes": 22909,
+      "note": "Restaurant identity: HC5/MR13/NEW66 independent QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-souvenir-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "de6dae9147f377567c2860d24f94f4c923c6e74efb4c885876d7b4d83b358d8b",
+      "size_bytes": 3837,
+      "note": "Souvenir 8-item physical-place QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-new-candidate-duplicate-audit-v1.jsonl",
+      "category": "qa",
+      "sha256": "5f54969f66e5dba141c7cc8b9daf7facd3ebcd2f4878de30851dde03ec5f8bbe",
+      "size_bytes": 31558,
+      "note": "New candidate 83-item duplicate/branch/parent-child audit"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-multilingual-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "b50433ebc029a8ea8598ed7fc6592def596e07690e35df4cf8958d9100f8dff9",
+      "size_bytes": 29704,
+      "note": "Multilingual 92x5 locale QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-event-independent-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "1bdf7c088ad4e1d173cd48c7153ca4e970b74f573602568a071388ae75987c49",
+      "size_bytes": 2574,
+      "note": "Event 7-entity QA; listing 10->7 reconciliation"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-relation-integrity-qa-v1.json",
+      "category": "qa",
+      "sha256": "d082512bd3f7faf6d78291614ad434fa2c5b13980bf040463e9d2e6b88192b52",
+      "size_bytes": 1241,
+      "note": "Collection/relation integrity: rec/course/heritage/guide"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-candidate-quality-coverage-v1.json",
+      "category": "qa",
+      "sha256": "6fca7fdaf9f05863e830d2a3ea4b216480d52094dcb9c534a46b4716e9c9b465",
+      "size_bytes": 876,
+      "note": "Full 914-candidate quality coverage measurement"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-coordinate-anomaly-audit-v1.jsonl",
+      "category": "qa",
+      "sha256": "c39c475d94a476e697ccc284b21f9e1d0e7ceada3ce73c2060d563fce677b056",
+      "size_bytes": 43,
+      "note": "Coordinate anomaly audit (Korea bounds, zero, swapped)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-field-selection-provenance-qa-v1.jsonl",
+      "category": "qa",
+      "sha256": "aee2d8ed8d0eefd6f9fc72e2f2e251dc992a05ca267d44b7c8012d0df3e04f85",
+      "size_bytes": 1500,
+      "note": "Field conflict selection/provenance QA (5 conflicts)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-independent-qa-defect-register-v1.jsonl",
+      "category": "qa",
+      "sha256": "51b1114585f400a5e86f26c72d2cdde5cbe474fcda3487cf696d4d2813d3202d",
+      "size_bytes": 3300,
+      "note": "Independent QA defect register: CRITICAL=2 HIGH=1 MEDIUM=1 LOW=1"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-readiness-assessment-v1.json",
+      "category": "qa",
+      "sha256": "821c0e7613ee6529d4caff7fe96eafc4c6a785eed0e37f96c09d48dac2bac4eb",
+      "size_bytes": 654,
+      "note": "Release/HOLD readiness: GYEONGJU_NORMALIZATION_QA_HOLD"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-normalization-independent-qa-summary-v1.json",
+      "category": "qa",
+      "sha256": "dcbf53e38628622f95f21287cc98663f2fd8242094087e9d59e987a979fadabc",
+      "size_bytes": 5589,
+      "note": "Independent QA summary: FAIL — VG candidate_id/source_fact_id duplication"
+    },
+    {
+      "path": "scripts/gyeongju_normalization_independent_qa_v1.py",
+      "category": "script",
+      "sha256": "083be92475a93a2e87c1a4c394ec6815550da76deeffa32065923d1c098c1898",
+      "size_bytes": 72907,
+      "note": "Independent QA script v1.0.0 (16 output files, 13 sections)"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-normalization-independent-qa-v1-completion.md",
+      "category": "doc",
+      "sha256": "240f04fab9fd2a04875a8d2e4a83bb0c84a3d4d981d43fd74dd14f0148618069",
+      "size_bytes": 16864,
+      "note": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1 completion report: FAIL - VG candidate_id/sfid duplication CRITICAL"
     }
   ],
   "correction_tasks": [
@@ -1386,11 +1512,36 @@
       "reproducibility": "Run2=Run3 BYTE_IDENTICAL (29/29)",
       "output_files": 28,
       "note": "이달의 추천여행지 place_relations 정정 (offline, V3 raw 재사용). source_mutability=MUTABLE_SOURCE_PAGE 명시. identity_status LINKED_WEB_SF → MANUAL_REVIEW (preflight 확인). 7개 신규 audit 파일 추가. 나머지 22개 파일 byte-identical 유지."
+    },
+    {
+      "task": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1",
+      "status": "COMPLETED",
+      "base_task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
+      "base_branch": "data/gyeongju-monthly-rec-relation-fix-alt-v1",
+      "base_head": "44e5a48",
+      "work_branch": "research/gyeongju-normalization-independent-qa-v1",
+      "script": "scripts/gyeongju_normalization_independent_qa_v1.py",
+      "script_version": "1.0.0",
+      "qa_verdict": "FAIL",
+      "readiness_status": "GYEONGJU_NORMALIZATION_QA_HOLD",
+      "defect_counts": {
+        "CRITICAL": 2,
+        "HIGH": 1,
+        "MEDIUM": 1,
+        "LOW": 1,
+        "TOTAL": 5
+      },
+      "critical_defects": [
+        "candidate_id_duplicates: 10 VG restaurant IDs duplicated (hexId truncation bug)",
+        "source_fact_id_duplicates: 10 VG restaurant sfids duplicated (same root cause)"
+      ],
+      "output_files": 16,
+      "note": "Independent QA of gyeongju full-v1 normalization. CRITICAL: VG restaurant candidate_id and source_fact_id not unique (truncated hexId). Normalization fix required before Release/HOLD classification."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 161
+  "files_count": 179
 }
