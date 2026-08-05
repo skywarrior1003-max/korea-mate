@@ -1,0 +1,22 @@
+{
+  "source": "gyeongju.go.kr/tour",
+  "collector": "gyeongju_culture_web_collect.py",
+  "collector_version": "2.2.0",
+  "content_type": "heritage",
+  "command": "scripts/gyeongju_culture_web_collect.py --content-type heritage --out data\\tourapi\\gyeongju\\web-raw-v3\\heritage --delay 0.5 --timeout 15 --retries 3 --as-of 2026-08-05T04:08:00Z",
+  "as_of": "2026-08-05T04:08:00Z",
+  "collected_at": "2026-08-05T04:43:09Z",
+  "finished_at": "2026-08-05T04:43:12Z",
+  "requested_url_count": 5,
+  "success_url_count": 5,
+  "failed_url_count": 0,
+  "http_status_distribution": {
+    "200": 5
+  },
+  "record_count": 5,
+  "output_file": "data\\tourapi\\gyeongju\\web-raw-v3\\heritage\\heritage-raw.jsonl",
+  "output_sha256": "9e18ee648aec57ca87da1d885d713aa53ec677aec9531494f93c82da4421562f",
+  "failed_urls": [],
+  "dry_run": false,
+  "reproducibility_note": "raw 수집은 수집 시각·사이트 상태에 따라 달라질 수 있음. 같은 raw snapshot + 같은 --as-of + 같은 mapping 규칙 → 정규화 단계만 byte-identical."
+}

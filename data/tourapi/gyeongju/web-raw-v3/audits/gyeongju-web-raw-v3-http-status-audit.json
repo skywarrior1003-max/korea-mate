@@ -1,0 +1,51 @@
+{
+  "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "generated_at": "2026-08-05T04:56:36Z",
+  "total_requests": 0,
+  "success_count": 0,
+  "failed_count": 0,
+  "success_rate_pct": 0,
+  "http_status_dist": {},
+  "by_content_type": {
+    "attractions": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "monthly-recommendations": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "courses": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "heritage": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "cultural-guides": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "events": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "restaurants": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    },
+    "souvenirs": {
+      "requests": 0,
+      "success": 0,
+      "failed": 0
+    }
+  }
+}

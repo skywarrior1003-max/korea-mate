@@ -1,0 +1,17 @@
+{
+  "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "generated_at": "2026-08-05T04:56:36Z",
+  "restaurants": {
+    "sitemap_discovered": 84,
+    "collected": 84,
+    "ASSERT_complete": true,
+    "all_ids_unique": true
+  },
+  "souvenirs": {
+    "sitemap_discovered": 8,
+    "collected": 8,
+    "ASSERT_complete": true,
+    "all_ids_unique": true
+  },
+  "combined_entity_count": 92
+}

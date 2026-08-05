@@ -1,0 +1,29 @@
+{
+  "source": "visitgyeongju.or.kr",
+  "collector": "visitgyeongju_collect.py",
+  "collector_version": "2.1.0",
+  "content_type": "souvenirs",
+  "command": "scripts/visitgyeongju_collect.py --content-type souvenirs --out data\\tourapi\\gyeongju\\web-raw-v3\\souvenirs --delay 0.5 --timeout 15 --retries 3",
+  "collected_at": "2026-08-05T04:50:42Z",
+  "finished_at": "2026-08-05T04:51:20Z",
+  "requested_url_count": 40,
+  "success_url_count": 40,
+  "failed_url_count": 0,
+  "http_status_distribution": {
+    "200": 40
+  },
+  "record_count": 8,
+  "language_class_distribution": {
+    "ko:VALID_TRANSLATED_DETAIL": 8,
+    "en:VALID_TRANSLATED_DETAIL": 8,
+    "ja:VALID_TRANSLATED_DETAIL": 8,
+    "zh-CN:VALID_TRANSLATED_DETAIL": 8,
+    "zh-TW:VALID_TRANSLATED_DETAIL": 8
+  },
+  "known_count": 8,
+  "output_file": "data\\tourapi\\gyeongju\\web-raw-v3\\souvenirs\\souvenirs-raw.jsonl",
+  "output_sha256": "5efdeec18bcbb2cdd751cc94b29b1fcefd188d2c8dc185f45dbf42ba7e7c2301",
+  "failed_urls": [],
+  "dry_run": false,
+  "reproducibility_note": "raw 수집은 수집 시각·사이트 상태에 따라 달라질 수 있음. 같은 raw snapshot + 같은 mapping 규칙 → 정규화 단계만 byte-identical."
+}

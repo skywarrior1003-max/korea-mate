@@ -1,0 +1,25 @@
+{
+  "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "generated_at": "2026-08-05T04:56:36Z",
+  "total_attractions": 159,
+  "detail_fetched": 159,
+  "name_parse_ok": 159,
+  "name_none_count": 0,
+  "name_extract_method_dist": {
+    "SEMANTIC_DL_FIELD": 159
+  },
+  "address_present": 159,
+  "phone_present": 159,
+  "by_region": {
+    "bomun": 34,
+    "sinae": 44,
+    "bulguksa": 12,
+    "donghae": 23,
+    "namsan": 19,
+    "seoakbukbu": 27
+  },
+  "ASSERT_semantic_dl_field_used": true,
+  "ASSERT_no_detail_entity_heading": true,
+  "ASSERT_name_none_zero": true,
+  "ASSERT_all_detail_fetched": true
+}

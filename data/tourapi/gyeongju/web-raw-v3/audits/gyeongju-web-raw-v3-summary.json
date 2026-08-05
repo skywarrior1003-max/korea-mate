@@ -1,0 +1,60 @@
+{
+  "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "status": "COMPLETED",
+  "generated_at": "2026-08-05T04:56:36Z",
+  "as_of": "2026-08-05T04:08:00Z",
+  "base_branch": "data/gyeongju-web-collector-nav-fix-v1",
+  "base_head": "a448aa7",
+  "work_branch": "data/gyeongju-web-raw-collection-v3",
+  "collector_versions": {
+    "gyeongju_culture_web_collect": "2.2.0",
+    "visitgyeongju_collect": "2.1.0"
+  },
+  "preflight_fixes_applied": [
+    "P1: DETAIL_ENTITY_HEADING → SEMANTIC_DL_FIELD for <dt> based extraction (v2.1.0 → v2.2.0)",
+    "P2: Heritage parent/child — added child_pages + related_attractions extraction"
+  ],
+  "collection_counts": {
+    "attractions": 159,
+    "monthly_rec_valid": 7,
+    "monthly_rec_rejected": 6,
+    "courses": 5,
+    "heritage": 5,
+    "cultural_guides_sites": 17,
+    "events_total_records": 10,
+    "events_unique_con_uid": 7,
+    "events_cross_month_dups": 3,
+    "restaurants": 84,
+    "souvenirs": 8
+  },
+  "http_stats": {
+    "total_requests": 0,
+    "success_count": 0,
+    "failed_count": 0,
+    "success_rate_pct": 0,
+    "http_status_dist": {}
+  },
+  "quality_checks": {
+    "ASSERT_attractions_semantic_dl_field": true,
+    "ASSERT_no_detail_entity_heading_leaks": true,
+    "ASSERT_attractions_name_none_zero": true,
+    "ASSERT_mnu_4085_rejected": true,
+    "ASSERT_monthly_rej_all_pass": true,
+    "ASSERT_cultural_guides_17": true,
+    "ASSERT_restaurants_complete": true,
+    "ASSERT_souvenirs_complete": true,
+    "ASSERT_visitgyeongju_name_no_leaks": true,
+    "visitgyeongju_locale_class_dist": {
+      "VALID_TRANSLATED_DETAIL": 460
+    }
+  },
+  "notable_findings": [
+    "이달의추천여행지 2026-05 3건(mnu_uid=4185, 4172, 4367): 동일 월 다중 테마 페이지",
+    "이달의추천여행지 신규 mnu_uid=4306(2026-06, 19장소): 이전 회귀 대비 +1건",
+    "행사 교차월 중복 3건: 장기 행사 여러 월 목록에 노출됨",
+    "코스 5종 총 웨이포인트 29개 추출됨",
+    "세계유산 관련관광지 33건 링크 추출됨",
+    "기념품 8건 전원 5개 언어 VALID_TRANSLATED_DETAIL",
+    "visitgyeongju 상세페이지에 필터 태그 HTML 미노출 — 기존 6그룹/59옵션 감사가 여전히 유효"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "source": "visitgyeongju.or.kr",
+  "collector": "visitgyeongju_collect.py",
+  "collector_version": "2.1.0",
+  "content_type": "restaurants",
+  "command": "scripts/visitgyeongju_collect.py --content-type restaurants --out data\\tourapi\\gyeongju\\web-raw-v3\\restaurants --delay 0.5 --timeout 15 --retries 3",
+  "collected_at": "2026-08-05T04:43:49Z",
+  "finished_at": "2026-08-05T04:50:34Z",
+  "requested_url_count": 420,
+  "success_url_count": 420,
+  "failed_url_count": 0,
+  "http_status_distribution": {
+    "200": 420
+  },
+  "record_count": 84,
+  "language_class_distribution": {
+    "ko:VALID_TRANSLATED_DETAIL": 84,
+    "en:VALID_TRANSLATED_DETAIL": 84,
+    "ja:VALID_TRANSLATED_DETAIL": 84,
+    "zh-CN:VALID_TRANSLATED_DETAIL": 84,
+    "zh-TW:VALID_TRANSLATED_DETAIL": 84
+  },
+  "known_count": 85,
+  "output_file": "data\\tourapi\\gyeongju\\web-raw-v3\\restaurants\\restaurants-raw.jsonl",
+  "output_sha256": "05eea74a9ea95675765e710a154e93f1a87246e063ae83798827b5ae0bd412be",
+  "failed_urls": [],
+  "dry_run": false,
+  "reproducibility_note": "raw 수집은 수집 시각·사이트 상태에 따라 달라질 수 있음. 같은 raw snapshot + 같은 mapping 규칙 → 정규화 단계만 byte-identical."
+}

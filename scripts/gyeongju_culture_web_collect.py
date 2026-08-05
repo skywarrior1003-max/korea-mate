@@ -25,7 +25,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-VERSION = "2.1.0"
+VERSION = "2.2.0"
 BASE_URL = "https://www.gyeongju.go.kr"
 TOUR_URL = f"{BASE_URL}/tour/page.do"
 UA = "Mozilla/5.0 (compatible; KoreaMate-Collector/2.0; +https://github.com/skywarrior1003-max/korea-mate)"
@@ -299,9 +299,13 @@ def extract_name_from_detail(html: str):
 
     Returns dict:
       name               – extracted string or None
-      name_extract_method  – DETAIL_ENTITY_HEADING | NAME_PARSE_FAILED
+      name_extract_method  – SEMANTIC_DL_FIELD | NAME_PARSE_FAILED
       name_source_selector – meaningful selector string or None
       name_parse_status    – PARSED | NAME_PARSE_FAILED
+
+    Note: method is SEMANTIC_DL_FIELD (not DETAIL_ENTITY_HEADING) because
+    the name is extracted from a <dt> in a definition list, which is a
+    semantic DL field — not a heading element.
     """
     for m in re.finditer(r"<dt[^>]*>(.*?)</dt>", html, re.DOTALL):
         raw = m.group(1)
@@ -319,7 +323,7 @@ def extract_name_from_detail(html: str):
             continue
         return {
             "name": name,
-            "name_extract_method": "DETAIL_ENTITY_HEADING",
+            "name_extract_method": "SEMANTIC_DL_FIELD",
             "name_source_selector": "dt[skip_list]",
             "name_parse_status": "PARSED",
         }
@@ -1029,6 +1033,39 @@ def collect_heritage(args, _out_dir: Path, snap: dict) -> list:
         snap["http_status_dist"][str(status)] = snap["http_status_dist"].get(str(status), 0) + 1
         title = extract_title(body)
 
+        # Extract child heritage links (mnu_uid sub-pages) and related attraction links
+        all_links = extract_links(body)
+        child_pages = []
+        attraction_links = []
+        seen_mnu = set()
+        seen_area = set()
+        for href, text in all_links:
+            if "mnu_uid=" in href:
+                m_mnu = re.search(r"mnu_uid=(\d+)", href)
+                if m_mnu:
+                    child_mnu = int(m_mnu.group(1))
+                    # Collect child heritage pages (different mnu_uid, on same domain)
+                    if child_mnu != page["mnu_uid"] and child_mnu not in seen_mnu:
+                        # Only include heritage-related sub-pages (not navigation)
+                        known_heritage_mnus = {p["mnu_uid"] for p in HERITAGE_PAGES}
+                        if child_mnu in known_heritage_mnus or text:
+                            seen_mnu.add(child_mnu)
+                            child_pages.append({
+                                "mnu_uid": child_mnu,
+                                "link_text": text or None,
+                                "href": make_absolute_url(href),
+                            })
+            if "area_uid=" in href and "cmd=2" in href:
+                m_area = re.search(r"area_uid=(\d+)", href)
+                if m_area:
+                    area_uid = int(m_area.group(1))
+                    if area_uid not in seen_area:
+                        seen_area.add(area_uid)
+                        attraction_links.append({
+                            "area_uid": area_uid,
+                            "detail_url": make_absolute_url(href),
+                        })
+
         rec = {
             "source_type": "gyeongju_web",
             "content_type": "heritage",
@@ -1037,6 +1074,9 @@ def collect_heritage(args, _out_dir: Path, snap: dict) -> list:
             "mnu_uid": page["mnu_uid"],
             "page_title": title,
             "source_url": url,
+            "child_pages": child_pages,
+            "related_attraction_count": len(attraction_links),
+            "related_attractions": attraction_links,
             "body_sha256": sha256_bytes(body),
             "body_size_bytes": len(body),
             "collected_at": now_iso(),

@@ -1,0 +1,81 @@
+{
+  "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "generated_at": "2026-08-05T04:56:36Z",
+  "source_url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2262",
+  "discovered_count": 17,
+  "expected_count": 17,
+  "ASSERT_17_sites": true,
+  "count_matches_reference": true,
+  "sites": [
+    {
+      "name_ko": "대릉원",
+      "guide_assignment": "한국어 2명/영어,일어,중국어 각1명"
+    },
+    {
+      "name_ko": "불국사",
+      "guide_assignment": "한국어 3명/영어,일어,중국어 각1명 ※ 일요일 배치제외(불국사 구품연지회에서 해설)"
+    },
+    {
+      "name_ko": "석굴암",
+      "guide_assignment": "한국어 2명/영어,일어,중국어 각1명"
+    },
+    {
+      "name_ko": "양동마을",
+      "guide_assignment": "영어, 일어, 중국어 각1명 ※ 한국어 해설은 양동마을 자체 실시 문의처(054-762-2630)"
+    },
+    {
+      "name_ko": "분황사",
+      "guide_assignment": "한국어, 외국어 각1명"
+    },
+    {
+      "name_ko": "첨성대",
+      "guide_assignment": "한국어, 외국어 각1명"
+    },
+    {
+      "name_ko": "동궁과 월지 (舊 임해전지,안압지)",
+      "guide_assignment": "한국어, 외국어 각1명"
+    },
+    {
+      "name_ko": "옥산서원",
+      "guide_assignment": "한국어 1명"
+    },
+    {
+      "name_ko": "김유신묘",
+      "guide_assignment": "한국어 2명"
+    },
+    {
+      "name_ko": "무열왕릉",
+      "guide_assignment": "한국어 1명"
+    },
+    {
+      "name_ko": "포석정지",
+      "guide_assignment": "한국어 1명"
+    },
+    {
+      "name_ko": "원성왕릉 (舊 괘릉)",
+      "guide_assignment": "한국어 1명"
+    },
+    {
+      "name_ko": "오릉",
+      "guide_assignment": "한국어 1명"
+    },
+    {
+      "name_ko": "감은사지",
+      "guide_assignment": "한국어 2명"
+    },
+    {
+      "name_ko": "신라를빛낸인물관(동리목월문학관 별관)",
+      "guide_assignment": "한국어 1명 (월요일휴관)"
+    },
+    {
+      "name_ko": "향교",
+      "guide_assignment": "한국어, 외국어 각 1명"
+    },
+    {
+      "name_ko": "경주읍성",
+      "guide_assignment": "한국어 1명"
+    }
+  ],
+  "body_sha256": "3307aed9f3101c4a8c5adc64322281363e0b630d19046ea3bd77d38c9beaddd1",
+  "collected_at": "2026-08-05T04:43:21Z"
+}

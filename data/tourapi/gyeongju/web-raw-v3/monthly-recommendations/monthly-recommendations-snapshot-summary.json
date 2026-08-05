@@ -1,0 +1,22 @@
+{
+  "source": "gyeongju.go.kr/tour",
+  "collector": "gyeongju_culture_web_collect.py",
+  "collector_version": "2.2.0",
+  "content_type": "monthly-recommendations",
+  "command": "scripts/gyeongju_culture_web_collect.py --content-type monthly-recommendations --out data\\tourapi\\gyeongju\\web-raw-v3\\monthly-recommendations --delay 0.5 --timeout 15 --retries 3 --as-of 2026-08-05T04:08:00Z",
+  "as_of": "2026-08-05T04:08:00Z",
+  "collected_at": "2026-08-05T04:42:36Z",
+  "finished_at": "2026-08-05T04:42:47Z",
+  "requested_url_count": 13,
+  "success_url_count": 13,
+  "failed_url_count": 0,
+  "http_status_distribution": {
+    "200": 13
+  },
+  "record_count": 7,
+  "output_file": "data\\tourapi\\gyeongju\\web-raw-v3\\monthly-recommendations\\monthly-recommendations-raw.jsonl",
+  "output_sha256": "e92ca02cd4bee6c4a233becd06b3f8a9e8e7b64e110658ac4dbe2164fd7f42d8",
+  "failed_urls": [],
+  "dry_run": false,
+  "reproducibility_note": "raw 수집은 수집 시각·사이트 상태에 따라 달라질 수 있음. 같은 raw snapshot + 같은 --as-of + 같은 mapping 규칙 → 정규화 단계만 byte-identical."
+}
