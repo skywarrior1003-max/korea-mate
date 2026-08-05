@@ -88,8 +88,13 @@ test("★migration 번호가 겹치지 않는다", () => {
   assert.deepEqual(same, ["035_harden_increment_trip_view.sql"]);
 });
 
-test("브라우저 호출 경로는 그대로다 — 인자 이름·엔드포인트 불변", () => {
+test("DB 함수의 인자 이름 계약은 그대로다 — 036/037 이후에도 서버가 같은 이름으로 부른다", () => {
+  // 035 시점에는 브라우저가 /rest/v1/rpc/increment_trip_view 를 직접 불렀고 이
+  // 테스트가 그 경로를 고정했다. 036/037 이 그 호출을 서버로 옮기고 공개
+  // EXECUTE 를 회수했으므로, 이제 고정할 것은 "브라우저가 직접 부르지 않는다"
+  // 쪽이다(trip-view-endpoint.test.ts 가 담당). 여기서는 함수 자체의 인자
+  // 이름만 지킨다 — 037 은 함수를 비상 복구 경로로 보존하기 때문이다.
+  assert.match(M035, /trip_id_param uuid/);
   const page = readFileSync(join(ROOT, "src", "app", "shared", "page.tsx"), "utf8");
-  assert.match(page, /rest\/v1\/rpc\/increment_trip_view/);
-  assert.match(page, /trip_id_param/);
+  assert.doesNotMatch(page, /rest[/]v1[/]rpc[/]increment_trip_view/);
 });

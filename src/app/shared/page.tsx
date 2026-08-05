@@ -195,23 +195,27 @@ export default function SharedTripPage() {
     }).catch(() => setStatus("error"));
   }, []);
 
-  // ── TASK-030: 뷰 카운터 RPC — 화면 렌더 후 백그라운드 비동기 호출 ──────────
-  // Edge Function 병목 없음. sessionStorage로 동일 세션 중복 카운트 차단.
+  // ── 뷰 카운터 — 서버 경유 (화면 렌더 후 백그라운드 비동기 호출) ────────────
+  //
+  // 예전에는 여기서 anon key 로 Supabase RPC 를 직접 불렀다. 중복 방지가
+  // sessionStorage 뿐이라 지우거나 curl 로 부르면 무제한 증가했고, Popular·
+  // Trending 이 view_count 를 쓰므로 순위까지 부풀릴 수 있었다.
+  //
+  // 이제 Pages Function 이 device id 를 SHA-256 해시해 서버 전용 RPC 로 넘기고,
+  // DB 가 같은 일정+같은 기기를 24시간에 한 번만 인정한다.
+  // sessionStorage 는 남겨 두지만 **네트워크 요청을 줄이는 최적화일 뿐**이고
+  // 중복 방지의 책임은 서버·DB 에 있다.
+  //
+  // trip 이 세팅됐다는 것은 get_shared_itinerary(is_public 강제)가 성공했다는
+  // 뜻이다. 비공개·미존재 화면에서는 이 effect 가 돌지 않는다.
   useEffect(() => {
     if (!trip?.id) return;
     const key = `viewed_${trip.id}`;
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
-    const url  = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/increment_trip_view`;
-    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-    fetch(url, {
+    fetch(`/api/itinerary/view/${trip.id}`, {
       method:  "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey:         anon,
-        Authorization:  `Bearer ${anon}`,
-      },
-      body: JSON.stringify({ trip_id_param: trip.id }),
+      headers: { "x-device-id": getDeviceId() },
     }).catch(() => { /* silent — 카운터 실패가 UX에 영향 없음 */ });
   }, [trip?.id]);
 
