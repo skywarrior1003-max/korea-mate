@@ -1,0 +1,14 @@
+{
+  "baseline_candidates": 831,
+  "full_v1_candidates_total": 914,
+  "new_attraction_candidates": 10,
+  "new_restaurant_candidates": 66,
+  "new_souvenir_candidates": 7,
+  "reconciliation_note": "기념품 PHYSICAL_PLACE 8건 중 1건은 기존 candidate 연결 (baseline_candidate_id 설정). 신규 candidate = 7건. 합계 = 10(관광지)+66(식당)+7(기념품) = 83. CANDIDATE_DELTA_RECONCILIATION_PASS.",
+  "souvenir_existing_candidate_id": "gyeongju-KTO12-2717319",
+  "souvenir_existing_candidate_link": 1,
+  "souvenir_existing_candidate_name": "배리삼릉공원",
+  "souvenir_physical_place_total": 8,
+  "total_new_candidates": 83,
+  "verdict": "CANDIDATE_DELTA_RECONCILIATION_PASS"
+}

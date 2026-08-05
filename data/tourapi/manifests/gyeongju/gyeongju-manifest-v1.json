@@ -1038,15 +1038,15 @@
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-collections-v1.jsonl",
       "category": "normalized",
-      "sha256": "8fbd271588cae0b7358747da5f5e6b37b70a2f40302e57b1242b8fe422f728d6",
-      "size_bytes": 2867,
+      "sha256": "f51c3ff9747f256cc78ebca4ca8088813ce0347ae994108f0d2af2591a8b41e5",
+      "size_bytes": 4014,
       "note": "이달의추천여행지 컬렉션 7건"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-place-relations-v1.jsonl",
       "category": "normalized",
-      "sha256": "93178e4504edf5fb05ab3d0f69e8af7cd0b019a85ec684b19c433c20bc8da051",
-      "size_bytes": 4572,
+      "sha256": "d141b38442c1b95d958be8bbe9ec1061703a16aa3df622b2f1a1c3b8effc5ef5",
+      "size_bytes": 8136,
       "note": "추천여행지 장소 관계 14건 (place_links area_uid 기반)"
     },
     {
@@ -1129,29 +1129,29 @@
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-manual-review-queue-v1.jsonl",
       "category": "audit",
-      "sha256": "1113a724fae25cb2d1be45a550ee0334deb13c9a28e9818c4faa593d6d9bae4e",
-      "size_bytes": 9660,
+      "sha256": "a6dbb1b04e4d8bcd3d7e8738c50ab2e2ec62e469f465cef04c8d12a0ed7a82c3",
+      "size_bytes": 13028,
       "note": "수동 검토 큐 30건"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-normalization-summary-v1.json",
       "category": "summary",
-      "sha256": "b91f2b46a5ff4a6bae90920101d41dde08e0801c86741e28ae5035226ec4317a",
-      "size_bytes": 1057,
+      "sha256": "30d3e94d84f13f312a92672aac3702bf7bfd1dd97d2431e7c01afecfac65f9a9",
+      "size_bytes": 1429,
       "note": "정규화 요약 — 22출력파일, 914candidates, 22/22 재현성 PASS"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-run1-run2-sha-audit.json",
       "category": "audit",
-      "sha256": "c22936b8b315a42761e38ee61f0b143f35aa7daac8185deac8552cefb7eee8fe",
-      "size_bytes": 6917,
+      "sha256": "d2d8afa269b595120b1958e10c39ab0e7dd779e9c88e26ba0042f09ca7de0d78",
+      "size_bytes": 11343,
       "note": "Run1/Run2 SHA 감사 — 22/22 BYTE_IDENTICAL"
     },
     {
       "path": "scripts/gyeongju_normalize_full_v1.py",
       "category": "script",
-      "sha256": "6d82080324c51ed0a312eb6256076a55b8fd0afa16bc00eb5c3b6a16f15b687a",
-      "size_bytes": 82143,
+      "sha256": "e2fe670c3cce27cc484f535f605b7518659dda449415af2d29068fbb47e7b3f2",
+      "size_bytes": 102639,
       "note": "경주 공식 데이터 정규화 v1.0.0 — 907+251=1158 source facts, 914 candidates"
     },
     {
@@ -1160,6 +1160,55 @@
       "sha256": "532de84561140871e1a0d19d65584ff915d968d62dcae762097e47661f472ba2",
       "size_bytes": 9745,
       "note": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1 완료보고서"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-candidate-delta-reconciliation-audit.json",
+      "category": "audit",
+      "sha256": "0d595e075cc8d0d528e81277f68de886c1422ce2b575862009e51d87b28576f3",
+      "size_bytes": 708,
+      "note": "Candidate delta reconciliation audit (+83=PASS): att10+rest66+souv7=83"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-mutable-source-page-audit.jsonl",
+      "category": "audit",
+      "sha256": "e848f9b0f7bc5e80a5ed8a89145b08684347e3393b27dbbe97e24aa5729e1be5",
+      "size_bytes": 3720,
+      "note": "MUTABLE_SOURCE_PAGE 속성 문서화 — 이달의 추천여행지 7건"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-before-after-comparison.jsonl",
+      "category": "audit",
+      "sha256": "154e2f13b18fab958d78c73e6d2164b2812cb805985716f343a9a8b054b0b490",
+      "size_bytes": 20364,
+      "note": "v1 → ALT 필드별 before/after 비교"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-relation-review-queue.jsonl",
+      "category": "audit",
+      "sha256": "ea7c71b03a61af5f15b0eb92d6fdd152c11ca36ab948d3a34162723e901b4801",
+      "size_bytes": 4928,
+      "note": "이달의 추천여행지 MANUAL_REVIEW 검토 큐 — area_uid 8건 (mnu_uid=4134)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-relation-status-audit.jsonl",
+      "category": "audit",
+      "sha256": "f1ef2b78dfa2eacca8b86f111f4ff96980412ccdcd07e4a31a7d84228c850e17",
+      "size_bytes": 3647,
+      "note": "컬렉션별 relation_status v1→ALT 변경 감사 (7건 모두 상태 변경)"
+    },
+    {
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-recommendation-ui-label-rejection-audit.jsonl",
+      "category": "audit",
+      "sha256": "e8610ad51d2610165fd819fb3190d1f463b160713977adb3fd9cdc5cd75a1d1e",
+      "size_bytes": 10951,
+      "note": "V3 places 필드 UI 탭 레이블 거부 감사 (7 collections, places는 dict {name,order})"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-monthly-rec-relation-fix-alt-v1-completion.md",
+      "category": "doc",
+      "sha256": "8fe6f01156cf788d8b81002ead59410a3bab999676cd64cbb15016b93a0fb332",
+      "size_bytes": 10291,
+      "note": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -1313,11 +1362,35 @@
       "reproducibility": "Run1=Run2 BYTE_IDENTICAL (22/22)",
       "output_files": 23,
       "note": "경주 공식 데이터 정규화 완료. 831→914 candidates. 수동검토 30건 별도."
+    },
+    {
+      "task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
+      "status": "COMPLETED",
+      "base_task": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1",
+      "base_branch": "data/gyeongju-normalization-identity-v1",
+      "base_head": "47de380",
+      "work_branch": "data/gyeongju-monthly-rec-relation-fix-alt-v1",
+      "script": "scripts/gyeongju_normalize_full_v1.py",
+      "script_version": "1.1.0",
+      "as_of": "2026-08-05T04:08:00Z",
+      "alt_results": {
+        "monthly_rec_collections": 7,
+        "monthly_rec_place_relations": 14,
+        "monthly_rec_manual_review": 8,
+        "relation_status_corrected": 7,
+        "ui_labels_rejected_collections": 7,
+        "new_audit_files": 6,
+        "candidate_delta_reconciliation": "PASS",
+        "total_new_candidates": 83
+      },
+      "reproducibility": "Run2=Run3 BYTE_IDENTICAL (29/29)",
+      "output_files": 28,
+      "note": "이달의 추천여행지 place_relations 정정 (offline, V3 raw 재사용). source_mutability=MUTABLE_SOURCE_PAGE 명시. identity_status LINKED_WEB_SF → MANUAL_REVIEW (preflight 확인). 7개 신규 audit 파일 추가. 나머지 22개 파일 byte-identical 유지."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 154
+  "files_count": 161
 }
