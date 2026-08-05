@@ -670,6 +670,13 @@
       "sha256": "b7a03ba26d8be891c34881fd2e62a45a2659d1ab981c44569ffd863a510395b7",
       "size_bytes": 7180,
       "note": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1 완료보고서"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-raw-collection-v1-verification.md",
+      "category": "verification",
+      "sha256": "50ec84f74b2651fc5bc85a9ddd4051ab43fefe97b35c9c5c476504677f88eb98",
+      "size_bytes": 16244,
+      "note": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 검증보고서 — EXECUTION_HOLD (블로커 6개)"
     }
   ],
   "correction_tasks": [
@@ -707,9 +714,17 @@
         "scripts/visitgyeongju_collect.py"
       ],
       "files_added": 27
+    },
+    {
+      "task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1",
+      "verdict": "EXECUTION_HOLD",
+      "blockers": 6,
+      "improvements": 4,
+      "completed_at": "2026-08-05T00:53:00Z",
+      "notes": "B1~B6 블로커 해소 전 실행 불가. SCRIPT_UPGRADE_REQUIRED."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
-  "last_updated_task": "TASK-GYEONGJU-WEB-SOURCE-DISCOVERY-AND-COLLECTOR-FOUNDATION-V1",
-  "last_updated_at": "2026-08-04T12:30:00Z"
+  "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
+  "last_updated_at": "2026-08-05T00:53:00Z"
 }
