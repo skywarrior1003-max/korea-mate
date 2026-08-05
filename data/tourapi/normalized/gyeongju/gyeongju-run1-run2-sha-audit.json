@@ -1,16 +1,14 @@
 {
-  "task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
-  "base_task": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1",
-  "script_version": "1.1.0",
+  "task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1",
+  "script_version": "1.2.0",
   "as_of": "2026-08-05T04:08:00Z",
-  "reproducibility_method": "Run2 vs Run3 (Run1 SHA 손상: PowerShell cp949 인코딩 오류)",
+  "reproducibility_method": "Run1 vs Run2 (독립 실행, 동일 입력)",
   "reproducibility_verdict": "BYTE_IDENTICAL",
   "total_files": 28,
   "match_count": 28,
-  "mismatch_files": [],
-  "preserved_from_base": 18,
-  "updated_in_alt": 4,
-  "new_in_alt": 6,
+  "mismatch_count": 0,
+  "preserved_from_v11": 19,
+  "changed_from_v11": 9,
   "files": [
     {
       "file": "gyeongju-attraction-identity-audit-v1.jsonl",
@@ -18,8 +16,8 @@
       "run2_sha256": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d",
       "match": true,
       "size_bytes": 87351,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d"
     },
     {
       "file": "gyeongju-attribute-mapping-audit-v1.json",
@@ -27,17 +25,17 @@
       "run2_sha256": "2b340238292823690619b021d8261c7ecd1118205b870f4e8bdd61523afcc8ca",
       "match": true,
       "size_bytes": 300,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "2b340238292823690619b021d8261c7ecd1118205b870f4e8bdd61523afcc8ca"
     },
     {
       "file": "gyeongju-baseline-831-identity-link-audit.jsonl",
-      "run1_sha256": "58494e5d39f27aa2258be68d3866dbc5a9fec5eda9bf00245af971ac6a6b4b7e",
-      "run2_sha256": "58494e5d39f27aa2258be68d3866dbc5a9fec5eda9bf00245af971ac6a6b4b7e",
+      "run1_sha256": "0e268a5d8bfe2764a1474b7822b2b7f0a7d7a10d29ca5ceecc784c7752843522",
+      "run2_sha256": "0e268a5d8bfe2764a1474b7822b2b7f0a7d7a10d29ca5ceecc784c7752843522",
       "match": true,
-      "size_bytes": 200713,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 201037,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "58494e5d39f27aa2258be68d3866dbc5a9fec5eda9bf00245af971ac6a6b4b7e"
     },
     {
       "file": "gyeongju-candidate-delta-reconciliation-audit.json",
@@ -45,8 +43,8 @@
       "run2_sha256": "0d595e075cc8d0d528e81277f68de886c1422ce2b575862009e51d87b28576f3",
       "match": true,
       "size_bytes": 708,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "0d595e075cc8d0d528e81277f68de886c1422ce2b575862009e51d87b28576f3"
     },
     {
       "file": "gyeongju-course-entities-v1.jsonl",
@@ -54,8 +52,8 @@
       "run2_sha256": "a1f63b3a69bbea68c8e09c3799a683bb3ccb1f29f98f9adcd43c02b02e402f83",
       "match": true,
       "size_bytes": 1697,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "a1f63b3a69bbea68c8e09c3799a683bb3ccb1f29f98f9adcd43c02b02e402f83"
     },
     {
       "file": "gyeongju-course-waypoint-relations-v1.jsonl",
@@ -63,8 +61,8 @@
       "run2_sha256": "178f955dfb5a17a083c5c2400edf9d196a6ee694012f6a2571fecc212df23bc8",
       "match": true,
       "size_bytes": 8299,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "178f955dfb5a17a083c5c2400edf9d196a6ee694012f6a2571fecc212df23bc8"
     },
     {
       "file": "gyeongju-cultural-guide-relations-v1.jsonl",
@@ -72,17 +70,17 @@
       "run2_sha256": "0c82c5de0c64265fe6da945366b682ff3a88a5f981119ad8ac6af93a62d69716",
       "match": true,
       "size_bytes": 5504,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "0c82c5de0c64265fe6da945366b682ff3a88a5f981119ad8ac6af93a62d69716"
     },
     {
       "file": "gyeongju-entity-attribute-evidence-v1.jsonl",
-      "run1_sha256": "f745cbe30ac652a3c403ef6daabd2430683e15bcb64438897ea712fcf4e28f99",
-      "run2_sha256": "f745cbe30ac652a3c403ef6daabd2430683e15bcb64438897ea712fcf4e28f99",
+      "run1_sha256": "08ae41049aee7d530926cb943fe303bb6afb4fc283873168e64afb75e571865c",
+      "run2_sha256": "08ae41049aee7d530926cb943fe303bb6afb4fc283873168e64afb75e571865c",
       "match": true,
-      "size_bytes": 19236,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 20748,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "f745cbe30ac652a3c403ef6daabd2430683e15bcb64438897ea712fcf4e28f99"
     },
     {
       "file": "gyeongju-event-entities-v1.jsonl",
@@ -90,8 +88,8 @@
       "run2_sha256": "aafae5151dd469f1999e1ee4dd1d93e360f2f3508a1237187ed9d80f50d30d82",
       "match": true,
       "size_bytes": 5381,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "aafae5151dd469f1999e1ee4dd1d93e360f2f3508a1237187ed9d80f50d30d82"
     },
     {
       "file": "gyeongju-event-listing-relations-v1.jsonl",
@@ -99,8 +97,8 @@
       "run2_sha256": "45d05c4f2b5f81e420ae02d82cdc700ca9c156a0689ade0ba4c2ba0a32d6cb46",
       "match": true,
       "size_bytes": 2840,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "45d05c4f2b5f81e420ae02d82cdc700ca9c156a0689ade0ba4c2ba0a32d6cb46"
     },
     {
       "file": "gyeongju-field-conflict-audit-v1.jsonl",
@@ -108,17 +106,17 @@
       "run2_sha256": "5a93e7699ac0d2c5b6723609bcad86e4c9d9e9d3706ca383a3a92dab11ea0c5b",
       "match": true,
       "size_bytes": 1375,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "5a93e7699ac0d2c5b6723609bcad86e4c9d9e9d3706ca383a3a92dab11ea0c5b"
     },
     {
       "file": "gyeongju-full-v1-candidates.jsonl",
-      "run1_sha256": "794dab0b8a1819996725d6405cbd427171509487d5577388d551749d81a6f523",
-      "run2_sha256": "794dab0b8a1819996725d6405cbd427171509487d5577388d551749d81a6f523",
+      "run1_sha256": "797e386cc122de7d3a033b80da5fc7b987b68d6f8b93cf6903c7bdd8b59fec68",
+      "run2_sha256": "797e386cc122de7d3a033b80da5fc7b987b68d6f8b93cf6903c7bdd8b59fec68",
       "match": true,
-      "size_bytes": 1082079,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 1085597,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "794dab0b8a1819996725d6405cbd427171509487d5577388d551749d81a6f523"
     },
     {
       "file": "gyeongju-heritage-entities-v1.jsonl",
@@ -126,8 +124,8 @@
       "run2_sha256": "a70aeadb4698525e5962356b7c40dd3069a9fda4229c846d046970d20a9b1bc3",
       "match": true,
       "size_bytes": 1946,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "a70aeadb4698525e5962356b7c40dd3069a9fda4229c846d046970d20a9b1bc3"
     },
     {
       "file": "gyeongju-heritage-relations-v1.jsonl",
@@ -135,26 +133,26 @@
       "run2_sha256": "7c56b419cad5dc77363232d789ea98652dfb4ab97d7d1d449b1f75433a509aab",
       "match": true,
       "size_bytes": 15599,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "7c56b419cad5dc77363232d789ea98652dfb4ab97d7d1d449b1f75433a509aab"
     },
     {
       "file": "gyeongju-manual-review-queue-v1.jsonl",
-      "run1_sha256": "a6dbb1b04e4d8bcd3d7e8738c50ab2e2ec62e469f465cef04c8d12a0ed7a82c3",
-      "run2_sha256": "a6dbb1b04e4d8bcd3d7e8738c50ab2e2ec62e469f465cef04c8d12a0ed7a82c3",
+      "run1_sha256": "762602eae3bb03edf0641bbb7a6d31b713348699b707353e5b2bc24c4f243c1d",
+      "run2_sha256": "762602eae3bb03edf0641bbb7a6d31b713348699b707353e5b2bc24c4f243c1d",
       "match": true,
-      "size_bytes": 13028,
-      "file_type": "updated_in_alt",
-      "sha_change_from_base": "UPDATED"
+      "size_bytes": 13748,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "a6dbb1b04e4d8bcd3d7e8738c50ab2e2ec62e469f465cef04c8d12a0ed7a82c3"
     },
     {
       "file": "gyeongju-multilingual-entity-link-audit-v1.jsonl",
-      "run1_sha256": "c017a1555511749db0afb17543e65ad643583cf818e66d3337804a89e8af07c7",
-      "run2_sha256": "c017a1555511749db0afb17543e65ad643583cf818e66d3337804a89e8af07c7",
+      "run1_sha256": "b43c4e414808087c2411b15715e4ef5154d5007ca4b8d430d489f61dce960df1",
+      "run2_sha256": "b43c4e414808087c2411b15715e4ef5154d5007ca4b8d430d489f61dce960df1",
       "match": true,
-      "size_bytes": 263754,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 265410,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "c017a1555511749db0afb17543e65ad643583cf818e66d3337804a89e8af07c7"
     },
     {
       "file": "gyeongju-mutable-source-page-audit.jsonl",
@@ -162,17 +160,17 @@
       "run2_sha256": "e848f9b0f7bc5e80a5ed8a89145b08684347e3393b27dbbe97e24aa5729e1be5",
       "match": true,
       "size_bytes": 3720,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "e848f9b0f7bc5e80a5ed8a89145b08684347e3393b27dbbe97e24aa5729e1be5"
     },
     {
       "file": "gyeongju-normalization-summary-v1.json",
-      "run1_sha256": "30d3e94d84f13f312a92672aac3702bf7bfd1dd97d2431e7c01afecfac65f9a9",
-      "run2_sha256": "30d3e94d84f13f312a92672aac3702bf7bfd1dd97d2431e7c01afecfac65f9a9",
+      "run1_sha256": "422527527f777f169d9dea936291d0cfff8ef8823b45887a19ca9ecc7a77e048",
+      "run2_sha256": "422527527f777f169d9dea936291d0cfff8ef8823b45887a19ca9ecc7a77e048",
       "match": true,
-      "size_bytes": 1429,
-      "file_type": "updated_in_alt",
-      "sha_change_from_base": "UPDATED"
+      "size_bytes": 1422,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "30d3e94d84f13f312a92672aac3702bf7bfd1dd97d2431e7c01afecfac65f9a9"
     },
     {
       "file": "gyeongju-recommendation-before-after-comparison.jsonl",
@@ -180,8 +178,8 @@
       "run2_sha256": "154e2f13b18fab958d78c73e6d2164b2812cb805985716f343a9a8b054b0b490",
       "match": true,
       "size_bytes": 20364,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "154e2f13b18fab958d78c73e6d2164b2812cb805985716f343a9a8b054b0b490"
     },
     {
       "file": "gyeongju-recommendation-collections-v1.jsonl",
@@ -189,8 +187,8 @@
       "run2_sha256": "f51c3ff9747f256cc78ebca4ca8088813ce0347ae994108f0d2af2591a8b41e5",
       "match": true,
       "size_bytes": 4014,
-      "file_type": "updated_in_alt",
-      "sha_change_from_base": "UPDATED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "f51c3ff9747f256cc78ebca4ca8088813ce0347ae994108f0d2af2591a8b41e5"
     },
     {
       "file": "gyeongju-recommendation-place-relations-v1.jsonl",
@@ -198,8 +196,8 @@
       "run2_sha256": "d141b38442c1b95d958be8bbe9ec1061703a16aa3df622b2f1a1c3b8effc5ef5",
       "match": true,
       "size_bytes": 8136,
-      "file_type": "updated_in_alt",
-      "sha_change_from_base": "UPDATED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "d141b38442c1b95d958be8bbe9ec1061703a16aa3df622b2f1a1c3b8effc5ef5"
     },
     {
       "file": "gyeongju-recommendation-relation-review-queue.jsonl",
@@ -207,8 +205,8 @@
       "run2_sha256": "ea7c71b03a61af5f15b0eb92d6fdd152c11ca36ab948d3a34162723e901b4801",
       "match": true,
       "size_bytes": 4928,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "ea7c71b03a61af5f15b0eb92d6fdd152c11ca36ab948d3a34162723e901b4801"
     },
     {
       "file": "gyeongju-recommendation-relation-status-audit.jsonl",
@@ -216,8 +214,8 @@
       "run2_sha256": "f1ef2b78dfa2eacca8b86f111f4ff96980412ccdcd07e4a31a7d84228c850e17",
       "match": true,
       "size_bytes": 3647,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "f1ef2b78dfa2eacca8b86f111f4ff96980412ccdcd07e4a31a7d84228c850e17"
     },
     {
       "file": "gyeongju-recommendation-ui-label-rejection-audit.jsonl",
@@ -225,17 +223,17 @@
       "run2_sha256": "e8610ad51d2610165fd819fb3190d1f463b160713977adb3fd9cdc5cd75a1d1e",
       "match": true,
       "size_bytes": 10951,
-      "file_type": "new_in_alt",
-      "sha_change_from_base": "NEW"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "e8610ad51d2610165fd819fb3190d1f463b160713977adb3fd9cdc5cd75a1d1e"
     },
     {
       "file": "gyeongju-restaurant-identity-audit-v1.jsonl",
-      "run1_sha256": "feee35c58400ba07dad5029e7b57185480f60265c3ce0991d4031436223f6a99",
-      "run2_sha256": "feee35c58400ba07dad5029e7b57185480f60265c3ce0991d4031436223f6a99",
+      "run1_sha256": "6f453f8e3824250dad8d5c458e666ed6fa6c3e0a96eac935d48a174b1f207572",
+      "run2_sha256": "6f453f8e3824250dad8d5c458e666ed6fa6c3e0a96eac935d48a174b1f207572",
       "match": true,
-      "size_bytes": 40970,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 43760,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "feee35c58400ba07dad5029e7b57185480f60265c3ce0991d4031436223f6a99"
     },
     {
       "file": "gyeongju-source-filter-taxonomy-v1.json",
@@ -243,26 +241,26 @@
       "run2_sha256": "f4abc5d36b6b291485184efd612f90aa36ace1e86951db80a7b57ccb7d41a925",
       "match": true,
       "size_bytes": 818,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "sha_change_from_v11": "PRESERVED",
+      "v11_sha256": "f4abc5d36b6b291485184efd612f90aa36ace1e86951db80a7b57ccb7d41a925"
     },
     {
       "file": "gyeongju-souvenir-classification-audit-v1.jsonl",
-      "run1_sha256": "4db0963fd74734fe7e3e32bb0abd03686cf3668a8101a78cad5154565ae8c345",
-      "run2_sha256": "4db0963fd74734fe7e3e32bb0abd03686cf3668a8101a78cad5154565ae8c345",
+      "run1_sha256": "89f589574ac86a11f6f648751e9c088045ac5534f807408624202ae9ac7ac5c7",
+      "run2_sha256": "89f589574ac86a11f6f648751e9c088045ac5534f807408624202ae9ac7ac5c7",
       "match": true,
-      "size_bytes": 4759,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 4903,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "4db0963fd74734fe7e3e32bb0abd03686cf3668a8101a78cad5154565ae8c345"
     },
     {
       "file": "source-facts-full-v1.jsonl",
-      "run1_sha256": "fb1953066f5596d51a79ec216c921aace7cc41c8f72b12258b3e99812a85be2a",
-      "run2_sha256": "fb1953066f5596d51a79ec216c921aace7cc41c8f72b12258b3e99812a85be2a",
+      "run1_sha256": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf",
+      "run2_sha256": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf",
       "match": true,
-      "size_bytes": 1325143,
-      "file_type": "preserved_from_base",
-      "sha_change_from_base": "PRESERVED"
+      "size_bytes": 1326799,
+      "sha_change_from_v11": "CHANGED",
+      "v11_sha256": "fb1953066f5596d51a79ec216c921aace7cc41c8f72b12258b3e99812a85be2a"
     }
   ]
 }

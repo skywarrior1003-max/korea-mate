@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1 (v1.1.0)
-기반: TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1 (v1.0.0)
+TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 (v1.2.0)
+기반: TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1 (v1.1.0)
 
-이달의 추천여행지 place_relations ALT 정규화 스크립트.
+VG hexId[:16] 잘라내기 버그 수정 정규화 스크립트.
 
-변경 내역 (v1.0.0 → v1.1.0):
+변경 내역 (v1.1.0 → v1.2.0):
+  - DEF-C01/DEF-C02 수정: VG hex_id[:16] → hex_id (전체 34자)
+      수정 위치:
+      · build_source_facts(): sfid = VG-REST-{hex_id} / VG-SOUV-{hex_id}
+      · link_restaurant_identity(): web_sfid = VG-REST-{hex_id}
+          evidence_values의 hex_id 필드도 전체 hexId 사용
+      · classify_souvenir(): web_sfid = VG-SOUV-{hex_id}
+      · _multilingual_entity(): entity_source_id = VG-{type}-{hex_id}
+      · build_source_filter_taxonomy(): entity_id = VG-REST-{hex_id}
+      · build_full_v1_candidates(): 식당 매칭 및 candidate_id 생성 전체 hexId 사용
+  - 수정 전후 ID 매핑 감사 파일 추가:
+      gyeongju-vg-id-fix-mapping-audit-v1.jsonl
+
+이전 변경 내역 (v1.0.0 → v1.1.0):
   - build_monthly_rec_collections() 재설계:
       · source_mutability, relation_status, relation_count, as_of, source_snapshot_sha 추가
       · identity_status: LINKED_WEB_SF → MANUAL_REVIEW
@@ -45,9 +58,9 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = "1.1.0"
-TASK = "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1"
-TASK_BASE = "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1"
+VERSION = "1.2.0"
+TASK = "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1"
+TASK_BASE = "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1"
 AS_OF_DEFAULT = "2026-08-05T04:08:00Z"
 
 # Identity verdict types (Section 4)
@@ -492,7 +505,7 @@ def enrich_source_facts(data, as_of: str) -> list:
 
     # 3c. Add visitgyeongju restaurant source facts (84)
     for rest in sorted(data["web_restaurants"], key=lambda x: x.get("hex_id", "")):
-        sfid = f"gyeongju-VG-REST-{rest.get('hex_id', '')[:16]}"
+        sfid = f"gyeongju-VG-REST-{rest.get('hex_id', '')}"  # v1.2.0: 전체 34자 hexId 사용 ([:16] 잘라내기 제거)
         ko_loc = rest.get("locales", {}).get("ko", {})
         e = {
             "source_fact_id": sfid,
@@ -531,7 +544,7 @@ def enrich_source_facts(data, as_of: str) -> list:
 
     # 3d. Add visitgyeongju souvenir source facts (8)
     for souv in sorted(data["web_souvenirs"], key=lambda x: x.get("hex_id", "")):
-        sfid = f"gyeongju-VG-SOUV-{souv.get('hex_id', '')[:16]}"
+        sfid = f"gyeongju-VG-SOUV-{souv.get('hex_id', '')}"  # v1.2.0: 전체 34자 hexId 사용
         ko_loc = souv.get("locales", {}).get("ko", {})
         e = {
             "source_fact_id": sfid,
@@ -727,7 +740,7 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
     p = norm_phone(rest.get("phone") or "")
     addr = norm_address(rest.get("address_ko") or "")
 
-    web_sfid = f"gyeongju-VG-REST-{hex_id[:16]}"
+    web_sfid = f"gyeongju-VG-REST-{hex_id}"  # v1.2.0: 전체 34자 hexId 사용
     evidence_codes = []
     evidence_values = []
     candidate_id = None
@@ -740,12 +753,12 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
         cid = pilot.get("candidate_id")
         if conf == "HIGH_CONFIDENCE" and cid:
             evidence_codes.append("PILOT_VG_CAND_HIGH_CONFIDENCE")
-            evidence_values.append({"hex_id": hex_id[:16], "candidate_id": cid, "link_basis": pilot.get("link_basis")})
+            evidence_values.append({"hex_id": hex_id, "candidate_id": cid, "link_basis": pilot.get("link_basis")})  # v1.2.0: 전체 hexId
             return _build_identity(web_sfid, cid, VERDICT["HIGH_CONFIDENCE"], evidence_codes, evidence_values,
                                    [], 0.95, None, [], "auto")
         elif conf == "NO_MATCH":
             evidence_codes.append("PILOT_VG_CAND_NO_MATCH")
-            evidence_values.append({"hex_id": hex_id[:16]})
+            evidence_values.append({"hex_id": hex_id})  # v1.2.0: 전체 hexId
             # Could still be NEW_OFFICIAL_PLACE if has address
             if rest.get("name_ko") and rest.get("address_ko"):
                 return _build_identity(web_sfid, None, VERDICT["NEW_OFFICIAL_PLACE"], evidence_codes, evidence_values,
@@ -754,7 +767,7 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
                                    [], 0.0, None, [], "manual")
         else:
             evidence_codes.append("PILOT_VG_CAND_MANUAL")
-            evidence_values.append({"hex_id": hex_id[:16], "confidence": conf})
+            evidence_values.append({"hex_id": hex_id, "confidence": conf})  # v1.2.0: 전체 hexId
 
     # Evidence 2: city restaurant SF name match → candidate
     city_sfids = sorted(idx["city_rest_sf_by_name"].get(n, []))
@@ -807,7 +820,7 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
 
     # No match
     evidence_codes.append("NO_LINKABLE_EVIDENCE")
-    evidence_values.append({"normalized_name": n, "hex_id": hex_id[:16]})
+    evidence_values.append({"normalized_name": n, "hex_id": hex_id})  # v1.2.0: 전체 hexId
     if rest.get("name_ko") and rest.get("address_ko"):
         return _build_identity(web_sfid, None, VERDICT["NEW_OFFICIAL_PLACE"], evidence_codes, evidence_values,
                                [], 0.0, None, [], "manual")
@@ -825,7 +838,7 @@ def classify_souvenir(souv: dict, idx: dict) -> dict:
     name = souv.get("name_ko", "")
     ko_loc = souv.get("locales", {}).get("ko", {})
     url = ko_loc.get("url", "")
-    web_sfid = f"gyeongju-VG-SOUV-{hex_id[:16]}"
+    web_sfid = f"gyeongju-VG-SOUV-{hex_id}"  # v1.2.0: 전체 34자 hexId 사용
 
     physical_type = SOUVENIR_PHYSICAL_INDICATORS.get(name)
 
@@ -910,7 +923,7 @@ def _multilingual_entity(rec: dict, content_type: str) -> dict:
     }
 
     return {
-        "entity_source_id": f"gyeongju-VG-{content_type.upper()[:4]}-{hex_id[:16]}",
+        "entity_source_id": f"gyeongju-VG-{content_type.upper()[:4]}-{hex_id}",  # v1.2.0: 전체 hexId
         "vg_hex_id": hex_id,
         "content_type": content_type,
         "name_ko": rec.get("name_ko"),
@@ -1563,7 +1576,7 @@ def build_filter_taxonomy(data) -> tuple:
     entity_evidence = []
     for r in sorted(data["web_restaurants"], key=lambda x: x.get("hex_id", "")):
         entity_evidence.append({
-            "entity_id": f"gyeongju-VG-REST-{r.get('hex_id','')[:16]}",
+            "entity_id": f"gyeongju-VG-REST-{r.get('hex_id','')}",  # v1.2.0: 전체 hexId
             "content_type": "restaurant",
             "filter_evidence_type": "DETAIL_PAGE_TAGS_NOT_FOUND",
             "attributes": {},
@@ -1660,11 +1673,11 @@ def build_full_v1_candidates(data, idx, att_identities, rest_identities, souv_cl
             sfid = ident.get("source_fact_id", "")
             rest = next(
                 (r for r in data["web_restaurants"]
-                 if f"gyeongju-VG-REST-{r.get('hex_id','')[:16]}" == sfid),
+                 if f"gyeongju-VG-REST-{r.get('hex_id','')}" == sfid),  # v1.2.0: 전체 hexId 매칭
                 None
             )
             if rest:
-                new_id = f"gyeongju-VG-NEW-REST-{rest.get('hex_id','')[:16]}"
+                new_id = f"gyeongju-VG-NEW-REST-{rest.get('hex_id','')}"  # v1.2.0: 전체 hexId
                 full_v1.append({
                     "candidate_id": new_id,
                     "category": "restaurant",
@@ -1689,7 +1702,7 @@ def build_full_v1_candidates(data, idx, att_identities, rest_identities, souv_cl
     for sc in sorted(souv_classif, key=lambda x: x.get("source_fact_id", "")):
         if sc["place_type"] == "PHYSICAL_PLACE" and sc["baseline_candidate_id"] is None:
             sfid = sc.get("source_fact_id", "")
-            new_id = f"gyeongju-VG-NEW-SOUV-{sc.get('vg_hex_id','')[:16]}"
+            new_id = f"gyeongju-VG-NEW-SOUV-{sc.get('vg_hex_id','')}"  # v1.2.0: 전체 hexId
             full_v1.append({
                 "candidate_id": new_id,
                 "category": sc.get("category_proposal", "attraction"),

@@ -6,7 +6,7 @@
     "NEW_OFFICIAL_PLACE": 10,
     "total": 159
   },
-  "base_task": "TASK-GYEONGJU-NORMALIZATION-AND-IDENTITY-V1",
+  "base_task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
   "baseline_candidates": 831,
   "collections": {
     "course_waypoints": 29,
@@ -41,12 +41,12 @@
     "NEW_OFFICIAL_PLACE": 66,
     "total": 84
   },
-  "script_version": "1.1.0",
+  "script_version": "1.2.0",
   "source_facts_enriched_total": 1158,
   "source_facts_input": 907,
   "souvenir_classification": {
     "PHYSICAL_PLACE": 8,
     "total": 8
   },
-  "task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1"
+  "task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1"
 }

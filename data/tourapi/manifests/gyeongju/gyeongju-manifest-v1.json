@@ -989,15 +989,15 @@
     {
       "path": "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl",
       "category": "normalized",
-      "sha256": "fb1953066f5596d51a79ec216c921aace7cc41c8f72b12258b3e99812a85be2a",
-      "size_bytes": 1325143,
+      "sha256": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf",
+      "size_bytes": 1326799,
       "note": "정규화된 source facts 1158건 (907 기존 + 251 신규 웹)"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-baseline-831-identity-link-audit.jsonl",
       "category": "audit",
-      "sha256": "58494e5d39f27aa2258be68d3866dbc5a9fec5eda9bf00245af971ac6a6b4b7e",
-      "size_bytes": 200713,
+      "sha256": "0e268a5d8bfe2764a1474b7822b2b7f0a7d7a10d29ca5ceecc784c7752843522",
+      "size_bytes": 201037,
       "note": "기존 831 candidates × 웹 source fact 연결 감사"
     },
     {
@@ -1010,22 +1010,22 @@
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-restaurant-identity-audit-v1.jsonl",
       "category": "audit",
-      "sha256": "feee35c58400ba07dad5029e7b57185480f60265c3ce0991d4031436223f6a99",
-      "size_bytes": 40970,
+      "sha256": "6f453f8e3824250dad8d5c458e666ed6fa6c3e0a96eac935d48a174b1f207572",
+      "size_bytes": 43760,
       "note": "visitgyeongju 식당 84건 identity 판정 — HC5/MR13/NEW66"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-souvenir-classification-audit-v1.jsonl",
       "category": "audit",
-      "sha256": "4db0963fd74734fe7e3e32bb0abd03686cf3668a8101a78cad5154565ae8c345",
-      "size_bytes": 4759,
+      "sha256": "89f589574ac86a11f6f648751e9c088045ac5534f807408624202ae9ac7ac5c7",
+      "size_bytes": 4903,
       "note": "visitgyeongju 기념품 8건 PHYSICAL_PLACE 분류"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-multilingual-entity-link-audit-v1.jsonl",
       "category": "audit",
-      "sha256": "c017a1555511749db0afb17543e65ad643583cf818e66d3337804a89e8af07c7",
-      "size_bytes": 263754,
+      "sha256": "b43c4e414808087c2411b15715e4ef5154d5007ca4b8d430d489f61dce960df1",
+      "size_bytes": 265410,
       "note": "다국어 엔티티 연결 감사 92건 (식당84+기념품8) × 5언어"
     },
     {
@@ -1108,8 +1108,8 @@
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-entity-attribute-evidence-v1.jsonl",
       "category": "audit",
-      "sha256": "f745cbe30ac652a3c403ef6daabd2430683e15bcb64438897ea712fcf4e28f99",
-      "size_bytes": 19236,
+      "sha256": "08ae41049aee7d530926cb943fe303bb6afb4fc283873168e64afb75e571865c",
+      "size_bytes": 20748,
       "note": "엔티티 속성 근거 84건 — 상세페이지 필터태그 미노출"
     },
     {
@@ -1122,36 +1122,36 @@
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl",
       "category": "normalized",
-      "sha256": "794dab0b8a1819996725d6405cbd427171509487d5577388d551749d81a6f523",
-      "size_bytes": 1082079,
+      "sha256": "797e386cc122de7d3a033b80da5fc7b987b68d6f8b93cf6903c7bdd8b59fec68",
+      "size_bytes": 1085597,
       "note": "full-v1 candidate 결과 914건 (831+83신규)"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-manual-review-queue-v1.jsonl",
       "category": "audit",
-      "sha256": "a6dbb1b04e4d8bcd3d7e8738c50ab2e2ec62e469f465cef04c8d12a0ed7a82c3",
-      "size_bytes": 13028,
+      "sha256": "762602eae3bb03edf0641bbb7a6d31b713348699b707353e5b2bc24c4f243c1d",
+      "size_bytes": 13748,
       "note": "수동 검토 큐 30건"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-normalization-summary-v1.json",
       "category": "summary",
-      "sha256": "30d3e94d84f13f312a92672aac3702bf7bfd1dd97d2431e7c01afecfac65f9a9",
-      "size_bytes": 1429,
+      "sha256": "422527527f777f169d9dea936291d0cfff8ef8823b45887a19ca9ecc7a77e048",
+      "size_bytes": 1422,
       "note": "정규화 요약 — 22출력파일, 914candidates, 22/22 재현성 PASS"
     },
     {
       "path": "data/tourapi/normalized/gyeongju/gyeongju-run1-run2-sha-audit.json",
       "category": "audit",
-      "sha256": "d2d8afa269b595120b1958e10c39ab0e7dd779e9c88e26ba0042f09ca7de0d78",
-      "size_bytes": 11343,
+      "sha256": "c2dd48827c969a0d807c8de228f0d0d2ddfba2e5af8c89f544f5be71379162b8",
+      "size_bytes": 12589,
       "note": "Run1/Run2 SHA 감사 — 22/22 BYTE_IDENTICAL"
     },
     {
       "path": "scripts/gyeongju_normalize_full_v1.py",
       "category": "script",
-      "sha256": "e2fe670c3cce27cc484f535f605b7518659dda449415af2d29068fbb47e7b3f2",
-      "size_bytes": 102639,
+      "sha256": "abd88bd72842ae4c3e66cd891aa782becf1e047e64f509e835523edc22b28295",
+      "size_bytes": 103684,
       "note": "경주 공식 데이터 정규화 v1.0.0 — 907+251=1158 source facts, 914 candidates"
     },
     {
@@ -1335,6 +1335,27 @@
       "sha256": "240f04fab9fd2a04875a8d2e4a83bb0c84a3d4d981d43fd74dd14f0148618069",
       "size_bytes": 16864,
       "note": "TASK-GYEONGJU-NORMALIZATION-INDEPENDENT-QA-V1 completion report: FAIL - VG candidate_id/sfid duplication CRITICAL"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-vg-prefix-collision-preflight-audit-v1.json",
+      "category": "audit",
+      "sha256": "4b060501dd07a206962082708c24121463b0f2d7febeaab04ce5949ed7567149",
+      "size_bytes": 11745,
+      "note": "VG hexId[:16] 잘라내기 버그 사전 확인 감사 — DEF-C01/DEF-C02 재현 CONFIRMED"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-vg-id-fix-mapping-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "da2a09a89fcd4535d1c9fc07c2cfbf2f0fd912464e5bc06e1e579b1bc4bc901d",
+      "size_bytes": 59455,
+      "note": "VG ID 수정 매핑 — v1.1.0→v1.2.0 candidate_id/sfid/entity_source_id 변경 내역 (73+92+92건)"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-vg-candidate-id-fix-v1-completion.md",
+      "category": "doc",
+      "sha256": "f4074f66652d674eb6509ac1bedb7a8b49311409c764a784a9aad508f4327594",
+      "size_bytes": 9626,
+      "note": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 완료보고서 (DEF-C01/C02 RESOLVED)"
     }
   ],
   "correction_tasks": [
@@ -1537,11 +1558,40 @@
       ],
       "output_files": 16,
       "note": "Independent QA of gyeongju full-v1 normalization. CRITICAL: VG restaurant candidate_id and source_fact_id not unique (truncated hexId). Normalization fix required before Release/HOLD classification."
+    },
+    {
+      "task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1",
+      "status": "COMPLETED",
+      "base_task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
+      "base_branch": "research/gyeongju-normalization-independent-qa-v1",
+      "base_head": "9fc3a80",
+      "work_branch": "data/gyeongju-vg-candidate-id-fix-v1",
+      "script": "scripts/gyeongju_normalize_full_v1.py",
+      "script_version": "1.2.0",
+      "as_of": "2026-08-05T04:08:00Z",
+      "defects_resolved": [
+        "DEF-C01",
+        "DEF-C02"
+      ],
+      "fix_results": {
+        "candidate_ids_changed": 73,
+        "source_fact_ids_changed": 92,
+        "entity_source_ids_changed": 92,
+        "baseline_831_affected": 0,
+        "total_candidates": 914,
+        "total_source_facts": 1158,
+        "unique_vg_new_candidate_ids": 73,
+        "unique_vg_sfids": 92
+      },
+      "reproducibility": "Run1=Run2 BYTE_IDENTICAL (28/28)",
+      "output_files": 28,
+      "new_audit_files": 2,
+      "note": "DEF-C01/DEF-C02 수정: VG hex_id[:16] → hex_id (전체 34자). 73 VG-NEW candidates / 92 VG source facts / 92 multilingual entities ID 갱신. baseline 831 ID 불변. Run1=Run2 28/28 BYTE_IDENTICAL."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 179
+  "files_count": 182
 }
