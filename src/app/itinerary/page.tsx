@@ -37,8 +37,10 @@ import ItineraryDayMap from "@/components/ItineraryDayMap";
 import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
 import PlannerDayNav from "@/components/planner/PlannerDayNav";
+import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
 import TimelineIcon from "@/components/planner/TimelineIcon";
 import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
+import { buildTimeline } from "@/lib/planner/timeline-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 
@@ -1863,6 +1865,36 @@ function ItineraryResult() {
         </div>
       )}
 
+      {/* ── 대표 이미지 헤더 — 도시 대표 비주얼 위에 제목·기간·제목 수정 ──
+          우선순위·보안 게이트는 cover-source-core 에 있다. 여기서는 값만 넘긴다. */}
+      <PlannerCoverHeader
+        cover={{ coverKind, coverMomentId, itineraryId: itinId, isPublic, city }}
+        title={tripTitle || `My ${city} Trip`}
+        dateLine={`${startDate} — ${endDate} · ${travelers} ${parseInt(travelers) > 1 ? "Travelers" : "Traveler"}`}
+        imageAlt={tPlanner("coverAlt", { city })}
+        canEditTitle={(!shareId || isOwner) && !!itinId}
+        editLabel={tPlanner("editTitle")}
+        onEditTitle={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
+        editing={editingTitle}
+        editSlot={
+          <input
+            autoFocus
+            type="text"
+            value={titleInput}
+            onChange={(e) => setTitleInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleTitleSave();
+              if (e.key === "Escape") setEditingTitle(false);
+            }}
+            onBlur={handleTitleSave}
+            aria-label={tPlanner("editTitle")}
+            className="gkm-focus w-full text-[26px] sm:text-4xl font-black text-[#131b2e] bg-white/95 rounded-2xl px-4 py-2"
+            placeholder={`My ${city} Trip`}
+            maxLength={60}
+          />
+        }
+      />
+
       {/* ── 헤더 카드 ── */}
       <div className="bg-white rounded-3xl p-8 border border-[#E5E7EA] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
@@ -1905,40 +1937,8 @@ function ItineraryResult() {
               ))}
             </div>
           )}
-          {editingTitle ? (
-            <div className="flex items-center gap-2 mt-3">
-              <input
-                autoFocus
-                type="text"
-                value={titleInput}
-                onChange={(e) => setTitleInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleTitleSave();
-                  if (e.key === "Escape") setEditingTitle(false);
-                }}
-                onBlur={handleTitleSave}
-                className="text-2xl sm:text-3xl font-black text-[#191C21] bg-[#F6F7F8] border-2 border-[#FF4A2D] rounded-xl px-3 py-1 focus:outline-none w-full"
-                placeholder={`My ${city} Trip`}
-                maxLength={60}
-              />
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 mt-3 group">
-              <h1 className="text-3xl sm:text-4xl font-black text-[#191C21]">
-                {tripTitle || `My ${city} Trip`}
-              </h1>
-              {(!shareId || isOwner) && itinId && (
-                <button
-                  onClick={() => { setTitleInput(tripTitle || `My ${city} Trip`); setEditingTitle(true); }}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity text-[#565D66] hover:text-[#FF4A2D] text-xl cursor-pointer shrink-0"
-                  title="제목 편집"
-                >✏️</button>
-              )}
-            </div>
-          )}
-          <p className="text-[#565D66] mt-2 text-base font-bold">
-            📅 {startDate} to {endDate} ({travelers} {parseInt(travelers) > 1 ? "Travelers" : "Traveler"})
-          </p>
+          {/* 제목·기간·제목 수정은 위 대표 이미지 헤더로 옮겼다.
+              두 곳에 같은 제목이 있으면 어느 쪽이 편집 대상인지 알 수 없다. */}
         </div>
 
         <div className="flex flex-col gap-2 w-full sm:w-auto">
@@ -2362,26 +2362,19 @@ function ItineraryResult() {
                   </div>
                 )}
 
-                <div className="space-y-4" id={`day-${day.dayNumber}`}>
-                  {TIME_SLOTS.map((ts) => {
-                    const slotItems = slotAssigned.filter((x) => x.slot === ts.key);
-                    if (slotItems.length === 0) return null;
-
-                    return (
-                      <div key={ts.key} className="rounded-2xl border border-[#E5E7EA] overflow-hidden bg-white">
-                        <div className="px-5 py-3 bg-[#F6F7F8]/25 border-b border-[#E5E7EA] flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-base">{ts.emoji}</span>
-                            <span className="text-sm font-black text-[#565D66]">{ts.label}</span>
-                            <span className="text-xs text-[#565D66]/50 font-medium hidden sm:inline">{ts.range}</span>
-                          </div>
-                          <span className="text-xs text-[#565D66]/60 font-semibold">
-                            {slotItems.length} place{slotItems.length !== 1 ? "s" : ""}
-                          </span>
-                        </div>
-
-                        <div className="divide-y divide-[#E5E7EA]/50">
-                            {slotItems.map(({ place, idx }, rowIdx) => {
+                {/* STAGE A 타임라인 — 하루를 하나의 흐름으로 편다.
+                    시간대마다 불투명 카드를 두면 하루가 네 덩어리로 보이고 점선도
+                    카드 안에서만 이어져 끊긴다. 슬롯 분류·정렬 로직(TIME_SLOTS,
+                    assignSlot)은 그대로 두고 화면만 평평하게 만든다. */}
+                <div className="rounded-2xl border border-[#E5E7EA] overflow-hidden bg-white" id={`day-${day.dayNumber}`}>
+                  {(() => {
+                    const rows = buildTimeline(
+                      slotAssigned.map(x => ({ item: x.place, index: x.idx, slot: x.slot })),
+                      TIME_SLOTS.map(ts => ts.key),   // 정렬 순서 정의는 기존 것 하나만 쓴다
+                    );
+                    return rows.map((row) => {
+                            const place = row.item;
+                            const idx   = row.index;
                               const naverUrl = buildNaverUrl(place.name, city);
                               const googleUrl =
                                 place.googleMapsUrl ||
@@ -2391,26 +2384,42 @@ function ItineraryResult() {
                               return (
                                 <div
                                   key={idx}
-                                  className="flex flex-col hover:bg-[#F6F7F8]/40 transition-colors group relative"
+                                  className="flex items-stretch hover:bg-[#F6F7F8]/40 transition-colors group relative"
                                 >
-                                  {/* STAGE A 타임라인 레일 — 아이콘이 기준점, 점선이 다음 장소로 이어진다.
-                                      의미는 옆의 category 배지가 이미 글자로 전하므로 여기서는 숨긴다. */}
+                                  {/* 타임라인 레일 — 위 선 · 아이콘 · 아래 선.
+                                      flex 로 행 높이를 그대로 따라가므로 카드가 길어지거나
+                                      슬롯 라벨이 붙어도 선이 끊기지 않는다. 슬롯이 바뀌는
+                                      자리에서도 위 선을 그대로 이어 하루가 한 줄로 보인다.
+                                      의미는 옆의 category 배지가 글자로 전하므로 숨긴다. */}
                                   <div
                                     aria-hidden
-                                    className="absolute left-5 top-5 bottom-0 flex flex-col items-center pointer-events-none"
+                                    className="w-[68px] shrink-0 flex flex-col items-center pointer-events-none"
                                   >
+                                    <span
+                                      className={`w-0 flex-none ${row.railAbove ? "border-l-2 border-dotted border-[#E5E7EA]" : ""}`}
+                                      style={{ height: row.showSlotLabel ? 46 : 22 }}
+                                    />
                                     <span
                                       className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
                                       style={{ backgroundColor: "var(--gkm-action-tint)", color: "var(--gkm-action-primary)" }}
                                     >
                                       <TimelineIcon category={place.category} size={16} />
                                     </span>
-                                    {rowIdx < slotItems.length - 1 && (
-                                      <span className="flex-1 mt-1 border-l-2 border-dotted border-[#E5E7EA]" />
-                                    )}
+                                    <span
+                                      className={`w-0 flex-1 ${row.railBelow ? "border-l-2 border-dotted border-[#E5E7EA]" : ""}`}
+                                    />
                                   </div>
+
+                                  <div className="flex-1 min-w-0">
+                                  {/* 시간대 흐름 라벨 — 그 시간대의 첫 장소에만. 정확한 도착
+                                      시각이 아니므로 작은 보조 텍스트로만 둔다. */}
+                                  {row.showSlotLabel && (
+                                    <p className="pt-4 pb-0.5 pr-5 text-[11px] font-black uppercase tracking-[0.14em] text-[#8A919B]">
+                                      {tPlanner(`slot_${row.slot}`)}
+                                    </p>
+                                  )}
                                   {/* 장소 정보 + 지도 버튼 행 */}
-                                  <div className="flex flex-col sm:flex-row justify-between gap-4 py-5 pr-5 pl-[68px]">
+                                  <div className="flex flex-col sm:flex-row justify-between gap-4 py-5 pr-5">
                                     <div
                                       className="space-y-2 flex-1 cursor-pointer min-w-0"
                                       onClick={() => setSelectedPlace(place)}
@@ -2420,7 +2429,8 @@ function ItineraryResult() {
                                           className="text-xs font-black uppercase px-2.5 py-0.5 rounded-md text-white"
                                           style={{ backgroundColor: getCategoryColor(place.category) }}
                                         >{place.category}</span>
-                                        <span className="text-xs font-bold text-[#565D66]">🕒 {place.time} ({place.duration})</span>
+                                        {/* 정확한 방문 시각은 표시하지 않는다 — 시간대 흐름 라벨이
+                                            그 자리를 대신한다. place.time 자체는 슬롯 판정에 계속 쓴다. */}
                                         <span className="text-xs font-bold text-[#565D66]">📍 {place.location}</span>
                                         {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
                                         <button
@@ -2524,14 +2534,11 @@ function ItineraryResult() {
                                     </a>
                                   </div>
                                   )}
+                                  </div>
                                 </div>
                               );
-                            })}
-                          </div>
-                      </div>
-                    );
-                  })}
-
+                            });
+                  })()}
                 </div>
               </div>
             );

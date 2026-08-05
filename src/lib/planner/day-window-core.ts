@@ -133,20 +133,80 @@ export function swipeIntent(dx: number, dy: number): -1 | 1 | 0 {
 export type TimelineIconKind =
   | "food" | "camera" | "nature" | "event" | "stay" | "transit" | "pin";
 
+/** 공백·하이픈·대소문자 차이를 없앤다. "Cafe  Street" 와 "cafe-street" 가 같아진다. */
+function normalizeKind(v: string): string {
+  return v.toLowerCase().replace(/[-_/]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+/**
+ * 값 전체가 정확히 일치할 때 쓰는 alias 표.
+ *
+ * 부분 문자열 매칭만 쓰면 우연히 걸린다 — 실제로 "Theme Park" 가 "park" 때문에
+ * nature 로, "Transit Landmark" 가 "landmark" 때문에 camera 로 잡혔다.
+ * 운영에 실제로 들어 있는 값은 여기서 먼저 확정하고, 표에 없는 값만 키워드
+ * 추정으로 넘긴다.
+ */
+const KIND_ALIASES: Readonly<Record<string, TimelineIconKind>> = Object.freeze({
+  // food
+  "market": "food", "cafe": "food", "cafe street": "food",
+  "restaurant": "food", "food": "food", "dining": "food", "bakery": "food",
+  // nature
+  "park": "nature", "walking trail": "nature", "hiking": "nature",
+  "beach": "nature", "island": "nature", "nature": "nature", "garden": "nature",
+  // attraction
+  "landmark": "camera", "viewpoint": "camera", "history": "camera",
+  "shopping": "camera", "observatory": "camera", "resort area": "camera",
+  "art": "camera", "theme park": "camera", "museum": "camera",
+  "temple": "camera", "culture": "camera", "attraction": "camera",
+  "sightseeing": "camera", "photo spot": "camera", "palace": "camera",
+  // transportation
+  "transit landmark": "transit", "transportation": "transit",
+  "transit": "transit", "bus": "transit", "train": "transit",
+  "airport": "transit", "station": "transit", "subway": "transit",
+  // event
+  "event": "event", "festival": "event", "concert": "event",
+  // accommodation
+  "accommodation": "stay", "hotel": "stay", "stay": "stay",
+  "hostel": "stay", "guesthouse": "stay", "resort": "stay",
+});
+
+/**
+ * 표에 없는 값을 위한 키워드 추정. 구체적인 것부터 본다 —
+ * transit 을 attraction 보다 먼저 봐야 "transit landmark" 류가 교통으로 간다.
+ */
+const KIND_PATTERNS: ReadonlyArray<readonly [RegExp, TimelineIconKind]> = Object.freeze([
+  [/transport|transit|airport|station|subway|\bbus\b|\btrain\b|교통|공항|역/, "transit"],
+  [/accommodation|hotel|hostel|guesthouse|\bstay\b|숙박|호텔/,               "stay"],
+  [/event|festival|concert|k-?pop|공연|축제/,                                "event"],
+  [/restaurant|\bfood\b|cafe|coffee|dining|market|bakery|음식|식당|카페/,     "food"],
+  [/theme park|attraction|culture|sightsee|photo|museum|landmark|temple|palace|viewpoint|observatory|history|shopping|\bart\b|관광|명소/, "camera"],
+  [/nature|\bpark\b|beach|mountain|garden|trail|hiking|island|자연|공원/,     "nature"],
+]);
+
 /**
  * 실제 category·subcategory 문자열에서 아이콘 종류를 고른다.
+ *
+ * 운영에서 이 함수가 받는 값은 5종 enum 이 아니다. Pages Function 이
+ * `row.subcategory || row.category` 로 내보내기 때문에 city_spots 의 자유
+ * 문자열(Park, Cafe Street, Transit Landmark …)이 그대로 들어온다.
  *
  * 새 DB category 를 만들지 않는다 — 지금 저장돼 있는 값을 그대로 읽는다.
  * 판단이 서지 않으면 지도 핀으로 둔다. 없는 의미를 지어내지 않는다.
  */
 export function timelineIconKind(category?: string | null, subcategory?: string | null): TimelineIconKind {
-  const c = `${category ?? ""} ${subcategory ?? ""}`.toLowerCase();
-  if (!c.trim()) return "pin";
-  if (/restaurant|food|cafe|coffee|dining|market|bakery|음식|식당|카페/.test(c)) return "food";
-  if (/attraction|culture|sightsee|photo|museum|landmark|temple|palace|관광|명소/.test(c)) return "camera";
-  if (/nature|park|beach|mountain|garden|trail|자연|공원/.test(c)) return "nature";
-  if (/event|festival|concert|k-pop|kpop|show|축제|공연/.test(c)) return "event";
-  if (/accommodation|hotel|stay|hostel|guesthouse|숙박|호텔/.test(c)) return "stay";
-  if (/transport|transit|airport|station|bus|train|subway|교통|공항|역/.test(c)) return "transit";
+  // 구체적인 값(subcategory)을 먼저 본다
+  for (const raw of [subcategory, category]) {
+    if (typeof raw !== "string") continue;
+    const k = normalizeKind(raw);
+    if (!k) continue;
+    const hit = KIND_ALIASES[k];
+    if (hit) return hit;
+  }
+
+  const joined = normalizeKind(`${subcategory ?? ""} ${category ?? ""}`);
+  if (!joined) return "pin";
+  for (const [re, kind] of KIND_PATTERNS) {
+    if (re.test(joined)) return kind;
+  }
   return "pin";
 }

@@ -25,6 +25,7 @@ import { useTranslations } from "next-intl";
 import { CITY_ENTRY_CONTENT } from "@/data/cities/entry-content";
 import { CITY_CONFIGS, CITY_SLUGS } from "@/data/cities";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
+import { cityVisual } from "@/lib/city-visual";
 import type { PopularTrip } from "@/lib/supabase";
 import CityCardArt from "./CityCardArt";
 import {
@@ -37,12 +38,9 @@ const CITY_LABEL: Record<string, string> = {
   busan: "Busan", seoul: "Seoul", jeju: "Jeju", gyeongju: "Gyeongju", jeonju: "Jeonju",
 };
 
-// 승인된 Stitch 시안이 실제로 쓴 도시 사진. 다른 도시 사진을 돌려쓰지 않는다.
-const CITY_IMAGE: Record<string, { src: string; w: number; h: number }> = {
-  seoul: { src: "/images/home/city-seoul.jpg", w: 1408, h: 768 },
-  busan: { src: "/images/home/city-busan.jpg", w: 1408, h: 768 },
-  jeju:  { src: "/images/home/city-jeju.jpg",  w: 704,  h: 1520 },
-};
+// 도시 사진은 서비스 공용 resolver 를 쓴다(src/lib/city-visual.ts).
+// 대표 비주얼이 없는 도시는 null 로 떨어져 CityCardArt 로 그린다 —
+// 다른 도시 사진을 돌려쓰지 않는다.
 
 function dayCount(t: PopularTrip): number | null {
   if (!t.start_date || !t.end_date) return null;
@@ -67,7 +65,7 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
     label: CITY_LABEL[slug] ?? slug,
     plannerReady: CITY_ENTRY_CONTENT[slug]?.plannerReady ?? false,
     tagline: CITY_ENTRY_CONTENT[slug]?.tagline || CITY_CONFIGS[slug]?.seoDescription || "",
-    image: CITY_IMAGE[slug] ?? null,
+    image: cityVisual(slug),
   }));
 
   // 모든 지표가 0인 목록은 인기라고 부를 근거가 없다. 그러면 섹션을 숨긴다.
@@ -135,6 +133,7 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
                       src={c.image.src}
                       alt=""
                       className="absolute inset-0 w-full h-full object-cover"
+                      style={{ objectPosition: c.image.objectPosition }}
                       loading="lazy"
                       decoding="async"
                       width={c.image.w}

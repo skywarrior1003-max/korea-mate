@@ -172,3 +172,56 @@ test("subcategory 도 함께 본다", () => {
   assert.equal(timelineIconKind("local", "seafood restaurant"), "food");
   assert.equal(timelineIconKind("spot", "photo spot"), "camera");
 });
+
+// ── 운영 실측 subcategory ────────────────────────────────────────────────────
+//
+// 운영이 실제로 넘기는 값은 5종 enum 이 아니다. Pages Function 이
+// `row.subcategory || row.category` 로 내보내서 city_spots 의 자유 문자열이
+// 그대로 온다. 아래 21종은 운영 city_spots 86행에서 실측한 전체 목록이다.
+test("★운영에 실제로 있는 subcategory 21종이 모두 유형 아이콘을 받는다", () => {
+  const REAL: Array<[string, string]> = [
+    ["Park", "nature"], ["Landmark", "camera"], ["Hiking", "nature"],
+    ["Walking Trail", "nature"], ["Beach", "nature"], ["Culture", "camera"],
+    ["Viewpoint", "camera"], ["History", "camera"], ["Temple", "camera"],
+    ["Market", "food"], ["Cafe Street", "food"], ["Shopping", "camera"],
+    ["Museum", "camera"], ["Observatory", "camera"], ["Resort Area", "camera"],
+    ["Theme Park", "camera"], ["Transit Landmark", "transit"], ["Cafe", "food"],
+    ["Island", "nature"], ["Art", "camera"],
+    // subcategory 가 null 인 17행은 category 로 떨어진다
+    ["attraction", "camera"],
+  ];
+  const missed: string[] = [];
+  for (const [value, want] of REAL) {
+    const got = timelineIconKind(value);
+    if (got !== want) missed.push(`${value}: ${got} (기대 ${want})`);
+  }
+  assert.deepEqual(missed, [], `잘못 매핑된 값:\n${missed.join("\n")}`);
+});
+
+test("★부분 문자열 우연 매칭으로 잘못 분류되지 않는다", () => {
+  // 실제로 "park" 때문에 nature 로, "landmark" 때문에 camera 로 잡혔던 값들이다
+  assert.equal(timelineIconKind("Theme Park"), "camera", "놀이공원은 자연이 아니다");
+  assert.equal(timelineIconKind("Transit Landmark"), "transit", "교통이 관광보다 우선");
+  assert.equal(timelineIconKind("Cafe Street"), "food", "street 이 아니라 cafe 가 기준");
+});
+
+test("★표기 차이를 흡수한다 — 대소문자·공백·하이픈", () => {
+  for (const v of ["cafe street", "Cafe Street", "CAFE  STREET", "cafe-street", " Cafe_Street "]) {
+    assert.equal(timelineIconKind(v), "food", v);
+  }
+  for (const v of ["walking trail", "Walking-Trail", "WALKING TRAIL"]) {
+    assert.equal(timelineIconKind(v), "nature", v);
+  }
+});
+
+test("★event·accommodation 도 자기 아이콘을 받는다", () => {
+  for (const v of ["Event", "Festival", "Concert"])                assert.equal(timelineIconKind(v), "event", v);
+  for (const v of ["Accommodation", "Hotel", "Stay", "Guesthouse"]) assert.equal(timelineIconKind(v), "stay", v);
+  for (const v of ["Transportation", "Bus", "Train", "Airport"])    assert.equal(timelineIconKind(v), "transit", v);
+});
+
+test("★모르는 값은 여전히 지도 핀 — 억지로 끼워 맞추지 않는다", () => {
+  for (const v of ["Zzz Unknown", "무엇인가", "12345", "-", ""]) {
+    assert.equal(timelineIconKind(v), "pin", v);
+  }
+});

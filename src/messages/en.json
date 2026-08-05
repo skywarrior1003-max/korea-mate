@@ -180,7 +180,13 @@
     "weather": "View weather",
     "weatherAria": "View weather on the Korea Meteorological Administration site (opens in a new tab)",
     "places": "{n} places",
-    "dayAria": "Day {n}, {date}"
+    "dayAria": "Day {n}, {date}",
+    "slot_morning": "Morning",
+    "slot_lunch": "Lunch",
+    "slot_afternoon": "Afternoon",
+    "slot_evening": "Evening",
+    "coverAlt": "{city} trip cover image",
+    "editTitle": "Edit trip title"
   },
   "common": {
     "language": "Language"

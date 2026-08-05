@@ -180,7 +180,13 @@
     "weather": "天気を見る",
     "weatherAria": "韓国気象庁のサイトで天気を見る (新しいタブで開きます)",
     "places": "{n}件",
-    "dayAria": "Day {n}, {date}"
+    "dayAria": "Day {n}, {date}",
+    "slot_morning": "午前",
+    "slot_lunch": "ランチ",
+    "slot_afternoon": "午後",
+    "slot_evening": "夜",
+    "coverAlt": "{city} 旅行のカバー画像",
+    "editTitle": "旅行タイトルを編集"
   },
   "common": {
     "language": "言語"

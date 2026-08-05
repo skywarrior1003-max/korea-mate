@@ -180,7 +180,13 @@
     "weather": "查看天气",
     "weatherAria": "在韩国气象厅网站查看天气 (在新标签页打开)",
     "places": "{n}个地点",
-    "dayAria": "第{n}天，{date}"
+    "dayAria": "第{n}天，{date}",
+    "slot_morning": "上午",
+    "slot_lunch": "午餐",
+    "slot_afternoon": "下午",
+    "slot_evening": "晚上",
+    "coverAlt": "{city} 行程封面图片",
+    "editTitle": "编辑行程标题"
   },
   "common": {
     "language": "语言"

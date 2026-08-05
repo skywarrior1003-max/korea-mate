@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import CityHeroArt from "@/components/home/CityHeroArt";
+import { cityVisual } from "@/lib/city-visual";
 import { DESIGN_PRIMARY, DESIGN_INK, FONT_SERIF } from "@/components/home/home-visual";
 import type { CityConfig } from "@/data/cities";
 import type { CityEntryContent } from "@/data/cities/entry-content";
@@ -25,21 +26,20 @@ interface Props {
 }
 
 /**
- * 도시 대표 사진. 승인 시안이 실제로 쓴 이미지만 둔다.
- * 경주·전주는 시안에도 저장소에도 사진이 없어 비워 두고 CityHeroArt 로 그린다 —
- * 다른 도시 사진을 돌려쓰면 그 도시가 아닌 곳을 보여주게 된다.
+ * 도시 대표 사진은 서비스 공용 resolver 를 쓴다(src/lib/city-visual.ts).
+ * 화면마다 자기 맵을 들고 있으면 도시가 늘 때 한 곳만 고쳐지고 나머지가 어긋난다.
+ *
+ * 경주·전주는 사진이 없어 CityHeroArt 로 그리던 도시였는데, 이제 대표 비주얼이
+ * 생겨 사진이 나온다. 대표 비주얼이 없는 도시는 여전히 null 이므로
+ * CityHeroArt 로 떨어진다 — 다른 도시 사진을 돌려쓰면 그 도시가 아닌 곳을
+ * 보여주게 되기 때문이다.
  */
-const CITY_HERO: Record<string, { src: string; w: number; h: number }> = {
-  busan: { src: "/images/home/city-busan-hero.jpg", w: 1408, h: 768 },
-  seoul: { src: "/images/home/city-seoul.jpg",      w: 1408, h: 768 },
-  jeju:  { src: "/images/home/city-jeju.jpg",       w: 704,  h: 1520 },
-};
 
 export default function CityEntry({ city, content }: Props) {
   const t  = useTranslations("cityEntry");
   const tE = useTranslations("explore");
   const tD = useTranslations("discovery");
-  const hero = CITY_HERO[city.slug] ?? null;
+  const hero = cityVisual(city.slug);
 
   const exploreHref = `/explore/${city.slug}/`;
   const hasHighlights = content.highlights.length > 0;
@@ -67,7 +67,7 @@ export default function CityEntry({ city, content }: Props) {
             width={hero.w}
             height={hero.h}
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 45%" }}
+            style={{ objectPosition: hero.objectPosition }}
             loading="eager"
             decoding="async"
             fetchPriority="high"

@@ -116,9 +116,36 @@ test("★모든 장소에 아이콘 기준점이 붙는다", () => {
   assert.match(PAGE, /<TimelineIcon category=\{place\.category\}/);
 });
 
-test("★점선은 마지막 장소 뒤에 남지 않는다", () => {
-  assert.match(PAGE, /rowIdx < slotItems\.length - 1 && \(/);
-  assert.match(PAGE, /border-dotted/);
+test("★점선의 시작·끝 판정은 하루 전체 기준이다 — 슬롯 경계에서 끊기지 않는다", () => {
+  // 판정 자체는 timeline-core 가 하고 그쪽에서 실행 테스트한다.
+  // 여기서는 화면이 그 값을 실제로 쓰는지만 지킨다.
+  assert.match(PAGE, /row\.railAbove \? "border-l-2 border-dotted/);
+  assert.match(PAGE, /row\.railBelow \? "border-l-2 border-dotted/);
+  assert.doesNotMatch(PAGE, /rowIdx < slotItems\.length - 1/, "슬롯 안에서만 잇던 옛 판정이 남아 있다");
+});
+
+test("★시간대별 불투명 카드를 걷어냈다 — 하루가 한 덩어리로 보인다", () => {
+  assert.doesNotMatch(PAGE, /TIME_SLOTS\.map\(\(ts\) => \{/, "슬롯마다 카드를 그리던 구조");
+  assert.doesNotMatch(PAGE, /\{ts\.emoji\}/,  "슬롯 대형 헤더");
+  assert.doesNotMatch(PAGE, /\{ts\.range\}/,  "슬롯 시간대 범위 헤더");
+  // 정렬·분류 로직은 그대로 남아 있어야 한다
+  assert.match(PAGE, /const TIME_SLOTS = \[/);
+  assert.match(PAGE, /TIME_SLOTS\.map\(ts => ts\.key\)/, "정렬 순서는 기존 정의를 그대로 쓴다");
+  assert.match(PAGE, /function assignSlot\(/);
+});
+
+test("★시간대 라벨은 그 시간대 첫 장소에만 붙는다", () => {
+  assert.match(PAGE, /row\.showSlotLabel && \(/);
+  assert.match(PAGE, /tPlanner\(`slot_\$\{row\.slot\}`\)/);
+});
+
+test("★타임라인은 정확한 방문 시각을 표시하지 않는다", () => {
+  // 타임라인 행에서만 뗀다. 장소 상세 모달의 시각 칩은 이번 범위가 아니라 그대로 둔다.
+  const rowStart = PAGE.indexOf("const rows = buildTimeline(");
+  assert.ok(rowStart > 0, "타임라인 블록을 찾지 못했다");
+  const timelineBlock = PAGE.slice(rowStart, PAGE.indexOf("</PlannerDayNav", rowStart) + 1 || undefined);
+  assert.doesNotMatch(timelineBlock, /🕒 \{place\.time\}/, "타임라인에 시각 칩이 남아 있다");
+  assert.doesNotMatch(timelineBlock, /\{place\.duration\}/, "타임라인에 체류시간이 남아 있다");
 });
 
 test("★아이콘은 장식이다 — category 배지와 중복 낭독하지 않는다", () => {
@@ -183,7 +210,48 @@ test("★지도·저장·공유·제목 편집이 그대로 있다", () => {
 });
 
 test("★제목 편집 버튼은 소유자에게만 보인다 — 열람자에게 노출되지 않는다", () => {
-  assert.match(PAGE, /\(!shareId \|\| isOwner\) && itinId && \(\s*\n?\s*<button\s*\n?\s*onClick=\{\(\) => \{ setTitleInput/);
+  // 연필은 대표 이미지 헤더로 옮겼다. 권한 판정은 그대로 owner 조건이다.
+  assert.match(PAGE, /canEditTitle=\{\(!shareId \|\| isOwner\) && !!itinId\}/);
+  const HEADER = strip(read("src", "components", "planner", "PlannerCoverHeader.tsx"));
+  assert.match(HEADER, /\{canEditTitle && \(/, "false 면 버튼 자체를 렌더하지 않아야 한다");
+  assert.doesNotMatch(HEADER, /opacity-0/, "숨긴 척만 하고 DOM 에 남기지 않는다");
+});
+
+test("★제목은 화면에 한 곳에만 있다 — 어느 쪽이 편집 대상인지 헷갈리지 않게", () => {
+  const h1 = PAGE.match(/<h1[\s>]/g) ?? [];
+  assert.equal(h1.length, 0, "제목은 헤더 컴포넌트가 그린다");
+  assert.match(PAGE, /<PlannerCoverHeader/);
+});
+
+test("★제목 편집 계약이 그대로다 — Enter 저장·ESC 취소·길이 제한", () => {
+  assert.match(PAGE, /if \(e\.key === "Enter"\) handleTitleSave\(\);/);
+  assert.match(PAGE, /if \(e\.key === "Escape"\) setEditingTitle\(false\);/);
+  assert.match(PAGE, /maxLength=\{60\}/);
+  assert.match(PAGE, /onBlur=\{handleTitleSave\}/);
+});
+
+// ── 대표 이미지 ──────────────────────────────────────────────────────────────
+test("★개인 사진 보안 게이트를 건드리지 않았다", () => {
+  const COVER = strip(read("src", "lib", "planner", "cover-source-core.ts"));
+  assert.match(COVER, /input\.isPublic === true/, "공개 일정에서만 개인 사진");
+  assert.match(COVER, /input\.coverKind === "moment"/);
+  // 새 owner 전용 이미지 API 를 만들지 않았다
+  assert.doesNotMatch(PAGE, /\/api\/itinerary\/[^\n]*\/cover-image/);
+});
+
+test("★도시 대표 비주얼은 KTO manifest·프록시와 분리돼 있다", () => {
+  const CV = strip(read("src", "lib", "city-visual.ts"));
+  assert.doesNotMatch(CV, /kogl_type1|visitkorea|tong\./i, "허위 라이선스·출처");
+  assert.doesNotMatch(CV, /\/img\/cover\//, "KTO 프록시 경로");
+});
+
+test("★도시 대표 비주얼 정의는 한 곳뿐이다 — 화면마다 자기 맵을 들지 않는다", () => {
+  for (const f of [["src", "components", "CityEntry.tsx"], ["src", "components", "home", "PremiumDiscoveryHome.tsx"]]) {
+    const src = strip(read(...f));
+    assert.match(src, /cityVisual\(/, `${f.join("/")}: 공용 resolver 미사용`);
+    assert.doesNotMatch(src, /city-(seoul|busan|jeju|gyeongju|jeonju)[\w-]*\.(jpg|png)/,
+      `${f.join("/")}: 이미지 경로를 다시 하드코딩했다`);
+  }
 });
 
 test("★편집 캔버스(compact) 진입 경로가 남아 있다", () => {

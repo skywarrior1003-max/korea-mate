@@ -180,7 +180,13 @@
     "weather": "날씨 보기",
     "weatherAria": "기상청 날씨누리에서 날씨 보기 (새 탭에서 열림)",
     "places": "{n}곳",
-    "dayAria": "Day {n}, {date}"
+    "dayAria": "Day {n}, {date}",
+    "slot_morning": "오전",
+    "slot_lunch": "점심",
+    "slot_afternoon": "오후",
+    "slot_evening": "저녁",
+    "coverAlt": "{city} 여행 대표 이미지",
+    "editTitle": "여행 제목 수정"
   },
   "common": {
     "language": "언어"
