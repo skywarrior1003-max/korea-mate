@@ -1,0 +1,60 @@
+{
+  "task": "TASK-GYEONGJU-WEB-COLLECTOR-UPGRADE-V1",
+  "blocker_fixed": "B4: monthly rec now parses content (places, nav, year/month)",
+  "collector_version": "2.0.0",
+  "collected_at": "2026-08-05T01:45:13Z",
+  "pages_collected": 2,
+  "records": [
+    {
+      "mnu_uid": 4185,
+      "source_url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4185",
+      "year": 2026,
+      "month": 5,
+      "theme": "경주 여행",
+      "place_count": 12,
+      "places_sample": [
+        {
+          "name": "BEST",
+          "order": 1
+        },
+        {
+          "name": "주차 정보",
+          "order": 2
+        },
+        {
+          "name": "관람시간",
+          "order": 3
+        },
+        {
+          "name": "휴관일",
+          "order": 4
+        },
+        {
+          "name": "주차정보",
+          "order": 5
+        }
+      ],
+      "nav_month_count": 12,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 4085,
+      "source_url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4085",
+      "year": 2019,
+      "month": null,
+      "theme": "여행필수정보",
+      "place_count": 1,
+      "places_sample": [
+        {
+          "name": "BEST",
+          "order": 1
+        }
+      ],
+      "nav_month_count": 10,
+      "parse_status": "PARSED"
+    }
+  ],
+  "ASSERT_primary_parsed": true,
+  "ASSERT_nav_discovered": true,
+  "ASSERT_places_extracted": true
+}

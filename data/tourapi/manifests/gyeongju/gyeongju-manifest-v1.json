@@ -677,6 +677,55 @@
       "sha256": "50ec84f74b2651fc5bc85a9ddd4051ab43fefe97b35c9c5c476504677f88eb98",
       "size_bytes": 16244,
       "note": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 검증보고서 — EXECUTION_HOLD (블로커 6개)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-attraction-detail-parser-regression-v1.jsonl",
+      "category": "validation",
+      "sha256": "1ba32692259e4fb0b574e20898563fea0a0a21dba94cf9df93405183294e8a97",
+      "size_bytes": 2876,
+      "note": "관광지 상세 파서 회귀 테스트 5건 — detail_fetched=True 5/5, name/addr/phone/hours 추출"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-event-detail-parser-regression-v1.jsonl",
+      "category": "validation",
+      "sha256": "2f5f92fb779f63d4c74d38dfb377cc6fc5acc1ed1143c8c05a873a4a0a6518dd",
+      "size_bytes": 3107,
+      "note": "행사 상세 파서 회귀 테스트 5건 — detail_fetched=True 5/5, name+venue 5/5"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-cultural-guide-dynamic-extraction-v1.json",
+      "category": "validation",
+      "sha256": "dad67aede34fb2b9fcac3587083e9958043931295fbb372a218626a03acf28b9",
+      "size_bytes": 3452,
+      "note": "문화관광해설 동적 추출 — 17/17 사이트 발견 (ASSERT_count_17=True)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-recommendation-parser-v1.json",
+      "category": "validation",
+      "sha256": "80f4cf3f8efed671abc23799a6e4db1c28930c19b7eed4245d08a28db746a436",
+      "size_bytes": 1459,
+      "note": "이달의추천여행지 파서 — 2페이지 수집, 12개 장소 파싱, nav 12개월 발견"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-entity-name-regression-v1.jsonl",
+      "category": "validation",
+      "sha256": "0691c5a26786a289afb1c0eac110032ef4b66d925f247826c9208a2237c95901",
+      "size_bytes": 3483,
+      "note": "visitgyeongju 엔티티명 회귀 테스트 8건 — VISIT_GYEONGJU 오추출 없음 8/8"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/visitgyeongju-language-classification-regression-v1.jsonl",
+      "category": "validation",
+      "sha256": "ac3e3cbaf4187dac34535f1e11be21bc0bf5342af8b6b307a016ae383349a576",
+      "size_bytes": 15091,
+      "note": "visitgyeongju 언어분류 회귀 40건 — VALID_TRANSLATED_DETAIL 40/40"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-collector-upgrade-v1.md",
+      "category": "report",
+      "sha256": "bea60195d96f8a0142ee0bd69403b47c759ef80ba35350ada3b1febcb9d19b13",
+      "size_bytes": 11805,
+      "note": "TASK-GYEONGJU-WEB-COLLECTOR-UPGRADE-V1 완료보고서 — 블로커 B1-B6 + 개선 I7-I9 해결"
     }
   ],
   "correction_tasks": [
@@ -722,9 +771,42 @@
       "improvements": 4,
       "completed_at": "2026-08-05T00:53:00Z",
       "notes": "B1~B6 블로커 해소 전 실행 불가. SCRIPT_UPGRADE_REQUIRED."
+    },
+    {
+      "task": "TASK-GYEONGJU-WEB-COLLECTOR-UPGRADE-V1",
+      "status": "COMPLETED",
+      "completed_at": "2026-08-05T01:47:36Z",
+      "resolved_blockers": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "applied_improvements": [
+        "I7",
+        "I8",
+        "I9"
+      ],
+      "scripts_upgraded": [
+        "scripts/gyeongju_culture_web_collect.py v1.0.0 → v2.0.0",
+        "scripts/visitgyeongju_collect.py v1.0.0 → v2.0.0"
+      ],
+      "validation_results": {
+        "attractions_5_5_pass": true,
+        "events_5_5_pass": true,
+        "cultural_guide_17_17": true,
+        "monthly_rec_parsed": true,
+        "restaurant_5x5_valid_translated": true,
+        "souvenir_3x5_valid_translated": true
+      },
+      "note": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1의 EXECUTION_HOLD(블로커 6개) 해소. 다음 단계: TASK-GYEONGJU-WEB-RAW-COLLECTION-V2"
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
-  "last_updated_at": "2026-08-05T00:53:00Z"
+  "last_updated_at": "2026-08-05T00:53:00Z",
+  "last_updated": "2026-08-05T01:47:36Z",
+  "files_count": 92
 }

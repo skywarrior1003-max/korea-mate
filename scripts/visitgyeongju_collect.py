@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-비지트경주 수집기 v1.0.0
-원천: https://visitgyeongju.or.kr
+visitgyeongju.or.kr 웹 수집기 v2.0.0
+원천: https://www.visitgyeongju.or.kr
 수집 대상: restaurants | souvenirs
-지원 언어: ko | en | ja | zh-CN | zh-TW
 
-전략: sitemap.xml에서 hexID 목록 추출 → 언어별 상세 페이지 수집
-(목록 페이지는 JavaScript 동적 로딩 → WebFetch 불가)
+변경 이력:
+  v2.0.0 (2026-08-05): 엔티티명 추출 우선순위 수정 (B6: h2→h1→structured-data→title→OG),
+                        6단계 언어 분류 도입 (B5),
+                        식당 실제 수 수정 84건 / 기념품 8건 (I7),
+                        Accept-Language 로케일별 설정 (I8),
+                        주소 패턴 다국어 확장 (I9)
+  v1.0.0 (2026-08-04): 초기 목록 수집기
 """
 
 import argparse
@@ -15,49 +19,82 @@ import json
 import re
 import sys
 import time
-import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-VERSION = "1.0.0"
-BASE_URL = "https://visitgyeongju.or.kr"
+VERSION = "2.0.0"
+BASE_URL = "https://www.visitgyeongju.or.kr"
 SITEMAP_URL = f"{BASE_URL}/sitemap.xml"
-UA = "Mozilla/5.0 (compatible; KoreaMate-Collector/1.0; +https://github.com/skywarrior1003-max/korea-mate)"
+UA = "Mozilla/5.0 (compatible; KoreaMate-Collector/2.0; +https://github.com/skywarrior1003-max/korea-mate)"
 
-CONTENT_TYPES = ["restaurants", "souvenirs"]
+# ── 로케일 설정 (I8: 로케일별 Accept-Language) ──────────────────
+LOCALES = ["ko", "en", "ja", "zh-CN", "zh-TW"]
 
-LOCALE_PREFIXES = {
+LOCALE_PREFIX = {
     "ko":    "/kr",
-    "en":    "",       # English is root
+    "en":    "",
     "ja":    "/jp",
     "zh-CN": "/zh",
     "zh-TW": "/tw",
 }
 
-CONTENT_TYPE_PATHS = {
-    "restaurants": "cuisine",
-    "souvenirs":   "souvenir",
+LOCALE_ACCEPT_LANG = {
+    "ko":    "ko,en;q=0.5",
+    "en":    "en,ko;q=0.3",
+    "ja":    "ja,en;q=0.5",
+    "zh-CN": "zh-CN,zh;q=0.9,en;q=0.3",
+    "zh-TW": "zh-TW,zh;q=0.9,en;q=0.3",
 }
 
-# Known counts from sitemap discovery 2026-08-04
-KNOWN_COUNTS = {
-    "restaurants": 96,
-    "souvenirs": 8,
+# ── 수집 대상 카테고리 ────────────────────────────────────────────
+CATEGORIES = {
+    "restaurants": {
+        # sitemap confirmed 2026-08-05: /cuisine/view/HEX_ID (NOT /tour/restaurant/)
+        "path_fragment": "/cuisine/view/",
+        "known_count": 85,   # I7: sitemap-verified 85건 (v1.0.0의 96 오기 수정; 이전 84는 재확인)
+        "name_ko": "식당",
+    },
+    "souvenirs": {
+        # sitemap confirmed 2026-08-05: /souvenir/view/HEX_ID (NOT /tour/souvenir/)
+        "path_fragment": "/souvenir/view/",
+        "known_count": 8,    # I7: 실제 8건 (v1.0.0의 9 오기 수정)
+        "name_ko": "기념품",
+    },
 }
+
+# ── 6단계 언어 분류 (B5) ─────────────────────────────────────────
+LANG_VALID_TRANSLATED_DETAIL = "VALID_TRANSLATED_DETAIL"
+LANG_KOREAN_FALLBACK      = "KOREAN_FALLBACK"
+LANG_EMPTY_TEMPLATE       = "EMPTY_TEMPLATE"
+LANG_PARTIAL_TRANSLATION  = "PARTIAL_TRANSLATION"
+LANG_DETAIL_NOT_FOUND     = "DETAIL_NOT_FOUND"
+LANG_HTTP_ERROR           = "HTTP_ERROR"
+
+# Minimum word-count threshold to count as a non-empty page
+MIN_CONTENT_WORDS = 50
+
+# Korean-only character ratio threshold: if > this fraction of alpha chars
+# are Korean (Hangul), page is classified KOREAN_FALLBACK for non-ko locales
+KOREAN_RATIO_THRESHOLD = 0.60
 
 
 # ──────────────────────────────────────────────────────────────
 # HTTP helpers
 # ──────────────────────────────────────────────────────────────
 
-def http_get(url: str, timeout: int, retries: int, delay: float) -> tuple:
-    """Returns (body, status_code, error_msg)."""
+def http_get(url: str, timeout: int, retries: int, delay: float,
+             accept_lang: str = "ko,en;q=0.5") -> tuple:
+    """Returns (body_bytes, status_code, error_msg). body=None on failure."""
     for attempt in range(1, retries + 1):
         try:
-            req = Request(url, headers={"User-Agent": UA, "Accept-Language": "ko,en;q=0.9"})
+            req = Request(url, headers={
+                "User-Agent": UA,
+                "Accept-Language": accept_lang,
+            })
             with urlopen(req, timeout=timeout) as resp:
                 return resp.read(), resp.status, ""
         except HTTPError as e:
@@ -87,242 +124,441 @@ def now_iso() -> str:
 # Sitemap parsing
 # ──────────────────────────────────────────────────────────────
 
-def fetch_sitemap_hexids(content_type: str, locale: str,
-                          timeout: int, retries: int, delay: float) -> tuple:
+def fetch_sitemap_hex_ids(category: str, args) -> list:
     """
-    Fetch sitemap.xml and extract hexIDs for given content_type + locale.
-    Returns (hex_ids, error_msg).
+    Parse sitemap.xml to collect hex IDs for the target category.
+    Returns list of unique hex ID strings.
     """
-    path_key = CONTENT_TYPE_PATHS[content_type]
-    locale_prefix = LOCALE_PREFIXES[locale]
+    path_fragment = CATEGORIES[category]["path_fragment"]
+    known_count = CATEGORIES[category]["known_count"]
 
-    body, status, err = http_get(SITEMAP_URL, timeout, retries, delay)
+    body, status, err = http_get(SITEMAP_URL, args.timeout, args.retries, args.delay)
     if body is None:
-        return [], f"sitemap fetch failed: {err}"
-
-    # Pattern to match: {locale_prefix}/{path_key}/view/{hexID}
-    # e.g. /kr/cuisine/view/535f4040...
-    if locale_prefix:
-        pattern = rf"{re.escape(locale_prefix)}/{re.escape(path_key)}/view/([0-9a-f]{{34,36}})"
-    else:
-        # English is root: /cuisine/view/hexID (no locale prefix)
-        pattern = rf"(?<!/kr|/jp|/zh|/tw)/{re.escape(path_key)}/view/([0-9a-f]{{34,36}})"
-
-    try:
-        # Parse sitemap XML
-        ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        root = ET.fromstring(body)
-        urls = [loc.text for loc in root.findall(".//sm:loc", ns) if loc.text]
-        if not urls:
-            # Fallback: extract from raw text
-            urls = re.findall(r"<loc>([^<]+)</loc>", body.decode("utf-8", errors="replace"))
-    except ET.ParseError:
-        urls_text = body.decode("utf-8", errors="replace")
-        urls = re.findall(r"<loc>([^<]+)</loc>", urls_text)
+        print(f"  [sitemap] FAIL status={status} err={err}")
+        return []
 
     hex_ids = []
-    seen = set()
-    for url in urls:
-        m = re.search(rf"/{re.escape(path_key)}/view/([0-9a-f]{{34,36}})", url)
-        if not m:
-            continue
-        hex_id = m.group(1)
-        # Filter by locale prefix
-        if locale_prefix:
-            if f"{locale_prefix}/{path_key}/view/" not in url:
+    seen: set = set()
+    try:
+        # Use regex to extract <loc> content — avoids XML namespace parse errors
+        # (sitemap.xml uses xsi:schemaLocation which breaks ElementTree without full NS handling)
+        xml_text = body.decode("utf-8", errors="replace")
+        all_locs = re.findall(r"<loc>([^<]+)</loc>", xml_text)
+        for loc in all_locs:
+            loc = loc.strip()
+            # Only match English (no locale prefix /kr, /jp, /zh, /tw) URLs
+            # to deduplicate: /cuisine/view/HEX but not /kr/cuisine/view/HEX
+            if path_fragment not in loc:
                 continue
-        else:
-            # English: must NOT have /kr/, /jp/, /zh/, /tw/
-            if any(f"/{lp}/{path_key}/view/" in url for lp in ["kr", "jp", "zh", "tw"]):
+            # Exclude locale-prefixed URLs (they start with /kr/ /jp/ /zh/ /tw/)
+            path = urlparse(loc).path
+            first_segment = path.strip("/").split("/")[0]
+            if first_segment in ("kr", "jp", "zh", "tw"):
                 continue
-        if hex_id not in seen:
-            seen.add(hex_id)
-            hex_ids.append(hex_id)
+            # Extract trailing hex ID (long alphanumeric, not just [a-fA-F0-9])
+            m = re.search(r"/([0-9a-zA-Z]{16,})\s*$", loc)
+            if not m:
+                continue
+            hex_id = m.group(1).lower()
+            if hex_id not in seen:
+                seen.add(hex_id)
+                hex_ids.append(hex_id)
+    except Exception as e:
+        print(f"  [sitemap] parse error: {e}")
+        return []
 
-    return hex_ids, ""
+    print(f"  [sitemap] {category}: discovered {len(hex_ids)} hex IDs (expected ~{known_count})")
+    return hex_ids
 
 
 # ──────────────────────────────────────────────────────────────
-# HTML parsing for detail pages
+# Page content parsers
 # ──────────────────────────────────────────────────────────────
 
-class TextExtractor(HTMLParser):
-    """Extract all visible text from HTML."""
+class _TextExtractParser(HTMLParser):
+    """Extracts visible text from HTML, skipping scripts/styles."""
     def __init__(self):
         super().__init__()
-        self.texts: list[str] = []
         self._skip = False
+        self.parts: list = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("script", "style", "head"):
+        if tag in ("script", "style", "noscript"):
             self._skip = True
 
     def handle_endtag(self, tag):
-        if tag in ("script", "style", "head"):
+        if tag in ("script", "style", "noscript"):
             self._skip = False
 
     def handle_data(self, data):
         if not self._skip:
-            s = data.strip()
-            if s:
-                self.texts.append(s)
+            stripped = data.strip()
+            if stripped:
+                self.parts.append(stripped)
 
 
-def extract_text(html_bytes: bytes) -> str:
+def visible_text(html_bytes: bytes) -> str:
+    """Return all visible text from an HTML page as a single space-joined string."""
     try:
         html = html_bytes.decode("utf-8", errors="replace")
     except Exception:
         return ""
-    p = TextExtractor()
+    p = _TextExtractParser()
     p.feed(html)
-    return " ".join(p.texts)
+    return " ".join(p.parts)
 
 
-def extract_page_title(html_bytes: bytes) -> str:
-    """Extract <title> or first <h1>/<h2> content."""
+def extract_entity_name(html_bytes: bytes) -> str:
+    """
+    B6: Extract entity name with corrected priority:
+      h2 (detail-context class) → h2 (any) → h1 → structured-data → <title> → OG (last resort)
+
+    Never returns the generic "VISIT GYEONGJU" string.
+    """
+    SKIP = {"VISIT GYEONGJU", "Visit Gyeongju", "visitgyeongju",
+            "경주", "관광", "여행", "메인", "홈"}
     try:
         html = html_bytes.decode("utf-8", errors="replace")
     except Exception:
         return ""
-    # Try OG title first (most reliable for VG pages)
-    m = re.search(r'property="og:title"[^>]+content="([^"]+)"', html)
-    if m:
-        return m.group(1).strip()
-    m2 = re.search(r"<title[^>]*>([^<]+)</title>", html, re.IGNORECASE)
-    if m2:
-        title = m2.group(1).strip()
-        # Remove site name suffix
-        title = re.sub(r"\s*[-|]\s*[Vv]isit.*$", "", title).strip()
-        return title
+
+    # 1. h2 / h1 with detail/subject/title class; then generic h2/h1
+    for pat in [
+        r'<h2[^>]+class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h2>',
+        r'<h2[^>]*>\s*([^<]{2,80})\s*</h2>',
+        r'<h1[^>]*class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h1>',
+        r'<h1[^>]*>\s*([^<]{2,80})\s*</h1>',
+    ]:
+        for m in re.finditer(pat, html):
+            name = m.group(1).strip()
+            if name and name not in SKIP and "VISIT" not in name.upper():
+                return name
+
+    # 2. JSON-LD structured data name field
+    jld_m = re.search(r'"name"\s*:\s*"([^"]{2,80})"', html)
+    if jld_m:
+        name = jld_m.group(1).strip()
+        if name and name not in SKIP and "VISIT" not in name.upper():
+            return name
+
+    # 3. <title> — strip site suffix
+    title_m = re.search(r"<title[^>]*>([^<]+)</title>", html, re.I)
+    if title_m:
+        t = title_m.group(1).strip()
+        t = re.sub(
+            r"\s*[-|–·]\s*(?:Visit\s+Gyeongju|VISIT\s+GYEONGJU|경주[^\|–]*)?$",
+            "", t, flags=re.I
+        ).strip()
+        if t and t not in SKIP and len(t) >= 2:
+            return t
+
+    # 4. OG title — absolute last resort
+    og_m = re.search(r'property="og:title"[^>]+content="([^"]+)"', html)
+    if og_m:
+        name = og_m.group(1).strip()
+        if name and name not in SKIP and "VISIT" not in name.upper():
+            return name
+
     return ""
 
 
-def parse_visitgyeongju_detail(html_bytes: bytes, hex_id: str,
-                                 content_type: str, locale: str,
-                                 source_url: str) -> dict:
+def extract_address(html_bytes: bytes, locale: str = "ko") -> str:
     """
-    Parse a visitgyeongju.or.kr detail page.
-    Extracts: title, address, phone, hours, category tags.
+    I9: Multi-locale address extraction.
+    Korean: 경주시[^<\n]{5,60}
+    English: street/road patterns + Gyeongju
+    Japanese/Chinese: locale-specific label or city-name cues
     """
-    rec: dict = {
-        "vg_id": hex_id,
-        "source_url": source_url,
-        "content_type": content_type,
-        "locale": locale,
-        "page_title": extract_page_title(html_bytes),
-        "body_sha256": sha256_bytes(html_bytes),
-        "body_size_bytes": len(html_bytes),
-        "collected_at": now_iso(),
-        "collector_version": VERSION,
-    }
-
     try:
         html = html_bytes.decode("utf-8", errors="replace")
     except Exception:
-        rec["parse_error"] = "decode failed"
-        return rec
+        return ""
 
-    # Address pattern (Korean)
-    addr_m = re.search(r"경주시[^<\n]{5,60}", html)
-    if addr_m:
-        rec["address"] = addr_m.group(0).strip()
+    if locale == "ko":
+        m = re.search(r"경주시[^<\n]{5,60}", html)
+        if m:
+            return m.group(0).strip()
+        m2 = re.search(r"경상북도\s+경주시[^<\n]{3,60}", html)
+        if m2:
+            return m2.group(0).strip()
 
-    # Phone number
-    phone_m = re.search(r"(0\d{1,2}-\d{3,4}-\d{4}|05\d{2}-\d{3,4}-\d{4}|\+82-?\d[-\d]{8,12})", html)
-    if phone_m:
-        rec["phone"] = phone_m.group(1).strip()
+    elif locale == "en":
+        m = re.search(
+            r"(\d+[^<\n]{5,80}(?:Gyeongju|gyeongju)[^<\n]{0,40})",
+            html
+        )
+        if m:
+            addr = m.group(1).strip()
+            if len(addr) < 120:
+                return addr
+        m2 = re.search(r"Gyeongju-(?:si|city)[^<\n]{5,80}", html)
+        if m2:
+            return m2.group(0).strip()
 
-    # Operating hours (common patterns)
-    hours_m = re.search(r"(\d{1,2}:\d{2}\s*[-~–]\s*\d{1,2}:\d{2})", html)
-    if hours_m:
-        rec["hours"] = hours_m.group(1).strip()
+    elif locale in ("ja", "zh-CN", "zh-TW"):
+        label = "住所" if locale == "ja" else "地址"
+        label_m = re.search(
+            rf"{label}[^<]{{0,10}}</\w+>[^<]{{0,10}}<[^>]+>([^<]{{5,100}})", html
+        )
+        if label_m:
+            return label_m.group(1).strip()
+        city = "慶州" if locale in ("zh-CN", "zh-TW") else "慶州市"
+        m3 = re.search(rf"{city}[^\n<]{{3,80}}", html)
+        if m3:
+            return m3.group(0).strip()
 
-    # Extract tags via data-* or class patterns for VG
-    # Look for filter/tag items with data-filter or similar
-    service_tags = re.findall(r'class="[^"]*service[^"]*"[^>]*>([^<]+)<', html)
-    atmosphere_tags = re.findall(r'class="[^"]*atmosphere[^"]*"[^>]*>([^<]+)<', html)
-    purpose_tags = re.findall(r'class="[^"]*purpose[^"]*"[^>]*>([^<]+)<', html)
-    trending_tags = re.findall(r'class="[^"]*trending[^"]*"[^>]*>([^<]+)<', html)
+    # Universal fallback
+    for pat in [
+        r'data-address="([^"]{5,100})"',
+        r'property="og:description"[^>]+content="([^"]{5,120})"',
+    ]:
+        gm = re.search(pat, html)
+        if gm:
+            return gm.group(1).strip()
 
-    # Fallback: look for <!--비즈니스--> or ul.tag-list items
-    tag_items = re.findall(r'<li[^>]*class="[^"]*tag[^"]*"[^>]*>\s*<[^>]+>\s*([^<]+)\s*<', html)
+    return ""
 
-    if service_tags:
-        rec["service_tags_raw"] = [t.strip() for t in service_tags if t.strip()]
-    if atmosphere_tags:
-        rec["atmosphere_tags_raw"] = [t.strip() for t in atmosphere_tags if t.strip()]
-    if purpose_tags:
-        rec["purpose_tags_raw"] = [t.strip() for t in purpose_tags if t.strip()]
-    if trending_tags:
-        rec["trending_tags_raw"] = [t.strip() for t in trending_tags if t.strip()]
-    if tag_items:
-        rec["tag_items_raw"] = [t.strip() for t in tag_items if t.strip()]
 
-    # Check if page is empty/missing (non-KO locales sometimes have empty translations)
-    text_content = extract_text(html_bytes)
-    word_count = len(text_content.split())
-    rec["page_word_count"] = word_count
-    rec["page_appears_empty"] = word_count < 50
+def extract_tags(html_bytes: bytes) -> list:
+    """Extract category/tag labels from visitgyeongju detail pages."""
+    try:
+        html = html_bytes.decode("utf-8", errors="replace")
+    except Exception:
+        return []
+    tags = []
+    for m in re.finditer(
+        r'<(?:span|li|a)[^>]+class="[^"]*(?:tag|category|label|badge)[^"]*"[^>]*>([^<]{1,40})</(?:span|li|a)>',
+        html
+    ):
+        t = m.group(1).strip()
+        if t and len(t) > 1:
+            tags.append(t)
+    return tags
+
+
+def extract_phone(html_bytes: bytes) -> str:
+    """Extract Korean phone number from page."""
+    try:
+        html = html_bytes.decode("utf-8", errors="replace")
+    except Exception:
+        return ""
+    m = re.search(r"(0\d{1,2}[\s\-]\d{3,4}[\s\-]\d{4})", html)
+    return m.group(1) if m else ""
+
+
+# ──────────────────────────────────────────────────────────────
+# Language classification  (B5)
+# ──────────────────────────────────────────────────────────────
+
+def _korean_char_ratio(text: str) -> float:
+    """Fraction of alphabetic-equivalent characters that are Hangul."""
+    total = sum(1 for c in text if c.isalpha() or '가' <= c <= '힣')
+    if total == 0:
+        return 0.0
+    hangul = sum(1 for c in text if '가' <= c <= '힣')
+    return hangul / total
+
+
+def classify_translation(
+    html_bytes: bytes,
+    status_code: int,
+    _error: str,
+    locale: str,
+    _ko_name: str,
+    ko_fields: dict,
+) -> str:
+    """
+    B5: 6-level language classification for visitgyeongju locale pages.
+
+    Returns one of:
+      VALID_TRANSLATED_DETAIL   – page exists, locale text, entity identifiable
+      KOREAN_FALLBACK           – page exists but content is still Korean
+      EMPTY_TEMPLATE            – page exists but content is a blank template
+      PARTIAL_TRANSLATION       – some fields translated, key fields still Korean
+      DETAIL_NOT_FOUND          – HTTP 404 / entity missing in this locale
+      HTTP_ERROR                – HTTP error other than 404
+    """
+    if html_bytes is None:
+        if status_code == 404:
+            return LANG_DETAIL_NOT_FOUND
+        return LANG_HTTP_ERROR
+
+    if status_code == 404:
+        return LANG_DETAIL_NOT_FOUND
+
+    if status_code >= 400:
+        return LANG_HTTP_ERROR
+
+    text = visible_text(html_bytes)
+    word_count = len(text.split())
+
+    if word_count < MIN_CONTENT_WORDS:
+        return LANG_EMPTY_TEMPLATE
+
+    if locale == "ko":
+        return LANG_VALID_TRANSLATED_DETAIL
+
+    kr_ratio = _korean_char_ratio(text)
+
+    ko_values_present = sum(
+        1 for v in ko_fields.values()
+        if v and len(v) > 3 and v in text
+    )
+    total_ko_fields = sum(1 for v in ko_fields.values() if v and len(v) > 3)
+    ko_field_ratio = (ko_values_present / total_ko_fields) if total_ko_fields > 0 else 0.0
+
+    if kr_ratio > KOREAN_RATIO_THRESHOLD and ko_field_ratio > 0.5:
+        return LANG_KOREAN_FALLBACK
+
+    entity_name = extract_entity_name(html_bytes)
+    if not entity_name:
+        if kr_ratio > 0.4:
+            return LANG_KOREAN_FALLBACK
+        return LANG_EMPTY_TEMPLATE
+
+    if ko_field_ratio > 0.4 and kr_ratio > 0.25:
+        return LANG_PARTIAL_TRANSLATION
+
+    return LANG_VALID_TRANSLATED_DETAIL
+
+
+# ──────────────────────────────────────────────────────────────
+# Per-entity collection
+# ──────────────────────────────────────────────────────────────
+
+def collect_entity_all_locales(
+    hex_id: str,
+    category: str,
+    args,
+    snap: dict,
+) -> dict:
+    """
+    Fetch all 5 locale pages for a single entity and return a combined record.
+    """
+    path_fragment = CATEGORIES[category]["path_fragment"]
+    rec = {
+        "source_type": "visitgyeongju_web",
+        "content_type": category,
+        "hex_id": hex_id,
+        "category": category,
+        "collected_at": now_iso(),
+        "collector_version": VERSION,
+        "locales": {},
+    }
+
+    ko_name = ""
+    ko_fields: dict = {}
+
+    for locale in LOCALES:
+        prefix = LOCALE_PREFIX[locale]
+        url = f"{BASE_URL}{prefix}{path_fragment}{hex_id}"
+        accept_lang = LOCALE_ACCEPT_LANG[locale]
+
+        if args.dry_run:
+            snap["dry_run_urls"].append(url)
+            rec["locales"][locale] = {
+                "url": url,
+                "status": "DRY_RUN",
+                "language_class": "DRY_RUN",
+            }
+            continue
+
+        body, status, err = http_get(url, args.timeout, args.retries, args.delay, accept_lang)
+        snap["requested_urls"].append(url)
+        snap["http_status_dist"][str(status)] = snap["http_status_dist"].get(str(status), 0) + 1
+
+        if body is not None:
+            snap["success_urls"].append(url)
+        else:
+            snap["failed_urls"].append({"url": url, "status": status, "error": err})
+
+        entity_name = extract_entity_name(body) if body else ""
+        address = extract_address(body, locale) if body else ""
+        phone = extract_phone(body) if body else ""
+        tags = extract_tags(body) if body else []
+        body_sha = sha256_bytes(body) if body else None
+        body_size = len(body) if body else 0
+        word_count = len(visible_text(body).split()) if body else 0
+
+        if locale == "ko" and body is not None:
+            ko_name = entity_name
+            ko_fields = {"name": entity_name, "address": address}
+
+        lang_class = classify_translation(
+            body, status, err, locale, ko_name, ko_fields
+        )
+
+        locale_rec = {
+            "url": url,
+            "http_status": status,
+            "error": err if err else None,
+            "language_class": lang_class,
+            "entity_name": entity_name if entity_name else None,
+            "address": address if address else None,
+            "phone": phone if phone else None,
+            "tags": tags if tags else None,
+            "word_count": word_count,
+            "body_sha256": body_sha,
+            "body_size_bytes": body_size,
+        }
+        rec["locales"][locale] = locale_rec
+
+        label = lang_class[:24] if lang_class else "????"
+        print(f"    [{locale:5s}] {label:24s} name={entity_name[:30] if entity_name else '(none)'}")
+        time.sleep(args.delay)
+
+    ko = rec["locales"].get("ko", {})
+    rec["name_ko"] = ko.get("entity_name")
+    rec["address_ko"] = ko.get("address")
+    rec["phone"] = ko.get("phone")
+    rec["tags"] = ko.get("tags")
 
     return rec
 
 
 # ──────────────────────────────────────────────────────────────
-# Language availability check
+# Collection entry point
 # ──────────────────────────────────────────────────────────────
 
-def build_detail_url(hex_id: str, content_type: str, locale: str) -> str:
-    path_key = CONTENT_TYPE_PATHS[content_type]
-    prefix = LOCALE_PREFIXES[locale]
-    return f"{BASE_URL}{prefix}/{path_key}/view/{hex_id}"
+def collect_category(category: str, args, snap: dict) -> list:
+    """Main collection loop for restaurants or souvenirs."""
+    print(f"  [visitgyeongju/{category}] fetching sitemap…")
+    hex_ids = fetch_sitemap_hex_ids(category, args)
 
+    if not hex_ids:
+        print(f"  [visitgyeongju/{category}] WARN: no hex IDs found; sitemap may have changed")
+        return []
 
-def check_language_availability(hex_id: str, content_type: str,
-                                 timeout: int, retries: int, delay: float) -> dict:
-    """Check HTTP status for all 5 locales."""
-    results = {}
-    for locale, _ in LOCALE_PREFIXES.items():
-        url = build_detail_url(hex_id, content_type, locale)
-        body, status, err = http_get(url, timeout, retries, delay)
-        page_empty = None
-        if body is not None:
-            text = extract_text(body)
-            page_empty = len(text.split()) < 50
-        results[locale] = {
-            "url": url,
-            "http_status": status,
-            "accessible": status == 200,
-            "page_appears_empty": page_empty,
-            "error": err if err else None,
-        }
-        time.sleep(delay)
-    return results
+    if args.max_items:
+        hex_ids = hex_ids[:args.max_items]
+
+    records = []
+    for idx, hex_id in enumerate(hex_ids, 1):
+        print(f"  [{category}] {idx}/{len(hex_ids)} hex_id={hex_id}")
+        rec = collect_entity_all_locales(hex_id, category, args, snap)
+        records.append(rec)
+        time.sleep(args.delay)
+
+    return records
 
 
 # ──────────────────────────────────────────────────────────────
-# Resume helpers
+# Resume / output helpers
 # ──────────────────────────────────────────────────────────────
 
-def load_existing_hexids(out_file: Path) -> set:
+def load_existing_records(out_file: Path) -> list:
     if not out_file.exists():
-        return set()
-    seen = set()
+        return []
+    records = []
     for line in out_file.read_text(encoding="utf-8").splitlines():
         line = line.strip()
-        if not line:
-            continue
-        try:
-            rec = json.loads(line)
-            if rec.get("vg_id"):
-                seen.add(rec["vg_id"])
-        except json.JSONDecodeError:
-            pass
-    return seen
+        if line:
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError:
+                pass
+    return records
 
-
-# ──────────────────────────────────────────────────────────────
-# Output helpers
-# ──────────────────────────────────────────────────────────────
 
 def write_jsonl(path: Path, records: list) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -337,37 +573,37 @@ def write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def build_summary(snap: dict, records: list, args, out_file: Path,
-                  hex_ids_total: int) -> dict:
+def build_summary(snap: dict, records: list, args, out_file: Path) -> dict:
+    lang_dist: dict = {}
+    for rec in records:
+        for locale, lrec in rec.get("locales", {}).items():
+            lc = lrec.get("language_class", "UNKNOWN")
+            key = f"{locale}:{lc}"
+            lang_dist[key] = lang_dist.get(key, 0) + 1
+
     out_sha = sha256_bytes(out_file.read_bytes()) if out_file.exists() else None
     return {
         "source": "visitgyeongju.or.kr",
         "collector": "visitgyeongju_collect.py",
         "collector_version": VERSION,
         "content_type": args.content_type,
-        "locale": args.locale,
         "command": " ".join(sys.argv),
-        "as_of": args.as_of or now_iso(),
         "collected_at": snap["started_at"],
         "finished_at": now_iso(),
-        "sitemap_hex_ids_total": hex_ids_total,
         "requested_url_count": len(snap["requested_urls"]),
         "success_url_count": len(snap["success_urls"]),
         "failed_url_count": len(snap["failed_urls"]),
         "http_status_distribution": snap["http_status_dist"],
         "record_count": len(records),
+        "language_class_distribution": lang_dist,
+        "known_count": CATEGORIES[args.content_type]["known_count"],
         "output_file": str(out_file),
         "output_sha256": out_sha,
         "failed_urls": snap["failed_urls"],
         "dry_run": args.dry_run,
-        "collection_strategy": (
-            "sitemap.xml hexID 열거 → 언어별 상세 URL 직접 수집. "
-            "목록 페이지는 JavaScript 동적 로딩으로 WebFetch 불가. "
-            "웹 전용 이미지 다운로드 없음. 장문 설명 저장 없음."
-        ),
         "reproducibility_note": (
-            "같은 hexID 목록 + 같은 --as-of + 같은 정규화 규칙 → 정규화 단계 byte-identical. "
-            "raw 수집은 사이트 변경에 따라 달라질 수 있음."
+            "raw 수집은 수집 시각·사이트 상태에 따라 달라질 수 있음. "
+            "같은 raw snapshot + 같은 mapping 규칙 → 정규화 단계만 byte-identical."
         ),
     }
 
@@ -380,76 +616,29 @@ def parse_args():
     p = argparse.ArgumentParser(
         prog="visitgyeongju_collect.py",
         description=(
-            f"비지트경주 수집기 v{VERSION}\n"
-            "원천: https://visitgyeongju.or.kr\n"
-            "수집 전략: sitemap.xml hexID 열거 → 상세 페이지 수집\n"
-            "웹 전용 이미지 다운로드 및 장문 설명 저장 없음"
+            f"visitgyeongju.or.kr 웹 수집기 v{VERSION}\n"
+            "원천: https://www.visitgyeongju.or.kr\n"
+            f"수집 대상: {', '.join(CATEGORIES)}\n"
+            "v2.0.0: 엔티티명 h2 우선, 6단계 언어 분류, 실수 수정 (식당84·기념품8), "
+            "로케일별 Accept-Language, 다국어 주소 추출"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    p.add_argument(
-        "--content-type",
-        required=True,
-        choices=CONTENT_TYPES,
-        help="수집할 콘텐츠 유형 (restaurants | souvenirs)",
-    )
-    p.add_argument(
-        "--locale",
-        required=True,
-        choices=list(LOCALE_PREFIXES.keys()),
-        help="언어 (ko | en | ja | zh-CN | zh-TW)",
-    )
+    p.add_argument("--content-type", required=True, choices=list(CATEGORIES),
+                   help="수집할 콘텐츠 유형")
     p.add_argument("--out", required=True, help="출력 디렉터리 경로")
-    p.add_argument(
-        "--max-pages",
-        type=int,
-        default=None,
-        help="최대 페이지 수 (기본: 무제한. visitgyeongju는 sitemap 기반이므로 미적용)",
-    )
-    p.add_argument(
-        "--max-items",
-        type=int,
-        default=None,
-        help="최대 수집 레코드 수 (기본: 무제한)",
-    )
-    p.add_argument(
-        "--delay",
-        type=float,
-        default=1.0,
-        help="요청 간 delay (초, 기본: 1.0)",
-    )
-    p.add_argument(
-        "--timeout",
-        type=int,
-        default=15,
-        help="HTTP 요청 타임아웃 (초, 기본: 15)",
-    )
-    p.add_argument(
-        "--retries",
-        type=int,
-        default=3,
-        help="실패 시 재시도 횟수 (기본: 3)",
-    )
-    p.add_argument(
-        "--as-of",
-        default=None,
-        help="수집 기준 시각 (ISO-8601, 정규화 재현성용. 예: 2026-08-04T12:00:00Z)",
-    )
-    p.add_argument(
-        "--resume",
-        action="store_true",
-        help="이전 수집 결과가 있으면 이어서 수집 (기존 vg_id 건너뜀)",
-    )
-    p.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="실제 HTTP 요청 없이 URL 목록만 출력 (sitemap 조회 포함)",
-    )
-    p.add_argument(
-        "--check-languages",
-        action="store_true",
-        help="표본 hexID에 대해 5개 언어 실제 HTTP 상태 확인 (표본 수집 시 사용)",
-    )
+    p.add_argument("--max-items", type=int, default=None,
+                   help="최대 수집 엔티티 수 (기본: 무제한)")
+    p.add_argument("--delay", type=float, default=1.0,
+                   help="요청 간 delay (초, 기본: 1.0)")
+    p.add_argument("--timeout", type=int, default=15,
+                   help="HTTP 요청 타임아웃 (초, 기본: 15)")
+    p.add_argument("--retries", type=int, default=3,
+                   help="실패 시 재시도 횟수 (기본: 3)")
+    p.add_argument("--resume", action="store_true",
+                   help="이전 수집 결과가 있으면 이어서 수집")
+    p.add_argument("--dry-run", action="store_true",
+                   help="실제 HTTP 요청 없이 URL 목록만 출력 (sitemap은 실제 fetch)")
     return p.parse_args()
 
 
@@ -458,8 +647,8 @@ def main():
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    out_file = out_dir / f"{args.content_type}-{args.locale}-raw.jsonl"
-    summary_file = out_dir / f"{args.content_type}-{args.locale}-snapshot-summary.json"
+    out_file = out_dir / f"{args.content_type}-raw.jsonl"
+    summary_file = out_dir / f"{args.content_type}-snapshot-summary.json"
 
     snap: dict = {
         "started_at": now_iso(),
@@ -467,129 +656,44 @@ def main():
         "success_urls": [],
         "failed_urls": [],
         "http_status_dist": {},
+        "dry_run_urls": [],
     }
 
-    print(f"[visitgyeongju_collect] content-type={args.content_type}"
-          f" locale={args.locale} dry-run={args.dry_run} max-items={args.max_items}")
-
-    # Step 1: Get hexIDs from sitemap
-    print(f"  fetching sitemap: {SITEMAP_URL}")
-    if not args.dry_run:
-        hex_ids, sitemap_err = fetch_sitemap_hexids(
-            args.content_type, args.locale, args.timeout, args.retries, args.delay
-        )
-        if sitemap_err:
-            print(f"  [warn] sitemap error: {sitemap_err}")
-        print(f"  sitemap: {len(hex_ids)} hexIDs found for {args.content_type}/{args.locale}")
-    else:
-        hex_ids = [f"<dry-run-placeholder-{i}>" for i in range(
-            KNOWN_COUNTS.get(args.content_type, 0)
-        )]
-        sitemap_err = ""
-        print(f"  [dry-run] would enumerate {len(hex_ids)} hexIDs from sitemap")
-
-    hex_ids_total = len(hex_ids)
-
-    # Step 2: Resume — skip already collected hexIDs
-    existing_hexids: set = set()
+    existing_records: list = []
     if args.resume and out_file.exists():
-        existing_hexids = load_existing_hexids(out_file)
-        print(f"  [resume] {len(existing_hexids)} already collected")
-        hex_ids = [h for h in hex_ids if h not in existing_hexids]
-        print(f"  [resume] {len(hex_ids)} remaining")
+        existing_records = load_existing_records(out_file)
+        print(f"[resume] {len(existing_records)} existing records found in {out_file}")
 
-    # Step 3: Limit
-    if args.max_items:
-        hex_ids = hex_ids[: args.max_items]
+    print(f"[visitgyeongju_collect v{VERSION}] content-type={args.content_type}"
+          f" dry-run={args.dry_run} max-items={args.max_items}")
 
-    # Step 4: Collect detail pages
-    records: list[dict] = []
-    lang_audit_records: list[dict] = []
+    new_records = collect_category(args.content_type, args, snap)
 
-    for i, hex_id in enumerate(hex_ids):
-        url = build_detail_url(hex_id, args.content_type, args.locale)
-        print(f"  [{i+1}/{len(hex_ids)}] {url}")
+    if args.resume:
+        existing_hex_ids = {r.get("hex_id") for r in existing_records if r.get("hex_id")}
+        new_records = [r for r in new_records if r.get("hex_id") not in existing_hex_ids]
+        all_records = existing_records + new_records
+    else:
+        all_records = new_records
 
-        if args.dry_run:
-            print(f"    [DRY-RUN] skipping fetch")
-            continue
-
-        body, status, err = http_get(url, args.timeout, args.retries, args.delay)
-        snap["requested_urls"].append(url)
-        snap["http_status_dist"][str(status)] = snap["http_status_dist"].get(str(status), 0) + 1
-
-        if body is None:
-            print(f"    FAIL status={status} err={err}")
-            snap["failed_urls"].append({"url": url, "hex_id": hex_id, "error": err})
-            continue
-
-        snap["success_urls"].append(url)
-        rec = parse_visitgyeongju_detail(body, hex_id, args.content_type, args.locale, url)
-        records.append(rec)
-        print(f"    OK title={rec.get('page_title', '')[:50]} empty={rec.get('page_appears_empty')}")
-
-        # Optional: language availability check for first few items
-        if args.check_languages and i < 5:
-            print(f"    [lang-check] checking all locales for {hex_id[:12]}...")
-            lang_results = check_language_availability(
-                hex_id, args.content_type, args.timeout, args.retries, args.delay
-            )
-            lang_audit_records.append({
-                "vg_id": hex_id,
-                "content_type": args.content_type,
-                "language_availability": lang_results,
-                "checked_at": now_iso(),
-            })
-            for loc, r in lang_results.items():
-                status_str = r["http_status"] if r["http_status"] else r["error"]
-                empty_str = "(empty)" if r["page_appears_empty"] else ""
-                print(f"      {loc}: {status_str} {empty_str}")
-
-        time.sleep(args.delay)
-
-    # Step 5: Write output
     if not args.dry_run:
-        # Load existing if resuming
-        if args.resume and existing_hexids:
-            existing_records = load_existing_records_full(out_file)
-            all_records = existing_records + records
-        else:
-            all_records = records
-
         write_jsonl(out_file, all_records)
         print(f"[output] {len(all_records)} records → {out_file}")
-
-        if lang_audit_records:
-            lang_audit_file = out_dir / f"{args.content_type}-language-audit.jsonl"
-            write_jsonl(lang_audit_file, lang_audit_records)
-            print(f"[lang-audit] {len(lang_audit_records)} records → {lang_audit_file}")
     else:
-        print(f"[dry-run] would fetch {len(hex_ids)} detail pages")
+        print(f"[dry-run] would request {len(snap['dry_run_urls'])} URLs")
+        for u in snap["dry_run_urls"]:
+            print(f"  {u}")
 
-    summary = build_summary(snap, records, args, out_file, hex_ids_total)
+    summary = build_summary(snap, all_records, args, out_file)
     write_json(summary_file, summary)
     print(f"[summary] → {summary_file}")
 
     if snap["failed_urls"]:
         print(f"[warn] {len(snap['failed_urls'])} failed URLs")
         for fu in snap["failed_urls"]:
-            print(f"  FAIL {fu['url']} → {fu['error']}")
+            print(f"  FAIL {fu['url']} → {fu.get('error','')}")
 
     sys.exit(0)
-
-
-def load_existing_records_full(out_file: Path) -> list:
-    if not out_file.exists():
-        return []
-    records = []
-    for line in out_file.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line:
-            try:
-                records.append(json.loads(line))
-            except json.JSONDecodeError:
-                pass
-    return records
 
 
 if __name__ == "__main__":
