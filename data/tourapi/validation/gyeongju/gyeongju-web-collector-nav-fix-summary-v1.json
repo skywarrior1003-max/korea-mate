@@ -1,0 +1,52 @@
+{
+  "task": "TASK-GYEONGJU-WEB-COLLECTOR-NAV-FIX-V1",
+  "status": "COMPLETED",
+  "generated_at": "2026-08-05T03:15:12Z",
+  "base_branch": "data/gyeongju-web-raw-collection-v2",
+  "base_head": "09488d5",
+  "scripts_updated": [
+    "scripts/gyeongju_culture_web_collect.py v2.0.0 → v2.1.0",
+    "scripts/visitgyeongju_collect.py v2.0.0 → v2.1.0"
+  ],
+  "blockers_fixed": {
+    "B-MR1": {
+      "description": "parse_monthly_rec_content() NOT_MONTHLY_REC 판정 추가",
+      "fix": "month=None 시 parse_status='NOT_MONTHLY_REC' 설정; r'20\\d{2}' fallback 제거",
+      "verified": true
+    },
+    "B-MR2": {
+      "description": "collect_monthly_recommendations() extra_limit 계산 수정",
+      "fix": "remaining = (max_items - len(valid_recs)); extra_limit = max(0, min(nav, remaining))",
+      "verified": true
+    },
+    "B-NEM": {
+      "description": "name_extract_method / name_source_selector / name_parse_status 필드 추가",
+      "fix": "extract_name_from_detail() → dict 반환; extract_entity_name() → tuple 반환",
+      "verified": true
+    }
+  },
+  "regression_results": {
+    "monthly_rec_nav": {
+      "valid_months": 6,
+      "rejected_pages": 6,
+      "mnu_4085_correctly_rejected": true,
+      "month_none_in_valid": 0
+    },
+    "name_extract_method": {
+      "total_records": 17,
+      "method_present": 17,
+      "name_parse_status_present": 17,
+      "visit_gyeongju_leak": 0,
+      "method_distribution": {
+        "DETAIL_ENTITY_HEADING": 9,
+        "CONTENT_HEADING": 8
+      }
+    },
+    "b1_attraction_detail_5_5": true,
+    "b3_cultural_guide_count": 17,
+    "b5_language_classification": "PASS",
+    "b6_entity_name": true
+  },
+  "next_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V3",
+  "readiness": "READY_FOR_GYEONGJU_WEB_RAW_COLLECTION_V3"
+}

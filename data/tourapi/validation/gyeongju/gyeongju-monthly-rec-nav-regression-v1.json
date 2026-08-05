@@ -1,0 +1,107 @@
+{
+  "task": "TASK-GYEONGJU-WEB-COLLECTOR-NAV-FIX-V1",
+  "blocker_fixed": [
+    "B-MR1",
+    "B-MR2"
+  ],
+  "generated_at": "2026-08-05T03:15:12Z",
+  "collector_version": "2.1.0",
+  "test_max_items": 12,
+  "primary_mnu_uid": 4185,
+  "primary_result": {
+    "mnu_uid": 4185,
+    "year": 2026,
+    "month": 5,
+    "places_count": 12,
+    "parse_status": "PARSED"
+  },
+  "valid_records": [
+    {
+      "mnu_uid": 4185,
+      "year": 2026,
+      "month": 5,
+      "places_count": 12,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 4172,
+      "year": 2026,
+      "month": 5,
+      "places_count": 12,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 4075,
+      "year": 2025,
+      "month": 11,
+      "places_count": 12,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 3801,
+      "year": 2023,
+      "month": 12,
+      "places_count": 15,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 4134,
+      "year": 2020,
+      "month": 12,
+      "places_count": 1,
+      "parse_status": "PARSED"
+    },
+    {
+      "mnu_uid": 4367,
+      "year": 2026,
+      "month": 5,
+      "places_count": 12,
+      "parse_status": "PARSED"
+    }
+  ],
+  "rejected_records": [
+    {
+      "mnu_uid": 4085,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    },
+    {
+      "mnu_uid": 4079,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    },
+    {
+      "mnu_uid": 4154,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    },
+    {
+      "mnu_uid": 4133,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    },
+    {
+      "mnu_uid": 4084,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    },
+    {
+      "mnu_uid": 4030,
+      "parse_status": "NOT_MONTHLY_REC",
+      "rejection_reason": "month_not_found_in_recommendation_content"
+    }
+  ],
+  "assertions": {
+    "ASSERT_mnu_4085_not_in_valid": true,
+    "ASSERT_mnu_4085_in_rejected": true,
+    "ASSERT_mnu_4085_status_NOT_MONTHLY_REC": true,
+    "ASSERT_month_none_in_valid_zero": true,
+    "ASSERT_extra_limit_formula_correct": true,
+    "ASSERT_no_general_year_fallback": true,
+    "ASSERT_valid_count": 6,
+    "ASSERT_rejected_count": 6
+  },
+  "nav_total_found": 12,
+  "nav_valid_months": 6,
+  "nav_rejected": 6
+}

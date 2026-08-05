@@ -726,6 +726,41 @@
       "sha256": "bea60195d96f8a0142ee0bd69403b47c759ef80ba35350ada3b1febcb9d19b13",
       "size_bytes": 11805,
       "note": "TASK-GYEONGJU-WEB-COLLECTOR-UPGRADE-V1 완료보고서 — 블로커 B1-B6 + 개선 I7-I9 해결"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-rec-nav-regression-v1.json",
+      "category": "validation",
+      "sha256": "2d2425a7e6013c6aa3303b105d5d57f1d9f089f575341c5354fbf2bde8bf6028",
+      "size_bytes": 2621,
+      "note": "이달의추천여행지 nav 회귀 — 유효 6개월, 거부 6건(mnu_uid=4085 포함), ASSERT_mnu_4085_NOT_MONTHLY_REC=True"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-monthly-rec-rejection-audit-v1.jsonl",
+      "category": "validation",
+      "sha256": "946cf329e1dd265d71bed641e6e7d7b8213445f238bcb0e0de494e1789d511ad",
+      "size_bytes": 2466,
+      "note": "이달의추천여행지 거부 감사 6건 — 모두 NOT_MONTHLY_REC + month=None, 6/6 PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-name-extract-method-regression-v1.jsonl",
+      "category": "validation",
+      "sha256": "2e0bbeb59f4aec19876e0a734e86308ec9545c2d56313440dedd430d16bd81e0",
+      "size_bytes": 7647,
+      "note": "name_extract_method 회귀 17건 — DETAIL_ENTITY_HEADING×9 + CONTENT_HEADING×8, 누락 0, 오수집 0"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-web-collector-nav-fix-summary-v1.json",
+      "category": "validation",
+      "sha256": "a962a1bb04cee6fa41b50d1e2a41b8d56bd2de12b037005a9584d2422526b104",
+      "size_bytes": 1840,
+      "note": "TASK-GYEONGJU-WEB-COLLECTOR-NAV-FIX-V1 수정 요약 — READY_FOR_GYEONGJU_WEB_RAW_COLLECTION_V3"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-web-collector-nav-fix-v1.md",
+      "category": "report",
+      "sha256": "7a6ab22cc69ca3b2cc28b7ffd23842ca0505e807bf377e5bac2b938e6da1c18f",
+      "size_bytes": 7512,
+      "note": "TASK-GYEONGJU-WEB-COLLECTOR-NAV-FIX-V1 완료보고서 — B-MR1·B-MR2·B-NEM 해결"
     }
   ],
   "correction_tasks": [
@@ -802,11 +837,35 @@
         "souvenir_3x5_valid_translated": true
       },
       "note": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1의 EXECUTION_HOLD(블로커 6개) 해소. 다음 단계: TASK-GYEONGJU-WEB-RAW-COLLECTION-V2"
+    },
+    {
+      "task": "TASK-GYEONGJU-WEB-COLLECTOR-NAV-FIX-V1",
+      "status": "COMPLETED",
+      "completed_at": "2026-08-05T03:16:53Z",
+      "resolved_blockers": [
+        "B-MR1",
+        "B-MR2",
+        "B-NEM"
+      ],
+      "scripts_upgraded": [
+        "scripts/gyeongju_culture_web_collect.py v2.0.0 → v2.1.0",
+        "scripts/visitgyeongju_collect.py v2.0.0 → v2.1.0"
+      ],
+      "validation_results": {
+        "monthly_rec_valid_months": 6,
+        "monthly_rec_rejected": 6,
+        "mnu_4085_correctly_rejected": true,
+        "name_extract_method_17_17": true,
+        "cultural_guide_17_17": true,
+        "attractions_5_5_detail_fetched": true,
+        "events_4_4_detail_fetched": true
+      },
+      "note": "B-MR1: NOT_MONTHLY_REC 판정. B-MR2: extra_limit 수정. B-NEM: name_extract_method 추가. 다음: TASK-GYEONGJU-WEB-RAW-COLLECTION-V3"
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
-  "last_updated": "2026-08-05T01:47:36Z",
-  "files_count": 92
+  "last_updated": "2026-08-05T03:16:53Z",
+  "files_count": 97
 }

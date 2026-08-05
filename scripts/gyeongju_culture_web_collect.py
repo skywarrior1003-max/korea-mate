@@ -5,6 +5,8 @@
 수집 대상: attractions | monthly-recommendations | courses | heritage | cultural-guides | events
 
 변경 이력:
+  v2.1.0 (2026-08-05): B-MR1 NOT_MONTHLY_REC 판정, B-MR2 extra_limit 수정,
+                        B-NEM name_extract_method 필드 추가
   v2.0.0 (2026-08-05): 상세 페이지 파서 추가 (B1 attractions, B2 events),
                         문화관광해설 동적 추출 (B3), 추천여행지 콘텐츠 파싱 (B4)
   v1.0.0 (2026-08-04): 초기 목록 수집기
@@ -23,7 +25,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 BASE_URL = "https://www.gyeongju.go.kr"
 TOUR_URL = f"{BASE_URL}/tour/page.do"
 UA = "Mozilla/5.0 (compatible; KoreaMate-Collector/2.0; +https://github.com/skywarrior1003-max/korea-mate)"
@@ -288,12 +290,18 @@ _DT_SKIP_CONTAINS = ["item.con_title", "javascript", "document.title"]
 
 def extract_name_from_detail(html: str):
     """
-    Extract attraction name from gyeongju.go.kr detail page.
+    Extract attraction/event name from gyeongju.go.kr detail page.
 
     Confirmed structure (2026-08-05): attraction name always appears as the
     4th <dt> tag on the page, right after 3 fixed UI dts.
     Strategy: iterate dt tags, skip known UI labels, return first match.
     Never skips names containing '경주' (most Gyeongju attraction names do).
+
+    Returns dict:
+      name               – extracted string or None
+      name_extract_method  – DETAIL_ENTITY_HEADING | NAME_PARSE_FAILED
+      name_source_selector – meaningful selector string or None
+      name_parse_status    – PARSED | NAME_PARSE_FAILED
     """
     for m in re.finditer(r"<dt[^>]*>(.*?)</dt>", html, re.DOTALL):
         raw = m.group(1)
@@ -309,8 +317,18 @@ def extract_name_from_detail(html: str):
         # Skip JavaScript template strings
         if any(skip in name for skip in _DT_SKIP_CONTAINS):
             continue
-        return name
-    return None
+        return {
+            "name": name,
+            "name_extract_method": "DETAIL_ENTITY_HEADING",
+            "name_source_selector": "dt[skip_list]",
+            "name_parse_status": "PARSED",
+        }
+    return {
+        "name": None,
+        "name_extract_method": "NAME_PARSE_FAILED",
+        "name_source_selector": None,
+        "name_parse_status": "NAME_PARSE_FAILED",
+    }
 
 
 def parse_korean_date(text: str):
@@ -328,6 +346,9 @@ def parse_attraction_detail(html_bytes: bytes) -> dict:
     """
     result = {
         "name_ko": None,
+        "name_extract_method": None,
+        "name_source_selector": None,
+        "name_parse_status": None,
         "address": None,
         "phone": None,
         "hours": None,
@@ -343,7 +364,11 @@ def parse_attraction_detail(html_bytes: bytes) -> dict:
         result["detail_parse_status"] = "DECODE_FAILED"
         return result
 
-    result["name_ko"] = extract_name_from_detail(html)
+    name_info = extract_name_from_detail(html)
+    result["name_ko"] = name_info["name"]
+    result["name_extract_method"] = name_info["name_extract_method"]
+    result["name_source_selector"] = name_info["name_source_selector"]
+    result["name_parse_status"] = name_info["name_parse_status"]
 
     result["address"] = extract_label_value(html, "주소")
     # Phone: label-based only — global regex fallback omitted to avoid picking up
@@ -398,6 +423,9 @@ def parse_event_detail(html_bytes: bytes) -> dict:
     """
     result = {
         "name_ko": None,
+        "name_extract_method": None,
+        "name_source_selector": None,
+        "name_parse_status": None,
         "event_type": None,
         "start_date": None,
         "end_date": None,
@@ -416,7 +444,11 @@ def parse_event_detail(html_bytes: bytes) -> dict:
         result["detail_parse_status"] = "DECODE_FAILED"
         return result
 
-    result["name_ko"] = extract_name_from_detail(html)
+    name_info = extract_name_from_detail(html)
+    result["name_ko"] = name_info["name"]
+    result["name_extract_method"] = name_info["name_extract_method"]
+    result["name_source_selector"] = name_info["name_source_selector"]
+    result["name_parse_status"] = name_info["name_parse_status"]
 
     # Event type from tag markers (e.g., #전시, #축제)
     type_hits = re.findall(r"#\s*(축제|행사|공연|전시|교육|체험|기타)", html)
@@ -612,6 +644,7 @@ def parse_monthly_rec_content(html_bytes: bytes, source_url: str, mnu_uid: int) 
         "place_links": [],
         "navigation_months": [],
         "parse_status": "PARSED",
+        "rejection_reason": None,
     }
     try:
         html = html_bytes.decode("utf-8", errors="replace")
@@ -619,19 +652,25 @@ def parse_monthly_rec_content(html_bytes: bytes, source_url: str, mnu_uid: int) 
         rec["parse_status"] = "DECODE_FAILED"
         return rec
 
-    # Year/month from text: "2026년 8월" or "8월 경주"
+    # Year+month extracted ONLY from explicit recommendation content patterns.
+    # Prohibited: general r"20\d{2}" fallback — it captures footer copyright
+    # years (e.g. ©2019) and produces false PARSED records for non-monthly pages.
     ym_m = re.search(r"(\d{4})년\s*(\d{1,2})월", html)
     if ym_m:
         rec["year"] = int(ym_m.group(1))
         rec["month"] = int(ym_m.group(2))
     else:
+        # Month-only pattern: "8월 경주" style nav labels
         month_m = re.search(r"(\d{1,2})월\s+경주", html)
         if month_m:
             rec["month"] = int(month_m.group(1))
-        # year from <title> or meta
-        year_m = re.search(r"20\d{2}", html)
-        if year_m and not rec["year"]:
-            rec["year"] = int(year_m.group(0))
+        # NOTE: NO r"20\d{2}" fallback — would match footer/copyright years
+
+    # A monthly recommendation page MUST have a month.
+    # Pages without an explicit month in recommendation content are not valid.
+    if rec["month"] is None:
+        rec["parse_status"] = "NOT_MONTHLY_REC"
+        rec["rejection_reason"] = "month_not_found_in_recommendation_content"
 
     # Theme: first h2 or h3 in main content area
     for pat in [
@@ -757,6 +796,9 @@ def collect_attractions(args, _out_dir: Path, snap: dict) -> list:
                 "detail_fetched": False,
                 "detail_parse_status": None,
                 "name_ko": None,
+                "name_extract_method": None,
+                "name_source_selector": None,
+                "name_parse_status": None,
                 "address": None,
                 "phone": None,
                 "hours": None,
@@ -786,6 +828,9 @@ def collect_attractions(args, _out_dir: Path, snap: dict) -> list:
                 rec["detail_http_status"] = dstatus
                 rec["detail_parse_status"] = detail.get("detail_parse_status")
                 rec["name_ko"] = detail.get("name_ko")
+                rec["name_extract_method"] = detail.get("name_extract_method")
+                rec["name_source_selector"] = detail.get("name_source_selector")
+                rec["name_parse_status"] = detail.get("name_parse_status")
                 rec["address"] = detail.get("address")
                 rec["phone"] = detail.get("phone")
                 rec["hours"] = detail.get("hours")
@@ -793,7 +838,7 @@ def collect_attractions(args, _out_dir: Path, snap: dict) -> list:
                 rec["closed"] = detail.get("closed")
                 rec["parking"] = detail.get("parking")
                 rec["homepage"] = detail.get("homepage")
-                print(f"    OK name={rec['name_ko']} addr={bool(rec['address'])} phone={bool(rec['phone'])} hours={bool(rec['hours'])}")
+                print(f"    OK name={rec['name_ko']} method={rec['name_extract_method']} addr={bool(rec['address'])} phone={bool(rec['phone'])}")
             else:
                 snap["failed_urls"].append({"url": item["detail_url"], "status": dstatus, "error": derr})
                 rec["detail_fetched"] = False
@@ -812,8 +857,15 @@ def collect_attractions(args, _out_dir: Path, snap: dict) -> list:
 
 
 def collect_monthly_recommendations(args, _out_dir: Path, snap: dict) -> list:
-    """이달의 추천여행지 수집 (B4: 콘텐츠 파싱 + 다중월 내비게이션)."""
-    records = []
+    """
+    이달의 추천여행지 수집 (B4: 콘텐츠 파싱 + 다중월 내비게이션).
+
+    B-MR1: NOT_MONTHLY_REC 레코드는 main dataset에서 제외 → rejected JSONL 별도 저장.
+    B-MR2: --max-items는 유효 월 페이지 수 기준이며, 비추천 페이지는 포함하지 않음.
+           --max-items 미지정 시 발견된 유효 월 전체 수집.
+    """
+    valid_recs = []     # parse_status == "PARSED"
+    rejected_recs = []  # parse_status == "NOT_MONTHLY_REC"
 
     # Fetch first page to discover navigation
     first_url = f"{TOUR_URL}?mnu_uid={MONTHLY_REC_MNU_UID}"
@@ -821,31 +873,46 @@ def collect_monthly_recommendations(args, _out_dir: Path, snap: dict) -> list:
 
     if args.dry_run:
         snap["dry_run_urls"].append(first_url)
-        return records
+        return valid_recs
 
     body, status, err = http_get(first_url, args.timeout, args.retries, args.delay)
     snap["requested_urls"].append(first_url)
 
     if body is None:
         snap["failed_urls"].append({"url": first_url, "error": err})
-        return records
+        return valid_recs
 
     snap["success_urls"].append(first_url)
     snap["http_status_dist"][str(status)] = snap["http_status_dist"].get(str(status), 0) + 1
 
-    # Parse content of first page
+    # Parse primary page; always extract nav regardless of parse_status
     rec = parse_monthly_rec_content(body, first_url, MONTHLY_REC_MNU_UID)
     rec["source_type"] = "gyeongju_web"
     rec["content_type"] = "monthly-recommendations"
     rec["collector_version"] = VERSION
-    records.append(rec)
-    print(f"    year={rec.get('year')} month={rec.get('month')} places={len(rec.get('places',[]))} links={len(rec.get('place_links',[]))}")
+    nav = rec.get("navigation_months", [])  # nav links from primary page HTML
 
-    # Discover additional months (up to 2 extra for sample; full collection uses --max-items)
-    nav = rec.get("navigation_months", [])
-    extra_limit = 1 if args.max_items and args.max_items <= 2 else min(2, len(nav))
+    if rec.get("parse_status") == "NOT_MONTHLY_REC":
+        rejected_recs.append(rec)
+        print(f"    PRIMARY NOT_MONTHLY_REC: mnu_uid={MONTHLY_REC_MNU_UID} reason={rec.get('rejection_reason')}")
+    else:
+        valid_recs.append(rec)
+        print(f"    year={rec.get('year')} month={rec.get('month')} places={len(rec.get('places',[]))} links={len(rec.get('place_links',[]))}")
+
+    # B-MR2: extra_limit based on remaining valid records, not total records.
+    # --max-items limits VALID monthly pages; NOT_MONTHLY_REC pages are excluded from count.
+    # --max-items unspecified → traverse all discovered nav pages.
+    remaining = (
+        args.max_items - len(valid_recs)
+        if args.max_items is not None
+        else len(nav)
+    )
+    extra_limit = max(0, min(len(nav), remaining))
+    print(f"  [monthly-recommendations] nav_found={len(nav)} extra_limit={extra_limit}"
+          f" max_items={args.max_items}")
+
     for nav_item in nav[:extra_limit]:
-        if args.max_items and len(records) >= args.max_items:
+        if args.max_items is not None and len(valid_recs) >= args.max_items:
             break
         nav_url = nav_item["url"]
         nav_mnu = nav_item["mnu_uid"]
@@ -862,10 +929,25 @@ def collect_monthly_recommendations(args, _out_dir: Path, snap: dict) -> list:
         nrec["source_type"] = "gyeongju_web"
         nrec["content_type"] = "monthly-recommendations"
         nrec["collector_version"] = VERSION
-        records.append(nrec)
-        print(f"    year={nrec.get('year')} month={nrec.get('month')} places={len(nrec.get('places',[]))}")
 
-    return records
+        if nrec.get("parse_status") == "NOT_MONTHLY_REC":
+            rejected_recs.append(nrec)
+            print(f"    REJECTED: mnu_uid={nav_mnu} reason={nrec.get('rejection_reason')}")
+        else:
+            valid_recs.append(nrec)
+            print(f"    year={nrec.get('year')} month={nrec.get('month')} places={len(nrec.get('places',[]))}")
+            # Recalculate remaining after each valid record
+            if args.max_items is not None and len(valid_recs) >= args.max_items:
+                break
+
+    # Write rejection audit alongside the main output (B-MR1 audit trail)
+    if rejected_recs and not args.dry_run:
+        rejection_file = _out_dir / "monthly-recommendations-rejected.jsonl"
+        write_jsonl(rejection_file, rejected_recs)
+        print(f"  [monthly-recommendations] {len(rejected_recs)} NOT_MONTHLY_REC → {rejection_file}")
+
+    print(f"  [monthly-recommendations] valid={len(valid_recs)} rejected={len(rejected_recs)}")
+    return valid_recs
 
 
 def collect_courses(args, _out_dir: Path, snap: dict) -> list:
@@ -1088,6 +1170,9 @@ def collect_events(args, _out_dir: Path, snap: dict) -> list:
                 "detail_parse_status": None,
                 # Detail fields (populated after fetch)
                 "name_ko": None,
+                "name_extract_method": None,
+                "name_source_selector": None,
+                "name_parse_status": None,
                 "event_type": None,
                 "start_date": None,
                 "end_date": None,
@@ -1120,6 +1205,9 @@ def collect_events(args, _out_dir: Path, snap: dict) -> list:
                 rec["detail_http_status"] = dstatus
                 rec["detail_parse_status"] = detail.get("detail_parse_status")
                 rec["name_ko"] = detail.get("name_ko")
+                rec["name_extract_method"] = detail.get("name_extract_method")
+                rec["name_source_selector"] = detail.get("name_source_selector")
+                rec["name_parse_status"] = detail.get("name_parse_status")
                 rec["event_type"] = detail.get("event_type")
                 rec["start_date"] = detail.get("start_date")
                 rec["end_date"] = detail.get("end_date")
@@ -1239,7 +1327,11 @@ def parse_args():
     p.add_argument("--max-pages", type=int, default=None,
                    help="페이지당 최대 페이지 수 (기본: 무제한)")
     p.add_argument("--max-items", type=int, default=None,
-                   help="최대 수집 레코드 수 (기본: 무제한)")
+                   help=(
+                       "최대 수집 레코드 수 (기본: 무제한). "
+                       "monthly-recommendations의 경우 유효 월 페이지 수 기준 — "
+                       "NOT_MONTHLY_REC 페이지는 포함하지 않음."
+                   ))
     p.add_argument("--delay", type=float, default=1.0,
                    help="요청 간 delay (초, 기본: 1.0)")
     p.add_argument("--timeout", type=int, default=15,

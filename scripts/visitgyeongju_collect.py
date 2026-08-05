@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-visitgyeongju.or.kr 웹 수집기 v2.0.0
+visitgyeongju.or.kr 웹 수집기 v2.1.0
 원천: https://www.visitgyeongju.or.kr
 수집 대상: restaurants | souvenirs
 
 변경 이력:
+  v2.1.0 (2026-08-05): B-NEM name_extract_method·name_source_selector·name_parse_status 추가
   v2.0.0 (2026-08-05): 엔티티명 추출 우선순위 수정 (B6: h2→h1→structured-data→title→OG),
                         6단계 언어 분류 도입 (B5),
                         식당 실제 수 수정 84건 / 기념품 8건 (I7),
@@ -26,7 +27,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 BASE_URL = "https://www.visitgyeongju.or.kr"
 SITEMAP_URL = f"{BASE_URL}/sitemap.xml"
 UA = "Mozilla/5.0 (compatible; KoreaMate-Collector/2.0; +https://github.com/skywarrior1003-max/korea-mate)"
@@ -208,38 +209,50 @@ def visible_text(html_bytes: bytes) -> str:
     return " ".join(p.parts)
 
 
-def extract_entity_name(html_bytes: bytes) -> str:
+def extract_entity_name(html_bytes: bytes) -> tuple:
     """
-    B6: Extract entity name with corrected priority:
-      h2 (detail-context class) → h2 (any) → h1 → structured-data → <title> → OG (last resort)
+    B6 + B-NEM: Extract entity name with corrected priority.
+
+    Priority: h2 (detail-class) → h2 (any) → h1 (detail-class) → h1 (any)
+              → JSON-LD → <title> → OG (last resort)
 
     Never returns the generic "VISIT GYEONGJU" string.
+
+    Returns (name: str, method: str, selector: str | None) where:
+      method — one of DETAIL_ENTITY_HEADING | CONTENT_HEADING |
+                      STRUCTURED_DATA_NAME | DOCUMENT_TITLE_FALLBACK |
+                      OG_TITLE_FALLBACK | NAME_PARSE_FAILED
+      selector — short meaningful identifier (e.g. "h2.detail", "json-ld", "title")
     """
     SKIP = {"VISIT GYEONGJU", "Visit Gyeongju", "visitgyeongju",
             "경주", "관광", "여행", "메인", "홈"}
     try:
         html = html_bytes.decode("utf-8", errors="replace")
     except Exception:
-        return ""
+        return ("", "NAME_PARSE_FAILED", None)
 
     # 1. h2 / h1 with detail/subject/title class; then generic h2/h1
-    for pat in [
-        r'<h2[^>]+class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h2>',
-        r'<h2[^>]*>\s*([^<]{2,80})\s*</h2>',
-        r'<h1[^>]*class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h1>',
-        r'<h1[^>]*>\s*([^<]{2,80})\s*</h1>',
+    for pat, method, selector in [
+        (r'<h2[^>]+class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h2>',
+         "DETAIL_ENTITY_HEADING", "h2.detail"),
+        (r'<h2[^>]*>\s*([^<]{2,80})\s*</h2>',
+         "CONTENT_HEADING", "h2"),
+        (r'<h1[^>]*class="[^"]*(?:detail|subject|tit|title|name)[^"]*"[^>]*>\s*([^<]{2,80})\s*</h1>',
+         "DETAIL_ENTITY_HEADING", "h1.detail"),
+        (r'<h1[^>]*>\s*([^<]{2,80})\s*</h1>',
+         "CONTENT_HEADING", "h1"),
     ]:
         for m in re.finditer(pat, html):
             name = m.group(1).strip()
             if name and name not in SKIP and "VISIT" not in name.upper():
-                return name
+                return (name, method, selector)
 
     # 2. JSON-LD structured data name field
     jld_m = re.search(r'"name"\s*:\s*"([^"]{2,80})"', html)
     if jld_m:
         name = jld_m.group(1).strip()
         if name and name not in SKIP and "VISIT" not in name.upper():
-            return name
+            return (name, "STRUCTURED_DATA_NAME", "json-ld")
 
     # 3. <title> — strip site suffix
     title_m = re.search(r"<title[^>]*>([^<]+)</title>", html, re.I)
@@ -250,16 +263,16 @@ def extract_entity_name(html_bytes: bytes) -> str:
             "", t, flags=re.I
         ).strip()
         if t and t not in SKIP and len(t) >= 2:
-            return t
+            return (t, "DOCUMENT_TITLE_FALLBACK", "title")
 
     # 4. OG title — absolute last resort
     og_m = re.search(r'property="og:title"[^>]+content="([^"]+)"', html)
     if og_m:
         name = og_m.group(1).strip()
         if name and name not in SKIP and "VISIT" not in name.upper():
-            return name
+            return (name, "OG_TITLE_FALLBACK", "og:title")
 
-    return ""
+    return ("", "NAME_PARSE_FAILED", None)
 
 
 def extract_address(html_bytes: bytes, locale: str = "ko") -> str:
@@ -410,7 +423,7 @@ def classify_translation(
     if kr_ratio > KOREAN_RATIO_THRESHOLD and ko_field_ratio > 0.5:
         return LANG_KOREAN_FALLBACK
 
-    entity_name = extract_entity_name(html_bytes)
+    entity_name, _method, _selector = extract_entity_name(html_bytes)
     if not entity_name:
         if kr_ratio > 0.4:
             return LANG_KOREAN_FALLBACK
@@ -472,13 +485,17 @@ def collect_entity_all_locales(
         else:
             snap["failed_urls"].append({"url": url, "status": status, "error": err})
 
-        entity_name = extract_entity_name(body) if body else ""
+        if body:
+            entity_name, name_method, name_selector = extract_entity_name(body)
+        else:
+            entity_name, name_method, name_selector = "", "NAME_PARSE_FAILED", None
         address = extract_address(body, locale) if body else ""
         phone = extract_phone(body) if body else ""
         tags = extract_tags(body) if body else []
         body_sha = sha256_bytes(body) if body else None
         body_size = len(body) if body else 0
         word_count = len(visible_text(body).split()) if body else 0
+        name_parse_status = "PARSED" if entity_name else "NAME_PARSE_FAILED"
 
         if locale == "ko" and body is not None:
             ko_name = entity_name
@@ -494,6 +511,9 @@ def collect_entity_all_locales(
             "error": err if err else None,
             "language_class": lang_class,
             "entity_name": entity_name if entity_name else None,
+            "name_extract_method": name_method,
+            "name_source_selector": name_selector,
+            "name_parse_status": name_parse_status,
             "address": address if address else None,
             "phone": phone if phone else None,
             "tags": tags if tags else None,
@@ -504,11 +524,14 @@ def collect_entity_all_locales(
         rec["locales"][locale] = locale_rec
 
         label = lang_class[:24] if lang_class else "????"
-        print(f"    [{locale:5s}] {label:24s} name={entity_name[:30] if entity_name else '(none)'}")
+        print(f"    [{locale:5s}] {label:24s} name={entity_name[:30] if entity_name else '(none)'} method={name_method}")
         time.sleep(args.delay)
 
     ko = rec["locales"].get("ko", {})
     rec["name_ko"] = ko.get("entity_name")
+    rec["name_extract_method"] = ko.get("name_extract_method")
+    rec["name_source_selector"] = ko.get("name_source_selector")
+    rec["name_parse_status"] = ko.get("name_parse_status")
     rec["address_ko"] = ko.get("address")
     rec["phone"] = ko.get("phone")
     rec["tags"] = ko.get("tags")
