@@ -2100,16 +2100,142 @@
       "path": "scripts/visitgyeongju_collect.py",
       "sha256": "588d9efdf57c8dab26c1e1b1b03edb35a21b4478838fdeaa14375bfeb7475563",
       "size_bytes": 27953
+    },
+    {
+      "category": "validation",
+      "note": "입력 감사: 대상 393건, 동결 파일 13건 SHA 검증 결과",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-input-audit-v1.json",
+      "sha256": "9bcab113efb1cbd8a0c2388d965101609c67a3a28703aadfb5d4436777843a57",
+      "size_bytes": 932
+    },
+    {
+      "category": "validation",
+      "note": "우선순위 분류: CORE_TIER_1=27, CORE_TIER_2=121, SUPPORTING=226, NOT_CURRENT=19",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-priority-v1.jsonl",
+      "sha256": "ede7fd860c91e89a6d316caa81b2b27542148459f784ea30da6cd46b0fac9ffa",
+      "size_bytes": 183285
+    },
+    {
+      "category": "validation",
+      "note": "필드 가용성 분석: description_ko 0/393, image 174/393",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-field-gap-audit-v1.jsonl",
+      "sha256": "d38e47dc019c82dcd80d18c0f8929b50bd0d99953d30a92a2de394eb0267fc4a",
+      "size_bytes": 313248
+    },
+    {
+      "category": "validation",
+      "note": "enrichment 오버레이: 393건 attraction+nature HOLD 분석 결과",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-enrichment-overlay-v1.jsonl",
+      "sha256": "e68bb39d5bc1abcd27bfa47617e3b0bb3ee1c803a7512a41269ddfd29e1003b6",
+      "size_bytes": 583251
+    },
+    {
+      "category": "validation",
+      "note": "이미지 권리 판정: RIGHTS_EVIDENCE_MISSING=174, NO_IMAGE=219, domain_only_positive=0",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-image-rights-v1.jsonl",
+      "sha256": "64d930a74bf85b06cc471ef13ac6174fb54941a059bf884533b736c4b9a07a73",
+      "size_bytes": 133709
+    },
+    {
+      "category": "validation",
+      "note": "설명 권리 판정: NO_DESCRIPTION=393 (전건 부재)",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-description-rights-v1.jsonl",
+      "sha256": "089d9275bac3dca9e39054509e9d394b135e018acd76b427b11d2d0c0b1fcbf3",
+      "size_bytes": 137630
+    },
+    {
+      "category": "validation",
+      "note": "RELEASE 제안: 0건 (offline에서 description 보강 불가)",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-proposed-release-v1.jsonl",
+      "sha256": "bf86bf54480dc058957124ad44e79af031a46ac641af19233741ac47eb21c584",
+      "size_bytes": 257246
+    },
+    {
+      "category": "validation",
+      "note": "잔여 HOLD: 393건 전건",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-remaining-hold-v1.jsonl",
+      "sha256": "10239646623e0619237c23e4261c9097794c8d7ee13c37f28dfec3689fc7231c",
+      "size_bytes": 141406
+    },
+    {
+      "category": "validation",
+      "note": "표적 수집 큐: 384건, API endpoint·source_record_id 명시",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-targeted-collection-queue-v1.jsonl",
+      "sha256": "5009c62d3a141759a1e6e8c58f5fba8b0312f3ffded33db7c051c449edfa9e49",
+      "size_bytes": 260130
+    },
+    {
+      "category": "validation",
+      "note": "커버리지 요약: description 0%, image 44%, coord 57%",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-coverage-summary-v1.json",
+      "sha256": "72e8c6cf897549e485c53ee0f202409816d981bee1d99cf2ecd01f19462a6971",
+      "size_bytes": 693
+    },
+    {
+      "category": "validation",
+      "note": "도시 핵심 세트 준비도: CITY_CORE_SET_NOT_READY",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-city-core-set-readiness-v1.json",
+      "sha256": "47a299897ae8fab0716f578a2244d8d1f8c0104b999a607c99b089655f10a0a7",
+      "size_bytes": 571
+    },
+    {
+      "category": "validation",
+      "note": "동결 파일 SHA 사전/사후 감사: 13/13 OK",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-frozen-sha-audit-v1.json",
+      "sha256": "142a65da346f1507bc2a0cbab35510268f4d984a6dcb1917e5f1ef98d91f8cd8",
+      "size_bytes": 2265
+    },
+    {
+      "category": "validation",
+      "note": "결함 레지스터: DEF-ENRICH-M01 (KTO12/KTO28 계약 미등록)",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-defect-register-v1.jsonl",
+      "sha256": "c245a3a96ad5a45b31714193118369a4770a2945013c1bbb1144fea16b809124",
+      "size_bytes": 281
+    },
+    {
+      "category": "validation",
+      "note": "enrichment 요약: CONDITIONAL_PASS, GYEONGJU_CORE_PLACE_OFFLINE_ENRICHMENT_COMPLETE_WITH_TARGETED_COLLECTION_REQUIRED",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-enrichment-summary-v1.json",
+      "sha256": "d5b7e60712b12dea33b2be129337a11e80baf158eae45b37ba54dcffbd26a3de",
+      "size_bytes": 1161
+    },
+    {
+      "category": "validation",
+      "note": "회귀 픽스처: 11/11 PASS",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-regression-fixtures-v1.json",
+      "sha256": "5b71a1065857cef06ed0c91d59c46b29cd638f47adea74012dbc4e58ac3d16b6",
+      "size_bytes": 2578
+    },
+    {
+      "category": "validation",
+      "note": "재현성: Run1=Run2 16/16 BYTE_IDENTICAL_PASS",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-core-place-reproducibility-v1.json",
+      "sha256": "9ceb2912f38b240c89c41f2bfe85eeb8b7082b421d82555405b2d512558c5f92",
+      "size_bytes": 6428
+    },
+    {
+      "category": "script",
+      "note": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1 스크립트 v1.0.0 (393건 분석, 18개 출력 파일)",
+      "path": "scripts/gyeongju_core_attraction_nature_enrichment_v1.py",
+      "sha256": "07a6898c6ee61a2bd477cfb3d952be0aa013ff0f08d680c801514375552380da",
+      "size_bytes": 60939
+    },
+    {
+      "category": "docs",
+      "note": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1 완료보고서",
+      "path": "docs/tourapi/gyeongju-core-attraction-nature-enrichment-v1-completion.md",
+      "sha256": "c323a5081d4c7ff5873922cff63e0a96a8bc6539b79b6aca90e5ffd8bdfd1ab2",
+      "size_bytes": 8870
     }
   ],
-  "files_count": 254,
-  "generated_by": "TASK-GYEONGJU-RELEASE-RIGHTS-RESOLUTION-OVERLAY-V1 (+17 files)",
+  "files_count": 272,
+  "generated_by": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1 (+18 files)",
   "hold_candidate_count": 808,
   "last_task": "TASK-GYEONGJU-RELEASE-HOLD-CLASSIFICATION-V1",
   "last_updated": "2026-08-06",
-  "last_updated_at": "2026-08-05T00:53:00Z",
-  "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
-  "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
+  "last_updated_at": "2026-08-06T00:00:00Z",
+  "last_updated_task": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1",
+  "manifest_sha256": "f2cb0c0ebec5abc68b502508361952e2b45ef030b343fa6b1839d86337fbe003",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",
     "D-02": "행사 24건 KTO detailCommon2+detailIntro2 수집, 날짜현재성 보강",

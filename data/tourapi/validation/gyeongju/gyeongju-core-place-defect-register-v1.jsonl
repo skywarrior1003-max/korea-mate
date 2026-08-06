@@ -1,0 +1,1 @@
+{"defect_id": "DEF-ENRICH-M01", "description": "KTO NS 계약 미등록: {'KTO12': 104, 'KTO14': 9, 'KTO28': 54, 'KTO38': 7}", "recommendation": "KTO 공공데이터포털 계약 파일에 KTO12/KTO28/KTO32/KTO38 api_sources 추가", "severity": "MEDIUM", "status": "DOCUMENTED"}
