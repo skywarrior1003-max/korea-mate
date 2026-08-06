@@ -1,3 +1,18 @@
+-- ⛔ WARNING — SUPERSEDED BY 030. 이 파일을 단독으로 실행하지 마라.
+--
+--   여기 있는 get_shared_itinerary 정의에는 `is_public = true` 필터가 없다.
+--   이 파일만 다시 실행하면 함수가 이 옛 정의로 덮여, UUID 만 알면 **비공개
+--   일정까지 조회**된다. 실제 운영에도 비공개 일정이 존재한다.
+--
+--   현재 권위 있는 최종 정의는
+--       supabase/migrations/030_shared_itinerary_copy_count.sql
+--   이며 Production 과 일치한다(12컬럼 + is_public = true 강제).
+--
+--   복구·재적용·수동 SQL 실행에는 016 이 아니라 030 을 쓴다.
+--   현재 상태 검증도 030 정의를 기준으로 한다.
+--
+--   이 파일은 migration 이력이므로 실행 본문은 고치지 않는다. 경고만 남긴다.
+--   (guard test: src/lib/migration-016-superseded-guard.test.ts)
 -- ════════════════════════════════════════════════════════════════════════════
 -- 016_create_shared_itinerary_rpc.sql
 -- TASK-SEC-02-EMERGENCY-B — 무중단 Lockdown 1단계: RPC 선생성
