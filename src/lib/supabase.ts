@@ -133,56 +133,19 @@ export async function fetchPopularTrips(limit = 6): Promise<PopularTrip[]> {
     .slice(0, limit);
 }
 
-// ── 플래너 세션 ──────────────────────────────────────────────
-export interface PlannerSessionRow {
-  id:            string;
-  num_days:      number;
-  start_date:    string;
-  arrival_times: string[];
-  scheduled:     unknown;
-  device_id?:    string;
-  created_at?:   string;
-  updated_at?:   string;
-}
-
-export async function upsertPlannerSession(row: PlannerSessionRow): Promise<boolean> {
-  const { error } = await supabase
-    .from("planner_sessions")
-    .upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "id" });
-  if (error) { console.error("[Supabase] planner upsert:", error.message); return false; }
-  return true;
-}
-
-export async function fetchPlannerSession(id: string): Promise<PlannerSessionRow | null> {
-  try {
-    const { data, error } = await supabase
-      .from("planner_sessions")
-      .select("id, num_days, start_date, arrival_times, scheduled, device_id, updated_at")
-      .eq("id", id)
-      .order("updated_at", { ascending: false })
-      .limit(1);
-    if (error) { console.error("[Supabase] planner fetch:", error.message); return null; }
-    return (data?.[0] ?? null) as PlannerSessionRow | null;
-  } catch (e) {
-    console.error("[Supabase] planner fetch exception:", (e as Error).message);
-    return null;
-  }
-}
-
-export async function fetchPlannersByDevice(deviceId: string): Promise<PlannerSessionRow[]> {
-  const { data, error } = await supabase
-    .from("planner_sessions")
-    .select("id, num_days, start_date, updated_at")
-    .eq("device_id", deviceId)
-    .order("updated_at", { ascending: false });
-  if (error) { console.error("[Supabase] planners by device:", error.message); return []; }
-  return (data ?? []) as PlannerSessionRow[];
-}
-
-export async function deletePlannerSession(id: string, deviceId?: string): Promise<boolean> {
-  let q = supabase.from("planner_sessions").delete().eq("id", id);
-  if (deviceId) q = q.eq("device_id", deviceId);
-  const { error } = await q;
-  if (error) { console.error("[Supabase] planner delete:", error.message); return false; }
-  return true;
-}
+// ── 플래너 세션 ─ 제거됨 ───────────────────────
+// PlannerSessionRow 타입과 helper 4종(upsertPlannerSession / fetchPlannerSession /
+// fetchPlannersByDevice / deletePlannerSession)은 제거했다.
+//
+// 호출처가 0건인 dead code 였다. 브라우저 번들·Functions Worker 번들 어느
+// 쪽에도 들어가지 않았고(tree-shaking), 사용자 기능과 연결된 적도 없다.
+//
+// 남겨 두면 오해를 불러서 위험하다. planner_sessions 는 029_lockdown_planner_sessions.sql
+// 로 anon·authenticated 권한을 전면 회수한 상태라 이 helper 들을 그대로 불러도
+// 42501 로 실패한다. "있으니 쓸 수 있겠지" 하고 손대면 그제서야 드러난다.
+//
+// 현재 일정 저장·조회는 planner_sessions 가 아니라 itineraries 와 그 서버 API
+// (functions/api/itinerary*, src/lib/itinerary-api.ts) 를 쓴다.
+//
+// 재유입 방지는 src/lib/planner-sessions-removal-guard.test.ts 가 지킨다.
+// 029 migration 의 주석은 적용 시점(2026)의 기록이므로 그대로 둔다.
