@@ -75,7 +75,8 @@ export default function AdminPage() {
   async function refreshFlagged() {
     setFlagLoading(true);
     try {
-      const data = await fetchFlaggedSpots(1);
+      // 집계는 서버가 한다. 다른 관리자 API 와 같은 x-admin-key 를 그대로 넘긴다.
+      const data = await fetchFlaggedSpots(sessionKey, 1);
       setFlagged(data);
     } catch { /* noop */ } finally {
       setFlagLoading(false);

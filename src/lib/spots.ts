@@ -112,50 +112,52 @@ const HEADER_MAP: Record<string, keyof SpotRow> = {
 };
 
 // ── 유저 Dislike 기록 ─────────────────────────────────────────
+//
+// 브라우저에서 spot_reactions 에 직접 INSERT 하지 않는다. 서버가 device_id 형식과
+// reaction 값을 검증하고 중복을 흡수한다. 서버 호출이 실패해도 anon DB 로
+// 되돌아가지 않는다 — 그러면 서버로 옮긴 의미가 없다.
+//
+// 반환 계약은 그대로 boolean 이다. 이미 기록된 경우도 true 로 본다. 사용자
+// 입장에서는 "반영됨"이 맞고, 재클릭이 오류처럼 보이면 안 된다.
 export async function dislikeSpot(placeId: string, deviceId?: string): Promise<boolean> {
-  const { error } = await supabase
-    .from("spot_reactions")
-    .insert({ place_id: placeId, reaction: "dislike", device_id: deviceId ?? null });
-  if (error) { console.error("[Supabase] dislike:", error.message); return false; }
-  return true;
+  if (!deviceId) return false;
+  try {
+    const res = await fetch("/api/spots/reactions", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      body:    JSON.stringify({ place_id: placeId, reaction: "dislike" }),
+    });
+    // 201 recorded / 200 already_recorded 둘 다 사용자에겐 성공이다
+    return res.status === 201 || res.status === 200;
+  } catch {
+    // 네트워크 실패. 원인을 화면에 노출하지 않고 실패로만 알린다.
+    return false;
+  }
 }
 
 // ── 관리자: 신뢰도 이슈 스팟 조회 ────────────────────────────
+//
+// 집계는 서버가 한다. 예전에는 브라우저가 reaction 원본 행을 전부 받아 세었는데,
+// 그러면 화면에 쓰지도 않는 raw device_id 가 관리자 브라우저까지 내려온다.
+// 판정 기준(threshold·정렬·제목 폴백)은 서버에서 그대로 유지하므로 화면 결과는
+// 같다. 실패 시 anon DB 로 되돌아가지 않는다.
 export async function fetchFlaggedSpots(
+  adminKey: string,
   threshold = 1
 ): Promise<{ place_id: string; title: string; count: number }[]> {
-  const { data: reactions, error } = await supabase
-    .from("spot_reactions")
-    .select("place_id")
-    .eq("reaction", "dislike");
-  if (error) { console.error("[Supabase] flagged:", error.message); return []; }
-
-  const counts: Record<string, number> = {};
-  for (const row of (reactions ?? [])) {
-    counts[row.place_id] = (counts[row.place_id] ?? 0) + 1;
+  if (!adminKey) return [];
+  try {
+    const res = await fetch(
+      `/api/admin/spot-reactions-summary?threshold=${encodeURIComponent(String(threshold))}`,
+      { headers: { "x-admin-key": adminKey } },
+    );
+    if (!res.ok) { console.error("[admin] flagged spots failed:", res.status); return []; }
+    const body = await res.json() as { items?: { place_id: string; title: string; count: number }[] };
+    return body.items ?? [];
+  } catch {
+    console.error("[admin] flagged spots request failed");
+    return [];
   }
-
-  const filtered = Object.entries(counts)
-    .filter(([, c]) => c >= threshold)
-    .sort((a, b) => b[1] - a[1]);
-
-  if (filtered.length === 0) return [];
-
-  const placeIds = filtered.map(([id]) => id);
-  const { data: spotsData } = await supabase
-    .from("spots")
-    .select("place_id, title")
-    .in("place_id", placeIds);
-
-  const titleMap = Object.fromEntries(
-    (spotsData ?? []).map((s: { place_id: string; title: string }) => [s.place_id, s.title])
-  );
-
-  return filtered.map(([place_id, count]) => ({
-    place_id,
-    title: titleMap[place_id] ?? place_id,
-    count,
-  }));
 }
 
 export function csvRowToSpot(row: Record<string, string>): Partial<SpotRow> {
