@@ -1468,6 +1468,13 @@
       "sha256": "13f40277a9d8532ebcaad0f3d207eb3b3260a593cb5b824c0e34f4240a1514f8",
       "size_bytes": 69736,
       "note": "독립 QA v2 스크립트 — 12개 섹션, 15개 출력 파일, Run1=Run2 BYTE_IDENTICAL"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-manifest-fix-and-independent-qa-rerun-v1-completion.md",
+      "category": "doc",
+      "sha256": "b4554d9fc97e01ce5f1f6c9b41abbdc823b4b0addeb68ac1d99555537e2828b2",
+      "size_bytes": 9967,
+      "note": "TASK-GYEONGJU-MANIFEST-FIX-AND-INDEPENDENT-QA-RERUN-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -1744,5 +1751,5 @@
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 198
+  "files_count": 199
 }
