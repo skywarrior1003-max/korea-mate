@@ -1,0 +1,20 @@
+{
+  "att_distribution": {
+    "HIGH_CONFIDENCE": 145,
+    "MANUAL_REVIEW": 4,
+    "NEW_OFFICIAL_PLACE": 10
+  },
+  "rest_distribution": {
+    "HIGH_CONFIDENCE": 5,
+    "MANUAL_REVIEW": 13,
+    "NEW_OFFICIAL_PLACE": 66
+  },
+  "section": "S3_SEMANTIC_PRESERVATION",
+  "semantic_failures": [],
+  "souv_baseline_linked": 1,
+  "souv_distribution": {
+    "PHYSICAL_PLACE": 8
+  },
+  "souv_new_candidates": 7,
+  "verdict": "PASS"
+}

@@ -1,0 +1,29 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "def_m01_status": "DEF-M01_RESOLVED",
+  "defects": {
+    "CRITICAL": 0,
+    "HIGH": 1,
+    "LOW": 0,
+    "MEDIUM": 0
+  },
+  "input": {
+    "baseline_rows": 831,
+    "full_v1_rows": 914,
+    "source_fact_rows": 1158
+  },
+  "overall_verdict": "PASS",
+  "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION_WITH_TARGETED_FIXES",
+  "s10_manifest_mismatch": 0,
+  "s1_input_integrity": "PASS",
+  "s2_vg_id_structure": "PASS",
+  "s3_semantic_preservation": "PASS",
+  "s4_def_h01_high_remaining": 0,
+  "s5_new_cand_likely_dup": 0,
+  "s6_data_fix_required": 0,
+  "s7_ml_entity_count": 92,
+  "s8_relation_qa": "PASS",
+  "s9_rights_violation": 0,
+  "script_version": "2.0.0",
+  "task": "TASK-GYEONGJU-MANIFEST-FIX-AND-INDEPENDENT-QA-RERUN-V1"
+}

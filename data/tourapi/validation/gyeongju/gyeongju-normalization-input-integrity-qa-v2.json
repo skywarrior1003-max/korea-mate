@@ -1,0 +1,20 @@
+{
+  "baseline_dup_groups": 0,
+  "baseline_rows": 831,
+  "baseline_unique_ids": 831,
+  "broken_candidate_sf_fk": 0,
+  "broken_source_fact_fk": 0,
+  "full_v1_dup_groups": 0,
+  "full_v1_rows": 914,
+  "full_v1_unique_ids": 914,
+  "new_candidate_dup_groups": 0,
+  "new_candidate_rows": 83,
+  "new_candidate_unique_ids": 83,
+  "old_truncated_vg_candidate_ids": 0,
+  "old_truncated_vg_sfids": 0,
+  "section": "S1_INPUT_INTEGRITY",
+  "source_fact_dup_groups": 0,
+  "source_fact_rows": 1158,
+  "source_fact_unique_ids": 1158,
+  "verdict": "PASS"
+}

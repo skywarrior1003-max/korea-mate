@@ -1,0 +1,15 @@
+{
+  "broken_fk": false,
+  "candidates_914_unique": true,
+  "critical_defects": 0,
+  "high_defects": 1,
+  "low_defects": 0,
+  "manifest_clean": true,
+  "medium_defects": 0,
+  "old_truncated_ids": false,
+  "overall_verdict": "PASS",
+  "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION_WITH_TARGETED_FIXES",
+  "rights_ok": true,
+  "section": "S12_READINESS",
+  "source_facts_1158_unique": true
+}

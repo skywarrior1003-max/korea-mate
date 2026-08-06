@@ -408,8 +408,8 @@
     {
       "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
       "category": "contracts",
-      "sha256": "8c08b2f4c15a7667a30f14a5dbd07e7886d116db2e019b68fb3064c85654818c",
-      "size_bytes": 5655,
+      "sha256": "63829c3fd21ec9851edbe940b203fd60ef74d88c5c2a3522b0356148e623f0f0",
+      "size_bytes": 5108,
       "note": "소스 계약 v2 (v1 HOLD 오류 수정)"
     },
     {
@@ -485,15 +485,15 @@
     {
       "path": "scripts/gyeongju_culture_web_collect.py",
       "category": "script",
-      "sha256": "feb17cc65b7544c9810628971c5e4a25c07920447043516d7622db397d0af020",
-      "size_bytes": 27624,
+      "sha256": "eec2d3fb2033614e47c4d1dba71f02bb4a4a60119ed30d9b351cceaf81834367",
+      "size_bytes": 58626,
       "note": "web 수집기: gyeongju.go.kr/tour 6 content-types v2.2.0: SEMANTIC_DL_FIELD 수정, heritage 링크 추출"
     },
     {
       "path": "scripts/visitgyeongju_collect.py",
       "category": "script",
-      "sha256": "01ac7eab0fb35b5b324fd7bc8cf7088a398e7719fa7dc70a458065c4426570b1",
-      "size_bytes": 22426,
+      "sha256": "588d9efdf57c8dab26c1e1b1b03edb35a21b4478838fdeaa14375bfeb7475563",
+      "size_bytes": 27953,
       "note": "web 수집기: visitgyeongju.or.kr restaurants+souvenirs 5개 언어"
     },
     {
@@ -674,8 +674,8 @@
     {
       "path": "docs/tourapi/gyeongju-web-raw-collection-v1-verification.md",
       "category": "verification",
-      "sha256": "50ec84f74b2651fc5bc85a9ddd4051ab43fefe97b35c9c5c476504677f88eb98",
-      "size_bytes": 16244,
+      "sha256": "3d203b23f67f880c57ef2d01baa7d5a0e9174d6323c2e257a858df5b857e64c1",
+      "size_bytes": 16624,
       "note": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 검증보고서 — EXECUTION_HOLD (블로커 6개)"
     },
     {
@@ -1356,6 +1356,118 @@
       "sha256": "f4074f66652d674eb6509ac1bedb7a8b49311409c764a784a9aad508f4327594",
       "size_bytes": 9626,
       "note": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 완료보고서 (DEF-C01/C02 RESOLVED)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-normalization-input-integrity-qa-v2.json",
+      "category": "qa",
+      "sha256": "4fd618e72020b0fed819658752fe5e09a2134ac17261cb2c903b1acc1cfd9fc9",
+      "size_bytes": 557,
+      "note": "QA v2 S1: 입력 무결성 — 914/914 unique, old 16-char IDs=0"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-vg-id-integrity-qa-v2.json",
+      "category": "qa",
+      "sha256": "3944cabea4c123fc4d75703160fc281d62dd1584c0fbdc56f6477148ca29a426",
+      "size_bytes": 407,
+      "note": "QA v2 S2: VG ID 구조 — 84 REST + 8 SOUV sfids, all 34-char, no collision"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-vg-id-integrity-records-v2.jsonl",
+      "category": "qa",
+      "sha256": "5600c2742592af4984fd19005a559a57882d6fdb862d1f31e0900f892d865190",
+      "size_bytes": 33450,
+      "note": "QA v2 S2 세부 레코드: per-hexId VG ID 구조 확인 (84+8=92 records)"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-semantic-preservation-qa-v2.json",
+      "category": "qa",
+      "sha256": "e3119fb54d507184caf461c41ffc4a7f501f0f5d2f162a90c1fd9dabffc9b851",
+      "size_bytes": 441,
+      "note": "QA v2 S3: 의미적 결과 보존 — att/rest/souv 분포 PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-def-h01-recheck-v2.jsonl",
+      "category": "qa",
+      "sha256": "6c03cad2be123a861a8238f29808e6fa4c3a39dace16970fa7b23e5f41ff9463",
+      "size_bytes": 16921,
+      "note": "QA v2 S4: DEF-H01 재검증 — 4건 LIKELY_DUP(VG-KTO 중복), WEB-ATT 2건 공유전화"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-new-candidate-duplicate-audit-v2.jsonl",
+      "category": "qa",
+      "sha256": "98e81ff493c2cd5f8c36853e7194ccc3103c1dea69b2d52d02b7e68e6c110291",
+      "size_bytes": 25389,
+      "note": "QA v2 S5: 신규 83건 중복 재검색 — 2 POSSIBLE_DUPLICATE, 81 NO_SIGNAL"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-manual-review-queue-qa-v2.jsonl",
+      "category": "qa",
+      "sha256": "0b84a4abe9a0094777bbe04ae7fa9f40f73a0fc32320f145bed59d4a1b3c450f",
+      "size_bytes": 8364,
+      "note": "QA v2 S6: 수동 검토 큐 38건 QA — 38건 REVIEW_CONFIRMED"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-multilingual-qa-v2.jsonl",
+      "category": "qa",
+      "sha256": "f29e517c3938d90184f14e7b20480412dbab205b6484f3bab53fd9e21db2e2e9",
+      "size_bytes": 81892,
+      "note": "QA v2 S7: 다국어 92×5 QA — entity_id dup=0, old 16-char=0, PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-relation-integrity-qa-v2.json",
+      "category": "qa",
+      "sha256": "e8483375f8797282fa83f6fdf0e889c523b38c3b98dd3e11e2814343374ded06",
+      "size_bytes": 544,
+      "note": "QA v2 S8: 행사·관계 QA — events/rec/course/heritage/guide 전수 PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-candidate-quality-provenance-qa-v2.json",
+      "category": "qa",
+      "sha256": "459a60bd473d0aa8842e4eb57434c1982fc1c870a486703853d4359d460606f6",
+      "size_bytes": 242,
+      "note": "QA v2 S9: candidate 품질·provenance — rights_violation=0, PASS"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-manifest-consistency-qa-v2.json",
+      "category": "qa",
+      "sha256": "4929ef5d931867ee6d9768ac81f96baf37d08946935f9815693b992ae6612a32",
+      "size_bytes": 277,
+      "note": "QA v2 S10: manifest 일관성 — mismatch=0, DEF-M01 RESOLVED"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-independent-qa-defect-register-v2.jsonl",
+      "category": "qa",
+      "sha256": "a8cc4abf276db5dab6cb711a7dac06714b30ed7956d3dbdea6156c83bbf19635",
+      "size_bytes": 593,
+      "note": "QA v2 S11: 결함 등록 — CRITICAL=0, HIGH=1(DEF-H01), MEDIUM=0, LOW=0"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-readiness-assessment-v2.json",
+      "category": "qa",
+      "sha256": "ce1d761d0e50c61fcacf17fccfdf6762253f4add3b578a1ca71c40da5a235525",
+      "size_bytes": 417,
+      "note": "QA v2 S12: Release 준비도 — READY(WITH_TARGETED_FIXES), DEF-H01 수동 처리 필요"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-normalization-independent-qa-summary-v2.json",
+      "category": "qa",
+      "sha256": "ec0757f7d383db0ed7cd05bb236ed16ce3ac953e795cbd6f44c3a6bc1a62cd99",
+      "size_bytes": 808,
+      "note": "QA v2 총괄 요약: overall_verdict=PASS, defects CRITICAL=0/HIGH=1"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-qa-v2-run1-run2-sha-audit.json",
+      "category": "audit",
+      "sha256": "fe809db0690eacd3f4567ec86a2063dab61721c30886404002ce2103e30760c5",
+      "size_bytes": 4302,
+      "note": "QA v2 재현성: Run1=Run2 14/14 BYTE_IDENTICAL"
+    },
+    {
+      "path": "scripts/gyeongju_normalization_independent_qa_v2.py",
+      "category": "script",
+      "sha256": "13f40277a9d8532ebcaad0f3d207eb3b3260a593cb5b824c0e34f4240a1514f8",
+      "size_bytes": 69736,
+      "note": "독립 QA v2 스크립트 — 12개 섹션, 15개 출력 파일, Run1=Run2 BYTE_IDENTICAL"
     }
   ],
   "correction_tasks": [
@@ -1587,11 +1699,50 @@
       "output_files": 28,
       "new_audit_files": 2,
       "note": "DEF-C01/DEF-C02 수정: VG hex_id[:16] → hex_id (전체 34자). 73 VG-NEW candidates / 92 VG source facts / 92 multilingual entities ID 갱신. baseline 831 ID 불변. Run1=Run2 28/28 BYTE_IDENTICAL."
+    },
+    {
+      "task": "TASK-GYEONGJU-MANIFEST-FIX-AND-INDEPENDENT-QA-RERUN-V1",
+      "status": "COMPLETED",
+      "base_task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1",
+      "base_head": "993ed68",
+      "work_branch": "research/gyeongju-normalization-independent-qa-v2",
+      "phases": {
+        "PHASE_A": {
+          "status": "COMPLETED",
+          "description": "manifest DEF-M01 수리: 4건 stale SHA 갱신, normalized/raw 파일 무변경",
+          "repaired_files": 4,
+          "content_modified": false
+        },
+        "PHASE_B": {
+          "status": "COMPLETED",
+          "description": "독립 QA v2: 12개 섹션, 15개 출력 파일, Run1=Run2 14/14 BYTE_IDENTICAL",
+          "script": "scripts/gyeongju_normalization_independent_qa_v2.py",
+          "script_version": "2.0.0",
+          "output_files": 15,
+          "byte_identical": "14/14"
+        }
+      },
+      "defects_resolved": [
+        "DEF-M01"
+      ],
+      "defects_open": [
+        "DEF-H01",
+        "DEF-L01"
+      ],
+      "defects_summary": {
+        "CRITICAL": 0,
+        "HIGH": 1,
+        "MEDIUM": 0,
+        "LOW": 0
+      },
+      "overall_verdict": "PASS",
+      "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION_WITH_TARGETED_FIXES",
+      "note": "PHASE A: manifest SHA 4건 수리 (비-정규화 파일 only). PHASE B: 독립 QA v2 실행 — S1~S12 전체 PASS, DEF-H01 4건 LIKELY_DUP 여전히 존재(VG-KTO 데이터 중복, 수동 LINK 필요), DEF-M01 RESOLVED, DEF-L01 COVERAGE_LIMITATION."
     }
   ],
   "manifest_sha256": "ba6a6cf7981fbb1e62aada6c92aa0f1adc17272485c32434c5f3ebf4973b606f",
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 182
+  "files_count": 198
 }

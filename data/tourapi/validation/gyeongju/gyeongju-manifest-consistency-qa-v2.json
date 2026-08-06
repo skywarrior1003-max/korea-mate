@@ -1,0 +1,13 @@
+{
+  "def_m01_status": "DEF-M01_RESOLVED",
+  "directory_entries": 1,
+  "missing_files": 0,
+  "missing_paths": [],
+  "ok": 181,
+  "perm_errors": 0,
+  "section": "S10_MANIFEST_QA",
+  "sha_mismatch": 0,
+  "stale_paths": [],
+  "total_tracked": 182,
+  "verdict": "PASS"
+}

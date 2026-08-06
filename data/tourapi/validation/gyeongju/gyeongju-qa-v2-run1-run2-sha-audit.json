@@ -1,0 +1,95 @@
+{
+  "byte_identical": 14,
+  "files": [
+    {
+      "file": "gyeongju-candidate-quality-provenance-qa-v2.json",
+      "run1_sha256": "459a60bd473d0aa8842e4eb57434c1982fc1c870a486703853d4359d460606f6",
+      "run2_sha256": "459a60bd473d0aa8842e4eb57434c1982fc1c870a486703853d4359d460606f6",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-def-h01-recheck-v2.jsonl",
+      "run1_sha256": "6c03cad2be123a861a8238f29808e6fa4c3a39dace16970fa7b23e5f41ff9463",
+      "run2_sha256": "6c03cad2be123a861a8238f29808e6fa4c3a39dace16970fa7b23e5f41ff9463",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-independent-qa-defect-register-v2.jsonl",
+      "run1_sha256": "a8cc4abf276db5dab6cb711a7dac06714b30ed7956d3dbdea6156c83bbf19635",
+      "run2_sha256": "a8cc4abf276db5dab6cb711a7dac06714b30ed7956d3dbdea6156c83bbf19635",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-manifest-consistency-qa-v2.json",
+      "run1_sha256": "4929ef5d931867ee6d9768ac81f96baf37d08946935f9815693b992ae6612a32",
+      "run2_sha256": "4929ef5d931867ee6d9768ac81f96baf37d08946935f9815693b992ae6612a32",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-manual-review-queue-qa-v2.jsonl",
+      "run1_sha256": "0b84a4abe9a0094777bbe04ae7fa9f40f73a0fc32320f145bed59d4a1b3c450f",
+      "run2_sha256": "0b84a4abe9a0094777bbe04ae7fa9f40f73a0fc32320f145bed59d4a1b3c450f",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-multilingual-qa-v2.jsonl",
+      "run1_sha256": "f29e517c3938d90184f14e7b20480412dbab205b6484f3bab53fd9e21db2e2e9",
+      "run2_sha256": "f29e517c3938d90184f14e7b20480412dbab205b6484f3bab53fd9e21db2e2e9",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-new-candidate-duplicate-audit-v2.jsonl",
+      "run1_sha256": "98e81ff493c2cd5f8c36853e7194ccc3103c1dea69b2d52d02b7e68e6c110291",
+      "run2_sha256": "98e81ff493c2cd5f8c36853e7194ccc3103c1dea69b2d52d02b7e68e6c110291",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-normalization-independent-qa-summary-v2.json",
+      "run1_sha256": "ec0757f7d383db0ed7cd05bb236ed16ce3ac953e795cbd6f44c3a6bc1a62cd99",
+      "run2_sha256": "ec0757f7d383db0ed7cd05bb236ed16ce3ac953e795cbd6f44c3a6bc1a62cd99",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-normalization-input-integrity-qa-v2.json",
+      "run1_sha256": "4fd618e72020b0fed819658752fe5e09a2134ac17261cb2c903b1acc1cfd9fc9",
+      "run2_sha256": "4fd618e72020b0fed819658752fe5e09a2134ac17261cb2c903b1acc1cfd9fc9",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-relation-integrity-qa-v2.json",
+      "run1_sha256": "e8483375f8797282fa83f6fdf0e889c523b38c3b98dd3e11e2814343374ded06",
+      "run2_sha256": "e8483375f8797282fa83f6fdf0e889c523b38c3b98dd3e11e2814343374ded06",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-release-readiness-assessment-v2.json",
+      "run1_sha256": "ce1d761d0e50c61fcacf17fccfdf6762253f4add3b578a1ca71c40da5a235525",
+      "run2_sha256": "ce1d761d0e50c61fcacf17fccfdf6762253f4add3b578a1ca71c40da5a235525",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-semantic-preservation-qa-v2.json",
+      "run1_sha256": "e3119fb54d507184caf461c41ffc4a7f501f0f5d2f162a90c1fd9dabffc9b851",
+      "run2_sha256": "e3119fb54d507184caf461c41ffc4a7f501f0f5d2f162a90c1fd9dabffc9b851",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-vg-id-integrity-qa-v2.json",
+      "run1_sha256": "3944cabea4c123fc4d75703160fc281d62dd1584c0fbdc56f6477148ca29a426",
+      "run2_sha256": "3944cabea4c123fc4d75703160fc281d62dd1584c0fbdc56f6477148ca29a426",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-vg-id-integrity-records-v2.jsonl",
+      "run1_sha256": "5600c2742592af4984fd19005a559a57882d6fdb862d1f31e0900f892d865190",
+      "run2_sha256": "5600c2742592af4984fd19005a559a57882d6fdb862d1f31e0900f892d865190",
+      "status": "BYTE_IDENTICAL"
+    }
+  ],
+  "mismatch": 0,
+  "new_in_run2": 0,
+  "script_version": "2.0.0",
+  "task": "TASK-GYEONGJU-MANIFEST-FIX-AND-INDEPENDENT-QA-RERUN-V1",
+  "total_files": 14,
+  "verdict": "BYTE_IDENTICAL"
+}

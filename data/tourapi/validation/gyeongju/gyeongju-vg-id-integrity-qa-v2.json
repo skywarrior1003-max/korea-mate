@@ -1,0 +1,15 @@
+{
+  "hex_id_all_34chars": true,
+  "missing_rest_sfids": 0,
+  "old_16char_hexid_ml_rest": 0,
+  "old_16char_hexid_ml_souv": 0,
+  "old_16char_hexid_rest_sfids": 0,
+  "old_16char_hexid_souv_sfids": 0,
+  "rest_souv_cross_collision": 0,
+  "section": "S2_VG_ID_STRUCTURE",
+  "verdict": "PASS",
+  "vg_rest_raw": 84,
+  "vg_rest_sfids_in_output": 84,
+  "vg_souv_raw": 8,
+  "vg_souv_sfids_in_output": 8
+}

@@ -1,0 +1,20 @@
+{
+  "broken_course_waypoint_fk": 0,
+  "course_waypoints": 29,
+  "courses": 5,
+  "cultural_guide_relations": 17,
+  "event_entities": 7,
+  "event_listings": 10,
+  "failures": [],
+  "heritage_coverage_gaps_def_l01": 25,
+  "heritage_entities": 5,
+  "heritage_parent_child": 20,
+  "heritage_related_attraction": 33,
+  "heritage_relations_total": 53,
+  "mutable_source_page_collections": 7,
+  "rec_collections": 7,
+  "rec_official_area_uid_rels": 8,
+  "rec_place_relations": 14,
+  "section": "S8_RELATION_QA",
+  "verdict": "PASS"
+}
