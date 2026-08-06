@@ -37,6 +37,12 @@
 --
 -- 2026-08-05 운영 실측: 7개 모두 0, 총 9행.
 
+-- ── 적용 이력 ───────────────────────────────────────────────────────────────
+-- 2026-08-06 사용자가 Supabase SQL Editor 에서 아래 본문을 그대로 실행했다.
+-- 이 파일은 그때 실행된 SQL 과 문자 그대로 일치해야 한다. 나중에 실제로 돈 것과
+-- 다른 내용이 남아 있으면 감사 이력이 거짓이 된다.
+BEGIN;
+
 -- ── 2. RLS 유지 ─────────────────────────────────────────────────────────────
 -- 이미 켜져 있다. 꺼진 적이 없어야 하므로 명시적으로 다시 보장한다.
 ALTER TABLE public.spot_reactions ENABLE ROW LEVEL SECURITY;
@@ -60,9 +66,18 @@ REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM PUBLIC;
 REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM anon;
 REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM authenticated;
 
--- ── 6. 서버 경로 유지 ───────────────────────────────────────────────────────
--- service_role 은 rolbypassrls 라 정책과 무관하지만, privilege 는 명시적으로 둔다.
-GRANT SELECT, INSERT ON TABLE public.spot_reactions TO service_role;
+COMMIT;
+
+-- ── 6. 서버 경로 — 손대지 않는다 ────────────────────────────────────────────
+-- service_role 에는 GRANT 도 REVOKE 도 하지 않는다.
+--
+-- 초안에는 `GRANT SELECT, INSERT ... TO service_role` 이 있었는데 이는 잘못이었다.
+-- service_role 은 이 테이블에 이미 7종(DELETE·INSERT·REFERENCES·SELECT·TRIGGER·
+-- TRUNCATE·UPDATE)을 갖고 있고, 그중 DELETE 는 관리자 장소 삭제 Function 이
+-- spot_reactions 를 FK 순서상 먼저 지울 때 필요하다. SELECT·INSERT 두 개만
+-- 적어 두면 "이 둘만 있으면 된다"는 잘못된 기대를 남긴다.
+--
+-- 실제 적용 SQL 에는 이 GRANT 가 없으며, 적용 전후 service_role 권한은 7종 그대로다.
 
 -- ── 7. 적용 후 검증 ─────────────────────────────────────────────────────────
 -- 아래를 실행해 기대값과 대조한다.
@@ -82,7 +97,9 @@ GRANT SELECT, INSERT ON TABLE public.spot_reactions TO service_role;
 --  where table_schema='public' and table_name='spot_reactions'
 --    and grantee in ('anon','authenticated','PUBLIC');
 --
--- -- service_role 은 SELECT·INSERT 유지 (2 행)
+-- -- service_role 은 적용 전과 같은 7종 유지 (7 행)
+-- --   DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE
+-- -- DELETE 가 빠지면 관리자 장소 삭제 Function 이 깨진다.
 -- select privilege_type from information_schema.role_table_grants
 --  where table_schema='public' and table_name='spot_reactions' and grantee='service_role';
 --

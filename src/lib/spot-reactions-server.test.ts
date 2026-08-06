@@ -187,8 +187,35 @@ test("★038 이 unique index · policy 제거 · privilege 회수를 모두 담
   assert.match(SQL, /ALTER TABLE public\.spot_reactions ENABLE ROW LEVEL SECURITY/);
 });
 
-test("★038 이 service_role 서버 경로를 유지한다", () => {
-  assert.match(SQL, /GRANT SELECT, INSERT ON TABLE public\.spot_reactions TO service_role/);
+test("★038 은 service_role 권한을 건드리지 않는다 — 관리자 삭제 경로가 DELETE 를 쓴다", () => {
+  // 초안은 GRANT SELECT, INSERT ... TO service_role 을 넣었는데 잘못이었다.
+  // service_role 은 이미 7종(DELETE 포함)을 갖고 있고, DELETE 는 관리자 장소
+  // 삭제 Function 이 spot_reactions 를 FK 순서상 먼저 지울 때 필요하다.
+  // 둘만 적어 두면 "이 둘이면 충분하다"는 잘못된 기대가 남는다.
+  assert.doesNotMatch(SQL, /GRANT[^\n]*service_role/,  "service_role 에 GRANT 하지 않는다");
+  assert.doesNotMatch(SQL, /REVOKE[^\n]*service_role/, "service_role 권한을 회수하지 않는다");
+});
+
+test("★038 실행 본문이 2026-08-06 운영에 적용된 SQL 과 일치한다", () => {
+  const body = SQL.split("\n").map(l => l.trim()).filter(Boolean).join(" ").replace(/\s+/g, " ");
+  assert.equal(body,
+    "BEGIN; " +
+    "ALTER TABLE public.spot_reactions ENABLE ROW LEVEL SECURITY; " +
+    "CREATE UNIQUE INDEX IF NOT EXISTS spot_reactions_device_place_reaction_uniq " +
+    "ON public.spot_reactions (device_id, place_id, reaction); " +
+    "DROP POLICY IF EXISTS anon_read_reactions ON public.spot_reactions; " +
+    "DROP POLICY IF EXISTS anon_insert_reactions ON public.spot_reactions; " +
+    "REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM PUBLIC; " +
+    "REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM anon; " +
+    "REVOKE ALL PRIVILEGES ON TABLE public.spot_reactions FROM authenticated; " +
+    "COMMIT;");
+});
+
+test("★적용 후 검증 문서가 service_role 7종을 기대값으로 적는다", () => {
+  const RAW = read("supabase", "migrations", "038_lock_down_spot_reactions.sql");
+  assert.match(RAW, /7종|7 행/, "service_role 기대값이 7종으로 적혀 있어야 한다");
+  assert.match(RAW, /DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE/);
+  assert.doesNotMatch(RAW, /service_role 은 SELECT·INSERT 유지 \(2 행\)/, "옛 2행 기대값이 남아 있다");
 });
 
 test("★038 문서에 사전검증 7종·적용 후 검증·롤백이 모두 있다", () => {
