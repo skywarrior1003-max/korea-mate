@@ -1,0 +1,69 @@
+{
+  "description_acquired": 5,
+  "details": [
+    {
+      "area_uid": 48,
+      "coordinates": false,
+      "description": "OFFICIAL_WEB_DESCRIPTION_EXCERPT_OWNER_APPROVED",
+      "image": true,
+      "name_ko": "국립경주박물관",
+      "readiness": "HOLD_LOCATION_INCOMPLETE",
+      "vg_parse_ok": true
+    },
+    {
+      "area_uid": 50,
+      "coordinates": true,
+      "description": "OFFICIAL_WEB_DESCRIPTION_EXCERPT_OWNER_APPROVED",
+      "image": true,
+      "name_ko": "동궁과 월지",
+      "readiness": "RELEASE_READY_OWNER_APPROVED_WEB_CONTENT",
+      "vg_parse_ok": true
+    },
+    {
+      "area_uid": 97,
+      "coordinates": false,
+      "description": "OFFICIAL_WEB_DESCRIPTION_EXCERPT_OWNER_APPROVED",
+      "image": true,
+      "name_ko": "삼릉",
+      "readiness": "HOLD_LOCATION_INCOMPLETE",
+      "vg_parse_ok": true
+    },
+    {
+      "area_uid": 29,
+      "coordinates": false,
+      "description": "OFFICIAL_WEB_DESCRIPTION_EXCERPT_OWNER_APPROVED",
+      "image": true,
+      "name_ko": "경주 엑스포대공원",
+      "readiness": "HOLD_LOCATION_INCOMPLETE",
+      "vg_parse_ok": true
+    },
+    {
+      "area_uid": 79,
+      "coordinates": false,
+      "description": "OFFICIAL_WEB_DESCRIPTION_EXCERPT_OWNER_APPROVED",
+      "image": true,
+      "name_ko": "불국사",
+      "readiness": "HOLD_LOCATION_INCOMPLETE",
+      "vg_parse_ok": true
+    }
+  ],
+  "image_acquired": 5,
+  "pass_conditions": {
+    "api_key_not_exposed": true,
+    "description_4_of_5": true,
+    "frozen_files_unchanged": true,
+    "image_4_of_5": true,
+    "official_identity_confirmed": true,
+    "parser_stable": true
+  },
+  "pilot_count": 5,
+  "pilot_names": [
+    "경주 엑스포대공원",
+    "국립경주박물관",
+    "동궁과 월지",
+    "불국사",
+    "삼릉"
+  ],
+  "pilot_status": "PASS",
+  "vg_parse_ok": 5
+}

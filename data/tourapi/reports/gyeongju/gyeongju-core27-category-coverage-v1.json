@@ -1,0 +1,22 @@
+{
+  "description_method_dist": {
+    "CONTENT_STILL_MISSING": 0,
+    "KTO_OVERVIEW_NORMALIZED": 0,
+    "OFFICIAL_WEB_DESCRIPTION": 27,
+    "STRUCTURED_FACTS_ONLY": 0
+  },
+  "districts": {
+    "UNKNOWN": 27
+  },
+  "mnu_regions": {
+    "2291": 4,
+    "2292": 11,
+    "2293": 4,
+    "2295": 4,
+    "2296": 4
+  },
+  "readiness_distribution": {
+    "HOLD_LOCATION_INCOMPLETE": 21,
+    "RELEASE_READY_OWNER_APPROVED_WEB_CONTENT": 6
+  }
+}

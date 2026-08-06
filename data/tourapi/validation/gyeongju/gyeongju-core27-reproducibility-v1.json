@@ -1,0 +1,75 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "files": [
+    {
+      "file": "gyeongju-core27-identity-bundle-v1.jsonl",
+      "run1_sha256": "c35f5b87f375ddef807de74acdcda5a4285cbd56cdf4693de673166b6943dad8",
+      "run2_sha256": "c35f5b87f375ddef807de74acdcda5a4285cbd56cdf4693de673166b6943dad8",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-official-detail-snapshot-v1.jsonl",
+      "run1_sha256": "8f632070b329572ce07a7bebd9f466231bf04e9ef13992764767ce40ab07bbd3",
+      "run2_sha256": "8f632070b329572ce07a7bebd9f466231bf04e9ef13992764767ce40ab07bbd3",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-kto-detail-snapshot-v1.jsonl",
+      "run1_sha256": "f610c4de7ba41847ffe71affa0a10727ac6e32decd4efddda3dad34d08637c36",
+      "run2_sha256": "f610c4de7ba41847ffe71affa0a10727ac6e32decd4efddda3dad34d08637c36",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-field-inventory-v1.jsonl",
+      "run1_sha256": "75358458d2bf33e6700ea688e3c435149f360183f4c88dadea36102ea9dd2938",
+      "run2_sha256": "75358458d2bf33e6700ea688e3c435149f360183f4c88dadea36102ea9dd2938",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-field-comparison-v1.jsonl",
+      "run1_sha256": "33c0895a80d9456be26819bf8420335977beaa027712f756ca5d2eb391fdc283",
+      "run2_sha256": "33c0895a80d9456be26819bf8420335977beaa027712f756ca5d2eb391fdc283",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-description-overlay-v1.jsonl",
+      "run1_sha256": "30e7d67ff00521b424346c6d8b5eeed16e45c24d352c33f489201736f680a291",
+      "run2_sha256": "30e7d67ff00521b424346c6d8b5eeed16e45c24d352c33f489201736f680a291",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-image-inventory-v1.jsonl",
+      "run1_sha256": "a3bcfd3991b2bf8805d375c09d5c4b62e4dfa9d5c0f61770988a2a090ff74d75",
+      "run2_sha256": "a3bcfd3991b2bf8805d375c09d5c4b62e4dfa9d5c0f61770988a2a090ff74d75",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-full-detail-overlay-v1.jsonl",
+      "run1_sha256": "d0150b68ad937fcba454138a342ec908a763fb4136941a437b21a3ae0d670a82",
+      "run2_sha256": "d0150b68ad937fcba454138a342ec908a763fb4136941a437b21a3ae0d670a82",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-release-proposal-v1.jsonl",
+      "run1_sha256": "3925b66828778608b0e746a932cdee1e8dfedb806f916bc88d8e4aadcd1d9650",
+      "run2_sha256": "3925b66828778608b0e746a932cdee1e8dfedb806f916bc88d8e4aadcd1d9650",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-remaining-queue-v1.jsonl",
+      "run1_sha256": "d8e372dbc2497e2a47ae051adf6cac10b7ddb07fd030dec8560607d23be463e4",
+      "run2_sha256": "d8e372dbc2497e2a47ae051adf6cac10b7ddb07fd030dec8560607d23be463e4",
+      "verdict": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-coverage-summary-v1.json",
+      "run1_sha256": "1b67e44ae8b9fd6ae0008741c5389f7f15ea968b650c1a746bf64674386ea361",
+      "run2_sha256": "1b67e44ae8b9fd6ae0008741c5389f7f15ea968b650c1a746bf64674386ea361",
+      "verdict": "PASS"
+    }
+  ],
+  "passed": 11,
+  "task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
+  "total": 11,
+  "verdict": "BYTE_IDENTICAL_PASS"
+}

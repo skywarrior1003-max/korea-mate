@@ -1,0 +1,21 @@
+{
+  "address_acquired": 27,
+  "as_of": "2026-08-05T04:08:00Z",
+  "by_method": {
+    "CONTENT_STILL_MISSING": 0,
+    "KTO_OVERVIEW_NORMALIZED": 0,
+    "OFFICIAL_WEB_DESCRIPTION": 27,
+    "STRUCTURED_FACTS_ONLY": 0
+  },
+  "coordinates_acquired": 6,
+  "description_acquired": 27,
+  "hold_count": 21,
+  "image_acquired": 27,
+  "image_kogl1": 27,
+  "kto_fetched": 6,
+  "release_ready": 6,
+  "task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
+  "total_core27": 27,
+  "vg_page_fetched": 27,
+  "vg_parse_ok": 27
+}

@@ -1,0 +1,35 @@
+{
+  "all_present": true,
+  "files": [
+    {
+      "file": "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl",
+      "sha256": "1ed2c18b2d7b7bf8",
+      "status": "PRESENT"
+    },
+    {
+      "file": "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl",
+      "sha256": "481fe795f992a4c3",
+      "status": "PRESENT"
+    },
+    {
+      "file": "data/tourapi/validation/gyeongju/gyeongju-candidate-release-hold-v1.jsonl",
+      "sha256": "0690bdac67415aaf",
+      "status": "PRESENT"
+    },
+    {
+      "file": "data/tourapi/validation/gyeongju/gyeongju-release-final-rights-overlay-v1.jsonl",
+      "sha256": "776e5206dbadb074",
+      "status": "PRESENT"
+    },
+    {
+      "file": "data/tourapi/validation/gyeongju/gyeongju-core-place-priority-v1.jsonl",
+      "sha256": "ede7fd860c91e89a",
+      "status": "PRESENT"
+    },
+    {
+      "file": "data/tourapi/normalized/gyeongju/gyeongju-course-waypoint-relations-v1.jsonl",
+      "sha256": "178f955dfb5a17a0",
+      "status": "PRESENT"
+    }
+  ]
+}

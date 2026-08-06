@@ -2228,14 +2228,14 @@
       "size_bytes": 8870
     }
   ],
-  "files_count": 272,
-  "generated_by": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1 (+18 files)",
+  "files_count": 298,
+  "generated_by": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
   "hold_candidate_count": 808,
-  "last_task": "TASK-GYEONGJU-RELEASE-HOLD-CLASSIFICATION-V1",
+  "last_task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
   "last_updated": "2026-08-06",
   "last_updated_at": "2026-08-06T00:00:00Z",
-  "last_updated_task": "TASK-GYEONGJU-CORE-ATTRACTION-NATURE-RELEASE-ENRICHMENT-V1",
-  "manifest_sha256": "f2cb0c0ebec5abc68b502508361952e2b45ef030b343fa6b1839d86337fbe003",
+  "last_updated_task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
+  "manifest_sha256": "49b8bfc33af775d8b0e17664cb3b5ded6618890321439d7d8d2f5a9f4d3a2c00",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",
     "D-02": "행사 24건 KTO detailCommon2+detailIntro2 수집, 날짜현재성 보강",
@@ -2278,6 +2278,14 @@
       "status": "COMPLETED",
       "task": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1",
       "work_branch": "research/gyeongju-post-link-final-independent-qa-v1"
+    },
+    {
+      "branch": "data/gyeongju-core27-full-official-snapshot-v1",
+      "completed_at": "2026-08-06",
+      "release_ready_added": 6,
+      "summary": "CORE_TIER_1 27건 공식 스냅샷: VG 27/27 수집, 설명 27/27(KOGL1), 이미지 187장(KOGL1), 좌표 6/27, RELEASE_READY 6건, Run1=Run2 BYTE_IDENTICAL_PASS",
+      "task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
+      "verdict": "PASS"
     }
   ],
   "release_candidate_count": 102,

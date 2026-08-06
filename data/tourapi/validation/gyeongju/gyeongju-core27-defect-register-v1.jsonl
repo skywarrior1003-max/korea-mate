@@ -1,0 +1,1 @@
+{"affected": "159건 WEB-ATT source facts", "defect_id": "DEF-CORE27-W01", "description": "WEB-ATT source facts의 official_external_url 전건 오류 (https://황리단길.kr). 이전 수집 태스크 버그. 본 태스크는 area_uid 기반 VG detail URL 사용으로 우회.", "mitigation": "area_uid+mnu_uid 기반 detail_url 직접 구성 또는 course waypoint pre-verified URL 사용", "severity": "WARNING", "status": "DOCUMENTED"}
