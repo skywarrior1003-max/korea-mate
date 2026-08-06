@@ -109,11 +109,19 @@ test("★016 실행 본문에 is_public 을 몰래 끼워 넣지 않았다 — �
 });
 
 // ── 12~16. 범위 밖 변경 금지 ─────────────────────────────────────────────────
-test("★신규 migration 을 만들지 않았다 — 번호는 040 이 마지막", () => {
+test("★get_shared_itinerary EXECUTE 를 회수하는 migration 이 없다", () => {
+  // 원래 "040 이 마지막" 으로 적었는데 그건 그 시점의 상태였지 불변식이 아니다.
+  // 이후 다른 작업이 정당하게 041 을 추가하면 이 테스트가 엉뚱하게 깨진다.
+  // 실제로 지켜야 할 것은 "공유 RPC 의 EXECUTE 를 건드리는 migration 이 생기지
+  // 않는다" 이다 — anon/authenticated EXECUTE WARN 2건은 수용하기로 한 상태다.
   assert.ok(!existsSync(MIG("041_restrict_get_shared_itinerary_execute.sql")));
-  const files = readdirSync(join(ROOT, "supabase", "migrations"))
-    .filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.at(-1)?.slice(0, 3), "040");
+  for (const f of readdirSync(join(ROOT, "supabase", "migrations")).filter(x => x.endsWith(".sql"))) {
+    const sql = readFileSync(MIG(f), "utf8")
+      .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
+    // PUBLIC 회수는 016·022·030 이 이미 하는 정상 동작이다. 막아야 할 것은
+    // anon·authenticated 회수뿐이다.
+    assert.doesNotMatch(sql, /REVOKE[^\n]*get_shared_itinerary[^\n]*FROM[^\n]*\b(anon|authenticated)\b/i, f);
+  }
 });
 
 test("★016 경고문이 실행 지시로 읽히지 않는다", () => {

@@ -1,5 +1,3 @@
-import { supabase } from "./supabase";
-
 export type SpotCategory =
   | "attraction"
   | "restaurant"
@@ -27,51 +25,17 @@ export interface SpotRow {
   created_at?: string;
 }
 
-export async function fetchSpotByPlaceId(placeId: string): Promise<SpotRow | null> {
-  const { data, error } = await supabase
-    .from("spots")
-    .select("*")
-    .eq("place_id", placeId)
-    .single();
-  if (error) { console.error("[Supabase] spot fetch:", error.message); return null; }
-  return data as SpotRow;
-}
-
-export async function fetchSpotsByCategory(
-  category: SpotCategory,
-  limit = 50
-): Promise<SpotRow[]> {
-  const { data, error } = await supabase
-    .from("spots")
-    .select("*")
-    .eq("category", category)
-    .order("title")
-    .limit(limit);
-  if (error) { console.error("[Supabase] spots list:", error.message); return []; }
-  return (data ?? []) as SpotRow[];
-}
-
-export async function fetchAllSpots(): Promise<SpotRow[]> {
-  const { data, error } = await supabase
-    .from("spots")
-    .select("*")
-    .order("category")
-    .order("title");
-  if (error) { console.error("[Supabase] all spots:", error.message); return []; }
-  return (data ?? []) as SpotRow[];
-}
-
-export async function searchSpots(query: string, limit = 14): Promise<SpotRow[]> {
-  if (!query.trim()) return [];
-  const { data, error } = await supabase
-    .from("spots")
-    .select("place_id, title, category, description, duration_min, image_url")
-    .ilike("title", `%${query.trim()}%`)
-    .order("title")
-    .limit(limit);
-  if (error) { console.error("[Supabase] spot search:", error.message); return []; }
-  return (data ?? []) as SpotRow[];
-}
+// 브라우저에서 spots 를 직접 읽던 helper 4종(fetchSpotByPlaceId /
+// fetchSpotsByCategory / fetchAllSpots / searchSpots)은 제거했다.
+// 호출처가 0건인 dead code 였고, 번들에도 들어가지 않았다(tree-shaking).
+// 남겨 두면 spots 의 anon SELECT 를 닫을 수 없다.
+//
+// 사용자 화면의 장소 SSOT 는 city_spots 다(src/lib/city-spots.ts).
+// spots 는 관리자 CSV 업로드 대상이며 접근은 전부 service_role 서버 경로다:
+//   POST /api/admin/upsert-spots            (쓰기)
+//   POST /api/admin/delete-spot             (삭제)
+//   GET  /api/admin/spot-reactions-summary  (제목 조회)
+// 그래서 이 파일에는 더 이상 브라우저 DB 접근이 없다.
 
 // CSV 헤더 → SpotRow 필드 매핑
 // NOTE: upsertSpot / bulkUpsertSpots는 TASK-SEC-01-B1에서 제거됨.
