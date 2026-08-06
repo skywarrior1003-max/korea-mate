@@ -1634,6 +1634,36 @@
       "size": 1421
     },
     {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-classification-authority-audit-v1.json",
+      "sha256": "fe1e0984f9ed4358b8e94f68a20bfad90cc2a0a452a222aa9c5ab41bb3b74348",
+      "size": 1020
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-description-rights-resolution-v1.jsonl",
+      "sha256": "0c52364ee18e2a0a4d2e78030833270290fb08c7c674d2c57c3545d8334283df",
+      "size": 83043
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-domain-only-decision-audit-v1.json",
+      "sha256": "b57201241b6ff15b17e10aebfcc43434915efefa6114fce3021543f900d9b823",
+      "size": 442
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-final-rights-overlay-v1.jsonl",
+      "sha256": "776e5206dbadb07480a18cf0a784fdb1b5c6925ac55869f43df9750ed213f3c1",
+      "size": 47063
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-image-rights-resolution-v1.jsonl",
+      "sha256": "6714f6a0a74e2bb483d06208495f8aa0b8b884ae0618711a90b2ee7061b2beaa",
+      "size": 87226
+    },
+    {
       "category": "qa",
       "note": "Release/HOLD readiness: GYEONGJU_NORMALIZATION_QA_HOLD",
       "path": "data/tourapi/validation/gyeongju/gyeongju-release-readiness-assessment-v1.json",
@@ -1646,6 +1676,66 @@
       "path": "data/tourapi/validation/gyeongju/gyeongju-release-readiness-assessment-v2.json",
       "sha256": "ce1d761d0e50c61fcacf17fccfdf6762253f4add3b578a1ca71c40da5a235525",
       "size_bytes": 417
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-defect-closure-v1.json",
+      "sha256": "c9ca73d6995deaceca54c0cc10908052f46121ed0aa3323c8bb6d899064caa83",
+      "size": 1168
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-frozen-baseline-v1.json",
+      "sha256": "752060a47ea8ad8b418a3920b876665abe78458a79b88d8e3dd1772dcb3a449c",
+      "size": 1839
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-input-integrity-v1.json",
+      "sha256": "241c90b278b7363877e63d65efdabb3bcc5eff46c9959f6d981a8f367f9c0439",
+      "size": 411
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-missing-queue-v1.jsonl",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "size": 2
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-regression-fixtures-v1.json",
+      "sha256": "fcbb398d648ce35d08100d06b07c84ba37439f0c1d7af68f8510fbb2e04347f0",
+      "size": 3226
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-reproducibility-v1.json",
+      "sha256": "03b8028e52bf83a7807e0c2ee0eef8265fa8368180cdee352b42fc36d2871657",
+      "size": 6144
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-status-overlay-v1.jsonl",
+      "sha256": "a1a763a0518b8d974897a0c9814dba1901ce3fc838b647437fc002b2bf06b458",
+      "size": 91882
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-rights-summary-v1.json",
+      "sha256": "ec75eccc9aebc8040f528364b21681ee75d94769bc76ece2a098d85af970beff",
+      "size": 1495
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-source-contract-evidence-v1.jsonl",
+      "sha256": "57353c81ab11903725d0d1ae5edf6cd5573e5f7950416de0d7fb678011fa8ad8",
+      "size": 97605
+    },
+    {
+      "category": "validation",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-release-vg-linked-source-audit-v1.jsonl",
+      "sha256": "635c067d61554346077c853b3fc4d9a2e4e41fb28d40863dd941782f43369f78",
+      "size": 3215
     },
     {
       "category": "qa",
@@ -1870,6 +1960,12 @@
       "size": 13250
     },
     {
+      "category": "docs",
+      "path": "docs/tourapi/gyeongju-release-rights-resolution-overlay-v1-completion.md",
+      "sha256": "448cc997a675535da2d49ed1778378e66c359086c9490f4b90f50a4ef225394a",
+      "size": 9400
+    },
+    {
       "category": "doc",
       "note": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 완료보고서 (DEF-C01/C02 RESOLVED)",
       "path": "docs/tourapi/gyeongju-vg-candidate-id-fix-v1-completion.md",
@@ -1916,6 +2012,12 @@
       "path": "docs/tourapi/multicity-release-provenance-rights-gate-v1.md",
       "sha256": "6b417a994949775294014cb96839a5a112a9e375a69fa40fa8b096d555cfa6e1",
       "size": 7987
+    },
+    {
+      "category": "docs",
+      "path": "docs/tourapi/multicity-source-provenance-required-fields-v1.md",
+      "sha256": "217c91ca6b68e1db4c438864d7f1604d63cc6e38e76c7abde509ddb32c8d4dd6",
+      "size": 7436
     },
     {
       "category": "docs",
@@ -1987,6 +2089,12 @@
       "size": 38245
     },
     {
+      "category": "scripts",
+      "path": "scripts/gyeongju_release_rights_resolution_v1.py",
+      "sha256": "e2e711f4d54c231bab4bd908fa05ab8c61b148262ddb92531b9912417bb274bf",
+      "size": 51645
+    },
+    {
       "category": "script",
       "note": "web 수집기: visitgyeongju.or.kr restaurants+souvenirs 5개 언어",
       "path": "scripts/visitgyeongju_collect.py",
@@ -1994,8 +2102,8 @@
       "size_bytes": 27953
     }
   ],
-  "files_count": 236,
-  "generated_by": "TASK-GYEONGJU-RELEASE-102-PROVENANCE-RIGHTS-AUDIT-V1 (+16 files)",
+  "files_count": 254,
+  "generated_by": "TASK-GYEONGJU-RELEASE-RIGHTS-RESOLUTION-OVERLAY-V1 (+17 files)",
   "hold_candidate_count": 808,
   "last_task": "TASK-GYEONGJU-RELEASE-HOLD-CLASSIFICATION-V1",
   "last_updated": "2026-08-06",
