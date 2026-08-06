@@ -1,0 +1,30 @@
+{
+  "attraction_identity_distribution": {
+    "HIGH_CONFIDENCE": 145,
+    "MANUAL_REVIEW": 4,
+    "NEW_OFFICIAL_PLACE": 10
+  },
+  "candidate_reconciliation": {
+    "baseline_831": 831,
+    "full_v1_total": 910,
+    "new_att": 10,
+    "new_rest": 62,
+    "new_souv": 7,
+    "total_new": 79
+  },
+  "fail_items": [],
+  "formula_check": "831+79=910 (expect 910)",
+  "formula_ok": true,
+  "removed_candidates_count": 4,
+  "removed_still_active": [],
+  "restaurant_identity_distribution": {
+    "HIGH_CONFIDENCE": 9,
+    "MANUAL_REVIEW": 13,
+    "NEW_OFFICIAL_PLACE": 62
+  },
+  "souvenir_type_distribution": {
+    "PHYSICAL_PLACE": 8
+  },
+  "verdict": "PASS",
+  "vg_linked_hc_count": 4
+}

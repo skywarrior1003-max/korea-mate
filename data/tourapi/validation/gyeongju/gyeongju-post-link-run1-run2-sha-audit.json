@@ -1,0 +1,82 @@
+{
+  "base_head": "781417b",
+  "base_task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1",
+  "files": {
+    "gyeongju-post-link-candidate-reconciliation-v1.json": {
+      "sha256": "f2527c0b61874e949d90e8b2c84e1be0f3191de65b1ba63946c2bcc22a9d4930",
+      "size_bytes": 710,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-defect-register-v1.jsonl": {
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "size_bytes": 2,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-final-qa-summary-v1.json": {
+      "sha256": "3f6c5fac0667bba71fd85084cf342b2713a71eb540ca25e5abf73eb3b2d6ab7f",
+      "size_bytes": 902,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-input-integrity-qa-v1.json": {
+      "sha256": "abd0931c33126147984882818c247258ade81c16c75e5ef7b26ee14a6ddf382d",
+      "size_bytes": 588,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-lineage-audit-v1.jsonl": {
+      "sha256": "89bfa2fb174371c7c32fb7b8dcedc00ef2177ebbcbee9ced825a1d06ca96f8dc",
+      "size_bytes": 2065,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-manifest-consistency-qa-v1.json": {
+      "sha256": "c9eae5566897682124301a22200adbe08ed8f83bda3979c77309e74e7b4a9a0b",
+      "size_bytes": 143,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-manual-review-reconciliation-v1.json": {
+      "sha256": "515fe29a69c95d18040e05fefceda4ee7175978131c897a5773a2f4c37145d1a",
+      "size_bytes": 306,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-multilingual-sf-integrity-qa-v1.json": {
+      "sha256": "3719d19f79b37b521ba262879f9fc157af50e101d6a83ee042df5ae5e0bb8280",
+      "size_bytes": 999,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-new-candidate-duplicate-audit-v1.jsonl": {
+      "sha256": "287a9181747e364b4f58a1798fd330c39480588675bb77de8588f83451913052",
+      "size_bytes": 20867,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-relation-preservation-qa-v1.json": {
+      "sha256": "603fa50146f8e3a960a699ef12f9df05d286488c2541911892dc691c73e7210c",
+      "size_bytes": 1736,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-release-readiness-v1.json": {
+      "sha256": "3fec2763f2601836c2575e663ad8c968f0e9c900d9fbb7d1f03beefdfa98a61c",
+      "size_bytes": 496,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-shared-phone-regression-v1.json": {
+      "sha256": "340552bca537d27e27186a5d7940cfcbdae87a17993f82e99aaedbe43d8fe5af",
+      "size_bytes": 2227,
+      "status": "BYTE_IDENTICAL"
+    },
+    "gyeongju-post-link-vg-link-integrity-qa-v1.jsonl": {
+      "sha256": "fd00570a71a08616a3bac55407733ed968ac3a9b10cb4277976913732bfeddea",
+      "size_bytes": 4472,
+      "status": "BYTE_IDENTICAL"
+    }
+  },
+  "note": "Run1=Run2 13/13 BYTE_IDENTICAL. datetime.now() 미사용; as_of는 normalization summary에서 읽음; sort_keys=True.",
+  "qa_script": "scripts/gyeongju_post_link_final_independent_qa_v1.py",
+  "qa_script_sha256": "b06c5987d080087e7b7f301f1585e93f3ee79ebba0ee05d17626db4778923831",
+  "summary": {
+    "byte_identical": 13,
+    "mismatch": 0,
+    "missing": 0,
+    "total": 13
+  },
+  "task": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1",
+  "verdict": "BYTE_IDENTICAL"
+}

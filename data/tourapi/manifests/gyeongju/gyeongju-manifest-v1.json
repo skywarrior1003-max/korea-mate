@@ -1510,6 +1510,118 @@
       "sha256": "4be820c62ddc4263ee360ea69803f505fe05193cf7c3db59de48c7b3c0789d26",
       "size_bytes": 7765,
       "note": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1 완료보고서"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-input-integrity-qa-v1.json",
+      "category": "qa",
+      "sha256": "abd0931c33126147984882818c247258ade81c16c75e5ef7b26ee14a6ddf382d",
+      "size_bytes": 588,
+      "note": "S1 입력 무결성 QA"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-vg-link-integrity-qa-v1.jsonl",
+      "category": "audit",
+      "sha256": "fd00570a71a08616a3bac55407733ed968ac3a9b10cb4277976913732bfeddea",
+      "size_bytes": 4472,
+      "note": "S2 VG 4건 link integrity audit"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-lineage-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "89bfa2fb174371c7c32fb7b8dcedc00ef2177ebbcbee9ced825a1d06ca96f8dc",
+      "size_bytes": 2065,
+      "note": "S3 source lineage 정정 감사"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-shared-phone-regression-v1.json",
+      "category": "qa",
+      "sha256": "340552bca537d27e27186a5d7940cfcbdae87a17993f82e99aaedbe43d8fe5af",
+      "size_bytes": 2227,
+      "note": "S4 공유전화 6-case 회귀검증"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-candidate-reconciliation-v1.json",
+      "category": "qa",
+      "sha256": "f2527c0b61874e949d90e8b2c84e1be0f3191de65b1ba63946c2bcc22a9d4930",
+      "size_bytes": 710,
+      "note": "S5+S6 식당 identity 분포 + candidate reconciliation"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-new-candidate-duplicate-audit-v1.jsonl",
+      "category": "audit",
+      "sha256": "287a9181747e364b4f58a1798fd330c39480588675bb77de8588f83451913052",
+      "size_bytes": 20867,
+      "note": "S7 신규 79건 중복 재검사"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-multilingual-sf-integrity-qa-v1.json",
+      "category": "qa",
+      "sha256": "3719d19f79b37b521ba262879f9fc157af50e101d6a83ee042df5ae5e0bb8280",
+      "size_bytes": 999,
+      "note": "S8 다국어·source fact 검증"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-manual-review-reconciliation-v1.json",
+      "category": "qa",
+      "sha256": "515fe29a69c95d18040e05fefceda4ee7175978131c897a5773a2f4c37145d1a",
+      "size_bytes": 306,
+      "note": "S9 manual review queue reconciliation"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-relation-preservation-qa-v1.json",
+      "category": "qa",
+      "sha256": "603fa50146f8e3a960a699ef12f9df05d286488c2541911892dc691c73e7210c",
+      "size_bytes": 1736,
+      "note": "S10 비관련 데이터 불변 검증"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-manifest-consistency-qa-v1.json",
+      "category": "qa",
+      "sha256": "c9eae5566897682124301a22200adbe08ed8f83bda3979c77309e74e7b4a9a0b",
+      "size_bytes": 143,
+      "note": "S11 manifest 일관성 검증"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-defect-register-v1.jsonl",
+      "category": "audit",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "size_bytes": 2,
+      "note": "S12 결함 판정 레지스터"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-release-readiness-v1.json",
+      "category": "audit",
+      "sha256": "3fec2763f2601836c2575e663ad8c968f0e9c900d9fbb7d1f03beefdfa98a61c",
+      "size_bytes": 496,
+      "note": "S13 Release/HOLD 준비도"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-final-qa-summary-v1.json",
+      "category": "qa",
+      "sha256": "3f6c5fac0667bba71fd85084cf342b2713a71eb540ca25e5abf73eb3b2d6ab7f",
+      "size_bytes": 902,
+      "note": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1 최종 요약"
+    },
+    {
+      "path": "data/tourapi/validation/gyeongju/gyeongju-post-link-run1-run2-sha-audit.json",
+      "category": "audit",
+      "sha256": "7f9839b870381827099f3d2e4e193a92d4130b59e31926a7585b85d9104197e8",
+      "size_bytes": 3376,
+      "note": "Run1=Run2 13/13 BYTE_IDENTICAL SHA 감사"
+    },
+    {
+      "path": "scripts/gyeongju_post_link_final_independent_qa_v1.py",
+      "category": "script",
+      "sha256": "b06c5987d080087e7b7f301f1585e93f3ee79ebba0ee05d17626db4778923831",
+      "size_bytes": 61617,
+      "note": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1 독립 QA 스크립트 v1.0.0"
+    },
+    {
+      "path": "docs/tourapi/gyeongju-post-link-final-independent-qa-v1-completion.md",
+      "category": "doc",
+      "sha256": "dde17752790bb749812acfcfde6728e0550352541c1b4b90adbb7f2f4c52a48f",
+      "size_bytes": 8418,
+      "note": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1 완료보고서"
     }
   ],
   "correction_tasks": [
@@ -1823,5 +1935,44 @@
   "last_updated_task": "TASK-GYEONGJU-WEB-RAW-COLLECTION-V1 (검증보고서)",
   "last_updated_at": "2026-08-05T00:53:00Z",
   "last_updated": "2026-08-05T04:57:39Z",
-  "files_count": 204
+  "files_count": 220,
+  "qa_tasks": [
+    {
+      "task": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1",
+      "status": "COMPLETED",
+      "base_task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1",
+      "base_head": "781417b",
+      "work_branch": "research/gyeongju-post-link-final-independent-qa-v1",
+      "script_version": "1.0.0",
+      "sections": {
+        "S1_input_integrity": "PASS",
+        "S2_vg_link_integrity": "PASS",
+        "S3_lineage_audit": "PASS",
+        "S4_shared_phone_regression": "PASS",
+        "S5_6_identity_reconciliation": "PASS",
+        "S7_new_candidate_duplicate": "PASS",
+        "S8_multilingual_sf": "PASS",
+        "S9_manual_review": "PASS",
+        "S10_invariance": "PASS",
+        "S11_manifest": "PASS"
+      },
+      "defect_counts": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0
+      },
+      "byte_identical": "13/13",
+      "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION",
+      "overall_verdict": "PASS",
+      "improvements_vs_gpt_prompt": [
+        "S10: recommendation_relations=14 동적 읽기 (GPT 프롬프트의 '8' 수정)",
+        "S10: heritage_relations=53 동적 읽기 (GPT 프롬프트의 '33' 수정)",
+        "S3: GJ08-405 lineage = VG_TO_GJ08_WITH_KTO_PROVENANCE (linked_sfs에 KTO39 포함)",
+        "S4: 6-case 회귀검증 (공유전화 규칙 양방향)",
+        "S7: 공유전화(3+) + 이름 포함 → POSSIBLE_DUPLICATE (LIKELY 과도 판정 방지)",
+        "S8: ML audit 구조 locale_variants에서 locale 추출 (최상위 locale 필드 없음)"
+      ]
+    }
+  ]
 }

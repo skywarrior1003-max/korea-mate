@@ -1,0 +1,21 @@
+{
+  "baseline_candidates_count": 831,
+  "baseline_dup_groups": 0,
+  "baseline_unique": 831,
+  "broken_candidate_sf_refs": 0,
+  "fail_items": [],
+  "full_v1_candidates_count": 910,
+  "full_v1_dup_groups": 0,
+  "full_v1_unique": 910,
+  "manifest_sha_mismatches": 0,
+  "new_candidates_count": 79,
+  "new_candidates_unique": 79,
+  "new_dup_groups": 0,
+  "raw_source_facts_count": 907,
+  "raw_source_facts_dup_groups": 0,
+  "raw_source_facts_unique": 907,
+  "s1_verdict": "PASS",
+  "source_facts_count": 1158,
+  "source_facts_dup_groups": 0,
+  "source_facts_unique": 1158
+}

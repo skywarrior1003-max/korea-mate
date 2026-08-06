@@ -1,0 +1,60 @@
+{
+  "all_pass": true,
+  "phone_addr_name_hc_count": 4,
+  "s4_verdict": "PASS",
+  "shared_tourism_phone_hc": 0,
+  "test_cases": [
+    {
+      "actual_cid": "gyeongju-GJ08-733",
+      "actual_result": "HIGH_CONFIDENCE",
+      "case_id": "CASE1_SHARED_PHONE_ONE_STRONG",
+      "description": "공유전화 + 강한 후보 정확히 1건 → 연결 가능",
+      "expected": "HIGH_CONFIDENCE → gyeongju-GJ08-733",
+      "phone": "054-775-3260",
+      "verdict": "PASS",
+      "vg_name": "고도벌 한정식"
+    },
+    {
+      "actual_cid": null,
+      "actual_result": "NO_PHONE_MATCH",
+      "case_id": "CASE2_SHARED_PHONE_ZERO_STRONG",
+      "description": "전화 매칭 없음 → 연결 금지",
+      "expected": "None (NO_PHONE_MATCH or NO_MATCH)",
+      "phone": "054-000-0000",
+      "verdict": "PASS"
+    },
+    {
+      "actual_cid": null,
+      "actual_result": "AMBIGUOUS",
+      "case_id": "CASE3_SHARED_PHONE_TWO_STRONG_AMBIGUOUS",
+      "description": "공유전화 + 강한 후보 2건 이상(AMBIGUOUS) → 연결 금지",
+      "expected": "None (AMBIGUOUS)",
+      "verdict": "PASS"
+    },
+    {
+      "actual_cid": null,
+      "actual_result": "NO_MATCH",
+      "case_id": "CASE4_PHONE_ONLY_NO_ADDR_NAME",
+      "description": "전화만 동일, 주소·이름 불일치 → 연결 금지",
+      "expected": "None (NO_MATCH)",
+      "verdict": "PASS"
+    },
+    {
+      "actual_cid": "branch-A",
+      "actual_result": "HIGH_CONFIDENCE",
+      "case_id": "CASE5_SAME_PHONE_NAME_DIFF_ADDR_BRANCHES",
+      "description": "이름·전화 동일하지만 주소가 다른 지점 — 주소 필터로 올바른 지점 특정",
+      "expected": "HIGH_CONFIDENCE → branch-A (addr match discriminates)",
+      "note": "주소로 유일 지점 특정 가능하면 연결, 불가능하면 AMBIGUOUS로 금지",
+      "verdict": "PASS"
+    },
+    {
+      "actual_count": 0,
+      "case_id": "CASE6_SHARED_TOURISM_HOTLINE_NOT_MERGED",
+      "description": "공용 관광청 전화(054-779-8585) 식당 HIGH_CONFIDENCE 오병합 0",
+      "expected": "0 HIGH_CONFIDENCE with shared tourism phone",
+      "verdict": "PASS"
+    }
+  ],
+  "total_rest_hc": 9
+}

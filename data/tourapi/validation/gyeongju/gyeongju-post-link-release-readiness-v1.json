@@ -1,0 +1,20 @@
+{
+  "def_l01_status": "OPEN (heritage coverage limitation — 수집 범위 한계, 비차단)",
+  "defect_counts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "LOW": 0,
+    "MEDIUM": 0
+  },
+  "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION",
+  "ready_conditions": {
+    "broken_refs_0": true,
+    "candidates_910": true,
+    "critical_0": true,
+    "high_0": true,
+    "manifest_ok": true,
+    "old_vg_active_0": true,
+    "rights_ok": true,
+    "sf_1158": true
+  }
+}

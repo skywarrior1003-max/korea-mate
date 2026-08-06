@@ -1,0 +1,29 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "base_head": "781417b",
+  "base_task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1",
+  "defect_counts": {},
+  "full_v1_total": 910,
+  "new_candidates": 79,
+  "output_files": 13,
+  "overall_verdict": "PASS",
+  "readiness": "READY_FOR_GYEONGJU_RELEASE_HOLD_CLASSIFICATION",
+  "restaurant_hc": 9,
+  "restaurant_new": 62,
+  "script_version": "1.0.0",
+  "section_verdicts": {
+    "S10_invariance": "PASS",
+    "S11_manifest": "PASS",
+    "S1_input_integrity": "PASS",
+    "S2_vg_link_integrity": "PASS",
+    "S3_lineage_audit": "PASS",
+    "S4_shared_phone_regression": "PASS",
+    "S5_6_identity_reconciliation": "PASS",
+    "S7_new_candidate_duplicate": "PASS",
+    "S8_multilingual_sf": "PASS",
+    "S9_manual_review": "PASS"
+  },
+  "source_facts": 1158,
+  "task": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1",
+  "vg_linked_hc": 4
+}

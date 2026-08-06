@@ -1,0 +1,15 @@
+{
+  "expected_total": 38,
+  "fail_items": [],
+  "linked_vg_in_mrq": 0,
+  "linked_vg_rest_in_mrq": 0,
+  "total_queue": 38,
+  "type_distribution": {
+    "attraction": 4,
+    "cultural_guide": 6,
+    "monthly_rec_place_link": 8,
+    "restaurant": 13,
+    "souvenir": 7
+  },
+  "verdict": "PASS"
+}

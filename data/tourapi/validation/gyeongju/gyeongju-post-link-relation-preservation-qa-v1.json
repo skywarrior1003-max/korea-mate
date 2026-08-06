@@ -1,0 +1,82 @@
+{
+  "checks": {
+    "attraction_hc": {
+      "actual": 145,
+      "expected": 145,
+      "ok": true
+    },
+    "attraction_mr": {
+      "actual": 4,
+      "expected": 4,
+      "ok": true
+    },
+    "attraction_new": {
+      "actual": 10,
+      "expected": 10,
+      "ok": true
+    },
+    "course_waypoints": {
+      "actual": 29,
+      "expected": 29,
+      "ok": true
+    },
+    "courses": {
+      "actual": 5,
+      "expected": 5,
+      "ok": true
+    },
+    "cultural_guides": {
+      "actual": 17,
+      "expected": 17,
+      "ok": true
+    },
+    "event_entities": {
+      "actual": 7,
+      "expected": 7,
+      "ok": true
+    },
+    "event_listings": {
+      "actual": 10,
+      "expected": 10,
+      "ok": true
+    },
+    "heritage_entities": {
+      "actual": 5,
+      "expected": 5,
+      "ok": true
+    },
+    "heritage_related_att": {
+      "actual": 33,
+      "expected": 33,
+      "ok": true
+    },
+    "heritage_relations": {
+      "actual": 53,
+      "expected": 53,
+      "ok": true
+    },
+    "rec_collections": {
+      "actual": 7,
+      "expected": 7,
+      "ok": true
+    },
+    "rec_mr": {
+      "actual": 8,
+      "expected": 8,
+      "ok": true
+    },
+    "rec_place_relations": {
+      "actual": 14,
+      "expected": 14,
+      "ok": true
+    },
+    "souvenir_physical": {
+      "actual": 8,
+      "expected": 8,
+      "ok": true
+    }
+  },
+  "fail_items": [],
+  "note": "recommendation_relations uses actual monthly_rec_place_relations=14 (GPT prompt had '8' which refers to MR-queue-only subset). heritage_relations uses actual total=53 (GPT prompt had '33' which refers to RELATED_ATTRACTION type only).",
+  "verdict": "PASS"
+}

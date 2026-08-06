@@ -1,0 +1,49 @@
+{
+  "all_locales_valid": true,
+  "entity_source_id_dups": 0,
+  "fail_items": [],
+  "invalid_locales_count": 0,
+  "locale_distribution": {
+    "en": 92,
+    "ja": 92,
+    "ko": 92,
+    "zh-CN": 92,
+    "zh-TW": 92
+  },
+  "multilingual_entities": 92,
+  "old_16char_hexid_count": 0,
+  "retained_vg_sf_ml_coverage": {
+    "gyeongju-VG-REST-535f40400604084d0a48034645514b4741": [
+      "en",
+      "ja",
+      "ko",
+      "zh-CN",
+      "zh-TW"
+    ],
+    "gyeongju-VG-REST-535f40400604084d0b4305454d5142404d": [
+      "en",
+      "ja",
+      "ko",
+      "zh-CN",
+      "zh-TW"
+    ],
+    "gyeongju-VG-REST-535f40400605094c0a4702424351404c4f": [
+      "en",
+      "ja",
+      "ko",
+      "zh-CN",
+      "zh-TW"
+    ],
+    "gyeongju-VG-REST-535f40400605094c0d4204474c51434d4a": [
+      "en",
+      "ja",
+      "ko",
+      "zh-CN",
+      "zh-TW"
+    ]
+  },
+  "rights_violations": 0,
+  "source_fact_id_dups": 0,
+  "verdict": "PASS",
+  "vg_rest_sf_count": 84
+}
