@@ -1,0 +1,123 @@
+{
+  "ARCHIVE_ONLY": 0,
+  "HOLD": 808,
+  "RELATION_ONLY": 0,
+  "RELEASE": 102,
+  "by_category": {
+    "accommodation": {
+      "ARCHIVE_ONLY": 0,
+      "HOLD": 126,
+      "RELEASE": 0,
+      "total": 126
+    },
+    "attraction": {
+      "ARCHIVE_ONLY": 0,
+      "HOLD": 334,
+      "RELEASE": 0,
+      "total": 334
+    },
+    "event": {
+      "ARCHIVE_ONLY": 0,
+      "HOLD": 24,
+      "RELEASE": 0,
+      "total": 24
+    },
+    "nature": {
+      "ARCHIVE_ONLY": 0,
+      "HOLD": 59,
+      "RELEASE": 0,
+      "total": 59
+    },
+    "restaurant": {
+      "ARCHIVE_ONLY": 0,
+      "HOLD": 265,
+      "RELEASE": 102,
+      "total": 367
+    }
+  },
+  "by_source": {
+    "baseline_831": {
+      "HOLD": 729,
+      "RELEASE": 102,
+      "total": 831
+    },
+    "visitgyeongju_restaurant_new": {
+      "HOLD": 62,
+      "RELEASE": 0,
+      "total": 62
+    },
+    "visitgyeongju_souvenir_new": {
+      "HOLD": 7,
+      "RELEASE": 0,
+      "total": 7
+    },
+    "web_attraction_new": {
+      "HOLD": 10,
+      "RELEASE": 0,
+      "total": 10
+    }
+  },
+  "by_subcategory": {
+    "None": {
+      "HOLD": 736,
+      "RELEASE": 0,
+      "total": 736
+    },
+    "night_view": {
+      "HOLD": 4,
+      "RELEASE": 0,
+      "total": 4
+    },
+    "observation_point": {
+      "HOLD": 9,
+      "RELEASE": 0,
+      "total": 9
+    },
+    "souvenir_shop": {
+      "HOLD": 7,
+      "RELEASE": 0,
+      "total": 7
+    },
+    "디저트": {
+      "HOLD": 16,
+      "RELEASE": 0,
+      "total": 16
+    },
+    "숲머리음식단지": {
+      "HOLD": 3,
+      "RELEASE": 0,
+      "total": 3
+    },
+    "양식": {
+      "HOLD": 1,
+      "RELEASE": 17,
+      "total": 18
+    },
+    "일식": {
+      "HOLD": 0,
+      "RELEASE": 6,
+      "total": 6
+    },
+    "전망좋은카페": {
+      "HOLD": 13,
+      "RELEASE": 0,
+      "total": 13
+    },
+    "중식": {
+      "HOLD": 1,
+      "RELEASE": 2,
+      "total": 3
+    },
+    "한식": {
+      "HOLD": 4,
+      "RELEASE": 77,
+      "total": 81
+    },
+    "황리단길": {
+      "HOLD": 14,
+      "RELEASE": 0,
+      "total": 14
+    }
+  },
+  "total": 910
+}

@@ -1,0 +1,39 @@
+{
+  "all_byte_identical": true,
+  "byte_identical_count": 13,
+  "notes": "as_of from normalization summary; datetime.now() not used; sort_keys=True; deterministic sort throughout",
+  "run1_sha256": {
+    "gyeongju-candidate-release-hold-v1.jsonl": "0690bdac67415aaf4f5e3d9a9e430b41ff720f9ab6a698ec5ac03bb48fb97013",
+    "gyeongju-event-release-hold-v1.jsonl": "1841559b21b72167ad4de50d7d06d759ae13875319096faa960fc2d4e944d174",
+    "gyeongju-hold-reason-summary-v1.json": "ce71a365e6ef3023ceee828c7fc4258fa6332f260aa20c4b1830fd226e2cfe36",
+    "gyeongju-product-usable-count-summary-v1.json": "4d374988a8586e458841909528cc3498051f8494bb3dce6ca44a5e5e673aa724",
+    "gyeongju-relation-release-usage-v1.jsonl": "2a022d6e58583f08a937c2c3a69028247bf9725639189aa841ce7a6bf8b21287",
+    "gyeongju-release-classification-defects-v1.jsonl": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "gyeongju-release-hold-category-summary-v1.json": "c67c05d22266bc07509685c355190f94537f979b983fb9f8cf5978c800961e70",
+    "gyeongju-release-manual-review-impact-v1.json": "b288e75b46c14767243b4c973f635a097aa9a76657aaefa0915aefa447d8321d",
+    "gyeongju-release-missing-core-fields-v1.jsonl": "18387312ae743de45a662c2a3042cb1d4747f23800c72d470e950a8c6fb368cd",
+    "gyeongju-release-quality-coverage-v1.json": "23a4708d1f354928bd1d30c91f54cf0d8b2f53ab4c77a7b07c45986d18cfad90",
+    "gyeongju-release-readiness-summary-v1.json": "75d1d505af51231da041eb594ca73acf159abce5f20a7ab2787c0bb7776add4a",
+    "gyeongju-release-rights-usage-audit-v1.jsonl": "b62bc827fe237616307f8dc890e86929e6b4e11c337c397954986bb7f9cc1f08",
+    "gyeongju-release-source-limitations-v1.jsonl": "bcc25dd86feb64fdd579a8d79194e6371a4248d7a45eff3e7e6cbb68f9ce25b1"
+  },
+  "run2_sha256": {
+    "gyeongju-candidate-release-hold-v1.jsonl": "0690bdac67415aaf4f5e3d9a9e430b41ff720f9ab6a698ec5ac03bb48fb97013",
+    "gyeongju-event-release-hold-v1.jsonl": "1841559b21b72167ad4de50d7d06d759ae13875319096faa960fc2d4e944d174",
+    "gyeongju-hold-reason-summary-v1.json": "ce71a365e6ef3023ceee828c7fc4258fa6332f260aa20c4b1830fd226e2cfe36",
+    "gyeongju-product-usable-count-summary-v1.json": "4d374988a8586e458841909528cc3498051f8494bb3dce6ca44a5e5e673aa724",
+    "gyeongju-relation-release-usage-v1.jsonl": "2a022d6e58583f08a937c2c3a69028247bf9725639189aa841ce7a6bf8b21287",
+    "gyeongju-release-classification-defects-v1.jsonl": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "gyeongju-release-hold-category-summary-v1.json": "c67c05d22266bc07509685c355190f94537f979b983fb9f8cf5978c800961e70",
+    "gyeongju-release-manual-review-impact-v1.json": "b288e75b46c14767243b4c973f635a097aa9a76657aaefa0915aefa447d8321d",
+    "gyeongju-release-missing-core-fields-v1.jsonl": "18387312ae743de45a662c2a3042cb1d4747f23800c72d470e950a8c6fb368cd",
+    "gyeongju-release-quality-coverage-v1.json": "23a4708d1f354928bd1d30c91f54cf0d8b2f53ab4c77a7b07c45986d18cfad90",
+    "gyeongju-release-readiness-summary-v1.json": "75d1d505af51231da041eb594ca73acf159abce5f20a7ab2787c0bb7776add4a",
+    "gyeongju-release-rights-usage-audit-v1.jsonl": "b62bc827fe237616307f8dc890e86929e6b4e11c337c397954986bb7f9cc1f08",
+    "gyeongju-release-source-limitations-v1.jsonl": "bcc25dd86feb64fdd579a8d79194e6371a4248d7a45eff3e7e6cbb68f9ce25b1"
+  },
+  "script_version": "1.0.0",
+  "task": "TASK-GYEONGJU-RELEASE-HOLD-CLASSIFICATION-V1",
+  "total_files": 13,
+  "verdict": "PASS"
+}

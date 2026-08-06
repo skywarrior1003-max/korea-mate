@@ -1,0 +1,47 @@
+{
+  "archive_count": 0,
+  "as_of": "2026-08-05T04:08:00Z",
+  "base_head": "74a484d",
+  "base_task": "TASK-GYEONGJU-POST-LINK-FINAL-INDEPENDENT-QA-V1",
+  "classification_status": "GYEONGJU_RELEASE_HOLD_CLASSIFICATION_COMPLETE_WITH_LIMITATIONS",
+  "defect_counts": {},
+  "documented_limitations": [
+    "DEF-L01: heritage coverage gap → CLOSED_AS_DOCUMENTED_SOURCE_LIMITATION",
+    "KTO15 행사 24건 날짜 없음 → SOURCE_LIMITATION_KTO15_NO_CURRENT_DATE",
+    "attraction/nature/accommodation description 없음 → SOURCE_LIMITATION_NO_ATTRACTION_DESCRIPTION",
+    "baseline_831 152건 좌표 없음 → SOURCE_LIMITATION_COORD_MISSING_BASELINE"
+  ],
+  "event_archive_count": 0,
+  "event_hold_count": 5,
+  "event_release_count": 2,
+  "hold_count": 808,
+  "overall_verdict": "PASS",
+  "product_usable_summary": {
+    "events": {
+      "archive_past_events": 0,
+      "current_events_releasable": 2,
+      "hold_date_incomplete": 5,
+      "hold_status_uncertain": 0,
+      "total_web_events": 7,
+      "upcoming_events_releasable": 0
+    },
+    "hold_enrichment_only": 538,
+    "hold_identity_category_review": 22,
+    "hold_location_or_enrichment": 762,
+    "hold_no_public_currently": 24,
+    "immediately_usable_places": 102,
+    "relations": {
+      "preserved_candidate_hold": 0,
+      "source_limitation": 113,
+      "total": 113,
+      "usable_linked_released": 0
+    }
+  },
+  "relation_only_count": 0,
+  "relation_records_classified": 113,
+  "release_count": 102,
+  "script_version": "1.0.0",
+  "task": "TASK-GYEONGJU-RELEASE-HOLD-CLASSIFICATION-V1",
+  "total_candidates": 910,
+  "web_events_classified": 7
+}

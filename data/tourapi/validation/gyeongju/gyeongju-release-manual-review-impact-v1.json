@@ -1,0 +1,73 @@
+{
+  "blocking_candidates": [
+    {
+      "candidate_id": "gyeongju-GJ08-1674",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6713",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6733",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7267",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7282",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7492",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-GJ09-372",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO12-128677",
+      "category": "attraction"
+    },
+    {
+      "candidate_id": "gyeongju-KTO12-2044527",
+      "category": "attraction"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-2838788",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-2839062",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-2840380",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-2840413",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-2840523",
+      "category": "restaurant"
+    },
+    {
+      "candidate_id": "gyeongju-KTO39-3444113",
+      "category": "restaurant"
+    }
+  ],
+  "mrq_blocking_candidate_count": 15,
+  "mrq_type_distribution": {
+    "attraction": 4,
+    "cultural_guide": 6,
+    "monthly_rec_place_link": 8,
+    "restaurant": 13,
+    "souvenir": 7
+  },
+  "total_mrq_entries": 38
+}

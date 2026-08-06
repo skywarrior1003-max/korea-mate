@@ -1,0 +1,147 @@
+{
+  "all_candidates": {
+    "coverage": {
+      "coord_ok": {
+        "count": 679,
+        "pct": 74.6,
+        "total": 910
+      },
+      "has_address": {
+        "count": 902,
+        "pct": 99.1,
+        "total": 910
+      },
+      "has_admission": {
+        "count": 13,
+        "pct": 1.4,
+        "total": 910
+      },
+      "has_category": {
+        "count": 910,
+        "pct": 100.0,
+        "total": 910
+      },
+      "has_description_ko": {
+        "count": 108,
+        "pct": 11.9,
+        "total": 910
+      },
+      "has_district": {
+        "count": 158,
+        "pct": 17.4,
+        "total": 910
+      },
+      "has_official_url": {
+        "count": 233,
+        "pct": 25.6,
+        "total": 910
+      },
+      "has_opening_hours": {
+        "count": 124,
+        "pct": 13.6,
+        "total": 910
+      },
+      "has_phone": {
+        "count": 329,
+        "pct": 36.2,
+        "total": 910
+      },
+      "has_source_fact_id": {
+        "count": 831,
+        "pct": 91.3,
+        "total": 910
+      },
+      "has_title_en": {
+        "count": 69,
+        "pct": 7.6,
+        "total": 910
+      },
+      "has_title_ko": {
+        "count": 910,
+        "pct": 100.0,
+        "total": 910
+      },
+      "image_rights": {
+        "count": 530,
+        "pct": 58.2,
+        "total": 910
+      }
+    },
+    "total": 910
+  },
+  "hold_missing_stats": {
+    "no_coord": 231,
+    "no_description": 802,
+    "no_image": 380
+  },
+  "release_candidates": {
+    "coverage": {
+      "coord_ok": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_address": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_admission": {
+        "count": 0,
+        "pct": 0.0,
+        "total": 102
+      },
+      "has_category": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_description_ko": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_district": {
+        "count": 0,
+        "pct": 0.0,
+        "total": 102
+      },
+      "has_official_url": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_opening_hours": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_phone": {
+        "count": 100,
+        "pct": 98.0,
+        "total": 102
+      },
+      "has_source_fact_id": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "has_title_en": {
+        "count": 0,
+        "pct": 0.0,
+        "total": 102
+      },
+      "has_title_ko": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      },
+      "image_rights": {
+        "count": 102,
+        "pct": 100.0,
+        "total": 102
+      }
+    },
+    "total": 102
+  }
+}
