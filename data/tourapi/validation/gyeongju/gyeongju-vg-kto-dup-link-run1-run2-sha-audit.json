@@ -1,0 +1,185 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "byte_identical": 29,
+  "files": [
+    {
+      "file": "gyeongju-attraction-identity-audit-v1.jsonl",
+      "run1_sha256": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d",
+      "run2_sha256": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-attribute-mapping-audit-v1.json",
+      "run1_sha256": "2b340238292823690619b021d8261c7ecd1118205b870f4e8bdd61523afcc8ca",
+      "run2_sha256": "2b340238292823690619b021d8261c7ecd1118205b870f4e8bdd61523afcc8ca",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-baseline-831-identity-link-audit.jsonl",
+      "run1_sha256": "3a01828930d84d2132a18e8eaa12bfc3685387eea4c9d03cee2264a26a6e2b4a",
+      "run2_sha256": "3a01828930d84d2132a18e8eaa12bfc3685387eea4c9d03cee2264a26a6e2b4a",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-candidate-delta-reconciliation-audit.json",
+      "run1_sha256": "2c6ef739bb5ed8da2184f6f7dfd36286f432971c4f42670c1c21d7ca1e08365b",
+      "run2_sha256": "2c6ef739bb5ed8da2184f6f7dfd36286f432971c4f42670c1c21d7ca1e08365b",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-course-entities-v1.jsonl",
+      "run1_sha256": "a1f63b3a69bbea68c8e09c3799a683bb3ccb1f29f98f9adcd43c02b02e402f83",
+      "run2_sha256": "a1f63b3a69bbea68c8e09c3799a683bb3ccb1f29f98f9adcd43c02b02e402f83",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-course-waypoint-relations-v1.jsonl",
+      "run1_sha256": "178f955dfb5a17a083c5c2400edf9d196a6ee694012f6a2571fecc212df23bc8",
+      "run2_sha256": "178f955dfb5a17a083c5c2400edf9d196a6ee694012f6a2571fecc212df23bc8",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-cultural-guide-relations-v1.jsonl",
+      "run1_sha256": "0c82c5de0c64265fe6da945366b682ff3a88a5f981119ad8ac6af93a62d69716",
+      "run2_sha256": "0c82c5de0c64265fe6da945366b682ff3a88a5f981119ad8ac6af93a62d69716",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-entity-attribute-evidence-v1.jsonl",
+      "run1_sha256": "08ae41049aee7d530926cb943fe303bb6afb4fc283873168e64afb75e571865c",
+      "run2_sha256": "08ae41049aee7d530926cb943fe303bb6afb4fc283873168e64afb75e571865c",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-event-entities-v1.jsonl",
+      "run1_sha256": "aafae5151dd469f1999e1ee4dd1d93e360f2f3508a1237187ed9d80f50d30d82",
+      "run2_sha256": "aafae5151dd469f1999e1ee4dd1d93e360f2f3508a1237187ed9d80f50d30d82",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-event-listing-relations-v1.jsonl",
+      "run1_sha256": "45d05c4f2b5f81e420ae02d82cdc700ca9c156a0689ade0ba4c2ba0a32d6cb46",
+      "run2_sha256": "45d05c4f2b5f81e420ae02d82cdc700ca9c156a0689ade0ba4c2ba0a32d6cb46",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-field-conflict-audit-v1.jsonl",
+      "run1_sha256": "5a93e7699ac0d2c5b6723609bcad86e4c9d9e9d3706ca383a3a92dab11ea0c5b",
+      "run2_sha256": "5a93e7699ac0d2c5b6723609bcad86e4c9d9e9d3706ca383a3a92dab11ea0c5b",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-full-v1-candidates.jsonl",
+      "run1_sha256": "1ed2c18b2d7b7bf841f1fa7c0be5774cf17512d052c4a5e585d2cfde37dc8ec0",
+      "run2_sha256": "1ed2c18b2d7b7bf841f1fa7c0be5774cf17512d052c4a5e585d2cfde37dc8ec0",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-heritage-entities-v1.jsonl",
+      "run1_sha256": "a70aeadb4698525e5962356b7c40dd3069a9fda4229c846d046970d20a9b1bc3",
+      "run2_sha256": "a70aeadb4698525e5962356b7c40dd3069a9fda4229c846d046970d20a9b1bc3",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-heritage-relations-v1.jsonl",
+      "run1_sha256": "7c56b419cad5dc77363232d789ea98652dfb4ab97d7d1d449b1f75433a509aab",
+      "run2_sha256": "7c56b419cad5dc77363232d789ea98652dfb4ab97d7d1d449b1f75433a509aab",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-manual-review-queue-v1.jsonl",
+      "run1_sha256": "762602eae3bb03edf0641bbb7a6d31b713348699b707353e5b2bc24c4f243c1d",
+      "run2_sha256": "762602eae3bb03edf0641bbb7a6d31b713348699b707353e5b2bc24c4f243c1d",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-multilingual-entity-link-audit-v1.jsonl",
+      "run1_sha256": "b43c4e414808087c2411b15715e4ef5154d5007ca4b8d430d489f61dce960df1",
+      "run2_sha256": "b43c4e414808087c2411b15715e4ef5154d5007ca4b8d430d489f61dce960df1",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-mutable-source-page-audit.jsonl",
+      "run1_sha256": "e848f9b0f7bc5e80a5ed8a89145b08684347e3393b27dbbe97e24aa5729e1be5",
+      "run2_sha256": "e848f9b0f7bc5e80a5ed8a89145b08684347e3393b27dbbe97e24aa5729e1be5",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-normalization-summary-v1.json",
+      "run1_sha256": "59fa5b37d57552bb252a194b2bbbd4ee45da985f15b6633f98aac1be08f000c3",
+      "run2_sha256": "59fa5b37d57552bb252a194b2bbbd4ee45da985f15b6633f98aac1be08f000c3",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-before-after-comparison.jsonl",
+      "run1_sha256": "154e2f13b18fab958d78c73e6d2164b2812cb805985716f343a9a8b054b0b490",
+      "run2_sha256": "154e2f13b18fab958d78c73e6d2164b2812cb805985716f343a9a8b054b0b490",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-collections-v1.jsonl",
+      "run1_sha256": "f51c3ff9747f256cc78ebca4ca8088813ce0347ae994108f0d2af2591a8b41e5",
+      "run2_sha256": "f51c3ff9747f256cc78ebca4ca8088813ce0347ae994108f0d2af2591a8b41e5",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-place-relations-v1.jsonl",
+      "run1_sha256": "d141b38442c1b95d958be8bbe9ec1061703a16aa3df622b2f1a1c3b8effc5ef5",
+      "run2_sha256": "d141b38442c1b95d958be8bbe9ec1061703a16aa3df622b2f1a1c3b8effc5ef5",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-relation-review-queue.jsonl",
+      "run1_sha256": "ea7c71b03a61af5f15b0eb92d6fdd152c11ca36ab948d3a34162723e901b4801",
+      "run2_sha256": "ea7c71b03a61af5f15b0eb92d6fdd152c11ca36ab948d3a34162723e901b4801",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-relation-status-audit.jsonl",
+      "run1_sha256": "f1ef2b78dfa2eacca8b86f111f4ff96980412ccdcd07e4a31a7d84228c850e17",
+      "run2_sha256": "f1ef2b78dfa2eacca8b86f111f4ff96980412ccdcd07e4a31a7d84228c850e17",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-recommendation-ui-label-rejection-audit.jsonl",
+      "run1_sha256": "e8610ad51d2610165fd819fb3190d1f463b160713977adb3fd9cdc5cd75a1d1e",
+      "run2_sha256": "e8610ad51d2610165fd819fb3190d1f463b160713977adb3fd9cdc5cd75a1d1e",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-restaurant-identity-audit-v1.jsonl",
+      "run1_sha256": "f69d5a40d915b5b530593de1d3589e57627b95935e36cdd6d198988edadc4eca",
+      "run2_sha256": "f69d5a40d915b5b530593de1d3589e57627b95935e36cdd6d198988edadc4eca",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-run1-run2-sha-audit.json",
+      "run1_sha256": "c2dd48827c969a0d807c8de228f0d0d2ddfba2e5af8c89f544f5be71379162b8",
+      "run2_sha256": "c2dd48827c969a0d807c8de228f0d0d2ddfba2e5af8c89f544f5be71379162b8",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-source-filter-taxonomy-v1.json",
+      "run1_sha256": "f4abc5d36b6b291485184efd612f90aa36ace1e86951db80a7b57ccb7d41a925",
+      "run2_sha256": "f4abc5d36b6b291485184efd612f90aa36ace1e86951db80a7b57ccb7d41a925",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "gyeongju-souvenir-classification-audit-v1.jsonl",
+      "run1_sha256": "89f589574ac86a11f6f648751e9c088045ac5534f807408624202ae9ac7ac5c7",
+      "run2_sha256": "89f589574ac86a11f6f648751e9c088045ac5534f807408624202ae9ac7ac5c7",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "file": "source-facts-full-v1.jsonl",
+      "run1_sha256": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf",
+      "run2_sha256": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf",
+      "status": "BYTE_IDENTICAL"
+    }
+  ],
+  "mismatch": 0,
+  "script_version": "1.3.0",
+  "task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1",
+  "total_files": 29,
+  "verdict": "BYTE_IDENTICAL"
+}

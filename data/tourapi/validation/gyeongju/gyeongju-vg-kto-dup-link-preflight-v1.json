@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-08-05T04:08:00Z",
+  "def_h01_expected": 4,
+  "def_h01_linked": 3,
+  "expected_v130": {
+    "HIGH_CONFIDENCE": 9,
+    "MANUAL_REVIEW": 13,
+    "NEW_OFFICIAL_PLACE": 62
+  },
+  "linked_cases": [
+    {
+      "candidate_id": "gyeongju-GJ08-87",
+      "evidence": [
+        "NO_LINKABLE_EVIDENCE",
+        "VG_KTO_PHONE_ADDRESS_NAME_MATCH"
+      ],
+      "hex_id": "535f40400604084d0b4305454d5142404d",
+      "name_ko": "산해식당",
+      "verdict": "HIGH_CONFIDENCE"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-760",
+      "evidence": [
+        "NO_LINKABLE_EVIDENCE",
+        "VG_KTO_PHONE_ADDRESS_NAME_MATCH"
+      ],
+      "hex_id": "535f40400605094c0a4702424351404c4f",
+      "name_ko": "박용자 경주 명동쫄면",
+      "verdict": "HIGH_CONFIDENCE"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-405",
+      "evidence": [
+        "NO_LINKABLE_EVIDENCE",
+        "VG_KTO_PHONE_ADDRESS_NAME_MATCH"
+      ],
+      "hex_id": "535f40400605094c0d4204474c51434d4a",
+      "name_ko": "스틸룸(Stillroom)",
+      "verdict": "HIGH_CONFIDENCE"
+    }
+  ],
+  "preflight_verdict": "FAIL",
+  "script_version": "v1.3.0-preflight",
+  "task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1",
+  "verdict_distribution": {
+    "HIGH_CONFIDENCE": 8,
+    "MANUAL_REVIEW": 13,
+    "NEW_OFFICIAL_PLACE": 63
+  }
+}

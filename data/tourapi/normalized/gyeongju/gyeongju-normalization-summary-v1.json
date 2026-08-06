@@ -6,7 +6,7 @@
     "NEW_OFFICIAL_PLACE": 10,
     "total": 159
   },
-  "base_task": "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1",
+  "base_task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1",
   "baseline_candidates": 831,
   "collections": {
     "course_waypoints": 29,
@@ -24,29 +24,29 @@
     "unique_entities": 7
   },
   "field_conflicts": 5,
-  "full_v1_candidates_total": 914,
+  "full_v1_candidates_total": 910,
   "manual_review_queue": 38,
   "monthly_rec_alt": {
     "candidate_delta_reconciliation": "CANDIDATE_DELTA_RECONCILIATION_PASS",
     "relation_status_corrected": 7,
     "source_mutability": "MUTABLE_SOURCE_PAGE",
-    "total_new_candidates": 83
+    "total_new_candidates": 79
   },
   "multilingual_entities": 92,
-  "new_candidates_added": 83,
+  "new_candidates_added": 79,
   "output_files": 28,
   "restaurant_identity": {
-    "HIGH_CONFIDENCE": 5,
+    "HIGH_CONFIDENCE": 9,
     "MANUAL_REVIEW": 13,
-    "NEW_OFFICIAL_PLACE": 66,
+    "NEW_OFFICIAL_PLACE": 62,
     "total": 84
   },
-  "script_version": "1.2.0",
+  "script_version": "1.3.0",
   "source_facts_enriched_total": 1158,
   "source_facts_input": 907,
   "souvenir_classification": {
     "PHYSICAL_PLACE": 8,
     "total": 8
   },
-  "task": "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1"
+  "task": "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1"
 }

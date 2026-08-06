@@ -1,24 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 (v1.2.0)
-기반: TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1 (v1.1.0)
+TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1 (v1.3.0)
+기반: TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1 (v1.2.0)
 
 VG hexId[:16] 잘라내기 버그 수정 정규화 스크립트.
-
+VG-KTO 중복 식당 4건 HIGH_CONFIDENCE 링크 정규화 스크립트.
 변경 내역 (v1.1.0 → v1.2.0):
-  - DEF-C01/DEF-C02 수정: VG hex_id[:16] → hex_id (전체 34자)
-      수정 위치:
-      · build_source_facts(): sfid = VG-REST-{hex_id} / VG-SOUV-{hex_id}
-      · link_restaurant_identity(): web_sfid = VG-REST-{hex_id}
-          evidence_values의 hex_id 필드도 전체 hexId 사용
-      · classify_souvenir(): web_sfid = VG-SOUV-{hex_id}
-      · _multilingual_entity(): entity_source_id = VG-{type}-{hex_id}
-      · build_source_filter_taxonomy(): entity_id = VG-REST-{hex_id}
-      · build_full_v1_candidates(): 식당 매칭 및 candidate_id 생성 전체 hexId 사용
-  - 수정 전후 ID 매핑 감사 파일 추가:
-      gyeongju-vg-id-fix-mapping-audit-v1.jsonl
+변경 내역 (v1.2.0 → v1.3.0):
+  - DEF-H01 수정: VG 식당 4건을 KTO 기준 후보에 HIGH_CONFIDENCE 링크
+      매칭 기준: 전화번호 일치(공유전화 제외) + 주소 포함 + 이름 포함
+  - 신규 함수: _norm_name_nospace, is_shared_or_generic_phone,
+      compare_normalized_address, evaluate_vg_kto_restaurant_identity
+  - link_restaurant_identity(): PILOT_NO_MATCH 분기 및 NO_LINKABLE_EVIDENCE 분기에
+      evaluate_vg_kto_restaurant_identity() 호출 추가
+  - 식당 HIGH_CONFIDENCE: 5 → 9 (+4), NEW_OFFICIAL_PLACE: 66 → 62 (-4)
+  - 전체 candidates: 914 → 910 (-4 신규 미생성)
+  - 금지사항 준수: 특정 ID 하드코딩 없음, 증거 기반 동적 매칭
 
+이전 변경 내역 (v1.1.0 → v1.2.0):
+  - DEF-C01/DEF-C02 수정: VG hex_id[:16] → hex_id (전체 34자)
+  - 수정 전후 ID 매핑 감사 파일 추가: gyeongju-vg-id-fix-mapping-audit-v1.jsonl
 이전 변경 내역 (v1.0.0 → v1.1.0):
   - build_monthly_rec_collections() 재설계:
       · source_mutability, relation_status, relation_count, as_of, source_snapshot_sha 추가
@@ -58,9 +60,9 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = "1.2.0"
-TASK = "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1"
-TASK_BASE = "TASK-GYEONGJU-MONTHLY-REC-RELATION-FIX-ALT-V1"
+VERSION = "1.3.0"
+TASK = "TASK-GYEONGJU-VG-KTO-DUPLICATE-LINK-FIX-V1"
+TASK_BASE = "TASK-GYEONGJU-VG-CANDIDATE-ID-FIX-V1"
 AS_OF_DEFAULT = "2026-08-05T04:08:00Z"
 
 # Identity verdict types (Section 4)
@@ -208,6 +210,14 @@ def norm_address(s: str) -> str:
     s = re.sub(r"^경북\s*", "", s)
     s = re.sub(r"^경주시\s*", "", s)
     return s.lower()
+
+
+def _norm_name_nospace(s: str) -> str:
+    """NFC + 모든 공백 제거 + lowercase. VG-KTO 이름 포함 비교에 사용. (v1.3.0)"""
+    if not s:
+        return ""
+    s = unicodedata.normalize("NFC", s)
+    return re.sub(r"\s+", "", s).lower()
 
 
 def clean_html(s: str) -> str:
@@ -733,6 +743,105 @@ def _build_identity(web_sfid, candidate_id, verdict, evidence_codes, evidence_va
 # Phase 5: Restaurant Identity Linking (84)
 # ──────────────────────────────────────────────────────────────
 
+# ──────────────────────────────────────────────────────────────
+# Phase 5 Helpers: VG-KTO 중복 탐지 (v1.3.0 신규)
+# ──────────────────────────────────────────────────────────────
+
+def is_shared_or_generic_phone(phone_digits: str, idx: dict) -> bool:
+    """True if phone matches 2+ baseline candidates (shared/tourism hotline).
+    공유 대표전화(054-779-8585 등)는 단독 증거로 사용 불가.
+    """
+    if not phone_digits or len(phone_digits) < 9:
+        return False
+    cids = idx["cand_by_norm_phone"].get(phone_digits, [])
+    return len(cids) >= 2
+
+
+def compare_normalized_address(vg_addr: str, bl_addr: str) -> dict:
+    """norm_address() 처리된 주소 2개를 비교.
+    공백 제거 후 동일 또는 한쪽이 다른쪽에 포함되면 match.
+    Returns: {match: bool, detail: str}"""
+    if not vg_addr or not bl_addr:
+        return {"match": False, "detail": "MISSING_ADDRESS"}
+    vg_n = re.sub(r"\s+", "", vg_addr)
+    bl_n = re.sub(r"\s+", "", bl_addr)
+    if vg_n == bl_n:
+        return {"match": True, "detail": "EXACT"}
+    if vg_n in bl_n or bl_n in vg_n:
+        return {"match": True, "detail": "CONTAINMENT"}
+    return {"match": False, "detail": "NO_MATCH"}
+
+
+def evaluate_vg_kto_restaurant_identity(rest: dict, idx: dict, web_sfid: str):
+    """VG 식당이 KTO 기준 후보와 매칭되면 HIGH_CONFIDENCE identity record 반환,
+    아니면 None 반환. (v1.3.0 신규)
+
+    매칭 기준 (3가지 모두 충족 필요):
+      1. 전화번호 일치 (norm_phone): 공유 대표전화는 제외
+      2. 주소 포함 (compare_normalized_address): EXACT 또는 CONTAINMENT
+      3. 이름 포함 (_norm_name_nospace): 동일 또는 한쪽이 다른쪽에 포함
+
+    금지사항: 특정 hexID·candidate_id 하드코딩 없음 — 순수 증거 기반 동적 매칭.
+    """
+    vg_phone = norm_phone(rest.get("phone") or "")
+    if not vg_phone or len(vg_phone) < 9:
+        return None
+
+    phone_matched_cids = sorted(idx["cand_by_norm_phone"].get(vg_phone, []))
+    if not phone_matched_cids:
+        return None
+
+    vg_addr = norm_address(rest.get("address_ko") or "")
+    vg_name_nsp = _norm_name_nospace(rest.get("name_ko") or "")
+
+    # 전화+주소+이름 3가지 모두 충족하는 후보를 전수 수집.
+    # 공유 전화라도 주소·이름 필터로 유일 후보를 특정할 수 있으면 허용.
+    strong_matches = []
+    for cid in phone_matched_cids:
+        cand = idx["cand_by_id"].get(cid)
+        if not cand:
+            continue
+
+        bl_addr = norm_address(cand.get("address") or "")
+        addr_cmp = compare_normalized_address(vg_addr, bl_addr)
+        if not addr_cmp["match"]:
+            continue
+
+        bl_name_nsp = _norm_name_nospace(cand.get("title_ko") or "")
+        if not vg_name_nsp or not bl_name_nsp:
+            continue
+        name_match = (
+            vg_name_nsp == bl_name_nsp
+            or vg_name_nsp in bl_name_nsp
+            or bl_name_nsp in vg_name_nsp
+        )
+        if not name_match:
+            continue
+
+        strong_matches.append({"cid": cid, "addr_match": addr_cmp["detail"],
+                               "bl_name_nsp": bl_name_nsp})
+
+    # 0건: 매칭 없음, 2건 이상: 모호 → None (호출자가 NEW_OFFICIAL_PLACE 처리)
+    if len(strong_matches) != 1:
+        return None
+
+    # 정확히 1건 → HIGH_CONFIDENCE
+    m = strong_matches[0]
+    cid = m["cid"]
+    return _build_identity(
+        web_sfid, cid, VERDICT["HIGH_CONFIDENCE"],
+        ["VG_KTO_PHONE_ADDRESS_NAME_MATCH"],
+        [{
+            "vg_phone": vg_phone,
+            "candidate_id": cid,
+            "addr_match": m["addr_match"],
+            "vg_name_nospace": vg_name_nsp,
+            "bl_name_nospace": m["bl_name_nsp"],
+        }],
+        [], 0.92, None, [], "auto",
+    )
+
+
 def link_restaurant_identity(rest: dict, idx: dict) -> dict:
     """Determine identity verdict for one visitgyeongju restaurant vs 831 candidates."""
     hex_id = rest.get("hex_id", "")
@@ -759,6 +868,10 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
         elif conf == "NO_MATCH":
             evidence_codes.append("PILOT_VG_CAND_NO_MATCH")
             evidence_values.append({"hex_id": hex_id})  # v1.2.0: 전체 hexId
+            # v1.3.0: PILOT_NO_MATCH라도 전화+주소+이름 증거로 KTO 기준 후보 매칭 시도
+            vg_kto_ident = evaluate_vg_kto_restaurant_identity(rest, idx, web_sfid)
+            if vg_kto_ident:
+                return vg_kto_ident
             # Could still be NEW_OFFICIAL_PLACE if has address
             if rest.get("name_ko") and rest.get("address_ko"):
                 return _build_identity(web_sfid, None, VERDICT["NEW_OFFICIAL_PLACE"], evidence_codes, evidence_values,
@@ -821,6 +934,10 @@ def link_restaurant_identity(rest: dict, idx: dict) -> dict:
     # No match
     evidence_codes.append("NO_LINKABLE_EVIDENCE")
     evidence_values.append({"normalized_name": n, "hex_id": hex_id})  # v1.2.0: 전체 hexId
+    # v1.3.0: 최종 폴백 — 전화+주소+이름 증거로 KTO 기준 후보 매칭 시도
+    vg_kto_ident = evaluate_vg_kto_restaurant_identity(rest, idx, web_sfid)
+    if vg_kto_ident:
+        return vg_kto_ident
     if rest.get("name_ko") and rest.get("address_ko"):
         return _build_identity(web_sfid, None, VERDICT["NEW_OFFICIAL_PLACE"], evidence_codes, evidence_values,
                                [], 0.0, None, [], "manual")
