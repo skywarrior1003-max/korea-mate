@@ -10,9 +10,9 @@
 
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
@@ -30,6 +30,11 @@ import UserSpotForm, {
 
 type Tab = "selected" | "saved" | "mine";
 const TABS: Tab[] = ["selected", "saved", "mine"];
+
+/** ?tab= 으로 열 탭을 지정한다. 모르는 값은 조용히 기본 탭으로 떨어뜨린다. */
+function tabFromParam(v: string | null): Tab {
+  return (TABS as string[]).includes(v ?? "") ? (v as Tab) : "selected";
+}
 
 const CATEGORY_EMOJI: Record<string, string> = {
   attraction: "🏛️", restaurant: "🍽️", nature: "🌿", event: "🎉", accommodation: "🏨",
@@ -69,13 +74,16 @@ function PlaceCardMedia({ image, type }: { image: string | null; type: string })
   );
 }
 
-export default function PicksClient() {
+function PicksContent() {
   const t   = useTranslations("picks");
   const tS  = useTranslations("shell");
   const tP  = useTranslations("place");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [tab, setTab] = useState<Tab>("selected");
+  // 첫 탭만 URL 에서 읽는다. 이후 탭 전환은 URL 을 다시 쓰지 않는다 —
+  // 히스토리에 탭 클릭이 쌓이면 뒤로가기가 이전 화면 대신 옆 탭으로 간다.
+  const [tab, setTab] = useState<Tab>(() => tabFromParam(searchParams.get("tab")));
 
   // ── Selected (cart) ─────────────────────────────────────────────────────────
   const [selected, setSelected] = useState<CartItem[]>([]);
@@ -524,5 +532,22 @@ export default function PicksClient() {
         </button>
       )}
     </div>
+  );
+}
+
+// useSearchParams 는 Suspense 경계를 요구한다(정적 export 라 더 엄격하다).
+// fallback 은 스켈레톤 하나로 둔다 — 어차피 탭 내용은 마운트 후 localStorage·
+// 서버에서 채워지므로, 여기서 화면을 크게 그리면 두 번 깜빡인다.
+export default function PicksClient() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-surface-dim flex items-center justify-center">
+          <div className="h-8 w-8 rounded-full border-2 border-line border-b-transparent animate-spin" aria-hidden />
+        </div>
+      }
+    >
+      <PicksContent />
+    </Suspense>
   );
 }

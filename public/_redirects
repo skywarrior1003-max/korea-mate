@@ -7,5 +7,9 @@
 
 # /saved → /picks (Picks 3탭으로 통합). trailingSlash:true 라 목적지를 /picks/ 로
 # 직접 지정한다 — /picks 로 보내면 Cloudflare 가 다시 /picks/ 로 보내 2홉이 된다.
-/saved/  /picks/  308
-/saved   /picks/  308
+#
+# ?tab=saved 를 붙인다. 예전 /saved 북마크는 "저장한 곳"을 보러 오는 링크인데
+# 그냥 /picks/ 로 보내면 Selected 탭이 열려서 저장 목록이 사라진 것처럼 보였다.
+# 탭 이름은 PicksClient 의 Tab 값과 같아야 한다(picks-ia-guard.test.ts 가 고정).
+/saved/  /picks/?tab=saved  308
+/saved   /picks/?tab=saved  308
