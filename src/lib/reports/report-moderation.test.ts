@@ -46,7 +46,7 @@ function mustParse(qs: string): ModerationListQuery {
 test("C1 인증 헤더가 없으면 거부한다", () => {
   // 공통 helper 가 x-admin-key 부재를 401 로 끝낸다
   assert.match(code(AUTH), /const provided = request\.headers\.get\("x-admin-key"\)/);
-  assert.match(code(AUTH), /if \(!provided \|\| provided !== adminKey\)/);
+  assert.match(code(AUTH), /if \(!provided\)/);
   assert.match(code(AUTH), /"Unauthorized" \}, 401/);
   // moderation endpoint 가 그 helper 를 쓴다 — 자체 인증을 새로 만들지 않았다
   assert.match(apiCode, /checkAdminAuth\(request, env\.ADMIN_KEY\)/);
@@ -54,7 +54,10 @@ test("C1 인증 헤더가 없으면 거부한다", () => {
 });
 
 test("C2 잘못된 키는 거부한다 — 서버 secret 과 다르면 통과 없음", () => {
-  assert.match(code(AUTH), /provided !== adminKey/);
+  // 비교는 고정 시간 비교로 강화됐다. 직접 비교로 되돌아가면 여기서 걸린다.
+  // (자세한 계약은 admin-auth-hardening.test.ts 가 실제 호출로 지킨다.)
+  assert.match(code(AUTH), /if \(!keysMatch\(provided, adminKey\)\)/);
+  assert.doesNotMatch(code(AUTH), /provided !== adminKey/);
   // ADMIN_KEY 미설정이면 통과가 아니라 503 fail-closed
   assert.match(code(AUTH), /if \(!adminKey\)/);
   assert.match(code(AUTH), /503/);
