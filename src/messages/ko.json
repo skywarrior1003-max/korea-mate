@@ -463,5 +463,46 @@
     "catAttraction": "관광명소",
     "catRestaurant": "음식",
     "catNature": "자연"
+  },
+  "report": {
+    "title": "문제 알려주기",
+    "close": "닫기",
+    "prompt": "무엇이 잘못됐나요? 보내주신 내용은 검토용으로만 쓰이고 공개되지 않습니다.",
+    "groupInfo": "정보가 잘못됐어요",
+    "groupExperience": "현장 상태·이용 중 문제",
+    "groupOther": "기타",
+    "noteLabel": "추가 설명 (선택)",
+    "notePlaceholder": "보신 내용을 알려주세요",
+    "submit": "보내기",
+    "sending": "보내는 중…",
+    "thanksTitle": "알려주셔서 감사합니다",
+    "thanksBody": "확인 후 반영합니다. 검토를 거쳐야 변경됩니다.",
+    "privacyNote": "신고 내용과 보낸 분은 공개되지 않습니다.",
+    "category": {
+      "hours_or_holiday": "영업시간·휴무일이 달라요",
+      "price_or_fee": "가격·입장료가 달라요",
+      "location": "위치가 달라요",
+      "closed_or_unavailable": "폐업·운영중단 같아요",
+      "construction_or_access": "공사 중이거나 이용하기 어려워요",
+      "facility_info": "시설 정보가 달라요",
+      "accessibility": "접근성 정보가 달라요",
+      "maintenance": "관리 상태가 나빠졌어요",
+      "cleanliness": "화장실·청결 상태가 좋지 않아요",
+      "facility_broken": "시설이 고장났어요",
+      "staff_service": "직원·관리인 응대에 문제가 있었어요",
+      "overcharge_suspected": "과다청구·바가지가 의심돼요",
+      "safety": "안전 문제가 있어요",
+      "service_mismatch": "안내와 실제 서비스가 달라요",
+      "other": "직접 입력할게요"
+    },
+    "error": {
+      "invalid_target": "이 장소는 신고할 수 없습니다.",
+      "invalid_category": "무엇이 잘못됐는지 선택해주세요.",
+      "note_too_long": "설명이 너무 깁니다.",
+      "duplicate_recent": "이미 알려주셨습니다. 감사합니다!",
+      "rate_limited": "요청이 많습니다. 잠시 후 다시 시도해주세요.",
+      "invalid_device": "기기를 확인할 수 없습니다.",
+      "server_error": "보내지 못했습니다. 다시 시도해주세요."
+    }
   }
 }

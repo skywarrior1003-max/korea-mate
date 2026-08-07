@@ -1,0 +1,144 @@
+// Cloudflare Pages Function — POST /api/place-report
+//
+// 사용자가 공개 장소 정보의 문제를 알려 주는 통로.
+//
+// SECURITY CONTRACT
+// - service_role 키는 서버에서만 쓴다. 브라우저로 나가지 않는다.
+// - 브라우저가 place_reports 에 직접 INSERT 할 수 없다(042 가 권한을 닫는다).
+// - raw device_id 를 저장하지도 로그에 남기지도 않는다. 대상별 해시만 쓴다.
+// - 응답에 신고자 키·다른 사람의 신고 수·내부 상태 이력·DB 오류 원문을 넣지 않는다.
+// - 신고 하나가 장소를 숨기거나 점수를 바꾸지 않는다. 이 파일에 그런 경로가 없다.
+// - 자유 입력은 저장만 하고 어디에도 렌더링하지 않는다.
+
+import {
+  validateReportRequest, reporterKey, acceptedResponse,
+  INITIAL_REPORT_STATUS, DUPLICATE_WINDOW_MS, RATE_MAX, RATE_WINDOW_MS,
+  MAX_BODY_BYTES, type ReportErrorCode,
+} from "../../src/lib/reports/place-report-core";
+
+interface Env {
+  NEXT_PUBLIC_SUPABASE_URL?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
+}
+interface Ctx { request: Request; env: Env }
+
+function json(data: unknown, status = 200): Response {
+  return new Response(JSON.stringify(data), {
+    status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}
+const fail = (error: ReportErrorCode, status: number) => json({ success: false, error }, status);
+
+/** 로그에 개인 식별값을 넣지 않는다. 대상과 사유만 남긴다. */
+function log(fields: Record<string, unknown>): void {
+  console.log(JSON.stringify({ action: "place-report", ...fields }));
+}
+
+// 한 기기가 짧은 시간에 쏟아붓는 것만 막는다. isolate 안에서만 유지되므로
+// 완전한 방어가 아니다 — spot-reactions·contact 가 쓰는 방식과 같은 한계이며
+// 새 테이블·패키지를 만들지 않기 위한 선택이다. 남은 위험으로 보고한다.
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+function underRateLimit(key: string): boolean {
+  const now = Date.now();
+  const hit = rateMap.get(key);
+  if (!hit || now > hit.resetAt) { rateMap.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS }); return true; }
+  if (hit.count >= RATE_MAX) return false;
+  hit.count += 1;
+  return true;
+}
+
+async function rest(
+  env: Env, method: string, pathQ: string, body?: unknown, prefer?: string,
+): Promise<{ ok: boolean; status: number; data: unknown }> {
+  const url = env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+  const key = env.SUPABASE_SERVICE_ROLE_KEY ?? "";
+  const res = await fetch(`${url}/rest/v1/${pathQ}`, {
+    method,
+    headers: {
+      apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json",
+      ...(prefer ? { Prefer: prefer } : {}),
+    },
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+  });
+  const text = await res.text();
+  let data: unknown = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+  return { ok: res.ok, status: res.status, data };
+}
+
+export async function onRequestPost(ctx: Ctx): Promise<Response> {
+  const { request, env } = ctx;
+
+  if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+    log({ status: "not_configured" });
+    return fail("server_error", 503);
+  }
+
+  // 본문 크기부터 막는다
+  const raw = await request.text();
+  if (raw.length > MAX_BODY_BYTES) return fail("invalid_target", 400);
+  let body: unknown;
+  try { body = JSON.parse(raw); } catch { return fail("invalid_target", 400); }
+
+  const deviceId = (request.headers.get("x-device-id") ?? "").trim();
+  const parsed = validateReportRequest(body, deviceId);
+  if (!parsed.ok) {
+    log({ status: "rejected", error: parsed.error });
+    return fail(parsed.error, parsed.error === "invalid_device" ? 401 : 400);
+  }
+  const r = parsed.value;
+
+  if (!underRateLimit(deviceId)) {
+    log({ status: "rate_limited", target_type: r.target_type });
+    return fail("rate_limited", 429);
+  }
+
+  // 대상이 실제로 존재하는 공개 장소인가.
+  // city_spots 는 공개 카탈로그다. user_spot 은 애초에 target_type 에 없다.
+  const found = await rest(env, "GET", `city_spots?id=eq.${encodeURIComponent(r.target_key)}&select=id&limit=1`);
+  if (!found.ok || !Array.isArray(found.data) || found.data.length === 0) {
+    log({ status: "invalid_target", target_type: r.target_type });
+    return fail("invalid_target", 404);
+  }
+
+  const rkey = await reporterKey(r.device_id, r.target_type, r.target_key);
+
+  // 같은 사람이 같은 대상·같은 사유로 최근에 이미 신고했는가.
+  const since = new Date(Date.now() - DUPLICATE_WINDOW_MS).toISOString();
+  const dup = await rest(env, "GET",
+    `place_reports?reporter_key=eq.${rkey}&target_type=eq.${r.target_type}` +
+    `&target_key=eq.${encodeURIComponent(r.target_key)}&category=eq.${r.category}` +
+    `&created_at=gte.${encodeURIComponent(since)}&select=id&limit=1`);
+  if (dup.ok && Array.isArray(dup.data) && dup.data.length > 0) {
+    log({ status: "duplicate_recent", target_type: r.target_type, category: r.category });
+    return fail("duplicate_recent", 409);
+  }
+
+  const ins = await rest(env, "POST", "place_reports", [{
+    target_type:  r.target_type,
+    target_key:   r.target_key,
+    category:     r.category,
+    note:         r.note,
+    reporter_key: rkey,
+    status:       INITIAL_REPORT_STATUS,
+  }], "return=minimal");
+
+  if (!ins.ok) {
+    // 23505 = 유니크 위반. DB 가 마지막 그물로 중복을 막은 경우다.
+    const code = (ins.data as { code?: string } | null)?.code;
+    if (ins.status === 409 || code === "23505") {
+      log({ status: "duplicate_db", target_type: r.target_type, category: r.category });
+      return fail("duplicate_recent", 409);
+    }
+    // DB 오류 원문을 사용자에게 주지 않는다.
+    log({ status: "insert_failed", httpStatus: ins.status, target_type: r.target_type });
+    return fail("server_error", 500);
+  }
+
+  log({ status: "received", target_type: r.target_type, category: r.category });
+  return json(acceptedResponse(), 201);
+}
+
+export async function onRequestOptions(): Promise<Response> {
+  return new Response(null, { status: 204, headers: { Allow: "POST, OPTIONS" } });
+}

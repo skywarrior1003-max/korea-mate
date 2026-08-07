@@ -463,5 +463,46 @@
     "catAttraction": "観光スポット",
     "catRestaurant": "グルメ",
     "catNature": "自然"
+  },
+  "report": {
+    "title": "問題を報告",
+    "close": "閉じる",
+    "prompt": "何が違いますか？ 内容は確認用にのみ使われ、公開されません。",
+    "groupInfo": "情報が違います",
+    "groupExperience": "現地の状態・サービス",
+    "groupOther": "その他",
+    "noteLabel": "補足（任意）",
+    "notePlaceholder": "見たことを教えてください",
+    "submit": "送信",
+    "sending": "送信中…",
+    "thanksTitle": "お知らせありがとうございます",
+    "thanksBody": "確認のうえ対応します。検討を経てから変更されます。",
+    "privacyNote": "報告内容と送信者は公開されません。",
+    "category": {
+      "hours_or_holiday": "営業時間・定休日が違います",
+      "price_or_fee": "料金・入場料が違います",
+      "location": "場所が違います",
+      "closed_or_unavailable": "閉店・営業停止のようです",
+      "construction_or_access": "工事中・利用しにくいです",
+      "facility_info": "施設情報が違います",
+      "accessibility": "バリアフリー情報が違います",
+      "maintenance": "管理状態が悪くなっています",
+      "cleanliness": "トイレ・清潔さが良くありません",
+      "facility_broken": "設備が故障しています",
+      "staff_service": "スタッフの対応に問題がありました",
+      "overcharge_suspected": "過剰請求の疑いがあります",
+      "safety": "安全上の問題があります",
+      "service_mismatch": "案内と実際のサービスが違います",
+      "other": "その他"
+    },
+    "error": {
+      "invalid_target": "この場所は報告できません。",
+      "invalid_category": "内容を選んでください。",
+      "note_too_long": "説明が長すぎます。",
+      "duplicate_recent": "すでに報告いただいています。ありがとうございます！",
+      "rate_limited": "現在混み合っています。後ほどお試しください。",
+      "invalid_device": "端末を確認できませんでした。",
+      "server_error": "送信できませんでした。もう一度お試しください。"
+    }
   }
 }

@@ -463,5 +463,46 @@
     "catAttraction": "景点",
     "catRestaurant": "美食",
     "catNature": "自然"
+  },
+  "report": {
+    "title": "报告问题",
+    "close": "关闭",
+    "prompt": "哪里不对？内容仅用于内部核实，不会公开。",
+    "groupInfo": "信息有误",
+    "groupExperience": "现场状况或服务",
+    "groupOther": "其他",
+    "noteLabel": "补充说明（选填）",
+    "notePlaceholder": "请告诉我们您看到的情况",
+    "submit": "提交",
+    "sending": "提交中…",
+    "thanksTitle": "感谢您的反馈",
+    "thanksBody": "我们会核实后处理。经审核后才会更改。",
+    "privacyNote": "报告内容和提交者不会公开。",
+    "category": {
+      "hours_or_holiday": "营业时间或休息日不符",
+      "price_or_fee": "价格或门票不符",
+      "location": "位置有误",
+      "closed_or_unavailable": "似乎已停业或无法使用",
+      "construction_or_access": "正在施工或难以前往",
+      "facility_info": "设施信息不符",
+      "accessibility": "无障碍信息不符",
+      "maintenance": "维护状况变差",
+      "cleanliness": "洗手间或卫生状况不佳",
+      "facility_broken": "设施损坏",
+      "staff_service": "工作人员服务有问题",
+      "overcharge_suspected": "疑似乱收费",
+      "safety": "存在安全问题",
+      "service_mismatch": "服务与介绍不符",
+      "other": "其他"
+    },
+    "error": {
+      "invalid_target": "该地点无法报告。",
+      "invalid_category": "请选择问题类型。",
+      "note_too_long": "说明过长。",
+      "duplicate_recent": "您已经反馈过了，谢谢！",
+      "rate_limited": "当前请求过多，请稍后再试。",
+      "invalid_device": "无法验证您的设备。",
+      "server_error": "提交失败，请重试。"
+    }
   }
 }

@@ -322,8 +322,11 @@ test("★NEXT_PUBLIC 계열로 key 를 노출하지 않는다", () => {
 test("★migration 을 건드리지 않았다 — 041 이 마지막", () => {
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 41);
-  assert.ok(!existsSync(join(dir, "042")));
+  assert.equal(files.length, 42);   // 042 place_reports 추가됨
+  // 042(place_reports)는 AI 와 무관한 별도 작업이다. 그 밖의 migration 은 없어야 한다.
+  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
+    assert.match(f, /^042_place_reports\.sql$/, `예상치 못한 migration: ${f}`);
+  }
 });
 
 // ── 같은 흐름 안의 중복 차단 ─────────────────────────────────────────────────

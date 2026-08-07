@@ -176,9 +176,14 @@ test("★016·022·030·038·039·040 실행 본문이 바뀌지 않았다", () 
 
 test("★migration 이 추가되지 않았다 — 041 이 마지막이고 042 는 없다", () => {
   const files = readdirSync(MIGDIR).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 41, files.length + "개");
-  assert.equal(files.at(-1), "041_lock_down_legacy_spots_select.sql");
-  assert.ok(!files.some(f => /^042/.test(f)));
+  assert.equal(files.length, 42, files.length + "개");   // 042 place_reports 추가됨
+  assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
+  // 이 가드의 뜻은 "이 작업이 DB 를 건드리지 않았다" 이다.
+  // 042 는 장소 제보(place_reports) 작업이 추가한 것으로 이 작업과 무관하다.
+  // 그 밖의 migration 이 생기면 여기서 걸린다.
+  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
+    assert.match(f, /^042_place_reports\.sql$/, `예상치 못한 migration: ${f}`);
+  }
 });
 
 test("★이번 정리가 권한을 여는 SQL 을 끌고 들어오지 않았다", () => {

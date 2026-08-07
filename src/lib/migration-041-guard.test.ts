@@ -175,5 +175,9 @@ test("★016·022·030·038·039·040 실행 본문이 그대로다", () => {
 test("★migration 번호는 041 이 마지막이다", () => {
   const files = readdirSync(join(ROOT, "supabase", "migrations"))
     .filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.at(-1), F041);
+  assert.ok(files.includes(F041));
+  // 042(place_reports)는 별도 작업이 추가했다. 그 밖의 migration 은 없어야 한다.
+  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
+    assert.match(f, /^042_place_reports\.sql$/, `예상치 못한 migration: ${f}`);
+  }
 });

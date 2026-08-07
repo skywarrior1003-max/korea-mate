@@ -463,5 +463,46 @@
     "catAttraction": "Attraction",
     "catRestaurant": "Food",
     "catNature": "Nature"
+  },
+  "report": {
+    "title": "Report an issue",
+    "close": "Close",
+    "prompt": "What looks wrong? Your report goes to our team for review — it is not published.",
+    "groupInfo": "Information is wrong",
+    "groupExperience": "On-site condition or service",
+    "groupOther": "Other",
+    "noteLabel": "Anything to add (optional)",
+    "notePlaceholder": "Tell us what you saw",
+    "submit": "Send report",
+    "sending": "Sending…",
+    "thanksTitle": "Thanks for letting us know",
+    "thanksBody": "Our team will check this. Reports are reviewed before anything changes.",
+    "privacyNote": "We do not publish reports or show who sent them.",
+    "category": {
+      "hours_or_holiday": "Opening hours or holidays are different",
+      "price_or_fee": "Price or entry fee is different",
+      "location": "The location is wrong",
+      "closed_or_unavailable": "Looks permanently closed or unavailable",
+      "construction_or_access": "Under construction or hard to access",
+      "facility_info": "Facility information is different",
+      "accessibility": "Accessibility information is different",
+      "maintenance": "Poorly maintained",
+      "cleanliness": "Restrooms or cleanliness were poor",
+      "facility_broken": "Something is broken",
+      "staff_service": "Problem with staff or management",
+      "overcharge_suspected": "Possible overcharging",
+      "safety": "Safety concern",
+      "service_mismatch": "Service did not match the description",
+      "other": "Something else"
+    },
+    "error": {
+      "invalid_target": "This place cannot be reported.",
+      "invalid_category": "Please choose what looks wrong.",
+      "note_too_long": "Your note is too long.",
+      "duplicate_recent": "You already reported this. Thanks!",
+      "rate_limited": "Too many reports right now. Please try later.",
+      "invalid_device": "Could not verify your device.",
+      "server_error": "Could not send the report. Please try again."
+    }
   }
 }

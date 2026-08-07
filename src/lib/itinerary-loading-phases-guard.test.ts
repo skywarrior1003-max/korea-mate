@@ -219,7 +219,12 @@ test("★S2-B 에서 번역한 일반 화면 키가 그대로 남아 있다", ()
 test("★migration 을 건드리지 않았다 — 041 이 마지막이고 042 는 없다", () => {
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 41);
-  assert.equal(files.at(-1), "041_lock_down_legacy_spots_select.sql");
-  assert.ok(!existsSync(join(dir, "042")));
+  assert.equal(files.length, 42);   // 042 place_reports 추가됨
+  assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
+  // 이 가드의 뜻은 "이 작업이 DB 를 건드리지 않았다" 이다.
+  // 042 는 장소 제보(place_reports) 작업이 추가한 것으로 이 작업과 무관하다.
+  // 그 밖의 migration 이 생기면 여기서 걸린다.
+  for (const f of files.filter(f => f.slice(0, 3) > "041")) {
+    assert.match(f, /^042_place_reports\.sql$/, `예상치 못한 migration: ${f}`);
+  }
 });

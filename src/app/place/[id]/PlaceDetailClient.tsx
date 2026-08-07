@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import PlaceReportModal from "@/components/PlaceReportModal";
 import { citySpotSourceKey } from "@/lib/place-identity";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
@@ -64,9 +65,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const t = useTranslations("place");
   const tD = useTranslations("discovery");
   const tSaved = useTranslations("saved");
+  const tReport = useTranslations("report");
   const locale = useLocale();
 
   const [saved, setSaved]       = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
   const [inCart, setInCart]     = useState(false);
   const [addedToast, setAdded]  = useState(false); // Add 성공 후 다음 행동 제시
   const [savedToast, setSavedT] = useState(false);
@@ -366,7 +369,22 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
               {/* 공식 원문 링크 — 기관명 명시 */}
 
-              <div className="mt-8 pt-5 border-t border-line flex items-center justify-between gap-3">
+              {/* 제보 — 공개 장소면 카테고리와 무관하게 같은 모달을 쓴다.
+                  본문 하단이라 모바일·데스크톱 어디서든 닿는다. */}
+              <div className="mt-8 pt-5 border-t border-line">
+                <button
+                  onClick={() => setReportOpen(true)}
+                  className="gkm-focus min-h-11 inline-flex items-center gap-1.5 text-xs font-semibold text-sub hover:text-ink"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden
+                       stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16.5v.01" />
+                  </svg>
+                  {tReport("title")}
+                </button>
+              </div>
+
+              <div className="mt-4 pt-5 border-t border-line flex items-center justify-between gap-3">
                 <Link href={`/explore/${spot.city.toLowerCase()}/`} className="gkm-focus text-sm font-semibold text-sub hover:text-ink">
                   {t("backExplore")}
                 </Link>
@@ -491,6 +509,13 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[90vw] truncate bg-ink text-white text-sm font-semibold px-4 py-2.5 rounded-control shadow-modal">
           {shareMsg}
         </div>
+      )}
+
+      {reportOpen && (
+        <PlaceReportModal
+          onClose={() => setReportOpen(false)}
+          targetType="city_spot" targetKey={String(spot.id)} placeName={text.name ?? ""}
+        />
       )}
     </div>
   );
