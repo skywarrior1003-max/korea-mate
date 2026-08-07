@@ -188,7 +188,25 @@ function extractJson(text: string): unknown {
   return null;
 }
 
-export async function onRequestPost(ctx: { request: Request; env: Env }): Promise<Response> {
+export async function onRequestPost(
+  ctx: {
+    request: Request;
+    env: Env;
+    /**
+     * provider 호출에 쓸 fetch. **일반 요청은 이 값을 주지 않는다.**
+     *
+     * Cloudflare 가 만들어 넘기는 ctx 에는 이 필드가 없으므로 실제 사용자
+     * 경로는 언제나 런타임 기본 fetch 를 쓴다. 관리자 canary 만 자기 요청
+     * 안에서 만든 fetch 를 넘겨 호출 횟수를 센다.
+     *
+     * 이렇게 주입하는 이유는 예전에 canary 가 globalThis.fetch 를 잠깐
+     * 바꿔치기했기 때문이다. 같은 isolate 에서 동시에 처리되는 다른 요청이
+     * 그 교체된 fetch 를 보게 되므로 안전하지 않았다. 전역을 건드리지 않고
+     * 요청 안에서만 끝나도록 경계를 여기로 옮겼다.
+     */
+    fetchFn?: typeof fetch;
+  },
+): Promise<Response> {
   const mode = resolveAiMode(ctx.env.AI_PERSONALIZATION_MODE);
 
   let body: Body;
@@ -238,10 +256,12 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
   const started = Date.now();
 
   // ── 실제 호출: 정확히 1회. 재시도 루프가 없다. ──
+  // provider 호출 지점은 이 한 곳뿐이다. 주입이 없으면 런타임 기본 fetch 다.
+  const providerFetch = ctx.fetchFn ?? fetch;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(
+    const res = await providerFetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
       {
         method:  "POST",

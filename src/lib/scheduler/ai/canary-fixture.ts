@@ -42,6 +42,73 @@ export const MAX_PROVIDER_CALLS = 1;
 /** 이 호스트로 나가는 요청만 provider 호출로 센다. */
 export const PROVIDER_HOST = "generativelanguage.googleapis.com";
 
+// ── request-local provider 계수기 ───────────────────────────────────────────
+
+export interface CapturedProviderCall {
+  httpStatus: number;
+  latencyMs:  number;
+  body:       unknown;
+  bodyChars:  number;
+}
+
+export interface CanaryFetchProbe {
+  /** personalize handler 에 넘길 fetch. 이 요청 안에서만 산다. */
+  fetchFn:       typeof fetch;
+  providerCalls(): number;
+  captured():      CapturedProviderCall | null;
+}
+
+/**
+ * 요청 하나가 쓸 fetch 와 계수기를 만든다.
+ *
+ * 왜 팩토리인가
+ *   예전에는 canary 가 globalThis.fetch 를 잠깐 바꿔치기했다. Workers 는 한
+ *   isolate 에서 여러 요청을 동시에 처리하므로, 그 사이에 들어온 **다른
+ *   요청까지 교체된 fetch 를 보게 된다.** 계수가 섞이는 것은 물론이고, 남의
+ *   요청이 우리 상한에 걸려 죽을 수도 있었다.
+ *
+ *   그래서 전역을 건드리지 않는다. 호출할 때마다 새 클로저를 만들고, 계수기는
+ *   그 클로저 안에만 둔다. 모듈 스코프에 변수를 두면 같은 문제가 그대로
+ *   돌아오므로 여기에는 어떤 가변 상태도 없다.
+ *
+ * 상한은 주장이 아니라 차단이다 — 두 번째 provider 요청은 네트워크로 나가기
+ * 전에 던진다.
+ */
+export function createCanaryFetch(baseFetch: typeof fetch): CanaryFetchProbe {
+  let providerCalls = 0;
+  let captured: CapturedProviderCall | null = null;
+
+  const fetchFn = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = typeof input === "string" ? input
+              : input instanceof URL ? input.href
+              : (input as Request).url;
+    if (!url.includes(PROVIDER_HOST)) return baseFetch(input as RequestInfo, init);
+
+    providerCalls += 1;
+    if (providerCalls > MAX_PROVIDER_CALLS) {
+      throw new Error("canary_provider_call_limit");
+    }
+    const t0 = Date.now();
+    const res = await baseFetch(input as RequestInfo, init);
+    const latencyMs = Date.now() - t0;
+    let body: unknown = null;
+    let bodyChars = 0;
+    try {
+      const text = await res.clone().text();
+      bodyChars = text.length;
+      body = JSON.parse(text);
+    } catch { /* 진단이 없어도 호출 자체는 그대로 흘려보낸다 */ }
+    captured = { httpStatus: res.status, latencyMs, body, bodyChars };
+    return res;
+  }) as typeof fetch;
+
+  return {
+    fetchFn,
+    providerCalls: () => providerCalls,
+    captured:      () => captured,
+  };
+}
+
 /**
  * canary 요청 안에서만 쓰는 모드.
  *

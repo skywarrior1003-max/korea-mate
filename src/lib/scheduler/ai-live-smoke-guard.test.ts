@@ -67,7 +67,8 @@ test("★L18·L25 재시도 0 · 실패 즉시 중단", () => {
   assert.doesNotMatch(src, /for\s*\([^)]*retry|while\s*\([^)]*retry|attempt\s*\+\+/i);
   // handler 쪽 계약도 그대로다 — provider fetch 지점은 하나뿐
   const fn = read("functions", "api", "trip", "personalize.ts");
-  assert.equal((fn.match(/await fetch\(/g) ?? []).length, 1);
+  assert.equal((fn.match(/await providerFetch\(/g) ?? []).length, 1);
+  assert.equal((fn.match(/await fetch\(/g) ?? []).length, 0);
 });
 
 test("★L22·L29 prompt 에 개인정보·좌표를 넣지 않는다", () => {

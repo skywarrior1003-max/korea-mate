@@ -61,7 +61,8 @@ test("★P22~P24·P29 비용 안전장치는 그대로다", () => {
   assert.match(s, /const MAX_OUTPUT_TOKENS = 700;/);
   assert.match(s, /const MODEL\s+= "gemini-2\.5-flash";/);
   assert.match(s, /const MAX_PROMPT_CHARS = 6_000;/);
-  assert.equal((s.match(/await fetch\(/g) ?? []).length, 1);      // provider 호출 지점 하나
+  assert.equal((s.match(/await providerFetch\(/g) ?? []).length, 1);   // provider 호출 지점 하나
+  assert.equal((s.match(/await fetch\(/g) ?? []).length, 0);           // 주입 우회 없음
   assert.doesNotMatch(s, /for\s*\([^)]*attempt|while\s*\([^)]*attempt|retry/i);
   assert.match(s, /attempts: 1/);
 });

@@ -34,8 +34,9 @@ import { json, checkAdminAuth } from "../../_lib/admin-auth";
 import { onRequestPost as personalizeHandler } from "../trip/personalize";
 import {
   canaryEnabled, confirmMatches, buildCanaryBody, allowedIdViolations,
+  createCanaryFetch,
   CANARY_CONFIRM_PHRASE, CANARY_ENABLE_ENV, CANARY_PROVIDER_MODE,
-  MAX_PROVIDER_CALLS, PROVIDER_HOST, CANARY_ALLOWED_PLACE_IDS,
+  MAX_PROVIDER_CALLS, CANARY_ALLOWED_PLACE_IDS,
 } from "../../../src/lib/scheduler/ai/canary-fixture";
 
 interface Env {
@@ -52,13 +53,6 @@ const NR = "provider_not_returned";
 /** 로그에 secret·개인 데이터를 넣지 않는다. */
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "ai-canary", ...fields }));
-}
-
-interface Captured {
-  httpStatus: number;
-  latencyMs:  number;
-  body:       unknown;
-  bodyChars:  number;
 }
 
 export const onRequestPost: (ctx: Ctx) => Promise<Response> = async ({ request, env }) => {
@@ -106,53 +100,28 @@ export const onRequestPost: (ctx: Ctx) => Promise<Response> = async ({ request, 
     body:    JSON.stringify(buildCanaryBody()),
   });
 
-  // ── 6. provider 경계 가드 ───────────────────────────────────────────────
-  // provider 로 나가는 요청만 세고, 상한을 넘으면 나가기 전에 막는다.
-  // 이건 주장이 아니라 실제 차단이다. 진단값도 여기서 받아 둔다.
-  const realFetch = globalThis.fetch;
-  let providerCalls = 0;
-  let captured: Captured | null = null;
-
-  globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
-    const url = typeof input === "string" ? input
-              : input instanceof URL ? input.href
-              : (input as Request).url;
-    if (!url.includes(PROVIDER_HOST)) return realFetch(input as RequestInfo, init);
-
-    providerCalls += 1;
-    if (providerCalls > MAX_PROVIDER_CALLS) {
-      // 재시도 루프가 생기거나 코드가 두 번 부르게 바뀌면 여기서 막힌다.
-      throw new Error("canary_provider_cap_exceeded");
-    }
-    const t0 = Date.now();
-    const res = await realFetch(input as RequestInfo, init);
-    const latencyMs = Date.now() - t0;
-    let parsed: unknown = null;
-    let chars = 0;
-    try {
-      const text = await res.clone().text();
-      chars = text.length;
-      parsed = JSON.parse(text);
-    } catch { /* 진단이 없어도 호출 자체는 그대로 흘려보낸다 */ }
-    captured = { httpStatus: res.status, latencyMs, body: parsed, bodyChars: chars };
-    return res;
-  }) as typeof fetch;
+  // ── 6. provider 경계 가드 — 이 요청 안에서만 산다 ──────────────────────
+  // 전역 fetch 를 건드리지 않는다. 요청마다 새 클로저를 만들어 handler 에
+  // 넘기므로, 같은 isolate 에서 동시에 처리되는 다른 요청은 이것을 볼 수 없다.
+  // 상한은 주장이 아니라 차단이다 — 2회째는 네트워크로 나가기 전에 던진다.
+  const probe = createCanaryFetch(fetch);
 
   let handlerBody: { profile: unknown; ai_status: string } | null = null;
   let handlerError: string | null = null;
   const started = Date.now();
   try {
-    const res = await personalizeHandler({ request: syntheticRequest, env: canaryEnv });
+    const res = await personalizeHandler({
+      request: syntheticRequest, env: canaryEnv, fetchFn: probe.fetchFn,
+    });
     handlerBody = await res.json() as { profile: unknown; ai_status: string };
   } catch (e) {
     handlerError = (e as Error).message;
-  } finally {
-    globalThis.fetch = realFetch;   // 반드시 되돌린다
   }
   const totalMs = Date.now() - started;
+  const providerCalls = probe.providerCalls();
 
   // ── 7. 안전한 진단만 조립한다 ───────────────────────────────────────────
-  const cap = captured as Captured | null;
+  const cap = probe.captured();
   const rawBody = cap?.body as {
     candidates?: { content?: { parts?: { text?: string }[] };
                    finishReason?: string; finishMessage?: string }[];

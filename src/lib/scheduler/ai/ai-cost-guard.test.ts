@@ -79,7 +79,11 @@ test("★timeout 은 8초 이하다", () => {
 
 test("★endpoint 에 재시도 루프가 없다 — fetch 는 정확히 한 번", () => {
   const s = strip(ENDPOINT);
-  assert.equal((s.match(/await fetch\(/g) ?? []).length, 1);
+  // provider 호출 지점은 providerFetch 하나다. canary 가 요청마다 자기 fetch 를
+  // 넘길 수 있게 주입 경계를 뒀을 뿐, 호출 지점 수와 재시도 0 은 그대로다.
+  assert.equal((s.match(/await providerFetch\(/g) ?? []).length, 1);
+  assert.equal((s.match(/await fetch\(/g) ?? []).length, 0);   // 주입을 우회하는 직접 호출 없음
+  assert.match(s, /const providerFetch = ctx\.fetchFn \?\? fetch;/);
   assert.doesNotMatch(s, /for\s*\([^)]*attempt/);
   assert.doesNotMatch(s, /while\s*\(/);
   assert.doesNotMatch(s, /\.retry|retryCount|setInterval/);
@@ -97,13 +101,13 @@ test("★timeout·network 에서도 재호출하지 않는다", () => {
   const s = strip(ENDPOINT);
   assert.match(s, /AbortController/);
   assert.match(s, /fallback_timeout/);
-  assert.doesNotMatch(s, /catch[\s\S]{0,400}await fetch\(/);
+  assert.doesNotMatch(s, /catch[\s\S]{0,400}await providerFetch\(/);
 });
 
 test("★key 가 없으면 provider 를 부르지 않는다", () => {
   const s = strip(ENDPOINT);
   const keyIdx = s.indexOf('fallback_missing_key');
-  const fetchIdx = s.indexOf("await fetch(");
+  const fetchIdx = s.indexOf("await providerFetch(");
   assert.ok(keyIdx > 0 && fetchIdx > keyIdx, "key 검사가 fetch 보다 먼저여야 한다");
 });
 
@@ -111,7 +115,7 @@ test("★off·mock 은 fetch 앞에서 끊는다", () => {
   const s = strip(ENDPOINT);
   const off  = s.indexOf('"disabled"');
   const mock = s.indexOf('"mock"');
-  const f    = s.indexOf("await fetch(");
+  const f    = s.indexOf("await providerFetch(");
   assert.ok(off > 0 && off < f, "off 분기가 fetch 뒤에 있다");
   assert.ok(mock > 0 && mock < f, "mock 분기가 fetch 뒤에 있다");
 });

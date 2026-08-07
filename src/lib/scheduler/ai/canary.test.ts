@@ -24,7 +24,7 @@ function globFunctions(dir = "functions/api"): string[] {
 }
 
 import {
-  canaryEnabled, buildCanaryBody, allowedIdViolations,
+  canaryEnabled, buildCanaryBody, allowedIdViolations, createCanaryFetch,
   CANARY_CONFIRM_PHRASE, CANARY_PROVIDER_MODE, MAX_PROVIDER_CALLS,
   PROVIDER_HOST, CANARY_ALLOWED_PLACE_IDS,
 } from "./canary-fixture.ts";
@@ -253,10 +253,12 @@ test("C11 provider 오류에도 재시도가 없다", async () => {
 
 test("C12 상한을 넘는 호출은 경계에서 막힌다", () => {
   assert.equal(MAX_PROVIDER_CALLS, 1);
-  assert.match(apiCode, /if \(providerCalls > MAX_PROVIDER_CALLS\)/);
-  assert.match(apiCode, /throw new Error\("canary_provider_cap_exceeded"\)/);
+  // 상한은 요청마다 만드는 fetch 안에 있다(전역을 건드리지 않기 위해).
+  assert.match(fixCode, /if \(providerCalls > MAX_PROVIDER_CALLS\)/);
+  assert.match(fixCode, /throw new Error\("canary_provider_call_limit"\)/);
   // 백그라운드 호출·루프가 없다
   assert.doesNotMatch(apiCode, /waitUntil|setInterval|for \(|while \(/);
+  assert.doesNotMatch(fixCode, /waitUntil|setInterval|while \(/);
 });
 
 // ── C13~C15 전역 격리 ───────────────────────────────────────────────────────
@@ -399,4 +401,153 @@ test("C20 provider 응답 검증이 그대로 살아 있다", async () => {
   assert.equal((bad.json.diagnostics as Record<string, unknown>).validatorPassed, false);
   assert.equal((bad.json.diagnostics as Record<string, unknown>).aiStatus, "fallback_invalid_response");
   assert.equal(bad.json.success, false);
+});
+
+// ── C21~C26 request-local fetch 격리 ────────────────────────────────────────
+//
+// 예전에는 canary 가 globalThis.fetch 를 잠깐 바꿔치기했다. Workers 는 한
+// isolate 에서 여러 요청을 동시에 처리하므로 그 사이 들어온 다른 요청까지
+// 교체된 fetch 를 보게 된다. 계수가 섞이는 것은 물론이고 남의 요청이 우리
+// 상한에 걸려 죽을 수도 있었다. 아래 테스트가 그 구조가 돌아오는 것을 막는다.
+
+test("C21 운영 코드에 globalThis.fetch 대입이 없다", () => {
+  const prod = globFunctions().concat([
+    "src/lib/scheduler/ai/canary-fixture.ts",
+    "src/lib/scheduler/ai/personalization-profile.ts",
+  ]);
+  for (const p of prod) {
+    const c = code(readFileSync(p, "utf8"));
+    assert.doesNotMatch(c, /globalThis\.fetch\s*=/, p);
+    assert.doesNotMatch(c, /\bglobal\.fetch\s*=/, p);
+    assert.doesNotMatch(c, /globalThis\[["']fetch["']\]\s*=/, p);
+  }
+});
+
+test("C22 계수기가 모듈 스코프에 없다 — 요청마다 새로 만든다", () => {
+  // 모듈 최상위에 let/var 가변 상태가 있으면 요청 간에 공유된다.
+  // 들여쓰기 없는 최상위 선언만 본다. 함수 안의 let 은 요청마다 새로 생긴다.
+  // export 가 붙어도 모듈 스코프인 것은 같다 — 오히려 더 나쁘다.
+  for (const src of [{ n: "canary-fixture", c: fixCode }, { n: "canary handler", c: apiCode }]) {
+    const mutable = src.c.match(/^(export\s+)?(let|var)\s+\w+/gm) ?? [];
+    assert.deepEqual(mutable, [], `${src.n} 모듈 스코프 가변 변수: ${mutable}`);
+  }
+  // 계수기는 팩토리 안에서만 산다
+  assert.match(fixCode, /export function createCanaryFetch\(baseFetch: typeof fetch\): CanaryFetchProbe \{\s*\n\s*let providerCalls = 0;/);
+  // handler 도 마찬가지 — 요청 안에서 만든다
+  assert.match(apiCode, /const probe = createCanaryFetch\(fetch\);/);
+  assert.doesNotMatch(apiCode, /^(let|var)\s+providerCalls/m);
+  // 두 번 만들면 서로 다른 계수기다
+  const a = createCanaryFetch(async () => new Response("{}")); 
+  const b = createCanaryFetch(async () => new Response("{}"));
+  assert.notEqual(a.fetchFn, b.fetchFn);
+  assert.equal(a.providerCalls(), 0);
+  assert.equal(b.providerCalls(), 0);
+});
+
+test("C23 일반 요청은 주입 없이 런타임 기본 fetch 를 쓴다", () => {
+  const per = code(readFileSync("functions/api/trip/personalize.ts", "utf8"));
+  assert.match(per, /const providerFetch = ctx\.fetchFn \?\? fetch;/);
+  assert.match(per, /fetchFn\?: typeof fetch;/);
+  // Cloudflare 가 넘기는 ctx 에는 fetchFn 이 없다 → 기본 fetch
+  assert.equal((per.match(/await providerFetch\(/g) ?? []).length, 1);
+  assert.equal((per.match(/await fetch\(/g) ?? []).length, 0);
+});
+
+test("C24 provider 상한은 요청 안에서 차단한다 — 2회째는 네트워크로 안 나간다", async () => {
+  let outbound = 0;
+  const base = (async () => { outbound += 1; return geminiOk(); }) as typeof fetch;
+  const probe = createCanaryFetch(base);
+  const url = `https://${PROVIDER_HOST}/v1beta/models/x:generateContent`;
+
+  await probe.fetchFn(url, { method: "POST" });
+  assert.equal(probe.providerCalls(), 1);
+  assert.equal(outbound, 1);
+
+  await assert.rejects(() => probe.fetchFn(url, { method: "POST" }),
+                       /canary_provider_call_limit/);
+  assert.equal(outbound, 1, "2회째가 네트워크로 나갔다");
+  assert.equal(probe.providerCalls(), 2, "시도는 세되 나가지는 않는다");
+
+  // provider 가 아닌 곳으로 가는 요청은 세지도 막지도 않는다
+  const p2 = createCanaryFetch(base);
+  await p2.fetchFn("https://example.test/other");
+  await p2.fetchFn("https://example.test/other");
+  assert.equal(p2.providerCalls(), 0);
+});
+
+test("C25 canary 와 일반 요청을 겹쳐 돌려도 서로를 보지 않는다", async () => {
+  const beforeFetch = globalThis.fetch;
+  let canaryOutbound = 0, normalOutbound = 0;
+
+  // canary 는 자기 fetch 를 handler 에 넘긴다. 일반 요청은 아무것도 넘기지 않는다.
+  const canaryReq = canary({
+    request: new Request("https://example.test/x", {
+      method: "POST", headers: { "x-admin-key": KEY }, body: JSON.stringify(CONFIRM),
+    }),
+    env: { ...ENABLED } as never,
+  });
+  const normalReq = personalize({
+    request: new Request("https://example.test/api/trip/personalize", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ city: "Busan", selected_place_ids: ["1", "2"] }),
+    }),
+    // 전역 AI 는 off 다
+    env: { GEMINI_API_KEY: GEM, AI_PERSONALIZATION_MODE: "off" } as never,
+  });
+
+  // 실제 provider 로는 아무것도 나가면 안 된다. canary 는 자기 fetch 로만 나간다.
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async (i: RequestInfo | URL, init?: RequestInit) => {
+    const u = typeof i === "string" ? i : i instanceof URL ? i.href : (i as Request).url;
+    if (u.includes(PROVIDER_HOST)) { canaryOutbound += 1; return geminiOk(); }
+    normalOutbound += 1;
+    return realFetch(i as RequestInfo, init);
+  }) as typeof fetch;
+
+  const [cRes, nRes] = await Promise.all([canaryReq, normalReq]);
+  globalThis.fetch = realFetch;
+
+  const cJson = await cRes.json() as Record<string, unknown>;
+  const nJson = await nRes.json() as { ai_status: string };
+
+  assert.equal((cJson.diagnostics as Record<string, unknown>).providerCalls, 1, "A canary provider 호출");
+  assert.equal(nJson.ai_status, "disabled", "B 일반 요청은 전역 off 를 본다");
+  assert.equal(normalOutbound, 0, "B 가 provider 로 나갔다");
+  assert.equal(canaryOutbound, 1, "A 만 provider 로 나간다");
+  // canary 가 끝난 뒤 전역 fetch 가 그대로다
+  assert.equal(globalThis.fetch, realFetch);
+  assert.equal(realFetch, beforeFetch);
+});
+
+test("C26 canary 두 개를 겹쳐 돌려도 각자 자기 계수기를 쓴다", async () => {
+  const realFetch = globalThis.fetch;
+  let outbound = 0;
+  globalThis.fetch = (async (i: RequestInfo | URL, init?: RequestInit) => {
+    const u = typeof i === "string" ? i : i instanceof URL ? i.href : (i as Request).url;
+    if (u.includes(PROVIDER_HOST)) {
+      outbound += 1;
+      // 겹치게 만든다 — 한쪽이 기다리는 동안 다른 쪽이 들어온다
+      await new Promise(r => setTimeout(r, 30));
+      return geminiOk();
+    }
+    return realFetch(i as RequestInfo, init);
+  }) as typeof fetch;
+
+  const mk = () => canary({
+    request: new Request("https://example.test/x", {
+      method: "POST", headers: { "x-admin-key": KEY }, body: JSON.stringify(CONFIRM),
+    }),
+    env: { ...ENABLED } as never,
+  });
+  const [a, b] = await Promise.all([mk(), mk()]);
+  globalThis.fetch = realFetch;
+
+  const aj = await a.json() as Record<string, unknown>;
+  const bj = await b.json() as Record<string, unknown>;
+  // 각자 1. 한쪽 계수기가 다른 쪽을 2회째로 오판하지 않는다.
+  assert.equal((aj.diagnostics as Record<string, unknown>).providerCalls, 1);
+  assert.equal((bj.diagnostics as Record<string, unknown>).providerCalls, 1);
+  assert.equal(aj.success, true);
+  assert.equal(bj.success, true);
+  assert.equal(outbound, 2, "두 요청이 각각 한 번씩 나갔다");
 });

@@ -263,7 +263,10 @@ test("★P3 비용 안전장치가 그대로다", () => {
   const fn = read("functions", "api", "trip", "personalize.ts");
   assert.match(fn, /MAX_ATTEMPTS|정확히 1회/);
   assert.doesNotMatch(fn, /for\s*\([^)]*attempt|while\s*\([^)]*attempt|retry/i);
-  assert.equal((fn.match(/await fetch\(/g) ?? []).length, 1);   // provider 호출 지점은 하나뿐
+  // provider 호출 지점은 하나뿐이다. canary 가 요청마다 자기 fetch 를 넘길 수
+  // 있게 주입 경계를 뒀을 뿐, 지점 수와 재시도 0 은 그대로다.
+  assert.equal((fn.match(/await providerFetch\(/g) ?? []).length, 1);
+  assert.equal((fn.match(/await fetch\(/g) ?? []).length, 0);   // 주입을 우회하는 호출 없음
   assert.match(fn, /TIMEOUT_MS/);
   assert.match(fn, /maxOutputTokens:\s*MAX_OUTPUT_TOKENS/);
   assert.match(fn, /slice\(0, MAX_PROMPT_CHARS\)/);
