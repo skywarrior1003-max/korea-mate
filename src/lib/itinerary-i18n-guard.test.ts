@@ -4,6 +4,7 @@
 // 되돌아가도 KO/JA/ZH 사용자에게는 그 줄만 영어로 남는데, 빌드도 타입체크도
 // 잡아주지 않는다.
 //
+// 생성 대기 화면(LOAD_PHASES)의 제휴 카드는 S2-B2 에서 제거됐다.
 // 남은 영어는 두 종류뿐이고 둘 다 이유가 있다.
 //   ① 커머스 배너 — POST_PLAN_COMMERCE_ENABLED / TRIP_FLOW_COMMERCE_ENABLED 가
 //      false 라 화면에 나가지 않는 죽은 UI 다. 번역하면 "₩8,000", "10% off"
@@ -67,10 +68,7 @@ const ALLOW_EN: { text: string; why: string }[] = [
   { text: "Stay connected throughout", why: "커머스 플래그가 false 라 렌더되지 않는 죽은 UI" },
   { text: "Google Maps",              why: "외부 고유명사 — 번역하지 않는다" },
   { text: "Naver Maps",               why: "외부 고유명사 — 번역하지 않는다" },
-  { text: "Michelin Guide",           why: "외부 고유명사. 생성 대기 화면 제휴 카드" },
-  { text: "Booking.com",              why: "외부 고유명사 — 생성 대기 화면 제휴 카드" },
-  { text: "Viator Tours",             why: "외부 고유명사 — 생성 대기 화면 제휴 카드" },
-  { text: "Airport Transfer",         why: "생성 대기 화면 제휴 카드 — affiliate 작업 금지 범위" },
+  { text: "Booking.com",              why: "외부 고유명사 — 죽은 공항 배너에만 남았다" },
 ];
 
 // ── 1·2·3. locale parity ────────────────────────────────────────────────────

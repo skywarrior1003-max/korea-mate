@@ -45,13 +45,13 @@ const MIGRATED: Record<string, { cls: string; cssVar: string; value: string }> =
  * 개수가 어긋나면 실패한다. 색을 새로 들이거나 조용히 지우는 것 둘 다 잡힌다.
  */
 const ALLOW: Record<string, { n: number; kind: string; why: string }> = {
-  "#7C3AED": { n: 5, kind: "map/data + external", why: "museum 카테고리 색 · Viator 브랜드 · 보라 그라디언트" },
+  "#7C3AED": { n: 4, kind: "map/data + external", why: "museum 카테고리 색 · 보라 그라디언트. Viator 카드는 S2-B2 에서 제거됐다" },
   "#1A1F36": { n: 4, kind: "map/data + ui",       why: "카테고리 기본색 · 어두운 패널. --gkm-ink(#191C21)와 값이 다르다" },
-  "#FF4A2D": { n: 3, kind: "concat/gradient",     why: "그라디언트 문자열 2 + 제휴 카드 색 1. 후자는 card.color+\"20\" 로 알파를 이어 붙여 var() 로 바꾸면 무효 CSS 가 된다" },
+  "#FF4A2D": { n: 2, kind: "concat/gradient",     why: "그라디언트 문자열 2. 제휴 카드 색은 S2-B2 에서 카드와 함께 제거됐다" },
   "#D93317": { n: 3, kind: "gradient pair",       why: "코랄 그라디언트의 짝. accent-coral-hover 토큰이 없다" },
-  "#16A34A": { n: 3, kind: "map/data + external", why: "nature 카테고리 색 · 공항 이동 브랜드 · compact 토글. --gkm-status-ok(#1D9A6C)와 값이 다르다" },
-  "#003580": { n: 3, kind: "external brand",      why: "Booking.com 브랜드색" },
-  "#D97706": { n: 2, kind: "map/data + external", why: "cafe 카테고리 색 · Michelin 브랜드. --gkm-status-warn(#B97A12)과 값이 다르다" },
+  "#16A34A": { n: 2, kind: "map/data + external", why: "nature 카테고리 색 · compact 토글. --gkm-status-ok(#1D9A6C)와 값이 다르다" },
+  "#003580": { n: 1, kind: "external brand",      why: "Booking.com 브랜드색 — 죽은 커머스 블록에만 남았다" },
+  "#D97706": { n: 1, kind: "map/data + external", why: "cafe 카테고리 색. Michelin 카드는 S2-B2 에서 제거됐다" },
   "#1A1A2E": { n: 2, kind: "ui",                  why: "어두운 히어로 패널. 대응 토큰 없음" },
   "#FFFFFF": { n: 1, kind: "plain",               why: "평범한 흰색. 이 파일은 다른 곳에서 text-white/bg-white 를 쓴다" },
   "#FFF":    { n: 1, kind: "plain",               why: "위와 같음(3자리 표기)" },

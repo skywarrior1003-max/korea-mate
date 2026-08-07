@@ -152,38 +152,21 @@ function buildNaverUrl(placeName: string, city: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${placeName} ${city} Korea`)}`;
 }
 
-// ── AI 빌드 단계 정의 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────
+// ── 일정 생성 대기 단계 ──────────────────────────────────────
 //
-// color 는 여기서만 raw hex 로 남는다. 렌더 쪽이 `card.color + "20"` 으로 알파를
-// 이어 붙여 8자리 hex 를 만들기 때문이다 — var(--gkm-…) 로 바꾸면
-// "var(--gkm-accent-coral)20" 이 되어 무효 CSS 가 되고 배경이 조용히 사라진다.
-// 값 자체도 대부분 제휴사 브랜드색이라 토큰 대상이 아니다.
-const LOAD_PHASES = [
-  {
-    emoji: "🍽️",
-    label: "[Step 1] Matching Michelin & top restaurants in Busan...",
-    cards: [
-      { emoji: "⭐", name: "Michelin Guide", desc: "Busan's best restaurants sorted by your route", color: "#d97706" },
-      { emoji: "🏨", name: "Booking.com",    desc: "Top hotels auto-sorted near each day's spots",  color: "#003580" },
-    ],
-  },
-  {
-    emoji: "🏨",
-    label: "[Step 2] Curating best hotels & nearby accommodations...",
-    cards: [
-      { emoji: "🏨", name: "Booking.com",    desc: "Free cancellation options — Haeundae & Centum", color: "#003580" },
-      { emoji: "🎟️", name: "Viator Tours",   desc: "Day trips: Gamcheon, Taejongdae & more",        color: "#7c3aed" },
-    ],
-  },
-  {
-    emoji: "📱",
-    label: "[Step 3] Optimizing eSIM coverage & transport routes...",
-    cards: [
-      { emoji: "📱", name: "Korea eSIM",     desc: "Unlimited 5G data — active before you land",    color: "#FF4A2D" },
-      { emoji: "✈️", name: "Airport Transfer",desc: "Fixed-price pickup from Gimhae Airport",        color: "#16a34a" },
-    ],
-  },
-] as const;
+// 예전에는 이 자리에 제휴사 카드가 있었다. Michelin·Booking.com·Viator·eSIM·
+// 공항 픽업이 단계마다 두 장씩 떴고, 문구에는 "Free cancellation options",
+// "Fixed-price pickup", "Unlimited 5G data" 처럼 우리가 확인해 줄 수 없는
+// 주장이 들어 있었다. 부산 지명(해운대·감천·김해공항)도 박혀 있어 다른 도시에서는
+// 그냥 거짓말이 된다. 기다리는 화면에서 팔 이유도 없다 — 커머스는 일정이 나온
+// 뒤 별도 영역에서 다룬다.
+//
+// 그래서 단계는 "지금 무엇을 하고 있는가"만 말한다. 문구는 4개 언어 locale 에
+// 있고 여기에는 키만 둔다.
+//
+// 길이 3 은 계약이다. 진행바가 (loadPhase+1)/LOAD_PHASES.length 로 폭을 계산하고
+// 타이머가 1200ms·2500ms 에 단계를 넘긴다. 개수를 바꾸면 둘 다 어긋난다.
+const LOAD_PHASES = ["loadPhase1", "loadPhase2", "loadPhase3"] as const;
 
 // ── TASK-018: Trip Plan API 클라이언트 타입 ──────────────────────────────────────
 interface PlaceDisplay {
@@ -1730,9 +1713,9 @@ function ItineraryResult() {
     });
   }
 
-  // ── 로딩 화면 — 페이즈별 스켈레톤 + 제휴 카드 노출 ──────────
+  // ── 로딩 화면 — 단계 표시 + 진행바 + 스켈레톤 ──────────
   if (loading) {
-    const phase = LOAD_PHASES[Math.min(loadPhase, LOAD_PHASES.length - 1)];
+    const phaseKey = LOAD_PHASES[Math.min(loadPhase, LOAD_PHASES.length - 1)];
     return (
       <div className="flex-1 flex flex-col items-center py-12 px-4 max-w-4xl mx-auto w-full">
 
@@ -1741,7 +1724,7 @@ function ItineraryResult() {
           <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-surface-dim/60 border border-line mb-4">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-coral shrink-0" />
             <span className="text-sm font-black text-ink">
-              {shareId ? t("loadingShared") : phase.label}
+              {shareId ? t("loadingShared") : t(phaseKey)}
             </span>
           </div>
           {!shareId && (
@@ -1753,30 +1736,6 @@ function ItineraryResult() {
             </div>
           )}
         </div>
-
-        {/* ── 제휴 파트너 카드 (드웰 타임 중 자연스럽게 노출) ── */}
-        {!shareId && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl mb-10">
-            {phase.cards.map((card) => (
-              <div
-                key={card.name}
-                className="bg-white rounded-2xl border border-line p-5 flex items-start gap-4 shadow-sm"
-                style={{ animation: "fadeInUp 0.4s ease-out" }}
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
-                  style={{ backgroundColor: card.color + "20" }}
-                >
-                  {card.emoji}
-                </div>
-                <div>
-                  <p className="text-sm font-black text-ink">{card.name}</p>
-                  <p className="text-xs text-sub leading-relaxed mt-0.5">{card.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* ── 스켈레톤 일정 카드 ── */}
         <div className="w-full space-y-4">
