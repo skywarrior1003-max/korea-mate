@@ -2226,15 +2226,141 @@
       "path": "docs/tourapi/gyeongju-core-attraction-nature-enrichment-v1-completion.md",
       "sha256": "c323a5081d4c7ff5873922cff63e0a96a8bc6539b79b6aca90e5ffd8bdfd1ab2",
       "size_bytes": 8870
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type12-areabasedlist2-gyeongju-v1.json",
+      "sha256": "ca0b766e4fa413589173778a202fe2a3819dc86a625cce592a1575d2f5181de2",
+      "size_bytes": 114897
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/kto-list/kto-type14-areabasedlist2-gyeongju-v1.json",
+      "sha256": "97d564c55be0afb3eaf690debc497e4cd5c1c598d2f2bcc0fb0420c2f1119897",
+      "size_bytes": 10224
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/vg-area-52.json",
+      "sha256": "6a170df81c9202608f1dc3254e86319583bb90082173df5d8d4901ee4c3d55a0",
+      "size_bytes": 83600
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/vg-area-72.json",
+      "sha256": "388d5f7557124a3e5aa94055fd72330f4854eeb9d0f6498cf09561374b327de8",
+      "size_bytes": 82073
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/vg-area-380.json",
+      "sha256": "5f286a1175743b78d22038999711636846dc6ad223f7763ef22ac8ae9ef39dae",
+      "size_bytes": 79805
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/vg-area-68.json",
+      "sha256": "b0561e920781955e4b9c166a1ff06bc3800c18a3a61d6fb850eb3c952d30f931",
+      "size_bytes": 82482
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/vg-area-91.json",
+      "sha256": "6d4346d08e19f7258058b01c21c4700e4a626fa5254b9aa86e2b0f39f913c3b5",
+      "size_bytes": 77988
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/kto-127985.json",
+      "sha256": "40ab0c3788f0f3d1a025e0306f4cb046f851f172ed7f9dd05d0b05803a9553e6",
+      "size_bytes": 593
+    },
+    {
+      "category": "raw",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/raw/gyeongju/gyeongju-tier-a-pilot-v1/kto-128612.json",
+      "sha256": "bddbb00ec240b3c489bd2735a2ce772c31c0e75e6d58d32af20e653b5bdffa30",
+      "size_bytes": 615
+    },
+    {
+      "category": "normalized",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/normalized/gyeongju/gyeongju-tier-a-pilot-snapshot-v1.jsonl",
+      "sha256": "93560fe3ed0de2761708128f96c972e1fb780ff28c2080606134458bbf2a549d",
+      "size_bytes": 37053
+    },
+    {
+      "category": "validation",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-tier-a-pilot-kto-link-v1.jsonl",
+      "sha256": "15e35567e74086d37b0521cdfa0594e87cfac4f756ada975be6434c9749b5446",
+      "size_bytes": 1880
+    },
+    {
+      "category": "validation",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-tier-a-pilot-qa-v1.json",
+      "sha256": "d58d744a5c7f06a735cfa581e18611c355f828936612c530e1ae95beee19c866",
+      "size_bytes": 1003
+    },
+    {
+      "category": "validation",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-tier-a-pilot-frozen-sha-v1.json",
+      "sha256": "0935d245fd9d3810f5f78ce499e4dd1fbc2afc5b9b3faa91af39c580bc77310b",
+      "size_bytes": 653
+    },
+    {
+      "category": "validation",
+      "note": "tier-a-pilot-v1",
+      "path": "data/tourapi/validation/gyeongju/gyeongju-tier-a-pilot-run1-run2-sha-v1.json",
+      "sha256": "3eed0a35fcbaacc4a754f91a9d3c5a2955b0a4696c0bbddfd5cae2a2474d3ec5",
+      "size_bytes": 854
+    },
+    {
+      "category": "script",
+      "note": "tier-a-pilot-v1",
+      "path": "scripts/gyeongju_tier_a_kto_pilot_v1.py",
+      "sha256": "ba1527a5a19a50dca6839a5daa5c58ecfef9b9f9da5015f706564bc0b8e307df",
+      "size_bytes": 25892
+    },
+    {
+      "category": "doc",
+      "note": "tier-a-pilot-v1",
+      "path": "docs/tourapi/gyeongju-kto-api-contract-and-5-place-pilot-v1.md",
+      "sha256": "9068c73bd8a410997c0979eeb93f790b8fc651ba877d79db418f9f8af5dc0fc4",
+      "size_bytes": 11284
+    },
+    {
+      "category": "doc",
+      "note": "tier-a-pilot-v1",
+      "path": "docs/tourapi/gyeongju-kto-api-contract-and-5-place-pilot-v1-verification.md",
+      "sha256": "d87a56c1831eb444230ac39746dc36223ac29e621de8de91569e7d32b7829928",
+      "size_bytes": 4013
+    },
+    {
+      "category": "doc",
+      "note": "tier-a-pilot-v1",
+      "path": "docs/tourapi/gyeongju-kto-api-contract-and-5-place-pilot-v1-completion.md",
+      "sha256": "8cb7b93571eff8ca837330d7e033c923fa2fd1e0d6d36fc230316515eb55ecf4",
+      "size_bytes": 7719
     }
   ],
-  "files_count": 326,
+  "files_count": 290,
   "generated_by": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
   "hold_candidate_count": 808,
   "last_task": "TASK-GYEONGJU-FULL-TOURISM-COVERAGE-AUDIT-AND-ATTRIBUTE-RECOVERY-V2",
   "last_updated": "2026-08-07",
   "last_updated_at": "2026-08-07T00:00:00Z",
-  "last_updated_task": "TASK-GYEONGJU-FULL-TOURISM-COVERAGE-AUDIT-AND-ATTRIBUTE-RECOVERY-V2",
+  "last_updated_task": "TASK-GYEONGJU-KTO-API-CONTRACT-AND-5-PLACE-PILOT-V1",
   "manifest_sha256": "49b8bfc33af775d8b0e17664cb3b5ded6618890321439d7d8d2f5a9f4d3a2c00",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",

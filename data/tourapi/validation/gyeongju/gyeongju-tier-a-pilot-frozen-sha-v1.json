@@ -1,0 +1,9 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "sha_records": {
+    "data/tourapi/normalized/gyeongju/gyeongju-attraction-identity-audit-v1.jsonl": "a3b2d0b116f8ddb54fbf00555d4b661f9bf322932ac8ca224906837aa0c8e94d",
+    "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl": "1ed2c18b2d7b7bf841f1fa7c0be5774cf17512d052c4a5e585d2cfde37dc8ec0",
+    "data/tourapi/normalized/gyeongju/gyeongju-tourism-next-batch-priority-v1.jsonl": "4076362fd8d8ef4095e8d07e8d70d7e4f9725aa6b6ef1ccf613362b4bdd9abcd",
+    "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl": "481fe795f992a4c3939e6e887c5bdee48b4a72edb78a0fd174e0cdc5ff87d3cf"
+  }
+}

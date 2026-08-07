@@ -1,0 +1,11 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "run": "run1",
+  "sha_records": {
+    "data\\tourapi\\normalized\\gyeongju\\gyeongju-tier-a-pilot-snapshot-v1.jsonl": "93560fe3ed0de2761708128f96c972e1fb780ff28c2080606134458bbf2a549d",
+    "data\\tourapi\\raw\\gyeongju\\kto-list\\kto-type12-areabasedlist2-gyeongju-v1.json": "ca0b766e4fa413589173778a202fe2a3819dc86a625cce592a1575d2f5181de2",
+    "data\\tourapi\\raw\\gyeongju\\kto-list\\kto-type14-areabasedlist2-gyeongju-v1.json": "97d564c55be0afb3eaf690debc497e4cd5c1c598d2f2bcc0fb0420c2f1119897",
+    "data\\tourapi\\validation\\gyeongju\\gyeongju-tier-a-pilot-kto-link-v1.jsonl": "15e35567e74086d37b0521cdfa0594e87cfac4f756ada975be6434c9749b5446",
+    "data\\tourapi\\validation\\gyeongju\\gyeongju-tier-a-pilot-qa-v1.json": "d58d744a5c7f06a735cfa581e18611c355f828936612c530e1ae95beee19c866"
+  }
+}

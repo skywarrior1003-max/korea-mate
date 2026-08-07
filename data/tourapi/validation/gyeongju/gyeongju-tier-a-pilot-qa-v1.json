@@ -1,0 +1,40 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "coordinate_count": 2,
+  "description_ko_count": 5,
+  "image_count": 28,
+  "kto_detail_ok": 2,
+  "kto_match_count": 2,
+  "link_records": [
+    {
+      "candidate_id": "gyeongju-GJ01-0008",
+      "kto_content_id": null,
+      "match_status": "KTO_MATCH_NOT_FOUND"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0010",
+      "kto_content_id": null,
+      "match_status": "KTO_MATCH_NOT_FOUND"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0039",
+      "kto_content_id": null,
+      "match_status": "KTO_MATCH_NOT_FOUND"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0041",
+      "kto_content_id": "127985",
+      "match_status": "EXACT_MATCH"
+    },
+    {
+      "candidate_id": "gyeongju-GJ01-0055",
+      "kto_content_id": "128612",
+      "match_status": "EXACT_MATCH"
+    }
+  ],
+  "pilot_count": 5,
+  "pipeline_version": "tier-a-pilot-v1",
+  "verdict": "CONDITIONAL_PASS",
+  "vg_http_ok": 5,
+  "vg_parse_ok": 5
+}
