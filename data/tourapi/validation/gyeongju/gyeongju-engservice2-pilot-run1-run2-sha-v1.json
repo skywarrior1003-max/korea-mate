@@ -1,0 +1,42 @@
+{
+  "as_of": "2026-08-07T09:13:05Z",
+  "task_id": "TASK-GYEONGJU-EN-ENGSERVICE2-CONTRACT-AND-10-PLACE-PILOT-V1",
+  "files": {
+    "contract_md": {
+      "path": "docs\\tourapi\\gyeongju-engservice2-source-contract-v1.md",
+      "sha256": "fad989481a4b5133a659b47457f09dad81bcdde6be522365afff3d66e3dcccae"
+    },
+    "contract_json": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-engservice2-source-contract-v1.json",
+      "sha256": "b50e83497e249349ca31a3e76d83ea04173856f674597eb3d275e6588e6d4996"
+    },
+    "pilot_input": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-en-10-pilot-input-v1.jsonl",
+      "sha256": "0a084dbf8e8ba68b99ad08fa2750f9dc96ff44f756d1eda8650f40e14d16292b"
+    },
+    "identity_link": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-ko-en-identity-link-pilot-v1.jsonl",
+      "sha256": "eab518fee6466d9d9726be26d8d0b6688ba7435f9651db47197135d2d19fe0c1"
+    },
+    "snapshot": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-engservice2-10-pilot-snapshot-v1.jsonl",
+      "sha256": "0258e7af8557653c9d075a4fa671b12e49d90dbc031ba8b8982534030c7ca32b"
+    },
+    "detail_audit": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-engservice2-detail-audit-v1.jsonl",
+      "sha256": "6d54649f0e68dfb8c53414ed34a785992d8594898f7fa52f91360ab25eb0ac2e"
+    },
+    "coverage": {
+      "path": "data\\tourapi\\validation\\gyeongju\\gyeongju-en-pilot-coverage-v1.json",
+      "sha256": "29e2fcff0d1c5b1958097781d5e9e74a41beb40ddfb0ee38dd14f0dfc73b2cc0"
+    },
+    "gate": {
+      "path": "data\\tourapi\\validation\\gyeongju\\gyeongju-en-full-collection-gate-v1.json",
+      "sha256": "239c2eb12dfe28a8774f5160a9eb800f0d84aae652273d6a9e82292131db1fd2"
+    },
+    "handoff": {
+      "path": "data\\tourapi\\normalized\\gyeongju\\gyeongju-official-en-site-handoff-v1.json",
+      "sha256": "2e92df5fc5410e33d8aa704d12dddbb3e150644109e0296562a36352619902ed"
+    }
+  }
+}

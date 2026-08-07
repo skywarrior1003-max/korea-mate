@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-08-07T09:13:05Z",
+  "task_id": "TASK-GYEONGJU-EN-ENGSERVICE2-CONTRACT-AND-10-PLACE-PILOT-V1",
+  "GYEONGJU_EN_FULL_COLLECTION_READY": true,
+  "gate_conditions": {
+    "engservice2_contract_confirmed": true,
+    "identity_linkage_reproducible": true,
+    "no_critical_parser_errors": true,
+    "id_namespace_no_confusion": true,
+    "no_arbitrary_translation": true,
+    "no_structural_api_errors": true,
+    "en_list_retrieved": true
+  },
+  "area_contract_status": "CONTRACT_CONFIRMED",
+  "gyeongju_areaCode": "35",
+  "gyeongju_sigunguCode": "2",
+  "en_list_count": 64,
+  "pilot_summary": {
+    "HIGH_CONFIDENCE_MULTI_EVIDENCE": 6,
+    "EXACT_OFFICIAL_IDENTITY": 3,
+    "IDENTITY_REVIEW_REQUIRED": 1
+  },
+  "notes": []
+}

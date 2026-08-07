@@ -1,0 +1,27 @@
+{
+  "as_of": "2026-08-07T09:13:05Z",
+  "task_id": "TASK-GYEONGJU-EN-ENGSERVICE2-CONTRACT-AND-10-PLACE-PILOT-V1",
+  "pilot_total": 10,
+  "en_match_exact_or_high": 9,
+  "en_match_review_required": 1,
+  "en_match_no_record": 0,
+  "match_breakdown": {
+    "HIGH_CONFIDENCE_MULTI_EVIDENCE": 6,
+    "EXACT_OFFICIAL_IDENTITY": 3,
+    "IDENTITY_REVIEW_REQUIRED": 1
+  },
+  "en_title_count": 9,
+  "en_description_count": 9,
+  "en_address_count": 9,
+  "en_coordinates_count": 9,
+  "en_image_count_with_image": 6,
+  "en_homepage_count": 9,
+  "detail_calls_made": 9,
+  "en_area_list_total": 64,
+  "api_errors": 0,
+  "parser_errors": 0,
+  "content_id_equal_observations": 0,
+  "content_id_different_observations": 4,
+  "content_id_na_count": 6,
+  "network_calls_this_run": 0
+}

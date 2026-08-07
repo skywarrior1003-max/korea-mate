@@ -1,0 +1,282 @@
+{
+  "source": "docs/tourapi/approved-api-inventory.md (Section 6)",
+  "base_endpoint": "https://apis.data.go.kr/B551011/EngService2",
+  "auth_env_var": "TOUR_API_KEY",
+  "daily_limit_estimate": "상세기능별 1,000회 (추정)",
+  "operations": {
+    "areaBasedList2": {
+      "status": "CONFIRMED_ACTUAL",
+      "note": "부산 areaCode=6 → 194건 실측"
+    },
+    "locationBasedList2": {
+      "status": "CONFIRMED_ACTUAL",
+      "note": "현재 스크립트 사용 중"
+    },
+    "searchKeyword2": {
+      "status": "CONFIRMED_ACTUAL",
+      "note": "현재 스크립트 사용 중"
+    },
+    "detailCommon2": {
+      "status": "CONFIRMED_ACTUAL",
+      "note": "rc:0000, contentId만 사용, YN 파라미터 금지"
+    },
+    "areaCode2": {
+      "status": "CONFIRMED_PARTIAL",
+      "note": "삭제예정 공식 미확인"
+    },
+    "categoryCode2": {
+      "status": "CONFIRMED_PARTIAL",
+      "note": "삭제예정 공식 미확인"
+    },
+    "areaBasedSyncList2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "searchFestival2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "searchStay2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "detailIntro2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "detailInfo2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "detailImage2": {
+      "status": "NOT_TESTED",
+      "note": "미실측"
+    },
+    "ldongCode2": {
+      "status": "NOT_TESTED",
+      "note": "신규 endpoint 미실측"
+    },
+    "lclsSystmCode2": {
+      "status": "NOT_TESTED",
+      "note": "신규 endpoint 미실측"
+    }
+  },
+  "content_id_namespace": {
+    "note": "EngService2 contentid ≠ KorService2 contentid",
+    "example_kor": {
+      "place": "해운대해수욕장",
+      "kor_content_id": "126081"
+    },
+    "example_eng": {
+      "place": "해운대해수욕장",
+      "eng_content_id": "264155"
+    }
+  },
+  "response_structure": "KorService2와 동일 구조, 필드명 동일. title은 영어 제공.",
+  "local_manual_found": true,
+  "manual_path": "docs/tourapi/approved-api-inventory.md (Section 6)",
+  "gyeongju_area_filter": {
+    "areaCode": "35",
+    "sigunguCode": "2",
+    "status": "CONTRACT_CONFIRMED",
+    "areaCode_items": [
+      {
+        "rnum": 1,
+        "code": "1",
+        "name": "Seoul"
+      },
+      {
+        "rnum": 2,
+        "code": "2",
+        "name": "Incheon"
+      },
+      {
+        "rnum": 3,
+        "code": "3",
+        "name": "Daejeon"
+      },
+      {
+        "rnum": 4,
+        "code": "4",
+        "name": "Daegu"
+      },
+      {
+        "rnum": 5,
+        "code": "5",
+        "name": "Gwangju"
+      },
+      {
+        "rnum": 6,
+        "code": "6",
+        "name": "Busan"
+      },
+      {
+        "rnum": 7,
+        "code": "7",
+        "name": "Ulsan"
+      },
+      {
+        "rnum": 8,
+        "code": "8",
+        "name": "Sejong"
+      },
+      {
+        "rnum": 9,
+        "code": "31",
+        "name": "Gyeonggi-do"
+      },
+      {
+        "rnum": 10,
+        "code": "32",
+        "name": "Gangwon-do"
+      },
+      {
+        "rnum": 11,
+        "code": "33",
+        "name": "Chungcheongbuk-do"
+      },
+      {
+        "rnum": 12,
+        "code": "34",
+        "name": "Chungcheongnam-do"
+      },
+      {
+        "rnum": 13,
+        "code": "35",
+        "name": "Gyeongsangbuk-do"
+      },
+      {
+        "rnum": 14,
+        "code": "36",
+        "name": "Gyeongsangnam-do"
+      },
+      {
+        "rnum": 15,
+        "code": "37",
+        "name": "Jeonbuk-do"
+      },
+      {
+        "rnum": 16,
+        "code": "38",
+        "name": "Jeollanam-do"
+      },
+      {
+        "rnum": 17,
+        "code": "39",
+        "name": "Jeju-do"
+      }
+    ],
+    "sigungu_items": [
+      {
+        "rnum": 1,
+        "code": "1",
+        "name": "Gyeongsan-si"
+      },
+      {
+        "rnum": 2,
+        "code": "2",
+        "name": "Gyeongju-si"
+      },
+      {
+        "rnum": 3,
+        "code": "3",
+        "name": "Goryeong-gun"
+      },
+      {
+        "rnum": 4,
+        "code": "4",
+        "name": "Gumi-si"
+      },
+      {
+        "rnum": 5,
+        "code": "6",
+        "name": "Gimcheon-si"
+      },
+      {
+        "rnum": 6,
+        "code": "7",
+        "name": "Mungyeong-si"
+      },
+      {
+        "rnum": 7,
+        "code": "8",
+        "name": "Bonghwa-gun"
+      },
+      {
+        "rnum": 8,
+        "code": "9",
+        "name": "Sangju-si"
+      },
+      {
+        "rnum": 9,
+        "code": "10",
+        "name": "Seongju-gun"
+      },
+      {
+        "rnum": 10,
+        "code": "11",
+        "name": "Andong-si"
+      },
+      {
+        "rnum": 11,
+        "code": "12",
+        "name": "Yeongdeok-gun"
+      },
+      {
+        "rnum": 12,
+        "code": "13",
+        "name": "Yeongyang-gun"
+      },
+      {
+        "rnum": 13,
+        "code": "14",
+        "name": "Yeongju-si"
+      },
+      {
+        "rnum": 14,
+        "code": "15",
+        "name": "Yeongcheon-si"
+      },
+      {
+        "rnum": 15,
+        "code": "16",
+        "name": "Yecheon-gun"
+      },
+      {
+        "rnum": 16,
+        "code": "17",
+        "name": "Ulleung-gun"
+      },
+      {
+        "rnum": 17,
+        "code": "18",
+        "name": "Uljin-gun"
+      },
+      {
+        "rnum": 18,
+        "code": "19",
+        "name": "Uiseong-gun"
+      },
+      {
+        "rnum": 19,
+        "code": "20",
+        "name": "Cheongdo-gun"
+      },
+      {
+        "rnum": 20,
+        "code": "21",
+        "name": "Cheongsong-gun"
+      },
+      {
+        "rnum": 21,
+        "code": "22",
+        "name": "Chilgok-gun"
+      },
+      {
+        "rnum": 22,
+        "code": "23",
+        "name": "Pohang-si"
+      }
+    ]
+  }
+}

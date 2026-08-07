@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-08-07T09:13:05Z",
+  "task_id": "TASK-GYEONGJU-EN-ENGSERVICE2-CONTRACT-AND-10-PLACE-PILOT-V1",
+  "vg_en_channel_files": 3,
+  "multilingual_audit_exists": true,
+  "notes": [
+    "visitgyeongju 영문 자료: 3개 파일",
+    "  - visitgyeongju-candidate-link-audit-v1.jsonl",
+    "  - visitgyeongju-filter-audit-v1.json",
+    "  - visitgyeongju-language-link-audit-v1.jsonl"
+  ],
+  "next_step_proposal": "visitgyeongju 영문 채널 구조 탐색 (별도 EN 보강 단계에서 수행)",
+  "en_url_rule": "https://www.gyeongju.go.kr/eng/ (추정 - 확인 필요, 이번 단계에서 수집 금지)",
+  "rights_status": "CONTRACT_NOT_CONFIRMED_FOR_EN"
+}
