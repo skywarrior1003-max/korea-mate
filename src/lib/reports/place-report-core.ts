@@ -153,8 +153,28 @@ export async function reporterKey(
 
 // ── 중복·남용 방어 ───────────────────────────────────────────────────────────
 
-/** 같은 사람이 같은 대상·같은 사유로 다시 신고해도 이 안에서는 한 건이다. */
+/**
+ * 같은 사람이 같은 대상·같은 사유로 다시 신고해도 이 안에서는 한 건이다.
+ *
+ * **창이 지나면 다시 신고할 수 있어야 한다.** 8월에 영업시간 오류를 알려 고쳤는데
+ * 10월에 또 바뀌면 같은 사람이 다시 알려줄 수 있어야 한다. 그래서 이 규칙은
+ * 스키마의 영구 unique 가 아니라 서버의 시간 판단이다.
+ */
 export const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+/** 이 시각 이후의 신고만 "최근 중복" 으로 본다. */
+export function duplicateWindowStart(now: Date = new Date()): Date {
+  return new Date(now.getTime() - DUPLICATE_WINDOW_MS);
+}
+
+/** 이전 신고가 아직 중복 창 안에 있는가 — 창 밖이면 다시 신고할 수 있다. */
+export function isWithinDuplicateWindow(
+  previousCreatedAt: Date | string, now: Date = new Date(),
+): boolean {
+  const prev = previousCreatedAt instanceof Date ? previousCreatedAt : new Date(previousCreatedAt);
+  if (Number.isNaN(prev.getTime())) return false;
+  return prev.getTime() >= duplicateWindowStart(now).getTime();
+}
 /** 한 기기가 짧은 시간에 쏟아붓는 것을 막는다. */
 export const RATE_MAX = 10;
 export const RATE_WINDOW_MS = 60 * 60 * 1000;

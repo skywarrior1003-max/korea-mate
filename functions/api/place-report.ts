@@ -124,13 +124,13 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   }], "return=minimal");
 
   if (!ins.ok) {
-    // 23505 = 유니크 위반. DB 가 마지막 그물로 중복을 막은 경우다.
-    const code = (ins.data as { code?: string } | null)?.code;
-    if (ins.status === 409 || code === "23505") {
-      log({ status: "duplicate_db", target_type: r.target_type, category: r.category });
-      return fail("duplicate_recent", 409);
-    }
     // DB 오류 원문을 사용자에게 주지 않는다.
+    //
+    // 중복은 위의 24시간 창 조회로만 판단한다. 스키마에 영구 unique 를 걸면
+    // 창이 지난 뒤에도 영원히 재신고를 막게 되므로 두지 않았다.
+    // 그 대가로 **동시에 두 번 제출되는 race** 에서는 두 행이 생길 수 있다.
+    // UI 연타 방어와 기기별 rate limit 이 실사용에서 이를 덮고,
+    // 독립 신고자 수는 reporter_key distinct 로 세므로 집계는 부풀지 않는다.
     log({ status: "insert_failed", httpStatus: ins.status, target_type: r.target_type });
     return fail("server_error", 500);
   }

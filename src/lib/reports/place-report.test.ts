@@ -17,6 +17,7 @@ import {
   REPORT_TARGET_TYPES, REPORT_CATEGORIES, REPORT_STATUSES,
   OBJECTIVE_CATEGORIES, EXPERIENCE_CATEGORIES,
   NOTE_MAX_CHARS, INITIAL_REPORT_STATUS, DUPLICATE_WINDOW_MS, RATE_MAX,
+  duplicateWindowStart, isWithinDuplicateWindow,
   isValidTargetType, isValidTargetKey, isValidCategory, isObjectiveCategory,
   normalizeNote, isValidDeviceId, reporterKey, reporterKeyInput,
   validateReportRequest, acceptedResponse, countIndependentReporters,
@@ -108,19 +109,68 @@ test("★R7 빈 자유 입력은 null 로 정규화된다", () => {
 
 // ── R8~R10 중복·독립 신고자 ─────────────────────────────────────────────────
 
-test("★R8 중복 방지 창이 정의돼 있다", () => {
+// ── A1~A10 중복 창은 시간 판단이지 스키마 제약이 아니다 ────────────────────
+
+test("★A1 같은 reporter·target·category 를 24시간 안에 다시 신고하면 중복이다", () => {
+  const now = new Date("2026-08-10T12:00:00Z");
+  assert.equal(isWithinDuplicateWindow(new Date("2026-08-10T11:00:00Z"), now), true);
+  assert.equal(isWithinDuplicateWindow(new Date("2026-08-09T13:00:00Z"), now), true);  // 23시간 전
+  assert.equal(duplicateWindowStart(now).toISOString(), "2026-08-09T12:00:00.000Z");
+});
+
+test("★A2 24시간이 지나면 같은 사람이 다시 신고할 수 있다", () => {
+  const now = new Date("2026-08-10T12:00:00Z");
+  assert.equal(isWithinDuplicateWindow(new Date("2026-08-09T11:59:00Z"), now), false); // 25시간 전
+  // 8월에 신고 → 고침 → 10월에 또 바뀜. 같은 사람이 다시 알려줄 수 있어야 한다.
+  assert.equal(isWithinDuplicateWindow(new Date("2026-08-10T12:00:00Z"),
+                                       new Date("2026-10-01T09:00:00Z")), false);
+  assert.equal(isWithinDuplicateWindow("not-a-date", now), false);
+});
+
+test("★A6 영구 unique index 가 없다 — 있으면 재신고가 영원히 막힌다", () => {
+  const m = read("supabase", "migrations", "042_place_reports.sql");
+  assert.doesNotMatch(m, /create unique index[^\n]*place_reports/i);
+  assert.doesNotMatch(m, /uq_place_reports_reporter_target_category/);
+  // 유니크가 없으므로 23505 를 중복으로 해석하는 분기도 없어야 한다
+  const fn = code("functions", "api", "place-report.ts");
+  assert.doesNotMatch(fn, /23505/);
+});
+
+test("★A7·A8 최근 중복 조회를 받치는 일반 index 와 rate limit 은 남아 있다", () => {
+  const m = read("supabase", "migrations", "042_place_reports.sql");
+  assert.match(m, /create index if not exists idx_place_reports_recent_duplicate/);
+  assert.match(m, /\(reporter_key, target_type, target_key, category, created_at desc\)/);
   assert.equal(DUPLICATE_WINDOW_MS, 24 * 60 * 60 * 1000);
   assert.ok(RATE_MAX > 0 && RATE_MAX <= 20);
-  // 서버가 실제로 그 창으로 조회한다
+  // 서버가 실제로 그 창으로 조회하고 중복을 돌려준다
   const fn = code("functions", "api", "place-report.ts");
   assert.match(fn, /DUPLICATE_WINDOW_MS/);
-  // 방어는 두 겹이다 — 서버 창 조회와 DB 유니크. 둘 다 있어야 한다.
-  assert.equal((fn.match(/fail\("duplicate_recent", 409\)/g) ?? []).length, 2,
-    "중복 방어가 서버·DB 두 곳에 모두 있어야 한다");
   assert.match(fn, /created_at=gte\./);
-  assert.match(fn, /23505/);
-  assert.match(read("supabase", "migrations", "042_place_reports.sql"),
-    /create unique index if not exists uq_place_reports_reporter_target_category/);
+  assert.equal((fn.match(/fail\("duplicate_recent", 409\)/g) ?? []).length, 1);
+});
+
+test("★A3 같은 reporter·target 이라도 사유가 다르면 신고할 수 있다", () => {
+  // 중복 판정 키에 category 가 들어간다 — 영업시간과 안전 문제는 다른 신고다.
+  const fn = code("functions", "api", "place-report.ts");
+  assert.match(fn, /category=eq\.\$\{r\.category\}/);
+  assert.match(fn, /reporter_key=eq\.\$\{rkey\}/);
+  assert.match(fn, /target_key=eq\.\$\{encodeURIComponent\(r\.target_key\)\}/);
+});
+
+test("★A4 다른 사람이 같은 대상·같은 사유를 신고하는 것은 막히지 않는다", async () => {
+  const a = await reporterKey("3f2a1b4c-5d6e-4f70-8a9b-0c1d2e3f4a5b", "city_spot", "99");
+  const b = await reporterKey("aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee", "city_spot", "99");
+  assert.notEqual(a, b, "사람이 다르면 중복 조회 키가 달라야 한다");
+});
+
+test("★A5 여러 시점에 같은 사람이 신고해도 독립 신고자는 1명이다", () => {
+  const rows = [
+    { reporter_key: "a", created_at: "2026-08-01T00:00:00Z" },
+    { reporter_key: "a", created_at: "2026-09-01T00:00:00Z" },
+    { reporter_key: "a", created_at: "2026-10-01T00:00:00Z" },
+  ];
+  assert.equal(rows.length, 3);
+  assert.equal(countIndependentReporters(rows), 1);
 });
 
 test("★R9 한 사람의 반복은 여러 명으로 세지 않는다", () => {
@@ -279,11 +329,10 @@ test("★migration 은 파괴적이지 않다", () => {
   assert.doesNotMatch(m, /\balter table public\.city_spots\b/i);
   assert.doesNotMatch(m, /\bdelete from\b|\btruncate\b/i);
   // 재실행 안전
-  for (const p of [/create table if not exists/, /create index if not exists/,
-                   /create unique index if not exists/]) assert.match(m, p);
+  for (const p of [/create table if not exists/, /create index if not exists/]) assert.match(m, p);
   // 사유·상태·길이를 DB 에서도 강제한다
   assert.match(m, /place_reports_category_chk/);
   assert.match(m, /place_reports_target_type_chk/);
   assert.match(m, /char_length\(note\) <= 500/);
-  assert.match(m, /uq_place_reports_reporter_target_category/);
+  assert.match(m, /idx_place_reports_recent_duplicate/);   // 영구 unique 가 아니라 조회용 index
 });

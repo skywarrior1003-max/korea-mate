@@ -92,10 +92,17 @@ create index if not exists idx_place_reports_target
 create index if not exists idx_place_reports_status
   on public.place_reports (status, created_at desc);
 
--- 같은 사람이 같은 대상·같은 사유로 반복 신고하는 것을 서버와 DB 양쪽에서 막는다.
--- 서버 쪽 24시간 창은 사용자 경험용이고, 이 인덱스는 마지막 그물이다.
-create unique index if not exists uq_place_reports_reporter_target_category
-  on public.place_reports (reporter_key, target_type, target_key, category);
+-- 최근 중복 신고 조회를 받쳐 준다.
+--
+-- 여기에 UNIQUE 를 걸면 안 된다. 처음엔 걸었다가 되돌렸다.
+-- 영구 unique 는 "같은 사람이 같은 장소의 같은 문제를 두 번 다시 신고할 수 없다" 는
+-- 뜻이 된다. 8월에 영업시간 오류를 신고해 고쳤는데 10월에 또 바뀌면 그 사람은
+-- 영원히 알려줄 수 없다. 그건 우리가 원하는 정책이 아니다.
+--
+-- 중복 판정은 시간 창의 문제이고, 시간 창은 스키마가 아니라 서버가 판단한다.
+-- (Postgres 는 NOW() 기준 sliding window 를 인덱스로 표현하지 못한다.)
+create index if not exists idx_place_reports_recent_duplicate
+  on public.place_reports (reporter_key, target_type, target_key, category, created_at desc);
 
 -- ── 권한 ────────────────────────────────────────────────────────────────────
 -- 브라우저는 이 테이블에 손댈 수 없다. 쓰기는 Pages Function(service_role)만.
