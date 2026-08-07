@@ -2,8 +2,8 @@
 // TASK-013: Rule-based Scheduler v1
 // Builds the ordered ScheduledItem list from placed items and resolves slot_order.
 
-import type { ScheduledItem, SchedulerInput } from "./types";
-import { timeToMinutes, minutesToTime } from "./utils";
+import type { ScheduledItem, SchedulerInput } from "./types.ts";
+import { timeToMinutes, minutesToTime } from "./utils.ts";
 
 export interface TimelineGap {
   start_minutes: number;

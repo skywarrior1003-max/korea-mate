@@ -2,14 +2,14 @@
 // TASK-013: Rule-based Scheduler v1
 // Injects affiliate cards into free gaps after greedy placement.
 
-import type { ScheduledItem, SchedulerInput, AffiliateContext } from "./types";
-import { timeToMinutes, minutesToTime } from "./utils";
+import type { ScheduledItem, SchedulerInput, AffiliateContext } from "./types.ts";
+import { timeToMinutes, minutesToTime } from "./utils.ts";
 import {
   AFFILIATE_MIN_GAP_MINUTES,
   AFFILIATE_ANCHOR_BUFFER_MIN,
   AFFILIATE_STAY_MINUTES,
-} from "./constants";
-import { findFreeGaps } from "./timeline-builder";
+} from "./constants.ts";
+import { findFreeGaps } from "./timeline-builder.ts";
 
 export function injectAffiliates(
   placed: ScheduledItem[],

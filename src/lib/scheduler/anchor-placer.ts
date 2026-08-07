@@ -8,9 +8,9 @@ import type {
   TripAnchor,
   FixedEventItem,
   ConflictError,
-} from "./types";
-import { timeToMinutes } from "./utils";
-import { hc5NoAnchorConflict } from "./constraint-validator";
+} from "./types.ts";
+import { timeToMinutes } from "./utils.ts";
+import { hc5NoAnchorConflict } from "./constraint-validator.ts";
 
 // Places all TripAnchors as fixed ScheduledItems.
 export function placeAnchors(

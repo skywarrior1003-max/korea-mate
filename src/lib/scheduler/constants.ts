@@ -1,7 +1,7 @@
 // GoKoreaMate / gokoreamate.com — Scheduler Engine Constants
 // TASK-013: Rule-based Scheduler v1
 
-import type { PlaceCategory, TripPace } from "./types";
+import type { PlaceCategory, TripPace } from "./types.ts";
 
 // ─── Category Stay Minutes (base, before pace multiplier) ────────────────────
 

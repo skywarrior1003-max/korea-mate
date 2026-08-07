@@ -2,8 +2,8 @@
 // TASK-013: Rule-based Scheduler v1
 // Stateful class tracking zone continuity bonuses and penalties.
 
-import type { ZoneId } from "./types";
-import { ZONE_SAME_BONUS, ZONE_REVERSE_PENALTY } from "./constants";
+import type { ZoneId } from "./types.ts";
+import { ZONE_SAME_BONUS, ZONE_REVERSE_PENALTY } from "./constants.ts";
 
 export class ZoneTracker {
   private lastZoneId: ZoneId | null = null;

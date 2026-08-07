@@ -3,20 +3,20 @@
 // Pipeline: runScheduler → buildPrompt → callGemini → parseResponse → merge
 // 3-tier fallback: Tier 1 (AI ok) → Tier 2 (parse fail) → Tier 3 (API fail)
 
-import { runScheduler } from "../engine";
-import type { SchedulerInput, ScheduledDay } from "../types";
+import { runScheduler } from "../engine.ts";
+import type { SchedulerInput, ScheduledDay } from "../types.ts";
 import type {
   PersonalizationResult,
   PersonalizedScheduledDay,
   PlaceExplanation,
-} from "./personalization-types";
-import { buildPersonalizationPrompt } from "./prompt-builder";
+} from "./personalization-types.ts";
+import { buildPersonalizationPrompt } from "./prompt-builder.ts";
 import {
   isMockPersonalizationMode,
   callGemini,
   PERSONALIZATION_AI_MODEL,
-} from "./gemini-client";
-import { parseGeminiResponse } from "./response-parser";
+} from "./gemini-client.ts";
+import { parseGeminiResponse } from "./response-parser.ts";
 
 // ─── Mock Personalizer ────────────────────────────────────────────────────────
 
@@ -50,7 +50,9 @@ function makeRequestId(): string {
 // ─── Main Orchestrator ────────────────────────────────────────────────────────
 
 export async function personalize(
-  input: SchedulerInput
+  input: SchedulerInput,
+  /** Cloudflare 에서는 ctx.env 로 주입한다. 없으면 provider 를 부르지 않고 fallback. */
+  apiKey = "",
 ): Promise<PersonalizationResult> {
   // ── Step 1: Rule-based schedule (foundation, never skipped) ───────────────
 
@@ -73,7 +75,7 @@ export async function personalize(
 
   // ── Step 4: Call Gemini (Tier 3 fallback on API failure) ─────────────────
 
-  const geminiResult = await callGemini(prompt, requestId);
+  const geminiResult = await callGemini(prompt, requestId, apiKey);
   if (!geminiResult.success) {
     return { kind: "fallback", data: ruleBasedDay, reason: geminiResult.reason };
   }

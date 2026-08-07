@@ -38,6 +38,7 @@ import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
 import PlannerDayNav from "@/components/planner/PlannerDayNav";
 import PlannerCoverHeader from "@/components/planner/PlannerCoverHeader";
+import { fetchPersonalizationProfile } from "@/lib/planner/personalize-client";
 import TimelineIcon from "@/components/planner/TimelineIcon";
 import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildTimeline } from "@/lib/planner/timeline-core";
@@ -342,7 +343,7 @@ async function generateWithNewApi(
   city: string,
   sd: string,
   ed: string,
-  _trav: string,
+  trav: string,
   tstyle: string,
   arrTime?: string,
   deptTime?: string,
@@ -431,6 +432,26 @@ async function generateWithNewApi(
   let hadDeferredCartHints = false;
   let usedCartHintCentroid = false;
 
+  // ── whole-trip 개인화 프로필 — 여행당 정확히 1회 ──
+  // 날짜 루프 "밖"이다. 안에서 부르면 14일 여행에 14번 나간다.
+  // 실패하면 null 이고, 그러면 아래 루프는 기존과 완전히 같은 규칙 기반으로 돈다.
+  const personalizationProfile = await fetchPersonalizationProfile({
+    city, locale,
+    start_date:   sd,
+    end_date:     ed,
+    travel_style: tstyle,
+    travelers:    trav,
+    pace,
+    selected_place_ids: cartHints.map(h => String(h.place_id)),
+    liked_place_ids:    [],
+    selected_places:    cartHints.map(h => ({
+      place_id: String(h.place_id),
+      name:     h.name,
+      category: (cartItemByKey[String(h.place_id)]?.type ?? undefined),
+    })),
+  });
+
+
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
@@ -503,6 +524,8 @@ async function generateWithNewApi(
           exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
           city,
           locale,
+          // 같은 프로필을 모든 날짜에 그대로 넘긴다. 여기서 AI 를 부르지 않는다.
+          personalization_profile: personalizationProfile ?? undefined,
         }),
       });
 

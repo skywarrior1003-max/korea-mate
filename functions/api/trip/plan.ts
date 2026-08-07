@@ -24,6 +24,7 @@ import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
 import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../../../src/lib/near-me/types";
 import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
+import { validateProfile } from "../../../src/lib/scheduler/ai/personalization-profile";
 
 // ── Inline types ──────────────────────────────────────────────────────────────
 
@@ -453,6 +454,14 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     route_template_stays: route_template_stays,
     affiliate_context,
     candidates:           filteredCandidates as any,
+    // whole-trip 프로필. 클라이언트가 보낸 값이라도 그대로 믿지 않고 여기서 다시
+    // 검증한다. 허용 id 집합은 이 날짜에 실제로 후보로 올라온 장소들이다.
+    personalization_profile: body.personalization_profile
+      ? validateProfile(
+          body.personalization_profile,
+          (filteredCandidates as any[]).map((c: any) => String(c.place_id)),
+        )
+      : null,
   });
 
   if (!schedulerResult.success) {

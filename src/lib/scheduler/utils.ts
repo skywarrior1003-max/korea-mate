@@ -1,7 +1,7 @@
 // GoKoreaMate / gokoreamate.com — Scheduler Utility Functions
 // TASK-013: Rule-based Scheduler v1
 
-import type { Coordinate } from "./types";
+import type { Coordinate } from "./types.ts";
 
 // ─── Haversine Distance ───────────────────────────────────────────────────────
 

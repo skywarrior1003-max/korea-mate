@@ -2,8 +2,8 @@
 // TASK-013: Rule-based Scheduler v1
 // Resolves stay_minutes for a candidate using route_template > category × pace.
 
-import type { NearMeCandidate, SchedulerInput, StaySource } from "./types";
-import { CATEGORY_STAY_MINUTES, PACE_MULTIPLIER } from "./constants";
+import type { NearMeCandidate, SchedulerInput, StaySource } from "./types.ts";
+import { CATEGORY_STAY_MINUTES, PACE_MULTIPLIER } from "./constants.ts";
 
 export interface StayResolution {
   stay_minutes: number;

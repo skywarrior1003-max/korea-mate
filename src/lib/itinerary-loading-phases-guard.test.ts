@@ -144,8 +144,14 @@ test("★일정 생성 경로·handler 를 바꾸지 않았다", () => {
   const plan = read("functions", "api", "trip", "plan.ts");
   assert.match(plan, /with_ai is ALWAYS forced to false/);
   assert.match(plan, /runScheduler\(/);
-  // 대기 화면 작업이 AI 배관을 끌어들이지 않았다 (주석의 언급은 제외하고 실제 import 만 본다)
-  assert.doesNotMatch(strip(plan), /from\s+"[^"]*scheduler\/ai\//);
+  // 원래는 "plan.ts 가 scheduler/ai/ 를 import 하지 않는다"로 적었다. 그건 그
+  // 시점의 상태였지 불변식이 아니다 — 이후 whole-trip 개인화 프로필이 들어오면서
+  // 순수 타입·검증기(personalization-profile.ts)를 정당하게 import 한다.
+  //
+  // 지켜야 할 진짜 계약은 "날짜별 plan endpoint 가 provider 를 직접 부르지 않는다"
+  // 이다. provider 를 부르는 모듈(gemini-client·personalizer)은 여전히 금지다.
+  assert.doesNotMatch(strip(plan), /from\s+"[^"]*scheduler\/ai\/(gemini-client|personalizer|prompt-builder|response-parser)/);
+  assert.doesNotMatch(strip(plan), /generativelanguage|callGemini/);
 });
 
 // ── 14. provider attribution ───────────────────────────────────────────────

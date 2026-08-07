@@ -4,8 +4,8 @@
 // v1: explanations are based on functional attributes (category, zone, score, timing).
 // v2 enhancement: add place_name_hints map to SchedulerInput for richer descriptions.
 
-import type { ScheduledDay } from "../types";
-import type { SchedulerInput, NearMeCandidate } from "../types";
+import type { ScheduledDay } from "../types.ts";
+import type { SchedulerInput, NearMeCandidate } from "../types.ts";
 
 const SYSTEM_PROMPT = `You are gokoreamate's trip personalization AI for gokoreamate.com.
 Your role is to explain rule-based scheduling decisions in natural, friendly language.

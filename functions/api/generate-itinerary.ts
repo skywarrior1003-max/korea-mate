@@ -1,4 +1,6 @@
+import { resolveAiMode, modeAllowsProviderCall } from "../../src/lib/scheduler/ai/personalization-profile";
 interface Env {
+  AI_PERSONALIZATION_MODE?: string;
   GEMINI_API_KEY: string;
 }
 
@@ -727,6 +729,17 @@ export const onRequestPost: (context: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
   };
+
+  // 비용 노출 차단 — 이 endpoint 는 현재 제품에서 호출하지 않는다.
+  // 인증도 rate limit 도 없이 인터넷에 열려 있어서, 게이트가 없으면 외부에서
+  // POST 만 해도 실제 Gemini 요금이 발생한다. AI 모드가 켜져 있지 않으면
+  // provider 에 도달하기 전에 끊는다. 기본값은 off 다.
+  if (!modeAllowsProviderCall(resolveAiMode(env.AI_PERSONALIZATION_MODE))) {
+    return new Response(
+      JSON.stringify({ error: "This endpoint is disabled.", ai_status: "disabled" }),
+      { status: 410, headers: corsHeaders },
+    );
+  }
 
   const apiKey = env.GEMINI_API_KEY;
 

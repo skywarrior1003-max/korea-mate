@@ -7,24 +7,25 @@ import type {
   SchedulerResult,
   ScheduledItem,
   NearMeCandidate,
-} from "./types";
-import { SCHEDULER_VERSION } from "./constants";
-import { timeToMinutes, minutesToTime } from "./utils";
-import { placeAnchors, placeFixedEvents, collectAnchorPlaceIds } from "./anchor-placer";
-import { prepareGreedyCandidates } from "./candidate-filter";
-import { ZoneTracker } from "./zone-tracker";
-import { estimateTravelMinutes } from "./travel-time-estimator";
-import { resolveStayMinutes } from "./slot-allocator";
-import { PriorityQueue } from "./priority-queue";
-import { injectAffiliates } from "./affiliate-injector";
-import { buildTimeline, findFreeGaps } from "./timeline-builder";
+} from "./types.ts";
+import { SCHEDULER_VERSION } from "./constants.ts";
+import { timeToMinutes, minutesToTime } from "./utils.ts";
+import { placeAnchors, placeFixedEvents, collectAnchorPlaceIds } from "./anchor-placer.ts";
+import { prepareGreedyCandidates } from "./candidate-filter.ts";
+import { ZoneTracker } from "./zone-tracker.ts";
+import { estimateTravelMinutes } from "./travel-time-estimator.ts";
+import { resolveStayMinutes } from "./slot-allocator.ts";
+import { PriorityQueue } from "./priority-queue.ts";
+import { profileBias } from "./profile-bias.ts";
+import { injectAffiliates } from "./affiliate-injector.ts";
+import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
   hc1NoDuplicate,
   hc3TravelFits,
   hc4StayFits,
   hc6WithinDayWindow,
   hc7MaxItems,
-} from "./constraint-validator";
+} from "./constraint-validator.ts";
 
 // ─── Greedy Candidate with adjusted score ────────────────────────────────────
 
@@ -139,7 +140,14 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
 
         scored.push({
           ...c,
-          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin),
+          // AI 프로필 보정은 여기서만 얹는다. 위의 HC 검사를 모두 통과한
+          // 후보들 사이의 순서만 바뀌고, 프로필이 없으면 0 이라 기존과 같다.
+          adjusted_score:       c.score + zoneBonus - consecutiveDistancePenalty(travelMin)
+                                + profileBias(input.personalization_profile, {
+                                    place_id:     c.place_id,
+                                    category:     c.category,
+                                    startMinutes: gap.start_minutes,
+                                  }),
           travel_minutes:       travelMin,
           stay_minutes_resolved: stayMin,
         });

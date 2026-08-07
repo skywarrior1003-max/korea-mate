@@ -2,7 +2,7 @@
 // TASK-013: Rule-based Scheduler v1
 // Filters and deduplicates candidates against already-placed items.
 
-import type { NearMeCandidate, ScheduledItem } from "./types";
+import type { NearMeCandidate, ScheduledItem } from "./types.ts";
 
 // Removes candidates already placed in the schedule.
 export function filterPlaced(

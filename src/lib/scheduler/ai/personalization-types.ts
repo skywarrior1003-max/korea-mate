@@ -1,7 +1,7 @@
 // GoKoreaMate / gokoreamate.com — AI Personalization Types
 // TASK-014: AI Personalization Layer
 
-import type { ScheduledDay } from "../types";
+import type { ScheduledDay } from "../types.ts";
 
 // ─── Alternative Place ────────────────────────────────────────────────────────
 

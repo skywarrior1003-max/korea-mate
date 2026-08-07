@@ -7,9 +7,9 @@ import type {
   SchedulerInput,
   ConflictError,
   NearMeCandidate,
-} from "./types";
-import { timeToMinutes } from "./utils";
-import { HC7_MAX_ITEMS } from "./constants";
+} from "./types.ts";
+import { timeToMinutes } from "./utils.ts";
+import { HC7_MAX_ITEMS } from "./constants.ts";
 
 // HC-1: No duplicate place_id in the day
 export function hc1NoDuplicate(

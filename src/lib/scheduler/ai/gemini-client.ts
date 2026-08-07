@@ -4,14 +4,15 @@
 // Immediate fallback on 429/404/400/403; retry on 503.
 // No new npm packages — native fetch only.
 
-import type { GeminiApiResponse } from "./personalization-types";
+import type { GeminiApiResponse } from "./personalization-types.ts";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 export const PERSONALIZATION_AI_MODEL = "gemini-2.5-flash";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${PERSONALIZATION_AI_MODEL}:generateContent`;
-const MAX_ATTEMPTS    = 2;    // 1 initial + 1 retry on 503 (per 2026-06-11 policy)
-const TIMEOUT_MS      = 10_000;
+const MAX_ATTEMPTS    = 1;    // 재시도 없음. 과거 비용 사고가 반복 호출에서 났다.
+                              // 어떤 status 에서도 두 번째 호출을 하지 않는다.
+const TIMEOUT_MS      = 8_000;   // 8초 초과 시 중단하고 규칙 기반으로 간다
 const MAX_OUTPUT_TOKENS = 2_048;
 
 // ─── Mock / Live Mode ─────────────────────────────────────────────────────────
@@ -54,11 +55,6 @@ function warnIfKeyFormatSuspect(key: string): void {
   }
 }
 
-// ─── Sleep ────────────────────────────────────────────────────────────────────
-
-const sleep = (ms: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, ms));
-
 // ─── Gemini Call ──────────────────────────────────────────────────────────────
 
 export type GeminiCallResult =
@@ -67,9 +63,10 @@ export type GeminiCallResult =
 
 export async function callGemini(
   prompt: string,
-  requestId: string
+  requestId: string,
+  /** 요청 시점에 Cloudflare ctx.env 에서 주입한다. module top-level 에서 읽지 않는다. */
+  apiKey: string,
 ): Promise<GeminiCallResult> {
-  const apiKey = process.env.GEMINI_API_KEY ?? "";
 
   if (!apiKey) {
     log({ requestId, action: "personalize-schedule", status: "fallback", reason: "GEMINI_API_KEY not set" });
@@ -116,18 +113,9 @@ export async function callGemini(
         const statusCode = res.status;
         log({ requestId, status: "error", errorCode: statusCode, attempt, mockMode: false });
 
-        // Non-retriable errors — immediate fallback
-        if ([400, 403, 404, 429].includes(statusCode)) {
-          return { success: false, reason: `Gemini HTTP ${statusCode} — non-retriable` };
-        }
-
-        // 503: retry if attempts remain
-        if (attempt < MAX_ATTEMPTS) {
-          await sleep(attempt * 1000);
-          continue;
-        }
-
-        return { success: false, reason: `Gemini HTTP ${statusCode} after ${attempt} attempt(s)` };
+        // 모든 오류에서 즉시 종료한다. 503 도 재시도하지 않는다 —
+        // 일시 장애 복구보다 비용 상한이 우선이다.
+        return { success: false, reason: `Gemini HTTP ${statusCode} — no retry` };
       }
 
       const raw = (await res.json()) as GeminiApiResponse;
@@ -151,11 +139,8 @@ export async function callGemini(
 
       log({ requestId, status: "error", errorMsg: reason, attempt, mockMode: false });
 
-      if (isAbort || attempt >= MAX_ATTEMPTS) {
-        return { success: false, reason };
-      }
-
-      await sleep(attempt * 1000);
+      // timeout 이든 network error 든 재호출하지 않는다.
+      return { success: false, reason };
     }
   }
 

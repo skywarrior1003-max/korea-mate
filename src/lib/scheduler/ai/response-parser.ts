@@ -3,7 +3,7 @@
 // Manual type guards only — no Zod or external validation libraries.
 // Returns null on any parsing or validation failure (triggers Tier 2 fallback).
 
-import type { PlaceExplanation, AlternativePlace } from "./personalization-types";
+import type { PlaceExplanation, AlternativePlace } from "./personalization-types.ts";
 
 // ─── Type Guards ──────────────────────────────────────────────────────────────
 

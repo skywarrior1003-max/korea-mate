@@ -2,7 +2,7 @@
 // TASK-013: Rule-based Scheduler v1
 // Busan 1-day scenario: BIFF at 14:00 anchor + greedy fill
 
-import type { SchedulerInput } from "../types";
+import type { SchedulerInput } from "../types.ts";
 
 export const MOCK_SCHEDULER_INPUT: SchedulerInput = {
   trip_date:       "2026-10-04",

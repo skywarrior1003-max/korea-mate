@@ -1,3 +1,4 @@
+import type { PersonalizationProfile } from "./ai/personalization-profile.ts";
 // GoKoreaMate / gokoreamate.com — Scheduler Engine Types
 // TASK-013: Rule-based Scheduler v1
 // NearMeCandidate is a local adapter; will be replaced by TASK-011 export when implemented.
@@ -85,6 +86,8 @@ export interface SchedulerInput {
   preferred_items?: ItineraryItem[];
   candidates: NearMeCandidate[];
   route_template_stays?: RouteTemplateStay[];
+  /** whole-trip AI 프로필. 없으면 기존 동작과 완전히 동일하다(보정 0). */
+  personalization_profile?: PersonalizationProfile | null;
   affiliate_context?: AffiliateContext;
 }
 

@@ -2,9 +2,9 @@
 // TASK-013: Rule-based Scheduler v1
 // Estimates travel time between two coordinates using distance thresholds.
 
-import type { Coordinate } from "./types";
-import { haversineDistance } from "./utils";
-import { TRAVEL_TIME_TABLE } from "./constants";
+import type { Coordinate } from "./types.ts";
+import { haversineDistance } from "./utils.ts";
+import { TRAVEL_TIME_TABLE } from "./constants.ts";
 
 export function estimateTravelMinutes(from: Coordinate, to: Coordinate): number {
   const distanceMeters = haversineDistance(from, to);

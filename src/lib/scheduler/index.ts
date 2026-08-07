@@ -1,7 +1,7 @@
 // GoKoreaMate / gokoreamate.com — Scheduler Public API
 // TASK-013: Rule-based Scheduler v1
 
-export { runScheduler } from "./engine";
+export { runScheduler } from "./engine.ts";
 
 export type {
   SchedulerInput,
@@ -23,6 +23,6 @@ export type {
   PlaceCategory,
   TripPace,
   TimelineSlot,
-} from "./types";
+} from "./types.ts";
 
-export { MOCK_SCHEDULER_INPUT } from "./mock/mock-input";
+export { MOCK_SCHEDULER_INPUT } from "./mock/mock-input.ts";
