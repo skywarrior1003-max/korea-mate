@@ -44,6 +44,7 @@ import { clampDay, formatDayChipDate } from "@/lib/planner/day-window-core";
 import { buildTimeline } from "@/lib/planner/timeline-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
+import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -660,35 +661,6 @@ async function generateWithNewApi(
   return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, hadDeferredCartHints, usedCartHintCentroid };
 }
 
-// ── 카테고리 이미지 ───────────────────────────────────────────
-function getCategoryImage(category: string, name: string): string {
-  const n = name.toLowerCase();
-  const c = category.toLowerCase();
-  if (n.includes("beach") || n.includes("haeundae") || n.includes("gwangalli") || n.includes("songdo"))
-    return "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800";
-  if (n.includes("temple") || n.includes("shrine") || n.includes("haedong"))
-    return "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800";
-  if (n.includes("market") || c.includes("market"))
-    return "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=800";
-  if (n.includes("mountain") || n.includes("trail") || n.includes("jangsan") || n.includes("hwangnyeong"))
-    return "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800";
-  if (n.includes("cable car") || n.includes("aerial"))
-    return "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800";
-  if (n.includes("gamcheon"))
-    return "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800";
-  if (c.includes("restaurant") || c.includes("food") || c.includes("dining"))
-    return "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=800";
-  if (c.includes("cafe") || c.includes("coffee"))
-    return "https://images.unsplash.com/photo-1447933601403-0c6688de566a?w=800";
-  if (c.includes("museum"))
-    return "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800";
-  if (c.includes("park") || c.includes("nature") || c.includes("garden"))
-    return "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800";
-  if (c.includes("k-pop") || c.includes("concert"))
-    return "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800";
-  return "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800";
-}
-
 function getCategoryColor(category: string): string {
   const c = category.toLowerCase();
   if (c.includes("restaurant") || c.includes("food")) return "var(--gkm-accent-coral)";
@@ -717,7 +689,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
   const snap       = place.cartSnapshot;
   const naverUrl   = snap?.naverMapUrl ?? buildNaverUrl(place.name, city);
   const googleUrl  = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
-  const imageUrl   = snap?.image ?? getCategoryImage(place.category, place.name);
+  const imageUrl   = resolveSpotImageSrc(snap?.image);
   const badgeColor = getCategoryColor(place.category);
   const tags       = snap?.tags ?? [];
   // 스냅샷 원문을 직접 읽는 자리다. tips 는 생성 시 이미 걸러졌지만 cartSnapshot
@@ -758,7 +730,8 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
       >
         <div className="relative h-52 sm:h-72 flex-shrink-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imageUrl} alt={place.name} className="w-full h-full object-cover" />
+          <img src={imageUrl} alt={place.name} className="w-full h-full object-cover"
+               onError={swapToPlaceholderOnError} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
           <button
             onClick={onClose}
@@ -2442,11 +2415,12 @@ function ItineraryResult() {
                                         </button>
                                       </div>
                                       <div className="flex items-start gap-3">
-                                        {place.cartSnapshot?.image && (
+                                        {hasRealSpotImage(place.cartSnapshot?.image) && (
                                           <img
-                                            src={place.cartSnapshot.image}
+                                            src={resolveSpotImageSrc(place.cartSnapshot?.image)}
                                             alt={place.name}
                                             className="w-16 h-16 rounded-xl object-cover shrink-0 border border-line"
+                                            onError={swapToPlaceholderOnError}
                                           />
                                         )}
                                         <div className="min-w-0">
