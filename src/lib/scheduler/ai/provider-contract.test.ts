@@ -96,6 +96,10 @@ test("★P1·P3 Functions typecheck gate 가 존재하고 배포 코드를 포�
   const cfg = JSON.parse(read("tsconfig.functions.json").replace(/^\s*\/\/.*$/gm, ""));
   assert.deepEqual(cfg.include, ["functions/**/*.ts"]);
   assert.equal(cfg.compilerOptions.strict, true);
+  // 실제 배포 endpoint 를 exclude 로 빼내 게이트를 무력화할 수 없다
+  for (const ex of cfg.exclude as string[]) {
+    assert.doesNotMatch(ex, /^functions\//, `배포 endpoint 가 typecheck 에서 제외됐다: ${ex}`);
+  }
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.scripts["typecheck:functions"], "tsc --noEmit -p tsconfig.functions.json");
 });

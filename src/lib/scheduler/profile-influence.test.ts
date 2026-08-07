@@ -89,27 +89,37 @@ test("★보정 함수는 프로필이 없으면 항상 0", () => {
 
 // ── ② 프로필이 실제로 순서를 바꾼다 ─────────────────────────────────────────
 test("★★프로필이 안전한 후보들 사이의 배치 순서를 실제로 바꾼다", () => {
-  const noProfile = runScheduler(input());
-  const withCafe  = runScheduler(input({
-    personalization_profile: profile({ category_weights: { cafe: 1, restaurant: 0, nature: 0 } }),
+  // Meal Coverage 도입 후 첫 자리는 아직 못 채운 식사창에 식음 후보가 먼저 간다.
+  // 그래서 이 테스트는 **식사 이후 자리**에서 프로필이 순서를 바꾸는지를 본다.
+  // 후보를 non-food 두 개(nature·attraction)로 두어야 그 차이가 드러난다.
+  const nonFoodInput = (extra: Record<string, unknown> = {}) => ({
+    trip_date: "2026-09-01", start_time: "09:00", end_time: "18:00",
+    base_coordinate: BASE, pace: "normal" as const,
+    candidates: [candidate("cafe-1", "cafe"), candidate("nat-1", "nature"), candidate("att-1", "attraction")],
+    ...extra,
+  } as never);
+
+  const noProfile   = runScheduler(nonFoodInput());
+  const withNature  = runScheduler(nonFoodInput({
+    personalization_profile: profile({ category_weights: { nature: 1, attraction: 0 } }),
   }));
-  const withNature = runScheduler(input({
-    personalization_profile: profile({ category_weights: { nature: 1, cafe: 0, restaurant: 0 } }),
+  const withAttract = runScheduler(nonFoodInput({
+    personalization_profile: profile({ category_weights: { attraction: 1, nature: 0 } }),
   }));
 
-  assert.ok(noProfile.success && withCafe.success && withNature.success);
+  assert.ok(noProfile.success && withNature.success && withAttract.success);
 
-  const a = placedIds(withCafe);
-  const b = placedIds(withNature);
+  const a = placedIds(withNature).filter(id => id !== "cafe-1");
+  const b = placedIds(withAttract).filter(id => id !== "cafe-1");
   assert.ok(a.length > 0 && b.length > 0, "아무것도 배치되지 않았다");
 
   // 선호가 정반대인 두 프로필이 같은 순서를 낸다면 보정이 실제로 먹지 않은 것이다.
   assert.notDeepEqual(a, b,
-    `프로필이 배치에 전혀 영향을 주지 못했다 (cafe=${a.join(",")} nature=${b.join(",")})`);
+    `프로필이 배치에 전혀 영향을 주지 못했다 (nature=${a.join(",")} attraction=${b.join(",")})`);
 
   // 각 프로필이 자기가 선호한 카테고리를 먼저 놓는다
-  assert.equal(a[0], "cafe-1", "cafe 선호인데 cafe 가 먼저 오지 않았다");
-  assert.equal(b[0], "nat-1",  "nature 선호인데 nature 가 먼저 오지 않았다");
+  assert.equal(a[0], "nat-1", "nature 선호인데 nature 가 먼저 오지 않았다");
+  assert.equal(b[0], "att-1", "attraction 선호인데 attraction 이 먼저 오지 않았다");
 });
 
 test("★같은 장소 집합은 유지된다 — 선호는 순서만 바꾼다", () => {

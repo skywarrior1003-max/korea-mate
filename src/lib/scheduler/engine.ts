@@ -16,9 +16,9 @@ import { ZoneTracker } from "./zone-tracker.ts";
 import { estimateTravelMinutes } from "./travel-time-estimator.ts";
 import { resolveStayMinutes } from "./slot-allocator.ts";
 import { PriorityQueue } from "./priority-queue.ts";
-import { profileBias } from "./profile-bias.ts";
+import { profileBias, PROFILE_MAX_BONUS } from "./profile-bias.ts";
 import {
-  activeMealWindows, canPlaceAutoMeal, isFoodCategory, type MealKind,
+  activeMealWindows, canPlaceAutoMeal, isFoodCategory, mealWindowAt, type MealKind,
 } from "./meal-opportunity.ts";
 import { injectAffiliates } from "./affiliate-injector.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
@@ -189,7 +189,41 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
 
       // Pick the highest adjusted_score candidate
       scored.sort((a, b) => b.adjusted_score - a.adjusted_score);
-      const best = scored[0];
+
+      // ── Meal Coverage ────────────────────────────────────────────────────
+      // 식사 기회가 남아 있는데 취향 보정이 강한 non-food 후보가 그 자리를 계속
+      // 가져가면 하루에 밥이 한 끼도 없는 일정이 나온다. 실제 Gemini 프로필에서
+      // 관측됐다 — attraction 1.0 이면 종일 식사 0.
+      //
+      // 점수를 키워 이기게 하지 않는다. restaurant 에 +100 을 주면 Selected 999,
+      // 거리 페널티, zone 보너스가 전부 흔들린다. 대신 **고르는 단계에서 역할을
+      // 나눈다** — 아직 못 채운 식사창에 놓을 수 있는 식음 후보가 있으면 이 자리는
+      // 그 후보들 중에서 고른다. 없으면 평소대로 고른다(빈 끼니를 허용한다).
+      //
+      // Selected 가 이 규칙보다 위다. 사용자가 직접 고른 장소를 식사 때문에 미루지 않는다.
+      let pickPool = scored;
+      if (!isUserSelected(scored[0].place_id, scored[0].score)) {
+        const openMeal = mealWindows.find(w =>
+          !filledMeals.has(w.kind) &&
+          w.start_minutes < gap.end_minutes && w.end_minutes > gap.start_minutes);
+        if (openMeal) {
+          // 밥 먹으러 멀리 가지는 않는다.
+          // 식사 보장은 **취향**을 이기되 **동선**은 이기지 못한다.
+          // 취향 보정의 최대치가 ±PROFILE_MAX_BONUS 이므로, 최고 후보보다 그만큼
+          // 안쪽에 있는 식음 후보만 받는다. 거리 페널티(최대 -90)로 크게 밀린
+          // 후보는 여기서 걸러지고 그 끼니는 비워 둔다.
+          const mealFloor = scored[0].adjusted_score - PROFILE_MAX_BONUS;
+          const mealPicks = scored.filter(c =>
+            isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score) &&
+            c.adjusted_score >= mealFloor &&
+            mealWindowAt(
+              c.start_minutes_resolved ?? gap.start_minutes + c.travel_minutes,
+              mealWindows,
+            )?.kind === openMeal.kind);
+          if (mealPicks.length > 0) pickPool = mealPicks;
+        }
+      }
+      const best = pickPool[0];
 
       // HC-1: no duplicate
       const hc1 = hc1NoDuplicate(best, placed);
