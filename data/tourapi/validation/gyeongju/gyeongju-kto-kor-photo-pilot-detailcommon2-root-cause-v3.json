@@ -1,0 +1,101 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "cases": [
+    {
+      "collected_at": "2026-08-07T09:00:00Z",
+      "content_id": "128676",
+      "has_overview": true,
+      "http_status": 200,
+      "items_count": 1,
+      "items_raw_repr": "{'item': [{'contentid': '128676', 'contenttypeid': '12', 'title': '경주 교촌마을', 'createdtime': '20051121090000', 'modifiedtime': '20260601105015', 'tel': '', 'telname': '', 'homepage': 'https://gyeongju.",
+      "items_raw_type": "dict",
+      "result_code": "0000",
+      "result_msg": "OK",
+      "total_count": 1,
+      "verdict": "VALID_ITEM",
+      "ynparam_check": {
+        "areacodeYN": "NOT_IN_V4.4_MANUAL",
+        "defaultYN": "NOT_IN_V4.4_MANUAL",
+        "firstImageYN": "NOT_IN_V4.4_MANUAL",
+        "note": "v4.4 매뉴얼에 YN 파라미터 없음 (구버전 v3.x에서 삭제됨)",
+        "overviewYN": "NOT_IN_V4.4_MANUAL"
+      }
+    },
+    {
+      "collected_at": "2026-08-07T09:00:00Z",
+      "content_id": "2756715",
+      "has_overview": true,
+      "http_status": 200,
+      "items_count": 1,
+      "items_raw_repr": "{'item': [{'contentid': '2756715', 'contenttypeid': '12', 'title': '금장대', 'createdtime': '20211014001520', 'modifiedtime': '20260323160220', 'tel': '', 'telname': '', 'homepage': 'https://www.gyeongju",
+      "items_raw_type": "dict",
+      "result_code": "0000",
+      "result_msg": "OK",
+      "total_count": 1,
+      "verdict": "VALID_ITEM",
+      "ynparam_check": {
+        "areacodeYN": "NOT_IN_V4.4_MANUAL",
+        "defaultYN": "NOT_IN_V4.4_MANUAL",
+        "firstImageYN": "NOT_IN_V4.4_MANUAL",
+        "note": "v4.4 매뉴얼에 YN 파라미터 없음 (구버전 v3.x에서 삭제됨)",
+        "overviewYN": "NOT_IN_V4.4_MANUAL"
+      }
+    },
+    {
+      "collected_at": "2026-08-07T09:00:00Z",
+      "content_id": "127985",
+      "has_overview": true,
+      "http_status": 200,
+      "items_count": 1,
+      "items_raw_repr": "{'item': [{'contentid': '127985', 'contenttypeid': '12', 'title': '경주 황룡사지', 'createdtime': '20040212090000', 'modifiedtime': '20250923090747', 'tel': '', 'telname': '', 'homepage': '<a href=\"https://",
+      "items_raw_type": "dict",
+      "result_code": "0000",
+      "result_msg": "OK",
+      "total_count": 1,
+      "verdict": "VALID_ITEM",
+      "ynparam_check": {
+        "areacodeYN": "NOT_IN_V4.4_MANUAL",
+        "defaultYN": "NOT_IN_V4.4_MANUAL",
+        "firstImageYN": "NOT_IN_V4.4_MANUAL",
+        "note": "v4.4 매뉴얼에 YN 파라미터 없음 (구버전 v3.x에서 삭제됨)",
+        "overviewYN": "NOT_IN_V4.4_MANUAL"
+      }
+    },
+    {
+      "collected_at": "2026-08-07T09:00:00Z",
+      "content_id": "128612",
+      "has_overview": true,
+      "http_status": 200,
+      "items_count": 1,
+      "items_raw_repr": "{'item': [{'contentid': '128612', 'contenttypeid': '12', 'title': '경주 서출지', 'createdtime': '20050927090000', 'modifiedtime': '20251114161930', 'tel': '', 'telname': '', 'homepage': '<a href=\"https://w",
+      "items_raw_type": "dict",
+      "result_code": "0000",
+      "result_msg": "OK",
+      "total_count": 1,
+      "verdict": "VALID_ITEM",
+      "ynparam_check": {
+        "areacodeYN": "NOT_IN_V4.4_MANUAL",
+        "defaultYN": "NOT_IN_V4.4_MANUAL",
+        "firstImageYN": "NOT_IN_V4.4_MANUAL",
+        "note": "v4.4 매뉴얼에 YN 파라미터 없음 (구버전 v3.x에서 삭제됨)",
+        "overviewYN": "NOT_IN_V4.4_MANUAL"
+      }
+    }
+  ],
+  "summary": {
+    "127985": "VALID_ITEM",
+    "128612": "VALID_ITEM",
+    "128676": "VALID_ITEM",
+    "2756715": "VALID_ITEM"
+  },
+  "ynparam_status": {
+    "addrinfoYN": "NOT_IN_V4.4_MANUAL",
+    "areacodeYN": "NOT_IN_V4.4_MANUAL",
+    "catcodeYN": "NOT_IN_V4.4_MANUAL",
+    "defaultYN": "NOT_IN_V4.4_MANUAL",
+    "firstImageYN": "NOT_IN_V4.4_MANUAL",
+    "mapinfoYN": "NOT_IN_V4.4_MANUAL",
+    "note": "v4.4 개정이력 확인 — 공통정보 YN 파라미터 삭제됨 (v4.x). 현재 detailCommon2는 contentId만 필수.",
+    "overviewYN": "NOT_IN_V4.4_MANUAL"
+  }
+}

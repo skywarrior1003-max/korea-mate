@@ -1,0 +1,10 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "files": {
+    "data\\tourapi\\normalized\\gyeongju\\gyeongju-tier-a-pilot-snapshot-v1.jsonl": "OK",
+    "data\\tourapi\\normalized\\gyeongju\\gyeongju-tourism-next-batch-priority-v1.jsonl": "OK",
+    "data\\tourapi\\validation\\gyeongju\\gyeongju-tier-a-pilot-kto-link-v1.jsonl": "OK",
+    "data\\tourapi\\validation\\gyeongju\\gyeongju-tier-a-pilot-qa-v1.json": "OK"
+  },
+  "result": "ALL_OK"
+}

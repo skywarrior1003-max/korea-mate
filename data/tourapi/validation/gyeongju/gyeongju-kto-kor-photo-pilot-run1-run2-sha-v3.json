@@ -1,0 +1,33 @@
+﻿{
+    "run":  "run1_run2_confirmed",
+    "files":  {
+                  "gyeongju-kto-kor-photo-pilot-api-ops-v3.json":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-namespace-audit-v3.json":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-kto-link-v3.jsonl":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-detailcommon2-root-cause-v3.json":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-coverage-v3.json":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-snapshot-v3.jsonl":  "IDENTICAL",
+                  "gyeongju-kto-kor-photo-pilot-photo-link-v3.jsonl":  "IDENTICAL"
+              },
+    "as_of":  "2026-08-07T09:00:00Z",
+    "result":  "BYTE_IDENTICAL_PASS",
+    "T12":  "PASS",
+    "run2":  {
+                 "gyeongju-kto-kor-photo-pilot-detailcommon2-root-cause-v3.json":  "66c3e7990dd44ffc40d5b4357e88185a5fe606ad67955f6d7f1b37408b272673",
+                 "gyeongju-kto-kor-photo-pilot-snapshot-v3.jsonl":  "c074b6a036d450627efa0afbe3fb907fe4723630db2710d5c68aba0133bf2553",
+                 "gyeongju-kto-kor-photo-pilot-api-ops-v3.json":  "102ee786017315a1d2c90c70acd4ac9ba08c3379c1fddd217da85c1c2b3c3aff",
+                 "gyeongju-kto-kor-photo-pilot-kto-link-v3.jsonl":  "3b1d1195a40887cd8b293bc5aba2b45478295f559dfaf02b1830d74147e3a81c",
+                 "gyeongju-kto-kor-photo-pilot-namespace-audit-v3.json":  "c45e12b9c149a18125b541c0d1ba9241792d0c3b7dfd0e971b47130c3afc3f4b",
+                 "gyeongju-kto-kor-photo-pilot-photo-link-v3.jsonl":  "e90db22613fad8b40c7de18627aeac06caf11f06e3898136c5218bb362f58afa",
+                 "gyeongju-kto-kor-photo-pilot-coverage-v3.json":  "cf49fa2a804ff0dd634aa5f26d49ecf82c8e514e54ed61f01123dd15db6da47b"
+             },
+    "run1":  {
+                 "gyeongju-kto-kor-photo-pilot-detailcommon2-root-cause-v3.json":  "66c3e7990dd44ffc40d5b4357e88185a5fe606ad67955f6d7f1b37408b272673",
+                 "gyeongju-kto-kor-photo-pilot-snapshot-v3.jsonl":  "c074b6a036d450627efa0afbe3fb907fe4723630db2710d5c68aba0133bf2553",
+                 "gyeongju-kto-kor-photo-pilot-api-ops-v3.json":  "102ee786017315a1d2c90c70acd4ac9ba08c3379c1fddd217da85c1c2b3c3aff",
+                 "gyeongju-kto-kor-photo-pilot-kto-link-v3.jsonl":  "3b1d1195a40887cd8b293bc5aba2b45478295f559dfaf02b1830d74147e3a81c",
+                 "gyeongju-kto-kor-photo-pilot-namespace-audit-v3.json":  "c45e12b9c149a18125b541c0d1ba9241792d0c3b7dfd0e971b47130c3afc3f4b",
+                 "gyeongju-kto-kor-photo-pilot-photo-link-v3.jsonl":  "e90db22613fad8b40c7de18627aeac06caf11f06e3898136c5218bb362f58afa",
+                 "gyeongju-kto-kor-photo-pilot-coverage-v3.json":  "cf49fa2a804ff0dd634aa5f26d49ecf82c8e514e54ed61f01123dd15db6da47b"
+             }
+}

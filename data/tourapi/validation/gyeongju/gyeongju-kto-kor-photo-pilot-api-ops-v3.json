@@ -1,0 +1,40 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "ops_total": {
+    "detailCommon2": 4,
+    "detailImage2": 4,
+    "detailInfo2": 4,
+    "detailIntro2": 4,
+    "detailPetTour2": 4
+  },
+  "params_log": [
+    {
+      "contentTypeId": "ALL",
+      "endpoint": "areaBasedList2",
+      "lDongRegnCd": "47",
+      "lDongSignguCd": "130"
+    },
+    {
+      "endpoint": "searchKeyword2",
+      "keyword": "황남리 고분군",
+      "lDongRegnCd": "47",
+      "lDongSignguCd": "130"
+    },
+    {
+      "contentId": "128676",
+      "endpoint": "detailCommon2_diag"
+    },
+    {
+      "contentId": "2756715",
+      "endpoint": "detailCommon2_diag"
+    },
+    {
+      "contentId": "127985",
+      "endpoint": "detailCommon2_diag"
+    },
+    {
+      "contentId": "128612",
+      "endpoint": "detailCommon2_diag"
+    }
+  ]
+}

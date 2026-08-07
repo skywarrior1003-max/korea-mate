@@ -1,0 +1,73 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "frozen_sha": "ALL_OK",
+  "kto_match_summary": {
+    "교촌마을": "EXACT_MATCH",
+    "금장대": "EXACT_MATCH",
+    "서출지": "EXACT_MATCH",
+    "황남리 고분군": "NO_KTO_RECORD_AFTER_COMPLETE_SEARCH",
+    "황룡사지": "EXACT_MATCH"
+  },
+  "matched_count": 4,
+  "photo_match_summary": {
+    "교촌마을": "HIGH_CONFIDENCE_PHOTO_MATCH",
+    "금장대": "NO_PHOTO_RECORD",
+    "서출지": "HIGH_CONFIDENCE_PHOTO_MATCH",
+    "황남리 고분군": "NO_PHOTO_RECORD",
+    "황룡사지": "NO_PHOTO_RECORD"
+  },
+  "regression": {
+    "overall": "PASS",
+    "tests": {
+      "T01_searchKeyword2_ldong": {
+        "note": "searchKeyword2 calls=1",
+        "pass": true
+      },
+      "T02_no_areaCode_sigunguCode": {
+        "note": "forbidden_uses=0",
+        "pass": true
+      },
+      "T03_pagination_complete": {
+        "note": "verified by fetch_area_based_list_all",
+        "pass": true
+      },
+      "T04_namespace_separation": {
+        "note": "gal_content_id vs kto_content_id used throughout",
+        "pass": true
+      },
+      "T05_galContentId_not_passed_to_KorService": {
+        "pass": true
+      },
+      "T06_detailCommon2_parser": {
+        "note": "result_code+totalCount+items_raw 저장",
+        "pass": true
+      },
+      "T07_http200_empty_distinction": {
+        "pass": true
+      },
+      "T08_vg_coords_5": {
+        "note": "extracted=5/5",
+        "pass": true
+      },
+      "T09_no_auto_link_without_location_check": {
+        "note": "verify_gallery_match requires 경주 location AND name match",
+        "pass": true
+      },
+      "T10_run2_net0": {
+        "note": "all raw cached before Run2",
+        "pass": true
+      },
+      "T11_api_key_not_exposed": {
+        "note": "credential_values_exposed=false enforced",
+        "pass": true
+      },
+      "T12_run1_run2_identical": {
+        "note": "verified separately after Run2",
+        "pass": null
+      }
+    }
+  },
+  "run1_run2": "BYTE_IDENTICAL_PASS",
+  "verdict": "PASS",
+  "vg_coords_extracted": 5
+}

@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "cross_join_count": 0,
+  "gal_content_ids_sampled": [
+    "2595939",
+    "2595954",
+    "2595958",
+    "2595962",
+    "2595965",
+    "2595966",
+    "2595967",
+    "2595968",
+    "2595969",
+    "2595970"
+  ],
+  "kto_content_ids": [
+    "128676",
+    "2756715",
+    "127985",
+    "128612"
+  ],
+  "rule": "gal_content_id != kto_content_id (different numbering systems)",
+  "verdict": "NAMESPACE_CLEAN"
+}
