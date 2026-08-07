@@ -1,0 +1,33 @@
+{
+  "task": "TASK-GYEONGJU-EN-CONTRACT-FINALIZE-AND-235-PLACE-FULL-COLLECTION-V1",
+  "as_of": "2026-08-07T10:02:14Z",
+  "base_branch": "data/gyeongju-engservice2-contract-10-pilot-v1",
+  "base_head": "5fc111b",
+  "contract_source": "APPROVED_API_INVENTORY_SEC6",
+  "base_endpoint": "https://apis.data.go.kr/B551011/EngService2",
+  "auth": "TOUR_API_KEY (.env.local)",
+  "area_code": "35",
+  "sigungu_code": "2",
+  "en_list_count": 64,
+  "operations": {
+    "areaCode2": "CONFIRMED_PARTIAL",
+    "areaBasedList2": "CONFIRMED_ACTUAL",
+    "searchKeyword2": "CONFIRMED_ACTUAL",
+    "detailCommon2": "CONFIRMED_ACTUAL",
+    "detailIntro2": "CONFIRMED_PILOT",
+    "detailInfo2": "CONFIRMED_PILOT",
+    "detailImage2": "CONFIRMED_PILOT_contentId_only",
+    "ldongCode2": "NOT_TESTED_GYEONGJU",
+    "lclsSystmCode2": "NOT_TESTED_GYEONGJU",
+    "searchFestival2": "NOT_TESTED",
+    "searchStay2": "NOT_TESTED",
+    "areaBasedSyncList2": "NOT_TESTED"
+  },
+  "confirmed_constraints": {
+    "areaCode2_language": "ENGLISH_NAMES_ONLY",
+    "detailImage2_params": "contentId_only (imageYN/subImageYN INVALID)",
+    "detailImage2_error_format": "flat {responseTime,resultCode,resultMsg}",
+    "contentId_namespace": "SEPARATE_FROM_KorService2"
+  },
+  "CONTRACT_FINALIZED": true
+}

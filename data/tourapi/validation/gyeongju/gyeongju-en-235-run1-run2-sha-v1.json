@@ -1,0 +1,21 @@
+{
+  "as_of": "2026-08-07T10:02:14Z",
+  "run": "RUN1",
+  "files": {
+    "gyeongju-engservice2-contract-finalized-v1.json": "95fba86768053eb5f041ca6f59dcc89753c28cc04b261532f71d69fb7feb8a3d",
+    "gyeongju-en-235-input-v1.jsonl": "6761316e73bb675dee88b12af778238af1d5422801e5b21ac04a010ea1f94ee9",
+    "gyeongju-ko-en-identity-link-235-v1.jsonl": "384c17da9525d6bcecbc44f57504e64f6589bf9af79f6e2849b696f07b3c8667",
+    "gyeongju-en-235-snapshot-v1.jsonl": "c75defee400e2013ace04370b4ca47a0f0a765be515744fab19aeff958a0833f",
+    "gyeongju-engservice2-detail-audit-235-v1.jsonl": "335ce62249708a9db08326e27f6ab49aa7fb6c15900a98db3f1b0d6c431e7b48",
+    "gyeongju-en-coverage-235-v1.jsonl": "4855299b58682f11994b45fd5dfbd2baa15978767c0812aa73955a7e84633a9e",
+    "gyeongju-translation-fallback-queue-v1.jsonl": "bd72090a7cab196664f654d566d7845cb56d41cebe1b5b6f4b378dd3fbdcb564",
+    "gyeongju-en-235-coverage-stats-v1.json": "6bda2a9484481eba393f2223901aace72ab6716577e3a3ca6cc5eec673459697",
+    "gyeongju-en-235-qa-report-v1.json": "ccbb117ce8e480fff2e783d5acf6fe46c68696bcfd26ebd4d0396ae3db102f34"
+  },
+  "http_stats": {
+    "HTTP": 0,
+    "CACHE": 120,
+    "CACHE_PILOT": 25,
+    "ERROR": 0
+  }
+}

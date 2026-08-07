@@ -1,0 +1,38 @@
+{
+  "as_of": "2026-08-07T10:02:14Z",
+  "task": "TASK-GYEONGJU-EN-CONTRACT-FINALIZE-AND-235-PLACE-FULL-COLLECTION-V1",
+  "input_count": 235,
+  "match_distribution": {
+    "REVIEW_REQUIRED": 93,
+    "EXACT_OFFICIAL_IDENTITY": 41,
+    "NO_EN_RECORD": 101
+  },
+  "coverage_distribution": {
+    "EN_IDENTITY_REVIEW": 93,
+    "EN_READY": 6,
+    "EN_PARTIAL": 35,
+    "EN_SOURCE_MISSING": 101
+  },
+  "http_stats": {
+    "HTTP": 0,
+    "CACHE": 120,
+    "CACHE_PILOT": 25,
+    "ERROR": 0
+  },
+  "searchKeyword2_calls": 0,
+  "searchKeyword2_found": 0,
+  "detail_calls_total": 36,
+  "snapshot_count": 41,
+  "translation_queue": 136,
+  "en_list_count": 64,
+  "en_duplicate_flag_count": 82,
+  "content_type_distribution": {
+    "85": 1,
+    "76": 45,
+    "80": 3,
+    "82": 5,
+    "78": 7,
+    "79": 2,
+    "75": 1
+  }
+}
