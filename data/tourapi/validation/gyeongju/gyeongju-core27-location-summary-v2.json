@@ -1,0 +1,48 @@
+{
+  "as_of": "2026-08-07T00:00:00Z",
+  "by_coordinate_source": {
+    "EXISTING_KTO_SOURCE": 6,
+    "GYEONGJU_OFFICIAL_TOURISM_DETAIL": 21
+  },
+  "by_readiness_tier": {
+    "RELEASE_READY_OWNER_APPROVED_WEB_CONTENT": 27
+  },
+  "existing_coord_comparison": {
+    "CONSISTENT": 4,
+    "LOCATION_CONFLICT": 1,
+    "REVIEW_REQUIRED": 1
+  },
+  "existing_coord_count": 6,
+  "final_with_coord": 27,
+  "geocoding_requests": 0,
+  "high_confidence_count": 21,
+  "hold_total": 0,
+  "http_requests": 0,
+  "kto_api_requests": 0,
+  "recovered_count": 21,
+  "regression_tests": {
+    "failed": 0,
+    "failed_details": [],
+    "passed": 12,
+    "passed_names": [
+      "T01_standard_extraction",
+      "T02_no_spaces",
+      "T03_extra_spaces",
+      "T04_lat_only_hold",
+      "T05_lng_only_hold",
+      "T06_non_numeric_no_match",
+      "T07_swap_detection",
+      "T07_swap_reason",
+      "T08_out_of_range",
+      "T09_multiple_pairs_count",
+      "T10_consistent_100m",
+      "T11_deterministic_output"
+    ],
+    "total": 12,
+    "verdict": "PASS"
+  },
+  "release_ready_total": 27,
+  "remaining_hold_count": 0,
+  "task": "TASK-GYEONGJU-CORE27-LOCATION-RECOVERY-V2",
+  "total_core27": 27
+}

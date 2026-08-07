@@ -2228,13 +2228,13 @@
       "size_bytes": 8870
     }
   ],
-  "files_count": 298,
+  "files_count": 309,
   "generated_by": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
   "hold_candidate_count": 808,
-  "last_task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
-  "last_updated": "2026-08-06",
-  "last_updated_at": "2026-08-06T00:00:00Z",
-  "last_updated_task": "TASK-GYEONGJU-CORE27-FULL-OFFICIAL-SNAPSHOT-V1",
+  "last_task": "TASK-GYEONGJU-CORE27-LOCATION-RECOVERY-V2",
+  "last_updated": "2026-08-07",
+  "last_updated_at": "2026-08-07T00:00:00Z",
+  "last_updated_task": "TASK-GYEONGJU-CORE27-LOCATION-RECOVERY-V2",
   "manifest_sha256": "49b8bfc33af775d8b0e17664cb3b5ded6618890321439d7d8d2f5a9f4d3a2c00",
   "qa_fixes_applied": {
     "D-01": "KTO type 25 여행코스 제외 사유 collection_summary에 기록",

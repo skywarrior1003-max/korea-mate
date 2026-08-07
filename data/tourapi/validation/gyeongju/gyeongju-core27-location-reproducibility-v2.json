@@ -1,0 +1,28 @@
+{
+  "as_of": "2026-08-07T00:00:00Z",
+  "files_checked": [
+    {
+      "file": "gyeongju-core27-location-recovery-overlay-v2.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-release-after-location-v2.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-vg-coordinate-extraction-v2.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-location-validation-v2.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-core27-existing-coordinate-comparison-v2.jsonl",
+      "result": "PASS"
+    }
+  ],
+  "pass_count": 5,
+  "total_count": 5,
+  "verdict": "BYTE_IDENTICAL_PASS"
+}
