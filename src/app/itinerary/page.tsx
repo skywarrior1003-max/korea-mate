@@ -45,6 +45,8 @@ import { buildTimeline } from "@/lib/planner/timeline-core";
 import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
+import { collectLikedSignals } from "@/lib/planner/saved-signals";
+import { getSavedSpotsData } from "@/lib/favorites";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -433,6 +435,12 @@ async function generateWithNewApi(
   let hadDeferredCartHints = false;
   let usedCartHintCentroid = false;
 
+  // Saved 는 localStorage 에만 있다. 여기서 한 번 읽어 검증·중복제거·상한을 건다.
+  const likedSignals = collectLikedSignals(
+    (typeof window === "undefined" ? [] : getSavedSpotsData()) as never[],
+    city,
+  );
+
   // ── whole-trip 개인화 프로필 — 여행당 정확히 1회 ──
   // 날짜 루프 "밖"이다. 안에서 부르면 14일 여행에 14번 나간다.
   // 실패하면 null 이고, 그러면 아래 루프는 기존과 완전히 같은 규칙 기반으로 돈다.
@@ -444,7 +452,9 @@ async function generateWithNewApi(
     travelers:    trav,
     pace,
     selected_place_ids: cartHints.map(h => String(h.place_id)),
-    liked_place_ids:    [],
+    // Saved(하트)는 취향 신호다. cart 로 승격하지 않는다 — 일정에 강제로 넣지 않는다.
+    liked_place_ids:    likedSignals.liked_place_ids,
+    liked_places:       likedSignals.liked_places,
     selected_places:    cartHints.map(h => ({
       place_id: String(h.place_id),
       name:     h.name,
@@ -525,6 +535,9 @@ async function generateWithNewApi(
           exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
           city,
           locale,
+          // Saved 취향 — 스코어러의 liked 카테고리 신호로만 쓰인다(강제 배치 아님)
+          liked_place_ids: likedSignals.liked_place_ids.length > 0
+            ? likedSignals.liked_place_ids : undefined,
           // 같은 프로필을 모든 날짜에 그대로 넘긴다. 여기서 AI 를 부르지 않는다.
           personalization_profile: personalizationProfile ?? undefined,
         }),

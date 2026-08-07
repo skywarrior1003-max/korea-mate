@@ -41,6 +41,7 @@ interface Body {
   pace?:                string;
   selected_place_ids?:  string[];
   liked_place_ids?:     string[];
+  liked_places?:        PlaceHint[];
   interests?:           string[];
   selected_places?:     PlaceHint[];
   request_id?:          string;
@@ -76,9 +77,12 @@ function log(fields: Record<string, unknown>): void {
  * 장소 원문 description·주소·좌표·가격은 보내지 않는다 — 모델이 사실을 지어낼
  * 재료를 주지 않고, 동시에 토큰도 아낀다.
  */
-function buildPrompt(b: Body, places: PlaceHint[]): string {
-  const lines = places.slice(0, MAX_PROFILE_PLACES).map(p =>
-    `- ${p.place_id} | ${(p.category ?? "unknown")} | ${(p.name ?? "").slice(0, MAX_PLACE_NAME_CHARS)}`);
+function buildPrompt(b: Body, places: PlaceHint[], liked: PlaceHint[] = []): string {
+  const fmt = (p: PlaceHint) =>
+    `- ${p.place_id} | ${(p.category ?? "unknown")} | ${(p.name ?? "").slice(0, MAX_PLACE_NAME_CHARS)}`;
+  const lines = places.slice(0, MAX_PROFILE_PLACES).map(fmt);
+  // Saved 는 취향 신호일 뿐이다. "반드시 방문" 이 아니라는 것을 구획으로 분리해 알린다.
+  const likedLines = liked.slice(0, MAX_PROFILE_PLACES).map(fmt);
 
   const p = [
     "You infer a traveler preference profile. You do NOT create an itinerary.",
@@ -88,14 +92,36 @@ function buildPrompt(b: Body, places: PlaceHint[]): string {
     `party: style=${b.travel_style ?? "?"} travelers=${b.travelers ?? "?"} pace=${b.pace ?? "?"}`,
     b.interests?.length ? `interests: ${b.interests.slice(0, 12).join(", ")}` : "",
     "",
-    "places the traveler already chose (id | category | name):",
+    "places the traveler already chose for THIS trip (id | category | name):",
     ...lines,
+    likedLines.length ? "" : "",
+    likedLines.length ? "places the traveler saved earlier — preference signal only, NOT required stops:" : "",
+    ...likedLines,
     "",
-    "Rules:",
+    // ── Route Coherence Contract ──────────────────────────────────────────
+    // 사람은 텔레포트하지 않는다. 거리·시간·지역 연속성은 서버 규칙 엔진의 책임이고,
+    // 모델은 이미 갈 수 있는 후보들 사이에서 취향만 해석한다.
+    "Your role:",
+    "- You infer preferences. You are NOT the route planner.",
+    "- The server rule engine decides real distance, travel time, zones, opening hours,",
+    "  fixed events, arrival/departure, and every hard constraint. You cannot override it.",
+    "- Preference never outranks route coherence.",
+    "",
+    "Route coherence you must respect:",
+    "- Prefer places in the same or adjacent area on the same day.",
+    "- Never push a route that backtracks to a far area already left behind.",
+    "- Do not favour a distant place just because it fits taste slightly better.",
+    "- If chosen places are far apart, they get spread across days — never dropped.",
+    "- Filler places should stay near the day's existing route.",
+    "- Saved and copied-trip preferences rank below route coherence.",
+    "",
+    "Rules:"
     `- category_weights keys must be from: ${PROFILE_CATEGORIES.join(", ")}; values 0..1`,
     `- time_preferences values must be from: ${TIME_PREFERENCES.join(", ")}`,
     "- preferred_place_ids MUST be a subset of the ids listed above",
-    "- do NOT invent places, addresses, hours, prices, or URLs",
+    "- do NOT invent places, addresses, hours, prices, coordinates, or URLs",
+    "- do NOT output any place_id that is not listed above",
+    "- do NOT try to change fixed events, arrival, or departure",
     "",
     "JSON shape:",
     `{"profile_version":${PROFILE_VERSION},"category_weights":{},"preferred_place_ids":[],`
@@ -158,7 +184,10 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     ? body.selected_places.slice(0, MAX_PROFILE_PLACES)
     : allowedIds.map(id => ({ place_id: id }));
 
-  const prompt = buildPrompt(body, places);
+  const likedHints: PlaceHint[] = Array.isArray(body.liked_places)
+    ? body.liked_places.slice(0, MAX_PROFILE_PLACES)
+    : [];
+  const prompt = buildPrompt(body, places, likedHints);
   const started = Date.now();
 
   // ── 실제 호출: 정확히 1회. 재시도 루프가 없다. ──

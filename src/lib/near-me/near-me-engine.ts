@@ -8,6 +8,7 @@ import { getCandidates, isMockNearMeMode } from "./candidate-generator";
 import { MOCK_NEAR_ME_PLACES } from "./mock/mock-places";
 import { rowsToZonedPlaces, expandZones } from "./zone-classifier";
 import { computeTotalScore, buildLikedCategorySet } from "./scorer";
+import { diversifyByCategory } from "./candidate-diversity";
 import type { PlaceCategory } from "../scheduler/types";
 
 const DEFAULT_LIMIT = 20;
@@ -72,9 +73,8 @@ export async function runNearMe(input: NearMeInput): Promise<NearMeResponse> {
   // ── Step 6: Sort by score descending, apply limit ────────────────────────
 
   const limit = input.limit ?? DEFAULT_LIMIT;
-  const results = scored
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+  // 후보 수가 많은 카테고리가 자동으로 이기지 않게 자른다 (candidate-diversity.ts)
+  const results = diversifyByCategory(scored, limit);
 
   return {
     results,

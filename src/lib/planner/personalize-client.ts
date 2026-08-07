@@ -21,6 +21,8 @@ export interface PersonalizeRequest {
   pace:                string;
   selected_place_ids:  string[];
   liked_place_ids:     string[];
+  /** Saved 의 최소 metadata — place_id·category 뿐이다. 주소·좌표는 넣지 않는다. */
+  liked_places?:       { place_id: string; category?: string }[];
   selected_places:     { place_id: string; name?: string; category?: string }[];
 }
 

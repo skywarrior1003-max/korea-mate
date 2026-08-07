@@ -20,6 +20,8 @@ import { runScheduler } from "../../../src/lib/scheduler/engine";
 import { haversineDistance } from "../../../src/lib/scheduler/utils";
 import { boundingBoxDelta, assignZoneId, rowsToZonedPlaces, expandZones } from "../../../src/lib/near-me/zone-classifier";
 import { computeTotalScore, buildLikedCategorySet } from "../../../src/lib/near-me/scorer";
+import { diversifyByCategory } from "../../../src/lib/near-me/candidate-diversity";
+import { mergePreferenceIds } from "../../../src/lib/planner/saved-signals";
 import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
 import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../../../src/lib/near-me/types";
 import { findRouteById } from "../../../src/lib/story-routes/index";
@@ -205,9 +207,9 @@ async function runNearMeDirect(
     }, likedCategories),
   }));
 
-  const results = scored
-    .sort((a: any, b: any) => b.score - a.score)
-    .slice(0, input.limit);
+  // 후보 수가 많은 카테고리가 자동으로 이기지 않게 자른다 (candidate-diversity.ts).
+  // 실측: 부산 restaurant 327 vs attraction 48 → 기존 방식은 top30 의 80~93% 가 식당이었다.
+  const results = diversifyByCategory(scored as any, input.limit);
 
   return { results, nearMeCount: results.length };
 }
@@ -377,11 +379,16 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   // cart_hints represent user-selected itinerary picks, so use their place_ids as preference
   // signals when liked_place_ids are absent. local-* ids may not match DB candidates and are
   // safely ignored by the scorer (buildLikedCategorySet skips unmatched ids).
+  // Saved(취향) 와 Selected(이번 여행 선택) 를 **함께** 넘긴다.
+  // 예전에는 Saved 가 없을 때만 Selected 를 넣었다 — Selected 를 Saved 로 위장하는
+  // 모양이었다. 이제 둘 다 신호로 쓰되 라벨을 섞지 않는다.
+  // Saved 가 0 개면 결과 집합이 예전과 완전히 같다.
+  const cartPreferenceIds = cart_hints
+    .map(h => h.place_id)
+    .filter((id): id is string => typeof id === "string" && id.length > 0);
+  const mergedPreferenceIds = mergePreferenceIds(liked_place_ids ?? [], cartPreferenceIds);
   const effective_liked_place_ids: string[] | undefined =
-    liked_place_ids ??
-    (cart_hints.length > 0
-      ? cart_hints.map(h => h.place_id).filter((id): id is string => typeof id === "string" && id.length > 0)
-      : undefined);
+    mergedPreferenceIds.length > 0 ? mergedPreferenceIds : undefined;
 
   const { results: nearMeResults, nearMeCount } = await runNearMeDirect({
     coordinate,
