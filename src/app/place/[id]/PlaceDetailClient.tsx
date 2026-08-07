@@ -24,6 +24,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 import PlaceReportModal from "@/components/PlaceReportModal";
+import PlaceLikeButton from "@/components/PlaceLikeButton";
 import { citySpotSourceKey } from "@/lib/place-identity";
 import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
@@ -371,7 +372,12 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
               {/* 제보 — 공개 장소면 카테고리와 무관하게 같은 모달을 쓴다.
                   본문 하단이라 모바일·데스크톱 어디서든 닿는다. */}
-              <div className="mt-8 pt-5 border-t border-line">
+              {/* 모바일 본문에도 Like — 오른쪽 카드는 데스크톱 전용이라 여기 하나 더 둔다 */}
+              <div className="mt-8 md:hidden">
+                <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
+              </div>
+
+              <div className="mt-8 md:mt-6 pt-5 border-t border-line">
                 <button
                   onClick={() => setReportOpen(true)}
                   className="gkm-focus min-h-11 inline-flex items-center gap-1.5 text-xs font-semibold text-sub hover:text-ink"
@@ -419,6 +425,8 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   {saved ? t("savedState") : t("save")}
                 </span>
               </button>
+
+              <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
 
               {externalLinks}
 

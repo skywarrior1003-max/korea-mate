@@ -504,5 +504,9 @@
       "invalid_device": "无法验证您的设备。",
       "server_error": "提交失败，请重试。"
     }
+  },
+  "like": {
+    "like": "点赞",
+    "liked": "取消点赞"
   }
 }

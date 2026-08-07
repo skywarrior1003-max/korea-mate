@@ -504,5 +504,9 @@
       "invalid_device": "Could not verify your device.",
       "server_error": "Could not send the report. Please try again."
     }
+  },
+  "like": {
+    "like": "Like",
+    "liked": "Liked"
   }
 }
