@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-08-07T09:00:00Z",
+  "based_on": "TASK-GYEONGJU-KTO-V3-FINAL-CORRECTION-AND-TIER-A-GATE-V1",
+  "gate_result": "TIER_A_117_READY",
+  "gate_value": true,
+  "gate_conditions": {
+    "kto_full_list_parser": {
+      "status": "PASS",
+      "evidence": "areaBasedList2 623건 정상 파싱. lDongRegnCd=47, lDongSignguCd=130 확정."
+    },
+    "detail_common2_parser": {
+      "status": "PASS",
+      "evidence": "4/4 matched places: resultCode=0000, VALID_ITEM. PARSER_FIELD_LOSS는 V3에서 수정됨."
+    },
+    "vg_lat_lng_parser": {
+      "status": "PASS",
+      "evidence": "5/5 var lat/var lng 추출 성공. ASCII 숫자라 인코딩 영향 없음."
+    },
+    "kto_photogallery_id_namespace": {
+      "status": "PASS",
+      "evidence": "gal_content_id ≠ kto_content_id. V3 namespace_check 필드로 분리 확인."
+    },
+    "kto_image_count_consistency": {
+      "status": "PASS",
+      "evidence": "firstimage + detailImage2 분리 집계 확정. 황룡사지 Phase D 보고 오류 ≠ 데이터 오류. Raw 기준 정확.",
+      "correction": "firstimage(1장) + detailImage2 별도 집계. usable_kto: 교촌9, 금장대7, 황룡사5, 서출지3"
+    },
+    "photogallery_image_count": {
+      "status": "PASS",
+      "evidence": "gallerySearchList1=개별이미지 반환. gal_title 기준 group_count 확정. 교촌마을 group=1/images=13, 서출지 group=1/images=9.",
+      "correction": "photo_groups 필드는 gal_title 기준(1), total_count는 개별이미지 수"
+    },
+    "image_rights_policy": {
+      "status": "PASS",
+      "kto_detailimage2": "VERIFIED_ALLOWED_BY_IMAGE_METADATA (cpyrhtDivCd 전건 확인. Type1 또는 Type3)",
+      "photogallery": "VERIFIED_ALLOWED_BY_SOURCE_CONTRACT (공공데이터포털 이용허락범위 제한없음)",
+      "note": "Type3: 출처표시+변경금지. 상업적 이용 허용. Type1: 출처표시만. 전건 상업적 이용 허용."
+    },
+    "api_key_exposure": {
+      "status": "PASS",
+      "evidence": "0건. 커밋 내 API 키 없음."
+    },
+    "worktree_clean": {
+      "status": "PASS",
+      "evidence": "__pycache__ 삭제 후 git status --short 출력 없음."
+    },
+    "run1_run2": {
+      "status": "PASS",
+      "evidence": "V3 Run1=Run2 BYTE_IDENTICAL_PASS (7/7). 본 correction 태스크는 raw 재사용만(신규 API 호출 0건)."
+    }
+  },
+  "blockers": [],
+  "warnings": [
+    {
+      "code": "WARN-GYEONGJU-HUMID-01",
+      "description": "황남리 고분군 VG HTML 인코딩 손상(EUC-KR). 설명/이미지 미추출. TIER_A 배치 수집 시 UTF-8 처리 필수.",
+      "blocking": false
+    },
+    {
+      "code": "WARN-GYEONGJU-COORD-01",
+      "description": "황룡사지 KTO-VG 좌표 161.9m 차이. 유적지 규모(250×250m) 내. 비차단.",
+      "blocking": false
+    },
+    {
+      "code": "WARN-GYEONGJU-NO-GAL-01",
+      "description": "금장대/황남리 고분군/황룡사지 PhotoGallery 미등록. TIER_A 117건 중 유사 패턴 예상.",
+      "blocking": false
+    }
+  ],
+  "api_calls_new": 0,
+  "frozen_sha_status": "ALL_OK",
+  "pilot_summary": {
+    "kto_match_rate": "4/5",
+    "kto_detail_image2_per_place": {
+      "교촌마을": 8,
+      "금장대": 6,
+      "황남리 고분군": 0,
+      "황룡사지": 4,
+      "서출지": 2
+    },
+    "firstimage_per_place": {
+      "교촌마을": 1,
+      "금장대": 1,
+      "황남리 고분군": 0,
+      "황룡사지": 1,
+      "서출지": 1
+    },
+    "usable_kto_images_per_place": {
+      "교촌마을": 9,
+      "금장대": 7,
+      "황남리 고분군": 0,
+      "황룡사지": 5,
+      "서출지": 3
+    },
+    "gallery_groups_per_place": {
+      "교촌마을": 1,
+      "금장대": 0,
+      "황남리 고분군": 0,
+      "황룡사지": 0,
+      "서출지": 1
+    },
+    "gallery_images_per_place": {
+      "교촌마을": 13,
+      "금장대": 0,
+      "황남리 고분군": 0,
+      "황룡사지": 0,
+      "서출지": 9
+    }
+  },
+  "recommendation": "PROCEED_TIER_A_117. VG 배치 수집(배치 20건×6회) → KTO 전수 매칭(623건 인덱스 활용) → 권리 감사(cpyrhtDivCd 기준). VG 수집 시 UTF-8 인코딩 명시 처리 필수."
+}
