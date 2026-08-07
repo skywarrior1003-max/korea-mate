@@ -5,6 +5,9 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  // 운영 Supabase 자격증명을 가진 채로 자동 QA 가 시작되면 여기서 즉시 실패한다.
+  // route intercept 를 실수해도 운영 write 가 일어나지 않는다. (tests/qa-guard.ts)
+  globalSetup: "./tests/global-setup.ts",
   timeout: 60_000,
   retries: 0,
   reporter: [["list"]],
