@@ -1,0 +1,16 @@
+{
+  "as_of": "2026-08-07T11:05:49.902651+00:00",
+  "task": "gyeongju_en_global_identity_reconciliation_v1",
+  "files": {
+    "gyeongju-en-global-identity-matrix-v1.jsonl": "d0b4fb2f1e89e924a0c80129d058a6d57e26b74be6321f85fb69e57f750c2b5c",
+    "gyeongju-en-contentid-collision-audit-v1.jsonl": "7d7e0434f34415dfb5f6f6c4f3dbe618727c1fbd55f0abcdae68951001f224bb",
+    "gyeongju-en-global-assignment-v1.jsonl": "2a7b0fda2eb964a9517934fc11300d881f8ed4e20890715a86fe14cdc024b247",
+    "gyeongju-en-review-92-resolution-v1.jsonl": "38ab65a23f6090abd7c5027cc3648e756b6bca4b101b342e4e91c43b0af78ab5",
+    "gyeongju-en-detail-fetch-required-v1.jsonl": "c8d6817e2269658d8727be058c133d6a178019d286ae75ea1572db5824371262",
+    "gyeongju-en-official-site-supplement-queue-v1.jsonl": "b36231503dfc546e6e51f5bd9102037585e0cfa9c6cc00a320ca038c646c19af",
+    "gyeongju-en-translation-fallback-queue-v3.jsonl": "60bbcc6ff7b91fdb76cc84129494e386c6a49474d36fc3bdf5e05e126340df07",
+    "gyeongju-en-235-identity-coverage-after-global-match-v1.jsonl": "207fce04d714d65f37fa3b54d7a5beb788a5ce9eb505e21f4af2b89b5bb5c6b3",
+    "gyeongju-en-global-reconciliation-summary-v1.json": "0e8af6ea3f015bf4ba39ed8c1ea964199974b4cd4375f4bb541a9b0f16021ec6",
+    "gyeongju-en-global-reconciliation-qa-v1.json": "434b193b68a1ad518aefdcb9ecd71d7306ba46a5841854b4a7a5b8564c451c05"
+  }
+}

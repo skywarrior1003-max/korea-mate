@@ -1,0 +1,39 @@
+{
+  "no_coord_only_high_confidence": {
+    "result": "PASS",
+    "detail": "좌표 단독 HIGH_CONFIDENCE: 0건"
+  },
+  "no_duplicate_en_assignment": {
+    "result": "PASS",
+    "detail": "중복 배정 EN contentId: 0개 []"
+  },
+  "input_235_exact": {
+    "result": "PASS",
+    "detail": "KO 처리: 235/235"
+  },
+  "en_102_processed": {
+    "result": "PASS",
+    "detail": "EN 처리: 90/102 EN candidate"
+  },
+  "no_arbitrary_translation": {
+    "result": "PASS",
+    "detail": "EN title 내 공식 한국어 텍스트만 사용"
+  },
+  "no_new_http": {
+    "result": "PASS",
+    "detail": "HTTP: 0건"
+  },
+  "no_unintended_regression": {
+    "result": "WARN",
+    "detail": "Regression: 6건 ['gyeongju-GJ01-0035', 'gyeongju-GJ01-0046', 'gyeongju-GJ01-0047']"
+  },
+  "no_contentid_namespace_mix": {
+    "result": "PASS",
+    "detail": "kto_ko/kto_en 분리 유지"
+  },
+  "overall": {
+    "result": "PASS",
+    "fail_count": 0,
+    "warn_count": 1
+  }
+}
