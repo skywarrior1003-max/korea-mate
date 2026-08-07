@@ -41,14 +41,17 @@ function sanitizeRow(raw: Record<string, unknown>): SpotRow | null {
   if (!place_id || !title || !category) return null;
   if (!/^[a-zA-Z0-9\-_]+$/.test(place_id)) return null;
 
-  const clean: Record<string, unknown> = {};
+  // 필수 3필드는 위에서 이미 비어 있지 않음을 확인했다. 그 사실을 타입에도 그대로 쓴다.
+  // 나머지는 선택 필드라 있을 때만 얹는다 — 맹목적 이중 단언 대신 실제 shape 를 표현한다.
+  const clean: SpotRow = { place_id, title, category };
   for (const key of ALLOWED_FIELDS) {
+    if (key === "place_id" || key === "title" || key === "category") continue;
     const val = raw[key];
-    if (val !== undefined && val !== null && val !== "") {
-      clean[key] = val;
-    }
+    if (val === undefined || val === null || val === "") continue;
+    if (key === "duration_min") { clean.duration_min = val as SpotRow["duration_min"]; continue; }
+    clean[key] = val as string;
   }
-  return clean as SpotRow;
+  return clean;
 }
 
 export const onRequestPost: (context: { request: Request; env: Env }) => Promise<Response> =

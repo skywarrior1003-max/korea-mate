@@ -132,6 +132,53 @@ function buildPrompt(b: Body, places: PlaceHint[], liked: PlaceHint[] = []): str
   return p.slice(0, MAX_PROMPT_CHARS);
 }
 
+/**
+ * Gemini Structured Output 스키마 — PersonalizationProfile 과 1:1 이다.
+ *
+ * 왜 필요한가
+ *   지난번엔 프롬프트로 "JSON 만 내라" 라고 말만 했다. 모델은 HTTP 200 을 주면서도
+ *   파싱 불가능한 25 토큰을 돌려줬다. 형식은 부탁이 아니라 계약이어야 한다.
+ *
+ * category_weights·time_preferences 는 자유 map 이지만 Gemini 스키마 방언은
+ * 자유 map 을 표현하지 못한다. 그래서 허용 카테고리를 **그대로 펼쳐** 선언한다.
+ * 느슨하게 푸는 것이 아니라 실제 enum 을 나열하는 것이다.
+ *
+ * 이 스키마를 통과해도 끝이 아니다. 서버 validateProfile 은 그대로 돈다 —
+ * 후보 밖 place_id 는 provider 가 뭐라 하든 거기서 걸러진다.
+ */
+const RESPONSE_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    profile_version:        { type: "INTEGER" },
+    category_weights: {
+      type: "OBJECT",
+      properties: Object.fromEntries(PROFILE_CATEGORIES.map(c => [c, { type: "NUMBER" }])),
+    },
+    preferred_place_ids:    { type: "ARRAY", items: { type: "STRING" } },
+    time_preferences: {
+      type: "OBJECT",
+      properties: Object.fromEntries(
+        PROFILE_CATEGORIES.map(c => [c, { type: "STRING", enum: [...TIME_PREFERENCES] }]),
+      ),
+    },
+    pace_bias:              { type: "NUMBER" },
+    day_density_preference: { type: "STRING", enum: ["lighter", "balanced", "fuller"] },
+    cluster_preference:     { type: "STRING", enum: ["tight", "balanced", "explore"] },
+    meal_preference:        { type: "STRING", enum: [...TIME_PREFERENCES] },
+    preference_summary:     { type: "STRING" },
+  },
+  required: [
+    "profile_version", "category_weights", "preferred_place_ids", "time_preferences",
+    "pace_bias", "day_density_preference", "cluster_preference", "meal_preference",
+    "preference_summary",
+  ],
+  propertyOrdering: [
+    "profile_version", "category_weights", "preferred_place_ids", "time_preferences",
+    "pace_bias", "day_density_preference", "cluster_preference", "meal_preference",
+    "preference_summary",
+  ],
+};
+
 /** 모델 텍스트에서 JSON 만 끄집어낸다. code fence 는 벗겨내되 실패하면 버린다. */
 function extractJson(text: string): unknown {
   const t = text.trim().replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
@@ -202,7 +249,16 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
         signal:  controller.signal,
         body: JSON.stringify({
           contents:         [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: MAX_OUTPUT_TOKENS, temperature: 0.3 },
+          generationConfig: {
+            maxOutputTokens:  MAX_OUTPUT_TOKENS,
+            temperature:      0.3,
+            // 형식을 부탁하지 않고 계약으로 건다
+            responseMimeType: "application/json",
+            responseSchema:   RESPONSE_SCHEMA,
+            // 제한된 스키마 채우기다. thinking 을 켜두면 그 토큰이
+            // maxOutputTokens 를 먹어 답이 잘린다.
+            thinkingConfig:   { thinkingBudget: 0 },
+          },
         }),
       },
     );
@@ -217,15 +273,42 @@ export async function onRequestPost(ctx: { request: Request; env: Env }): Promis
     }
 
     const raw = await res.json() as {
-      candidates?: { content?: { parts?: { text?: string }[] } }[];
-      usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number };
+      candidates?: {
+        content?: { parts?: { text?: string }[] };
+        finishReason?: string; finishMessage?: string;
+      }[];
+      usageMetadata?: {
+        promptTokenCount?: number; candidatesTokenCount?: number;
+        thoughtsTokenCount?: number; totalTokenCount?: number;
+        cachedContentTokenCount?: number;
+      };
     };
-    const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-    const profile = validateProfile(extractJson(text), allowedIds);
+    const cand    = raw.candidates?.[0];
+    const parts   = cand?.content?.parts ?? [];
+    const text    = parts[0]?.text ?? "";
+    const parsed  = extractJson(text);
+    const profile = validateProfile(parsed, allowedIds);
 
-    log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: 200, latency,
-          inputTokens:  raw.usageMetadata?.promptTokenCount     ?? "unknown",
-          outputTokens: raw.usageMetadata?.candidatesTokenCount ?? "unknown",
+    // 왜 실패했는지 알 수 있어야 한다. 응답 원문은 남기지 않고 구조적 특징만 남긴다.
+    // provider 가 안 준 값은 0 으로 추측하지 않고 provider_not_returned 로 구분한다.
+    const u = raw.usageMetadata;
+    const orNR = (v: number | undefined) => (v === undefined ? "provider_not_returned" : v);
+    log({ requestId, mode, model: MODEL, providerCalled: true, attempts: 1,
+          httpStatus: 200, latency,
+          finishReason:   cand?.finishReason  ?? "provider_not_returned",
+          finishMessage:  cand?.finishMessage ?? "provider_not_returned",
+          candidatesCount: raw.candidates?.length ?? 0,
+          partsCount:      parts.length,
+          candidateChars:  text.length,
+          candidateHead:   text.slice(0, 1),
+          candidateTail:   text.slice(-1),
+          inputTokens:    orNR(u?.promptTokenCount),
+          outputTokens:   orNR(u?.candidatesTokenCount),
+          thoughtsTokens: orNR(u?.thoughtsTokenCount),
+          totalTokens:    orNR(u?.totalTokenCount),
+          cachedTokens:   orNR(u?.cachedContentTokenCount),
+          jsonParsed:     parsed !== null,
+          validatorPassed: profile !== null,
           status: profile ? "applied" : "fallback_invalid_response" });
 
     return profile ? reply(profile, "applied") : reply(null, "fallback_invalid_response");

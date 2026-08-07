@@ -53,7 +53,9 @@ function adminClient(env: Env) {
 }
 
 async function verifyItineraryOwner(
-  admin: ReturnType<typeof createClient>,
+  // 호출부가 넘기는 것은 adminClient() 의 반환값이다. bare createClient 제네릭과
+  // 다르므로 실제 넘어오는 타입을 그대로 쓴다.
+  admin: ReturnType<typeof adminClient>,
   itineraryId: string,
   deviceId:    string,
 ): Promise<boolean> {

@@ -18,7 +18,9 @@
     "test:url-route": "node --experimental-strip-types src/lib/photo-url-route.test.ts",
     "test:visited": "node --experimental-strip-types src/lib/visited.test.ts",
     "test:memo-patch": "node --experimental-strip-types src/lib/trip-moments/memo-patch-core.test.ts",
-    "test:helpful-guard": "node --experimental-strip-types src/lib/helpful-guard-core.test.ts"
+    "test:helpful-guard": "node --experimental-strip-types src/lib/helpful-guard-core.test.ts",
+    "typecheck": "tsc --noEmit",
+    "typecheck:functions": "tsc --noEmit -p tsconfig.functions.json"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",

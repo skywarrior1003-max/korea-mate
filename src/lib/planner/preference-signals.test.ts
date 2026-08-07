@@ -265,7 +265,7 @@ test("★P3 비용 안전장치가 그대로다", () => {
   assert.doesNotMatch(fn, /for\s*\([^)]*attempt|while\s*\([^)]*attempt|retry/i);
   assert.equal((fn.match(/await fetch\(/g) ?? []).length, 1);   // provider 호출 지점은 하나뿐
   assert.match(fn, /TIMEOUT_MS/);
-  assert.match(fn, /maxOutputTokens: MAX_OUTPUT_TOKENS/);
+  assert.match(fn, /maxOutputTokens:\s*MAX_OUTPUT_TOKENS/);
   assert.match(fn, /slice\(0, MAX_PROMPT_CHARS\)/);
   assert.match(fn, /MAX_PROFILE_PLACES/);
   // 모드 기본값은 off — 모르는 값도 off

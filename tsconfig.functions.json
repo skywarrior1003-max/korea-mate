@@ -1,0 +1,33 @@
+{
+  // 배포되는 Cloudflare Pages Functions 를 타입체크한다.
+  //
+  // 왜 별도 파일인가
+  //   메인 tsconfig 는 exclude 에 "functions" 가 들어 있다. 그래서 `npx tsc --noEmit` 은
+  //   배포 서버 코드를 한 번도 보지 않았다. 실제로 그 틈으로 prompt 문자열 결함이
+  //   운영 코드에 들어갔고, Production AI 가 off 였던 덕분에만 사고가 나지 않았다.
+  //
+  //   메인 설정을 뒤집으면 Next 빌드 파이프라인에 영향이 가므로 건드리지 않고
+  //   Functions 전용 게이트를 하나 더 둔다.
+  //
+  //   실행: npm run typecheck:functions
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    // 공용 src/lib 코드가 process.env 를 참조한다. 타입만 주고 동작은 바꾸지 않는다.
+    "types": ["node"]
+  },
+  // functions/ 와 거기서 끌어오는 공용 모듈만 본다.
+  // 테스트는 별도 러너가 돌리므로 제외한다.
+  "include": ["functions/**/*.ts"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}

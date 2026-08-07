@@ -106,13 +106,10 @@ export const onRequest: (context: {
   }
 
   // 봇 요청 → 동적 OG HTML 생성
-  // TASK-029: 도시별 정적 OG 이미지 맵 (build-time PNG)
-  const CITY_OG_IMAGE: Record<string, string> = {
-    seoul:    "https://gokoreamate.com/og/seoul/opengraph-image.png",
-    busan:    "https://gokoreamate.com/og/busan/opengraph-image.png",
-    jeju:     "https://gokoreamate.com/og/jeju/opengraph-image.png",
-    gyeongju: "https://gokoreamate.com/og/gyeongju/opengraph-image.png",
-  };
+  // TASK-029 의 도시별 OG 맵(seoul/busan/jeju/gyeongju)은 여기서 제거했다.
+  // 유일한 참조가 `trip` 이 falsy 인 분기 안의 `trip?.city` 였고, 그 자리에서
+  // 도시를 알 수 없어 한 번도 선택된 적이 없다. 도시별 OG 를 살리려면
+  // 도시를 알 수 있는 지점에서 다시 설계해야 한다 — 이번 작업 범위가 아니다.
   const FALLBACK_OG = "https://gokoreamate.com/opengraph-image.png";
   const CANONICAL   = `https://gokoreamate.com/shared/${shareId}`;
 
@@ -168,9 +165,12 @@ export const onRequest: (context: {
   const coverVersion = trip?.updated_at && String(trip.updated_at).trim()
     ? String(trip.updated_at).trim()
     : "0";
+  // trip 이 없으면 도시를 알 방법이 없다. 예전 코드는 이 분기에서 trip?.city 를
+  // 읽었지만 그 자리에서 trip 은 항상 falsy 라 결과는 늘 FALLBACK_OG 였다.
+  // 도시별 OG 를 새로 켜지 않고, 실제 동작을 그대로 표현한다.
   const ogImage = trip
     ? `https://gokoreamate.com/img/trip-cover/${shareId}?v=${encodeURIComponent(coverVersion)}`
-    : (CITY_OG_IMAGE[trip?.city?.toLowerCase() ?? ""] ?? FALLBACK_OG);
+    : FALLBACK_OG;
 
   return new Response(
     buildBotHtml({ title, description, ogImage, url: CANONICAL }),

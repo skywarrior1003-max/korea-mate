@@ -163,12 +163,11 @@ async function runScenario(sc: Scenario, key: string): Promise<CallResult> {
       "meal_preference", "preference_summary", "source"]);
     for (const k of Object.keys(p)) if (!allowed.has(k)) violations.push(`스키마 밖 필드: ${k}`);
   }
+  // handler 가 남긴 진단값을 **통째로** 넘긴다.
+  // 예전엔 몇 개만 골라 담아서 finishReason·thoughtsTokens 를 잡아놓고도 버렸다.
+  // 호출 예산이 3회뿐이라 한 번 놓치면 다시 얻을 수 없다.
   const last = logs.at(-1) ?? null;
-  const usage = last ? {
-    providerCalled: last.providerCalled, attempts: last.attempts,
-    providerHttpStatus: last.httpStatus, providerLatencyMs: last.latency,
-    inputTokens: last.inputTokens, outputTokens: last.outputTokens, status: last.status,
-  } : null;
+  const usage = last ? { ...last, action: undefined, requestId: undefined } : null;
   if (logs.length > 1) violations.push(`provider 로그 ${logs.length}건 — 호출이 1회를 넘었을 수 있다`);
   return { name: sc.name, httpStatus: res.status, latencyMs, aiStatus: body.ai_status,
            profile: p, usage, allowedIds, violations };
