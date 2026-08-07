@@ -1,0 +1,14 @@
+{
+  "computed_at": "2026-08-07T07:33:05Z",
+  "note": "Run1 SHA. VG raw cache 기반 결정론적 출력. Run2 BYTE_IDENTICAL 보장.",
+  "run": 1,
+  "sha256": {
+    "coverage": "23529778edda12e545512761faa0463d12d7a6aae4a04d183a9a3ac3cd467958",
+    "desc_overlay": "b7be4f6725f9c61ec80d4318cde3cfa14df73304e5e77d4e489412fe37f8c52c",
+    "final_release_117": "aa4be38fa78ea62cc61254bd2a5e353628940bb40806c62b06fca1080c6f6204",
+    "html_structure_audit": "be2c0e47c0e36e8ce734ef591a3225e82a288ddb7cf72d4f60ebf724ee0ca36f",
+    "partial_3_root_cause": "fdc27db6093e75437905125b6fb37e7eb1eea1c9a703ae2273986e450ae7814f",
+    "pattern_audit": "688593bc400db966929b9ad3ef56d835557baea9742889f351ab7c4fc3d50433"
+  },
+  "task_id": "TASK-GYEONGJU-VG-DESCRIPTION-PARSER-AND-FINAL-117-RELEASE-V1"
+}

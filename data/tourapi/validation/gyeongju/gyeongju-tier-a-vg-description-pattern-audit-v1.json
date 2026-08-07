@@ -1,0 +1,74 @@
+{
+  "computed_at": "2026-08-07T07:33:05Z",
+  "correct_pattern": "<dt>요약정보</dt>\\s*<dd>(.*?)</dd>",
+  "desc_extractable": 74,
+  "new_desc_count": 28,
+  "parser_v1_failure_reason": "tourView[quote][^>]*(.*?)</div> regex stops at first </div> — description is nested deep inside <div class=tourView>><div class=tourInfo>><dl class=cont><dt>요약정보</dt><dd>TEXT</dd>",
+  "pattern_descriptions": {
+    "CHARSET_DAMAGE": "charset 손상으로 설명 추출 제외",
+    "PATTERN_A_DESC": "요약정보 dd에 실제 장소 설명 포함 (운영정보 아님)",
+    "PATTERN_A_EMPTY": "요약정보 dd가 있지만 내용 없음 또는 한글 부족",
+    "PATTERN_A_OPS": "요약정보 dd에 관람시간/관람료 등 운영정보만 포함",
+    "PATTERN_B_DL_CONT": "dl.cont에서 직접 dd 추출 (보조 패턴)",
+    "PATTERN_NONE": "요약정보 섹션 자체 없음"
+  },
+  "pattern_distribution": {
+    "PATTERN_A_DESC": 75,
+    "PATTERN_A_OPS": 42
+  },
+  "pattern_examples": {
+    "CHARSET_DAMAGE": [
+      {
+        "candidate_id": "gyeongju-GJ01-0008",
+        "desc_preview": null,
+        "name_ko": "교촌마을"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0010",
+        "desc_preview": null,
+        "name_ko": "금장대"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0039",
+        "desc_preview": null,
+        "name_ko": "황남리 고분군"
+      }
+    ],
+    "PATTERN_A_DESC": [
+      {
+        "candidate_id": "gyeongju-GJ01-0002",
+        "desc_preview": "관람시간(향토사료관) : 10:00-17:00 휴무일 : 일요일, 공휴일 관람료 : 무료 주차정보 : 경주문",
+        "name_ko": "경주 문화원"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0006",
+        "desc_preview": "노블리스 오블리제를 실천한, 경주의 이름난 부호 경주 교동 최씨 고택 - 관람시간 : 09:00-18:00(",
+        "name_ko": "경주최부자댁"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0007",
+        "desc_preview": "관람시간 : 09:00-18:00 관람료 : 무료 주차정보 : 교촌한옥마을 주변 노상주차장(교촌길 2, 유료",
+        "name_ko": "경주향교"
+      }
+    ],
+    "PATTERN_A_OPS": [
+      {
+        "candidate_id": "gyeongju-GJ01-0003",
+        "desc_preview": null,
+        "name_ko": "경주 보문사지 연화문 당간지주"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0012",
+        "desc_preview": null,
+        "name_ko": "노서동 고분군"
+      },
+      {
+        "candidate_id": "gyeongju-GJ01-0016",
+        "desc_preview": null,
+        "name_ko": "대릉원 미추왕릉"
+      }
+    ]
+  },
+  "task_id": "TASK-GYEONGJU-VG-DESCRIPTION-PARSER-AND-FINAL-117-RELEASE-V1",
+  "total_analyzed": 117
+}

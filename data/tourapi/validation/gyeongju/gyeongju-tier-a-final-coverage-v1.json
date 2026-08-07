@@ -1,0 +1,33 @@
+{
+  "boilerplate_extracted": 0,
+  "computed_at": "2026-08-07T07:33:05Z",
+  "cross_place_contamination": 0,
+  "desc_both": 46,
+  "desc_kto_only": 32,
+  "desc_none": 11,
+  "desc_vg_only": 28,
+  "deterministic": true,
+  "downgrade_count": 0,
+  "hamnam_ri_charset": "CHARSET_REVIEW_REQUIRED",
+  "hamnam_ri_desc_recovered": false,
+  "hold_count": 11,
+  "hold_reasons": {
+    "READY_WITH_REVIEW_NOTE": 11
+  },
+  "llm_used": false,
+  "new_http_requests": 0,
+  "new_vg_desc_recovered": 28,
+  "partial_count_before": 3,
+  "partial_promoted_to_ready": 3,
+  "partial_root_cause": "PARTIAL_IMAGE_COUNT (이미지 1-2장, 이전 기준 ≥3)",
+  "ready_count": 106,
+  "release_dist": {
+    "READY_FOR_RELEASE": 106,
+    "READY_WITH_REVIEW_NOTE": 11
+  },
+  "task_id": "TASK-GYEONGJU-VG-DESCRIPTION-PARSER-AND-FINAL-117-RELEASE-V1",
+  "total_places": 117,
+  "total_with_desc": 106,
+  "v1_ready_count": 114,
+  "vg_raw_files": 117
+}
