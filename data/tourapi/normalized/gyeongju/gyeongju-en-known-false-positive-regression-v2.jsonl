@@ -1,0 +1,3 @@
+{"check": "대릉원 돌담길 → 황남빵", "en_cid": "2992462", "ko_cid": "gyeongju-GJ01-0015", "result_relation": "DIFFERENT_ENTITY", "result_grade": "UNASSIGNED_TYPE_INCOMPATIBLE", "false_positive_prevented": true, "status": "PASS:PASS"}
+{"check": "향화정 → ZERO SPACE Tax Refund", "en_cid": "4054334", "ko_cid": "gyeongju-GJ08-7128", "result_relation": "DIFFERENT_ENTITY", "result_grade": "UNASSIGNED_TYPE_INCOMPATIBLE", "false_positive_prevented": true, "status": "PASS:PASS"}
+{"check": "성동분식 → Discovery Tax Refund", "en_cid": "4030396", "ko_cid": "gyeongju-GJ08-7496", "result_relation": "DIFFERENT_ENTITY", "result_grade": "UNASSIGNED_TYPE_INCOMPATIBLE", "false_positive_prevented": true, "status": "PASS:PASS"}

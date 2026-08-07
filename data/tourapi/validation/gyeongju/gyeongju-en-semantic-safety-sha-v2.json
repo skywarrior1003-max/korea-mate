@@ -1,0 +1,18 @@
+{
+  "gyeongju-en-task6-task7-contentid-delta-audit-v2.jsonl": "74c00a6f4a4cb4482f995d3f0e99402a2525147ab33a90511be40422003df4e8",
+  "gyeongju-en-semantic-relation-audit-v2.jsonl": "bd96dc5f1a9393f2584f70ac8886ac93b00233604f0d671989f895997c5b76f6",
+  "gyeongju-en-type-compatibility-audit-v2.jsonl": "9a65e3e7aaded9e39ce869abab2abc09c71f0517deb489836c6bc9c2b08dce22",
+  "gyeongju-en-known-false-positive-regression-v2.jsonl": "8263c4fbf759436bc0fd202de176dfec46056736a5cc79f6b60d9ab9eaf5aa29",
+  "gyeongju-en-known-collision-resolution-v2.jsonl": "3c6ec54930b734db6a4fc12f48e15507cbd42a7109f7268f6f2778e5af1257cb",
+  "gyeongju-en-102-final-semantic-assignment-v2.jsonl": "d6d13468926a914956f5d9cdf0cdbd1b39685696589b86c936d4487d10b57724",
+  "gyeongju-en-unassigned-entity-audit-v2.jsonl": "fa382abdac027cb0af91fdb32a7c6121c5727df9718f3451acf92b956764b4e8",
+  "gyeongju-en-new-place-proposals-v2.jsonl": "9a13511486ddd07b3877b733933504ae608cd7703dd0c53a2ade0b75689a9ec7",
+  "gyeongju-en-final-identity-v2.jsonl": "919d89290960c2da65771f056a65e8bba0ae0ed52f7dff1cb4bbff0ac5104e35",
+  "gyeongju-en-targeted-detail-fetch-input-v2.jsonl": "3a678374fb5e9a862e07468db334001451c8f65174daa46def9b757347056208",
+  "gyeongju-engservice2-targeted-detail-snapshot-v2.jsonl": "e2c11a7eb5bda5545b6cacad4d8d087921c83cfe9f81ba9b3ceee78684985060",
+  "gyeongju-en-235-final-coverage-v2.jsonl": "e6a19fa07ec1be396bd7b50b7aa0e174e8f94db93280778d1c175c0efbf1e45d",
+  "gyeongju-en-official-site-supplement-queue-v3.jsonl": "ce73b9c247eb4b694637bbfea467345ad51361b3b803a1871fb1a1d1d37d53ea",
+  "gyeongju-en-translation-fallback-pending-v5.jsonl": "125bdbd2bbcf33cb81044802ee0866c22a86b727bb45030165c8dda67e856d5f",
+  "gyeongju-en-semantic-safety-summary-v2.json": "1048b37b8087088831dcceb6949abfa435b85eaa78681bad3ac766000d19d7d4",
+  "gyeongju-en-semantic-safety-qa-v2.json": "b7575401ceeaddcaf6e1a3cc3e3df988bbc99f876bd73ec87f63a77ad06584ff"
+}

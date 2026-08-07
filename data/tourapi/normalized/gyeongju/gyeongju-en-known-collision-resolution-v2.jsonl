@@ -1,0 +1,3 @@
+{"en_cid": "994021", "label": "보문호 → NEW_PLACE_PROPOSAL", "expected_ko": null, "actual_ko": null, "actual_grade": "UNASSIGNED_VALID_EN_PLACE", "pass": true}
+{"en_cid": "264117", "label": "천마총 → EXACT (GJ01-0035)", "expected_ko": "gyeongju-GJ01-0035", "actual_ko": "gyeongju-GJ01-0035", "actual_grade": "ASSIGNED_EXACT", "pass": true}
+{"en_cid": "806320", "label": "경주남산 → GROUP_ENTITY", "expected_ko": null, "actual_ko": null, "actual_grade": "UNASSIGNED_GROUP_ENTITY", "pass": true}

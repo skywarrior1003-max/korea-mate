@@ -1,0 +1,165 @@
+{
+  "script_version": "gyeongju_en_identity_semantic_safety_correction_v2",
+  "run_timestamp": "2026-08-07T12:27:09.037561+00:00",
+  "base_branch": "data/gyeongju-en-global-identity-reconciliation-v1",
+  "base_head": "8be1664",
+  "output_branch": "data/gyeongju-en-identity-semantic-safety-v2",
+  "task6_task7_delta": {
+    "status_promotion": 8,
+    "status_regression": 7,
+    "silent_en_reassignment": 3,
+    "silent_cases": [
+      {
+        "cid": "gyeongju-GJ01-0009",
+        "name": "국립경주박물관",
+        "t6_en": "268141",
+        "t7_en": "3492117"
+      },
+      {
+        "cid": "gyeongju-GJ01-0014",
+        "name": "대릉원",
+        "t6_en": "264117",
+        "t7_en": "2818690"
+      },
+      {
+        "cid": "gyeongju-GJ01-0125",
+        "name": "불국사",
+        "t6_en": "3337817",
+        "t7_en": "264261"
+      }
+    ]
+  },
+  "semantic_corrections": {
+    "false_positive_prevented": [
+      {
+        "label": "대릉원돌담길→황남빵",
+        "en": "2992462",
+        "reason": "attraction→restaurant TYPE_INCOMPATIBLE"
+      },
+      {
+        "label": "향화정→ZEROSPACE",
+        "en": "4054334",
+        "reason": "restaurant→shopping TYPE_INCOMPATIBLE"
+      },
+      {
+        "label": "성동분식→Discovery",
+        "en": "4030396",
+        "reason": "restaurant→shopping TYPE_INCOMPATIBLE"
+      }
+    ],
+    "relation_corrections": [
+      {
+        "label": "중앙시장야시장→중앙시장",
+        "relation": "RELATED_PARENT_ENTITY"
+      },
+      {
+        "label": "경주동궁원→버드파크",
+        "relation": "CHILD_ENTITY"
+      },
+      {
+        "label": "국립경주박물관→신라천년서고",
+        "relation": "CHILD_ENTITY (EN268141 is correct)"
+      },
+      {
+        "label": "국립경주박물관→국립경주박물관EN268141",
+        "relation": "SAME_PLACE RESTORED"
+      }
+    ],
+    "double_claim_fix": {
+      "ko": "gyeongju-GJ01-0009 (국립경주박물관)",
+      "task7_wrong_en": "3492117 (신라천년서고, Level2)",
+      "task9_correct_en": "268141 (국립경주박물관, Level1)",
+      "root_cause": "Task7 dict overwrite: both ENs claimed GJ01-0009; last-processed EN3492117 won despite weaker match"
+    }
+  },
+  "collision_3_resolution": {
+    "994021_보문호": "UNASSIGNED_VALID_EN_PLACE → NEW_PLACE_PROPOSAL",
+    "264117_천마총": "ASSIGNED_EXACT → gyeongju-GJ01-0035 (천마총)",
+    "806320_경주남산": "UNASSIGNED_GROUP_ENTITY"
+  },
+  "contenttype_map": {
+    "85": {
+      "count": 3,
+      "examples": [
+        "2025 APEC Summit Special <Seorabeol Spirit> (2025년 APEC 정상회의 기념공연 <서라벌 풍류>)",
+        "Gyochon Cultural Performance Silla Ogi(교촌문화공연 신라오기)"
+      ]
+    },
+    "79": {
+      "count": 25,
+      "examples": [
+        "ABC-Mart ST Gyeongju Cheonbuk Branch[Tax Refund Shop](ABC마트 ST 경주천북점)",
+        "ABC-Mart ST Gyeongju Nodong Branch[Tax Refund Shop](ABC마트 ST 경주노동점)"
+      ]
+    },
+    "82": {
+      "count": 6,
+      "examples": [
+        "Bomun Galbi (보문갈비)",
+        "Cheonnyeonae Gyeongjuppang Chalborippang Chalboritteok (천년애 경주빵 찰보리빵 찰보리떡)"
+      ]
+    },
+    "76": {
+      "count": 51,
+      "examples": [
+        "Bomun Tourist Complex (경주 보문관광단지)",
+        "Bomunho Lake (보문호)"
+      ]
+    },
+    "80": {
+      "count": 5,
+      "examples": [
+        "Bulguksa Hanok Dongodang (불국사한옥동오당)",
+        "Cheongjae Hanok (청재한옥)"
+      ]
+    },
+    "78": {
+      "count": 11,
+      "examples": [
+        "Daldongnae of Olden Times (추억의 달동네)",
+        "Flashback Gyerim (플래시백 계림)"
+      ]
+    },
+    "75": {
+      "count": 1,
+      "examples": [
+        "Hwarang Institute (화랑교육원)"
+      ]
+    }
+  },
+  "en_102_final_distribution": {
+    "UNASSIGNED_OUT_OF_SCOPE": 26,
+    "IDENTITY_COLLISION_REVIEW": 22,
+    "ASSIGNED_HIGH_CONFIDENCE": 18,
+    "UNASSIGNED_VALID_EN_PLACE": 5,
+    "ASSIGNED_EXACT": 18,
+    "UNASSIGNED_TYPE_INCOMPATIBLE": 8,
+    "UNASSIGNED_PARENT_CHILD_ENTITY": 4,
+    "UNASSIGNED_GROUP_ENTITY": 1
+  },
+  "ko_235_final_distribution": {
+    "NO_EN_RECORD": 187,
+    "EN_IDENTITY_CONFIRMED": 36,
+    "EN_RELATED_ENTITY_ONLY": 3,
+    "EN_IDENTITY_REVIEW": 4,
+    "EN_CANDIDATE_COLLISION": 5
+  },
+  "coverage_distribution": {
+    "EN_SOURCE_MISSING": 187,
+    "EN_PARTIAL": 25,
+    "EN_READY": 11,
+    "EN_RELATED_ONLY": 3,
+    "EN_IDENTITY_REVIEW": 9
+  },
+  "detail_fetch": {
+    "targets": 25,
+    "cache_reuse": 11,
+    "http_calls": 0,
+    "cache_hits": 75,
+    "errors": 0
+  },
+  "queues": {
+    "supplement_queue": 98,
+    "fallback_queue": 187
+  }
+}
