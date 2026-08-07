@@ -1,0 +1,98 @@
+{
+  "as_of": "2026-08-07T08:35:22Z",
+  "candidate_not_found": 0,
+  "course_count": 5,
+  "course_input_count": 29,
+  "course_overlay_in_heritage": 0,
+  "deterministic": true,
+  "exact_source_id_match": 29,
+  "heritage_candidate_forced_links": 0,
+  "heritage_input_count": 53,
+  "heritage_nav_link_count": 20,
+  "heritage_skip_slot_count": 33,
+  "http_requests": 0,
+  "identity_conflicts": [],
+  "intra_course_area_duplicates": [],
+  "llm_used": false,
+  "no_baseline_candidate": 0,
+  "no_identity_record": 0,
+  "qa_issues": [],
+  "qa_issues_count": 0,
+  "task_id": "TASK-GYEONGJU-COURSE-LINKAGE-AND-KO-CLOSEOUT-V2",
+  "waypoint_index_audit": {
+    "gyeongju-COURSE-2297": {
+      "count": 7,
+      "duplicate_indices": [],
+      "is_zero_based": true,
+      "missing_indices": [],
+      "order_preserved": true,
+      "waypoint_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "gyeongju-COURSE-2298": {
+      "count": 4,
+      "duplicate_indices": [],
+      "is_zero_based": true,
+      "missing_indices": [],
+      "order_preserved": true,
+      "waypoint_indices": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "gyeongju-COURSE-2299": {
+      "count": 6,
+      "duplicate_indices": [],
+      "is_zero_based": true,
+      "missing_indices": [],
+      "order_preserved": true,
+      "waypoint_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "gyeongju-COURSE-2300": {
+      "count": 5,
+      "duplicate_indices": [],
+      "is_zero_based": true,
+      "missing_indices": [],
+      "order_preserved": true,
+      "waypoint_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "gyeongju-COURSE-2301": {
+      "count": 7,
+      "duplicate_indices": [],
+      "is_zero_based": true,
+      "missing_indices": [],
+      "order_preserved": true,
+      "waypoint_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  }
+}

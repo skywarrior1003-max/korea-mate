@@ -1,0 +1,15 @@
+{
+  "computed_at": "2026-08-07T08:35:22Z",
+  "note": "Run1 SHA. 0 HTTP 요청. 결정론적. Run2 BYTE_IDENTICAL 보장.",
+  "run": 1,
+  "sha256": {
+    "closeout_json": "29b0c5f69aa275ccb48231f1404ee51cf2d47f8e68e1bd0b2c3fce327ba5dc3c",
+    "closeout_md": "d89aed3c2cc510994cd702f28e7bfcad7a100e39c3e165aadd1d51332db5f368",
+    "course_linkage": "9311f56238ba8a5bc309581d9151014b6703833bedf9467bd46b2ee2f6f41871",
+    "course_overlay": "55ad87ba807f5e12a41fd18bc1e83837da1c40cce69686dda4295fd7f46955db",
+    "heritage_nav": "2518e0023425f497e52d9fe95cf0dc47e4fbaf2b8a3f4fbfbbc80d869f6c3f86",
+    "heritage_skip": "594b261134f43c80be786978ecc49e1079782996ae61db2a62ed8247d01ba85f",
+    "relation_qa": "c04b7f73697720a755752fbb92ed9b5f4e2e09b5e9527b74456395e3b645d36b"
+  },
+  "task_id": "TASK-GYEONGJU-COURSE-LINKAGE-AND-KO-CLOSEOUT-V2"
+}

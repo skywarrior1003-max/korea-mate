@@ -1,0 +1,74 @@
+{
+  "as_of": "2026-08-07T08:35:22Z",
+  "att_nature_unique_ready_count": 133,
+  "by_category": {
+    "accommodation": 126,
+    "attraction": 334,
+    "event": 24,
+    "nature": 59,
+    "restaurant": 367
+  },
+  "core27_readiness_tier": "RELEASE_READY_OWNER_APPROVED_WEB_CONTENT",
+  "core27_ready": 27,
+  "core27_source_file": "gyeongju-core27-release-after-location-v2.jsonl",
+  "core27_tier_a_overlap": 0,
+  "core27_total": 27,
+  "course_count": 5,
+  "course_relation_unique_candidates": 22,
+  "course_waypoint_linked": 29,
+  "course_waypoint_total": 29,
+  "course_waypoint_unlinked": 0,
+  "en_handoff_notes": {
+    "engservice2_check_items": [
+      "EngService2 매뉴얼 v4.4 존재 여부",
+      "영문 contentId 체계 별도 확인"
+    ],
+    "kto_contentid_held": 78,
+    "stable_key": "candidate_id",
+    "total_unique_places_ko_confirmed": 910,
+    "vg_official_url_held": 5,
+    "warning": "Korean contentId ≠ English contentId (가정 금지). EngService2 계약 항목 별도 확인 필요."
+  },
+  "event_entities": 7,
+  "event_listings": 10,
+  "event_total_note": "event category 24건 in candidates; 7 entity records; 10 listing relations",
+  "heritage_candidate_relation_count": 0,
+  "heritage_empty_slots": 33,
+  "heritage_input_total": 53,
+  "heritage_navigation_links": 20,
+  "heritage_note": "NAVIGATION_LINK 20건은 VG 사이트 내비게이션 구조. candidate product relation에 포함하지 않음.",
+  "kto_contentid_matched_count": 78,
+  "method": "DYNAMIC_AGGREGATE_FROM_COMMITTED_ARTIFACTS",
+  "new_place_proposal_status": {
+    "?": 12
+  },
+  "new_place_proposals_total": 12,
+  "overlap_note": "CORE27와 TIER_A는 별도 파이프라인 산출물로 현재 0건 교차. CORE27=VG 공식 원천 27건; TIER_A=VG ATT 수집 117건. 중복 없음 확인됨.",
+  "remaining_work": [
+    "HOLD_DESCRIPTION 11건 — VG/KTO 공식 설명 source 없음 (외부 출처 탐색 필요)",
+    "heritage entity→candidate 연결 — 세계문화유산 그룹 페이지 1:N 구조 미해결",
+    "TIER_B 15건 / TIER_C 234건 — attraction/nature HOLD",
+    "accommodation 126건 — release 미분류",
+    "restaurant HOLD 265건 — 추가 enrichment 필요",
+    "미push 브랜치 4개 (data/gyeongju-kto-api-contract-..., data/gyeongju-release-rights-..., research/gyeongju-release-102-..., data/gyeongju-release-hold-...)",
+    "EN 단계: EngService2 계약 항목 확인, 영문 contentId 체계 검증"
+  ],
+  "restaurant_hold": 808,
+  "restaurant_ready": 102,
+  "restaurant_source_branch": "research/gyeongju-release-102-provenance-rights-audit-v1",
+  "restaurant_source_file": "data/tourapi/validation/gyeongju/gyeongju-candidate-release-hold-v1.jsonl",
+  "restaurant_total": 910,
+  "stable_identity_key_candidates": "candidate_id (gyeongju-GJ01-xxxx)",
+  "task_id": "TASK-GYEONGJU-COURSE-LINKAGE-AND-KO-CLOSEOUT-V2",
+  "tier_a_hold": 11,
+  "tier_a_hold_by_reason": {
+    "HOLD_DESCRIPTION": 11
+  },
+  "tier_a_ready": 106,
+  "tier_a_source_file": "gyeongju-tier-a-final-release-after-description-recovery-v1.jsonl",
+  "tier_a_total": 117,
+  "total_candidates": 910,
+  "total_unique_hold_estimated": 808,
+  "total_unique_ready_all_types": 235,
+  "vg_identity_url_count": 5
+}
