@@ -1,0 +1,109 @@
+{
+  "as_of": "2026-08-07",
+  "script_version": "gyeongju_overnight_release_batch_v1",
+  "checks": [
+    {
+      "check": "supplement_input_97",
+      "status": "PASS",
+      "expected": 97,
+      "actual": 97
+    },
+    {
+      "check": "longtail_universe_249",
+      "status": "PASS",
+      "expected": 249,
+      "actual": 249
+    },
+    {
+      "check": "longtail_total_processed",
+      "status": "PASS",
+      "expected": 249,
+      "actual": 249
+    },
+    {
+      "check": "core27_baseline",
+      "status": "PASS",
+      "expected": ">=27",
+      "actual": 27
+    },
+    {
+      "check": "tier_a_baseline",
+      "status": "PASS",
+      "expected": 106,
+      "actual": 106
+    },
+    {
+      "check": "restaurant_baseline",
+      "status": "PASS",
+      "expected": 102,
+      "actual": 102
+    },
+    {
+      "check": "event_universe_not_empty",
+      "status": "PASS",
+      "expected": ">=7",
+      "actual": 31
+    },
+    {
+      "check": "no_new_http_in_batch",
+      "status": "PASS",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "check": "no_api_key_in_outputs",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "no_arbitrary_translation",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "en_coverage_total_235",
+      "status": "PASS",
+      "expected": 235,
+      "actual": 235
+    },
+    {
+      "check": "final_release_not_empty",
+      "status": "PASS",
+      "expected": ">0",
+      "actual": 235
+    },
+    {
+      "check": "hold_description_primary_reason",
+      "status": "PASS",
+      "expected": ">=100",
+      "actual": 190
+    },
+    {
+      "check": "out_of_scope_all_kto28",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "no_parent_child_as_same_place",
+      "status": "PASS",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "check": "http_total_run1",
+      "status": "PASS",
+      "expected": ">=0",
+      "actual": 0
+    },
+    {
+      "check": "no_fatal_holds",
+      "status": "PASS",
+      "expected": 0,
+      "actual": 0
+    }
+  ],
+  "overall": "PASS"
+}
