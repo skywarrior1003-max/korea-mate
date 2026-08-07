@@ -706,6 +706,7 @@ interface ModalProps {
 }
 
 function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
+  const t          = useTranslations("itin");
   const matched    = matchCitySpot(place.name, citySpots);
   const snap       = place.cartSnapshot;
   const naverUrl   = snap?.naverMapUrl ?? buildNaverUrl(place.name, city);
@@ -778,14 +779,14 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
             <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{place.name}</h2>
           </div>
           <div className="bg-surface-dim border border-line rounded-2xl p-5">
-            <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">💡 Tips for Foreigners</p>
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">{t("tipsForForeigners")}</p>
             <p className="text-base text-sub leading-relaxed font-medium">{desc}</p>
           </div>
           {(snap?.soloFriendly != null || snap?.cashOnly || snap?.foreignCardAccepted != null) && (
             <div className="flex flex-wrap gap-2">
-              {snap?.soloFriendly     && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">👤 Solo OK</span>}
-              {snap?.cashOnly         && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">💵 Cash Only</span>}
-              {snap?.foreignCardAccepted && !snap?.cashOnly && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">💳 Card OK</span>}
+              {snap?.soloFriendly     && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{t("soloOk")}</span>}
+              {snap?.cashOnly         && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">{t("cashOnly")}</span>}
+              {snap?.foreignCardAccepted && !snap?.cashOnly && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{t("cardOk")}</span>}
             </div>
           )}
           {tags.length > 0 && (
@@ -796,7 +797,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
             </div>
           )}
           <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-            <p className="text-xs font-bold text-green-700 mb-1">💡 If Naver Maps can&apos;t find it by English name, search in Korean directly.</p>
+            <p className="text-xs font-bold text-green-700 mb-1">{t("naverKoreanHint")}</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <a href={googleUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
@@ -830,7 +831,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
               {/* difficulty + entry_fee 배지 */}
               <div className="flex flex-wrap gap-2">
                 {matched.difficulty && (() => {
-                  const label = matched.difficulty === "easy" ? "🟢 Easy" : matched.difficulty === "moderate" ? "🟡 Moderate" : "🔴 Hard";
+                  const label = matched.difficulty === "easy" ? t("difficultyEasy") : matched.difficulty === "moderate" ? t("difficultyModerate") : t("difficultyHard");
                   const cls   = matched.difficulty === "easy" ? "bg-green-50 text-green-700 border-green-100" : matched.difficulty === "moderate" ? "bg-amber-50 text-amber-700 border-amber-100" : "bg-red-50 text-red-700 border-red-100";
                   return <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${cls}`}>{label}</span>;
                 })()}
@@ -941,6 +942,7 @@ function ItineraryResult() {
   const [loadPhase, setLoadPhase] = useState(0);
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
+  const t = useTranslations("itin");
   const tMemo = useTranslations("memo");
   const tPlanner = useTranslations("planner");
   const locale = useLocale();
@@ -1125,12 +1127,12 @@ function ItineraryResult() {
       } else if (Array.isArray(rawShareDays)) {
         sharedDays = rawShareDays;
       } else {
-        setError("Itinerary data is corrupted. Please regenerate.");
+        setError(t("errCorrupted"));
         setLoading(false);
         return;
       }
       if (sharedDays.length === 0) {
-        setError("Itinerary data is empty. Please regenerate.");
+        setError(t("errEmpty"));
         setLoading(false);
         return;
       }
@@ -1153,7 +1155,7 @@ function ItineraryResult() {
     };
 
     loadItinerary().catch(err => {
-      setError(`Failed to load itinerary: ${(err as Error).message}`);
+      setError(t("errLoadFailed", { message: (err as Error).message }));
       setLoading(false);
     });
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -1164,7 +1166,7 @@ function ItineraryResult() {
   useEffect(() => {
     if (shareId) return; // Effect 1이 처리
     if (!paramStartDate || !paramEndDate) {
-      setError("Please select travel dates.");
+      setError(t("errNoDates"));
       setLoading(false);
       return;
     }
@@ -1245,11 +1247,11 @@ function ItineraryResult() {
               if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
               if (notes.length > 0) setTripNotes(notes);
               if (days.length > 0 && conflictDayNumbers.length === days.length) {
-                setError("We couldn't generate your trip plan right now. Please try again in a moment.");
+                setError(t("errGenerate"));
               }
               setLoading(false);
             })
-            .catch(() => { setError("Network error — please check your connection and try again."); setLoading(false); });
+            .catch(() => { setError(t("errNetwork")); setLoading(false); });
           return;
         }
         // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
@@ -1288,12 +1290,12 @@ function ItineraryResult() {
           if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
           if (notes.length > 0) setTripNotes(notes);
           if (days.length > 0 && conflictDayNumbers.length === days.length) {
-            setError("We couldn't generate your trip plan right now. Please try again in a moment.");
+            setError(t("errGenerate"));
           }
           setLoading(false);
         })
-        .catch((err) => { setError(`Failed to generate itinerary: ${(err as Error).message}`); setLoading(false); });
-    }).catch((err) => { setError(`Failed to load saved itinerary: ${(err as Error).message}`); setLoading(false); });
+        .catch((err) => { setError(t("errGenerateFailed", { message: (err as Error).message })); setLoading(false); });
+    }).catch((err) => { setError(t("errLoadSavedFailed", { message: (err as Error).message })); setLoading(false); });
   }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ══════════════════════════════════════════════════════════
@@ -1739,7 +1741,7 @@ function ItineraryResult() {
           <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-surface-dim/60 border border-line mb-4">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-coral shrink-0" />
             <span className="text-sm font-black text-ink">
-              {shareId ? "Loading shared itinerary…" : phase.label}
+              {shareId ? t("loadingShared") : phase.label}
             </span>
           </div>
           {!shareId && (
@@ -1808,7 +1810,7 @@ function ItineraryResult() {
     return (
       <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
         <div className="text-6xl mb-6">⚠️</div>
-        <h2 className="text-3xl font-black text-red-600 mb-4">Something went wrong</h2>
+        <h2 className="text-3xl font-black text-red-600 mb-4">{t("somethingWrong")}</h2>
         <p className="text-lg text-sub max-w-md mb-8 font-bold">{error}</p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-ink text-surface-dim rounded-xl hover:bg-black transition-colors">
@@ -1880,7 +1882,7 @@ function ItineraryResult() {
       <PlannerCoverHeader
         cover={{ coverKind, coverMomentId, itineraryId: itinId, isPublic, city }}
         title={tripTitle || `My ${city} Trip`}
-        dateLine={`${startDate} — ${endDate} · ${travelers} ${parseInt(travelers) > 1 ? "Travelers" : "Traveler"}`}
+        dateLine={`${startDate} — ${endDate} · ${parseInt(travelers) > 1 ? t("travelerMany", { n: travelers }) : t("travelerOne", { n: travelers })}`}
         imageAlt={tPlanner("coverAlt", { city })}
         canEditTitle={(!shareId || isOwner) && !!itinId}
         editLabel={tPlanner("editTitle")}
@@ -1959,7 +1961,7 @@ function ItineraryResult() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all disabled:opacity-40 active:scale-95"
             style={{ backgroundColor: "var(--gkm-accent-coral)" }}
           >
-            {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
+            {copied ? t("copied") : t("copyShareLink")}
           </button>
 
           {/* 공개/비공개 토글 */}
@@ -1972,7 +1974,7 @@ function ItineraryResult() {
                   : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
               }`}
             >
-              {isPublic ? "🌐 Public" : "🔒 Private"}
+              {isPublic ? t("visibilityPublic") : t("visibilityPrivate")}
             </button>
           )}
 
@@ -2025,7 +2027,7 @@ function ItineraryResult() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
               style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "var(--gkm-ink)" }}
             >
-              {viewMode === "compact" ? "✅ Editing" : "✏️ Edit Trip"}
+              {viewMode === "compact" ? t("editing") : t("editTrip")}
             </button>
           )}
 
@@ -2041,7 +2043,7 @@ function ItineraryResult() {
                     : "text-sub hover:text-ink"
                 }`}
               >
-                {mode === "compact" ? "⊟ Compact" : "⊞ Full View"}
+                {mode === "compact" ? t("viewCompact") : t("viewFull")}
               </button>
             ))}
           </div>
@@ -2049,7 +2051,7 @@ function ItineraryResult() {
       </div>
 
       <p className="text-center text-sm text-sub font-bold mb-4 bg-surface-dim/40 rounded-xl py-2.5">
-        💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit Trip above
+        {t("hintTapCard")}
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
@@ -2103,13 +2105,13 @@ function ItineraryResult() {
           <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1a1f36] text-white">
             <span className="text-base shrink-0">✏️</span>
             <p className="text-xs font-bold flex-1">
-              Edit canvas — remove or reorder places. Changes are saved automatically.
+              {t("editCanvasHint")}
             </p>
             <button
               onClick={() => setViewMode("full")}
               className="shrink-0 text-xs font-black text-white/70 hover:text-white px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
             >
-              ⊞ Full View
+              {t("viewFull")}
             </button>
           </div>
 
@@ -2186,18 +2188,18 @@ function ItineraryResult() {
                         onClick={() => movePlace(editDay, pi, "up")}
                         disabled={pi === 0}
                         className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="Move up"
+                        title={t("moveUp")}
                       >↑</button>
                       <button
                         onClick={() => movePlace(editDay, pi, "down")}
                         disabled={pi === days[editDay].places.length - 1}
                         className="w-7 h-7 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-25 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="Move down"
+                        title={t("moveDown")}
                       >↓</button>
                       <button
                         onClick={() => deletePlace(editDay, pi)}
                         className="w-7 h-7 rounded-full bg-red-500 text-white hover:bg-red-600 text-xs font-black flex items-center justify-center cursor-pointer transition-colors"
-                        title="Remove"
+                        title={t("removePlace")}
                       >×</button>
                     </div>
                   )}
@@ -2219,11 +2221,11 @@ function ItineraryResult() {
             return (
               <div className="mt-5">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="text-xs font-black text-sub">❤️ My Picks (Unscheduled)</span>
+                  <span className="text-xs font-black text-sub">{t("unscheduledTitle")}</span>
                   <span className="text-[10px] font-bold bg-surface-dim/60 text-sub px-2 py-0.5 rounded-full">
                     {unscheduled.length}
                   </span>
-                  <span className="text-[10px] text-sub/50 ml-auto">Use + to add to this day</span>
+                  <span className="text-[10px] text-sub/50 ml-auto">{t("unscheduledHint")}</span>
                 </div>
                 <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
                   {unscheduled.map((item) => (
@@ -2270,7 +2272,7 @@ function ItineraryResult() {
           )}
 
           <p className="text-center text-xs text-sub/50 mt-4">
-            ☁️ Changes are saved automatically · Use Full View above to return
+            {t("editCanvasFooter")}
           </p>
         </div>
       ) : (
@@ -2343,13 +2345,13 @@ function ItineraryResult() {
                 <h2 className="text-2xl sm:text-3xl font-black text-ink mb-5 flex items-center gap-3 flex-wrap">
                   <span>Day {day.dayNumber}</span>
                   <span className="text-lg font-bold text-sub bg-surface-dim/40 px-3 py-0.5 rounded-full">{day.date}</span>
-                  <span className="text-sm font-semibold text-sub">({day.places.length} places)</span>
+                  <span className="text-sm font-semibold text-sub">{t("placesCount", { n: day.places.length })}</span>
                   {/* S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만) */}
                   {(() => {
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
                     return done > 0 ? (
                       <span className="text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-0.5 rounded-full">
-                        ✓ {done}/{day.places.length} visited
+                        ✓ {t("progress", { done, total: day.places.length })}
                       </span>
                     ) : null;
                   })()}
@@ -2359,7 +2361,7 @@ function ItineraryResult() {
                   <div className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-amber-50 border border-amber-200">
                     <span className="text-lg shrink-0">⚠️</span>
                     <p className="text-sm font-bold text-amber-700">
-                      Day {day.dayNumber}: Could not generate schedule — scheduling conflict detected. Try adjusting your travel dates or removing saved places.
+                      {t("conflictNotice", { n: day.dayNumber })}
                     </p>
                   </div>
                 )}
@@ -2369,7 +2371,7 @@ function ItineraryResult() {
                   <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-dim/40 border border-accent-coral/30">
                     <span className="text-sm shrink-0">🕐</span>
                     <p className="text-xs font-semibold text-sub">
-                      Kept light — your departure is at {paramDepartureTime}.
+                      {t("departureNotice", { time: paramDepartureTime })}
                     </p>
                   </div>
                 )}
@@ -2454,7 +2456,7 @@ function ItineraryResult() {
                                               : "bg-white text-sub/60 border-line hover:border-sub/40"
                                           }`}
                                         >
-                                          {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ Visited" : "○ Visited"}
+                                          {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ " : "○ "}{t("visited")}
                                         </button>
                                       </div>
                                       <div className="flex items-start gap-3">
@@ -2497,7 +2499,7 @@ function ItineraryResult() {
                                             : "bg-white hover:bg-green-50 text-green-700 border border-green-200 hover:border-green-400"
                                         }`}
                                       >
-                                        {naverIsGoogle ? "🗺️ More Search" : "💚 Naver Maps"}
+                                        {naverIsGoogle ? t("moreSearch") : "💚 Naver Maps"}
                                       </a>
                                     </div>
                                   </div>
@@ -2748,6 +2750,7 @@ function ItineraryResult() {
 //  페이지 레이아웃 (Suspense wrapper)
 // ══════════════════════════════════════════════════════════════
 export default function ItineraryPage() {
+  const t = useTranslations("itin");
   return (
     <div className="min-h-screen flex flex-col bg-surface-dim text-ink font-sans antialiased">
       <header className="border-b border-line bg-surface-dim/90 backdrop-blur-md sticky top-0 z-40">
@@ -2762,7 +2765,7 @@ export default function ItineraryPage() {
         fallback={
           <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-accent-coral mb-8" />
-            <h2 className="text-3xl font-black text-ink mb-3">Loading itinerary…</h2>
+            <h2 className="text-3xl font-black text-ink mb-3">{t("loadingItinerary")}</h2>
           </div>
         }
       >
@@ -2772,7 +2775,7 @@ export default function ItineraryPage() {
       <footer className="mt-auto border-t border-line bg-surface-dim py-8 text-center text-sm text-sub px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
-          <p className="font-bold tracking-wide">Data provided by Korea Tourism Organization. AI-powered by Gemini.</p>
+          <p className="font-bold tracking-wide">{t("attribution")}</p>
         </div>
       </footer>
     </div>

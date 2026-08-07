@@ -160,13 +160,19 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
   assert.doesNotMatch(map, /selectedKey/);
 });
 
-test("★사용자 문구를 바꾸지 않았다", () => {
+test("★색 작업이 사용자 문구를 없애지 않았다", () => {
+  // 원래 이 검사는 page.tsx 안에 영어 원문이 그대로 있는지를 봤다. 그건 그
+  // 시점의 상태였지 불변식이 아니다 — S2-B 가 같은 문구를 en.json 의 itin
+  // 네임스페이스로 옮겼고, 그건 정당한 변경이다.
+  //
+  // 지켜야 할 것은 "색을 만지다가 문구가 사라지지 않는다" 이므로, 문구가
+  // page.tsx 든 locale 파일이든 **어딘가에 살아 있는지**를 본다.
+  const en = readFileSync(join(ROOT, "src", "messages", "en.json"), "utf8");
+  const alive = (s: string) => PAGE.includes(s) || en.includes(s);
   for (const s of ["Copy Share Link", "Tips for Foreigners", "Google Maps", "Naver Maps",
                    "Kept light", "scheduling conflict", "visited", "places)"]) {
-    assert.ok(PAGE.includes(s), "사라진 문구: " + s);
+    assert.ok(alive(s), "사라진 문구: " + s);
   }
-  // i18n 이관은 이번 작업 범위가 아니다 — 호출 수가 늘지도 줄지도 않아야 한다
-  assert.equal((PAGE.match(/useTranslations\(/g) ?? []).length, 2);
 });
 
 test("★지도 카테고리 색 함수가 그대로 값을 돌려준다", () => {
