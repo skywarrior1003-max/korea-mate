@@ -153,6 +153,11 @@ function buildNaverUrl(placeName: string, city: string): string {
 }
 
 // ── AI 빌드 단계 정의 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────
+//
+// color 는 여기서만 raw hex 로 남는다. 렌더 쪽이 `card.color + "20"` 으로 알파를
+// 이어 붙여 8자리 hex 를 만들기 때문이다 — var(--gkm-…) 로 바꾸면
+// "var(--gkm-accent-coral)20" 이 되어 무효 CSS 가 되고 배경이 조용히 사라진다.
+// 값 자체도 대부분 제휴사 브랜드색이라 토큰 대상이 아니다.
 const LOAD_PHASES = [
   {
     emoji: "🍽️",
@@ -680,7 +685,7 @@ function getCategoryImage(category: string, name: string): string {
 
 function getCategoryColor(category: string): string {
   const c = category.toLowerCase();
-  if (c.includes("restaurant") || c.includes("food")) return "#FF4A2D";
+  if (c.includes("restaurant") || c.includes("food")) return "var(--gkm-accent-coral)";
   if (c.includes("cafe") || c.includes("coffee")) return "#d97706";
   if (c.includes("market")) return "#dc2626";
   if (c.includes("museum")) return "#7c3aed";
@@ -769,12 +774,12 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
 
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "#FF4A2D" }}>📍 {place.location}</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#191C21] leading-tight">{place.name}</h2>
+            <p className="text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--gkm-accent-coral)" }}>📍 {place.location}</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-ink leading-tight">{place.name}</h2>
           </div>
-          <div className="bg-[#F6F7F8] border border-[#E5E7EA] rounded-2xl p-5">
-            <p className="text-xs font-black uppercase tracking-widest mb-2 text-[#565D66]">💡 Tips for Foreigners</p>
-            <p className="text-base text-[#565D66] leading-relaxed font-medium">{desc}</p>
+          <div className="bg-surface-dim border border-line rounded-2xl p-5">
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-sub">💡 Tips for Foreigners</p>
+            <p className="text-base text-sub leading-relaxed font-medium">{desc}</p>
           </div>
           {(snap?.soloFriendly != null || snap?.cashOnly || snap?.foreignCardAccepted != null) && (
             <div className="flex flex-wrap gap-2">
@@ -821,7 +826,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
 
           {/* ── SpotCard enrichment (SSOT: city_spots 매칭 성공 시) ── */}
           {matched && (
-            <div className="border-t border-[#E5E7EA] pt-5 space-y-3">
+            <div className="border-t border-line pt-5 space-y-3">
               {/* difficulty + entry_fee 배지 */}
               <div className="flex flex-wrap gap-2">
                 {matched.difficulty && (() => {
@@ -862,7 +867,7 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
           )}
 
           <button onClick={onClose}
-            className="w-full py-3.5 rounded-xl text-sm font-black text-[#191C21] border-2 border-[#E5E7EA] hover:border-[#FF4A2D] hover:bg-[#F6F7F8] transition-all cursor-pointer">
+            className="w-full py-3.5 rounded-xl text-sm font-black text-ink border-2 border-line hover:border-accent-coral hover:bg-surface-dim transition-all cursor-pointer">
             Close
           </button>
         </div>
@@ -1731,16 +1736,16 @@ function ItineraryResult() {
 
         {/* ── 페이즈 표시기 ── */}
         <div className="text-center mb-8 w-full max-w-lg">
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#F6F7F8]/60 border border-[#E5E7EA] mb-4">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#FF4A2D] shrink-0" />
-            <span className="text-sm font-black text-[#191C21]">
+          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-surface-dim/60 border border-line mb-4">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-coral shrink-0" />
+            <span className="text-sm font-black text-ink">
               {shareId ? "Loading shared itinerary…" : phase.label}
             </span>
           </div>
           {!shareId && (
-            <div className="w-full bg-[#E5E7EA] rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-line rounded-full h-1.5 overflow-hidden">
               <div
-                className="h-full bg-[#FF4A2D] rounded-full transition-all duration-700 ease-out"
+                className="h-full bg-accent-coral rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${((loadPhase + 1) / LOAD_PHASES.length) * 100}%` }}
               />
             </div>
@@ -1753,7 +1758,7 @@ function ItineraryResult() {
             {phase.cards.map((card) => (
               <div
                 key={card.name}
-                className="bg-white rounded-2xl border border-[#E5E7EA] p-5 flex items-start gap-4 shadow-sm"
+                className="bg-white rounded-2xl border border-line p-5 flex items-start gap-4 shadow-sm"
                 style={{ animation: "fadeInUp 0.4s ease-out" }}
               >
                 <div
@@ -1763,8 +1768,8 @@ function ItineraryResult() {
                   {card.emoji}
                 </div>
                 <div>
-                  <p className="text-sm font-black text-[#191C21]">{card.name}</p>
-                  <p className="text-xs text-[#565D66] leading-relaxed mt-0.5">{card.desc}</p>
+                  <p className="text-sm font-black text-ink">{card.name}</p>
+                  <p className="text-xs text-sub leading-relaxed mt-0.5">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -1774,16 +1779,16 @@ function ItineraryResult() {
         {/* ── 스켈레톤 일정 카드 ── */}
         <div className="w-full space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-2xl border border-[#E5E7EA] p-5 animate-pulse">
+            <div key={i} className="bg-white rounded-2xl border border-line p-5 animate-pulse">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded-full bg-[#F6F7F8]" />
-                <div className="h-5 bg-[#F6F7F8] rounded w-24" />
-                <div className="h-4 bg-[#F6F7F8] rounded w-16 ml-2" />
+                <div className="w-6 h-6 rounded-full bg-surface-dim" />
+                <div className="h-5 bg-surface-dim rounded w-24" />
+                <div className="h-4 bg-surface-dim rounded w-16 ml-2" />
               </div>
               <div className="space-y-2.5">
-                <div className="h-3.5 bg-[#F6F7F8] rounded w-3/4" />
-                <div className="h-3.5 bg-[#F6F7F8] rounded w-1/2" />
-                <div className="h-3.5 bg-[#F6F7F8] rounded w-2/3" />
+                <div className="h-3.5 bg-surface-dim rounded w-3/4" />
+                <div className="h-3.5 bg-surface-dim rounded w-1/2" />
+                <div className="h-3.5 bg-surface-dim rounded w-2/3" />
               </div>
             </div>
           ))}
@@ -1804,9 +1809,9 @@ function ItineraryResult() {
       <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
         <div className="text-6xl mb-6">⚠️</div>
         <h2 className="text-3xl font-black text-red-600 mb-4">Something went wrong</h2>
-        <p className="text-lg text-[#565D66] max-w-md mb-8 font-bold">{error}</p>
+        <p className="text-lg text-sub max-w-md mb-8 font-bold">{error}</p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-[#191C21] text-[#F6F7F8] rounded-xl hover:bg-black transition-colors">
+          <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-ink text-surface-dim rounded-xl hover:bg-black transition-colors">
             ← Back to Home
           </Link>
           {shareId && (
@@ -1901,10 +1906,10 @@ function ItineraryResult() {
       />
 
       {/* ── 헤더 카드 ── */}
-      <div className="bg-white rounded-3xl p-8 border border-[#E5E7EA] shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-8 border border-line shadow-sm mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-black bg-[#F6F7F8] text-[#565D66] px-3 py-1 rounded-md uppercase tracking-wider">
+            <span className="text-xs font-black bg-surface-dim text-sub px-3 py-1 rounded-md uppercase tracking-wider">
               {travelStyle} Trip
             </span>
             {plannerMeta && (
@@ -1935,7 +1940,7 @@ function ItineraryResult() {
               {prefTags.map(tag => (
                 <span
                   key={tag}
-                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F6F7F8] text-[#565D66] capitalize"
+                  className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-surface-dim text-sub capitalize"
                 >
                   {tag}
                 </span>
@@ -1952,7 +1957,7 @@ function ItineraryResult() {
             onClick={handleCopyShareLink}
             disabled={!itinId}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all disabled:opacity-40 active:scale-95"
-            style={{ backgroundColor: "#FF4A2D" }}
+            style={{ backgroundColor: "var(--gkm-accent-coral)" }}
           >
             {copied ? "✅ Copied!" : "🔗 Copy Share Link"}
           </button>
@@ -1983,7 +1988,7 @@ function ItineraryResult() {
           ) : (
             <button
               onClick={() => setEmailModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-[#191C21] bg-white border-2 border-[#E5E7EA] hover:border-[#8A919B] rounded-xl transition-all active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-ink bg-white border-2 border-line hover:border-faint rounded-xl transition-all active:scale-95"
             >
               📧 Save to Email
             </button>
@@ -1995,7 +2000,7 @@ function ItineraryResult() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
             style={{ backgroundColor: "#1a1a2e" }}
           >
-            📸 {tMemo("captureTitle")} {moments.length > 0 && <span className="bg-[#FF4A2D] text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
+            📸 {tMemo("captureTitle")} {moments.length > 0 && <span className="bg-accent-coral text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
           </button>
 
           {/* TASK-022: 공유 카드 버튼 */}
@@ -2003,13 +2008,13 @@ function ItineraryResult() {
             <button
               onClick={() => setStoryExportOpen(true)}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2"
-              style={{ borderColor: "#FF4A2D", color: "#FF4A2D", backgroundColor: "transparent" }}
+              style={{ borderColor: "var(--gkm-accent-coral)", color: "var(--gkm-accent-coral)", backgroundColor: "transparent" }}
             >
               🎴 Create Story Card
             </button>
           )}
 
-          <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-[#F6F7F8] hover:bg-[#F3EEE3] text-[#191C21] border border-[#E5E7EA] rounded-xl transition-all shadow-sm">
+          <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-surface-dim hover:bg-[#F3EEE3] text-ink border border-line rounded-xl transition-all shadow-sm">
             ← Back to Home
           </Link>
 
@@ -2018,22 +2023,22 @@ function ItineraryResult() {
             <button
               onClick={() => { setViewMode("compact"); setEditDay(0); }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "#191C21" }}
+              style={{ backgroundColor: viewMode === "compact" ? "#16a34a" : "var(--gkm-ink)" }}
             >
               {viewMode === "compact" ? "✅ Editing" : "✏️ Edit Trip"}
             </button>
           )}
 
           {/* Compact / Full View 토글 */}
-          <div className="flex gap-1.5 p-1 border border-[#E5E7EA] rounded-xl bg-[#F6F7F8]">
+          <div className="flex gap-1.5 p-1 border border-line rounded-xl bg-surface-dim">
             {(["full", "compact"] as const).map((mode) => (
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
                 className={`flex-1 px-4 py-2 rounded-lg text-xs font-black transition-all ${
                   viewMode === mode
-                    ? "bg-[#191C21] text-[#F6F7F8] shadow-sm"
-                    : "text-[#565D66] hover:text-[#191C21]"
+                    ? "bg-ink text-surface-dim shadow-sm"
+                    : "text-sub hover:text-ink"
                 }`}
               >
                 {mode === "compact" ? "⊟ Compact" : "⊞ Full View"}
@@ -2043,14 +2048,14 @@ function ItineraryResult() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-[#565D66] font-bold mb-4 bg-[#F6F7F8]/40 rounded-xl py-2.5">
+      <p className="text-center text-sm text-sub font-bold mb-4 bg-surface-dim/40 rounded-xl py-2.5">
         💡 Tap any card for details, maps &amp; booking links · To edit your schedule, use ✏️ Edit Trip above
       </p>
 
       {/* ── 공항 저녁 도착 전용 배관 배너 ── */}
       {/* Post-Plan Commerce (§14-1-B) — 일정 확정 후 문맥 상품. 정상화 전까지 비활성 */}
       {POST_PLAN_COMMERCE_ENABLED && shouldShowAirportBanner && (
-        <div className="mb-6 rounded-2xl border border-[#FF4A2D]/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
+        <div className="mb-6 rounded-2xl border border-accent-coral/40 bg-gradient-to-r from-amber-50 to-orange-50 p-5">
           <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
@@ -2113,7 +2118,7 @@ function ItineraryResult() {
             <Link
               href="/all-spots"
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-black text-white mb-4 transition-opacity hover:opacity-90 active:scale-95"
-              style={{ backgroundColor: "#FF4A2D" }}
+              style={{ backgroundColor: "var(--gkm-accent-coral)" }}
             >
               🔍 Search Spots
             </Link>
@@ -2128,7 +2133,7 @@ function ItineraryResult() {
                 className={`shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   editDay === i
                     ? "bg-[#1a1f36] text-white shadow-md"
-                    : "bg-white text-[#565D66] border border-[#E5E7EA] hover:border-[#FF4A2D]"
+                    : "bg-white text-sub border border-line hover:border-accent-coral"
                 }`}
               >
                 <span>Day {day.dayNumber}</span>
@@ -2140,7 +2145,7 @@ function ItineraryResult() {
                 <span
                   className="mt-1 px-1.5 py-0.5 rounded-full text-[10px] font-black"
                   style={editDay === i
-                    ? { backgroundColor: "#FF4A2D", color: "#fff" }
+                    ? { backgroundColor: "var(--gkm-accent-coral)", color: "#fff" }
                     : { backgroundColor: "#f3f4f6", color: "#374151" }}
                 >
                   {day.places.length}
@@ -2151,7 +2156,7 @@ function ItineraryResult() {
 
           {/* 현재 Day 편집 리스트 — 시간순 플랫 리스트 (슬롯 그루핑 제거로 누락 방지) */}
           {days[editDay] && (
-            <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
               <div className="px-5 py-3 flex items-center justify-between" style={{ backgroundColor: "#1a1f36" }}>
                 <span className="text-sm font-black text-white">
                   Day {days[editDay].dayNumber} — {days[editDay].date}
@@ -2163,18 +2168,18 @@ function ItineraryResult() {
               {days[editDay].places.map((p, pi) => (
                 <div
                   key={pi}
-                  className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 group transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0 hover:bg-surface-dim/60 group transition-colors"
                 >
                   {/* 방문 시각 대신 순서 번호. ↑↓ 로 바꾸는 것이 바로 이 순서다.
                       시각은 출처를 구분할 계약이 없어 표시하지 않는다(상세 모달과 같은 이유). */}
-                  <span className="text-xs font-bold text-[#565D66] w-6 shrink-0 tabular-nums text-right">{pi + 1}</span>
+                  <span className="text-xs font-bold text-sub w-6 shrink-0 tabular-nums text-right">{pi + 1}</span>
                   <span
                     className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
                     style={{ backgroundColor: getCategoryColor(p.category) }}
                   >
                     {p.category.slice(0, 5)}
                   </span>
-                  <span className="flex-1 text-sm font-bold text-[#191C21] truncate">{p.name}</span>
+                  <span className="flex-1 text-sm font-bold text-ink truncate">{p.name}</span>
                   {(!shareId || isOwner) && (
                     <div className="flex items-center gap-1.5 shrink-0">
                       <button
@@ -2200,7 +2205,7 @@ function ItineraryResult() {
               ))}
 
               {days[editDay].places.length === 0 && (
-                <div className="py-10 text-center text-sm text-[#565D66]/40 italic">
+                <div className="py-10 text-center text-sm text-sub/40 italic">
                   No places for this day
                 </div>
               )}
@@ -2214,19 +2219,19 @@ function ItineraryResult() {
             return (
               <div className="mt-5">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="text-xs font-black text-[#565D66]">❤️ My Picks (Unscheduled)</span>
-                  <span className="text-[10px] font-bold bg-[#F6F7F8]/60 text-[#565D66] px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-black text-sub">❤️ My Picks (Unscheduled)</span>
+                  <span className="text-[10px] font-bold bg-surface-dim/60 text-sub px-2 py-0.5 rounded-full">
                     {unscheduled.length}
                   </span>
-                  <span className="text-[10px] text-[#565D66]/50 ml-auto">Use + to add to this day</span>
+                  <span className="text-[10px] text-sub/50 ml-auto">Use + to add to this day</span>
                 </div>
-                <div className="bg-white rounded-2xl border border-[#E5E7EA] overflow-hidden shadow-sm">
+                <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
                   {unscheduled.map((item) => (
                     <div
                       /* 같은 `local-<n>` 을 가진 다른 소스의 장소가 함께 있을 수 있다.
                          id 를 key 로 쓰면 React 가 두 행을 같은 것으로 보고 재사용한다. */
                       key={getItemSourceKey(item)}
-                      className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EA]/40 last:border-0 hover:bg-[#F6F7F8]/60 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 border-b border-line/40 last:border-0 hover:bg-surface-dim/60 transition-colors"
                     >
                       <span
                         className="text-[10px] font-black px-1.5 py-0.5 rounded text-white shrink-0 hidden sm:inline"
@@ -2234,16 +2239,16 @@ function ItineraryResult() {
                       >
                         {item.type.slice(0, 5)}
                       </span>
-                      <span className="flex-1 text-sm font-bold text-[#191C21] truncate">
+                      <span className="flex-1 text-sm font-bold text-ink truncate">
                         {item.shortName || item.name}
                       </span>
-                      <span className="text-[10px] text-[#565D66]/50 shrink-0 hidden sm:inline">
+                      <span className="text-[10px] text-sub/50 shrink-0 hidden sm:inline">
                         {item.recommendedDurationMinutes}m
                       </span>
                       <button
                         onClick={() => addCartItemToDay(item)}
                         className="shrink-0 w-7 h-7 rounded-full text-white text-sm font-black flex items-center justify-center hover:opacity-80 cursor-pointer transition-opacity"
-                        style={{ backgroundColor: "#FF4A2D" }}
+                        style={{ backgroundColor: "var(--gkm-accent-coral)" }}
                         title={`Add to Day ${editDay + 1}`}
                       >+</button>
                     </div>
@@ -2264,7 +2269,7 @@ function ItineraryResult() {
             />
           )}
 
-          <p className="text-center text-xs text-[#565D66]/50 mt-4">
+          <p className="text-center text-xs text-sub/50 mt-4">
             ☁️ Changes are saved automatically · Use Full View above to return
           </p>
         </div>
@@ -2333,12 +2338,12 @@ function ItineraryResult() {
             }));
 
             return (
-              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-[#FF4A2D]/30">
-                <div className="absolute -left-[11px] top-1.5 bg-[#F6F7F8] border-4 border-[#FF4A2D] w-5 h-5 rounded-full z-10" />
-                <h2 className="text-2xl sm:text-3xl font-black text-[#191C21] mb-5 flex items-center gap-3 flex-wrap">
+              <div key={day.dayNumber} className="relative pl-6 sm:pl-8 border-l-2 border-accent-coral/30">
+                <div className="absolute -left-[11px] top-1.5 bg-surface-dim border-4 border-accent-coral w-5 h-5 rounded-full z-10" />
+                <h2 className="text-2xl sm:text-3xl font-black text-ink mb-5 flex items-center gap-3 flex-wrap">
                   <span>Day {day.dayNumber}</span>
-                  <span className="text-lg font-bold text-[#565D66] bg-[#F6F7F8]/40 px-3 py-0.5 rounded-full">{day.date}</span>
-                  <span className="text-sm font-semibold text-[#565D66]">({day.places.length} places)</span>
+                  <span className="text-lg font-bold text-sub bg-surface-dim/40 px-3 py-0.5 rounded-full">{day.date}</span>
+                  <span className="text-sm font-semibold text-sub">({day.places.length} places)</span>
                   {/* S2: 방문 진행률 — 체크된 게 있을 때만 표시 (실측치만) */}
                   {(() => {
                     const done = day.places.filter(p => visited.has(visitedPlaceKey(day.dayNumber, p))).length;
@@ -2361,9 +2366,9 @@ function ItineraryResult() {
 
                 {/* TASK-058-D: 마지막 날 출발 버퍼 안내 — 일정이 짧은 이유를 사용자에게 설명 */}
                 {day.dayNumber === days.length && paramDepartureTime && (
-                  <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F6F7F8]/40 border border-[#FF4A2D]/30">
+                  <div className="mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-dim/40 border border-accent-coral/30">
                     <span className="text-sm shrink-0">🕐</span>
-                    <p className="text-xs font-semibold text-[#565D66]">
+                    <p className="text-xs font-semibold text-sub">
                       Kept light — your departure is at {paramDepartureTime}.
                     </p>
                   </div>
@@ -2373,7 +2378,7 @@ function ItineraryResult() {
                     시간대마다 불투명 카드를 두면 하루가 네 덩어리로 보이고 점선도
                     카드 안에서만 이어져 끊긴다. 슬롯 분류·정렬 로직(TIME_SLOTS,
                     assignSlot)은 그대로 두고 화면만 평평하게 만든다. */}
-                <div className="rounded-2xl border border-[#E5E7EA] overflow-hidden bg-white" id={`day-${day.dayNumber}`}>
+                <div className="rounded-2xl border border-line overflow-hidden bg-white" id={`day-${day.dayNumber}`}>
                   {(() => {
                     const rows = buildTimeline(
                       slotAssigned.map(x => ({ item: x.place, index: x.idx, slot: x.slot })),
@@ -2391,7 +2396,7 @@ function ItineraryResult() {
                               return (
                                 <div
                                   key={idx}
-                                  className="flex items-stretch hover:bg-[#F6F7F8]/40 transition-colors group relative"
+                                  className="flex items-stretch hover:bg-surface-dim/40 transition-colors group relative"
                                 >
                                   {/* 타임라인 레일 — 위 선 · 아이콘 · 아래 선.
                                       flex 로 행 높이를 그대로 따라가므로 카드가 길어지거나
@@ -2403,7 +2408,7 @@ function ItineraryResult() {
                                     className="w-[68px] shrink-0 flex flex-col items-center pointer-events-none"
                                   >
                                     <span
-                                      className={`w-0 flex-none ${row.railAbove ? "border-l-2 border-dotted border-[#E5E7EA]" : ""}`}
+                                      className={`w-0 flex-none ${row.railAbove ? "border-l-2 border-dotted border-line" : ""}`}
                                       style={{ height: row.showSlotLabel ? 46 : 22 }}
                                     />
                                     <span
@@ -2413,7 +2418,7 @@ function ItineraryResult() {
                                       <TimelineIcon category={place.category} size={16} />
                                     </span>
                                     <span
-                                      className={`w-0 flex-1 ${row.railBelow ? "border-l-2 border-dotted border-[#E5E7EA]" : ""}`}
+                                      className={`w-0 flex-1 ${row.railBelow ? "border-l-2 border-dotted border-line" : ""}`}
                                     />
                                   </div>
 
@@ -2421,7 +2426,7 @@ function ItineraryResult() {
                                   {/* 시간대 흐름 라벨 — 그 시간대의 첫 장소에만. 정확한 도착
                                       시각이 아니므로 작은 보조 텍스트로만 둔다. */}
                                   {row.showSlotLabel && (
-                                    <p className="pt-4 pb-0.5 pr-5 text-[11px] font-black uppercase tracking-[0.14em] text-[#8A919B]">
+                                    <p className="pt-4 pb-0.5 pr-5 text-[11px] font-black uppercase tracking-[0.14em] text-faint">
                                       {tPlanner(`slot_${row.slot}`)}
                                     </p>
                                   )}
@@ -2438,7 +2443,7 @@ function ItineraryResult() {
                                         >{place.category}</span>
                                         {/* 정확한 방문 시각은 표시하지 않는다 — 시간대 흐름 라벨이
                                             그 자리를 대신한다. place.time 자체는 슬롯 판정에 계속 쓴다. */}
-                                        <span className="text-xs font-bold text-[#565D66]">📍 {place.location}</span>
+                                        <span className="text-xs font-bold text-sub">📍 {place.location}</span>
                                         {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
                                         <button
                                           onClick={(e) => { e.stopPropagation(); toggleVisited(day.dayNumber, place); }}
@@ -2446,7 +2451,7 @@ function ItineraryResult() {
                                           className={`text-xs font-bold px-2.5 py-1 rounded-full border transition-colors cursor-pointer ${
                                             visited.has(visitedPlaceKey(day.dayNumber, place))
                                               ? "bg-emerald-50 text-emerald-700 border-emerald-300"
-                                              : "bg-white text-[#565D66]/60 border-[#E5E7EA] hover:border-[#565D66]/40"
+                                              : "bg-white text-sub/60 border-line hover:border-sub/40"
                                           }`}
                                         >
                                           {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ Visited" : "○ Visited"}
@@ -2457,21 +2462,21 @@ function ItineraryResult() {
                                           <img
                                             src={place.cartSnapshot.image}
                                             alt={place.name}
-                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[#E5E7EA]"
+                                            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-line"
                                           />
                                         )}
                                         <div className="min-w-0">
-                                          <h3 className="text-lg sm:text-xl font-black text-[#191C21] group-hover:text-[#565D66] transition-colors">
+                                          <h3 className="text-lg sm:text-xl font-black text-ink group-hover:text-sub transition-colors">
                                             {place.name}
                                           </h3>
-                                          <div className="bg-[#F6F7F8]/60 border border-[#E5E7EA]/60 rounded-xl p-3 mt-1">
-                                            <p className="text-xs text-[#565D66] leading-relaxed line-clamp-2">
+                                          <div className="bg-surface-dim/60 border border-line/60 rounded-xl p-3 mt-1">
+                                            <p className="text-xs text-sub leading-relaxed line-clamp-2">
                                               {firstPublicText(place.cartSnapshot?.whyItMatters, place.cartSnapshot?.description, place.tips)}
                                             </p>
                                           </div>
                                         </div>
                                       </div>
-                                      <p className="text-xs text-[#FF4A2D] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <p className="text-xs text-accent-coral font-bold opacity-0 group-hover:opacity-100 transition-opacity">
                                         Click for full details + maps →
                                       </p>
                                     </div>
@@ -2501,7 +2506,7 @@ function ItineraryResult() {
                                       Trip-Flow Commerce (§14-1-A) 로 분류한다. */}
                                   {TRIP_FLOW_COMMERCE_ENABLED && (
                                   <div
-                                    className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-[#E5E7EA]/40"
+                                    className="flex gap-2 overflow-x-auto px-5 pb-4 pt-0 border-t border-line/40"
                                     style={{ scrollbarWidth: "none" }}
                                     onClick={(e) => e.stopPropagation()}
                                   >
@@ -2510,7 +2515,7 @@ function ItineraryResult() {
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
-                                      style={{ backgroundColor: "#FF4A2D" }}
+                                      style={{ backgroundColor: "var(--gkm-accent-coral)" }}
                                     >
                                       📱 Get Korea eSIM
                                     </a>
@@ -2556,7 +2561,7 @@ function ItineraryResult() {
       {/* ── TASK-021: Korea Ready Partner Deals (Supabase affiliate_links) ── */}
       {Object.keys(affiliateMap).length > 0 && (
         <div className="mb-12">
-          <p className="text-xs font-black uppercase tracking-widest text-[#565D66] mb-4">
+          <p className="text-xs font-black uppercase tracking-widest text-sub mb-4">
             Korea Ready Partner Deals
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2566,19 +2571,19 @@ function ItineraryResult() {
                 href={deal.destination_url}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-[#E5E7EA] shadow-sm hover:border-[#FF4A2D] transition-colors"
+                className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-line shadow-sm hover:border-accent-coral transition-colors"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#F6F7F8] flex items-center justify-center text-xl shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-surface-dim flex items-center justify-center text-xl shrink-0">
                   🇰🇷
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-black uppercase tracking-wide text-[#565D66] mb-0.5">
+                  <p className="text-xs font-black uppercase tracking-wide text-sub mb-0.5">
                     {deal.provider}
                   </p>
-                  <p className="text-sm font-black text-[#191C21] leading-tight">{deal.title}</p>
-                  <p className="text-xs text-[#565D66] leading-relaxed mt-1 line-clamp-2">{deal.description}</p>
+                  <p className="text-sm font-black text-ink leading-tight">{deal.title}</p>
+                  <p className="text-xs text-sub leading-relaxed mt-1 line-clamp-2">{deal.description}</p>
                 </div>
-                <span className="text-[#FF4A2D] text-sm shrink-0 mt-0.5">→</span>
+                <span className="text-accent-coral text-sm shrink-0 mt-0.5">→</span>
               </a>
             ))}
           </div>
@@ -2589,8 +2594,8 @@ function ItineraryResult() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-black text-[#191C21]">📸 {tMemo("memoriesTitle")}</h2>
-            <p className="text-sm text-[#565D66] mt-0.5">{tMemo("memoriesSubtitle")}</p>
+            <h2 className="text-2xl font-black text-ink">📸 {tMemo("memoriesTitle")}</h2>
+            <p className="text-sm text-sub mt-0.5">{tMemo("memoriesSubtitle")}</p>
           </div>
           <button
             onClick={() => setCaptureOpen(true)}
@@ -2621,13 +2626,13 @@ function ItineraryResult() {
           두 조건을 모두 만족할 때만 anchor 를 생성한다. Post-Plan 을 미래에
           활성화해도 공유 일정에서는 shareId 때문에 계속 0 이다. */}
       {!shareId && POST_PLAN_COMMERCE_ENABLED && (
-      <div className="bg-gradient-to-r from-[#FF4A2D] to-[#D93317] rounded-3xl p-8 sm:p-10 shadow-xl text-white mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-accent-coral to-[#D93317] rounded-3xl p-8 sm:p-10 shadow-xl text-white mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center sm:text-left">
           <h3 className="text-2xl sm:text-3xl font-black">📱 Don&apos;t forget your eSIM!</h3>
           <p className="text-base sm:text-lg font-bold text-white/85">Stay connected throughout your Korea trip with 10% off.</p>
         </div>
         <a href="https://affiliate.klook.com/sl/KiT3U74" target="_blank" rel="noopener noreferrer sponsored"
-          className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-[#191C21] text-[#F6F7F8] rounded-xl hover:bg-black transition-all shadow-md">
+          className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-ink text-surface-dim rounded-xl hover:bg-black transition-all shadow-md">
           Get eSIM Now
         </a>
       </div>
@@ -2660,7 +2665,7 @@ function ItineraryResult() {
           className="fixed left-1/2 -translate-x-1/2 bottom-24 z-[80] max-w-[92vw] px-4 py-3 rounded-xl text-sm font-bold shadow-modal"
           style={coverNotice === "coverUpdateFailed"
             ? { backgroundColor: "#FFF1EC", color: "#B33A22" }
-            : { backgroundColor: "#191C21", color: "#ffffff" }}
+            : { backgroundColor: "var(--gkm-ink)", color: "#ffffff" }}
           onClick={() => setCoverNotice(null)}
         >
           {tMemo(coverNotice)}
@@ -2744,10 +2749,10 @@ function ItineraryResult() {
 // ══════════════════════════════════════════════════════════════
 export default function ItineraryPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#F6F7F8] text-[#191C21] font-sans antialiased">
-      <header className="border-b border-[#E5E7EA] bg-[#F6F7F8]/90 backdrop-blur-md sticky top-0 z-40">
+    <div className="min-h-screen flex flex-col bg-surface-dim text-ink font-sans antialiased">
+      <header className="border-b border-line bg-surface-dim/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
+          <Link href="/" className="text-2xl font-normal tracking-tight text-ink flex items-center gap-1.5">
             <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
         </div>
@@ -2756,15 +2761,15 @@ export default function ItineraryPage() {
       <Suspense
         fallback={
           <div className="flex-1 flex flex-col items-center justify-center py-24 px-4 text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#FF4A2D] mb-8" />
-            <h2 className="text-3xl font-black text-[#191C21] mb-3">Loading itinerary…</h2>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-accent-coral mb-8" />
+            <h2 className="text-3xl font-black text-ink mb-3">Loading itinerary…</h2>
           </div>
         }
       >
         <ItineraryResult />
       </Suspense>
 
-      <footer className="mt-auto border-t border-[#E5E7EA] bg-[#F6F7F8] py-8 text-center text-sm text-[#565D66] px-4">
+      <footer className="mt-auto border-t border-line bg-surface-dim py-8 text-center text-sm text-sub px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
           <p className="font-bold tracking-wide">Data provided by Korea Tourism Organization. AI-powered by Gemini.</p>
