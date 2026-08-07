@@ -1,0 +1,39 @@
+{
+  "no_coord_only_high_confidence": {
+    "result": "PASS",
+    "detail": "HIGH_CONFIDENCE_MULTI_EVIDENCE: 0건"
+  },
+  "no_contentid_namespace_mix": {
+    "result": "PASS",
+    "detail": "kto_ko_content_id / kto_en_content_id 분리 유지"
+  },
+  "no_arbitrary_translation": {
+    "result": "PASS",
+    "detail": "KO 문장 EN 데이터로 사용 없음 - EN 필드는 EngService2 응답만 사용"
+  },
+  "no_full_235_requery": {
+    "result": "PASS",
+    "detail": "HTTP 호출: 0건 (신규 EXACT 건만 재호출)"
+  },
+  "input_235_exact": {
+    "result": "PASS",
+    "detail": "링크 레코드: 235건"
+  },
+  "no_url_pattern_guessing": {
+    "result": "PASS",
+    "detail": "visitgyeongju 직접 확인 URL만 사용"
+  },
+  "no_api_key_exposed": {
+    "result": "PASS",
+    "detail": "캐시 파일에 serviceKey 미저장"
+  },
+  "en_list_coord_coverage": {
+    "result": "WARN",
+    "detail": "EN 102건 중 좌표 없음: 1건"
+  },
+  "overall": {
+    "result": "PASS",
+    "fail_count": 0,
+    "warn_count": 1
+  }
+}

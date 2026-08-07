@@ -1,0 +1,17 @@
+{
+  "as_of": "2026-08-07T10:37:44.400109+00:00",
+  "total_input": 235,
+  "en_coverage": {
+    "EN_IDENTITY_REVIEW": 92,
+    "EN_READY": 11,
+    "EN_PARTIAL": 35,
+    "EN_SOURCE_MISSING": 97
+  },
+  "match_status_distribution": {
+    "REVIEW_REQUIRED": 92,
+    "EXACT_OFFICIAL_IDENTITY": 46,
+    "NO_EN_RECORD": 97
+  },
+  "improved_from_task5": 5,
+  "vg_supplement_count": 0
+}

@@ -1,0 +1,21 @@
+{
+  "as_of": "2026-08-07T10:37:44.413625+00:00",
+  "task": "gyeongju_en_contract_review_official_site_v1",
+  "files": {
+    "gyeongju-engservice2-official-manual-audit-v1.json": "1820056b2c30318706104331bfe76cbde0f8fe53ee6ecf4b8c63c70c6000c2ae",
+    "gyeongju-engservice2-contract-correction-v1.json": "aff08dc9809a43ae96769a5562679d19e61a154ade0e76986761aeedfceec147",
+    "gyeongju-engservice2-area-vs-ldong-comparison-v1.json": "23f7237c80b7182b650dac8a87fed4ebbd683131d5ac76f0abd88f2022c6c0bb",
+    "gyeongju-en-task6-newly-exact-v1.jsonl": "37cf14abbe4f42bc9db60607f11952dc94503c4ea70191b72de0f122278a38c1",
+    "gyeongju-en-review-collision-audit-v1.jsonl": "e17f9a8f20b928074ade6b3d1e4ac34a4f0e3f7a83f6c18f7179774a785aec8f",
+    "gyeongju-ko-en-identity-link-235-v2.jsonl": "4aa34321ccc4ac331292958da150dd3cd5ef89f9d4b3904ffe9fb78ef4eb48ab",
+    "gyeongju-en-235-snapshot-v2.jsonl": "e991cd5c1dbda0ba6e0fcacc3fac7b78eb44741b3ea9ba74710b25dbff02d119",
+    "gyeongju-engservice2-detail-audit-task6-new-v1.jsonl": "087d93e9c11954ba6d528e622ace4b959484f43342f8b9ffffd02ca74f78575d",
+    "gyeongju-official-en-site-contract-v1.json": "892bd829d548d00c783a299e3b73594f88cd7731c2d51e860dffa933632e82cf",
+    "gyeongju-official-en-site-linkage-v1.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gyeongju-en-235-final-official-coverage-v1.jsonl": "6d3293c935016cb890f46f246409891b22aa936f9c0da40656b7936bdd974381",
+    "gyeongju-en-translation-fallback-queue-v2.jsonl": "e471b5e51860cfd1407b1a6a3c93378f5e1c7205586494dfffea1e7fd1c13312",
+    "gyeongju-en-correction-api-ops-v1.json": "9609ebfbda98b5e2b92210579e2c77d182dd3496fa12709250623ae4777ce5cd",
+    "gyeongju-en-235-final-coverage-stats-v1.json": "00fd46851e4aa2b5662feec292cd8e86f2d0668fc513381129621aa1495824be",
+    "gyeongju-en-correction-qa-v1.json": "6270de19ddbe581648d7425bb6b0680fed5104f5ac6a14497d0ed2a2f7881bb1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "as_of": "2026-08-07T10:37:44.400109+00:00",
+  "task5_contract_summary": "areaCode=35/sigunguCode=2 → 64건",
+  "task6_correction": "lDongRegnCd=47/lDongSignguCd=130 → 102건 (+38건)",
+  "ldong_codes": {
+    "lDongRegnCd": "47",
+    "lDongRegnName": "Gyeongsangbuk-do",
+    "lDongSignguCd": "130",
+    "lDongSignguName": "Gyeongju-si",
+    "confirmed": true
+  },
+  "new_en_count": 102,
+  "additional_en_count": 38,
+  "ldong_contract_detail": {
+    "ldong_confirmed": {
+      "lDongRegnCd": "47",
+      "lDongSignguCd": "130",
+      "area_name": "Gyeongsangbuk-do / Gyeongju-si",
+      "en_record_count": 102,
+      "rc": "0000"
+    },
+    "legacy_confirmed": {
+      "areaCode": "35",
+      "sigunguCode": "2",
+      "en_record_count": 64,
+      "rc": "0000"
+    },
+    "recommendation": "lDong 방식 우선 사용 (102건 > 64건)"
+  },
+  "recommendation": "향후 EngService2 경주 수집 시 lDong 방식 사용 권장"
+}

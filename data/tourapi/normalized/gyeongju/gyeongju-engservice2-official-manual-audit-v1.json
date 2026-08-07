@@ -1,0 +1,11 @@
+{
+  "audit_date": "2026-08-07T10:37:44.285988+00:00",
+  "official_english_manual_online": "NOT_FOUND",
+  "official_korean_manual_online": "개방데이터_활용매뉴얼(국문).zip",
+  "local_docs_found": [
+    "docs\\tourapi\\approved-api-inventory.md",
+    "docs\\tourapi\\gyeongju-engservice2-source-contract-v1.md"
+  ],
+  "task5_contract_file_exists": true,
+  "conclusion": "영문 공식 매뉴얼 미존재 (data.go.kr 국문 매뉴얼만 제공). Task5 확정 계약(approved-api-inventory.md + 파일럿 실측) 유효. 신규 발견: lDong 방식으로 102건(+38건) 추가 수집 가능."
+}

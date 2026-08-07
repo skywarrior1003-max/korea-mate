@@ -1,0 +1,9 @@
+{
+  "site": "visitgyeongju.com",
+  "language": "en",
+  "contract_status": "PARTIAL_CONFIRMED",
+  "confirmed_link_count": 0,
+  "restriction": "URL 패턴 추측 금지 - 개별 확인된 URL만 사용",
+  "confirmed_links": [],
+  "note": "향화정(GJ08-7128) hexID URL 1건만 직접 확인. 나머지 미확인."
+}

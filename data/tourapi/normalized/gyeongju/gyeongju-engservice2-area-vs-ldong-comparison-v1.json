@@ -1,0 +1,341 @@
+{
+  "as_of": "2026-08-07T10:37:44.288998+00:00",
+  "area_method": {
+    "params": "areaCode=35&sigunguCode=2",
+    "count": 64
+  },
+  "ldong_method": {
+    "params": "lDongRegnCd=47&lDongSignguCd=130",
+    "count": 102
+  },
+  "common_count": 64,
+  "only_in_ldong_count": 38,
+  "only_in_area_count": 0,
+  "new_en_records_in_ldong": [
+    {
+      "contentid": "264256",
+      "contenttypeid": "76",
+      "title": "Cheomseongdae Observatory (경주 첨성대)",
+      "mapx": "129.218534537847",
+      "mapy": "35.8343303426799",
+      "addr1": "140-25 Cheomseong-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "264367",
+      "contenttypeid": "76",
+      "title": "Donggung Palace and Wolji Pond (경주 동궁과 월지)",
+      "mapx": "129.228344703918",
+      "mapy": "35.8351582099638",
+      "addr1": "102 Wonhwa-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "804281",
+      "contenttypeid": "76",
+      "title": "Gyeongju Yangdong Village [UNESCO World Heritage] (경주 양동마을 [유네스코 세계유산])",
+      "mapx": "129.253659865198",
+      "mapy": "35.996658967069",
+      "addr1": "134 Yangdongmaeul-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "950952",
+      "contenttypeid": "76",
+      "title": "Gyeongju EXPO Grand Park (경주엑스포대공원)",
+      "mapx": "129.2895",
+      "mapy": "35.832",
+      "addr1": "614 Gyeonggam-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "1251139",
+      "contenttypeid": "80",
+      "title": "Sono Calm Gyeongju (소노캄 경주)",
+      "mapx": "",
+      "mapy": "35.8467893529",
+      "addr1": "402-12 Bomun-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "1863267",
+      "contenttypeid": "78",
+      "title": "Silla Arts and Science Museum (신라역사과학관)",
+      "mapx": "129.311193295698",
+      "mapy": "35.8070659063726",
+      "addr1": "33 Hadonggongyechon-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "2818690",
+      "contenttypeid": "76",
+      "title": "Gyeongju Daereungwon Ancient Tomb Complex (경주 대릉원 일원)",
+      "mapx": "129.2106906912",
+      "mapy": "35.8391407332",
+      "addr1": "9 Gyerim-ro, Gyeonju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "2957744",
+      "contenttypeid": "79",
+      "title": "MODA Outlet Gyeongju Pohang Branch [Tax Refund Shop](모다아울렛 경주포항점)",
+      "mapx": "129.24383861958418",
+      "mapy": "35.91648520883252",
+      "addr1": "4930, Saneop-ro, Cheonbuk-myeon, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "2959726",
+      "contenttypeid": "79",
+      "title": "Second Face Gyeongju Jungang Branch [Tax Refund Shop](세컨페이스 경주중앙점)",
+      "mapx": "129.21332614674938",
+      "mapy": "35.84354349797824",
+      "addr1": "1F, 101, Gyerim-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "2960292",
+      "contenttypeid": "79",
+      "title": "Homeplus Mega Food Market Gyeongju Branch [Tax Refund Shop](홈플러스 메가푸드마켓 경주점)",
+      "mapx": "129.22407501866235",
+      "mapy": "35.87268075113159",
+      "addr1": "97, Gongdan-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3323396",
+      "contenttypeid": "79",
+      "title": "Artbox - Gyeongju Branch [Tax Refund Shop](아트박스 경주점)",
+      "mapx": "129.213499805773",
+      "mapy": "35.84227444626041",
+      "addr1": "89, Gyerim-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3337817",
+      "contenttypeid": "80",
+      "title": "Bulguksa Hanok Dongodang (불국사한옥동오당)",
+      "mapx": "129.3283480037",
+      "mapy": "35.7828713047",
+      "addr1": "5-58 Jinti-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3403854",
+      "contenttypeid": "76",
+      "title": "Dokrakdang House (경주 독락당)",
+      "mapx": "129.1600764285",
+      "mapy": "36.0165159213",
+      "addr1": "300-3 Oksanseowon-gil, Angang-eup, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3447093",
+      "contenttypeid": "85",
+      "title": "Infinity Flying(인피니티 플라잉)",
+      "mapx": "129.28951532236107",
+      "mapy": "35.83401476569975",
+      "addr1": "경상북도 경주시 경감로 614 (천군동)"
+    },
+    {
+      "contentid": "3447661",
+      "contenttypeid": "85",
+      "title": "Gyochon Cultural Performance Silla Ogi(교촌문화공연 신라오기)",
+      "mapx": "129.2147503089",
+      "mapy": "35.8296628670",
+      "addr1": "경상북도 경주시 교촌길 39-2 (교동)"
+    },
+    {
+      "contentid": "3492117",
+      "contenttypeid": "78",
+      "title": "Library of the Silla Millennium (국립경주박물관 신라천년서고)",
+      "mapx": "129.2269000000",
+      "mapy": "35.8293000000",
+      "addr1": "Inwang-dong, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557070",
+      "contenttypeid": "79",
+      "title": "Kolon Sport Gyeongju Jungang-ro Branch [Tax Refund Shop](코오롱스포츠 경주중앙로점)",
+      "mapx": "129.21313119541637",
+      "mapy": "35.84431295207208",
+      "addr1": "114, Hwarang-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557071",
+      "contenttypeid": "79",
+      "title": "Innisfree Gyeongju Branch [Tax Refund Shop](이니스프리 경주점)",
+      "mapx": "129.21264293749795",
+      "mapy": "35.84197144043458",
+      "addr1": "108, Wonhyo-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557072",
+      "contenttypeid": "79",
+      "title": "Folder Gyeongju Branch [Tax Refund Shop](폴더 경주점)",
+      "mapx": "129.21310540632481",
+      "mapy": "35.841848996749754",
+      "addr1": "1F, 112-1, Wonhyo-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557094",
+      "contenttypeid": "79",
+      "title": "Olive Young Gyeongju Yonggang Branch [Tax Refund Shop](올리브영 경주용강점)",
+      "mapx": "129.22291516871533",
+      "mapy": "35.867394319380814",
+      "addr1": "46, Wonji-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557123",
+      "contenttypeid": "79",
+      "title": "Olive Young Gyeongju Hwangnam Branch [Tax Refund Shop](올리브영 경주황남점)",
+      "mapx": "129.2097441000618",
+      "mapy": "35.836257139047994",
+      "addr1": "1068, Poseok-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3557169",
+      "contenttypeid": "79",
+      "title": "Holika Holika Gyeongju Branch [Tax Refund Shop](홀리카홀리카 경주점)",
+      "mapx": "129.21264096947334",
+      "mapy": "35.84212350287805",
+      "addr1": "2, Wonhyo-ro 105beon-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "3591044",
+      "contenttypeid": "78",
+      "title": "Flashback Gyerim (플래시백 계림)",
+      "mapx": "129.29023895928268",
+      "mapy": "35.84443508559838",
+      "addr1": "14 Cheonbungnam-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4013822",
+      "contenttypeid": "79",
+      "title": "Dada Shopping [Tax Refund Shop](다다쇼핑)",
+      "mapx": "129.209432727487",
+      "mapy": "35.8287632393434",
+      "addr1": "981, Poseok-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4029940",
+      "contenttypeid": "79",
+      "title": "UNIQLO Gyeongju Branch [Tax Refund Shop](유니클로 경주점)",
+      "mapx": "129.216106353247",
+      "mapy": "35.8778347128443",
+      "addr1": "642, Gangbyeon-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4029941",
+      "contenttypeid": "79",
+      "title": "Samsung Store Gyeongju [Tax Refund Shop](삼성스토어 경주)",
+      "mapx": "129.227313127759",
+      "mapy": "35.8777597923939",
+      "addr1": "4465-6, Saneop-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4029942",
+      "contenttypeid": "79",
+      "title": "ZIOZIA Gyeongju Branch [Tax Refund Shop](지오지아 경주점)",
+      "mapx": "129.213397020624",
+      "mapy": "35.8418324607354",
+      "addr1": "114-1, Wonhyo-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4029959",
+      "contenttypeid": "79",
+      "title": "Davich Optical Gyeongju Jungang-ro Branch [Tax Refund Shop](다비치안경 경주중앙로점)",
+      "mapx": "129.213131206994",
+      "mapy": "35.8443129781038",
+      "addr1": "114, Hwarang-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030337",
+      "contenttypeid": "79",
+      "title": "LIFEWORK Gyeongju Branch[Tax Refund Shop](라이프워크 경주직영점)",
+      "mapx": "129.213322060235",
+      "mapy": "35.8438853398415",
+      "addr1": "107, Gyelim-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030339",
+      "contenttypeid": "79",
+      "title": "LOTTE Hi-Mart Gyeongju Branch[Tax Refund Shop](롯데하이마트 경주점)",
+      "mapx": "129.220036806362",
+      "mapy": "35.8606562235906",
+      "addr1": "447, Wonhwa-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030341",
+      "contenttypeid": "79",
+      "title": "LG Best Shop Gyeongju Branch[Tax Refund Shop](LG전자 베스트샵 경주점)",
+      "mapx": "129.223084653776",
+      "mapy": "35.8669172105834",
+      "addr1": "525, Wonhwa-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030343",
+      "contenttypeid": "79",
+      "title": "ABC-Mart ST Gyeongju Nodong Branch[Tax Refund Shop](ABC마트 ST 경주노동점)",
+      "mapx": "129.212746685164",
+      "mapy": "35.8421441303855",
+      "addr1": "107, Wonhyo-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030345",
+      "contenttypeid": "79",
+      "title": "Hanyang Minyesa[Tax Refund Shop](한양민예사)",
+      "mapx": "129.325550251403",
+      "mapy": "35.7864458964377",
+      "addr1": "50, Jinhyeon-ro 3-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030347",
+      "contenttypeid": "79",
+      "title": "ABC-Mart ST Gyeongju Cheonbuk Branch[Tax Refund Shop](ABC마트 ST 경주천북점)",
+      "mapx": "129.243682707672",
+      "mapy": "35.9154378137754",
+      "addr1": "4920, Saneop-ro, Cheonbuk-myeon, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4030396",
+      "contenttypeid": "79",
+      "title": "Discovery Gyeongju Branch[Tax Refund Shop](디스커버리 경주점)",
+      "mapx": "129.21337208932",
+      "mapy": "35.8440687715808",
+      "addr1": "1F, 16, Jungang-ro 48beon-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4054334",
+      "contenttypeid": "79",
+      "title": "ZERO SPACE Gyeongju [Tax Refund Shop](제로스페이스 경주)",
+      "mapx": "129.21030824145",
+      "mapy": "35.8376273946743",
+      "addr1": "17-2, Sonhyoja-gil, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4063986",
+      "contenttypeid": "78",
+      "title": "OAR Contemporary Art Museum (오아르미술관)",
+      "mapx": "129.20763579635073",
+      "mapy": "35.840548251964755",
+      "addr1": "260-6 Geumseong-ro, Gyeongju-si, Gyeongsangbuk-do"
+    },
+    {
+      "contentid": "4064509",
+      "contenttypeid": "82",
+      "title": "Bomun Galbi (보문갈비)",
+      "mapx": "129.285349346667",
+      "mapy": "35.8369910774607",
+      "addr1": "529 Bomun-ro, Gyeongju-si, Gyeongsangbuk-do"
+    }
+  ],
+  "contenttypeid_distribution": {
+    "area_method": {
+      "75": 1,
+      "76": 45,
+      "78": 7,
+      "79": 2,
+      "80": 3,
+      "82": 5,
+      "85": 1
+    },
+    "ldong_method": {
+      "75": 1,
+      "76": 51,
+      "78": 11,
+      "79": 25,
+      "80": 5,
+      "82": 6,
+      "85": 3
+    }
+  },
+  "conclusion": "lDong 방식이 38건 추가 수집. 기존 방식 누락 없음(only_in_area=0건). lDong 방식이 상위 호환 (모든 기존 64건 포함 + 38건 추가)."
+}
