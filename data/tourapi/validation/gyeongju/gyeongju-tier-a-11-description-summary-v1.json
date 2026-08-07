@@ -1,0 +1,28 @@
+{
+  "boilerplate_extracted": 0,
+  "completion_verdict": "CONDITIONAL_PASS",
+  "computed_at": "2026-08-07T07:55:23Z",
+  "cross_place_contamination": 0,
+  "description_verdict_dist": {
+    "DESCRIPTION_NOT_FOUND": 11
+  },
+  "deterministic": true,
+  "frozen_files_modified": 0,
+  "hamnam_ri_charset_ok_final": true,
+  "hamnam_ri_charset_verdict": "CHARSET_OK_INFERRED_FROM_KOR_COUNT",
+  "hamnam_ri_desc_recovered": false,
+  "hold_description_count": 11,
+  "llm_used": false,
+  "new_http_requests": 0,
+  "not_found_count": 11,
+  "ready_count": 106,
+  "recovered_count": 0,
+  "release_dist": {
+    "HOLD_DESCRIPTION": 11,
+    "READY_FOR_RELEASE": 106
+  },
+  "task_id": "TASK-GYEONGJU-TIER-A-11-DESCRIPTION-GAP-RECOVERY-V1",
+  "total_gap_cids": 11,
+  "v1_downgrade_count": 0,
+  "v1_ready_count": 106
+}

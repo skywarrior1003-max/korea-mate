@@ -1,0 +1,14 @@
+{
+  "computed_at": "2026-08-07T07:55:23Z",
+  "note": "Run1 SHA. 0 HTTP 요청. 결정론적 출력. Run2 BYTE_IDENTICAL 보장.",
+  "run": 1,
+  "sha256": {
+    "charset_audit": "4ead686760713f7cb7ad1dd0b2b3f8f73b096d4e2385783d439507f5679572e4",
+    "final_release": "780a8fee272c990be2e8d163e5ed54d7af605aeeea879571b39376defa099a5c",
+    "input": "6627c8741d9145e9caff9b4c0e7f5d376642effbf967526145b2cfac8dfc7263",
+    "recovery": "c0c0310552610e93ad38c31e846d6c9b6776e72b7bb41d86ae917eda2af1e3e3",
+    "source_audit": "aab28a15c046ea68686f2e8b20fe789be1ffca82bee45f3aa93abd03fd441c3e",
+    "summary": "ddecb2133cbde410ffdcfc9eafe177800353ab7fe84728917335e949ee42a420"
+  },
+  "task_id": "TASK-GYEONGJU-TIER-A-11-DESCRIPTION-GAP-RECOVERY-V1"
+}
