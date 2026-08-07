@@ -1,0 +1,40 @@
+{
+  "api_ops": {
+    "gallery_new_requests": 0,
+    "kto_new_requests": 0,
+    "vg_cache_hits": 0,
+    "vg_fresh_http": 112,
+    "vg_http_200": 112,
+    "vg_http_500": 0,
+    "vg_other_error": 0
+  },
+  "charset_ok": 112,
+  "charset_review": 0,
+  "collected_at": "2026-08-07T07:00:55Z",
+  "coord_recovered": 38,
+  "desc_recovered": 0,
+  "downgrade_count": 0,
+  "gallery_data_unchanged": true,
+  "http_200_recovered": 112,
+  "http_500_remaining": 0,
+  "img_recovered": 41,
+  "kto_data_unchanged": true,
+  "pilot_result": "10/10 PASS (CANONICAL_URL_WORKS)",
+  "recovery_release_dist": {
+    "PARTIAL_READY": 3,
+    "READY_FOR_RELEASE": 114
+  },
+  "root_cause_confirmed": "WRONG_BASE_PATH: /gyeongju/page.do → /tour/page.do (web-raw-v3.detail_url)",
+  "root_cause_dist": {
+    "WRONG_BASE_PATH": 112
+  },
+  "task_id": "TASK-GYEONGJU-VG-HTTP500-ROOT-CAUSE-FIX-AND-TARGETED-RECOVERY-V1",
+  "total_targeted": 112,
+  "v1_release_dist": {
+    "COORD_MISSING": 38,
+    "IMAGES_MISSING": 6,
+    "PARTIAL_READY": 2,
+    "READY_FOR_RELEASE": 71
+  },
+  "vg_url_fix_confirmed": true
+}

@@ -1,0 +1,16 @@
+{
+  "computed_at": "2026-08-07T07:00:55Z",
+  "note": "Run1 SHA. 재실행 시 BYTE_IDENTICAL 검증용. raw cache 기반 결정론적 출력.",
+  "run": 1,
+  "sha256": {
+    "api_ops": "1266ff9b7717f3891eb417212edebba892fbf69dff13a3180345a79873d5df8a",
+    "canonical_url": "816df9b8afa50264c818640a9ba501678f259585b5b0c0f6c7aebc622eeb5d16",
+    "charset_audit": "531f481f5008c1ad51cecaf88984a02f04580a817b4a7225e734c235999257c7",
+    "pilot": "7315b2a02382101f6cd7d792b81c3ee57dee90a45246012f3ece2a46bb76bb7a",
+    "release": "470578314a506522eefb809b09ccedce429110b4294f6eeb5082141bf15be9f3",
+    "summary": "a67acb79b1839bf624978cc7dcc6c94032015bc1ff04cd49171606ec3662ac1b",
+    "url_audit": "da22d52ef45a7a79543c310f2caec478cb0d7f581dc11ed66cc2137a7d230eff",
+    "vg_recovery": "79542737bbe96525f30896f4cce75daa77cb85dd7c6344e70450f0100ece8572"
+  },
+  "task_id": "TASK-GYEONGJU-VG-HTTP500-ROOT-CAUSE-FIX-AND-TARGETED-RECOVERY-V1"
+}
