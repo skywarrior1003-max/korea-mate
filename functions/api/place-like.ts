@@ -10,6 +10,8 @@
 // - 응답은 숫자와 "내 상태" 뿐이다. 누가 좋아했는지는 절대 나가지 않는다.
 // - 좋아요는 Saved 를 바꾸지 않고, 신고 수와 합산되지 않는다.
 
+import { reserveLikeMilestones } from "../_lib/admin-notify";
+import { likeNotificationCandidates } from "../../src/lib/notifications/admin-notification-core";
 import {
   validateLikeRequest, likerKey, likeState,
   isValidLikeTargetType, isValidLikeTargetKey, isValidDeviceId,
@@ -21,7 +23,12 @@ interface Env {
   NEXT_PUBLIC_SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
 }
-interface Ctx { request: Request; env: Env }
+interface Ctx {
+  request: Request;
+  env: Env;
+  /** Cloudflare 가 넘겨준다. 알림은 이 안에서 돌려 사용자 응답을 붙잡지 않는다. */
+  waitUntil?: (p: Promise<unknown>) => void;
+}
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -155,6 +162,21 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
 
   // 최종 상태는 언제나 서버가 다시 센 값이다. 연타해도 ±2 가 되지 않는다.
   const count = await countLikes(env, r.target_type, r.target_key);
+
+  // ── 운영 알림 후보 ────────────────────────────────────────────────────────
+  // 좋아요는 급한 신호가 아니다. **메일을 보내지 않고** 단계 기록만 남긴다.
+  // 취소는 아무것도 만들지 않는다 — 내려갔다 올라와도 같은 단계는 한 번뿐이다.
+  if (r.action === "like") {
+    const notify = (async () => {
+      try {
+        await reserveLikeMilestones(ctx.env, likeNotificationCandidates(r.target_key, count));
+      } catch {
+        log({ status: "notify_failed", target_type: r.target_type });
+      }
+    })();
+    if (ctx.waitUntil) ctx.waitUntil(notify); else void notify;
+  }
+
   log({ status: "ok", op: r.action, target_type: r.target_type });
   return json(likeState(count, r.action === "like"));
 }

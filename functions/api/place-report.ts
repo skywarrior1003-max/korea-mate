@@ -10,6 +10,8 @@
 // - 신고 하나가 장소를 숨기거나 점수를 바꾸지 않는다. 이 파일에 그런 경로가 없다.
 // - 자유 입력은 저장만 하고 어디에도 렌더링하지 않는다.
 
+import { loadReportRows, notifyReportMilestones } from "../_lib/admin-notify";
+import { reportNotificationCandidates } from "../../src/lib/notifications/admin-notification-core";
 import {
   validateReportRequest, reporterKey, acceptedResponse,
   INITIAL_REPORT_STATUS, DUPLICATE_WINDOW_MS, RATE_MAX, RATE_WINDOW_MS,
@@ -20,7 +22,12 @@ interface Env {
   NEXT_PUBLIC_SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
 }
-interface Ctx { request: Request; env: Env }
+interface Ctx {
+  request: Request;
+  env: Env;
+  /** Cloudflare 가 넘겨준다. 알림은 이 안에서 돌려 사용자 응답을 붙잡지 않는다. */
+  waitUntil?: (p: Promise<unknown>) => void;
+}
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -134,6 +141,21 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     log({ status: "insert_failed", httpStatus: ins.status, target_type: r.target_type });
     return fail("server_error", 500);
   }
+
+  // ── 운영 알림 ─────────────────────────────────────────────────────────────
+  // 접수는 이미 끝났다. 아래가 무엇을 하든 이 요청은 201 로 끝난다.
+  // 메일이 안 나가도 신고가 사라지면 안 된다 — 순서를 바꾸지 않는다.
+  const notify = (async () => {
+    try {
+      const rows = await loadReportRows(ctx.env, r.target_type, r.target_key);
+      const candidates = reportNotificationCandidates(r.target_key, rows);
+      await notifyReportMilestones(ctx.env, r.target_key, candidates, rows);
+    } catch {
+      // 알림 실패는 신고 접수와 무관하다. 조용히 끝낸다.
+      log({ status: "notify_failed", target_type: r.target_type });
+    }
+  })();
+  if (ctx.waitUntil) ctx.waitUntil(notify); else void notify;
 
   log({ status: "received", target_type: r.target_type, category: r.category });
   return json(acceptedResponse(), 201);

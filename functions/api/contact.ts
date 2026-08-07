@@ -2,6 +2,8 @@
 // Handles contact form submissions: validates, inserts into Supabase, sends Resend notification.
 // Runtime: Cloudflare Workers (edge). No Node.js APIs.
 
+import { sendAdminEmail as sendViaResend } from "../_lib/admin-email";
+
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL: string;
   NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
@@ -174,15 +176,6 @@ async function sendAdminEmail(
     relatedPlaceName?: string;
   }
 ): Promise<void> {
-  const apiKey = env.RESEND_API_KEY;
-  const to     = env.ADMIN_NOTIFICATION_EMAIL;
-  const from   = env.CONTACT_FROM_EMAIL ?? "gokoreamate <noreply@gokoreamate.com>";
-
-  if (!apiKey || !to) {
-    console.warn("[contact fn] RESEND_API_KEY or ADMIN_NOTIFICATION_EMAIL not set — skipping notification");
-    return;
-  }
-
   const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://gokoreamate.com";
   const subject = `[gokoreamate Inquiry] ${data.type}`;
   const text = [
@@ -201,17 +194,7 @@ async function sendAdminEmail(
     `${siteUrl}/korea-mate-admin/inquiries/detail?id=${data.id}`,
   ].join("\n");
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization:  `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ from, to: [to], subject, text }),
-    });
-    if (!res.ok) console.error("[contact fn] Resend error:", await res.text());
-  } catch (err) {
-    console.error("[contact fn] Resend fetch error:", err);
-  }
+  // 발송은 공통 helper 하나만 쓴다. 복사본을 두지 않는다.
+  // 결과를 던지지 않으므로 문의 접수는 메일 실패와 무관하게 성공한 채로 남는다.
+  await sendViaResend(env, { subject, text });
 }

@@ -200,12 +200,12 @@ test("★카드↔마커 연결을 새로 만들지 않았다", () => {
 test("★migration 을 건드리지 않았다 — 041 이 마지막이고 042 는 없다", () => {
   const dir = join(ROOT, "supabase", "migrations");
   const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
-  assert.equal(files.length, 43);   // 042 place_reports · 043 place_likes 추가됨
+  assert.equal(files.length, 44);   // 042·043·044 는 피드백/알림 작업이 추가했다
   assert.ok(files.includes("041_lock_down_legacy_spots_select.sql"));
   // 이 가드의 뜻은 "이 작업이 DB 를 건드리지 않았다" 이다.
   // 042(place_reports)·043(place_likes)는 피드백 작업이 추가한 것으로 이 작업과 무관하다.
   // 그 밖의 migration 이 생기면 여기서 걸린다.
   for (const f of files.filter(f => f.slice(0, 3) > "041")) {
-    assert.match(f, /^04[23]_(place_reports|place_likes)\.sql$/, `예상치 못한 migration: ${f}`);
+    assert.match(f, /^04[234]_(place_reports|place_likes|admin_notification_events)\.sql$/, `예상치 못한 migration: ${f}`);
   }
 });
