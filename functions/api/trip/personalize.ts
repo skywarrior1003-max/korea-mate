@@ -115,7 +115,7 @@ function buildPrompt(b: Body, places: PlaceHint[], liked: PlaceHint[] = []): str
     "- Filler places should stay near the day's existing route.",
     "- Saved and copied-trip preferences rank below route coherence.",
     "",
-    "Rules:"
+    "Rules:",
     `- category_weights keys must be from: ${PROFILE_CATEGORIES.join(", ")}; values 0..1`,
     `- time_preferences values must be from: ${TIME_PREFERENCES.join(", ")}`,
     "- preferred_place_ids MUST be a subset of the ids listed above",

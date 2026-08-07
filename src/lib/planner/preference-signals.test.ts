@@ -15,7 +15,7 @@ import { join } from "node:path";
 import {
   collectLikedSignals, mergePreferenceIds, MAX_LIKED_PLACES,
 } from "./saved-signals.ts";
-import { diversifyByCategory } from "../near-me/candidate-diversity.ts";
+import { diversifyByCategory, MIN_RECALL_PER_CATEGORY } from "../near-me/candidate-diversity.ts";
 import { profileBias, PROFILE_MAX_BONUS } from "../scheduler/profile-bias.ts";
 import type { PersonalizationProfile } from "../scheduler/ai/personalization-profile.ts";
 
@@ -161,24 +161,31 @@ test("★RC4-b Saved·Copy 라는 이유만으로 hard constraint 를 우회하�
 
 // ── candidate volume ≠ preference (§10·§11) ─────────────────────────────────
 
-test("★RC6-vol 후보가 많은 카테고리가 자동으로 취향이 되지 않는다", () => {
-  // 부산 실측 비율을 그대로 재현: food 168 · attraction 21 · walking 9
-  // 같은 거리대에 식당이 8배 많다 — 실제 부산 분포의 핵심이다
+test("★RC6-vol 후보 풀은 소수 카테고리를 굶기지 않는다 — 비율은 정하지 않는다", () => {
+  // 이 테스트의 의도가 바뀌었다.
+  //   예전: 풀을 카테고리별로 균등하게 잘라 식당을 1/3 로 맞췄다.
+  //   지금: 풀은 **최소 recall 개수**만 보장하고, 하루에 식당이 몇 개 들어가는지는
+  //         meal-opportunity.ts 가 실제 식사 기회로 정한다.
+  //   즉 `후보 풀 비율 ≠ 일정 비율` 이다.
+  //
+  // 부산 실측 분포 재현: 같은 거리대에 식당이 8배 많다.
   const mk = (cat: string, n: number, per: number) =>
     Array.from({ length: n }, (_, i) => ({ category: cat, score: 120 - Math.floor(i / per) }));
   const pool = [...mk("food", 168, 8), ...mk("attraction", 21, 1), ...mk("walking", 9, 1)];
 
   const before = [...pool].sort((a, b) => b.score - a.score).slice(0, 30);
-  const beforeFood = before.filter(c => c.category === "food").length;
-  // 운영 실측과 같은 수준(부산 80~93%)의 편중이 재현돼야 의미 있는 회귀 테스트다
-  assert.ok(beforeFood >= 24, `기존 방식은 식당 편중이어야 한다 (실측 ${beforeFood}/30)`);
+  assert.ok(before.filter(c => c.category === "food").length >= 24,
+    "순수 점수 자르기는 식당 편중이라는 사실이 재현돼야 한다");
 
   const after = diversifyByCategory(pool, 30);
-  const foodAfter = after.filter(c => c.category === "food").length;
   assert.equal(after.length, 30);
-  assert.ok(foodAfter <= 12, `다양화 후 식당 비중이 크게 낮아져야 한다 (실측 ${foodAfter}/30)`);
-  assert.ok(after.filter(c => c.category === "attraction").length >= 9);
-  assert.ok(after.filter(c => c.category === "walking").length >= 9);
+  // 소수 카테고리가 후보에서 통째로 사라지지 않는다 — 하루를 채울 재료가 있어야 한다
+  assert.ok(after.filter(c => c.category === "attraction").length >= MIN_RECALL_PER_CATEGORY);
+  assert.ok(after.filter(c => c.category === "walking").length >= MIN_RECALL_PER_CATEGORY);
+  // 나머지는 점수 순이다 — 균등 분배가 아니므로 식당이 여전히 다수여도 정상이다
+  assert.ok(after.filter(c => c.category === "food").length > MIN_RECALL_PER_CATEGORY,
+    "최소치만 채우고 나머지를 점수로 채우면 공급이 많은 식당이 다수인 것이 정상이다");
+  assert.equal(MIN_RECALL_PER_CATEGORY, 5);
 });
 
 test("★다양화는 기존 동작을 깨지 않는다", () => {

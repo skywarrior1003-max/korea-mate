@@ -17,6 +17,9 @@ import { estimateTravelMinutes } from "./travel-time-estimator.ts";
 import { resolveStayMinutes } from "./slot-allocator.ts";
 import { PriorityQueue } from "./priority-queue.ts";
 import { profileBias } from "./profile-bias.ts";
+import {
+  activeMealWindows, canPlaceAutoMeal, isFoodCategory, type MealKind,
+} from "./meal-opportunity.ts";
 import { injectAffiliates } from "./affiliate-injector.ts";
 import { buildTimeline, findFreeGaps } from "./timeline-builder.ts";
 import {
@@ -30,6 +33,8 @@ import {
 // ─── Greedy Candidate with adjusted score ────────────────────────────────────
 
 interface ScoredCandidate extends NearMeCandidate {
+  /** 실제 배치 시각(분). 식사 기회로 미뤄진 경우 gap 앞머리가 아니다. */
+  start_minutes_resolved?: number;
   adjusted_score: number;
   travel_minutes: number;
   stay_minutes_resolved: number;
@@ -73,6 +78,14 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
   // Seed zone tracker with the first placed item's zone (if any)
   const firstWithZone = placed.find((it) => it.zone_id !== undefined);
   if (firstWithZone?.zone_id) zoneTracker.update(firstWithZone.zone_id);
+
+  // 그날 실제로 존재하는 식사 기회. start_time/end_time 에 도착·출발이 이미 반영돼 있다.
+  // 비율이 아니라 기회다 — 고정 percentage 는 어디에도 없다.
+  const mealWindows  = activeMealWindows(timeToMinutes(input.start_time), timeToMinutes(input.end_time));
+  const filledMeals  = new Set<MealKind>();
+  /** 사용자가 직접 고른 장소인가 — Selected 에는 끼니 상한을 적용하지 않는다(§6) */
+  const isUserSelected = (placeId: string, score: number): boolean =>
+    score === 999 || Boolean(input.preferred_items?.some(p => p.place_id === placeId));
 
   const pq = new PriorityQueue<NearMeCandidate & { score: number }>();
   for (const c of prepareGreedyCandidates(input.candidates, placed, anchorPlaceIds)) {
@@ -125,6 +138,24 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
         // In cartFallbackMode, high-priority cart items (score=999) skip this check —
         // they already had their preferred window in the first pass and can now go
         // into any remaining gap within the day window.
+        // 자동으로 채우는 식당은 실제 식사 기회 안에서만, 끼니당 하나만 놓는다.
+        // 후보가 많다는 이유로 non-food 슬롯을 침범하지 못한다.
+        //
+        // 앞자리가 식사 시간이 아니면 **버리지 않고 미룬다** — 사람은 10시에 점심을
+        // 먹지 않고 12시에 먹는다. 같은 gap 안에 아직 안 채운 식사 창이 있으면
+        // 그 시작 시각으로 놓는다.
+        let placeStart = gap.start_minutes + travelMin;
+        if (isFoodCategory(c.category) && !isUserSelected(c.place_id, c.score)) {
+          if (!canPlaceAutoMeal(placeStart, mealWindows, filledMeals).allowed) {
+            const later = mealWindows.find(w =>
+              !filledMeals.has(w.kind) &&
+              w.start_minutes >= placeStart &&
+              w.start_minutes + stayMin <= gap.end_minutes);
+            if (!later) continue;
+            placeStart = later.start_minutes;
+          }
+        }
+
         const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);
         if (preferredItem?.preferred_time_slot) {
           const isCartFallback = cartFallbackMode && c.score === 999;
@@ -150,6 +181,7 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
                                   }),
           travel_minutes:       travelMin,
           stay_minutes_resolved: stayMin,
+          start_minutes_resolved: placeStart,
         });
       }
 
@@ -164,17 +196,13 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
       if (hc1) continue;
 
       // Compute start/end times
-      const slotStart = minutesToTime(gap.start_minutes + best.travel_minutes);
-      const slotEnd   = minutesToTime(
-        gap.start_minutes + best.travel_minutes + best.stay_minutes_resolved
-      );
+      const startMin  = best.start_minutes_resolved ?? (gap.start_minutes + best.travel_minutes);
+      const slotStart = minutesToTime(startMin);
+      const slotEnd   = minutesToTime(startMin + best.stay_minutes_resolved);
 
       // HC-6: within day window
       if (
-        hc6WithinDayWindow(
-          gap.start_minutes + best.travel_minutes + best.stay_minutes_resolved,
-          input
-        ) !== null
+        hc6WithinDayWindow(startMin + best.stay_minutes_resolved, input) !== null
       ) continue;
 
       const newItem: ScheduledItem = {
@@ -192,6 +220,10 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
       };
 
       placed.push(newItem);
+      if (isFoodCategory(best.category) && !isUserSelected(best.place_id, best.score)) {
+        const meal = canPlaceAutoMeal(startMin, mealWindows, filledMeals).meal;
+        if (meal) filledMeals.add(meal);
+      }
       if (best.zone_id !== undefined) zoneTracker.update(best.zone_id);
 
       // Remove placed candidate from the queue
