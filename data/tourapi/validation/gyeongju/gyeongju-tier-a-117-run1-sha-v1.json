@@ -1,0 +1,17 @@
+{
+  "computed_at": "2026-08-07T06:30:19Z",
+  "note": "Run1 SHA. Run2 실행 시 BYTE_IDENTICAL 검증에 사용.",
+  "run": 1,
+  "sha256": {
+    "batch_log": "0f62fabcba71178d5d76941ff5a35abdad286cb30179a2886838af53d0046a3b",
+    "coverage_report": "16d5b876f732ac735f1cd87bbc6f99ab04af8541c3bb0fefffeb191ea05a2f3f",
+    "integrated_snapshot": "460bb4cc19d0c616bf0ba3fe60ffb4fffaf8868e9d77248f325b52f33f7ed8a2",
+    "kto_images_audit": "3f67ba11f7fd429c75fb36fe788dc48f41afee34f4146aef01354780ae01eed7",
+    "kto_match_index": "f84f741ec616d04e3c55c9ee4535cfce1f82e762655bf343e036e68c4578aaae",
+    "photogallery_snapshot": "479f3afb67e5ac47c37c932fdbd1f7134673213f8644d878813428e8b5ae63b1",
+    "qa_report": "7851b25f27521064cae26a3f5118ae970564cdaa90ffe4f0e1d01f4d398fbc0b",
+    "release_classification": "d2fa549b759345b3984a96ab31608f791afef73d55aab01ce0fb679c9a3ac234",
+    "vg_snapshot": "c0f68d820888475a9813bcb15f4c884bab295bcc8d4d370898e15f42aabdf835"
+  },
+  "task_id": "TASK-GYEONGJU-TIER-A-117-INTEGRATED-FULL-COLLECTION-V1"
+}

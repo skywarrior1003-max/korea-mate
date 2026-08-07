@@ -1,0 +1,222 @@
+{
+  "areacode_check": "areaCode_sigunguCode_not_used",
+  "coverage": {
+    "avg_usable_images": 9.2,
+    "chain_errors": 0,
+    "chain_errors_detail": [],
+    "collected_at": "2026-08-07T06:30:19Z",
+    "gallery_match_rate_pct": 22.2,
+    "gallery_matched": 26,
+    "kto_match_rate_pct": 66.7,
+    "kto_matched": 78,
+    "kto_rights_type1_images": 207,
+    "kto_rights_type3_images": 224,
+    "kto_rights_verified_pct": 99.8,
+    "release_coord_missing": 38,
+    "release_img_missing": 6,
+    "release_partial": 2,
+    "release_ready": 71,
+    "task_id": "TASK-GYEONGJU-TIER-A-117-INTEGRATED-FULL-COLLECTION-V1",
+    "total_tier_a": 117,
+    "vg_collected": 5,
+    "vg_errors": 112
+  },
+  "issue_count": 38,
+  "issues": [
+    {
+      "cid": "gyeongju-GJ01-0003",
+      "name": "경주 보문사지 연화문 당간지주",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0012",
+      "name": "노서동 고분군",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0019",
+      "name": "동부사적지구 꽃단지",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0021",
+      "name": "봉황대",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0023",
+      "name": "비단벌레 전기자동차",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0026",
+      "name": "소금강산",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0028",
+      "name": "숭혜전",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0029",
+      "name": "신라대종",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0043",
+      "name": "황복사지 삼층석탑(구황리 삼층석탑)",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0044",
+      "name": "히어로 키즈파크",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0066",
+      "name": "감포해국길",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0085",
+      "name": "전통명주 전시관",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0090",
+      "name": "경주 스파월드",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0092",
+      "name": "경주생활체육공원",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0095",
+      "name": "경주타워",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0097",
+      "name": "동대봉산 무장봉(억새군락지)",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0105",
+      "name": "뽀로로 아쿠아빌리지",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0106",
+      "name": "소노벨 경주 오션플레이",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0108",
+      "name": "숲머리뚝방길",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0109",
+      "name": "애니멀테마파크 주렁주렁",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0111",
+      "name": "전 홍유후 설총묘",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0115",
+      "name": "천군동 동서삼층석탑",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0122",
+      "name": "국립경주문화재연구소 천존고",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0126",
+      "name": "불국사 박물관",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0134",
+      "name": "구미산",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0135",
+      "name": "김유신장군묘",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0136",
+      "name": "누군가의책방",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0142",
+      "name": "산내 동창천",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0143",
+      "name": "서악동 삼층석탑",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0144",
+      "name": "서악서원",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0145",
+      "name": "선도산",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0146",
+      "name": "송화산(옥녀봉)",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0148",
+      "name": "오봉산",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0150",
+      "name": "용담정",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0151",
+      "name": "정혜사지 13층 석탑",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0152",
+      "name": "최제우 생가",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0153",
+      "name": "키즈베리 딸기체험장",
+      "type": "COORD_NONE"
+    },
+    {
+      "cid": "gyeongju-GJ01-0154",
+      "name": "키즈팜 막내농부",
+      "type": "COORD_NONE"
+    }
+  ],
+  "namespace_check": "gal_content_id_not_passed_to_KorService2",
+  "qa_status": "WARN",
+  "qa_ts": "2026-08-07T06:35:31Z",
+  "task_id": "TASK-GYEONGJU-TIER-A-117-INTEGRATED-FULL-COLLECTION-V1",
+  "total_records": 117
+}

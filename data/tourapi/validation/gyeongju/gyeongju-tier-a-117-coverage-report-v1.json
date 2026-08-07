@@ -1,0 +1,21 @@
+{
+  "avg_usable_images": 9.2,
+  "chain_errors": 0,
+  "chain_errors_detail": [],
+  "collected_at": "2026-08-07T06:30:19Z",
+  "gallery_match_rate_pct": 22.2,
+  "gallery_matched": 26,
+  "kto_match_rate_pct": 66.7,
+  "kto_matched": 78,
+  "kto_rights_type1_images": 207,
+  "kto_rights_type3_images": 224,
+  "kto_rights_verified_pct": 99.8,
+  "release_coord_missing": 38,
+  "release_img_missing": 6,
+  "release_partial": 2,
+  "release_ready": 71,
+  "task_id": "TASK-GYEONGJU-TIER-A-117-INTEGRATED-FULL-COLLECTION-V1",
+  "total_tier_a": 117,
+  "vg_collected": 5,
+  "vg_errors": 112
+}
