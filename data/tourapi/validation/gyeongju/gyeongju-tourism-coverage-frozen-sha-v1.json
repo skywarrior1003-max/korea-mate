@@ -1,0 +1,42 @@
+{
+  "files_checked": 6,
+  "results": [
+    {
+      "actual_sha16": "1ed2c18b2d7b7bf8",
+      "file": "data/tourapi/normalized/gyeongju/gyeongju-full-v1-candidates.jsonl",
+      "status": "OK",
+      "stored_sha16": "1ed2c18b2d7b7bf8"
+    },
+    {
+      "actual_sha16": "481fe795f992a4c3",
+      "file": "data/tourapi/normalized/gyeongju/source-facts-full-v1.jsonl",
+      "status": "OK",
+      "stored_sha16": "481fe795f992a4c3"
+    },
+    {
+      "actual_sha16": "0690bdac67415aaf",
+      "file": "data/tourapi/validation/gyeongju/gyeongju-candidate-release-hold-v1.jsonl",
+      "status": "OK",
+      "stored_sha16": "0690bdac67415aaf"
+    },
+    {
+      "actual_sha16": "776e5206dbadb074",
+      "file": "data/tourapi/validation/gyeongju/gyeongju-release-final-rights-overlay-v1.jsonl",
+      "status": "OK",
+      "stored_sha16": "776e5206dbadb074"
+    },
+    {
+      "actual_sha16": "ede7fd860c91e89a",
+      "file": "data/tourapi/validation/gyeongju/gyeongju-core-place-priority-v1.jsonl",
+      "status": "OK",
+      "stored_sha16": "ede7fd860c91e89a"
+    },
+    {
+      "actual_sha16": "178f955dfb5a17a0",
+      "file": "data/tourapi/normalized/gyeongju/gyeongju-course-waypoint-relations-v1.jsonl",
+      "status": "OK",
+      "stored_sha16": "178f955dfb5a17a0"
+    }
+  ],
+  "verdict": "ALL_OK"
+}

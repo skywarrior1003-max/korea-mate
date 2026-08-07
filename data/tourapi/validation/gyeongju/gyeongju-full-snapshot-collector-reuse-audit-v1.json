@@ -1,0 +1,19 @@
+{
+  "as_of": "2026-08-07T00:00:00Z",
+  "batch_size_recommended": 20,
+  "candidate_selection_changeable": true,
+  "collector_exists": true,
+  "collector_script": "scripts/gyeongju_official_detail_collector_v1.py",
+  "core27_hardcoding_found": true,
+  "expected_http_per_item": 1,
+  "min_changes_needed": [
+    "candidate selection list를 TIER_A 목록으로 교체",
+    "VG raw 출력 디렉토리명 변경 (gyeongju-core27-vg-detail → gyeongju-tier-a-vg-detail)",
+    "frozen SHA audit 기준 파일 변경"
+  ],
+  "notes": "CORE27 full snapshot collector는 area_uid 기반으로 일반화돼 있어 candidate 목록 교체로 재사용 가능.",
+  "reuse_feasibility": "HIGH",
+  "tier_a_applicable": true,
+  "total_http_for_tier_a": 117,
+  "web_att_area_uid_general": true
+}

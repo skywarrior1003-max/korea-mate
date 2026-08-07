@@ -1,0 +1,98 @@
+{
+  "as_of": "2026-08-07T00:00:00Z",
+  "attraction_count": 334,
+  "attribute_not_modeled_night_view": 10,
+  "by_next_batch_tier": {
+    "TIER_A_NEXT_RELEASE": 117,
+    "TIER_B_COVERAGE_EXPANSION": 15,
+    "TIER_C_LONG_TAIL": 234
+  },
+  "category_flattening_count": 10,
+  "core27_count": 27,
+  "course_waypoints": 29,
+  "geocoding_requests": 0,
+  "gj01_to_gj09_role_summary": {
+    "GJ-01": {
+      "records": 159,
+      "role": "PLACE_LIST"
+    },
+    "GJ-02": {
+      "records": 0,
+      "role": "EMPTY_SOURCE"
+    },
+    "GJ-03": {
+      "records": 680,
+      "role": "IMAGE_ALBUM_CMS"
+    },
+    "GJ-04": {
+      "records": 560,
+      "role": "IMAGE_ALBUM_CMS"
+    },
+    "GJ-05": {
+      "records": 52,
+      "role": "IMAGE_ALBUM_CMS"
+    },
+    "GJ-06": {
+      "records": 10,
+      "role": "THEMATIC_LIST"
+    },
+    "GJ-07": {
+      "records": 10,
+      "role": "THEMATIC_LIST"
+    },
+    "GJ-08": {
+      "records": 111,
+      "role": "RESTAURANT_LIST_CMS"
+    },
+    "GJ-09": {
+      "records": 61,
+      "role": "RESTAURANT_HOTPLACE"
+    }
+  },
+  "gj02_status": "EMPTY_SOURCE_CONFIRMED",
+  "heritage": {
+    "attribute_overlay_count": 0,
+    "candidate_linked": 0,
+    "relation_count": 53
+  },
+  "http_requests": 0,
+  "kto_api_requests": 0,
+  "nature_count": 59,
+  "negative_discovery_log_excluded": 84,
+  "new_place_proposals": 12,
+  "night_view": {
+    "attribute_overlay_count": 10,
+    "candidate_linked": 10,
+    "raw_count": 10,
+    "sf_linked": 10
+  },
+  "regression_tests": {
+    "failed": 0,
+    "failed_details": [],
+    "passed": 10,
+    "passed_names": [
+      "T01_viewpoint_independent_place",
+      "T02_night_view_place_attribute",
+      "T03_image_album_classification",
+      "T04_no_place_from_image_caption",
+      "T05_negative_log_excluded",
+      "T06_attribute_not_modeled_detected",
+      "T07_sf_path_used",
+      "T08_gj01_trrsrt_field",
+      "T09_gj02_empty_source",
+      "T10_deterministic"
+    ],
+    "total": 10,
+    "verdict": "PASS"
+  },
+  "remaining_count": 366,
+  "task": "TASK-GYEONGJU-FULL-TOURISM-COVERAGE-AUDIT-AND-ATTRIBUTE-RECOVERY-V2",
+  "total_attraction_nature": 393,
+  "total_attribute_overlay": 20,
+  "viewpoint": {
+    "attribute_overlay_count": 10,
+    "candidate_linked": 10,
+    "raw_count": 10,
+    "sf_linked": 10
+  }
+}

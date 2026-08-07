@@ -1,0 +1,28 @@
+{
+  "as_of": "2026-08-07T00:00:00Z",
+  "files_checked": [
+    {
+      "file": "gyeongju-tourism-theme-audit-v1.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-tourism-entity-role-classification-v1.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-tourism-attributes-overlay-v1.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-tourism-next-batch-priority-v1.jsonl",
+      "result": "PASS"
+    },
+    {
+      "file": "gyeongju-tourism-pipeline-loss-audit-v1.jsonl",
+      "result": "PASS"
+    }
+  ],
+  "pass_count": 5,
+  "total_count": 5,
+  "verdict": "BYTE_IDENTICAL_PASS"
+}
