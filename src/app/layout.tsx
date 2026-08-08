@@ -138,8 +138,13 @@ gtag('config','${ga4Id}');
           제시한 스니펫은 value 속성이다. 두 형식이 같다고 볼 근거가 없고
           (공식 문서에도 형식 설명이 없다) 검증기가 무엇을 읽는지 모르는 채로
           content 만 내보내면 실패해도 원인을 알 수 없다. 그래서 받은 그대로
-          value 를 내보내고, 표준 HTML 을 읽는 도구를 위해 content 도 같이 둔다.
-          태그는 하나이므로 중복이 아니다.
+          value 를 내보낸다.
+
+        content 를 함께 두지 않는 이유
+          처음에는 표준 HTML 을 읽는 도구를 위해 content 도 같이 달았다. 그
+          상태로 Impact 검증이 실패했다. 검증기가 자기 스니펫과 문자열로
+          맞춰 본다면 여분의 속성이 어긋나는 원인이 된다. 그래서 받은 스니펫
+          과 같은 모양만 남긴다 — 이 name 을 읽는 다른 도구는 없다.
 
         value 를 spread 로 넣는 이유
           value 는 <meta> 의 표준 속성이 아니라 React 타입이 거부한다. 속성을
@@ -150,7 +155,6 @@ gtag('config','${ga4Id}');
       */}
       <meta
         name="impact-site-verification"
-        content="b459f968-0d9e-493f-9e4f-938653b3569b"
         {...{ value: "b459f968-0d9e-493f-9e4f-938653b3569b" }}
       />
       <body className="min-h-full flex flex-col">
