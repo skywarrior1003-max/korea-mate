@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "gyeongju_final_source_resolution_v4",
+  "pass": 17,
+  "fail": 0,
+  "total": 17,
+  "checks": [
+    {
+      "check": "hold_190_loaded",
+      "status": "PASS",
+      "expected": 190,
+      "actual": 190
+    },
+    {
+      "check": "source_state_190",
+      "status": "PASS",
+      "expected": 190,
+      "actual": 190
+    },
+    {
+      "check": "vg_pending_exactly_2",
+      "status": "PASS",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "check": "crosswalk_188",
+      "status": "PASS",
+      "expected": 188,
+      "actual": 188
+    },
+    {
+      "check": "kto623_loaded",
+      "status": "PASS",
+      "expected": 623,
+      "actual": 623
+    },
+    {
+      "check": "scope_audit_kto1438",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "dup_audit_not_empty",
+      "status": "PASS",
+      "expected": ">0",
+      "actual": 30
+    },
+    {
+      "check": "kto_detail_snapshot",
+      "status": "PASS",
+      "expected": ">0",
+      "actual": 76
+    },
+    {
+      "check": "vg_snapshots_2",
+      "status": "PASS",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "check": "final_cls_190",
+      "status": "PASS",
+      "expected": 190,
+      "actual": 190
+    },
+    {
+      "check": "event_targeted_31",
+      "status": "PASS",
+      "expected": 31,
+      "actual": 31
+    },
+    {
+      "check": "en_targeted_97",
+      "status": "PASS",
+      "expected": 97,
+      "actual": 97
+    },
+    {
+      "check": "no_api_key_in_outputs",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "no_arbitrary_translation",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "kto_detail_sorted",
+      "status": "PASS",
+      "expected": "SORTED",
+      "actual": "SORTED"
+    },
+    {
+      "check": "parent_child_not_same_place",
+      "status": "PASS",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "check": "img_rights_overlay_190",
+      "status": "PASS",
+      "expected": 190,
+      "actual": 190
+    }
+  ]
+}

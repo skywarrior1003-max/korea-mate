@@ -1,0 +1,66 @@
+{
+  "task": "TASK-GYEONGJU-FINAL-SOURCE-RESOLUTION-KTO-CROSSWALK-V4",
+  "as_of": "2026-08-08",
+  "script_version": "gyeongju_final_source_resolution_v4",
+  "branch": "data/gyeongju-final-source-resolution-v4",
+  "base_branch": "data/gyeongju-overnight-release-batch-v1",
+  "base_head": "fed67de",
+  "network_mode": "CACHE_ONLY",
+  "http_total": 0,
+  "runtime_seconds": 0.2,
+  "phases_completed": [
+    "P1_SOURCE_STATE_AUDIT",
+    "P2_KTO_CROSSWALK",
+    "P3_SCOPE_AUDIT",
+    "P4_DUPLICATE_AUDIT",
+    "P5_KTO_DETAIL",
+    "P6_VG_HTTP",
+    "P7_EN_TARGETED",
+    "P8_EVENT_TARGETED",
+    "P9_FINAL_CLS",
+    "P10_QUALITY_METRICS",
+    "P11_DOCS"
+  ],
+  "source_state_dist": {
+    "VG_COLLECTION_PENDING": 2,
+    "DUPLICATE_COVERED": 26,
+    "KTO_CACHE_MISS": 74,
+    "KTO_NOT_IN_623": 31,
+    "KTO_DESCRIPTION_PARSEABLE": 2,
+    "NO_KTO_LINK": 55
+  },
+  "crosswalk_dist": {
+    "DIRECT_CONTENTID_MATCH": 92,
+    "CONTENTID_NOT_IN_623": 32,
+    "NAME_BASED_MATCH": 33,
+    "NO_KTO_MATCH": 31
+  },
+  "final_classification_dist": {
+    "HOLD_IMAGE": 2,
+    "DUPLICATE_COVERED": 26,
+    "HOLD_DESCRIPTION": 157,
+    "READY_FOR_RELEASE": 2,
+    "OUT_OF_SCOPE": 3
+  },
+  "kto_detail_total": 76,
+  "kto_detail_has_overview": 2,
+  "vg_pending_2": {
+    "items": [
+      {
+        "candidate_id": "gyeongju-KTO12-128677",
+        "name": "감포항",
+        "has_description": true
+      },
+      {
+        "candidate_id": "gyeongju-KTO12-2044527",
+        "name": "강동 워터파크",
+        "has_description": true
+      }
+    ]
+  },
+  "tier_a_duplicates_suppressed": 26,
+  "events_summary": {
+    "EVENT_RELEASE_READY": 2,
+    "HOLD_DATE_INCOMPLETE": 29
+  }
+}

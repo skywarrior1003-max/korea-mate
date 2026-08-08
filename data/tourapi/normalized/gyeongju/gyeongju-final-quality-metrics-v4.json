@@ -1,0 +1,56 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "gyeongju_final_source_resolution_v4",
+  "hold_190_total": 190,
+  "phase9_classification": {
+    "READY_FOR_RELEASE": 2,
+    "HOLD_DESCRIPTION": 157,
+    "HOLD_IMAGE": 2,
+    "DUPLICATE_COVERED": 26,
+    "OUT_OF_SCOPE": 3
+  },
+  "baseline_released_235": 235,
+  "baseline_core27": 27,
+  "baseline_tier_a": 117,
+  "baseline_restaurant_102": 102,
+  "kto_623_total": 623,
+  "kto_623_type_dist": {
+    "39": 211,
+    "12": 201,
+    "28": 52,
+    "14": 32,
+    "38": 31,
+    "15": 9,
+    "32": 86,
+    "25": 1
+  },
+  "crosswalk_stats": {
+    "DIRECT_CONTENTID_MATCH": 92,
+    "CONTENTID_NOT_IN_623": 32,
+    "NAME_BASED_MATCH": 33,
+    "NO_KTO_MATCH": 31
+  },
+  "collision_count": 3,
+  "tier_a_duplicates_found": 26,
+  "scope_audit": {
+    "OUT_OF_SCOPE": 4,
+    "IN_SCOPE": 13,
+    "REVIEW_REQUIRED": 3
+  },
+  "kto_detail_snapshot_total": 76,
+  "kto_detail_has_overview": 2,
+  "vg_pending_resolved": 2,
+  "events_active": 2,
+  "events_date_incomplete": 29,
+  "events_past": 0,
+  "en_supplement_97": {
+    "EN_OFFICIAL_PARTIAL": 2,
+    "EN_IDENTITY_REVIEW": 26,
+    "OFFICIAL_EN_PAGE_NOT_RESOLVED": 69
+  },
+  "http_total": 0,
+  "http_vg": 0,
+  "http_kto": 0,
+  "http_errors": 0,
+  "network_mode": "CACHE_ONLY"
+}
