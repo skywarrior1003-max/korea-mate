@@ -1,0 +1,65 @@
+{
+  "manifest_id": "busan-gyeongju-gap-fill-import-manifest-v3",
+  "task_id": "TASK-BUSAN-GYEONGJU-OVERNIGHT-GAP-FILL-CORRECTION-AND-FINAL-HANDOFF-V3",
+  "branch": "data/busan-gyeongju-gap-fill-v1",
+  "START_MASTER_SHA": "bec6f4bcc2eb4ce2f5ffb05db4aee0cf3f99d667",
+  "V2_COMMIT": "df77100",
+  "generated_at": "2026-08-08T00:00:00Z",
+  "parser_version": "v3.0.0",
+  "qa_overall": "PASS_WITH_PARTIAL",
+  "gyeongju": {
+    "coord_116_verified": 28,
+    "coord_116_final_hold": 88,
+    "coord_not_found_terminal": 0,
+    "food_190_ready": 28,
+    "food_190_final_hold": 162,
+    "food_190_new_place_proposal_terminal": 0,
+    "food_hold_breakdown": {
+      "HOLD_COORDINATE": 162
+    }
+  },
+  "busan": {
+    "BUSAN_CANONICAL_RELEASE": 1533,
+    "BUSAN_CANONICAL_PLACE": 1529,
+    "BUSAN_CANONICAL_EVENT": 4,
+    "BUSAN_ENRICHMENT_UNIVERSE": 1642,
+    "en_patches": 124,
+    "V2_matrix_correction": "V2 used universe(1642); V3 uses canonical(1533)."
+  },
+  "import_required": [
+    "data/gyeongju-gap-fill/gyeongju-coord-116-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-190-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-p1-factual-patch-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-relation-final-v3.jsonl",
+    "data/busan-gap-fill/busan-canonical-baseline-audit-v3.json",
+    "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+    "data/busan-gap-fill/busan-coord-fix-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-v3.jsonl",
+    "data/busan-gap-fill/busan-event-source-audit-v3.json"
+  ],
+  "import_optional": [
+    "data/gyeongju-gap-fill/gyeongju-kto-area-all-types-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-remaining-gaps-v3.json",
+    "data/busan-gap-fill/busan-promotion-notices-v3.json",
+    "data/busan-gap-fill/busan-course-inventory-v3.json",
+    "data/busan-gap-fill/busan-kto-courses-type25-v3.jsonl",
+    "data/busan-gap-fill/busan-kto-leisure-type28-v3.jsonl",
+    "data/busan-gap-fill/busan-kto-eng-area-list-v3.jsonl",
+    "data/busan-gap-fill/gap-fill-v3-qa.json",
+    "data/gyeongju-gap-fill/gyeongju-coord-fill-result-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-disposition-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-kto-detail-fill-v1.jsonl",
+    "data/busan-gap-fill/busan-event-hold-refresh-v1.json",
+    "data/busan-gap-fill/busan-promotion-refresh-v1.json"
+  ],
+  "do_not_import": [
+    "data/gyeongju-gap-fill/cache/",
+    "data/busan-gap-fill/cache/",
+    "data/busan-gap-fill/busan-completeness-matrix-v1.json"
+  ],
+  "security": {
+    "secrets_in_output": false,
+    "kto_key_sanitized": true
+  },
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
+}

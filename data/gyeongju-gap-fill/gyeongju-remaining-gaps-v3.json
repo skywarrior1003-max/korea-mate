@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "coord_116": {
+    "verified": 28,
+    "final_hold": 88
+  },
+  "food_190": {
+    "ready": 28,
+    "final_hold": 162,
+    "hold_breakdown": {
+      "HOLD_COORDINATE": 162
+    }
+  },
+  "p1_remaining": {
+    "description_ko": "~170 missing (GJ01 API no desc; alt source needed)",
+    "opening_hours": "~80 missing (KTO partial fill for newly verified canonical)",
+    "admission": "302 FIELD_MISSING_AT_SOURCE",
+    "image": "~133 IMAGE_MISSING (GJ03/GJ04/GJ05 not attempted)",
+    "en_title": "Partial KTO EngService2 bulk fill for KTO-linked canonical"
+  },
+  "manual_review": {
+    "EVENT_GARBAGE_RECORD": 3,
+    "EVENT_DATE_INCOMPLETE": 3,
+    "EVENT_VENUE_UNRESOLVED": "see gyeongju-relation-final-v3.jsonl",
+    "COURSE_STOP_MANUAL_REVIEW_FINAL": 14
+  }
+}

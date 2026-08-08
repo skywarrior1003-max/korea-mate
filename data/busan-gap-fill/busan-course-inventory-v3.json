@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "kto_courses_type25": {
+    "count": 1,
+    "fact_type": "FACT"
+  },
+  "kto_leisure_type28": {
+    "count": 33,
+    "fact_type": "FACT"
+  },
+  "course_stop_relations": {
+    "status": "NOT_BUILT",
+    "note": "Separate task needed."
+  },
+  "gaps": [
+    "Visit Busan official courses (SSR)",
+    "Stop->canonical mapping: separate task"
+  ]
+}

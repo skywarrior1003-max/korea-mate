@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "BUSAN_CANONICAL_RELEASE": 1533,
+  "BUSAN_CANONICAL_PLACE": 1529,
+  "BUSAN_CANONICAL_EVENT": 4,
+  "BUSAN_ENRICHMENT_UNIVERSE": 1642,
+  "separation_note": "BUSAN_CANONICAL_RELEASE(1533)=place_release(1529)+event_release(4). BUSAN_ENRICHMENT_UNIVERSE(1642)=canonical(1533)+hold/exclude(109). V2 completeness-matrix used universe(1642) — corrected in V3.",
+  "hold_breakdown": {
+    "hold_structural_review": 4,
+    "exclude_duplicate_sibling": 37,
+    "hold_past_event": 14,
+    "hold_stale_event": 25,
+    "hold_date_missing_event": 26,
+    "hold_no_current_source_event": 3
+  },
+  "category_dist": {
+    "attraction": 717,
+    "event": 4,
+    "restaurant": 680,
+    "nature": 50,
+    "accommodation": 82
+  },
+  "release_class_dist": {
+    "RELEASE_READY_OPTIONAL_MISSING": 1228,
+    "RELEASE_READY_CURRENT_EVENT": 4,
+    "RELEASE_READY_COMPLETE": 301
+  },
+  "field_completeness": {
+    "name_en": {
+      "have": 953,
+      "missing": 580
+    },
+    "description_en": {
+      "missing": 715
+    },
+    "opening_hours": {
+      "missing": 315
+    },
+    "image": {
+      "missing": 128
+    },
+    "coordinate": {
+      "missing": 2
+    },
+    "address": {
+      "missing": 1
+    }
+  }
+}

@@ -1,0 +1,685 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "current_events": 4,
+  "stale": {
+    "total": 25,
+    "now_past": 7,
+    "items": [
+      {
+        "candidate_id": "busan-E-00002",
+        "title_ko": "수국축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 7. 5.(토) ~ 7. 13.(일) ",
+        "source_keys": [
+          "FestivalService:253:ko"
+        ],
+        "raw_date_text": "2025. 7. 5.(토) ~ 7. 13.(일) ",
+        "verified_date": null,
+        "parsed_end": "2026-07-13",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00005",
+        "title_ko": "낙동강구포나루축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+        "source_keys": [
+          "FestivalService:331:ko"
+        ],
+        "raw_date_text": "2025. 9. 26.(금) ~ 2025. 9. 28.(일)",
+        "verified_date": null,
+        "parsed_end": "2025-09-28",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00010",
+        "title_ko": "동래읍성 역사축제(한, 영, 중간, 중번, 일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025.10.24. (금) ~ 2025.10.26. (일)",
+        "source_keys": [
+          "FestivalService:407:ko"
+        ],
+        "raw_date_text": "2025.10.24. (금) ~ 2025.10.26. (일)",
+        "verified_date": null,
+        "parsed_end": "2025-10-26",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00011",
+        "title_ko": "부산자갈치축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 10. 23. ~ 10. 06.",
+        "source_keys": [
+          "FestivalService:411:ko"
+        ],
+        "raw_date_text": "2025. 10. 23. ~ 10. 06.",
+        "verified_date": null,
+        "parsed_end": "2026-10-06",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00012",
+        "title_ko": "차이나타운특구 문화축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 10. 17 ~ 10. 19.",
+        "source_keys": [
+          "FestivalService:414:ko"
+        ],
+        "raw_date_text": "2025. 10. 17 ~ 10. 19.",
+        "verified_date": null,
+        "parsed_end": "2026-10-19",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00013",
+        "title_ko": "부산바다미술제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 9. 27.(토) ~ 2025. 11. 2.(일)",
+        "source_keys": [
+          "FestivalService:427:ko"
+        ],
+        "raw_date_text": "2025. 9. 27.(토) ~ 2025. 11. 2.(일)",
+        "verified_date": null,
+        "parsed_end": "2025-11-02",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00022",
+        "title_ko": "사상강변축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025년 9월 20일(토) ~ 9월 21일(일)",
+        "source_keys": [
+          "FestivalService:500:ko"
+        ],
+        "raw_date_text": "2025년 9월 20일(토) ~ 9월 21일(일)",
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00023",
+        "title_ko": "해운대달맞이온천축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025.2.12",
+        "source_keys": [
+          "FestivalService:502:ko"
+        ],
+        "raw_date_text": "2025.2.12",
+        "verified_date": null,
+        "parsed_end": "2025-02-12",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00025",
+        "title_ko": "조선통신사축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025.4.25.(금) ~ 4.27.(일)",
+        "source_keys": [
+          "FestivalService:523:ko"
+        ],
+        "raw_date_text": "2025.4.25.(금) ~ 4.27.(일)",
+        "verified_date": null,
+        "parsed_end": "2026-04-27",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00026",
+        "title_ko": "부산국제영화제(한, 영, 중간, 중번, 일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 09. 17. (수) ~ 2025. 09. 26. (금)",
+        "source_keys": [
+          "FestivalService:524:ko"
+        ],
+        "raw_date_text": "2025. 09. 17. (수) ~ 2025. 09. 26. (금)",
+        "verified_date": null,
+        "parsed_end": "2025-09-26",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00027",
+        "title_ko": "감천문화마을골목축제(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 10. 24. ~ 10. 25.",
+        "source_keys": [
+          "FestivalService:531:ko"
+        ],
+        "raw_date_text": "2025. 10. 24. ~ 10. 25.",
+        "verified_date": null,
+        "parsed_end": "2026-10-25",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00030",
+        "title_ko": "부산수제맥주마스터스챌린지(한,영,중간,중번,일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 9. 20.(토) ~ 2025. 9. 24.(수)",
+        "source_keys": [
+          "FestivalService:1694:ko"
+        ],
+        "raw_date_text": "2025. 9. 20.(토) ~ 2025. 9. 24.(수)",
+        "verified_date": null,
+        "parsed_end": "2025-09-24",
+        "v3_class": "HOLD_PAST_EVENT"
+      },
+      {
+        "candidate_id": "busan-E-00031",
+        "title_ko": "나이트레이스 인 부산(한, 영, 중간, 중번, 일)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025년 8월 2일 (토)",
+        "source_keys": [
+          "FestivalService:1698:ko"
+        ],
+        "raw_date_text": "2025년 8월 2일 (토)",
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00033",
+        "title_ko": "부산국제마케팅광고제(한)",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025. 8. 27 ~ 8.29. / 상시운영",
+        "source_keys": [
+          "FestivalService:1807:ko"
+        ],
+        "raw_date_text": "2025. 8. 27 ~ 8.29. / 상시운영",
+        "verified_date": null,
+        "parsed_end": "2026-08-29",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00034",
+        "title_ko": "부산국제어린이청소년영화제",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2025.7.8.(화) ~ 7.19.(토)",
+        "source_keys": [
+          "FestivalService:1897:ko"
+        ],
+        "raw_date_text": "2025.7.8.(화) ~ 7.19.(토)",
+        "verified_date": null,
+        "parsed_end": "2026-07-19",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-E-00035",
+        "title_ko": "2024 용두산 썸머 비치",
+        "classification": "STALE_DATE",
+        "reason": "FestivalService raw 날짜 만료(2025 이전): 2024. 7. 27.(토) ~ 9. 21.(토), 매주 토요일 16:00 ~ 20:00",
+        "source_keys": [
+          "FestivalService:1961:ko"
+        ],
+        "raw_date_text": "2024. 7. 27.(토) ~ 9. 21.(토), 매주 토요일 16:00 ~ 20:00",
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00206",
+        "title_ko": "사상강변축제",
+        "classification": "STALE_DATE",
+        "reason": "KTO 소스, FestivalService 동명 행사(busan-E-00022) raw 날짜 만료 — 사상강변축제 — raw 2025.9.20~21 (stale)",
+        "source_keys": [
+          "KorService2:2032436:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00211",
+        "title_ko": "해운대 빛축제",
+        "classification": "STALE_DATE",
+        "reason": "KTO 소스, FestivalService 동명 행사(busan-E-00014) raw 날짜 만료 — 해운대 빛축제 — raw 2025.11~2026.01 (past)",
+        "source_keys": [
+          "KorService2:2048902:ko",
+          "EngService2:3565954:en"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00546",
+        "title_ko": "부산수제맥주마스터스챌린지",
+        "classification": "STALE_DATE",
+        "reason": "KTO 소스, FestivalService 동명 행사(busan-E-00030) raw 날짜 만료 — 부산수제맥주마스터스챌린지 — raw 2025.9.20~24 (stale)",
+        "source_keys": [
+          "KorService2:2856938:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00591",
+        "title_ko": "2025 영호남 전통시장 박람회",
+        "classification": "STALE_DATE",
+        "reason": "타이틀에 '2025' 포함, 2025년 특정 행사로 판정 — 2026 개최 미확인",
+        "source_keys": [
+          "KorService2:2868776:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00723",
+        "title_ko": "2025 별바다부산 나이트마켓",
+        "classification": "STALE_DATE",
+        "reason": "타이틀에 '2025' 포함, 2025년 특정 행사로 판정 — 2026 개최 미확인",
+        "source_keys": [
+          "KorService2:3356047:ko",
+          "EngService2:3544716:en"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00732",
+        "title_ko": "크리스마스 빌리지 부산 2025",
+        "classification": "STALE_DATE",
+        "reason": "타이틀에 '2025' 포함, 2025년 특정 행사로 판정 — 2026 개최 미확인",
+        "source_keys": [
+          "KorService2:3437916:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00758",
+        "title_ko": "2025 서부산 슈퍼어싱 페스티벌",
+        "classification": "STALE_DATE",
+        "reason": "타이틀에 '2025' 포함, 2025년 특정 행사로 판정 — 2026 개최 미확인",
+        "source_keys": [
+          "KorService2:3524130:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00759",
+        "title_ko": "2025 부산세일페스타 부대앞으로",
+        "classification": "STALE_DATE",
+        "reason": "타이틀에 '2025' 포함, 2025년 특정 행사로 판정 — 2026 개최 미확인",
+        "source_keys": [
+          "KorService2:3528964:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      },
+      {
+        "candidate_id": "busan-K-00775",
+        "title_ko": "광복로 겨울빛 트리축제",
+        "classification": "STALE_DATE",
+        "reason": "KTO 소스, FestivalService 동명 행사(busan-E-00018) raw 날짜 만료 — 광복로 겨울빛 트리축제 — raw 2025.12~2026.02 (past, winter 2025 season)",
+        "source_keys": [
+          "KorService2:3576410:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "parsed_end": "",
+        "v3_class": "HOLD_STALE_PENDING"
+      }
+    ]
+  },
+  "date_missing": {
+    "total": 26,
+    "access": "SOURCE_DYNAMIC_HOLD",
+    "items": [
+      {
+        "candidate_id": "busan-E-00008",
+        "title_ko": "해운대모래축제(한,영,중간,중번,일)",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "FestivalService:405:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-E-00036",
+        "title_ko": "서면 빛 축제(한,영,중간,중번,일)",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "FestivalService:2136:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-E-00039",
+        "title_ko": "부산콘서트홀 개관 페스티벌",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "FestivalService:2383:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-E-00040",
+        "title_ko": "김해공항 Welcome to Busan 환대 행사",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "FestivalService:2730:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00143",
+        "title_ko": "영도다리축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:1080734:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00157",
+        "title_ko": "부산고등어축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:1399532:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00204",
+        "title_ko": "대한민국 국제해양레저위크(KIMA WEEK)",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2019366:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00237",
+        "title_ko": "부산국제공연예술제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2558735:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00238",
+        "title_ko": "헬로메이커",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2560161:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00294",
+        "title_ko": "카운트다운 부산",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2702333:ko",
+          "EngService2:1385298:en"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00562",
+        "title_ko": "기장붕장어축제in칠암",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2860868:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00648",
+        "title_ko": "부산글로벌웹툰페스티벌",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:2873292:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00686",
+        "title_ko": "유라리 건맥축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3001170:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00687",
+        "title_ko": "부산국제공연예술마켓",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3006246:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00690",
+        "title_ko": "부산종합민속예술제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3016659:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00694",
+        "title_ko": "전포커피축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3018117:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00695",
+        "title_ko": "글로컬 문화 in(人) 남산 페스티벌",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3020552:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00721",
+        "title_ko": "부산국제아동도서전",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3345610:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00722",
+        "title_ko": "중구민의 날 페스타",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3351515:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00724",
+        "title_ko": "페스티벌 시월",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3370514:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00730",
+        "title_ko": "게임 체험 팝업 전시 ‘Game-Playground’",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3422647:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00731",
+        "title_ko": "온천천 빛 축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3434800:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00757",
+        "title_ko": "부산국제AI영화제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3515311:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00766",
+        "title_ko": "부산 서구 의료관광축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3532971:ko"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00773",
+        "title_ko": "옥토버페스타 인 광안리",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3555363:ko",
+          "EngService2:3562686:en"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      },
+      {
+        "candidate_id": "busan-K-00774",
+        "title_ko": "부산중구반려동물축제",
+        "classification": "DATE_MISSING",
+        "reason": "어떤 소스에도 날짜 정보 없음 (hold)",
+        "source_keys": [
+          "KorService2:3559571:ko",
+          "EngService2:3562082:en"
+        ],
+        "raw_date_text": null,
+        "verified_date": null,
+        "v3_class": "FINAL_HOLD_DATE_SOURCE_MISSING",
+        "access": "SOURCE_DYNAMIC_HOLD"
+      }
+    ]
+  }
+}

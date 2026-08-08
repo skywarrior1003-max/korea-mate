@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "START_MASTER_SHA": "bec6f4bcc2eb4ce2f5ffb05db4aee0cf3f99d667",
+  "V2_COMMIT": "df77100",
+  "checks": {
+    "QA01_busan_canonical_universe": {
+      "status": "PASS",
+      "BUSAN_CANONICAL_RELEASE": 1533,
+      "BUSAN_CANONICAL_PLACE": 1529,
+      "BUSAN_ENRICHMENT_UNIVERSE": 1642
+    },
+    "QA02_gyeongju_116_sum": {
+      "status": "PASS",
+      "verified": 28,
+      "hold": 88,
+      "sum": 116
+    },
+    "QA03_no_kto_not_found_terminal": {
+      "status": "PASS",
+      "count": 0
+    },
+    "QA04_food_190_disposition": {
+      "status": "PASS",
+      "ready": 28,
+      "hold": 162,
+      "sum": 190,
+      "np_terminal": 0,
+      "hold_breakdown": {
+        "HOLD_COORDINATE": 162
+      }
+    },
+    "QA05_ready_food_has_coord": {
+      "status": "PASS",
+      "count_no_coord": 0
+    },
+    "QA06_gyeongju_coord_range_valid": {
+      "status": "PASS",
+      "range_fail": 0
+    },
+    "QA07_busan_coord_fix": {
+      "status": "PARTIAL",
+      "corrected": 0,
+      "ok_in_bounds": 0,
+      "fix_failed": 2
+    },
+    "QA08_no_ai_content": {
+      "status": "PASS",
+      "note": "All fills from KTO API (FACT). No AI generation."
+    },
+    "QA09_fact_tagging": {
+      "status": "PASS",
+      "note": "KTO=FACT, manual=UNKNOWN, name-match=DERIVED."
+    },
+    "QA10_secret_scan": {
+      "status": "PASS",
+      "note": "KTO key sanitized; not in output/commit."
+    },
+    "QA11_source_unmodified": {
+      "status": "PASS",
+      "note": "enriched-candidates-v1.jsonl: read-only."
+    },
+    "QA12_en_official_only": {
+      "status": "PASS",
+      "note": "EN from KTO EngService2 only. No translation."
+    },
+    "QA13_protected_code": {
+      "status": "PASS",
+      "note": "src/functions/supabase/package: zero changes."
+    },
+    "QA14_deterministic": {
+      "status": "PASS",
+      "note": "NETWORK=0 cache-only re-run = same output."
+    }
+  },
+  "overall": "PASS_WITH_PARTIAL",
+  "pass_count": 13,
+  "partial_count": 1,
+  "fail_count": 0
+}

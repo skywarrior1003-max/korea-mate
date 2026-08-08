@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-08-08",
+  "parser_version": "v3.0.0",
+  "BUSAN_ENRICHMENT_UNIVERSE": 1642,
+  "publishability": {
+    "?": 1642
+  },
+  "category": {
+    "attraction": 717,
+    "event": 72,
+    "restaurant": 721,
+    "nature": 50,
+    "accommodation": 82
+  },
+  "note": "Universe(1642)=canonical(1533)+hold/exclude(109). Not the place count."
+}

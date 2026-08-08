@@ -1,0 +1,2 @@
+{"candidate_id": "busan-F-00341", "title_ko": "보느파티쓰 리", "original_lat": 35.195267, "original_lng": 35.195267, "corrected_lat": null, "corrected_lng": null, "action": "COORD_FIX_FAILED", "reason": "lat=35.195267 out-of-range. No in-bounds KTO match.", "as_of": "2026-08-08"}
+{"candidate_id": "busan-K-00674", "title_ko": "반송공원", "original_lat": 19.69442748, "original_lng": 117.9925662504, "corrected_lat": null, "corrected_lng": null, "action": "COORD_FIX_FAILED", "reason": "lat=19.69442748 out-of-range. No in-bounds KTO match.", "as_of": "2026-08-08"}
