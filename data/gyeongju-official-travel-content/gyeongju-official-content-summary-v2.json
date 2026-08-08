@@ -1,0 +1,35 @@
+{
+  "task": "TASK-GYEONGJU-OFFICIAL-TRAVEL-CONTENT-LAYER-V2",
+  "collection_date": "2026-08-08",
+  "network_allowed": false,
+  "smoke": {
+    "smoke_url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2694",
+    "http_ok": true,
+    "charset": "utf-8",
+    "charset_ok": true,
+    "korean_ok": true,
+    "nav_links": 399,
+    "error": null,
+    "passed": true
+  },
+  "inventory_pass": true,
+  "counts": {
+    "events": 87,
+    "events_active": 4,
+    "events_upcoming": 4,
+    "events_past": 76,
+    "events_date_inc": 3,
+    "courses": 57,
+    "stops": 132,
+    "experiences": 23,
+    "applications": 6,
+    "food_relations": 0,
+    "travel_info": 54,
+    "relations": 0,
+    "scheduler_features": 65,
+    "temporal_items": 93,
+    "new_proposals": 20
+  },
+  "qa_verdict": "PASS",
+  "fail_reasons": []
+}

@@ -1,0 +1,809 @@
+{
+  "source_url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2694",
+  "total_sections": 132,
+  "core_section_check": {
+    "행사": "FOUND",
+    "코스": "FOUND",
+    "체험": "FOUND",
+    "음식": "FOUND",
+    "신청": "FOUND",
+    "여행정보": "FOUND",
+    "추천": "FOUND"
+  },
+  "found_core_count": 7,
+  "inventory_pass": true,
+  "sections": [
+    {
+      "mnu_uid": "4085",
+      "label": "경주로ON",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4085&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2669",
+      "label": "로그인",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2669&mode=",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2694",
+      "label": "전체메뉴",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2694&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2256",
+      "label": "경주 여행",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2256&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "4172",
+      "label": "이달의 추천여행지",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4172&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "4185",
+      "label": "2026년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4185&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4075",
+      "label": "2025년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4075&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3621",
+      "label": "2024년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3621&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3801",
+      "label": "2023년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3801&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3239",
+      "label": "2022년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3239&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3497",
+      "label": "2021년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3497&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2265",
+      "label": "2020년",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2265&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2266",
+      "label": "권역별 관광지",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2266&",
+      "section_type": "ATTRACTION"
+    },
+    {
+      "mnu_uid": "2291",
+      "label": "보문관광단지권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2291&code_uid=1011&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2292",
+      "label": "시내권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2292&code_uid=1012",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2293",
+      "label": "불국사권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2293&code_uid=1015",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2294",
+      "label": "동해안권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2294&code_uid=1016",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2295",
+      "label": "남산권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2295&code_uid=1014",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2296",
+      "label": "서악,북부권",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2296&code_uid=1010",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2267",
+      "label": "여행코스추천",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2267&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2297",
+      "label": "경주핵심여행코스",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2297&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2298",
+      "label": "나의두번째경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2298&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2299",
+      "label": "자박자박 경주걷기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2299&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2300",
+      "label": "두바퀴로 누비는 경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2300&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2301",
+      "label": "버스타고 경주여행",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2301&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2551",
+      "label": "테마여행",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2551&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2552",
+      "label": "경주10Pick",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2552&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2553",
+      "label": "감성더하기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2553&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2554",
+      "label": "동네탐구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2554&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4079",
+      "label": "사계절 경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4079&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3702",
+      "label": "벚꽃알리미",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3702&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2271",
+      "label": "경주의 자연",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2271&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2315",
+      "label": "포토스팟",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2315&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2314",
+      "label": "경주꽃달력",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2314&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2272",
+      "label": "체험과레져",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2272&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2317",
+      "label": "의복체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2317&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2318",
+      "label": "전통문화체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2318&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2319",
+      "label": "템플스테이",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2319&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2323",
+      "label": "고택체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2323&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2324",
+      "label": "농촌교육장, 체험마을",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2324&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2325",
+      "label": "VR 체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2325&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2326",
+      "label": "스포츠",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2326&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2705",
+      "label": "이색체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2705&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2710",
+      "label": "동·식물 체험",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2710&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2273",
+      "label": "투어프로그램",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2273&",
+      "section_type": "TOUR_PROGRAM"
+    },
+    {
+      "mnu_uid": "2274",
+      "label": "영상으로보는경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2274&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2327",
+      "label": "영상속 경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2327&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2328",
+      "label": "VR",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2328&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2329",
+      "label": "실시간경주",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2329&seq=2",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2363",
+      "label": "양동마을3D스캔영상",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?&mnu_uid=2363&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4154",
+      "label": "경주여행17선",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4154&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2258",
+      "label": "음식",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2258&",
+      "section_type": "FOOD"
+    },
+    {
+      "mnu_uid": "2500",
+      "label": "음식점",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2500&",
+      "section_type": "FOOD"
+    },
+    {
+      "mnu_uid": "2501",
+      "label": "전체",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2501&code_uid=100",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2502",
+      "label": "한식",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2502&code_uid=1001",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2503",
+      "label": "양식",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2503&code_uid=1000",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2504",
+      "label": "일식",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2504&code_uid=1002",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2505",
+      "label": "중식",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2505&code_uid=1003",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4134",
+      "label": "먹거리핫플레이스",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4134&code_uid=1017",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2287",
+      "label": "카페&찻집",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2287&code_uid=1004",
+      "section_type": "FOOD"
+    },
+    {
+      "mnu_uid": "2286",
+      "label": "향토음식 별채반",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2286&",
+      "section_type": "FOOD"
+    },
+    {
+      "mnu_uid": "2288",
+      "label": "경주한우",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2288&",
+      "section_type": "FOOD"
+    },
+    {
+      "mnu_uid": "1729",
+      "label": "착한가격업소",
+      "url": "https://www.gyeongju.go.kr/area/page.do?step=1&pageOrder=0&srchEnable=1&pageNo=1&srchKeyword=&srchSDate=&pageRef=0&srchBgpUid=454&mnu_uid=1729&parm_mnu_uid=1595&pagePrvNxt=1&srchEDate=&srchVoteType=-1&srchColumn=&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2259",
+      "label": "숙박",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2259&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4133",
+      "label": "전체",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4133&code_uid=200",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2336",
+      "label": "호텔",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2336&code_uid=1027",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2337",
+      "label": "콘도",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2337&code_uid=1028",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2338",
+      "label": "한옥호텔",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2338&code_uid=1029",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2339",
+      "label": "오토캠핑,야영장",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2339&code_uid=1030",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2340",
+      "label": "게스트하우스·펜션",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2340&code_uid=1031",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3606",
+      "label": "공공시설",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3606&code_uid=1135",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2260",
+      "label": "쇼핑",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2260&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2341",
+      "label": "특산품",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2341&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2342",
+      "label": "경주의 빵",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2342&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3706",
+      "label": "경주의 다양한 술",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3706&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2343",
+      "label": "전통시장",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2343&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2706",
+      "label": "기념품가게",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2706&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2261",
+      "label": "문화행사",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2261&",
+      "section_type": "EVENT"
+    },
+    {
+      "mnu_uid": "2393",
+      "label": "이달의 축제 및 행사",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2393&code_uid=300",
+      "section_type": "EVENT"
+    },
+    {
+      "mnu_uid": "2346",
+      "label": "정기 축제 행사 안내",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2346&",
+      "section_type": "EVENT"
+    },
+    {
+      "mnu_uid": "2715",
+      "label": "정기축제 및 행사",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2715&",
+      "section_type": "EVENT"
+    },
+    {
+      "mnu_uid": "2716",
+      "label": "경주 상설 공연, 전시",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2716&",
+      "section_type": "EVENT"
+    },
+    {
+      "mnu_uid": "2257",
+      "label": "국가유산·역사",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2257&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2275",
+      "label": "세계문화유산",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2275&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2349",
+      "label": "불국사·석굴암",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2349&code_uid=1044",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2508",
+      "label": "양동마을",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2508&code_uid=1045",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2509",
+      "label": "옥산서원",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2509&code_uid=1046",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2510",
+      "label": "남산지구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2510&code_uid=1047",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2511",
+      "label": "월성지구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2511&code_uid=1048",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2512",
+      "label": "대릉원지구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2512&code_uid=1049",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2513",
+      "label": "황룡사지구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2513&code_uid=1050",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2514",
+      "label": "산성지구",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2514&code_uid=1051",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2278",
+      "label": "경주의 역사",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2278&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2357",
+      "label": "역사이야기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2357&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2358",
+      "label": "신라왕이야기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2358&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2359",
+      "label": "설화이야기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2359&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2279",
+      "label": "분류별 국가유산",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2279&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2360",
+      "label": "분류별 현황",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2360&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2361",
+      "label": "국가지정국가유산",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2361&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2362",
+      "label": "도지정국가유산",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2362&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2262",
+      "label": "신청하기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2262&",
+      "section_type": "APPLICATION"
+    },
+    {
+      "mnu_uid": "2395",
+      "label": "문화관광해설신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2395&",
+      "section_type": "APPLICATION"
+    },
+    {
+      "mnu_uid": "2368",
+      "label": "황성공원 숲체험 신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2368&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2369",
+      "label": "신라대종타종체험신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2369&",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "2367",
+      "label": "관광지도신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2367&reqType=1",
+      "section_type": "APPLICATION"
+    },
+    {
+      "mnu_uid": "2372",
+      "label": "관광지도미리보기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2372&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "4084",
+      "label": "사적지 길라잡이 미리보기",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4084&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2830",
+      "label": "스탬프투어 완료 기념품 신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2830&reqType=4",
+      "section_type": "TOUR_PROGRAM"
+    },
+    {
+      "mnu_uid": "486",
+      "label": "관광책자 e-book",
+      "url": "https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=486&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "3555",
+      "label": "경주 단체관광 인센티브 지급",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=3555&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2263",
+      "label": "여행필수정보",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2263&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2373",
+      "label": "여행도우미",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2373&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2376",
+      "label": "관광안내소",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2376&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2380",
+      "label": "공공와이파이서비스",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2380&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2377",
+      "label": "문화관광해설사안내",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2377&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2378",
+      "label": "입장료안내",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2378&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2379",
+      "label": "관광스탬프안내",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2379&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2689",
+      "label": "무장애 여행정보",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2689&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "4030",
+      "label": "짐보관 서비스",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=4030&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2374",
+      "label": "교통정보",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2374&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "2381",
+      "label": "경주오는길",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2381&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2382",
+      "label": "비행기, 기차, 고속버스, 시내버스",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2382&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2264",
+      "label": "나의 여행",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2264&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2388",
+      "label": "투어플랜",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2388&",
+      "section_type": "TOUR_PROGRAM"
+    },
+    {
+      "mnu_uid": "2385",
+      "label": "스크랩 리스트",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2385&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "2507",
+      "label": "여행공유",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2507&",
+      "section_type": "COURSE"
+    },
+    {
+      "mnu_uid": "2396",
+      "label": "문화관광해설신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2396&",
+      "section_type": "APPLICATION"
+    },
+    {
+      "mnu_uid": "2457",
+      "label": "숲체험신청",
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2457&reqType=2",
+      "section_type": "EXPERIENCE"
+    },
+    {
+      "mnu_uid": "1069",
+      "label": "개인정보처리방침",
+      "url": "https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=1069&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "1068",
+      "label": "이용약관",
+      "url": "https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=1068&",
+      "section_type": "OTHER"
+    },
+    {
+      "mnu_uid": "1070",
+      "label": "저작권안내",
+      "url": "https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=1070&",
+      "section_type": "TRAVEL_INFO"
+    },
+    {
+      "mnu_uid": "1807",
+      "label": "관광불편신고",
+      "url": "https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=1807",
+      "section_type": "OTHER"
+    }
+  ]
+}

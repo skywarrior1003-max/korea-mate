@@ -1,0 +1,17 @@
+
+
+
+
+
+
+
+
+<script>
+ //<![CDATA[ 
+ //]]> 
+ </script>
+ 
+<script type="text/javascript" language="javascript">
+ //<![CDATA[ 
+ alert("메뉴정보 오류, 비정상적인 메뉴코드가 입력되었습니다.");history.back();
+ //]]> </script><noscript>스크립트를 지원하지 않습니다. <a href="history.back()">이동</a>을 클릭하여 주십시요.</noscript>

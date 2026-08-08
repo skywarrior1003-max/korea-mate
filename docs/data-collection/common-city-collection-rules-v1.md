@@ -176,3 +176,46 @@ API_BASE_URL = "https://apis.data.go.kr/B551011/KorService2"
 - raw/frozen 기존 파일 덮어쓰기 금지
 - API key 출력·커밋 금지
 - force push 금지
+
+## §9 Travel Content Layer (도시 공식 여행 콘텐츠 레이어)
+
+새 도시 수집 시작 시 place만 수집하지 않는다. 공식 관광사이트 전체 메뉴를 먼저 inventory하고
+Travel Content Layer를 구축한다.
+
+**9-1 레이어 구성 원칙**
+- place, event, course, experience, program, travel_info는 분리된 데이터 유형이다.
+- event·course·experience·program은 기존 place와 relation으로 연결한다.
+- place 수에 포함하지 않는다.
+
+**9-2 공식 코스**
+- official course = AI 일정 생성의 기준 seed/reference 데이터
+- stop 순서 반드시 보존
+- stop ↔ 기존 place relation 구축 (substring·좌표 단독 매칭 금지)
+
+**9-3 temporal freshness**
+- event/신청기간/예약기간/혜택/지원사업은 TEMPORAL 분류
+- collection_date 기준으로 status 계산 (datetime.date.today() 직접 사용 금지)
+- 만료 콘텐츠 삭제 금지 — PAST/EXPIRED 상태 보존
+
+**9-4 신청 프로그램 eligibility**
+- 공식 근거 없이 외국인 가능 여부 추정 금지
+- 기본값: ELIGIBILITY_REVIEW
+
+**9-5 charset**
+- 도시 공식사이트 charset 사전 가정 금지
+- Content-Type → HTML meta → 사이트별 알려진 값 순으로 확인
+- 한글 정상성 검사 필수 (replacement char < 0.5%)
+- charset_ok=false: CHARSET_DAMAGE sentinel, 해당 페이지 데이터 사용 금지
+
+**9-6 smoke test**
+- bulk 호출 전 known-good 페이지 1건 smoke test (§7-5 준용)
+- HTTP 200 + charset_ok + 한글 정상 확인 후에만 bulk 허용
+
+**9-7 수집 범위**
+- 공식 도시 관광사이트 우선, KTO API 보완
+- 수집 단계에서 유용 콘텐츠 조기 제외 금지
+- 실제 구조/접근 제한 확인 전까지 섹션 누락 처리 금지
+
+**9-8 재현성**
+- _run_metadata.json에 collection_date 저장 (Run1)
+- Run2: NETWORK=0, cache만 사용, Run1과 BYTE_IDENTICAL 검증

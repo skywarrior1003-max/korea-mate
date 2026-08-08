@@ -1,0 +1,9 @@
+{
+  "collection_date": "2026-08-08",
+  "collected_at": "2026-08-08T04:47:20.691874Z",
+  "source_base": "data/gyeongju-final-closeout-handoff-v1@f7d6f44",
+  "parser_version": "v2.0.0",
+  "script": "gyeongju_official_travel_content_layer_v2.py",
+  "task": "TASK-GYEONGJU-OFFICIAL-TRAVEL-CONTENT-LAYER-V2",
+  "network_run1": true
+}

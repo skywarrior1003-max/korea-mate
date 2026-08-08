@@ -1,0 +1,1454 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="ko">
+  <head>
+	
+
+
+
+
+
+
+<title>
+
+
+
+	
+	
+	고분의 도시 경주, 개성있는 왕릉찾기 |
+
+
+
+	
+	 나의두번째경주 |
+	
+
+
+
+	
+	
+	여행코스추천 |
+
+
+
+	
+	
+	경주 여행 |
+
+
+
+	
+	
+	
+
+ 경주문화관광  </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=yes" />
+<meta name="format-detection" content="telephone=no">
+<!-- 아이폰에서 전화번호 안나오거나 클릭해도 전화안걸리게할때 -->
+<meta name="robots" content="all">
+<meta name="title" content="경주문화관광">
+<meta name="subject" content="경주시 문화관광 홈페이지입니다.">
+<meta name="Keywords" content="경주문화관광, 경주여행, 문화재·역사, 음식, 숙박, 쇼핑, 문화행사, 신청하기, 여행필수정보, 나의여행">
+<meta name="description" content="한국관광의 메카 Beautiful Gyeongju가 여러분을 초대합니다.">
+<meta name="author" content="경주문화관광">
+<meta property="og:type" content="website">
+<meta property="og:title" id="ogtitle" content="경주문화관광">
+<meta property="og:description" content="한국관광의 메카 Beautiful Gyeongju가 여러분을 초대합니다.">
+<script src="/design/common/js/jquery-1.11.3.min.js"></script>
+<script src="/design/common/js/jquery-ui.js"></script>
+<script src="/design/common/js/utility.js"></script>
+<script src="/design/tour2019/js/common.js"></script>
+<!--[if lt IE 9]>
+<script src="/design/common/js/html5shiv.js"></script>
+<![endif]-->
+<!--[if lte IE 8]>
+<script>
+alert('IE 8이하 버젼을 사용하고 있습니다. IE9이상으로 Upgrade 하셔야 정상적인 화면을 보실수있습니다.');
+</script>
+<![endif]-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157141530-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-157141530-1');
+</script>
+<link rel="stylesheet" href="/design/common/css/jquery-ui.css">
+<link rel="stylesheet" href="/design/common/css/common_2019.css">
+<link rel="stylesheet" href="/design/common/css/board_2019.css">
+<link rel="stylesheet" href="/design/tour2019/css/layout.css">
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('dc83c6ab530545bd2fbba0be7ba1015a'); //★ 수정 할 것
+</script>
+
+  <script src="/design/common/js/slick.js"></script>
+  <script src="/design/tour2019/js/sub.js"></script>
+  <link rel="stylesheet" href="/design/common/css/slick.css">
+  <link rel="stylesheet" href="/design/tour2019/css/sub.css?v=2608081400">
+  </head>
+
+  <body>
+    <div id="skipBtn" tabindex="-1">
+      <a href="#contStart">본문 바로가기</a>
+    </div>
+
+	
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+	new google.translate.TranslateElement({pageLanguage:'ko',autoDisplay:false,includedLanguages:'ko,en,ja,zh-CN'},'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="header">
+	<header class="header wrap">
+		<h1 class="logo"><a href="./index.do">경주문화관광</a></h1>
+		<div id="google_translate_element" style="display:none;"></div>
+		<div class="topMenu">
+			<ul>
+				<li><a href="/open_content/ko/index.do" target="_blank" class="icon1">경주시청 바로가기</a></li>
+				
+				<li><a href="https://황리단길.kr" target="_blank">상상황리단길 바로가기</a></li>
+
+				<li class="gjon"><a href="/tour/page.do?mnu_uid=4085&"><span>경주로ON</span></a></li>
+				
+				<li><a href="/tour/page.do?mnu_uid=2669&amp;mode=" class="icon2">로그인</a></li>
+				
+				<li class="langEvent"><a href="#self" class="icon3 off" title="언어 열기">LANGUAGE</a>
+				<ul class="lang translation-links">
+					<li><a href="javascript:void(0)" class="english" data-lang="en">English</a></li>
+					<li><a href="javascript:void(0)" class="japanese" data-lang="ja">日本語</a></li>
+					<li><a href="javascript:void(0)" class="chinese" data-lang="zh-CN">中文(简体)</a></li>
+				</ul>
+			</li>
+			<li><a href="/tour/page.do?mnu_uid=2694&" class="icon4">전체메뉴</a></li>
+		</ul>
+		<!--a href="/tour/page.do?mnu_uid=2274&" class="movie">영상으로보는 경주</a-->
+	</div>
+	<div id="navi">
+		<ul class="dept1">
+			<li><a href="/tour/page.do?mnu_uid=2256&amp;" target="_self"><span>경주 여행</span></a>
+<div class="naviWrap">
+
+<div class="title">경주 여행</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=4172&amp;" target="_self"><span>이달의 추천여행지</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=4185&amp;" target="_self"><span>2026년</span></a>
+<li><a href="/tour/page.do?mnu_uid=4075&amp;" target="_self"><span>2025년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3621&amp;" target="_self"><span>2024년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3801&amp;" target="_self"><span>2023년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3239&amp;" target="_self"><span>2022년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3497&amp;" target="_self"><span>2021년</span></a>
+<li><a href="/tour/page.do?mnu_uid=2265&amp;" target="_self"><span>2020년</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2266&amp;" target="_self"><span>권역별 관광지</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2291&amp;code_uid=1011&amp;" target="_self"><span>보문관광단지권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2292&amp;code_uid=1012" target="_self"><span>시내권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2293&amp;code_uid=1015" target="_self"><span>불국사권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2294&amp;code_uid=1016" target="_self"><span>동해안권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2295&amp;code_uid=1014" target="_self"><span>남산권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2296&amp;code_uid=1010" target="_self"><span>서악,북부권</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2267&amp;" target="_self"><span>여행코스추천</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2297&amp;" target="_self"><span>경주핵심여행코스</span></a>
+<li><a href="/tour/page.do?mnu_uid=2298&amp;" target="_self"><span>나의두번째경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2299&amp;" target="_self"><span>자박자박 경주걷기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2300&amp;" target="_self"><span>두바퀴로 누비는 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2301&amp;" target="_self"><span>버스타고 경주여행</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2551&amp;" target="_self"><span>테마여행</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2552&amp;" target="_self"><span>경주10Pick</span></a>
+<li><a href="/tour/page.do?mnu_uid=2553&amp;" target="_self"><span>감성더하기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2554&amp;" target="_self"><span>동네탐구</span></a>
+<li><a href="/tour/page.do?mnu_uid=4079&amp;" target="_self"><span>사계절 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=3702&amp;" target="_self"><span>벚꽃알리미</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2271&amp;" target="_self"><span>경주의 자연</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2315&amp;" target="_self"><span>포토스팟</span></a>
+<li><a href="/tour/page.do?mnu_uid=2314&amp;" target="_self"><span>경주꽃달력</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2272&amp;" target="_self"><span>체험과레져</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2317&amp;" target="_self"><span>의복체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2318&amp;" target="_self"><span>전통문화체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2319&amp;" target="_self"><span>템플스테이</span></a>
+<li><a href="/tour/page.do?mnu_uid=2323&amp;" target="_self"><span>고택체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2324&amp;" target="_self"><span>농촌교육장, 체험마을</span></a>
+<li><a href="/tour/page.do?mnu_uid=2325&amp;" target="_self"><span>VR 체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2326&amp;" target="_self"><span>스포츠</span></a>
+<li><a href="/tour/page.do?mnu_uid=2705&amp;" target="_self"><span>이색체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2710&amp;" target="_self"><span>동·식물 체험</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2273&amp;" target="_self"><span>투어프로그램</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2274&amp;" target="_self"><span>영상으로보는경주</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2327&amp;" target="_self"><span>영상속 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2328&amp;" target="_self"><span>VR</span></a>
+<li><a href="/tour/page.do?mnu_uid=2329&amp;seq=2" target="_self"><span>실시간경주</span></a>
+<li><a href="http://gyeongju.go.kr/gyeongjuimage/index.do" target="_blank"><span>이미지다운로드</span></a>
+<li><a href="/tour/page.do?&amp;mnu_uid=2363&amp;" target="_self"><span>양동마을3D스캔영상</span></a>
+<li><a href="https://xn--wk0bx2gp2g1p7a.kr/index.nm?contentId=448" target="_blank"><span>상상황리단길</span></a>
+<li><a href="/tour/page.do?mnu_uid=4154&amp;" target="_self"><span>경주여행17선</span></a>
+</ul>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2258&amp;" target="_self"><span>음식</span></a>
+<div class="naviWrap">
+
+<div class="title">음식</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2500&amp;" target="_self"><span>음식점</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2501&amp;code_uid=100" target="_self"><span>전체</span></a>
+<li><a href="/tour/page.do?mnu_uid=2502&amp;code_uid=1001" target="_self"><span>한식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2503&amp;code_uid=1000" target="_self"><span>양식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2504&amp;code_uid=1002" target="_self"><span>일식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2505&amp;code_uid=1003" target="_self"><span>중식</span></a>
+<li><a href="/tour/page.do?mnu_uid=4134&amp;code_uid=1017" target="_self"><span>먹거리핫플레이스</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2287&amp;code_uid=1004" target="_self"><span>카페&amp;찻집</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2286&amp;" target="_self"><span>향토음식 별채반</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2288&amp;" target="_self"><span>경주한우</span></a>
+</li>
+<li><a href="https://www.gyeongju.go.kr/area/page.do?step=1&pageOrder=0&srchEnable=1&pageNo=1&srchKeyword=&srchSDate=&pageRef=0&srchBgpUid=454&mnu_uid=1729&parm_mnu_uid=1595&pagePrvNxt=1&srchEDate=&srchVoteType=-1&srchColumn=&" target="_blank"><span>착한가격업소</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2259&amp;" target="_self"><span>숙박</span></a>
+<div class="naviWrap">
+
+<div class="title">숙박</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=4133&amp;code_uid=200" target="_self"><span>전체</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2336&amp;code_uid=1027" target="_self"><span>호텔</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2337&amp;code_uid=1028" target="_self"><span>콘도</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2338&amp;code_uid=1029" target="_self"><span>한옥호텔</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2339&amp;code_uid=1030" target="_self"><span>오토캠핑,야영장</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2340&amp;code_uid=1031" target="_self"><span>게스트하우스·펜션</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3606&amp;code_uid=1135" target="_self"><span>공공시설</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2260&amp;" target="_self"><span>쇼핑</span></a>
+<div class="naviWrap">
+
+<div class="title">쇼핑</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2341&amp;" target="_self"><span>특산품</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2342&amp;" target="_self"><span>경주의 빵</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3706&amp;" target="_self"><span>경주의 다양한 술</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2343&amp;" target="_self"><span>전통시장</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2706&amp;" target="_self"><span>기념품가게</span></a>
+</li>
+<li><a href="https://gjmall.cyso.co.kr/" target="_blank"><span>경주몰</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2261&amp;" target="_self"><span>문화행사</span></a>
+<div class="naviWrap">
+
+<div class="title">문화행사</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2393&amp;code_uid=300" target="_self"><span>이달의 축제 및 행사</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2346&amp;" target="_self"><span>정기 축제 행사 안내</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2715&amp;" target="_self"><span>정기축제 및 행사</span></a>
+<li><a href="/tour/page.do?mnu_uid=2716&amp;" target="_self"><span>경주 상설 공연, 전시</span></a>
+</ul>
+</li>
+<li><a href="https://garts.kr/index.do?menuId=00000260" target="_blank"><span>공연전시 정보</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2257&amp;" target="_self"><span>국가유산·역사</span></a>
+<div class="naviWrap">
+
+<div class="title">국가유산·역사</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2275&amp;" target="_self"><span>세계문화유산</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2349&amp;code_uid=1044" target="_self"><span>불국사·석굴암</span></a>
+<li><a href="/tour/page.do?mnu_uid=2508&amp;code_uid=1045" target="_self"><span>양동마을</span></a>
+<li><a href="/tour/page.do?mnu_uid=2509&amp;code_uid=1046" target="_self"><span>옥산서원</span></a>
+<li><a href="/tour/page.do?mnu_uid=2510&amp;code_uid=1047" target="_self"><span>남산지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2511&amp;code_uid=1048" target="_self"><span>월성지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2512&amp;code_uid=1049" target="_self"><span>대릉원지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2513&amp;code_uid=1050" target="_self"><span>황룡사지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2514&amp;code_uid=1051" target="_self"><span>산성지구</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2278&amp;" target="_self"><span>경주의 역사</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2357&amp;" target="_self"><span>역사이야기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2358&amp;" target="_self"><span>신라왕이야기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2359&amp;" target="_self"><span>설화이야기</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2279&amp;" target="_self"><span>분류별 국가유산</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2360&amp;" target="_self"><span>분류별 현황</span></a>
+<li><a href="/tour/page.do?mnu_uid=2361&amp;" target="_self"><span>국가지정국가유산</span></a>
+<li><a href="/tour/page.do?mnu_uid=2362&amp;" target="_self"><span>도지정국가유산</span></a>
+<li><a href="/tour/page.do?mnu_uid=2363&amp;" target="_self"><span>양동마을3D스캔영상</span></a>
+</ul>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2262&amp;" target="_self"><span>신청하기</span></a>
+<div class="naviWrap">
+
+<div class="title">신청하기</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2395&amp;" target="_self"><span>문화관광해설신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2368&amp;" target="_self"><span>황성공원 숲체험 신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2369&amp;" target="_self"><span>신라대종타종체험신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2367&amp;reqType=1" target="_self"><span>관광지도신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2372&amp;" target="_self"><span>관광지도미리보기</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=4084&amp;" target="_self"><span>사적지 길라잡이 미리보기</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2830&amp;reqType=4" target="_self"><span>스탬프투어 완료 기념품 신청</span></a>
+</li>
+<li><a href="https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=486&" target="_blank"><span>관광책자 e-book</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3555&amp;" target="_self"><span>경주 단체관광 인센티브 지급</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2263&amp;" target="_self"><span>여행필수정보</span></a>
+<div class="naviWrap">
+
+<div class="title">여행필수정보</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2373&amp;" target="_self"><span>여행도우미</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2376&amp;" target="_self"><span>관광안내소</span></a>
+<li><a href="/tour/page.do?mnu_uid=2380&amp;" target="_self"><span>공공와이파이서비스</span></a>
+<li><a href="/tour/page.do?mnu_uid=2377&amp;" target="_self"><span>문화관광해설사안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2378&amp;" target="_self"><span>입장료안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2379&amp;" target="_self"><span>관광스탬프안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2689&amp;" target="_self"><span>무장애 여행정보</span></a>
+<li><a href="https://www.gjfmc.or.kr/gjsiseol/facility/facilityTab1.do?menuNo=311&classId=PARKING&itemId=T0000015" target="_blank"><span>공영주차장</span></a>
+<li><a href="/tour/page.do?mnu_uid=4030&amp;" target="_self"><span>짐보관 서비스</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2374&amp;" target="_self"><span>교통정보</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2381&amp;" target="_self"><span>경주오는길</span></a>
+<li><a href="/tour/page.do?mnu_uid=2382&amp;" target="_self"><span>비행기, 기차, 고속버스, 시내버스</span></a>
+<li><a href="http://its.gyeongju.go.kr" target="_blank"><span>교통정보센터</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=4085&amp;" target="_self"><span>경주로ON</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2264&amp;" target="_self"><span>나의 여행</span></a>
+<div class="naviWrap">
+
+<div class="title">나의 여행</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2388&amp;" target="_self"><span>투어플랜</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2385&amp;" target="_self"><span>스크랩 리스트</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2507&amp;" target="_self"><span>여행공유</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+
+		</ul>
+		
+<div class="naviSearch">
+  <dl class="search">
+    <dt>문화관광 통합검색</dt>
+    <dd>
+  		<form id="RsaSearchForm1" method="post" name="RsaSearchForm1" action="https://search.gyeongju.go.kr/RSA_Tour/front/Search.jsp" target="_blank" onsubmit="return ">
+        <input type="hidden" name="menu" id="menu" value="통합검색" />
+        <label class="hidden" for="qt">검색어 입력</label>
+        <input type="text" id="qt" name="qt" value="" placeholder="검색어를 입력하세요"/>
+        <a href="#self" class="btn" onclick="checkSerData2(document.RsaSearchForm1)" title="새창">검색</a>
+  		</form>
+    </dd>
+  </dl>
+  <dl class="keywords">
+    <dt><strong>BEST</strong> 인기검색어</dt>
+    <dd>
+      <ul>
+        <li><a target="_blank" href="#self" onclick="selectTourSearch('황리단길');return false;"><span>1</span>황리단길</a></li>
+        <li><a target="_blank" href="#self" onclick="selectTourSearch('포토스팟');return false;"><span>2</span>포토스팟</a></li>
+        <li><a target="_blank" href="#self" onclick="selectTourSearch('실시간경주');return false;"><span>3</span>실시간경주</a></li>
+      </ul>
+    </dd>
+  </dl>
+  <dl class="weather">
+    <dt>오늘의 날씨</dt>
+    <dd>
+      <ul>
+        <li class="todayWeather"><span class="wTemp"></span></li>
+        <li class="tomorrowWeather">내일<span class="wState hidden"></span></li>
+      </ul>
+    </dd>
+  </dl>
+</div>
+
+	</div>
+	<a href="#" id="mnaviOpen">전체메뉴</a>
+	<div id="mNavi">
+		<div>
+			<div class="mNavimenu">
+				<ul>
+					<li><a href="/open_content/ko/index.do" target="_blank" class="home">경주시청 바로가기</a></li>
+					<li><a href="https://www.gyeongju.go.kr/hwangridan/index.nm?contentId=448" target="_blank" class="sshwang">상상황리단길 바로가기</a></li>
+					<li><a href="/tour/page.do?mnu_uid=4085&" class="sshwang">경주로ON</a></li>
+					
+					<li><a href="/tour/page.do?mnu_uid=2669&amp;mode=" class="login">로그인</a></li>
+					
+					<li class="lang m_translation-links">
+						<a href="javascript:void(0)" class="english" data-lang="en">English</a>
+						<a href="javascript:void(0)" class="japanese" data-lang="ja">日本語</a>
+						<a href="javascript:void(0)" class="chinese" data-lang="zh-CN">中文(简体)</a>
+					</li>
+				</ul>
+			</div>
+			<ul class="dept1">
+				
+				<li><a href="/tour/page.do?mnu_uid=2256&amp;" target="_self"><span>경주 여행</span></a>
+<div class="naviWrap">
+
+<div class="title">경주 여행</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=4172&amp;" target="_self"><span>이달의 추천여행지</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=4185&amp;" target="_self"><span>2026년</span></a>
+<li><a href="/tour/page.do?mnu_uid=4075&amp;" target="_self"><span>2025년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3621&amp;" target="_self"><span>2024년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3801&amp;" target="_self"><span>2023년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3239&amp;" target="_self"><span>2022년</span></a>
+<li><a href="/tour/page.do?mnu_uid=3497&amp;" target="_self"><span>2021년</span></a>
+<li><a href="/tour/page.do?mnu_uid=2265&amp;" target="_self"><span>2020년</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2266&amp;" target="_self"><span>권역별 관광지</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2291&amp;code_uid=1011&amp;" target="_self"><span>보문관광단지권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2292&amp;code_uid=1012" target="_self"><span>시내권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2293&amp;code_uid=1015" target="_self"><span>불국사권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2294&amp;code_uid=1016" target="_self"><span>동해안권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2295&amp;code_uid=1014" target="_self"><span>남산권</span></a>
+<li><a href="/tour/page.do?mnu_uid=2296&amp;code_uid=1010" target="_self"><span>서악,북부권</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2267&amp;" target="_self"><span>여행코스추천</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2297&amp;" target="_self"><span>경주핵심여행코스</span></a>
+<li><a href="/tour/page.do?mnu_uid=2298&amp;" target="_self"><span>나의두번째경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2299&amp;" target="_self"><span>자박자박 경주걷기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2300&amp;" target="_self"><span>두바퀴로 누비는 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2301&amp;" target="_self"><span>버스타고 경주여행</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2551&amp;" target="_self"><span>테마여행</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2552&amp;" target="_self"><span>경주10Pick</span></a>
+<li><a href="/tour/page.do?mnu_uid=2553&amp;" target="_self"><span>감성더하기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2554&amp;" target="_self"><span>동네탐구</span></a>
+<li><a href="/tour/page.do?mnu_uid=4079&amp;" target="_self"><span>사계절 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=3702&amp;" target="_self"><span>벚꽃알리미</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2271&amp;" target="_self"><span>경주의 자연</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2315&amp;" target="_self"><span>포토스팟</span></a>
+<li><a href="/tour/page.do?mnu_uid=2314&amp;" target="_self"><span>경주꽃달력</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2272&amp;" target="_self"><span>체험과레져</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2317&amp;" target="_self"><span>의복체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2318&amp;" target="_self"><span>전통문화체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2319&amp;" target="_self"><span>템플스테이</span></a>
+<li><a href="/tour/page.do?mnu_uid=2323&amp;" target="_self"><span>고택체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2324&amp;" target="_self"><span>농촌교육장, 체험마을</span></a>
+<li><a href="/tour/page.do?mnu_uid=2325&amp;" target="_self"><span>VR 체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2326&amp;" target="_self"><span>스포츠</span></a>
+<li><a href="/tour/page.do?mnu_uid=2705&amp;" target="_self"><span>이색체험</span></a>
+<li><a href="/tour/page.do?mnu_uid=2710&amp;" target="_self"><span>동·식물 체험</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2273&amp;" target="_self"><span>투어프로그램</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2274&amp;" target="_self"><span>영상으로보는경주</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2327&amp;" target="_self"><span>영상속 경주</span></a>
+<li><a href="/tour/page.do?mnu_uid=2328&amp;" target="_self"><span>VR</span></a>
+<li><a href="/tour/page.do?mnu_uid=2329&amp;seq=2" target="_self"><span>실시간경주</span></a>
+<li><a href="http://gyeongju.go.kr/gyeongjuimage/index.do" target="_blank"><span>이미지다운로드</span></a>
+<li><a href="/tour/page.do?&amp;mnu_uid=2363&amp;" target="_self"><span>양동마을3D스캔영상</span></a>
+<li><a href="https://xn--wk0bx2gp2g1p7a.kr/index.nm?contentId=448" target="_blank"><span>상상황리단길</span></a>
+<li><a href="/tour/page.do?mnu_uid=4154&amp;" target="_self"><span>경주여행17선</span></a>
+</ul>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2258&amp;" target="_self"><span>음식</span></a>
+<div class="naviWrap">
+
+<div class="title">음식</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2500&amp;" target="_self"><span>음식점</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2501&amp;code_uid=100" target="_self"><span>전체</span></a>
+<li><a href="/tour/page.do?mnu_uid=2502&amp;code_uid=1001" target="_self"><span>한식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2503&amp;code_uid=1000" target="_self"><span>양식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2504&amp;code_uid=1002" target="_self"><span>일식</span></a>
+<li><a href="/tour/page.do?mnu_uid=2505&amp;code_uid=1003" target="_self"><span>중식</span></a>
+<li><a href="/tour/page.do?mnu_uid=4134&amp;code_uid=1017" target="_self"><span>먹거리핫플레이스</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2287&amp;code_uid=1004" target="_self"><span>카페&amp;찻집</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2286&amp;" target="_self"><span>향토음식 별채반</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2288&amp;" target="_self"><span>경주한우</span></a>
+</li>
+<li><a href="https://www.gyeongju.go.kr/area/page.do?step=1&pageOrder=0&srchEnable=1&pageNo=1&srchKeyword=&srchSDate=&pageRef=0&srchBgpUid=454&mnu_uid=1729&parm_mnu_uid=1595&pagePrvNxt=1&srchEDate=&srchVoteType=-1&srchColumn=&" target="_blank"><span>착한가격업소</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2259&amp;" target="_self"><span>숙박</span></a>
+<div class="naviWrap">
+
+<div class="title">숙박</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=4133&amp;code_uid=200" target="_self"><span>전체</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2336&amp;code_uid=1027" target="_self"><span>호텔</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2337&amp;code_uid=1028" target="_self"><span>콘도</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2338&amp;code_uid=1029" target="_self"><span>한옥호텔</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2339&amp;code_uid=1030" target="_self"><span>오토캠핑,야영장</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2340&amp;code_uid=1031" target="_self"><span>게스트하우스·펜션</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3606&amp;code_uid=1135" target="_self"><span>공공시설</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2260&amp;" target="_self"><span>쇼핑</span></a>
+<div class="naviWrap">
+
+<div class="title">쇼핑</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2341&amp;" target="_self"><span>특산품</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2342&amp;" target="_self"><span>경주의 빵</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3706&amp;" target="_self"><span>경주의 다양한 술</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2343&amp;" target="_self"><span>전통시장</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2706&amp;" target="_self"><span>기념품가게</span></a>
+</li>
+<li><a href="https://gjmall.cyso.co.kr/" target="_blank"><span>경주몰</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2261&amp;" target="_self"><span>문화행사</span></a>
+<div class="naviWrap">
+
+<div class="title">문화행사</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2393&amp;code_uid=300" target="_self"><span>이달의 축제 및 행사</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2346&amp;" target="_self"><span>정기 축제 행사 안내</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2715&amp;" target="_self"><span>정기축제 및 행사</span></a>
+<li><a href="/tour/page.do?mnu_uid=2716&amp;" target="_self"><span>경주 상설 공연, 전시</span></a>
+</ul>
+</li>
+<li><a href="https://garts.kr/index.do?menuId=00000260" target="_blank"><span>공연전시 정보</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2257&amp;" target="_self"><span>국가유산·역사</span></a>
+<div class="naviWrap">
+
+<div class="title">국가유산·역사</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2275&amp;" target="_self"><span>세계문화유산</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2349&amp;code_uid=1044" target="_self"><span>불국사·석굴암</span></a>
+<li><a href="/tour/page.do?mnu_uid=2508&amp;code_uid=1045" target="_self"><span>양동마을</span></a>
+<li><a href="/tour/page.do?mnu_uid=2509&amp;code_uid=1046" target="_self"><span>옥산서원</span></a>
+<li><a href="/tour/page.do?mnu_uid=2510&amp;code_uid=1047" target="_self"><span>남산지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2511&amp;code_uid=1048" target="_self"><span>월성지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2512&amp;code_uid=1049" target="_self"><span>대릉원지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2513&amp;code_uid=1050" target="_self"><span>황룡사지구</span></a>
+<li><a href="/tour/page.do?mnu_uid=2514&amp;code_uid=1051" target="_self"><span>산성지구</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2278&amp;" target="_self"><span>경주의 역사</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2357&amp;" target="_self"><span>역사이야기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2358&amp;" target="_self"><span>신라왕이야기</span></a>
+<li><a href="/tour/page.do?mnu_uid=2359&amp;" target="_self"><span>설화이야기</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2279&amp;" target="_self"><span>분류별 국가유산</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2360&amp;" target="_self"><span>분류별 현황</span></a>
+<li><a href="/tour/page.do?mnu_uid=2361&amp;" target="_self"><span>국가지정국가유산</span></a>
+<li><a href="/tour/page.do?mnu_uid=2362&amp;" target="_self"><span>도지정국가유산</span></a>
+<li><a href="/tour/page.do?mnu_uid=2363&amp;" target="_self"><span>양동마을3D스캔영상</span></a>
+</ul>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2262&amp;" target="_self"><span>신청하기</span></a>
+<div class="naviWrap">
+
+<div class="title">신청하기</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2395&amp;" target="_self"><span>문화관광해설신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2368&amp;" target="_self"><span>황성공원 숲체험 신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2369&amp;" target="_self"><span>신라대종타종체험신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2367&amp;reqType=1" target="_self"><span>관광지도신청</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2372&amp;" target="_self"><span>관광지도미리보기</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=4084&amp;" target="_self"><span>사적지 길라잡이 미리보기</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2830&amp;reqType=4" target="_self"><span>스탬프투어 완료 기념품 신청</span></a>
+</li>
+<li><a href="https://www.gyeongju.go.kr/open_content/ko/page.do?mnu_uid=486&" target="_blank"><span>관광책자 e-book</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=3555&amp;" target="_self"><span>경주 단체관광 인센티브 지급</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2263&amp;" target="_self"><span>여행필수정보</span></a>
+<div class="naviWrap">
+
+<div class="title">여행필수정보</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2373&amp;" target="_self"><span>여행도우미</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2376&amp;" target="_self"><span>관광안내소</span></a>
+<li><a href="/tour/page.do?mnu_uid=2380&amp;" target="_self"><span>공공와이파이서비스</span></a>
+<li><a href="/tour/page.do?mnu_uid=2377&amp;" target="_self"><span>문화관광해설사안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2378&amp;" target="_self"><span>입장료안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2379&amp;" target="_self"><span>관광스탬프안내</span></a>
+<li><a href="/tour/page.do?mnu_uid=2689&amp;" target="_self"><span>무장애 여행정보</span></a>
+<li><a href="https://www.gjfmc.or.kr/gjsiseol/facility/facilityTab1.do?menuNo=311&classId=PARKING&itemId=T0000015" target="_blank"><span>공영주차장</span></a>
+<li><a href="/tour/page.do?mnu_uid=4030&amp;" target="_self"><span>짐보관 서비스</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2374&amp;" target="_self"><span>교통정보</span></a>
+<ul class="dept3">
+<li><a href="/tour/page.do?mnu_uid=2381&amp;" target="_self"><span>경주오는길</span></a>
+<li><a href="/tour/page.do?mnu_uid=2382&amp;" target="_self"><span>비행기, 기차, 고속버스, 시내버스</span></a>
+<li><a href="http://its.gyeongju.go.kr" target="_blank"><span>교통정보센터</span></a>
+</ul>
+</li>
+<li><a href="/tour/page.do?mnu_uid=4085&amp;" target="_self"><span>경주로ON</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+<li><a href="/tour/page.do?mnu_uid=2264&amp;" target="_self"><span>나의 여행</span></a>
+<div class="naviWrap">
+
+<div class="title">나의 여행</div>
+<ul class="dept2">
+
+<li><a href="/tour/page.do?mnu_uid=2388&amp;" target="_self"><span>투어플랜</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2385&amp;" target="_self"><span>스크랩 리스트</span></a>
+</li>
+<li><a href="/tour/page.do?mnu_uid=2507&amp;" target="_self"><span>여행공유</span></a>
+</li>
+</ul>
+</div>
+
+</li>
+
+
+			</ul>
+		</div>
+		<a href="#" id="mnaviClose">메뉴닫기</a>
+	</div>
+	<div id="mnaviBg"></div>
+	<div class="bottomMenu">
+		<div class="searchWrap">
+			<div class="search">
+				<form method="post" name="RsaSearchForm" action="https://search.gyeongju.go.kr/RSA_Tour/front/Search.jsp" target="_blank" onsubmit="return ">
+					<input type="hidden" name="menu" id="menu2" value="통합검색" />
+					<label class="hidden" for="qt2">검색어 입력</label>
+					<input type="text" name="qt" id="qt2" value="" placeholder="필요한 정보를 검색해보세요."/>
+					<a href="#self" title="새창" class="btn" onclick="checkSerData2(document.RsaSearchForm)">검색</a>
+				</form>
+			</div>
+			<div class="keywords">
+				<a href="/tour/page.do?mnu_uid=2274&" class="vrBtn">영상 속 경주</a>
+				<a target="_blank" href="#self" onclick="selectTourSearch('황리단길');return false;"><span>#</span>황리단길</a>
+				<a target="_blank" href="#self" onclick="selectTourSearch('포토스팟');return false;"><span>#</span>포토스팟</a>
+				<a target="_blank" href="#self" onclick="selectTourSearch('디저트');return false;"><span>#</span>디저트</a></div>
+			</div>
+			<ul class="weather">
+				<li class="todayWeather" ><span class="wTemp"></span></li>
+				<li class="tomorrowWeather" >내일<span class="wState hidden"></span></li>
+				<li class="afterTomorrowWeather">모레<span class="wState2 hidden"></span></li>
+			</ul>
+		</div>
+	</header>
+</div>
+
+<script>
+<!--
+function getWeather( sky , pty)
+{
+	var Src = "1-맑음";			//맑음
+	if( pty == 0 ){
+		if(sky == 0 || sky == 1 ||sky == 2 ) Src = "1-맑음"; 			// 맑음
+		if(sky == 3 || sky == 4 ||sky == 5 ) Src = "2-구름조금";		// 구름조금
+		if(sky == 6 || sky == 7 ||sky == 8 ) Src = "3-구름많음";		// 구름많음
+		if(sky == 9 || sky == 10) Src = "4-흐림";							// 흐림
+		if(sky == "null" ) Src = "1-맑음";
+	}else{
+		if( pty == 1 ) Src = "5-비";			//비
+		if( pty == 2 ) Src = "6-비/눈";		//비/눈
+		if( pty == 3 ) Src = "7-눈";			//눈
+	}
+	return Src
+}
+var curDate = 10*1;
+//var curDate = 14;//<?=date('H')?>*1;
+var fcsttime;
+
+if( curDate < 3 ){
+	fcsttime = '0600';
+}else if (curDate >= 3 &&  curDate < 6){
+	fcsttime = '0900';
+}else if (curDate >= 6 &&  curDate < 9){
+	fcsttime = '1200';
+}else if (curDate >= 9 &&  curDate < 12){
+	fcsttime = '1500';
+}else if (curDate >= 12 &&  curDate < 15){
+	fcsttime = '1800';
+}else if (curDate >= 15 &&  curDate < 18){
+	fcsttime = '2100';
+}else if (curDate >= 18 &&  curDate < 21){
+	fcsttime = '2100';
+}else if (curDate >= 21 &&  curDate < 24){
+	fcsttime = '2100';
+}else {
+	fcsttime = '0300';
+}
+//alert( fcsttime );
+$(document).ready(function(){
+	var paraDate = new Date();
+
+	// 오늘 날씨
+	$(function()
+	{
+		$.ajax({
+
+			type:"post"
+			, url:"/XML/weather.json"
+			, dataType:"json"
+			, timeout: 5000
+			, data: {
+				address : "경상북도 경주시"
+			}
+			, success:function(data)
+			{
+				if(data != null)
+				{
+					//실시간 날씨정보
+
+					var t1h = data.today.t1h;
+					var sky = data.today.sky;
+					var pty = data.today.pty;
+					var vec = data.today.vec;
+					var wsd = data.today.wsd;
+					var reh = data.today.reh;
+
+					var pty1 = data.day_1.pty;
+					var pty2 = data.day_2.pty;
+
+					var sky1 = data.day_1.sky;
+					var sky2 = data.day_2.sky;
+
+					var pm10 = data.air.pm10Value;
+					var pm10Value = "좋음";
+					var AirPollutionColor = "#1a549d";
+
+
+					if(pm10 >= 31 && pm10 <= 80){
+						pm10Value = "보통"; AirPollutionColor = "#52a644";
+					}else if (pm10 >= 81 && pm10 <= 150)
+					{
+						pm10Value = "나쁨"; AirPollutionColor = "#f0802e";
+					}else if (pm10 >= 151)
+					{
+						pm10Value = "매우나쁨"; AirPollutionColor = "#da445d";
+					}
+
+					var weatherImg = "";
+					var skyString = "";
+
+					var weather = getWeather( sky , pty).split('-');
+					var weather1 = getWeather( sky1 , pty1).split('-');
+					var weather2 = getWeather( sky2 , pty2).split('-');
+
+					if(pty != 0)
+					{
+						/*todaySky = getPty(pty);
+						skyString = todaySky[0];
+						weatherImg = todaySky[1];*/
+					}
+					jQuery('.todayWeather').addClass("icon"+weather[0]);
+					jQuery('.tomorrowWeather').addClass("icon"+weather1[0]);
+					jQuery('.afterTomorrowWeather').addClass("icon"+weather2[0]);
+					jQuery('.wTemp').html(t1h+"<em>℃</em>");
+
+				}
+			}
+			, error:function(jqXHR, textStatus, errorThrown)
+			{
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
+		});
+	});
+});
+//-->
+</script>
+<script type="text/javascript">
+document.querySelector('.translation-links').addEventListener('click',function(event) {
+	let el = event.target;
+	if(el != null){
+		while(el.nodeName == 'FONT'){el = el.parentElement;}//data-lang 속성이 있는 태그 찾기
+		const tolang = el.dataset.lang; // 변경할 언어 코드 얻기
+		const gtcombo = document.querySelector('.goog-te-combo');
+		if (gtcombo == null) {
+			alert("Error: Could not find Google translate Combolist.");
+			return false;
+		}
+		gtcombo.value = tolang; // 변경할 언어 적용
+		gtcombo.dispatchEvent(new Event('change')); // 변경 이벤트 트리거
+		var alert_msg = "해당 번역은 구글 자동번역으로 오역이 존재할 수 있습니다.";
+		if(tolang == "en"){
+			alert_msg = "This translation is a Google automatic translation, and mistranslation may exist.";
+		}else if(tolang == "ja"){
+			alert_msg = "この翻訳はGoogleの自動翻訳であり、誤訳が存在する可能性があります。";
+		}else if(tolang == "zh-CN"){
+			alert_msg = "该翻译是谷歌自动翻译，可能会存在错误翻译。";
+		}else{
+		}
+		alert(alert_msg);
+	}
+	return false;
+});
+</script>
+<script type="text/javascript">
+document.querySelector('.m_translation-links').addEventListener('click',function(event) {
+	let el = event.target;
+	if(el != null){
+		while(el.nodeName == 'FONT'){el = el.parentElement;}//data-lang 속성이 있는 태그 찾기
+		const tolang = el.dataset.lang; // 변경할 언어 코드 얻기
+		const gtcombo = document.querySelector('.goog-te-combo');
+		if (gtcombo == null) {
+			alert("Error: Could not find Google translate Combolist.");
+			return false;
+		}
+		gtcombo.value = tolang; // 변경할 언어 적용
+		gtcombo.dispatchEvent(new Event('change')); // 변경 이벤트 트리거
+		var alert_msg = "해당 번역은 구글 자동번역으로 오역이 존재할 수 있습니다.";
+		if(tolang == "en"){
+			alert_msg = "This translation is a Google automatic translation, and mistranslation may exist.";
+		}else if(tolang == "ja"){
+			alert_msg = "この翻訳はGoogleの自動翻訳であり、誤訳が存在する可能性があります。";
+		}else if(tolang == "zh-CN"){
+			alert_msg = "该翻译是谷歌自动翻译，可能会存在错误翻译。";
+		}else{
+		}
+		alert(alert_msg);
+	}
+	return false;
+});
+</script>
+
+
+    <div id="container">
+      <div id="subNavi">
+		      
+
+
+
+
+
+
+
+
+<div class="wrap">
+  <ul class="floatL">
+    <li class="home"><a href="./index.do">HOME</a></li>
+<li><a href="/tour/page.do?mnu_uid=2256&amp;" target="_self"><span>경주 여행</span></a>
+<ul class="dept2">
+<li><a href="/tour/page.do?mnu_uid=2256&amp;" target="_self"><span>경주 여행</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2258&amp;" target="_self"><span>음식</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2259&amp;" target="_self"><span>숙박</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2260&amp;" target="_self"><span>쇼핑</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2261&amp;" target="_self"><span>문화행사</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2257&amp;" target="_self"><span>국가유산·역사</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2262&amp;" target="_self"><span>신청하기</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2263&amp;" target="_self"><span>여행필수정보</span></a></li>
+<li><a href="/tour/page.do?mnu_uid=2264&amp;" target="_self"><span>나의 여행</span></a></li>
+</ul>
+</li>
+
+<li ><a href="/tour/page.do?mnu_uid=2267&amp;" target="_self"><span>여행코스추천</span></a>
+<ul class="dept2">
+<li><a href="/tour/page.do?mnu_uid=4172&amp;" target="_self"><span>이달의 추천여행지</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2266&amp;" target="_self"><span>권역별 관광지</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2267&amp;" target="_self"><span>여행코스추천</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2551&amp;" target="_self"><span>테마여행</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2271&amp;" target="_self"><span>경주의 자연</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2272&amp;" target="_self"><span>체험과레져</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2273&amp;" target="_self"><span>투어프로그램</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2274&amp;" target="_self"><span>영상으로보는경주</span></a></li>
+
+</ul>
+</li>
+
+<li ><a href="/tour/page.do?mnu_uid=2298&amp;" target="_self"><span>나의두번째경주</span></a>
+<ul class="dept2">
+<li><a href="/tour/page.do?mnu_uid=2297&amp;" target="_self"><span>경주핵심여행코스</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2298&amp;" target="_self"><span>나의두번째경주</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2299&amp;" target="_self"><span>자박자박 경주걷기</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2300&amp;" target="_self"><span>두바퀴로 누비는 경주</span></a></li>
+
+<li><a href="/tour/page.do?mnu_uid=2301&amp;" target="_self"><span>버스타고 경주여행</span></a></li>
+
+</ul>
+</li>
+
+
+  </ul>
+  <div class="floatR">
+	
+		
+	
+
+
+
+
+
+
+
+
+		<a href="#plus" class="plus" onclick="wdSetFontSize('PageContArea',+1);return false;">글자크기확대</a>
+		<a href="#minus" class="minus" onclick="wdSetFontSize('PageContArea',-1);return false;">글자크기축소</a>
+    <a href="#" class="print" onclick="printPage(42);return false;" target="_blank" title="본문 페이지 인쇄 - 새창">본문 인쇄</a>
+    <a href="#" class="share">공유</a>
+    <div class="shareWrap">
+
+      <a href="#" onclick="facebook(location.href,'고분의 도시 경주, 개성있는 왕릉찾기');return false;" target="_blank" title="이 페이지를 내 페이스북으로 보내기 - 새창">페이스북</a>
+      <a href="#" onclick="twitter(location.href,'고분의 도시 경주, 개성있는 왕릉찾기');return false;" target="_blank" title="이 페이지를 내 X(엑스)로 보내기 - 새창">X(엑스)</a>
+	  	<a href="#" onclick="kakaostory(location.href,'고분의 도시 경주, 개성있는 왕릉찾기');return false;" target="_blank" title="이 페이지를 내 카카오톡으로 보내기 - 새창">카카오톡</a>
+	  <!-- a href="#" >카카오스토리</a -->
+    </div>
+
+
+  </div>
+</div>
+
+      </div>
+
+      <div id="content" class="PageContArea wrap">
+        <div class="subTitle">
+          <h2 class="hidden">경주 여행</h2>
+          <h3 id="pageTitle"  ><span>고분의 도시 경주, 개성있는 왕릉찾기</span></h3>
+          <p>한국관광의 메카 “Beautiful Gyeongju”가 여러분을 초대합니다.</p>
+        </div>
+        <div class="content" id="contStart" tabindex="-1">
+          <!-- 콘텐츠 시작 -->
+		        
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+	
+	
+
+		
+		
+
+		
+
+		
+			
+			
+			
+		
+
+
+
+
+
+
+
+<div class="tab_depth04">
+<ul class="col_5">
+<li class=" "><a href="/tour/page.do?mnu_uid=2536&amp;" target="_self"  class=""><span>예인의 도시 경주, 미술·문학기행</span></a></li>
+<li class=" "><a href="/tour/page.do?mnu_uid=2537&amp;" target="_self"  class=""><span>반려견과 함께하는 경주여행</span></a></li>
+<li class="active"><a href="/tour/page.do?mnu_uid=2538&amp;" target="_self"  class=""><span>고분의 도시 경주, 개성있는 왕릉찾기</span></a></li>
+<li class=" "><a href="/tour/page.do?mnu_uid=3172&amp;" target="_self"  class=""><span>동학의 발상지 따라 현곡 여행</span></a></li>
+<li class=" "><a href="/tour/page.do?mnu_uid=3615&amp;" target="_self"  class=""><span>인물여행 김유신</span></a></li>
+	</ul>
+</div>
+
+
+<div class="courseWrap">
+<dl class="bg black course2-3">
+	<dt><span>같은 듯 다른 매력, <strong>경주 왕릉여행</strong></span></dt>
+	<dd>경주 도심에 봉황대라 불리는 고분이 있다. 봉황의 알 모양을 닮아서 그렇다던가, 이곳에 올라 월성을 바라보니 마치 봉황새처럼 보여 봉황대라 불린다는 이야기도 있다. 올라도 되는 곳이었던가, 옛 경주사람들은 이곳을 언덕바지라고 생각했기에 가능한 이야기일 수 있다. 비탈면에 고목 여러 그루가 자라고 있는 아파트 6-7층 높이의 언덕이 신라의 왕이 잠들어 있을지도 모를 고분이라 선뜻 생각이 들지 않을 법도 하다. 한쪽은 현대식 건물들이 즐비하고, 또 다른 한쪽은 그와 맞먹는 높이의 거대 고분들이 솟아 있는 경주의 이채로운 풍경. 마냥 같아 보이는데 저마다의 개성과 매력을 뽐내는 고분들을 찾아가며 여행해보는 것은 어떨까. 이름하여, 보물찾기하듯 떠나는 &lsquo;개성 있는 왕릉 찾기&rsquo; 여행.</dd>
+</dl>
+
+<ul class="explain">
+	<li>
+	<h4>여행코스 설명</h4>
+
+	<p class="keywords">#당일치기경주여행 #테마여행 #경주왕릉여행</p>
+	개성 있는 경주의 왕릉만을 찾아 떠나는 테마 여행 코스이다. 고분 발굴현장을 볼 수 있는 쪽샘유적발굴관에서 출발해 당일로 충분히 돌아볼 수 있는 7곳의 왕릉을 이동 동선에 따라 소개한다. 왕릉과 주변 여행지까지 둘러본다면 1박2일의 일정으로 둘러보는 것을 추천한다.</li>
+	<li>
+	<h4>코스제안</h4>
+
+	<dl id="courseList" tabindex="-1">
+		<dt>1일차</dt>
+		<dd><a href="#day1-1"><span>1</span>쪽샘유적발굴관</a><a href="#day1-2"><span>2</span>대릉원 미추왕릉</a><a href="#day1-3"><span>3</span>오릉</a><a href="#day1-4"><span>4</span>삼릉</a><a href="#day1-5"><span>5</span>무열왕릉</a><a href="#day1-6"><span>6</span>진평왕릉</a><a href="#day1-7"><span>7</span>탈해왕릉</a><a href="#day1-8"><span>8</span>흥덕왕릉</a></dd>
+	</dl>
+	</li>
+</ul>
+
+<div class="cont" id="day1-1" tabindex="-1">
+<h4 class="numSt"><span>#1</span>왕릉여행에 앞서 쪽샘유적발굴관</h4>
+<img alt="경주쪽샘유적발굴관 전경" class="img" src="/design/tour2019/img/sub/course02_img1-1.jpg" />
+<p>본격적으로 왕릉을 둘러보기 전, 고분의 속살을 들여다 볼 수 있는 곳이 있다. 고분발굴현장을 직접 볼 수 있는 쪽샘유적발굴관이 그 곳. 한창 발굴조사가 진행되고 있는 대릉원 일원 쪽샘지구 &lsquo;제44호분&rsquo;의 발굴과정을 국민 모두와 공유하고자 건립되었다. 발굴 조사 중인 제44호분 위에 천장을 덮고, 전시 공간도 마련했다. 제44호분은 신라시대의 특징적인 무덤형태인 돌무지덧널무덤(적석목곽분)으로, 흙을 걷어낸 고분의 내부 구조를 일부 들여다 볼 수 있다. 돌무지덧널무덤은 목곽을 만들어 죽은 이와 부장품을 모시고, 돌을 쌓은 뒤 그 위에 흙을 덮는 과정으로 축조된다. 이 형태는 도굴이 어려워 천년이 넘는 신라의 유물들이 현재까지 남아 있을 수 있었다. 제44호분에서도 귀한 유물이 많이 출토되었는데, 최근 신라행렬도가 새겨진 토기 항아리가 발견되어 이목을 끌기도 했다. 쪽샘유적발굴관에는 문화해설사가 상주하고 있다. 제44호분의 발굴조사에 대한 상세한 이야기와 함께 경주의 고분에 대한 전시해설을 들을 수 있다.</p>
+
+<ul class="imgWrap2">
+	<li><img alt="쪽샘유적발굴관 내부 발굴현장" src="/design/tour2019/img/sub/course02_img1-2.jpg" /></li>
+	<li><img alt="쪽샘유적발굴관 내부 발굴현장" src="/design/tour2019/img/sub/course02_img1-3.jpg" /></li>
+</ul>
+
+<div class="info">
+<h5>쪽샘유적발굴관 정보</h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 태종로 788</li>
+	<li>관람시간 : 10:00-17:00 (휴게시간 12:00-13:00), 상시해설</li>
+	<li>관람료 : 무료</li>
+	<li>문의 : 054 774 0114</li>
+</ul>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-2" tabindex="-1">
+<h4 class="numSt"><span>#2</span>대릉원 미추왕릉</h4>
+<img alt="대릉원 항공사진" class="img" src="/design/tour2019/img/sub/course02_img2-1.jpg" />
+<p class="floatL">23기의 고분이 모여 있는 대릉원에는 능(陵)이 있고, 총(塚)이 있고, 분(墳)이 있다. 미추왕릉, 천마총, 99호분. 무덤인 것은 매 한가지인데 왜 각기 다른 명칭을 붙일까? 가장 큰 범위의 분류명칭은 &lsquo;분(墳)&rsquo;이다. 옛 무덤을 통칭하여 우리가 익히 아는 &lsquo;고분(古墳)&rsquo;이라 부를 때의 그 분(墳)이다. 피장자가 누구인 지 알 수 없는 대부분의 무덤에 분을 붙인다. 분 앞의 숫자는 일제 강점기 경주 시내지역의 고분을 조사하는 과정에서 확인한 1호부터 155호까지 무덤의 고유번호를 매긴 것이다. &lsquo;제155호분&rsquo;이 우리가 익히 알고 있는 그 &lsquo;천마총&rsquo;이다. 그렇다면 제155호분은 어떻게 천마총이라는 이름을 가졌을까. 총(塚)은 발굴한 고분에 붙이는 경우가 대다수이며 발굴과정에서 유의미한 유물이 나왔거나 특징이 확실할 때에 붙인다. 귀한 말다래 그림 &lsquo;천마도&rsquo;가 출토된 제155호분은 &lsquo;천마총&rsquo;이라는 이름을 가지게 되었고 금관을 가장 먼저 출토한 제128호분은 &lsquo;금관총&rsquo;이 되었다.</p>
+
+<p class="floatR">마지막으로 대릉원의 유일한 왕릉 &lsquo;미추왕릉&rsquo;. 능은 피장자에 대한 추정이 비교적 확실하게 가능한 행운을 가진 고분에 붙인다. 미추왕릉은 여러 이야기를 품은 능이다. 삼국사기에 &lsquo;재위 23년에 돌아가니 대릉에 장사지냈다&rsquo;는 기록이 있어 이 일대를 &lsquo;대릉원&rsquo;이라 부르게 되었다는 이야기가 전한다.<br />
+또, 하나의 이야기. 이서국에서 신라를 침입했을 때 머리에 댓잎(대나무잎)을 꽂은 군사들이 몰려와 그들을 물리쳤는데 군사들에게 꽂혀 있던 댓잎이 미추왕의 무덤 앞에 소복이 쌓여 있었고, 이에 사람들은 그 후 미추왕릉을 &lsquo;죽릉&rsquo; 또는 &lsquo;죽장릉&rsquo;이라 불렀다. 이 후 나라에 어려움이 있을 때마다 미추왕릉에서 제사를 지냈다고 한다. 이야기 가득한 미추왕릉의 주변에 아름드리 벚나무가 호위하듯 서 있다. 벚꽃 흐드러지는 봄날, 벚나무 단풍이 드는 가을날, 모두 찾기 좋다.</p>
+
+<ul class="imgWrap2">
+	<li><img alt="벚꽃나무 아래로 보이는 대릉원 미추왕릉" src="/design/tour2019/img/sub/course02_img2-2.jpg" /></li>
+	<li><img alt="대릉원 미추왕릉 항공사진" src="/design/tour2019/img/sub/course02_img2-3.jpg" /></li>
+</ul>
+
+<div class="info">
+<h5>대릉원 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2292&amp;sortKwd=name&amp;code_uid=1012&amp;srchKwd=&amp;area_uid=203&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 황남동 31-1</li>
+	<li>관람시간 : 09:00-22:00(매표마감 21:30)</li>
+	<li>관람료 : <a class="textLink" href="https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2378&amp;" target="_blank">자세히보기</a></li>
+	<li>문의 : 054 750 8650</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 5km이내) : 황리단길, 첨성대, 월성, 동궁과 월지, 교촌마을, 월정교, 국립경주박물관, 오릉, 포석정, 삼릉</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-3" tabindex="-1">
+<h4 class="numSt"><span>#3</span>오릉</h4>
+<img alt="오릉 전경" class="img" src="/design/tour2019/img/sub/course02_img3-1.jpg" />
+<p>능이 다섯 기라 오릉이라 부르는 이곳은 신라의 역사를 시작한 인물들이 잠들어 있다고 추정되는 곳이다. 신라의 시조인 박혁거세 거서간과 그의 부인 알영부인, 2대왕 남해 차차웅, 3대왕 유리 이사금, 5대왕 파사 이사금의 능이 모여 있다. 오릉 동쪽에는 박혁거세의 위패를 모시는 숭덕전이 있어 매년 봄, 가을 혁거세를 기리는 향사를 봉행하고 있다. 숭덕전 뒤로는 알영부인이 태어났다는 알영정이 자리하고 있다. 5기의 왕릉 뿐만 아니라 구석구석 살펴볼 곳이 많은 오릉이다.</p>
+
+<ul class="imgWrap2">
+	<li><img alt="오릉 알영정 앞 연못과 중앙에 소나무" src="/design/tour2019/img/sub/course02_img3-2.jpg" /></li>
+	<li><img alt="오릉 숭덕전 전경" src="/design/tour2019/img/sub/course02_img3-3.jpg" /></li>
+</ul>
+
+<div class="info">
+<h5>오릉 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2295&amp;sortKwd=name&amp;code_uid=1014&amp;srchKwd=&amp;area_uid=99&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 탑동 67-1</li>
+	<li>관람시간 : 3월-10월 09:00&ndash;18:00 / 11월&ndash;2월 09:00-17:00</li>
+	<li>관람료 : <a class="textLink" href="https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2378&amp;" target="_blank">자세히보기</a></li>
+	<li>문의 : 054 750 8614</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 5km이내) : 황리단길, 대릉원, 첨성대, 교촌마을, 월정교, 나정, 포석정, 삼릉</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-4" tabindex="-1">
+<h4 class="numSt"><span>#4</span>삼릉</h4>
+<img alt="삼릉 전경" class="img" src="/design/tour2019/img/sub/course02_img4-1.jpg" />
+<p>능이 5기라 오릉이라 부르듯 능이 3기라 &lsquo;삼릉&rsquo;이라 한다. 삼릉을 보러 가기 전, 울창한 솔숲을 먼저 만난다. 구불구불한 모양이 특징으로 경주 안강 지역에서 처음 발견되어 &lsquo;안강형 소나무&rsquo;라고 불리는 소나무들이 빽빽하게 숲을 이루고 있다. 이곳은 포토그래퍼들의 성지로 불린다. 아침의 빛내림, 설경, 안개 자욱한 솔숲 등 작품이 쏟아져 나오는 곳이다. 호젓하게 솔숲을 거닐다보면 이내 삼릉과 마주하게 된다. 삼릉에는 제8대 아달라 이사금, 제53대 신덕왕, 제54대 경명왕의 무덤으로 비정(비교하여 추정함)된 능이 모여 있다. 아달라 이사금과 다른 두 왕의 연대차가 너무 커 의문이 드는데 공통점이 한 가지 있다. 모두 박씨 왕이라는 점이다. 신라는 박씨, 석씨, 김씨가 번갈아가며 왕위를 이어 받았다. 신라 사람들이 신성시 여기던 남산 기슭에 왕릉이 많이 있는데 삼릉이 있는 남산 서쪽에는 박씨 왕의 능이 많고, 통일전이 있는 남산 동쪽에는 김씨 왕의 능이 많은 것이 특징이다.</p>
+
+<div class="info">
+<h5>삼릉 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2295&amp;sortKwd=name&amp;code_uid=1014&amp;srchKwd=&amp;area_uid=97&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 배동 산73-1</li>
+	<li>관람시간 : 정해진 시간 없음(야간 관람 어려움)</li>
+	<li>관람료 : 무료</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 5km이내) : 포석정, 나정, 오릉, 교촌마을, 월정교, 황리단길, 대릉원, 첨성대</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-5" tabindex="-1">
+<h4 class="numSt"><span>#5</span>무열왕릉</h4>
+<img alt="무열왕릉 전경" class="img" src="/design/tour2019/img/sub/course02_img5-1.jpg" />
+<p>신라가 삼국을 통일할 수 있도록 기반을 다진 무열왕의 능이 선도산 기슭에 자리하고 있다. 신라 56대 왕 중에서 왕릉으로 비정한 무덤은 총 38기이고 경주 내에 36기의 왕릉이 있다. 그 중 완벽하게 무덤의 주인을 알 수 있는 경우는 그리 많지 않다. 무열왕릉이 완벽하게 주인을 알 수 있는 능 중의 한 곳이다. 왕릉과 멀지 않은 곳에 비석을 세웠던 돌 거북(귀부)과 비석 위에 올리는 머릿돌(이수)이 남아 있다. 이 머릿돌에 &lsquo;태종무열대왕지비(太宗武烈大王之碑)&rsquo;라는 글씨가 새겨져 있어 이곳이 무열왕의 능임을 확실하게 알 수 있었다. 무덤의 주인을 찾아준 귀한 돌거북과 머릿돌이기에 국보 25호로 지정되어 비각 안에 고이 모셔져 있다. 무열왕릉 영역 안에는 왕릉 뒤편으로 &lsquo;서악동고분군&lsquo;으로 부르는 거대한 고분4기가 일렬종대로 늘어서 있다. 무열왕릉부터 서악동고분군까지 거닐기 좋게 산책로를 잘 가꾸어 놓았으니 여유롭게 거닐어 보자.</p>
+
+<ul class="imgWrap2">
+	<li><img alt="무열왕릉-서악동 고분군 전경" src="/design/tour2019/img/sub/course02_img5-2.jpg" /></li>
+	<li><img alt="무열왕릉-태종무열왕릉비" src="/design/tour2019/img/sub/course02_img5-3.jpg" /></li>
+</ul>
+
+<div class="info">
+<h5>무열왕릉 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2296&amp;sortKwd=name&amp;code_uid=1010&amp;srchKwd=&amp;area_uid=131&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 서악동 842</li>
+	<li>관람시간 : 3월-10월 09:00&ndash;18:00 / 11월&ndash;2월 09:00-17:00</li>
+	<li>관람료 : <a class="textLink" href="https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2378&amp;" target="_blank">자세히보기</a></li>
+	<li>문의 : 054 750 8614</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 5km이내) : 김유신장군묘, 서악서원, 황리단길, 대릉원, 첨성대, 동궁과 월지</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-6" tabindex="-1">
+<h4 class="numSt"><span>#6</span>진평왕릉</h4>
+<img alt="우거진 나무들 뒤로 보이는 진평왕릉" class="img" src="/design/tour2019/img/sub/course02_img6-1.jpg" />
+<p>보문관광단지로 가는 길, 잠시 한 눈을 팔아 남촌마을로 향한다. 들녘 한 가운데 우뚝 선 왕릉을 한 기 만날 수 있다. 선덕여왕의 아버지인 제26대 진평왕의 능이다. 유홍준 교수는 진평왕릉을 두고 &lsquo;꼭 보아야 할 경주의 보물 세 가지 중 하나&rsquo;라고 평했다. 저서 &lsquo;나의 문화유산 답사기&rsquo;에서 그는 진평왕릉을 이렇게 표현 했다. &ldquo;왕릉으로서의 위용을 잃지 않으면서도 소담하고 온화한 느낌을 주는 고분은 진평왕릉 뿐이다.&rdquo;라고. 다른 왕릉이 무인상, 문인상, 돌사자, 호석과 돌난간, 능을 감싸는 도래솔 등 화려한 장식을 갖고 있다면, 진평왕릉은 아담한 숲을 갖고 있다. 제 자리를 찾아 자라난 고목들이 의도한 듯 아닌 듯 진평왕릉을 감싸고서 숲을 이룬다. 오래도록 머물다 가고 싶은 기분이 들게 하는 왕릉이다.</p>
+
+<div class="info">
+<h5>진평왕릉 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2291&amp;sortKwd=name&amp;code_uid=1011&amp;srchKwd=&amp;area_uid=170&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 보문동 608</li>
+	<li>관람시간 : 정해진 시간 없음(야간 관람 어려움)</li>
+	<li>관람료 : 무료</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 10km이내) : 보문관광단지, 분황사, 황룡사지, 동궁과 월지, 첨성대, 황리단길, 대릉원</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-7" tabindex="-1">
+<h4 class="numSt"><span>#7</span>탈해왕릉</h4>
+<img alt="안개 낀 탈해왕릉" class="img" src="/design/tour2019/img/sub/course02_img7-1.jpg" />
+<p>경주 내에 있는 유일한 석씨왕의 능 &lsquo;탈해왕릉&rsquo;이 경주국립공원 소금강산 지구 초입의 야트막한 구릉에 있다. 안개가 내려앉은 이른 아침, 솔숲으로 에워싸인 탈해왕릉을 한 바퀴 둘러본다. 능 쪽으로 마치 &lsquo;절하는 듯한&rsquo; 모양새로 누워 있는 소나무에 눈길이 갔다. 소금강산 등반을 다녀온 듯 보이는 한 아주머니는 내려오며 그 소나무처럼 손을 모아 예를 갖추고 제 갈 길을 가셨다. 안개 덕인 지, 절하는 소나무 때문인 지, 아주머니의 공손함 탓인 지 알 수 없지만 거대하지도, 별다른 특징이 있는 것도 아닌 왕릉이 괜스레 예사롭지 않아 보인다. 사실 이 왕릉이 탈해왕릉이 맞는 지에 대한 의견은 분분하다. 제4대 탈해이사금의 왕릉이라 하는데, 경주 중심부의 평지에 있는 신라 초기 왕들의 무덤과 달리 외곽지의 산 중에 있어서다. 외곽지의 산 중으로 고분들이 옮겨간 시기는 통일신라 전후로 보고 있기 때문. 논의는 잠시 잊어버리고, 예사롭지 않은 왕릉의 분위기를 좀 더 깊게 느끼며 탈해왕릉의 매력을 기억에 새긴다.</p>
+<!--li class="imgWrap2">
+                <li><img src="/design/tour2019/img/sub/course02_img7-2.jpg" alt="탈해왕릉"/></li>
+                <li><img src="/design/tour2019/img/sub/course02_img7-3.jpg" alt="탈해왕릉"/></li>
+              </ul-->
+
+<div class="info">
+<h5>탈해왕릉 관람정보<a class="viewBtn" href="/tour/page.do?listType=&amp;mnu_uid=2292&amp;sortKwd=name&amp;code_uid=1012&amp;srchKwd=&amp;area_uid=184&amp;cmd=2" target="_blank">상세보기</a></h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 동천동 산17</li>
+	<li>관람시간 : 정해진 시간 없음(야간 관람 어려움)</li>
+	<li>관람료 : 무료</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 10km이내) : 보문관광단지, 분황사, 황룡사지, 동궁과 월지, 첨성대, 황리단길, 대릉원</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a>
+
+<div class="cont" id="day1-8" tabindex="-1">
+<h4 class="numSt"><span>#8</span>흥덕왕릉</h4>
+<img alt="흥덕왕릉 전경" class="img" src="/design/tour2019/img/sub/course02_img8-1.jpg" />
+<p>앞서 소개한 왕릉들과는 제법 멀리 떨어져 있지만, 흥덕왕릉을 꼭 찾아야 하는 이유는 확실하다. 천년의 사랑을 품은 능, 주인이 확실한 몇 안 되는 왕릉, 멋진 솔숲을 가진 곳. 왕릉이 품은 &lsquo;천년의 사랑이야기&rsquo;부터 시작하자. 당나라에 다녀온 사신이 앵무새 한 쌍을 가져왔다. 암컷이 이내 죽어버렸는데, 홀로 남은 수컷은 밤낮으로 슬피 울었다. 왕은 홀로 된 새 앞에 거울을 두게 했는데 새는 거울 속 제 모습을 짝인 줄 알고 거울을 쪼다가 자신인 것을 알고는 구슬프게 울다 죽어 버렸다. 수컷 앵무새와 왕은 닮은꼴이었다. 즉위한 지 1년도 채 되지 않아 왕비를 잃었다. 신하들은 다시 왕비를 얻으라고 간청했지만 왕은, &lsquo;새도 제 짝을 잃고 저리 슬피 우는데, 훌륭한 부인을 잃은 내가 어찌 다시 결혼을 한다는 말인가?&rsquo;라며 후처를 얻지 않았다. 왕은 평생 죽은 부인을 가슴에 품고 살다가 사랑하는 부인의 능에 함께 잠들었다. 흥덕왕의 이야기다.</p>
+<!--ul class="imgWrap2">
+                <li><img src="/design/tour2019/img/sub/course02_img8-2.jpg" alt="흥덕왕릉"/></li>
+                <li><img src="/design/tour2019/img/sub/course02_img8-3.jpg" alt="흥덕왕릉 솔숲"/></li>
+              </ul-->
+
+<p>흥덕왕릉은 무열왕릉과 함께 왕릉 중에서도 주인을 완벽하게 알 수 있었던 능이다. 왕릉 한 쪽에 귀부가 남아 있는데, 비편 조각의 판독결과 이곳이 흥덕왕릉임을 알 수 있었다. 왕릉은 통일신라 이후의 전형적인 왕릉의 형태로 무인상 한 쌍과 문인상 한 쌍, 네 귀퉁이의 돌사자, 봉분 둘레에 십이지신이 새겨진 호석과 난간을 둘렀다. 아주 잘 갖추어진 통일신라 왕릉의 모습을 흥덕왕릉에서 확인할 수 있다. 마지막으로 솔숲. 삼릉에 견줄만한 안강형 소나무 솔숲이 이곳 흥덕왕릉 초입에도 조성되어 있다. 흥덕왕과 부인의 사랑이야기를 되뇌며 호젓하게 산책하기 좋다.</p>
+
+<p><img alt="흥덕왕릉-무인상과 문인상" src="/design/tour2019/img/sub/course02_img8-4.jpg" /></p>
+
+<div class="info">
+<h5>흥덕왕릉 관람정보</h5>
+
+<ul class="dept1">
+	<li>위치 : 경주시 안강읍 육통리 산 42</li>
+	<li>관람시간 : 정해진 시간 없음(야간 관람 어려움)</li>
+	<li>관람료 : 무료</li>
+</ul>
+
+<p class="tip"><span>TIP!</span>함께 가볼만한 인근 여행지(반경 10km이내) : 양동마을, 옥산서원, 독락당</p>
+</div>
+</div>
+<a class="listTop" href="#courseList">코스제안 바로가기</a></div>
+&nbsp;
+
+<p>※위 콘텐츠의 정보는 2023년 2월 기준으로 업데이트 되었습니다. 이후 방문시기에 따라 변경될 수 있으니 여행 전 확인하시기 바랍니다.</p>
+
+	
+
+
+            
+
+
+
+
+
+
+
+
+<!-- 공공누리 시작 -->
+
+
+	
+		<div id="page_open">
+				<dl>	<!--	/design/ko/img/common/opencode.gif	 -->
+					<dt><a href="https://www.kogl.or.kr/info/publicGuide.do"  target="_blank" title="새창열림"><img alt='공공누리 공공저작물 자유이용허락 : 출처표시' src='/design/ko2019/img/sub/img_opentype01.png' /></a></dt>
+					<dd><span>경주시청</span>이 창작한 <span>고분의 도시 경주, 개성있는 왕릉찾기</span> 저작물은 "공공누리" <a href='https://www.kogl.or.kr/info/publicGuide.do' target='_blank' title="새창열림">제1유형:출처표시</a> 조건에 따라 이용 할 수 있습니다.</dd>
+				</dl>
+		</div>
+	
+	
+	
+	
+	
+
+
+<!-- 공공누리 끝 -->
+
+
+
+
+
+
+
+<!-- 대표번호/담당자번호 출력값 -->
+
+
+<!-- 만족도 처리 URL (mnu_uid 파라미터는 c:url/c:param로 안전하게 구성) -->
+
+
+
+    
+    
+    
+    
+    
+
+    
+        <!-- intentionally empty -->
+    
+
+	
+    
+
+
+
+          <!-- 콘텐츠 끝 -->
+          <a href="#self" id="topBtn" title="페이지 최상단으로 이동">TOP</a>
+        </div>
+      </div>
+    </div>
+	
+<div id="footer">
+  <div class="wrap">
+    <ul>
+      <li class="floatL"><a href="/open_content/ko/page.do?mnu_uid=1069&" target="_blank" class="yellow">개인정보처리방침</a><a href="/open_content/ko/page.do?mnu_uid=1068&" target="_blank">이용약관</a><a href="/open_content/ko/page.do?mnu_uid=1070&" target="_blank">저작권안내</a><a href="/open_content/ko/page.do?mnu_uid=1807" target="_blank">관광불편신고</a></li>
+      <li class="floatR"><a href="http://kto.visitkorea.or.kr/kor/customer/call/1330.kto" target="_blank">관광안내전화 1330</a><a href="https://www.e-gen.or.kr/egen/main.do" target="_blank">응급전화안내1339</a></li>
+    </ul>
+    <div>
+      <a href="#" class="flogo">경주문화관광</a>
+      <div class="address">
+        <span>[38102] 경상북도 경주시 양정로 260 (동천동, 경주시청)</span><span>대표전화 : 054-779-8585</span>
+        <p>Copyright 2019 Gyeongju Tourguide. All rights reserved.</p>
+      </div>
+      <div class="snsBtn">
+        <a href="https://www.youtube.com/channel/UCQh-jbXM1DkVnC8vUYqfkVw" target="_blank" class="youtube">유튜브 바로가기</a>
+        <a href="https://www.facebook.com/gj.tour1/" target="_blank" class="facebook">페이스북 바로가기</a>
+        <a href="https://blog.naver.com/gj_tour" target="_blank" class="blog">블로그 바로가기</a>
+        <a href="https://www.instagram.com/gj_tour/" target="_blank" class="insta">인스타그램 바로가기</a>
+      </div>
+      <a href="http://www.wa.or.kr/board/list.asp?search=c_name&SearchString=%B0%E6%C1%D6%B9%AE%C8%AD%B0%FC%B1%A4&BoardID=0006" target="_blank" class="wa"><img src="/design/tour2019/img/common/wa.png" alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성 우수사이트 인증마크(WA인증마크)" title=""></a>
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>

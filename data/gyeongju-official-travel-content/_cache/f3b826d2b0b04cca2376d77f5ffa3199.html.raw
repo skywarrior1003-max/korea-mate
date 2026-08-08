@@ -1,0 +1,65 @@
+
+
+
+
+
+
+
+
+<script type="text/javascript" language="javascript">
+ //<![CDATA[ 
+ alert("관리자 세션이 종료되었거나 승인된 IP 대역이 아닙니다.\n\n로그인 하시기 바랍니다.");top.location.href='/' ;
+ //]]> </script><noscript>스크립트를 지원하지 않습니다. <a href="top.location.href='/' ">이동</a>을 클릭하여 주십시요.</noscript>
+
+
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="pragma"				content="no-cache" />
+	<meta http-equiv="imagetoolbar"		content="no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>경주시청 홈페이지</title>
+	<link type="text/css" rel="stylesheet" href="/design/common/css/board.css" />
+	<link type="text/css" rel="stylesheet" href="/design/common/css/common.css" />
+	<link type="text/css" rel="stylesheet" href="/center/css/default.css" />
+	<link type="text/css" rel="stylesheet" href="/center/css/layout.css" />
+	<link type="text/css" rel="stylesheet" href="/center/css/dtree.css" />
+	<link type="text/css" rel="stylesheet" href="/center/css/manager.css" />
+	<script type="text/javascript" src="/center/javascript/default.js"></script>
+	<script type="text/javascript" src="/center/javascript/dtree.js"></script>
+	<script type="text/javascript" src="/center/javascript/Framework.js"></script>
+	<script type="text/javascript" src="/design/common/js/jquery-1.11.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/design/common/js/utility.js"></script>
+	<script type="text/javascript" src="/design/common/js/default.js"></script>
+	<script type="text/javascript" src="/design/common/js/calendar.js"></script>
+	<script type="text/javascript" src="/design/common/js/popup.js"></script>
+	<script type="text/javascript" src="/Manager/js/amcharts/amcharts.js"></script>
+	<script type="text/javascript" src="/Manager/js/amcharts/serial.js"></script>
+	<script type="text/javascript" src="/Manager/js/amcharts/themes/light.js"></script>
+	<script type="text/javascript" src="/center/javascript/FileSaver.min.js"></script>
+	<script type="text/javascript" src="/center/javascript/html2canvas.min.js"></script>
+	<script type="text/javascript" src="/center/javascript/jquery.table2excel.js"></script>
+	<script type="text/javascript" src="/center/javascript/tableexport.js"></script>
+	<script type="text/javascript" src="/center/javascript/xlsx.full.min.js"></script>
+</head>
+ <body>
+
+
+
+
+
+
+
+
+<script>
+ //<![CDATA[ 
+ //]]> 
+ </script>
+ 
+
+
+ </body>
+ </html>
+ 
+ 
