@@ -1,0 +1,34 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "v2.0.0",
+  "network_mode": "CACHE_ONLY",
+  "http_total": 0,
+  "http_ok": 0,
+  "http_error": 0,
+  "http_cached": 301,
+  "checks": {
+    "smoke_test_pass": true,
+    "kto_service1_calls": 0,
+    "legacy_yn_param_uses": 0,
+    "recovery_input_count": true,
+    "recovery_input_74": true,
+    "sentinel_preserved": true,
+    "identity_unchanged": true,
+    "api_key_not_logged": true,
+    "rights_violations": 0,
+    "duplicate_contentId": false,
+    "no_duplicate_contentId": true,
+    "json_parse_errors": 0
+  },
+  "sha_manifest": {
+    "gyeongju-korservice2-smoke-test-v2.json": "fa96c9c61cc38c92",
+    "gyeongju-kto400-root-cause-v2.json": "4d4bad5b8f5bf793",
+    "gyeongju-kto74-recovery-input-v2.jsonl": "e8bc20e08bd35f2c",
+    "gyeongju-kto74-recovery-result-v2.jsonl": "521cf198f2bfdacd",
+    "gyeongju-hold-image2-final-result-v2.jsonl": "a5a23036680d961e",
+    "gyeongju-kto74-release-delta-v2.jsonl": "6bacb4e9b5de424c",
+    "gyeongju-final-ready-v2.json": "36653f285ee17a58",
+    "gyeongju-final-quality-metrics-v2.json": "297b1d95592537a8"
+  },
+  "all_checks_pass": true
+}

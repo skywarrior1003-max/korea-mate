@@ -1,0 +1,27 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "v2.0.0",
+  "v4_endpoint": "https://apis.data.go.kr/B551011/KorService1",
+  "v4_deprecated_yn_params": [
+    "defaultYN",
+    "firstImageYN",
+    "addrinfoYN",
+    "mapinfoYN",
+    "overviewYN"
+  ],
+  "corrected_endpoint": "https://apis.data.go.kr/B551011/KorService2",
+  "corrected_params": {
+    "serviceKey": "(env)",
+    "MobileOS": "ETC",
+    "MobileApp": "KoreaMate",
+    "_type": "json",
+    "contentId": "(per-item)"
+  },
+  "root_cause": "V4 스크립트 regression: detailCommon2 호출 시 deprecated YN 파라미터 5종 재도입 + KorService1(구버전) 사용. Task 8(GYEONGJU-EN-CONTRACT-CORRECTION)에서 YN INVALID 확정 후 V4에서 재도입.",
+  "evidence": {
+    "640_success_files": "data/tourapi/raw/kto/detailCommon2/full/ -YN 없이 성공",
+    "74_fail_sentinels": "data/tourapi/raw/gyeongju/kto-detail/ -HTTP 400 (Bad Request)",
+    "api_contract": "approved-api-inventory.md Section 4: YN 파라미터 전부 INVALID_REQUEST_PARAMETER_ERROR"
+  },
+  "fix": "KorService2 + contentId only (no YN params)"
+}

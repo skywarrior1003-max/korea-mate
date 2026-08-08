@@ -1,0 +1,30 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "v2.0.0",
+  "api_contract_version": "KorService2-v4.4",
+  "endpoint": "https://apis.data.go.kr/B551011/KorService2/detailCommon2",
+  "known_good_contentId": "128676",
+  "params_used": [
+    "serviceKey",
+    "MobileOS",
+    "MobileApp",
+    "_type=json",
+    "contentId=128676"
+  ],
+  "banned_params": [
+    "defaultYN",
+    "firstImageYN",
+    "addrinfoYN",
+    "mapinfoYN",
+    "overviewYN",
+    "numOfRows",
+    "pageNo"
+  ],
+  "http_status": 200,
+  "resultCode": "0000",
+  "item_present": true,
+  "cache_status": "CACHE_REUSED",
+  "verdict": "PASS",
+  "title": "경주 교촌마을",
+  "has_overview": true
+}

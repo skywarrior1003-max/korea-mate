@@ -1,0 +1,13 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "v2.0.0",
+  "baseline_ready": 237,
+  "new_ready_from_74": 63,
+  "new_ready_from_hold_image": 2,
+  "total_new_ready": 65,
+  "final_ready": 302,
+  "hold_description_final": 0,
+  "hold_image_final": 11,
+  "hold_address_final": 0,
+  "hold_location_final": 0
+}

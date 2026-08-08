@@ -1,0 +1,77 @@
+{
+  "as_of": "2026-08-08",
+  "script_version": "v2.0.0",
+  "total_ready": 302,
+  "baseline_ready_237": 237,
+  "new_ready_this_task": 65,
+  "final_ready": 302,
+  "category_breakdown": {
+    "attraction_nature": 200,
+    "restaurant": 102
+  },
+  "coverage": {
+    "description": {
+      "n": 302,
+      "N": 302,
+      "pct": 100.0
+    },
+    "address": {
+      "n": 302,
+      "N": 302,
+      "pct": 100.0
+    },
+    "coordinate": {
+      "n": 302,
+      "N": 302,
+      "pct": 100.0
+    },
+    "image_any": {
+      "n": 302,
+      "N": 302,
+      "pct": 100.0
+    },
+    "rights_cleared": {
+      "n": 302,
+      "N": 302,
+      "pct": 100.0
+    },
+    "phone": {
+      "n": 0,
+      "N": 63,
+      "pct": 0.0,
+      "note": "newly recovered KTO items only"
+    },
+    "homepage": {
+      "n": 47,
+      "N": 63,
+      "pct": 74.6,
+      "note": "newly recovered KTO items only"
+    },
+    "hours": {
+      "n": 57,
+      "N": 63,
+      "pct": 90.5
+    },
+    "closed_days": {
+      "n": 57,
+      "N": 63,
+      "pct": 90.5
+    },
+    "fee": {
+      "n": 0,
+      "N": 63,
+      "pct": 0.0
+    },
+    "en_title": {
+      "n": 28,
+      "N": 302,
+      "pct": 9.3
+    }
+  },
+  "source_breakdown": {
+    "VG": 0,
+    "KTO": 65,
+    "both": 0
+  },
+  "note": "phone/homepage/hours/fee: tracked only for newly recovered KTO items (74). baseline boolean fields don't include these."
+}
