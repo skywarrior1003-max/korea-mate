@@ -141,7 +141,11 @@ export async function notifyReportMilestones(
       milestoneKey: c.milestone_key,
       categories,
       occurredAt:   new Date().toISOString(),
-      adminPath:    `${site}/korea-mate-admin`,
+      // 해당 장소의 신고만 바로 열리도록 딥링크. target_type 은 후보에서
+      // 가져온다 — 하드코딩하면 나중에 대상이 늘 때 조용히 어긋난다.
+      adminPath:    `${site}/korea-mate-admin/place-reports/`
+                    + `?target_type=${encodeURIComponent(c.target_type)}`
+                    + `&target_key=${encodeURIComponent(targetKey)}`,
     });
     const sent = await sendAdminEmail(env, mail);
     if (r.id !== null) await markDelivery(base, h, r.id, sent.ok, sent.ok ? undefined : sent.reason);

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useCallback, useRef, useEffect } from "react";
 import { csvRowToSpot, fetchFlaggedSpots, type SpotRow } from "@/lib/spots";
 
@@ -261,12 +263,20 @@ export default function AdminPage() {
             <h1 className="text-2xl font-black">🛠️ gokoreamate Admin</h1>
             <p className="text-gray-400 text-sm mt-1">CSV 일괄 업로더 — Supabase spots 테이블 동기화</p>
           </div>
-          <button
-            onClick={() => { setAuthed(false); setSessionKey(""); }}
-            className="text-xs text-gray-500 hover:text-white border border-gray-700 px-3 py-1.5 rounded-lg"
-          >
-            로그아웃
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/korea-mate-admin/place-reports"
+              className="text-xs text-gray-400 hover:text-orange-400 border border-gray-700 hover:border-orange-500 px-3 py-1.5 rounded-lg"
+            >
+              📝 장소 제보 검토
+            </Link>
+            <button
+              onClick={() => { setAuthed(false); setSessionKey(""); }}
+              className="text-xs text-gray-500 hover:text-white border border-gray-700 px-3 py-1.5 rounded-lg"
+            >
+              로그아웃
+            </button>
+          </div>
         </div>
 
         {/* 🚨 유저 신고 데이터 검증 센터 */}
