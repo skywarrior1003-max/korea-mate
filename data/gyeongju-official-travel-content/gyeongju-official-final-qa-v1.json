@@ -1,0 +1,40 @@
+{
+  "parser_version": "v1.0.0",
+  "timestamp": "2026-08-08T06:10:47.159267Z",
+  "security": {
+    "secret_candidates_current_branch": 0,
+    "sanitizer_PASS": true,
+    "youtube_api_key_stored": 0,
+    "playlist_api_calls": 0,
+    "video_binary": 0,
+    "PASS": true
+  },
+  "data": {
+    "event_total": 87,
+    "event_status_sum_matches": true,
+    "event_PASS": true,
+    "course_stops_total": 132,
+    "course_stops_exact": 82,
+    "course_stops_high_conf": 2,
+    "course_stops_manual_review": 44,
+    "existing_place_linked_unique": 61,
+    "course_stop_order_changed": 0,
+    "food_universe": 292,
+    "food_pages_success": 37,
+    "food_pages_fail": 0,
+    "food_pagination_complete": true,
+    "food_existing_linked": 102,
+    "food_proposals": 190,
+    "application_total": 6,
+    "eligibility_review_remaining": 4,
+    "ai_scheduler_total_relations": 188,
+    "existing_302_modified": 0,
+    "generated_text": 0,
+    "eligibility_assumptions": 0,
+    "json_errors": 0
+  },
+  "reproducibility": {
+    "run1_network": "NETWORK=0"
+  },
+  "PASS": true
+}

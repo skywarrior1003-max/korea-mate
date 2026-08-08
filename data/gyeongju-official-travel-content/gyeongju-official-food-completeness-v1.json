@@ -1,0 +1,14 @@
+{
+  "strategy": "correct_pagination_mnu2501_pageNo_N",
+  "pagination_mechanism": "form_GET_pageNo_param",
+  "total_pages_attempted": 37,
+  "pages_success": 37,
+  "pages_fail": 0,
+  "total_unique_items": 292,
+  "EXISTING_RESTAURANT_LINK": 102,
+  "NEW_PLACE_PROPOSAL": 190,
+  "MANUAL_REVIEW": 0,
+  "unique_existing_restaurant_linked": 102,
+  "note": "mnu_uid=2500+pageNum was wrong; correct is mnu_uid=2501+pageNo; all 37 pages fetched",
+  "pagination_complete": true
+}

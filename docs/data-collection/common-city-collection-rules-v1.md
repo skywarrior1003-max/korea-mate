@@ -219,3 +219,65 @@ Travel Content Layer를 구축한다.
 **9-8 재현성**
 - _run_metadata.json에 collection_date 저장 (Run1)
 - Run2: NETWORK=0, cache만 사용, Run1과 BYTE_IDENTICAL 검증
+
+---
+
+## §10 보안 · Raw 저장 정책
+
+1. **Secret sanitizer 필수**: 외부 HTML/JS/raw response를 디스크에 저장하기 전에
+   credential-like 문자열을 deterministic placeholder로 치환한다.
+   최소 탐지 대상: Google API key (AIza*), OAuth token (ya29.*),
+   JWT, AWS access key (AKIA*), Slack token (xox*), private key block.
+   치환값: `[REDACTED_THIRD_PARTY_SECRET]` 계열.
+
+2. **Third-party public credential도 repo 저장 금지**: 외부 사이트 HTML 안에
+   포함된 타 서비스의 API 키·인증값도 raw cache에 그대로 저장하지 않는다.
+   fingerprint가 필요하면 메모리 내 해시만 사용.
+
+3. **Official video = link-only reference**: YouTube 등 공식 영상은
+   URL + title + 연결 장소/코스만 저장한다.
+   playlist API response, embed JS, video binary, 썸네일 대량 cache 금지.
+
+4. **Sanitizer 결과 reproducibility**: sanitizer는 deterministic하게 동작해
+   Run1=Run2 BYTE_IDENTICAL 조건을 깨지 않아야 한다.
+
+## §11 공식 음식 목록 수집 정책
+
+5. **JS pagination 우선 조사**: 공식 관광 사이트의 음식/장소 목록이 JS로
+   페이징될 때, 먼저 HTML form action/hidden input/XHR endpoint를
+   조사해 실제 서버 파라미터를 확인한다.
+   잘못된 URL 파라미터(pageNum vs pageNo, 잘못된 mnu_uid)는
+   서버가 동일 첫 페이지를 반복 반환하므로 중복 감지로 발견 가능.
+
+6. **Headless browser는 마지막 수단**: 서버 endpoint 확인 후에도
+   정상 GET/POST로 데이터를 얻을 수 없을 때만 사용한다.
+
+7. **Pagination completeness gate**: 수집 완료 보고 전에
+   예상 전체 항목 수 vs 실수집 수를 반드시 대조한다.
+   페이지 수 × 페이지당 항목 수로 예상치를 검증하라.
+
+## §12 이벤트·코스·신청 정책
+
+8. **Event status 완전 reconciliation**: 모든 이벤트의 status 값의 합이
+   전체 이벤트 수와 일치해야 한다.
+   DATE_INCOMPLETE·CANCELLED·CHANGED·OTHER_TEMPORAL_REVIEW도 유효 상태로 집계.
+
+9. **Course stop → existing place relation 구축**: 신규 도시 수집 시
+   공식 코스의 각 stop을 기존 302(또는 해당 도시 READY) place에 연결한다.
+   안전한 evidence 우선순위: exact normalized name > prefix 제거 후 exact >
+   no-space exact. substring 단독·좌표 단독 금지.
+
+10. **Application eligibility 공식 근거 필수**: 신청/예약/지원 프로그램의
+    외국인 개인여행자 사용가능 여부는 공식 페이지 텍스트에 근거가 있을 때만
+    FOREIGN_INDIVIDUAL_USABLE로 분류한다.
+    근거가 없으면 ELIGIBILITY_REVIEW 유지.
+
+## §13 AI itinerary seed 정책
+
+11. **Official course = AI itinerary seed/reference**: 공식 코스 데이터는
+    그대로 복사하는 용도가 아닌, AI가 사용자 취향·기간·동행자·활동강도에 맞춰
+    재조합할 수 있는 seed/reference로 저장한다.
+    course_id + 순서가 보존된 stop + linked candidate_id 구조 필수.
+
+12. **부산/서울/제주/기타 도시 동일 적용**: §9~§13의 규칙은
+    경주 특수 ID·수치를 제외하고 모든 도시에 동일하게 적용한다.

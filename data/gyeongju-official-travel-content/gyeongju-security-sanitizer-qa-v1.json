@@ -1,0 +1,27 @@
+{
+  "task": "TASK-GYEONGJU-SECURE-CONTENT-GAP-FILL-AND-FINAL-QA-V1",
+  "phase": "PHASE_0_SECURITY",
+  "sanitization": {
+    "files_checked": 179,
+    "files_cleaned": 0,
+    "total_redacted": 0,
+    "cleaned_files": []
+  },
+  "post_sanitize_qa": {
+    "files_with_remaining_secrets": 0,
+    "files": [],
+    "PASS": true
+  },
+  "secret_patterns_checked": [
+    "AIza[0-9A-Za-z\\-_]{35}",
+    "ya29\\.[0-9A-Za-z\\-_]+",
+    "(?<![A-Za-z0-9])eyJ[A-Za-z0-9\\-_]{20,}\\.[A-Za-z0-9\\-_]{20,}\\.[A-Za-z0-9\\-_]{20,}",
+    "AKIA[0-9A-Z]{16}",
+    "xox[baprs]-[0-9A-Za-z\\-]+",
+    "-----BEGIN (?:RSA |EC )?PRIVATE KEY-----[\\s\\S]{10,}?-----END (?:RSA |EC )?PRIVATE KEY-----"
+  ],
+  "youtube_data_policy": "LINK_ONLY_REFERENCE",
+  "playlist_api_response_stored": false,
+  "video_binary_stored": false,
+  "PASS": true
+}

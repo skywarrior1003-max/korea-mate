@@ -1281,7 +1281,7 @@ document.querySelector('.m_translation-links').addEventListener('click',function
 		var videoURL = "https://www.googleapis.com/youtube/v3/videos";
 
 		var playlistId = "PLJe17oavSfvFtRO-wD7lqCXCUJIIFEymO";
-		var key = "AIzaSyDUyaOOiuChkso5RlJlFoNgFYz_oDwvOVY";
+		var key = "[REDACTED_THIRD_PARTY_GOOGLE_API_KEY]";
 
 		var youtubePageNo = '1';		//페이징 번호
 		var listCnt = 50;						//게시글 수
