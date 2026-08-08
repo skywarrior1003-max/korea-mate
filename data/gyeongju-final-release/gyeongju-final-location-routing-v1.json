@@ -1,0 +1,13 @@
+{
+  "as_of": "2026-08-08",
+  "has_coords": {
+    "count": 302,
+    "total": 302,
+    "pct": 100.0
+  },
+  "route_linked": {
+    "count": 22,
+    "note": "Items linked to official gyeongju.go.kr tourist courses (candidate-official-course-overlay-v2)"
+  },
+  "waypoint_relations": 29
+}

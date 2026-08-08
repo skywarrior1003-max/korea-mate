@@ -1,0 +1,64 @@
+{
+  "as_of": "2026-08-08",
+  "rules_doc": "docs/data-collection/common-city-collection-rules-v1.md",
+  "rules_doc_exists": true,
+  "compliance_items": [
+    {
+      "rule": "§1 Source priority",
+      "status": "COMPLIANT",
+      "note": "VG official > KTO KO > KTO EN hierarchy maintained"
+    },
+    {
+      "rule": "§2 Release criteria — description",
+      "status": "COMPLIANT",
+      "note": "302/302 has_description=True"
+    },
+    {
+      "rule": "§2 Release criteria — address",
+      "status": "COMPLIANT",
+      "note": "302/302 has_address=True"
+    },
+    {
+      "rule": "§2 Release criteria — coordinates",
+      "status": "COMPLIANT",
+      "note": "302/302 has_coords=True"
+    },
+    {
+      "rule": "§2 Release criteria — images",
+      "status": "COMPLIANT",
+      "note": "302/302 has_images=True"
+    },
+    {
+      "rule": "§3 Identity — no force-matching",
+      "status": "COMPLIANT",
+      "note": "KTO12 candidate_ids = direct contentId (DIRECT_CONTENTID); no name-only matching"
+    },
+    {
+      "rule": "§6 BYTE_IDENTICAL",
+      "status": "COMPLIANT",
+      "note": "V2 recovery script: 8/8 SHA-256 PASS confirmed (05ad3ac)"
+    },
+    {
+      "rule": "§7 API contract (KorService2, no YN params)",
+      "status": "COMPLIANT",
+      "note": "detailCommon2 used contentId only; no legacy YN params"
+    },
+    {
+      "rule": "§8 as_of pinning",
+      "status": "COMPLIANT",
+      "note": "_run_metadata.json stores as_of for reproducibility"
+    },
+    {
+      "rule": "§9 Attribution — no name guessing",
+      "status": "COMPLIANT",
+      "note": "All 302 candidate_id → name_ko verified from actual records"
+    },
+    {
+      "rule": "§10 Git safety — no master push",
+      "status": "COMPLIANT",
+      "note": "Working on data/gyeongju-final-closeout-handoff-v1 branch"
+    }
+  ],
+  "non_compliances": [],
+  "overall": "ALL_COMPLIANT"
+}

@@ -1,0 +1,94 @@
+{
+  "as_of": "2026-08-08",
+  "final_ready_n": 302,
+  "basic_fields": {
+    "has_description": {
+      "count": 302,
+      "total": 302,
+      "pct": 100.0
+    },
+    "has_address": {
+      "count": 302,
+      "total": 302,
+      "pct": 100.0
+    },
+    "has_coords": {
+      "count": 302,
+      "total": 302,
+      "pct": 100.0
+    },
+    "has_images": {
+      "count": 302,
+      "total": 302,
+      "pct": 100.0
+    }
+  },
+  "extended_fields_new_65_kto": {
+    "denominator": 67,
+    "note": "Extended operating info available only for new 65 KTO items collected in V2 recovery and hold_image clearance",
+    "tel": {
+      "count": 0,
+      "total": 67,
+      "pct": 0.0
+    },
+    "homepage": {
+      "count": 49,
+      "total": 67,
+      "pct": 73.1
+    },
+    "usetime": {
+      "count": 57,
+      "total": 67,
+      "pct": 85.1
+    },
+    "restdate": {
+      "count": 57,
+      "total": 67,
+      "pct": 85.1
+    },
+    "usefee": {
+      "count": 0,
+      "total": 67,
+      "pct": 0.0
+    }
+  },
+  "core27_operating_info": {
+    "denominator": 27,
+    "note": "CORE27 (27 items) have operating info from official gyeongju.go.kr (phone, hours, admission_fee, closed_days)",
+    "phone": {
+      "count": 27,
+      "total": 27,
+      "pct": 100.0
+    },
+    "hours": {
+      "count": 27,
+      "total": 27,
+      "pct": 100.0
+    }
+  },
+  "baseline_235_extended_note": "Baseline 235 items (GJ01+GJ08 prefix): tel/hours/fee fields not captured in normalized output. CORE27 subset (27 items) has operating info from VG official source. TIER_A 106 items have KTO homepage in tier-a detailcommon2 cache (~70/75). RESTAURANT_RELEASE_102 items: VG source, operating hours not systematically captured.",
+  "image_rights_distribution": {
+    "VG_official_public": 237,
+    "KTO_Type3_attribution": 36,
+    "KTO_Type1_public": 27,
+    "IMAGE_RIGHTS_CLEARED": 2
+  },
+  "category_breakdown": {
+    "attraction_nature": 200,
+    "restaurant": 102
+  },
+  "quality_tier": {
+    "TIER_A": 193,
+    "TIER_B": 109,
+    "HOLD": 0
+  },
+  "en_coverage": {
+    "denominator": 302,
+    "EN_READY": 11,
+    "EN_PARTIAL": 127,
+    "EN_NOT_COLLECTED_OR_MISSING": 164,
+    "has_en_title_count": 138,
+    "has_en_overview_count": 19,
+    "note": "67 items added after EN collection phase (V4 new 2 + KTO74 new 63 + HOLD_IMAGE cleared 2): EN = 0 for these"
+  }
+}

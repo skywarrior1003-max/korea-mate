@@ -1,0 +1,59 @@
+{
+  "task": "TASK-GYEONGJU-FINAL-CLOSEOUT-HANDOFF-V1",
+  "status": "COMPLETE",
+  "as_of": "2026-08-08",
+  "GYEONGJU_DATA_COLLECTION_STATUS": "CLOSED",
+  "final_ready": {
+    "count": 302,
+    "set_A_baseline_237": 237,
+    "set_B_kto74_new_63": 63,
+    "set_C_hold_image_2": 2,
+    "all_intersections_empty": true
+  },
+  "category": {
+    "attraction_nature": 200,
+    "restaurant": 102
+  },
+  "quality_tier": {
+    "TIER_A": 193,
+    "TIER_B": 109
+  },
+  "hold_freeze": {
+    "HOLD_IMAGE_FINAL": 11,
+    "total_frozen": 123
+  },
+  "en_coverage": {
+    "EN_READY": 11,
+    "EN_PARTIAL": 127,
+    "EN_NOT_COLLECTED_OR_MISSING": 164,
+    "has_en_title": 138
+  },
+  "image_rights": {
+    "VG_OFFICIAL_PUBLIC": 133,
+    "VG_RESTAURANT_OFFICIAL": 102,
+    "Type3": 36,
+    "Type1": 27,
+    "IMAGE_RIGHTS_CLEARED": 2,
+    "KTO_TYPE_UNKNOWN": 2
+  },
+  "location": {
+    "has_coords": 302,
+    "coords_coverage_pct": 100.0,
+    "route_linked": 22
+  },
+  "base_branch": "data/gyeongju-kto-service2-final-recovery-v2",
+  "base_commit": "05ad3ac",
+  "output_dir": "data/gyeongju-final-release/",
+  "output_files": [
+    "gyeongju-final-set-audit-v1.json",
+    "gyeongju-final-ready-302-v1.jsonl",
+    "gyeongju-final-hold-freeze-v1.jsonl",
+    "gyeongju-final-quality-metrics-v3.json",
+    "gyeongju-final-quality-tier-v1.jsonl",
+    "gyeongju-final-en-coverage-302-v1.jsonl",
+    "gyeongju-final-image-rights-302-v1.jsonl",
+    "gyeongju-final-location-routing-v1.json",
+    "gyeongju-final-busan-gap-check-v1.json",
+    "gyeongju-main-laptop-handoff-v1.md"
+  ]
+}

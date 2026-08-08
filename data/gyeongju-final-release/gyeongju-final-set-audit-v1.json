@@ -1,0 +1,19 @@
+{
+  "set_A_count": 237,
+  "set_A_sources": [
+    "gyeongju-final-release-places-v1.jsonl (235)",
+    "gyeongju-final-release-classification-v4.jsonl (2 V4 new)"
+  ],
+  "set_B_count": 63,
+  "set_B_source": "gyeongju-kto74-release-delta-v2.jsonl (release_v2=READY_FOR_RELEASE, previous_status!=HOLD_IMAGE)",
+  "set_C_count": 2,
+  "set_C_source": "gyeongju-kto74-release-delta-v2.jsonl (previous_status=HOLD_IMAGE, release_v2=READY_FOR_RELEASE)",
+  "intersection_AB": [],
+  "intersection_AC": [],
+  "intersection_BC": [],
+  "final_union_unique": 302,
+  "arithmetic_sum": 302,
+  "duplicates_found": 0,
+  "verification": "PASS - FINAL_READY = 302, all intersections empty",
+  "as_of": "2026-08-08"
+}

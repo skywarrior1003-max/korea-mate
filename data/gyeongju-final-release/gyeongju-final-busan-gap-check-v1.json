@@ -1,0 +1,46 @@
+{
+  "as_of": "2026-08-08",
+  "gyeongju_status": "CLOSED",
+  "busan_status": "IN_PROGRESS (data/busan-enrichment-v1, HEAD 4465278)",
+  "busan_gap_doc_exists": true,
+  "busan_gap_doc": "docs\\data-collection\\busan-gap-audit-application-v1.md",
+  "gyeongju_lessons_for_busan": [
+    {
+      "lesson": "KorService2 API contract enforcement",
+      "detail": "HTTP 400 from legacy YN params (V4 regression). V2 fixed: contentId only for detailCommon2.",
+      "busan_applicability": "HIGH — Busan enrichment uses same API. Verify no YN params in busan scripts."
+    },
+    {
+      "lesson": "HOLD_IMAGE clearance via KorService2 detailImage2",
+      "detail": "감포항/강동워터파크 cleared after KorService2 detailImage2 returned images with Type1/3 rights.",
+      "busan_applicability": "MEDIUM — Check Busan HOLD_IMAGE items for similar clearance opportunity."
+    },
+    {
+      "lesson": "Set union vs arithmetic for final count",
+      "detail": "FINAL_READY must use UNION(A,B,C), not arithmetic sum. Duplicates cause overcounting.",
+      "busan_applicability": "HIGH — Apply same set union logic when finalizing Busan READY count."
+    },
+    {
+      "lesson": "Phase counter assertion before hold_img_delta loop",
+      "detail": "Counter captured AFTER loop caused 76≠74 assertion failure. Capture BEFORE delta loop.",
+      "busan_applicability": "HIGH — Any Busan script with similar loop structure must use same pattern."
+    },
+    {
+      "lesson": "BYTE_IDENTICAL: as_of pinning via _run_metadata.json",
+      "detail": "Timestamp in script output breaks SHA-256 between Run1/Run2. Pin with metadata file.",
+      "busan_applicability": "HIGH — Apply to all Busan collection scripts for reproducibility."
+    },
+    {
+      "lesson": "EN coverage is pipeline-phase-dependent",
+      "detail": "Items added after EN collection phase have EN=0. EN must be a separate targeted phase.",
+      "busan_applicability": "MEDIUM — Busan EN collection phase should run AFTER final READY set is locked."
+    }
+  ],
+  "priority_actions_for_busan": [
+    "Audit busan enrichment scripts for legacy YN params (grep -n 'YN')",
+    "Confirm busan KTO scripts use KorService2 (not KorService1)",
+    "Apply set union logic for Busan final READY count verification",
+    "Apply phase counter assertion pattern to any Busan batch scripts",
+    "Pin as_of for BYTE_IDENTICAL compliance in Busan scripts"
+  ]
+}
