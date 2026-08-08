@@ -1,0 +1,47 @@
+{
+  "task": "TASK-GYEONGJU-SECURITY-RELATIONS-FINAL-CLOSEOUT-AND-MAIN-HANDOFF-V1",
+  "timestamp": "2026-08-08T06:54:30.024328Z",
+  "security": {
+    "GITHUB_SECRET_ALERT_STATUS": "CLOSED",
+    "current_secret_candidates": 0,
+    "sanitizer_active": true,
+    "youtube_collection": 0,
+    "history_rewrite": false,
+    "secret_raw_output": 0,
+    "PASS": true
+  },
+  "places": {
+    "existing_302_modified": 0,
+    "identity_mutation": 0,
+    "PASS": true
+  },
+  "relations": {
+    "course_stops_total": 132,
+    "course_stops_all_final_status": true,
+    "event_total": 87,
+    "event_all_relation_status": true,
+    "experience_total": 23,
+    "experience_all_relation_status": true,
+    "application_total": 6,
+    "application_all_relation_status": true,
+    "course_stop_order_unchanged": true,
+    "duplicate_hard_relations": 0,
+    "PASS": true
+  },
+  "completeness": {
+    "discrepancies": {},
+    "GYEONGJU_MAJOR_SOURCE_COLLECTION": "COMPLETE",
+    "PASS": true
+  },
+  "outputs": {
+    "json_errors": 0,
+    "generated_text": 0,
+    "api_key_exposed": 0
+  },
+  "reproducibility": {
+    "network_allowed": false,
+    "run_mode": "NETWORK=0 (relation/finalization phase)",
+    "byte_identical_expectation": "PASS (deterministic offline analysis)"
+  },
+  "PASS": true
+}

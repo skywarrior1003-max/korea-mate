@@ -281,3 +281,47 @@ Travel Content Layer를 구축한다.
 
 12. **부산/서울/제주/기타 도시 동일 적용**: §9~§13의 규칙은
     경주 특수 ID·수치를 제외하고 모든 도시에 동일하게 적용한다.
+
+
+---
+
+## §14 최종 체크리스트 (경주 기반, 전 도시 적용)
+
+이 체크리스트는 도시 데이터 수집 완료 전 최종 검증에 사용한다.
+
+```
+[ ] READY place set 확정 (identity 중복/오류 없음)
+[ ] official site inventory-first 적용
+[ ] event/course/experience/program/food/travel_info 6종 분리 수집
+[ ] official course stop → existing place relation 구축
+[ ] event 전건 venue relation 상태 부여
+[ ] experience 전건 place/area relation 상태 부여
+[ ] application 전건 eligibility 공식 근거 기반 분류
+[ ] food 전건 place link 또는 proposal 분류
+[ ] AI scheduler relation graph (hard/soft/unresolved)
+[ ] GitHub secret scan: current candidates = 0
+[ ] raw 저장 전 sanitizer 적용 확인
+[ ] YouTube/video binary 없음
+[ ] BYTE_IDENTICAL Run1=Run2
+[ ] JSON/JSONL parse error = 0
+[ ] generated text = 0
+[ ] existing place identity 수정 = 0
+[ ] master push/merge = 0
+[ ] force push/history rewrite = 0
+```
+
+## §15 다음 도시 적용 순서
+
+새 도시 수집 시 적용 순서:
+
+1. official site inventory 파악 (연결된 mnu_uid 전수)
+2. smoke test (charset, nav_links, HTTP 상태)
+3. secret sanitizer 활성화 (저장 전 적용)
+4. places 수집 (기존 READY set 확정 후 진행)
+5. events/courses/experiences/programs/travel_info 수집
+6. food 수집 (JS pagination → form/XHR endpoint 먼저 확인)
+7. course stop → place linkage
+8. event/experience relation 상태 부여
+9. AI scheduler relation graph
+10. QA PASS → commit → push
+11. 공통 규칙 업데이트 (일반화 가능한 항목만)

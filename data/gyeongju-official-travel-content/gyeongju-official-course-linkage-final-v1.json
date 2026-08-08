@@ -1,0 +1,13 @@
+{
+  "total_stops": 132,
+  "EXACT_EXISTING_PLACE": 83,
+  "HIGH_CONFIDENCE_EXISTING_PLACE": 12,
+  "RELATED_ENTITY_ONLY": 8,
+  "GROUP_ENTITY": 3,
+  "TEMPORAL_OR_ACTIVITY_STOP": 3,
+  "NON_PLACE_STOP": 6,
+  "NEW_PLACE_PROPOSAL": 3,
+  "MANUAL_REVIEW_FINAL": 14,
+  "MANUAL_REVIEW_lingering": 0,
+  "existing_place_linked_unique_count": 73
+}

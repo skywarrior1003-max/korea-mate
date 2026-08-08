@@ -1,0 +1,14 @@
+{
+  "GITHUB_SECRET_ALERT_STATUS": "CLOSED",
+  "repository": "skywarrior1003-max/korea-mate",
+  "alert_type": "Google API key (third-party)",
+  "affected_commit": "c7bcfbe",
+  "affected_path": "data/gyeongju-official-travel-content/_cache/course_detail_4156.html.raw",
+  "dismissal_reason": "Won't fix",
+  "dismissal_comment_summary": "Third-party credential from publicly served gyeongju.go.kr HTML; not owned by GoKoreaMate; current files sanitized; history not rewritten intentionally.",
+  "human_closed": true,
+  "current_secret_candidates": 0,
+  "credential_rotation_required": false,
+  "history_rewrite_performed": false,
+  "confirmed_at": "2026-08-08T06:54:29.962847Z"
+}
