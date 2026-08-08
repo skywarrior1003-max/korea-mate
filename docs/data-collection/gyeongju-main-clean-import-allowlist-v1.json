@@ -1,0 +1,364 @@
+{
+  "candidate_branch": "data/gyeongju-final-security-relations-handoff-v1",
+  "candidate_sha": "1b7806c1494d0518d06cd31212b5acf6eba27817",
+  "gyeongju_main_handoff_candidate_sha": "1b7806c1494d0518d06cd31212b5acf6eba27817",
+  "generated_at": "2026-08-08T07:41:37.063690Z",
+  "import_required": [
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-ready-302-v1.jsonl",
+      "reason": "READY 302 place index. JOIN key for all place data.",
+      "type": "data",
+      "records": 302,
+      "note": "Summary index only; join enriched-candidates for full detail"
+    },
+    {
+      "path": "data/tourapi/enriched/gyeongju/gyeongju-enriched-candidates-v1.jsonl",
+      "reason": "Detailed place data: description_ko, lat/lng, address, phone per candidate_id. Filter 831 by ready-302 candidate_ids.",
+      "type": "data",
+      "records": 831
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-en-coverage-302-v1.jsonl",
+      "reason": "EN coverage per place: en_coverage, has_en_title, has_en_overview.",
+      "type": "data",
+      "records": 302
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-image-rights-302-v1.jsonl",
+      "reason": "Image rights per place: image_rights type, rights_note.",
+      "type": "data",
+      "records": 302
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-quality-tier-v1.jsonl",
+      "reason": "Quality tier per place: TIER_A=193 TIER_B=109.",
+      "type": "data",
+      "records": 302
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-source-priority-matrix-v1.json",
+      "reason": "Official source priority matrix.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-events-final-v1.jsonl",
+      "reason": "Events 87 final (ACTIVE=4,UPCOMING=4,PAST=76,DATE_INCOMPLETE=3).",
+      "type": "data",
+      "records": 87
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-courses-v2.jsonl",
+      "reason": "Official courses 57 with title, category, theme, description, keywords.",
+      "type": "data",
+      "records": 57
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-course-place-links-final-v1.jsonl",
+      "reason": "Course stop final relation 132 (EXACT=83, HIGH_CONF=12 + others) with match_status, existing_candidate_id.",
+      "type": "data",
+      "records": 132
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-experiences-v2.jsonl",
+      "reason": "Experiences 23 with venue, address, hours, reservation_required.",
+      "type": "data",
+      "records": 23
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-application-programs-final-v1.jsonl",
+      "reason": "Application programs 6 with foreigner_eligibility classification.",
+      "type": "data",
+      "records": 6
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-travel-info-v2.jsonl",
+      "reason": "Travel essential info 54 (tourist offices, fees, stamps, wifi, transport, accessibility, baggage).",
+      "type": "data",
+      "records": 54
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-food-final-relations-v1.jsonl",
+      "reason": "Food 292 final (EXISTING=102, NEW_PLACE_PROPOSAL=190).",
+      "type": "data",
+      "records": 292
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-event-place-relations-v1.jsonl",
+      "reason": "Event to place relation 87 (AT_PLACE=17, MULTI=9, IN_AREA=1, NOT_IN_SET=60).",
+      "type": "data",
+      "records": 87
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-experience-place-relations-v1.jsonl",
+      "reason": "Experience to place relation 23 (AT_PLACE=6, IN_AREA=8, BY_PROVIDER=9).",
+      "type": "data",
+      "records": 23
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-application-relations-v1.jsonl",
+      "reason": "Application relation 6 with ai_scheduler_usable flag and related_place_candidate_id.",
+      "type": "data",
+      "records": 6
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-ai-scheduler-graph-final-v1.jsonl",
+      "reason": "AI scheduler relation graph 350 (HARD=222, SOFT=32, UNRESOLVED=96).",
+      "type": "data",
+      "records": 350
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/_run_metadata.json",
+      "reason": "Collection metadata: collection_date=2026-08-08, parser_version. as_of anchor.",
+      "type": "data",
+      "records": 1
+    }
+  ],
+  "import_optional": [
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-hold-freeze-v1.jsonl",
+      "reason": "HOLD 123 frozen candidates. Useful for future expansion.",
+      "type": "data",
+      "records": 123
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-quality-metrics-v3.json",
+      "reason": "Quality metrics summary: image rights distribution, category breakdown.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-set-audit-v1.json",
+      "reason": "Set A/B/C intersection audit confirming READY 302 disjoint construction.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-closeout-summary-v1.json",
+      "reason": "Closeout summary with final status, ready count, quality tier, hold count.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-course-linkage-final-v1.json",
+      "reason": "Course stop linkage distribution summary (EXACT/HIGH_CONF/etc. counts).",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-final-closeout-qa-v1.json",
+      "reason": "Final QA PASS report with security, places, relations, completeness checks.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-food-completeness-v1.json",
+      "reason": "Food collection completeness: 37 pages success.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-event-status-audit-v1.json",
+      "reason": "Event status distribution audit.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-security-sanitizer-qa-v1.json",
+      "reason": "Secret sanitizer QA: 3 files sanitized, 0 remaining candidates.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-github-alert-closeout-v1.json",
+      "reason": "GitHub Secret Scanning alert dismissal record.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-ai-scheduler-features-v2.jsonl",
+      "reason": "AI scheduler seed features 65 (courses + active/upcoming events).",
+      "type": "data",
+      "records": 65
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-tour-program-info-v1.jsonl",
+      "reason": "Tour/program info 133 from official site static pages.",
+      "type": "data",
+      "records": 133
+    },
+    {
+      "path": "data/tourapi/contracts/gyeongju/gyeongju-culture-tourism-source-contract-v2.json",
+      "reason": "KTO API + VG source contract v2.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-image-provenance-v2.jsonl",
+      "reason": "Image provenance 1814 records: per-image source, rights_type, URL.",
+      "type": "data",
+      "records": 1814
+    },
+    {
+      "path": "docs/data-collection/gyeongju-final-main-handoff-v2.md",
+      "reason": "Handoff documentation v2 with data counts, AI relation contract, security notes.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "docs/data-collection/gyeongju-collection-lessons-v1.md",
+      "reason": "Collection lessons learned.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "docs/data-collection/common-city-collection-rules-v1.md",
+      "reason": "Common city collection rules applicable to future cities.",
+      "type": "doc",
+      "records": 1
+    },
+    {
+      "path": "scripts/gyeongju_final_relations_handoff_v1.py",
+      "reason": "Final relations script (PHASEs 3-13, reproducibility reference).",
+      "type": "script",
+      "records": 1
+    },
+    {
+      "path": "scripts/gyeongju_secure_content_gap_fill_v1.py",
+      "reason": "Gap fill script (PHASEs 0-10, secret sanitizer, food pagination fix).",
+      "type": "script",
+      "records": 1
+    }
+  ],
+  "do_not_import": [
+    {
+      "path": "data/gyeongju-official-travel-content/_cache/",
+      "reason": "Raw HTML cache 358 files including 3 sanitized .html.raw. No content value; sanitized credential markers present.",
+      "type": "raw_cache"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-course-place-links-v1.jsonl",
+      "reason": "Intermediate (MANUAL_REVIEW unresolved). Superseded by -final-v1.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-course-stops-v2.jsonl",
+      "reason": "Intermediate without final match_status. Superseded by -place-links-final.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-events-v2.jsonl",
+      "reason": "Intermediate events before final status. Superseded by events-final.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-application-programs-v2.jsonl",
+      "reason": "Intermediate applications. Superseded by -final-v1.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-content-place-relations-v2.jsonl",
+      "reason": "Intermediate relations (V2, all 0 relations). Superseded by final relation files.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-content-qa-v2.json",
+      "reason": "Intermediate QA. Superseded by closeout-qa.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-content-summary-v2.json",
+      "reason": "Intermediate summary. Superseded.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-course-linkage-summary-v1.json",
+      "reason": "Intermediate linkage summary (44 MANUAL_REVIEW). Superseded by final.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-final-gap-summary-v1.json",
+      "reason": "Gap fill internal summary. Debug artifact.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-final-qa-v1.json",
+      "reason": "Pre-closeout QA. Superseded by final-closeout-qa.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-food-place-links-v1.jsonl",
+      "reason": "Intermediate food links. Superseded by food-final-relations.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-food-recommendations-v2.jsonl",
+      "reason": "Intermediate food recommendations (20 items). Superseded.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-menu-inventory-v2.json",
+      "reason": "Internal menu navigation inventory. Collection artifact.",
+      "type": "internal"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-new-place-proposals-v2.jsonl",
+      "reason": "V2 proposals (20 items). Superseded by food-final-relations proposals (190).",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-tour-programs-v2.jsonl",
+      "reason": "Intermediate tour programs. Superseded by tour-program-info-v1.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-official-travel-content/gyeongju-official-ai-scheduler-relations-final-v1.jsonl",
+      "reason": "V1 AI relations (188 records). Superseded by graph-final (350 records).",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-busan-gap-check-v1.json",
+      "reason": "Internal process handoff to BUSAN task. Not gyeongju content.",
+      "type": "internal"
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-location-routing-v1.json",
+      "reason": "Internal routing check. Not content.",
+      "type": "internal"
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-final-common-rules-check-v1.json",
+      "reason": "Internal rules compliance check. Not content.",
+      "type": "internal"
+    },
+    {
+      "path": "data/gyeongju-final-release/gyeongju-main-laptop-handoff-v1.md",
+      "reason": "Handoff doc v1. Superseded by gyeongju-final-main-handoff-v2.md.",
+      "type": "intermediate"
+    },
+    {
+      "path": "data/tourapi/gyeongju/web-raw-v3/",
+      "reason": "Raw web crawl data. Source artifacts only.",
+      "type": "raw_source"
+    },
+    {
+      "path": "data/tourapi/candidates/gyeongju/gyeongju-source-facts-v1.jsonl",
+      "reason": "Raw source facts pre-normalization. Use enriched-candidates instead.",
+      "type": "intermediate"
+    }
+  ],
+  "allowlist_qa": {
+    "A_all_required_exist": true,
+    "A_missing_required": [],
+    "B_no_category_duplicates": true,
+    "B_duplicates": [],
+    "C_no_cache_in_required": true,
+    "D_no_html_raw_in_required": true,
+    "E_no_raw_api_dump_in_required": true,
+    "F_no_secret_candidate_in_required": true,
+    "G_no_debug_in_required": true,
+    "H_optional_exist": true,
+    "H_optional_missing": [],
+    "ALLOWLIST_QA_PASS": true
+  }
+}
