@@ -48,22 +48,24 @@ export function distinctReporters(rows: readonly ReportRow[]): number {
 }
 
 /**
- * 지금 열려 있는 사건의 이름.
+ * 사건을 열 때 기록해 둘 최초 신고 id.
  *
- * 열려 있는 신고 중 **가장 먼저 들어온 것의 id** 를 쓴다. 모두 종결되면
- * 사건이 끝나고, 나중에 새 신고가 들어오면 새 id 가 앵커가 되어 임계를
- * 처음부터 다시 쓸 수 있다. 그래서 몇 달 뒤 같은 장소에 새 문제가 생겨도
- * 알림을 받는다.
+ * **사건의 정체성이 아니다.** 예전엔 이 값을 사건 이름으로 썼는데, 관리자가
+ * 그 신고 하나만 종결하면 이름이 다음 신고로 옮겨갔다. 같은 사건인데 이름이
+ * 바뀌니 2/5/10 알림이 처음부터 다시 울렸다.
  *
- * 알아 둘 것: 관리자가 **가장 오래된 신고만** 종결하면 앵커가 다음 신고로
- * 옮겨간다. 그러면 같은 임계 알림이 한 번 더 올 수 있다. 이 방향의 오차는
- * 알림이 더 오는 쪽이지 빠지는 쪽이 아니라서 그대로 둔다 — 관리자가 손을
- * 댄 뒤에도 신고가 계속 들어온다면 그건 다시 볼 만한 일이다.
+ * 이제 사건은 DB 의 행이고 그 id 는 무슨 일이 있어도 바뀌지 않는다. 이 값은
+ * "무엇 때문에 열렸나" 를 나중에 읽기 위한 기록일 뿐이다.
  */
-export function incidentKey(rows: readonly ReportRow[]): string | null {
+export function anchorReportId(rows: readonly ReportRow[]): number | null {
   const act = activeReports(rows);
   if (act.length === 0) return null;
-  return String(act.reduce((min, r) => (r.id < min.id ? r : min)).id);
+  return act.reduce((min, r) => (r.id < min.id ? r : min)).id;
+}
+
+/** 열려 있는 신고가 하나라도 있는가 — 사건을 닫을지 판단하는 유일한 기준이다. */
+export function hasActiveReports(rows: readonly ReportRow[]): boolean {
+  return activeReports(rows).length > 0;
 }
 
 // ── 신고: 언제 알리나 ───────────────────────────────────────────────────────
@@ -102,7 +104,8 @@ export interface NotificationCandidate {
   target_key:    string;
   signal_key:    string | null;
   milestone_key: string;
-  incident_key:  string;
+  /** 신고 알림은 반드시 어느 사건의 것인지 적는다. 좋아요는 사건이 없다. */
+  incident_id:   number | null;
   delivery_mode: "immediate" | "digest";
   metric_value:  number;
 }
@@ -114,15 +117,13 @@ export interface NotificationCandidate {
  * 판단하고, 정말 보낼지는 DB 가 자리를 내주는지로 정한다(동시 요청 방어).
  */
 export function reportNotificationCandidates(
-  targetKey: string, rows: readonly ReportRow[],
+  targetKey: string, rows: readonly ReportRow[], incidentId: number,
 ): NotificationCandidate[] {
   const act = activeReports(rows);
   if (act.length === 0) return [];
-  const incident = incidentKey(rows);
-  if (incident === null) return [];
 
   const out: NotificationCandidate[] = [];
-  const base = { target_type: "city_spot" as const, target_key: targetKey, incident_key: incident };
+  const base = { target_type: "city_spot" as const, target_key: targetKey, incident_id: incidentId };
 
   // 안전 문제는 열려 있는 사건에서 최초 1건이면 바로 알린다.
   const safety = act.filter(r => isImmediateSingleCategory(r.category));
@@ -164,7 +165,8 @@ export const LIKE_MILESTONES = [5, 10, 25, 50, 100] as const;
  * 좋아요 알림 후보.
  *
  * 취소했다가 다시 눌러 같은 단계를 또 넘어도 후보가 다시 생기지 않는다 —
- * 좋아요 이벤트는 incident 없이 평생 한 번이라 DB 의 UNIQUE 가 막는다.
+ * 좋아요 이벤트는 사건이 없어 (event_type, target, milestone) 만으로 평생
+ * 한 번이고, 그 계약을 좋아요 전용 partial unique 가 지킨다.
  * 여기서는 넘긴 단계를 전부 후보로 내놓고, 이미 처리된 것은 DB 가 걸러 낸다.
  */
 export function likeNotificationCandidates(
@@ -177,7 +179,8 @@ export function likeNotificationCandidates(
     signal_key:    null,
     milestone_key: `like:${m}`,
     // 평생 한 번이면 되는 알림이라 사건 개념이 없다.
-    incident_key:  "",
+    // NULL 이면 좋아요 전용 partial unique 가 "이 장소의 이 단계" 를 한 번으로 묶는다.
+    incident_id:   null,
     // 즉시 보내지 않는다. 좋아요는 운영이 급히 볼 일이 아니다.
     delivery_mode: DELIVERY_DIGEST,
     metric_value:  count,

@@ -240,8 +240,10 @@ test("C16 허용된 상태 전이", () => {
   assert.equal(isAllowedTransition("resolved_hidden", "resolved_removed"), false);
   assert.equal(isAllowedTransition("rejected", "resolved_corrected"), false);
   assert.equal(isAllowedTransition("pending", "pending"), false);
-  // 서버가 현재 상태를 읽고 판단한다 — 클라이언트가 준 from 을 믿지 않는다
-  assert.match(apiCode, /select=id,status&limit=1/);
+  // 서버가 현재 상태를 읽고 판단한다 — 클라이언트가 준 from 을 믿지 않는다.
+  // (알림 사건 종료 판단에 target 이 필요해 select 에 두 칸이 늘었다.
+  //  현재 상태를 서버가 직접 읽는다는 계약은 그대로다.)
+  assert.match(apiCode, /select=id,status,target_type,target_key&limit=1/);
   assert.match(apiCode, /isAllowedTransition\(current\.status, patch\.status\)/);
   assert.match(apiCode, /"invalid_transition", 409/);
 });

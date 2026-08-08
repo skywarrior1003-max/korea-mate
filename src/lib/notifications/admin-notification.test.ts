@@ -14,7 +14,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import {
-  activeReports, distinctReporters, incidentKey,
+  activeReports, distinctReporters, anchorReportId, hasActiveReports,
   reportNotificationCandidates, likeNotificationCandidates,
   buildReportEmail, isImmediateSingleCategory, isActiveReportStatus,
   ACTIVE_REPORT_STATUSES, REPORT_MILESTONES, LIKE_MILESTONES,
@@ -54,15 +54,18 @@ const row = (
 
 const milestones = (cs: { milestone_key: string }[]) => cs.map(c => c.milestone_key).sort();
 
+/** 사건 id 는 DB 가 준다. 여기서는 고정값 하나면 충분하다. */
+const INC = 7001;
+
 // ── R1~R5 일반 임계 ─────────────────────────────────────────────────────────
 
 test("R1 신고자 1명이면 알리지 않는다", () => {
-  const c = reportNotificationCandidates("1", [row("a")]);
+  const c = reportNotificationCandidates("1", [row("a")], INC);
   assert.deepEqual(c, []);
 });
 
 test("R2 서로 다른 2명이면 알린다", () => {
-  const c = reportNotificationCandidates("1", [row("a"), row("b")]);
+  const c = reportNotificationCandidates("1", [row("a"), row("b")], INC);
   assert.deepEqual(milestones(c), ["threshold:2"]);
   assert.equal(c[0].event_type, EVENT_REPORT_THRESHOLD);
   assert.equal(c[0].delivery_mode, DELIVERY_IMMEDIATE);
@@ -74,20 +77,20 @@ test("R3 같은 단계는 반복해서 만들지 않는다 — DB 가 막는다"
   // 그 하나는 이미 예약돼 있으므로 UNIQUE 가 두 번째를 거부한다.
   for (const n of [2, 3, 4]) {
     const rows = Array.from({ length: n }, (_, i) => row(`r${i}`));
-    assert.deepEqual(milestones(reportNotificationCandidates("1", rows)), ["threshold:2"], `${n}명`);
+    assert.deepEqual(milestones(reportNotificationCandidates("1", rows, INC)), ["threshold:2"], `${n}명`);
   }
-  assert.match(sqlCode, /create unique index if not exists uq_ane_event_identity/);
-  assert.match(sqlCode, /\(event_type, target_type, target_key, incident_key, milestone_key\)/);
+  assert.match(sqlCode, /create unique index if not exists uq_ane_report_event/);
+  assert.match(sqlCode, /\(event_type, target_type, target_key, incident_id, milestone_key\)/);
 });
 
 test("R4 5명이 되면 단계가 하나 늘어난다", () => {
   const rows = Array.from({ length: 5 }, (_, i) => row(`r${i}`));
-  assert.deepEqual(milestones(reportNotificationCandidates("1", rows)), ["threshold:2", "threshold:5"]);
+  assert.deepEqual(milestones(reportNotificationCandidates("1", rows, INC)), ["threshold:2", "threshold:5"]);
 });
 
 test("R5 10명이 되면 또 하나 늘어난다", () => {
   const rows = Array.from({ length: 10 }, (_, i) => row(`r${i}`));
-  assert.deepEqual(milestones(reportNotificationCandidates("1", rows)),
+  assert.deepEqual(milestones(reportNotificationCandidates("1", rows, INC)),
                    ["threshold:10", "threshold:2", "threshold:5"]);
   assert.deepEqual([...REPORT_MILESTONES], [2, 5, 10]);
 });
@@ -95,7 +98,7 @@ test("R5 10명이 되면 또 하나 늘어난다", () => {
 test("R6 같은 사람이 반복 신고해도 사람 수는 늘지 않는다", () => {
   const rows = [row("a"), row("a"), row("a"), row("a"), row("a")];
   assert.equal(distinctReporters(rows), 1);
-  assert.deepEqual(reportNotificationCandidates("1", rows), []);
+  assert.deepEqual(reportNotificationCandidates("1", rows, INC), []);
   // 총 건수로 세는 코드가 어디에도 없다
   assert.match(coreCode, /new Set\(rows\.map\(r => r\.reporter_key\)\)\.size/);
   assert.doesNotMatch(coreCode, /rows\.length >= m|act\.length >= m/);
@@ -104,7 +107,7 @@ test("R6 같은 사람이 반복 신고해도 사람 수는 늘지 않는다", (
 // ── R7~R10 사유별 ───────────────────────────────────────────────────────────
 
 test("R7 safety 는 첫 1건부터 알린다", () => {
-  const c = reportNotificationCandidates("1", [row("a", "safety")]);
+  const c = reportNotificationCandidates("1", [row("a", "safety")], INC);
   assert.deepEqual(milestones(c), ["safety:1"]);
   assert.equal(c[0].event_type, EVENT_REPORT_SAFETY);
   assert.equal(c[0].delivery_mode, DELIVERY_IMMEDIATE);
@@ -115,23 +118,23 @@ test("R7 safety 는 첫 1건부터 알린다", () => {
 test("R8 같은 사건 안에서 safety 를 반복해도 단계는 하나다", () => {
   const c = reportNotificationCandidates("1", [
     row("a", "safety", "pending", 100), row("b", "safety", "pending", 101),
-  ]);
+  ], INC);
   const safety = c.filter(x => x.event_type === EVENT_REPORT_SAFETY);
   assert.equal(safety.length, 1);
   assert.equal(safety[0].milestone_key, "safety:1");
-  // 사건 이름이 같으므로 두 번째 예약은 DB 가 거부한다
-  assert.equal(safety[0].incident_key, "100");
+  // 사건 id 가 같으므로 두 번째 예약은 DB 가 거부한다
+  assert.equal(safety[0].incident_id, INC);
 });
 
 test("R9 폐업 신고 1명만으로는 알리지 않는다", () => {
-  assert.deepEqual(reportNotificationCandidates("1", [row("a", "closed_or_unavailable")]), []);
+  assert.deepEqual(reportNotificationCandidates("1", [row("a", "closed_or_unavailable")], INC), []);
   assert.equal(CLOSED_REPORT_MIN_REPORTERS, 2);
 });
 
 test("R10 폐업 신고가 2명이면 알린다", () => {
   const c = reportNotificationCandidates("1", [
     row("a", "closed_or_unavailable"), row("b", "closed_or_unavailable"),
-  ]);
+  ], INC);
   assert.deepEqual(milestones(c), ["threshold:2"]);
 });
 
@@ -144,8 +147,9 @@ test("R11 열려 있는 신고가 모두 종결되면 사건이 끝난다", () =
     row("c", "safety", "duplicate", 102),
   ];
   assert.deepEqual(activeReports(closed), []);
-  assert.equal(incidentKey(closed), null);
-  assert.deepEqual(reportNotificationCandidates("1", closed), []);
+  assert.equal(hasActiveReports(closed), false);
+  assert.equal(anchorReportId(closed), null);
+  assert.deepEqual(reportNotificationCandidates("1", closed, INC), []);
   assert.deepEqual([...ACTIVE_REPORT_STATUSES], ["pending", "reviewing"]);
   assert.equal(isActiveReportStatus("resolved_hidden"), false);
   assert.equal(isActiveReportStatus("reviewing"), true);
@@ -159,13 +163,14 @@ test("R12 새 사건이 열리면 같은 단계를 다시 쓸 수 있다", () =>
   // 몇 달 뒤 새 신고 두 건
   const now = [...old, row("c", "hours_or_holiday", "pending", 500),
                        row("d", "hours_or_holiday", "pending", 501)];
-  const c = reportNotificationCandidates("1", now);
+  // 새 사건이므로 DB 가 새 id 를 준다
+  const NEW_INC = 7002;
+  const c = reportNotificationCandidates("1", now, NEW_INC);
   assert.deepEqual(milestones(c), ["threshold:2"]);
-  // 사건 이름이 예전과 다르므로 UNIQUE 에 걸리지 않는다 — 다시 알릴 수 있다
-  assert.equal(c[0].incident_key, "500");
-  assert.notEqual(c[0].incident_key, "100");
-  // 스키마에 (target, milestone) 영구 UNIQUE 를 걸지 않았다
-  assert.doesNotMatch(sqlCode, /unique index[\s\S]{0,120}\(event_type, target_type, target_key, milestone_key\)/);
+  assert.equal(c[0].incident_id, NEW_INC);
+  assert.notEqual(c[0].incident_id, INC);
+  // 신고용 UNIQUE 에 incident_id 가 들어 있어 새 사건에서는 다시 쓸 수 있다
+  assert.match(sqlCode, /uq_ane_report_event[\s\S]{0,200}\(event_type, target_type, target_key, incident_id, milestone_key\)[\s\S]{0,60}where incident_id is not null/);
 });
 
 // ── R13~R15 동시성·실패·프라이버시 ──────────────────────────────────────────
@@ -262,24 +267,25 @@ test("L6 5→4→5 로 오가도 like:5 는 한 번뿐이다", () => {
   const a = likeNotificationCandidates("1", 5);
   const b = likeNotificationCandidates("1", 5);
   assert.deepEqual(milestones(a), milestones(b));
-  assert.equal(a[0].incident_key, "");   // 사건 개념 없음 = 평생 한 번
-  assert.match(coreCode, /incident_key:\s*"",/);
+  assert.equal(a[0].incident_id, null);   // 사건 개념 없음 = 평생 한 번
+  assert.match(coreCode, /incident_id:\s*null,/);
 });
 
 test("L7 10→9→10 도 마찬가지다", () => {
   const c = likeNotificationCandidates("1", 10).find(x => x.milestone_key === "like:10");
   assert.ok(c);
-  assert.equal(c.incident_key, "");
-  // UNIQUE 열쇠에 incident_key 가 들어 있고, 좋아요는 그 값이 항상 빈 문자열이라
-  // (event_type, target, "", milestone) 조합이 평생 하나뿐이 된다
-  assert.match(sqlCode, /incident_key\s+text not null default ''/);
+  assert.equal(c.incident_id, null);
+  // 좋아요 전용 partial unique 가 (event_type, target, milestone) 을 평생 하나로 묶는다.
+  // Postgres 에서 NULL 은 서로 같지 않으므로 incident_id 를 포함한 열쇠로는
+  // 좋아요 중복을 막을 수 없다. 그래서 조건을 나눴다.
+  assert.match(sqlCode, /uq_ane_like_event[\s\S]{0,200}\(event_type, target_type, target_key, milestone_key\)[\s\S]{0,60}where incident_id is null/);
 });
 
 test("L8 동시에 같은 단계를 넘겨도 후보는 하나만 남는다", () => {
   assert.match(notifyCode, /export async function reserveLikeMilestones/);
   const fn = notifyCode.slice(notifyCode.indexOf("export async function reserveLikeMilestones"));
   assert.match(fn, /const r = await reserve\(env, base, h, c\)/);
-  assert.match(sqlCode, /create unique index if not exists uq_ane_event_identity/);
+  assert.match(sqlCode, /create unique index if not exists uq_ane_like_event/);
 });
 
 test("L9·L10·L11 알림이 Saved·Report·AI 를 바꾸지 않는다", () => {
@@ -373,9 +379,12 @@ test("E9 사용자 요청을 붙잡지 않는다", () => {
 });
 
 test("E10 044 가 보안 계약을 지킨다", () => {
-  assert.match(sqlCode, /alter table public\.admin_notification_events enable row level security/);
-  for (const r of ["anon", "authenticated", "public"]) {
-    assert.ok(sqlCode.includes(`revoke all on public.admin_notification_events from ${r};`), r);
+  for (const t of ["admin_notification_incidents", "admin_notification_events"]) {
+    // 정렬용 공백이 들어갈 수 있으므로 공백 개수에 의존하지 않는다
+    assert.match(sqlCode, new RegExp(`alter table public\\.${t}\\s+enable row level security;`), t);
+    for (const r of ["anon", "authenticated", "public"]) {
+      assert.ok(sqlCode.includes(`revoke all on public.${t} from ${r};`), `${t}/${r}`);
+    }
   }
   assert.doesNotMatch(sqlCode, /create policy/i);
   assert.doesNotMatch(sqlCode, /\b(drop|truncate|delete from)\b/i);
@@ -420,4 +429,177 @@ test("C2 공개 기여 흐름이 코드로 구현되지 않았다 — 이번 범
   // 확장 자리만 열어 뒀다
   assert.match(coreCode, /EVENT_PUBLIC_PLACE_SUBMISSION = "public_place_submission"/);
   assert.doesNotMatch(notifyCode, /EVENT_PUBLIC_PLACE_SUBMISSION/);
+});
+
+// ── I1~I10 사건의 일생 ──────────────────────────────────────────────────────
+//
+// 이 묶음이 이번 수정의 전부다. 하나의 실제 사건은 일부 신고가 처리돼도
+// **같은 사건**이어야 하고, 전부 처리된 뒤에야 닫혀야 한다.
+
+/** DB 를 흉내 낸 최소 모형 — partial unique 두 개를 그대로 재현한다. */
+function makeDb() {
+  const incidents: { id: number; target: string; status: "open" | "closed"; anchor: number | null }[] = [];
+  const events: { event_type: string; target: string; incident_id: number | null; milestone_key: string }[] = [];
+  let nextId = 1000;
+  return {
+    incidents, events,
+    /** 열린 사건을 가져오거나 연다. 열린 사건은 target 당 하나뿐이다. */
+    getOrOpen(target: string, rows: readonly ReportRow[]): number {
+      const open = incidents.find(i => i.target === target && i.status === "open");
+      if (open) return open.id;
+      const id = ++nextId;
+      incidents.push({ id, target, status: "open", anchor: anchorReportId(rows) });
+      return id;
+    },
+    /** 열려 있는 신고가 하나도 없을 때만 닫는다. */
+    closeIfResolved(target: string, rows: readonly ReportRow[]): "closed" | "kept" {
+      if (hasActiveReports(rows)) return "kept";
+      const open = incidents.find(i => i.target === target && i.status === "open");
+      if (open) open.status = "closed";
+      return "closed";
+    },
+    /** reserve — 이미 있으면 false. 신고와 좋아요의 열쇠가 다르다. */
+    reserve(c: { event_type: string; target_key: string; incident_id: number | null; milestone_key: string }): boolean {
+      const dup = events.some(e =>
+        e.event_type === c.event_type && e.target === c.target_key &&
+        e.milestone_key === c.milestone_key &&
+        (c.incident_id === null ? e.incident_id === null : e.incident_id === c.incident_id));
+      if (dup) return false;
+      events.push({ event_type: c.event_type, target: c.target_key,
+                    incident_id: c.incident_id, milestone_key: c.milestone_key });
+      return true;
+    },
+  };
+}
+
+/** 신고 하나가 들어왔을 때 서버가 하는 일 전체 */
+function onReport(db: ReturnType<typeof makeDb>, target: string, rows: ReportRow[]): number {
+  const inc = db.getOrOpen(target, rows);
+  let sent = 0;
+  for (const c of reportNotificationCandidates(target, rows, inc)) {
+    if (db.reserve(c)) sent += 1;
+  }
+  return sent;
+}
+
+test("I1~I10 사건은 일부가 처리돼도 같은 사건이고, 전부 끝나야 닫힌다", () => {
+  const db = makeDb();
+  const T = "42";
+  const rows: ReportRow[] = [];
+
+  // I1 — 첫 신고 → 사건 A 열림
+  rows.push(row("u1", "hours_or_holiday", "pending", 101));
+  assert.equal(onReport(db, T, rows), 0, "1명이면 알리지 않는다");
+  const A = db.incidents[0].id;
+  assert.equal(db.incidents.length, 1);
+  assert.equal(db.incidents[0].status, "open");
+  assert.equal(db.incidents[0].anchor, 101);
+
+  // I2 — 두 번째 신고 → 같은 사건, threshold 2 발송
+  rows.push(row("u2", "hours_or_holiday", "pending", 102));
+  assert.equal(onReport(db, T, rows), 1, "2명에서 한 번 알린다");
+  assert.equal(db.incidents.length, 1);
+  assert.equal(db.getOrOpen(T, rows), A);
+
+  // I3 — #101 만 처리. #102 는 아직 열려 있다 → 사건 유지
+  rows[0].status = "resolved_corrected";
+  assert.equal(db.closeIfResolved(T, rows), "kept");
+  assert.equal(db.incidents[0].status, "open");
+
+  // I4 — 이 상태에서 다시 평가해도 사건 id 가 그대로고 재발송이 없다.
+  //      **예전 구조에서는 여기서 앵커가 102 로 옮겨가 다시 울렸다.**
+  const stillA = db.getOrOpen(T, rows);
+  assert.equal(stillA, A, "사건 id 가 바뀌었다");
+  assert.equal(onReport(db, T, rows), 0, "같은 사건에서 다시 알렸다");
+  assert.notEqual(anchorReportId(rows), 101);   // 앵커 계산값은 바뀌지만
+  assert.equal(db.incidents[0].id, A);          // 사건 id 는 그대로다
+
+  // I5 — 신고 하나 더 → 여전히 사건 A
+  rows.push(row("u3", "hours_or_holiday", "pending", 103));
+  assert.equal(onReport(db, T, rows), 0, "threshold:2 는 이미 보냈다");
+  assert.equal(db.getOrOpen(T, rows), A);
+
+  // I6 — #102 처리, #103 남음 → 유지
+  rows[1].status = "resolved_no_change";
+  assert.equal(db.closeIfResolved(T, rows), "kept");
+  assert.equal(db.incidents[0].status, "open");
+
+  // I7 — 마지막 #103 처리 → active 0 → 사건 A 닫힘
+  rows[2].status = "rejected";
+  assert.equal(db.closeIfResolved(T, rows), "closed");
+  assert.equal(db.incidents[0].status, "closed");
+
+  // I8·I9 — 몇 달 뒤 새 신고 → 새 사건 B
+  rows.push(row("u4", "hours_or_holiday", "pending", 200));
+  onReport(db, T, rows);
+  const B = db.incidents.find(i => i.status === "open")!.id;
+  assert.equal(db.incidents.length, 2);
+  assert.notEqual(A, B, "새 사건이 열리지 않았다");
+
+  // I10 — 새 사건에서 threshold 2 를 다시 쓸 수 있다
+  rows.push(row("u5", "hours_or_holiday", "pending", 201));
+  assert.equal(onReport(db, T, rows), 1, "새 사건에서 다시 알리지 못했다");
+  const t2 = db.events.filter(e => e.milestone_key === "threshold:2");
+  assert.equal(t2.length, 2);
+  assert.deepEqual(t2.map(e => e.incident_id), [A, B]);
+});
+
+// ── C1~C5 동시성 ────────────────────────────────────────────────────────────
+
+test("C1~C4 첫 신고 두 건이 겹쳐도 사건 1개 · 알림 1건이다", () => {
+  const db = makeDb();
+  const T = "42";
+  const rows: ReportRow[] = [
+    row("u1", "hours_or_holiday", "pending", 301),
+    row("u2", "hours_or_holiday", "pending", 302),
+  ];
+  // 두 요청이 같은 순간 같은 상태를 본다
+  const incA = db.getOrOpen(T, rows);
+  const incB = db.getOrOpen(T, rows);
+  assert.equal(incA, incB, "C2 두 요청이 다른 사건을 썼다");
+  assert.equal(db.incidents.filter(i => i.status === "open").length, 1, "C1 열린 사건이 둘이다");
+
+  // 둘 다 "2명이다" 라고 판단하지만 자리는 하나뿐이다
+  const a = reportNotificationCandidates(T, rows, incA).filter(c => db.reserve(c)).length;
+  const b = reportNotificationCandidates(T, rows, incB).filter(c => db.reserve(c)).length;
+  assert.equal(a + b, 1, "C3·C4 발송 시도가 2회다");
+
+  // DB 가 마지막 방어선이라는 계약이 스키마에 있다
+  assert.match(sqlCode, /create unique index if not exists uq_ani_one_open_per_target[\s\S]{0,160}where status = 'open'/);
+  // 애플리케이션 메모리 잠금으로 때우지 않았다
+  assert.doesNotMatch(notifyCode, /Map<|Set<|lock|mutex/i);
+});
+
+test("C5 일부 처리와 새 신고가 겹쳐도 사건이 불필요하게 갈리지 않는다", () => {
+  const db = makeDb();
+  const T = "42";
+  const rows: ReportRow[] = [
+    row("u1", "hours_or_holiday", "pending", 401),
+    row("u2", "hours_or_holiday", "pending", 402),
+  ];
+  const A = db.getOrOpen(T, rows);
+
+  // 관리자가 401 을 처리하는 동시에 새 신고가 들어온다
+  rows[0].status = "resolved_corrected";
+  rows.push(row("u3", "hours_or_holiday", "pending", 403));
+  assert.equal(db.closeIfResolved(T, rows), "kept");
+  assert.equal(db.getOrOpen(T, rows), A);
+  assert.equal(db.incidents.length, 1);
+
+  // 조회 → 없으면 생성 → 충돌하면 재조회 순서가 코드에 있다
+  assert.match(notifyCode, /const existing = await find\(\);\s*\n\s*if \(existing !== null\) return existing;/);
+  assert.match(notifyCode, /return await find\(\);/);
+});
+
+test("C6 사건 종료는 moderation 이 판단을 적은 뒤에만 일어난다", () => {
+  const mod = code(read("functions/api/admin/place-reports.ts"));
+  const updIdx   = mod.indexOf('rest(base, headers, "PATCH"');
+  const closeIdx = mod.indexOf("closeIncidentIfResolved(");
+  assert.ok(updIdx > 0 && closeIdx > updIdx, "사건 종료가 상태 기록보다 먼저다");
+  // 사건 종료가 신고 상태를 바꾸지 않는다
+  const closeFn = notifyCode.slice(notifyCode.indexOf("export async function closeIncidentIfResolved"));
+  assert.doesNotMatch(closeFn, /place_reports\?[^`]*`,\s*\{\s*\n?\s*method: "(PATCH|POST|DELETE)"/);
+  assert.match(closeFn, /if \(hasActiveReports\(rows\)\) return "kept";/);
+  // 실패해도 관리자 요청은 성공으로 끝난다
+  assert.match(mod, /\.catch\(\(\) => "none" as const\)/);
 });

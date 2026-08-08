@@ -19,7 +19,7 @@ import {
   buildReportEmail,
   EVENT_REPORT_SAFETY, DELIVERY_IMMEDIATE,
   type NotificationCandidate, type ReportRow,
-  activeReports, distinctReporters,
+  activeReports, distinctReporters, anchorReportId, hasActiveReports,
 } from "../../src/lib/notifications/admin-notification-core";
 
 export interface NotifyEnv {
@@ -31,7 +31,8 @@ export interface NotifyEnv {
   CONTACT_FROM_EMAIL?:        string;
 }
 
-const TABLE = "admin_notification_events";
+const TABLE     = "admin_notification_events";
+const INCIDENTS = "admin_notification_incidents";
 
 function log(fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ action: "admin-notify", ...fields }));
@@ -61,7 +62,7 @@ async function reserve(
       target_key:    c.target_key,
       signal_key:    c.signal_key,
       milestone_key: c.milestone_key,
-      incident_key:  c.incident_key,
+      incident_id:   c.incident_id,
       delivery_mode: c.delivery_mode,
       delivery_status: "pending",
       metric_value:  c.metric_value,
@@ -166,6 +167,91 @@ export async function reserveLikeMilestones(
     const r = await reserve(env, base, h, c);
     if (r.reserved) log({ status: "digest_queued", event: c.event_type, milestone: c.milestone_key });
   }
+}
+
+/**
+ * 이 장소에 지금 열려 있는 사건을 가져오거나, 없으면 연다.
+ *
+ * 조회 → 없으면 생성 → 충돌하면 **다시 조회** 순서다. 마지막 재조회가 핵심이다.
+ * 첫 신고 두 건이 동시에 들어오면 둘 다 "열린 사건이 없네" 라고 본다. 그때
+ * DB 의 partial unique 가 한쪽만 통과시키고, 진 쪽은 이미 열린 사건을 다시
+ * 읽어 **같은 id** 를 쓴다. 애플리케이션 판단만으로는 이걸 막을 수 없다.
+ */
+export async function getOrOpenIncident(
+  env: NotifyEnv, targetType: string, targetKey: string, rows: readonly ReportRow[],
+): Promise<number | null> {
+  const base = env.NEXT_PUBLIC_SUPABASE_URL;
+  const h = headers(env);
+  if (!base || !h) return null;
+
+  const q = `${INCIDENTS}?target_type=eq.${targetType}` +
+            `&target_key=eq.${encodeURIComponent(targetKey)}&status=eq.open&select=id&limit=1`;
+
+  const find = async (): Promise<number | null> => {
+    try {
+      const res = await fetch(`${base}/rest/v1/${q}`, { headers: h });
+      if (!res.ok) return null;
+      const arr = await res.json() as { id: number }[];
+      return arr?.[0]?.id ?? null;
+    } catch { return null; }
+  };
+
+  const existing = await find();
+  if (existing !== null) return existing;
+
+  try {
+    const res = await fetch(`${base}/rest/v1/${INCIDENTS}?select=id`, {
+      method: "POST",
+      headers: { ...h, Prefer: "return=representation" },
+      body: JSON.stringify([{
+        target_type:      targetType,
+        target_key:       targetKey,
+        status:           "open",
+        anchor_report_id: anchorReportId(rows),
+      }]),
+    });
+    if (res.ok) {
+      const arr = await res.json() as { id: number }[];
+      const id = arr?.[0]?.id ?? null;
+      if (id !== null) { log({ status: "incident_opened", target_key: targetKey }); return id; }
+    }
+    // 진 쪽이다. 이미 열린 사건이 있다는 뜻이므로 그걸 쓴다.
+  } catch { /* 아래 재조회로 넘어간다 */ }
+
+  return await find();
+}
+
+/**
+ * 열려 있는 신고가 하나도 남지 않았으면 사건을 닫는다.
+ *
+ * 하나라도 남아 있으면 닫지 않는다 — 일부만 처리했다고 사건이 끝난 것이
+ * 아니고, 여기서 닫아 버리면 다음 신고가 새 사건을 열어 2/5/10 이 다시 울린다.
+ *
+ * 이 함수는 place_reports 를 **읽기만** 한다. 신고 상태를 바꾸지 않는다.
+ */
+export async function closeIncidentIfResolved(
+  env: NotifyEnv, targetType: string, targetKey: string,
+): Promise<"closed" | "kept" | "none"> {
+  const base = env.NEXT_PUBLIC_SUPABASE_URL;
+  const h = headers(env);
+  if (!base || !h) return "none";
+
+  const rows = await loadReportRows(env, targetType, targetKey);
+  if (hasActiveReports(rows)) return "kept";
+
+  try {
+    const res = await fetch(
+      `${base}/rest/v1/${INCIDENTS}?target_type=eq.${targetType}` +
+      `&target_key=eq.${encodeURIComponent(targetKey)}&status=eq.open`,
+      {
+        method: "PATCH",
+        headers: { ...h, Prefer: "return=minimal" },
+        body: JSON.stringify({ status: "closed", closed_at: new Date().toISOString() }),
+      });
+    if (!res.ok) { log({ status: "incident_close_failed", httpStatus: res.status }); return "none"; }
+    log({ status: "incident_closed", target_key: targetKey });
+    return "closed";
+  } catch { return "none"; }
 }
 
 /** 열려 있는 신고 목록을 읽는다. 쓰지 않는다. */

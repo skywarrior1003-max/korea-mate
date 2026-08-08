@@ -20,6 +20,7 @@
 //   승인이 있는 별도 작업이다. 판단과 집행을 한 호출에 묶지 않는다.
 
 import { json, checkAdminAuth, getServiceRoleHeaders } from "../../_lib/admin-auth";
+import { closeIncidentIfResolved } from "../../_lib/admin-notify";
 import {
   parseModerationListQuery, buildModerationQuery, toModerationRow,
   aggregateReports, validateModerationPatch, isAllowedTransition, buildStatusUpdate,
@@ -130,12 +131,13 @@ export const onRequestPatch: (ctx: Ctx) => Promise<Response> = async ({ request,
 
   // 지금 상태를 먼저 읽는다. 전이 허용 여부는 현재 값을 알아야 판단할 수 있다.
   const curRes = await rest(base, headers, "GET",
-    `place_reports?id=eq.${patch.id}&select=id,status&limit=1`);
+    `place_reports?id=eq.${patch.id}&select=id,status,target_type,target_key&limit=1`);
   if (!curRes.ok || !Array.isArray(curRes.data)) {
     log({ status: "read_failed", httpStatus: curRes.status });
     return fail("server_error", 502);
   }
-  const current = (curRes.data as { id: number; status: string }[])[0];
+  const current = (curRes.data as
+    { id: number; status: string; target_type: string; target_key: string }[])[0];
   if (!current) return fail("not_found", 404);
 
   if (!isAllowedTransition(current.status, patch.status)) {
@@ -153,8 +155,15 @@ export const onRequestPatch: (ctx: Ctx) => Promise<Response> = async ({ request,
     return fail("server_error", 502);
   }
 
+  // 열려 있는 신고가 하나도 남지 않았으면 알림 사건을 닫는다.
+  // 이건 신고 상태를 바꾸는 것이 아니라 "이 건은 끝났다" 를 알림 쪽에 알려
+  // 다음에 새 문제가 생기면 다시 알릴 수 있게 하는 것이다. 실패해도 이 요청은
+  // 성공으로 끝난다 — 판단 기록이 먼저다.
+  const incident = await closeIncidentIfResolved(env, current.target_type, current.target_key)
+    .catch(() => "none" as const);
+
   // 여기서 끝난다. city_spots · place_likes · 개인 Saved 는 건드리지 않는다.
-  log({ status: "ok", op: "patch", from: current.status, to: patch.status });
+  log({ status: "ok", op: "patch", from: current.status, to: patch.status, incident });
   return json({ success: true, report: toModerationRow((updRes.data as Record<string, unknown>[])[0]) });
 };
 

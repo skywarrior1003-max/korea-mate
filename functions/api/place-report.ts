@@ -10,7 +10,7 @@
 // - 신고 하나가 장소를 숨기거나 점수를 바꾸지 않는다. 이 파일에 그런 경로가 없다.
 // - 자유 입력은 저장만 하고 어디에도 렌더링하지 않는다.
 
-import { loadReportRows, notifyReportMilestones } from "../_lib/admin-notify";
+import { loadReportRows, notifyReportMilestones, getOrOpenIncident } from "../_lib/admin-notify";
 import { reportNotificationCandidates } from "../../src/lib/notifications/admin-notification-core";
 import {
   validateReportRequest, reporterKey, acceptedResponse,
@@ -148,7 +148,11 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
   const notify = (async () => {
     try {
       const rows = await loadReportRows(ctx.env, r.target_type, r.target_key);
-      const candidates = reportNotificationCandidates(r.target_key, rows);
+      // 지금 벌어지고 있는 사건을 먼저 확정한다. 이 id 는 일부 신고가 종결돼도
+      // 바뀌지 않으므로, 같은 사건에서 같은 임계 알림이 다시 울리지 않는다.
+      const incidentId = await getOrOpenIncident(ctx.env, r.target_type, r.target_key, rows);
+      if (incidentId === null) return;   // 사건을 못 열면 알리지 않는다. 접수는 이미 끝났다.
+      const candidates = reportNotificationCandidates(r.target_key, rows, incidentId);
       await notifyReportMilestones(ctx.env, r.target_key, candidates, rows);
     } catch {
       // 알림 실패는 신고 접수와 무관하다. 조용히 끝낸다.
