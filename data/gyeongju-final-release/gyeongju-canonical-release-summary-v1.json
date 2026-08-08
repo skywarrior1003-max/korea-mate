@@ -1,0 +1,86 @@
+{
+  "actual_address_count": 302,
+  "actual_coords_count": 186,
+  "actual_description_count": 102,
+  "actual_image_count": 169,
+  "as_of": "2026-08-08",
+  "baseline_identity_count": 302,
+  "canonical_rows": 302,
+  "category_counts": {
+    "attraction": 200,
+    "restaurant": 102
+  },
+  "city": "gyeongju",
+  "content_rich_ready_count": 102,
+  "en_overview_claimed_count": 19,
+  "en_status_counts": {
+    "EN_IDENTITY_REVIEW": 92,
+    "EN_NOT_COLLECTED": 67,
+    "EN_PARTIAL": 35,
+    "EN_READY": 11,
+    "EN_SOURCE_MISSING": 97
+  },
+  "en_title_claimed_count": 138,
+  "gap_priority_counts": {
+    "MANUAL_REVIEW": 344,
+    "P0_AI_ROUTE": 117,
+    "P1_AI_QUALITY": 201,
+    "P1_PUBLIC_CONTENT": 1441,
+    "P2_ENRICHMENT": 249
+  },
+  "gap_queue_total": 2352,
+  "gap_type_counts": {
+    "ADMISSION_MISSING": 302,
+    "COORDINATES_MISSING": 116,
+    "COORD_NOT_VALIDATED": 119,
+    "COURSE_STOP_MANUAL_REVIEW": 1,
+    "DESCRIPTION_MISSING": 200,
+    "EN_IDENTITY_REVIEW": 92,
+    "EVENT_DATE_INCOMPLETE": 1,
+    "EVENT_VENUE_NOT_IN_PLACE_SET": 1,
+    "FOOD_NEW_PLACE_PROPOSAL_ENRICHMENT": 1,
+    "IDENTITY_UNLINKED": 250,
+    "IMAGE_MISSING": 133,
+    "IMAGE_RIGHTS_UNKNOWN": 2,
+    "OFFICIAL_EN_DESCRIPTION_MISSING": 302,
+    "OFFICIAL_EN_TITLE_MISSING": 302,
+    "OFFICIAL_URL_MISSING": 200,
+    "OPENING_HOURS_MISSING": 200,
+    "PHONE_MISSING": 130
+  },
+  "identity_status_counts": {
+    "high_confidence": 52,
+    "unlinked": 250
+  },
+  "image_display_eligible_count": 167,
+  "image_display_ready_count": 167,
+  "image_rights_status_counts": {
+    "IMAGE_RIGHTS_CLEARED": 2,
+    "KTO_TYPE_UNKNOWN": 2,
+    "Type1": 27,
+    "Type3": 36,
+    "VG_OFFICIAL_PUBLIC": 133,
+    "VG_RESTAURANT_OFFICIAL": 102
+  },
+  "join_missing_count": 0,
+  "official_en_available_count": 0,
+  "official_en_description_count": 0,
+  "official_en_title_count": 0,
+  "publishability_counts": {
+    "pending_review": 302
+  },
+  "quality_tier_counts": {
+    "TIER_A": 193,
+    "TIER_B": 109
+  },
+  "route_data_ready_count": 186,
+  "source_candidate_sha": "d49ad34",
+  "source_tier_counts": {
+    "CORE27": 27,
+    "KTO12_HOLD_IMAGE_CLEARED": 2,
+    "KTO12_RECOVERY_V2": 63,
+    "KTO12_V4_NEW": 2,
+    "RESTAURANT_RELEASE_102": 102,
+    "TIER_A": 106
+  }
+}
