@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-08-08",
+  "task_version": "v1.0.0",
+  "START_MASTER_SHA": "bec6f4bcc2eb4ce2f5ffb05db4aee0cf3f99d667",
+  "branch": "data/busan-gyeongju-gap-fill-v1",
+  "checks": {
+    "QA01_no_new_place_proposal_terminal": {
+      "status": "PASS",
+      "count": 0,
+      "note": "All food 190 proposals resolved to READY or FINAL_HOLD"
+    },
+    "QA02_food_190_all_dispositioned": {
+      "status": "PASS",
+      "total": 190,
+      "missing_disposition": 0,
+      "ready": 28,
+      "final_hold": 162
+    },
+    "QA03_coord_fill_audit": {
+      "status": "PASS",
+      "total_targets": 116,
+      "coord_filled": 23,
+      "coord_not_found": 93,
+      "other": 0,
+      "note": "COORD_NOT_FOUND → place not in KTO database. Not a data error — FINAL_HOLD status appropriate."
+    },
+    "QA04_no_ai_generated_content": {
+      "status": "PASS",
+      "note": "All fills sourced from KTO API (FACT). No AI generation used."
+    },
+    "QA05_coord_gyeongju_bounds": {
+      "status": "PASS",
+      "sanity_fail_count": 0,
+      "note": "All filled coords verified within Gyeongju bounds (35.4-36.2N, 128.8-129.6E)"
+    },
+    "QA06_busan_integrity": {
+      "status": "PASS",
+      "total_candidates": 1642,
+      "coordinates_pct": 100,
+      "note": "Busan completeness matrix built from existing master data. No modifications to source files."
+    },
+    "QA07_fact_tagging": {
+      "status": "PASS",
+      "note": "All KTO fills tagged FACT. Manual dispositions tagged UNKNOWN. No DERIVED synthetic content."
+    },
+    "QA08_security_no_secrets": {
+      "status": "PASS",
+      "note": "KTO API key sanitized from all cached responses. Key value not present in any output file."
+    },
+    "QA09_source_files_unmodified": {
+      "status": "PASS",
+      "note": "gyeongju-enriched-candidates-v1.jsonl and busan-enriched-candidates-v1.jsonl read-only. All gap fills written to new files in data/gyeongju-gap-fill/ and data/busan-gap-fill/."
+    }
+  },
+  "overall": "PASS",
+  "pass_count": 9,
+  "fail_count": 0
+}

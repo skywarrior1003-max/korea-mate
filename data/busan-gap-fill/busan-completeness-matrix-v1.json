@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-08-08",
+  "task_version": "v1.0.0",
+  "total_candidates": 1642,
+  "publishability_distribution": {
+    "unknown": 1642
+  },
+  "category_distribution": {
+    "attraction": 717,
+    "event": 72,
+    "restaurant": 721,
+    "nature": 50,
+    "accommodation": 82
+  },
+  "field_completeness": {
+    "name_ko": {
+      "have": 1642,
+      "missing": 0,
+      "pct": 100
+    },
+    "name_en": {
+      "have": 1031,
+      "missing": 611,
+      "pct": 63
+    },
+    "address": {
+      "have": 1639,
+      "missing": 3,
+      "pct": 100
+    },
+    "coordinates": {
+      "have": 1642,
+      "missing": 0,
+      "pct": 100
+    },
+    "description_ko": {
+      "have": 1308,
+      "missing": 334,
+      "pct": 80
+    },
+    "description_en": {
+      "have": 934,
+      "missing": 708,
+      "pct": 57
+    },
+    "image": {
+      "have": 1510,
+      "missing": 132,
+      "pct": 92
+    },
+    "opening_hours": {
+      "have": 1011,
+      "missing": 631,
+      "pct": 62
+    },
+    "official_url": {
+      "have": 673,
+      "missing": 969,
+      "pct": 41
+    }
+  },
+  "gap_priority": {
+    "P0_IDENTITY_OR_COORD_MISSING": 0,
+    "P1_EN_TITLE_MISSING": 611,
+    "P1_EN_DESC_MISSING": 708,
+    "P1_HOURS_MISSING": 631
+  },
+  "field_state_notes": {
+    "name_ko": "SOURCE_HAS_VALUE for all 1642",
+    "address": "SOURCE_HAS_VALUE for place candidates",
+    "coordinates": "SOURCE_HAS_VALUE for place candidates (KTO/VB sourced)",
+    "description_ko": "SOURCE_HAS_VALUE — KTO overview + visitbusan parsed",
+    "description_en": "FIELD_MISSING_AT_SOURCE for ~788 (Korean-only sources). NOT_COLLECTED for remainder.",
+    "opening_hours": "NOT_COLLECTED — maintenance item for all",
+    "admission": "NOT_COLLECTED — maintenance item",
+    "name_en": "FIELD_MISSING_AT_SOURCE for 788 pending_source. Partially available for 810."
+  }
+}

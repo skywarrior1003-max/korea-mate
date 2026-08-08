@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-08-08",
+  "reference_date": "2026-08-08",
+  "task_version": "v1.0.0",
+  "baseline_counts": {
+    "STALE": 25,
+    "DATE_MISSING": 26,
+    "SOURCE_CONFLICT": 0
+  },
+  "refresh_action": "HOLD_MAINTAINED",
+  "refresh_note": "Event holds maintained. Stale/date-missing events require web access to Visit Busan or official Busan city event sources for refresh. No network fetch performed for individual events as event pages require session-based browser access (SSR). Recommend periodic manual refresh.",
+  "recommended_sources": [
+    "https://www.visitbusan.net/index.do?menuCd=DOM_000000025",
+    "https://www.busan.go.kr/tour"
+  ],
+  "hold_action_required": "MANUAL_VERIFICATION",
+  "new_stale_threshold": "Reference date 2026-08-08. Events with end_date < 2026-07-01 are presumed past.",
+  "stale_reclassification": {
+    "stale_total": 25,
+    "now_past_by_date": 0,
+    "still_stale": 25,
+    "note": "Events with end_date < 2026-07-01 are eligible for HOLD_PAST_EVENT reclassification."
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "manifest_id": "busan-gyeongju-gap-fill-main-handoff-v1",
+  "task_id": "TASK-BUSAN-GYEONGJU-FINAL-GAP-FILL-AND-MAIN-HANDOFF-V2",
+  "branch": "data/busan-gyeongju-gap-fill-v1",
+  "START_MASTER_SHA": "bec6f4bcc2eb4ce2f5ffb05db4aee0cf3f99d667",
+  "generated_at": "2026-08-08T00:00:00Z",
+  "parser_version": "v1.0.0",
+  "qa_overall": "PASS",
+  "network_allowed": false,
+  "gyeongju": {
+    "canonical_baseline": 302,
+    "coord_fill_targets": 116,
+    "coord_filled": 23,
+    "coord_not_found": 93,
+    "food_190_ready": 28,
+    "food_190_final_hold": 162,
+    "food_190_new_place_proposal": 0,
+    "kto_detail_fills": 23,
+    "p1_relation_dispositions": 63
+  },
+  "busan": {
+    "total_candidates": 1642,
+    "field_completeness": {
+      "name_ko": {
+        "have": 1642,
+        "missing": 0,
+        "pct": 100
+      },
+      "name_en": {
+        "have": 1031,
+        "missing": 611,
+        "pct": 63
+      },
+      "address": {
+        "have": 1639,
+        "missing": 3,
+        "pct": 100
+      },
+      "coordinates": {
+        "have": 1642,
+        "missing": 0,
+        "pct": 100
+      },
+      "description_ko": {
+        "have": 1308,
+        "missing": 334,
+        "pct": 80
+      },
+      "description_en": {
+        "have": 934,
+        "missing": 708,
+        "pct": 57
+      },
+      "image": {
+        "have": 1510,
+        "missing": 132,
+        "pct": 92
+      },
+      "opening_hours": {
+        "have": 1011,
+        "missing": 631,
+        "pct": 62
+      },
+      "official_url": {
+        "have": 673,
+        "missing": 969,
+        "pct": 41
+      }
+    },
+    "gap_priority": {
+      "P0_IDENTITY_OR_COORD_MISSING": 0,
+      "P1_EN_TITLE_MISSING": 611,
+      "P1_EN_DESC_MISSING": 708,
+      "P1_HOURS_MISSING": 631
+    }
+  },
+  "import_required": [
+    "data/gyeongju-gap-fill/gyeongju-coord-fill-result-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-disposition-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-kto-detail-fill-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-p1-relation-disposition-v1.jsonl",
+    "data/busan-gap-fill/busan-completeness-matrix-v1.json"
+  ],
+  "import_optional": [
+    "data/gyeongju-gap-fill/gyeongju-baseline-audit-v1.json",
+    "data/gyeongju-gap-fill/gyeongju-kto-area-type12-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-kto-area-type14-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-kto-area-type39-v1.jsonl",
+    "data/busan-gap-fill/busan-event-hold-refresh-v1.json",
+    "data/busan-gap-fill/busan-promotion-refresh-v1.json",
+    "data/busan-gap-fill/busan-kto-events-refresh-v1.jsonl"
+  ],
+  "do_not_import": [
+    "data/gyeongju-gap-fill/cache/",
+    "data/busan-gap-fill/cache/",
+    "data/gyeongju-gap-fill/gap-fill-qa-v1.json"
+  ],
+  "security": {
+    "secrets_in_output": false,
+    "kto_key_sanitized": true,
+    "sanitizer_pattern": "KOR_TOUR_API_KEY replaced with [KTO_KEY_REDACTED]"
+  },
+  "prohibited": [
+    "AI-generated content: NONE",
+    "Coordinate guessing without official source: NONE",
+    "NEW_PLACE_PROPOSAL terminal state: 0",
+    "Source file modification: NONE"
+  ]
+}

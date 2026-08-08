@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-08-08",
+  "task_version": "v1.0.0",
+  "existing_public_count": 2,
+  "existing_archive_count": 8,
+  "freshness_check": {
+    "reference_date": "2026-08-08",
+    "public_promos": [
+      {
+        "promo_id": "BTO_PRESS_5340",
+        "source_id": "BTO-PRESS",
+        "source_url": "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047&mode=view&mgr_seq=22&board_seq=5340",
+        "title_en": null,
+        "title_ko": "부산병 치유 프로모션 (중화권 외국인 관광객 대상)",
+        "content_type": "campaign",
+        "content_class": "PROMOTION",
+        "promotion_mechanism": "TARGETED_OFFER",
+        "audience_type": "B2C",
+        "status": "ACTIVE",
+        "period_start": "2026-07-28",
+        "period_end": "2026-08-27",
+        "regular_price": null,
+        "promotion_price": null,
+        "price_display": "KKday 상품 할인 (할인율 미기재)",
+        "discount_value": null,
+        "benefit": "부산병 진단 맞춤형 상품 할인 — 중화권 외국인 관광객 대상 KKday 연동 프로모션. 김해공항 현장 치유 부스 (7/31~8/2) 별도 운영.",
+        "benefit_condition": "외국인 관광객 (중화권 포함) 대상. KKday 플랫폼 통해 부산병 진단 맞춤형 상품 구매 시 할인. 오프라인: 김해공항 치유 부스 무료 참여.",
+        "target": "외국인 관광객 (중화권 포함)",
+        "booking_url": "BLOCKED_OFFICIAL_PLATFORM_RESTRICTED",
+        "booking_url_note": "KKday Cloudflare 차단 — Playwright Chromium 브라우저로 직접 접근 시도 포함 전체 HTTP 403. 우회 불가(우회 금지 원칙). BTO 보도자료 본문에 직접 링크 미기재. MB-001 CLOSED.",
+        "location": "부산 전역 (오프라인 이벤트: 김해공항)",
+        "evidence_urls": [
+          "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN047&mode=view&mgr_seq=22&board_seq=5340"
+        ],
+        "classification_reason": "BTO 공식 보도자료에서 '부산병 진단 맞춤형 상품 할인'으로 명시. KKday 연동 기간한정 캠페인. 중화권 외국인 특정 대상 TARGETED_OFFER.",
+        "reference_date": "2026-08-03",
+        "verification_status": "VERIFIED",
+        "verification_note": "BTO 보도자료 공식 1차 소스 확인. 기간·대상·혜택 확정. KKday 할인율 및 예약 링크는 BTO 본문 미기재. Playwright 브라우저 직접 접근 시도 → Cloudflare 403 차단 지속. BLOCKED_OFFICIAL_PLATFORM_RESTRICTED. MB-001 CLOSED.",
+        "collected_at": "2026-08-03T00:00:00Z"
+      },
+      {
+        "promo_id": "VB_EVENT_684",
+        "source_id": "VB-EVENT-SURVEY",
+        "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq=684",
+        "title_en": "Starry Night Busan Midnight River Cruise Summer Promotion",
+        "title_ko": null,
+        "content_type": "special_experience",
+        "content_class": "PROMOTION",
+        "promotion_mechanism": "BUNDLE_BENEFIT",
+        "audience_type": "B2C",
+        "status": "ENDING_SOON",
+        "period_start": "2026-07-23",
+        "period_end": "2026-08-09",
+        "regular_price": null,
+        "promotion_price": 20000,
+        "price_display": "₩20,000/인 (35석/박 한정)",
+        "discount_value": null,
+        "benefit": "수영강 야간 크루즈 + 문라이트 콘서트 + 불꽃놀이 + 간식·음료 + 포토 프린트 무료 + 선장 체험",
+        "benefit_condition": "2026-07-23~08-09 한정 18일 운영. 박당 35석 한정. Smartstore 사전 예약 필수. 성인·어린이 동일 요금.",
+        "target": null,
+        "booking_url": "https://smartstore.naver.com/rivercruise/products/13673189862",
+        "location": "수영강 (부산)",
+        "evidence_urls": [
+          "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000304002001000&ueb_seq=684",
+          "https://smartstore.naver.com/rivercruise/products/13673189862"
+        ],
+        "classification_reason": "VisitBusan 공식 'Summer Promotion' 타이틀. 한정 기간(18일) + 한정 좌석(35). 야간 크루즈에 콘서트·불꽃·간식·사진이 번들 포함 — 기본 크루즈 대비 기간한정 특별 패키지 BUNDLE_BENEFIT.",
+        "reference_date": "2026-08-03",
+        "verification_status": "VERIFIED",
+        "verification_note": "VisitBusan Event & Survey 상세 페이지 직접 확인. 기간·가격·예약 URL·번들 내용 확정. 정가 vs 할인가 비교 근거 없음 — BUNDLE_BENEFIT으로 분류.",
+        "collected_at": "2026-08-03T00:00:00Z"
+      }
+    ],
+    "status": "STALE_CHECK_REQUIRED",
+    "note": "Promotions require web access to visitbusan.net and official Busan city sources. Current data was collected 2026-08-03. Recommend refresh if >7 days old."
+  },
+  "official_notice_sources": {
+    "visitbusan_promotions": {
+      "url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000086",
+      "status": "NOT_FETCHED_THIS_RUN",
+      "reason": "Requires SSR/session-based browser access"
+    },
+    "busan_city_tourism_notice": {
+      "url": "https://www.busan.go.kr/tour",
+      "status": "NOT_FETCHED_THIS_RUN"
+    },
+    "visitbusan_discount_pass": {
+      "url": "https://www.visitbusan.net/discount",
+      "status": "NOT_FETCHED_THIS_RUN"
+    }
+  },
+  "kto_busan_promotions": {}
+}

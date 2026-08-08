@@ -1,0 +1,32 @@
+{
+  "phase": 1,
+  "task_version": "v1.0.0",
+  "as_of": "2026-08-08",
+  "source": "gyeongju-final-ready-302-v1.jsonl + gyeongju-enriched-candidates-v1.jsonl",
+  "stats": {
+    "canonical_total": 302,
+    "attraction": 200,
+    "restaurant": 102,
+    "has_lat": 186,
+    "has_description_ko": 102,
+    "has_image": 169,
+    "has_address": 302,
+    "has_en_title": 0,
+    "has_en_description": 0,
+    "has_opening_hours": 102,
+    "has_phone": 172,
+    "has_admission": 0,
+    "has_official_url": 102
+  },
+  "gaps": {
+    "coordinates_missing": 116,
+    "description_ko_missing": 200,
+    "image_missing": 133,
+    "opening_hours_missing": 200,
+    "phone_missing": 130,
+    "official_url_missing": 200,
+    "admission_missing": 302,
+    "en_title_missing": 302,
+    "en_description_missing": 302
+  }
+}
