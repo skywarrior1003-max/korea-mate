@@ -130,6 +130,29 @@ gtag('config','${ga4Id}');
           />
         ) : null;
       })()}
+      {/*
+        Impact 파트너 사이트 소유권 확인 태그.
+
+        왜 metadata.other 를 쓰지 않는가
+          Next Metadata API 는 name/content 로만 직렬화한다. 그런데 Impact 가
+          제시한 스니펫은 value 속성이다. 두 형식이 같다고 볼 근거가 없고
+          (공식 문서에도 형식 설명이 없다) 검증기가 무엇을 읽는지 모르는 채로
+          content 만 내보내면 실패해도 원인을 알 수 없다. 그래서 받은 그대로
+          value 를 내보내고, 표준 HTML 을 읽는 도구를 위해 content 도 같이 둔다.
+          태그는 하나이므로 중복이 아니다.
+
+        value 를 spread 로 넣는 이유
+          value 는 <meta> 의 표준 속성이 아니라 React 타입이 거부한다. 속성을
+          빼는 대신 타입만 우회한다 — 우리가 형식을 고를 수 있는 자리가 아니다.
+
+        이 토큰은 소유권 확인용 public 값이다. secret 이 아니지만 env·별도
+        파일로 복제하지 않는다. 복제하면 어느 쪽이 진짜인지 흐려진다.
+      */}
+      <meta
+        name="impact-site-verification"
+        content="b459f968-0d9e-493f-9e4f-938653b3569b"
+        {...{ value: "b459f968-0d9e-493f-9e4f-938653b3569b" }}
+      />
       <body className="min-h-full flex flex-col">
         <I18nProvider>
         <script
