@@ -1,0 +1,47 @@
+{
+  "as_of": "2026-08-08",
+  "base_place_count": 302,
+  "category_counts": {
+    "attraction": 200,
+    "restaurant": 102
+  },
+  "city": "gyeongju",
+  "description_present_count": 102,
+  "fake_coordinate_count": 0,
+  "food_proposal_promoted_count": 0,
+  "generated_en_count": 0,
+  "idempotency_keys": {
+    "images": [
+      "city_spot_id",
+      "image_url"
+    ],
+    "places": [
+      "city",
+      "name"
+    ],
+    "sources": [
+      "source_type",
+      "source_key"
+    ]
+  },
+  "image_attribution_required_count": 38,
+  "image_cache_set_count": 167,
+  "image_display_eligible_count": 167,
+  "image_rights_status_counts": {
+    "IMAGE_RIGHTS_CLEARED": 2,
+    "KTO_TYPE_UNKNOWN": 2,
+    "Type1": 27,
+    "Type3": 36,
+    "VG_RESTAURANT_OFFICIAL": 102
+  },
+  "image_rows": 169,
+  "map_eligible_count": 186,
+  "no_coordinate_count": 116,
+  "route_ai_eligible_count": 186,
+  "source_candidate_sha": "d49ad34",
+  "source_rows": 302,
+  "source_type_counts": {
+    "gyeongju-city": 235,
+    "kto": 67
+  }
+}

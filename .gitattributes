@@ -1,0 +1,11 @@
+# 경주 결정론 산출물만 LF 로 고정한다.
+#
+# 왜 좁게 거는가
+#   이 저장소는 core.autocrlf=true 인 Windows 환경이다. builder 는 LF 로 쓰는데
+#   fresh clone 하면 작업 트리가 CRLF 로 나와, 재빌드만 해도 diff 가 생긴다.
+#   그러면 "같은 입력이면 같은 출력" 이 다른 머신에서 깨진다.
+#
+#   저장소 전체를 재정규화하지 않는다. 기존 파일까지 건드리면 무관한 대량 diff 가
+#   생기고, 그건 이 문제를 고치는 데 필요하지 않다.
+data/gyeongju-final-release/*.jsonl   text eol=lf
+data/gyeongju-final-release/*.json    text eol=lf
