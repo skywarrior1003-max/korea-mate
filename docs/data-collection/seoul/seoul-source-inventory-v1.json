@@ -1,0 +1,421 @@
+{
+  "as_of": "2026-08-09",
+  "task": "TASK-SEOUL-SOURCE-DISCOVERY-COVERAGE-AUDIT-V1",
+  "kto_tourapi": {
+    "operator": "한국관광공사 (KTO)",
+    "type": "public_api",
+    "access": "API_KEY",
+    "key_available": true,
+    "base_url": "https://apis.data.go.kr/B551011/KorService2",
+    "area_code": "1",
+    "content_types": {
+      "12": {
+        "label": "관광지(attraction)",
+        "result": "REAL_RESULT",
+        "total": 421
+      },
+      "14": {
+        "label": "문화시설(culture)",
+        "result": "REAL_RESULT",
+        "total": 220
+      },
+      "15": {
+        "label": "축제/행사(festival)",
+        "result": "REAL_RESULT",
+        "total": 84
+      },
+      "28": {
+        "label": "레포츠(leisure/sports)",
+        "result": "REAL_RESULT",
+        "total": 60
+      },
+      "38": {
+        "label": "쇼핑(shopping)",
+        "result": "REAL_RESULT",
+        "total": 150
+      },
+      "39": {
+        "label": "음식점(restaurant)",
+        "result": "REAL_RESULT",
+        "total": 1019
+      },
+      "25": {
+        "label": "여행코스(course)",
+        "result": "EMPTY_RESULT",
+        "total": 0
+      }
+    },
+    "eng_service": {
+      "url": "https://apis.data.go.kr/B551011/EngService2/areaBasedList2?serviceKey=519595c4187d57cdca64b26d3ea27b682440925189b117e9cf65db1f93b923f4&MobileOS=ETC&MobileApp=GoKoreaMate&_type=json&areaCode=1&contentTypeId=12&numOfRows=10&pageNo=1",
+      "status": 200,
+      "actual_signal": "EMPTY_RESULT",
+      "total": 0
+    },
+    "detail_endpoints": [
+      "detailCommon2",
+      "detailIntro2",
+      "detailInfo2",
+      "detailImage2"
+    ],
+    "stable_id": "contentId (numeric)",
+    "targeted_detail_possible": true,
+    "languages": [
+      "KR",
+      "EN"
+    ],
+    "image_provided": true,
+    "preflight": "PASS",
+    "notes": "전체 서울 관광자원 접근 가능. contentTypeId 12/14/28/38/39 전건 REAL_RESULT."
+  },
+  "visitseoul": {
+    "operator": "서울관광재단",
+    "type": "official_tourism_website",
+    "endpoints_tested": [
+      {
+        "endpoint_name": "visitseoul_main_kr",
+        "url": "https://www.visitseoul.net/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "content_type": "text/html;charset=UTF-8",
+        "length": 19852,
+        "lang_check": "EN",
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "visitseoul_main_en",
+        "url": "https://english.visitseoul.net/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "content_type": "text/html;charset=UTF-8",
+        "length": 212256,
+        "lang_check": "EN",
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "visitseoul_attraction_kr",
+        "url": "https://www.visitseoul.net/attractions",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "content_type": "",
+        "length": 0,
+        "lang_check": "",
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "visitseoul_attraction_en",
+        "url": "https://english.visitseoul.net/attractions",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "content_type": "text/html;charset=UTF-8",
+        "length": 96092,
+        "lang_check": "EN",
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "visitseoul_food_kr",
+        "url": "https://www.visitseoul.net/food",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "content_type": "",
+        "length": 0,
+        "lang_check": "",
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "visitseoul_tour_api_check",
+        "url": "https://www.visitseoul.net/api/v1/places?type=attraction&limit=10",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "content_type": "",
+        "length": 0,
+        "lang_check": "",
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "visitseoul_json_api",
+        "url": "https://www.visitseoul.net/rest/contents/tourist-attractions?lang=en&pageSize=10&pageNum=1",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "content_type": "",
+        "length": 0,
+        "lang_check": "",
+        "preflight": "FAIL"
+      }
+    ],
+    "has_api": false,
+    "has_structured_data": false,
+    "languages": [
+      "KR",
+      "EN"
+    ],
+    "image_provided": "HTML embedded",
+    "preflight": "PASS",
+    "notes": "메인 사이트 HTML accessible. API endpoint 미확인. 구조화 데이터 여부 요추가 확인."
+  },
+  "seoul_open_data": {
+    "operator": "서울시 (서울 열린데이터광장)",
+    "type": "public_data_portal",
+    "endpoints_tested": [
+      {
+        "endpoint_name": "seoul_data_main",
+        "url": "https://data.seoul.go.kr/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 101419,
+        "sample_rows": 0,
+        "requires_key": true,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "seoul_data_tourist_info",
+        "url": "https://data.seoul.go.kr/dataList/OA-13126/S/1/datasetView.do",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 70653,
+        "sample_rows": 0,
+        "requires_key": true,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "seoul_data_culture",
+        "url": "https://data.seoul.go.kr/dataList/OA-15073/S/1/datasetView.do",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 101471,
+        "sample_rows": 0,
+        "requires_key": true,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "seoul_openapi_tourist_public",
+        "url": "http://openapi.seoul.go.kr:8088/sample/json/TbViewTouristInfo/1/5/",
+        "status": 200,
+        "actual_signal": "EMPTY_PAGE",
+        "length": 90,
+        "sample_rows": 0,
+        "requires_key": false,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "seoul_openapi_culture_public",
+        "url": "http://openapi.seoul.go.kr:8088/sample/json/culturalEventInfo/1/5/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 4469,
+        "sample_rows": 5,
+        "requires_key": false,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "seoul_openapi_museum",
+        "url": "http://openapi.seoul.go.kr:8088/sample/json/SeoulMuseumInfo/1/5/",
+        "status": 200,
+        "actual_signal": "EMPTY_PAGE",
+        "length": 90,
+        "sample_rows": 0,
+        "requires_key": false,
+        "preflight": "FAIL"
+      }
+    ],
+    "requires_api_key": true,
+    "portal_url": "https://data.seoul.go.kr",
+    "sample_api_public": "http://openapi.seoul.go.kr:8088/sample/json/{dataset}/1/N/",
+    "preflight": "PARTIAL",
+    "notes": "portal HTML accessible. API 호출 시 인증키 필요. sample endpoint 제한적 접근 가능."
+  },
+  "national_heritage": {
+    "operator": "국가유산청 (khs.go.kr)",
+    "type": "public_api",
+    "endpoints_tested": [
+      {
+        "endpoint_name": "khs_seoul_sajok",
+        "url": "https://www.khs.go.kr/cha/SearchKindOpenapiList.do?ccbaKdcd=13&ccbaCtcd=11&pageUnit=10&pageIndex=1",
+        "status": 200,
+        "actual_signal": "NON_PLACE_CONTENT",
+        "length": 5632,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "gyeongbokgung_official",
+        "url": "https://www.royalpalace.go.kr/",
+        "status": 0,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "changdeokgung_official",
+        "url": "https://www.cdg.go.kr/",
+        "status": 0,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "deoksugung_official",
+        "url": "https://www.deoksugung.go.kr/",
+        "status": 0,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "seoul_city_wall",
+        "url": "https://seoulcitywall.seoul.go.kr/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 33065,
+        "heritage_items_found": [],
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "jongmyo_official",
+        "url": "https://jm.cha.go.kr/",
+        "status": 200,
+        "actual_signal": "NON_PLACE_CONTENT",
+        "length": 2727,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "heritage_seoul_search",
+        "url": "https://www.heritage.go.kr/heri/cul/culSelectList.do?pageNo=1&pageUnit=10&searchCondition=all&searchKeyword=%EC%84%9C%EC%9A%B8",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "cha_gov_api_check",
+        "url": "https://www.khs.go.kr/cha/SearchKindOpenapiList.do?serviceKey=test&pageUnit=3&pageIndex=1",
+        "status": 200,
+        "actual_signal": "NON_PLACE_CONTENT",
+        "length": 1837,
+        "heritage_items_found": [],
+        "preflight": "FAIL"
+      }
+    ],
+    "preflight": "FAIL",
+    "notes": "이전 경주 preflight에서 HERITAGE_API_ACCESS_BLOCKED 확인됨. 서울도 동일 상태."
+  },
+  "major_museums": {
+    "operator": "국립중앙박물관 등 개별 기관",
+    "type": "official_institution_website",
+    "endpoints_tested": [
+      {
+        "endpoint_name": "national_museum_main",
+        "url": "https://www.museum.go.kr/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 92023,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "national_museum_api",
+        "url": "https://www.museum.go.kr/site/main/exhiinfo/getInfoList",
+        "status": 302,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "national_folk_museum",
+        "url": "https://www.nfm.go.kr/",
+        "status": 200,
+        "actual_signal": "EMPTY_PAGE",
+        "length": 631,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "seoul_history_museum",
+        "url": "https://www.museum.seoul.go.kr/",
+        "status": 0,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "lieum_museum",
+        "url": "https://www.leeum.org/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 12327,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "hangul_museum",
+        "url": "https://www.hangeul.go.kr/",
+        "status": 200,
+        "actual_signal": "REAL_RESULT",
+        "length": 124075,
+        "preflight": "PASS"
+      },
+      {
+        "endpoint_name": "korean_cinema_museum",
+        "url": "https://www.koreafilm.or.kr/",
+        "status": 200,
+        "actual_signal": "NON_PLACE_CONTENT",
+        "length": 2260,
+        "preflight": "PASS"
+      }
+    ],
+    "preflight": "PARTIAL",
+    "notes": "각 기관 공식 사이트 HTTP accessible. 구조화 API 없음. 상세 정보 개별 접근 필요."
+  },
+  "events_sources": {
+    "operator": "복합 (KTO + 서울시 + visitseoul)",
+    "endpoints_tested": [
+      {
+        "endpoint_name": "kto_event_seoul",
+        "url": "https://apis.data.go.kr/B551011/KorService2/searchFestival2?serviceKey=519595c41",
+        "status": 200,
+        "actual_signal": "EMPTY_RESULT",
+        "length": 125,
+        "event_count": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "seoul_city_event",
+        "url": "https://culture.seoul.go.kr/culture/culture/cultureEvent/list.do",
+        "status": 200,
+        "actual_signal": "EMPTY_PAGE",
+        "length": 742,
+        "event_count": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "visitseoul_events",
+        "url": "https://www.visitseoul.net/festival-event",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "event_count": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "visitseoul_events_en",
+        "url": "https://english.visitseoul.net/festival-event",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "event_count": 0,
+        "preflight": "FAIL"
+      },
+      {
+        "endpoint_name": "go_kr_notice",
+        "url": "https://www.seoul.go.kr/seoul/news.do",
+        "status": 404,
+        "actual_signal": "ACCESS_ERROR",
+        "length": 0,
+        "event_count": 0,
+        "preflight": "FAIL"
+      }
+    ],
+    "kto_event_preflight": "FAIL"
+  }
+}

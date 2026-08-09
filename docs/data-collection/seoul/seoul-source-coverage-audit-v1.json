@@ -1,0 +1,65 @@
+{
+  "as_of": "2026-08-09",
+  "kto_coverage": {
+    "attraction": {
+      "total": 421,
+      "preflight": "REAL_RESULT"
+    },
+    "culture": {
+      "total": 220,
+      "preflight": "REAL_RESULT"
+    },
+    "festival": {
+      "total": 84,
+      "preflight": "REAL_RESULT"
+    },
+    "leisure": {
+      "total": 60,
+      "preflight": "REAL_RESULT"
+    },
+    "shopping": {
+      "total": 150,
+      "preflight": "REAL_RESULT"
+    },
+    "restaurant": {
+      "total": 1019,
+      "preflight": "REAL_RESULT"
+    },
+    "course": {
+      "total": 0,
+      "preflight": "EMPTY_RESULT"
+    }
+  },
+  "languages": {
+    "kto_korean": {
+      "available": true,
+      "preflight": "PASS"
+    },
+    "kto_english": {
+      "available": true,
+      "total_attraction": 0,
+      "preflight": "EMPTY_RESULT"
+    },
+    "visitseoul_korean": {
+      "available": true
+    },
+    "visitseoul_english": {
+      "available": true,
+      "url": "https://english.visitseoul.net"
+    }
+  },
+  "field_coverage_kto": {
+    "source_id": "FULL (contentId)",
+    "name_ko": "FULL",
+    "name_en": "PARTIAL (EngService2 별도)",
+    "address": "FULL",
+    "coordinates": "FULL",
+    "description_ko": "FULL (detailCommon2.overview)",
+    "description_en": "PARTIAL (EngService2)",
+    "image": "FULL (firstimage + detailImage2)",
+    "phone": "PARTIAL (detailCommon2.tel)",
+    "opening_hours": "PARTIAL (detailIntro2)",
+    "fee": "PARTIAL (detailIntro2)",
+    "heritage_designation": "NONE (별도 국가유산 소스 필요)"
+  }
+}

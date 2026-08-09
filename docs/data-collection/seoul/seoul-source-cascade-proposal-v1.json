@@ -1,0 +1,58 @@
+{
+  "as_of": "2026-08-09",
+  "base_on": "실측 preflight 결과",
+  "place_discovery": [
+    {
+      "rank": 1,
+      "source": "KTO TourAPI (areaCode=1)",
+      "role": "PLACE_DISCOVERY_PRIMARY",
+      "why": "전건 REAL_RESULT, contentId stable, 서울 전체 관광자원 포함, targeted detail 가능"
+    },
+    {
+      "rank": 2,
+      "source": "VisitSeoul (visitseoul.net)",
+      "role": "DETAIL_ENRICHMENT + IMAGE",
+      "why": "서울관광재단 공식. HTML accessible. 다국어. API 확인 필요."
+    },
+    {
+      "rank": 3,
+      "source": "Seoul Open Data (data.seoul.go.kr)",
+      "role": "SUPPLEMENTARY_CATEGORY",
+      "why": "문화시설/박물관/시장 등 분야 데이터. 인증키 필요."
+    },
+    {
+      "rank": 4,
+      "source": "KTO EngService2",
+      "role": "ENGLISH_TITLE_DESCRIPTION",
+      "why": "공식 영문 명칭/설명. areaCode=1 접근 가능."
+    },
+    {
+      "rank": 5,
+      "source": "개별 기관 공식 사이트",
+      "role": "SUPPLEMENTARY_DETAIL",
+      "why": "궁궐/박물관 등 특정 장소 상세 정보. 개별 접근 필요."
+    },
+    {
+      "rank": 6,
+      "source": "국가유산 API",
+      "role": "HERITAGE_DESIGNATION",
+      "why": "BLOCKED. 대안: KTO heritage category + 개별 기관 사이트"
+    },
+    {
+      "rank": 7,
+      "source": "USER_REVIEW_REQUIRED",
+      "role": "FALLBACK",
+      "why": "위 cascade 전부 실패 또는 tourism relevance 애매 시"
+    }
+  ],
+  "by_role": {
+    "PLACE_DISCOVERY": "KTO TourAPI areaBasedList2",
+    "DETAIL_ENRICHMENT": "KTO detailCommon2 + detailIntro2 + detailImage2 (targeted)",
+    "IMAGE": "KTO detailImage2 + VisitSeoul (pending API confirm)",
+    "MULTILINGUAL": "KTO EngService2 (EN) + VisitSeoul EN (HTML) + 추가 필요 (JA/ZH)",
+    "HERITAGE": "KTO contentTypeId=12/14 + 개별 궁궐/유산 사이트",
+    "FOOD": "KTO contentTypeId=39 + 별도 맛집 source (visitseoul 등)",
+    "EVENT": "KTO searchFestival2 + Seoul Culture + VisitSeoul",
+    "COURSE": "KTO contentTypeId=25"
+  }
+}

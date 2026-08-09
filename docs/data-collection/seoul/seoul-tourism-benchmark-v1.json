@@ -1,0 +1,856 @@
+{
+  "as_of": "2026-08-09",
+  "count": 32,
+  "benchmark": [
+    {
+      "no": 1,
+      "name": "경복궁",
+      "type": "HERITAGE_PALACE",
+      "kto_cid": "126508",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "heritage"
+      ],
+      "reason": "서울 대표 궁궐, 유네스코 세계유산 후보, 연간 수백만 방문"
+    },
+    {
+      "no": 2,
+      "name": "창덕궁",
+      "type": "HERITAGE_PALACE",
+      "kto_cid": "264337",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "heritage"
+      ],
+      "reason": "유네스코 세계유산 등재, 후원으로 유명"
+    },
+    {
+      "no": 3,
+      "name": "창경궁",
+      "type": "HERITAGE_PALACE",
+      "kto_cid": "126500",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "heritage"
+      ],
+      "reason": "4대 궁궐 중 하나"
+    },
+    {
+      "no": 4,
+      "name": "덕수궁",
+      "type": "HERITAGE_PALACE",
+      "kto_cid": "127000",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "heritage"
+      ],
+      "reason": "대한제국 황궁, 중명전 포함"
+    },
+    {
+      "no": 5,
+      "name": "경희궁",
+      "type": "HERITAGE_PALACE",
+      "kto_cid": "126998",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "5대 궁궐 중 하나"
+    },
+    {
+      "no": 6,
+      "name": "종묘",
+      "type": "HERITAGE_UNESCO",
+      "kto_cid": "264335",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "heritage"
+      ],
+      "reason": "유네스코 세계유산, 조선 왕실 사당"
+    },
+    {
+      "no": 7,
+      "name": "한양도성(서울 성곽)",
+      "type": "HERITAGE_WALL",
+      "kto_cid": "2685706",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "seoul_city"
+      ],
+      "reason": "서울 조선시대 성곽, 약 18.6km"
+    },
+    {
+      "no": 8,
+      "name": "남대문(숭례문)",
+      "type": "HERITAGE_GATE",
+      "kto_cid": "126553",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "국보 제1호, 조선시대 성문"
+    },
+    {
+      "no": 9,
+      "name": "동대문(흥인지문)",
+      "type": "HERITAGE_GATE",
+      "kto_cid": "126538",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "보물 제1호, 서울 성문"
+    },
+    {
+      "no": 10,
+      "name": "북촌한옥마을",
+      "type": "HERITAGE_VILLAGE",
+      "kto_cid": "264370",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "한옥 보존지구, 전통 마을 관광"
+    },
+    {
+      "no": 11,
+      "name": "국립중앙박물관",
+      "type": "MUSEUM",
+      "kto_cid": "126676",
+      "expected_sources": [
+        "KTO",
+        "visitseoul",
+        "museum"
+      ],
+      "reason": "한국 최대 박물관, 외국인 필수 방문지"
+    },
+    {
+      "no": 12,
+      "name": "국립민속박물관",
+      "type": "MUSEUM",
+      "kto_cid": "126695",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "경복궁 내 한국 민속 박물관"
+    },
+    {
+      "no": 13,
+      "name": "서울역사박물관",
+      "type": "MUSEUM",
+      "kto_cid": "264274",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 역사 전문 박물관"
+    },
+    {
+      "no": 14,
+      "name": "국립한글박물관",
+      "type": "MUSEUM",
+      "kto_cid": "1753997",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "한글 전문 박물관, 외국인 관심 높음"
+    },
+    {
+      "no": 15,
+      "name": "리움미술관",
+      "type": "MUSEUM_PRIVATE",
+      "kto_cid": "800428",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "삼성 리움, 현대미술+고미술, 국제적 명성"
+    },
+    {
+      "no": 16,
+      "name": "N서울타워(남산서울타워)",
+      "type": "MODERN_ATTRACTION",
+      "kto_cid": "264337",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 대표 랜드마크 전망대"
+    },
+    {
+      "no": 17,
+      "name": "롯데월드타워 서울스카이",
+      "type": "MODERN_ATTRACTION",
+      "kto_cid": "2685708",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "세계 5위 높이 전망대"
+    },
+    {
+      "no": 18,
+      "name": "DDP(동대문디자인플라자)",
+      "type": "MODERN_ATTRACTION",
+      "kto_cid": "1870504",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "자하 하디드 설계, 쇼핑/전시 복합"
+    },
+    {
+      "no": 19,
+      "name": "서울식물원",
+      "type": "NATURE_MODERN",
+      "kto_cid": "2611001",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "2019년 개원, 대형 온실 포함"
+    },
+    {
+      "no": 20,
+      "name": "북한산국립공원",
+      "type": "NATURE_MOUNTAIN",
+      "kto_cid": "2781026",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 대표 산, 연간 수백만 등산객"
+    },
+    {
+      "no": 21,
+      "name": "남산",
+      "type": "NATURE_MOUNTAIN",
+      "kto_cid": "2685709",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 중심 산, N서울타워 소재지"
+    },
+    {
+      "no": 22,
+      "name": "청계천",
+      "type": "NATURE_STREAM",
+      "kto_cid": "131220",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "도심 복원 하천, 광화문~동대문"
+    },
+    {
+      "no": 23,
+      "name": "한강공원",
+      "type": "NATURE_RIVERSIDE",
+      "kto_cid": "127248",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "한강변 11개 공원, 서울 대표 야외 명소"
+    },
+    {
+      "no": 24,
+      "name": "광장시장",
+      "type": "MARKET",
+      "kto_cid": "126668",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "넷플릭스 스트리트푸드파이터 등장, 빈대떡·마약김밥"
+    },
+    {
+      "no": 25,
+      "name": "남대문시장",
+      "type": "MARKET",
+      "kto_cid": "126571",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 최대 전통시장"
+    },
+    {
+      "no": 26,
+      "name": "통인시장",
+      "type": "MARKET",
+      "kto_cid": "1920780",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "도시락 카페, 엽전 체험으로 유명"
+    },
+    {
+      "no": 27,
+      "name": "인사동",
+      "type": "FOOD_CULTURE_DISTRICT",
+      "kto_cid": "264491",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "전통공예·갤러리·한식 거리"
+    },
+    {
+      "no": 28,
+      "name": "이태원",
+      "type": "FOOD_MULTICULTURAL",
+      "kto_cid": "264483",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "다국적 음식, 글로벌 관광지"
+    },
+    {
+      "no": 29,
+      "name": "명동",
+      "type": "SHOPPING_DISTRICT",
+      "kto_cid": "264382",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "서울 1등 쇼핑 관광지, K-beauty"
+    },
+    {
+      "no": 30,
+      "name": "홍대",
+      "type": "SHOPPING_CULTURE",
+      "kto_cid": "264491",
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "젊은이 거리, 인디음악·카페·클럽"
+    },
+    {
+      "no": 31,
+      "name": "SMTOWN 코엑스 아티움",
+      "type": "HALLYU_ATTRACTION",
+      "kto_cid": null,
+      "expected_sources": [
+        "KTO",
+        "visitseoul"
+      ],
+      "reason": "SM엔터 공식 팬 공간, K-pop 체험"
+    },
+    {
+      "no": 32,
+      "name": "BTS 그래피티 이태원",
+      "type": "HALLYU_ATTRACTION",
+      "kto_cid": null,
+      "expected_sources": [
+        "visitseoul"
+      ],
+      "reason": "공식 관광 맥락 여부 확인 필요"
+    }
+  ],
+  "kto_check_results": {
+    "1": {
+      "found": true,
+      "cid": "126508"
+    },
+    "2": {
+      "found": true,
+      "cid": "2923488"
+    },
+    "3": {
+      "found": true,
+      "cid": "126511"
+    },
+    "4": {
+      "found": true,
+      "cid": "130173"
+    },
+    "5": {
+      "found": true,
+      "cid": "126484"
+    },
+    "6": {
+      "found": true,
+      "cid": "126510"
+    },
+    "7": {
+      "found": false,
+      "cid": null
+    },
+    "8": {
+      "found": false,
+      "cid": null
+    },
+    "9": {
+      "found": false,
+      "cid": null
+    },
+    "10": {
+      "found": true,
+      "cid": "126537"
+    }
+  },
+  "group_b_false_negative": [
+    {
+      "no": 1,
+      "name_ko": "경복궁",
+      "type": "HERITAGE_PALACE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "126508",
+      "alternate_official_source": "KTO, visitseoul, heritage",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126508",
+      "targeted_detail_possible": true,
+      "why_important": "서울 대표 궁궐, 유네스코 세계유산 후보, 연간 수백만 방문",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 2,
+      "name_ko": "창덕궁",
+      "type": "HERITAGE_PALACE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "2923488",
+      "alternate_official_source": "KTO, visitseoul, heritage",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264337",
+      "targeted_detail_possible": true,
+      "why_important": "유네스코 세계유산 등재, 후원으로 유명",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 3,
+      "name_ko": "창경궁",
+      "type": "HERITAGE_PALACE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "126511",
+      "alternate_official_source": "KTO, visitseoul, heritage",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126500",
+      "targeted_detail_possible": true,
+      "why_important": "4대 궁궐 중 하나",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 4,
+      "name_ko": "덕수궁",
+      "type": "HERITAGE_PALACE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "130173",
+      "alternate_official_source": "KTO, visitseoul, heritage",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "127000",
+      "targeted_detail_possible": true,
+      "why_important": "대한제국 황궁, 중명전 포함",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 5,
+      "name_ko": "경희궁",
+      "type": "HERITAGE_PALACE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "126484",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126998",
+      "targeted_detail_possible": true,
+      "why_important": "5대 궁궐 중 하나",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 6,
+      "name_ko": "종묘",
+      "type": "HERITAGE_UNESCO",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "126510",
+      "alternate_official_source": "KTO, visitseoul, heritage",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264335",
+      "targeted_detail_possible": true,
+      "why_important": "유네스코 세계유산, 조선 왕실 사당",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 7,
+      "name_ko": "한양도성(서울 성곽)",
+      "type": "HERITAGE_WALL",
+      "primary_source": "KTO TourAPI",
+      "primary_found": false,
+      "primary_cid": "2685706",
+      "alternate_official_source": "KTO, visitseoul, seoul_city",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "2685706",
+      "targeted_detail_possible": true,
+      "why_important": "서울 조선시대 성곽, 약 18.6km",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 8,
+      "name_ko": "남대문(숭례문)",
+      "type": "HERITAGE_GATE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": false,
+      "primary_cid": "126553",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126553",
+      "targeted_detail_possible": true,
+      "why_important": "국보 제1호, 조선시대 성문",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 9,
+      "name_ko": "동대문(흥인지문)",
+      "type": "HERITAGE_GATE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": false,
+      "primary_cid": "126538",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126538",
+      "targeted_detail_possible": true,
+      "why_important": "보물 제1호, 서울 성문",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 10,
+      "name_ko": "북촌한옥마을",
+      "type": "HERITAGE_VILLAGE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": true,
+      "primary_cid": "126537",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264370",
+      "targeted_detail_possible": true,
+      "why_important": "한옥 보존지구, 전통 마을 관광",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 11,
+      "name_ko": "국립중앙박물관",
+      "type": "MUSEUM",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "126676",
+      "alternate_official_source": "KTO, visitseoul, museum",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126676",
+      "targeted_detail_possible": true,
+      "why_important": "한국 최대 박물관, 외국인 필수 방문지",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 12,
+      "name_ko": "국립민속박물관",
+      "type": "MUSEUM",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "126695",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126695",
+      "targeted_detail_possible": true,
+      "why_important": "경복궁 내 한국 민속 박물관",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 13,
+      "name_ko": "서울역사박물관",
+      "type": "MUSEUM",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264274",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264274",
+      "targeted_detail_possible": true,
+      "why_important": "서울 역사 전문 박물관",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 14,
+      "name_ko": "국립한글박물관",
+      "type": "MUSEUM",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "1753997",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "1753997",
+      "targeted_detail_possible": true,
+      "why_important": "한글 전문 박물관, 외국인 관심 높음",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 15,
+      "name_ko": "리움미술관",
+      "type": "MUSEUM_PRIVATE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "800428",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "800428",
+      "targeted_detail_possible": true,
+      "why_important": "삼성 리움, 현대미술+고미술, 국제적 명성",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 16,
+      "name_ko": "N서울타워(남산서울타워)",
+      "type": "MODERN_ATTRACTION",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264337",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264337",
+      "targeted_detail_possible": true,
+      "why_important": "서울 대표 랜드마크 전망대",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 17,
+      "name_ko": "롯데월드타워 서울스카이",
+      "type": "MODERN_ATTRACTION",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "2685708",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "2685708",
+      "targeted_detail_possible": true,
+      "why_important": "세계 5위 높이 전망대",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 18,
+      "name_ko": "DDP(동대문디자인플라자)",
+      "type": "MODERN_ATTRACTION",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "1870504",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "1870504",
+      "targeted_detail_possible": true,
+      "why_important": "자하 하디드 설계, 쇼핑/전시 복합",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 19,
+      "name_ko": "서울식물원",
+      "type": "NATURE_MODERN",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "2611001",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "2611001",
+      "targeted_detail_possible": true,
+      "why_important": "2019년 개원, 대형 온실 포함",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 20,
+      "name_ko": "북한산국립공원",
+      "type": "NATURE_MOUNTAIN",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "2781026",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "2781026",
+      "targeted_detail_possible": true,
+      "why_important": "서울 대표 산, 연간 수백만 등산객",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 21,
+      "name_ko": "남산",
+      "type": "NATURE_MOUNTAIN",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "2685709",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "2685709",
+      "targeted_detail_possible": true,
+      "why_important": "서울 중심 산, N서울타워 소재지",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 22,
+      "name_ko": "청계천",
+      "type": "NATURE_STREAM",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "131220",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "131220",
+      "targeted_detail_possible": true,
+      "why_important": "도심 복원 하천, 광화문~동대문",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 23,
+      "name_ko": "한강공원",
+      "type": "NATURE_RIVERSIDE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "127248",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "127248",
+      "targeted_detail_possible": true,
+      "why_important": "한강변 11개 공원, 서울 대표 야외 명소",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 24,
+      "name_ko": "광장시장",
+      "type": "MARKET",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "126668",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126668",
+      "targeted_detail_possible": true,
+      "why_important": "넷플릭스 스트리트푸드파이터 등장, 빈대떡·마약김밥",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 25,
+      "name_ko": "남대문시장",
+      "type": "MARKET",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "126571",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "126571",
+      "targeted_detail_possible": true,
+      "why_important": "서울 최대 전통시장",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 26,
+      "name_ko": "통인시장",
+      "type": "MARKET",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "1920780",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "1920780",
+      "targeted_detail_possible": true,
+      "why_important": "도시락 카페, 엽전 체험으로 유명",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 27,
+      "name_ko": "인사동",
+      "type": "FOOD_CULTURE_DISTRICT",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264491",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264491",
+      "targeted_detail_possible": true,
+      "why_important": "전통공예·갤러리·한식 거리",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 28,
+      "name_ko": "이태원",
+      "type": "FOOD_MULTICULTURAL",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264483",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264483",
+      "targeted_detail_possible": true,
+      "why_important": "다국적 음식, 글로벌 관광지",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 29,
+      "name_ko": "명동",
+      "type": "SHOPPING_DISTRICT",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264382",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264382",
+      "targeted_detail_possible": true,
+      "why_important": "서울 1등 쇼핑 관광지, K-beauty",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 30,
+      "name_ko": "홍대",
+      "type": "SHOPPING_CULTURE",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": "264491",
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": "264491",
+      "targeted_detail_possible": true,
+      "why_important": "젊은이 거리, 인디음악·카페·클럽",
+      "recommendation": "KTO_targeted_detail"
+    },
+    {
+      "no": 31,
+      "name_ko": "SMTOWN 코엑스 아티움",
+      "type": "HALLYU_ATTRACTION",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": null,
+      "alternate_official_source": "KTO, visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": null,
+      "targeted_detail_possible": false,
+      "why_important": "SM엔터 공식 팬 공간, K-pop 체험",
+      "recommendation": "VISITSEOUL_MANUAL_CHECK"
+    },
+    {
+      "no": 32,
+      "name_ko": "BTS 그래피티 이태원",
+      "type": "HALLYU_ATTRACTION",
+      "primary_source": "KTO TourAPI",
+      "primary_found": null,
+      "primary_cid": null,
+      "alternate_official_source": "visitseoul",
+      "alternate_found": "CHECK_REQUIRED",
+      "known_source_id": null,
+      "targeted_detail_possible": false,
+      "why_important": "공식 관광 맥락 여부 확인 필요",
+      "recommendation": "VISITSEOUL_MANUAL_CHECK"
+    }
+  ]
+}
