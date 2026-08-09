@@ -396,7 +396,14 @@
     "savedManage": "选择",
     "savedManageDone": "完成",
     "savedDeleteSelected": "删除 {count} 个",
-    "savedDeleteConfirm": "删除 {count} 个？"
+    "savedDeleteConfirm": "删除 {count} 个？",
+    "saveLabel": "收藏",
+    "savedLabel": "已收藏",
+    "saveAria": "收藏{name}",
+    "unsaveAria": "取消收藏{name}",
+    "savedLive": "已收藏{name}。",
+    "unsavedLive": "已取消收藏{name}。",
+    "viewDetails": "查看详情"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

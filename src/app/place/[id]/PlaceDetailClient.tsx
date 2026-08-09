@@ -22,11 +22,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
-import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
 import PlaceReportModal from "@/components/PlaceReportModal";
-import PlaceLikeButton from "@/components/PlaceLikeButton";
 import { citySpotSourceKey } from "@/lib/place-identity";
-import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { trackEvent } from "@/lib/analytics";
 import {
   resolvePlaceText,
@@ -71,8 +69,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   const [saved, setSaved]       = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
-  const [inCart, setInCart]     = useState(false);
-  const [addedToast, setAdded]  = useState(false); // Add 성공 후 다음 행동 제시
   const [savedToast, setSavedT] = useState(false);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   const [imgFailed, setImgFail] = useState(false);
@@ -90,14 +86,15 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   useEffect(() => {
     setSaved(getFavorites().includes(eventId));
-    setInCart(isInCart(citySpotSourceKey(spot.id)));
   }, [eventId]);
 
-  // 다른 화면(My Picks 드로어 등)에서 Cart 가 바뀌어도 버튼 상태가 어긋나지 않게 한다
+  // 다른 화면(Explore 카드·모달·Picks)에서 저장 상태가 바뀌어도 이 버튼이
+  // 어긋나지 않게 한다. 예전에는 Cart 만 구독하고 Save 는 마운트 시 1회만
+  // 읽어서, 같은 파일 안에서 두 상태의 동기화 수준이 달랐다.
   useEffect(() => {
-    const sync = () => setInCart(isInCart(citySpotSourceKey(spot.id)));
-    window.addEventListener(CART_EVENT, sync);
-    return () => window.removeEventListener(CART_EVENT, sync);
+    const sync = () => setSaved(getFavorites().includes(eventId));
+    window.addEventListener(FAVORITES_EVENT, sync);
+    return () => window.removeEventListener(FAVORITES_EVENT, sync);
   }, [eventId]);
 
   // place_view 는 장소당 1회만 발화한다 (spot.id 변경 시에만 재실행)
@@ -105,20 +102,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     trackEvent("place_view", { place_id: spot.id, city: spot.city, category: spot.category });
   }, [spot.id, spot.city, spot.category]);
 
-  function handleAddToItinerary(source: "sticky" | "card") {
-    const already = isInCart(citySpotSourceKey(spot.id));
-    if (!already) {
-      // 비상업 어댑터 — 상업 문맥을 Cart 로 넘기지 않는다
-      addToCart(stripCommercialKeys(toItineraryEvent(spot, text)));
-    }
-    setInCart(true);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 5000);
-    trackEvent("place_add_to_itinerary", {
-      place_id: spot.id, city: spot.city, category: spot.category,
-      cta_position: source, duplicate: already,
-    });
-  }
 
   function handleSave() {
     const nowSaved = toggleFavorite(eventId, citySpotSourceKey(spot.id));
@@ -162,10 +145,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   // ── 재사용 조각 ────────────────────────────────────────────────────────────
 
   // 라벨은 문자열, 아이콘은 JSX 로 분리한다 (버튼 두 곳이 같은 조합을 쓴다)
-  const addLabel = inCart ? t("inItinerary") : t("addToItinerary");
-  const addIcon = inCart
-    ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>
-    : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>;
 
   // 외부 연결 3개 — 네이버·구글·공식 정보를 항상 같은 자리에 둘다.
   //
@@ -374,7 +353,6 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   본문 하단이라 모바일·데스크톱 어디서든 닿는다. */}
               {/* 모바일 본문에도 Like — 오른쪽 카드는 데스크톱 전용이라 여기 하나 더 둔다 */}
               <div className="mt-8 md:hidden">
-                <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
               </div>
 
               <div className="mt-8 md:mt-6 pt-5 border-t border-line">
@@ -405,28 +383,21 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           {/* ── 오른쪽: 데스크톱 sticky action card ───────────────────────── */}
           <aside className="hidden md:block md:sticky md:top-6">
             <Card className="p-5 flex flex-col gap-3">
-              <button
-                onClick={() => handleAddToItinerary("card")}
-                aria-pressed={inCart}
-                className={`gkm-focus w-full min-h-12 rounded-control text-sm font-bold transition-colors ${
-                  inCart ? "bg-action-tint text-action" : "bg-action text-white hover:bg-action-hover shadow-cta"
-                }`}
-              >
-                <span className="inline-flex items-center justify-center gap-1.5">{addIcon}{addLabel}</span>
-              </button>
-
+              {/* 발견 단계의 개인 행동은 저장 하나다. 일정 편입은 Picks > Saved 에서
+                  This Trip 으로 보낼 때 한다 — 장소를 처음 본 자리에서 저장과 일정
+                  선택을 동시에 묻지 않는다. */}
               <button
                 onClick={handleSave}
                 aria-pressed={saved}
-                className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink"
+                className={`gkm-focus w-full min-h-12 rounded-control text-sm font-bold transition-colors ${
+                  saved ? "bg-action-tint text-action" : "bg-action text-white hover:bg-action-hover shadow-cta"
+                }`}
               >
                 <span className="inline-flex items-center justify-center gap-1.5">
                   {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
                   {saved ? t("savedState") : t("save")}
                 </span>
               </button>
-
-              <PlaceLikeButton targetType="city_spot" targetKey={String(spot.id)} />
 
               {externalLinks}
 
@@ -453,19 +424,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         <button
-          onClick={() => handleAddToItinerary("sticky")}
-          aria-pressed={inCart}
-          className={`gkm-focus flex-1 min-h-12 rounded-control text-sm font-bold transition-colors ${
-            inCart ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
-          }`}
-        >
-          <span className="inline-flex items-center justify-center gap-1.5">{addIcon}{addLabel}</span>
-        </button>
-        <button
           onClick={handleSave}
           aria-pressed={saved}
-          aria-label={t("save")}
-          className="gkm-focus shrink-0 min-h-12 w-12 rounded-control border border-line inline-flex items-center justify-center text-sub"
+          className={`gkm-focus flex-1 min-h-12 rounded-control text-sm font-bold transition-colors ${
+            saved ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
+          }`}
         >
           {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
         </button>
@@ -478,28 +441,8 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         </button>
       </div>
 
-      {/* Add 성공 → 다음 행동 제시 */}
-      {addedToast && (
-        <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
-          <span className="inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>{t("addedToTrip")}</span>
-          <Link
-            href="/itinerary/"
-            className="gkm-focus bg-action hover:bg-action-hover text-white text-sm font-bold px-3 py-1.5 rounded-control"
-            onClick={() => setAdded(false)}
-          >
-            {t("viewItinerary")}
-          </Link>
-          <button
-            onClick={() => setAdded(false)}
-            className="gkm-focus text-white/80 hover:text-white text-sm font-semibold px-2 py-1.5"
-          >
-            {t("keepExploring")}
-          </button>
-        </div>
-      )}
-
       {/* Save → 일정 브리지 토스트 */}
-      {savedToast && !addedToast && (
+      {savedToast && (
         <div className="fixed bottom-36 md:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-ink text-white text-sm font-semibold pl-4 pr-2 py-2.5 rounded-control shadow-modal">
           <span className="inline-flex items-center gap-1.5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg>{t("savedState")}</span>
           <Link

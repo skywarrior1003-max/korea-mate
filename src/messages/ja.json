@@ -396,7 +396,14 @@
     "savedManage": "選択",
     "savedManageDone": "完了",
     "savedDeleteSelected": "{count}件を削除",
-    "savedDeleteConfirm": "{count}件を削除しますか？"
+    "savedDeleteConfirm": "{count}件を削除しますか？",
+    "saveLabel": "保存",
+    "savedLabel": "保存済み",
+    "saveAria": "{name}を保存",
+    "unsaveAria": "{name}の保存を解除",
+    "savedLive": "{name}を保存しました。",
+    "unsavedLive": "{name}の保存を解除しました。",
+    "viewDetails": "詳細を見る"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

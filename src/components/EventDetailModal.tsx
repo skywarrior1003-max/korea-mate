@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/config/affiliates";
 import type { EventItem } from "@/lib/cart";
-import { addToCart, removeFromCart, isInCart, getCart } from "@/lib/cart";
-import { trackEvent } from "@/lib/analytics";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { useTranslations } from "next-intl";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
@@ -87,13 +85,12 @@ interface Props {
 }
 
 export default function EventDetailModal({ event, onClose }: Props) {
-  const [inCart,    setInCart]    = useState(false);
   // 문자열로 고정한다 — effect 의존성이 event 객체가 아니라 안정적인 키가 된다.
   const sourceKey    = getItemSourceKey(event);
   const tModal       = useTranslations("modal");
+  const tPicks       = useTranslations("picks");
   const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);
-  const [added,     setAdded]     = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [copied,    setCopied]    = useState(false);
   const [review,    setReview]    = useState("");
@@ -104,7 +101,6 @@ export default function EventDetailModal({ event, onClose }: Props) {
 
   // ── 마운트: 상태 초기화 + 모바일 뒤로가기 방지 ──
   useEffect(() => {
-    setInCart(isInCart(sourceKey));
     setFavorited(isFavorited(event.id, sourceKey));
     setReview(loadReview(event.id));
 
@@ -137,26 +133,6 @@ export default function EventDetailModal({ event, onClose }: Props) {
     };
   }, [handleKeyDown]);
 
-  function handleAddToCart() {
-    // 카드와 같은 이벤트를 쓴다. 표면마다 이벤트명을 나누면 퍼널을 합산할 수 없다.
-    const already = isInCart(sourceKey);
-    addToCart(event);
-    setInCart(true);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
-    trackEvent("place_add_to_itinerary", {
-      city:         event.city,
-      category:     event.type,
-      source_type:  sourceKey.split(":")[0],
-      cta_position: "explore-modal",
-      duplicate:    already,
-      picked_count: getCart().length,
-    });
-  }
-  function handleRemoveFromCart() {
-    removeFromCart(sourceKey);
-    setInCart(false);
-  }
   function handleToggleFavorite() {
     // legacy id 와 sourceKey 를 함께 기록한다(롤백 호환).
     const next = toggleFavorite(event.id, sourceKey);
@@ -230,15 +206,24 @@ export default function EventDetailModal({ event, onClose }: Props) {
             ✕
           </button>
 
-          {/* 찜하기 하트 버튼 (이미지 위) */}
+          {/* 저장 버튼 (이미지 위).
+              하트가 아니라 북마크다. 이 버튼은 favorites 에 넣는 **개인 보관**이고,
+              하트는 다른 사용자의 Story·Memory 에 대한 Like 로 남겨 둔다.
+              예전에는 같은 동작에 하트와 "Like this spot" 라벨이 붙어 있어
+              사회적 반응처럼 읽혔다. */}
           <button
             onClick={handleToggleFavorite}
-            className={`absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full text-xl shadow-md transition-all ${
-              favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
+            aria-pressed={favorited}
+            className={`absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md transition-all ${
+              favorited ? "bg-emerald-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-500"
             }`}
-            aria-label={favorited ? "Remove from liked" : "Like this spot"}
+            aria-label={favorited ? tPicks("unsaveAria", { name: event.name }) : tPicks("saveAria", { name: event.name })}
           >
-            {favorited ? "❤️" : "🤍"}
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden
+                 fill={favorited ? "currentColor" : "none"}
+                 stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+            </svg>
           </button>
 
           {/* 뱃지들 */}
@@ -552,43 +537,27 @@ export default function EventDetailModal({ event, onClose }: Props) {
 
       {/* ── Sticky Bottom 액션 바 ── */}
       <div className="shrink-0 px-5 py-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.07)] rounded-b-3xl sm:rounded-b-3xl">
-        {added && (
-          <div className="text-center text-sm font-bold text-emerald-600 animate-pulse mb-2">{tModal("addedToast")}</div>
-        )}
+        {/* 이 모달은 장소를 처음 훑어보는 자리다. 여기서 일정 편입을 묻지 않는다 —
+            담기는 Picks > Saved 에서 This Trip 으로 보낼 때 한다.
+            남는 개인 행동은 저장 하나뿐이라 폭을 다 쓴다. */}
         <div className="flex gap-3">
-          {/* 하트 (찜하기) */}
           <button
             onClick={handleToggleFavorite}
-            className={`shrink-0 flex items-center gap-2 px-5 py-3.5 rounded-2xl font-black text-sm border-2 transition-all ${
+            aria-pressed={favorited}
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-base border-2 transition-all ${
               favorited
-                ? "bg-red-50 border-red-300 text-red-500"
-                : "bg-gray-50 border-gray-200 text-gray-500 hover:border-red-200 hover:text-red-400"
+                ? "bg-emerald-50 border-emerald-300 text-emerald-700"
+                : "border-transparent text-white"
             }`}
+            style={favorited ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
           >
-            {favorited ? tModal("liked") : tModal("like")}
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden className="shrink-0"
+                 fill={favorited ? "currentColor" : "none"}
+                 stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+            </svg>
+            {favorited ? tPicks("savedLabel") : tPicks("saveLabel")}
           </button>
-          {/* 일정표 추가 / 제거 */}
-          {inCart ? (
-            <div className="flex-1 flex gap-2">
-              <div className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white bg-emerald-500">
-                {tModal("inTrip")}
-              </div>
-              <button
-                onClick={handleRemoveFromCart}
-                className="px-4 py-3.5 rounded-2xl font-bold text-sm text-red-500 border-2 border-red-200 hover:bg-red-50 transition-colors"
-              >
-                {tModal("remove")}
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleAddToCart}
-              className="flex-1 py-3.5 rounded-2xl font-black text-base text-white transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
-              style={{ backgroundColor: "#FF4A2D" }}
-            >
-              + {tModal("addToTrip")}
-            </button>
-          )}
         </div>
       </div>
     </div>

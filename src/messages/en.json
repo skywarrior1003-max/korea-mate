@@ -396,7 +396,14 @@
     "savedManage": "Select",
     "savedManageDone": "Done",
     "savedDeleteSelected": "Delete {count}",
-    "savedDeleteConfirm": "Delete {count}?"
+    "savedDeleteConfirm": "Delete {count}?",
+    "saveLabel": "Save",
+    "savedLabel": "Saved",
+    "saveAria": "Save {name}",
+    "unsaveAria": "Remove {name} from Saved",
+    "savedLive": "{name} saved.",
+    "unsavedLive": "{name} removed from Saved.",
+    "viewDetails": "View Details"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

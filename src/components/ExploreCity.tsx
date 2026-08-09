@@ -12,7 +12,9 @@ import { fetchCitySpots } from "@/lib/city-spots";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
 import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
-import { addToCart, isInCart, getCart, CART_EVENT } from "@/lib/cart";
+import {
+  toggleFavorite, getFavoriteSourceKeys, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT,
+} from "@/lib/favorites";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget, nextPickedKey } from "@/lib/explore/map-selection-core";
 import { trackEvent } from "@/lib/analytics";
@@ -114,7 +116,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [selectedEvent,    setSelectedEvent]   = useState<EventItem | null>(null);
   // Cart 는 여기서 한 번만 구독한다. 카드에는 boolean 만 내려보내 158개가
   // 담기 한 번에 전부 리렌더되지 않게 한다.
-  const [pickedKeys, setPickedKeys] = useState<Set<string>>(new Set());
+  const [savedKeys, setSavedKeys] = useState<Set<string>>(new Set());
   const tPicks = useTranslations("picks");
   const [liveMessage, setLiveMessage] = useState("");
 
@@ -139,10 +141,10 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
   const [mapPickedKey, setMapPickedKey] = useState<string | null>(null);
 
   useEffect(() => {
-    const sync = () => setPickedKeys(new Set(getCart().map(getItemSourceKey)));
+    const sync = () => setSavedKeys(new Set(getFavoriteSourceKeys()));
     sync();
-    window.addEventListener(CART_EVENT, sync);
-    return () => window.removeEventListener(CART_EVENT, sync);
+    window.addEventListener(FAVORITES_EVENT, sync);
+    return () => window.removeEventListener(FAVORITES_EVENT, sync);
   }, []);
 
   // Body scroll lock while map is full-screen
@@ -335,27 +337,27 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     [filteredSpots]
   );
 
-  function handleAddSpot(spot: CitySpot) {
+  // 발견 화면의 행동은 저장 하나다. 일정 편입은 Picks > Saved 에서 한다.
+  function handleSaveSpot(spot: CitySpot) {
     const event = toEventItem(spot);
     const key   = getItemSourceKey(event);
-    const already = isInCart(key);
-    if (!already) addToCart(event);
-    setPickedKeys(new Set(getCart().map(getItemSourceKey)));
-    const picked = getCart().length;
-    // 영어는 1개일 때 "place" 다. 기존 spotCount / spotCountPlural 와 같은 방식으로
-    // 키를 나눠 쓴다 — 이 저장소에 ICU plural 전례가 없다.
+    // id 는 반드시 event.id 다. cacheSavedSpot 이 event.id 로 캐시하고 Picks 는
+    // getFavorites() 와 캐시의 id 를 맞춰 목록을 만든다 — 여기서 city_spots 의
+    // 숫자 id 를 넣으면 저장은 되는데 Picks > Saved 에는 안 보인다.
+    const next = toggleFavorite(event.id, key);
+    if (next) cacheSavedSpot(event);
+    else      uncacheSavedSpot(event.id, key);
+    setSavedKeys(new Set(getFavoriteSourceKeys()));
     setLiveMessage(
-      picked === 1
-        ? tPicks("addedLiveOne", { name: spot.name })
-        : tPicks("addedLive",    { name: spot.name, count: picked }),
+      next ? tPicks("savedLive", { name: spot.name })
+           : tPicks("unsavedLive", { name: spot.name }),
     );
-    trackEvent("place_add_to_itinerary", {
+    trackEvent("place_save", {
       city:         spot.city,
       category:     spot.category,
       source_type:  (spot.sourceKey ?? "").split(":")[0],
       cta_position: "explore-card",
-      duplicate:    already,
-      picked_count: picked,
+      saved:        next,
     });
   }
 
@@ -520,8 +522,8 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
           key={item.sourceKey ?? item.id}
           spot={item}
           distKm={distances.get(item.id)}
-          isAdded={pickedKeys.has(getItemSourceKey(toEventItem(item)))}
-          onAdd={() => handleAddSpot(item)}
+          isSaved={savedKeys.has(getItemSourceKey(toEventItem(item)))}
+          onSave={() => handleSaveSpot(item)}
           onClick={() => setSelectedEvent(toEventItem(item))}
         />
       ))}
@@ -675,28 +677,9 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
                 </button>
               </div>
               <div className="flex items-center gap-2 mt-2">
-                {(() => {
-                  const added = pickedKeys.has(getItemSourceKey(toEventItem(mapPickedSpot)));
-                  return (
-                    <button
-                      onClick={() => handleAddSpot(mapPickedSpot)}
-                      disabled={added}
-                      className={`gkm-focus flex-1 min-h-10 rounded-xl text-xs font-black transition-colors ${
-                        added ? "bg-emerald-50 text-emerald-600 cursor-default" : "text-white"
-                      }`}
-                      style={added ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
-                    >
-                      {/* \uae30\ud638\ub9cc \uacf5\ud1b5 SVG \ub85c \ubc14\uafbc\ub2e4 \u2014 \ubb38\uad6c\u00b7\uc0c1\ud0dc\u00b7\ub3d9\uc791\u00b7\ud130\uce58 \uc601\uc5ed\uc740 \uadf8\ub300\ub85c */}
-                      <span className="inline-flex items-center justify-center gap-1.5">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0"
-                             stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                          {added ? <path d="M4.5 12.5l5 5 10-11" /> : <path d="M12 5v14M5 12h14" />}
-                        </svg>
-                        {added ? tE("addedToPicks") : tE("addToPicks")}
-                      </span>
-                    </button>
-                  );
-                })()}
+                {/* 이 카드에 저장 버튼을 새로 만들지 않는다. 지도에서 마커를 누른
+                    직후는 "저기가 뭐지" 를 확인하는 순간이지 이번 여행에 넣을지
+                    결정하는 순간이 아니다. 저장은 리스트 카드나 상세에서 한다. */}
                 {/* 장소 전체 상세의 기준 화면은 /place/[id] 다. 단 상세 페이지는
                     city_spots 로만 정적 생성되므로(dynamicParams:false), 다른 소스의
                     장소는 route 로 보내면 404 다 — 그 때만 기존 미리보기 모달을 쓴다. */}

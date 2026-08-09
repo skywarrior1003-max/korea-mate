@@ -241,7 +241,13 @@ Discover
 ```
 
 - 사용자가 **먼저 장소를 고르고** 시스템이 일정을 구성한다
-- **Add to Itinerary가 일정 입력의 중심**이다
+- **`This Trip`이 일정 입력의 중심**이다. 장소가 일정에 들어가는 유일한 경로다
+- **장소를 처음 발견하는 화면에서는 저장과 일정 선택을 동시에 묻지 않는다.** 발견 단계의 행동은 `Save` 하나이고, 일정 편입은 `Picks > Saved`에서 `This Trip`으로 보낼 때 일어난다. 아직 그 장소가 무엇인지도 다 모르는 사람에게 두 결정을 한꺼번에 요구하지 않는다
+
+```
+Discover · Recommendation · Shared Place
+  → Save → Picks > Saved → This Trip → Build My Trip with AI → Trip → Trip Memory
+```
 - Like · Helpful · 반응은 **신호이지 강제 일정 입력이 아니다**
 - **사용자가 선택한 장소를 제휴상품이나 광고보다 우선한다**
 - 하루 단위 지역 묶기와 이동 순서 품질을 중시한다

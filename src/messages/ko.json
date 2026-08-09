@@ -396,7 +396,14 @@
     "savedManage": "선택",
     "savedManageDone": "완료",
     "savedDeleteSelected": "{count}곳 삭제",
-    "savedDeleteConfirm": "{count}곳 삭제할까요?"
+    "savedDeleteConfirm": "{count}곳 삭제할까요?",
+    "saveLabel": "저장",
+    "savedLabel": "저장됨",
+    "saveAria": "{name} 저장",
+    "unsaveAria": "{name} 저장 해제",
+    "savedLive": "{name} 저장했어요.",
+    "unsavedLive": "{name} 저장을 해제했어요.",
+    "viewDetails": "자세히 보기"
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

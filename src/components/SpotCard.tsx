@@ -42,22 +42,21 @@ interface SpotCardProps {
   distKm?: number;
   onClick: () => void;
   /**
-   * 이미 담긴 장소인가. Cart 구독은 ExploreCity 가 한 번만 한다 —
-   * 카드마다 CART_EVENT 를 구독하면 담을 때마다 158개가 전부 리렌더된다.
+   * 이미 저장한 장소인가. favorites 구독은 ExploreCity 가 한 번만 한다 —
+   * 카드마다 FAVORITES_EVENT 를 구독하면 저장할 때마다 158개가 전부 리렌더된다.
    */
-  isAdded?: boolean;
+  isSaved?: boolean;
   /** 없으면 CTA 를 렌더하지 않는다 (Explore 밖 사용처 호환) */
-  onAdd?: () => void;
+  onSave?: () => void;
 }
 
-export default function SpotCard({ spot, distKm, onClick, isAdded, onAdd }: SpotCardProps) {
+export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: SpotCardProps) {
   const [imgError, setImgError] = useState(false);
   const tB = useTranslations("badges");
   const tM = useTranslations("map");
   const tE = useTranslations("explore");
   const tD = useTranslations("discovery");
   const tP = useTranslations("picks");
-  const tMo = useTranslations("modal");
 
   // 필터 칩("Attractions")과 배지("Attraction")는 수가 다르다 — 카드 한 장은
   // 한 곳이므로 단수 라벨을 따로 쓴다.
@@ -160,27 +159,34 @@ export default function SpotCard({ spot, distKm, onClick, isAdded, onAdd }: Spot
 
         {/* 버튼 영역 */}
         <div className="flex flex-col gap-1.5 mt-auto" onClick={e => e.stopPropagation()}>
-          {/* 일정에 담기 — 이 카드의 핵심 행동이라 지도 링크보다 위에 둔다.
-              onAdd 가 없으면(Explore 밖) 렌더하지 않는다. */}
-          {onAdd && (
+          {/* 장소를 처음 보는 자리다. 여기서 "이번 여행에 넣을지" 를 묻지 않는다 —
+              사용자는 아직 그 장소가 무엇인지도 다 모른다. 익숙한 저장 하나만 둔다.
+              담기는 Picks > Saved 에서 This Trip 으로 보낼 때 한다.
+
+              하트가 아니라 북마크다. 하트는 다른 사용자의 Story·Memory 에 대한
+              Like 로 쓴다. 같은 기호를 두 의미로 쓰면 둘 다 읽히지 않는다.
+
+              onSave 가 없으면(Explore 밖) 렌더하지 않는다. */}
+          {onSave && (
             <button
               type="button"
-              onClick={onAdd}
-              disabled={isAdded}
-              aria-label={isAdded ? tP("addedAria", { name: spot.name }) : tP("addAria", { name: spot.name })}
+              onClick={onSave}
+              aria-pressed={!!isSaved}
+              aria-label={isSaved ? tP("unsaveAria", { name: spot.name }) : tP("saveAria", { name: spot.name })}
               className={
-                isAdded
-                  ? "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 cursor-default"
+                isSaved
+                  ? "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 transition-colors"
                   : "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
               }
-              style={isAdded ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
+              style={isSaved ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}
             >
-              {/* 색상만으로 구분하지 않는다 — 기호와 문구가 함께 바뀐다 */}
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0"
-                   stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                {isAdded ? <path d="M4.5 12.5l5 5 10-11" /> : <path d="M12 5v14M5 12h14" />}
+              {/* 색상만으로 구분하지 않는다 — 채워진 북마크와 문구가 함께 바뀐다 */}
+              <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden className="shrink-0"
+                   fill={isSaved ? "currentColor" : "none"}
+                   stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
               </svg>
-              {isAdded ? tMo("added") : tMo("addToTrip")}
+              {isSaved ? tP("savedLabel") : tP("saveLabel")}
             </button>
           )}
 

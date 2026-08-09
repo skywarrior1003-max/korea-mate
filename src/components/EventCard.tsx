@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { EventItem } from "@/lib/cart";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
@@ -41,6 +42,7 @@ interface Props {
 }
 
 export default function EventCard({ event, onClick, distanceBadge }: Props) {
+  const tPicks = useTranslations("picks");
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
   const [disliked,    setDisliked]    = useState(false);
@@ -255,7 +257,9 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
           className="w-full py-2 rounded-xl text-xs font-bold text-center text-white transition-opacity group-hover:opacity-100 opacity-80"
           style={{ backgroundColor: "#1a1f36" }}
         >
-          View Details & Add to Itinerary →
+          {/* 이 카드는 상세로 보내는 역할만 한다. 일정 편입은 여기서 약속하지 않는다 —
+              담기는 Picks > Saved 에서 This Trip 으로 보낼 때 일어난다. */}
+          {tPicks("viewDetails")} →
         </div>
       </div>
     </button>
