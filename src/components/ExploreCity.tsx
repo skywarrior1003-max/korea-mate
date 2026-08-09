@@ -584,9 +584,23 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
               // 클러스터 ↔ 개별 마커 + 이름 pill 로 갈라 그린다.
               clusterZoomLabels
             />
+            {/* 모바일 Map 모드에서는 이 버튼을 아래로 내린다.
+                위(top-3)에 두면 누를 수 없다 — 지도 열이 z-20 으로 stacking context 를
+                만들어서, 그 안의 z-50 은 형제인 컨트롤 패널(z-[34])을 이기지 못한다.
+                z 를 올려 패널을 덮는 대신 겹치지 않는 자리로 옮긴다: 패널은 위에서
+                최대 48vh, 이 버튼은 아래에서 BottomNav 위. 선택 카드가 떠 있을 때는
+                그 카드보다 한 층 더 위로 올려 서로 가리지 않게 한다.
+                전체화면일 때는 패널이 렌더되지 않으므로 원래대로 top-3.
+                데스크톱(lg+)은 split 뷰라 기존 동작을 그대로 되돌린다. */}
             <button
               onClick={() => setMapExpanded(e => !e)}
-              className="absolute top-3 right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95"
+              className={`absolute right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-lg transition-all active:scale-95 lg:top-3 lg:bottom-auto ${
+                mapExpanded
+                  ? "top-3"
+                  : mapPickedSpot
+                    ? "bottom-[calc(9.5rem+env(safe-area-inset-bottom))]"
+                    : "bottom-[calc(4.5rem+env(safe-area-inset-bottom))]"
+              }`}
               style={{ backgroundColor: mapExpanded ? "var(--gkm-status-error)" : "var(--gkm-ink)", opacity: 0.92 }}
               title={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}
               aria-label={mapExpanded ? tE("exitFullScreen") : tE("fullScreen")}

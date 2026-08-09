@@ -221,7 +221,9 @@ export default function CityEntry({ city, content }: Props) {
       {content.plannerReady && (
         <section className="max-w-3xl mx-auto px-4 py-14 text-center">
           <div className="rounded-frame p-8 sm:p-10" style={{ backgroundColor: DESIGN_INK }}>
-            <p className="text-xs font-black uppercase tracking-widest text-white/45 mb-3">{content.plannerLabel}</p>
+            {/* 브랜드 표기는 항상 소문자 gokoreamate 다. uppercase 를 걸면
+                원문이 소문자여도 화면에는 GOKOREAMATE 로 나온다. */}
+            <p className="text-xs font-black tracking-widest text-white/45 mb-3">{content.plannerLabel}</p>
             <h2 className="text-2xl font-black text-white mb-3">{content.plannerTitle}</h2>
             <p className="text-white/60 text-sm leading-relaxed mb-7 max-w-md mx-auto">{content.plannerDesc}</p>
             <Link

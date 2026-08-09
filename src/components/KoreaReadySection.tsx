@@ -137,7 +137,9 @@ export default function KoreaReadySection({ city, surface }: Props) {
         <div className="px-6 pt-5 pb-4 border-b border-[#E6DFD5] flex items-center gap-3">
           <span className="text-2xl">🇰🇷</span>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#8C6239]">
+            {/* 브랜드 표기는 항상 소문자 gokoreamate 다. uppercase 를 걸면
+                원문이 소문자여도 화면에는 GOKOREAMATE 로 나온다. */}
+            <p className="text-[10px] font-black tracking-widest text-[#8C6239]">
               gokoreamate partner network
             </p>
             <p className="text-lg font-black text-[#2C2520]">
