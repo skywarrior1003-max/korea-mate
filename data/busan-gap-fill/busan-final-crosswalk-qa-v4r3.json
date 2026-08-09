@@ -1,0 +1,194 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v4r3.0",
+  "start_sha": "9a10864",
+  "checks": {
+    "Q01_k00720_contradiction_resolved": {
+      "status": "PASS",
+      "finding": "MISCLASSIFIED as DISPLAY_READY_OFFICIAL — image was never patched",
+      "correction": "Re-classified as HOLD_BROWSER_ENV_REQUIRED",
+      "image_in_patch": false,
+      "BUSAN_K_00720_IMAGE_PATCH": "NO"
+    },
+    "Q02_image_coverage_BEFORE_CURRENT": {
+      "status": "PASS",
+      "BUSAN_IMAGE_BEFORE_V4R3": 128,
+      "BUSAN_IMAGE_CURRENT": 128,
+      "BUSAN_IMAGE_AFTER_V4R3": 128
+    },
+    "Q03_browser_env_check_performed": {
+      "status": "PASS",
+      "result": "BROWSER_RUNTIME_NOT_AVAILABLE",
+      "checks": {
+        "playwright": false,
+        "selenium": false,
+        "pyppeteer": false,
+        "chromium": false,
+        "chrome": false,
+        "google-chrome": false,
+        "geckodriver": false
+      }
+    },
+    "Q04_new_dependency_install_zero": {
+      "status": "PASS",
+      "note": "No npm/pip install performed. Browser check = existing system probe only."
+    },
+    "Q05_browser_not_available_hold_explicit": {
+      "status": "PASS",
+      "result": "BROWSER_RUNTIME_NOT_AVAILABLE",
+      "note": "All 128 targets → HOLD_BROWSER_ENV_REQUIRED when browser not available"
+    },
+    "Q06_url_crosswalk_not_built_terminal_zero": {
+      "status": "PASS",
+      "URL_CROSSWALK_NOT_BUILT": 0
+    },
+    "Q07_crosswalk_pending_busan_zero": {
+      "status": "PASS",
+      "CROSSWALK_PENDING": 0
+    },
+    "Q08_busan_128_sum": {
+      "status": "PASS",
+      "sum": 128,
+      "breakdown": {
+        "HOLD_BROWSER_ENV_REQUIRED": 128
+      }
+    },
+    "Q09_coord_only_image_match_zero": {
+      "status": "PASS",
+      "note": "No crosswalk performed. Only hold reclassification."
+    },
+    "Q10_unrelated_image_match_zero": {
+      "status": "PASS",
+      "note": "No new image patches in V4R3."
+    },
+    "Q11_existing_mnu_inventory_reused": {
+      "status": "PASS",
+      "known_mnu_count": 91,
+      "note": "89 mnu_uid from V4R2R1 repo scan used as SSOT. No new site inventory."
+    },
+    "Q12_new_full_site_inventory_zero": {
+      "status": "PASS",
+      "note": "No new site-map crawl. Classification from existing metadata only."
+    },
+    "Q13_place_relevant_classified": {
+      "status": "PASS",
+      "PLACE_RELEVANT_total": 4,
+      "PLACE_RELEVANT_DONE": [
+        "2501"
+      ],
+      "PLACE_RELEVANT_JS_RENDERED": [
+        "2266",
+        "4185"
+      ],
+      "PLACE_RELEVANT_DEAD": [
+        "2498"
+      ]
+    },
+    "Q14_relevant_listing_pagination_verified": {
+      "status": "PASS",
+      "note": "mnu=2266,4185 probed: navigation landing pages (no con_uid). mnu=2498: error page. All PLACE_RELEVANT listings = JS-rendered or dead.",
+      "listing_results": {
+        "2266": "HTTP_HTML_ACCESSIBLE",
+        "4185": "HTTP_HTML_ACCESSIBLE",
+        "2689": "HTTP_HTML_ACCESSIBLE",
+        "2294": "HTTP_HTML_ACCESSIBLE",
+        "2882": "HTTP_HTML_ACCESSIBLE",
+        "2501": "PLACE_RELEVANT_DONE",
+        "2498": "ERROR_PAGE_IN_200_OK"
+      }
+    },
+    "Q15_description_target_matching_attempted": {
+      "status": "PASS",
+      "note": "Travel-info crossref: 10 title matches, 0 descriptions found. Listing probe: no con_uid available. VisitGyeongju: TRANSIENT_ERROR final.",
+      "travelinfo_matches": 10,
+      "travelinfo_desc_patches": 0
+    },
+    "Q16_official_record_not_found_only_after_search": {
+      "status": "PASS",
+      "note": "HOLD_SOURCE_ACCESS used for JS-rendered listings. OFFICIAL_RECORD_NOT_FOUND not used (doesn't meet §13 criteria: listing search was incomplete due to JS rendering).",
+      "holds_using_hold_source_access": 200
+    },
+    "Q17_crosswalk_pending_gyeongju_zero": {
+      "status": "PASS",
+      "CROSSWALK_PENDING": 0
+    },
+    "Q18_attraction_crosswalk_not_built_zero": {
+      "status": "PASS",
+      "ATTRACTION_CROSSWALK_NOT_BUILT": 0
+    },
+    "Q19_gj_200_sum": {
+      "status": "FAIL",
+      "sum": 210,
+      "patches": 10,
+      "holds": 200
+    },
+    "Q20_forced_ambiguous_match_zero": {
+      "status": "PASS",
+      "note": "No forced ambiguous matches. All 200 → terminal HOLD_SOURCE_ACCESS."
+    },
+    "Q21_food28_coord_rework_zero": {
+      "status": "PASS",
+      "note": "food28 coord verified 28/28 in V4R1. Not re-checked in V4R3 (§16 QA: food28 coordinate 재검증 = 0)."
+    },
+    "Q22_official_detail_multi_field_extraction": {
+      "status": "PASS",
+      "note": "No new detail page fetches in V4R3 (no con_uid available). Policy preserved from §14."
+    },
+    "Q23_source_provenance_all_patches": {
+      "status": "PASS",
+      "note": "All holds include final_reason, replaces_previous_hold, as_of. Patches (0 new) would also comply."
+    },
+    "Q24_broken_image_display_ready_zero": {
+      "status": "PASS",
+      "note": "No new image patches. 0 DISPLAY_READY_OFFICIAL in V4R3."
+    },
+    "Q25_general_public_person_display_ready_zero": {
+      "status": "PASS",
+      "note": "No new image patches."
+    },
+    "Q26_official_event_person_not_excluded": {
+      "status": "PASS",
+      "note": "No event poster images added. Policy preserved."
+    },
+    "Q27_kto_network_calls_zero": {
+      "status": "PASS"
+    },
+    "Q28_visitgyeongju_bounded_retry_done": {
+      "status": "PASS",
+      "note": "1x retry performed for SHA 9a10864. Result: TRANSIENT_ERROR_FINAL (all endpoints status=0)."
+    },
+    "Q29_irrelevant_bulk_crawl_zero": {
+      "status": "PASS",
+      "note": "Only 5 mnu_uid listing URLs tested. No full site crawl."
+    },
+    "Q30_secret_candidate_zero": {
+      "status": "PASS",
+      "note": "No API keys in output. KTO key not used."
+    },
+    "Q31_embedded_credential_zero": {
+      "status": "PASS"
+    },
+    "Q32_protected_code_changes_zero": {
+      "status": "PASS"
+    },
+    "Q33_master_changes_zero": {
+      "status": "PASS",
+      "note": "Branch=data/busan-gyeongju-gap-fill-v1 only."
+    },
+    "Q34_production_db_migration_deploy_zero": {
+      "status": "PASS"
+    },
+    "Q35_empty_artifact_not_created": {
+      "status": "PASS",
+      "note": "busan-content-actual-patch-v4r3 and gyeongju-content-actual-patch-v4r3 not created (0 new patches). Only non-empty artifacts committed."
+    }
+  },
+  "overall": "FAIL",
+  "pass_count": 34,
+  "fail_count": 1,
+  "partial_count": 0,
+  "BUSAN_CONTENT_QUALITY_READY": "NO",
+  "GYEONGJU_CONTENT_QUALITY_READY": "NO",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "NO",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "NO"
+}
