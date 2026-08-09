@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "version": "v1",
+    "created": "2026-08-09",
+    "task": "TASK-MULTICITY-TOURISM-DATA-QUALITY-GUARDRAIL-V2",
+    "base_sha": "8c6f327",
+    "description": "부산 false-positive + 경주 false-negative regression fixtures. 신규 도시 데이터 수집 규칙 검증에 사용."
+  },
+
+  "busan_false_positive": {
+    "description": "사용자 제외 14건. 전건 KTO TourAPI (kto_tourapi) 출처. 관광 적합성 gate 없이 자동 READY된 사례.",
+    "source_audit": {
+      "KTO_kto_tourapi": 14,
+      "VisitBusan": 0,
+      "Busan_official_public": 0,
+      "Other": 0,
+      "TOTAL": 14
+    },
+    "provenance_note": "busan-K- prefix = KTO 출처. image gap 파일의 known_source=VisitBusan은 이미지 해소 대상 source이며 원본 출처 아님.",
+    "expected_rule_behavior": {
+      "tourism_relevance_gate": "REQUIRED — KTO 등재만으로 READY 불가",
+      "entity_type_check": "REQUIRED — 주식회사/기관/시설 유형 확인",
+      "auto_ready_without_gate": 0
+    },
+    "fixtures": [
+      {
+        "candidate_id": "busan-K-00005",
+        "name_ko": "25의용단",
+        "kto_content_id": "126814",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "의용단(의병/애국단체) 기념시설. 관광 방문 이유 불명확.",
+        "expected": "USER_REVIEW_REQUIRED or TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00035",
+        "name_ko": "사상문화원",
+        "kto_content_id": "130382",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_SOURCE_SCOPE_TOO_BROAD", "FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "지역 문화원. 주민 문화 활동 중심, 관광객 대상 방문 이유 불명확.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00052",
+        "name_ko": "함지골청소년수련관",
+        "kto_content_id": "131452",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_SOURCE_SCOPE_TOO_BROAD", "FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "청소년 복지/교육 시설. 일반 관광객 대상 방문 이유 없음.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00053",
+        "name_ko": "영도관광실탄사격장",
+        "kto_content_id": "131943",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "'관광' 명칭 포함이나 일반 로컬 사격장 성격. 외국인 관광객 대상 상품 확인 필요.",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00321",
+        "name_ko": "임랑카라반파크",
+        "kto_content_id": "2741535",
+        "category_normalized": "nature",
+        "fp_types": ["FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "카라반 파크는 관광 숙박 시설. 사용자 판단으로 서비스 제외. GoKoreaMate 타겟 관광지 여부 확인 필요.",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00322",
+        "name_ko": "명지시장",
+        "kto_content_id": "2742601",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "강서구 지역 시장. 관광객 방문 시장(자갈치·국제 등)과 달리 로컬 중심. 사용자 low-value 판정.",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00678",
+        "name_ko": "UN조각공원",
+        "kto_content_id": "2945389",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_PARENT_CHILD_CONFUSION", "FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "UN기념공원(유엔기념공원) 인근 조각공원. 상위 명소와의 관계 불명확. 독립 관광지로서 가치 재검토 필요.",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00685",
+        "name_ko": "플루니티",
+        "kto_content_id": "2999905",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE", "FP_NO_TOURISM_RELEVANCE_GATE"],
+        "fp_detail": "브랜드명 또는 상업 공간. 관광 가치 불명확.",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00720",
+        "name_ko": "고래서이뻐",
+        "kto_content_id": "3336600",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_NORMALIZATION_OVERPROMOTION"],
+        "fp_detail": "독특한 브랜드명. KTO에서 attraction으로 분류됐으나 실제 entity type(카페/상점 등) 불명확. 사용자 제외. (V4R2R1에서 opening_hours+official_url 패치 유효)",
+        "expected": "USER_REVIEW_REQUIRED"
+      },
+      {
+        "candidate_id": "busan-K-00752",
+        "name_ko": "주식회사감천아울",
+        "kto_content_id": "3510987",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE"],
+        "fp_detail": "법인 명칭. 감천마을(주요 관광지) 인근 운영체로 KTO에 등재된 것으로 추정. entity type 불일치.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00753",
+        "name_ko": "주식회사아래모래",
+        "kto_content_id": "3511011",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE"],
+        "fp_detail": "법인 명칭. 감천마을 인근. entity type 불일치.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00754",
+        "name_ko": "주식회사어반힐링",
+        "kto_content_id": "3511018",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE"],
+        "fp_detail": "법인 명칭. entity type 불일치.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00755",
+        "name_ko": "주식회사뷰티홀릭",
+        "kto_content_id": "3511057",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE"],
+        "fp_detail": "법인 명칭. entity type 불일치.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      },
+      {
+        "candidate_id": "busan-K-00756",
+        "name_ko": "주식회사피알아이피",
+        "kto_content_id": "3511071",
+        "category_normalized": "attraction",
+        "fp_types": ["FP_ENTITY_TYPE_MISMATCH", "FP_COMMERCIAL_OR_ORGANIZATION_FALSE_POSITIVE"],
+        "fp_detail": "법인 명칭(PR I P 또는 유사). entity type 불일치.",
+        "expected": "TOURISM_RELEVANCE_REJECTED"
+      }
+    ]
+  },
+
+  "gyeongju_false_negative": {
+    "description": "경주 200건 description gap. 초기 JS-rendered listing 실패로 HOLD됐으나 alternative source/targeted fetch로 전건 구제.",
+    "final_result": {
+      "input_total": 200,
+      "user_excluded": 2,
+      "gyeongju_official_rescue": 139,
+      "kto_targeted_rescue": 59,
+      "unresolved": 0
+    },
+    "root_causes": [
+      "gyeongju.go.kr 권역별 관광지 listing = JS-rendered (mnu=2291~2296)",
+      "listing 실패 → detail 부재로 잘못 해석",
+      "KTO12 contentId 보유 59건에 대해 targeted fetch 미시도",
+      "SOURCE_ABSENCE를 NON-TOURISM으로 조기 결론"
+    ],
+    "resolution_cascade": [
+      "V1: gyeongju.go.kr area_uid detail (cmd=2) direct access → 139건",
+      "V2: KTO detailCommon2 targeted fetch (59건 contentId 직접) → 59건"
+    ],
+    "key_fixtures": [
+      {
+        "no": 135,
+        "name_ko": "경주 석빙고",
+        "candidate_id": "gyeongju-KTO12-126204",
+        "kto_content_id": "126204",
+        "initial_status": "OFFICIAL_DETAIL_NOT_FOUND",
+        "final_status": "RESCUED_KTO",
+        "rescue_method": "KTO_detailCommon2_targeted",
+        "rule_test": "known KTO contentId → targeted fetch 도달 필수",
+        "expected": "SOURCE_ABSENCE_ONLY ≠ EXCLUDE"
+      },
+      {
+        "no": 136,
+        "name_ko": "경주 포석정지",
+        "candidate_id": "gyeongju-KTO12-126208",
+        "kto_content_id": "126208",
+        "initial_status": "OFFICIAL_DETAIL_NOT_FOUND",
+        "final_status": "RESCUED_KTO",
+        "rescue_method": "KTO_detailCommon2_targeted",
+        "rule_test": "listing JS-shell ≠ detail 없음",
+        "expected": "LISTING_FAILURE ≠ DETAIL_ABSENT"
+      },
+      {
+        "no": 176,
+        "name_ko": "경주 율동 마애여래삼존입상",
+        "candidate_id": "gyeongju-KTO12-250271",
+        "kto_content_id": "250271",
+        "initial_status": "OFFICIAL_DETAIL_NOT_FOUND",
+        "final_status": "RESCUED_KTO",
+        "rescue_method": "KTO_detailCommon2_targeted",
+        "rule_test": "국가유산 유형 → source absence만으로 EXCLUDE 금지",
+        "expected": "HERITAGE_TYPE_REQUIRES_CASCADE"
+      },
+      {
+        "no": 199,
+        "name_ko": "경주역사유적지구 [유네스코 세계유산]",
+        "candidate_id": "gyeongju-KTO12-971032",
+        "kto_content_id": "971032",
+        "initial_status": "OFFICIAL_DETAIL_NOT_FOUND",
+        "final_status": "RESCUED_KTO",
+        "rescue_method": "KTO_detailCommon2_targeted",
+        "rule_test": "세계유산 → primary source 누락 시 escalation 필수",
+        "expected": "USER_ESCALATION_TRIGGER_2"
+      },
+      {
+        "no": 77,
+        "name_ko": "코라드 청정누리공원",
+        "candidate_id": "gyeongju-GJ01-XXXX",
+        "initial_status": "MATCH_VERIFIED",
+        "final_status": "DESCRIPTION_FILLED_GYEONGJU_OFFICIAL",
+        "rescue_method": "gyeongju_go_kr_area_uid_direct",
+        "rule_test": "PUBLIC_DATA_PRIORITY=YES 장소 — 공식 source에서 description 확보",
+        "expected": "OFFICIAL_SOURCE_PRIORITY_RESPECTED"
+      }
+    ]
+  },
+
+  "silent_failure_fixtures": [
+    {
+      "test_name": "gyeongju_srchKwd_empty_result",
+      "url_pattern": "gyeongju.go.kr/tour/page.do?mnu_uid=2292&srchKwd=XXXX&cmd=1",
+      "expected_actual_signal": "EMPTY_RESULT",
+      "expected_usable_result": false,
+      "rule": "SEARCH_SUCCESS=true는 실제 area_uid 있을 때만. srchKwd 파라미터 = 필터 미작동."
+    },
+    {
+      "test_name": "gyeongju_search_ajax_shell",
+      "url_pattern": "search.gyeongju.go.kr/RSA_Tour/front/Search.jsp?query=XXXX",
+      "expected_actual_signal": "AJAX_INTERFACE_ONLY",
+      "expected_usable_result": false,
+      "rule": "HTTP 200이지만 JS-rendered AJAX interface. 서버사이드 결과 없음."
+    },
+    {
+      "test_name": "heritage_api_shell",
+      "url_pattern": "khs.go.kr/cha/SearchKindOpenapiList.do?...",
+      "expected_actual_signal": "JS_SHELL",
+      "expected_usable_result": false,
+      "rule": "HTTP 200, 5KB HTML shell, 유산 데이터 없음. HERITAGE_API_ACCESS_BLOCKED."
+    }
+  ],
+
+  "targeted_fetch_fixtures": [
+    {
+      "test_name": "kto_59_targeted_no_full_rescan",
+      "scenario": "59개 known KTO contentId 보유 record",
+      "expected_method": "detailCommon2 targeted fetch (59건)",
+      "prohibited": "전체 TourAPI 재수집",
+      "expected_result": "KTO_DETAIL_FULL = 59/59"
+    },
+    {
+      "test_name": "kto_contentid_mismatch_guard",
+      "scenario": "detailCommon2 응답의 contentid ≠ 요청 contentId",
+      "expected_action": "WRONG_ID 기록, usable_result=false",
+      "prohibited": "불일치 응답을 정상 결과로 처리"
+    }
+  ]
+}
