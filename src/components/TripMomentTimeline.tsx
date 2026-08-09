@@ -13,7 +13,10 @@ const MEMO_MAX = 2000;
 interface Props {
   moments:       TripMoment[];
   onDelete:      (momentId: string) => void;
-  onAddMemory:   () => void;
+  /** day 를 넘기면 Capture 가 그 Day 를 기본 선택으로 연다 */
+  onAddMemory:   (day?: number | null) => void;
+  /** 이 일정의 Day 번호 목록. Day 별 기록 추가를 제안하는 데만 쓴다 */
+  dayNumbers?:   number[];
   /** memo 수정 — 미전달 시 Edit 버튼을 노출하지 않는다 (공유·읽기 전용 화면 대비) */
   onEditMemo?:   (momentId: string, memo: string) => Promise<void>;
 
@@ -38,8 +41,37 @@ const CAT_COLORS: Record<string, string> = {
   random:  "#FF4A2D",
 };
 
+/**
+ * Day 단위로 묶어 최신 Day 가 위로 오게 정렬한다.
+ *
+ * 최종 디자인의 타임라인은 "여행 전체가 하나의 기록"이라는 것을 Day 마커와
+ * 점선 축으로 보여준다. Day 가 없는 기록(day_number = null)은 버리지 않고
+ * 맨 아래 한 묶음으로 남긴다 — 기록을 화면 밖으로 밀어내지 않는다.
+ */
+function groupByDay(moments: TripMoment[]): { day: number | null; items: TripMoment[] }[] {
+  const buckets = new Map<number | null, TripMoment[]>();
+  for (const m of moments) {
+    const k = m.day_number;
+    const cur = buckets.get(k);
+    if (cur) cur.push(m);
+    else buckets.set(k, [m]);
+  }
+  return [...buckets.entries()]
+    .map(([day, items]) => ({
+      day,
+      items: [...items].sort(
+        (a, b) => new Date(b.captured_at).getTime() - new Date(a.captured_at).getTime(),
+      ),
+    }))
+    .sort((a, b) => {
+      if (a.day === null) return 1;
+      if (b.day === null) return -1;
+      return b.day - a.day;
+    });
+}
+
 export default function TripMomentTimeline({
-  moments, onDelete, onAddMemory, onEditMemo,
+  moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [],
   isPublic = false, currentCoverMomentId = null,
   onUseAsCover, onClearCover, coverBusy = false,
 }: Props) {
@@ -95,7 +127,7 @@ export default function TripMomentTimeline({
     return (
       <div
         className="rounded-3xl border-2 border-dashed border-[#E5E7EA] p-10 text-center flex flex-col items-center gap-4 cursor-pointer hover:border-[#FF4A2D] transition-colors"
-        onClick={onAddMemory}
+        onClick={() => onAddMemory()}
       >
         <div className="w-16 h-16 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-3xl">📸</div>
         <div>
@@ -112,9 +144,43 @@ export default function TripMomentTimeline({
     );
   }
 
+  const groups   = groupByDay(moments);
+  const tripDays = new Set(dayNumbers);
+
   return (
-    <div className="space-y-4">
-      {moments.map((m, i) => {
+    <div>
+      {groups.map((group, gi) => {
+      const isLastGroup = gi === groups.length - 1;
+      // 그 Day 의 마지막 기록 시각을 묶음 라벨로 쓴다 — 새로 만든 값이 아니다
+      const groupDate = group.items[0]
+        ? new Date(group.items[0].captured_at).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })
+        : "";
+
+      return (
+        <div key={String(group.day)} className="flex gap-3 sm:gap-4">
+          {/* 점선 축 + Day 마커 — 흩어진 카드가 아니라 한 여행의 흐름으로 읽히게 한다 */}
+          <div className="flex flex-col items-center shrink-0 w-9">
+            <span
+              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black text-white shrink-0"
+              style={{ backgroundColor: group.day === null ? "#565D66" : "#1a1a2e" }}
+            >
+              {group.day === null ? "•" : group.day}
+            </span>
+            {!isLastGroup && <span className="w-0 flex-1 border-l-2 border-dashed border-[#E5E7EA]" />}
+          </div>
+
+          <div className={`flex-1 min-w-0 ${isLastGroup ? "" : "pb-8"}`}>
+            <div className="flex items-center justify-between gap-2 h-9">
+              <h3 className="text-base font-black text-[#191C21] truncate">
+                {group.day === null ? t("dayUnassigned") : `Day ${group.day}`}
+              </h3>
+              {groupDate && (
+                <span className="text-xs font-bold text-[#565D66]/60 shrink-0">{groupDate}</span>
+              )}
+            </div>
+
+            <div className="space-y-4 pt-2">
+      {group.items.map((m, i) => {
         const cat      = MOMENT_CATEGORIES.find(c => c.key === m.category) ?? MOMENT_CATEGORIES[4];
         const color    = CAT_COLORS[m.category] ?? "#FF4A2D";
         const isOpen   = expanded === m.moment_id;
@@ -177,11 +243,7 @@ export default function TripMomentTimeline({
                   >
                     {cat.emoji} {cat.label}
                   </span>
-                  {m.day_number !== null && (
-                    <span className="text-xs font-bold bg-black/50 text-white px-2 py-1 rounded-lg backdrop-blur-sm">
-                      Day {m.day_number}
-                    </span>
-                  )}
+                  {/* Day 배지는 왼쪽 축 마커가 대신한다 — 같은 줄에 두 번 쓰지 않는다 */}
                 </div>
                 <div className="absolute top-3 right-3 text-xs text-white/70 font-medium bg-black/40 px-2 py-1 rounded-lg backdrop-blur-sm">
                   {isOpen ? "collapse ↑" : "expand ↓"}
@@ -200,11 +262,7 @@ export default function TripMomentTimeline({
                 >
                   {cat.emoji} {cat.label}
                 </span>
-                {m.day_number !== null && (
-                  <span className="text-xs font-bold bg-[#F6F7F8] text-[#565D66] px-2 py-1 rounded-lg">
-                    Day {m.day_number}
-                  </span>
-                )}
+                {/* Day 배지는 왼쪽 축 마커가 대신한다 */}
               </div>
             )}
 
@@ -252,9 +310,11 @@ export default function TripMomentTimeline({
                 </div>
               ) : (
                 <>
+                  {/* 최종 디자인은 메모를 여행자 본인의 목소리로 읽히게 둔다 —
+                      설명문이 아니라 그때 쓴 문장이다. */}
                   {m.memo && (
-                    <p className="text-sm text-[#191C21] leading-relaxed font-medium whitespace-pre-line">
-                      {m.memo}
+                    <p className="text-sm text-[#191C21] leading-relaxed font-medium italic whitespace-pre-line">
+                      “{m.memo}”
                     </p>
                   )}
                   {!m.memo && (
@@ -330,6 +390,22 @@ export default function TripMomentTimeline({
             </div>
           </div>
         );
+      })}
+
+              {/* 그 Day 에 바로 이어 붙이는 기록 추가. 상단 버튼은 어느 Day 인지
+                  묻지 않지만 이 버튼은 이미 그 Day 안에 있다. */}
+              {group.day !== null && tripDays.has(group.day) && (
+                <button
+                  onClick={() => onAddMemory(group.day)}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl border-2 border-dashed border-[#E5E7EA] text-[11px] font-black uppercase tracking-[0.12em] text-[#565D66]/70 hover:border-[#FF4A2D] hover:text-[#FF4A2D] transition-colors cursor-pointer"
+                >
+                  ＋ {t("addMemoryToDay", { n: group.day })}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      );
       })}
 
       <style>{`

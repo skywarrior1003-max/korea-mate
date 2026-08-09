@@ -311,7 +311,9 @@
     "useTourismCover": "관광 사진 표지로 되돌리기",
     "coverUpdated": "여행 표지를 변경했습니다",
     "tourismCoverRestored": "관광 사진 표지로 되돌렸습니다",
-    "coverUpdateFailed": "표지를 변경하지 못했습니다. 다시 시도해 주세요."
+    "coverUpdateFailed": "표지를 변경하지 못했습니다. 다시 시도해 주세요.",
+    "dayUnassigned": "그 밖의 기록",
+    "addMemoryToDay": "Day {n}에 기록 추가"
   },
   "dayDone": {
     "title": "Day {n} 완주!",

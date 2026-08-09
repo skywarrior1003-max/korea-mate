@@ -146,6 +146,27 @@ Constitution 의 기존 원칙을 이 구조에 적용한 결과이며 새 원�
 - Saved ↔ This Trip 왕복이 membership 만 바꾸고 원본을 건드리지 않음 (390px 왕복 3회 검증)
 - Clear All · Saved 다중 삭제 · My Places 삭제의 확인 1회
 
+### 5-2. Trips · Memory 최종 디자인 적용 (2026-08-09)
+
+**두 기준을 분리해서 쓴다.**
+
+| 기준 | 무엇을 정하는가 |
+|---|---|
+| **최신 제품 결정** | 기능 · 용어 · 사용자 흐름의 **SSOT** |
+| **최종 디자인** (`docs/design/final-mobile-2026-08-02/`) | **시각적** 레이아웃 · 스타일 기준 |
+
+충돌하면 제품 결정이 이긴다. 디자인 시안에 남아 있는 옛 기능명·CTA·기능 가정(`Open Optimizer`, `BUILD: LIVE`, `Route Optimized by AI`, `N Photos` / `N Memory Stories`, Google Maps 자동 동기화)은 **복원하지 않는다.**
+
+**이번에 적용한 것**
+
+- `/my-trips` — `Current & Upcoming` / `Memory Archive` 두 단. 기준은 실제 종료일 하나뿐이고, 비어 있는 단은 제목째로 내리지 않는다. 카드 사진 비율 4:3
+- `/itinerary` Memory — 점선 축 + Day 마커로 묶은 Day 단위 타임라인. 최신 Day 가 위. `day_number` 가 없는 기록은 버리지 않고 맨 아래 한 묶음으로 남긴다. Day 안에 그 Day 로 바로 여는 기록 추가
+- Memory 는 별도 화면이 아니라 그 Trip 안의 한 구간이다 — `/itinerary?id={id}#memories`
+
+**Memory 개수는 표시하지 않는다.** Memory 는 localStorage 1차 + 서버 동기화 구조라 화면이 아는 값은 이 기기가 본 것뿐이다. 그 부분합을 전체 개수처럼 적으면 다른 기기에서 남긴 기록이 없는 것처럼 읽힌다. 그래서 `/my-trips` 의 카드 칩과 상단 요약에 있던 `N moments` 를 없애고, 숫자 없는 Memory 진입만 남겼다.
+
+**`Copy this trip` 은 이번 배치에서 구현하지 않았다.** §1 의 "과거 Trip 전체를 복사해 새 여행으로 시작한다"는 여전히 확정된 방향이지만, 현재 공개 복사 계약이 자기 Trip 재사용에 맞지 않는다 — `is_public = true` 게이트라 비공개 Trip 에서는 동작하지 않고, 복사할 때마다 원본의 `copy_count` 가 올라 남이 복사한 것처럼 읽히며, 제목이 그대로라 같은 카드가 둘로 보인다. **후속 별도 TASK 의 필수 과제로 남긴다.**
+
 ---
 
 ## 6. 참조

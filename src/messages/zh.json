@@ -311,7 +311,9 @@
     "useTourismCover": "改用观光照片封面",
     "coverUpdated": "已更新行程封面",
     "tourismCoverRestored": "已恢复观光照片封面",
-    "coverUpdateFailed": "未能更新封面。请重试。"
+    "coverUpdateFailed": "未能更新封面。请重试。",
+    "dayUnassigned": "其他记录",
+    "addMemoryToDay": "为第 {n} 天添加记录"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",

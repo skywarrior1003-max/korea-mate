@@ -311,7 +311,9 @@
     "useTourismCover": "Use tourism cover instead",
     "coverUpdated": "Trip cover updated",
     "tourismCoverRestored": "Tourism cover restored",
-    "coverUpdateFailed": "Couldn't update your cover. Please try again."
+    "coverUpdateFailed": "Couldn't update your cover. Please try again.",
+    "dayUnassigned": "Other memories",
+    "addMemoryToDay": "Add memory to Day {n}"
   },
   "dayDone": {
     "title": "Day {n} complete!",

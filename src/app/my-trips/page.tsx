@@ -14,7 +14,7 @@ import {
 import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 import { getSavedEmail } from "@/lib/userEmail";
-import { loadMoments } from "@/lib/trip-moments";
+import { visitedStorageKey } from "@/lib/visited";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
 
 // ── 도시 대표 이미지 ───────────────────────────────────────────────────────────
@@ -72,7 +72,6 @@ interface Trip {
   tripTitle:   string | null;
   updatedAt:   string;
   days:        number;
-  moments:     number;
   isPublic:    boolean;
   copyCount:   number;   // 실측 누적값 — 낙관적 증가 없음
   helpfulCount:number;
@@ -90,7 +89,6 @@ function rowToTrip(r: ItineraryRow): Trip {
     tripTitle:   r.trip_title ?? null,
     updatedAt:   r.updated_at ?? "",
     days,
-    moments:     0,
     isPublic:    r.is_public ?? false,
     copyCount:   r.copy_count ?? 0,
     helpfulCount:r.helpful_count ?? 0,
@@ -120,8 +118,7 @@ export default function MyTripsPage() {
       if (cancelled) return;
       const sorted = itins
         .map(rowToTrip)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-        .map(t => ({ ...t, moments: loadMoments(t.id).length }));
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       setTrips(sorted);
       setLoading(false);
     }).catch(() => { if (!cancelled) { setLoading(false); setFetchError(true); } });
@@ -141,7 +138,7 @@ export default function MyTripsPage() {
     setDeleting(trip.id);
     setConfirmDel(null);
     setTrips(prev => prev.filter(t => t.id !== trip.id));
-    await apiDeleteItinerary(trip.id, getDeviceId());
+    const serverDeleted = await apiDeleteItinerary(trip.id, getDeviceId());
     // localStorage 캐시 키 일괄 제거
     try {
       const toRemove: string[] = [];
@@ -151,6 +148,10 @@ export default function MyTripsPage() {
           toRemove.push(k);
         }
       }
+      // Visited 는 이 여행에서만 의미가 있는 기록이라 여행이 사라지면 같이 지운다.
+      // 서버 삭제가 성공했을 때만 지운다 — 실패하면 여행이 그대로 남아 있고,
+      // 그때 Visited 만 날리면 사용자가 직접 찍은 기록을 이유 없이 잃는다.
+      if (serverDeleted) toRemove.push(visitedStorageKey(trip.id));
       toRemove.forEach(k => localStorage.removeItem(k));
     } catch { /* ignore */ }
     setDeleting(null);
@@ -166,8 +167,25 @@ export default function MyTripsPage() {
     setTogglingPublic(prev => { const s = new Set(prev); s.delete(trip.id); return s; });
   }, [togglingPublic]);
 
-  const totalMoments = trips.reduce((s, t) => s + t.moments, 0);
   const cityCap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
+
+  // 최종 디자인의 두 단(Current & Upcoming / Memory Archive) 구분.
+  // 기준은 실제 종료일 하나뿐이다 — 진행률·완료 신호 같은 추정값을 쓰지 않는다.
+  const today = new Date().toISOString().slice(0, 10);
+  const SECTIONS = [
+    {
+      key: "upcoming",
+      title: "Current & Upcoming",
+      hint: "Trips you are on or about to take",
+      trips: trips.filter(t => !t.endDate || t.endDate >= today),
+    },
+    {
+      key: "archive",
+      title: "Memory Archive",
+      hint: "Finished trips — itinerary, visits and memories stay together",
+      trips: trips.filter(t => t.endDate && t.endDate < today),
+    },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#F6F7F8" }}>
@@ -191,9 +209,9 @@ export default function MyTripsPage() {
 
         {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black text-[#191C21] mb-2">My Trips</h1>
-          <p className="text-[#565D66] font-medium">
-            AI-generated Korea itineraries · memories · sharing
+          <h1 className="text-4xl font-black text-[#191C21] mb-2 tracking-tight">My Trips</h1>
+          <p className="text-[#565D66] font-medium leading-relaxed max-w-md">
+            Manage your journey and revisit the memories you&apos;ve made across Korea.
           </p>
         </div>
 
@@ -201,9 +219,11 @@ export default function MyTripsPage() {
         {!loading && trips.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-8">
             {[
+              // Memory 개수는 여기에 두지 않는다. Memory SSOT 는 localStorage 1차 +
+              // 서버 동기화라, 이 화면이 아는 값은 이 기기가 본 것뿐이다. 그 부분합을
+              // 전체 개수처럼 적으면 다른 기기에서 남긴 기록이 없는 것처럼 읽힌다.
               { emoji: "✈️", label: `${trips.length} trips` },
               { emoji: "📍", label: `${trips.reduce((s, t) => s + t.days, 0)} days` },
-              totalMoments > 0 ? { emoji: "📸", label: `${totalMoments} moments` } : null,
             ].filter(Boolean).map((chip) => (
               <div
                 key={chip!.label}
@@ -289,10 +309,17 @@ export default function MyTripsPage() {
           </div>
         )}
 
-        {/* ── 여행 카드 그리드 ── */}
-        {!loading && trips.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {trips.map((trip, i) => {
+        {/* ── 여행 카드 — 최종 디자인의 두 단 구성 ──
+              빈 단은 제목째로 내리지 않는다. 첫 여행 하나를 만든 사람에게
+              "Memory Archive: 비어 있음"을 보여줄 이유가 없다. */}
+        {!loading && SECTIONS.map(section => section.trips.length === 0 ? null : (
+          <section key={section.key} className="mb-10">
+            <div className="mb-4">
+              <h2 className="text-xl font-black text-[#191C21] tracking-tight">{section.title}</h2>
+              <p className="text-xs text-[#565D66] font-medium mt-0.5">{section.hint}</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {section.trips.map((trip, i) => {
               const personality = getPersonality(trip.travelStyle);
               const isDeleting  = deleting    === trip.id;
               const isConfirm   = confirmDel  === trip.id;
@@ -307,7 +334,9 @@ export default function MyTripsPage() {
                   style={{ animation: `fadeInUp 0.3s ease-out ${i * 0.07}s both` }}
                 >
                   {/* ── 도시 히어로 이미지 ── */}
-                  <Link href={`/itinerary?id=${trip.id}`} className="block relative h-44 overflow-hidden">
+                  {/* 최종 디자인은 사진이 카드의 주인공이다. 기존 h-44(약 2:1)는
+                      도시 사진이 띠처럼 잘려 표지로 읽히지 않았다. */}
+                  <Link href={`/itinerary?id=${trip.id}`} className="block relative aspect-[4/3] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={cityImg}
@@ -350,14 +379,17 @@ export default function MyTripsPage() {
                     <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
                       👤 {trip.travelers} pax
                     </span>
-                    {trip.moments > 0 && (
-                      <span
-                        className="text-[10px] font-black px-2.5 py-1 rounded-md text-white"
-                        style={{ backgroundColor: "#1a1a2e" }}
-                      >
-                        📸 {trip.moments} moments
-                      </span>
-                    )}
+                    {/* Memory 진입 — 개수는 적지 않는다. 이 기기가 본 로컬 캐시만
+                        세는 값이라 "3 memories"라고 쓰면 다른 기기에서 남긴 기록이
+                        없는 것처럼 읽힌다. Memory 는 같은 Trip 안에 있으므로 별도
+                        화면이 아니라 그 Trip 의 Memory 영역으로 보낸다. */}
+                    <Link
+                      href={`/itinerary?id=${trip.id}#memories`}
+                      className="text-[10px] font-black px-2.5 py-1 rounded-md text-white transition-opacity hover:opacity-85"
+                      style={{ backgroundColor: "#1a1a2e" }}
+                    >
+                      📸 Memories
+                    </Link>
                     {/* 원작자 성과 — 실측 누적값만. 둘 다 0이면 미노출 */}
                     {trip.copyCount > 0 && (
                       <span className="text-[10px] font-black bg-[#FFF0EC] text-[#FF4A2D] px-2.5 py-1 rounded-md">
@@ -404,7 +436,9 @@ export default function MyTripsPage() {
                             : { backgroundColor: "#F6F7F8", borderColor: "#E5E7EA", color: "#565D66" }
                         }
                       >
-                        {isCopied ? "✅ Copied" : "🔗 Copy Link"}
+                        {/* 이 버튼은 공유 링크를 클립보드에 담는다. 여행 자체를
+                            복제하지 않는다 — "Copy Link"는 둘 다로 읽혔다. */}
+                        {isCopied ? "✅ Link copied" : "🔗 Copy Share Link"}
                       </button>
 
                       {/* 삭제 */}
@@ -437,8 +471,13 @@ export default function MyTripsPage() {
                 </div>
               );
             })}
+            </div>
+          </section>
+        ))}
 
-            {/* ── 새 여행 추가 카드 ── */}
+        {/* ── 새 여행 추가 카드 — 두 단 아래에 한 번만 둔다 ── */}
+        {!loading && trips.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <Link
               href="/"
               className="rounded-3xl border-2 border-dashed border-[#E5E7EA] flex flex-col items-center justify-center gap-3 py-16 text-center hover:border-[#FF4A2D] transition-colors group"

@@ -311,7 +311,9 @@
     "useTourismCover": "観光写真の表紙に戻す",
     "coverUpdated": "旅の表紙を変更しました",
     "tourismCoverRestored": "観光写真の表紙に戻しました",
-    "coverUpdateFailed": "表紙を変更できませんでした。もう一度お試しください。"
+    "coverUpdateFailed": "表紙を変更できませんでした。もう一度お試しください。",
+    "dayUnassigned": "その他の記録",
+    "addMemoryToDay": "Day {n} に記録を追加"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

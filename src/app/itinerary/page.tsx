@@ -84,6 +84,23 @@ interface Day {
   places: Place[];
 }
 
+/**
+ * 일정 항목을 Place Detail 로 보낼 수 있는가.
+ *
+ * `/place/[id]` 는 `dynamicParams = false` 로 city_spots id 목록만 정적 생성한다.
+ * 그래서 두 조건을 모두 만족할 때만 링크를 만든다 —
+ *   ① `source === "city_spot"` : 저장 시점에 실제 city_spots 행과 대조된 항목
+ *   ② place_id 가 숫자        : city_spots.id 는 숫자다
+ * user_spot · events · planner 내부 키 · mock 은 여기서 걸러진다. 링크를 만들어
+ * 두고 404 를 보여주는 것보다 링크가 없는 편이 낫다.
+ */
+function citySpotHref(place: Place): string | null {
+  if (place.source !== "city_spot") return null;
+  const id = place.place_id ?? "";
+  if (!/^\d+$/.test(id)) return null;
+  return `/place/${id}/`;
+}
+
 // ── 시간 슬롯 정의 ───────────────────────────────────────────
 const TIME_SLOTS = [
   { key: "morning",   label: "Morning",   emoji: "☀️", range: "9AM–12PM" },
@@ -1354,6 +1371,22 @@ function ItineraryResult() {
     return () => window.removeEventListener("online", onOnline);
   }, [itinId, shareId, isOwner]);
 
+  // ── #memories 앵커 스크롤 ────────────────────────────────────
+  // 이 화면은 일정을 받아온 뒤에야 Memory 영역을 그린다. 브라우저의 기본
+  // 해시 스크롤은 로드 시점에 한 번만 일어나므로, 그때는 대상이 아직 없어
+  // 아무 일도 일어나지 않는다. 일정이 그려진 뒤 한 번 직접 옮긴다.
+  const hashScrolled = useRef(false);
+  useEffect(() => {
+    if (hashScrolled.current) return;
+    if (days.length === 0) return;
+    if (window.location.hash !== "#memories") return;
+    hashScrolled.current = true;
+    // 레이아웃이 한 번 확정된 다음 프레임에 옮긴다
+    requestAnimationFrame(() => {
+      document.getElementById("memories")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [days.length]);
+
   // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
   useEffect(() => {
     if (!city) return;
@@ -2437,8 +2470,19 @@ function ItineraryResult() {
                                           />
                                         )}
                                         <div className="min-w-0">
+                                          {/* 장소명만 Place Detail 로 보낸다. 카드 전체를 링크로
+                                              바꾸면 Visited·지도·상세 모달과 클릭이 겹친다.
+                                              stopPropagation 으로 카드의 모달 열기를 막는다. */}
                                           <h3 className="text-lg sm:text-xl font-black text-ink group-hover:text-sub transition-colors">
-                                            {place.name}
+                                            {citySpotHref(place) ? (
+                                              <Link
+                                                href={citySpotHref(place)!}
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="hover:text-accent-coral hover:underline underline-offset-4 decoration-2 transition-colors"
+                                              >
+                                                {place.name}
+                                              </Link>
+                                            ) : place.name}
                                           </h3>
                                           <div className="bg-surface-dim/60 border border-line/60 rounded-xl p-3 mt-1">
                                             <p className="text-xs text-sub leading-relaxed line-clamp-2">
@@ -2561,8 +2605,11 @@ function ItineraryResult() {
         </div>
       )}
 
-      {/* ── TASK-022: Trip Journal — 나만의 여행 기억 타임라인 ── */}
-      <div className="mb-12">
+      {/* ── TASK-022: Trip Journal — 나만의 여행 기억 타임라인 ──
+            Memory 는 별도 화면이 아니라 이 Trip 안의 한 구간이다. /my-trips 의
+            Memories 진입이 이 앵커로 내려온다 — scroll-mt 는 상단 고정 바에
+            제목이 가려지지 않게 하는 여백이다. */}
+      <div id="memories" className="mb-12 scroll-mt-24">
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="text-2xl font-black text-ink">📸 {tMemo("memoriesTitle")}</h2>
@@ -2580,7 +2627,8 @@ function ItineraryResult() {
           moments={moments}
           onDelete={handleMomentDelete}
           onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
-          onAddMemory={() => setCaptureOpen(true)}
+          onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}
+          dayNumbers={days.map(d => d.dayNumber)}
           isPublic={isPublic}
           currentCoverMomentId={coverKind === "moment" ? coverMomentId : null}
           coverBusy={coverBusy}
