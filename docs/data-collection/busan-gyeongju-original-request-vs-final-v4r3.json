@@ -1,0 +1,171 @@
+{
+  "generated_at": "2026-08-09",
+  "start_sha": "c0234564",
+  "note": "Numbers sourced from pipeline artifacts V1-V4R3. See evidence_sources for traceability. 'final_exact_count_not_available' means no confirmed machine-readable artifact provided the number.",
+  "busan": [
+    {
+      "field": "canonical_place_population",
+      "initial_universe_target": 1642,
+      "initial_universe_note": "UNIVERSE=1642 (canonical 1533 + holds 109). Enrollments happened in stages.",
+      "final_population": 1529,
+      "final_population_note": "PLACE=1529 (EVENT=4 separate). 1642 universe ≠ 1529 final canonical; do not subtract blindly.",
+      "resolved_comparison_note": "population changed across pipeline stages; field_specific gaps tracked separately below",
+      "evidence_source": "busan-canonical-count-clarification-v3.json, busan-enrichment-universe-audit-v3.json"
+    },
+    {
+      "field": "image",
+      "initial_gap": "final_exact_count_not_available",
+      "initial_gap_note": "V1 initial image gap not separately enumerated in machine-readable artifact. Derived from V4R1 baseline: 1529-1401=128",
+      "final_population": 1529,
+      "final_available": 1401,
+      "final_unresolved": 128,
+      "v4r3_status": "HOLD_BROWSER_ENV_REQUIRED (browser runtime required for VB listing crosswalk)",
+      "evidence_source": "busan-content-baseline-v4r1.json, busan-content-holds-v4r3.jsonl"
+    },
+    {
+      "field": "opening_hours",
+      "initial_gap": "final_exact_count_not_available",
+      "initial_gap_note": "V1 hours gap not separately enumerated. Derived from V4R1 baseline.",
+      "final_population": 1529,
+      "final_available": 1217,
+      "final_unresolved": 312,
+      "v4r3_status": "SOURCE_EXHAUSTED (VisitBusan listing JS-rendered; same crosswalk dependency as image)",
+      "evidence_source": "busan-content-baseline-v4r1.json"
+    },
+    {
+      "field": "title_en",
+      "initial_gap": "final_exact_count_not_available",
+      "initial_gap_note": "V1 EN gap: 124 items explicitly in V1 identity scope",
+      "final_population": 1529,
+      "final_available": 941,
+      "final_unresolved": 588,
+      "en_identity_v3": {
+        "targets": 124,
+        "MATCH_VERIFIED": 3,
+        "MATCH_HOLD_AMBIGUOUS": 121
+      },
+      "v4r3_status": "588 missing; 121 identity-ambiguous on hold",
+      "evidence_source": "busan-en-patch-MAIN-IMPORT-v3.jsonl, busan-content-baseline-v4r1.json"
+    },
+    {
+      "field": "description_en",
+      "initial_gap": "final_exact_count_not_available",
+      "final_population": 1529,
+      "final_available": 814,
+      "final_unresolved": 715,
+      "v4r3_status": "715 missing; EN description not in scope of V1-V4R3 pipeline (KTO EN coverage gap)",
+      "evidence_source": "busan-content-baseline-v4r1.json"
+    },
+    {
+      "field": "coordinates",
+      "initial_gap": 2,
+      "initial_gap_note": "2 places with coord issues (busan-F-00341, busan-K-00674)",
+      "resolved": 0,
+      "final_unresolved": 2,
+      "v4r3_status": "FINAL_HOLD_COORD_SOURCE_EXHAUSTED (AI route not usable)",
+      "evidence_source": "busan-coord-fix-final-v3.jsonl"
+    },
+    {
+      "field": "events",
+      "initial_target": 51,
+      "stale_25": 25,
+      "date_missing_26": 26,
+      "resolved": 0,
+      "final_unresolved": 51,
+      "v4r3_status": "Stale=25 (require 2026 annual refresh); Date-missing=26 (source records lack dates)",
+      "evidence_source": "busan-event-source-audit-v3.json, busan-event-arithmetic-final-v3.json"
+    },
+    {
+      "field": "subcategory",
+      "initial_gap": "final_exact_count_not_available",
+      "note": "subcategory field not enumerated as explicit gap target in V1-V4R3 pipeline",
+      "evidence_source": "final_exact_count_not_available"
+    },
+    {
+      "field": "district",
+      "initial_gap": "final_exact_count_not_available",
+      "note": "district not available in manifest artifact; extractable from address string",
+      "evidence_source": "final_exact_count_not_available"
+    }
+  ],
+  "gyeongju": [
+    {
+      "field": "baseline_places",
+      "canonical_total": 302,
+      "note": "302 canonical places: A_BASELINE_235 + B_KTO74_NEW_63 + C_HOLD_IMAGE_2 + A_V4_NEW_2",
+      "evidence_source": "gyeongju-canonical-places-v1.jsonl"
+    },
+    {
+      "field": "coordinates_116_gap",
+      "initial_gap": 116,
+      "resolved_COORD_VERIFIED": 28,
+      "final_unresolved_FINAL_HOLD": 88,
+      "coord_coverage_after": "214/302 (186 original + 28 verified)",
+      "source_cascade": "5-step: KTO type12/14/28 area list, all-type area list, searchKeyword2",
+      "evidence_source": "gyeongju-coord-116-final-v3.jsonl, gyeongju-coord-116-source-audit-v3.json"
+    },
+    {
+      "field": "food_proposals_190",
+      "initial_target": 190,
+      "READY": 28,
+      "FINAL_HOLD_COORDINATE": 162,
+      "food28_enrichment": {
+        "V4R1": "phone + closed_day added",
+        "V4R2R1": "description_ko + opening_hours + closed_day + phone + official_url + menu_info added"
+      },
+      "NEW_PLACE_PROPOSAL_terminal": 0,
+      "evidence_source": "gyeongju-food-190-final-v3.jsonl, gyeongju-content-actual-patch-v4r2r1.jsonl"
+    },
+    {
+      "field": "description_ko",
+      "initial_gap": 200,
+      "initial_gap_note": "All 200 are attraction category; GJ01 API has no description field",
+      "resolved": 0,
+      "final_unresolved": 200,
+      "v4r3_status": "HOLD_SOURCE_ACCESS (gyeongju.go.kr/tour attraction listings JS-rendered; GJ01 API ↔ con_uid crosswalk not buildable via HTTP)",
+      "evidence_source": "gyeongju-content-holds-v4r3.jsonl"
+    },
+    {
+      "field": "image",
+      "initial_gap": 133,
+      "initial_gap_note": "133/302 without image (GJ03/GJ04/GJ05 KTO image sources not attempted in V1-V4R3)",
+      "resolved": 0,
+      "final_unresolved": 133,
+      "v4r3_status": "SOURCE_EXHAUSTED_NOT_ATTEMPTED (KTO image crosswalk not in scope of V1-V4R3)",
+      "evidence_source": "gyeongju-canonical-places-v1.jsonl"
+    },
+    {
+      "field": "factual_patch_p1",
+      "scope": "phone, hours, url, admission for quality-tier places",
+      "resolved_FACT_PATCHED": "final_exact_count_not_available",
+      "note": "gyeongju-p1-factual-patch-v3.jsonl contains these patches; exact count not summarized here",
+      "evidence_source": "gyeongju-p1-factual-patch-v3.jsonl"
+    },
+    {
+      "field": "events_DATE_INCOMPLETE_venue_relation",
+      "event_total_collected": 87,
+      "DISCARD_garbage": 3,
+      "venue_matched": 22,
+      "venue_unresolved": 62,
+      "v4r3_status": "COURSE_STOP_MANUAL_REVIEW_FINAL=14; remaining event-venue relations require manual review",
+      "evidence_source": "gyeongju-relation-final-v3.jsonl, gyeongju-official-events-final-v1.jsonl"
+    },
+    {
+      "field": "experiences_applications",
+      "collected": {
+        "experiences": 23,
+        "applications": 6,
+        "travel_info": 54,
+        "courses": 57
+      },
+      "note": "Official experience/application/info content collected and archived in gyeongju-official-travel-content/. Integration into canonical requires canonical data contract review.",
+      "evidence_source": "gyeongju-official-travel-content/ (all v2 files)"
+    },
+    {
+      "field": "official_en",
+      "initial_gap": "final_exact_count_not_available",
+      "note": "EN content not primary focus of V1-V4R3. official_en_title/description available for subset via KTO B_KTO74 set.",
+      "evidence_source": "gyeongju-canonical-places-v1.jsonl (en_status field)"
+    }
+  ]
+}
