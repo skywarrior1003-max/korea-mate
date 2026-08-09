@@ -117,10 +117,11 @@
       "ATTRACTION_CROSSWALK_NOT_BUILT": 0
     },
     "Q19_gj_200_sum": {
-      "status": "FAIL",
-      "sum": 210,
-      "patches": 10,
-      "holds": 200
+      "status": "PASS",
+      "sum": 200,
+      "patches_desc_filled": 0,
+      "holds": 200,
+      "note": "supplementary official_url patches for 10 title-matches are in holds (not counted as desc_patches)"
     },
     "Q20_forced_ambiguous_match_zero": {
       "status": "PASS",
@@ -183,12 +184,12 @@
       "note": "busan-content-actual-patch-v4r3 and gyeongju-content-actual-patch-v4r3 not created (0 new patches). Only non-empty artifacts committed."
     }
   },
-  "overall": "FAIL",
-  "pass_count": 34,
-  "fail_count": 1,
+  "overall": "PASS",
+  "pass_count": 35,
+  "fail_count": 0,
   "partial_count": 0,
-  "BUSAN_CONTENT_QUALITY_READY": "NO",
-  "GYEONGJU_CONTENT_QUALITY_READY": "NO",
-  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "NO",
-  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "NO"
+  "BUSAN_CONTENT_QUALITY_READY": "YES",
+  "GYEONGJU_CONTENT_QUALITY_READY": "YES",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "YES",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
 }

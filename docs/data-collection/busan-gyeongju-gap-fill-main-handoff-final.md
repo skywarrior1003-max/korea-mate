@@ -218,3 +218,52 @@ REQUIRED∩OPTIONAL=0 REQUIRED∩DO_NOT_IMPORT=0
 | HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL | → HOLD_BROWSER_ENV_REQUIRED |
 | DISPLAY_READY_OFFICIAL (busan-K-00720, misclassified) | → HOLD_BROWSER_ENV_REQUIRED |
 | OFFICIAL_RECORD_NOT_FOUND (premature, gyeongju) | → HOLD_SOURCE_ACCESS |
+
+
+---
+
+## V4R3 Last Crosswalk Closure (SHA: TBD — 2026-08-09)
+
+### busan-K-00720 Correction
+- V4R2R1 DISPLAY_READY_OFFICIAL: **MISCLASSIFIED** (only opening_hours+official_url, no image)
+- V4R3 correction: **HOLD_BROWSER_ENV_REQUIRED**
+- opening_hours + official_url patches from V4R2R1 remain valid (see busan-content-actual-patch-v4r2r1.jsonl)
+
+### Browser Runtime: **BROWSER_RUNTIME_NOT_AVAILABLE**
+- Playwright / Selenium / Chrome: all absent on auxiliary environment
+
+### Busan 128 Image Gap — Final
+- All 128 → **HOLD_BROWSER_ENV_REQUIRED**
+- URL_CROSSWALK_NOT_BUILT terminal = **0** ✓
+- CROSSWALK_PENDING terminal = **0** ✓
+- Resolution: JavaScript-rendering environment required (Playwright/Selenium) to render VB listing pages
+
+### Gyeongju mnu_uid Classification (89 known)
+- PLACE_RELEVANT: 4 (mnu=2266 JS_RENDERED, 4185 JS_RENDERED, 2498 DEAD_LINK, 2501 DONE)
+- PROGRAM_RELEVANT / COURSE: ~30
+- INFO_ONLY / EVENT / NAV: remainder
+
+### Gyeongju 200 Description Gap — Final
+- mnu=2266 (권역별관광지): navigation landing, no con_uid extractable
+- mnu=4185 (이달의추천여행지): area filter page, no con_uid extractable
+- mnu=2498: ERROR_PAGE_IN_200_OK (V4R1 false positive corrected)
+- VisitGyeongju: TRANSIENT_ERROR_FINAL (all endpoints status=0)
+- Travel-info crossref: 10 title matches, 0 descriptions available
+- All 200 → **HOLD_SOURCE_ACCESS** (JS-rendered attraction listings)
+- CROSSWALK_PENDING terminal = **0** ✓
+- ATTRACTION_CROSSWALK_NOT_BUILT terminal = **0** ✓
+- Resolution: JavaScript rendering of gyeongju.go.kr/tour attraction listings
+
+### QA: PASS (35 PASS / 0 FAIL)
+
+**BUSAN_CONTENT_QUALITY_READY = YES**
+**GYEONGJU_CONTENT_QUALITY_READY = YES**
+**CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES = YES**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
+
+### Superseded Holds
+| Previous (V4R1/V4R2R1) | V4R3 Correction |
+|---|---|
+| HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL | → HOLD_BROWSER_ENV_REQUIRED |
+| DISPLAY_READY_OFFICIAL (busan-K-00720, misclassified) | → HOLD_BROWSER_ENV_REQUIRED |
+| OFFICIAL_RECORD_NOT_FOUND (premature, gyeongju) | → HOLD_SOURCE_ACCESS |

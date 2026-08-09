@@ -57,6 +57,8 @@ REPO       = pathlib.Path(__file__).parent.parent
 RUN_DATE   = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 PARSER_VER = "v4r3.0"
 START_SHA  = "9a10864"
+# V4R3 first attempt SHA (QA_FAIL was due to Q19 coding bug, not data error)
+V4R3_ATTEMPT1_SHA = "27ba514"
 AS_OF      = RUN_DATE
 NETWORK    = os.environ.get("NETWORK","1") != "0"
 
@@ -113,7 +115,8 @@ def ph00_safety():
     protected = r3.stdout.strip()
     print(f"  branch={branch}  sha={sha[:12]}  protected='{protected}'")
     assert branch == "data/busan-gyeongju-gap-fill-v1", f"WRONG BRANCH: {branch}"
-    assert sha.startswith(START_SHA), f"SHA mismatch: {sha}"
+    allowed = [START_SHA, V4R3_ATTEMPT1_SHA]
+    assert any(sha.startswith(s) for s in allowed), f"SHA mismatch: {sha} (expected one of {allowed})"
     assert not protected, f"Protected code changed: {protected}"
     print("  PASS: branch/SHA/protected OK")
     return sha
@@ -428,7 +431,10 @@ def ph07_gj_travelinfo_crossref(desc_missing):
     desc_missing_by_title = {r["title_ko"]: r for r in desc_missing}
 
     # Load all travel-content files for crossref
-    patches = []
+    # desc_patches: only records that fill description_ko (goes to actual-patch file, counts toward 200 sum)
+    # supplementary_patches: official_url/phone/hours only (stays in holds, noted as partial field find)
+    desc_patches = []
+    supplementary_patches = []
     crossref_results = []
 
     info_file = GJ_OTC/"gyeongju-official-travel-info-v2.jsonl"
@@ -457,7 +463,9 @@ def ph07_gj_travelinfo_crossref(desc_missing):
                 "fields_available": fields_available,
                 "description_len": len(desc),
             })
-            if fields_available:
+
+            if "description_ko" in fields_available:
+                # Description filled → goes to actual-patch, not holds
                 patch = {
                     "candidate_id": canon["candidate_id"], "title_ko": t,
                     "source": "gyeongju-official-travel-info-v2",
@@ -468,26 +476,31 @@ def ph07_gj_travelinfo_crossref(desc_missing):
                     "identity_evidence": ["EXACT_TITLE_MATCH"],
                     "replaces_previous_hold": True,
                     "previous_reason": "OFFICIAL_RECORD_NOT_FOUND (PREMATURE)",
-                    "final_reason": "DESCRIPTION_FILLED_FROM_REPO" if "description_ko" in fields_available else "PARTIAL_FILL_FROM_REPO",
+                    "final_reason": "DESCRIPTION_FILLED_FROM_REPO",
                 }
                 if desc: patch["description_ko_new"] = desc[:500]
                 if phone: patch["phone_new"] = phone
                 if hours: patch["opening_hours_new"] = hours
                 if official_url: patch["official_url_new"] = official_url
                 if image: patch["primary_image_new"] = image
-                patches.append(patch)
+                desc_patches.append(patch)
+            elif fields_available:
+                # Partial fill (official_url/phone only) → stays in holds, noted
+                supplementary_patches.append({
+                    "candidate_id": canon["candidate_id"], "title_ko": t,
+                    "fields_available": fields_available,
+                    "official_url_from_crossref": official_url,
+                    "phone_from_crossref": phone,
+                })
 
     title_matches = len(crossref_results)
-    desc_patches = len([p for p in patches if p.get("description_ko_new")])
-
     print(f"  Travel-info title matches: {title_matches}")
-    print(f"  Crossref patches (any field): {len(patches)}")
-    print(f"  Description patches: {desc_patches}")
-    if crossref_results:
-        for cr in crossref_results:
-            print(f"    {cr['candidate_id']}: fields_available={cr['fields_available']} desc_len={cr['description_len']}")
+    print(f"  Description patches: {len(desc_patches)}")
+    print(f"  Supplementary patches (official_url/phone, stays in holds): {len(supplementary_patches)}")
+    for cr in crossref_results:
+        print(f"    {cr['candidate_id']}: fields_available={cr['fields_available']} desc_len={cr['description_len']}")
 
-    return patches, crossref_results
+    return desc_patches, supplementary_patches, crossref_results
 
 # ─────────────────────────────────────────────────────────────────
 # PH08: BUILD BUSAN HOLDS (128 → HOLD_BROWSER_ENV_REQUIRED)
@@ -551,11 +564,13 @@ def ph08_busan_holds(p0_items, k00720_result):
 # ─────────────────────────────────────────────────────────────────
 # PH09: BUILD GYEONGJU HOLDS (200 → HOLD_SOURCE_ACCESS)
 # ─────────────────────────────────────────────────────────────────
-def ph09_gj_holds(desc_missing, travelinfo_patches, listing_results):
+def ph09_gj_holds(desc_missing, travelinfo_patches, supplementary_patches, listing_results):
     print("\n=== PH09: Build Gyeongju Holds ===")
 
-    ti_patch_ids = {p["candidate_id"] for p in travelinfo_patches if p.get("description_ko_new")}
-    # If any of the travelinfo patches have actual description → patch (but from probe we know 0)
+    # travelinfo_patches = only description patches (§ DESCRIPTION_FILLED_FROM_REPO)
+    ti_patch_ids = {p["candidate_id"] for p in travelinfo_patches}
+    # supplementary_patches = official_url/phone only → goes into holds with note
+    supp_by_id = {p["candidate_id"]: p for p in supplementary_patches}
     any_accessible_listings = any(
         v.get("con_uid_count",0) > 0 for v in listing_results.values()
         if v.get("classification","")=="HTTP_HTML_ACCESSIBLE"
@@ -568,6 +583,9 @@ def ph09_gj_holds(desc_missing, travelinfo_patches, listing_results):
             continue  # Will be in patches, not holds
 
         prev_reason = "OFFICIAL_RECORD_NOT_FOUND (PREMATURE)"  # from V4R2R1
+
+        # Check if supplementary partial data found via travel-info crossref
+        supp = supp_by_id.get(cid)
 
         hold = {
             "candidate_id": cid,
@@ -600,6 +618,13 @@ def ph09_gj_holds(desc_missing, travelinfo_patches, listing_results):
             "resolution_path": "JavaScript rendering of gyeongju.go.kr/tour attraction listing OR manual con_uid table",
             "as_of": AS_OF,
         }
+        if supp:
+            hold["travel_info_partial_crossref"] = {
+                "fields_found": supp.get("fields_available",[]),
+                "official_url_from_crossref": supp.get("official_url_from_crossref",""),
+                "phone_from_crossref": supp.get("phone_from_crossref",""),
+                "note": "Title-matched in gyeongju-official-travel-info-v2; description not available in that file",
+            }
         holds.append(hold)
 
     patched_count = len(ti_patch_ids)
@@ -684,9 +709,11 @@ def ph10_qa(k00720_result, coverage, browser_result, mnu_class,
     chk("Q18_attraction_crosswalk_not_built_zero",
         "PASS" if disp_gj.get("ATTRACTION_CROSSWALK_NOT_BUILT",0)==0 else "FAIL",
         ATTRACTION_CROSSWALK_NOT_BUILT=disp_gj.get("ATTRACTION_CROSSWALK_NOT_BUILT",0))
+    # gj_patches = description-filling patches only; supplementary (url/phone) stay in holds
     desc_sum = sum(disp_gj.values()) + len(gj_patches)
     chk("Q19_gj_200_sum", "PASS" if desc_sum==200 else "FAIL",
-        sum=desc_sum, patches=len(gj_patches), holds=sum(disp_gj.values()))
+        sum=desc_sum, patches_desc_filled=len(gj_patches), holds=sum(disp_gj.values()),
+        note="supplementary official_url patches for 10 title-matches are in holds (not counted as desc_patches)")
     chk("Q20_forced_ambiguous_match_zero", "PASS",
         note="No forced ambiguous matches. All 200 → terminal HOLD_SOURCE_ACCESS.")
     chk("Q21_food28_coord_rework_zero", "PASS",
@@ -859,6 +886,7 @@ def ph11_handoff_commit(qa, coverage, browser_result, mnu_class, listing_results
             "travelinfo_title_matches": len(travelinfo_crossref),
             "travelinfo_desc_available": 0,
             "DESCRIPTION_FILLED_OFFICIAL": len(gj_patches),
+            "HOLD_SOURCE_ACCESS_WITH_PARTIAL_CROSSREF": sum(1 for h in gj_holds if h.get("travel_info_partial_crossref")),
             "HOLD_SOURCE_ACCESS": len(gj_holds),
             "OFFICIAL_RECORD_NOT_FOUND": 0,
             "HOLD_IDENTITY_AMBIGUOUS": 0,
@@ -1058,17 +1086,17 @@ def main():
     mnu_class, _ = ph04_gj_mnu_classify()
     listing_results = ph05_gj_listing_verify()
     vg_result = ph06_visitgyeongju_retry()
-    gj_patches, ti_crossref = ph07_gj_travelinfo_crossref(desc_missing)
+    gj_desc_patches, gj_supp_patches, ti_crossref = ph07_gj_travelinfo_crossref(desc_missing)
 
     bs_holds = ph08_busan_holds(p0_items, k00720)
-    gj_holds = ph09_gj_holds(desc_missing, gj_patches, listing_results)
+    gj_holds = ph09_gj_holds(desc_missing, gj_desc_patches, gj_supp_patches, listing_results)
 
     qa = ph10_qa(k00720, coverage, browser, mnu_class,
-                  listing_results, gj_patches, gj_holds, bs_holds, ti_crossref)
+                  listing_results, gj_desc_patches, gj_holds, bs_holds, ti_crossref)
 
     final_sha = ph11_handoff_commit(
         qa, coverage, browser, mnu_class, listing_results,
-        bs_holds, gj_holds, gj_patches, ti_crossref, k00720)
+        bs_holds, gj_holds, gj_desc_patches, ti_crossref, k00720)
 
     print("\n" + "="*70)
     print(f"COMPLETE  QA={qa['overall']}  FINAL_SHA={final_sha[:12] if final_sha else 'PENDING'}")
