@@ -30,9 +30,19 @@
 
 ## 구현 상태 (2026-08-09)
 
-- Explore 카드 · 장소 모달 · Place Detail 의 Save 를 **북마크 기호**로 통일했다. 이전에는 하트 + `Like this spot` 라벨이 붙어 있어 사회적 반응처럼 읽혔다
-- Place Detail 의 공개 장소 Like 노출을 제거했다. **`place_likes` 백엔드와 `PlaceLikeButton` 컴포넌트는 보존한다** — 노출만 정리한 것이지 기능을 지운 것이 아니다
-- Helpful · Recommend 는 이번에 새로 만들지 않았다
+**Save 를 쓰는 화면 전체가 북마크로 통일됐다.** Explore 카드 · 장소 모달 · Place Detail · Home 카드 · Saved 패널 · Picks > Saved. 이전에는 하트 + `Like this spot` 라벨이 붙어 있어 사회적 반응처럼 읽혔다.
+
+관련 문구도 함께 맞췄다 — Home 과 `/all-spots` 의 `Liked Spots` 필터와 `tap ❤️ on any card` 안내는 카드에 하트가 없어진 뒤로 사실이 아니게 됐다.
+
+**This Trip 으로 가는 경로는 `Picks > Saved` 하나뿐이다.** `SavedSpotsPanel` 의 직접 `addToCart` 우회 경로를 제거하고 `Manage in Picks` 링크만 남겼다. 컴포넌트 자체는 보존한다.
+
+**Place Detail 의 공개 장소 Like 노출을 제거했다.** `place_likes` 백엔드와 `PlaceLikeButton` 컴포넌트는 보존한다 — 노출만 정리한 것이지 기능을 지운 것이 아니다.
+
+Helpful · Recommend 는 새로 만들지 않았다.
+
+### 남은 하트
+
+현재 저장소에 Save 의미의 하트는 **0** 이다. 앞으로 하트를 쓸 자리는 Story · Memory 의 Like 뿐이다.
 
 ## 참조
 

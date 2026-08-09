@@ -402,7 +402,7 @@ const EVENT_FILTERS = [
   { key: "michelin", label: "🍽️ Food"                  },
   { key: "nature",   label: "🗺️ Attractions & Nature" },
   { key: "culture",  label: "🏛️ History & Culture"    },
-  { key: "saved",    label: "❤️ Liked Spots"          },
+  { key: "saved",    label: "🔖 Saved Spots"           },
 ];
 
 // ═══════════════════════════════════════════════
@@ -1559,10 +1559,10 @@ export default function HomeClient() {
               </div>
             ) : filteredResults.length === 0 ? (
               <div className="text-center py-20">
-                <p className="text-4xl mb-3">{eventFilter === "saved" ? "🤍" : "🔍"}</p>
+                <p className="text-4xl mb-3">{eventFilter === "saved" ? "🔖" : "🔍"}</p>
                 <p className="text-gray-500 font-semibold text-lg">
                   {eventFilter === "saved"
-                    ? "No liked spots yet — tap ❤️ on any card to like it."
+                    ? "No saved spots yet — tap the bookmark on any card to save it."
                     : globalSearch
                     ? `No results for "${globalSearch}"`
                     : "No spots found for this filter."}

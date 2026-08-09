@@ -480,9 +480,14 @@ function PicksContent() {
                           <button
                             onClick={() => removeFavorite(e.id)}
                             aria-label={`${t("remove")}: ${e.name}`}
-                            className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-base"
+                            className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-emerald-600"
                           >
-                            ❤️
+                            {/* 저장된 상태 = 채워진 북마크. 하트는 Like 전용이다. */}
+                            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden
+                                 fill="currentColor" stroke="currentColor" strokeWidth="2.2"
+                                 strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+                            </svg>
                           </button>
                         )}
                       </div>

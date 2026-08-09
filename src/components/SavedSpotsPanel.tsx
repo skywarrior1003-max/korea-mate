@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
-import { addToCart, isInCart, CART_EVENT } from "@/lib/cart";
 import { getItemSourceKey } from "@/lib/place-identity";
 import type { EventItem } from "@/lib/cart";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -14,7 +14,8 @@ export default function SavedSpotsPanel() {
   const [expanded, setExpanded] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState<EventItem | null>(null);
 
-  // FAVORITES_EVENT 또는 CART_EVENT 시 전체 재렌더 — isInCart 상태도 갱신됨
+  // 이 패널은 저장 목록만 본다. cart 를 구독할 이유가 없어졌다 —
+  // This Trip 편입은 Picks 에서만 일어난다.
   const refresh = useCallback(() => {
     setSpots([...getSavedSpotsData()]);
   }, []);
@@ -22,11 +23,7 @@ export default function SavedSpotsPanel() {
   useEffect(() => {
     refresh();
     window.addEventListener(FAVORITES_EVENT, refresh);
-    window.addEventListener(CART_EVENT, refresh);
-    return () => {
-      window.removeEventListener(FAVORITES_EVENT, refresh);
-      window.removeEventListener(CART_EVENT, refresh);
-    };
+    return () => window.removeEventListener(FAVORITES_EVENT, refresh);
   }, [refresh]);
 
   // 저장된 Spot이 없으면 패널 숨김
@@ -46,14 +43,17 @@ export default function SavedSpotsPanel() {
         // ── 접힌 상태: 작은 pill 버튼 ──────────────────────────────
         <button
           onClick={() => setExpanded(true)}
-          aria-label="Show liked spots"
+          aria-label="Show saved spots"
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all"
         >
-          <span className="text-base leading-none">❤️</span>
-          <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-red-500 text-white px-1 leading-none">
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden className="text-emerald-600"
+               fill="currentColor" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+          </svg>
+          <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-emerald-500 text-white px-1 leading-none">
             {spots.length}
           </span>
-          <span className="text-xs font-semibold text-gray-600">Liked</span>
+          <span className="text-xs font-semibold text-gray-600">Saved</span>
           <span className="text-gray-400 text-xs leading-none">▲</span>
         </button>
       ) : (
@@ -61,16 +61,21 @@ export default function SavedSpotsPanel() {
         <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-72 max-h-[380px] flex flex-col overflow-hidden">
           {/* 헤더 */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
+            {/* 이 목록은 favorites 다. 하트가 아니라 북마크로 표기한다 —
+                하트는 Story·Memory 의 Like 로 남긴다. */}
             <div className="flex items-center gap-2">
-              <span className="text-sm leading-none">❤️</span>
-              <span className="text-sm font-black text-gray-900">Liked Spots</span>
-              <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-red-500 text-white px-1 leading-none">
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden className="text-emerald-600"
+                   fill="currentColor" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+              </svg>
+              <span className="text-sm font-black text-gray-900">Saved</span>
+              <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-emerald-500 text-white px-1 leading-none">
                 {spots.length}
               </span>
             </div>
             <button
               onClick={() => setExpanded(false)}
-              aria-label="Collapse liked spots panel"
+              aria-label="Collapse saved spots panel"
               className="text-gray-400 hover:text-gray-700 font-bold px-1 py-0.5 transition-colors text-sm"
             >
               ▼
@@ -80,7 +85,6 @@ export default function SavedSpotsPanel() {
           {/* 스팟 목록 */}
           <ul className="overflow-y-auto flex-1 divide-y divide-gray-50">
             {spots.map(item => {
-              const inCart = isInCart(getItemSourceKey(item));
               return (
                 <li
                   key={getItemSourceKey(item)}
@@ -108,24 +112,15 @@ export default function SavedSpotsPanel() {
                     <p className="text-[10px] text-gray-400 truncate">{item.district || item.city}</p>
                   </div>
 
-                  {/* 일정에 추가 버튼 */}
-                  <button
-                    onClick={(e) => { e.stopPropagation(); addToCart(item); }}
-                    disabled={inCart}
-                    title={inCart ? "Already in itinerary" : "Add to itinerary"}
-                    className={`shrink-0 w-7 h-7 rounded-full text-xs font-black flex items-center justify-center transition-all ${
-                      inCart
-                        ? "bg-emerald-100 text-emerald-600 cursor-default"
-                        : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer active:scale-95"
-                    }`}
-                  >
-                    {inCart ? "✓" : "+"}
-                  </button>
+                  {/* 여기서 This Trip 으로 바로 보내지 않는다. 이번 여행에 넣는
+                      공식 경로는 Picks > Saved 하나뿐이다 — 우회 경로를 두면 같은
+                      동작이 두 곳에 생겨 어느 쪽이 진짜인지 흐려진다.
+                      이 패널은 저장한 것을 훑고 상세로 들어가는 역할만 한다. */}
 
-                  {/* 좋아요 취소(제거) 버튼 */}
+                  {/* 저장 해제 */}
                   <button
                     onClick={(e) => { e.stopPropagation(); removeFavorite(item.id); }}
-                    title="Remove from Liked"
+                    title="Remove from Saved"
                     className="shrink-0 w-7 h-7 rounded-full text-xs flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
                   >
                     ✕
@@ -135,11 +130,14 @@ export default function SavedSpotsPanel() {
             })}
           </ul>
 
-          {/* 하단 힌트 */}
+          {/* 이번 여행에 넣는 일은 Picks 에서 한다. 여기서는 그리로 보내기만 한다. */}
           <div className="px-4 py-2 border-t border-gray-50 shrink-0">
-            <p className="text-[10px] text-gray-400 text-center">
-              Tap spot for details · <span className="text-orange-500 font-semibold">+</span> to add to itinerary
-            </p>
+            <Link
+              href="/picks/?tab=saved"
+              className="block text-[11px] font-bold text-gray-600 hover:text-gray-900 text-center py-1 transition-colors"
+            >
+              Manage in Picks →
+            </Link>
           </div>
         </div>
       )}

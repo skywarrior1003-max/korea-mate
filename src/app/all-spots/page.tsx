@@ -54,7 +54,7 @@ const CATEGORY_FILTERS = [
   { key: "michelin", label: "Food",                  emoji: "🍽️" },
   { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
   { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
-  { key: "saved",    label: "Liked Spots",            emoji: "❤️" },
+  { key: "saved",    label: "Saved Spots",            emoji: "🔖" },
 ];
 
 // ── 지역 필터 ─────────────────────────────────────────────────────────────────
@@ -401,7 +401,7 @@ export default function AllSpotsPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
             <p className="text-4xl mb-4">
-              {categoryFilter === "saved" ? "🤍" : gpsActive ? "📍" : "🔍"}
+              {categoryFilter === "saved" ? "🔖" : gpsActive ? "📍" : "🔍"}
             </p>
             <p className="text-xl font-black text-gray-700 mb-2">
               {categoryFilter === "saved"
@@ -412,7 +412,7 @@ export default function AllSpotsPage() {
             </p>
             <p className="text-gray-500 mb-6 text-sm">
               {categoryFilter === "saved"
-                ? "Tap ❤️ on any card to like spots."
+                ? "Tap the bookmark on any card to save spots."
                 : gpsActive
                 ? "Turn off GPS or change the area filter."
                 : "Try a different search or filter."}

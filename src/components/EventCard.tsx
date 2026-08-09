@@ -123,9 +123,11 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
           </span>
         )}
 
-        {/* 하트 + Dislike 버튼 그룹 */}
+        {/* Save + Dislike 버튼 그룹 */}
         <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
-          {/* 찜하기 하트 */}
+          {/* 저장 — 이 동작은 favorites 에 넣는 **개인 보관**이다. 하트를 쓰면
+              다른 사용자의 Story·Memory 에 대한 Like 와 같은 기호가 되어 둘 다
+              읽히지 않는다. Explore·모달·Place Detail 과 같은 북마크로 맞춘다. */}
           <span
             role="button"
             tabIndex={0}
@@ -145,12 +147,17 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
                 else uncacheSavedSpot(event.id, sourceKey);
               }
             }}
-            aria-label={favorited ? "Remove from liked" : "Like this spot"}
-            className={`w-8 h-8 flex items-center justify-center rounded-full text-base shadow-md cursor-pointer transition-all select-none ${
-              favorited ? "bg-red-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-400 hover:text-red-400"
+            aria-pressed={favorited}
+            aria-label={favorited ? tPicks("unsaveAria", { name: event.name }) : tPicks("saveAria", { name: event.name })}
+            className={`w-8 h-8 flex items-center justify-center rounded-full shadow-md cursor-pointer transition-all select-none ${
+              favorited ? "bg-emerald-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-500"
             }`}
           >
-            {favorited ? "❤️" : "🤍"}
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden
+                 fill={favorited ? "currentColor" : "none"}
+                 stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
+            </svg>
           </span>
           {/* 정보 오류 신고 (Dislike) */}
           <span
