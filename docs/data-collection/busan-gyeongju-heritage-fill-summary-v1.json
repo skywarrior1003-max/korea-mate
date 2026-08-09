@@ -1,0 +1,22 @@
+{
+  "task": "GYEONGJU-HERITAGE-CONTENT-FILL-V1",
+  "source": "gyeongju.go.kr/tour (권역별 관광지 detail pages)",
+  "as_of": "2026-08-09",
+  "input_total": 200,
+  "user_excluded": [
+    81,
+    190
+  ],
+  "active_review_target": 198,
+  "gj01_with_area_uid": 132,
+  "kto_with_area_uid": 7,
+  "match_verified": 139,
+  "description_filled": 139,
+  "image_filled": 139,
+  "other_facts_filled": 139,
+  "official_detail_not_found": 59,
+  "hold_identity_ambiguous": 0,
+  "source_access_failure": 0,
+  "remaining_unresolved": 59,
+  "user_excluded_count": 2
+}

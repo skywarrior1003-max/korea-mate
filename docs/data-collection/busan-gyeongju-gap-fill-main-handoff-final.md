@@ -267,3 +267,68 @@ REQUIRED∩OPTIONAL=0 REQUIRED∩DO_NOT_IMPORT=0
 | HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL | → HOLD_BROWSER_ENV_REQUIRED |
 | DISPLAY_READY_OFFICIAL (busan-K-00720, misclassified) | → HOLD_BROWSER_ENV_REQUIRED |
 | OFFICIAL_RECORD_NOT_FOUND (premature, gyeongju) | → HOLD_SOURCE_ACCESS |
+
+
+---
+
+## TASK-BUSAN-REMOVE-14-AND-GYEONGJU-HERITAGE-CONTENT-FILL-V1 (SHA: TBD — 2026-08-09)
+
+### Part A — 부산 14건 서비스 제거
+
+| 항목 | 값 |
+|---|---|
+| 제외 대상 | attraction/nature 14건 (busan-image-gap-128-v4r3.jsonl 기준) |
+| 최종 상태 | EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE |
+| 산출물 | data/busan-gap-fill/busan-user-excluded-14-v1.jsonl (14 rows) |
+| MAIN_IMPORT_REQUIRED | false (전건) |
+| AI_ITINERARY_CANDIDATE | false (전건) |
+| EXPLORE_VISIBLE | false (전건) |
+| IMAGE_FILL_PROHIBITED | true (전건) |
+| DESCRIPTION_FILL_PROHIBITED | true (전건) |
+
+제외 14건: no=38(25의용단), 39(사상문화원), 40(함지골청소년수련관), 41(영도관광실탄사격장), 82(임랑카라반파크), 83(명지시장), 97(UN조각공원), 98(플루니티), 100(고래서이뻐), 112~116(주식회사감천아울·아래모래·어반힐링·뷰티홀릭·피알아이피)
+
+### Part B — 경주 200건 description 보강 (gyeongju.go.kr 공식 관광 상세 페이지)
+
+| 항목 | 값 |
+|---|---|
+| 입력 | gyeongju-description-gap-200-v4r3.jsonl (200건) |
+| 소스 | gyeongju.go.kr/tour 권역별 관광지 detail pages |
+| URL 패턴 | mnu_uid={region}&area_uid={place}&cmd=2 |
+| 권역 | 보문관광단지(2291)·시내(2292)·불국사(2293)·동해(2294)·남산(2295)·서악북부(2296) |
+
+**결과 요약**
+
+| 상태 | 건수 |
+|---|---|
+| USER_EXCLUDED (no=81 경주생활체육공원, no=190 경주축구공원) | 2 |
+| ACTIVE_REVIEW_TARGET | 198 |
+| MATCH_VERIFIED (gyeongju.go.kr 상세 페이지 확인) | 139 |
+| OFFICIAL_DETAIL_NOT_FOUND (KTO-only, 권역 목록 미등재) | 59 |
+| HOLD_IDENTITY_AMBIGUOUS 미해결 | 0 |
+
+두 건 AMBIGUOUS 처리:
+- no=134 "경주 김유신묘" = gyeongju.go.kr "김유신장군묘" (area_uid=144, 충효동 산 7-1) → MATCH_VERIFIED
+- no=140 "경주 나정" = gyeongju.go.kr "나정" (area_uid=98, 탑동 700-1) → MATCH_VERIFIED (KTO '경주' prefix convention)
+
+no=77(코라드 청정누리공원), no=80(경주 엑스포대공원): PUBLIC_DATA_PRIORITY=YES — gyeongju.go.kr에서 description 수집 완료(MATCH_VERIFIED). Main import 시 공공데이터 우선 적용.
+
+**산출물**
+- `data/gyeongju-gap-fill/gyeongju-heritage-crosswalk-200-v1.jsonl` — 198 rows (2 USER_EXCLUDED 제외)
+- `data/gyeongju-gap-fill/gyeongju-heritage-content-patch-v1.jsonl` — 139 rows
+- `data/gyeongju-gap-fill/gyeongju-heritage-content-holds-v1.jsonl` — 61 rows (2 USER_EXCLUDED + 59 OFFICIAL_DETAIL_NOT_FOUND)
+- `docs/data-collection/busan-gyeongju-heritage-fill-summary-v1.json`
+
+### QA: PASS
+
+| 검증 항목 | 결과 |
+|---|---|
+| 부산 제외 attraction/nature = 14건 | ✓ |
+| 부산 제외 전건 MAIN_IMPORT_REQUIRED=false | ✓ |
+| 경주 입력 200건 전건 판정 완료 | ✓ (139+59+2=200) |
+| HOLD_IDENTITY_AMBIGUOUS 미해결 = 0 | ✓ |
+| master/운영DB/src/functions 변경 = 0 | ✓ |
+
+**BUSAN_CONTENT_QUALITY_READY = YES**
+**GYEONGJU_CONTENT_QUALITY_READY = YES**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
