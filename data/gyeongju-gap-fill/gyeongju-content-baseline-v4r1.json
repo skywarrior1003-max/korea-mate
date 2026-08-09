@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-08-09",
+  "city": "gyeongju",
+  "canonical_place_count": 302,
+  "data_source_note": "gyeongju-final-ready-302-v1.jsonl has all has_X flags = True (incorrect). Actual values computed from gyeongju-canonical-places-v1.jsonl (enriched).",
+  "BEFORE": {
+    "primary_image": {
+      "have": 169,
+      "missing": 133,
+      "pct": 56.0
+    },
+    "description_ko": {
+      "have": 102,
+      "missing": 200,
+      "pct": 33.8
+    },
+    "phone": {
+      "have": 172,
+      "missing": 130,
+      "pct": 57.0
+    },
+    "official_url": {
+      "have": 102,
+      "missing": 200,
+      "pct": 33.8
+    },
+    "opening_hours": {
+      "have": 102,
+      "missing": 200,
+      "pct": 33.8
+    },
+    "coordinates": {
+      "before_v3": 186,
+      "after_v3_coord_fill": 214,
+      "final_hold_exhausted": 88
+    },
+    "official_en_title": {
+      "have": 0,
+      "missing": 302,
+      "pct": 0.0,
+      "note": "GJ EngService2 returned 64 records; after identity verification = 0 VERIFIED"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-08-09",
+  "total_food_190": 190,
+  "READY_total": 28,
+  "PAIR_VERIFIED_IN_BOUNDS": 28,
+  "PAIR_OOB": 0,
+  "LAT_ONLY": 0,
+  "COORD_MISSING": 0,
+  "verdict": "READY_COORD_VERIFIED",
+  "AI_ready_plus_coord_missing": 0,
+  "note": "All 28 READY items have KTO_COORD_FOUND provenance. V3 validation report incorrectly stated 'READY 28건에 좌표 없음'. Actual data shows coordinates are present and verified in-bounds."
+}

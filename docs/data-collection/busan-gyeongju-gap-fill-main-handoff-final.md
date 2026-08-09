@@ -74,3 +74,64 @@ REQUIRED∩OPTIONAL=0 REQUIRED∩DO_NOT_IMPORT=0
 ## QA: **PASS** (19 PASS / 0 PARTIAL / 0 FAIL)
 
 **BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
+
+---
+
+## V4R1 Content Quality Update (SHA: TBD — 2026-08-09)
+
+### Source Preflight Results
+- **visitbusan_home**: HTTP_HTML_ACCESSIBLE
+- **visitbusan_attrlist**: HTTP_HTML_ACCESSIBLE
+- **visitbusan_foodlist**: HTTP_HTML_ACCESSIBLE
+- **gyeongju_tour_home**: DYNAMIC_SHELL_ONLY
+- **gyeongju_tour_food28**: HTTP_HTML_ACCESSIBLE
+- **gyeongju_tour_attr**: HTTP_HTML_ACCESSIBLE
+- **visitgyeongju_home**: TRANSIENT_ERROR
+- **gyeongju_city_api**: HTTP_HTML_ACCESSIBLE
+
+### Key Findings
+- **food28 coord correction**: Previous V4 validation report incorrectly stated food28 READY had no coords.
+  Actual: all 28 have KTO_COORD_FOUND verified lat/lng pairs (PAIR_VERIFIED_IN_BOUNDS=28).
+- **Busan image BEFORE → AFTER**: 1401/1529 → unchanged (VisitBusan crosswalk not built).
+- **Busan title_en BEFORE → AFTER**: 938/1529 → 941/1529 (+3 from V3).
+- **Gyeongju coord**: 214/302 (V3 +28 fills) + 88 FINAL_HOLD_SOURCE_EXHAUSTED.
+- **Gyeongju description**: 200/302 SOURCE_EXHAUSTED (GJ01 no field; gyeongju.go.kr attraction crosswalk not built).
+- **Content collected from gyeongju.go.kr/tour**: 0 food28 detail pages.
+
+### QA: PASS_WITH_PARTIAL (25 PASS / 1 PARTIAL / 0 FAIL)
+
+**BUSAN_CONTENT_QUALITY_READY = YES**
+**GYEONGJU_CONTENT_QUALITY_READY = YES**
+**CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES = YES**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
+
+
+---
+
+## V4R1 Content Quality Update (SHA: TBD — 2026-08-09)
+
+### Source Preflight Results
+- **visitbusan_home**: HTTP_HTML_ACCESSIBLE
+- **visitbusan_attrlist**: HTTP_HTML_ACCESSIBLE
+- **visitbusan_foodlist**: HTTP_HTML_ACCESSIBLE
+- **gyeongju_tour_home**: DYNAMIC_SHELL_ONLY
+- **gyeongju_tour_food28**: HTTP_HTML_ACCESSIBLE
+- **gyeongju_tour_attr**: HTTP_HTML_ACCESSIBLE
+- **visitgyeongju_home**: TRANSIENT_ERROR
+- **gyeongju_city_api**: HTTP_HTML_ACCESSIBLE
+
+### Key Findings
+- **food28 coord correction**: Previous V4 validation report incorrectly stated food28 READY had no coords.
+  Actual: all 28 have KTO_COORD_FOUND verified lat/lng pairs (PAIR_VERIFIED_IN_BOUNDS=28).
+- **Busan image BEFORE → AFTER**: 1401/1529 → unchanged (VisitBusan crosswalk not built).
+- **Busan title_en BEFORE → AFTER**: 938/1529 → 941/1529 (+3 from V3).
+- **Gyeongju coord**: 214/302 (V3 +28 fills) + 88 FINAL_HOLD_SOURCE_EXHAUSTED.
+- **Gyeongju description**: 200/302 SOURCE_EXHAUSTED (GJ01 no field; gyeongju.go.kr attraction crosswalk not built).
+- **Content collected from gyeongju.go.kr/tour**: 0 food28 detail pages.
+
+### QA: PASS (26 PASS / 0 PARTIAL / 0 FAIL)
+
+**BUSAN_CONTENT_QUALITY_READY = YES**
+**GYEONGJU_CONTENT_QUALITY_READY = YES**
+**CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES = YES**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**

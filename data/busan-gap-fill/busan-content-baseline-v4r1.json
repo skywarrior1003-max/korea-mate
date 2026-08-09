@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-08-09",
+  "city": "busan",
+  "canonical_place_count": 1529,
+  "BEFORE": {
+    "primary_image": {
+      "have": 1401,
+      "missing": 128,
+      "pct": 91.6
+    },
+    "opening_hours": {
+      "have": 1217,
+      "missing": 312,
+      "pct": 79.6
+    },
+    "title_en": {
+      "have": 938,
+      "missing": 591,
+      "pct": 61.3
+    },
+    "description_en": {
+      "have": 814,
+      "missing": 715,
+      "pct": 53.2
+    },
+    "coordinates": {
+      "have": 1527,
+      "missing": 2,
+      "pct": 99.9
+    },
+    "description_ko": {
+      "note": "not tracked in manifest missing_optional_fields; source-level only"
+    },
+    "phone": {
+      "note": "not tracked in manifest missing_optional_fields; source-level only"
+    },
+    "official_url": {
+      "note": "not tracked separately"
+    },
+    "fee": {
+      "note": "not tracked separately"
+    },
+    "reservation": {
+      "note": "not tracked separately"
+    }
+  },
+  "all_missing_fields_freq": {
+    "description_en_gate": 715,
+    "name_en_gate": 591,
+    "needs_arrival_verification": 424,
+    "needs_hours": 312,
+    "image_gate": 128,
+    "coordinate_gate": 2,
+    "unresolved_flag:needs_district": 2
+  },
+  "P0_image_gap_by_category": {
+    "restaurant": 80,
+    "attraction": 13,
+    "accommodation": 34,
+    "nature": 1
+  },
+  "P1_hours_gap_by_category": {
+    "attraction": 244,
+    "restaurant": 60,
+    "nature": 5,
+    "accommodation": 3
+  },
+  "P0_total": 128,
+  "P1_hours_total": 312
+}

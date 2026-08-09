@@ -1,0 +1,140 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v4r1.0",
+  "starting_sha": "e25c108",
+  "checks": {
+    "Q01_busan_canonical_place_count": {
+      "status": "PASS",
+      "count": 1529,
+      "source": "busan-canonical-count-clarification-v3.json(e25c108)"
+    },
+    "Q02_1642_universe_redefinition_zero": {
+      "status": "PASS",
+      "note": "1642 = current enrichment universe (canonical 1533 + holds 109). No re-diagnosis."
+    },
+    "Q03_1642_bulk_promotion_zero": {
+      "status": "PASS",
+      "note": "No bulk promotion of 1642 to current canonical."
+    },
+    "Q04_source_dynamic_hold_not_assumed": {
+      "status": "PASS",
+      "visitbusan": "HTTP_HTML_ACCESSIBLE",
+      "gyeongju_tour": "HTTP_HTML_ACCESSIBLE",
+      "note": "Preflight tested actual HTTP accessibility. SOURCE_DYNAMIC_HOLD applied only where confirmed."
+    },
+    "Q05_kto_full_city_recollection_zero": {
+      "status": "PASS",
+      "note": "KTO committed files used as cache. No areaBasedList2 re-collection."
+    },
+    "Q06_kto_en_redundant_recollection_zero": {
+      "status": "PASS",
+      "note": "V3 EN verification (3 VERIFIED/121 HOLD) maintained. No EngService2 re-collection."
+    },
+    "Q07_gyeongju_food28_coord_reality_check": {
+      "status": "PASS",
+      "PAIR_VERIFIED_IN_BOUNDS": 28,
+      "AI_ready_plus_coord_missing": 0,
+      "note": "V4 validation report 'READY 28건에 좌표 없음' was incorrect. Actual data: all 28 have verified lat/lng."
+    },
+    "Q08_ai_ready_coord_missing_zero": {
+      "status": "PASS",
+      "count": 0
+    },
+    "Q09_image_gap_final_reason_documented": {
+      "status": "PASS",
+      "busan_image_gap": {
+        "missing": 128,
+        "reason": "IMAGE_NOT_FOUND_SOURCE_EXHAUSTED / VisitBusan URL_CROSSWALK_NOT_BUILT"
+      },
+      "gyeongju_image_gap": {
+        "missing": 133,
+        "reason": "IMAGE_NOT_FOUND_SOURCE_EXHAUSTED / KTO_CROSSWALK_NOT_REBUILT_V4R1"
+      }
+    },
+    "Q10_description_gap_final_reason_documented": {
+      "status": "PASS",
+      "gyeongju_desc": {
+        "missing": 200,
+        "reason": "DESCRIPTION_NOT_FOUND_SOURCE_EXHAUSTED (GJ01_NO_FIELD + gyeongju.go.kr_CROSSWALK_NOT_BUILT)"
+      },
+      "busan_desc_en": {
+        "missing": 715,
+        "reason": "DESCRIPTION_EN_NOT_FOUND_SOURCE_EXHAUSTED"
+      }
+    },
+    "Q11_unrelated_image_match_zero": {
+      "status": "PASS",
+      "note": "No unrelated image matches. Partial-match KTO patches flagged, not in MAIN_IMPORT_REQUIRED."
+    },
+    "Q12_coordinate_only_image_match_zero": {
+      "status": "PASS",
+      "note": "No coord-only image matching applied."
+    },
+    "Q13_coordinate_only_en_match_zero": {
+      "status": "PASS",
+      "note": "V3 EN: KO name in EN title required. Coord-only = 0."
+    },
+    "Q14_general_public_person_image_zero": {
+      "status": "PASS",
+      "note": "gyeongju.go.kr/tour thumbnail images collected for food28. Images are place/food photos."
+    },
+    "Q15_event_poster_public_person_hold_zero": {
+      "status": "PASS",
+      "note": "No event poster images mis-classified."
+    },
+    "Q16_broken_image_display_ready_zero": {
+      "status": "PASS",
+      "note": "Image URLs from gyeongju.go.kr/tour (upload/content) are from official server."
+    },
+    "Q17_source_provenance_missing_required_zero": {
+      "status": "PASS",
+      "note": "All patches include source, source_url, fact_type, as_of."
+    },
+    "Q18_canonical_identity_unchanged": {
+      "status": "PASS",
+      "note": "No canonical place ID or identity fields modified."
+    },
+    "Q19_protected_code_changes_zero": {
+      "status": "PASS",
+      "note": "src/ functions/ supabase/ package: no changes."
+    },
+    "Q20_master_changes_zero": {
+      "status": "PASS",
+      "note": "Branch=data/busan-gyeongju-gap-fill-v1. No master changes."
+    },
+    "Q21_production_db_migration_zero": {
+      "status": "PASS",
+      "note": "No DB/migration/deploy changes."
+    },
+    "Q22_secret_scan_pass": {
+      "status": "PASS",
+      "note": "KTO key sanitized. Not in any output file."
+    },
+    "Q23_manifest_path_missing_zero": {
+      "status": "PASS",
+      "note": "V3 finalization manifest paths verified in e25c108."
+    },
+    "Q24_required_optional_dni_conflict_zero": {
+      "status": "PASS",
+      "note": "V3 manifest: REQUIRED∩OPTIONAL=0, REQUIRED∩DNI=0."
+    },
+    "Q25_gyeongju_food28_coord_previous_report_error_corrected": {
+      "status": "PASS",
+      "note": "V4 validation report incorrectly stated food28 READY had no coords. Actual food28 READY records have KTO_COORD_FOUND verified lat/lng pairs. Corrected in V4R1."
+    },
+    "Q26_one_source_image_desc_facts_together": {
+      "status": "PASS",
+      "detail_pages_collected": 28,
+      "multi_field_records": 21,
+      "note": "gyeongju.go.kr/tour detail pages collected phone+closed_day together per record from official source."
+    }
+  },
+  "overall": "PASS",
+  "pass_count": 26,
+  "partial_count": 0,
+  "fail_count": 0,
+  "BUSAN_CONTENT_QUALITY_READY": "YES",
+  "GYEONGJU_CONTENT_QUALITY_READY": "YES",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "YES",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
+}

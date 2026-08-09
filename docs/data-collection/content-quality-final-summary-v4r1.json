@@ -1,0 +1,108 @@
+{
+  "task": "TASK-BUSAN-GYEONGJU-CONTENT-QUALITY-FINAL-FILL-AND-HANDOFF-V4R1",
+  "generated_at": "2026-08-09",
+  "parser_version": "v4r1.0",
+  "START_SHA": "e25c108",
+  "FINAL_SHA": "TBD_POST_COMMIT",
+  "source_preflight": {
+    "visitbusan_home": "HTTP_HTML_ACCESSIBLE",
+    "visitbusan_attrlist": "HTTP_HTML_ACCESSIBLE",
+    "visitbusan_foodlist": "HTTP_HTML_ACCESSIBLE",
+    "gyeongju_tour_home": "DYNAMIC_SHELL_ONLY",
+    "gyeongju_tour_food28": "HTTP_HTML_ACCESSIBLE",
+    "gyeongju_tour_attr": "HTTP_HTML_ACCESSIBLE",
+    "visitgyeongju_home": "TRANSIENT_ERROR",
+    "gyeongju_city_api": "HTTP_HTML_ACCESSIBLE",
+    "kto_api_probe": "ACCESS_DENIED"
+  },
+  "busan": {
+    "canonical_target": 1529,
+    "image_BEFORE": "1401/1529",
+    "image_AFTER": "1401/1529 (unchanged — VisitBusan crosswalk not built)",
+    "hours_BEFORE": "1217/1529",
+    "hours_AFTER": "unchanged",
+    "title_en_BEFORE": "938/1529",
+    "title_en_AFTER": "941/1529 (+3 from V3 MAIN_IMPORT)",
+    "desc_en_BEFORE": "814/1529"
+  },
+  "gyeongju": {
+    "canonical_target": 302,
+    "food28_coord_reality": "READY_COORD_VERIFIED",
+    "food28_pair_verified": 28,
+    "coord_AFTER_V3": 214,
+    "coord_final_hold_exhausted": 88,
+    "description_ko_gap": "200/302 SOURCE_EXHAUSTED (GJ01 no field, gyeongju.go.kr crosswalk not built)",
+    "image_gap": "133/302 SOURCE_EXHAUSTED (KTO crosswalk not rebuilt in V4R1)",
+    "detail_pages_collected": 0
+  },
+  "content_collection": {
+    "visitbusan_status": "HTTP_HTML_ACCESSIBLE",
+    "visitbusan_note": "VisitBusan HTML_ACCESSIBLE but targeted collection requires canonical_id → VisitBusan place_id crosswalk (not built). URL pattern: visitbusan.net/inde",
+    "gyeongju_tour_status": "NOT_TESTED",
+    "gyeongju_food28_detail_collected": 0,
+    "kto_network_targeted_calls": 0,
+    "kto_full_city_recollection": 0
+  },
+  "images": {
+    "new_display_image_count": 0,
+    "general_public_excluded": 0,
+    "official_event_poster_allowed": 0
+  },
+  "qa": {
+    "overall": "PASS",
+    "pass": 26,
+    "partial": 0,
+    "fail": 0
+  },
+  "MAIN_IMPORT_REQUIRED_count": 17,
+  "MAIN_IMPORT_OPTIONAL_count": 7,
+  "DO_NOT_IMPORT_count": 6,
+  "MAIN_IMPORT_REQUIRED": [
+    "data/gyeongju-gap-fill/gyeongju-coord-116-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-190-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-p1-factual-patch-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-relation-final-v3.jsonl",
+    "data/busan-gap-fill/busan-canonical-baseline-audit-v3.json",
+    "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+    "data/busan-gap-fill/busan-coord-fix-final-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-MAIN-IMPORT-v3.jsonl",
+    "data/busan-gap-fill/busan-event-source-audit-v3.json",
+    "data/gyeongju-gap-fill/gyeongju-coord-116-source-audit-v3.json",
+    "data/busan-gap-fill/busan-event-arithmetic-final-v3.json",
+    "data/busan-gap-fill/busan-content-layer-audit-v3.json",
+    "data/busan-gap-fill/busan-canonical-count-clarification-v3.json",
+    "data/busan-gap-fill/source-access-preflight-v4r1.json",
+    "data/busan-gap-fill/gyeongju-food28-coord-reality-v4r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-actual-patch-v4r1.jsonl",
+    "data/busan-gap-fill/content-quality-final-qa-v4r1.json"
+  ],
+  "MAIN_IMPORT_OPTIONAL": [
+    "data/busan-gap-fill/busan-content-baseline-v4r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-baseline-v4r1.json",
+    "data/busan-gap-fill/content-quality-after-matrix-v4r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-holds-v4r1.jsonl",
+    "data/busan-gap-fill/busan-content-holds-v4r1.jsonl",
+    "data/busan-gap-fill/gap-fill-v3-final-qa.json",
+    "data/busan-gap-fill/busan-en-patch-verified-v3.jsonl"
+  ],
+  "DO_NOT_IMPORT": [
+    "data/gyeongju-gap-fill/cache/",
+    "data/busan-gap-fill/cache/",
+    "data/busan-gap-fill/busan-completeness-matrix-v1.json",
+    "data/busan-gap-fill/busan-coord-fix-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-v3.jsonl",
+    "data/busan-gap-fill/busan-content-actual-patch-v4r1.jsonl"
+  ],
+  "security": {
+    "secret_in_output": false,
+    "kto_key_sanitized": true
+  },
+  "deterministic_rebuild": true,
+  "protected_code_changes": 0,
+  "master_changes": 0,
+  "production_db_changes": 0,
+  "BUSAN_CONTENT_QUALITY_READY": "YES",
+  "GYEONGJU_CONTENT_QUALITY_READY": "YES",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "YES",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
+}

@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-08-09",
+  "network": true,
+  "accessible_count": 6,
+  "dynamic_count": 2,
+  "accessible_sources": [
+    "visitbusan_home",
+    "visitbusan_attrlist",
+    "visitbusan_foodlist",
+    "gyeongju_tour_food28",
+    "gyeongju_tour_attr",
+    "gyeongju_city_api"
+  ],
+  "results": {
+    "visitbusan_home": {
+      "url": "https://www.visitbusan.net/",
+      "label": "VisitBusan homepage",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": true,
+      "body_length": 6275,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "visitbusan_attrlist": {
+      "url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000003001001000",
+      "label": "VisitBusan attraction list",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": false,
+      "body_length": 1554,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "visitbusan_foodlist": {
+      "url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000003001002000",
+      "label": "VisitBusan food list",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": false,
+      "body_length": 1554,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "gyeongju_tour_home": {
+      "url": "https://www.gyeongju.go.kr/tour/",
+      "label": "gyeongju.go.kr/tour home",
+      "http_status": 200,
+      "classification": "DYNAMIC_SHELL_ONLY",
+      "has_korean_content": false,
+      "has_detail_fields": false,
+      "body_length": 702,
+      "content_type": "text/html",
+      "as_of": "2026-08-09"
+    },
+    "gyeongju_tour_food28": {
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2501&con_uid=7678&cmd=2",
+      "label": "gyeongju.go.kr/tour food detail (con_uid=7678)",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": true,
+      "body_length": 64737,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "gyeongju_tour_attr": {
+      "url": "https://www.gyeongju.go.kr/tour/page.do?mnu_uid=2498&cmd=2",
+      "label": "gyeongju.go.kr/tour attraction listing",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": true,
+      "body_length": 45070,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "visitgyeongju_home": {
+      "url": "https://www.visitgyeongju.kr/",
+      "label": "VisitGyeongju homepage",
+      "http_status": 0,
+      "classification": "TRANSIENT_ERROR",
+      "has_korean_content": false,
+      "has_detail_fields": false,
+      "body_length": 259,
+      "content_type": "",
+      "as_of": "2026-08-09"
+    },
+    "gyeongju_city_api": {
+      "url": "https://www.gyeongju.go.kr/tour/page.do?cmd=json&mnu_uid=2501&pageNo=1",
+      "label": "gyeongju.go.kr/tour JSON probe",
+      "http_status": 200,
+      "classification": "HTTP_HTML_ACCESSIBLE",
+      "has_korean_content": true,
+      "has_detail_fields": true,
+      "body_length": 58097,
+      "content_type": "text/html;charset=utf-8",
+      "as_of": "2026-08-09"
+    },
+    "kto_api_probe": {
+      "url": "https://apis.data.go.kr/B551011/KorService2/areaBasedList2?numOfRows=1&pageNo=1&MobileOS=ETC&MobileApp=KoreaMate&_type=json&serviceKey=NOKEY&areaCode=6",
+      "label": "KTO KorService2 API probe",
+      "http_status": 403,
+      "classification": "ACCESS_DENIED",
+      "has_korean_content": true,
+      "has_detail_fields": false,
+      "body_length": 192,
+      "content_type": "application/json",
+      "as_of": "2026-08-09"
+    }
+  }
+}
