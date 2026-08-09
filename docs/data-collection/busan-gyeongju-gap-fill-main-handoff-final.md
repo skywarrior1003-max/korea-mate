@@ -332,3 +332,84 @@ no=77(코라드 청정누리공원), no=80(경주 엑스포대공원): PUBLIC_DA
 **BUSAN_CONTENT_QUALITY_READY = YES**
 **GYEONGJU_CONTENT_QUALITY_READY = YES**
 **BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
+
+---
+
+## TASK-GYEONGJU-REMAINING59-OFFICIAL-RESCUE-V2 (SHA: TBD — 2026-08-09)
+
+### 개요
+경주 200건 gap fill 1차 작업(V1) 후 잔존한 59건(OFFICIAL_DETAIL_NOT_FOUND)을 KTO TourAPI 콘텐츠ID 직접 조회(targeted fetch)로 전량 구제.
+
+### 대상 59건 특성
+- 전건 candidate_id 패턴: `gyeongju-KTO12-XXXXXX` (KTO12 prefix)
+- no=135~200 범위(no=190 EXCLUDED_USER_DECISION 제외)
+- gyeongju.go.kr 권역별 관광지 목록(mnu 2291~2296)에 미등재된 장소들
+- 유형: 왕릉·고분군·사지·마애불·석탑 등 역사유산(37건), 서원(5건), 리조트·호텔(4건), 자연·지질(4건), 현대관광·체험(5건), 식음·문화(4건)
+
+### 소스별 결과
+
+| 소스 | 시도 | 성공 | 상태 |
+|---|---|---|---|
+| KTO detailCommon2 | 59 | **59** | 전건 PASS (rc=0000, contentId 일치, overview 있음) |
+| KTO detailIntro2 | 59 | ~50 | 실용정보(운영시간·휴무·요금·주차) 보조 수집 |
+| KTO detailImage2 | 59 | 59 | firstimage(common2) + gallery(image2) 전건 수집 |
+| gyeongju.go.kr 미탐색 mnu | 60개 검사 | 7개 명칭 출현 | 역사소개·축제페이지(비장소 컨텍스트) |
+| 국가유산청 Open API | 4 endpoints | **0** | HERITAGE_API_ACCESS_BLOCKED |
+
+### KTO 상세 결과
+
+| 상태 | 건수 |
+|---|---|
+| KTO_DETAIL_FULL (description+image 모두 있음) | **59** |
+| KTO_DETAIL_PARTIAL | 0 |
+| KTO_RECORD_EXISTS_BUT_CONTENT_EMPTY | 0 |
+| KTO_TARGETED_NOT_FOUND | 0 |
+| **RESCUED_KTO** | **59** |
+
+- description 보강: **59건** (overview 범위: 142~1,001자, 평균 ~400자)
+- 이미지 보강: **59건** (firstimage + gallery 최대 5개)
+- 좌표(mapx/mapy): **59건** (전건 KTO 좌표 있음)
+- 주소(addr1): **59건**
+- detailIntro2 실용정보: 운영시간·휴무일·입장료·주차 일부 보강
+
+### 국가유산청 API 상태
+- cha.go.kr, khs.go.kr, api.cha.go.kr, heritage.go.kr 모두 shell/연결거부
+- `HERITAGE_API_ACCESS_BLOCKED` — 도메인 이전(문화재청→국가유산청) 후 API 경로 미확인
+- 영향: 37건 heritage 타입 → KTO overview로 대신 커버(전건 RESCUED_KTO)
+
+### gyeongju.go.kr mnu 인벤토리 (추가 탐색)
+- 신규 검사: 60개 mnu (131개 nav 발견 중 기존 6+@개 제외)
+- REAL_CONTENT 섹션: 6개 (불국사·석굴암 3중복, 포토스팟 2중복, 버스투어)
+- 59건 장소명 출현: 7건(역사이야기·신라왕이야기·입장료안내 등 비장소 컨텍스트) → 신규 area_uid 없음
+
+### 산출물
+
+| 파일 | 건수 | 비고 |
+|---|---|---|
+| `data/gyeongju-gap-fill/gyeongju-remaining59-source-attempts-v2.jsonl` | 59 | 소스별 시도 기록 |
+| `data/gyeongju-gap-fill/gyeongju-remaining59-crosswalk-v2.jsonl` | 59 | final_status=RESCUED_KTO(전건) |
+| `data/gyeongju-gap-fill/gyeongju-remaining59-content-patch-v2.jsonl` | 59 | description/image/coord 패치값 |
+| `data/gyeongju-gap-fill/gyeongju-remaining59-user-review-v2.jsonl` | 0 | 미결 없음 |
+| `docs/data-collection/gyeongju-remaining59-source-inventory-v2.json` | — | mnu 인벤토리 + heritage API 상태 |
+| `docs/data-collection/gyeongju-remaining59-rescue-summary-v2.json` | — | 최종 집계 요약 |
+
+### QA
+
+| 검증 항목 | 결과 |
+|---|---|
+| 대상 59건 전건 final_status 확정 | ✓ RESCUED_KTO=59 |
+| no=081/190 재처리 = 0 | ✓ |
+| no=077/080 중복 패치 = 0 | ✓ |
+| 자동 EXCLUDE = 0 | ✓ |
+| srchKwd 사용 = 0 | ✓ |
+| AJAX 검색 사용 = 0 | ✓ |
+| 2291~2296 전체재수집 = 0 | ✓ |
+| 추측 heritage URL 사용 = 0 | ✓ |
+| contentId 불일치 = 0 | ✓ (전건 resp_cid==req_cid 확인) |
+| raw HTML 커밋 = 0 | ✓ |
+| master/운영DB/src/functions 변경 = 0 | ✓ |
+| user_review 미결 = 0 | ✓ |
+
+**GYEONGJU_REMAINING59_RESCUED = YES (59/59)**
+**GYEONGJU_DESCRIPTION_FILLED = 198/200 (139 V1 + 59 V2, 2건 USER_EXCLUDED)**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**

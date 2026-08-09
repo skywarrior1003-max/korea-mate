@@ -1,0 +1,37 @@
+{
+  "task": "TASK-GYEONGJU-REMAINING59-OFFICIAL-RESCUE-V2",
+  "start_sha": "b4c3b18",
+  "as_of": "2026-08-09",
+  "target_count": 59,
+  "no081_190_reworked": 0,
+  "no077_080_duplicate_patched": 0,
+  "kto_targeted": {
+    "attempted": 59,
+    "KTO_DETAIL_FULL": 59,
+    "KTO_DETAIL_PARTIAL": 0,
+    "KTO_RECORD_EXISTS_BUT_CONTENT_EMPTY": 0,
+    "KTO_TARGETED_NOT_FOUND": 0
+  },
+  "gyeongju_mnu_inventory": {
+    "total_nav_mnu": 131,
+    "previously_scanned": 13,
+    "newly_inspected": 60,
+    "real_content_sections": 6,
+    "new_target_matches": 7
+  },
+  "heritage_api": "HERITAGE_API_ACCESS_BLOCKED",
+  "rescue_counts": {
+    "RESCUED_KTO": 59,
+    "RESCUED_GYEONGJU_OFFICIAL": 0,
+    "RESCUED_HERITAGE_OFFICIAL": 0,
+    "RESCUED_MULTI_SOURCE": 0,
+    "MATCHED_BUT_CONTENT_INSUFFICIENT": 0,
+    "USER_REVIEW_REQUIRED": 0,
+    "SOURCE_TECHNICALLY_BLOCKED": 0
+  },
+  "description_filled": 59,
+  "image_filled": 59,
+  "automatic_exclude": 0,
+  "patch_file_rows": 59,
+  "user_review_rows": 0
+}
