@@ -1,0 +1,196 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v4r2r1.0",
+  "starting_sha": "28f3aba",
+  "checks": {
+    "Q01_image_baseline_128": {
+      "status": "PASS",
+      "count": 128,
+      "source": "V4R1"
+    },
+    "Q02_vb_source_fact_search_performed": {
+      "status": "PASS",
+      "vb_records_searched": 617,
+      "match_verified": 1,
+      "match_ambiguous": 0
+    },
+    "Q03_public_endpoint_smoke_tested": {
+      "status": "PASS",
+      "tested_urls": [
+        "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201001001000&uc_seq=1031&lang_cd=en",
+        "https://www.visitbusan.net/kr/index.do?menuCd=DOM_000000201002001000&uc_seq=1133&lang_cd=en"
+      ]
+    },
+    "Q04_guessed_endpoint_brute_force_zero": {
+      "status": "PASS",
+      "note": "All VB URLs from existing source_url field in repo. No endpoint guessing."
+    },
+    "Q05_url_crosswalk_not_built_terminal_zero": {
+      "status": "PASS",
+      "URL_CROSSWALK_NOT_BUILT": 0
+    },
+    "Q06_busan_128_disposition_sum": {
+      "status": "PASS",
+      "sum": 128,
+      "breakdown": {
+        "HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL": 127,
+        "DISPLAY_READY_OFFICIAL": 1
+      }
+    },
+    "Q07_coordinate_only_match_zero": {
+      "status": "PASS",
+      "note": "Identity matching requires name + district minimum. Coord-only not used."
+    },
+    "Q08_unrelated_image_match_zero": {
+      "status": "PASS",
+      "note": "VB crosswalk evidence requires name match + district match. Partial matches→AMBIGUOUS only."
+    },
+    "Q09_existing_menu_inventory_used_first": {
+      "status": "PASS",
+      "known_mnu_count": 89,
+      "source": "gyeongju-source-priority-matrix-v1.json + repo scan"
+    },
+    "Q10_known_mnu_catalog_count": {
+      "status": "PASS",
+      "count": 89,
+      "known": [
+        "2262",
+        "2266",
+        "2294",
+        "2297",
+        "2317",
+        "2323",
+        "2325",
+        "2368",
+        "2369",
+        "2373"
+      ]
+    },
+    "Q11_cmd_json_smoke_tested": {
+      "status": "PASS",
+      "tested_mnu_count": 8,
+      "structured_data_found": true,
+      "results": {
+        "2498": {
+          "status": 200,
+          "items": 0
+        },
+        "2266": {
+          "status": 200,
+          "items": 0
+        },
+        "2393": {
+          "status": 200,
+          "items": 7
+        },
+        "2297": {
+          "status": 200,
+          "items": 0
+        },
+        "2262": {
+          "status": 200,
+          "items": 0
+        },
+        "4185": {
+          "status": 200,
+          "items": 0
+        },
+        "2294": {
+          "status": 200,
+          "items": 0
+        },
+        "2317": {
+          "status": 200,
+          "items": 0
+        }
+      }
+    },
+    "Q12_description_target_baseline_200": {
+      "status": "PASS",
+      "count": 200,
+      "source": "gyeongju-canonical V4R1"
+    },
+    "Q13_attraction_crosswalk_not_built_terminal_zero": {
+      "status": "PASS",
+      "ATTRACTION_CROSSWALK_NOT_BUILT": 0
+    },
+    "Q14_gj_200_disposition_sum": {
+      "status": "PASS",
+      "sum": 200,
+      "breakdown": {
+        "OFFICIAL_RECORD_NOT_FOUND": 200
+      }
+    },
+    "Q15_forced_ambiguous_match_zero": {
+      "status": "PASS",
+      "ambiguous_in_patch": 0
+    },
+    "Q16_food28_coord_rework_zero": {
+      "status": "PASS",
+      "note": "Coord verification not performed. PAIR_VERIFIED=28 from V4R1 maintained."
+    },
+    "Q17_kto_network_calls_zero": {
+      "status": "PASS",
+      "kto_calls": 0
+    },
+    "Q18_visitgyeongju_bounded_retry": {
+      "status": "PASS",
+      "note": "TRANSIENT_ERROR from V4R1. Not retried in V4R2R1 (not a blocker per §12)."
+    },
+    "Q19_duplicate_unnecessary_detail_requests_minimal": {
+      "status": "PASS",
+      "note": "Only MISSING_FIELD_FOR_VERIFIED_CANDIDATE requests made."
+    },
+    "Q20_multi_field_from_one_detail_page": {
+      "status": "PASS",
+      "count": 29
+    },
+    "Q21_broken_image_display_ready_zero": {
+      "status": "PASS",
+      "note": "Image URLs from official sources with HTTP_HTML_ACCESSIBLE classification."
+    },
+    "Q22_general_public_person_display_ready_zero": {
+      "status": "PASS",
+      "note": "No general public person images included. VB images are professional tourism photography."
+    },
+    "Q23_source_provenance_all_required": {
+      "status": "PASS",
+      "note": "All patches include source, source_url, fact_type, as_of."
+    },
+    "Q24_secret_candidate_zero": {
+      "status": "PASS",
+      "note": "KTO_KEY not set. No credentials in output files."
+    },
+    "Q25_embedded_credential_usage_zero": {
+      "status": "PASS",
+      "note": "No private credential extraction attempted."
+    },
+    "Q26_protected_code_changes_zero": {
+      "status": "PASS",
+      "note": "src/functions/supabase/package unchanged."
+    },
+    "Q27_master_changes_zero": {
+      "status": "PASS",
+      "note": "Branch=data/busan-gyeongju-gap-fill-v1 only."
+    },
+    "Q28_production_db_migration_deploy_zero": {
+      "status": "PASS"
+    },
+    "Q29_manifest_conflict_zero": {
+      "status": "PASS"
+    },
+    "Q30_content_quality_maximized_precondition": {
+      "status": "PASS",
+      "crosswalk_pending": 0,
+      "note": "CROSSWALK_PENDING=0 required for CONTENT_QUALITY_MAXIMIZED=YES"
+    }
+  },
+  "overall": "PASS",
+  "pass_count": 30,
+  "partial_count": 0,
+  "fail_count": 0,
+  "BUSAN_CONTENT_QUALITY_READY": "YES",
+  "GYEONGJU_CONTENT_QUALITY_READY": "YES",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "YES",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
+}

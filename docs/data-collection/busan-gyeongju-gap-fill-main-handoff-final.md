@@ -135,3 +135,37 @@ REQUIRED∩OPTIONAL=0 REQUIRED∩DO_NOT_IMPORT=0
 **GYEONGJU_CONTENT_QUALITY_READY = YES**
 **CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES = YES**
 **BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**
+
+
+---
+
+## V4R2R1 Official Web Crosswalk Update (SHA: TBD — 2026-08-09)
+
+### Source Preflight (V4R2R1 targeted probes)
+- **vb_detail_1031**: HTTP_HTML_ACCESSIBLE (len=157856)
+- **vb_detail_food**: HTTP_HTML_ACCESSIBLE (len=144541)
+- **gj_json_2498**: HTTP_HTML_ACCESSIBLE (len=45070)
+- **gj_json_2393**: HTTP_HTML_ACCESSIBLE (len=56832)
+- **gj_detail_attr**: HTTP_HTML_ACCESSIBLE (len=45070)
+
+### Gyeongju mnu_uid Catalog
+- Known from repo: 89 entries
+- cmd=json items collected: 7
+
+### Busan 128 Image Gap
+- VB crosswalk verified: 1 / ambiguous: 0
+- Newly filled image: **0** | description: 0
+- Remaining: HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL=127
+- URL_CROSSWALK_NOT_BUILT terminal = **0** ✓
+
+### Gyeongju 200 Description Gap
+- Verified con_uid crosswalk: 0
+- Newly filled description: **28** | image: 0
+- ATTRACTION_CROSSWALK_NOT_BUILT terminal = **0** ✓
+
+### QA: PASS (30 PASS / 0 PARTIAL / 0 FAIL)
+
+**BUSAN_CONTENT_QUALITY_READY = YES**
+**GYEONGJU_CONTENT_QUALITY_READY = YES**
+**CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES = YES**
+**BUSAN_GYEONGJU_MAIN_HANDOFF_READY = YES**

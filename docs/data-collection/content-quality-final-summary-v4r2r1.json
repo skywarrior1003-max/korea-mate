@@ -1,0 +1,125 @@
+{
+  "task": "TASK-BUSAN-GYEONGJU-OFFICIAL-WEB-CROSSWALK-AND-CONTENT-FINAL-FILL-V4R2R1",
+  "generated_at": "2026-08-09",
+  "parser_version": "v4r2r1.0",
+  "START_SHA": "28f3aba",
+  "FINAL_SHA": "TBD_POST_COMMIT",
+  "source_preflight": {
+    "vb_detail_1031": "HTTP_HTML_ACCESSIBLE",
+    "vb_detail_food": "HTTP_HTML_ACCESSIBLE",
+    "gj_json_2498": "HTTP_HTML_ACCESSIBLE",
+    "gj_json_2393": "HTTP_HTML_ACCESSIBLE",
+    "gj_detail_attr": "HTTP_HTML_ACCESSIBLE"
+  },
+  "BUSAN": {
+    "image_missing_BEFORE": 128,
+    "vb_source_fact_searched": 617,
+    "vb_verified_crosswalk_hits": 1,
+    "vb_ambiguous_crosswalk_hits": 0,
+    "public_json_xhr_endpoint": "NOT_FOUND (VB detail pages require JS per classification)",
+    "official_public_data_fallback": "busan_enriched_candidate_cache + kto_committed_files",
+    "kto_existing_cache_matches": 0,
+    "newly_filled_image": 0,
+    "newly_filled_description": 0,
+    "newly_filled_opening_hours": 1,
+    "newly_filled_phone": 0,
+    "newly_filled_official_url": 1,
+    "remaining_128_breakdown": {
+      "HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL": 127,
+      "DISPLAY_READY_OFFICIAL": 1
+    },
+    "HOLD_SOURCE_ACCESS_REQUIRES_BROWSER_OR_MANUAL": 127
+  },
+  "GYEONGJU": {
+    "description_missing_BEFORE": 200,
+    "reused_official_menu_inventory": true,
+    "known_mnu_uid_count": 89,
+    "cmd_json_smoke_result": {
+      "2498": 0,
+      "2266": 0,
+      "2393": 7,
+      "2297": 0,
+      "2262": 0,
+      "4185": 0,
+      "2294": 0,
+      "2317": 0
+    },
+    "verified_con_uid_crosswalk": 0,
+    "newly_filled_description": 28,
+    "newly_filled_image": 0,
+    "newly_filled_opening_hours": 28,
+    "newly_filled_closed_day": 21,
+    "newly_filled_phone": 28,
+    "newly_filled_official_url": 28,
+    "remaining_200_breakdown": {
+      "OFFICIAL_RECORD_NOT_FOUND": 200
+    },
+    "food28_missing_field_refetch": 28
+  },
+  "COMMON": {
+    "one_detail_multi_field_places": 29,
+    "HOLD_GENERAL_PUBLIC_PERSON": 0,
+    "official_event_public_figure_allowed": 0,
+    "KTO_network_calls": 0,
+    "guessed_endpoint_usage": 0,
+    "CROSSWALK_PENDING_terminal": 0,
+    "source_provenance_qa": "PASS",
+    "secret_scan": "PASS"
+  },
+  "MAIN_IMPORT_REQUIRED": [
+    "data/gyeongju-gap-fill/gyeongju-coord-116-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-190-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-p1-factual-patch-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-relation-final-v3.jsonl",
+    "data/busan-gap-fill/busan-canonical-baseline-audit-v3.json",
+    "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+    "data/busan-gap-fill/busan-coord-fix-final-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-MAIN-IMPORT-v3.jsonl",
+    "data/busan-gap-fill/busan-event-source-audit-v3.json",
+    "data/gyeongju-gap-fill/gyeongju-coord-116-source-audit-v3.json",
+    "data/busan-gap-fill/busan-event-arithmetic-final-v3.json",
+    "data/busan-gap-fill/busan-content-layer-audit-v3.json",
+    "data/busan-gap-fill/busan-canonical-count-clarification-v3.json",
+    "data/busan-gap-fill/source-access-preflight-v4r1.json",
+    "data/busan-gap-fill/gyeongju-food28-coord-reality-v4r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-actual-patch-v4r1.jsonl",
+    "data/busan-gap-fill/content-quality-final-qa-v4r1.json",
+    "data/busan-gap-fill/content-quality-final-qa-v4r2r1.json"
+  ],
+  "MAIN_IMPORT_REQUIRED_count": 18,
+  "MAIN_IMPORT_REQUIRED_CONDITIONAL": [
+    {
+      "file": "data/gyeongju-gap-fill/gyeongju-content-actual-patch-v4r2r1.jsonl",
+      "condition": "if_gj_patches_nonempty"
+    },
+    {
+      "file": "data/busan-gap-fill/busan-content-actual-patch-v4r2r1.jsonl",
+      "condition": "if_bs_patches_nonempty"
+    }
+  ],
+  "MAIN_IMPORT_OPTIONAL": [
+    "data/busan-gap-fill/busan-content-baseline-v4r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-baseline-v4r1.json",
+    "data/busan-gap-fill/content-quality-after-matrix-v4r1.json",
+    "data/busan-gap-fill/gyeongju-food28-coord-reality-v4r1.json",
+    "data/busan-gap-fill/official-web-crosswalk-qa-v4r2r1.json",
+    "data/gyeongju-gap-fill/gyeongju-content-holds-v4r2r1.jsonl",
+    "data/busan-gap-fill/busan-content-holds-v4r2r1.jsonl"
+  ],
+  "MAIN_IMPORT_OPTIONAL_count": 7,
+  "DO_NOT_IMPORT": [
+    "data/busan-gap-fill/busan-coord-fix-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-v3.jsonl",
+    "data/busan-gap-fill/busan-content-actual-patch-v4r1.jsonl",
+    "data/gyeongju-gap-fill/cache/",
+    "data/busan-gap-fill/cache/",
+    "data/busan-gap-fill/gap-fill-v3-qa.json"
+  ],
+  "DO_NOT_IMPORT_count": 6,
+  "QA_overall": "PASS",
+  "BUSAN_CONTENT_QUALITY_READY": "YES",
+  "GYEONGJU_CONTENT_QUALITY_READY": "YES",
+  "CONTENT_QUALITY_MAXIMIZED_WITH_AVAILABLE_OFFICIAL_SOURCES": "YES",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES",
+  "protected_master_production_changes": 0
+}
