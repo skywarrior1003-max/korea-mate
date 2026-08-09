@@ -15,21 +15,15 @@ import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 import { getSavedEmail } from "@/lib/userEmail";
 import { visitedStorageKey } from "@/lib/visited";
+import { cityVisual } from "@/lib/city-visual";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
 
 // ── 도시 대표 이미지 ───────────────────────────────────────────────────────────
-const CITY_IMAGES: Record<string, string> = {
-  busan:    "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=800&q=70",
-  seoul:    "https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?w=800&q=70",
-  gyeongju: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&q=70",
-  jeju:     "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800&q=70",
-  incheon:  "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&q=70",
-};
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800&q=70";
-
-function getCityImage(city: string): string {
-  return CITY_IMAGES[city.toLowerCase()] ?? DEFAULT_IMAGE;
-}
+// 이 화면은 자기 맵을 들지 않는다. 예전에 여기 있던 원격 사진 매핑은 원본이
+// 바뀌어도 알 길이 없었고, 실제로 부산 카드에 스마트폰 사진이, 서울 카드에
+// 일본 아사쿠사 사진이 나오고 있었다. 도시 사진은 `city-visual.ts` 한 곳에서만
+// 정한다 — 대표 비주얼이 없는 도시에 다른 도시 사진을 끼워 넣지 않는 규칙도
+// 그 resolver 가 이미 갖고 있다.
 
 // ── 여행 퍼스낼리티 배지 ─────────────────────────────────────────────────────
 function getPersonality(style: string): { emoji: string; label: string; color: string } {
@@ -137,21 +131,37 @@ export default function MyTripsPage() {
   const handleDelete = useCallback(async (trip: Trip) => {
     setDeleting(trip.id);
     setConfirmDel(null);
-    setTrips(prev => prev.filter(t => t.id !== trip.id));
+
+    // 목록에서 빼는 것도 서버가 실제로 지운 뒤에 한다. 먼저 지워 두면 요청이
+    // 실패했을 때 여행은 서버에 그대로 남아 있는데 화면에서만 사라져,
+    // 새로고침해야 다시 나타난다.
     const serverDeleted = await apiDeleteItinerary(trip.id, getDeviceId());
-    // localStorage 캐시 키 일괄 제거
+    if (!serverDeleted) { setDeleting(null); return; }
+
+    setTrips(prev => prev.filter(t => t.id !== trip.id));
+
+    // 이 여행에 속한 로컬 기록만 지운다.
+    //
+    // 예전에는 `koreamate_itin` 으로 시작하는 키를 **전부** 지웠다. 그 접두사는
+    // 여행 하나가 아니라 모든 여행의 캐시를 덮어서, 여행 한 개를 지우면 남은
+    // 여행들의 일정 캐시까지 같이 날아갔다.
+    //
+    // `koreamate_itin3_id_*` 는 키가 아니라 **값**이 여행 ID다(키는 URL 파라미터로
+    // 만든다). 그래서 값이 이 여행일 때만 지운다. 구버전 `koreamate_itin_v2_*` ·
+    // `koreamate_itin_id_*` 는 /itinerary 가 진입할 때마다 스스로 철거하므로
+    // 여기서 건드리지 않는다.
     try {
-      const toRemove: string[] = [];
+      const toRemove = [
+        `koreamate_moments_${trip.id}`,
+        visitedStorageKey(trip.id),
+        `koreamate_daydone_${trip.id}`,
+      ];
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
-        if (k && (k.startsWith("koreamate_itin") || k === `koreamate_moments_${trip.id}`)) {
+        if (k && k.startsWith("koreamate_itin3_id_") && localStorage.getItem(k) === trip.id) {
           toRemove.push(k);
         }
       }
-      // Visited 는 이 여행에서만 의미가 있는 기록이라 여행이 사라지면 같이 지운다.
-      // 서버 삭제가 성공했을 때만 지운다 — 실패하면 여행이 그대로 남아 있고,
-      // 그때 Visited 만 날리면 사용자가 직접 찍은 기록을 이유 없이 잃는다.
-      if (serverDeleted) toRemove.push(visitedStorageKey(trip.id));
       toRemove.forEach(k => localStorage.removeItem(k));
     } catch { /* ignore */ }
     setDeleting(null);
@@ -325,7 +335,7 @@ export default function MyTripsPage() {
               const isConfirm   = confirmDel  === trip.id;
               const isCopied    = copied      === trip.id;
               const displayTitle = trip.tripTitle || `My ${cityCap(trip.city)} Trip`;
-              const cityImg = getCityImage(trip.city);
+              const hero = cityVisual(trip.city);
 
               return (
                 <div
@@ -337,12 +347,26 @@ export default function MyTripsPage() {
                   {/* 최종 디자인은 사진이 카드의 주인공이다. 기존 h-44(약 2:1)는
                       도시 사진이 띠처럼 잘려 표지로 읽히지 않았다. */}
                   <Link href={`/itinerary?id=${trip.id}`} className="block relative aspect-[4/3] overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={cityImg}
-                      alt={trip.city}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    {hero ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={hero.src}
+                        alt={trip.city}
+                        width={hero.w}
+                        height={hero.h}
+                        style={{ objectPosition: hero.objectPosition }}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      /* 대표 비주얼이 없는 도시. 다른 도시 사진으로 메우지 않는다 —
+                         그 자리를 메운 사진은 사용자에게 "이 도시가 이렇게 생겼다"로
+                         읽힌다. 중립 배경에 도시 이름만 둔다. */
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#E9ECEF] to-[#CFD5DB]">
+                        <span className="text-2xl font-black tracking-tight text-[#565D66]/70">
+                          {cityCap(trip.city)}
+                        </span>
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
                     {/* 퍼스낼리티 배지 */}
@@ -425,8 +449,16 @@ export default function MyTripsPage() {
                       Open Itinerary →
                     </Link>
 
-                    <div className="flex gap-2">
-                      {/* 복사 */}
+                    {/* 공유 버튼이 없는 비공개 일정에서는 휴지통만 남는다 —
+                        왼쪽에 홀로 떠 있지 않게 오른쪽으로 붙인다. */}
+                    <div className="flex gap-2 justify-end">
+                      {/* 공유 링크 복사 — 공개 일정에만 둔다.
+                          링크를 받은 사람은 `/itinerary?id=…` 에서 소유자가 아니므로
+                          `/shared/{id}` 로 넘어가고, 거기서는 is_public 이 강제된다.
+                          비공개 일정의 링크는 상대에게 "Itinerary not found" 만
+                          보여준다 — 열리지 않는 링크를 복사하게 두지 않는다.
+                          공개로 바꾸는 방법은 바로 위 Public/Private 칩이다. */}
+                      {trip.isPublic && (
                       <button
                         onClick={() => handleCopy(trip)}
                         className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer"
@@ -440,6 +472,7 @@ export default function MyTripsPage() {
                             복제하지 않는다 — "Copy Link"는 둘 다로 읽혔다. */}
                         {isCopied ? "✅ Link copied" : "🔗 Copy Share Link"}
                       </button>
+                      )}
 
                       {/* 삭제 */}
                       {isConfirm ? (

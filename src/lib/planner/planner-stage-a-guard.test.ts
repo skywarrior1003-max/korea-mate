@@ -245,12 +245,22 @@ test("★도시 대표 비주얼은 KTO manifest·프록시와 분리돼 있다"
   assert.doesNotMatch(CV, /\/img\/cover\//, "KTO 프록시 경로");
 });
 
+// My Trips 는 이 목록에 없어서 자기 Unsplash 맵을 오래 들고 있었고, 부산 카드에
+// 스마트폰 사진이, 서울 카드에 일본 아사쿠사 사진이 나가고 있었다. 도시 사진을
+// 쓰는 화면은 빠짐없이 여기에 적는다.
 test("★도시 대표 비주얼 정의는 한 곳뿐이다 — 화면마다 자기 맵을 들지 않는다", () => {
-  for (const f of [["src", "components", "CityEntry.tsx"], ["src", "components", "home", "PremiumDiscoveryHome.tsx"]]) {
+  for (const f of [
+    ["src", "components", "CityEntry.tsx"],
+    ["src", "components", "home", "PremiumDiscoveryHome.tsx"],
+    ["src", "app", "my-trips", "page.tsx"],
+  ]) {
     const src = strip(read(...f));
     assert.match(src, /cityVisual\(/, `${f.join("/")}: 공용 resolver 미사용`);
     assert.doesNotMatch(src, /city-(seoul|busan|jeju|gyeongju|jeonju)[\w-]*\.(jpg|png)/,
       `${f.join("/")}: 이미지 경로를 다시 하드코딩했다`);
+    // 원격 사진은 원본이 바뀌어도 알 길이 없다 — 실제로 그렇게 어긋났다
+    assert.doesNotMatch(src, /images\.unsplash\.com/,
+      `${f.join("/")}: 도시 사진을 외부 URL 로 다시 들었다`);
   }
 });
 
