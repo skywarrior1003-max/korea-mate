@@ -226,6 +226,44 @@ function PicksContent() {
   }
 
   const selectedKeys = new Set(selected.map(getItemSourceKey));
+
+  // Saved 는 장기 보관함이고 This Trip 은 이번 여행 목록이다. 같은 장소가 두
+  // 목록에 동시에 보이면 사용자는 "두 번 담았나" 를 의심한다. 그래서 **화면에서만**
+  // 숨긴다 — favorites 저장소는 건드리지 않는다.
+  //
+  // 이 방식이 중요한 이유: This Trip 에서 빼면 cart membership 만 사라지고
+  // Saved 원본은 처음부터 그대로였으므로 **아무 것도 되돌리지 않아도** 다시 보인다.
+  // 반대로 뺄 때 toggleFavorite 을 부르면, Explore 에서 바로 담은(Saved 아닌)
+  // 장소까지 Saved 로 새로 만들어 버린다.
+  const savedVisible = saved.filter(e => !selectedKeys.has(getItemSourceKey(e)));
+
+  // Clear All 은 여러 개를 한 번에 지운다. 개별 × 와 달리 되돌리기 비용이 커서
+  // 짧은 확인 한 번을 둔다. 별도 모달을 만들지 않고 버튼 자리에서 바꿔 보여 준다.
+  const [confirmClear, setConfirmClear] = useState(false);
+
+  // Saved 정리 모드 — 평소에는 카드에 삭제 문구를 노출하지 않는다.
+  const [savedManaging, setSavedManaging] = useState(false);
+  const [savedPicked,   setSavedPicked]   = useState<Set<string>>(new Set());
+  const [confirmSavedDelete, setConfirmSavedDelete] = useState(false);
+
+  function exitSavedManage() {
+    setSavedManaging(false); setSavedPicked(new Set()); setConfirmSavedDelete(false);
+  }
+  function toggleSavedPick(key: string) {
+    setSavedPicked(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+    setConfirmSavedDelete(false);   // 선택이 바뀌면 확인 단계를 되돌린다
+  }
+  function runSavedDelete() {
+    for (const e of saved) {
+      if (savedPicked.has(getItemSourceKey(e))) removeFavorite(e.id);
+    }
+    exitSavedManage();
+  }
+
   const panelId = (k: Tab) => `picks-panel-${k}`;
   const tabId   = (k: Tab) => `picks-tab-${k}`;
 
@@ -310,7 +348,19 @@ function PicksContent() {
             <>
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-semibold text-sub">{t("selectedCount", { count: selected.length })}</p>
-                <Button variant="text" onClick={() => clearCart()}>{t("clearAll")}</Button>
+                {confirmClear ? (
+                  <span className="flex items-center gap-1">
+                    <Button variant="text" onClick={() => setConfirmClear(false)}>{t("cancel")}</Button>
+                    <button
+                      onClick={() => { clearCart(); setConfirmClear(false); }}
+                      className="gkm-focus text-xs font-black text-error px-2 py-2"
+                    >
+                      {t("clearAllConfirm")}
+                    </button>
+                  </span>
+                ) : (
+                  <Button variant="text" onClick={() => setConfirmClear(true)}>{t("clearAll")}</Button>
+                )}
               </div>
 
               <ul className="flex flex-col gap-3">
@@ -362,7 +412,38 @@ function PicksContent() {
 
         {/* ── Saved ── */}
         <div role="tabpanel" id={panelId("saved")} aria-labelledby={tabId("saved")} hidden={tab !== "saved"}>
-          {tab === "saved" && (saved.length === 0 ? (
+          {tab === "saved" && savedVisible.length > 0 && (
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-sub">
+                {savedManaging ? t("selectedCount", { count: savedPicked.size }) : ""}
+              </p>
+              {savedManaging ? (
+                <span className="flex items-center gap-1">
+                  <Button variant="text" onClick={exitSavedManage}>{t("savedManageDone")}</Button>
+                  {savedPicked.size > 0 && (
+                    confirmSavedDelete ? (
+                      <button
+                        onClick={runSavedDelete}
+                        className="gkm-focus text-xs font-black text-error px-2 py-2"
+                      >
+                        {t("savedDeleteConfirm", { count: savedPicked.size })}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setConfirmSavedDelete(true)}
+                        className="gkm-focus text-xs font-black text-error px-2 py-2"
+                      >
+                        {t("savedDeleteSelected", { count: savedPicked.size })}
+                      </button>
+                    )
+                  )}
+                </span>
+              ) : (
+                <Button variant="text" onClick={() => setSavedManaging(true)}>{t("savedManage")}</Button>
+              )}
+            </div>
+          )}
+          {tab === "saved" && (savedVisible.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-3xl mb-3" aria-hidden>🔖</p>
               <p className="font-bold text-ink mb-1">{t("savedEmpty")}</p>
@@ -373,23 +454,37 @@ function PicksContent() {
             </Card>
           ) : (
             <ul className="flex flex-col gap-3">
-              {saved.map(e => {
+              {savedVisible.map(e => {
                 const key = getItemSourceKey(e);
                 const placeId = parseCitySpotId(key);
-                const already = selectedKeys.has(key);
+                const picked = savedPicked.has(key);
                 return (
                   <li key={key}>
                     <Card className="overflow-hidden p-0">
                       <div className="relative">
                         <PlaceCardMedia image={e.image} type={e.type} />
-                        {/* 저장 상태 — 디자인의 카드 우상단 하트 */}
-                        <button
-                          onClick={() => removeFavorite(e.id)}
-                          aria-label={`${t("remove")}: ${e.name}`}
-                          className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-base"
-                        >
-                          ❤️
-                        </button>
+                        {/* 우상단 한 자리. 평소엔 저장 해제 하트, 정리 모드에선 선택 표시.
+                            평소 카드에 삭제 문구를 늘어놓지 않는다. */}
+                        {savedManaging ? (
+                          <button
+                            onClick={() => toggleSavedPick(key)}
+                            aria-label={`${t("savedManage")}: ${e.name}`}
+                            aria-pressed={picked}
+                            className={`gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full backdrop-blur-sm shadow-card flex items-center justify-center text-base ${
+                              picked ? "bg-action text-white" : "bg-white/90 text-faint"
+                            }`}
+                          >
+                            {picked ? "✓" : "○"}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => removeFavorite(e.id)}
+                            aria-label={`${t("remove")}: ${e.name}`}
+                            className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-base"
+                          >
+                            ❤️
+                          </button>
+                        )}
                       </div>
                       <div className="p-4">
                         <p className="font-bold text-ink text-base leading-snug">{e.name}</p>
@@ -397,12 +492,15 @@ function PicksContent() {
                           📍 {[e.district, e.city].filter(Boolean).join(", ") || "—"}
                         </p>
                         <div className="flex items-center gap-3 mt-3">
+                          {/* savedVisible 이 이미 This Trip 에 담긴 것을 걸러내므로
+                              여기 보이는 항목은 항상 미담김이다. 담기면 카드가
+                              This Trip 탭으로 넘어가는 것처럼 보인다. */}
                           <button
                             onClick={() => addToSelected(e, "saved")}
-                            disabled={already}
-                            className="gkm-focus inline-flex items-center gap-1 text-xs font-black text-action disabled:text-ok disabled:cursor-default"
+                            disabled={savedManaging}
+                            className="gkm-focus inline-flex items-center gap-1 text-xs font-black text-action disabled:text-faint disabled:cursor-default"
                           >
-                            {already ? `✓ ${t("inSelected")}` : `+ ${t("addToSelected")}`}
+                            + {t("addToSelected")}
                           </button>
                           <span className="flex-1" />
                           {placeId && (
