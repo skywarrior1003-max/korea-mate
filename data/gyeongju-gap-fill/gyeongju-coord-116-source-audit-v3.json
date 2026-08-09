@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "total_116": 116,
+  "COORD_VERIFIED": 28,
+  "FINAL_HOLD_COORD_SOURCE_EXHAUSTED": 88,
+  "KTO_NOT_FOUND_terminal": 0,
+  "verified_in_bounds_pair": 28,
+  "verified_coord_pair_fail": 0,
+  "holds_with_reason": 88,
+  "holds_without_reason": 0,
+  "sum_check": "28+88=116 (expect 116)",
+  "source_cascade_documentation": {
+    "source_cascade_performed": [
+      "1. V2: KTO KorService2 areaBasedList2 contentTypeId=12 (103 records) - no match",
+      "2. V2: KTO KorService2 areaBasedList2 contentTypeId=14 (9 records) - no match",
+      "3. V2: KTO KorService2 areaBasedList2 contentTypeId=28 (35 records) - no match",
+      "4. V3 Step A: KTO KorService2 areaBasedList2 all types (328 records) - no match",
+      "5. V3 Step B: KTO KorService2 searchKeyword2 per-name areaCode=35 - no verified match"
+    ],
+    "source_cascade_not_performed": [
+      "gyeongju.go.kr/tour: dynamic SSR, not accessible without browser",
+      "경주시 공식/공공 API: no separate coord API identified",
+      "VisitGyeongju: SSR, not accessible without browser",
+      "repo verified cross-source/crosswalk: checked - no additional coord sources in repo"
+    ],
+    "note": "88 records exhausted 5 KTO source paths. gyeongju.go.kr/tour and VisitGyeongju require browser-based access. No verified geocoding without dual-source coord verification per policy. Terminal: FINAL_HOLD_COORD_SOURCE_EXHAUSTED."
+  }
+}

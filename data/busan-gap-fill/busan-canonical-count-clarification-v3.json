@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "BUSAN_CANONICAL_RELEASE_TOTAL": 1533,
+  "BUSAN_PLACE_CANONICAL_COUNT": 1529,
+  "BUSAN_EVENT_CANONICAL_COUNT": 4,
+  "BUSAN_ENRICHMENT_UNIVERSE": 1642,
+  "definitions": {
+    "BUSAN_CANONICAL_RELEASE_TOTAL": "1533: All service-ready items (places + events) in busan-final-place-event-release-manifest.json. Do NOT use as city_spots import count.",
+    "BUSAN_PLACE_CANONICAL_COUNT": "1529: Place items only (category != event). This is the count for city_spots import planning.",
+    "BUSAN_EVENT_CANONICAL_COUNT": "4: Event items with release_class=RELEASE_READY_CURRENT_EVENT. Events live in a separate events dataset, not city_spots.",
+    "BUSAN_ENRICHMENT_UNIVERSE": "1642: All enriched candidates including canonical(1533) + holds/excludes(109). Holds = 68 event holds + 37 duplicate excludes + 4 structural. Not a service-ready count."
+  },
+  "event_4_inclusion_reason": "4 events are included in busan-final-place-event-release-manifest.json because the manifest consolidates ALL service-ready tourism items (places + active events) into one release artifact. They are tagged release_class=RELEASE_READY_CURRENT_EVENT and category=event. They should be imported to a separate events table, not city_spots.",
+  "import_guidance": {
+    "city_spots_import_count": 1529,
+    "events_import_count": 4,
+    "total_release_manifest_count": 1533
+  }
+}

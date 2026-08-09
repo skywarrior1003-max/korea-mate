@@ -1,0 +1,95 @@
+{
+  "manifest_id": "busan-gyeongju-gap-fill-import-manifest-v3-final",
+  "task_id": "TASK-BUSAN-GYEONGJU-V3-FINALIZATION-ONLY",
+  "supersedes": "busan-gyeongju-gap-fill-import-manifest-v3",
+  "branch": "data/busan-gyeongju-gap-fill-v1",
+  "starting_sha": "7708bbf",
+  "generated_at": "2026-08-09T00:00:00Z",
+  "parser_version": "v3.1.0",
+  "qa_overall": "PASS",
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES",
+  "busan_canonical": {
+    "BUSAN_PLACE_CANONICAL_COUNT": 1529,
+    "BUSAN_EVENT_CANONICAL_COUNT": 4,
+    "BUSAN_CANONICAL_RELEASE_TOTAL": 1533,
+    "BUSAN_ENRICHMENT_UNIVERSE": 1642
+  },
+  "gyeongju": {
+    "coord_116_verified": 28,
+    "coord_116_final_hold": 88,
+    "coord_not_found_terminal": 0,
+    "food_190_ready": 28,
+    "food_190_final_hold": 162,
+    "food_190_np_terminal": 0,
+    "food_hold_breakdown": {
+      "HOLD_COORDINATE": 162
+    }
+  },
+  "busan_en": {
+    "total_patches_input": 124,
+    "EN_MATCH_VERIFIED": 3,
+    "EN_MATCH_HOLD_AMBIGUOUS": 121,
+    "coordinate_only_accepted": 0,
+    "main_import_file": "busan-en-patch-MAIN-IMPORT-v3.jsonl"
+  },
+  "busan_coord": {
+    "busan-F-00341": "COORD_PAIR_CORRUPT_LAT_EQ_LNG -> FINAL_HOLD_COORD_SOURCE_EXHAUSTED",
+    "busan-K-00674": "COORD_PAIR_OUT_OF_RANGE_BOTH -> FINAL_HOLD_COORD_SOURCE_EXHAUSTED",
+    "AI_ROUTE_USABLE_both": false
+  },
+  "busan_events": {
+    "stale25": {
+      "PAST_CONFIRMED_BY_RAW_DATE_TEXT": 9,
+      "PAST_CONFIRMED_BY_DATE": 7,
+      "PAST_CONFIRMED_BY_SOURCE_REASON": 4,
+      "HOLD_STALE_2025_EDITION_REQUIRES_REFRESH": 5
+    },
+    "stale25_sum": 25,
+    "date_missing26": {
+      "SOURCE_DYNAMIC_HOLD": 26
+    },
+    "date_missing26_sum": 26
+  },
+  "import_required": [
+    "data/gyeongju-gap-fill/gyeongju-coord-116-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-190-final-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-p1-factual-patch-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-relation-final-v3.jsonl",
+    "data/busan-gap-fill/busan-canonical-baseline-audit-v3.json",
+    "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+    "data/busan-gap-fill/busan-coord-fix-final-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-MAIN-IMPORT-v3.jsonl",
+    "data/busan-gap-fill/busan-event-source-audit-v3.json",
+    "data/gyeongju-gap-fill/gyeongju-coord-116-source-audit-v3.json",
+    "data/busan-gap-fill/busan-event-arithmetic-final-v3.json",
+    "data/busan-gap-fill/busan-content-layer-audit-v3.json",
+    "data/busan-gap-fill/busan-canonical-count-clarification-v3.json"
+  ],
+  "import_optional": [
+    "data/gyeongju-gap-fill/gyeongju-kto-area-all-types-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-remaining-gaps-v3.json",
+    "data/busan-gap-fill/busan-promotion-notices-v3.json",
+    "data/busan-gap-fill/busan-course-inventory-v3.json",
+    "data/busan-gap-fill/busan-kto-courses-type25-v3.jsonl",
+    "data/busan-gap-fill/busan-kto-leisure-type28-v3.jsonl",
+    "data/busan-gap-fill/busan-kto-eng-area-list-v3.jsonl",
+    "data/busan-gap-fill/gap-fill-v3-final-qa.json",
+    "data/busan-gap-fill/busan-en-patch-verified-v3.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-coord-fill-result-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-food-disposition-v1.jsonl",
+    "data/gyeongju-gap-fill/gyeongju-kto-detail-fill-v1.jsonl",
+    "data/busan-gap-fill/busan-event-hold-refresh-v1.json",
+    "data/busan-gap-fill/busan-promotion-refresh-v1.json"
+  ],
+  "do_not_import": [
+    "data/gyeongju-gap-fill/cache/",
+    "data/busan-gap-fill/cache/",
+    "data/busan-gap-fill/busan-completeness-matrix-v1.json",
+    "data/busan-gap-fill/busan-coord-fix-v3.jsonl",
+    "data/busan-gap-fill/busan-en-patch-v3.jsonl"
+  ],
+  "security": {
+    "secrets_in_output": false,
+    "kto_key_sanitized": true
+  }
+}

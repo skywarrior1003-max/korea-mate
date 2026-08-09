@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "starting_sha": "7708bbf",
+  "checks": {
+    "Q01_en_coord_only_accepted_zero": {
+      "status": "PASS",
+      "coordinate_only_accepted": 0,
+      "EN_MATCH_VERIFIED": 3,
+      "EN_MATCH_HOLD_AMBIGUOUS": 121,
+      "note": "Coord-only evidence rejected. Identity requires name or address corroboration."
+    },
+    "Q02_gyeongju_coord116_sum": {
+      "status": "PASS",
+      "verified": 28,
+      "final_hold": 88,
+      "sum": 116
+    },
+    "Q03_gyeongju_kto_not_found_terminal": {
+      "status": "PASS",
+      "count": 0
+    },
+    "Q04_gyeongju_food190_sum": {
+      "status": "PASS",
+      "ready": 28,
+      "hold": 162,
+      "sum": 190,
+      "np_terminal": 0
+    },
+    "Q05_new_place_proposal_terminal_zero": {
+      "status": "PASS",
+      "count": 0
+    },
+    "Q06_ai_ready_place_coord_missing_zero": {
+      "status": "PASS",
+      "count": 0
+    },
+    "Q07_busan_stale25_disposition_sum": {
+      "status": "PASS",
+      "breakdown": {
+        "PAST_CONFIRMED_BY_RAW_DATE_TEXT": 9,
+        "PAST_CONFIRMED_BY_DATE": 7,
+        "PAST_CONFIRMED_BY_SOURCE_REASON": 4,
+        "HOLD_STALE_2025_EDITION_REQUIRES_REFRESH": 5
+      },
+      "sum": 25
+    },
+    "Q08_busan_date_missing26_sum": {
+      "status": "PASS",
+      "breakdown": {
+        "SOURCE_DYNAMIC_HOLD": 26
+      },
+      "sum": 26
+    },
+    "Q09_busan_content_layers_audited": {
+      "status": "PASS",
+      "all_audited": true,
+      "np_terminal": 0
+    },
+    "Q10_busan_canonical_place_event_separated": {
+      "status": "PASS",
+      "BUSAN_PLACE_CANONICAL_COUNT": 1529,
+      "BUSAN_EVENT_CANONICAL_COUNT": 4,
+      "BUSAN_CANONICAL_RELEASE_TOTAL": 1533
+    },
+    "Q11_manifest_unique_no_overlap": {
+      "status": "PASS",
+      "REQUIRED": 13,
+      "OPTIONAL": 14,
+      "DO_NOT_IMPORT": 5,
+      "req_opt_overlap": 0,
+      "req_dni_conflict": 0
+    },
+    "Q12_required_manifest_paths_exist": {
+      "status": "PASS",
+      "scope": "REQUIRED_only",
+      "missing_count": 0,
+      "missing": []
+    },
+    "Q13_rights_unknown_not_display_ready": {
+      "status": "PASS",
+      "note": "rights_unknown images not promoted. Only KTO cpyrhtDivCd-verified images usable."
+    },
+    "Q14_source_provenance_missing_ready_zero": {
+      "status": "PASS",
+      "note": "All READY items have fact_type=FACT + source field."
+    },
+    "Q15_protected_code_changes_zero": {
+      "status": "PASS",
+      "note": "src/ functions/ supabase/ package: zero changes."
+    },
+    "Q16_master_changes_zero": {
+      "status": "PASS",
+      "note": "Branch=data/busan-gyeongju-gap-fill-v1. No master changes."
+    },
+    "Q17_production_db_migration_zero": {
+      "status": "PASS",
+      "note": "No DB/migration/deploy changes."
+    },
+    "Q18_secret_scan_pass": {
+      "status": "PASS",
+      "note": "KTO key sanitized. Not in any output file."
+    },
+    "Q19_busan_coord_final_hold_documented": {
+      "status": "PASS",
+      "records": [
+        "busan-F-00341 COORD_PAIR_CORRUPT_LAT_EQ_LNG -> FINAL_HOLD_COORD_SOURCE_EXHAUSTED AI_ROUTE_USABLE=false",
+        "busan-K-00674 COORD_PAIR_OUT_OF_RANGE_BOTH -> FINAL_HOLD_COORD_SOURCE_EXHAUSTED AI_ROUTE_USABLE=false"
+      ],
+      "note": "FINAL_HOLD_COORD_SOURCE_EXHAUSTED is a valid terminal state. QA PASS."
+    }
+  },
+  "overall": "PASS",
+  "pass_count": 19,
+  "partial_count": 0,
+  "fail_count": 0,
+  "BUSAN_GYEONGJU_MAIN_HANDOFF_READY": "YES"
+}

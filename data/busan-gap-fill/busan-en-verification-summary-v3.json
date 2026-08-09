@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "total_input": 124,
+  "EN_MATCH_VERIFIED": 3,
+  "EN_MATCH_HOLD_AMBIGUOUS": 121,
+  "coordinate_only_accepted": 0,
+  "main_import_file": "busan-en-patch-MAIN-IMPORT-v3.jsonl",
+  "verification_policy": "VERIFIED requires: Korean name of canonical appears in EN title (from KTO Korean parenthetical) OR very-close coord (<0.0003 deg ~30m) + at least 2 shared address tokens. Coord-only proximity is INSUFFICIENT for identity verification.",
+  "evidence_types": {
+    "KO_NAME_IN_EN_TITLE": "canonical title_ko found in KTO EN record Korean part",
+    "VERY_CLOSE_COORD": "<0.0003 deg distance (approx 30m)",
+    "CLOSE_COORD": "<0.001 deg distance (approx 100m)",
+    "ADDRESS_TOKENS_SHARED": ">=2 address tokens shared"
+  }
+}

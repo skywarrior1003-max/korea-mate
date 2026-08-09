@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "V3_commit": "7708bbf",
+  "finalization_changes": {
+    "busan-coord-fix-v3.jsonl -> DO_NOT_IMPORT": "replaced by busan-coord-fix-final-v3.jsonl",
+    "busan-en-patch-v3.jsonl -> DO_NOT_IMPORT": "replaced by busan-en-patch-MAIN-IMPORT-v3.jsonl (verified only)",
+    "new REQUIRED files": [
+      "gyeongju-coord-116-source-audit-v3.json",
+      "busan-event-arithmetic-final-v3.json",
+      "busan-content-layer-audit-v3.json",
+      "busan-canonical-count-clarification-v3.json"
+    ]
+  },
+  "count_reconciliation_from_V3": {
+    "V3_manifest_paths": 22,
+    "V3_committed_files": 20,
+    "why_22_ne_20": "22 = 9 REQUIRED + 13 OPTIONAL. OPTIONAL includes 5 pre-existing V2 artifacts (not recommitted in 7708bbf). Committed 20 = 17 new V3 in manifest + 3 support files (import-manifest-v3.json, main-handoff-v3.md, script). No discrepancy — 3 support files excluded from REQUIRED/OPTIONAL by design."
+  },
+  "finalization_counts": {
+    "REQUIRED": 13,
+    "OPTIONAL": 14,
+    "DO_NOT_IMPORT": 5,
+    "REQUIRED_OPTIONAL_overlap": 0,
+    "REQUIRED_DNI_conflict": 0,
+    "OPTIONAL_DNI_overlap": 0,
+    "missing_paths": 0
+  }
+}

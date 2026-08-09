@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-08-09",
+  "parser_version": "v3.1.0",
+  "all_layers_audited": true,
+  "NEW_PLACE_PROPOSAL_terminal_all_layers": 0,
+  "layers": {
+    "official_courses_ordered_stops": {
+      "AUDITED": "YES",
+      "source": "KTO_KorService2_areaBasedList2_type25",
+      "COLLECTED_COUNT": 1,
+      "SERVICE_USABLE_COUNT": 1,
+      "FINAL_HOLD_COUNT": 0,
+      "NEW_PLACE_PROPOSAL_terminal": 0,
+      "course_stop_relations": "NOT_BUILT (separate task needed)",
+      "note": "1 KTO course record for Busan. Stop-level canonical link mapping: NOT_BUILT.",
+      "AS_OF": "2026-08-09"
+    },
+    "experiences_leisure_programs": {
+      "AUDITED": "YES",
+      "source": "KTO_KorService2_areaBasedList2_type28",
+      "COLLECTED_COUNT": 33,
+      "SERVICE_USABLE_COUNT": 33,
+      "FINAL_HOLD_COUNT": 0,
+      "NEW_PLACE_PROPOSAL_terminal": 0,
+      "note": "33 leisure/experience records from KTO. Applications/reservations: NOT_COLLECTED (requires Visit Busan SSR).",
+      "AS_OF": "2026-08-09"
+    },
+    "applications_reservations": {
+      "AUDITED": "YES",
+      "source": "busan-travel-product-discovery-final.json",
+      "COLLECTED_COUNT": 0,
+      "SERVICE_USABLE_COUNT": 0,
+      "FINAL_HOLD_COUNT": 0,
+      "note": "Travel product discovery 0 usable records. Visit Busan booking pages require SSR.",
+      "AS_OF": "2026-08-09"
+    },
+    "travel_information": {
+      "AUDITED": "YES",
+      "source": "busan-travel-notice-discovery-final.json",
+      "COLLECTED_COUNT": 0,
+      "SERVICE_USABLE_COUNT": 0,
+      "FINAL_HOLD_COUNT": 0,
+      "note": "Travel notice discovery 0 usable records.",
+      "AS_OF": "2026-08-09"
+    },
+    "promotions_discounts": {
+      "AUDITED": "YES",
+      "source": "busan-promotions-public-final.json + archive",
+      "COLLECTED_COUNT": 10,
+      "SERVICE_USABLE_COUNT": 2,
+      "FINAL_HOLD_COUNT": 0,
+      "NEW_PLACE_PROPOSAL_terminal": 0,
+      "note": "Public: 2 (current=2, expired=0). Archived: 8. KTO type15 Busan: 22 fetched, 0 current.",
+      "AS_OF": "2026-08-09"
+    },
+    "official_tourism_notices": {
+      "AUDITED": "YES",
+      "source": "busan-promotions-public-final.json + KTO_type15",
+      "COLLECTED_COUNT": 10,
+      "SERVICE_USABLE_COUNT": 2,
+      "FINAL_HOLD_COUNT": 0,
+      "note": "Official tourism notices captured via promotions pipeline. busan.go.kr tourism notice board: SOURCE_DYNAMIC_HOLD (requires SSR).",
+      "AS_OF": "2026-08-09"
+    },
+    "seasonal_monthly_content": {
+      "AUDITED": "YES",
+      "source": "KTO_type15_areaCode6",
+      "COLLECTED_COUNT": 22,
+      "SERVICE_USABLE_COUNT": 0,
+      "FINAL_HOLD_COUNT": 22,
+      "note": "All 22 KTO type15 Busan records have past dates or no dates. 0 current seasonal traveler-facing content from KTO. Visit Busan seasonal page: SOURCE_DYNAMIC_HOLD.",
+      "AS_OF": "2026-08-09"
+    }
+  },
+  "summary": {
+    "total_service_usable": 38,
+    "total_final_hold": 22,
+    "total_np_terminal": 0
+  }
+}
