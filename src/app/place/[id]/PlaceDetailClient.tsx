@@ -423,9 +423,14 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         className="md:hidden fixed left-0 right-0 bottom-16 z-40 bg-surface border-t border-line px-4 py-3 flex items-center gap-2"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
+        {/* 이 버튼은 아이콘만 있고 글자가 없다. 이름을 붙여 두지 않으면 화면을
+            읽어 주는 도구에는 "버튼"이라고만 들리고, 이 화면에서 가장 중요한
+            동작이 무엇인지 알 수 없다. 데스크톱이 보여 주는 라벨과 같은 문구를
+            쓴다 — 상태는 aria-pressed 가 함께 알린다. */}
         <button
           onClick={handleSave}
           aria-pressed={saved}
+          aria-label={saved ? t("savedState") : t("save")}
           className={`gkm-focus flex-1 min-h-12 rounded-control text-sm font-bold transition-colors ${
             saved ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
           }`}

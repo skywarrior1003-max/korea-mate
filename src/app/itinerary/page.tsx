@@ -1830,8 +1830,11 @@ function ItineraryResult() {
   return (
     <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-12">
 
-      {/* ── 공유 링크 뷰 배너 ── */}
-      {shareId && (
+      {/* ── 공유 링크 뷰 배너 ──
+            `?id=` 가 붙어 있다는 것만으로 남의 일정이라고 보면 안 된다. 내 여행
+            목록에서 여는 정규 경로가 바로 `?id=` 라서, 자기 일정을 열 때마다
+            "공유받은 일정을 보고 있다"는 말이 붙어 있었다. 소유 여부로 판단한다. */}
+      {shareId && !isOwner && (
         <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-50 border border-blue-200">
           <span className="text-lg">🔗</span>
           <p className="text-sm font-bold text-blue-700 flex-1">
@@ -1955,7 +1958,12 @@ function ItineraryResult() {
         </div>
 
         <div className="flex flex-col gap-2 w-full sm:w-auto">
-          {/* 공유 링크 복사 버튼 */}
+          {/* 공유 링크 복사 — 공개 일정에만 둔다. 링크를 받은 사람은
+              `/shared/{id}` 로 들어가고 거기서 is_public 이 강제되므로,
+              비공개 일정의 링크는 상대에게 "Itinerary not found" 만 보여준다.
+              열리지 않는 링크를 복사하게 두지 않는다. 공개로 바꾸는 방법은
+              바로 아래 Public/Private 토글이다. /my-trips 와 같은 규칙이다. */}
+          {isPublic && (
           <button
             onClick={handleCopyShareLink}
             disabled={!itinId}
@@ -1964,6 +1972,7 @@ function ItineraryResult() {
           >
             {copied ? t("copied") : t("copyShareLink")}
           </button>
+          )}
 
           {/* 공개/비공개 토글 */}
           {(!shareId || isOwner) && itinId && (
