@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { getSavedSpotsData, FAVORITES_EVENT, removeFavorite } from "@/lib/favorites";
 import { getItemSourceKey } from "@/lib/place-identity";
@@ -10,6 +11,11 @@ import EventDetailModal from "@/components/EventDetailModal";
 
 export default function SavedSpotsPanel() {
   const pathname = usePathname();
+  // 이 패널의 문구는 Saved 보관함의 것이다. 목록 제목과 해제 동작은 이미
+  // 같은 뜻으로 쓰이는 키가 있어 그대로 쓴다 — 같은 말에 키를 새로 만들면
+  // 나중에 한쪽만 고쳐진다.
+  const t = useTranslations("saved");
+  const tPicks = useTranslations("picks");
   const [spots, setSpots] = useState<EventItem[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState<EventItem | null>(null);
@@ -43,7 +49,7 @@ export default function SavedSpotsPanel() {
         // ── 접힌 상태: 작은 pill 버튼 ──────────────────────────────
         <button
           onClick={() => setExpanded(true)}
-          aria-label="Show saved spots"
+          aria-label={t("panelShow")}
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white shadow-lg border border-gray-200 hover:shadow-xl transition-all"
         >
           <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden className="text-emerald-600"
@@ -53,7 +59,7 @@ export default function SavedSpotsPanel() {
           <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-emerald-500 text-white px-1 leading-none">
             {spots.length}
           </span>
-          <span className="text-xs font-semibold text-gray-600">Saved</span>
+          <span className="text-xs font-semibold text-gray-600">{t("title")}</span>
           <span className="text-gray-400 text-xs leading-none">▲</span>
         </button>
       ) : (
@@ -68,14 +74,14 @@ export default function SavedSpotsPanel() {
                    fill="currentColor" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z" />
               </svg>
-              <span className="text-sm font-black text-gray-900">Saved</span>
+              <span className="text-sm font-black text-gray-900">{t("title")}</span>
               <span className="min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[11px] font-black bg-emerald-500 text-white px-1 leading-none">
                 {spots.length}
               </span>
             </div>
             <button
               onClick={() => setExpanded(false)}
-              aria-label="Collapse saved spots panel"
+              aria-label={t("panelCollapse")}
               className="text-gray-400 hover:text-gray-700 font-bold px-1 py-0.5 transition-colors text-sm"
             >
               ▼
@@ -120,7 +126,7 @@ export default function SavedSpotsPanel() {
                   {/* 저장 해제 */}
                   <button
                     onClick={(e) => { e.stopPropagation(); removeFavorite(item.id); }}
-                    title="Remove from Saved"
+                    title={tPicks("unsaveAria", { name: item.shortName })}
                     className="shrink-0 w-7 h-7 rounded-full text-xs flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
                   >
                     ✕
@@ -136,7 +142,7 @@ export default function SavedSpotsPanel() {
               href="/picks/?tab=saved"
               className="block text-[11px] font-bold text-gray-600 hover:text-gray-900 text-center py-1 transition-colors"
             >
-              Manage in Picks →
+              {t("manageInPicks")}
             </Link>
           </div>
         </div>

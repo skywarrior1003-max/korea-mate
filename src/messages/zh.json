@@ -6,7 +6,8 @@
     "myTrips": "我的行程",
     "planMyTrip": "规划行程",
     "plan": "规划",
-    "home": "首页"
+    "home": "首页",
+    "about": "关于"
   },
   "explore": {
     "title": "探索{city}",
@@ -111,7 +112,10 @@
     "explore": "探索地点",
     "mineEmpty": "暂无自己添加的地点",
     "mineHint": "在行程编辑器中添加地图上没有的地点。",
-    "openItinerary": "打开行程编辑器"
+    "openItinerary": "打开行程编辑器",
+    "panelShow": "查看已保存的地点",
+    "panelCollapse": "收起已保存地点面板",
+    "manageInPicks": "在 Picks 中管理 →"
   },
   "place": {
     "save": "保存",
@@ -130,7 +134,6 @@
     "whyGo": "推荐理由",
     "details": "详细信息",
     "viewDetails": "查看详情",
-    "addToItinerary": "加入行程",
     "inItinerary": "已加入行程",
     "addedToTrip": "已加入你的行程",
     "keepExploring": "继续浏览",
@@ -523,5 +526,20 @@
   "like": {
     "like": "点赞",
     "liked": "取消点赞"
+  },
+  "about": {
+    "heroTitle": "关于 gokoreamate",
+    "heroSubtitle": "让海外自由行旅客安心走遍韩国",
+    "missionTitle": "我们在做什么",
+    "missionBody": "gokoreamate 是为来韩国的海外旅客打造的 AI 旅行向导。我们帮你安排行程、找到一个人也自在的地方，并让你在韩国不会卡住。",
+    "dataTitle": "数据来源",
+    "dataBodyBefore": "本地信息由韩国观光公社（",
+    "dataBodyAfter": "）的 TourAPI 提供。为了让无障碍设施、支付方式和是否适合独自前往一目了然，我们会逐条核实并整理。",
+    "aiTitle": "AI 技术",
+    "aiBody": "行程与博客文章由 Gemini AI 生成。我们力求准确、优化且贴近当地，但现场运营可能变动，重要信息请在出发前再确认一次。",
+    "contactTitle": "联系我们",
+    "contactBody": "有反馈或建议吗？我们很想听。欢迎分享你的想法，或告诉我们哪些信息需要更新。让我们一起把这趟韩国之旅变成难忘的回忆。",
+    "lastUpdated": "最后更新：{date}",
+    "footerNote": "数据来源：韩国观光公社 · AI：Gemini"
   }
 }

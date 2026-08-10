@@ -6,7 +6,8 @@
     "myTrips": "내 여행",
     "planMyTrip": "여행 계획하기",
     "plan": "계획",
-    "home": "홈"
+    "home": "홈",
+    "about": "소개"
   },
   "explore": {
     "title": "{city} 탐험하기",
@@ -111,7 +112,10 @@
     "explore": "장소 둘러보기",
     "mineEmpty": "직접 등록한 장소가 없습니다",
     "mineHint": "지도에 없는 나만 아는 장소를 일정 편집기에서 추가하세요.",
-    "openItinerary": "일정 편집기 열기"
+    "openItinerary": "일정 편집기 열기",
+    "panelShow": "저장한 장소 보기",
+    "panelCollapse": "저장한 장소 패널 접기",
+    "manageInPicks": "Picks 에서 관리 →"
   },
   "place": {
     "save": "저장",
@@ -130,7 +134,6 @@
     "whyGo": "추천 이유",
     "details": "상세 정보",
     "viewDetails": "상세 보기",
-    "addToItinerary": "일정에 추가",
     "inItinerary": "일정에 있음",
     "addedToTrip": "일정에 추가했습니다",
     "keepExploring": "계속 둘러보기",
@@ -523,5 +526,20 @@
   "like": {
     "like": "좋아요",
     "liked": "좋아요 취소"
+  },
+  "about": {
+    "heroTitle": "gokoreamate 소개",
+    "heroSubtitle": "외국인 자유여행자가 마음 놓고 한국을 다닐 수 있게 합니다",
+    "missionTitle": "우리가 하는 일",
+    "missionBody": "gokoreamate 는 한국에 오는 외국인 여행자를 위해 만든 AI 여행 가이드입니다. 일정을 짜고, 혼자서도 편한 장소를 찾고, 막히는 순간 없이 한국을 다닐 수 있도록 돕습니다.",
+    "dataTitle": "데이터 출처",
+    "dataBodyBefore": "지역 정보는 한국관광공사(",
+    "dataBodyAfter": ")의 TourAPI 로 제공받습니다. 접근성, 결제 방법, 혼자 가도 되는지를 분명히 알 수 있도록 저희가 직접 확인하고 정리합니다.",
+    "aiTitle": "AI 기술",
+    "aiBody": "일정과 블로그 글은 Gemini AI 가 만듭니다. 정확하고 최적화된 안내를 목표로 하지만 현지 운영은 바뀔 수 있으니, 중요한 내용은 출발 전에 한 번 더 확인해 주세요.",
+    "contactTitle": "문의하기",
+    "contactBody": "의견이나 제안이 있으신가요? 언제든 들려주세요. 생각을 나눠 주시거나 고쳐야 할 정보를 알려 주시면 반영하겠습니다. 한국 여행이 오래 남는 기억이 되도록 함께 만들어 가요.",
+    "lastUpdated": "최종 업데이트: {date}",
+    "footerNote": "데이터 제공: 한국관광공사 · AI: Gemini"
   }
 }

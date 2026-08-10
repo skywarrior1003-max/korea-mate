@@ -6,7 +6,8 @@
     "myTrips": "マイトリップ",
     "planMyTrip": "旅行を計画する",
     "plan": "計画",
-    "home": "ホーム"
+    "home": "ホーム",
+    "about": "サービス紹介"
   },
   "explore": {
     "title": "{city}を探索",
@@ -111,7 +112,10 @@
     "explore": "場所を探す",
     "mineEmpty": "登録した場所がありません",
     "mineHint": "地図にない場所を旅程エディタから追加できます。",
-    "openItinerary": "旅程エディタを開く"
+    "openItinerary": "旅程エディタを開く",
+    "panelShow": "保存した場所を表示",
+    "panelCollapse": "保存した場所パネルを閉じる",
+    "manageInPicks": "Picks で管理 →"
   },
   "place": {
     "save": "保存",
@@ -130,7 +134,6 @@
     "whyGo": "おすすめの理由",
     "details": "詳細情報",
     "viewDetails": "詳細を見る",
-    "addToItinerary": "旅程に追加",
     "inItinerary": "旅程に追加済み",
     "addedToTrip": "旅程に追加しました",
     "keepExploring": "引き続き探す",
@@ -523,5 +526,20 @@
   "like": {
     "like": "いいね",
     "liked": "いいね解除"
+  },
+  "about": {
+    "heroTitle": "gokoreamate について",
+    "heroSubtitle": "海外からの個人旅行者が、安心して韓国を歩けるように",
+    "missionTitle": "私たちの目的",
+    "missionBody": "gokoreamate は、韓国を訪れる海外の旅行者のために作られた AI 旅行ガイドです。旅程づくり、ひとりでも入りやすい場所探し、そして迷わず動けることをお手伝いします。",
+    "dataTitle": "データの出典",
+    "dataBodyBefore": "地域情報は韓国観光公社（",
+    "dataBodyAfter": "）の TourAPI から提供されています。アクセシビリティ、支払い方法、ひとりでも利用しやすいかどうかがはっきり分かるよう、私たちが確認して整えています。",
+    "aiTitle": "AI 技術",
+    "aiBody": "旅程とブログ記事は Gemini AI が作成します。正確で最適な案内を目指していますが、現地の運営は変わることがあります。大切な内容は出発前にご確認ください。",
+    "contactTitle": "お問い合わせ",
+    "contactBody": "ご意見やご提案はありますか。ぜひお聞かせください。お考えを共有いただくか、更新が必要な情報をお知らせください。韓国の旅が忘れられないものになるよう、一緒に作っていきましょう。",
+    "lastUpdated": "最終更新: {date}",
+    "footerNote": "データ提供: 韓国観光公社 · AI: Gemini"
   }
 }
