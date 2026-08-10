@@ -15,7 +15,7 @@ import ContactModal from "@/components/ContactModal";
 import { getCart, CART_EVENT, type EventItem } from "@/lib/cart";
 import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
 import { trackEvent } from "@/lib/analytics";
-import { citySpotSourceKey } from "@/lib/place-identity";
+import { localInfoSourceKey } from "@/lib/place-identity";
 import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
@@ -228,9 +228,18 @@ function toEventItem(spot: LocalInfo): EventItem {
   } catch { /* mapUrl 파싱 실패 시 lat/lng 없이 진행 */ }
   return {
     id: `local-${spot.id}`,
-    // 홈 프리셋은 src/data/cities/busan.ts id 1~7 이며 city_spots 1~7 과 같은
-    // 장소다(이름·whyItMatters 문자열 일치 확인). 별도 namespace 를 만들지 않는다.
-    sourceKey: citySpotSourceKey(spot.id),
+    // 이 숫자는 local-info.json 의 파일 ID 다. city_spots.id 가 아니다.
+    //
+    // 예전에는 여기서 citySpotSourceKey(spot.id) 를 불렀다. 그래서 Haeundae
+    // Beach(파일 id 6)가 `city_spot:6` 이 됐고, canonical 6 번은 Jangsan
+    // Mountain Trail 이라 상세로 들어가면 다른 산이 열렸다. 파일 ID 71 건 중
+    // 65 건이 다른 장소를, 6 건이 존재하지 않는 행을 가리키고 있었다.
+    //
+    // 이 장소들의 canonical id 를 아직 모르므로 canonical 인 척하지 않는다.
+    // local_info 네임스페이스로 두면 parseCitySpotId 가 null 을 돌려주고,
+    // 틀린 Place Detail 링크와 틀린 AI 취향 신호가 둘 다 생기지 않는다.
+    // 진짜 연결은 Home 을 city_spots 로 옮기는 다음 단계에서 붙인다.
+    sourceKey: localInfoSourceKey(spot.city, spot.id),
     type: spot.category,
     isAnchor: false,
     journeyCluster: "busan-explore",

@@ -175,8 +175,18 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
       const deduped = dedupeByCanonical(supabaseSpots);
       // 병합 시점이 소스를 아는 유일한 지점이다. 여기서 sourceKey 를 붙이지 않으면
       // 이후 `local-24` 만 남아 어느 소스였는지 복원할 수 없다.
-      const result: CitySpot[] = (deduped.length > 0 ? deduped : city.staticSpots)
-        .map(s => ({ ...s, sourceKey: s.sourceKey ?? citySpotSourceKey(s.id) }));
+      // staticSpots 는 Supabase 가 비었을 때만 쓰는 Version 1 정적 목록이고,
+      // 그 id 는 local-info 파일 ID 다 — canonical city_spots.id 가 아니다.
+      // 한 map 안에서 두 소스에 같은 키를 붙이면 fallback 이 걸릴 때마다
+      // 엉뚱한 DB 장소로 귀속된다. 소스를 아는 이 자리에서 갈라 준다.
+      const fromCanonical = deduped.length > 0;
+      const result: CitySpot[] = (fromCanonical ? deduped : city.staticSpots)
+        .map(s => ({
+          ...s,
+          sourceKey: s.sourceKey ?? (fromCanonical
+            ? citySpotSourceKey(s.id)
+            : localInfoSourceKey(city.name, s.id)),
+        }));
       const seen = new Set(result.map(s => s.name.toLowerCase()));
 
       // local-info.json: 런타임 타입 가드로 필수 필드 검증
