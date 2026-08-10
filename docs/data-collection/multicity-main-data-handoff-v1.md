@@ -197,7 +197,7 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 
 | 항목 | 값 |
 |---|---|
-| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1(SHA 7a84ce2) + BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1 완료 + VISITSEOUL-INVENTORY-COLLECTOR-DRYRUN-V1 완료 |
+| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1(SHA 7a84ce2) + BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1 완료 + VISITSEOUL-INVENTORY-COLLECTOR-DRYRUN-V1 완료 + **VISITSEOUL-FULL-INVENTORY-LIST-ONLY-V1 완료** |
 | KTO 관광지 | 421건 |
 | KTO 문화 | 220건 |
 | KTO 쇼핑 | 150건 |
@@ -275,21 +275,61 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 | EVENT_TRACK | 47건 (21.9%) |
 | RESTAURANT_TRACK | 35건 (16.3%) |
 | multi_lang_list 보유율 | 100% (215/215) |
-| SEOUL_BULK_COLLECTION | NOT_STARTED |
 | 스크립트 | `scripts/run-visitseoul-inventory-collector-v1.py` |
 | 설계 문서 | `docs/data-collection/seoul/seoul-visitseoul-inventory-collector-design-v1.md` |
 | 실행 결과 | `docs/data-collection/seoul/seoul-visitseoul-inventory-dryrun-summary-v1.md` |
-| 산출물 | `data/seoul-source-audit/` (manifest + JSONL 4개) |
+
+**VisitSeoul Korean LIST Inventory completed (2026-08-10):**
+
+| 지표 | 값 |
+|---|---|
+| 전체 total_count | **3,765건** (confirmed) |
+| 전체 수집 records | **3,765건** |
+| unique CIDs | **3,765** (중복 0) |
+| pages_success | **76 / 76** |
+| DETAIL_CALLS | **0** (list only) |
+| TOTAL_API_CALLS | **76** |
+| SOURCE_MUTATED | NO |
+| PLACE_CORE_CANDIDATE | **316건** (8.4%) |
+| PLACE_CONDITIONAL_REVIEW | **577건** (15.3%) |
+| RESTAURANT_TRACK | **1,259건** (33.4%) |
+| EVENT_TRACK | **1,190건** (31.6%) |
+| SHOPPING_REVIEW | **262건** (7.0%) |
+| EXPERIENCE_CANDIDATE | **120건** (3.2%) |
+| GENERAL_ACCOMMODATION_EXCLUDE | **17건** (0.5%) |
+| TEMPLE_STAY_CANDIDATE | **2건** (0.1%) |
+| UNRESOLVED_CATEGORY | **22건** (0.6%) — 3개 미매핑 코드, detail 진입 금지 |
+| EXACT_PRELIMINARY_RETAINED_COUNT | **1,277건** (CORE+COND+SHOP+EXP+TEMPLE) |
+| MAX_POSSIBLE_DETAIL_CALLS | 1,277건 |
+| multi_lang_list 보유율 | 100% (3765/3765) |
+| SEOUL_BULK_DETAIL_COLLECTION | **NOT_STARTED** |
+| 수집기 | `scripts/run-visitseoul-full-inventory-v1.py` (v2.0.0-list-only) |
+| 산출물 | `data/seoul-source-audit/seoul-visitseoul-full-inventory-v1.jsonl` (3765건) |
+| 요약 | `docs/data-collection/seoul/seoul-visitseoul-full-inventory-summary-v1.md` |
+
+다음 승인 gate: retained detail 수집 (1,277건 — MAIN 결정 필요)
+
+**MAIN 결정 필요 (retained detail 착수 전):**
+
+1. ~~list inventory + local category filter 수집 전략 승인~~ (**완료** — 전체 3,765건 수집됨)
+2. 전문매장/상가 USER_REVIEW 프로세스 (262건)
+3. KTO 병행 수집 범위 확정 (credential 확보 포함)
+4. 서울역사박물관 대안 source
+5. KTO ID collision 해소 (264337, 264491) — credential 확보 후 targeted detail
+6. UNRESOLVED 22건 코드맵 추가 (`Cw8j0y7`, `Cy5h2x9`, `Ca1z6p7`)
 
 **참조 파일 (data/seoul-collection-v1 branch):**
 
+- `docs/data-collection/seoul/seoul-visitseoul-full-inventory-summary-v1.md` — **Full inventory 결과 요약 (신규)**
+- `docs/data-collection/seoul/seoul-visitseoul-full-category-distribution-v1.json` — **Track 분포 + category coverage (신규)**
+- `docs/data-collection/seoul/seoul-visitseoul-detail-candidate-plan-v1.json` — **Retained detail plan EXACT (신규)**
 - `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서 (v1-corrected)
 - `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세 (SSOT 정렬, 홍대 복구)
 - `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` — KTO contentId 후보 무결성 테이블
-- `docs/data-collection/seoul/seoul-visitseoul-inventory-collector-design-v1.md` — 수집기 설계 문서 (신규)
-- `docs/data-collection/seoul/seoul-visitseoul-inventory-dryrun-summary-v1.md` — Dry-run 실행 결과 요약 (신규)
+- `docs/data-collection/seoul/seoul-visitseoul-inventory-collector-design-v1.md` — 수집기 설계 문서
+- `docs/data-collection/seoul/seoul-visitseoul-inventory-dryrun-summary-v1.md` — Dry-run 실행 결과 요약
 - `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` — 카테고리 품질 분석
-- `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안 (수집 전략 포함)
+- `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안
 - `docs/data-collection/seoul/seoul-live-user-review-groups-v1.md` — 사용자 검토 그룹
 - `docs/data-collection/seoul/seoul-visitseoul-kto-crosswalk-sample-v1.json` — KTO↔VS 교차 매핑
 - `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json` — SOURCE-DISCOVERY 원안

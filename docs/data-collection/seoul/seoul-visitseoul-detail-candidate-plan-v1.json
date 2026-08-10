@@ -1,0 +1,57 @@
+{
+  "as_of": "2026-08-10",
+  "basis": "exact full list inventory (not estimate)",
+  "detail_calls_this_task": 0,
+  "detail_candidate_plan": {
+    "DETAIL_DEFERRED_EVENT": 1190,
+    "DETAIL_DEFERRED_RESTAURANT": 1259,
+    "DETAIL_EXCLUDED_GENERAL_ACCOMMODATION": 17,
+    "DETAIL_PRIORITY_CONDITIONAL": 577,
+    "DETAIL_PRIORITY_CORE": 316,
+    "DETAIL_PRIORITY_EXPERIENCE": 120,
+    "DETAIL_PRIORITY_SHOPPING_REVIEW": 262,
+    "DETAIL_PRIORITY_TEMPLE_STAY": 2,
+    "EXACT_PRELIMINARY_RETAINED_COUNT": 1277,
+    "MAX_POSSIBLE_DETAIL_CALLS": 1277,
+    "RECOMMENDED_FIRST_DETAIL_BATCH": 300,
+    "UNRESOLVED_DEFERRED": 22,
+    "note": "DETAIL_CALLS = 0 in this task. Calculation only.",
+    "shopping_pre_gate": {
+      "AMBIGUOUS_REVIEW": 234,
+      "STRONG_AUTO_EXCLUDE": 5,
+      "STRONG_AUTO_INCLUDE": 23,
+      "note": "list-evidence only — no API calls made"
+    }
+  },
+  "multilang_stats": {
+    "CID_SUFFIX_AUTOGENERATION": "NO",
+    "ZH_VARIANT_DECISION": "PENDING",
+    "multi_lang_list_present": 3765,
+    "multi_lang_list_rate": 1.0,
+    "note": "multi_lang_list is SSOT for multilingual linkage",
+    "per_lang": {
+      "en": {
+        "count": 3610,
+        "rate": 0.9588
+      },
+      "ja": {
+        "count": 3408,
+        "rate": 0.9052
+      },
+      "ko": {
+        "count": 3765,
+        "rate": 1.0
+      },
+      "zh-CN": {
+        "count": 3395,
+        "rate": 0.9017
+      },
+      "zh-TW": {
+        "count": 3386,
+        "rate": 0.8993
+      }
+    }
+  },
+  "note": "All counts derived from full LIST inventory. DETAIL collection requires separate task approval.",
+  "task": "TASK-SEOUL-VISITSEOUL-FULL-INVENTORY-LIST-ONLY-V1"
+}

@@ -1,0 +1,264 @@
+{
+  "as_of": "2026-08-10",
+  "category_coverage": {
+    "mapped_codes": 43,
+    "observed_codes": 59,
+    "unmapped_codes": 16,
+    "unmapped_detail": {
+      "Ca1z6p7": {
+        "count": 2,
+        "path": "역사관광",
+        "sample_titles": [
+          "중랑망우공간",
+          "감사의 정원"
+        ]
+      },
+      "Ce7q5s7": {
+        "count": 11,
+        "path": "숙박 > 호텔",
+        "sample_titles": [
+          "콘래드 서울 호텔",
+          "부티크모나코",
+          "메이필드 호텔"
+        ]
+      },
+      "Ch4v8z7": {
+        "count": 4,
+        "path": "숙박",
+        "sample_titles": [
+          "남현당 한옥게스트하우스",
+          "수락휴 트리하우스",
+          "스테이 다반사"
+        ]
+      },
+      "Cl1k5b1": {
+        "count": 5,
+        "path": "역사관광 > 역사유적지",
+        "sample_titles": [
+          "국립서울현충원",
+          "고궁을 찾다",
+          "종묘돌담길"
+        ]
+      },
+      "Cm1y8v1": {
+        "count": 54,
+        "path": "음식 > 외국식 > 중식",
+        "sample_titles": [
+          "난향",
+          "이닝",
+          "팔선"
+        ]
+      },
+      "Cn7k2s5": {
+        "count": 36,
+        "path": "음식 > 외국식 > 기타외국식",
+        "sample_titles": [
+          "타코아미고",
+          "알라딘의양고기",
+          "포탈라"
+        ]
+      },
+      "Cp3b3j9": {
+        "count": 17,
+        "path": "자연관광 > 자연공원",
+        "sample_titles": [
+          "북한산국립공원",
+          "용산가족공원",
+          "홍릉시험림(홍릉숲)"
+        ]
+      },
+      "Cp5i3g2": {
+        "count": 5,
+        "path": "쇼핑 > 면세점",
+        "sample_titles": [
+          "신라면세점 서울점",
+          "롯데면세점 본점",
+          "동화면세점"
+        ]
+      },
+      "Cp7e6o3": {
+        "count": 4,
+        "path": "문화관광  > 행사시설",
+        "sample_titles": [
+          "더클래스 청담",
+          "라움",
+          "세종대 컨벤션센터"
+        ]
+      },
+      "Cr6o1h2": {
+        "count": 18,
+        "path": "체험관광 > 산업관광",
+        "sample_titles": [
+          "KBS 견학홀",
+          "나무엑터스",
+          "YG 엔터테인먼트"
+        ]
+      },
+      "Ct1z4k9": {
+        "count": 3,
+        "path": "쇼핑 > 대형마트",
+        "sample_titles": [
+          "롯데마트  제타플렉스 서울역점",
+          "이마트 왕십리점",
+          "승진완구\t"
+        ]
+      },
+      "Ct9n1n3": {
+        "count": 2,
+        "path": "숙박 > 호스텔",
+        "sample_titles": [
+          "하이서울유스호스텔",
+          "우리집 게스트하우스"
+        ]
+      },
+      "Cw8j0y7": {
+        "count": 13,
+        "path": "자연관광 > 자연경관(하천)",
+        "sample_titles": [
+          "청계천",
+          "불광천",
+          "홍제천"
+        ]
+      },
+      "Cx2j0n1": {
+        "count": 4,
+        "path": "음식 > 외국식",
+        "sample_titles": [
+          "케르반 반포점",
+          "루나아시아",
+          "델리인디아"
+        ]
+      },
+      "Cx3e9k9": {
+        "count": 11,
+        "path": "음식 > 외국식 > 퓨전음식",
+        "sample_titles": [
+          "슬런치 팩토리",
+          "파크루안 역삼점",
+          "더킹스"
+        ]
+      },
+      "Cy5h2x9": {
+        "count": 8,
+        "path": "문화관광  > 테마공원",
+        "sample_titles": [
+          "씨라이프 코엑스아쿠아리움",
+          "서울랜드 ",
+          "롯데월드 어드벤처"
+        ]
+      }
+    }
+  },
+  "collector_version": "v2.0.0-list-only",
+  "detail_calls": 0,
+  "detail_candidate_plan": {
+    "DETAIL_DEFERRED_EVENT": 1190,
+    "DETAIL_DEFERRED_RESTAURANT": 1259,
+    "DETAIL_EXCLUDED_GENERAL_ACCOMMODATION": 17,
+    "DETAIL_PRIORITY_CONDITIONAL": 577,
+    "DETAIL_PRIORITY_CORE": 316,
+    "DETAIL_PRIORITY_EXPERIENCE": 120,
+    "DETAIL_PRIORITY_SHOPPING_REVIEW": 262,
+    "DETAIL_PRIORITY_TEMPLE_STAY": 2,
+    "EXACT_PRELIMINARY_RETAINED_COUNT": 1277,
+    "MAX_POSSIBLE_DETAIL_CALLS": 1277,
+    "RECOMMENDED_FIRST_DETAIL_BATCH": 300,
+    "UNRESOLVED_DEFERRED": 22,
+    "note": "DETAIL_CALLS = 0 in this task. Calculation only.",
+    "shopping_pre_gate": {
+      "AMBIGUOUS_REVIEW": 234,
+      "STRONG_AUTO_EXCLUDE": 5,
+      "STRONG_AUTO_INCLUDE": 23,
+      "note": "list-evidence only — no API calls made"
+    }
+  },
+  "duplicate_cids": 0,
+  "duplicate_records": [],
+  "expected_pages": 76,
+  "failed_pages": [],
+  "final_total_count": 3765,
+  "finished_at": "2026-08-10T07:29:12.585774+00:00",
+  "initial_total_count": 3765,
+  "inventory_snapshot_status": "COMPLETE",
+  "kto": {
+    "collision_264337": "AUTO_ASSIGN_FORBIDDEN",
+    "collision_264491": "AUTO_ASSIGN_FORBIDDEN",
+    "targeted_detail": "DEFERRED"
+  },
+  "lang": "ko",
+  "list_api_calls": 76,
+  "mode": "FULL_LIST",
+  "multilang_stats": {
+    "CID_SUFFIX_AUTOGENERATION": "NO",
+    "ZH_VARIANT_DECISION": "PENDING",
+    "multi_lang_list_present": 3765,
+    "multi_lang_list_rate": 1.0,
+    "note": "multi_lang_list is SSOT for multilingual linkage",
+    "per_lang": {
+      "en": {
+        "count": 3610,
+        "rate": 0.9588
+      },
+      "ja": {
+        "count": 3408,
+        "rate": 0.9052
+      },
+      "ko": {
+        "count": 3765,
+        "rate": 1.0
+      },
+      "zh-CN": {
+        "count": 3395,
+        "rate": 0.9017
+      },
+      "zh-TW": {
+        "count": 3386,
+        "rate": 0.8993
+      }
+    }
+  },
+  "output_sort": "cid_ascending",
+  "page_overlap_count": 0,
+  "page_size": 50,
+  "pages_failed": 0,
+  "pages_requested": 76,
+  "pages_success": 76,
+  "records_received": 3765,
+  "regression": {
+    "api_category_filter_used": false,
+    "cid_suffix_autogeneration": false,
+    "event_track_preserved": true,
+    "general_accommodation_excluded": true,
+    "keyword_search_primary_discovery": false,
+    "restaurant_track_preserved": true,
+    "temple_stay_exception_preserved": true
+  },
+  "run_id": "visitseoul-full-inventory-2026-08-10",
+  "safety": {
+    "allow_full_inventory": true,
+    "api_key_exposed": false,
+    "db_change": 0,
+    "detail_api_calls": 0,
+    "secret_leak": 0,
+    "seoul_bulk_detail_collection": "NOT_STARTED",
+    "src_change": 0,
+    "ui_change": 0
+  },
+  "source_mutated_during_run": false,
+  "started_at": "2026-08-10T07:26:18.051051+00:00",
+  "temple_stay_wrongly_excluded": 0,
+  "total_api_calls": 76,
+  "track_counts": {
+    "EVENT_TRACK": 1190,
+    "EXPERIENCE_CANDIDATE": 120,
+    "GENERAL_ACCOMMODATION_EXCLUDE": 17,
+    "PLACE_CONDITIONAL_REVIEW": 577,
+    "PLACE_CORE_CANDIDATE": 316,
+    "RESTAURANT_TRACK": 1259,
+    "SHOPPING_REVIEW": 262,
+    "TEMPLE_STAY_CANDIDATE": 2,
+    "UNRESOLVED_CATEGORY": 22
+  },
+  "unexpected_empty_pages": 0,
+  "unique_cids": 3765
+}

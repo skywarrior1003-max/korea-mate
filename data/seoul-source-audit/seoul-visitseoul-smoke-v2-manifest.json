@@ -1,0 +1,118 @@
+{
+  "as_of": "2026-08-10",
+  "category_coverage": {
+    "mapped_codes": 42,
+    "observed_codes": 42,
+    "unmapped_codes": 0,
+    "unmapped_detail": {}
+  },
+  "collector_version": "v2.0.0-list-only",
+  "detail_calls": 0,
+  "detail_candidate_plan": {
+    "DETAIL_DEFERRED_EVENT": 42,
+    "DETAIL_DEFERRED_RESTAURANT": 34,
+    "DETAIL_EXCLUDED_GENERAL_ACCOMMODATION": 0,
+    "DETAIL_PRIORITY_CONDITIONAL": 59,
+    "DETAIL_PRIORITY_CORE": 33,
+    "DETAIL_PRIORITY_EXPERIENCE": 15,
+    "DETAIL_PRIORITY_SHOPPING_REVIEW": 32,
+    "DETAIL_PRIORITY_TEMPLE_STAY": 0,
+    "EXACT_PRELIMINARY_RETAINED_COUNT": 139,
+    "MAX_POSSIBLE_DETAIL_CALLS": 139,
+    "RECOMMENDED_FIRST_DETAIL_BATCH": 92,
+    "UNRESOLVED_DEFERRED": 0,
+    "note": "DETAIL_CALLS = 0 in this task. Calculation only.",
+    "shopping_pre_gate": {
+      "AMBIGUOUS_REVIEW": 28,
+      "STRONG_AUTO_EXCLUDE": 1,
+      "STRONG_AUTO_INCLUDE": 3,
+      "note": "list-evidence only — no API calls made"
+    }
+  },
+  "duplicate_cids": 0,
+  "duplicate_records": [],
+  "expected_pages": 5,
+  "failed_pages": [],
+  "final_total_count": 3765,
+  "finished_at": "2026-08-10T07:25:21.150622+00:00",
+  "initial_total_count": 3765,
+  "inventory_snapshot_status": "COMPLETE",
+  "kto": {
+    "collision_264337": "AUTO_ASSIGN_FORBIDDEN",
+    "collision_264491": "AUTO_ASSIGN_FORBIDDEN",
+    "targeted_detail": "DEFERRED"
+  },
+  "lang": "ko",
+  "list_api_calls": 5,
+  "mode": "SMOKE",
+  "multilang_stats": {
+    "CID_SUFFIX_AUTOGENERATION": "NO",
+    "ZH_VARIANT_DECISION": "PENDING",
+    "multi_lang_list_present": 215,
+    "multi_lang_list_rate": 1.0,
+    "note": "multi_lang_list is SSOT for multilingual linkage",
+    "per_lang": {
+      "en": {
+        "count": 210,
+        "rate": 0.9767
+      },
+      "ja": {
+        "count": 205,
+        "rate": 0.9535
+      },
+      "ko": {
+        "count": 215,
+        "rate": 1.0
+      },
+      "zh-CN": {
+        "count": 208,
+        "rate": 0.9674
+      },
+      "zh-TW": {
+        "count": 207,
+        "rate": 0.9628
+      }
+    }
+  },
+  "output_sort": "cid_ascending",
+  "page_overlap_count": 0,
+  "page_size": 50,
+  "pages_failed": 0,
+  "pages_requested": 5,
+  "pages_success": 5,
+  "records_received": 215,
+  "regression": {
+    "api_category_filter_used": false,
+    "cid_suffix_autogeneration": false,
+    "event_track_preserved": true,
+    "general_accommodation_excluded": true,
+    "keyword_search_primary_discovery": false,
+    "restaurant_track_preserved": true,
+    "temple_stay_exception_preserved": true
+  },
+  "run_id": "visitseoul-smoke-2026-08-10",
+  "safety": {
+    "allow_full_inventory": false,
+    "api_key_exposed": false,
+    "db_change": 0,
+    "detail_api_calls": 0,
+    "secret_leak": 0,
+    "seoul_bulk_detail_collection": "NOT_STARTED",
+    "src_change": 0,
+    "ui_change": 0
+  },
+  "source_mutated_during_run": false,
+  "started_at": "2026-08-10T07:25:09.971360+00:00",
+  "temple_stay_wrongly_excluded": 0,
+  "total_api_calls": 5,
+  "track_counts": {
+    "EVENT_TRACK": 42,
+    "EXPERIENCE_CANDIDATE": 15,
+    "PLACE_CONDITIONAL_REVIEW": 59,
+    "PLACE_CORE_CANDIDATE": 33,
+    "RESTAURANT_TRACK": 34,
+    "SHOPPING_REVIEW": 32
+  },
+  "unexpected_empty_pages": 0,
+  "unique_cids": 215
+}
