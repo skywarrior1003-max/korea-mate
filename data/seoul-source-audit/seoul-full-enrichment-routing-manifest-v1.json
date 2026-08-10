@@ -1,0 +1,56 @@
+{
+  "task": "TASK-SEOUL-FULL-INVENTORY-ENRICHMENT-ROUTING-V1",
+  "as_of": "2026-08-10",
+  "policy_version": "v1.0.0",
+  "routing_script": "scripts/run-seoul-full-enrichment-routing-v1.py",
+  "ROUTING_COUNTS_ARE_NOT_RETENTION_COUNTS": true,
+  "input_records": 3765,
+  "output_records": 3765,
+  "unique_cids": 3765,
+  "every_cid_has_primary_routing": true,
+  "primary_routing_unknown": 0,
+  "primary_routing_counts": {
+    "A": 1318,
+    "D": 1152,
+    "C": 921,
+    "B": 254,
+    "F": 72,
+    "H": 48
+  },
+  "secondary_routing_counts": {
+    "E": 1856,
+    "G": 417,
+    "C": 278,
+    "D": 38,
+    "H": 1
+  },
+  "source_content_type_counts": {
+    "PHYSICAL_PLACE": 2474,
+    "EVENT": 1186,
+    "EXPERIENCE_CONTENT": 105
+  },
+  "travel_value_signal_counts": {
+    "INTENT_SPECIFIC_VALUE": 1919,
+    "UTILITY_VALUE": 1212,
+    "GENERAL_TRAVEL_VALUE": 861,
+    "HIGH_TRAVEL_VALUE": 387,
+    "LOW_TRAVEL_VALUE": 97,
+    "EXTERNAL_SEARCH_VALUE": 84,
+    "INSUFFICIENT_EVIDENCE": 22
+  },
+  "records_with_detected_intents": 3606,
+  "records_without_detected_intents": 159,
+  "existing_detail_call_records": 254,
+  "existing_detail_unique_cids": 254,
+  "nature_119_cids_identified": 119,
+  "integrated_detail_cids": 120,
+  "dryrun_cids": 15,
+  "detail_required_now_count": 1318,
+  "detail_already_sufficient_count": 254,
+  "utility_enrichment_count": 921,
+  "event_date_enrichment_count": 1152,
+  "other_official_source_count": 0,
+  "external_search_count": 72,
+  "user_enrichment_count": 0,
+  "hold_review_count": 48
+}

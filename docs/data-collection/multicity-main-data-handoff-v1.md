@@ -584,3 +584,51 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 - [ ] **[신규]** LEGACY_PRE_TRAVEL_VALUE_DETAIL_POOL 1,277건 → 개별 TV Gate 적용 (후속 TASK)
 - [ ] **[신규]** Cy5h2x9 4건 PLACE_CORE 확정 반영 (씨라이프, 서울랜드, 롯데월드2건)
 - [ ] **[신규]** MAIN이 실제 AI candidate filtering 코드를 먼저 검토한다. 현재 구현이 READY/data presence만으로 결정되는 구조인지 확인 후, 필요 시 Travel Value + eligibility + intent 기반으로 개선 (CURRENT_MAIN_AI_FILTER = NOT_VERIFIED_IN_THIS_TASK)
+- [ ] **[신규]** 서울 3,765건 enrichment routing 결과 확인 (TASK-SEOUL-FULL-INVENTORY-ENRICHMENT-ROUTING-V1)
+- [ ] **[신규]** EXISTING_DETAIL_UNIQUE_CIDS = 254 (call count 239 ≠ unique count) — 중복 CID 체크 로직 필요
+- [ ] **[신규]** Event lifecycle: ENDED/RECURRING/ACTIVE/UNKNOWN 상태값 schema 지원 확인
+
+---
+
+## SECTION 9 — 서울 Full Enrichment Routing 결과 (2026-08-10)
+
+**TASK**: TASK-SEOUL-FULL-INVENTORY-ENRICHMENT-ROUTING-V1
+
+> ROUTING_COUNTS_ARE_NOT_RETENTION_COUNTS = YES
+> 아래 숫자는 GoKoreaMate 최종 포함/제외가 아님. "다음 필요 정보" 분류임.
+
+**Primary Routing 요약:**
+
+| Routing | 건수 | 비율 |
+|---|---|---|
+| A — DETAIL_REQUIRED_NOW | 1,318 | 35.0% |
+| B — DETAIL_ALREADY_SUFFICIENT | 254 | 6.7% |
+| C — UTILITY_ENRICHMENT_REQUIRED | 921 | 24.5% |
+| D — EVENT_DATE_ENRICHMENT_REQUIRED | 1,152 | 30.6% |
+| F — EXTERNAL_SEARCH_LAYER_SUITABLE | 72 | 1.9% |
+| H — HOLD_USER_REVIEW_REQUIRED | 48 | 1.3% |
+| **합계** | **3,765** | |
+
+**핵심 수치:**
+- EXISTING_DETAIL_UNIQUE_CIDS = **254** (Nature 119 + Integrated 120 + Dryrun 15 unique)
+- BYTE_IDENTICAL_REPRODUCIBLE = YES
+- E secondary (official source 보강 필요): **1,856건** (49.3%)
+- G secondary (user enrichment 적합): **417건** (11.1%)
+
+**RECOMMENDED_NEXT_TASK = TASK-SEOUL-PLACE-CORE-DETAIL-COLLECTION-V1**
+(194건 non-B PLACE_CORE + 108건 EXPERIENCE → AI 일정 서울 서비스 시작 최소 조건)
+
+**전국 재사용 규칙 (이번 TASK에서 확립):**
+- ROUTE_COURSE = 0 (VisitSeoul 공통): 경로 data는 SEOUL_CITY/NATIONAL_PARK 별도 source
+- Restaurant C primary = "utility 수집 필요" (제외 아님)
+- Event D primary = "날짜 확인 필요" (제외 아님)
+- E secondary 비율 높음 → 전국 공통으로 VisitSeoul + official source 병행 필요
+
+**상세 문서:**
+- `docs/data-collection/seoul/seoul-full-enrichment-routing-summary-v1.md`
+- `docs/data-collection/seoul/seoul-enrichment-routing-distribution-v1.json`
+- `docs/data-collection/seoul/seoul-next-collection-priority-v1.md`
+- `docs/data-collection/seoul/seoul-traveler-need-routing-gap-v1.json`
+- `data/seoul-source-audit/seoul-full-enrichment-routing-v1.jsonl` (3,765건)
+- `data/seoul-source-audit/seoul-full-enrichment-routing-manifest-v1.json`
+- `scripts/run-seoul-full-enrichment-routing-v1.py`

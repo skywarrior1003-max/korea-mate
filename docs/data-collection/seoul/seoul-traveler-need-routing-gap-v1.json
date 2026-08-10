@@ -1,0 +1,311 @@
+{
+  "_meta": {
+    "task": "TASK-SEOUL-FULL-INVENTORY-ENRICHMENT-ROUTING-V1",
+    "as_of": "2026-08-10",
+    "policy_version": "v1.0.0",
+    "base": "docs/data-collection/seoul/seoul-traveler-need-coverage-matrix-v1.json (45 intents)",
+    "note": "LIST 기반 routing은 detail-verified보다 evidence level이 낮음. 기존 confirmed coverage를 근거 없이 STRONG으로 올리지 않음."
+  },
+  "summary": {
+    "intents_total": 45,
+    "strong_confirmed": 11,
+    "moderate_confirmed": 19,
+    "weak_confirmed": 14,
+    "not_available": 1,
+    "inventory_candidate_coverage_added": true
+  },
+  "intents": [
+    {
+      "intent": "heritage_history",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 86,
+      "detail_verified_count": 12,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL+KTO",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "traditional_culture",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 52,
+      "detail_verified_count": 12,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL+SEOUL_CITY",
+      "routing_alignment": "A"
+    },
+    {
+      "intent": "nature_trekking",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 46,
+      "detail_verified_count": 119,
+      "primary_gap_type": "OFFICIAL_ROUTE_DATA",
+      "recommended_next_source": "NATIONAL_PARK+SEOUL_CITY",
+      "routing_alignment": "B+E secondary"
+    },
+    {
+      "intent": "hangang_experience",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 243,
+      "detail_verified_count": 73,
+      "primary_gap_type": "EXPERIENCE_DIVERSITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL+SEOUL_CITY",
+      "routing_alignment": "B(parks)+A(others)+G secondary"
+    },
+    {
+      "intent": "korean_cuisine",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 574,
+      "detail_verified_count": 40,
+      "primary_gap_type": "UTILITY_FIELDS",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "C"
+    },
+    {
+      "intent": "shopping",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 262,
+      "detail_verified_count": 18,
+      "primary_gap_type": "CLASSIFICATION",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "A"
+    },
+    {
+      "intent": "festival",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 1190,
+      "detail_verified_count": 35,
+      "primary_gap_type": "DATE_CURRENTNESS",
+      "recommended_next_source": "OFFICIAL_EVENT+OFFICIAL_VENUE",
+      "routing_alignment": "D+E secondary"
+    },
+    {
+      "intent": "family_kids",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 114,
+      "detail_verified_count": 7,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "A+D mix"
+    },
+    {
+      "intent": "night_view",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 135,
+      "detail_verified_count": 8,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "A"
+    },
+    {
+      "intent": "cycling",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 73,
+      "detail_verified_count": 15,
+      "primary_gap_type": "ROUTE_DATA",
+      "recommended_next_source": "SEOUL_CITY+NATIONAL_PARK",
+      "routing_alignment": "B(hangang parks)+E secondary"
+    },
+    {
+      "intent": "walking_urban",
+      "coverage_status": "STRONG",
+      "inventory_candidate_count": 127,
+      "detail_verified_count": 73,
+      "primary_gap_type": "ROUTE_DIVERSITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL+SEOUL_CITY",
+      "routing_alignment": "B(parks)+A(others)"
+    },
+    {
+      "intent": "food_trip",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 1259,
+      "detail_verified_count": 40,
+      "primary_gap_type": "UTILITY_FIELDS+DESTINATION_CLASSIFICATION",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "C(utility) + A(destination)"
+    },
+    {
+      "intent": "exhibition",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 709,
+      "detail_verified_count": 16,
+      "primary_gap_type": "DATE_CURRENTNESS+CLASSIFICATION",
+      "recommended_next_source": "OFFICIAL_VENUE+VISITSEOUL_DETAIL",
+      "routing_alignment": "A+D mix"
+    },
+    {
+      "intent": "performance",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 233,
+      "detail_verified_count": 8,
+      "primary_gap_type": "DATE_TICKET_INFO",
+      "recommended_next_source": "OFFICIAL_EVENT+OFFICIAL_VENUE",
+      "routing_alignment": "D+A mix"
+    },
+    {
+      "intent": "kpop",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 70,
+      "detail_verified_count": 8,
+      "primary_gap_type": "OFFICIAL_SOURCE_WEAK",
+      "recommended_next_source": "OFFICIAL_BRAND+VISITSEOUL_DETAIL",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "hallyu",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 15,
+      "detail_verified_count": 4,
+      "primary_gap_type": "OFFICIAL_SOURCE_WEAK",
+      "recommended_next_source": "OFFICIAL_BRAND",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "kbeauty",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 40,
+      "detail_verified_count": 6,
+      "primary_gap_type": "OFFICIAL_SOURCE_WEAK",
+      "recommended_next_source": "OFFICIAL_BRAND+VISITSEOUL_DETAIL",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "traditional_market",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 97,
+      "detail_verified_count": 8,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL+DISTRICT_OFFICIAL",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "popup",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 12,
+      "detail_verified_count": 3,
+      "primary_gap_type": "DATE_CURRENTNESS",
+      "recommended_next_source": "OFFICIAL_BRAND+OFFICIAL_EVENT",
+      "routing_alignment": "D+A mix"
+    },
+    {
+      "intent": "wellness",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 35,
+      "detail_verified_count": 5,
+      "primary_gap_type": "DETAIL_QUALITY",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "A+G secondary"
+    },
+    {
+      "intent": "cafe_culture",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 250,
+      "detail_verified_count": 8,
+      "primary_gap_type": "UTILITY_FIELDS",
+      "recommended_next_source": "VISITSEOUL_DETAIL+USER_CONTRIBUTION",
+      "routing_alignment": "C+G secondary"
+    },
+    {
+      "intent": "nightlife",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 64,
+      "detail_verified_count": 3,
+      "primary_gap_type": "INTENT_SPECIFIC_DETAIL",
+      "recommended_next_source": "VISITSEOUL_DETAIL+USER_CONTRIBUTION",
+      "routing_alignment": "F(bars)+G secondary"
+    },
+    {
+      "intent": "temple_stay",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 13,
+      "detail_verified_count": 5,
+      "primary_gap_type": "OFFICIAL_REGISTRATION",
+      "recommended_next_source": "OFFICIAL_EVENT+DISTRICT_OFFICIAL",
+      "routing_alignment": "A+E secondary"
+    },
+    {
+      "intent": "trekking",
+      "coverage_status": "MODERATE",
+      "inventory_candidate_count": 33,
+      "detail_verified_count": 29,
+      "primary_gap_type": "ROUTE_DETAIL",
+      "recommended_next_source": "NATIONAL_PARK+SEOUL_CITY",
+      "routing_alignment": "B+E secondary"
+    },
+    {
+      "intent": "vegetarian",
+      "coverage_status": "WEAK",
+      "inventory_candidate_count": 29,
+      "detail_verified_count": 3,
+      "primary_gap_type": "CERTIFICATION_VERIFICATION",
+      "recommended_next_source": "PUBLIC_DATA+USER_CONTRIBUTION",
+      "routing_alignment": "C+E secondary"
+    },
+    {
+      "intent": "halal",
+      "coverage_status": "WEAK",
+      "inventory_candidate_count": 26,
+      "detail_verified_count": 2,
+      "primary_gap_type": "CERTIFICATION_VERIFICATION",
+      "recommended_next_source": "PUBLIC_DATA",
+      "routing_alignment": "C+E secondary"
+    },
+    {
+      "intent": "solo_travel",
+      "coverage_status": "WEAK",
+      "inventory_candidate_count": 18,
+      "detail_verified_count": 5,
+      "primary_gap_type": "UTILITY_FIELDS",
+      "recommended_next_source": "VISITSEOUL_DETAIL+USER_CONTRIBUTION",
+      "routing_alignment": "C+G secondary"
+    },
+    {
+      "intent": "breakfast",
+      "coverage_status": "WEAK",
+      "inventory_candidate_count": 26,
+      "detail_verified_count": 3,
+      "primary_gap_type": "UTILITY_FIELDS",
+      "recommended_next_source": "VISITSEOUL_DETAIL",
+      "routing_alignment": "C"
+    },
+    {
+      "intent": "late_night",
+      "coverage_status": "WEAK",
+      "inventory_candidate_count": 13,
+      "detail_verified_count": 2,
+      "primary_gap_type": "UTILITY_FIELDS",
+      "recommended_next_source": "VISITSEOUL_DETAIL+USER_CONTRIBUTION",
+      "routing_alignment": "C+G secondary"
+    },
+    {
+      "intent": "food_delivery",
+      "coverage_status": "NOT_AVAILABLE",
+      "inventory_candidate_count": 0,
+      "detail_verified_count": 0,
+      "primary_gap_type": "OUT_OF_SCOPE",
+      "recommended_next_source": "NOT_APPLICABLE",
+      "routing_alignment": "NOT_APPLICABLE"
+    }
+  ],
+  "gap_priority": {
+    "CRITICAL_GAP_1": {
+      "intents": ["vegetarian", "halal", "solo_travel"],
+      "reason": "여행자 utility가 높으나 VisitSeoul 구조화 필드 없음. 인증 data 필요.",
+      "recommended_source": "PUBLIC_DATA (할랄: 한국이슬람교 연합회, 채식: HappyCow)"
+    },
+    "CRITICAL_GAP_2": {
+      "intents": ["festival", "exhibition", "performance", "popup"],
+      "reason": "시간적 현재성 확인 없이는 AI 일정 추천 불가. Date/status pipeline 필요.",
+      "recommended_source": "OFFICIAL_EVENT+OFFICIAL_VENUE"
+    },
+    "MODERATE_GAP_1": {
+      "intents": ["kpop", "kbeauty", "hallyu"],
+      "reason": "VisitSeoul 등록률 낮음. 공식 브랜드 source 보강 필요.",
+      "recommended_source": "OFFICIAL_BRAND+HYBE+SM+YG"
+    },
+    "MODERATE_GAP_2": {
+      "intents": ["breakfast", "late_night", "cafe_culture"],
+      "reason": "영업시간 정보 부족. VisitSeoul detail에서 확인 가능성 있으나 미보장.",
+      "recommended_source": "VISITSEOUL_DETAIL+USER_CONTRIBUTION"
+    }
+  }
+}
