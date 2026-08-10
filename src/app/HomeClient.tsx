@@ -20,6 +20,7 @@ import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
+import { useTranslations } from "next-intl";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -459,6 +460,10 @@ function SectionHeader({
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function HomeClient() {
+  // AI 여행계획 폼 전용 문구. 화면에 보이는 label 만 번역하고
+  // city·style·시간 슬롯의 내부 value 는 손대지 않는다 — API payload 와
+  // localStorage 가 그 값을 그대로 쓴다.
+  const tf = useTranslations("tripForm");
 
   // ── 로컬 스팟 상태 ────────────────────────────
   const [localInfoData, setLocalInfoData] = useState<LocalInfo[]>(BUSAN_SPOTS);
@@ -659,7 +664,7 @@ export default function HomeClient() {
   function handleGenerate() {
     // 필수 조건 먼저 확인 — vibe 모달은 모든 조건 통과 후 마지막에만 표시
     if (!startDate || !endDate) {
-      alert("Please select both start and end travel dates.");
+      alert(tf("errNoDates"));
       return;
     }
     if (isNavigating) return;
@@ -981,7 +986,7 @@ export default function HomeClient() {
                 color: "#8C6239",
               }}
             >
-              <span>🗺️ Dates & travel style copied from a shared trip — adjust and make it yours!</span>
+              <span>{tf("sharedBanner")}</span>
               <button
                 onClick={() => setShowCloneBanner(false)}
                 className="text-xs font-black opacity-50 hover:opacity-100 shrink-0 transition-opacity"
@@ -991,16 +996,16 @@ export default function HomeClient() {
 
           <div className="text-center mb-8">
             <h2 id="planner-heading" className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-              ✨ Plan Your Korea Trip with AI
+              {tf("title")}
             </h2>
             <p className="text-base font-medium text-gray-500">
-              Free • No signup required • Ready in 30 seconds
+              {tf("subtitle")}
             </p>
           </div>
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Where to? (City)</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("cityLabel")}</label>
                 <div className="w-full bg-gray-50 border border-gray-200 rounded-xl overflow-hidden divide-y divide-gray-100">
                   {/* Busan — 활성 */}
                   <button
@@ -1012,13 +1017,13 @@ export default function HomeClient() {
                         : "text-gray-900 hover:bg-gray-100"
                     }`}
                   >
-                    <span>🌊 Busan</span>
-                    {city === "Busan" && <span className="text-xs font-black text-orange-500">✓ Selected</span>}
+                    <span>🌊 {tf("city_Busan")}</span>
+                    {city === "Busan" && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}
                   </button>
                   {[
-                    { value: "Seoul",    label: "🏙️ Seoul"       },
-                    { value: "Jeju",     label: "🏝️ Jeju Island"  },
-                    { value: "Gyeongju", label: "🏯 Gyeongju"     },
+                    { value: "Seoul",    emoji: "🏙️" },
+                    { value: "Jeju",     emoji: "🏝️" },
+                    { value: "Gyeongju", emoji: "🏯" },
                   ].map((c) => (
                     <button
                       key={c.value}
@@ -1030,8 +1035,8 @@ export default function HomeClient() {
                           : "text-gray-900 hover:bg-gray-100"
                       }`}
                     >
-                      <span>{c.label}</span>
-                      {city === c.value && <span className="text-xs font-black text-orange-500">✓ Selected</span>}
+                      <span>{c.emoji} {tf(`city_${c.value}`)}</span>
+                      {city === c.value && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}
                     </button>
                   ))}
                 </div>
@@ -1040,12 +1045,12 @@ export default function HomeClient() {
                   className="flex items-center justify-center gap-1.5 py-2.5 text-xs font-black rounded-xl transition-all active:scale-95 hover:opacity-90 shadow-sm"
                   style={{ color: "#fff", background: "linear-gradient(135deg, #FF4A2D, #D93317)" }}
                 >
-                  🗺️ Explore {city} Spots on Map →
+                  {tf("exploreOnMap", { city: tf(`city_${city}`) })}
                 </Link>
               </div>
               <div id="travel-style-section" className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                  Travel Style
+                  {tf("styleLabel")}
                 </label>
                 <button
                   type="button"
@@ -1053,53 +1058,53 @@ export default function HomeClient() {
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
                   style={{ backgroundColor: "#FF4A2D" }}
                 >
-                  ✨ Pick Your Vibe
+                  {tf("pickVibe")}
                 </button>
                 <select
                   value={style}
                   onChange={(e) => setStyle(e.target.value)}
                   // 이 select 는 눈에 보이는 <label> 이 없다. 화면을 못 보는 사용자에겐
                   // 이름 없는 콤보박스로만 읽혀 무엇을 고르는 칸인지 알 수 없었다.
-                  aria-label="Travel style"
+                  aria-label={tf("styleAria")}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors"
                 >
-                  <option value="" disabled>— Select your travel style —</option>
-                  <option value="Solo">Solo FIT Traveler</option>
-                  <option value="Couple">Couple / Partners</option>
-                  <option value="Family">Family Trip</option>
-                  <option value="Group">Friends / Group</option>
+                  <option value="" disabled>{tf("stylePlaceholder")}</option>
+                  <option value="Solo">{tf("style_Solo")}</option>
+                  <option value="Couple">{tf("style_Couple")}</option>
+                  <option value="Family">{tf("style_Family")}</option>
+                  <option value="Group">{tf("style_Group")}</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Start Date</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("startDate")}</label>
                 <DatePicker
                   value={startDate}
                   onChange={setStartDate}
-                  placeholder="Select start date"
+                  placeholder={tf("startDatePlaceholder")}
                   min={new Date().toISOString().split("T")[0]}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">End Date</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("endDate")}</label>
                 <DatePicker
                   value={endDate}
                   onChange={setEndDate}
-                  placeholder="Select end date"
+                  placeholder={tf("endDatePlaceholder")}
                   min={startDate || new Date().toISOString().split("T")[0]}
                 />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Number of Travelers</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("travelers")}</label>
                 {/* 위 <label> 은 for/id 로 묶여 있지 않아 보조기술이 연결하지 못한다.
                     보이는 문구는 그대로 두고 접근 가능한 이름만 붙인다. */}
                 <input type="number" min="1" max="50" value={travelers} onChange={(e) => setTravelers(e.target.value)}
-                  aria-label="Number of travelers"
+                  aria-label={tf("travelersAria")}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400" />
               </div>
 
               {/* ── 가변형 AI 스케줄러 — 시작 위치 ── */}
               <div className="flex flex-col gap-2 sm:col-span-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">📍 Where do you arrive? (Starting Point)</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("arrivalLabel")}</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {(CITY_ARRIVAL_OPTIONS[city] ?? CITY_ARRIVAL_OPTIONS["Busan"]!).map((loc) => (
                     <button
@@ -1120,14 +1125,14 @@ export default function HomeClient() {
 
               {/* ── 가변형 AI 스케줄러 — 도착 시간 ── */}
               <div className="flex flex-col gap-2 sm:col-span-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">🕐 Arrival Time on Day 1</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("arrivalTimeLabel")}</label>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   {[
-                    { value: "09:00", label: "☀️ Morning",   sub: "9 AM" },
-                    { value: "12:00", label: "🍽️ Noon",      sub: "12 PM" },
-                    { value: "14:00", label: "⛅ Afternoon", sub: "2 PM" },
-                    { value: "17:00", label: "🌅 Evening",   sub: "5 PM" },
-                    { value: "20:00", label: "🌙 Night",     sub: "8 PM" },
+                    { value: "09:00", k: "morning"   },
+                    { value: "12:00", k: "noon"      },
+                    { value: "14:00", k: "afternoon" },
+                    { value: "17:00", k: "evening"   },
+                    { value: "20:00", k: "night"     },
                   ].map((slot) => (
                     <button
                       key={slot.value}
@@ -1139,8 +1144,8 @@ export default function HomeClient() {
                           : "border-gray-200 bg-gray-50 text-gray-600 hover:border-orange-300"
                       }`}
                     >
-                      <span className="text-sm font-black">{slot.label}</span>
-                      <span className="text-[10px] font-semibold opacity-60">{slot.sub}</span>
+                      <span className="text-sm font-black">{tf(`slot_${slot.k}`)}</span>
+                      <span className="text-[10px] font-semibold opacity-60">{tf(`sub_${slot.k}`)}</span>
                     </button>
                   ))}
                 </div>
@@ -1156,30 +1161,30 @@ export default function HomeClient() {
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold border border-dashed border-gray-300 text-gray-500 hover:border-orange-300 hover:text-orange-600 transition-all bg-transparent"
                 >
                   <span>✈️</span>
-                  <span>Add Departure Info</span>
-                  <span className="text-[10px] font-normal text-gray-400">(optional — for a safer last day)</span>
+                  <span>{tf("addDeparture")}</span>
+                  <span className="text-[10px] font-normal text-gray-400">{tf("addDepartureNote")}</span>
                 </button>
               ) : (
                 <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-4 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-black uppercase tracking-wider text-orange-700">
-                      ✈️ Optional: Departure Info
+                      {tf("departureTitle")}
                     </p>
                     <button
                       type="button"
                       onClick={() => { setShowDeptSection(false); setDeparturePlace(""); setDepartureTime(""); }}
                       className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
                     >
-                      ✕ Remove
+                      {tf("departureRemove")}
                     </button>
                   </div>
                   <p className="text-[11px] text-gray-500 -mt-1">
-                    Add your train or flight time so we can avoid risky routes on your last day.
+                    {tf("departureHint")}
                   </p>
 
                   {/* Where do you leave from? */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-gray-600">📍 Where do you leave from?</label>
+                    <label className="text-xs font-bold text-gray-600">{tf("departureFrom")}</label>
                     <div className="grid grid-cols-2 gap-1.5">
                       {(CITY_ARRIVAL_OPTIONS[city] ?? CITY_ARRIVAL_OPTIONS["Busan"]!).map((loc) => (
                         <button
@@ -1200,7 +1205,7 @@ export default function HomeClient() {
 
                   {/* Departure time */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-gray-600">🕐 Departure time on last day</label>
+                    <label className="text-xs font-bold text-gray-600">{tf("departureTime")}</label>
                     <input
                       type="time"
                       value={departureTime}
@@ -1218,7 +1223,7 @@ export default function HomeClient() {
               className="w-full mt-6 py-4 rounded-xl text-base font-black text-white shadow-md transition-opacity hover:opacity-90 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              {isNavigating ? "⏳ Generating..." : "✨ Generate My Itinerary"}
+              {isNavigating ? tf("generating") : tf("generate")}
             </button>
           </div>
         </div>
@@ -1233,7 +1238,7 @@ export default function HomeClient() {
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-7" style={{ animation: "vibeModalIn 0.22s ease-out" }}>
             <div className="text-center mb-5">
               <div className="text-4xl mb-3">🎯</div>
-              <h3 className="text-xl font-black text-[#2C2520] mb-2">Pick your spots first!</h3>
+              <h3 className="text-xl font-black text-[#2C2520] mb-2">{tf("vibeTitle")}</h3>
               <p className="text-sm text-[#61554D] leading-relaxed">
                 Tap K-POP, Food, Attractions, or other cards below to tell us what you&apos;re into.
                 We&apos;ll build your itinerary around your picks — or skip for a balanced mix.
@@ -1245,13 +1250,13 @@ export default function HomeClient() {
                 className="w-full py-3.5 rounded-xl font-black text-sm text-white transition-all active:scale-95 hover:opacity-90"
                 style={{ backgroundColor: "#FF4A2D" }}
               >
-                🎯 Pick Spots →
+                {tf("vibePick")}
               </button>
               <button
                 onClick={handleContinueWithoutPicks}
                 className="w-full py-3 rounded-xl font-bold text-sm text-[#61554D] border-2 border-[#E6DFD5] hover:border-[#FF4A2D] hover:bg-[#FAF7F2] transition-all"
               >
-                Continue Without Picks →
+                {tf("vibeSkip")}
               </button>
             </div>
           </div>
@@ -1273,10 +1278,10 @@ export default function HomeClient() {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
             <div className="text-3xl mb-3 text-center">✈️</div>
             <h3 className="text-lg font-black text-gray-900 mb-2 text-center">
-              Want a safer last-day plan?
+              {tf("deptWarnTitle")}
             </h3>
             <p className="text-sm text-gray-500 text-center mb-5 leading-relaxed">
-              Add your train or flight departure time so we can avoid risky routes on your final day.
+              {tf("deptWarnBody")}
             </p>
             <div className="flex flex-col gap-2">
               <button
@@ -1288,7 +1293,7 @@ export default function HomeClient() {
                 className="w-full py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90"
                 style={{ backgroundColor: "#FF4A2D" }}
               >
-                Add Departure Info
+                {tf("addDeparture")}
               </button>
               <button
                 onClick={() => {
@@ -1310,7 +1315,7 @@ export default function HomeClient() {
                 }}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
               >
-                Continue Without It
+                {tf("deptWarnSkip")}
               </button>
             </div>
           </div>
