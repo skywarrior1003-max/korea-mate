@@ -360,6 +360,79 @@ relation_type은 부여됨; 일정 사실로 소비 금지.
 
 ---
 
+## MAIN CRITICAL — Place Eligibility Policy (2026-08-10 추가)
+
+> **추가 근거**: TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1
+> **전체 정책 문서**: `docs/data-collection/multicity-place-eligibility-policy-v1.md`
+> **Backfill audit**: `docs/data-collection/multicity-place-eligibility-backfill-audit-v1.json`
+> **적용 대상**: 부산·경주·서울·제주·전주·이후 전국 모든 도시
+
+### ⚠️ AI Itinerary candidate filtering 변경 필요
+
+```
+READY=true 또는 city_spots 존재
+≠
+AI 일정 자동 추천 가능
+```
+
+AI candidate 선정 시 최소 다음 조건 전부 통과 필요:
+1. `ai_itinerary_eligible` = YES 또는 CONDITIONAL (intent 매칭 포함)
+2. verified coordinates
+3. tourism_relevance = CONFIRMED
+4. identity verified
+5. current/open/usable 상태
+6. 사용자 관심사·여행 목적 매칭
+7. 사용자가 Selected로 명시적 추가 여부 (USER PICKED > AI AUTO FILTER)
+
+### ⚠️ 5개 독립 Eligibility 축 도입 필요
+
+현재 city_spots에 없는 새 필드 (Schema proposal — MAIN 결정 대상):
+
+| 필드 | 타입 | 의미 |
+|---|---|---|
+| `searchable` | BOOLEAN | 검색 노출 여부 (AI 자격과 독립) |
+| `explore_eligible` | TEXT (YES/CONDITIONAL/NO) | Explore surface 노출 여부 |
+| `ai_itinerary_eligible` | TEXT (YES/CONDITIONAL/NO) | AI 자동 일정 후보 여부 |
+| `eligibility_conditions` | JSONB | CONDITIONAL 시 적용 조건 (traveler intent 등) |
+| `user_can_select` | BOOLEAN | 사용자 직접 Selected 추가 가능 여부 |
+| `user_can_save` | BOOLEAN | 사용자 Save 가능 여부 |
+
+### 부산/경주 Backfill 필요
+
+경주/부산 모두 위 필드가 **전건 없음**. 주요 backfill 필요 항목:
+
+| 도시 | 유형 | 건수(추정) | 우선순위 |
+|---|---|---|---|
+| 부산 | accommodation → ai=NO | 82 | HIGH (즉시 가능) |
+| 경주 | heritage attraction → ai=YES | 81 | HIGH (즉시 가능) |
+| 경주 | resort-type attraction → ai=NO | 5~8 | HIGH |
+| 부산+경주 | restaurant ai 분류 | 721+102 | MEDIUM (별도 TASK) |
+| 부산 | 관광형 시장 분류 | ~10 | MEDIUM |
+
+→ 상세 내용: `docs/data-collection/multicity-place-eligibility-backfill-audit-v1.json`
+
+### 부산 제외 14건 — 복구 금지
+
+`EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE` 14건은 새 policy에서도 복구하지 않는다.
+
+### 서울부터 신규 정책 적용
+
+서울 데이터 수집(BULK 시작 전)부터 5개 eligibility 축 적용.
+VisitSeoul API source 카테고리를 그대로 AI 후보로 사용하지 않는다.
+
+### External Search / My Places 역할 분리
+
+GoKoreaMate canonical curated data + external place search + My Places 조합.
+일반 Olive Young 지점 수백 개를 curated city_spots로 전체 구축하지 않는다.
+관광형 flagship만 curated. 일반 지점은 향후 external search.
+
+### USER PICKED > AI AUTO FILTER
+
+사용자가 직접 Selected에 추가한 장소는
+`ai_itinerary_eligible=NO`이더라도 AI 일정 포함 허용.
+
+---
+
 ## 12. SECURITY FINAL GATE
 
 | 항목 | 결과 |
