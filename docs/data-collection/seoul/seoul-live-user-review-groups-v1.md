@@ -131,15 +131,19 @@ VisitSeoul 수집 시 **사용자(또는 담당자)가 직접 검토해야 하�
 
 ### VisitSeoul에 없어 KTO 수집 필요한 곳
 
-| 장소 | 이유 | 권장 source |
-|---|---|---|
-| N서울타워 | VS standalone 없음 | KTO |
-| 롯데월드타워 서울스카이 | VS 0건 | KTO |
-| SMTOWN | VS 0건 | KTO |
-| 한양도성 | VS 500 오류 지속 | KTO |
-| 숭례문 | VS 500 오류 지속 | KTO |
-| 서울역사박물관 | VS events만 (standalone 미발견) | KTO + 공식 사이트 |
-| BTS 그래피티 (특정 위치) | VS events만 | 공식 사이트 |
+> **SSOT 정렬 주의**: 홍대(SSOT no.30)는 keyword zero(call#71)이나 LIVE_SOURCE_DEGRADED로 분류.
+> NOT_IN_VS 확정 불가 (KEYWORD_ZERO_RESULT ≠ SOURCE_ABSENCE). list inventory로 재확인 필요.
+
+| 장소 | SSOT no. | 이유 | 권장 source |
+|---|---|---|---|
+| N서울타워 | 16 | VS standalone 없음 (KTO ID 264337=COLLISION) | KTO targeted detail 후 확정 |
+| 롯데월드타워 서울스카이 | 17 | VS 0건 | KTO |
+| SMTOWN | 31 | VS 0건 | KTO |
+| 한양도성 | 7 | VS 500 오류 지속 | KTO |
+| 숭례문 | 8 | VS 500 오류 지속 | KTO |
+| 서울역사박물관 | 13 | VS events만 (standalone 미발견) | KTO + 공식 사이트 |
+| 홍대 | 30 | VS keyword zero (call#71) — DEGRADED, NOT NOT_IN_VS | list inventory 재확인 후 결정 |
+| BTS 그래피티 (특정 위치) | 32 | VS events만 | 공식 사이트 |
 
 ### 검색 결과 매몰 주의 (buried entries)
 

@@ -1,29 +1,43 @@
 {
   "meta": {
     "task": "TASK-SEOUL-VISITSEOUL-LIVE-QUALITY-VALIDATION-V1",
-    "version": "v1",
+    "correction_task": "TASK-SEOUL-BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1",
+    "version": "v1-corrected",
     "created_date": "2026-08-10",
     "branch": "data/seoul-collection-v1",
-    "api_source": "VisitSeoul API v1 (api-call.visitseoul.net)",
-    "description": "32개 서울 benchmark place의 VisitSeoul API 실시간 검증 결과",
+    "ssot": "docs/data-collection/seoul/seoul-tourism-benchmark-v1.json",
+    "description": "SSOT 32개 entity 기준으로 정렬된 VisitSeoul API 실시간 검증 결과",
     "total_benchmark": 32,
-    "confirmed": 19,
-    "degraded_or_partial": 9,
+    "confirmed": 17,
+    "confirmed_list_only": 1,
+    "live_source_degraded": 10,
     "not_in_visitseoul": 4,
-    "coverage_rate": "59.4% (19/32 fully confirmed)",
+    "status_sum": 32,
+    "coverage_rate": "53.1% (17/32 confirmed) | 56.3% (18/32 confirmed+list_only)",
     "verification_date": "2026-08-10",
-    "api_calls_used_for_benchmark": 75
+    "correction_date": "2026-08-10",
+    "api_calls_used_for_benchmark": 75,
+    "ssot_aligned": true,
+    "correction_notes": [
+      "CORRECTION: 기존 meta/summary CONFIRMED=19(오류) → 17(SSOT 정렬 기준 정확값)",
+      "CORRECTION: 창덕궁 후원(KOPl8f5md)을 독립 BM entity로 집계했던 오류 수정 — 창덕궁 = 1 SSOT entity, 2 VisitSeoul source records",
+      "CORRECTION: SSOT no.30 홍대가 검증 JSON에서 누락된 것을 복구 — call#71 evidence 연결",
+      "CORRECTION: LIVE_SOURCE_DEGRADED 9건(오류) → 10건(홍대 추가)",
+      "RULE: ONE_SSOT_ENTITY = ONE_BENCHMARK_STATUS (multiple source records ≠ multiple benchmark counts)",
+      "RULE: KEYWORD_ZERO_RESULT ≠ SOURCE_ABSENCE — 홍대 LIVE_SOURCE_DEGRADED (NOT NOT_IN_VISITSEOUL)"
+    ]
   },
   "legend": {
     "CONFIRMED": "VisitSeoul CID 확인, detail 또는 list에서 본체 entry 직접 확인",
     "CONFIRMED_LIST_ONLY": "list에서 CID 확인, detail 500 오류로 fully verified 아님",
-    "LIVE_SOURCE_DEGRADED": "키워드 500 오류 또는 standalone entry 미발견 (다른 source 필요)",
-    "NOT_IN_VISITSEOUL": "0 results 또는 해당 place 미존재 확인"
+    "LIVE_SOURCE_DEGRADED": "키워드 500 오류 / standalone entry 미발견 / keyword zero result(keyword zero ≠ source absence)",
+    "NOT_IN_VISITSEOUL": "복수 discovery 방법으로 0 results 또는 place entry 없음 확인. 단일 keyword 결과만으로는 확정 불가."
   },
   "benchmark_results": [
     {
+      "ssot_benchmark_no": 1,
+      "ssot_name": "경복궁",
       "id": "BM_001",
-      "name_ko": "경복궁",
       "category_expected": "historic_palace",
       "visitseoul_cid": "KOP000072",
       "visitseoul_en_cid": "ENP000072",
@@ -33,325 +47,426 @@
       "addr": "서울 종로구 사직로 161",
       "lat": 37.579617,
       "fee_indicator": "C",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 13,
-      "notes": "검색 결과 13번째. 이벤트 및 프로그램이 앞 12건 점유. 관광지 자체보다 프로그램/행사 entries 우선 노출됨."
+      "notes": "검색 13번째 노출(이벤트 12건 선행). KTO kto_check confirmed cid=126508."
     },
     {
+      "ssot_benchmark_no": 2,
+      "ssot_name": "창덕궁",
       "id": "BM_002",
-      "name_ko": "창덕궁 본체",
       "category_expected": "historic_palace",
-      "visitseoul_cid": "KOP000295",
-      "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
+      "visitseoul_entries": 2,
+      "visitseoul_source_records": [
+        {
+          "cid": "KOP000295",
+          "name": "창덕궁 본체",
+          "category": "역사관광 > 역사유적지 > 고궁",
+          "search_position": 11,
+          "notes": "창덕궁 달빛기행 이벤트(9건) + 후원(1건) 이후 11번째"
+        },
+        {
+          "cid": "KOPl8f5md",
+          "name": "창덕궁 후원",
+          "category": "역사관광 > 역사유적지 > 고궁",
+          "search_position": 2,
+          "notes": "비표준 CID 형식. 후원(Secret Garden) — 별도 예약 필수."
+        }
+      ],
+      "benchmark_count": 1,
       "status": "CONFIRMED",
-      "search_position": 11,
-      "notes": "창덕궁 달빛기행 이벤트(9건)가 검색 1~10위 점유. 본체 entry는 11번째로 매우 buried. 후원과 별도 entry."
+      "kto_anomaly": {
+        "keyword_search_returned": "2923488",
+        "entity_name": "국가유산진흥원 창덕궁상품관",
+        "identity_status": "WRONG_ENTITY — 상품관이 궁궐 본체 identity를 대체할 수 없음",
+        "kto_candidate_id": "264337",
+        "collision_note": "264337 = 창덕궁(no.2) AND N서울타워(no.16) 둘 다 candidate — COLLISION"
+      },
+      "notes": "1 SSOT benchmark entity, 2 VisitSeoul source records. 창덕궁 후원은 독립 benchmark entity가 아님."
     },
     {
+      "ssot_benchmark_no": 3,
+      "ssot_name": "창경궁",
       "id": "BM_003",
-      "name_ko": "창덕궁 후원",
-      "category_expected": "historic_palace_garden",
-      "visitseoul_cid": "KOPl8f5md",
-      "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
-      "status": "CONFIRMED",
-      "search_position": 2,
-      "notes": "창덕궁 본체와 별도 entry. 후원(Secret Garden)은 별도 예약 필요. CID 패턴: 비표준 형식(KOPl8f5md)."
-    },
-    {
-      "id": "BM_004",
-      "name_ko": "창경궁",
       "category_expected": "historic_palace",
       "visitseoul_cid": "KOP000297",
       "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
       "addr": "서울 종로구 창경궁로 185",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 6,
-      "notes": "본체 entry 확인. 500 오류 발생(초기 retry), 이후 검색에서 복구."
+      "notes": "본체 entry 확인(6번째). KTO kto_check: kto_cid=126500 vs actual=126511(CANDIDATE_DISCREPANCY)."
     },
     {
-      "id": "BM_005",
-      "name_ko": "덕수궁",
+      "ssot_benchmark_no": 4,
+      "ssot_name": "덕수궁",
+      "id": "BM_004",
       "category_expected": "historic_palace",
       "visitseoul_cid": "KOP002046",
       "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
       "addr": "서울 중구 세종대로 99",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 7,
-      "notes": "K-Heritage 상점(1), 음악회 이벤트(2), 돌담길(3), 미디어파사드(4), 봄음악회(5), 왕궁수문장교대의식(6) 이후 7번째. 국립현대미술관 덕수궁관(KOP001707) 별도 entry 존재."
+      "notes": "7번째 노출(이벤트 6건 선행). KTO kto_check: kto_cid=127000 vs actual=130173(CANDIDATE_DISCREPANCY)."
     },
     {
-      "id": "BM_006",
-      "name_ko": "경희궁",
+      "ssot_benchmark_no": 5,
+      "ssot_name": "경희궁",
+      "id": "BM_005",
       "category_expected": "historic_palace",
       "visitseoul_cid": "KOP001159",
       "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
       "addr": "서울 종로구 새문안로 45",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 1,
-      "notes": "total_count=1, 직접 노출. 이벤트 오염 없음."
+      "notes": "total=1 직접 노출. KTO kto_check: kto_cid=126998 vs actual=126484(CANDIDATE_DISCREPANCY)."
     },
     {
-      "id": "BM_007",
-      "name_ko": "종묘",
+      "ssot_benchmark_no": 6,
+      "ssot_name": "종묘",
+      "id": "BM_006",
       "category_expected": "historic_shrine",
       "visitseoul_cid": "KOP000507",
       "visitseoul_en_cid": "ENP000507",
       "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
-      "status": "CONFIRMED",
-      "search_position": 1,
+      "visitseoul_entries": 1,
       "detail_verified": true,
       "tags_confirmed": ["유네스코세계문화유산", "종로3가역", "종묘제례"],
       "homepage": "https://royal.khs.go.kr/ROYAL/contents/menuInfo-jms.do?grpCode=jms",
-      "notes": "rich data 확인. UNESCO 세계유산 태그. 홈페이지는 문화재청(KHS) — KTO 연동 아님."
+      "status": "CONFIRMED",
+      "notes": "rich data 확인. KTO kto_check: kto_cid=264335 vs actual=126510(CANDIDATE_DISCREPANCY)."
     },
     {
-      "id": "BM_008",
-      "name_ko": "한양도성",
+      "ssot_benchmark_no": 7,
+      "ssot_name": "한양도성(서울 성곽)",
+      "id": "BM_007",
       "category_expected": "historic_fortress_wall",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
       "error": "HTTP 500 persistent (2회 시도)",
-      "notes": "키워드 '한양도성' 검색 시 500 오류. 서울 SOURCE-DISCOVERY-V1에서 FN 위험 플래그된 항목. KTO 또는 직접 ID 조회 필요."
+      "notes": "키워드 '한양도성' 검색 시 500 오류. KTO keyword search: NOT_FOUND(cid=null). KTO candidate=2685706(NEEDS_TARGETED_DETAIL)."
     },
     {
-      "id": "BM_009",
-      "name_ko": "숭례문(남대문)",
+      "ssot_benchmark_no": 8,
+      "ssot_name": "남대문(숭례문)",
+      "id": "BM_008",
       "category_expected": "historic_gate",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
       "error": "HTTP 500 persistent (키워드 '숭례문')",
-      "notes": "숭례문 키워드 500 오류. 남대문시장(KOP000085)과 별개. KTO 수집 필요."
+      "notes": "숭례문 키워드 500 오류. KTO keyword search: NOT_FOUND. KTO candidate=126553(NEEDS_TARGETED_DETAIL)."
     },
     {
-      "id": "BM_010",
-      "name_ko": "흥인지문(동대문)",
+      "ssot_benchmark_no": 9,
+      "ssot_name": "동대문(흥인지문)",
+      "id": "BM_009",
       "category_expected": "historic_gate",
       "visitseoul_cid": "KOP001999",
+      "visitseoul_category": "역사관광 > 역사유적지 > 성/문",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 1,
-      "notes": "addr 확인됨. 성/문 category."
+      "notes": "KTO keyword search: NOT_FOUND(cid=null). KTO candidate=126538(NEEDS_TARGETED_DETAIL)."
     },
     {
-      "id": "BM_011",
-      "name_ko": "북촌한옥마을",
+      "ssot_benchmark_no": 10,
+      "ssot_name": "북촌한옥마을",
+      "id": "BM_010",
       "category_expected": "cultural_village",
       "visitseoul_cid": "KOP000261",
       "visitseoul_en_cid": "ENP000261",
       "visitseoul_category_en": "Culture > Landmark Tourism",
       "addr_en": "37 Gyedong-gil, Jongno-gu, Seoul",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
-      "detail_status": "DETAIL_500_ERROR",
-      "notes": "list 확인, EN detail 확인(addr/cat). ko detail 500 오류. 랜드마크관광 category."
+      "detail_status": "DETAIL_500_ERROR_KO",
+      "notes": "EN detail 확인. KTO kto_check: kto_cid=264370 vs actual=126537(CANDIDATE_DISCREPANCY)."
     },
     {
-      "id": "BM_012",
-      "name_ko": "국립중앙박물관",
+      "ssot_benchmark_no": 11,
+      "ssot_name": "국립중앙박물관",
+      "id": "BM_011",
       "category_expected": "museum",
       "visitseoul_cid": "KOP000433",
       "visitseoul_category": "문화관광 > 전시시설 > 박물관",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 1,
-      "notes": "total=2, 첫 번째 entry. detail 500 오류(2차 조회)."
+      "notes": "total=2 중 1번째. KTO candidate=126676(UNVERIFIED)."
     },
     {
-      "id": "BM_013",
-      "name_ko": "국립민속박물관",
+      "ssot_benchmark_no": 12,
+      "ssot_name": "국립민속박물관",
+      "id": "BM_012",
       "category_expected": "museum",
       "visitseoul_cid": "KOP001644",
       "visitseoul_category": "문화관광 > 전시시설 > 박물관",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 6,
-      "notes": "민속박물관 검색 결과 6번째. 이벤트 5건이 앞을 점유. 국립어린이민속박물관(KOP005130)·롯데월드민속박물관(KOP005815) 별도 존재."
+      "notes": "이벤트 5건 선행. KTO candidate=126695(UNVERIFIED)."
     },
     {
-      "id": "BM_014",
-      "name_ko": "서울역사박물관",
+      "ssot_benchmark_no": 13,
+      "ssot_name": "서울역사박물관",
+      "id": "BM_013",
       "category_expected": "museum",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
-      "notes": "키워드 '서울역사박물관' 검색 6건 전부 행사/전시(2016-2020년). 박물관 본체 entry 미발견. VisitSeoul에 standalone 장소 미등록 가능성 높음. KTO 확인 필요."
+      "notes": "키워드 검색 6건 전부 2016~2020년 행사. 박물관 standalone entry 미발견. KTO candidate=264274(UNVERIFIED)."
     },
     {
-      "id": "BM_015",
-      "name_ko": "국립한글박물관",
+      "ssot_benchmark_no": 14,
+      "ssot_name": "국립한글박물관",
+      "id": "BM_014",
       "category_expected": "museum",
       "visitseoul_cid": "KOP035405",
       "visitseoul_category": "문화관광 > 전시시설",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 1,
-      "notes": "total=3, 첫 번째. detail 미조회(예산 보존)."
+      "notes": "KTO candidate=1753997(UNVERIFIED)."
     },
     {
-      "id": "BM_016",
-      "name_ko": "리움미술관",
+      "ssot_benchmark_no": 15,
+      "ssot_name": "리움미술관",
+      "id": "BM_015",
       "category_expected": "art_museum",
       "visitseoul_cid": "KOP001232",
       "visitseoul_category": "문화관광 > 전시시설 > 미술관/화랑",
       "addr": "서울 용산구 이태원로55길 60-16 (한남동)",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 3,
-      "notes": "'리움' 검색 4건 중 3번째(1=특별전시, 2=롯데월드아쿠아리움 무관 결과). 미술관 본체 확인."
+      "notes": "검색 3번째(1=특별전시, 2=롯데아쿠아리움 무관). KTO candidate=800428(UNVERIFIED)."
     },
     {
-      "id": "BM_017",
-      "name_ko": "N서울타워",
+      "ssot_benchmark_no": 16,
+      "ssot_name": "N서울타워(남산서울타워)",
+      "id": "BM_016",
       "category_expected": "landmark_tower",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "NOT_IN_VISITSEOUL",
-      "notes": "'N서울타워' 검색: 음식점·이벤트 결과만. 타워 자체 standalone place entry 없음. 서울 SOURCE-DISCOVERY에서 FN 위험 플래그. KTO 필수."
+      "kto_candidate_id": "264337",
+      "kto_candidate_collision": "COLLISION — 창덕궁(no.2) 동일 candidate ID 264337",
+      "notes": "관련 음식점·이벤트만 노출. 타워 standalone place entry 없음. KTO candidate 264337 = COLLISION(KTO_TARGETED_DETAIL = DEFERRED)."
     },
     {
-      "id": "BM_018",
-      "name_ko": "롯데월드타워 서울스카이",
+      "ssot_benchmark_no": 17,
+      "ssot_name": "롯데월드타워 서울스카이",
+      "id": "BM_017",
       "category_expected": "landmark_tower",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "NOT_IN_VISITSEOUL",
       "error": "0 results",
-      "notes": "'서울스카이' 또는 '롯데월드타워' 검색 = 0건. 전혀 없음. KTO 또는 공식 페이지 직접 수집 필요."
+      "notes": "KTO candidate=2685708(UNVERIFIED)."
     },
     {
-      "id": "BM_019",
-      "name_ko": "동대문디자인플라자(DDP)",
+      "ssot_benchmark_no": 18,
+      "ssot_name": "DDP(동대문디자인플라자)",
+      "id": "BM_018",
       "category_expected": "cultural_complex",
       "visitseoul_cid": "KOP024679",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED_LIST_ONLY",
       "detail_status": "DETAIL_500_ERROR",
-      "notes": "list에서 CID 확인. detail 500 오류. list에서 category 확인 불가."
+      "notes": "list CID 확인. detail 500 오류. KTO candidate=1870504(UNVERIFIED)."
     },
     {
-      "id": "BM_020",
-      "name_ko": "서울식물원",
+      "ssot_benchmark_no": 19,
+      "ssot_name": "서울식물원",
+      "id": "BM_019",
       "category_expected": "botanical_garden",
       "visitseoul_cid": "KOP027397",
       "visitseoul_category": "자연관광 > 자연공원",
       "addr": "서울 강서구 마곡동로 161",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 1,
-      "notes": "자연공원 category. 좌표·주소 확인."
+      "notes": "KTO candidate=2611001(UNVERIFIED)."
     },
     {
-      "id": "BM_021",
-      "name_ko": "북한산국립공원",
+      "ssot_benchmark_no": 20,
+      "ssot_name": "북한산국립공원",
+      "id": "BM_020",
       "category_expected": "national_park",
       "visitseoul_cid": "KOP000369",
       "visitseoul_category": "자연관광 > 자연공원",
       "addr": "서울 성북구 보국문로 215",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 2,
-      "notes": "total=2, 2번째(1=북한산둘레캠프). 공원 본체 confirmed."
+      "notes": "total=2 중 2번째(1=북한산둘레캠프). KTO candidate=2781026(UNVERIFIED)."
     },
     {
-      "id": "BM_022",
-      "name_ko": "남산(남산공원)",
+      "ssot_benchmark_no": 21,
+      "ssot_name": "남산",
+      "id": "BM_021",
       "category_expected": "mountain_park",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
-      "notes": "'남산' 검색 54건. 전부 이벤트·음식점. 남산공원 standalone entry 미발견. 남산골한옥마을(별도) 등 하위 명소 개별 존재 가능."
+      "notes": "54건 검색 결과 전부 이벤트·음식점. 남산공원 standalone entry 미발견. KTO candidate=2685709(UNVERIFIED)."
     },
     {
-      "id": "BM_023",
-      "name_ko": "청계천",
+      "ssot_benchmark_no": 22,
+      "ssot_name": "청계천",
+      "id": "BM_022",
       "category_expected": "urban_stream",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
-      "notes": "'청계천' 검색 13건. 전부 미디어아트전시·공공미술 프로그램. 청계천 자체 place entry 미발견."
+      "notes": "13건 결과 전부 미디어아트·전시 프로그램. standalone entry 미발견. KTO candidate=131220(UNVERIFIED)."
     },
     {
-      "id": "BM_024",
-      "name_ko": "한강공원",
+      "ssot_benchmark_no": 23,
+      "ssot_name": "한강공원",
+      "id": "BM_023",
       "category_expected": "riverside_park",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
-      "notes": "'한강공원' 검색 19건. 잠원한강공원수영장·뚝섬한강공원눈썰매장 등 sub-facility entries. 통합 한강공원 entry 없음."
+      "notes": "19건 sub-facility entries(수영장·눈썰매장). 통합 한강공원 entry 없음. KTO candidate=127248(UNVERIFIED)."
     },
     {
-      "id": "BM_025",
-      "name_ko": "광장시장",
+      "ssot_benchmark_no": 24,
+      "ssot_name": "광장시장",
+      "id": "BM_024",
       "category_expected": "traditional_market",
       "visitseoul_cid": "KOP000286",
       "visitseoul_en_cid": "ENP000286",
       "visitseoul_category": "쇼핑 > 시장",
-      "visitseoul_category_en": "Shopping > Traditional Markets",
       "addr_en": "88 Changgyeonggung-ro, Jongno-gu, Seoul",
       "homepage": "http://www.kwangjangmarket.co.kr/en/",
-      "status": "CONFIRMED",
+      "multi_lang_list": "ko:KOP000286,en:ENP000286,ja:JPP000286,zh-CN:CNP000286,zh-TW:TCP000286,ru:RUP000286,ms:MLP000286",
+      "visitseoul_entries": 1,
       "detail_verified": true,
-      "multilingual_cids": "ko:KOP000286,en:ENP000286,ja:JPP000286,zh-CN:CNP000286,zh-TW:TCP000286,ru:RUP000286,ms:MLP000286",
-      "notes": "다국어 CID 패턴 확인(suffix 동일: 000286). EN 주소·카테고리 정상."
+      "status": "CONFIRMED",
+      "notes": "7개 언어 multi_lang_list suffix 동일(000286) 확인. KTO candidate=126668(UNVERIFIED)."
     },
     {
-      "id": "BM_026",
-      "name_ko": "남대문시장",
+      "ssot_benchmark_no": 25,
+      "ssot_name": "남대문시장",
+      "id": "BM_025",
       "category_expected": "traditional_market",
       "visitseoul_cid": "KOP000085",
       "visitseoul_category": "쇼핑 > 시장",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 4,
-      "notes": "남대문시장 검색 4건 중 4번째. 꽃종합상가·칼국수골목·갈치조림골목·관광안내소가 앞에. 시장 본체 buried."
+      "notes": "4번째 노출(꽃종합상가·칼국수골목·갈치조림골목 선행). KTO candidate=126571(UNVERIFIED)."
     },
     {
-      "id": "BM_027",
-      "name_ko": "통인시장",
+      "ssot_benchmark_no": 26,
+      "ssot_name": "통인시장",
+      "id": "BM_026",
       "category_expected": "traditional_market",
       "visitseoul_cid": "KOP000281",
       "visitseoul_category": "쇼핑 > 시장",
+      "visitseoul_entries": 1,
       "status": "CONFIRMED",
       "search_position": 2,
-      "notes": "total=2. 1번째=통인시장기름떡볶이(음식 entry), 2번째=통인시장 본체."
+      "notes": "2번째(기름떡볶이 food entry 선행). KTO candidate=1920780(UNVERIFIED)."
     },
     {
-      "id": "BM_028",
-      "name_ko": "인사동",
+      "ssot_benchmark_no": 27,
+      "ssot_name": "인사동",
+      "id": "BM_027",
       "category_expected": "cultural_district",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
-      "notes": "'인사동' 검색 5건: 런닝맨체험관·봉이밥(음식점)·문화축제. 인사동 거리/문화지구 standalone entry 없음. 안녕인사동(쇼핑몰) 별도 있을 가능성."
+      "kto_candidate_id": "264491",
+      "kto_candidate_collision": "COLLISION — 홍대(no.30) 동일 candidate ID 264491",
+      "notes": "5건 결과: 런닝맨체험관·음식점·이벤트. 지구 district entry 없음. KTO candidate 264491 = COLLISION(DEFERRED)."
     },
     {
-      "id": "BM_029",
-      "name_ko": "이태원",
+      "ssot_benchmark_no": 28,
+      "ssot_name": "이태원",
+      "id": "BM_028",
       "category_expected": "multicultural_district",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
       "error": "HTTP 500 (키워드 '이태원')",
-      "notes": "키워드 500 오류. 이태원 내 리움미술관(한남동)은 확인됨. 이태원 지구 자체 entry 없음."
+      "notes": "500 오류. KTO candidate=264483(UNVERIFIED)."
     },
     {
-      "id": "BM_030",
-      "name_ko": "명동",
+      "ssot_benchmark_no": 29,
+      "ssot_name": "명동",
+      "id": "BM_029",
       "category_expected": "shopping_district",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "LIVE_SOURCE_DEGRADED",
       "error": "HTTP 500 (키워드 '명동거리')",
-      "notes": "명동 키워드 500 오류. 올리브영 명동 플래그십(KOP012015)은 쇼핑 카테고리에서 확인됨."
+      "notes": "500 오류. 올리브영 명동플래그십(KOP012015)은 별도 확인. KTO candidate=264382(UNVERIFIED)."
     },
     {
+      "ssot_benchmark_no": 30,
+      "ssot_name": "홍대",
+      "id": "BM_030",
+      "category_expected": "youth_culture_district",
+      "visitseoul_cid": null,
+      "visitseoul_entries": 0,
+      "status": "LIVE_SOURCE_DEGRADED",
+      "live_evidence": {
+        "call_num": 71,
+        "keyword": "홍대 놀이터",
+        "total_count": 0,
+        "note": "KEYWORD_ZERO_RESULT ≠ SOURCE_ABSENCE — keyword search는 primary discovery 방법이 아님. 홍대 district entry 부재 확인 위해 list inventory 방식 추가 확인 필요."
+      },
+      "kto_candidate_id": "264491",
+      "kto_candidate_collision": "COLLISION — 인사동(no.27) 동일 candidate ID 264491",
+      "notes": "SSOT no.30 복구. 기존 검증 JSON에서 누락되었던 항목. LIVE_SOURCE_DEGRADED로 분류(NOT_IN_VISITSEOUL 확정 불가). KTO candidate 264491 = COLLISION(DEFERRED)."
+    },
+    {
+      "ssot_benchmark_no": 31,
+      "ssot_name": "SMTOWN 코엑스 아티움",
       "id": "BM_031",
-      "name_ko": "SMTOWN",
       "category_expected": "entertainment_complex",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "NOT_IN_VISITSEOUL",
       "error": "0 results",
-      "notes": "SMTOWN 코엑스아티움 = 0건. 완전 부재."
+      "notes": "KTO candidate=null(NO_CANDIDATE)."
     },
     {
+      "ssot_benchmark_no": 32,
+      "ssot_name": "BTS 그래피티 이태원",
       "id": "BM_032",
-      "name_ko": "BTS 그래피티 벽화마을",
       "category_expected": "cultural_landmark",
       "visitseoul_cid": null,
+      "visitseoul_entries": 0,
       "status": "NOT_IN_VISITSEOUL",
-      "notes": "'BTS' 검색 2건 = BTS 10주년 FESTA 이벤트(2023). 물리적 고정 landmark entry 없음. 이태원/용산 그래피티는 VisitSeoul 미등록."
+      "notes": "BTS 이벤트(10주년 FESTA)만 존재. 고정 landmark entry 없음. KTO candidate=null(NO_CANDIDATE)."
     }
   ],
   "summary": {
-    "CONFIRMED": 19,
+    "CONFIRMED": 17,
     "CONFIRMED_LIST_ONLY": 1,
-    "LIVE_SOURCE_DEGRADED": 8,
+    "LIVE_SOURCE_DEGRADED": 10,
     "NOT_IN_VISITSEOUL": 4,
-    "confirmed_with_detail": 15,
-    "visitseoul_coverage_rate": "59.4%",
-    "critical_missing": ["N서울타워", "롯데월드타워서울스카이", "SMTOWN", "서울역사박물관"],
-    "persistent_500_errors": ["한양도성", "숭례문", "이태원", "명동", "창경궁(초기)"],
-    "key_finding_burial_problem": "5대 고궁(경복궁·창덕궁·창경궁·덕수궁·경희궁) 중 경복궁이 13번째, 창덕궁 본체 11번째로 노출 — 이벤트 entry가 검색 상위를 점령함. CID 직접 조회 방식 필요."
+    "STATUS_SUM": 32,
+    "SSOT_TOTAL": 32,
+    "MISSING_SSOT_ENTITY": 0,
+    "DUPLICATE_SSOT_ENTITY": 0,
+    "BENCHMARK_ALIGNMENT_VALID": true,
+    "visitseoul_coverage_rate": "53.1% (17/32)",
+    "confirmed_with_detail": 13,
+    "changdeokgung_benchmark_count": 1,
+    "changdeokgung_visitseoul_records": 2,
+    "kto_collision_264337": "창덕궁(no.2) AND N서울타워(no.16) — UNRESOLVED",
+    "kto_collision_264491": "인사동(no.27) AND 홍대(no.30) — UNRESOLVED",
+    "keyword_zero_result_confirmed_as_source_absence": false,
+    "key_finding": "이벤트 오염으로 5대 고궁이 검색 결과에서 매몰됨. CID 직접 조회 방식 필수. 홍대는 LIVE_SOURCE_DEGRADED(keyword zero ≠ source absence)."
   }
 }

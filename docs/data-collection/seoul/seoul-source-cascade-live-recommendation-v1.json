@@ -1,18 +1,21 @@
 {
   "meta": {
     "task": "TASK-SEOUL-VISITSEOUL-LIVE-QUALITY-VALIDATION-V1",
-    "version": "v1",
+    "correction_task": "TASK-SEOUL-BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1",
+    "version": "v1-corrected",
     "created_date": "2026-08-10",
+    "correction_date": "2026-08-10",
     "branch": "data/seoul-collection-v1",
-    "description": "VisitSeoul 실시간 검증 결과 기반 서울 source cascade 최종 권장안",
+    "description": "VisitSeoul 실시간 검증 결과 기반 서울 source cascade 최종 권장안 (SSOT 정렬 수정)",
     "prior_proposal": "docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json (SOURCE-DISCOVERY-V1 기반)",
     "live_validation_calls": 109,
-    "validation_date": "2026-08-10"
+    "validation_date": "2026-08-10",
+    "correction_notes": "benchmark coverage_rate 수정: 19/32=59.4%(오류) → 17/32=53.1%(SSOT 정렬 기준)"
   },
   "cascade_recommendation": {
     "primary_source": "VisitSeoul API",
     "primary_source_reason": [
-      "주요 고궁·박물관·시장 benchmark 19/32 직접 확인",
+      "주요 고궁·박물관·시장 benchmark CONFIRMED 17/32 = 53.1% (SSOT 정렬 기준)",
       "7개 언어 다국어 content 자동 연결 (CID suffix 동일)",
       "coordinates, address, 운영시간, 입장료, 이미지 포함",
       "전통시장·문화유산 분야 KTO 대비 풍부한 설명"
@@ -60,6 +63,20 @@
     ],
     "collection_method": "CID 직접 조회 방식 권장 (키워드 검색 시 이벤트 오염 심각)",
     "event_contamination_risk": "HIGH — 창덕궁 달빛기행 9건이 창덕궁 본체(11번째)보다 상위 노출",
+    "confirmed_collector_strategy": {
+      "step_1": "contents/list pagination으로 전체 CID inventory 수집 (이벤트 포함 전체)",
+      "step_2": "list response의 category metadata로 로컬 필터 적용 (이벤트·숙박·음식 제거)",
+      "step_3": "단계 2 통과 CID → contents/info targeted detail 조회 (이벤트 아닌 장소만)",
+      "step_4": "Eligibility gate 적용 (5개 axis)",
+      "step_5": "KTO cross-check / fallback (VS 미등록 장소)",
+      "step_6": "미해결 → 공식 사이트 개별 조회",
+      "note": "keyword 검색 방식으로 전체 수집 금지. list inventory + local filter가 CANONICAL 방식."
+    },
+    "ssot_alignment_rules": {
+      "ONE_SSOT_ENTITY_ONE_BENCHMARK_STATUS": "SSOT 1 entity = VS source records가 여러 개여도 benchmark count=1",
+      "KEYWORD_ZERO_RESULT_NOT_SOURCE_ABSENCE": "keyword zero → NOT_IN_VS 확정 불가. list inventory로 재확인 필요.",
+      "COLLISION_GATE_MANDATORY": "동일 KTO ID가 다른 entity candidate → AUTO_ASSIGN_FORBIDDEN. targeted detail 후 disambiguate."
+    },
     "estimated_eligible_content": "약 800~1200건 (이벤트·숙박·음식 제외, CONDITIONAL 포함 전)",
     "flag": "ESTIMATED — BULK_COLLECTION_NOT_DONE"
   },

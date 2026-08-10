@@ -197,40 +197,74 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 
 | 항목 | 값 |
 |---|---|
-| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1 완료 |
+| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1(SHA 7a84ce2) + BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1 완료 |
 | KTO 관광지 | 421건 |
 | KTO 문화 | 220건 |
 | KTO 쇼핑 | 150건 |
 | Bulk 수집 | NOT_STARTED (금지 — 별도 승인 필요) |
 | VisitSeoul 총 콘텐츠 | 3,765건 (lang=ko 기준) |
-| VisitSeoul API 검증 | 109 calls. Benchmark 32개 중 19개(59%) 직접 확인. |
+| VisitSeoul API 검증 | 109 calls. Benchmark 32개 CONFIRMED 17(53.1%) / DEGRADED 10 / NOT_IN_VS 4. |
+| SSOT | 32개 entity (docs/data-collection/seoul/seoul-tourism-benchmark-v1.json) |
+| KTO ID 무결성 | COLLISION 3건(264337/264491), 창덕궁 WRONG_ENTITY, 5건 CANDIDATE_DISCREPANCY. 모두 DEFERRED. |
 
 **서울 Live 검증 핵심 발견:**
 
 - **VisitSeoul primary source 확정**: 고궁·박물관·시장·자연공원·랜드마크 커버리지 확인
 - **KTO 병행 필수**: N서울타워·롯데월드서울스카이·SMTOWN·한양도성·숭례문·서울역사박물관 — VisitSeoul 미등록/500오류
-- **이벤트 오염 심각**: 경복궁 검색 13번째, 창덕궁 11번째 — 키워드 검색 금지, CID 직접 조회 필요
+- **이벤트 오염 심각**: 경복궁 검색 13번째, 창덕궁 11번째 — 키워드 검색 금지, list inventory + local filter 필요
 - **Flagship 탐지 가능**: 올리브영 명동 플래그십만 VS에 등록 (chain 지점 미등록) — FLAGSHIP_DETECTION_FEASIBLE=YES
 - **전문매장/상가 FP 32%**: 최근 50건 중 CU 편의점·약국 포함 — USER_REVIEW 필수
 - **7개 언어 CID suffix 동일**: 다국어 entity 자동 매핑 가능 (KOP/ENP/JPP/CNP/TCP/RUP/MLP + suffix)
 - **Temple Stay 현장 확인**: 국제선센터(양천구 목동) — AI=CONDITIONAL 정책 현장 적용 확인
 
+**서울 SSOT 정렬 원칙 (반드시 준수):**
+
+| 원칙 | 내용 |
+|---|---|
+| SSOT_BENCHMARK_TOTAL = 32 | 분모는 항상 SSOT 32개 entity. 분할/추가 금지. |
+| ONE_SSOT_ONE_BENCHMARK | VS source records가 여러 개여도 benchmark count=1 (창덕궁 예: VS 2건 = benchmark 1건) |
+| KTO_IDs_ARE_CANDIDATES | KTO contentId는 후보 — targeted detail 조회 후 title 매칭으로 확정 |
+| COLLISION_GATE_MANDATORY | 동일 ID가 다른 entity의 candidate → AUTO_ASSIGN_FORBIDDEN |
+| KEYWORD_ZERO ≠ SOURCE_ABSENCE | keyword 0건 → NOT_IN_VS 확정 불가. list inventory로 재확인 필요 |
+| COLLECTOR_STRATEGY | list inventory pagination → local category filter → targeted detail (keyword 방식 금지) |
+
+**KTO ID 충돌 현황 (UNRESOLVED — targeted detail DEFERRED):**
+
+| collision_id | entity A | entity B | action |
+|---|---|---|---|
+| 264337 | 창덕궁 (no.2) | N서울타워 (no.16) | AUTO_ASSIGN_FORBIDDEN — disambiguate 후 확정 |
+| 264491 | 인사동 (no.27) | 홍대 (no.30) | AUTO_ASSIGN_FORBIDDEN — disambiguate 후 확정 |
+
+**KTO 후보 ID 불일치 현황 (keyword 검색 결과 기준, targeted detail 필요):**
+
+| 장소 | candidate_id | search_returned | identity_status |
+|---|---|---|---|
+| 창덕궁 | 264337(COLLISION) | 2923488(창덕궁상품관) | WRONG_ENTITY |
+| 창경궁 | 126500 | 126511 | CANDIDATE_DISCREPANCY |
+| 덕수궁 | 127000 | 130173 | CANDIDATE_DISCREPANCY |
+| 경희궁 | 126998 | 126484 | CANDIDATE_DISCREPANCY |
+| 종묘 | 264335 | 126510 | CANDIDATE_DISCREPANCY |
+| 북촌 | 264370 | 126537 | CANDIDATE_DISCREPANCY |
+
 **MAIN 결정 필요 (서울 수집 착수 전):**
 
-1. CID 기반 수집 전략 승인 (category 필터 + 이벤트 제거)
+1. list inventory + local category filter 수집 전략 승인
 2. 전문매장/상가 USER_REVIEW 프로세스
-3. KTO 병행 수집 범위 확정
+3. KTO 병행 수집 범위 확정 (credential 확보 포함)
 4. 서울역사박물관 대안 source
+5. KTO ID collision 해소 (264337, 264491) — credential 확보 후 targeted detail
 
 **참조 파일 (data/seoul-collection-v1 branch):**
 
-- `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서
-- `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세
+- `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서 (v1-corrected)
+- `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세 (SSOT 정렬, 홍대 복구)
+- `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` — KTO contentId 후보 무결성 테이블 (신규)
 - `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` — 카테고리 품질 분석
-- `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안
+- `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안 (수집 전략 포함)
 - `docs/data-collection/seoul/seoul-live-user-review-groups-v1.md` — 사용자 검토 그룹
 - `docs/data-collection/seoul/seoul-visitseoul-kto-crosswalk-sample-v1.json` — KTO↔VS 교차 매핑
 - `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json` — SOURCE-DISCOVERY 원안
+- `docs/data-collection/seoul/seoul-tourism-benchmark-v1.json` — SSOT 32개 (READ ONLY)
 
 ---
 
@@ -296,7 +330,8 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 | Seoul Live Quality Validation | `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` | VisitSeoul 실시간 검증 (109 calls) |
 | Seoul Benchmark Verification | `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` | 32개 benchmark CID 확인 |
 | Seoul Category Quality | `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` | 카테고리별 FP·수집 적합성 |
-| Seoul Source Cascade Live | `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` | Source 우선순위 최종 |
+| Seoul Source Cascade Live | `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` | Source 우선순위 최종 (수집 전략 포함) |
+| Seoul KTO ID Integrity | `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` | KTO contentId 후보 무결성 (32 entries, collision gate) |
 
 **Branch 참조:**
 
