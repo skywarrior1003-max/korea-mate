@@ -566,3 +566,132 @@ test("좌표 없는 local_info 항목은 planner hint 에서 빠져도 Cart 에 
   assert.equal(getItemSourceKey(noCoord), "local_info:busan:24");
   assert.notEqual(getItemSourceKey(noCoord), getItemSourceKey(A));
 });
+
+// ── 10. V1 오염 identity 복구 (migration v2) ────────────────────────────────
+//
+// V1 Home 은 local-info 파일 ID 를 city_spot 키로 선언했다. 파일 6 번은
+// Haeundae Beach 인데 canonical 6 번은 Jangsan Mountain Trail 이라, 저장해 두면
+// 상세에서 다른 산이 열렸다. 여기서 확인하는 것은 "되돌리되 멀쩡한 데이터를
+// 건드리지 않는다" 하나다.
+
+const V2_CANDIDATES: SourceCandidate[] = [
+  { sourceKey: "city_spot:1", name: "Haeundae Beach",           address: "Haeundae-gu", city: "busan" },
+  { sourceKey: "city_spot:3", name: "Jagalchi Fish Market",     address: "Jung-gu",     city: "busan" },
+  { sourceKey: "city_spot:6", name: "Jangsan Mountain Trail",   address: "Haeundae-gu", city: "busan" },
+  { sourceKey: "city_spot:9", name: "Twin Hall",                address: "A-ro",        city: "busan" },
+  { sourceKey: "city_spot:10", name: "Twin Hall",               address: "B-ro",        city: "busan" },
+];
+// V1 local-info 지문: 파일 ID → 그 시절 장소명
+const V2_LEGACY = new Map<string, string>([
+  ["busan:6",  "Haeundae Beach"],
+  ["busan:8",  "Jagalchi Fish Market"],
+  ["busan:20", "Twin Hall"],
+]);
+
+function v2Item(over: Record<string, unknown>) {
+  return { id: "local-6", name: "X", city: "Busan", address: null, type: "attraction",
+           addedAt: 1750000000000, sortOrder: 0, ...over };
+}
+function runV2(items: unknown[], candidates = V2_CANDIDATES, legacy: Map<string, string> | undefined = V2_LEGACY) {
+  const fs = fakeStorage({
+    [IDENTITY_STORAGE_KEYS.cart]:      JSON.stringify(items),
+    [IDENTITY_STORAGE_KEYS.savedData]: JSON.stringify(items),
+  });
+  const r = runCartIdentityMigration(candidates, fs.store, legacy);
+  return { r, fs, cart: () => JSON.parse(fs.snapshot()[IDENTITY_STORAGE_KEYS.cart] ?? "[]") };
+}
+
+test("CASE A — 오염된 Haeundae(city_spot:6) 가 canonical city_spot:1 로 복구된다", () => {
+  const { r, cart } = runV2([v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })]);
+  assert.equal(r.status, "done");
+  assert.equal(cart()[0].sourceKey, "city_spot:1");
+});
+
+test("CASE B — 정상 canonical(Jangsan + city_spot:6) 는 절대 바뀌지 않는다", () => {
+  const { cart } = runV2([v2Item({ name: "Jangsan Mountain Trail", sourceKey: "city_spot:6" })]);
+  assert.equal(cart()[0].sourceKey, "city_spot:6");
+});
+
+test("CASE C — canonical 행이 없는 파일 ID(8) 도 이름으로 정확히 복구된다", () => {
+  const { cart } = runV2([v2Item({ id: "local-8", name: "Jagalchi Fish Market", sourceKey: "city_spot:8" })]);
+  assert.equal(cart()[0].sourceKey, "city_spot:3");
+});
+
+test("CASE D — 후보가 둘이면 추측하지 않고 local_info 로 강등한다", () => {
+  const { cart } = runV2([v2Item({ id: "local-20", name: "Twin Hall", sourceKey: "city_spot:20" })]);
+  assert.equal(cart()[0].sourceKey, "local_info:busan:20");
+  assert.equal(parseCitySpotId(cart()[0].sourceKey), null);
+});
+
+test("CASE E — 후보 목록이 비면 아무것도 쓰지 않고 version 도 남기지 않는다", () => {
+  const items = [v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })];
+  const before = JSON.stringify(items);
+  const { r, fs, cart } = runV2(items, []);
+  assert.equal(r.status, "skipped");
+  assert.equal(JSON.stringify(cart()), before);
+  assert.equal(fs.has(IDENTITY_STORAGE_KEYS.version), false);
+});
+
+test("CASE E-2 — 지문이 비면(local-info 로드 실패) 실행하지 않는다", () => {
+  const items = [v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })];
+  const { r, fs } = runV2(items, V2_CANDIDATES, new Map());
+  assert.equal(r.status, "skipped");
+  assert.equal(fs.has(IDENTITY_STORAGE_KEYS.version), false);
+});
+
+test("CASE F — v2 완료 후 재실행은 storage 를 바꾸지 않는다", () => {
+  const items = [v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })];
+  const fs = fakeStorage({
+    [IDENTITY_STORAGE_KEYS.cart]:      JSON.stringify(items),
+    [IDENTITY_STORAGE_KEYS.savedData]: JSON.stringify(items),
+  });
+  runCartIdentityMigration(V2_CANDIDATES, fs.store, V2_LEGACY);
+  const first = JSON.stringify(fs.snapshot());
+  const r2 = runCartIdentityMigration(V2_CANDIDATES, fs.store, V2_LEGACY);
+  assert.equal(r2.status, "skipped");
+  assert.equal(JSON.stringify(fs.snapshot()), first);
+});
+
+test("CASE G — 쓰기 실패 시 원본이 그대로 복구된다", () => {
+  const items = [v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })];
+  const seed = {
+    [IDENTITY_STORAGE_KEYS.cart]:      JSON.stringify(items),
+    [IDENTITY_STORAGE_KEYS.savedData]: JSON.stringify(items),
+  };
+  const fs = fakeStorage({ ...seed });
+  fs.failAt(k => k === IDENTITY_STORAGE_KEYS.savedData);
+  const r = runCartIdentityMigration(V2_CANDIDATES, fs.store, V2_LEGACY);
+  assert.equal(r.status, "failed");
+  assert.equal(fs.snapshot()[IDENTITY_STORAGE_KEYS.cart], seed[IDENTITY_STORAGE_KEYS.cart]);
+  assert.equal(fs.has(IDENTITY_STORAGE_KEYS.version), false);
+});
+
+test("CASE H — 무관한 정상 항목은 사용자 필드까지 그대로다", () => {
+  const normal = v2Item({
+    id: "local-42", name: "The Bay 101", sourceKey: "city_spot:42",
+    addedAt: 1750000009999, sortOrder: 7, userNote: "야경",
+  });
+  const { cart } = runV2([normal, v2Item({ name: "Haeundae Beach", sourceKey: "city_spot:6" })]);
+  const after = cart()[0];
+  assert.equal(after.sourceKey, "city_spot:42");
+  assert.equal(after.addedAt, 1750000009999);
+  assert.equal(after.sortOrder, 7);
+  assert.equal(after.userNote, "야경");
+  assert.equal(after.name, "The Bay 101");
+  assert.equal(cart()[1].sourceKey, "city_spot:1");
+});
+
+test("★오염 복구 후 favorites source key 가 새 identity 로 재유도된다", () => {
+  const item = v2Item({ id: "local-6", name: "Haeundae Beach", sourceKey: "city_spot:6" });
+  const fs = fakeStorage({
+    [IDENTITY_STORAGE_KEYS.cart]:       JSON.stringify([item]),
+    [IDENTITY_STORAGE_KEYS.savedData]:  JSON.stringify([item]),
+    [IDENTITY_STORAGE_KEYS.legacyFavs]: JSON.stringify(["local-6"]),
+  });
+  runCartIdentityMigration(V2_CANDIDATES, fs.store, V2_LEGACY);
+  assert.deepEqual(
+    JSON.parse(fs.snapshot()[IDENTITY_STORAGE_KEYS.favSources]),
+    ["city_spot:1"],
+  );
+  assert.equal(fs.snapshot()[IDENTITY_STORAGE_KEYS.legacyFavs], JSON.stringify(["local-6"]));
+});

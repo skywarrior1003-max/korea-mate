@@ -11,7 +11,7 @@ import { haversineKm, isValidCoordinate } from "@/lib/geo";
 import { fetchCitySpots } from "@/lib/city-spots";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
-import { runCartIdentityMigration, toSourceCandidates } from "@/lib/cart-identity-migration";
+import { runCartIdentityMigration, toSourceCandidates, buildLegacyFingerprint } from "@/lib/cart-identity-migration";
 import {
   toggleFavorite, getFavoriteSourceKeys, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT,
 } from "@/lib/favorites";
@@ -266,7 +266,14 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
 
       // 기존 브라우저의 Cart·Saved 에 sourceKey 를 채운다. 병합 목록이 곧
       // 후보 목록이므로 여기가 실행 지점이다. 멱등이라 매번 호출해도 된다.
-      runCartIdentityMigration(toSourceCandidates(result));
+      // V1 Home 이 심어 둔 잘못된 city_spot 키를 되돌린다. 판정에는 지금 막
+        // 받아 온 local-info 원본이 지문으로 필요하다 — 여기 말고는 후보 목록과
+        // 지문이 동시에 손에 있는 지점이 없어서 실행 위치를 옮기지 않았다.
+        runCartIdentityMigration(
+          toSourceCandidates(result),
+          undefined,
+          buildLegacyFingerprint(localRaw),
+        );
 
       // 좌표가 없는 장소는 공개 목록에서 뺀다.
       //
