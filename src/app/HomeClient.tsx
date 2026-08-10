@@ -1513,7 +1513,13 @@ export default function HomeClient() {
             </div>
           </div>
 
-          {/* ── [Section 1] Airport Transfer Banner ── */}
+          {/* ── [Section 1] Airport Transfer Banner ──
+                Trip-Flow Commerce (§14-1-A). 예전에는 CTA 만 flag 로 가려서,
+                커머스가 꺼져 있으면 "예약하세요" 하는 홍보문과 혜택 목록,
+                "via Klook" 까지 남고 정작 누를 버튼만 없었다. 블록 전체를 같은
+                flag 로 묶는다 — 바깥 래퍼가 mt-6 mb-10 을 들고 있어서 통째로
+                빠지면 빈 여백도 함께 사라진다. */}
+          {TRIP_FLOW_COMMERCE_ENABLED && (
           <div
             className="mt-6 mb-10 rounded-3xl overflow-hidden relative shadow-xl"
             style={{ background: "linear-gradient(135deg, #1a1f36 0%, #2d3a6b 60%, #1e3a5f 100%)" }}
@@ -1544,8 +1550,7 @@ export default function HomeClient() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-3 shrink-0">
-                {/* Trip-Flow Commerce (§14-1-A) — 일정 생성 전 판매 CTA */}
-                {TRIP_FLOW_COMMERCE_ENABLED && (
+                {/* 일정 생성 전 판매 CTA — gate 는 이 블록 바깥에 하나만 둔다 */}
                 <a
                   href="https://affiliate.klook.com/sl/21FkAvj"
                   target="_blank"
@@ -1555,11 +1560,11 @@ export default function HomeClient() {
                 >
                   Book Airport Transfer →
                 </a>
-                )}
                 <p className="text-white/40 text-xs font-medium">via Klook · Instant confirmation</p>
               </div>
             </div>
           </div>
+          )}
 
           {/* ══════════════════════════════════════════
               검색/필터 모드 — 통합 플랫 그리드
