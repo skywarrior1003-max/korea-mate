@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
@@ -48,24 +49,26 @@ function restaurantToEventItem(r: RestaurantItem): EventItem {
 }
 
 // ── 카테고리 필터 ─────────────────────────────────────────────────────────────
+// 라벨은 여기 두지 않는다 — key 로 번역을 찾는다. 같은 문구가 상수와 messages
+// 두 곳에 있으면 한쪽만 고쳐진다. key·emoji 는 필터 동작에 쓰이므로 그대로다.
 const CATEGORY_FILTERS = [
-  { key: "all",      label: "All",                  emoji: ""   },
-  { key: "kpop",     label: "K-POP / BTS",          emoji: "🎤" },
-  { key: "michelin", label: "Food",                  emoji: "🍽️" },
-  { key: "nature",   label: "Attractions & Nature",  emoji: "🗺️" },
-  { key: "culture",  label: "History & Culture",     emoji: "🏛️" },
-  { key: "saved",    label: "Saved Spots",            emoji: "🔖" },
+  { key: "all",      emoji: ""   },
+  { key: "kpop",     emoji: "🎤" },
+  { key: "michelin", emoji: "🍽️" },
+  { key: "nature",   emoji: "🗺️" },
+  { key: "culture",  emoji: "🏛️" },
+  { key: "saved",    emoji: "🔖" },
 ];
 
 // ── 지역 필터 ─────────────────────────────────────────────────────────────────
 const DISTRICT_FILTERS = [
-  { key: "all",       label: "All",                    districts: [] as string[] },
-  { key: "haeundae",  label: "Haeundae · Gijang",      districts: ["Haeundae-gu", "Gijang-gun"] },
-  { key: "gwangalli", label: "Suyeong · Gwangalli",     districts: ["Suyeong-gu", "Nam-gu"] },
-  { key: "seomyeon",  label: "Seomyeon · Busanjin",     districts: ["Busanjin-gu"] },
-  { key: "nampo",     label: "Nampo · Jung · Seo-gu",   districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
-  { key: "dongnae",   label: "Dongnae · Geumjeong",     districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
-  { key: "bukgu",     label: "Buk · Sasang · Gangseo",  districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
+  { key: "all",                           districts: [] as string[] },
+  { key: "haeundae",        districts: ["Haeundae-gu", "Gijang-gun"] },
+  { key: "gwangalli",      districts: ["Suyeong-gu", "Nam-gu"] },
+  { key: "seomyeon",       districts: ["Busanjin-gu"] },
+  { key: "nampo",        districts: ["Jung-gu", "Yeongdo-gu", "Seo-gu", "Dong-gu"] },
+  { key: "dongnae",        districts: ["Dongnae-gu", "Geumjeong-gu", "Yeonje-gu"] },
+  { key: "bukgu",       districts: ["Buk-gu", "Sasang-gu", "Gangseo-gu", "Saha-gu"] },
 ];
 
 // ── 구별 중심 좌표 (GPS 폴백용) ───────────────────────────────────────────────
@@ -100,9 +103,12 @@ export function haversineKm(lat1: number, lng1: number, lat2: number, lng2: numb
   return R * 2 * Math.asin(Math.sqrt(a));
 }
 
-export function formatDistance(km: number): string {
-  if (km < 1) return `${Math.round(km * 1000)}m away`;
-  return `${km.toFixed(1)}km`;
+// 거리 뱃지 문구는 화면에서 읽히는 말이라 번역이 필요하다. 이 함수는 모듈
+// 스코프라 t() 를 부를 수 없어서, 포맷 자체를 호출부로 옮겼다. 숫자를 만드는
+// 규칙은 그대로다 — 1km 미만은 미터, 그 이상은 소수 한 자리 km.
+export function distanceParts(km: number): { unit: "m" | "km"; value: number } {
+  if (km < 1) return { unit: "m", value: Math.round(km * 1000) };
+  return { unit: "km", value: Number(km.toFixed(1)) };
 }
 
 export function getEventCoords(event: EventItem): { lat: number; lng: number } {
@@ -121,6 +127,12 @@ function matchCategoryFilter(e: EventItem, key: string, savedIds: string[]): boo
 }
 
 export default function AllSpotsPage() {
+  const t     = useTranslations("allSpots");
+  const tNav  = useTranslations("nav");
+  // 저장 필터의 빈 상태는 Picks 의 Saved 와 같은 말이다 — 같은 키를 쓴다.
+  // 예전 문구는 "No liked spots yet" 이었는데, 바로 아래 안내는 북마크를
+  // 누르라고 하고 있었다. 한 화면에서 서로 다른 말을 하고 있던 셈이다.
+  const tPicks = useTranslations("picks");
   const [events,         setEvents]         = useState<EventItem[]>([]);
   const [loading,        setLoading]        = useState(true);
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -252,10 +264,10 @@ export default function AllSpotsPage() {
               <span className="font-black tracking-tight">gokoreamate</span>
             </Link>
             <span className="text-gray-300 text-lg">/</span>
-            <h1 className="text-base font-black text-gray-700">All Spots</h1>
+            <h1 className="text-base font-black text-gray-700">{t("title")}</h1>
           </div>
           <Link href="/my-trips" className="shrink-0 px-3 py-1.5 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors">
-            🧳 My Trips
+            🧳 {tNav("myTrips")}
           </Link>
         </div>
       </header>
@@ -271,7 +283,7 @@ export default function AllSpotsPage() {
               type="text"
               value={search}
               onChange={e => { setSearch(e.target.value); resetPage(); }}
-              placeholder="Search spots, BTS, beach, Michelin, hiking…"
+              placeholder={t("searchPlaceholder")}
               className="w-full pl-12 pr-10 py-3 rounded-2xl border-2 border-gray-200 bg-white text-sm font-semibold text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all shadow-sm"
             />
             {search && (
@@ -293,7 +305,7 @@ export default function AllSpotsPage() {
                       : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
                   }
                 >
-                  {f.emoji && <span className="mr-1">{f.emoji}</span>}{f.label}
+                  {f.emoji && <span className="mr-1">{f.emoji}</span>}{t(`cat_${f.key}`)}
                 </button>
               ))}
             </div>
@@ -303,7 +315,7 @@ export default function AllSpotsPage() {
           {/* 지역 필터 버튼 */}
           <div className="relative">
             <div className="flex items-center gap-2 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-              <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">Area</span>
+              <span className="shrink-0 text-[11px] font-extrabold text-gray-400 uppercase tracking-wider pr-1">{t("areaLabel")}</span>
               {DISTRICT_FILTERS.map(d => (
                 <button
                   key={d.key}
@@ -315,7 +327,7 @@ export default function AllSpotsPage() {
                       : { backgroundColor: "#fff", color: "#6b7280", borderColor: "#e5e7eb" }
                   }
                 >
-                  {d.label}
+                  {t(`district_${d.key}`)}
                 </button>
               ))}
             </div>
@@ -350,7 +362,7 @@ export default function AllSpotsPage() {
             </button>
             {gpsActive && userCoords && (
               <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-                GPS active · sorting by distance
+                {t("gpsActive")}
               </span>
             )}
             {gpsError && (
@@ -361,14 +373,14 @@ export default function AllSpotsPage() {
           {/* 결과 카운트 + 필터 초기화 */}
           <p className="text-xs text-gray-400 flex items-center gap-2 flex-wrap">
             <span>
-              {loading ? "Loading…" : `${filtered.length} spot${filtered.length !== 1 ? "s" : ""}`}
+              {loading ? t("loading") : t(filtered.length === 1 ? "spotCount" : "spotCountPlural", { count: filtered.length })}
             </span>
             {activeFilterCount > 0 && !loading && (
               <button
                 onClick={() => { setCategoryFilter("all"); setDistrictFilter("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
                 className="text-orange-500 font-bold underline"
               >
-                Clear all
+                {t("clearAll")}
               </button>
             )}
           </p>
@@ -386,17 +398,17 @@ export default function AllSpotsPage() {
           >
             <span className="text-3xl shrink-0">🍽️</span>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">NEW</p>
+              <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest">{t("badgeNew")}</p>
               <p className="text-sm font-black text-gray-900 leading-snug">2026 Busan Food Guide — Michelin · Busan Mat · Taegshlang</p>
             </div>
-            <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">View All →</span>
+            <span className="shrink-0 text-xs font-black text-orange-500 group-hover:text-orange-700 transition-colors whitespace-nowrap">{t("foodGuideCta")}</span>
           </Link>
         )}
 
         {loading ? (
           <div className="text-center py-24">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-6" />
-            <p className="text-gray-500 font-semibold">Loading all spots…</p>
+            <p className="text-gray-500 font-semibold">{t("loadingAll")}</p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
@@ -405,24 +417,24 @@ export default function AllSpotsPage() {
             </p>
             <p className="text-xl font-black text-gray-700 mb-2">
               {categoryFilter === "saved"
-                ? "No liked spots yet"
+                ? tPicks("savedEmpty")
                 : gpsActive
-                ? "No spots within 3km of you"
-                : "No results found"}
+                ? t("emptyGpsTitle")
+                : t("emptySearchTitle")}
             </p>
             <p className="text-gray-500 mb-6 text-sm">
               {categoryFilter === "saved"
-                ? "Tap the bookmark on any card to save spots."
+                ? tPicks("savedEmptyHint")
                 : gpsActive
-                ? "Turn off GPS or change the area filter."
-                : "Try a different search or filter."}
+                ? t("emptyGpsHint")
+                : t("emptySearchHint")}
             </p>
             <button
               onClick={() => { setCategoryFilter("all"); setDistrictFilter("all"); setSearch(""); setGpsActive(false); setUserCoords(null); setGpsError(null); resetPage(); }}
               className="px-6 py-3 rounded-xl font-black text-white text-sm"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              View All Spots
+              {t("viewAllSpots")}
             </button>
           </div>
         ) : (
@@ -443,7 +455,14 @@ export default function AllSpotsPage() {
                     key={event.id}
                     event={event}
                     onClick={() => setSelected(event)}
-                    distanceBadge={distKm !== null ? formatDistance(distKm) : undefined}
+                    distanceBadge={distKm !== null
+                        ? (() => {
+                            const p = distanceParts(distKm);
+                            return p.unit === "m"
+                              ? t("distanceMeters", { n: p.value })
+                              : t("distanceKm", { n: p.value });
+                          })()
+                        : undefined}
                   />
                 );
               })}
@@ -457,7 +476,7 @@ export default function AllSpotsPage() {
                   disabled={safePage === 1}
                   className="px-3 py-2 rounded-lg text-sm font-bold border transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50"
                 >
-                  ← Prev
+                  {t("prev")}
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter(n => n === 1 || n === totalPages || Math.abs(n - safePage) <= 1)
@@ -488,7 +507,7 @@ export default function AllSpotsPage() {
                   disabled={safePage === totalPages}
                   className="px-3 py-2 rounded-lg text-sm font-bold border transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50"
                 >
-                  Next →
+                  {t("next")}
                 </button>
               </div>
             )}
@@ -498,7 +517,7 @@ export default function AllSpotsPage() {
 
       {/* 푸터 */}
       <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400">
-        <Link href="/" className="text-orange-500 font-bold hover:underline">← Back to gokoreamate Home</Link>
+        <Link href="/" className="text-orange-500 font-bold hover:underline">{t("backHome")}</Link>
       </footer>
 
       {/* 상세 모달 */}
