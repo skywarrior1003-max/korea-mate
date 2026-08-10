@@ -632,3 +632,72 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 - `data/seoul-source-audit/seoul-full-enrichment-routing-v1.jsonl` (3,765건)
 - `data/seoul-source-audit/seoul-full-enrichment-routing-manifest-v1.json`
 - `scripts/run-seoul-full-enrichment-routing-v1.py`
+
+---
+
+## SECTION 10 — 서울 야간 오프라인 품질 감사 결과 (2026-08-10)
+
+**TASK**: TASK-SEOUL-NIGHT-OFFLINE-MULTILINGUAL-ENTITY-RELATION-QUALITY-AUDIT-V1  
+**방법**: 3,765건 오프라인 전수 감사 (API 호출 0 / 자동 변경 0)
+
+### 주요 발견
+
+**다국어 무결성:**
+```
+STRUCTURAL_ANOMALIES = 0  (SELF_LINK=0, MISMATCH=0, DUPLICATE=0)
+KO_ONLY_RECORDS = 110  (다국어 추천 제외 후보)
+HIGH_PRIORITY_LANGUAGE_GAP = 258  (High-value 레코드 중 target 언어 누락)
+EN=95.9% / JA=90.5% / ZH-CN=90.2% / ZH-TW=90.0%
+```
+
+**SCT 재분류:**
+```
+ROUTE_COURSE_AUDITED_COUNT = 1  (KOP015873 = EDITORIAL_MULTI_ROUTE_CONTENT)
+DULLEGIL_RECORD_COUNT = 4
+ROUTE_RELATED_CONTENT_TOTAL = 11
+SCT_RECLASSIFIED_COUNT = 16
+```
+
+**⚠️ 전국 공통 규칙 수정 (RULE_MH_02):**  
+~~ROUTE_COURSE = 0 (VisitSeoul 공통)~~ →  
+**ROUTE_COURSE ≥ 1 존재 가능. 반드시 SCT 감사 후 확인 필요.**  
+KOP015873 = 서울 둘레길 코스 안내 → EDITORIAL_MULTI_ROUTE_CONTENT로 재분류.  
+서울 둘레길 21개 코스는 개별 CID 없음 (확인 완료).
+
+**Blanket Rule 결함:**
+```
+BLANKET_RULE_DEFECT_COUNT = 2
+  BLANKET_01: Ck6n0w6 (주점) 전체 F → 28건 upgrade 필요
+  BLANKET_02: Cl2d2s1 (교육) 전체 H → 체험형 예외 필요
+ROUTING_V2_REQUIRED = YES
+```
+
+**Entity Relations / Duplicates:**
+```
+ENTITY_RELATION_CANDIDATE_COUNT = 306  (AUTO_MERGE=0)
+DUPLICATE_CANDIDATE_COUNT = 152  (AUTO_MERGE=0, AUTO_DELETE=0)
+REVIEW_QUEUE_COUNT = 526
+```
+
+### 전국 공통 정책 업데이트 (이번 감사에서 추가)
+
+```
+RULE_MH_08: KO_ONLY 레코드 = 다국어 AI 일정 추천 제외 기본 처리 대상
+RULE_MH_09: 주점 category (Ck6n0w6) blanket F = 정책 위반.
+            야경/루프탑/전통주/포차 키워드 보유 시 A 상향 필요.
+RULE_MH_10: routing 스크립트는 blanket rule 감사 포함 QA를 통과해야 함.
+            전국 타 도시에도 동일 blanket rule 적용 여부 확인 필요.
+```
+
+### 상세 문서
+
+- `docs/data-collection/seoul/seoul-offline-multilingual-quality-summary-v1.md`
+- `docs/data-collection/seoul/seoul-entity-relation-quality-summary-v1.md`
+- `docs/data-collection/seoul/seoul-routing-blanket-rule-audit-v1.md`
+- `docs/data-collection/seoul/seoul-night-quality-audit-summary-v1.md`
+- `data/seoul-source-audit/seoul-multilingual-link-audit-v1.jsonl` (3,765건)
+- `data/seoul-source-audit/seoul-entity-relation-candidates-v1.jsonl` (306건)
+- `data/seoul-source-audit/seoul-duplicate-related-candidates-v1.jsonl` (152건)
+- `data/seoul-source-audit/seoul-night-quality-review-queue-v1.jsonl` (526건)
+- `data/seoul-source-audit/seoul-night-quality-audit-manifest-v1.json`
+- `scripts/run-seoul-offline-entity-relation-quality-audit-v1.py`

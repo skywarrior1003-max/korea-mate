@@ -366,3 +366,30 @@ FULL_DETAIL_COLLECTION = NOT_STARTED
 BYTE_IDENTICAL_REPRODUCIBLE = YES
 SOURCE_FILE_MUTATION = NO
 ```
+
+---
+
+## S. 야간 품질 감사 델타 (TASK-SEOUL-NIGHT-OFFLINE-MULTILINGUAL-ENTITY-RELATION-QUALITY-AUDIT-V1)
+
+2026-08-10 오프라인 전수 감사 완료. 주요 발견:
+
+```
+MULTILINGUAL_STRUCTURAL_ANOMALIES = 0  (구조 이상 없음)
+KO_ONLY_RECORDS                   = 110
+HIGH_PRIORITY_LANGUAGE_GAP        = 258
+ROUTE_COURSE_AUDITED_COUNT        = 1  (ROUTE_COURSE = 0 선언 수정 필요)
+DULLEGIL_RECORD_COUNT             = 4
+SCT_RECLASSIFIED_COUNT            = 16
+ENTITY_RELATION_CANDIDATE_COUNT   = 306
+DUPLICATE_CANDIDATE_COUNT         = 152
+BAR_PUB_UPGRADE_CANDIDATE         = 28
+BLANKET_RULE_DEFECT_COUNT         = 2
+REVIEW_QUEUE_COUNT                = 526
+ROUTING_V2_REQUIRED               = YES
+```
+
+**RULE_MH_02 수정**: "ROUTE_COURSE = 0 (VisitSeoul 공통)" → **ROUTE_COURSE ≥ 1**  
+KOP015873이 감사 후 EDITORIAL_MULTI_ROUTE_CONTENT로 재분류되었으며,  
+서울 둘레길 21개 코스는 개별 CID로 존재하지 않음이 확인됨.
+
+후속 참조: `docs/data-collection/seoul/seoul-night-quality-audit-summary-v1.md`
