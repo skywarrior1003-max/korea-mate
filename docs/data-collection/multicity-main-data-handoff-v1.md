@@ -18,6 +18,32 @@
 
 도시별 상세 인수인계(경주, 부산 등)와 **병행** 확인 필요.
 
+### MAIN CRITICAL — Nature/Trekking Travel Value 정책 (2026-08-10 확립)
+
+**AI 일정 생성 시 자연/트레킹 여행 의도 처리에 관한 필수 원칙:**
+
+```
+1. PLACE_VALUE ≠ PLACE_BASED_EXPERIENCE_VALUE
+   - 야경·계절·활동형 경험은 PLACE entity와 분리 모델링 필요.
+   - VisitSeoul은 동일 스키마이나 플랫폼은 구분해야 함.
+
+2. ROUTE entity 분리
+   - 서울 둘레길(156.5km, 21코스), 한강 자전거 코스(240km) 등은
+     PLACE entity가 아닌 ROUTE entity. 시작점 좌표만으로 대표 불가.
+
+3. EVENT-PLACE 관계
+   - 자연 장소에서 발생하는 이벤트(벚꽃축제, 야시장, 눈썰매)는
+     별도 CID — hosting_place 참조 연결 필요.
+
+4. 트레킹 루트 상세 데이터 = VisitSeoul에서 미제공
+   - 코스별 거리/소요시간/난이도/GPS 트랙 없음.
+   - 별도 외부 API(국립공원공단, 서울둘레길) 또는 UGC 필요.
+
+5. 19개 Nature Intent 매트릭스 정의 완료
+   - coast = NOT_AVAILABLE_IN_SEOUL (내륙 도시)
+   - 정책 문서: docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md
+```
+
 ---
 
 ## SECTION 1 — Eligibility Policy 핵심 원칙
@@ -318,11 +344,42 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 5. KTO ID collision 해소 (264337, 264491) — credential 확보 후 targeted detail
 6. UNRESOLVED 22건 코드맵 추가 (`Cw8j0y7`, `Cy5h2x9`, `Ca1z6p7`)
 
+**Nature/Trekking Travel Value 정책 (VALIDATED — 2026-08-10):**
+
+> 119건 detail 호출 live 검증 완료. 정책 문서: `docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md`
+
+| 플래그 | 값 |
+|---|---|
+| NATURE_TRAVEL_VALUE_POLICY | **VALIDATED** |
+| TREKKING_ROUTE_DATA_AVAILABLE_IN_VISITSEOUL | **PARTIAL** (텍스트 추출 16%, 구조화 필드 없음) |
+| PLACE_BASED_EXPERIENCE_MODEL_REQUIRED | **YES** |
+| EVENT_PLACE_RELATION_REQUIRED | **YES** |
+| USER_ROUTE_ENRICHMENT_ROLE | **DOCUMENTED** |
+
+**핵심 발견:**
+
+- VisitSeoul 자연 카테고리: 산(Cu5u8d4) 29건, 도시공원(Ce9z7g9) 73건, 자연공원(Cp3b3j9) 17건, 하천(Cw8j0y7) 13건
+- 좌표 가용성: 95.8% (자연 장소 detail 119건 기준)
+- 거리 데이터: 16% (text에만 서술, 구조화 없음) — 서울 둘레길 156.5km, 한강 자전거 코스 240km, 청계천 10.84km 등
+- 고도 데이터: 6.7% (text에만 서술)
+- 활동 탐지: 51.3% — walking(35건), cycling(16건), hiking(10건), swimming(9건), camping(7건)
+- PLACE_VALUE vs PLACE_BASED_EXPERIENCE_VALUE: 야경 시리즈 8건 + 계절 시설이 별도 CID로 분리 등록됨 (동일 스키마 사용)
+
+**MAIN 구현 요구사항 (schema/DB 결정은 MAIN):**
+
+1. PLACE entity + PLACE_BASED_EXPERIENCE entity 분리 모델링 (야경/계절/루트)
+2. event-place 관계 연결 (`hosting_place_id`)
+3. 19개 nature intent → VisitSeoul 카테고리 매핑 필터
+4. 서울 둘레길 21개 코스 상세 → 외부 API 또는 UGC 보완 필요
+5. 북한산 코스별 데이터 → 국립공원공단 API 연동 검토
+
 **참조 파일 (data/seoul-collection-v1 branch):**
 
-- `docs/data-collection/seoul/seoul-visitseoul-full-inventory-summary-v1.md` — **Full inventory 결과 요약 (신규)**
-- `docs/data-collection/seoul/seoul-visitseoul-full-category-distribution-v1.json` — **Track 분포 + category coverage (신규)**
-- `docs/data-collection/seoul/seoul-visitseoul-detail-candidate-plan-v1.json` — **Retained detail plan EXACT (신규)**
+- `docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md` — **Nature Travel Value 정책 (신규)**
+- `docs/data-collection/seoul/seoul-nature-trekking-value-live-validation-v1.md` — **Nature/Trekking live validation 119건 (신규)**
+- `docs/data-collection/seoul/seoul-visitseoul-full-inventory-summary-v1.md` — **Full inventory 결과 요약**
+- `docs/data-collection/seoul/seoul-visitseoul-full-category-distribution-v1.json` — **Track 분포 + category coverage**
+- `docs/data-collection/seoul/seoul-visitseoul-detail-candidate-plan-v1.json` — **Retained detail plan EXACT**
 - `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서 (v1-corrected)
 - `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세 (SSOT 정렬, 홍대 복구)
 - `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` — KTO contentId 후보 무결성 테이블
@@ -401,6 +458,8 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 | Seoul Category Quality | `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` | 카테고리별 FP·수집 적합성 |
 | Seoul Source Cascade Live | `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` | Source 우선순위 최종 (수집 전략 포함) |
 | Seoul KTO ID Integrity | `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` | KTO contentId 후보 무결성 (32 entries, collision gate) |
+| Seoul Nature Travel Value Policy | `docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md` | **19개 intent 정의, PLACE vs EXPERIENCE 분리, 이벤트-장소 관계 (신규)** |
+| Seoul Nature Trekking Live Validation | `docs/data-collection/seoul/seoul-nature-trekking-value-live-validation-v1.md` | **119건 detail 검증, 트레킹 루트 데이터 가용성 (신규)** |
 
 **Branch 참조:**
 
@@ -423,3 +482,8 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 - [ ] 부산 14건 제외 결정 보존 (복구 금지)
 - [ ] VisitSeoul 카테고리 직접 AI 후보 처리 금지 확인
 - [ ] Seoul branch eligibility policy 확인 (data/seoul-collection-v1)
+- [ ] **[신규]** PLACE_VALUE vs PLACE_BASED_EXPERIENCE_VALUE 분리 모델 구현 (야경 8건, 계절 시설)
+- [ ] **[신규]** event-place 관계 연결 (`hosting_place_id`) 구현
+- [ ] **[신규]** 19개 nature intent → VisitSeoul 카테고리 매핑 필터 구현
+- [ ] **[신규]** 서울 둘레길 21코스 상세 데이터 수집 출처 결정 (외부 API or UGC)
+- [ ] **[신규]** 북한산 등산 코스 상세 수집 출처 결정 (국립공원공단 API)
