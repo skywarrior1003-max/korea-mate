@@ -1,0 +1,385 @@
+{
+  "_meta": {
+    "task": "TASK-SEOUL-TRAVEL-VALUE-INTEGRATION-AND-ENTITY-MODEL-V1",
+    "created": "2026-08-10",
+    "description": "서울 여행자 intent 44개 VisitSeoul coverage 평가 매트릭스",
+    "coverage_values": ["STRONG", "MODERATE", "WEAK", "NOT_AVAILABLE", "UNKNOWN"],
+    "source": "VisitSeoul 3,765건 inventory + 239건 detail 호출 분석",
+    "note": "COUNT_TARGET = NOT_DEFINED_BY_DESIGN. COVERAGE = 얼마나 잘 커버하는가, 건수 아님"
+  },
+  "intents": [
+    {
+      "intent": "heritage_history",
+      "label": "역사/유산 탐방",
+      "coverage": "STRONG",
+      "visitseoul_support": "경복궁, 창덕궁, 종묘, 남산한옥마을 등 다수. KTO/공식 데이터 보강",
+      "gap": "NONE",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "traditional_culture",
+      "label": "전통문화 체험",
+      "coverage": "STRONG",
+      "visitseoul_support": "고궁음악회, 연등회, 전통공예체험관, 금현국악원, 한복 체험 등",
+      "gap": "STRUCTURED_FIELDS_LIMITED",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "nature_trekking",
+      "label": "자연/트레킹",
+      "coverage": "STRONG",
+      "visitseoul_support": "수락산, 북한산, 관악산, 서울둘레길 등 119건 detail 확인",
+      "gap": "ELEVATION_DISTANCE_TEXT_ONLY",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "hangang_experience",
+      "label": "한강 체험",
+      "coverage": "STRONG",
+      "visitseoul_support": "뚝섬, 여의도, 반포, 난지 등 한강공원 전체. 수상스포츠, 자전거, 캠핑 포함",
+      "gap": "SEASONAL_FACILITY_DATE_UNKNOWN",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "kpop",
+      "label": "K-pop 팬 여행",
+      "coverage": "WEAK",
+      "visitseoul_support": "145건 keyword match (3.85%). 공연장 강함, 팬 체험 시설 약함",
+      "gap": "HYBE_SM_JYP_OFFICIAL_VENUES_WEAK. K-pop 공연 이벤트 별도 플랫폼 필요",
+      "ai_eligible": "CONDITIONAL",
+      "note": "KPOP_DISCOVERY_FROM_VISITSEOUL = CONDITIONAL"
+    },
+    {
+      "intent": "hallyu",
+      "label": "한류 전반 (드라마/영화 촬영지 등)",
+      "coverage": "MODERATE",
+      "visitseoul_support": "드라마 촬영지, 관련 장소 일부. 이태원, 강남 등 노출",
+      "gap": "DRAMA_FILMING_LOCATION_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "korean_cuisine",
+      "label": "한국 음식 (한식)",
+      "coverage": "STRONG",
+      "visitseoul_support": "Restaurant 1,259건. 한식 전문점 다수. 전통 한식, 족발, 냉면 등",
+      "gap": "MENU_PRICE_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "street_food",
+      "label": "길거리 음식/포차",
+      "coverage": "MODERATE",
+      "visitseoul_support": "노량진 수산시장, 광장시장, 일부 포장마차 관련 장소",
+      "gap": "STREET_VENDOR_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "cafe_hopping",
+      "label": "카페 투어",
+      "coverage": "MODERATE",
+      "visitseoul_support": "Restaurant 내 카페/찻집 코드(Cx0t8m5) 다수. 성수, 을지로, 익선동 카페 포함",
+      "gap": "AMBIENCE_PHOTO_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "halal",
+      "label": "할랄 식당",
+      "coverage": "MODERATE",
+      "visitseoul_support": "이태원 집중. 텍스트에서 할랄 탐지 5/40 (12.5%). 이슬람 사원 주변",
+      "gap": "HALAL_CERTIFIED_NOT_STRUCTURED. 외부 할랄코리아 연동 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "vegetarian_vegan",
+      "label": "채식/비건",
+      "coverage": "WEAK",
+      "visitseoul_support": "4/40 탐지. 비건 레스토랑 소수 포함",
+      "gap": "VEGAN_NOT_STRUCTURED. 해피카우 API 연동 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "solo_travel",
+      "label": "솔로 여행 (혼밥/혼여)",
+      "coverage": "WEAK",
+      "visitseoul_support": "1/40 탐지. 솔로 큐레이션 콘텐츠(나혼자간다) 1건 발견",
+      "gap": "SOLO_DINING_NOT_STRUCTURED. UGC 보강 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "shopping",
+      "label": "쇼핑 일반",
+      "coverage": "STRONG",
+      "visitseoul_support": "명동, 홍대, 강남 쇼핑 구역. 면세점, 백화점 포함",
+      "gap": "ORDINARY_CHAIN_VS_TOURISM_FLAGSHIP 구분 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "kbeauty",
+      "label": "K-beauty 쇼핑",
+      "coverage": "MODERATE",
+      "visitseoul_support": "6/18 탐지. 명동 집중. 위글위글, 뷰티 브랜드 일부",
+      "gap": "KBEAUTY_DEDICATED_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "local_market",
+      "label": "재래시장/로컬 마켓",
+      "coverage": "MODERATE",
+      "visitseoul_support": "광장시장, 통인시장, 노량진수산시장, 청계5가 등",
+      "gap": "MARKET_HOURS_VENDOR_INFO_LIMITED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "festival",
+      "label": "축제/이벤트 참가",
+      "coverage": "STRONG",
+      "visitseoul_support": "Event 1,190건. 벚꽃, 불꽃, 여의도 봄꽃, 서울빛초롱 등 대형 축제",
+      "gap": "START_END_DATE_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL",
+      "note": "LIFECYCLE = ACTIVE 조건 필수"
+    },
+    {
+      "intent": "temple_stay",
+      "label": "템플스테이",
+      "coverage": "WEAK",
+      "visitseoul_support": "템플스테이 통합정보센터 1건. 국제선센터 1건",
+      "gap": "TEMPLE_STAY_SPECIFIC_TEMPLES_LIMITED. 공식 템플스테이 사이트 연동 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "wellness",
+      "label": "웰니스/스파/명상",
+      "coverage": "MODERATE",
+      "visitseoul_support": "강변스파랜드, 스파고결, 명상 체험 일부",
+      "gap": "WELLNESS_CATEGORY_NOT_DEDICATED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "family_kids",
+      "label": "가족 여행/어린이",
+      "coverage": "STRONG",
+      "visitseoul_support": "롯데월드, 씨라이프, 서울랜드, 서울상상나라, 키자니아, 어린이대공원 등",
+      "gap": "AGE_RANGE_NOT_STRUCTURED",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "photography",
+      "label": "사진 명소",
+      "coverage": "MODERATE",
+      "visitseoul_support": "야경 시리즈 8건, 한강뷰, 궁궐 등 사진 명소 포함",
+      "gap": "PHOTO_SPOT_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "night_view",
+      "label": "야경",
+      "coverage": "STRONG",
+      "visitseoul_support": "남산서울타워 야경, 선유도 야경, N서울타워, 63빌딩 야경 등 8건 시리즈",
+      "gap": "VIEWING_HOURS_STRUCTURED_LIMITED",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "cycling",
+      "label": "자전거",
+      "coverage": "STRONG",
+      "visitseoul_support": "한강 자전거 코스 240km, 각 공원 자전거 대여, 천호자전거거리 등",
+      "gap": "RENTAL_LOCATION_HOURS_LIMITED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "walking_urban",
+      "label": "도심 도보 탐방",
+      "coverage": "STRONG",
+      "visitseoul_support": "서울 둘레길 21코스, 청계천, 종로, 북촌, 서촌 도보 코스",
+      "gap": "NONE",
+      "ai_eligible": "YES"
+    },
+    {
+      "intent": "art_gallery",
+      "label": "미술관/갤러리",
+      "coverage": "MODERATE",
+      "visitseoul_support": "국립현대미술관, 서울시립미술관, 아트선재, 토탈미술관 등",
+      "gap": "EXHIBITION_SCHEDULE_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "performance",
+      "label": "공연 관람",
+      "coverage": "MODERATE",
+      "visitseoul_support": "아르코예술극장, 충무아트센터, 두산아트센터, 세종문화회관 등 공연장 포함",
+      "gap": "PERFORMANCE_SCHEDULE_NOT_STRUCTURED. 티켓 연동 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "traditional_performance",
+      "label": "전통 공연 (국악/무용)",
+      "coverage": "MODERATE",
+      "visitseoul_support": "고궁음악회, 정동극장, 남산골 야외공연장 등",
+      "gap": "PERFORMANCE_DATE_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "night_market",
+      "label": "야시장/야간 마켓",
+      "coverage": "WEAK",
+      "visitseoul_support": "일부 축제 내 포함. 전용 야시장 콘텐츠 희박",
+      "gap": "NIGHT_MARKET_DEDICATED_COVERAGE_WEAK",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "budget_travel",
+      "label": "저예산 여행",
+      "coverage": "WEAK",
+      "visitseoul_support": "무료 입장 플래그(trrsrt_use_chrge=N) 일부. 예산 정보 구조화 부족",
+      "gap": "BUDGET_TAG_NOT_STRUCTURED. 가격 정보 수집 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "luxury_travel",
+      "label": "럭셔리 여행",
+      "coverage": "WEAK",
+      "visitseoul_support": "면세점, 고급 레스토랑 일부. LUXURY 태그 없음",
+      "gap": "LUXURY_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "accessibility",
+      "label": "접근성 (장애인/휠체어)",
+      "coverage": "WEAK",
+      "visitseoul_support": "extra.disabled_facility 필드 존재. 데이터 입력 불완전",
+      "gap": "DISABLED_FACILITY_FIELD_SPARSE",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "educational",
+      "label": "교육/학습 여행",
+      "coverage": "MODERATE",
+      "visitseoul_support": "역사 박물관, 과학관, 어린이박물관, 독립기념관 등",
+      "gap": "NONE",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "religious_sites",
+      "label": "종교 시설 탐방 (불교/기독교 등)",
+      "coverage": "MODERATE",
+      "visitseoul_support": "조계사, 명동성당, 봉은사, 국제선센터 등",
+      "gap": "PRAYER_TIMES_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "sunrise_sunset",
+      "label": "일출/일몰 명소",
+      "coverage": "WEAK",
+      "visitseoul_support": "아차산 일출 1건 탐지. 전반적 커버리지 약함",
+      "gap": "SUNRISE_SUNSET_SPOT_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "sports_activities",
+      "label": "스포츠/액티비티 참여",
+      "coverage": "MODERATE",
+      "visitseoul_support": "한강 수영장, 마라톤 이벤트, 자전거, 행글라이딩 포함",
+      "gap": "BOOKING_RESERVATION_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "couple_romantic",
+      "label": "커플/로맨틱 여행",
+      "coverage": "MODERATE",
+      "visitseoul_support": "야경, 한강공원, 북촌 한옥마을, 데이트 코스 일부",
+      "gap": "ROMANTIC_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "group_tour",
+      "label": "단체 여행",
+      "coverage": "MODERATE",
+      "visitseoul_support": "대형 시설(롯데월드, 궁궐) 단체 접수. 투어버스 관련 일부",
+      "gap": "GROUP_BOOKING_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "digital_nomad",
+      "label": "디지털 노마드/장기 체류",
+      "coverage": "WEAK",
+      "visitseoul_support": "서울창업허브 1건. 코워킹스페이스 매우 희박",
+      "gap": "COWORKING_CAFÉ_NOT_STRUCTURED. 외부 소스 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "lgbtq",
+      "label": "LGBTQ+ 친화 여행",
+      "coverage": "WEAK",
+      "visitseoul_support": "이태원 일부 포함. 전용 플래그 없음",
+      "gap": "LGBTQ_FRIENDLY_FLAG_NOT_STRUCTURED. UGC 필요",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "language_learning",
+      "label": "한국어 학습 연계 여행",
+      "coverage": "WEAK",
+      "visitseoul_support": "문화원, 어학원 일부",
+      "gap": "LANGUAGE_LEARNING_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "shopping_souvenir",
+      "label": "기념품 쇼핑",
+      "coverage": "MODERATE",
+      "visitseoul_support": "서울마이소울샵, 인사동, 명동 기념품 등",
+      "gap": "SOUVENIR_SPECIFIC_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "medical_wellness",
+      "label": "의료 관광/뷰티 시술",
+      "coverage": "WEAK",
+      "visitseoul_support": "강남 피부과/성형 관련 언급 일부. 전용 카테고리 없음",
+      "gap": "MEDICAL_TOURISM_DEDICATED_COVERAGE_WEAK",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "sunrise_hike",
+      "label": "일출 등산",
+      "coverage": "WEAK",
+      "visitseoul_support": "아차산 일출 1건. 기타 산 일출 구조화 없음",
+      "gap": "SUNRISE_HIKE_FLAG_NOT_STRUCTURED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "water_activities",
+      "label": "수상 레저 (카약/보트)",
+      "coverage": "MODERATE",
+      "visitseoul_support": "한강 수상스키, 보트, 카약 관련. 더리버 등",
+      "gap": "BOOKING_HOURS_STRUCTURED_LIMITED",
+      "ai_eligible": "CONDITIONAL"
+    },
+    {
+      "intent": "food_delivery",
+      "label": "배달 음식 체험",
+      "coverage": "NOT_AVAILABLE",
+      "visitseoul_support": "VisitSeoul에서 제공하지 않음",
+      "gap": "DELIVERY_PLATFORM_INTEGRATION_NEEDED",
+      "ai_eligible": "NO"
+    },
+    {
+      "intent": "free_attractions",
+      "label": "무료 관광지",
+      "coverage": "MODERATE",
+      "visitseoul_support": "trrsrt_use_chrge=N 필드 기반 필터 가능. 공원, 궁궐 일부 무료",
+      "gap": "FREE_FLAG_INCONSISTENTLY_FILLED",
+      "ai_eligible": "CONDITIONAL"
+    }
+  ],
+  "summary": {
+    "total_intents": 44,
+    "STRONG": 8,
+    "MODERATE": 18,
+    "WEAK": 13,
+    "NOT_AVAILABLE": 1,
+    "UNKNOWN": 0,
+    "ai_eligible_YES": 5,
+    "ai_eligible_CONDITIONAL": 38,
+    "ai_eligible_NO": 1
+  }
+}

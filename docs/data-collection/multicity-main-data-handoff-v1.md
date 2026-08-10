@@ -333,7 +333,7 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 | 산출물 | `data/seoul-source-audit/seoul-visitseoul-full-inventory-v1.jsonl` (3765건) |
 | 요약 | `docs/data-collection/seoul/seoul-visitseoul-full-inventory-summary-v1.md` |
 
-다음 승인 gate: retained detail 수집 (1,277건 — MAIN 결정 필요)
+다음 승인 gate: retained detail 수집 (1,277건 → 후속 TASK)
 
 **MAIN 결정 필요 (retained detail 착수 전):**
 
@@ -342,7 +342,86 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 3. KTO 병행 수집 범위 확정 (credential 확보 포함)
 4. 서울역사박물관 대안 source
 5. KTO ID collision 해소 (264337, 264491) — credential 확보 후 targeted detail
-6. UNRESOLVED 22건 코드맵 추가 (`Cw8j0y7`, `Cy5h2x9`, `Ca1z6p7`)
+6. ~~UNRESOLVED 22건 코드맵 추가~~ (**완료** — 아래 Travel Value 통합 섹션 참조)
+
+**⚠️ LEGACY TERMINOLOGY CORRECTION (MAIN 필독):**
+
+```
+OLD (사용 금지): EXACT_PRELIMINARY_RETAINED = 1,277
+NEW (사용 필수): LEGACY_PRE_TRAVEL_VALUE_DETAIL_POOL = 1,277
+```
+
+1,277건은 PLACE_CORE / PLACE_CONDITIONAL / SHOPPING / EXPERIENCE / TEMPLE만 포함.
+Restaurant(1,259건), Event(1,190건)은 **별도 track — 이 숫자에 포함되지 않음**.
+이 1,277건은 Travel Value Gate 적용 **전** 상태 → `RETAINED_DETAIL_PLAN_READY = NO`.
+
+**Travel Value Integration — 통합 완료 (2026-08-10):**
+
+| 항목 | 값 |
+|---|---|
+| TASK | TASK-SEOUL-TRAVEL-VALUE-INTEGRATION-AND-ENTITY-MODEL-V1 |
+| 추가 detail 호출 | 120건 (Restaurant 40, Event 35, Shopping 18, Experience 12, K-pop 8, UNRESOLVED 7) |
+| 누적 detail 호출 | **239건** (Nature 119 + Integrated 120) |
+| FULL_INVENTORY_UNRESOLVED_CATEGORY | **0** (22건 routing 완료) |
+
+**UNRESOLVED 22건 Resolution:**
+
+| Code | Category | 건수 | Routing |
+|---|---|---|---|
+| `Cw8j0y7` | 자연경관(하천) | 13 | PLACE_CONDITIONAL_REVIEW (Nature 119 포함) |
+| `Cy5h2x9` | 테마공원 | 7 | 4건 PLACE_CORE + 3건 PLACE_CONDITIONAL |
+| `Ca1z6p7` | 역사관광 | 2 | PLACE_CONDITIONAL_REVIEW |
+
+**Cy5h2x9 상세:**
+- PLACE_CORE: 씨라이프코엑스아쿠아리움, 서울랜드, 롯데월드어드벤처, 롯데월드아쿠아리움
+- PLACE_CONDITIONAL: 어린이대공원반려견놀이터, 라바타운, 키자니아서울
+
+**7축 Travel Value Gate 확립:**
+
+| 축 | 이름 |
+|---|---|
+| TV1 | TRAVEL_PURPOSE_VALUE |
+| TV2 | TRAVELER_UTILITY_VALUE |
+| TV3 | KOREA_LOCAL_UNIQUENESS |
+| TV4 | EXPERIENCE_VALUE |
+| TV5 | INTENT_MATCH_POTENTIAL |
+| TV6 | INFORMATION_QUALITY |
+| TV7 | CURRENT_USABILITY |
+
+자세한 정책: `docs/data-collection/seoul/seoul-integrated-travel-value-policy-v1.md`
+
+**SOURCE_CONTENT_TYPE 분류 완료:**
+
+6가지 분류 확립 (PHYSICAL_PLACE, EXPERIENCE_CONTENT, ROUTE_COURSE, EVENT, EDITORIAL_CONTENT, UTILITY_SERVICE).
+전국 공통 적용. 자세한 정책: `docs/data-collection/seoul/seoul-source-content-entity-classification-v1.md`
+
+**Key Field Gap 발견 (구조화 필드 부재 — 외부 보강 필요):**
+
+| 필드 | VisitSeoul | 보강 방법 |
+|---|---|---|
+| Event 시작/종료일 | NOT_AVAILABLE (텍스트에만) | 공식 사이트 + regex 추출 |
+| 할랄 인증 | NOT_AVAILABLE | 한국이슬람교 연합회 |
+| 채식/비건 | NOT_AVAILABLE | HappyCow API + UGC |
+| 외국어 메뉴 | NOT_AVAILABLE | 구글 리뷰 + UGC |
+| 솔로 다이닝 | NOT_AVAILABLE | UGC |
+| 이미지 URL | Detail API 미포함 | 별도 이미지 API |
+
+**K-pop 발견 (KPOP_DISCOVERY_FROM_VISITSEOUL = CONDITIONAL):**
+- 전체 3,765건 중 K-pop 키워드 145건 (3.85%)
+- 공연장/문화 venue = STRONG. K-pop 직접 체험 시설 = WEAK
+- 하이브 인사이트/SM TOWN 등 공식 체험 공간 → VisitSeoul 미등록 또는 EXPERIENCE_CANDIDATE
+- 별도 K-pop 특화 source 연동 필요
+
+**44개 여행자 intent 커버리지 정의 완료:**
+
+| 등급 | intent 수 |
+|---|---|
+| STRONG | 8 |
+| MODERATE | 18 |
+| WEAK | 13 |
+| NOT_AVAILABLE | 1 |
+
+자세한 정책: `docs/data-collection/seoul/seoul-traveler-need-coverage-matrix-v1.json`
 
 **Nature/Trekking Travel Value 정책 (VALIDATED — 2026-08-10):**
 
@@ -458,8 +537,16 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 | Seoul Category Quality | `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` | 카테고리별 FP·수집 적합성 |
 | Seoul Source Cascade Live | `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` | Source 우선순위 최종 (수집 전략 포함) |
 | Seoul KTO ID Integrity | `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` | KTO contentId 후보 무결성 (32 entries, collision gate) |
-| Seoul Nature Travel Value Policy | `docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md` | **19개 intent 정의, PLACE vs EXPERIENCE 분리, 이벤트-장소 관계 (신규)** |
-| Seoul Nature Trekking Live Validation | `docs/data-collection/seoul/seoul-nature-trekking-value-live-validation-v1.md` | **119건 detail 검증, 트레킹 루트 데이터 가용성 (신규)** |
+| Seoul Nature Travel Value Policy | `docs/data-collection/seoul/seoul-nature-travel-value-policy-v1.md` | **19개 intent 정의, PLACE vs EXPERIENCE 분리, 이벤트-장소 관계** |
+| Seoul Nature Trekking Live Validation | `docs/data-collection/seoul/seoul-nature-trekking-value-live-validation-v1.md` | **119건 detail 검증, 트레킹 루트 데이터 가용성** |
+| Seoul Source Content Entity Classification | `docs/data-collection/seoul/seoul-source-content-entity-classification-v1.md` | **SOURCE_CONTENT_TYPE 7종 분류, 전국 공통 적용 원칙 (신규)** |
+| Seoul Restaurant Travel Value Live Validation | `docs/data-collection/seoul/seoul-restaurant-travel-value-live-validation-v1.md` | **40건 restaurant detail 검증, 할랄/비건/솔로 field gap (신규)** |
+| Seoul Event Travel Value Live Validation | `docs/data-collection/seoul/seoul-event-travel-value-live-validation-v1.md` | **35건 event detail 검증, 날짜 field gap, lifecycle 분석 (신규)** |
+| Seoul Shopping K-pop Experience Validation | `docs/data-collection/seoul/seoul-shopping-kpop-experience-live-validation-v1.md` | **38건 (Shopping+Kpop+Experience) 검증, UNRESOLVED 22건 해소 (신규)** |
+| Seoul Integrated Travel Value Policy | `docs/data-collection/seoul/seoul-integrated-travel-value-policy-v1.md` | **7축 TV Gate, 4-Layer Curation, Entity Relation Model (신규)** |
+| Seoul Traveler Need Coverage Matrix | `docs/data-collection/seoul/seoul-traveler-need-coverage-matrix-v1.json` | **44개 intent 커버리지 STRONG/MODERATE/WEAK (신규)** |
+| Seoul Traveler Utility Field Gap | `docs/data-collection/seoul/seoul-traveler-utility-field-gap-v1.json` | **30개 필드 가용성 분석, 보강 전략 (신규)** |
+| Seoul Integrated Detail Strategy | `docs/data-collection/seoul/seoul-integrated-detail-strategy-v1.md` | **6-Tier detail 호출 전략, 239건 완료 현황 (신규)** |
 
 **Branch 참조:**
 
@@ -483,7 +570,13 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 - [ ] VisitSeoul 카테고리 직접 AI 후보 처리 금지 확인
 - [ ] Seoul branch eligibility policy 확인 (data/seoul-collection-v1)
 - [ ] **[신규]** PLACE_VALUE vs PLACE_BASED_EXPERIENCE_VALUE 분리 모델 구현 (야경 8건, 계절 시설)
-- [ ] **[신규]** event-place 관계 연결 (`hosting_place_id`) 구현
+- [ ] **[신규]** event-place 관계 연결 (`hosting_place_id`) M:N 구현 (단일 ID 확정 금지)
 - [ ] **[신규]** 19개 nature intent → VisitSeoul 카테고리 매핑 필터 구현
 - [ ] **[신규]** 서울 둘레길 21코스 상세 데이터 수집 출처 결정 (외부 API or UGC)
 - [ ] **[신규]** 북한산 등산 코스 상세 수집 출처 결정 (국립공원공단 API)
+- [ ] **[신규]** Event START_DATE/END_DATE 추출 파이프라인 구현 (구조화 필드 없음 — regex+공식사이트)
+- [ ] **[신규]** 할랄 인증 리스트 연동 (한국이슬람교 연합회/할랄코리아)
+- [ ] **[신규]** SOURCE_CONTENT_TYPE 분류 로직 적용 (EVENT CID → city_spots entity 변환 금지)
+- [ ] **[신규]** LEGACY_PRE_TRAVEL_VALUE_DETAIL_POOL 1,277건 → 개별 TV Gate 적용 (후속 TASK)
+- [ ] **[신규]** Cy5h2x9 4건 PLACE_CORE 확정 반영 (씨라이프, 서울랜드, 롯데월드2건)
+- [ ] **[신규]** AI_ITINERARY_MAIN_CHANGE_REQUIRED = YES 확인 및 구현 (7축 TV Gate 기반 필터링)

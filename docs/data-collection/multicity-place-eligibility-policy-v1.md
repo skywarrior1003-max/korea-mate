@@ -631,6 +631,89 @@ Claude가 임의로 확정하면 안 되는 구조적 판단:
 
 ---
 
+---
+
+## PART 13 — SOURCE_CONTENT_TYPE 원칙 (서울 실증 기반, 전국 공통)
+
+> 출처: `docs/data-collection/seoul/seoul-source-content-entity-classification-v1.md`
+
+**SOURCE_CONTENT_EQUALS_PHYSICAL_PLACE = NO**
+
+VisitSeoul/TourAPI CID가 존재한다는 이유만으로 해당 콘텐츠가 물리적 장소라고 자동 처리하지 않는다.
+
+| SOURCE_CONTENT_TYPE | 정의 | 처리 원칙 |
+|---|---|---|
+| `PHYSICAL_PLACE` | 실재 고정 물리 장소 | city_spots canonical entity 후보 |
+| `EXPERIENCE_CONTENT` | 특정 장소에서의 시간/계절/활동 경험 | 기반 PHYSICAL_PLACE entity와 관계 연결 |
+| `ROUTE_COURSE` | 경로/코스 자체가 콘텐츠 | 별도 route entity — 단일 좌표 저장 금지 |
+| `EVENT` | 기간이 있는 이벤트 | start_date/end_date 필수. 없으면 CURRENT_STATUS=UNKNOWN |
+| `EDITORIAL_CONTENT` | 다수 장소 큐레이션 | 포함 장소 개별 entity 참조 |
+| `UTILITY_SERVICE` | 여행 편의 서비스 | PHYSICAL_PLACE의 amenity 속성으로 연결 |
+| `UNKNOWN` | 분류 불명 | USER_REVIEW_REQUIRED. 자동 처리 금지 |
+
+**전국 적용**: 부산 비짓부산, 경주 KTO/공식 API, 제주 등 모든 도시에 동일하게 적용.
+
+---
+
+## PART 14 — Restaurant / Event / Shopping CORE DOMAIN 원칙
+
+기존 정책에서 Restaurant·Event를 "별도 track" 또는 "AI 제외" 기본으로 분류하는 것을 수정한다.
+
+```
+RESTAURANT_IS_CORE_TRAVEL_DOMAIN = YES
+EVENT_IS_CORE_TIME_SENSITIVE_DOMAIN = YES
+SHOPPING_IS_CORE_TRAVEL_DOMAIN = YES
+```
+
+이 세 카테고리를 이유 없이 낮은 우선순위로 취급하지 않는다.
+
+각 카테고리는 이 문서 PART 2의 5개 Eligibility 축을 그대로 적용한다.
+별도 track으로 관리하는 이유는 **데이터 lifecycle 차이** 때문이지, 중요도 차이가 아니다.
+
+**COUNT_TARGET = NOT_DEFINED_BY_DESIGN**
+**NUMERIC_PRUNING_POLICY = FORBIDDEN**
+**CATEGORY_BLANKET_EXCLUSION = FORBIDDEN**
+
+---
+
+## PART 15 — Event Lifecycle 필수 원칙
+
+이벤트 콘텐츠는 TV7 (CURRENT_USABILITY) 확인 없이 AI 후보로 사용하지 않는다.
+
+| Lifecycle 상태 | AI 자격 | Explore |
+|---|---|---|
+| ACTIVE/UPCOMING | CONDITIONAL (최우선 고려) | YES |
+| RECURRING (매년 반복) | CONDITIONAL (해당 시즌) | YES |
+| UNKNOWN | 별도 확인 후 결정 | CONDITIONAL |
+| ENDED | NO | NO (기본 숨김) |
+
+**ENDED 이벤트 삭제 금지**: RECURRING 이벤트의 이전 회차는 아카이브 보존.
+
+**START_DATE / END_DATE 없는 이벤트**: CURRENT_STATUS=UNKNOWN 처리. 자동 ACTIVE 간주 금지.
+
+---
+
+## PART 16 — 7축 Travel Value Gate 참조
+
+AI 후보 판정 시 다음 7축 Travel Value Gate를 참고 지표로 사용한다.
+상세 정의: `docs/data-collection/seoul/seoul-integrated-travel-value-policy-v1.md`
+
+| 축 | 이름 |
+|---|---|
+| TV1 | TRAVEL_PURPOSE_VALUE |
+| TV2 | TRAVELER_UTILITY_VALUE |
+| TV3 | KOREA_LOCAL_UNIQUENESS |
+| TV4 | EXPERIENCE_VALUE |
+| TV5 | INTENT_MATCH_POTENTIAL |
+| TV6 | INFORMATION_QUALITY |
+| TV7 | CURRENT_USABILITY |
+
+AI_ITINERARY = YES: TV1≥MEDIUM, TV3≥MEDIUM, TV5≥HIGH, TV7=ACTIVE/SEASONAL/RECURRING
+AI_ITINERARY = CONDITIONAL: 일부 축 미달 또는 intent 매칭 조건부
+AI_ITINERARY = NO: TV1=LOW/NONE, 또는 TV7=ENDED, 또는 UTILITY_ONLY
+
+---
+
 ## 관련 문서
 
 - `docs/data-collection/multicity-data-quality-guardrail-v1.md` — 기존 13원칙 (이 문서가 확장)
@@ -639,3 +722,5 @@ Claude가 임의로 확정하면 안 되는 구조적 판단:
 - `docs/data-collection/multicity-place-eligibility-backfill-audit-v1.json` — 부산/경주 backfill audit 결과
 - `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json` — 서울 source cascade
 - `docs/data-collection/gyeongju-main-clean-import-manifest-v1.md` — MAIN CRITICAL 섹션 참조
+- `docs/data-collection/seoul/seoul-integrated-travel-value-policy-v1.md` — 7축 Travel Value Gate 전체 정의
+- `docs/data-collection/seoul/seoul-source-content-entity-classification-v1.md` — SOURCE_CONTENT_TYPE 전체 분류

@@ -1,0 +1,329 @@
+{
+  "_meta": {
+    "task": "TASK-SEOUL-TRAVEL-VALUE-INTEGRATION-AND-ENTITY-MODEL-V1",
+    "created": "2026-08-10",
+    "description": "여행자 utility 관련 필드별 VisitSeoul 가용성 및 보강 전략",
+    "field_status_values": [
+      "STRUCTURED",
+      "DESCRIPTION_DERIVABLE",
+      "OTHER_SOURCE",
+      "USER_CONTRIBUTABLE",
+      "NOT_AVAILABLE"
+    ],
+    "source": "239건 detail 호출 실증 분석 (Nature 119 + Integrated 120)"
+  },
+  "fields": [
+    {
+      "field_name": "coordinates",
+      "label": "좌표 (위경도)",
+      "visitseoul_field": "traffic.map_position_x / traffic.map_position_y",
+      "status": "STRUCTURED",
+      "availability": "95%+",
+      "notes": "PLACE/EXPERIENCE 유형에서 95%+ 가용. EVENT 일부 없음",
+      "ai_dependency": "HIGH"
+    },
+    {
+      "field_name": "address",
+      "label": "주소",
+      "visitseoul_field": "traffic.adres",
+      "status": "STRUCTURED",
+      "availability": "90%+",
+      "notes": "대부분 제공. 도로명 또는 지번",
+      "ai_dependency": "HIGH"
+    },
+    {
+      "field_name": "phone",
+      "label": "전화번호",
+      "visitseoul_field": "extra.cmmn_telno",
+      "status": "STRUCTURED",
+      "availability": "70%",
+      "notes": "장소 유형에 주로 존재. EVENT 희박",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "website",
+      "label": "공식 홈페이지",
+      "visitseoul_field": "extra.cmmn_hmpg_url",
+      "status": "STRUCTURED",
+      "availability": "60%",
+      "notes": "주요 장소에 존재. 소규모 식당/카페 희박",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "open_hours",
+      "label": "영업시간",
+      "visitseoul_field": "extra.cmmn_use_time",
+      "status": "STRUCTURED",
+      "availability": "50%",
+      "notes": "비정형 텍스트 형식 혼재. 파싱 필요",
+      "ai_dependency": "HIGH"
+    },
+    {
+      "field_name": "closed_days",
+      "label": "휴무일",
+      "visitseoul_field": "extra.closed_days",
+      "status": "STRUCTURED",
+      "availability": "40%",
+      "notes": "채워진 경우 신뢰도 높음",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "admission_fee",
+      "label": "입장료 여부 (N=무료/F=유료)",
+      "visitseoul_field": "extra.trrsrt_use_chrge",
+      "status": "STRUCTURED",
+      "availability": "50%",
+      "notes": "이진 플래그만. 실제 금액은 없음",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "transit_directions",
+      "label": "지하철/교통 접근",
+      "visitseoul_field": "traffic.subway_info",
+      "status": "STRUCTURED",
+      "availability": "60%",
+      "notes": "서울 특성상 지하철 정보 풍부한 편",
+      "ai_dependency": "HIGH"
+    },
+    {
+      "field_name": "accessibility",
+      "label": "장애인/휠체어 편의시설",
+      "visitseoul_field": "extra.disabled_facility",
+      "status": "STRUCTURED",
+      "availability": "30%",
+      "notes": "필드 존재하나 입력 불완전. 보강 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH"
+    },
+    {
+      "field_name": "description",
+      "label": "설명 텍스트",
+      "visitseoul_field": "post_desc (HTML) + sumry",
+      "status": "STRUCTURED",
+      "availability": "85%",
+      "notes": "HTML 파싱 필요. 품질 편차 큼. 0~8000자",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "tags",
+      "label": "태그",
+      "visitseoul_field": "tag",
+      "status": "STRUCTURED",
+      "availability": "70%",
+      "notes": "list 또는 comma-separated string. intent 추출 활용 가능",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "special_notes",
+      "label": "특이사항/유의사항",
+      "visitseoul_field": "extra.cmmn_important",
+      "status": "STRUCTURED",
+      "availability": "30%",
+      "notes": "예약 필수, 드레스코드, 연령 제한 등 포함 가능",
+      "ai_dependency": "MEDIUM"
+    },
+    {
+      "field_name": "multilingual_cid",
+      "label": "다국어 CID 연결",
+      "visitseoul_field": "multi_lang_list",
+      "status": "STRUCTURED",
+      "availability": "80%",
+      "notes": "ko/en/ja/zh-CN/zh-TW/ru/ms suffix로 연결",
+      "ai_dependency": "HIGH"
+    },
+    {
+      "field_name": "event_start_date",
+      "label": "이벤트 시작일",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "30% (텍스트 추출)",
+      "notes": "구조화 필드 없음. title/post_desc에서 regex 추출 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH"
+    },
+    {
+      "field_name": "event_end_date",
+      "label": "이벤트 종료일",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "25% (텍스트 추출)",
+      "notes": "구조화 필드 없음. post_desc에서 추출 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH"
+    },
+    {
+      "field_name": "event_ticket_url",
+      "label": "이벤트 티켓/예매 링크",
+      "visitseoul_field": null,
+      "status": "OTHER_SOURCE",
+      "availability": "RARE",
+      "notes": "인터파크, 예스24, YES티켓 등 외부 플랫폼 연동 필요",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "ticket_platforms"
+    },
+    {
+      "field_name": "menu_items",
+      "label": "메뉴 및 가격",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "15% (텍스트에 일부)",
+      "notes": "구조화 없음. 네이버/구글 리뷰 연동 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "naver_place, google_maps"
+    },
+    {
+      "field_name": "price_range",
+      "label": "가격대",
+      "visitseoul_field": null,
+      "status": "OTHER_SOURCE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "네이버 플레이스, 구글 Maps 연동 또는 UGC",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "naver_place, google_maps, ugc"
+    },
+    {
+      "field_name": "solo_dining",
+      "label": "1인 식사 가능 여부",
+      "visitseoul_field": null,
+      "status": "USER_CONTRIBUTABLE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "구조화 필드 없음. UGC 필수",
+      "ai_dependency": "MEDIUM",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "ugc"
+    },
+    {
+      "field_name": "halal_certified",
+      "label": "할랄 인증 여부",
+      "visitseoul_field": null,
+      "status": "OTHER_SOURCE",
+      "availability": "NOT_AVAILABLE_IN_VS_STRUCTURED",
+      "notes": "텍스트에서 일부 탐지 가능. 한국이슬람교 연합회/할랄코리아 공식 리스트 연동 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "halal_korea_official_list"
+    },
+    {
+      "field_name": "vegetarian_menu",
+      "label": "채식 메뉴 여부",
+      "visitseoul_field": null,
+      "status": "USER_CONTRIBUTABLE",
+      "availability": "NOT_AVAILABLE_IN_VS_STRUCTURED",
+      "notes": "텍스트에서 일부 탐지. HappyCow API 또는 UGC 보강",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "happycow, ugc"
+    },
+    {
+      "field_name": "allergy_info",
+      "label": "알레르기 정보",
+      "visitseoul_field": null,
+      "status": "NOT_AVAILABLE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "VisitSeoul에 없음. UGC 또는 공식 메뉴 데이터",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "ugc"
+    },
+    {
+      "field_name": "foreign_language_menu",
+      "label": "외국어 메뉴 여부",
+      "visitseoul_field": null,
+      "status": "USER_CONTRIBUTABLE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "구글 리뷰에서 일부. UGC 필수",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "google_reviews, ugc"
+    },
+    {
+      "field_name": "kiosk_ordering",
+      "label": "키오스크/주문 방식",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "RARE",
+      "notes": "설명 텍스트에 드물게 등장",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "ugc"
+    },
+    {
+      "field_name": "reservation_required",
+      "label": "예약 필요 여부",
+      "visitseoul_field": "extra.cmmn_important (일부)",
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "20%",
+      "notes": "중요사항 필드 또는 설명 텍스트에서 추출",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "ugc"
+    },
+    {
+      "field_name": "peak_waiting_time",
+      "label": "웨이팅/혼잡도 정보",
+      "visitseoul_field": null,
+      "status": "OTHER_SOURCE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "네이버 줄서기, 구글 인기 시간 연동 필요",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "naver_lineup, google_popular_times"
+    },
+    {
+      "field_name": "trekking_distance",
+      "label": "등산/트레킹 거리 (km)",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "40% (자연/트레킹 카테고리)",
+      "notes": "post_desc에서 regex 추출 가능. 119건 중 약 40% 텍스트 포함",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "description_extraction, external_trail_db"
+    },
+    {
+      "field_name": "trekking_elevation",
+      "label": "고도/난이도",
+      "visitseoul_field": null,
+      "status": "DESCRIPTION_DERIVABLE",
+      "availability": "20%",
+      "notes": "일부 설명에 고도 정보 포함",
+      "ai_dependency": "MEDIUM",
+      "enrichment_source": "description_extraction"
+    },
+    {
+      "field_name": "photo_url",
+      "label": "대표 사진",
+      "visitseoul_field": null,
+      "status": "OTHER_SOURCE",
+      "availability": "NOT_IN_DETAIL_API",
+      "notes": "VisitSeoul detail API에 사진 URL 미포함. 별도 이미지 수집 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_priority": "HIGH",
+      "enrichment_source": "visitseoul_image_api, kto_image, ugc"
+    },
+    {
+      "field_name": "kpop_artist_affiliation",
+      "label": "K-pop 아티스트/소속사 연결",
+      "visitseoul_field": null,
+      "status": "NOT_AVAILABLE",
+      "availability": "NOT_AVAILABLE_IN_VS",
+      "notes": "VisitSeoul에 K-pop 전용 구조 없음. 외부 K-pop DB 연동 필요",
+      "ai_dependency": "HIGH",
+      "enrichment_source": "external_kpop_db"
+    }
+  ],
+  "summary": {
+    "STRUCTURED": 12,
+    "DESCRIPTION_DERIVABLE": 7,
+    "OTHER_SOURCE": 6,
+    "USER_CONTRIBUTABLE": 4,
+    "NOT_AVAILABLE": 3,
+    "high_priority_gaps": [
+      "event_start_date",
+      "event_end_date",
+      "menu_items",
+      "price_range",
+      "solo_dining",
+      "halal_certified",
+      "foreign_language_menu",
+      "photo_url",
+      "kpop_artist_affiliation"
+    ]
+  }
+}
