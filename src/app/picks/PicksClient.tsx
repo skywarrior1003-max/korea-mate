@@ -283,7 +283,15 @@ function PicksContent() {
       {/* 모바일 헤더 — TopNav 는 md+ 전용 */}
       <header className="md:hidden bg-surface border-b border-line px-4 h-14 flex items-center justify-between">
         <h1 className="text-lg font-bold text-ink">{t("title")}</h1>
-        <Link href="/" className="gkm-focus text-sm font-semibold text-sub">{tS("home")}</Link>
+        {/* 글자만 두면 41×20 이라 손가락으로는 빗나간다. 글자 크기는 그대로 두고
+            좌우 padding 과 min-height 로 누를 수 있는 넓이만 44 까지 넓힌다.
+            -mr-2 로 늘어난 padding 만큼 되당겨 헤더 오른쪽 정렬은 유지한다. */}
+        <Link
+          href="/"
+          className="gkm-focus inline-flex items-center min-h-11 px-2 -mr-2 text-sm font-semibold text-sub"
+        >
+          {tS("home")}
+        </Link>
       </header>
 
       <main className="flex-1 w-full max-w-[720px] mx-auto px-4 py-5">
@@ -353,7 +361,7 @@ function PicksContent() {
                     <Button variant="text" onClick={() => setConfirmClear(false)}>{t("cancel")}</Button>
                     <button
                       onClick={() => { clearCart(); setConfirmClear(false); }}
-                      className="gkm-focus text-xs font-black text-error px-2 py-2"
+                      className="gkm-focus inline-flex items-center min-h-11 text-xs font-black text-error px-2"
                     >
                       {t("clearAllConfirm")}
                     </button>
@@ -381,12 +389,14 @@ function PicksContent() {
                               📍 {[item.district, item.city].filter(Boolean).join(", ") || "—"}
                             </p>
                             {placeId && (
-                              <Link href={`/place/${placeId}/`} className="gkm-focus inline-block mt-2 text-xs font-bold text-sub hover:text-ink">
+                              <Link href={`/place/${placeId}/`} className="gkm-focus inline-flex items-center min-h-11 -mb-2 text-xs font-bold text-sub hover:text-ink">
                                 {tP("viewDetails")} →
                               </Link>
                             )}
                           </div>
-                          <Button variant="text" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key)}>✕</Button>
+                          {/* 글리프 하나뿐이라 text 변형은 폭이 43 에서 멈춘다.
+                              같은 색을 쓰면서 min-w-11 을 갖는 icon 변형으로 바꾼다. */}
+                          <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key)}>✕</Button>
                         </div>
                       </Card>
                     </li>
@@ -424,14 +434,14 @@ function PicksContent() {
                     confirmSavedDelete ? (
                       <button
                         onClick={runSavedDelete}
-                        className="gkm-focus text-xs font-black text-error px-2 py-2"
+                        className="gkm-focus inline-flex items-center min-h-11 text-xs font-black text-error px-2"
                       >
                         {t("savedDeleteConfirm", { count: savedPicked.size })}
                       </button>
                     ) : (
                       <button
                         onClick={() => setConfirmSavedDelete(true)}
-                        className="gkm-focus text-xs font-black text-error px-2 py-2"
+                        className="gkm-focus inline-flex items-center min-h-11 text-xs font-black text-error px-2"
                       >
                         {t("savedDeleteSelected", { count: savedPicked.size })}
                       </button>
@@ -463,14 +473,18 @@ function PicksContent() {
                     <Card className="overflow-hidden p-0">
                       <div className="relative">
                         <PlaceCardMedia image={e.image} type={e.type} />
-                        {/* 우상단 한 자리. 평소엔 저장 해제 하트, 정리 모드에선 선택 표시.
-                            평소 카드에 삭제 문구를 늘어놓지 않는다. */}
+                        {/* 우상단 한 자리. 평소엔 저장 해제 북마크, 정리 모드에선 선택 표시.
+                            평소 카드에 삭제 문구를 늘어놓지 않는다.
+                            사진 위에 떠 있는 원이라 원 자체를 44 로 키우면 눈에 띄게
+                            무거워진다. 보이는 원은 36 그대로 두고 ::after 로 누를 수
+                            있는 범위만 사방 4px 넓혀 44×44 를 만든다. 버튼이 이미
+                            absolute 라 ::after 의 기준 상자는 버튼이다. */}
                         {savedManaging ? (
                           <button
                             onClick={() => toggleSavedPick(key)}
                             aria-label={`${t("savedManage")}: ${e.name}`}
                             aria-pressed={picked}
-                            className={`gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full backdrop-blur-sm shadow-card flex items-center justify-center text-base ${
+                            className={`gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full backdrop-blur-sm shadow-card flex items-center justify-center text-base after:absolute after:content-[''] after:-inset-1 ${
                               picked ? "bg-action text-white" : "bg-white/90 text-faint"
                             }`}
                           >
@@ -480,7 +494,7 @@ function PicksContent() {
                           <button
                             onClick={() => removeFavorite(e.id)}
                             aria-label={`${t("remove")}: ${e.name}`}
-                            className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-emerald-600"
+                            className="gkm-focus absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-card flex items-center justify-center text-action after:absolute after:content-[''] after:-inset-1"
                           >
                             {/* 저장된 상태 = 채워진 북마크. 하트는 Like 전용이다. */}
                             <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden
@@ -493,23 +507,32 @@ function PicksContent() {
                       </div>
                       <div className="p-4">
                         <p className="font-bold text-ink text-base leading-snug">{e.name}</p>
+                        {/* 정본(my_picks_selected_places)은 분류를 이미지 위 칩이 아니라
+                            이름 바로 아래 파란 대문자 캡션으로 둔다. This Trip 카드가
+                            이미 같은 자리·같은 스타일을 쓰고 있어 그대로 맞춘다. */}
+                        {e.type && (
+                          <p className="text-[11px] font-black text-action uppercase tracking-wider mt-1">{e.type}</p>
+                        )}
                         <p className="text-xs text-faint mt-1 truncate">
                           📍 {[e.district, e.city].filter(Boolean).join(", ") || "—"}
                         </p>
-                        <div className="flex items-center gap-3 mt-3">
+                        {/* 아래 두 동작은 글자만 있어 16px 높이였다. min-h-11 로 누를 수
+                            있는 높이를 확보하고, 버튼이 스스로 갖게 된 위아래 여백만큼
+                            바깥 margin 을 줄여 카드 여백 리듬은 그대로 둔다. */}
+                        <div className="flex items-center gap-3 mt-1 -mb-2">
                           {/* savedVisible 이 이미 This Trip 에 담긴 것을 걸러내므로
                               여기 보이는 항목은 항상 미담김이다. 담기면 카드가
                               This Trip 탭으로 넘어가는 것처럼 보인다. */}
                           <button
                             onClick={() => addToSelected(e, "saved")}
                             disabled={savedManaging}
-                            className="gkm-focus inline-flex items-center gap-1 text-xs font-black text-action disabled:text-faint disabled:cursor-default"
+                            className="gkm-focus inline-flex items-center min-h-11 gap-1 text-xs font-black text-action disabled:text-faint disabled:cursor-default"
                           >
                             + {t("addToSelected")}
                           </button>
                           <span className="flex-1" />
                           {placeId && (
-                            <Link href={`/place/${placeId}/`} className="gkm-focus text-xs font-bold text-sub hover:text-ink">
+                            <Link href={`/place/${placeId}/`} className="gkm-focus inline-flex items-center min-h-11 text-xs font-bold text-sub hover:text-ink">
                               {tP("viewDetails")} →
                             </Link>
                           )}
@@ -592,22 +615,22 @@ function PicksContent() {
                                 <button
                                   onClick={() => addToSelected(ev, "mine")}
                                   disabled={already}
-                                  className="gkm-focus text-xs font-bold text-action disabled:text-ok disabled:cursor-default px-2 py-2"
+                                  className="gkm-focus inline-flex items-center min-h-11 text-xs font-bold text-action disabled:text-ok disabled:cursor-default px-2"
                                 >
                                   {already ? `✓ ${t("inSelected")}` : `+ ${t("addToSelected")}`}
                                 </button>
                                 <span className="flex-1" />
-                                <Button variant="text" aria-label={`${t("edit")}: ${s.name}`} onClick={() => openEdit(s)}>✏️</Button>
+                                <Button variant="icon" aria-label={`${t("edit")}: ${s.name}`} onClick={() => openEdit(s)}>✏️</Button>
                                 {confirmId === s.id ? (
                                   <button
                                     onClick={() => void handleDelete(s.id)}
                                     disabled={deletingId === s.id}
-                                    className="gkm-focus text-xs font-black text-error px-2 py-2 disabled:opacity-60"
+                                    className="gkm-focus inline-flex items-center min-h-11 text-xs font-black text-error px-2 disabled:opacity-60"
                                   >
                                     {deletingId === s.id ? t("deleting") : t("confirmDelete")}
                                   </button>
                                 ) : (
-                                  <Button variant="text" aria-label={`${t("delete")}: ${s.name}`} onClick={() => setConfirmId(s.id)}>🗑️</Button>
+                                  <Button variant="icon" aria-label={`${t("delete")}: ${s.name}`} onClick={() => setConfirmId(s.id)}>🗑️</Button>
                                 )}
                               </div>
                             </>
