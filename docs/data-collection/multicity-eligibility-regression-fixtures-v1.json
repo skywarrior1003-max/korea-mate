@@ -1,11 +1,13 @@
 {
   "meta": {
-    "version": "v1",
+    "version": "v1-corrected",
     "created": "2026-08-10",
+    "corrected": "2026-08-10",
+    "correction_task": "TASK-MULTICITY-ELIGIBILITY-POLICY-CORRECTION-V1",
     "task": "TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1",
     "branch": "data/seoul-collection-v1",
     "extends": "docs/data-collection/multicity-regression-fixtures-v1.json (on data/busan-gyeongju-gap-fill-v1)",
-    "description": "5개 eligibility 축(SEARCHABLE / EXPLORE / AI_ITINERARY / USER_SELECT / USER_SAVE) 회귀 테스트. 기존 guardrail regression과 독립적으로 추가."
+    "description": "5개 eligibility 축(SEARCHABLE / EXPLORE / AI_ITINERARY / USER_SELECT / USER_SAVE) 회귀 테스트. 기존 guardrail regression과 독립적으로 추가. v1-corrected: ELG_006 Temple Stay AI=CONDITIONAL 정정, ELG_015~017 신규 추가."
   },
 
   "eligibility_core_rules": [
@@ -160,26 +162,34 @@
     {
       "fixture_id": "ELG_006",
       "name": "Temple Stay (사찰 문화 체험)",
-      "description": "숙박이 아닌 문화 체험 목적의 템플스테이. 숙박 정책 예외.",
-      "place_class": "CORE_TRAVEL_PLACE",
+      "description": "숙박이 아닌 문화 체험 목적의 템플스테이. 숙박 정책 예외. 관광/문화 가치 높으나 예약 필요·숙박 포함·시간 제약 크므로 AI=CONDITIONAL.",
+      "_correction": "v1에서 AI_ITINERARY_ELIGIBLE=YES였으나 CONDITIONAL로 정정. 이유: 예약 필요, 시간 제약, 일정 구조 충돌 위험. traveler intent 매칭 조건 추가.",
+      "place_class": "CORE_TRAVEL_PLACE (체험/문화)",
       "inputs": {
         "category": "experience",
         "tourism_relevance": "CONFIRMED",
         "official_source": "KTO / 한국불교문화사업단",
         "foreign_visitor_intent": "HIGH",
         "is_accommodation": false,
-        "is_cultural_experience": true
+        "is_cultural_experience": true,
+        "booking_required": true,
+        "overnight_stay_typical": true
       },
       "expected": {
         "SEARCHABLE": "YES",
         "EXPLORE_ELIGIBLE": "YES",
-        "AI_ITINERARY_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["temple_stay", "traditional_culture", "wellness", "meditation", "slow_travel", "overnight_cultural_experience"],
+          "notes": "traveler intent 매칭 시에만 AI 후보 포함. 일정 구조·예약 가능 여부 확인 필요."
+        },
         "USER_CAN_SELECT": "YES",
-        "USER_CAN_SAVE": "YES"
+        "USER_CAN_SAVE": "YES",
+        "user_selected_override": "사용자가 Selected에 직접 추가한 경우 AI CONDITIONAL 조건 무관하게 일정 포함 허용 (USER PICKED > AI AUTO FILTER)"
       },
-      "rule_tests": ["RULE_1"],
+      "rule_tests": ["RULE_1", "RULE_4"],
       "status": "PASS",
-      "notes": "숙박 정책 예외. 문화 체험으로 분류."
+      "notes": "숙박 정책 예외 — accommodation이 아닌 culture/experience 분류. AI는 CONDITIONAL(예약·시간 제약 큼)."
     },
     {
       "fixture_id": "ELG_007",
@@ -353,6 +363,86 @@
       "rule_tests": ["RULE_1", "RULE_2"],
       "status": "PASS",
       "guardrail_cross_reference": "multicity-data-quality-guardrail-v1.md PRINCIPLE 2: SOURCE ABSENCE ≠ NON-TOURISM"
+    },
+    {
+      "fixture_id": "ELG_015",
+      "name": "일반 Chain Store 지점 (canonical bulk ingest 금지 케이스)",
+      "description": "대표점이 아닌 일반 chain 지점. canonical city_spots에 전체 구축하지 않고 외부 검색으로 처리.",
+      "place_class": "TRAVEL_USEFUL_PLACE",
+      "inputs": {
+        "category": "shopping",
+        "entity": "Olive Young 일반 지점 (대표점 아님)",
+        "is_flagship": false,
+        "is_chain": true,
+        "canonical_bulk_ingest_attempted": true
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "SEARCHABLE_method": "EXTERNAL_SEARCH (B) — canonical city_spots bulk 구축 금지",
+        "canonical_city_spots_required": false,
+        "EXPLORE_ELIGIBLE": "NO",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES (외부 장소 검색 경유)",
+        "USER_CAN_SAVE": "YES (My Places)"
+      },
+      "rule_tests": ["RULE_1", "RULE_2", "RULE_3"],
+      "status": "PASS",
+      "notes": "SEARCHABLE=YES이지만 실현 방식은 (B) external search. canonical bulk 구축이 SEARCHABLE의 필요조건이 아님."
+    },
+    {
+      "fixture_id": "ELG_016",
+      "name": "관광형 Flagship 장소 (curated 가능, AI CONDITIONAL)",
+      "description": "명동 Olive Young flagship 등 외국인 primary destination급 관광형 chain 대표점. curated canonical 가능, AI는 CONDITIONAL.",
+      "place_class": "TRAVEL_USEFUL_PLACE (→ curated 선정 시 CORE 경계)",
+      "inputs": {
+        "category": "shopping",
+        "entity": "Olive Young 명동 flagship",
+        "is_flagship": true,
+        "is_chain": true,
+        "district": "Myeongdong",
+        "foreign_visitor_intent": "HIGH",
+        "tourism_relevance": "CONFIRMED (official tourism content)"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "SEARCHABLE_method": "CANONICAL (A) — curated 선정 가능",
+        "canonical_city_spots_required": "USER_REVIEW_REQUIRED (MAIN 결정)",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["k_beauty", "shopping", "myeongdong", "cosmetics"]
+        },
+        "USER_CAN_SELECT": "YES (canonical 또는 외부 검색)",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "USER_REVIEW_REQUIRED": true,
+      "notes": "관광형 flagship 선정 기준(도시별 몇 개까지 curated로 구축할지)은 MAIN 결정. 이 fixture는 정책 방향 기록."
+    },
+    {
+      "fixture_id": "ELG_017",
+      "name": "사용자가 외부 검색으로 추가한 장소 (canonical 없음)",
+      "description": "canonical city_spots에 없는 장소를 사용자가 외부 장소 검색으로 Selected에 추가. AI eligibility 무관하게 일정 포함 허용.",
+      "place_class": "EXTERNAL_OR_USER_PLACE",
+      "inputs": {
+        "in_canonical_city_spots": false,
+        "user_added_via_external_search": true,
+        "user_selected": true,
+        "ai_itinerary_eligible": "N/A (canonical 없음)"
+      },
+      "expected": {
+        "SEARCHABLE": "YES (외부 검색 경유, canonical 아님)",
+        "EXPLORE_ELIGIBLE": "N/A",
+        "AI_ITINERARY_ELIGIBLE": "N/A — 이 장소에 대한 AI 자동 추가는 없으나 사용자 Selected에 있으면 일정 포함",
+        "USER_CAN_SELECT": "YES (EXTERNAL_SEARCH USER_ADD_ALLOWED)",
+        "USER_CAN_SAVE": "YES (My Places)",
+        "itinerary_allowed": true,
+        "override_reason": "USER PICKED > AI AUTO FILTER. canonical SEARCHABLE=NO이더라도 사용자 직접 추가 가능."
+      },
+      "rule_tests": ["RULE_3", "RULE_4"],
+      "status": "PASS",
+      "notes": "CANONICAL USER_CAN_SELECT과 EXTERNAL_SEARCH USER_ADD_ALLOWED를 혼동하지 않는다. canonical에 없어도 사용자는 외부 검색으로 추가 가능."
     }
   ],
 

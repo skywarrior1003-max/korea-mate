@@ -21,12 +21,16 @@ GoKoreaMate의 기존 데이터 파이프라인은 장소를:
 
 하나의 축으로 판단했다.
 
-이 단일 축 모델은 다음 문제를 초래한다:
+이 단일 축 모델은 다음 **위험(risk)**을 초래한다:
 
-1. **AI가 쇼핑몰·식당·숙박업소를 여행 명소처럼 자동 추천**한다.
-2. **관광객이 실제로 찾는 장소가 SEARCHABLE에서 제외**된다.
-3. **`READY=true` 하나만으로 AI 일정 후보가 결정**되어 quality gate가 없다.
+1. **AI가 쇼핑몰·식당·숙박업소를 여행 명소처럼 자동 추천**할 수 있다.
+2. **관광객이 실제로 찾는 장소가 SEARCHABLE에서 제외**될 수 있다.
+3. **`READY=true` 하나만으로 AI 일정 후보가 결정**되어 quality gate가 없을 수 있다.
 4. **Explore·Search·AI·사용자 직접 선택 각각에 맞는 품질 기준이 없다**.
+
+> **CURRENT_MAIN_AI_FILTER = NOT_VERIFIED_IN_THIS_TASK**
+> 위 3번 항목은 MAIN 코드에서 직접 확인한 사실이 아니라 단일 축 모델의 **구조적 위험** 설명이다.
+> AI candidate filtering 실제 구현은 MAIN 코드 검토 후 확인 필요.
 
 이 정책은 장소를 **5개 독립 eligibility 축**으로 분리하여 관리한다.
 
@@ -108,6 +112,23 @@ AI 자동 추천 대상이 아니더라도 검색/저장/사용자 직접 선택
 YES이면: 검색 결과 노출 가능 + 장소 상세 접근 가능 + Save 후보 + Selected 후보.
 
 AI 자동추천 여부와 **독립**.
+
+> **중요 — SEARCHABLE 구현 방식 구분:**
+>
+> SEARCHABLE=YES가 "canonical city_spots DB에 해당 장소를 반드시 bulk 저장한다"를 의미하지 않는다.
+>
+> SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
+> - (A) curated canonical record (canonical city_spots에 있는 장소)
+> - (B) external place search result (외부 지도/검색 연동)
+> - (C) My Places / user-added (사용자가 직접 추가)
+>
+> 대표 flagship은 (A) 가능. 일반 chain 지점 수백 개는 **(A)로 전체 구축 금지** — (B) 또는 (C)로 처리.
+>
+> **CANONICAL USER_CAN_SELECT**: canonical city_spots에 있는 장소를 Selected에 추가.
+>
+> **EXTERNAL_SEARCH USER_ADD_ALLOWED**: canonical에 없어도 외부 장소 검색으로 사용자가 직접 추가 가능.
+>
+> `canonical SEARCHABLE=NO`여도 사용자는 외부 장소 검색으로 직접 추가할 수 있음. 이 두 개념을 혼동하지 않는다.
 
 ---
 
@@ -332,14 +353,22 @@ AI=CONDITIONAL로 승격 가능. MAIN 결정 필요.
 
 | Axis | 값 | 근거 |
 |---|---|---|
-| Place Class | CORE_TRAVEL_PLACE | 숙박이 아닌 문화 체험 목적 |
+| Place Class | CORE_TRAVEL_PLACE (체험/문화) | 숙박이 아닌 문화 체험 목적 |
 | SEARCHABLE | YES | |
 | EXPLORE_ELIGIBLE | YES | |
-| AI_ITINERARY | YES 또는 CONDITIONAL | 문화 관심 여행자 → YES |
+| AI_ITINERARY | **CONDITIONAL** | 일정 구조·예약 제약 큼. traveler intent 필요. |
 | USER_CAN_SELECT | YES | |
 | USER_CAN_SAVE | YES | |
 
-**주의**: 일반 한옥 숙박은 accommodation 정책 적용. Temple Stay는 예외(문화 체험).
+> **AI CONDITIONAL 이유**: Temple Stay는 관광/문화 가치가 높지만, 예약 필요·숙박 포함·시간 제약이 크다.
+> AI 자동 일정에 무조건 삽입하면 예약 불가능하거나 일정 구조와 충돌할 수 있다.
+> traveler intent 매칭 시에만 AI 후보 포함.
+>
+> AI CONDITIONAL 조건 예: `temple_stay`, `traditional_culture`, `wellness`, `meditation`, `slow_travel`, `overnight_cultural_experience`
+>
+> 사용자가 직접 Selected에 추가한 경우 USER PICKED 우선 — AI filter 무관하게 일정 포함 허용.
+
+**주의**: 일반 한옥 숙박은 accommodation 정책 적용. Temple Stay / 문화 체험 프로그램은 예외(culture/experience 분류).
 
 ---
 
@@ -378,6 +407,11 @@ KTO에 attraction으로 등재됨 → tourism relevance gate 없이 READY 처리
 ## PART 5 — AI Itinerary 후보 필터링 요구사항
 
 > **MAIN CRITICAL**: AI itinerary generator에서 반드시 구현해야 할 필터링.
+
+> **CURRENT_MAIN_AI_FILTER = NOT_VERIFIED_IN_THIS_TASK**
+> 현재 MAIN 코드에서 AI 후보 필터링이 어떻게 구현되어 있는지 이 TASK에서 직접 확인하지 않았다.
+> MAIN은 실제 AI candidate selection 코드를 검토한 뒤, `READY=true` 또는 data presence만으로 AI 후보가 되지 않도록
+> `AI_ITINERARY_ELIGIBLE` 축을 명시적으로 적용해야 한다.
 
 AI candidate 선정 시 `city_spots에 존재` 또는 `READY=true` 단독으로는 충분하지 않다.
 

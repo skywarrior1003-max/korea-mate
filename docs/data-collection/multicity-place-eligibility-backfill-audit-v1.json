@@ -1,36 +1,57 @@
 {
   "meta": {
-    "version": "v1",
+    "version": "v1-corrected",
     "created": "2026-08-10",
+    "corrected": "2026-08-10",
+    "correction_task": "TASK-MULTICITY-ELIGIBILITY-POLICY-CORRECTION-V1",
     "task": "TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1",
     "branch": "data/seoul-collection-v1",
     "base_sha_busan_gyeongju": "8dfdc6d",
     "policy_doc": "docs/data-collection/multicity-place-eligibility-policy-v1.md",
-    "audit_scope": "READ ONLY — 부산/경주 데이터를 새 eligibility policy 기준으로 감사. DB 변경 없음.",
+    "audit_scope": "READ ONLY — 부산/경주 데이터를 새 eligibility policy 기준으로 감사. DB 변경 없음. 이 감사 결과는 BACKFILL RECOMMENDATION이며 DB 변경·patch 지시가 아니다. 실제 적용은 MAIN 결정 후 별도 TASK에서 수행.",
     "data_sources_read": [
       "data/busan-gap-fill/busan-user-excluded-14-v1.jsonl",
       "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+      "data/busan-gap-fill/busan-canonical-count-clarification-v3.json",
       "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/reports/busan/busan-final-place-event-release-manifest.json",
       "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
       "data/gyeongju-final-release/gyeongju-final-ready-302-v1.jsonl",
+      "data/gyeongju-final-release/gyeongju-canonical-release-summary-v1.json",
       "docs/data-collection/multicity-data-quality-guardrail-v1.md"
-    ]
+    ],
+    "denominator_note": "이 감사는 eligibility policy 적용 범위 분석용이다. 분모는 도시별로 구분해 이해해야 한다. 세부 사항은 아래 audit 섹션의 DENOMINATOR 필드 참조."
   },
 
   "summary": {
+    "BACKFILL_STATUS": "RECOMMENDATION_ONLY — DB 변경 아님. MAIN 결정 후 별도 TASK에서 실행.",
     "BUSAN_BACKFILL_REQUIRED": "YES",
     "GYEONGJU_BACKFILL_REQUIRED": "YES",
-    "busan_total_in_enriched": 1641,
-    "gyeongju_total_canonical": 301,
+    "BUSAN_ELIGIBILITY_AUDIT_DENOMINATOR": 1642,
+    "BUSAN_ELIGIBILITY_AUDIT_SOURCE": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl (enrichment universe, 비어 있지 않은 행 기준)",
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_PLACES": 1529,
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_EVENTS": 4,
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_TOTAL": 1533,
+    "BUSAN_CANONICAL_SOURCE": "data/tourapi/reports/busan/busan-final-place-event-release-manifest.json",
+    "BUSAN_DENOMINATOR_NOTE": "eligibility 감사 분모 = 1,642 (enrichment universe, 부산 전체 후보). city_spots import 대상(canonical)은 1,529 places + 4 events = 1,533. restaurant 721건은 universe 기준(canonical에서는 680건만 포함, 41건 hold/exclude).",
+    "GYEONGJU_ELIGIBILITY_AUDIT_DENOMINATOR": 302,
+    "GYEONGJU_FINAL_CANONICAL_DENOMINATOR": 302,
+    "GYEONGJU_SERVICE_CANDIDATE_DENOMINATOR": 300,
+    "GYEONGJU_CANONICAL_SOURCE": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl 및 gyeongju-final-ready-302-v1.jsonl (양 파일 302행 확인)",
+    "GYEONGJU_DENOMINATOR_NOTE": "canonical 302에는 사용자 제외 결정 2건(경주생활체육공원, 경주축구공원)이 제외 마커 없이 포함되어 있음. MAIN이 service 적용 시 제외 처리 → service candidate 300건.",
     "busan_excluded_14_auto_restore": 0,
     "db_change": 0,
-    "finding": "양 도시 모두 ai_itinerary_eligible / searchable / explore_eligible 필드가 존재하지 않는다. 현재 READY 또는 publishability 단일 축으로만 분류되어 있음. 새 policy 적용 시 백필 필요."
+    "finding": "양 도시 모두 ai_itinerary_eligible / searchable / explore_eligible 필드가 존재하지 않는다. 새 policy 적용 시 백필 필요. 단, 이 감사는 RECOMMENDATION이며 MAIN 결정 없이 자동 확정·DB 반영 금지."
   },
 
   "busan_audit": {
     "data_as_of": "2026-08-09",
     "source_file": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
-    "total_records": 1641,
+    "DENOMINATOR_UNIVERSE": 1642,
+    "DENOMINATOR_CANONICAL_PLACES": 1529,
+    "DENOMINATOR_CANONICAL_EVENTS": 4,
+    "DENOMINATOR_NOTE": "total_records=1642는 enrichment universe(전체 후보). city_spots import 대상(canonical)은 1,529 places + 4 events. 아래 category_breakdown은 universe(1,642) 기준. canonical 기준에서 restaurant는 721건 아닌 680건(41건 hold/exclude).",
+    "total_records": 1642,
     "eligibility_field_status": {
       "ai_itinerary_eligible": "ABSENT — 전건 없음",
       "searchable": "ABSENT — 전건 없음",
@@ -38,12 +59,14 @@
       "user_can_select": "ABSENT — 전건 없음",
       "user_can_save": "ABSENT — 전건 없음"
     },
-    "category_breakdown": {
+    "category_breakdown_universe": {
+      "_note": "enrichment universe(1,642) 기준. canonical(1,529)에서는 restaurant가 680건(41건 hold/exclude). accommodation 82건은 canonical에 포함.",
       "attraction": 716,
       "restaurant": 721,
       "nature": 50,
       "accommodation": 82,
-      "event": 72
+      "event": 72,
+      "restaurant_canonical_note": "canonical 1,529에서 restaurant=680(universe 721 - hold/exclude 41건)"
     },
 
     "excluded_14_status": {
@@ -200,7 +223,8 @@
     ],
 
     "busan_backfill_summary": {
-      "total_requiring_classification": 1641,
+      "total_requiring_classification": 1642,
+      "_total_note": "eligibility 감사 universe 기준(1,642). BACKFILL RECOMMENDATION — DB 변경 아님.",
       "high_confidence_no_ai": {
         "count_estimate": 82,
         "label": "accommodation",
@@ -218,7 +242,16 @@
   "gyeongju_audit": {
     "data_as_of": "2026-08-09",
     "source_file": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
-    "total_records": 301,
+    "DENOMINATOR_CANONICAL": 302,
+    "DENOMINATOR_SERVICE_CANDIDATES": 300,
+    "DENOMINATOR_NOTE": "total_records=302는 canonical 전체(gyeongju-canonical-places-v1.jsonl 및 gyeongju-final-ready-302-v1.jsonl 양 파일 동일). 단, 사용자 제외 결정 2건(경주생활체육공원, 경주축구공원)이 canonical에 제외 마커 없이 포함. MAIN service 적용 시 제외 → service candidates=300.",
+    "USER_EXCLUDED_IN_CANONICAL": {
+      "count": 2,
+      "records": ["경주생활체육공원", "경주축구공원"],
+      "status": "canonical 302에 포함(제외 마커 없음) — MAIN이 service 적용 시 명시적 제외 필요",
+      "auto_restore": false
+    },
+    "total_records": 302,
     "eligibility_field_status": {
       "ai_itinerary_eligible": "ABSENT — 전건 없음",
       "searchable": "ABSENT — 전건 없음",
@@ -227,7 +260,8 @@
       "user_can_save": "ABSENT — 전건 없음"
     },
     "category_breakdown": {
-      "attraction": 199,
+      "_note": "canonical 302건 기준. attraction 200+restaurant 102=302 (attraction은 release summary 기준 200).",
+      "attraction": 200,
       "restaurant": 102
     },
     "quality_tier": {
@@ -377,7 +411,8 @@
     },
 
     "gyeongju_backfill_summary": {
-      "total_requiring_classification": 301,
+      "total_requiring_classification": 302,
+      "_total_note": "canonical 302건 기준. service candidates는 302-2=300. BACKFILL RECOMMENDATION — DB 변경 아님.",
       "high_confidence_core": {
         "count_estimate": 81,
         "label": "heritage attractions",
@@ -399,7 +434,7 @@
       "heritage attractions → ai_itinerary_eligible=YES (경주 81건 고신뢰)"
     ],
     "requires_main_decision": [
-      "restaurant 분류 (부산 721 + 경주 102)",
+      "restaurant 분류 (부산 universe 721건/canonical 680건 + 경주 102건)",
       "market tourism threshold (부산 시장 ~10건)",
       "resort vs spa 구분 (경주 8건)",
       "culture facility 분류 (경주 9건)"
