@@ -363,6 +363,7 @@ function SpotSearchBar({
   placeholder?: string;
   highlighted?: boolean;
 }) {
+  const tEx = useTranslations("explore");
   return (
     <div
       id="search-section"
@@ -384,7 +385,7 @@ function SpotSearchBar({
         <button
           onClick={() => onChange("")}
           className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300 transition-colors text-xs font-bold"
-          aria-label="Clear search"
+          aria-label={tEx("search.clearSearch")}
         >
           ✕
         </button>
@@ -397,13 +398,15 @@ function SpotSearchBar({
 //  CONSTANTS
 // ═══════════════════════════════════════════════
 
+// /all-spots 와 완전히 같은 카테고리다. 라벨을 여기 또 두면 한쪽만 고쳐진다 —
+// 문구는 allSpots.cat_* 하나를 같이 쓰고, 여기엔 key 와 emoji 만 둔다.
 const EVENT_FILTERS = [
-  { key: "all",      label: "All"                    },
-  { key: "kpop",     label: "🎤 K-POP / BTS"         },
-  { key: "michelin", label: "🍽️ Food"                  },
-  { key: "nature",   label: "🗺️ Attractions & Nature" },
-  { key: "culture",  label: "🏛️ History & Culture"    },
-  { key: "saved",    label: "🔖 Saved Spots"           },
+  { key: "all",      emoji: ""   },
+  { key: "kpop",     emoji: "🎤" },
+  { key: "michelin", emoji: "🍽️" },
+  { key: "nature",   emoji: "🗺️" },
+  { key: "culture",  emoji: "🏛️" },
+  { key: "saved",    emoji: "🔖" },
 ];
 
 // ═══════════════════════════════════════════════
@@ -423,6 +426,7 @@ function SectionHeader({
   count?: number;
   onViewAll?: () => void;
 }) {
+  const th = useTranslations("homeUi");
   return (
     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
       <div>
@@ -443,7 +447,7 @@ function SectionHeader({
             className="inline-flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-black border-2 transition-all cursor-pointer hover:shadow-md"
             style={{ borderColor: "#FF4A2D", color: "#FF4A2D" }}
           >
-            View All →
+            {th("viewAll")}
           </button>
         )}
       </div>
@@ -464,6 +468,10 @@ export default function HomeClient() {
   // city·style·시간 슬롯의 내부 value 는 손대지 않는다 — API payload 와
   // localStorage 가 그 값을 그대로 쓴다.
   const tf = useTranslations("tripForm");
+  const th = useTranslations("homeUi");
+  const tn = useTranslations("nav");
+  // 카테고리 문구는 /all-spots 와 공유한다
+  const tCat = useTranslations("allSpots");
 
   // ── 로컬 스팟 상태 ────────────────────────────
   const [localInfoData, setLocalInfoData] = useState<LocalInfo[]>(BUSAN_SPOTS);
@@ -903,11 +911,11 @@ export default function HomeClient() {
             <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
           <nav className="hidden sm:flex items-center gap-6 lg:gap-8">
-            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
-            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Food Guide</Link>
-            <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">Survival Guide</Link>
-            <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">About</Link>
-            <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">My Trips</Link>
+            <Link href="/blog"           className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("blog")}</Link>
+            <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("foodGuide")}</Link>
+            <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("survivalGuide")}</Link>
+            <Link href="/about"          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("about")}</Link>
+            <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tn("myTrips")}</Link>
             {/* 데스크톱 CTA 도 Home 시안 색을 따른다. 이모지 라벨과 주황 버튼은
                 구버전 인상이 강해 Hero 보다 메뉴가 먼저 읽혔다 */}
             <button
@@ -925,7 +933,7 @@ export default function HomeClient() {
           <div className="sm:hidden flex items-center gap-1 shrink-0">
             <button
               onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
-              aria-label="Search places"
+              aria-label={th("searchPlaces")}
               className="gkm-focus w-11 h-11 inline-flex items-center justify-center rounded-full text-gray-700 cursor-pointer"
             >
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden
@@ -935,7 +943,7 @@ export default function HomeClient() {
             </button>
             <Link
               href="/my-trips"
-              aria-label="My Trips"
+              aria-label={tn("myTrips")}
               className="gkm-focus w-11 h-11 inline-flex items-center justify-center rounded-full text-gray-700"
             >
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden
@@ -1335,10 +1343,10 @@ export default function HomeClient() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-              Essential for Foreign Travelers
+              {th("essentialTitle")}
             </h2>
             <p className="text-base font-medium text-gray-500">
-              Things Korea doesn&apos;t explain to tourists
+              {th("essentialSub")}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1363,19 +1371,19 @@ export default function HomeClient() {
               },
               {
                 icon: "🚇",
-                title: "Transport Card",
-                desc: "How to get T-money card and load cash at convenience stores.",
+                title: th("cardTransportTitle"),
+                desc: th("cardTransportDesc"),
                 href: "/survival-guide",
-                cta: "Read Guide →",
+                cta: th("cardCtaGuide"),
                 external: false,
                 highlight: false,
               },
               {
                 icon: "💳",
-                title: "Cash & Payments",
-                desc: "Where foreign cards work. Which places are cash-only.",
+                title: th("cardCashTitle"),
+                desc: th("cardCashDesc"),
                 href: "/survival-guide",
-                cta: "Read Guide →",
+                cta: th("cardCtaGuide"),
                 external: false,
                 highlight: false,
               },
@@ -1432,7 +1440,7 @@ export default function HomeClient() {
               <SpotSearchBar
                 value={globalSearch}
                 onChange={(v) => { setGlobalSearch(v); if (v) setEventFilter("all"); }}
-                placeholder="Search spots, BTS, Michelin, beach, hiking…"
+                placeholder={th("searchSpotsPlaceholder")}
                 highlighted={searchHighlight}
               />
               {/* ── 2분할 버튼: 미식 가이드 + Near Me ── */}
@@ -1486,7 +1494,7 @@ export default function HomeClient() {
                           : { backgroundColor: "#f9fafb", color: "#6b7280", borderColor: "#e5e7eb" }
                       }
                     >
-                      {f.label}
+                      {f.emoji && <span className="mr-1">{f.emoji}</span>}{tCat(`cat_${f.key}`)}
                     </button>
                   ))}
                 </div>
@@ -1560,7 +1568,7 @@ export default function HomeClient() {
             eventsLoading && filteredResults.length === 0 ? (
               <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4" style={{ borderColor: "#FF4A2D" }} />
-                <p className="text-gray-500 font-medium">Loading…</p>
+                <p className="text-gray-500 font-medium">{th("loading")}</p>
               </div>
             ) : filteredResults.length === 0 ? (
               <div className="text-center py-20">
@@ -1576,7 +1584,7 @@ export default function HomeClient() {
                   onClick={() => { setGlobalSearch(""); setEventFilter("all"); }}
                   className="mt-4 text-sm text-orange-500 font-bold underline"
                 >
-                  Show all sections
+                  {th("showAllSections")}
                 </button>
               </div>
             ) : (
@@ -1606,7 +1614,7 @@ export default function HomeClient() {
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={safePage === 1}
                       className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
-                    >← Prev</button>
+                    >{th("prev")}</button>
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => (
                       <button
                         key={pg}
@@ -1623,7 +1631,7 @@ export default function HomeClient() {
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={safePage === totalPages}
                       className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
-                    >Next →</button>
+                    >{th("next")}</button>
                   </div>
                 )}
               </>
@@ -1638,18 +1646,18 @@ export default function HomeClient() {
               <div>
                 <SectionHeader
                   emoji="🎤"
-                  title="K-POP / BTS Pilgrimage"
-                  subtitle="BTS birthplaces, ARIRANG live concerts, and festival season highlights"
+                  title={th("kpopTitle")}
+                  subtitle={th("kpopSub")}
                   count={megaEvents.length}
                   onViewAll={() => router.push("/all-spots?filter=kpop")}
                 />
                 {eventsLoading ? (
                   <div className="text-center py-16">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
-                    <p className="text-gray-500 text-sm font-medium">Loading events…</p>
+                    <p className="text-gray-500 text-sm font-medium">{th("kpopLoading")}</p>
                   </div>
                 ) : megaEvents.length === 0 ? (
-                  <p className="text-gray-400 font-medium py-10 text-center">No K-POP events available.</p>
+                  <p className="text-gray-400 font-medium py-10 text-center">{th("kpopEmpty")}</p>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {megaEvents.slice(0, 9).map((event) => (
@@ -1668,15 +1676,15 @@ export default function HomeClient() {
                 <div>
                   <SectionHeader
                     emoji="🏛️"
-                    title="History & Culture"
-                    subtitle="Temples, palaces, heritage villages, and Korea's living traditions"
+                    title={th("cultureTitle")}
+                    subtitle={th("cultureSub")}
                     count={cultureEvents.length}
                     onViewAll={() => router.push("/all-spots?filter=culture")}
                   />
                   {eventsLoading ? (
                     <div className="text-center py-16">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
-                      <p className="text-gray-500 text-sm font-medium">Loading…</p>
+                      <p className="text-gray-500 text-sm font-medium">{th("loading")}</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1697,7 +1705,7 @@ export default function HomeClient() {
                 <SectionHeader
                   emoji="⭐🍽️"
                   title="2026 Busan Food Guide"
-                  subtitle="Michelin, local favorites, and taxi-driver picks — curated for Busan travelers"
+                  subtitle={th("foodSub")}
                   count={michelinFood.length}
                   onViewAll={() => router.push("/restaurants")}
                 />
@@ -1710,20 +1718,20 @@ export default function HomeClient() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-black text-orange-500 uppercase tracking-widest mb-0.5">NEW · 2026 Busan Food Guide</p>
                     <p className="text-base font-black text-gray-900">Michelin · Busan Mat · Taegshlang picks</p>
-                    <p className="text-xs text-gray-500 mt-0.5">16 districts · EN/KO · Sorted by GPS distance</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{th("foodGuideMeta")}</p>
                   </div>
                   <span className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white bg-orange-500 group-hover:bg-orange-600 transition-colors whitespace-nowrap">
-                    View All →
+                    {th("viewAll")}
                   </span>
                 </Link>
 
                 {eventsLoading ? (
                   <div className="text-center py-16">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderColor: "#FF4A2D" }} />
-                    <p className="text-gray-500 text-sm font-medium">Loading restaurants…</p>
+                    <p className="text-gray-500 text-sm font-medium">{th("restLoading")}</p>
                   </div>
                 ) : michelinFood.length === 0 ? (
-                  <p className="text-gray-400 font-medium py-10 text-center">No Michelin restaurants available.</p>
+                  <p className="text-gray-400 font-medium py-10 text-center">{th("restEmpty")}</p>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {michelinFood.slice(0, 9).map((event) => (
@@ -1741,13 +1749,13 @@ export default function HomeClient() {
               <div>
                 <SectionHeader
                   emoji="🗺️"
-                  title="Attractions & Nature"
-                  subtitle="Beaches, coastal trails, and scenic viewpoints — all solo-traveler approved"
+                  title={th("natureTitle")}
+                  subtitle={th("natureSub")}
                   count={attractionSpots.length}
                   onViewAll={() => router.push("/all-spots?filter=nature")}
                 />
                 {attractionSpots.length === 0 ? (
-                  <p className="text-gray-400 font-medium py-10 text-center">No attraction data available.</p>
+                  <p className="text-gray-400 font-medium py-10 text-center">{th("natureEmpty")}</p>
                 ) : (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1772,7 +1780,7 @@ export default function HomeClient() {
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src="/images/placeholder-spot.svg"
-                                alt="No image"
+                                alt={th("noImage")}
                                 className="w-full h-full object-cover"
                               />
                             )}
@@ -1872,7 +1880,7 @@ export default function HomeClient() {
                           onClick={() => setSection4Page((p) => Math.max(1, p - 1))}
                           disabled={s4SafePage === 1}
                           className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
-                        >← Prev</button>
+                        >{th("prev")}</button>
                         {Array.from({ length: s4TotalPages }, (_, i) => i + 1).map((pg) => (
                           <button
                             key={pg}
@@ -1889,7 +1897,7 @@ export default function HomeClient() {
                           onClick={() => setSection4Page((p) => Math.min(s4TotalPages, p + 1))}
                           disabled={s4SafePage === s4TotalPages}
                           className="px-3 py-1.5 rounded-lg border text-sm font-bold text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
-                        >Next →</button>
+                        >{th("next")}</button>
                       </div>
                     )}
                   </>
@@ -1906,14 +1914,14 @@ export default function HomeClient() {
       <section className="py-20" style={{ backgroundColor: "#1a1f36" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">Survival Guide for Korea</h2>
-            <p className="text-base font-medium text-gray-400">Everything tourists struggle with — solved.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">{th("survivalTitle")}</h2>
+            <p className="text-base font-medium text-gray-400">{th("survivalSub")}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
-              { icon: "🚇", title: "Getting Around", desc: "Subway, bus & T-money explained" },
-              { icon: "💳", title: "Payments",       desc: "Card vs. cash — know before you go" },
-              { icon: "🍜", title: "Solo Dining",    desc: "Eat alone without awkwardness"       },
+              { icon: "🚇", title: th("svTransitTitle"), desc: th("svTransitDesc") },
+              { icon: "💳", title: th("svPayTitle"),     desc: th("svPayDesc") },
+              { icon: "🍜", title: th("svSoloTitle"),    desc: th("svSoloDesc") },
             ].map((card) => (
               <Link
                 key={card.title}
@@ -1925,7 +1933,7 @@ export default function HomeClient() {
                 <h3 className="text-xl font-black text-white">{card.title}</h3>
                 <p className="text-sm font-medium text-gray-400">{card.desc}</p>
                 <span className="text-sm font-bold mt-2 group-hover:underline" style={{ color: "#FF4A2D" }}>
-                  Read More →
+                  {th("readMore")}
                 </span>
               </Link>
             ))}
@@ -1941,9 +1949,9 @@ export default function HomeClient() {
               <span className="font-black tracking-tight">gokoreamate</span>
             </span>
             <div className="flex items-center gap-6">
-              <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Blog</Link>
-              <Link href="/survival-guide" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Survival Guide</Link>
-              <Link href="/about"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">About</Link>
+              <Link href="/blog"           className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("blog")}</Link>
+              <Link href="/survival-guide" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("survivalGuide")}</Link>
+              <Link href="/about"          className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">{tn("about")}</Link>
               <button
                 onClick={() => setContactOpen(true)}
                 className="text-sm font-semibold text-gray-400 hover:text-white transition-colors"
@@ -1952,7 +1960,7 @@ export default function HomeClient() {
               </button>
             </div>
             <p className="text-xs text-gray-500 text-center sm:text-right leading-relaxed">
-              Data by Korea Tourism Organization<br />AI by Gemini
+              {th("footerData")}<br />{th("footerAi")}
             </p>
           </div>
           <div className="border-t border-white/5 pt-6 text-center">
