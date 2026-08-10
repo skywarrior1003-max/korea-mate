@@ -1,0 +1,84 @@
+{
+  "allow_full": false,
+  "as_of": "2026-08-10",
+  "category_routing": {
+    "CATEGORY_PARAMETER_USED": false,
+    "LOCAL_ROUTING_ONLY": true,
+    "track_counts": {
+      "EVENT_TRACK": 47,
+      "EXPERIENCE_CANDIDATE": 14,
+      "PLACE_CONDITIONAL_REVIEW": 38,
+      "PLACE_CORE_CANDIDATE": 22,
+      "RESTAURANT_TRACK": 35,
+      "SHOPPING_REVIEW": 32,
+      "UNRESOLVED_CATEGORY": 27
+    }
+  },
+  "collector_version": "v1.0.0",
+  "detail_api_calls": 16,
+  "dry_run": true,
+  "duplicate_cids": 0,
+  "duplicate_records": [],
+  "failed_pages": [],
+  "final_total_count": 3765,
+  "finished_at": "2026-08-10T06:39:17.313344+00:00",
+  "initial_total_count": 3765,
+  "kto": {
+    "collision_264337": "AUTO_ASSIGN_FORBIDDEN — 창덕궁(no.2) AND N서울타워(no.16)",
+    "collision_264491": "AUTO_ASSIGN_FORBIDDEN — 인사동(no.27) AND 홍대(no.30)",
+    "targeted_detail": "DEFERRED"
+  },
+  "lang": "ko",
+  "list_api_calls": 5,
+  "multilingual_stats": {
+    "multi_lang_list_available_in_list": 215,
+    "multi_lang_list_in_detail_sample": 16,
+    "multi_lang_list_rate_in_list": 1.0,
+    "note": "CID_SUFFIX_AUTOGENERATION=NO. multi_lang_list is SSOT."
+  },
+  "page_size": 50,
+  "pages_failed": 0,
+  "pages_requested": 5,
+  "pages_sampled": [
+    1,
+    2,
+    38,
+    75,
+    76
+  ],
+  "pages_success": 5,
+  "projected_full_run": {
+    "note": "ESTIMATE_ONLY — based on dry-run sample distribution",
+    "projected_accommodation_excluded": 0,
+    "projected_detail_calls_range": "1050~1715",
+    "projected_event_track": 823,
+    "projected_list_pages": 76,
+    "projected_restaurant_track": 612,
+    "projected_shopping_review": 560,
+    "sample_note": "sample distribution != full population distribution"
+  },
+  "records_received": 215,
+  "regression": {
+    "api_category_filter_used": false,
+    "cid_suffix_autogeneration": false,
+    "event_track_preserved": true,
+    "general_accommodation_excluded": true,
+    "keyword_search_primary_discovery": false,
+    "restaurant_track_preserved": true,
+    "temple_stay_exception_preserved": true
+  },
+  "run_id": "visitseoul-inventory-dryrun-2026-08-10",
+  "safety": {
+    "api_key_exposed": false,
+    "db_change": 0,
+    "secret_leak": 0,
+    "seoul_bulk_collection": "NOT_STARTED",
+    "src_change": 0,
+    "ui_change": 0,
+    "visitseoul_full_inventory": "NOT_STARTED"
+  },
+  "source_mutated_during_run": false,
+  "started_at": "2026-08-10T06:38:36.201370+00:00",
+  "total_api_calls": 21,
+  "unique_cids": 215
+}

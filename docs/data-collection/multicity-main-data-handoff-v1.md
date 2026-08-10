@@ -197,7 +197,7 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 
 | 항목 | 값 |
 |---|---|
-| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1(SHA 7a84ce2) + BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1 완료 |
+| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1(SHA 7a84ce2) + BENCHMARK-ALIGNMENT-AND-KTO-ID-INTEGRITY-V1 완료 + VISITSEOUL-INVENTORY-COLLECTOR-DRYRUN-V1 완료 |
 | KTO 관광지 | 421건 |
 | KTO 문화 | 220건 |
 | KTO 쇼핑 | 150건 |
@@ -254,11 +254,40 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 4. 서울역사박물관 대안 source
 5. KTO ID collision 해소 (264337, 264491) — credential 확보 후 targeted detail
 
+**VisitSeoul 수집기 전략 (DRYRUN-V1 검증 완료):**
+
+| 단계 | 내용 |
+|---|---|
+| 1. Inventory pagination | `contents/list` empty keyword → 전체 3,765건 CID 수집 (76 pages) |
+| 2. Local category filter | `com_ctgry_sn` 코드 매핑 → 21개 코드 확인, `CATEGORY_CODE_MAP` 적용 |
+| 3. Targeted detail | PLACE_CORE + PLACE_CONDITIONAL만 `contents/info` 호출 |
+| 4. Track 분리 보존 | EVENT/RESTAURANT/SHOPPING → 드롭 없이 track별 보존 |
+| 5. KTO crosscheck | credential 확보 후 별도 TASK (현재 DEFERRED) |
+
+**Dry-run 결과 요약 (5 pages, 215 records):**
+
+| 지표 | 값 |
+|---|---|
+| total_count 실측 | 3,765건 (76 pages) |
+| 샘플 레코드 | 215건 (0 중복) |
+| PLACE_CORE_CANDIDATE | 22건 (10.2%) |
+| PLACE_CONDITIONAL_REVIEW | 38건 (17.7%) |
+| EVENT_TRACK | 47건 (21.9%) |
+| RESTAURANT_TRACK | 35건 (16.3%) |
+| multi_lang_list 보유율 | 100% (215/215) |
+| SEOUL_BULK_COLLECTION | NOT_STARTED |
+| 스크립트 | `scripts/run-visitseoul-inventory-collector-v1.py` |
+| 설계 문서 | `docs/data-collection/seoul/seoul-visitseoul-inventory-collector-design-v1.md` |
+| 실행 결과 | `docs/data-collection/seoul/seoul-visitseoul-inventory-dryrun-summary-v1.md` |
+| 산출물 | `data/seoul-source-audit/` (manifest + JSONL 4개) |
+
 **참조 파일 (data/seoul-collection-v1 branch):**
 
 - `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서 (v1-corrected)
 - `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세 (SSOT 정렬, 홍대 복구)
-- `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` — KTO contentId 후보 무결성 테이블 (신규)
+- `docs/data-collection/seoul/seoul-kto-candidate-id-integrity-v1.json` — KTO contentId 후보 무결성 테이블
+- `docs/data-collection/seoul/seoul-visitseoul-inventory-collector-design-v1.md` — 수집기 설계 문서 (신규)
+- `docs/data-collection/seoul/seoul-visitseoul-inventory-dryrun-summary-v1.md` — Dry-run 실행 결과 요약 (신규)
 - `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` — 카테고리 품질 분석
 - `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안 (수집 전략 포함)
 - `docs/data-collection/seoul/seoul-live-user-review-groups-v1.md` — 사용자 검토 그룹
