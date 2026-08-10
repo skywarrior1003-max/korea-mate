@@ -288,14 +288,19 @@
     },
     {
       "field_name": "photo_url",
-      "label": "대표 사진",
-      "visitseoul_field": null,
-      "status": "OTHER_SOURCE",
-      "availability": "NOT_IN_DETAIL_API",
-      "notes": "VisitSeoul detail API에 사진 URL 미포함. 별도 이미지 수집 필요",
+      "label": "대표 사진 (main_img)",
+      "visitseoul_field": "main_img",
+      "visitseoul_field_path": "LIST: main_img (URL string) | DETAIL: main_img (동일 필드, has_image로 확인)",
+      "status": "STRUCTURED",
+      "availability": "100% (LIST API — 3,765/3,765건 모두 보유. 전체 full inventory JSONL에 이미 저장됨)",
+      "notes": "수정(TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1): '이미지 URL = Detail API 미포함' 결론은 오류. LIST API의 main_img 필드가 전 레코드에 URL 제공. 형식: https://api.visitseoul.net/comm/getImage?srvcId=POST&parentSn=X&fileTy=POSTTHUMB&fileNo=Y&thumbTy=M&postTy=P. DETAIL API도 main_img 반환 (dryrun has_image=True 16/16 확인). 기존 full inventory JSONL에 이미 수집됨 — 추가 API 호출 불필요.",
+      "image_schema_state": "LIST_HAS_MAIN_IMAGE_AND_DETAIL_HAS_MAIN_IMAGE",
+      "collector_parser_bug": "NO (full inventory collector main_img 정상 수집됨)",
+      "integrated_detail_caller_capture": "NO (integrated_detail_caller.py가 main_img 저장 안 함 — 단, 이미 list JSONL에 존재)",
+      "additional_api_calls_required": 0,
       "ai_dependency": "HIGH",
-      "enrichment_priority": "HIGH",
-      "enrichment_source": "visitseoul_image_api, kto_image, ugc"
+      "enrichment_priority": "LOW (이미 수집됨 — 활용만 필요)",
+      "enrichment_source": "visitseoul_main_img (already in seoul-visitseoul-full-inventory-v1.jsonl)"
     },
     {
       "field_name": "kpop_artist_affiliation",
@@ -309,11 +314,12 @@
     }
   ],
   "summary": {
-    "STRUCTURED": 12,
+    "STRUCTURED": 13,
     "DESCRIPTION_DERIVABLE": 7,
-    "OTHER_SOURCE": 6,
+    "OTHER_SOURCE": 5,
     "USER_CONTRIBUTABLE": 4,
     "NOT_AVAILABLE": 3,
+    "_correction_note": "photo_url 필드 수정: OTHER_SOURCE→STRUCTURED (LIST main_img 100% 가용). TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1",
     "high_priority_gaps": [
       "event_start_date",
       "event_end_date",
@@ -322,7 +328,6 @@
       "solo_dining",
       "halal_certified",
       "foreign_language_menu",
-      "photo_url",
       "kpop_artist_affiliation"
     ]
   }

@@ -708,9 +708,14 @@ AI 후보 판정 시 다음 7축 Travel Value Gate를 참고 지표로 사용한
 | TV6 | INFORMATION_QUALITY |
 | TV7 | CURRENT_USABILITY |
 
-AI_ITINERARY = YES: TV1≥MEDIUM, TV3≥MEDIUM, TV5≥HIGH, TV7=ACTIVE/SEASONAL/RECURRING
-AI_ITINERARY = CONDITIONAL: 일부 축 미달 또는 intent 매칭 조건부
-AI_ITINERARY = NO: TV1=LOW/NONE, 또는 TV7=ENDED, 또는 UTILITY_ONLY
+AI_ITINERARY = YES: 5개 기본 Gate 충족 + 다수 TV 축에서 강한 근거 (고정 threshold 수식 아님)
+AI_ITINERARY = CONDITIONAL: 5개 Gate 충족 + traveler intent 명시 매칭 시 후보 (조건 명시 필수)
+AI_ITINERARY = NO: TV7=ENDED, 또는 유효 intent match 없음, 또는 TV 근거 없음
+
+> **수정 (TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1)**:
+> 고정 threshold 수식 (`TV1≥MEDIUM + TV3≥MEDIUM + TV5≥HIGH` 등)은 제거.
+> 7축 Travel Value는 evidence framework. Domain별로 핵심 TV 근거 축이 다름.
+> 상세: `docs/data-collection/seoul/seoul-integrated-travel-value-policy-v1.md` Section 2
 
 ---
 

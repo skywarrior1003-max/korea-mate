@@ -2,7 +2,8 @@
   "_meta": {
     "task": "TASK-SEOUL-TRAVEL-VALUE-INTEGRATION-AND-ENTITY-MODEL-V1",
     "created": "2026-08-10",
-    "description": "서울 여행자 intent 44개 VisitSeoul coverage 평가 매트릭스",
+    "corrected": "2026-08-10 (TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1)",
+    "description": "서울 여행자 intent 45개 VisitSeoul coverage 평가 매트릭스 (수정: 44→45, STRONG 8→11, MODERATE 18→19, WEAK 13→14)",
     "coverage_values": ["STRONG", "MODERATE", "WEAK", "NOT_AVAILABLE", "UNKNOWN"],
     "source": "VisitSeoul 3,765건 inventory + 239건 detail 호출 분석",
     "note": "COUNT_TARGET = NOT_DEFINED_BY_DESIGN. COVERAGE = 얼마나 잘 커버하는가, 건수 아님"
@@ -372,14 +373,15 @@
     }
   ],
   "summary": {
-    "total_intents": 44,
-    "STRONG": 8,
-    "MODERATE": 18,
-    "WEAK": 13,
+    "total_intents": 45,
+    "STRONG": 11,
+    "MODERATE": 19,
+    "WEAK": 14,
     "NOT_AVAILABLE": 1,
     "UNKNOWN": 0,
-    "ai_eligible_YES": 5,
-    "ai_eligible_CONDITIONAL": 38,
-    "ai_eligible_NO": 1
+    "ai_eligible_YES": 7,
+    "ai_eligible_CONDITIONAL": 37,
+    "ai_eligible_NO": 1,
+    "_correction_note": "수정 전 잘못된 집계: total=44, STRONG=8, MODERATE=18, WEAK=13, ai_YES=5, ai_COND=38. 실제 배열 기준 재계산 (TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1)"
   }
 }

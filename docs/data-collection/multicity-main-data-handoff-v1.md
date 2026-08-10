@@ -117,8 +117,12 @@ AI_ITINERARY = CONDITIONAL 이면:
 **MAIN ACTION REQUIRED:**
 
 1. 실제 AI candidate selection 코드를 검토한다.
-2. `READY=true` 또는 `city_spots에 존재` 단독으로 AI 후보가 되지 않도록 확인한다.
-3. `AI_ITINERARY_ELIGIBLE` 축을 명시적으로 적용한다.
+2. `READY=true` 또는 `city_spots에 존재` 단독으로 AI 후보가 결정되는 구조인지 실제 코드에서 먼저 확인한다. 만약 그런 구조가 확인된 경우, Travel Value + eligibility + traveler intent + current usability를 반영하도록 개선한다.
+3. 현재 구현이 이미 intent-aware하다면 추가 개선 범위는 MAIN이 판단한다.
+
+> **주의 (TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1 수정)**:
+> 데이터 branch에서 MAIN 코드의 실제 AI filtering 구현을 검증하지 않았다.
+> CURRENT_MAIN_AI_FILTER = NOT_VERIFIED_IN_THIS_TASK로 유지.
 
 ### AI 후보 선정 최소 조건 (전부 통과 필요)
 
@@ -579,4 +583,4 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 - [ ] **[신규]** SOURCE_CONTENT_TYPE 분류 로직 적용 (EVENT CID → city_spots entity 변환 금지)
 - [ ] **[신규]** LEGACY_PRE_TRAVEL_VALUE_DETAIL_POOL 1,277건 → 개별 TV Gate 적용 (후속 TASK)
 - [ ] **[신규]** Cy5h2x9 4건 PLACE_CORE 확정 반영 (씨라이프, 서울랜드, 롯데월드2건)
-- [ ] **[신규]** AI_ITINERARY_MAIN_CHANGE_REQUIRED = YES 확인 및 구현 (7축 TV Gate 기반 필터링)
+- [ ] **[신규]** MAIN이 실제 AI candidate filtering 코드를 먼저 검토한다. 현재 구현이 READY/data presence만으로 결정되는 구조인지 확인 후, 필요 시 Travel Value + eligibility + intent 기반으로 개선 (CURRENT_MAIN_AI_FILTER = NOT_VERIFIED_IN_THIS_TASK)

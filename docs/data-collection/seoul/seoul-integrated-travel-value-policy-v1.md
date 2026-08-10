@@ -109,11 +109,46 @@ coverage가 목표이다. 각 record는 7축 Travel Value Gate를 통과해 개�
 
 ## 2. AI 자격 분류 (ai_itinerary_eligible)
 
-| 분류 | 기준 | 설명 |
-|---|---|---|
-| `YES` | TV1≥MEDIUM, TV3≥MEDIUM, TV5≥HIGH, TV7=ACTIVE/SEASONAL/RECURRING | AI 추천 자격 확정 |
-| `CONDITIONAL` | 일부 축 미달 또는 intent 매칭 조건부 | intent 파라미터 매칭 시 AI 후보 |
-| `NO` | TV1=LOW/NONE, 또는 TV7=ENDED, 또는 UTILITY_ONLY | AI 추천 제외 |
+> **수정 (TASK-SEOUL-TRAVEL-VALUE-POLICY-CORRECTION-AND-DETAIL-GATE-V1)**:
+> 이전 버전에 있던 고정 threshold 수식 (`TV1≥MEDIUM + TV3≥MEDIUM + TV5≥HIGH + TV7=ACTIVE/SEASONAL`)은 제거.
+> 7축 Travel Value는 **evidence framework** (평가 근거 모음)이지, 모든 domain에 동일하게 적용하는 필수 산술 공식이 아니다.
+
+### 2-1. AI 자격 판정 기본 Gate (5개 — 필수)
+
+| # | 조건 |
+|---|---|
+| G1 | Entity / Source Identity가 충분히 검증됨 |
+| G2 | CURRENT_USABILITY (TV7) = 여행 시점에 적합 (ACTIVE / SEASONAL / RECURRING) |
+| G3 | 위치/venue 등 일정 구성에 필요한 핵심 정보가 충분함 (좌표, 주소 최소 보유) |
+| G4 | traveler intent와 의미 있는 match 존재 |
+| G5 | 하나 이상의 실제 Travel Value 근거 존재 (아래 중 domain에 따라 주요 축이 다름) |
+
+### 2-2. Travel Value 7축 — Domain별 주요 Evidence
+
+7축은 단일 threshold formula가 아니라, domain별로 핵심 근거 축이 달라진다.
+
+| Domain 예시 | 주요 TV 근거 축 |
+|---|---|
+| 역사/궁궐/유산 | TV1 TRAVEL_PURPOSE + TV3 KOREA_UNIQUENESS + TV4 EXPERIENCE |
+| 솔로 다이닝 restaurant | TV2 TRAVELER_UTILITY 단독으로도 CONDITIONAL 가능 |
+| K-pop 공연/팝업 | TV4 EXPERIENCE + TV5 INTENT_MATCH + TV7 CURRENT_USABILITY |
+| Temple Stay | TV1 + TV3 + TV4 + TV5 모두 강함 |
+| 자연/트레킹 | TV1 + TV4 + TV5 + TV7 중심 |
+| 할랄 식당 | TV2 TRAVELER_UTILITY + TV5 INTENT_MATCH |
+
+> TV2 TRAVELER_UTILITY가 높아도, 적절한 traveler intent 매칭이 있으면 CONDITIONAL 후보 가능.
+> TV3 KOREA_UNIQUENESS가 낮아도 TV2/TV5가 강한 domain은 제외하지 않는다.
+
+### 2-3. AI 자격 판정
+
+| 판정 | 의미 |
+|---|---|
+| `YES` | G1~G5 모두 충족 + 다수 TV 축에서 강한 근거. 일반 여행 일정 추천 후보. |
+| `CONDITIONAL` | G1~G5 충족 + traveler intent 명시 매칭 시 후보. 조건을 `eligibility_conditions`에 명시. |
+| `NO` | G2(usability 부적합/ENDED) 또는 G4(intent match 없음) 또는 G5(TV 근거 없음). |
+
+CONDITIONAL 조건 예:
+`food_trip`, `solo_travel`, `kpop`, `kbeauty`, `date_match`, `seasonal`, `family`, `vegetarian`, `halal`, `walking`, `trekking`, `night_view`, `wellness`, `temple_stay`, `photography`, `couple`
 
 ### CONDITIONAL 예시
 
@@ -134,9 +169,10 @@ coverage가 목표이다. 각 record는 7축 Travel Value Gate를 통과해 개�
 
 ### 3-1. PLACE_CORE_CANDIDATE (기존 분류)
 
-- TV Gate 전 항목 MEDIUM 이상
-- ai_eligible = YES (기본 후보)
+- 다수 TV 축에서 강한 근거 보유 (경복궁, 남산서울타워 등 → G1~G5 모두 충족 가능성 높음)
+- ai_eligible = YES 후보 (detail 호출 + Travel Value evidence 확인 후 개별 판정)
 - 대표: 경복궁, 남산서울타워, 명동, 홍대, 63빌딩, 한강공원 (메인 거점)
+- **주의**: PLACE_CORE_CANDIDATE 분류가 자동으로 ai=YES를 보장하지 않음 — 개별 TV 근거 확인 필요
 
 ### 3-2. PLACE_CONDITIONAL_REVIEW
 
