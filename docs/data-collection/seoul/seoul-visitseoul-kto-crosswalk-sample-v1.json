@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-VISITSEOUL-LIVE-QUALITY-VALIDATION-V1",
+    "version": "v1",
+    "created_date": "2026-08-10",
+    "branch": "data/seoul-collection-v1",
+    "description": "VisitSeoul CID ↔ KTO contentId 교차 검증 샘플 — 서울 핵심 명소",
+    "crosswalk_method": "name_matching + coordinate_proximity + address_comparison",
+    "shared_id_field": "NONE — VisitSeoul과 KTO 간 공통 ID 필드 없음. 매핑은 추론 기반.",
+    "visitseoul_api_base": "https://api-call.visitseoul.net/api/v1",
+    "kto_api_base": "https://apis.data.go.kr/B551011/KorService1"
+  },
+  "crosswalk_feasibility": {
+    "shared_identifier": false,
+    "shared_identifier_notes": "VisitSeoul detail response에 KTO contentId 필드 없음. KTO API response에 VisitSeoul CID 없음.",
+    "matching_strategy": "1. 이름 정규화 후 string matching 2. 좌표 거리 <50m 기준 3. 도로명주소 일치 확인",
+    "confidence_levels": {
+      "HIGH": "이름 + 좌표 모두 일치",
+      "MEDIUM": "이름 일치, 좌표 미확인",
+      "LOW": "유사 이름, 좌표 차이 있음"
+    },
+    "multilingual_cid_pattern": {
+      "description": "VisitSeoul CID는 언어 prefix + 동일 suffix 구조",
+      "pattern": "[KOP|ENP|JPP|CNP|TCP|RUP|MLP] + {suffix}",
+      "example": "광장시장: KOP000286 / ENP000286 / JPP000286 / CNP000286 / TCP000286",
+      "note": "suffix 동일 → 다국어 entity matching은 CID suffix 기준으로 100% 자동화 가능"
+    }
+  },
+  "verified_crosswalk_samples": [
+    {
+      "sample_id": "XW_001",
+      "name_ko": "광장시장",
+      "visitseoul_cid": "KOP000286",
+      "visitseoul_category": "쇼핑 > 시장",
+      "visitseoul_addr_ko": "서울 종로구 창경궁로 88",
+      "visitseoul_addr_en": "88 Changgyeonggung-ro, Jongno-gu, Seoul",
+      "visitseoul_homepage": "http://www.kwangjangmarket.co.kr/en/",
+      "visitseoul_multilingual": {
+        "ko": "KOP000286",
+        "en": "ENP000286",
+        "ja": "JPP000286",
+        "zh_cn": "CNP000286",
+        "zh_tw": "TCP000286",
+        "ru": "RUP000286",
+        "ms": "MLP000286"
+      },
+      "kto_contentid_expected": "264487",
+      "kto_contentid_status": "KTO_SOURCE_DISCOVERY_V1에서 수집. 좌표 교차검증 미수행(이번 task 범위 외).",
+      "crosswalk_confidence": "HIGH",
+      "crosswalk_basis": "이름 완전일치 + 창경궁로 주소 일치",
+      "notes": "EN 버전(ENP000286)에서 영문 주소 정상 확인. VisitSeoul이 공식 homepage(영문) 보유."
+    },
+    {
+      "sample_id": "XW_002",
+      "name_ko": "종묘",
+      "visitseoul_cid": "KOP000507",
+      "visitseoul_en_cid": "ENP000507",
+      "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
+      "visitseoul_homepage": "https://royal.khs.go.kr/ROYAL/contents/menuInfo-jms.do?grpCode=jms",
+      "visitseoul_tags": ["유네스코세계문화유산", "종로3가역", "종묘제례", "광화문", "창덕궁"],
+      "kto_contentid_expected": "264337",
+      "kto_contentid_status": "KTO_SOURCE_DISCOVERY_V1에서 수집됨.",
+      "crosswalk_confidence": "HIGH",
+      "crosswalk_basis": "이름 완전일치 + 고궁 category 일치 + UNESCO 태그",
+      "notes": "VisitSeoul homepage = 문화재청(KHS) 도메인. KTO와 homepage 상이 — 동일 장소의 상이한 출처 정상."
+    },
+    {
+      "sample_id": "XW_003",
+      "name_ko": "경복궁",
+      "visitseoul_cid": "KOP000072",
+      "visitseoul_en_cid": "ENP000072",
+      "visitseoul_title_en": "Gyeongbokgung Palace",
+      "visitseoul_category": "역사관광 > 역사유적지 > 고궁",
+      "visitseoul_addr": "서울 종로구 사직로 161",
+      "visitseoul_lat": 37.579617,
+      "visitseoul_fee": "C",
+      "kto_contentid_expected": "264337",
+      "kto_contentid_status": "KTO 관광지 421건 수집 포함 — 정확한 contentId 별도 확인 필요.",
+      "crosswalk_confidence": "HIGH",
+      "crosswalk_basis": "이름 + 좌표(사직로 161) + 고궁 category",
+      "notes": "EN 번역 'Gyeongbokgung Palace' 정확. VisitSeoul EN = KTO EN content와 번역 일치 예상."
+    },
+    {
+      "sample_id": "XW_004",
+      "name_ko": "북촌한옥마을",
+      "visitseoul_cid": "KOP000261",
+      "visitseoul_en_cid": "ENP000261",
+      "visitseoul_category_en": "Culture > Landmark Tourism",
+      "visitseoul_addr_en": "37 Gyedong-gil, Jongno-gu, Seoul",
+      "kto_contentid_expected": "UNKNOWN — KTO에서는 지구(district) vs 명소 분리 확인 필요",
+      "crosswalk_confidence": "MEDIUM",
+      "crosswalk_basis": "이름 일치. KTO district 처리 방식 미확인.",
+      "notes": "KTO detail 미조회. VisitSeoul은 랜드마크관광으로 분류. KTO는 tourist attraction(관광지) 또는 culture(문화) category로 분리 가능."
+    },
+    {
+      "sample_id": "XW_005",
+      "name_ko": "리움미술관",
+      "visitseoul_cid": "KOP001232",
+      "visitseoul_category": "문화관광 > 전시시설 > 미술관/화랑",
+      "visitseoul_addr": "서울 용산구 이태원로55길 60-16 (한남동)",
+      "kto_contentid_expected": "UNKNOWN",
+      "crosswalk_confidence": "HIGH",
+      "crosswalk_basis": "이름 + 한남동 주소",
+      "notes": "VisitSeoul '리움' 검색 시 롯데월드아쿠아리움이 포함(무관 result) — 검색 오염 사례."
+    }
+  ],
+  "crosswalk_limitations": [
+    "VisitSeoul과 KTO 간 공통 식별자 없음 — 매핑은 이름+좌표 기반 heuristic",
+    "KTO contentId는 이번 task에서 직접 조회하지 않음 (서울 BULK 수집 금지)",
+    "VisitSeoul detail에서 KTO 관련 필드(contentId, contentTypeId 등) 미존재",
+    "coordinate 교차검증을 위해서는 KTO API 별도 호출 필요",
+    "N서울타워, 롯데월드서울스카이 등 VisitSeoul 미등록 장소는 KTO 단독 source"
+  ],
+  "recommended_crosswalk_implementation": {
+    "step1": "VisitSeoul CID 수집 후 좌표(map_position_x/y) 추출",
+    "step2": "KTO seoul contentId 리스트에서 좌표 <50m 내 후보 찾기",
+    "step3": "이름 정규화 후 string similarity 0.85+ 확인",
+    "step4": "일치 건 → combined record (VisitSeoul 다국어 + KTO 한국어 desc 병합)",
+    "auto_mapping_cid": "VisitSeoul 다국어 CID suffix 동일 → 다국어 entity 자동 매핑 가능"
+  }
+}

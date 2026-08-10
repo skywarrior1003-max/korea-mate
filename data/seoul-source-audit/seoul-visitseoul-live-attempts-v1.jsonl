@@ -1,0 +1,48 @@
+{"attempt_id":"ATT_001","type":"category_list","endpoint":"GET /category/list","call_num":1,"result":"SUCCESS","total_categories_returned":24,"notes":"전체 카테고리 트리 수집 완료. 산사체험(Cq9d5v0) 등 확인."}
+{"attempt_id":"ATT_002","type":"lang_list","endpoint":"GET /code/lang","call_num":2,"result":"SUCCESS","languages":["ko","en","ja","zh-CN","zh-TW","ru","ms"],"notes":"7개 언어 확인."}
+{"attempt_id":"ATT_003","type":"category_filter_test","endpoint":"POST /contents/list","call_num":3,"category_code":"Ch5t7s7","result":"FAILED","failure_reason":"category_code 파라미터 무시됨 — 전체 최신 50건 반환","notes":"카테고리 필터링 불가. 키워드 검색 또는 CID 직접 조회 필요."}
+{"attempt_id":"ATT_004","type":"total_count","endpoint":"POST /contents/list","call_num":4,"keyword":"서울","result":"SUCCESS","total_count":3765,"notes":"VisitSeoul 전체 콘텐츠 3,765건 확인."}
+{"attempt_id":"ATT_005","type":"keyword_search","endpoint":"POST /contents/list","call_num":5,"keyword":"경복궁","result":"SUCCESS","total_count":14,"top_result_cid":"KOP000072","top_result_position":13,"notes":"경복궁 본체 13번째. 이벤트 12건 선행."}
+{"attempt_id":"ATT_006","type":"keyword_search","endpoint":"POST /contents/list","call_num":6,"keyword":"종묘","result":"SUCCESS","total_count":3,"top_result_cid":"KOP000507","notes":"종묘 본체 1번째."}
+{"attempt_id":"ATT_007","type":"keyword_search","endpoint":"POST /contents/list","call_num":7,"keyword":"광장시장","result":"SUCCESS","total_count":2,"top_result_cid":"KOP000286","notes":"광장시장 1번째."}
+{"attempt_id":"ATT_008","type":"keyword_search","endpoint":"POST /contents/list","call_num":8,"keyword":"서울식물원","result":"SUCCESS","total_count":1,"top_result_cid":"KOP027397","notes":"서울식물원 1건."}
+{"attempt_id":"ATT_009","type":"detail","endpoint":"POST /contents/info","call_num":9,"cid":"KOP000507","lang":"ko","result":"SUCCESS","notes":"종묘 상세 full data 확인. tags, homepage, multilang 포함."}
+{"attempt_id":"ATT_010","type":"detail","endpoint":"POST /contents/info","call_num":10,"cid":"KOP000286","lang":"ko","result":"SUCCESS","notes":"광장시장 상세 확인."}
+{"attempt_id":"ATT_011","type":"detail","endpoint":"POST /contents/info","call_num":11,"cid":"KOP012015","lang":"ko","result":"SUCCESS","notes":"올리브영 명동 플래그십 확인. 1건만 존재."}
+{"attempt_id":"ATT_012","type":"keyword_search","endpoint":"POST /contents/list","call_num":12,"keyword":"올리브영","result":"SUCCESS","total_count":1,"top_result_cid":"KOP012015","notes":"올리브영 VisitSeoul 1건. chain 지점 미등록. FLAGSHIP_DETECTION_FEASIBLE=YES."}
+{"attempt_id":"ATT_013","type":"keyword_search","endpoint":"POST /contents/list","call_num":13,"keyword":"뉴뉴하우스","result":"SUCCESS_VIA_LIST","total_count":0,"notes":"직접 검색 0건. 목록 탐색으로 KOPmwrtiq 발견."}
+{"attempt_id":"ATT_014","type":"detail","endpoint":"POST /contents/info","call_num":14,"cid":"KOPmwrtiq","lang":"ko","result":"SUCCESS","notes":"뉴뉴하우스 성수역점 상세. 성수이로 93."}
+{"attempt_id":"ATT_015","type":"detail","endpoint":"POST /contents/info","call_num":15,"cid":"KOPl8f5md","lang":"ko","result":"SUCCESS","notes":"창덕궁 후원(Secret Garden) 확인."}
+{"attempt_id":"ATT_016","type":"detail","endpoint":"POST /contents/info","call_num":16,"cid":"KOP0pzgtj","lang":"ko","result":"SUCCESS","notes":"국제선센터 템플스테이. 양천구 목동 위치 확인."}
+{"attempt_id":"ATT_017","type":"keyword_search","endpoint":"POST /contents/list","call_num":17,"keyword":"한양도성","result":"ERROR_500","http_status":500,"notes":"persistent 500. 2회 시도 모두 실패."}
+{"attempt_id":"ATT_018","type":"keyword_search","endpoint":"POST /contents/list","call_num":18,"keyword":"숭례문","result":"ERROR_500","http_status":500,"notes":"persistent 500."}
+{"attempt_id":"ATT_019","type":"keyword_search","endpoint":"POST /contents/list","call_num":19,"keyword":"창경궁","result":"ERROR_500","http_status":500,"notes":"초기 500. 이후 재시도로 KOP000297 발견."}
+{"attempt_id":"ATT_020","type":"detail","endpoint":"POST /contents/info","call_num":20,"cid":"KOP024679","lang":"ko","result":"ERROR_500","notes":"DDP detail 500 오류. list에서 CID 확인."}
+{"attempt_id":"ATT_021","type":"multilingual_detail","endpoint":"POST /contents/info","call_num":21,"cid":"ENP000072","lang":"en","result":"SUCCESS","notes":"경복궁 EN: 'Gyeongbokgung Palace' 확인."}
+{"attempt_id":"ATT_022","type":"multilingual_detail","endpoint":"POST /contents/info","call_num":22,"cid":"ENP000507","lang":"en","result":"SUCCESS","notes":"종묘 EN 확인."}
+{"attempt_id":"ATT_023","type":"multilingual_detail","endpoint":"POST /contents/info","call_num":23,"cid":"ENP000286","lang":"en","result":"SUCCESS","notes":"광장시장 EN. addr='88 Changgyeonggung-ro'. multilang suffix pattern 확인."}
+{"attempt_id":"ATT_024","type":"detail","endpoint":"POST /contents/info","call_num":24,"cid":"KOP002046","lang":"ko","result":"SUCCESS","notes":"덕수궁 본체. 세종대로 99."}
+{"attempt_id":"ATT_025","type":"detail","endpoint":"POST /contents/info","call_num":25,"cid":"KOP000297","lang":"ko","result":"SUCCESS","notes":"창경궁 본체. 창경궁로 185."}
+{"attempt_id":"ATT_026","type":"detail","endpoint":"POST /contents/info","call_num":26,"cid":"KOP001232","lang":"ko","result":"SUCCESS","notes":"리움미술관. 이태원로55길 60-16."}
+{"attempt_id":"ATT_027","type":"detail","endpoint":"POST /contents/info","call_num":27,"cid":"KOP000369","lang":"ko","result":"SUCCESS","notes":"북한산국립공원. 보국문로 215."}
+{"attempt_id":"ATT_028","type":"detail","endpoint":"POST /contents/info","call_num":28,"cid":"KOP027397","lang":"ko","result":"SUCCESS","notes":"서울식물원. 마곡동로 161."}
+{"attempt_id":"ATT_029","type":"keyword_search","endpoint":"POST /contents/list","call_num":29,"keyword":"리움","result":"SUCCESS","total_count":4,"top_result_position_of_museum":3,"notes":"리움미술관 3번째. 롯데월드아쿠아리움 무관 result 포함(검색 오염)."}
+{"attempt_id":"ATT_030","type":"keyword_search","endpoint":"POST /contents/list","call_num":30,"keyword":"N서울타워","result":"NO_STANDALONE_PLACE","total_count":"복수 but 모두 음식점/이벤트","notes":"N서울타워 standalone entry 없음. KTO 필수."}
+{"attempt_id":"ATT_031","type":"keyword_search","endpoint":"POST /contents/list","call_num":31,"keyword":"SMTOWN","result":"SUCCESS","total_count":0,"notes":"SMTOWN = 0건. VisitSeoul 완전 미등록."}
+{"attempt_id":"ATT_032","type":"keyword_search","endpoint":"POST /contents/list","call_num":32,"keyword":"서울스카이","result":"SUCCESS","total_count":0,"notes":"롯데월드타워 서울스카이 = 0건."}
+{"attempt_id":"ATT_033","type":"keyword_search","endpoint":"POST /contents/list","call_num":33,"keyword":"남대문시장","result":"ERROR_500_then_SUCCESS","notes":"남대문시장 키워드 초기 500 후 재시도로 KOP000085 발견(4번째 결과)."}
+{"attempt_id":"ATT_034","type":"keyword_search","endpoint":"POST /contents/list","call_num":34,"keyword":"덕수궁","result":"SUCCESS","total_count":8,"palace_position":7,"notes":"덕수궁 본체 7번째. K-Heritage store(1), 음악회(2), 돌담길(3), 미디어파사드(4), 봄음악회(5), 수문장교대(6) 이후."}
+{"attempt_id":"ATT_035","type":"keyword_search","endpoint":"POST /contents/list","call_num":35,"keyword":"창덕궁","result":"SUCCESS","total_count":11,"palace_position":11,"notes":"창덕궁 본체 11번째. 달빛기행 이벤트 9건 + 창덕궁후원(2번째) 이후."}
+{"attempt_id":"ATT_036","type":"keyword_search","endpoint":"POST /contents/list","call_num":36,"keyword":"국립민속박물관","result":"ERROR_500_then_SUCCESS_VIA_민속박물관","notes":"국립민속박물관 키워드 500. '민속박물관' 재시도: KOP001644 발견(6번째, 이벤트 5건 선행)."}
+{"attempt_id":"ATT_037","type":"recent_50_analysis","endpoint":"POST /contents/list","call_num":37,"keyword":"서울","num_of_rows":50,"result":"SUCCESS","total_count":3765,"fp_count_in_recent_50":16,"fp_rate":0.32,"fp_category":"쇼핑 > 전문매장/상가","fp_examples":["CU성수디저트파크점(편의점)","옵티마웰니스뮤지엄약국"],"notes":"최근 업데이트 50건 중 전문매장/상가 16건(32%). 이중 FP 명확: 편의점·약국."}
+{"attempt_id":"ATT_038","type":"keyword_search","endpoint":"POST /contents/list","call_num":38,"keyword":"카페","result":"SUCCESS","total_count":48,"notes":"카페/찻집 48건. 개인 카페 다수. AI=NO 기본값 권장."}
+{"attempt_id":"ATT_039","type":"keyword_search","endpoint":"POST /contents/list","call_num":39,"keyword":"경희궁","result":"SUCCESS","total_count":1,"top_result_cid":"KOP001159","notes":"경희궁 total=1. 이벤트 오염 없음."}
+{"attempt_id":"ATT_040","type":"keyword_search","endpoint":"POST /contents/list","call_num":40,"keyword":"이태원","result":"ERROR_500","http_status":500,"notes":"persistent 500."}
+{"attempt_id":"ATT_041","type":"keyword_search","endpoint":"POST /contents/list","call_num":41,"keyword":"명동거리","result":"ERROR_500","http_status":500,"notes":"persistent 500."}
+{"attempt_id":"ATT_042","type":"keyword_search","endpoint":"POST /contents/list","call_num":42,"keyword":"남산","result":"SUCCESS","total_count":54,"notes":"남산 54건. 전부 이벤트/음식점. 남산공원 standalone entry 미발견."}
+{"attempt_id":"ATT_043","type":"keyword_search","endpoint":"POST /contents/list","call_num":43,"keyword":"청계천","result":"SUCCESS","total_count":13,"notes":"청계천 13건. 전부 전시/프로그램. standalone entry 미발견."}
+{"attempt_id":"ATT_044","type":"keyword_search","endpoint":"POST /contents/list","call_num":44,"keyword":"한강공원","result":"SUCCESS","total_count":19,"notes":"한강공원 19건. sub-facility entries(수영장·눈썰매장). 통합 entry 없음."}
+{"attempt_id":"ATT_045","type":"keyword_search","endpoint":"POST /contents/list","call_num":45,"keyword":"BTS","result":"SUCCESS","total_count":2,"notes":"BTS 2건 = BTS 10주년 FESTA 이벤트. 고정 landmark 없음."}
+{"attempt_id":"ATT_046","type":"detail","endpoint":"POST /contents/info","call_num":46,"cid":"KOP001159","lang":"ko","result":"SUCCESS","notes":"경희궁 본체. 새문안로 45."}
+{"attempt_id":"ATT_047","type":"detail","endpoint":"POST /contents/info","call_num":47,"cid":"KOP000433","lang":"en","result":"ERROR_500","notes":"국립중앙박물관 detail 500(2차 조회 시)."}
+{"attempt_id":"ATT_048","type":"detail","endpoint":"POST /contents/info","call_num":48,"cid":"KOP000261","lang":"en","result":"SUCCESS","notes":"북촌한옥마을 EN. 37 Gyedong-gil."}

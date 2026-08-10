@@ -197,20 +197,40 @@ MAIN은 service 적용 시 이 2건을 **명시적으로 제외** 처리해야 �
 
 | 항목 | 값 |
 |---|---|
-| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) |
+| 수집 현황 | SOURCE-DISCOVERY-V1 완료 (SHA 49f0806) + VISITSEOUL-LIVE-QUALITY-VALIDATION-V1 완료 |
 | KTO 관광지 | 421건 |
 | KTO 문화 | 220건 |
 | KTO 쇼핑 | 150건 |
 | Bulk 수집 | NOT_STARTED (금지 — 별도 승인 필요) |
+| VisitSeoul 총 콘텐츠 | 3,765건 (lang=ko 기준) |
+| VisitSeoul API 검증 | 109 calls. Benchmark 32개 중 19개(59%) 직접 확인. |
 
-**서울 특이사항:**
+**서울 Live 검증 핵심 발견:**
 
-- 한양도성, N서울타워 → FN 위험 (공식 KTO ID 확인 필요)
-- VisitSeoul API 19,838건 → **GoKoreaMate eligibility gate 필수** (직접 AI 후보 금지)
+- **VisitSeoul primary source 확정**: 고궁·박물관·시장·자연공원·랜드마크 커버리지 확인
+- **KTO 병행 필수**: N서울타워·롯데월드서울스카이·SMTOWN·한양도성·숭례문·서울역사박물관 — VisitSeoul 미등록/500오류
+- **이벤트 오염 심각**: 경복궁 검색 13번째, 창덕궁 11번째 — 키워드 검색 금지, CID 직접 조회 필요
+- **Flagship 탐지 가능**: 올리브영 명동 플래그십만 VS에 등록 (chain 지점 미등록) — FLAGSHIP_DETECTION_FEASIBLE=YES
+- **전문매장/상가 FP 32%**: 최근 50건 중 CU 편의점·약국 포함 — USER_REVIEW 필수
+- **7개 언어 CID suffix 동일**: 다국어 entity 자동 매핑 가능 (KOP/ENP/JPP/CNP/TCP/RUP/MLP + suffix)
+- **Temple Stay 현장 확인**: 국제선센터(양천구 목동) — AI=CONDITIONAL 정책 현장 적용 확인
+
+**MAIN 결정 필요 (서울 수집 착수 전):**
+
+1. CID 기반 수집 전략 승인 (category 필터 + 이벤트 제거)
+2. 전문매장/상가 USER_REVIEW 프로세스
+3. KTO 병행 수집 범위 확정
+4. 서울역사박물관 대안 source
 
 **참조 파일 (data/seoul-collection-v1 branch):**
 
-- `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json`
+- `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` — Live 검증 종합 보고서
+- `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` — benchmark 32개 상세
+- `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` — 카테고리 품질 분석
+- `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` — Source cascade 권장안
+- `docs/data-collection/seoul/seoul-live-user-review-groups-v1.md` — 사용자 검토 그룹
+- `docs/data-collection/seoul/seoul-visitseoul-kto-crosswalk-sample-v1.json` — KTO↔VS 교차 매핑
+- `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json` — SOURCE-DISCOVERY 원안
 
 ---
 
@@ -273,6 +293,10 @@ SEARCHABLE=YES는 **product surface capability** 정의다. 실현 방식은:
 | Gyeongju MAIN 상세 | `docs/data-collection/gyeongju-main-clean-import-manifest-v1.md` | 경주 상세 인수인계 |
 | Busan-Gyeongju Gap Fill Handoff | `docs/data-collection/busan-gyeongju-gap-fill-main-handoff-final.md` | 부산·경주 gap fill 최종 |
 | Seoul Source Discovery | `docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json` | 서울 수집 현황 |
+| Seoul Live Quality Validation | `docs/data-collection/seoul/seoul-visitseoul-live-quality-summary-v1.md` | VisitSeoul 실시간 검증 (109 calls) |
+| Seoul Benchmark Verification | `docs/data-collection/seoul/seoul-benchmark-live-verification-v1.json` | 32개 benchmark CID 확인 |
+| Seoul Category Quality | `docs/data-collection/seoul/seoul-visitseoul-category-quality-v1.json` | 카테고리별 FP·수집 적합성 |
+| Seoul Source Cascade Live | `docs/data-collection/seoul/seoul-source-cascade-live-recommendation-v1.json` | Source 우선순위 최종 |
 
 **Branch 참조:**
 

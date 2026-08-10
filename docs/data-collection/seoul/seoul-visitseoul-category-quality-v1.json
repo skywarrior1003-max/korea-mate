@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-VISITSEOUL-LIVE-QUALITY-VALIDATION-V1",
+    "version": "v1",
+    "created_date": "2026-08-10",
+    "branch": "data/seoul-collection-v1",
+    "description": "VisitSeoul API category별 품질 분석 — GoKoreaMate 수집 적합성 평가",
+    "api_total_content_count": 3765,
+    "analysis_date": "2026-08-10"
+  },
+  "category_quality": [
+    {
+      "category_ko": "역사관광 > 역사유적지 > 고궁",
+      "category_code": "Ch5t7s7",
+      "eligibility_recommendation": "CURATE_HIGH_PRIORITY",
+      "false_positive_risk": "LOW",
+      "notes": "5대 고궁(경복궁·창덕궁·창경궁·덕수궁·경희궁)·종묘 전부 포함. 이벤트 오염이 검색 결과 상위를 점령하지만 CID 직접 조회 시 장소 자체 quality 높음.",
+      "key_cids_found": ["KOP000072(경복궁)", "KOP000295(창덕궁)", "KOPl8f5md(창덕궁후원)", "KOP000297(창경궁)", "KOP002046(덕수궁)", "KOP001159(경희궁)", "KOP000507(종묘)"],
+      "ai_eligibility": "YES",
+      "searchable": "YES",
+      "action": "수집 우선. 이벤트 category(축제/공연/행사) 반드시 분리 필터링 필요."
+    },
+    {
+      "category_ko": "역사관광 > 역사유적지 > 성/문",
+      "category_code": "Co2n1h7",
+      "eligibility_recommendation": "CURATE_HIGH_PRIORITY",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP001999(흥인지문)"],
+      "ai_eligibility": "YES",
+      "searchable": "YES",
+      "notes": "성·문 category. 한양도성은 500 오류로 미확인 — KTO 병행 필요."
+    },
+    {
+      "category_ko": "역사관광 > 역사유적지 > 사적지",
+      "eligibility_recommendation": "CURATE",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP023563(덕수궁돌담길)"],
+      "ai_eligibility": "CONDITIONAL",
+      "searchable": "YES",
+      "notes": "덕수궁돌담길 등 historic site 포함. 관광 목적지 vs 단순 도로/지구 구분 필요."
+    },
+    {
+      "category_ko": "문화관광 > 전시시설 > 박물관",
+      "category_code": "Cr0q2v2",
+      "eligibility_recommendation": "CURATE_HIGH_PRIORITY",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP000433(국립중앙박물관)", "KOP001644(국립민속박물관)", "KOP035405(국립한글박물관)", "KOP005130(국립어린이민속박물관)", "KOP005815(롯데월드민속박물관)"],
+      "ai_eligibility": "YES",
+      "searchable": "YES",
+      "notes": "대형 국립박물관 포함. 이벤트·전시 entry와 혼재 — category 필터링 필수. 서울역사박물관은 standalone entry 미확인."
+    },
+    {
+      "category_ko": "문화관광 > 전시시설 > 미술관/화랑",
+      "category_code": "Ct9t6m8",
+      "eligibility_recommendation": "CURATE",
+      "false_positive_risk": "MEDIUM",
+      "key_cids_found": ["KOP001232(리움미술관)", "KOP001707(국립현대미술관덕수궁관)"],
+      "ai_eligibility": "CONDITIONAL",
+      "searchable": "YES",
+      "notes": "리움 등 주요 미술관 포함. 소규모 화랑·갤러리 다수 혼재 예상. USER_REVIEW 권장."
+    },
+    {
+      "category_ko": "문화관광 > 랜드마크관광",
+      "eligibility_recommendation": "CURATE",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP000261(북촌한옥마을)"],
+      "ai_eligibility": "YES",
+      "searchable": "YES",
+      "notes": "랜드마크 category — tourism destination 품질 높음."
+    },
+    {
+      "category_ko": "체험관광 > 산사체험",
+      "category_code": "Cq9d5v0",
+      "eligibility_recommendation": "CURATE_CONDITIONAL",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP0pzgtj(국제선센터템플스테이)"],
+      "confirmed_detail": {
+        "cid": "KOP0pzgtj",
+        "name": "국제선센터 템플스테이",
+        "addr": "서울 양천구 목동동로 167 (국제템플스테이센터)",
+        "lat": 37.5207859835315,
+        "category": "체험관광 > 산사체험"
+      },
+      "ai_eligibility": "CONDITIONAL",
+      "eligibility_conditions": ["traveler_intent=temple_stay", "traveler_intent=traditional_culture", "traveler_intent=wellness", "traveler_intent=meditation"],
+      "searchable": "YES",
+      "notes": "서울 내 산사체험은 국제템플스테이센터(양천구 목동) — 전통 산사 아님. 예약 필수. AI=CONDITIONAL."
+    },
+    {
+      "category_ko": "쇼핑 > 시장",
+      "category_code": "Cn7z1h7",
+      "eligibility_recommendation": "CURATE_HIGH_PRIORITY",
+      "false_positive_risk": "LOW_TO_MEDIUM",
+      "key_cids_found": ["KOP000286(광장시장)", "KOP000085(남대문시장)", "KOP000281(통인시장)"],
+      "ai_eligibility": "CONDITIONAL",
+      "searchable": "YES",
+      "notes": "전통시장 category. 시장 본체 entry와 내부 음식점/골목 entry 혼재(예: 남대문시장 칼국수골목). 시장 본체만 canonical 수집."
+    },
+    {
+      "category_ko": "쇼핑 > 전문매장/상가",
+      "category_code": "Cn0t1e0",
+      "eligibility_recommendation": "USER_REVIEW_REQUIRED",
+      "false_positive_risk": "HIGH",
+      "fp_rate_in_recent_50": "32% (16/50건)",
+      "fp_examples": [
+        "CU 성수 디저트파크점 (편의점)",
+        "옵티마웰니스뮤지엄 약국 (약국)",
+        "치이카와샵 (캐릭터 굿즈 체인)",
+        "메디큐브 (뷰티 브랜드 매장)",
+        "나가노마켓 (수입캐릭터 굿즈)"
+      ],
+      "flagship_exceptions": ["KOP012015(올리브영 명동 플래그십)"],
+      "ai_eligibility": "NO (default) / CONDITIONAL (flagship only)",
+      "searchable": "YES (flagship only)",
+      "notes": "최근 업데이트 50건 중 32%가 chain store/convenience/pharmacy. 일반 체인 지점 bulk 수집 금지. Flagship travel destination만 선별 수집. FLAGSHIP_DETECTION_FEASIBLE=YES (VisitSeoul이 이미 명동플래그십만 등록)."
+    },
+    {
+      "category_ko": "음식 > 카페/찻집",
+      "category_code": "Cx0t8m5",
+      "eligibility_recommendation": "USER_REVIEW_REQUIRED",
+      "false_positive_risk": "HIGH",
+      "total_count": 48,
+      "ai_eligibility": "NO (default) / CONDITIONAL (iconic cafe only)",
+      "searchable": "CONDITIONAL",
+      "notes": "48건 카페 결과. 개인 카페·트렌디 카페 다수. 관광 목적지급 아이콘 카페만 선별. '서울카페' 는 외국인 여행자에게 travel useful이지만 AI 자동 추천 위험."
+    },
+    {
+      "category_ko": "음식 > 한식",
+      "eligibility_recommendation": "NO_CANONICAL_BULK",
+      "false_positive_risk": "HIGH",
+      "ai_eligibility": "NO",
+      "searchable": "YES (via external search B)",
+      "notes": "식당은 canonical bulk 수집 금지. 외부 검색 연동(방식 B)으로 처리."
+    },
+    {
+      "category_ko": "축제/공연/행사",
+      "eligibility_recommendation": "BULK_EXCLUDE",
+      "false_positive_risk": "N/A (events, not places)",
+      "ai_eligibility": "NO",
+      "searchable": "NO (as place)",
+      "notes": "검색 결과 상위를 점령하는 event entries. 장소 수집 시 반드시 제외. VisitSeoul 검색 결과 오염의 주요 원인."
+    },
+    {
+      "category_ko": "숙박 (호텔/게스트하우스 등)",
+      "eligibility_recommendation": "BULK_EXCLUDE",
+      "false_positive_risk": "N/A",
+      "ai_eligibility": "NO",
+      "searchable": "NO",
+      "notes": "부산·경주와 동일 원칙. accommodation bulk 수집 금지."
+    },
+    {
+      "category_ko": "자연관광 > 자연공원",
+      "eligibility_recommendation": "CURATE",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP027397(서울식물원)", "KOP000369(북한산국립공원)"],
+      "ai_eligibility": "YES",
+      "searchable": "YES",
+      "notes": "자연공원 category. 서울식물원·북한산국립공원 확인. 남산은 미등록."
+    },
+    {
+      "category_ko": "문화관광 > 레저스포츠시설",
+      "eligibility_recommendation": "USER_REVIEW_REQUIRED",
+      "false_positive_risk": "MEDIUM",
+      "notes": "한강공원 수영장·눈썰매장 등 sub-facility entries. 여행 목적 관광객 대상 분류 필요."
+    },
+    {
+      "category_ko": "체험관광 > 전통체험",
+      "eligibility_recommendation": "CURATE",
+      "false_positive_risk": "LOW",
+      "key_cids_found": ["KOP012592(사단법인전통문화원)"],
+      "ai_eligibility": "CONDITIONAL",
+      "searchable": "YES",
+      "notes": "'문화원' 검색 1건 = 전통문화원. 일반 culture center vs 전통체험 기관 구분 필요."
+    }
+  ],
+  "overall_quality_assessment": {
+    "high_quality_categories": ["고궁", "성/문", "박물관", "랜드마크관광", "전통시장", "자연공원", "산사체험(CONDITIONAL)"],
+    "medium_quality_categories": ["미술관/화랑", "사적지", "전통체험", "레저스포츠"],
+    "high_fp_categories": ["전문매장/상가 (32% FP rate)", "카페/찻집", "음식"],
+    "bulk_exclude_categories": ["축제/공연/행사", "숙박"],
+    "key_risk": "VisitSeoul 검색 결과에서 이벤트 entries가 장소 entries보다 상위 노출. 키워드 검색만으로 장소 수집 금지 — CID 직접 조회 또는 category 필터링 필수.",
+    "total_visitseoul_items": 3765,
+    "estimated_tourism_relevant": "약 800~1200건 (이벤트·숙박·음식·체인 제외 후 추정)",
+    "flag": "ESTIMATED — BULK_COLLECTION_NOT_DONE"
+  }
+}

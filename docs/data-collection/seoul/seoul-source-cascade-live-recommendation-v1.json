@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-VISITSEOUL-LIVE-QUALITY-VALIDATION-V1",
+    "version": "v1",
+    "created_date": "2026-08-10",
+    "branch": "data/seoul-collection-v1",
+    "description": "VisitSeoul 실시간 검증 결과 기반 서울 source cascade 최종 권장안",
+    "prior_proposal": "docs/data-collection/seoul/seoul-source-cascade-proposal-v1.json (SOURCE-DISCOVERY-V1 기반)",
+    "live_validation_calls": 109,
+    "validation_date": "2026-08-10"
+  },
+  "cascade_recommendation": {
+    "primary_source": "VisitSeoul API",
+    "primary_source_reason": [
+      "주요 고궁·박물관·시장 benchmark 19/32 직접 확인",
+      "7개 언어 다국어 content 자동 연결 (CID suffix 동일)",
+      "coordinates, address, 운영시간, 입장료, 이미지 포함",
+      "전통시장·문화유산 분야 KTO 대비 풍부한 설명"
+    ],
+    "secondary_source": "KTO TourAPI",
+    "secondary_source_cases": [
+      "N서울타워 (VisitSeoul 미등록)",
+      "롯데월드타워 서울스카이 (VisitSeoul 미등록)",
+      "SMTOWN (VisitSeoul 미등록)",
+      "한양도성 (VisitSeoul 500 오류 지속)",
+      "숭례문 (VisitSeoul 500 오류 지속)",
+      "서울역사박물관 (VisitSeoul standalone entry 미발견)",
+      "BTS 그래피티 등 고정 landmark (VisitSeoul events만 존재)"
+    ],
+    "supplemental_source": "공식 기관 사이트",
+    "supplemental_cases": [
+      "VisitSeoul·KTO 모두 미등록 신규 명소",
+      "CID/contentId 미확인 독립 명소"
+    ]
+  },
+  "visitseoul_collection_strategy": {
+    "INCLUDE_categories": [
+      "역사관광 > 역사유적지 > 고궁",
+      "역사관광 > 역사유적지 > 성/문",
+      "역사관광 > 역사유적지 > 사적지",
+      "문화관광 > 전시시설 > 박물관",
+      "문화관광 > 전시시설 > 미술관/화랑",
+      "문화관광 > 랜드마크관광",
+      "체험관광 > 산사체험",
+      "쇼핑 > 시장",
+      "자연관광 > 자연공원"
+    ],
+    "CONDITIONAL_categories": [
+      "역사관광 > 역사유적지 > 사적지 (USER_REVIEW 권장)",
+      "체험관광 > 전통체험 (USER_REVIEW)",
+      "쇼핑 > 전문매장/상가 (flagship only, USER_REVIEW_REQUIRED)",
+      "음식 > 카페/찻집 (아이콘 카페만, USER_REVIEW)",
+      "문화관광 > 레저스포츠시설 (관광형만)"
+    ],
+    "EXCLUDE_categories": [
+      "축제/공연/행사 (events — place 아님)",
+      "숙박 전체",
+      "음식 > 한식/외국식 (일반 식당 — external search B)",
+      "정보/서비스"
+    ],
+    "collection_method": "CID 직접 조회 방식 권장 (키워드 검색 시 이벤트 오염 심각)",
+    "event_contamination_risk": "HIGH — 창덕궁 달빛기행 9건이 창덕궁 본체(11번째)보다 상위 노출",
+    "estimated_eligible_content": "약 800~1200건 (이벤트·숙박·음식 제외, CONDITIONAL 포함 전)",
+    "flag": "ESTIMATED — BULK_COLLECTION_NOT_DONE"
+  },
+  "visitseoul_quality_confirmed": {
+    "coordinate_accuracy": "HIGH — ko/en/zh-CN 좌표 동일 확인",
+    "multilingual_coverage": {
+      "languages": ["ko", "en", "ja", "zh-CN", "zh-TW", "ru", "ms"],
+      "cid_suffix_consistent": true,
+      "english_translation_quality": "GOOD (Gyeongbokgung Palace, Gwangjang Market 등 정확)",
+      "ja_zh_tw_500_error_risk": "INTERMITTENT — 일부 entry 500 오류"
+    },
+    "content_richness": {
+      "address": "YES (new_adres + old adres)",
+      "coordinates": "YES (map_position_x/y)",
+      "phone": "YES (extra.cmmn_telno)",
+      "opening_hours": "YES (extra.cmmn_use_time)",
+      "fee": "YES (extra.trrsrt_use_chrge C/N + extra.usage_fee)",
+      "images": "YES (main_img + relate_img array)",
+      "tags": "YES (tag array)",
+      "homepage": "YES (extra.cmmn_hmpg_url)",
+      "subway_access": "YES (traffic.subway_info)",
+      "accessibility": "YES (extra.disabled_facility)"
+    }
+  },
+  "shopping_fp_analysis": {
+    "olive_young_finding": {
+      "result": "FLAGSHIP_DETECTION_FEASIBLE=YES",
+      "detail": "VisitSeoul '올리브영' 검색 = 1건 (올리브영 명동 플래그십 KOP012015만 등록). 일반 chain 지점은 VisitSeoul에 미등록.",
+      "implication": "VisitSeoul 전문매장/상가 category에서 올리브영 류 data = 이미 flagship 필터링된 상태"
+    },
+    "chain_fp_examples": {
+      "CU_convenience_store": "KOP(미확인) = CU 성수 디저트파크점 — 편의점 chain. 명확한 FP.",
+      "pharmacy": "옵티마웰니스뮤지엄 약국 — 약국. FP.",
+      "recent_50_fp_rate": "16/50 = 32% (전문매장/상가 category 최신 50건)"
+    },
+    "recommendation": "쇼핑 > 전문매장/상가 카테고리는 일괄 수집 금지. CID 리스트 USER_REVIEW 후 flagship만 선별."
+  },
+  "kto_visitseoul_gap_analysis": {
+    "visitseoul_only_strong": ["광장시장(풍부한 다국어+공식링크)", "경희궁(KTO에서 흡수 가능하나 VS 1건 직접)"],
+    "kto_only_required": ["N서울타워", "롯데월드타워서울스카이", "SMTOWN", "한양도성(VS 500)", "숭례문(VS 500)", "서울역사박물관(VS events only)"],
+    "both_sources_beneficial": ["경복궁", "종묘", "창덕궁", "국립중앙박물관"],
+    "merge_strategy": "VisitSeoul 다국어 + KTO 한국어 설명 병합. 좌표는 VisitSeoul 우선(confirmed)."
+  },
+  "newnew_house_assessment": {
+    "cid": "KOPmwrtiq",
+    "name": "뉴뉴하우스 성수역점",
+    "category": "쇼핑 > 전문매장/상가",
+    "addr": "서울 성동구 성수이로 93",
+    "tags": ["성수 쇼핑", "성수동 핫플"],
+    "eligibility_assessment": {
+      "SEARCHABLE": "YES (via external search B — user-led)",
+      "EXPLORE_ELIGIBLE": "CONDITIONAL",
+      "AI_ITINERARY_ELIGIBLE": "NO (일반 트렌디 샵, tourism destination 미확정)",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES"
+    },
+    "notes": "성수동 local trendy shop. AI 자동 추천 금지. 사용자 직접 추가(USER PICKED)는 허용."
+  },
+  "temple_stay_assessment": {
+    "confirmed_entry": {
+      "cid": "KOP0pzgtj",
+      "name": "국제선센터 템플스테이",
+      "category": "체험관광 > 산사체험",
+      "addr": "서울 양천구 목동동로 167",
+      "lat": 37.5207859835315,
+      "note": "도심 양천구 위치. 전통 산사 아님. 사전 예약 필수."
+    },
+    "eligibility": {
+      "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+      "eligibility_conditions": {
+        "ai_intents": ["temple_stay", "traditional_culture", "wellness", "meditation", "slow_travel"]
+      }
+    },
+    "policy_reference": "multicity-place-eligibility-policy-v1.md ELG_006 수정 사항 참조"
+  },
+  "final_recommendation": {
+    "visitseoul_as_primary": true,
+    "visitseoul_collection_readiness": "READY_FOR_PLANNING (bulk 수집 착수 전 category 필터링·CID 기반 수집 전략 확정 필요)",
+    "seoul_bulk_status": "NOT_STARTED — 별도 승인 후 착수",
+    "immediate_next_steps": [
+      "1. VisitSeoul category별 CID 목록 수집 (고궁·박물관·시장·자연공원 우선)",
+      "2. 이벤트 entries 제거 필터 구현",
+      "3. KTO 병행 수집 (N서울타워 등 VS 미등록 6+ 건)",
+      "4. 전문매장/상가 USER_REVIEW 프로세스 설계",
+      "5. 다국어 CID suffix 기반 자동 entity matching 구현"
+    ]
+  }
+}
