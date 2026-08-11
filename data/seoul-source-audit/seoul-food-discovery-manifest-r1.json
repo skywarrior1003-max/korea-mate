@@ -1,0 +1,131 @@
+{
+  "task": "TASK-SEOUL-FOOD-DISCOVERY-V1-R1-SOURCE-AUDIT-AND-TARGETED-GAPFILL",
+  "script_version": "v1.1.0-R1",
+  "target_city": "seoul",
+  "as_of": "2026-08-11",
+  "start_sha": "ac372fd",
+
+  "PARSER_BUG_FIXED": true,
+  "PARSER_FIX_DETAIL": {
+    "DISCOVERY_METHOD": "live recursive key dump on 4 sample restaurant CIDs",
+    "OLD_FIELD_addr": "addr (top-level) — NOT present in restaurant response",
+    "OLD_FIELD_coord": "mapx / mapy (top-level) — NOT present in restaurant response",
+    "OLD_FIELD_hours": "opentime (top-level) — NOT present in restaurant response",
+    "CORRECT_FIELD_addr": "traffic.adres / traffic.new_adres",
+    "CORRECT_FIELD_coord": "traffic.map_position_x (lng) / traffic.map_position_y (lat)",
+    "CORRECT_FIELD_hours": "extra.cmmn_use_time",
+    "CORRECT_FIELD_phone": "extra.cmmn_telno",
+    "CORRECT_FIELD_closed": "extra.closed_days",
+    "CORRECT_FIELD_menu": "restaurant.fd_reprsnt_menu",
+    "CORRECT_FIELD_halal": "restaurant.halal / restaurant.dietary / restaurant.muslim / restaurant.salam"
+  },
+
+  "FOOD_COLLECTION_SPEC_V1": "APPLIED",
+  "FOOD_DISCOVERY_SPEC_STATUS": "ACTIVE_PROVISIONAL",
+  "FINAL_FREEZE_AFTER": "SEOUL_GYEONGJU_BUSAN_VALIDATION",
+  "CANONICAL_TARGET": "city_spots",
+  "LEGACY_STORE_AS_SSOT": "NO",
+  "CANONICAL_MATCHING_FINAL": "NOT_PERFORMED",
+  "RESTAURANT_ATTRIBUTE_AI_INFERENCE": "FORBIDDEN",
+
+  "RESTAURANT_TRACK_TOTAL": 1259,
+  "PRIORITY_CIDS": 42,
+  "EXPAND_CIDS": 1217,
+  "TOTAL_API_CALLS_EXPAND": 1217,
+  "TOTAL_API_CALLS_FIX_PRIORITY": 42,
+  "TOTAL_API_CALLS_FINAL": 1259,
+  "ENRICHED_EXPAND": 1217,
+  "ENRICHED_FIX_PRIORITY": 42,
+  "ENRICHED_TOTAL": 1259,
+
+  "EXPAND_SUMMARY": {
+    "COORD_OK": 1217,
+    "ADDRESS_OK": 1216,
+    "HOURS_OK": 1202,
+    "SIGNATURE_DISHES_OK": 840,
+    "PHONE_OK": 1182
+  },
+  "FIX_PRIORITY_SUMMARY": {
+    "COORD_OK": 42,
+    "ADDRESS_OK": 42,
+    "HOURS_OK": 41,
+    "SIGNATURE_DISHES_OK": 24,
+    "PHONE_OK": 40
+  },
+
+  "MICHELIN_SEOUL": 0,
+  "MICHELIN_NOTE": "All 194 restaurant records in public/data are Busan. SEOUL_MICHELIN_REUSABLE=0 CONFIRMED FINAL",
+
+  "KTO_RESULT": {
+    "KTO_AVAILABLE": false,
+    "KTO_RESTAURANT_MATCHABLE": "0 (TOUR_API_KEY not present in current environment)",
+    "NOTE": "Seoul TourAPI restaurant data does not exist in repo (tourapi/raw/enriched = busan/gyeongju only)"
+  },
+
+  "VISITSEOUL_RESTAURANT_SOURCE_CONTRACT": {
+    "STATUS": "AUDITED",
+    "SAMPLE_COUNT": 4,
+    "has_coordinates_confirmed": true,
+    "has_phone_confirmed": true,
+    "has_open_hours_confirmed": true,
+    "has_address_confirmed": true,
+    "has_signature_dishes_confirmed": true,
+    "has_halal_cert_confirmed": true,
+    "FIELDS_ABSENT_TOP_LEVEL": ["addr", "mapx", "mapy", "opentime"],
+    "CORRECT_SUBOBJECTS": ["traffic", "extra", "restaurant"]
+  },
+
+  "FINAL_COVERAGE": {
+    "TOTAL_RESTAURANTS": 1259,
+    "name": {"has": 1259, "pct": 100.0},
+    "address": {"has": 1258, "missing": 1, "pct": 99.9},
+    "lat": {"has": 1259, "pct": 100.0},
+    "lng": {"has": 1259, "pct": 100.0},
+    "district": {"has": 1051, "missing": 208, "pct": 83.5},
+    "neighborhood": {"has": 0, "note": "not available from VisitSeoul; requires external source"},
+    "cuisine": {"has": 978, "missing": 281, "pct": 77.7, "unknown_note": "281 generic '음식' category"},
+    "signature_dishes": {"has": 864, "missing": 395, "pct": 68.6},
+    "description": {"has": 1259, "pct": 100.0},
+    "official_url": {"has": 581, "missing": 678, "pct": 46.1},
+    "phone": {"has": 1222, "missing": 37, "pct": 97.1},
+    "opening_hours_weekly": {"has": 1243, "missing": 16, "pct": 98.7},
+    "closed_days": {"has": 836, "missing": 423, "pct": 66.4},
+    "price_range_krw": {"has": 266, "missing": 993, "pct": 21.1},
+    "menu_evidence": {"has": 1259, "pct": 100.0},
+    "image_main_url": {"has": 1259, "pct": 100.0},
+    "transit_info": {"has": 1194, "missing": 65, "pct": 94.8},
+    "dietary_certification": {"has": 17, "pct": 1.4, "note": "official certification only; 0 does not mean none"},
+    "halal_certification": {"has": 94, "pct": 7.5, "note": "official certification only"},
+    "language_menu": {"has": 0, "note": "UNKNOWN by design — VisitSeoul does not provide; requires official restaurant source"},
+    "language_staff": {"has": 0, "note": "UNKNOWN by design"},
+    "payment": {"has": 0, "note": "UNKNOWN by design — requires official restaurant source"},
+    "seating_solo_counter": {"has": 0, "note": "UNKNOWN by design — requires seating structure evidence"},
+    "accessibility_step_free": {"has": 0, "note": "UNKNOWN by design — disabled_facility list empty for most records"},
+    "reservation": {"has": 0, "note": "UNKNOWN by design"}
+  },
+
+  "REVIEW_FLAG_COUNTS": {
+    "OPENING_HOURS_RAW_TEXT": 1243,
+    "OFFICIAL_URL_MISSING": 678,
+    "CUISINE_UNKNOWN": 281,
+    "OPENING_HOURS_MISSING": 16,
+    "ADDRESS_MISSING": 1
+  },
+
+  "VALIDATION_STATUS_COUNTS": {
+    "DETAIL_FETCHED_PENDING_REVIEW": 1259
+  },
+
+  "ATTEMPTS_FILE_NOTE": "seoul-food-discovery-detail-attempts-r1.jsonl covers fix-priority 42 records only; expand-all 1217 attempts were overwritten by sequential pass. Expand summary data available in EXPAND_SUMMARY above.",
+
+  "POOL_SHA256": "4ECE54CC01D67B0E9AE1794D16D3EBB8C6B39B4C7A4FAFC33715C3168420BD39",
+
+  "PRODUCTION_WRITE": 0,
+  "DB_CHANGE": 0,
+  "SRC_MODIFIED": 0,
+  "MASTER_CHANGE": 0,
+  "SECRET_LEAK": 0,
+  "BUSAN_CHANGE": 0,
+  "GYEONGJU_CHANGE": 0,
+  "JEJU_CHANGE": 0
+}
