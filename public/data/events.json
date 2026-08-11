@@ -45,13 +45,13 @@
     "koreanSurvivalScore": 95,
     "notice": "Tickets sold via Weverse Shop. Foreign card accepted. Arrive 2 hours early for entry.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Weverse Shop",
-      "affiliateUrl": "https://weverseshop.io",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": true,
       "hasTicketing": true,
-      "bookingUrl": "https://weverseshop.io"
+      "bookingUrl": null
     },
     "displayUntil": "2026-06-13"
   },
@@ -173,10 +173,10 @@
     "koreanSurvivalScore": 76,
     "notice": "₩2,000 trail map at entrance. Best on weekday mornings. Steep hills — wear comfortable shoes.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "KKday",
-      "affiliateUrl": "https://www.kkday.com/en/product/18498",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -232,10 +232,10 @@
     "koreanSurvivalScore": 88,
     "notice": "Coin lockers fill by noon on concert day. Arrive before 10 AM to secure storage.",
     "commerce": {
-      "affiliateType": "transport",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/activity/2339-t-money-card-seoul/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -294,10 +294,10 @@
     "koreanSurvivalScore": 91,
     "notice": "Free. Bring a light jacket. GS25 and CU convenience stores along the beach.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Agoda",
-      "affiliateUrl": "https://www.agoda.com/city/busan-kr.html",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -359,7 +359,7 @@
     "koreanSurvivalScore": 98,
     "notice": "Free. No ticket required. Arrive by 21:30 — beach fills up fast. Bring a light jacket.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -422,10 +422,10 @@
     "koreanSurvivalScore": 92,
     "notice": "October sunrise in Busan ~06:20. 24-hour haejang-guk restaurants near Haeundae Station.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -477,10 +477,10 @@
     "koreanSurvivalScore": 87,
     "notice": "Free event. Arrive 3–4 hours early. Store all luggage beforehand.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -535,10 +535,10 @@
     "koreanSurvivalScore": 82,
     "notice": "Danubi train runs every 30 min (₩3,000). Wear non-slip shoes on cliff paths. No subway access — taxi ₩12,000 from Nampo.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "KKday",
-      "affiliateUrl": "https://www.kkday.com/en/product/18498",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -593,10 +593,10 @@
     "koreanSurvivalScore": 88,
     "notice": "Crystal cabin (glass floor) is ₩5,000 more. Book at the counter on weekdays, expect 20-min queues on weekends.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=songdo+cable+car+busan",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -652,10 +652,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Tower admission ₩12,000. Park is free. Best at dusk when port lights up. Last elevator up 21:30.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=busan+tower",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -711,10 +711,10 @@
     "koreanSurvivalScore": 78,
     "notice": "Free entry. 108 steps to the main gate — not wheelchair accessible. Bus 181 from Haeundae (40 min). Cash only at street stalls.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "KKday",
-      "affiliateUrl": "https://www.kkday.com/en/product/18498",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -770,10 +770,10 @@
     "koreanSurvivalScore": 93,
     "notice": "Spa Land towel rental included. Swimwear required for pool areas. Tax refund desk on B1 — min purchase ₩30,000. Bring passport.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=shinsegae+centum+spa+busan",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -1061,10 +1061,10 @@
     "koreanSurvivalScore": 86,
     "notice": "Free. Shoe covers provided (mandatory). No subway — Bus 24 or 131 from Gwangan or Namcheon Station.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "KKday",
-      "affiliateUrl": "https://www.kkday.com/en/product/18498",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -1239,10 +1239,10 @@
     "koreanSurvivalScore": 91,
     "notice": "LED roof show: 19:30 & 21:00 daily (free from outside). Film tickets ₩12,000–₩15,000. Best seat for light show: the steps across from the main entrance.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -1353,10 +1353,10 @@
     "koreanSurvivalScore": 95,
     "notice": "Tickets ₩27,000 adults — 10% cheaper via Klook. Last entry 21:00. The shark tunnel is busiest 13:00–16:00; go at 10:00 for shortest queues.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=sea+life+busan+aquarium",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -2474,10 +2474,10 @@
     "koreanSurvivalScore": 88,
     "notice": "Tickets via Interpark or Melon Ticket. Foreign card accepted online. Arrive 2 hours early. T-money recommended for post-concert transit.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": true,
       "hasTicketing": true,
       "bookingUrl": null
@@ -2586,10 +2586,10 @@
     "koreanSurvivalScore": 83,
     "notice": "2-day festival pass available. Camping optional. Dadaepo Beach accessible by subway (Line 1 Dadaepo Beach Station).",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -2642,10 +2642,10 @@
     "koreanSurvivalScore": 93,
     "notice": "Tickets ₩12,000 adults. BEXCO is at Centum City Station (Metro Line 2, Exit 12). Biennial event — check dates.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -3748,10 +3748,10 @@
     "koreanSurvivalScore": 86,
     "notice": "Book escape room in advance online (₩20,000–₩28,000/person). English instructions available. Groups of 2–6 recommended.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=kpop+escape+room+busan",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -3911,10 +3911,10 @@
     "koreanSurvivalScore": 83,
     "notice": "Book via Melon Ticket or Interpark. Foreign card accepted online. Check 2–3 weeks before visit for upcoming dates.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4019,10 +4019,10 @@
     "koreanSurvivalScore": 78,
     "notice": "Full-day tour — start by 09:00 at Mandeok Station. T-money card essential (₩10,000 budget for metro + buses). Download Naver Maps for navigation.",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "KKday",
-      "affiliateUrl": "https://www.kkday.com/en/search?q=busan+kpop+tour",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -4076,10 +4076,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Entry ₩15,000. BEXCO is at Centum City Station (Metro Line 2, Exit 12). Bring tote bags — tasting portions are generous.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4133,10 +4133,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Interpark. Foreign card accepted. Book 4–6 weeks in advance for best seats. Arrive 90 min early for MD line.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": true,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4243,10 +4243,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Registration via official Busan Marathon website. Entry fee ₩60,000–₩80,000 for full/half. Spectator access is free. Course closes 6 hours after start.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4354,10 +4354,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Melon/Interpark — sell out in minutes. Watching outside BEXCO is free and equally electric. Arrive by 15:00 for good outside viewing position.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": true,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4407,10 +4407,10 @@
     "koreanSurvivalScore": 87,
     "notice": "Surf lesson ₩30,000–₩45,000/2hr with board rental. Festival entry free. Donghai Line from Haeundae to Songjeong (15 min, ₩1,700).",
     "commerce": {
-      "affiliateType": "activity",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/search-results/?query=busan+surf+lesson",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": false,
       "bookingUrl": null
@@ -4517,10 +4517,10 @@
     "koreanSurvivalScore": 92,
     "notice": "Outdoor shows free. Theater tickets ₩20,000–₩40,000 — book online in advance. Best street show time: 19:00–21:00.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": false,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4574,10 +4574,10 @@
     "koreanSurvivalScore": 90,
     "notice": "Tickets via Melon Ticket or official One K website. Foreign card accepted. Budget ₩80,000–₩150,000. Arrive 3 hours early for best atmosphere.",
     "commerce": {
-      "affiliateType": "booking",
-      "hasAffiliate": true,
-      "affiliatePartner": "Klook",
-      "affiliateUrl": "https://www.klook.com/en-US/city/38-busan/",
+      "affiliateType": null,
+      "hasAffiliate": false,
+      "affiliatePartner": null,
+      "affiliateUrl": null,
       "hasMerchandise": true,
       "hasTicketing": true,
       "bookingUrl": null
@@ -4627,7 +4627,7 @@
     "koreanSurvivalScore": 92,
     "notice": "Check Visit Busan official site for venue and ticket details.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4682,7 +4682,7 @@
     "koreanSurvivalScore": 88,
     "notice": "Free entry (some programs may require registration). Check Visit Busan for schedule.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4737,7 +4737,7 @@
     "koreanSurvivalScore": 90,
     "notice": "Free to enter. Check Visit Busan for exact dates and performances.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4791,7 +4791,7 @@
     "koreanSurvivalScore": 88,
     "notice": "Reservations recommended for top restaurants. Check Visit Busan for participating venues.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4848,7 +4848,7 @@
     "koreanSurvivalScore": 98,
     "notice": "Free. No registration required. Check Visit Busan official site for exact booth location within the airport.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4904,7 +4904,7 @@
     "koreanSurvivalScore": 96,
     "notice": "Free. Check Visit Busan official site for booth hours.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -4960,7 +4960,7 @@
     "koreanSurvivalScore": 97,
     "notice": "Free outdoor event. Check Visit Busan for exact schedule.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -5016,7 +5016,7 @@
     "koreanSurvivalScore": 98,
     "notice": "Free. Limited supply. First-come, first-served at official welcome centers.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -5071,7 +5071,7 @@
     "koreanSurvivalScore": 96,
     "notice": "Free. Operated during concert hours. Check Visit Busan official site for full schedule.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,
@@ -5126,7 +5126,7 @@
     "koreanSurvivalScore": 90,
     "notice": "Free to enter. Check Visit Busan official site for dates and venue.",
     "commerce": {
-      "affiliateType": "none",
+      "affiliateType": null,
       "hasAffiliate": false,
       "affiliatePartner": null,
       "affiliateUrl": null,

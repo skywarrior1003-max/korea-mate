@@ -698,11 +698,11 @@
     "dataBodyBefore": "本地信息由韩国观光公社（",
     "dataBodyAfter": "）的 TourAPI 提供。为了让无障碍设施、支付方式和是否适合独自前往一目了然，我们会逐条核实并整理。",
     "aiTitle": "AI 技术",
-    "aiBody": "行程与博客文章由 Gemini AI 生成。我们力求准确、优化且贴近当地，但现场运营可能变动，重要信息请在出发前再确认一次。",
+    "aiBody": "行程与博客文章在 AI 协助下生成。我们力求准确、条理清晰，但现场运营可能变动，重要信息请在出发前再确认一次。",
     "contactTitle": "联系我们",
     "contactBody": "有反馈或建议吗？我们很想听。欢迎分享你的想法，或告诉我们哪些信息需要更新。让我们一起把这趟韩国之旅变成难忘的回忆。",
     "lastUpdated": "最后更新：{date}",
-    "footerNote": "数据来源：韩国观光公社 · AI：Gemini"
+    "footerNote": "地点信息采用韩国观光公社的资料。行程规划由 AI 完成。"
   },
   "allSpots": {
     "title": "全部地点",
@@ -834,6 +834,6 @@
     "svSoloDesc": "不用尴尬，一个人也自在",
     "readMore": "了解更多 →",
     "footerData": "数据来源：韩国观光公社",
-    "footerAi": "AI：Gemini"
+    "footerAi": "AI 协助规划"
   }
 }
