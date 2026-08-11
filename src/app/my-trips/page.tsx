@@ -4,7 +4,7 @@
 // TASK-023: premium trip management hub with moments count + personality badge
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
@@ -27,28 +27,38 @@ import EmailCaptureModal from "@/components/EmailCaptureModal";
 // 그 resolver 가 이미 갖고 있다.
 
 // ── 여행 퍼스낼리티 배지 ─────────────────────────────────────────────────────
-function getPersonality(style: string): { emoji: string; label: string; color: string } {
+// travel_style 원본값은 Solo|Couple|Family|Group 넷뿐이다(플래너가 그 넷만
+// 만든다). food·adventure·culture 분기는 어떤 값으로도 닿지 않아 라벨을
+// 번역하지 않고 그대로 둔다 — 살아 있는 넷만 messages 를 탄다.
+function getPersonality(style: string): { emoji: string; labelKey: string; color: string } {
   const s = style.toLowerCase();
-  if (s.includes("food"))      return { emoji: "🍜", label: "Foodie",       color: "#FF4A2D" };
-  if (s.includes("adventure")) return { emoji: "⚡", label: "Adventurer",   color: "#dc2626" };
-  if (s.includes("couple"))    return { emoji: "💫", label: "Romantic",     color: "#db2777" };
-  if (s.includes("family"))    return { emoji: "👨‍👩‍👧", label: "Family",       color: "#16a34a" };
-  if (s.includes("culture"))   return { emoji: "🏛️", label: "Cultural",     color: "#7c3aed" };
-  if (s.includes("solo"))      return { emoji: "🎒", label: "Solo",         color: "#0ea5e9" };
-  return                              { emoji: "✨", label: "Explorer",     color: "#FF4A2D" };
+  if (s.includes("food"))      return { emoji: "🍜", labelKey: "",              color: "#FF4A2D" };
+  if (s.includes("adventure")) return { emoji: "⚡", labelKey: "",              color: "#dc2626" };
+  if (s.includes("couple"))    return { emoji: "💫", labelKey: "styleRomantic", color: "#db2777" };
+  if (s.includes("family"))    return { emoji: "👨‍👩‍👧", labelKey: "styleFamily",   color: "#16a34a" };
+  if (s.includes("culture"))   return { emoji: "🏛️", labelKey: "",              color: "#7c3aed" };
+  if (s.includes("solo"))      return { emoji: "🎒", labelKey: "styleSolo",     color: "#0ea5e9" };
+  return                              { emoji: "✨", labelKey: "styleExplorer", color: "#FF4A2D" };
 }
 
 // ── 날짜 유틸 ─────────────────────────────────────────────────────────────────
-function timeAgo(iso: string): string {
+// 문장을 여기서 만들지 않는다. 어순도 단위도 언어마다 다르고, 30일이 넘으면
+// 날짜 표기 자체가 달라진다(en-US 고정이었다). 종류와 값만 돌려주고 문장은
+// 화면이 만든다.
+type Ago =
+  | { kind: "now" }
+  | { kind: "min" | "hour" | "day"; n: number }
+  | { kind: "date"; iso: string };
+function timeAgo(iso: string): Ago {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 1)  return "Just now";
-  if (m < 60) return `${m}m ago`;
+  if (m < 1)  return { kind: "now" };
+  if (m < 60) return { kind: "min", n: m };
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ago`;
+  if (h < 24) return { kind: "hour", n: h };
   const d = Math.floor(h / 24);
-  if (d < 30) return `${d}d ago`;
-  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  if (d < 30) return { kind: "day", n: d };
+  return { kind: "date", iso };
 }
 
 function dayCount(start: string, end: string): number {
@@ -92,7 +102,12 @@ function rowToTrip(r: ItineraryRow): Trip {
 
 // ══════════════════════════════════════════════════════════════════════════════
 export default function MyTripsPage() {
+  const t      = useTranslations("trips");
   const tStats = useTranslations("creatorStats");
+  const tHome  = useTranslations("home");
+  const tNav   = useTranslations("nav");
+  const tPicks = useTranslations("picks");
+  const locale = useLocale();
   const [trips,          setTrips]          = useState<Trip[]>([]);
   const [loading,        setLoading]        = useState(true);
   const [fetchError,     setFetchError]     = useState(false);
@@ -182,18 +197,28 @@ export default function MyTripsPage() {
 
   // 최종 디자인의 두 단(Current & Upcoming / Memory Archive) 구분.
   // 기준은 실제 종료일 하나뿐이다 — 진행률·완료 신호 같은 추정값을 쓰지 않는다.
+  // 상대 시각은 종류별로 문장을 고르고, 30일이 넘으면 사용자의 locale 로 날짜를
+  // 적는다. 예전엔 en-US 로 고정돼 있어 어느 언어에서도 "Aug 11" 이었다.
+  const agoLabel = (iso: string) => {
+    const a = timeAgo(iso);
+    if (a.kind === "now")  return t("agoNow");
+    if (a.kind === "date") return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" })
+                                    .format(new Date(a.iso));
+    return t(`ago${a.kind === "min" ? "Min" : a.kind === "hour" ? "Hour" : "Day"}`, { n: a.n });
+  };
+
   const today = new Date().toISOString().slice(0, 10);
   const SECTIONS = [
     {
       key: "upcoming",
-      title: "Current & Upcoming",
-      hint: "Trips you are on or about to take",
+      title: t("sectionUpcoming"),
+      hint: t("sectionUpcomingHint"),
       trips: trips.filter(t => !t.endDate || t.endDate >= today),
     },
     {
       key: "archive",
-      title: "Memory Archive",
-      hint: "Finished trips — itinerary, visits and memories stay together",
+      title: t("sectionArchive"),
+      hint: t("sectionArchiveHint"),
       trips: trips.filter(t => t.endDate && t.endDate < today),
     },
   ];
@@ -213,7 +238,7 @@ export default function MyTripsPage() {
               href="/"
               className="gkm-focus inline-flex items-center min-h-11 px-2 -mr-2 text-sm font-bold text-[#565D66] hover:text-[#191C21] transition-colors"
             >
-              ← Home
+              ← {tNav("home")}
             </Link>
           </span>
         </div>
@@ -223,9 +248,9 @@ export default function MyTripsPage() {
 
         {/* ── 페이지 타이틀 ── */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black text-[#191C21] mb-2 tracking-tight">My Trips</h1>
+          <h1 className="text-4xl font-black text-[#191C21] mb-2 tracking-tight">{tNav("myTrips")}</h1>
           <p className="text-[#565D66] font-medium leading-relaxed max-w-md">
-            Manage your journey and revisit the memories you&apos;ve made across Korea.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -236,8 +261,8 @@ export default function MyTripsPage() {
               // Memory 개수는 여기에 두지 않는다. Memory SSOT 는 localStorage 1차 +
               // 서버 동기화라, 이 화면이 아는 값은 이 기기가 본 것뿐이다. 그 부분합을
               // 전체 개수처럼 적으면 다른 기기에서 남긴 기록이 없는 것처럼 읽힌다.
-              { emoji: "✈️", label: `${trips.length} trips` },
-              { emoji: "📍", label: `${trips.reduce((s, t) => s + t.days, 0)} days` },
+              { emoji: "✈️", label: t("statTrips", { n: trips.length }) },
+              { emoji: "📍", label: tHome("days", { n: trips.reduce((sum, x) => sum + x.days, 0) }) },
             ].filter(Boolean).map((chip) => (
               <div
                 key={chip!.label}
@@ -256,21 +281,21 @@ export default function MyTripsPage() {
           <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-emerald-200 bg-emerald-50">
             <span className="text-lg">☁️</span>
             <p className="text-sm font-bold text-emerald-800 flex-1">
-              Saved to cloud as <strong>{savedEmail}</strong> — access from any device
+              {t.rich("emailSaved", { email: savedEmail ?? "", b: (c) => <strong>{c}</strong> })}
             </p>
           </div>
         ) : (
           <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[#E5E7EA] bg-white shadow-sm">
             <span className="text-lg">📧</span>
             <p className="text-sm font-bold text-[#565D66] flex-1">
-              Connect your email to access trips on any device
+              {t("emailPrompt")}
             </p>
             <button
               onClick={() => setEmailModalOpen(true)}
               className="shrink-0 px-4 py-2 rounded-xl text-xs font-black text-white transition-opacity hover:opacity-90 cursor-pointer"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              Connect
+              {t("emailConnect")}
             </button>
           </div>
         )}
@@ -279,7 +304,7 @@ export default function MyTripsPage() {
         {loading && (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#FF4A2D]" />
-            <p className="text-sm font-bold text-[#565D66]">Loading your trips…</p>
+            <p className="text-sm font-bold text-[#565D66]">{t("loading")}</p>
           </div>
         )}
 
@@ -288,9 +313,9 @@ export default function MyTripsPage() {
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-red-50 flex items-center justify-center text-5xl">⚠️</div>
             <div>
-              <p className="text-2xl font-black text-[#191C21] mb-2">Could not load trips</p>
+              <p className="text-2xl font-black text-[#191C21] mb-2">{t("errorTitle")}</p>
               <p className="text-[#565D66] max-w-sm leading-relaxed">
-                Check your connection and try again.
+                {t("errorBody")}
               </p>
             </div>
             <button
@@ -298,7 +323,7 @@ export default function MyTripsPage() {
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              Try Again
+              {t("errorRetry")}
             </button>
           </div>
         )}
@@ -308,9 +333,9 @@ export default function MyTripsPage() {
           <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
             <div className="w-24 h-24 rounded-3xl bg-[#F6F7F8] flex items-center justify-center text-5xl">✈️</div>
             <div>
-              <p className="text-2xl font-black text-[#191C21] mb-2">No trips yet</p>
+              <p className="text-2xl font-black text-[#191C21] mb-2">{t("emptyTitle")}</p>
               <p className="text-[#565D66] max-w-sm leading-relaxed">
-                Trips are saved here automatically after AI generation.<br/>Plan your first Korea adventure now!
+                {t("emptyBody1")}<br/>{t("emptyBody2")}
               </p>
             </div>
             <Link
@@ -318,7 +343,7 @@ export default function MyTripsPage() {
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              🗺️ Start Planning
+              🗺️ {t("startPlanning")}
             </Link>
           </div>
         )}
@@ -338,7 +363,7 @@ export default function MyTripsPage() {
               const isDeleting  = deleting    === trip.id;
               const isConfirm   = confirmDel  === trip.id;
               const isCopied    = copied      === trip.id;
-              const displayTitle = trip.tripTitle || `My ${cityCap(trip.city)} Trip`;
+              const displayTitle = trip.tripTitle || t("titleFallback", { city: cityCap(trip.city) });
               const hero = cityVisual(trip.city);
 
               return (
@@ -379,14 +404,14 @@ export default function MyTripsPage() {
                         className="text-xs font-black px-2.5 py-1 rounded-lg text-white"
                         style={{ backgroundColor: personality.color }}
                       >
-                        {personality.emoji} {personality.label}
+                        {personality.emoji}{personality.labelKey ? ` ${t(personality.labelKey)}` : ""}
                       </span>
                     </div>
 
                     {/* 업데이트 시간 */}
                     <div className="absolute top-3 right-3">
                       <span className="text-[10px] font-bold bg-black/50 text-white px-2 py-1 rounded-lg backdrop-blur-sm">
-                        {timeAgo(trip.updatedAt)}
+                        {agoLabel(trip.updatedAt)}
                       </span>
                     </div>
 
@@ -402,10 +427,10 @@ export default function MyTripsPage() {
                   {/* ── 메타 칩 ── */}
                   <div className="px-4 pt-3.5 pb-0 flex flex-wrap gap-1.5">
                     <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
-                      📅 {trip.days}d
+                      📅 {t("days", { n: trip.days })}
                     </span>
                     <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
-                      👤 {trip.travelers} pax
+                      👤 {t("pax", { n: trip.travelers })}
                     </span>
                     {/* Memory 진입 — 개수는 적지 않는다. 이 기기가 본 로컬 캐시만
                         세는 값이라 "3 memories"라고 쓰면 다른 기기에서 남긴 기록이
@@ -416,7 +441,7 @@ export default function MyTripsPage() {
                       className="text-[10px] font-black px-2.5 py-1 rounded-md text-white transition-opacity hover:opacity-85"
                       style={{ backgroundColor: "#1a1a2e" }}
                     >
-                      📸 Memories
+                      📸 {tHome("summaryMemories")}
                     </Link>
                     {/* 원작자 성과 — 실측 누적값만. 둘 다 0이면 미노출 */}
                     {trip.copyCount > 0 && (
@@ -439,7 +464,7 @@ export default function MyTripsPage() {
                           : { backgroundColor: "#F6F7F8", borderColor: "#d1c4b0", color: "#565D66" }
                       }
                     >
-                      {togglingPublic.has(trip.id) ? "…" : trip.isPublic ? "🌐 Public" : "🔒 Private"}
+                      {togglingPublic.has(trip.id) ? "…" : trip.isPublic ? `🌐 ${t("public")}` : `🔒 ${t("private")}`}
                     </button>
                   </div>
 
@@ -450,7 +475,7 @@ export default function MyTripsPage() {
                       className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
                       style={{ backgroundColor: "#191C21" }}
                     >
-                      Open Itinerary →
+                      {t("openItinerary")} →
                     </Link>
 
                     {/* 공유 버튼이 없는 비공개 일정에서는 휴지통만 남는다 —
@@ -474,7 +499,7 @@ export default function MyTripsPage() {
                       >
                         {/* 이 버튼은 공유 링크를 클립보드에 담는다. 여행 자체를
                             복제하지 않는다 — "Copy Link"는 둘 다로 읽혔다. */}
-                        {isCopied ? "✅ Link copied" : "🔗 Copy Share Link"}
+                        {isCopied ? `✅ ${t("linkCopied")}` : `🔗 ${t("copyShareLink")}`}
                       </button>
                       )}
 
@@ -486,13 +511,13 @@ export default function MyTripsPage() {
                             disabled={isDeleting}
                             className="px-3 py-2.5 rounded-xl text-xs font-black bg-red-500 text-white hover:bg-red-600 transition-colors disabled:opacity-50 cursor-pointer"
                           >
-                            {isDeleting ? "…" : "Delete"}
+                            {isDeleting ? "…" : tPicks("delete")}
                           </button>
                           <button
                             onClick={() => setConfirmDel(null)}
                             className="px-3 py-2.5 rounded-xl text-xs font-bold bg-[#F6F7F8] text-[#565D66] hover:bg-[#E5E7EA] transition-colors cursor-pointer"
                           >
-                            Cancel
+                            {tPicks("cancel")}
                           </button>
                         </div>
                       ) : (
@@ -523,8 +548,8 @@ export default function MyTripsPage() {
                 ＋
               </div>
               <div>
-                <p className="text-sm font-black text-[#191C21]">New Trip Plan</p>
-                <p className="text-xs text-[#565D66] mt-0.5">AI in 30 sec</p>
+                <p className="text-sm font-black text-[#191C21]">{t("newTripPlan")}</p>
+                <p className="text-xs text-[#565D66] mt-0.5">{t("newTripPlanHint")}</p>
               </div>
             </Link>
           </div>
