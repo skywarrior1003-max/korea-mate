@@ -896,6 +896,12 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
 // ══════════════════════════════════════════════════════════════
 //  일정 결과 컴포넌트
 // ══════════════════════════════════════════════════════════════
+// 서버가 준 원문(message)은 번역 대상이 아니라 값이다. 키와 함께 들고 간다.
+type ItineraryError =
+  | { key: "errCorrupted" | "errEmpty" | "errNoDates" | "errGenerate" | "errNetwork" }
+  | { key: "errLoadFailed" | "errGenerateFailed" | "errLoadSavedFailed"; message: string }
+  | null;
+
 function ItineraryResult() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -934,7 +940,13 @@ function ItineraryResult() {
   // ── 핵심 상태 ─────────────────────────────────────────────
   const [days,          setDays]          = useState<Day[]>([]);
   const [loading,       setLoading]       = useState(true);
-  const [error,         setError]         = useState<string | null>(null);
+  // 번역한 "문장" 이 아니라 "키" 를 담는다.
+  //
+  // locale 은 I18nProvider 가 마운트 후 URL·localStorage·브라우저 순으로 정하는데,
+  // 일정 로드는 그보다 먼저 끝날 수 있다. 그 시점에 t() 로 문장을 만들어 state 에
+  // 넣으면 영어로 굳어서, 한국어 화면에 영어 에러만 남는다. 키로 들고 있다가
+  // 그리는 순간 번역한다.
+  const [error,         setError]         = useState<ItineraryError>(null);
   const [isFallback,    setIsFallback]    = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [viewMode,      setViewMode]      = useState<"full" | "compact">("full");
@@ -1137,12 +1149,12 @@ function ItineraryResult() {
       } else if (Array.isArray(rawShareDays)) {
         sharedDays = rawShareDays;
       } else {
-        setError(t("errCorrupted"));
+        setError({ key: "errCorrupted" });
         setLoading(false);
         return;
       }
       if (sharedDays.length === 0) {
-        setError(t("errEmpty"));
+        setError({ key: "errEmpty" });
         setLoading(false);
         return;
       }
@@ -1165,7 +1177,7 @@ function ItineraryResult() {
     };
 
     loadItinerary().catch(err => {
-      setError(t("errLoadFailed", { message: (err as Error).message }));
+      setError({ key: "errLoadFailed", message: (err as Error).message });
       setLoading(false);
     });
   }, [shareId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -1176,7 +1188,7 @@ function ItineraryResult() {
   useEffect(() => {
     if (shareId) return; // Effect 1이 처리
     if (!paramStartDate || !paramEndDate) {
-      setError(t("errNoDates"));
+      setError({ key: "errNoDates" });
       setLoading(false);
       return;
     }
@@ -1257,11 +1269,11 @@ function ItineraryResult() {
               if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
               if (notes.length > 0) setTripNotes(notes);
               if (days.length > 0 && conflictDayNumbers.length === days.length) {
-                setError(t("errGenerate"));
+                setError({ key: "errGenerate" });
               }
               setLoading(false);
             })
-            .catch(() => { setError(t("errNetwork")); setLoading(false); });
+            .catch(() => { setError({ key: "errNetwork" }); setLoading(false); });
           return;
         }
         // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
@@ -1300,12 +1312,12 @@ function ItineraryResult() {
           if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
           if (notes.length > 0) setTripNotes(notes);
           if (days.length > 0 && conflictDayNumbers.length === days.length) {
-            setError(t("errGenerate"));
+            setError({ key: "errGenerate" });
           }
           setLoading(false);
         })
-        .catch((err) => { setError(t("errGenerateFailed", { message: (err as Error).message })); setLoading(false); });
-    }).catch((err) => { setError(t("errLoadSavedFailed", { message: (err as Error).message })); setLoading(false); });
+        .catch((err) => { setError({ key: "errGenerateFailed", message: (err as Error).message }); setLoading(false); });
+    }).catch((err) => { setError({ key: "errLoadSavedFailed", message: (err as Error).message }); setLoading(false); });
   }, [shareId, paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ══════════════════════════════════════════════════════════
@@ -1813,7 +1825,9 @@ function ItineraryResult() {
       <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
         <div className="text-6xl mb-6">⚠️</div>
         <h2 className="text-3xl font-black text-red-600 mb-4">{t("somethingWrong")}</h2>
-        <p className="text-lg text-sub max-w-md mb-8 font-bold">{error}</p>
+        <p className="text-lg text-sub max-w-md mb-8 font-bold">
+          {"message" in error ? t(error.key, { message: error.message }) : t(error.key)}
+        </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-ink text-surface-dim rounded-xl hover:bg-black transition-colors">
             ← Back to Home

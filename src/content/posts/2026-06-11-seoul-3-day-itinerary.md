@@ -83,7 +83,7 @@ Seoul's flagship shopping and street food district.
 
 ### Evening: Namsan & N Seoul Tower (17:00–21:00)
 
-Take the **cable car** (₩12,000 round trip) or hike 20 minutes up Namsan hill.
+Take the **cable car** (₩15,000 round trip, ₩12,000 one way for adults) or hike 20 minutes up Namsan hill.
 
 **N Seoul Tower** sits at 479m above sea level. The observation deck ticket (₩16,000) offers a 360° view of the entire Seoul basin. Go at **sunset (18:30–19:30)** when the city transitions from golden hour to neon.
 

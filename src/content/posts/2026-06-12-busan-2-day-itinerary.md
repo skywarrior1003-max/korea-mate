@@ -91,7 +91,7 @@ The traditional commercial heart of Busan.
 
 ### Late Afternoon: Songdo Beach & Sky Walk (17:00–19:00)
 
-Korea's first public beach (1913), now home to a **glass-bottom sky walk** extending over the sea and a cable car (Aircruse) connecting two cliffsides. The sky walk is free to enter; the cable car is ticketed, with a round-trip option.
+Korea's first public beach (1913), now home to a **glass-bottom sky walk** extending over the sea and the Songdo Marine Cable Car (Busan Air Cruise) connecting two cliffsides. The sky walk is free to enter. The cable car is ticketed and sells two cabin types — a standard Air Cruise cabin and a glass-floor Crystal Cruise cabin at a higher fare — each with round-trip and one-way options; check the current fares at the ticket office or on the operator's site before you queue.
 
 The sky walk gives genuinely vertiginous views over the Busan coastline — worth the detour before catching your KTX back to Seoul.
 
