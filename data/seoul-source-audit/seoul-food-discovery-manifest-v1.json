@@ -1,0 +1,107 @@
+{
+  "task": "TASK-FOOD-DISCOVERY-COLLECTION-V1",
+  "script_version": "v1.0.0",
+  "target_city": "seoul",
+  "as_of": "2026-08-11",
+  "start_sha": "983c8d9",
+  "FOOD_COLLECTION_SPEC_V1": "APPLIED",
+  "CANONICAL_TARGET": "city_spots",
+  "LEGACY_STORE_AS_SSOT": "NO",
+  "CANONICAL_MATCHING_FINAL": "NOT_PERFORMED",
+  "RESTAURANT_ATTRIBUTE_AI_INFERENCE": "FORBIDDEN",
+  "RESTAURANT_TRACK_TOTAL": 1259,
+  "EXISTING_VISITSEOUL_LISTING_RECORDS": 1259,
+  "EXISTING_DETAIL_PAYLOAD_RECORDS_BEFORE": 42,
+  "EXISTING_MICHELIN_SEOUL_RECORDS": 0,
+  "MICHELIN_NOTE": "ALL 55 Michelin records in restaurants.json are Busan — 0 Seoul Michelin records",
+  "REUSABLE_FACT_RECORDS": 1259,
+  "CANDIDATES_TOTAL": 1259,
+  "PHASE5_API_CALLS": 42,
+  "PHASE5_ENRICHED": 42,
+  "PHASE5_COORD_OK": 0,
+  "PHASE5_OFFICIAL_URL_OK": 23,
+  "PHASE5_HOURS_OK": 0,
+  "REMAINING_TARGETED_COLLECTION_REQUIRED": 1217,
+  "VISITSEOUL_RESTAURANT_API_LIMITATION": {
+    "FINDING": "VisitSeoul contents/info endpoint does NOT return addr/mapx/mapy/opentime for restaurant-category records",
+    "EVIDENCE": "42/42 priority records returned SUCCESS but 0 coords, 0 hours, 0 address",
+    "FIELDS_ACTUALLY_RETURNED": ["sumry (description)", "extra.cmmn_hmpg_url (official_url for 23/42)", "tag (menu_evidence)"],
+    "FIELDS_CONFIRMED_ABSENT": ["addr", "mapx", "mapy", "opentime"],
+    "IMPLICATION": "Address/coordinates/hours for Seoul restaurants require an external source — Naver Place API, Kakao Map API, or direct official restaurant pages",
+    "NEXT_TASK_HINT": "TASK-SEOUL-RESTAURANT-LOCATION-ENRICHMENT from external source (Naver/Kakao)"
+  },
+  "FIELD_AUDIT": {
+    "address": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "lat": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "lng": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "official_url": {
+      "has": 23,
+      "missing": 1236,
+      "pct": 1.8
+    },
+    "opening_hours_weekly": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "neighborhood": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "district": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "signature_dishes": {
+      "has": 0,
+      "missing": 1259,
+      "pct": 0.0
+    },
+    "cuisine": {
+      "has": 978,
+      "missing": 281,
+      "pct": 77.7
+    }
+  },
+  "UNKNOWN_BY_DESIGN_FIELDS": [
+    "vegetarian",
+    "vegan",
+    "allergy",
+    "language.menu",
+    "language.staff",
+    "seating.solo_counter",
+    "accessibility.step_free",
+    "reservation",
+    "payment",
+    "awards"
+  ],
+  "REVIEW_FLAG_COUNTS": {
+    "CUISINE_UNKNOWN": 281,
+    "COORD_MISSING": 42,
+    "OPENING_HOURS_MISSING": 42,
+    "OFFICIAL_URL_MISSING": 19
+  },
+  "PRODUCTION_WRITE": 0,
+  "DB_CHANGE": 0,
+  "SRC_MODIFIED": 0,
+  "MASTER_CHANGE": 0,
+  "SECRET_LEAK": 0,
+  "POOL_SHA256": "AA8455BD9358326D445BE8EE7567DCECF81B1D95BB70D5AAC33DCEB73F5CEEAB",
+  "BUSAN_CHANGE": 0,
+  "GYEONGJU_CHANGE": 0,
+  "JEJU_CHANGE": 0
+}
