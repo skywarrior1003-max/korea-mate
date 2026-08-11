@@ -2,6 +2,7 @@
 
 > **최초 작성**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1  
 > **R1 수정**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION  
+> **R2 업데이트**: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP  
 > **As-of**: 2026-08-11  
 > **Product role**: AI Travel Scheduler (not event archive / search engine)
 
@@ -179,7 +180,7 @@ Pool 기록이 있어도 여행자 날짜와 겹치지 않으면 제안하지 �
 
 | 도시 | 1차 소스 | 상태 |
 |---|---|---|
-| 서울 | VisitSeoul API | ✅ v1.1.0-R1 완료 (2026-08-11) |
+| 서울 | VisitSeoul API (MAIN) + 열린데이터광장 OA-15486 (보완·미접근) | ✅ R2 PASS_WITH_LIMITATION (2026-08-11) |
 | 부산 | 미정 (KTO 또는 VisitBusan API) | 미착수 |
 | 경주 | 미정 (KTO 또는 경주시 공식 소스) | 미착수 |
 
@@ -269,8 +270,69 @@ scripts/run-seoul-current-upcoming-event-sync-v1.py  (v1.1.0-R1)
 2. **AI 일정 통합**: SERVICE_EVENT_POOL 6건 → 여행자 날짜 overlap 검사 후 일정 연동
 3. **타 도시 확장**: 부산·경주 이벤트 소스 발굴 후 동일 정책 적용
 4. **VERIFIED_URL_TABLE 관리**: 재수집 시 기존 URL 유효성 확인; 만료된 항목 교체
+5. **서울 열린데이터광장 OA-15486**: API 키 확보 후 보완 소스로 추가 (R2 PASS_WITH_LIMITATION 사유)
+
+---
+
+---
+
+## 12. R2 공식 소스 탐색 결과 (2026-08-11)
+
+> **Task**: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP  
+> **결과**: EVENT_DISCOVERY_R2 = PASS_WITH_LIMITATION
+
+### 12.1 탐색 대상 소스
+
+| 소스 | 식별 근거 | 접근 상태 |
+|---|---|---|
+| 서울 열린데이터광장 「서울시 문화행사 정보」 (OA-15486) | `data.seoul.go.kr` 공개 데이터셋 | API 키 미보유 / 엔드포인트 접근 불가 |
+
+### 12.2 소스 특성 (메타 기준)
+
+```
+데이터셋명: 서울시 문화행사 정보
+OA 코드: OA-15486
+업데이트 주기: 일 (daily)
+날짜 필드: 시작일·종료일 포함 (확인됨)
+라이선스: 공공누리 1유형
+API 엔드포인트: openapi.seoul.go.kr:8088/{KEY}/json/culturalEventInfo/...
+```
+
+### 12.3 접근 차단 사유
+
+```
+API_KEY_AVAILABLE = NO          — SEOUL_OPENAPI_KEY 환경 변수 없음
+ENDPOINT_ACCESSIBLE = NO        — HTTP :8088 포트 SSL 불가
+AUTHENTICATED_PORTAL = BLOCKED  — culture.seoul.go.kr → SSO 리다이렉트
+DISCOVERY_COMPLETENESS = NOT_PROVEN
+```
+
+### 12.4 R2 최종 결론
+
+```
+EVENT_DISCOVERY_R2           = PASS_WITH_LIMITATION
+MAIN_EVENT_SOURCE            = VISITSEOUL_OFFICIAL_API
+SECONDARY_SOURCE             = SEOUL_OPEN_DATA_OA15486_IDENTIFIED_NOT_ACCESSED
+CURRENT_VERIFIED_EVENT_POOL  = 6 (R1 FROZEN — 2026-08-11)
+POOL_SHA256                  = EC89604497EEB544483E688E2FABCAD439BA2905F2359BD27499F8F14ACF3C89
+NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
+```
+
+### 12.5 파일 정리 분류
+
+| 파일 | 분류 |
+|---|---|
+| `seoul-current-upcoming-event-pool-v1.jsonl` | ACTIVE_PIPELINE_OUTPUT |
+| `seoul-current-upcoming-event-sync-manifest-v1.json` | ACTIVE_PIPELINE_OUTPUT |
+| `seoul-current-upcoming-event-discovery-v1.jsonl` | KEEP_FOR_REPRODUCIBILITY |
+| `seoul-current-upcoming-event-attempts-v1.jsonl` | KEEP_FOR_REPRODUCIBILITY |
+| `seoul-current-upcoming-event-detail-raw-v1.jsonl` | SAFE_TO_DELETE |
+
+> VisitSeoul API는 현재 유일하게 검증·운영 중인 서울 이벤트 소스다.  
+> 서울 열린데이터광장 OA-15486은 API 키 확보 후 보완 소스로 통합할 수 있다.
 
 ---
 
 *최초 생성: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1 / 2026-08-11*  
-*R1 업데이트: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION / 2026-08-11*
+*R1 업데이트: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION / 2026-08-11*  
+*R2 업데이트: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP / 2026-08-11*

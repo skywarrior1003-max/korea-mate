@@ -987,3 +987,23 @@ SECRET_LEAK = 0  DB_CHANGE = 0  SRC_MODIFIED = 0
 4. 다음 재수집 예정: 2026-08-18 이후
 5. OFFICIAL_VISIT_OR_PUBLIC_PAGE URL도 valid official_url — AI에서 사용 가능
 ```
+
+### R2 공식 소스 탐색 결과 (2026-08-11)
+
+> **Task**: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP
+
+```
+EVENT_DISCOVERY_R2           = PASS_WITH_LIMITATION
+MAIN_EVENT_SOURCE            = VISITSEOUL_OFFICIAL_API
+SECONDARY_SOURCE             = SEOUL_OPEN_DATA_OA15486_IDENTIFIED_NOT_ACCESSED
+  — data.seoul.go.kr OA-15486 「서울시 문화행사 정보」
+  — 일 업데이트 / 날짜 필드 있음 / API 키 미보유로 접근 불가
+DISCOVERY_COMPLETENESS       = NOT_PROVEN
+CURRENT_VERIFIED_EVENT_POOL  = 6건 (R1 FROZEN — 2026-08-11)
+POOL_FREEZE_STATUS           = FROZEN_R1_2026_08_11
+NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
+```
+
+**의미**: VisitSeoul API는 현재 유일하게 검증·운영 중인 서울 이벤트 소스. AI 일정 생성 시 이 6건을 event pool로 사용. 서울 열린데이터광장 OA-15486은 API 키 확보 후 보완 소스로 추가 예정.
+
+상세 정책: `docs/data-collection/multicity-event-freshness-policy-v1.md` Section 12

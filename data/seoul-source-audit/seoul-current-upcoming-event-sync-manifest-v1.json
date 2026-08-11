@@ -88,5 +88,31 @@
   "AUTO_MERGE": 0,
   "SECRET_LEAK": 0,
   "DB_CHANGE": 0,
-  "SRC_MODIFIED": 0
+  "SRC_MODIFIED": 0,
+  "R2_TASK": "TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP",
+  "R2_AS_OF": "2026-08-11",
+  "EVENT_DISCOVERY_R2": "PASS_WITH_LIMITATION",
+  "OFFICIAL_SOURCE_DISCOVERY": {
+    "CANDIDATE_SOURCE": "서울 열린데이터광장 「서울시 문화행사 정보」 (OA-15486)",
+    "DATASET_EXISTS": true,
+    "DAILY_UPDATE_CADENCE": true,
+    "HAS_DATE_FIELDS": true,
+    "LICENSE": "공공누리 1유형",
+    "API_KEY_AVAILABLE": false,
+    "API_ENDPOINT_ACCESSIBLE": false,
+    "ACCESS_BLOCKED_REASON": "API_KEY_NOT_IN_ENVIRONMENT; HTTP_PORT_8088_UNREACHABLE_VIA_WEBFETCH",
+    "DISCOVERY_COMPLETENESS": "NOT_PROVEN"
+  },
+  "MAIN_EVENT_SOURCE": "VISITSEOUL_OFFICIAL_API",
+  "SECONDARY_SOURCE": "SEOUL_OPEN_DATA_OA15486_IDENTIFIED_NOT_ACCESSED",
+  "CURRENT_VERIFIED_EVENT_POOL": 6,
+  "POOL_FREEZE_STATUS": "FROZEN_R1_2026_08_11",
+  "CLEANUP_CLASSIFICATION": {
+    "seoul-current-upcoming-event-pool-v1.jsonl": "ACTIVE_PIPELINE_OUTPUT",
+    "seoul-current-upcoming-event-sync-manifest-v1.json": "ACTIVE_PIPELINE_OUTPUT",
+    "seoul-current-upcoming-event-discovery-v1.jsonl": "KEEP_FOR_REPRODUCIBILITY",
+    "seoul-current-upcoming-event-attempts-v1.jsonl": "KEEP_FOR_REPRODUCIBILITY",
+    "seoul-current-upcoming-event-detail-raw-v1.jsonl": "SAFE_TO_DELETE"
+  },
+  "NEXT_TASK": "FOOD_DISCOVERY_COLLECTION"
 }
