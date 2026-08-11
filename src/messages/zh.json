@@ -69,6 +69,19 @@
     "moderate": "中等",
     "hard": "困难"
   },
+  "events": {
+    "stage_earlyBird": "早鸟",
+    "stage_preEvent": "活动前",
+    "stage_eventDay": "活动当天",
+    "stage_postEvent": "活动后",
+    "stage_standalone": "常设",
+    "transitWalk": "步行 {n}分钟",
+    "transitSubway": "地铁 {n}分钟",
+    "transitTaxi": "打车 {n}分钟",
+    "slotAnytime": "随时",
+    "score": "{n}分",
+    "scoreTooltip": "韩国旅行友好度评分 — 对外国旅客的便利程度"
+  },
   "map": {
     "google": "谷歌地图",
     "naver": "Naver地图",
@@ -246,7 +259,9 @@
     "editTitle": "编辑行程标题"
   },
   "common": {
-    "language": "语言"
+    "language": "语言",
+    "noImage": "暂无图片",
+    "minutes": "{n}分钟"
   },
   "publish": {
     "eyebrow": "发布预览",
@@ -530,7 +545,10 @@
       "rate_limited": "当前请求过多，请稍后再试。",
       "invalid_device": "无法验证您的设备。",
       "server_error": "提交失败，请重试。"
-    }
+    },
+    "inaccurateAria": "举报错误信息",
+    "alreadyReportedAria": "已举报",
+    "underReviewTitle": "已收到举报 — 审核中"
   },
   "like": {
     "like": "点赞",

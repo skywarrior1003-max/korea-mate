@@ -10,13 +10,16 @@ import { getVerifiedImage } from "@/lib/placeImages";
 import { dislikeSpot } from "@/lib/spots";
 import { getDeviceId } from "@/lib/deviceId";
 
-// ── Stage 뱃지 색상 매핑 ──────────────────────────
-const STAGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
-  "Early-Bird":  { bg: "bg-violet-500",  text: "text-white", label: "Early Bird"  },
-  "Pre-Event":   { bg: "bg-blue-500",    text: "text-white", label: "Pre-Event"   },
-  "Event-Day":   { bg: "bg-red-500",     text: "text-white", label: "Event Day"   },
-  "Post-Event":  { bg: "bg-emerald-500", text: "text-white", label: "Post-Event"  },
-  "Standalone":  { bg: "bg-gray-500",    text: "text-white", label: "Standalone"  },
+// ── Stage 뱃지 ────────────────────────────────────
+// 색은 여기, 문구는 events.stage_* 가 갖는다. 예전엔 label 이 영어로 박혀 있어
+// 4 개 언어 어디서도 번역되지 않았다. bg 는 stage 다섯 단계를 구분하는 상태색이라
+// Save 색과 무관하다 — 그대로 둔다.
+const STAGE_STYLE: Record<string, { bg: string; text: string; key: string }> = {
+  "Early-Bird":  { bg: "bg-violet-500",  text: "text-white", key: "stage_earlyBird" },
+  "Pre-Event":   { bg: "bg-blue-500",    text: "text-white", key: "stage_preEvent"  },
+  "Event-Day":   { bg: "bg-red-500",     text: "text-white", key: "stage_eventDay"  },
+  "Post-Event":  { bg: "bg-emerald-500", text: "text-white", key: "stage_postEvent" },
+  "Standalone":  { bg: "bg-gray-500",    text: "text-white", key: "stage_standalone" },
 };
 
 // koreanSurvivalScore → 색상
@@ -26,14 +29,23 @@ function scoreColor(score: number): string {
   return "text-red-400";
 }
 
-// 가장 빠른 이동 수단 텍스트
-function fastestTransit(transit: EventItem["transitFromAnchor"]): string | null {
+// 가장 빠른 이동 수단.
+// 여기서 문장을 만들지 않는다 — 어순이 언어마다 다르다("12min walk" / "도보 12분").
+// 종류와 분만 돌려주고 문장은 events.transit* 가 만든다.
+type Transit = { kind: "Walk" | "Subway" | "Taxi"; minutes: number } | null;
+function fastestTransit(transit: EventItem["transitFromAnchor"]): Transit {
   if (!transit) return null;
-  if (transit.walkMinutes)   return `${transit.walkMinutes}min walk`;
-  if (transit.subwayMinutes) return `${transit.subwayMinutes}min subway`;
-  if (transit.taxiMinutes)   return `${transit.taxiMinutes}min taxi`;
+  if (transit.walkMinutes)   return { kind: "Walk",   minutes: transit.walkMinutes };
+  if (transit.subwayMinutes) return { kind: "Subway", minutes: transit.subwayMinutes };
+  if (transit.taxiMinutes)   return { kind: "Taxi",   minutes: transit.taxiMinutes };
   return null;
 }
+
+// bestTimeSlot 은 내부 값이다(morning|afternoon|evening|anytime). 값은 그대로 두고
+// 표시만 옮긴다. 셋은 planner 가 이미 갖고 있어 재사용하고, anytime 만 새로 둔다.
+const SLOT_KEY: Record<string, string> = {
+  morning: "slot_morning", afternoon: "slot_afternoon", evening: "slot_evening",
+};
 
 interface Props {
   event: EventItem;
@@ -42,7 +54,12 @@ interface Props {
 }
 
 export default function EventCard({ event, onClick, distanceBadge }: Props) {
-  const tPicks = useTranslations("picks");
+  const tPicks  = useTranslations("picks");
+  const tE      = useTranslations("events");
+  const tC      = useTranslations("common");
+  const tB      = useTranslations("badges");
+  const tR      = useTranslations("report");
+  const tSlot   = useTranslations("planner");
   const [imgError,    setImgError]    = useState(false);
   const [favorited,   setFavorited]   = useState(false);
   const [disliked,    setDisliked]    = useState(false);
@@ -101,7 +118,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src="/images/placeholder-spot.svg"
-            alt="No image available"
+            alt={tC("noImage")}
             className="w-full h-full object-cover"
           />
         )}
@@ -150,7 +167,7 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             aria-pressed={favorited}
             aria-label={favorited ? tPicks("unsaveAria", { name: event.name }) : tPicks("saveAria", { name: event.name })}
             className={`w-8 h-8 flex items-center justify-center rounded-full shadow-md cursor-pointer transition-all select-none ${
-              favorited ? "bg-emerald-500 text-white scale-110" : "bg-white/80 hover:bg-white text-gray-500"
+              favorited ? "bg-action text-white scale-110" : "bg-white/80 hover:bg-white text-gray-500"
             }`}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden
@@ -165,8 +182,8 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             tabIndex={0}
             onClick={handleDislike}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDislike(e as unknown as React.MouseEvent); }}
-            aria-label={disliked ? "Already reported" : "Report inaccurate info"}
-            title={disliked ? "Reported — under review" : "Report incorrect info"}
+            aria-label={disliked ? tR("alreadyReportedAria") : tR("inaccurateAria")}
+            title={disliked ? tR("underReviewTitle") : tR("inaccurateAria")}
             className={`w-8 h-8 flex items-center justify-center rounded-full text-sm shadow-md cursor-pointer transition-all select-none ${
               disliked
                 ? "bg-gray-600 text-white scale-110 cursor-not-allowed"
@@ -181,13 +198,13 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         <span
           className={`absolute bottom-3 left-3 px-2 py-0.5 rounded-full text-xs font-bold ${stage.bg} ${stage.text}`}
         >
-          {stage.label}
+          {tE(stage.key)}
         </span>
 
         {/* Transit 뱃지 (이미지 하단 오른쪽) */}
         {transit && (
           <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-full text-xs font-semibold bg-black/50 text-white backdrop-blur-sm">
-            📍 {transit}
+            📍 {tE(`transit${transit.kind}`, { n: transit.minutes })}
           </span>
         )}
       </div>
@@ -218,14 +235,16 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
         {/* 메타 정보 행 */}
         <div className="flex items-center gap-3 text-xs text-gray-500 pt-1">
           <span className="flex items-center gap-1">
-            🕐 {event.recommendedDurationMinutes}min
+            🕐 {tC("minutes", { n: event.recommendedDurationMinutes })}
           </span>
-          <span className="flex items-center gap-1 capitalize">
-            ☀️ {event.bestTimeSlot}
+          <span className="flex items-center gap-1">
+            ☀️ {SLOT_KEY[event.bestTimeSlot]
+                  ? tSlot(SLOT_KEY[event.bestTimeSlot])
+                  : tE("slotAnytime")}
           </span>
           {event.cashOnly && (
             <span className="flex items-center gap-1 text-amber-600 font-semibold">
-              💵 Cash Only
+              💵 {tB("cashOnly")}
             </span>
           )}
         </div>
@@ -244,9 +263,9 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
           </div>
           <span
             className={`text-xs font-bold ${scoreColor(event.koreanSurvivalScore)} shrink-0 ml-2`}
-            title="Korean Survival Score — foreigner-friendliness"
+            title={tE("scoreTooltip")}
           >
-            {event.koreanSurvivalScore}pts
+            {tE("score", { n: event.koreanSurvivalScore })}
           </span>
         </div>
 

@@ -69,6 +69,19 @@
     "moderate": "普通",
     "hard": "きつい"
   },
+  "events": {
+    "stage_earlyBird": "アーリーバード",
+    "stage_preEvent": "開催前",
+    "stage_eventDay": "開催当日",
+    "stage_postEvent": "開催後",
+    "stage_standalone": "通年",
+    "transitWalk": "徒歩 {n}分",
+    "transitSubway": "地下鉄 {n}分",
+    "transitTaxi": "タクシー {n}分",
+    "slotAnytime": "いつでも",
+    "score": "{n}点",
+    "scoreTooltip": "韓国旅行のしやすさスコア — 海外からの旅行者にとっての行きやすさ"
+  },
   "map": {
     "google": "Google",
     "naver": "Naver",
@@ -246,7 +259,9 @@
     "editTitle": "旅行タイトルを編集"
   },
   "common": {
-    "language": "言語"
+    "language": "言語",
+    "noImage": "画像なし",
+    "minutes": "{n}分"
   },
   "publish": {
     "eyebrow": "公開プレビュー",
@@ -530,7 +545,10 @@
       "rate_limited": "現在混み合っています。後ほどお試しください。",
       "invalid_device": "端末を確認できませんでした。",
       "server_error": "送信できませんでした。もう一度お試しください。"
-    }
+    },
+    "inaccurateAria": "誤った情報を報告",
+    "alreadyReportedAria": "報告済み",
+    "underReviewTitle": "報告を受付 — 確認中"
   },
   "like": {
     "like": "いいね",

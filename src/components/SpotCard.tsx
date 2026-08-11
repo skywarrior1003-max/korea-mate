@@ -57,6 +57,7 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
   const tE = useTranslations("explore");
   const tD = useTranslations("discovery");
   const tP = useTranslations("picks");
+  const tC = useTranslations("common");
 
   // 필터 칩("Attractions")과 배지("Attraction")는 수가 다르다 — 카드 한 장은
   // 한 곳이므로 단수 라벨을 따로 쓴다.
@@ -96,7 +97,7 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src="/images/placeholder-spot.svg" alt="No image" className="w-full h-full object-cover" />
+          <img src="/images/placeholder-spot.svg" alt={tC("noImage")} className="w-full h-full object-cover" />
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
           <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white font-black text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
@@ -133,7 +134,7 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
               <span className="text-xs font-bold text-emerald-600 inline-flex items-center gap-1"><TicketIcon />{spot.entryFee}</span>
             )}
             {spot.durationMinutes && (
-              <span className="text-xs font-semibold text-gray-400 inline-flex items-center gap-1"><ClockIcon />{spot.durationMinutes}min</span>
+              <span className="text-xs font-semibold text-gray-400 inline-flex items-center gap-1"><ClockIcon />{tC("minutes", { n: spot.durationMinutes })}</span>
             )}
           </div>
         </div>
@@ -175,7 +176,7 @@ export default function SpotCard({ spot, distKm, onClick, isSaved, onSave }: Spo
               aria-label={isSaved ? tP("unsaveAria", { name: spot.name }) : tP("saveAria", { name: spot.name })}
               className={
                 isSaved
-                  ? "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 transition-colors"
+                  ? "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl border border-action-tint bg-action-tint text-action transition-colors"
                   : "gkm-focus flex items-center justify-center gap-1.5 min-h-11 px-2 text-xs font-black rounded-xl text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
               }
               style={isSaved ? undefined : { backgroundColor: "var(--gkm-action-primary)" }}

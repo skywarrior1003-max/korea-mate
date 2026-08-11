@@ -69,6 +69,19 @@
     "moderate": "Moderate",
     "hard": "Hard"
   },
+  "events": {
+    "stage_earlyBird": "Early Bird",
+    "stage_preEvent": "Pre-Event",
+    "stage_eventDay": "Event Day",
+    "stage_postEvent": "Post-Event",
+    "stage_standalone": "Standalone",
+    "transitWalk": "{n}min walk",
+    "transitSubway": "{n}min subway",
+    "transitTaxi": "{n}min taxi",
+    "slotAnytime": "Anytime",
+    "score": "{n}pts",
+    "scoreTooltip": "Korean Survival Score — how easy this place is for foreign travelers"
+  },
   "map": {
     "google": "Google",
     "naver": "Naver",
@@ -246,7 +259,9 @@
     "editTitle": "Edit trip title"
   },
   "common": {
-    "language": "Language"
+    "language": "Language",
+    "noImage": "No image available",
+    "minutes": "{n}min"
   },
   "publish": {
     "eyebrow": "Publish preview",
@@ -530,7 +545,10 @@
       "rate_limited": "Too many reports right now. Please try later.",
       "invalid_device": "Could not verify your device.",
       "server_error": "Could not send the report. Please try again."
-    }
+    },
+    "inaccurateAria": "Report inaccurate info",
+    "alreadyReportedAria": "Already reported",
+    "underReviewTitle": "Reported — under review"
   },
   "like": {
     "like": "Like",
