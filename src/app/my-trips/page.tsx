@@ -338,8 +338,10 @@ export default function MyTripsPage() {
                 {t("emptyBody1")}<br/>{t("emptyBody2")}
               </p>
             </div>
+            {/* 여행을 만들러 가는 버튼이다. Home 최상단이 아니라 플래너로 보낸다 —
+                Picks·Place Detail·Explore·Trending 이 모두 /#planner 로 들어간다. */}
             <Link
-              href="/"
+              href="/#planner"
               className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
               style={{ backgroundColor: "#FF4A2D" }}
             >
@@ -541,7 +543,7 @@ export default function MyTripsPage() {
         {!loading && trips.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <Link
-              href="/"
+              href="/#planner"
               className="rounded-3xl border-2 border-dashed border-[#E5E7EA] flex flex-col items-center justify-center gap-3 py-16 text-center hover:border-[#FF4A2D] transition-colors group"
             >
               <div className="w-14 h-14 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
