@@ -1,0 +1,60 @@
+{
+  "task": "TASK-SEOUL-PLACE-CORE-AND-EXPERIENCE-DETAIL-COLLECTION-V1-R1",
+  "as_of": "2026-08-11",
+  "scope": "311 records (PLACE_CORE 194 + EXPERIENCE 107 + TEMPLE_STAY 1 + V2_RECOVERED 9)",
+  "source": "VisitSeoul contents/info API",
+
+  "fields_captured_successfully": {
+    "coordinates": { "available": 311, "missing": 0, "source": "traffic.map_position_xy" },
+    "address": { "available": 310, "missing": 1, "source": "traffic.new_adres / adres" },
+    "main_image": { "available": 311, "missing": 0, "source": "content.main_img" },
+    "related_images": { "available": 311, "missing": 0, "source": "content.relate_img", "note": "발견: Round-2 field discovery" },
+    "summary": { "available": 311, "missing": 0, "source": "content.sumry", "note": "발견: Round-2 field discovery, max 500자 truncation" },
+    "tags": { "available": 311, "missing": 0, "source": "content.tag", "note": "발견: Round-2 field discovery" },
+    "created_at": { "available": 311, "missing": 0, "source": "content.creat_dt_text" },
+    "updated_at": { "available": 311, "missing": 0, "source": "content.updt_dt_text" },
+    "opening_hours": { "available": 258, "missing": 53, "source": "extra.cmmn_use_time" },
+    "homepage": { "available": 225, "missing": 86, "source": "extra.cmmn_hmpg_url" },
+    "phone": { "available": 278, "missing": 33, "source": "extra.cmmn_telno" }
+  },
+
+  "fields_missing_in_api": {
+    "closed_days": {
+      "missing": 311,
+      "api_field": "extra.cmmn_rstrde_info",
+      "gap_type": "VISITSEOUL_MISSING",
+      "resolution": "EXTERNAL_SOURCE_REQUIRED",
+      "note": "VisitSeoul이 이 필드를 제공하지 않음. 공식 사이트 직접 확인 필요."
+    },
+    "accessibility": {
+      "missing": 311,
+      "api_field": "extra.cmmn_acmpnyat_dc / cmmn_acmpnyat_youth_dc",
+      "gap_type": "VISITSEOUL_MISSING",
+      "resolution": "EXTERNAL_SOURCE_REQUIRED",
+      "note": "API 응답에 항상 비어 있음. 별도 접근성 정보 파이프라인 필요."
+    },
+    "fee_price": {
+      "missing": 311,
+      "api_field": "extra.cmmn_ntry_se_dc",
+      "gap_type": "VISITSEOUL_MISSING",
+      "resolution": "EXTERNAL_SOURCE_REQUIRED",
+      "note": "무료/유료 정보는 description에 텍스트로 포함되나 구조화 필드 없음."
+    }
+  },
+
+  "field_discovery_history": {
+    "round_1_normalized_sha": "94E65F3ACED3FA866A074B51460FBA91B7A20FFA86222C68D087E6E880C97F7C",
+    "round_1_issue": "relate_img / tag / sumry 필드가 raw에 존재하나 output dict에 미반영",
+    "round_2_fix": "relate_img → related_images / tag → tags / sumry → summary 추출 코드 추가 및 return dict 반영",
+    "round_2_normalized_sha": "c1b88ae1e5eb20e821348da60d9952222e282450a3892d40827a70e8aa40e87c",
+    "byte_identical_confirmed": true
+  },
+
+  "quality_notes": [
+    "closed_days / accessibility / fee_price 3항목은 VisitSeoul API 구조적 미제공으로 후속 파이프라인 없이 해결 불가",
+    "related_images 311/311 가용: 각 장소당 평균 3~5개 URL 목록 (관광공사 포토갱크 수준)",
+    "tags 311/311 가용: 평균 10~15개 한국어 검색 태그 (예: 남산, 야경, 전망대, 케이블카 등)",
+    "summary 311/311 가용: 평균 100~200자 한국어 요약문",
+    "address 1건 누락: 특정 자연/공원 시설에서 주소 미등록 상태로 추정"
+  ]
+}

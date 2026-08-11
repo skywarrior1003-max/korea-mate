@@ -1,0 +1,93 @@
+{
+  "task": "TASK-SEOUL-PLACE-CORE-AND-EXPERIENCE-DETAIL-COLLECTION-V1-R1",
+  "as_of": "2026-08-11",
+  "scope_total": 311,
+
+  "eligibility_policy_ref": "docs/data-collection/multicity-place-eligibility-policy-v1.md",
+  "axis_count": 5,
+  "axes": ["SEARCHABLE", "EXPLORE_ELIGIBLE", "AI_ITINERARY_ELIGIBLE", "USER_CAN_SELECT", "USER_CAN_SAVE"],
+
+  "results": {
+    "SEARCHABLE": {
+      "YES": 311,
+      "NO": 0,
+      "note": "311/311 전원 identity + location 충족"
+    },
+    "EXPLORE_ELIGIBLE": {
+      "YES": 274,
+      "CONDITIONAL": 21,
+      "NO": 16,
+      "note": "YES 기준: high_tv >= 3 + location + info. CONDITIONAL: high_tv >= 2 + location."
+    },
+    "AI_ITINERARY_ELIGIBLE": {
+      "YES": 265,
+      "CONDITIONAL": 30,
+      "NO": 16,
+      "yes_pct": "85.2%",
+      "conditional_pct": "9.6%",
+      "no_pct": "5.2%"
+    },
+    "USER_CAN_SELECT": { "YES": 311, "NO": 0 },
+    "USER_CAN_SAVE":   { "YES": 311, "NO": 0 }
+  },
+
+  "ai_conditional_reasons": {
+    "COORDINATE_REQUIRED": "GPS 좌표 미확인 기록 (해당 없음 — 311/311 좌표 보유, 조건부는 다른 사유)",
+    "HOURS_OR_HOMEPAGE_REQUIRED": "영업시간 또는 홈페이지 미확인 (53건 hours 없음 + 86건 homepage 없음 일부 겹침)",
+    "IDENTITY_VERIFICATION_REQUIRED": "SCT UNKNOWN 또는 UTILITY_SERVICE 판정"
+  },
+
+  "ai_yes_sample": [
+    { "cid": "KOP000036", "title": "남산서울타워", "domain": "PLACE_CORE" },
+    { "cid": "KOP000083", "title": "경복궁", "domain": "PLACE_CORE" },
+    { "cid": "KOP000085", "title": "창덕궁", "domain": "PLACE_CORE" },
+    { "cid": "KOP0pzgtj", "title": "국제선센터 템플스테이", "domain": "TEMPLE_STAY" },
+    { "cid": "KOP001155", "title": "국립민속박물관", "domain": "PLACE_CORE" },
+    { "cid": "KOP001156", "title": "국립중앙박물관", "domain": "PLACE_CORE" },
+    { "cid": "KOP001157", "title": "서울역사박물관", "domain": "PLACE_CORE" }
+  ],
+
+  "sct_breakdown": {
+    "PHYSICAL_PLACE": 211,
+    "EXPERIENCE_CONTENT": 98,
+    "PHYSICAL_PLACE_WITH_ROUTE_CONTENT": 2,
+    "SCT_CHANGED_FROM_V2": 7,
+    "changes": [
+      { "from": "PHYSICAL_PLACE", "to": "EXPERIENCE_CONTENT", "count": 5, "reason": "웰니스/체험 프로그램 시설 — 체험/워크숍 키워드" },
+      { "from": "PHYSICAL_PLACE", "to": "PHYSICAL_PLACE_WITH_ROUTE_CONTENT", "count": 2, "reason": "산책로/코스 안내 키워드 — dullegil_kw 패턴" }
+    ]
+  },
+
+  "travel_value_basis": {
+    "framework": "TV1~TV7 7-axis evidence-based (keyword signals)",
+    "formula": "NONE — no fixed arithmetic threshold",
+    "tv_axes": [
+      "TV1_PURPOSE_CONTEXT_VALUE",
+      "TV2_TRAVELER_UTILITY_VALUE",
+      "TV3_KOREA_LOCAL_UNIQUENESS",
+      "TV4_EXPERIENCE_VALUE",
+      "TV5_INTENT_MATCH_POTENTIAL",
+      "TV6_INFORMATION_QUALITY",
+      "TV7_CURRENT_USABILITY"
+    ],
+    "place_core_profile": "TV1/TV3/TV5 HIGH 비율 높음 (랜드마크·역사·문화 직접성)",
+    "experience_profile": "TV4/TV3 HIGH 비율 높음 (체험 목적·전통 고유성)"
+  },
+
+  "temple_stay_audit": {
+    "cid": "KOP0pzgtj",
+    "title": "국제선센터 템플스테이",
+    "ai_eligible": "YES",
+    "homepage": "https://www.templestay.com",
+    "opening_hours_available": false,
+    "sct": "EXPERIENCE_CONTENT",
+    "note": "템플스테이 공식 등록 기관. 홈페이지=templestay.com (공식). AI 일정 즉시 사용 가능."
+  },
+
+  "scoper_notes": [
+    "AI_ITINERARY_ELIGIBLE=YES 265건은 현재 VisitSeoul 데이터만으로 판정. DB 업로드 후 최종 확정 필요.",
+    "CONDITIONAL 30건은 추가 정보(영업시간/홈페이지) 확보 시 YES 전환 가능.",
+    "SCT 7건 재분류는 detail text 분석 기반. 추가 7건 수동 검토 권장 (SCT_REMAINING_AFTER_DETAIL=7).",
+    "Bar/Pub 17건은 이 집계에 미포함 (BAR_PUB_EXCLUDED_FROM_THIS_TASK=17)."
+  ]
+}

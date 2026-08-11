@@ -768,3 +768,100 @@ TASK-SEOUL-PLACE-CORE-DETAIL-COLLECTION-V1 (유지)
 - `data/seoul-source-audit/seoul-full-enrichment-routing-v1-v2-delta.jsonl` (41건)
 - `data/seoul-source-audit/seoul-full-enrichment-routing-v2-manifest.json`
 - `scripts/run-seoul-full-enrichment-routing-v2.py`
+
+---
+
+## SECTION 12 — 서울 PLACE_CORE + EXPERIENCE Detail Collection 결과 (2026-08-11)
+
+**TASK**: TASK-SEOUL-PLACE-CORE-AND-EXPERIENCE-DETAIL-COLLECTION-V1-R1  
+**방법**: VisitSeoul contents/info API 배치 호출 311건 (API_CALLS=311)
+
+### ⚠️ CRITICAL — B_ROUTING_EVIDENCE ≠ ACTUAL_API_PAYLOAD
+
+```
+B_ROUTING_EVIDENCE_CIDS   = 254  (Nature 119 + Integrated 120 + Dryrun 15)
+  └─ Nature 119: category code 증거만. API payload 없음. NATURE_RECALLED=0.
+  └─ Integrated 120: 실제 API 호출 완료 (7f9fae5)
+  └─ Dryrun 15: 실제 API 호출 완료 (55e7d10)
+
+ACTUAL_API_PAYLOAD_BEFORE_TASK = 135  (= Integrated 120 + Dryrun 15)
+ACTUAL_API_PAYLOAD_AFTER_TASK  = 446  (= 135 + 311 이번 task)
+
+B_ROUTING_EVIDENCE(254) ≠ ACTUAL_API_PAYLOAD(135)
+
+전국 공통 원칙:
+  B routing = "detail 충분하다고 판단된 라우팅" — 모두 실제 API payload를 의미하지 않음
+  Nature/trekking 119건은 routing 증거만. 실제 payload 취득 시 별도 task 필요.
+```
+
+### 수집 결과
+
+| Collection Domain | 건수 |
+|---|---|
+| PLACE_CORE | 194 |
+| EXPERIENCE | 107 |
+| TEMPLE_STAY | 1 |
+| V2_RECOVERED (BLANKET_02_FIX 교육 A-복원) | 9 |
+| **PLAN_TOTAL** | **311** |
+
+```
+API_SUCCESS     = 311/311
+API_FAILURE     = 0
+BAR_PUB_CALLED  = 0  (17건 → TASK-SEOUL-RESTAURANT-UTILITY-ENRICHMENT-V1)
+NATURE_RECALLED = 0
+```
+
+### 필드 발견 (Round-2)
+
+```
+relate_img → related_images  (311/311 가용)
+tag        → tags            (311/311 가용, 평균 10~15개 한국어 태그)
+sumry      → summary         (311/311 가용, 최대 500자)
+creat_dt_text → created_at  (311/311)
+updt_dt_text  → updated_at  (311/311)
+
+NORMALIZED_SHA256 = c1b88ae1e5eb20e821348da60d9952222e282450a3892d40827a70e8aa40e87c
+NORMALIZATION_BYTE_IDENTICAL = YES
+```
+
+### Eligibility
+
+```
+AI_ITINERARY_YES         = 265/311  (85.2%)
+AI_ITINERARY_CONDITIONAL = 30/311   (9.6%)
+AI_ITINERARY_NO          = 16/311   (5.2%)
+SEARCHABLE_YES           = 311/311
+```
+
+### SCT 재분류 (Detail 기반)
+
+```
+SCT_CHANGED_FROM_V2 = 7
+  PHYSICAL_PLACE → EXPERIENCE_CONTENT: 5건
+  PHYSICAL_PLACE → PHYSICAL_PLACE_WITH_ROUTE_CONTENT: 2건
+SCT_REMAINING_AFTER_DETAIL = 7건 (수동 검토 권장)
+```
+
+### RECOMMENDED_NEXT_TASK
+
+```
+TASK-SEOUL-RESTAURANT-UTILITY-ENRICHMENT-V1
+  대상: Bar/Pub 17건 + Restaurant C 931건 utility enrichment
+  이유: halal/vegan/solo intent CRITICAL GAP
+
+또는:
+TASK-SEOUL-EVENT-DATE-STATUS-PIPELINE-V1
+  대상: D-routing 1,152건
+  이유: 날짜 없이 AI 일정 사용 불가
+```
+
+### 상세 문서
+
+- `docs/data-collection/seoul/seoul-place-core-experience-detail-summary-v1.md`
+- `docs/data-collection/seoul/seoul-place-core-experience-quality-gap-v1.json`
+- `docs/data-collection/seoul/seoul-place-core-experience-eligibility-audit-v1.json`
+- `data/seoul-source-audit/seoul-place-core-experience-detail-plan-v1.jsonl` (311건)
+- `data/seoul-source-audit/seoul-place-core-experience-detail-raw-v1.jsonl` (311건)
+- `data/seoul-source-audit/seoul-place-core-experience-detail-normalized-v1.jsonl` (311건)
+- `data/seoul-source-audit/seoul-place-core-experience-detail-manifest-v1.json`
+- `scripts/run-seoul-place-core-experience-detail-collection-v1.py`
