@@ -11,13 +11,16 @@ R1 수정 사항:
     traffic.map_position_x → lng
     traffic.map_position_y → lat
     extra.cmmn_telno → phone
-    extra.cmmn_use_time → opening_hours_weekly
+    extra.cmmn_use_time → opening_hours_raw_text
     extra.closed_days → closed_days
     extra.business_days → business_days
     extra.cmmn_hmpg_url → official_url (이미 수집됨)
     extra.disabled_facility → accessibility_evidence (list)
     restaurant.fd_reprsnt_menu → signature_dishes_raw
-    restaurant.dietary / halal / muslim / salam → dietary/halal certs
+    restaurant.dietary → dietary_certification
+    restaurant.halal → halal_evidence (source evidence, NOT verified certification)
+    restaurant.muslim → muslim_certification
+    restaurant.salam → salam_certification
     restaurant.price_range → price_range_krw
     restaurant.type / kind → restaurant type codes
     tag → menu_evidence_tags (이미 수집됨)
@@ -244,8 +247,8 @@ def _extract_restaurant_facts_r1(detail: dict, cid: str) -> tuple[dict, dict, li
     use_time = str(extra.get("cmmn_use_time", "") or "").strip()
     use_time = use_time.replace("\r\n", " | ").replace("\r", " | ").replace("\n", " | ")
     if use_time:
-        facts["opening_hours_weekly"] = use_time
-        prov["opening_hours_weekly"] = {
+        facts["opening_hours_raw_text"] = use_time
+        prov["opening_hours_raw_text"] = {
             "source": "visitseoul:contents_info",
             "cid": cid,
             "field": "extra.cmmn_use_time",
@@ -348,7 +351,7 @@ def _extract_restaurant_facts_r1(detail: dict, cid: str) -> tuple[dict, dict, li
     # dietary / halal / muslim / salam are lists; empty = unknown
     for cert_field, cert_key in [
         ("dietary", "dietary_certification"),
-        ("halal",   "halal_certification"),
+        ("halal",   "halal_evidence"),       # SEMANTIC: restaurant.halal != formal certification
         ("muslim",  "muslim_certification"),
         ("salam",   "salam_certification"),
     ]:
@@ -362,7 +365,7 @@ def _extract_restaurant_facts_r1(detail: dict, cid: str) -> tuple[dict, dict, li
                     "source": "visitseoul:contents_info",
                     "cid": cid,
                     "field": f"restaurant.{cert_field}",
-                    "note": "official certification from VisitSeoul"
+                    "note": "official source evidence from VisitSeoul (field semantics preserved; formal certification unverified)"
                 }
         # Empty list = NOT present = unknown (NOT "no certification")
         # Per UNKNOWN_DISTINCT_FROM_NO: empty list → key absent
@@ -463,7 +466,7 @@ def update_candidate(cand: dict, facts_delta: dict, prov_delta: dict, new_flags:
     # Upgrade confidence and status
     has_location = "lat" in c["facts"] and "lng" in c["facts"]
     has_addr     = "address" in c["facts"]
-    has_hours    = "opening_hours_weekly" in c["facts"]
+    has_hours    = "opening_hours_raw_text" in c["facts"]
     if has_location and has_addr and has_hours:
         c["confidence"] = "HIGH"
     elif has_location or has_addr:
@@ -482,10 +485,10 @@ def compute_coverage(candidates: dict) -> dict:
     FOOD_FIELDS = [
         "name", "address", "lat", "lng", "district", "neighborhood",
         "cuisine", "signature_dishes", "description",
-        "official_url", "phone", "opening_hours_weekly", "closed_days",
+        "official_url", "phone", "opening_hours_raw_text", "closed_days",
         "price_range_krw", "menu_evidence",
         "image_main_url", "transit_info",
-        "dietary_certification", "halal_certification",
+        "dietary_certification", "halal_evidence",
         "language_menu", "language_staff",
         "payment", "seating_solo_counter", "accessibility_step_free",
         "reservation",
@@ -712,7 +715,7 @@ def main():
             enriched += 1
             if "lat" in facts_delta:   coord_ok += 1
             if "address" in facts_delta: addr_ok += 1
-            if "opening_hours_weekly" in facts_delta: hours_ok += 1
+            if "opening_hours_raw_text" in facts_delta: hours_ok += 1
             if "signature_dishes" in facts_delta: sig_dish_ok += 1
             if "phone" in facts_delta: phone_ok += 1
 
@@ -720,7 +723,7 @@ def main():
             n_fields = len(facts_delta)
             print(f"OK ({n_fields}f: addr={'Y' if 'address' in facts_delta else 'N'} "
                   f"coord={'Y' if 'lat' in facts_delta else 'N'} "
-                  f"hrs={'Y' if 'opening_hours_weekly' in facts_delta else 'N'} "
+                  f"hrs={'Y' if 'opening_hours_raw_text' in facts_delta else 'N'} "
                   f"dish={'Y' if 'signature_dishes' in facts_delta else 'N'})", flush=True)
         else:
             attempt_rec["error"] = status
@@ -741,7 +744,7 @@ def main():
     print("\n=== QA ===", flush=True)
 
     # No facts in proposed_values
-    fact_fields = {"address", "lat", "lng", "cuisine", "name", "opening_hours_weekly"}
+    fact_fields = {"address", "lat", "lng", "cuisine", "name", "opening_hours_raw_text"}
     for c in candidates.values():
         overlap = set(c.get("proposed_values", {}).keys()) & fact_fields
         assert not overlap, f"Fact in proposed_values: {overlap} @ {c['candidate_id']}"
