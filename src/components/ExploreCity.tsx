@@ -747,8 +747,12 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("myTrips")}</Link>
+            {/* Plan My Trip 은 플래너를 여는 버튼인데 Home 최상단으로만 보내서,
+                누른 사람이 스스로 플래너까지 스크롤해 내려가야 했다. 플래너는
+                Home 안의 섹션이고 Picks·Place Detail·Trending 이 모두 /#planner
+                로 들어간다 — 여기도 같은 자리로 보낸다. */}
             <Link
-              href="/"
+              href="/#planner"
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >
