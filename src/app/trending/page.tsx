@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventCard from "@/components/EventCard";
@@ -10,38 +11,44 @@ import type { EventItem } from "@/lib/cart";
 import { apiFetchPopularTrips } from "@/lib/itinerary-api";
 import type { PopularTrip } from "@/lib/supabase";
 
+// 필터 상수는 key 와 이모지만 갖는다. 문구는 messages 가 갖는다 —
+// 예전엔 label 이 영어로 박혀 있어 네 언어 어디서도 번역되지 않았다.
+// key 는 필터 로직과 DB travel_style 값에 그대로 쓰이므로 번역하지 않는다.
 const EVENT_FILTERS = [
-  { key: "all",      label: "All"           },
-  { key: "busan",    label: "🏙️ Busan"      },
-  { key: "mega",     label: "🎤 Mega Event" },
-  { key: "activity", label: "🗺️ Activity"   },
+  { key: "all",      emoji: "",    labelKey: "filterAll"      },
+  { key: "busan",    emoji: "🏙️", labelKey: "city:Busan"     },
+  { key: "mega",     emoji: "🎤",  labelKey: "filterMega"     },
+  { key: "activity", emoji: "🗺️", labelKey: "filterActivity" },
 ];
 
 const TRIP_CITY_FILTERS = [
-  { key: "",          label: "All Cities" },
-  { key: "seoul",     label: "🌆 Seoul"   },
-  { key: "busan",     label: "🏙️ Busan"   },
-  { key: "jeju",      label: "🌿 Jeju"    },
-  { key: "gyeongju",  label: "🏛️ Gyeongju" },
+  { key: "",         emoji: "",    labelKey: "allCities"    },
+  { key: "seoul",    emoji: "🌆",  labelKey: "city:Seoul"   },
+  { key: "busan",    emoji: "🏙️", labelKey: "city:Busan"   },
+  { key: "jeju",     emoji: "🌿",  labelKey: "city:Jeju"    },
+  { key: "gyeongju", emoji: "🏛️", labelKey: "city:Gyeongju" },
 ];
 
 const TRIP_STYLE_FILTERS = [
-  { key: "",        label: "All Styles" },
-  { key: "Solo",    label: "Solo"       },
-  { key: "Couple",  label: "Couple"     },
-  { key: "Family",  label: "Family"     },
-  { key: "Group",   label: "Group"      },
+  { key: "",       labelKey: "allStyles"    },
+  { key: "Solo",   labelKey: "style_Solo"   },
+  { key: "Couple", labelKey: "style_Couple" },
+  { key: "Family", labelKey: "style_Family" },
+  { key: "Group",  labelKey: "style_Group"  },
 ];
 
+// placeholder 에 기본값을 두지 않는다 — 기본값이 있으면 번역되지 않은 영어가
+// 조용히 살아남는다. 호출부가 반드시 번역된 문구를 넘긴다.
 function SearchBar({
   value,
   onChange,
-  placeholder = "Search events, BTS, fireworks…",
+  placeholder,
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
 }) {
+  const t = useTranslations("trending");
   return (
     <div className="relative w-full">
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none text-lg">
@@ -58,7 +65,7 @@ function SearchBar({
         <button
           onClick={() => onChange("")}
           className="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-white/20 text-white/70 hover:bg-white/30 transition-colors text-xs font-bold"
-          aria-label="Clear search"
+          aria-label={t("clearSearch")}
         >
           ✕
         </button>
@@ -68,6 +75,10 @@ function SearchBar({
 }
 
 function TrendingContent() {
+  const t   = useTranslations("trending");
+  const tH  = useTranslations("home");        // 같은 PopularTrip 을 Home 도 쓴다
+  const tF  = useTranslations("tripForm");    // 도시 이름은 플래너와 같은 표기
+  const tD  = useTranslations("discovery");   // Home 으로 돌아가기 문구 재사용
   const searchParams = useSearchParams();
   const initialFilter = searchParams.get("filter") ?? "all";
   const initialQuery  = searchParams.get("q")      ?? "";
@@ -119,6 +130,11 @@ function TrendingContent() {
 
   const CITY_EMOJI: Record<string, string> = { seoul: "🌆", busan: "🏙️", jeju: "🌿", gyeongju: "🏛️" };
 
+  // "city:Busan" 은 플래너가 쓰는 도시 표기를 그대로 빌린다. 도시 이름을
+  // 이 화면에서 또 번역하면 같은 도시가 화면마다 다르게 불린다.
+  const label = (labelKey: string) =>
+    labelKey.startsWith("city:") ? tF(`city_${labelKey.slice(5)}`) : t(labelKey);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
@@ -127,10 +143,10 @@ function TrendingContent() {
         {/* 섹션 헤더 */}
         <div className="flex items-center gap-3 mb-4 flex-wrap">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-emerald-600 border border-emerald-400/40 bg-emerald-50 uppercase tracking-widest">
-            ✨ Popular Trips
+            ✨ {tH("popularTrips")}
           </span>
           <p className="text-sm text-gray-500 font-medium">
-            Real AI-planned itineraries — voted helpful by travelers
+            {t("popularSub")}
           </p>
         </div>
 
@@ -147,7 +163,7 @@ function TrendingContent() {
                   : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
               }
             >
-              {f.label}
+              {f.emoji ? `${f.emoji} ` : ""}{label(f.labelKey)}
             </button>
           ))}
         </div>
@@ -163,7 +179,7 @@ function TrendingContent() {
                   : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
               }
             >
-              {f.label}
+              {t(f.labelKey)}
             </button>
           ))}
         </div>
@@ -172,14 +188,14 @@ function TrendingContent() {
         {popularLoading ? (
           <div className="flex items-center gap-2 py-6 text-gray-400 text-sm font-medium">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-500" />
-            Loading trips…
+            {t("loadingTrips")}
           </div>
         ) : popularTrips.length === 0 ? (
           /* 빈 상태 — 자동 폴백 없음 */
           <div className="py-10 text-center border border-dashed border-gray-200 rounded-2xl">
             <p className="text-3xl mb-2">🗺️</p>
             <p className="text-sm font-semibold text-gray-500 mb-3">
-              No public itineraries match the selected filters.
+              {t("noTrips")}
             </p>
             {(tripCity || tripStyle) && (
               <button
@@ -187,7 +203,7 @@ function TrendingContent() {
                 className="text-xs font-bold underline"
                 style={{ color: "#FF4A2D" }}
               >
-                Clear filters
+                {t("clearFilters")}
               </button>
             )}
           </div>
@@ -208,26 +224,31 @@ function TrendingContent() {
                 >
                   <div>
                     <p className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-1.5">
-                      {emoji} {cityLabel} · {days > 0 ? `${days} days` : "weekend"}
+                      {emoji} {cityLabel} · {days > 0 ? tH("days", { n: days }) : t("weekend")}
                     </p>
                     <p className="text-base font-black text-gray-900 leading-tight group-hover:text-orange-600 transition-colors line-clamp-2">
-                      {trip.trip_title ?? `${days > 0 ? days + "-Day" : ""} ${cityLabel} Trip`}
+                      {trip.trip_title
+                        ?? (days > 0
+                              ? t("tripTitleDays", { n: days, city: cityLabel })
+                              : t("tripTitleCity", { city: cityLabel }))}
                     </p>
                   </div>
                   <div className="mt-auto">
                     <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
-                      {trip.travel_style}
+                      {["Solo", "Couple", "Family", "Group"].includes(trip.travel_style)
+                        ? t(`style_${trip.travel_style}`)
+                        : trip.travel_style}
                     </span>
                   </div>
                   <div className="flex items-center gap-3 text-xs font-semibold text-gray-400 border-t border-gray-100 pt-3">
                     {trip.view_count >= 2 && (
-                      <span className="text-amber-500">🔥 {trip.view_count} views</span>
+                      <span className="text-amber-500">🔥 {tH("views", { n: trip.view_count })}</span>
                     )}
                     {(trip.helpful_count ?? 0) >= 1 && (
-                      <span className="text-emerald-500">👍 {trip.helpful_count} helpful</span>
+                      <span className="text-emerald-500">👍 {tH("helpful", { n: trip.helpful_count ?? 0 })}</span>
                     )}
                     {(trip.copy_count ?? 0) >= 1 && (
-                      <span className="text-blue-500">📋 {trip.copy_count} copied</span>
+                      <span className="text-blue-500">📋 {tH("copies", { n: trip.copy_count ?? 0 })}</span>
                     )}
                   </div>
                 </Link>
@@ -252,20 +273,20 @@ function TrendingContent() {
         <div className="relative flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-6">
           <div>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-orange-400 border border-orange-400/30 bg-orange-400/10 mb-4 uppercase tracking-widest">
-              🔥 All Trending Events in Korea
+              🔥 {t("eyebrowAll")}
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-2">
-              Trending Now
+              {t("title")}
             </h1>
             <p className="text-white/60 text-base max-w-lg">
-              BTS concerts, Busan fireworks, K-pop pilgrimages — full list, no limits.
+              {t("subtitle")}
             </p>
           </div>
           <Link
             href="/"
             className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-black text-white/80 border border-white/20 hover:bg-white/10 transition-colors"
           >
-            ← Back to Home
+            ← {tD("backToHome")}
           </Link>
         </div>
 
@@ -274,7 +295,7 @@ function TrendingContent() {
           <SearchBar
             value={search}
             onChange={setSearch}
-            placeholder="Search: BTS, fireworks, pilgrimage, ARMY, Busan…"
+            placeholder={t("searchPlaceholder")}
           />
         </div>
 
@@ -291,7 +312,7 @@ function TrendingContent() {
                   : { backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.15)" }
               }
             >
-              {f.label}
+              {f.emoji ? `${f.emoji} ` : ""}{label(f.labelKey)}
               {eventFilter === f.key && (
                 <span className="ml-1.5 text-xs opacity-80">{filteredEvents.length}</span>
               )}
@@ -303,7 +324,9 @@ function TrendingContent() {
       {/* ── Search result count ───────────────────── */}
       {search && !loading && (
         <p className="text-sm text-gray-500 mb-5 font-semibold">
-          {filteredEvents.length} result{filteredEvents.length !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;
+          {filteredEvents.length === 1
+            ? t("resultsOne",    { n: filteredEvents.length, q: search })
+            : t("resultsPlural", { n: filteredEvents.length, q: search })}
         </p>
       )}
 
@@ -314,13 +337,13 @@ function TrendingContent() {
             className="animate-spin rounded-full h-10 w-10 border-b-2 mx-auto mb-4"
             style={{ borderColor: "#FF4A2D" }}
           />
-          <p className="text-gray-500 font-medium">Loading events…</p>
+          <p className="text-gray-500 font-medium">{t("loadingEvents")}</p>
         </div>
       ) : filteredEvents.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-4xl mb-3">🎌</p>
           <p className="text-gray-500 font-semibold">
-            No events found{search ? ` for "${search}"` : ""}.
+            {search ? t("noEventsFor", { q: search }) : t("noEvents")}
           </p>
           {search && (
             <button
@@ -328,7 +351,7 @@ function TrendingContent() {
               className="mt-3 text-sm font-bold underline"
               style={{ color: "#FF4A2D" }}
             >
-              Clear search
+              {t("clearSearch")}
             </button>
           )}
         </div>
@@ -355,6 +378,9 @@ function TrendingContent() {
 }
 
 export default function TrendingPage() {
+  const tNav = useTranslations("nav");
+  const tE   = useTranslations("explore");
+  const tF   = useTranslations("tripForm");
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased">
 
@@ -370,13 +396,13 @@ export default function TrendingPage() {
               href="/busan"
               className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
             >
-              Explore Busan
+              {tE("title", { city: tF("city_Busan") })}
             </Link>
             <Link
               href="/survival-guide"
               className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
             >
-              Survival Guide
+              {tNav("survivalGuide")}
             </Link>
             {/* /planner 라는 route 는 없다. 플래너는 Home 안의 섹션이고,
                 Picks·Place Detail·도시 랜딩이 모두 /#planner 로 들어간다. */}
@@ -385,7 +411,7 @@ export default function TrendingPage() {
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >
-              My Planner
+              {tNav("planMyTrip")}
             </Link>
           </nav>
         </div>
