@@ -10,6 +10,8 @@
 
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { PARTNER_LABEL, type ProductKey } from "@/config/affiliate-registry";
+import { resolveOffer } from "@/lib/affiliate-resolve";
 
 // ─── 제휴 카드 ────────────────────────────────────────────────────────────
 
@@ -23,16 +25,27 @@ export type BlogCardId =
   | "esimKlook"
   | "carJeju";
 
+// 서버가 넘기는 것은 "어떤 카드를, 어떤 상품으로" 까지다. 파트너와 링크는
+// 아래에서 resolver 가 정한다.
 export interface BlogCardProps {
   id: BlogCardId;
   emoji: string;
-  provider: string;
-  url: string;
+  product: ProductKey;
+  /** 같은 상품에 링크가 여럿일 때만 (노선·도시). */
+  variant?: string;
 }
 
 export function BlogAffiliateCards({ cards }: { cards: BlogCardProps[] }) {
   const t = useTranslations("blogAffiliate");
-  if (cards.length === 0) return null;
+  const locale = useLocale();
+
+  // policy 가 파트너를 고르지 않는 상품은 카드가 사라진다. 대체 카드를
+  // 만들지 않는다 — 한 장만 남거나 아예 없는 것이 정상이다.
+  const rendered = cards
+    .map((card) => ({ card, offer: resolveOffer(card.product, locale, { variant: card.variant }) }))
+    .filter((x): x is { card: BlogCardProps; offer: NonNullable<typeof x.offer> } => x.offer !== null);
+
+  if (rendered.length === 0) return null;
 
   return (
     <div className="mt-8 mb-2">
@@ -40,12 +53,15 @@ export function BlogAffiliateCards({ cards }: { cards: BlogCardProps[] }) {
         {t("partnerNetwork")}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {cards.map((card) => (
+        {rendered.map(({ card, offer }) => (
           <a
             key={card.id}
-            href={card.url}
+            href={offer.url}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            // 수익 관계가 있을 때만 sponsored 를 붙인다.
+            rel={offer.kind === "affiliate"
+              ? "noopener noreferrer sponsored"
+              : "noopener noreferrer"}
             className="flex items-start gap-3 p-4 rounded-2xl border border-[#E6DFD5] bg-[#FAF7F2] hover:border-[#D4AF37] hover:shadow-sm transition-all group"
           >
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 bg-[#EAE3D2]">
@@ -53,7 +69,7 @@ export function BlogAffiliateCards({ cards }: { cards: BlogCardProps[] }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-black uppercase tracking-wide text-[#8C6239]">
-                {card.provider}
+                {PARTNER_LABEL[offer.partner]}
               </p>
               <p className="text-sm font-black text-[#2C2520] leading-tight">
                 {t(`card.${card.id}.title`)}

@@ -3,6 +3,7 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from "react";
 import { resolveCityParam, stripCityParam } from "@/lib/home-city-param-core";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
+import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
@@ -21,7 +22,7 @@ import { haversineKm, fmtDist } from "@/lib/geo";
 import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -477,6 +478,8 @@ export default function HomeClient() {
   // AI 여행계획 폼 전용 문구. 화면에 보이는 label 만 번역하고
   // city·style·시간 슬롯의 내부 value 는 손대지 않는다 — API payload 와
   // localStorage 가 그 값을 그대로 쓴다.
+  // 제휴 링크는 화면이 소유하지 않는다 — 상품 키만 넘기고 resolver 가 정한다.
+  const locale = useLocale();
   const tf = useTranslations("tripForm");
   const th = useTranslations("homeUi");
   const tn = useTranslations("nav");
@@ -1366,7 +1369,7 @@ export default function HomeClient() {
                 icon: "✈️",
                 title: "Airport Limousine",
                 desc: "Private car from Incheon/Gimhae Airport straight to your hotel. No subway stress with luggage.",
-                href: "https://affiliate.klook.com/sl/21FkAvj",
+                href: resolveOffer("airport_transfer", locale, { variant: "literal" })?.url ?? "",
                 cta: "Book Transfer →",
                 external: true,
                 highlight: true,
@@ -1375,7 +1378,7 @@ export default function HomeClient() {
                 icon: "📱",
                 title: "Stay Connected",
                 desc: "Get your Korea eSIM before landing. No registration hassle.",
-                href: "https://affiliate.klook.com/sl/KiT3U74",
+                href: resolveOffer("esim", locale)?.url ?? "",
                 cta: "Get 10% Off eSIM →",
                 external: true,
                 highlight: false,
@@ -1563,7 +1566,7 @@ export default function HomeClient() {
               <div className="flex flex-col items-center gap-3 shrink-0">
                 {/* 일정 생성 전 판매 CTA — gate 는 이 블록 바깥에 하나만 둔다 */}
                 <a
-                  href="https://affiliate.klook.com/sl/21FkAvj"
+                  href={resolveOffer("airport_transfer", locale, { variant: "literal" })?.url ?? ""}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-black transition-all shadow-lg cursor-pointer"
@@ -2088,7 +2091,7 @@ export default function HomeClient() {
                 </div>
                 {TRIP_FLOW_COMMERCE_ENABLED && (
                 <a
-                  href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/sl/21FkAvj"}
+                  href={resolveOffer("airport_transfer", locale)?.url ?? ""}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-white transition-colors"

@@ -1,16 +1,29 @@
+"use client";
+
+// 이 컴포넌트는 링크를 소유하지 않는다. 카드는 상품 키만 가리키고 실제
+// URL·파트너는 resolver 가 policy + registry 를 보고 정한다. 파트너를 바꾸는
+// 일은 affiliate-policy.ts 에서, 링크를 바꾸는 일은 affiliate-registry.ts
+// 에서 끝난다 — 이 파일을 열 필요가 없다.
+//
+// locale 이 필요해 client 로 내렸다. 서버 렌더 결과는 그대로 정적 HTML 에
+// 남는다.
+
+import { useLocale } from "next-intl";
 import AffiliateLink from "@/components/AffiliateLink";
-import { KLOOK, KTX } from "@/config/affiliates";
+import { PARTNER_LABEL, type ProductKey } from "@/config/affiliate-registry";
+import { resolveOffer } from "@/lib/affiliate-resolve";
 import {
   isEditorialAffiliateEnabled,
   type CommerceSurface,
 } from "@/config/commerce-surfaces";
 
 interface AffiliateCard {
-  emoji: string;
-  provider: string;
-  title: string;
-  desc: string;
-  url: string;
+  emoji:    string;
+  title:    string;
+  desc:     string;
+  product:  ProductKey;
+  /** 같은 상품에 링크가 여럿일 때만 지정한다 (노선·도시). */
+  variant?: string;
 }
 
 type City = "seoul" | "busan" | "jeju" | "gyeongju";
@@ -19,65 +32,60 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
   seoul: [
     {
       emoji: "📱",
-      provider: "Klook",
       title: "Korea eSIM",
       desc: "Activate before landing. 5G/LTE data from the moment you arrive at Incheon.",
-      url: KLOOK.esimUrl,
+      product: "esim",
     },
     {
       emoji: "✈️",
-      provider: "Klook",
       title: "Incheon Airport Transfer",
       desc: "Limousine bus direct to Seoul city center. Skip the AREX queue with luggage.",
-      url: KLOOK.transferUrl,
+      product: "airport_transfer",
     },
   ],
   busan: [
     {
       emoji: "📱",
-      provider: "Klook",
       title: "Korea eSIM",
       desc: "Activate before landing. 5G/LTE data from the moment you arrive.",
-      url: KLOOK.esimUrl,
+      product: "esim",
     },
     {
       emoji: "🚄",
-      provider: "Klook",
       title: "Seoul → Busan KTX",
       desc: "Korea's fastest train. 2hr 15min from Seoul. Book seats in advance on weekends.",
-      url: KTX.seoulBusanUrl,
+      product: "rail",
+      variant: "seoulBusan",
     },
   ],
   jeju: [
     {
       emoji: "📱",
-      provider: "Klook",
       title: "Korea eSIM",
       desc: "Activate before landing. 5G/LTE data from the moment you arrive in Jeju.",
-      url: KLOOK.esimUrl,
+      product: "esim",
     },
     {
       emoji: "🚗",
-      provider: "Klook",
       title: "Jeju Car Rental",
       desc: "Essential for Jeju island — the best spots are spread island-wide. International license accepted.",
-      url: KLOOK.jejuCarRentalUrl,
+      product: "car_rental",
+      variant: "jeju",
     },
   ],
   gyeongju: [
     {
       emoji: "📱",
-      provider: "Klook",
       title: "Korea eSIM",
       desc: "Activate before landing. 5G/LTE data from the moment you arrive.",
-      url: KLOOK.esimUrl,
+      product: "esim",
     },
     {
       emoji: "🚄",
-      provider: "Klook",
       title: "Seoul → Gyeongju KTX",
       desc: "2hr 10min from Seoul Station. Book in advance — weekends sell out fast.",
-      url: KTX.seoulGyeongjuUrl,
+      product: "rail",
+      variant: "seoulGyeongju",
     },
   ],
 };
@@ -95,7 +103,12 @@ interface Props {
 }
 
 export default function KoreaReadySection({ city, surface }: Props) {
-  const cards = CITY_CARDS[city];
+  const locale = useLocale();
+  // policy 가 어떤 파트너도 고르지 않는 상품은 카드 자체가 생기지 않는다.
+  // 빈자리를 다른 파트너로 메우지 않는다.
+  const cards = CITY_CARDS[city]
+    .map((card) => ({ card, offer: resolveOffer(card.product, locale, { variant: card.variant, city }) }))
+    .filter((x): x is { card: AffiliateCard; offer: NonNullable<typeof x.offer> } => x.offer !== null);
   const cityLabel = city.charAt(0).toUpperCase() + city.slice(1);
 
   // 승인된 Editorial 표면이 아니면 상업 anchor 를 생성하지 않는다.
@@ -122,19 +135,20 @@ export default function KoreaReadySection({ city, surface }: Props) {
 
         {/* Cards grid — 도시당 카드 2장이다. 3열로 두면 마지막 칸이 빈다. */}
         <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {cards.map((card) => (
+          {cards.map(({ card, offer }) => (
             <AffiliateLink
-              key={card.title}
-              href={card.url}
-              provider={card.provider}
+              key={`${card.product}-${offer.variant}`}
+              href={offer.url}
+              provider={PARTNER_LABEL[offer.partner]}
               title={card.title}
               city={city}
+              kind={offer.kind}
               className="flex flex-col gap-2 p-4 rounded-2xl border border-[#E6DFD5] bg-[#FAF7F2] hover:border-[#D4AF37] hover:shadow-sm transition-all group"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-2xl">{card.emoji}</span>
                 <span className="text-[9px] font-black uppercase tracking-wide text-[#8C6239] px-2 py-0.5 rounded-full border border-[#D4AF37]/40 bg-[#FDF8EE]">
-                  {card.provider}
+                  {PARTNER_LABEL[offer.partner]}
                 </span>
               </div>
               <p className="text-sm font-black text-[#2C2520] leading-tight">{card.title}</p>

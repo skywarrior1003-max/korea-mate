@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
+import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useTranslations, useLocale } from "next-intl";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
@@ -2071,7 +2072,7 @@ function ItineraryResult() {
           <p className="text-xs font-black text-amber-700 uppercase tracking-wider mb-3">✈️ Gimhae Airport Evening Arrival — Essential Setup</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
-              href={process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL || "https://affiliate.klook.com/redirect?aid=41763&aff_adid=944297&k_site=https%3A%2F%2Fwww.klook.com%2Factivity%2F21049-busan-gimhae-airport-private-transfer%2F"}
+              href={resolveOffer("airport_transfer", locale, { variant: "gimhae" })?.url ?? ""}
               target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-amber-200 hover:border-amber-400 transition-colors shadow-sm"
             >
@@ -2082,7 +2083,7 @@ function ItineraryResult() {
               </div>
             </a>
             <a
-              href={process.env.NEXT_PUBLIC_KLOOK_ESIM_URL || "https://affiliate.klook.com/sl/KiT3U74"}
+              href={resolveOffer("esim", locale, { variant: "envOverride" })?.url ?? ""}
               target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-orange-200 hover:border-orange-400 transition-colors shadow-sm"
             >
@@ -2093,7 +2094,7 @@ function ItineraryResult() {
               </div>
             </a>
             <a
-              href={`${process.env.NEXT_PUBLIC_BOOKING_BUSAN_URL || "https://www.booking.com/searchresults.html?ss=Nampo-dong+Busan+Korea"}&checkin=${startDate}&checkout=${endDate}`}
+              href={resolveOffer("accommodation", locale, { variant: "busanNampo", checkin: startDate, checkout: endDate })?.url ?? ""}
               target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-blue-200 hover:border-blue-400 transition-colors shadow-sm"
             >
@@ -2535,7 +2536,7 @@ function ItineraryResult() {
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     <a
-                                      href={process.env.NEXT_PUBLIC_KLOOK_ESIM_URL || "https://affiliate.klook.com/sl/KiT3U74"}
+                                      href={resolveOffer("esim", locale, { variant: "envOverride" })?.url ?? ""}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
@@ -2544,7 +2545,7 @@ function ItineraryResult() {
                                       📱 Get Korea eSIM
                                     </a>
                                     <a
-                                      href={`${process.env.NEXT_PUBLIC_BOOKING_BUSAN_URL || "https://www.booking.com/searchresults.html?ss=Busan+Korea"}&checkin=${startDate}&checkout=${endDate}`}
+                                      href={resolveOffer("accommodation", locale, { variant: "busanCity", checkin: startDate, checkout: endDate })?.url ?? ""}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
@@ -2553,7 +2554,7 @@ function ItineraryResult() {
                                       🏨 Book Hotels
                                     </a>
                                     <a
-                                      href={process.env.NEXT_PUBLIC_VIATOR_BUSAN_URL || "https://www.viator.com/en-KR/Korea/d4431-ttd/"}
+                                      href={resolveOffer("activities", locale, { variant: "koreaHub" })?.url ?? ""}
                                       target="_blank"
                                       rel="noopener noreferrer sponsored"
                                       className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black text-white transition-opacity hover:opacity-90 mt-3"
@@ -2659,7 +2660,7 @@ function ItineraryResult() {
           <h3 className="text-2xl sm:text-3xl font-black">📱 Don&apos;t forget your eSIM!</h3>
           <p className="text-base sm:text-lg font-bold text-white/85">Stay connected throughout your Korea trip with 10% off.</p>
         </div>
-        <a href="https://affiliate.klook.com/sl/KiT3U74" target="_blank" rel="noopener noreferrer sponsored"
+        <a href={resolveOffer("esim", locale)?.url ?? ""} target="_blank" rel="noopener noreferrer sponsored"
           className="inline-flex items-center justify-center px-6 py-4 text-base font-black uppercase tracking-wider bg-ink text-surface-dim rounded-xl hover:bg-black transition-all shadow-md">
           Get eSIM Now
         </a>

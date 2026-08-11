@@ -1,83 +1,43 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  gokoreamate · Affiliate Partner Configuration
+//  gokoreamate · Affiliate Partner Configuration  (compatibility shim)
 //
-//  수익화 파이프라인 3-tier 구조:
-//    Tier 1 — Viator   : 투어 / 액티비티 / 체험 (영미권 메인)
-//    Tier 2 — Booking  : 호텔 / 숙박 예약 (영미권 메인)
-//    Tier 3 — Klook    : 공항 리무진 / eSIM / 렌터카 / KTX (로컬 교통 전용)
+//  링크의 출처는 이제 affiliate-registry.ts 하나다. 이 파일은 아직 남아 있는
+//  호출부를 위한 얇은 재노출 계층일 뿐이고, 여기에 URL 을 새로 적지 않는다.
+//  값을 바꿔야 하면 registry 를, 어떤 파트너를 쓸지는 policy 를 고친다.
 //
-//  .env.local 에 실제 ID를 채우면 즉시 전 페이지 동시 반영.
+//  화면은 이 파일을 쓰지 않는다 — resolveOffers 를 쓴다. 남은 사용처는
+//  EventDetailModal 하나이며 TRIP_FLOW_COMMERCE_ENABLED 로 막혀 렌더되지
+//  않는다. 그 화면이 정리되면 이 파일은 지울 수 있다.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const VIATOR_ID  = process.env.NEXT_PUBLIC_VIATOR_AFFILIATE_ID  ?? "";
-const BOOKING_ID = process.env.NEXT_PUBLIC_BOOKING_HOTEL_ID     ?? "";
+import { REGISTRY, entryUrl, type OfferContext } from "./affiliate-registry";
 
-// ── Viator ───────────────────────────────────────────────────────────────────
-//  실제 PID 예시: "P00123456" (Viator 파트너 대시보드에서 발급)
-//  Travelpayouts 통합 사용 시 marker 값을 VIATOR_AFFILIATE_ID에 입력
+const url = (product: keyof typeof REGISTRY, variant: string, ctx: OfferContext = {}) =>
+  entryUrl(REGISTRY[product][variant]!, ctx);
+
 export const VIATOR = {
-  /** 특정 키워드로 Viator 투어 검색 페이지 */
-  searchUrl: (query: string, city = "Busan") =>
-    `https://www.viator.com/searchResults/all?pid=${VIATOR_ID}&mcid=42383&medium=link&text=${encodeURIComponent(`${query} ${city} Korea`)}`,
-
-  /** 부산 투어 허브 랜딩 페이지 */
-  busanHub: () =>
-    `https://www.viator.com/Busan/d4482-ttd?pid=${VIATOR_ID}&mcid=42383&medium=link`,
-
-  /** 서울 투어 허브 랜딩 페이지 */
-  seoulHub: () =>
-    `https://www.viator.com/Seoul/d973-ttd?pid=${VIATOR_ID}&mcid=42383&medium=link`,
-
-  /** ID가 채워졌는지 여부 */
-  isReady: () => VIATOR_ID.length > 0,
+  searchUrl: (query: string, city = "Busan") => url("activities", "search", { query, city }),
+  busanHub:  () => url("activities", "busanHub"),
+  seoulHub:  () => url("activities", "seoulHub"),
+  isReady:   () => (process.env.NEXT_PUBLIC_VIATOR_AFFILIATE_ID ?? "").length > 0,
 };
 
-// ── Booking.com ───────────────────────────────────────────────────────────────
-//  실제 AID 예시: "1234567" (Booking.com Affiliate Partner Centre에서 발급)
 export const BOOKING = {
-  /** 도시명으로 호텔 검색 */
-  cityUrl: (city = "Busan") =>
-    `https://www.booking.com/searchresults.html?aid=${BOOKING_ID}&ss=${encodeURIComponent(city + " Korea")}&lang=en-us`,
-
-  /** 특정 지역/명소 근처 호텔 검색 */
-  nearUrl: (location: string, city = "Busan") =>
-    `https://www.booking.com/searchresults.html?aid=${BOOKING_ID}&ss=${encodeURIComponent(`${location} ${city} Korea`)}&lang=en-us`,
-
-  /** ID가 채워졌는지 여부 */
-  isReady: () => BOOKING_ID.length > 0,
+  cityUrl: (city = "Busan") => url("accommodation", "city", { city }),
+  nearUrl: (location: string, city = "Busan") => url("accommodation", "near", { query: location, city }),
+  isReady: () => (process.env.NEXT_PUBLIC_BOOKING_HOTEL_ID ?? "").length > 0,
 };
 
-// ── Klook (로컬 교통 전용) ───────────────────────────────────────────────────
-//  주의: Klook은 공항 리무진 / eSIM / 렌터카 / KTX 구역에만 사용.
-//  투어·숙박 구역에는 Viator / Booking.com 사용.
 export const KLOOK = {
-  /** 공항 픽업 / 리무진 */
-  transferUrl: process.env.NEXT_PUBLIC_KLOOK_TRANSFER_URL
-    ?? "https://affiliate.klook.com/sl/21FkAvj",
-
-  /** 한국 eSIM 데이터 */
-  esimUrl: "https://affiliate.klook.com/sl/KiT3U74",
-
-  /** 송도 케이블카 */
-  cableCarUrl: process.env.NEXT_PUBLIC_CABLE_CAR_URL
-    ?? "https://www.klook.com/en-US/search-results/?query=busan+songdo+cable+car",
-
-  /** 제주 렌터카 */
-  jejuCarRentalUrl: process.env.NEXT_PUBLIC_KLOOK_JEJU_CAR_URL
-    ?? "https://www.klook.com/en-US/search-results/?query=jeju+car+rental",
+  get transferUrl()      { return url("airport_transfer", "default"); },
+  get esimUrl()          { return url("esim", "default"); },
+  get cableCarUrl()      { return url("cable_car", "songdo"); },
+  get jejuCarRentalUrl() { return url("car_rental", "jeju"); },
 };
 
-// ── KTX Inter-city Rail ───────────────────────────────────────────────────────
-//  Klook sells KTX passes and inter-city rail bookings for tourists.
-//  실제 제휴 URL은 NEXT_PUBLIC_KTX_* 환경변수로 교체 가능.
 export const KTX = {
-  /** 서울 → 부산 KTX */
-  seoulBusanUrl: process.env.NEXT_PUBLIC_KTX_BUSAN_URL
-    ?? "https://www.klook.com/en-US/search-results/?query=seoul+busan+ktx+train",
-
-  /** 서울 → 경주 KTX */
-  seoulGyeongjuUrl: process.env.NEXT_PUBLIC_KTX_GYEONGJU_URL
-    ?? "https://www.klook.com/en-US/search-results/?query=seoul+gyeongju+ktx+train",
+  get seoulBusanUrl()    { return url("rail", "seoulBusan"); },
+  get seoulGyeongjuUrl() { return url("rail", "seoulGyeongju"); },
 };
 
 // ── 이벤트 타입 → 적합한 제휴 파트너 판별 ──────────────────────────────────

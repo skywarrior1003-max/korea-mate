@@ -12,12 +12,14 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EditorialNav from "@/components/ui/EditorialNav";
 import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
+import { resolveOffer } from "@/lib/affiliate-resolve";
 
 export default function SurvivalGuideClient() {
+  const locale  = useLocale();
   const t       = useTranslations("survival");
   const tAbout  = useTranslations("about");
   const tFooter = useTranslations("footer");
@@ -91,7 +93,7 @@ export default function SurvivalGuideClient() {
                 anchor 를 생성하지 않는다. 링크·코드는 후속 정상화를 위해 보존한다. */}
             {isEditorialAffiliateEnabled("survival-guide") && (
             <a
-              href="https://affiliate.klook.com/sl/KiT3U74"
+              href={resolveOffer("esim", locale)?.url ?? ""}
               target="_blank"
               rel="noopener noreferrer sponsored"
               className="mt-8 inline-flex items-center justify-center px-4 py-3 text-sm font-black uppercase tracking-wider bg-[#2C2520] text-[#FAF7F2] rounded-xl hover:bg-black transition-colors w-full text-center"

@@ -9,7 +9,6 @@ import remarkGfm from "remark-gfm";
 import fs from "fs";
 import path from "path";
 import AdBanner from "@/components/AdBanner";
-import { KLOOK, KTX } from "@/config/affiliates";
 import {
   BlogAffiliateCards,
   BlogBackLink,
@@ -81,7 +80,9 @@ function getAffiliateLink(postTitle: string): string {
 }
 
 // 카드의 제목·설명은 여기 없다. locale 별 문구는 BlogDetailI18n 이 id 로 찾는다.
-// 여기 남는 것은 서버가 결정하는 것 — 어떤 카드를 고를지, provider, 목적지 URL.
+// URL·파트너도 여기 없다 — 서버는 "어떤 상품을 붙일지" 만 정하고, 실제 링크는
+// 클라이언트가 resolver 로 해석한다. 이 파일은 Server Component 라 사용자가
+// 고른 언어를 알 수 없기 때문이다.
 function getBlogAffiliateCards(post: PostData): BlogCardProps[] {
   const tags = post.tags.map((t) => t.toLowerCase());
   const hasTag = (...terms: string[]) => terms.some((t) => tags.includes(t));
@@ -96,8 +97,8 @@ function getBlogAffiliateCards(post: PostData): BlogCardProps[] {
 
   // Transportation guide: KTX + airport transfer
   if (hasTag("transportation", "ktx", "t-money")) {
-    cards.push({ id: "ktxSeoulBusan",     emoji: "🚄", provider: "Klook", url: KTX.seoulBusanUrl });
-    cards.push({ id: "transferTransport", emoji: "✈️", provider: "Klook", url: KLOOK.transferUrl });
+    cards.push({ id: "ktxSeoulBusan",     emoji: "🚄", product: "rail", variant: "seoulBusan" });
+    cards.push({ id: "transferTransport", emoji: "✈️", product: "airport_transfer" });
     return cards.slice(0, 2);
   }
 
@@ -105,19 +106,19 @@ function getBlogAffiliateCards(post: PostData): BlogCardProps[] {
   // 중복으로 보고 공항 이동만 붙였다. 그 글을 실용 가이드로 다시 쓰면서 본문의
   // 상품 추천이 사라졌으므로, 이제 이 글의 구매 연결은 eSIM 카드가 맡는다.
   if (hasTag("esim", "sim card", "connectivity")) {
-    cards.push({ id: "esimKlook",     emoji: "📱", provider: "Klook", url: KLOOK.esimUrl });
-    cards.push({ id: "transferEsim",  emoji: "✈️", provider: "Klook", url: KLOOK.transferUrl });
+    cards.push({ id: "esimKlook",     emoji: "📱", product: "esim" });
+    cards.push({ id: "transferEsim",  emoji: "✈️", product: "airport_transfer" });
     return cards.slice(0, 2);
   }
 
   // All other posts: eSIM is always first
-  cards.push({ id: "esimKlook", emoji: "📱", provider: "Klook", url: KLOOK.esimUrl });
+  cards.push({ id: "esimKlook", emoji: "📱", product: "esim" });
 
   // 도시별 카드. seoul·busan·gyeongju 자리에 있던 투어 카드는 Viator 소속이었고,
   // Viator 는 현재 승인 파트너가 아니라 제거했다. 빈자리를 다른 파트너로 메우지
   // 않는다 — 승인 파트너가 없으면 카드 없이 정보만 남는 것이 정상이다.
   if (city === "jeju") {
-    cards.push({ id: "carJeju", emoji: "🚗", provider: "Klook", url: KLOOK.jejuCarRentalUrl });
+    cards.push({ id: "carJeju", emoji: "🚗", product: "car_rental", variant: "jeju" });
   }
 
   return cards.slice(0, 2);
