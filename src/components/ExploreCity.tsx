@@ -747,12 +747,14 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
             <Link href="/restaurants"    className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("foodGuide")}</Link>
             <Link href="/survival-guide" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("survivalGuide")}</Link>
             <Link href="/my-trips"       className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">{tN("myTrips")}</Link>
-            {/* Plan My Trip 은 플래너를 여는 버튼인데 Home 최상단으로만 보내서,
-                누른 사람이 스스로 플래너까지 스크롤해 내려가야 했다. 플래너는
-                Home 안의 섹션이고 Picks·Place Detail·Trending 이 모두 /#planner
-                로 들어간다 — 여기도 같은 자리로 보낸다. */}
+            {/* 플래너는 Home 안의 섹션이라 /#planner 로 들어간다. 여기서는
+                보고 있던 도시까지 함께 넘긴다 — 서울을 보다가 눌렀는데 플래너가
+                Busan 으로 열리면 방금 한 선택을 다시 해야 한다.
+                형식은 도시 진입 화면(CityEntry)이 쓰는 것과 같고, 해석은
+                resolveCityParam 한 곳에서만 한다. 플래너가 없는 도시(전주)는
+                그쪽에서 자기 진입 화면으로 돌려보낸다. */}
             <Link
-              href="/#planner"
+              href={`/?city=${city.slug}#planner`}
               className="px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >
