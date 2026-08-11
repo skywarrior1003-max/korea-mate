@@ -33,6 +33,7 @@ export default function EditorialNav({ active }: { active?: EditorialNavKey }) {
         <Link
           key={l.key}
           href={l.href}
+          aria-current={active === l.key ? "page" : undefined}
           className={`text-base font-bold transition-colors ${
             active === l.key ? "text-[#D4AF37]" : "hover:text-[#D4AF37]"
           }`}
