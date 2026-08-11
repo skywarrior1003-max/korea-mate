@@ -120,6 +120,19 @@ city_spots에 import 가능한 수준의 factual candidate pool을 구성한다.
 - 먼저 `detailCommon2`로 `tel` 확인, 없으면 반드시 `detailIntro2` → `infocenterfood` 확인
 - `detailIntro2` type39 추가 유용 필드: `opentimefood`(영업시간), `restdatefood`(휴무일), `firstmenu`(대표메뉴), `treatmenu`(취급메뉴), `packing`(포장), `parkingfood`(주차)
 
+**KTO type39 anti-pattern 규칙** (경주 V2 오류 교훈, 2026-08-11):
+
+```
+KTO_TYPE39_PHONE_PRIMARY_DETAIL_FIELD = detailIntro2.infocenterfood
+TYPE39_DETAILINTRO2_MUST_BE_CHECKED = YES
+KTO_DETAILCOMMON2_TEL_EMPTY != RESTAURANT_PHONE_NOT_AVAILABLE
+KTO_LIST_TEL_EMPTY != RESTAURANT_PHONE_NOT_AVAILABLE
+```
+
+- `getAreaBasedList2.tel` 또는 `detailCommon2.tel` 공란만 보고 "type39 전화 없음" 판정 금지
+- 반드시 `detailIntro2.infocenterfood` 까지 확인 후 phone 없음 결론 가능
+- `detailIntro2` 호출 시 `infocenterfood` 외 유용 필드 동시 수집 (→ §6.1 `ONE_FETCH_COLLECT_ALL_USEFUL_FACTS` 원칙 적용)
+
 ---
 
 ## 5. VisitSeoul API 레스토랑 응답 구조 (서울 검증 2026-08-11)
@@ -453,10 +466,16 @@ FINAL_RETAINED_CANDIDATES_WITHOUT_PHONE = 0
 
 ### 16.2 전화번호 수집 순서 (공식 소스 우선)
 
-1. **KTO TourAPI** — `detailCommon2` → `tel` 필드, 이어서 `detailIntro2` → `infocenterfood`
-2. **VisitSeoul** → `extra.cmmn_telno`
-3. **지자체 공식 관광 사이트**
-4. **Naver Place** — 위 모든 소스에서 미확인 시, **최종 검증**
+1. **기존 source/list record 재사용** — `getAreaBasedList2.tel` 등 이미 수집된 값 확인
+2. **KTO detailIntro2** (contentTypeId=39) — `infocenterfood` 필드 (`detailCommon2.tel` 공란이어도 여기서 별도 확인 필수)
+3. **기타 KTO detail** — `detailCommon2`, `detailInfo2` 등 승인된 상세 endpoint
+4. **VisitSeoul** → `extra.cmmn_telno`
+5. **지자체 공식 관광 사이트**
+6. **그래도 phone 없음 → Naver Place** (외부 최종 검증)
+7. **Naver phone 있음** → retain + same-pass factual enrichment
+8. **Naver phone 없음** → `EXCLUDED_NO_VERIFIABLE_PHONE`
+
+`TYPE39_DETAILINTRO2_MUST_BE_CHECKED = YES` — STEP 6(Naver)로 이동 전 STEP 2 완료가 전제조건.
 
 ### 16.3 Naver 단독 최종 검증
 
@@ -500,6 +519,29 @@ Naver 전 도메인 차단 시:
 - candidate pool 변경 최소화
 - `PHONE_GATE_STATUS = OPEN_PHONE_VERIFICATION` 유지
 
+### 16.9 다음 도시 Food Precheck 체크리스트 (Busan 우선)
+
+부산·서울·제주 등 다음 도시 Food 수집 시작 전 반드시 확인:
+
+```
+BUSAN_FOOD_PRECHECK_MUST_CHECK:
+1.  기존 Busan phone 값 provenance — legacy/default utility field 신뢰 금지
+2.  KTO contentTypeId=39 여부 확인
+3.  type39이면 detailIntro2.infocenterfood 필수 (TYPE39_DETAILINTRO2_MUST_BE_CHECKED = YES)
+4.  detailCommon2.tel empty → phone 없음으로 판정 금지
+5.  opentimefood = opening_hours_raw_text 의미 (weekly structure 아님)
+6.  firstmenu / treatmenu = source factual menu evidence (AI 해석 금지)
+7.  restdatefood = 휴무일 factual source
+8.  detailIntro2 1회 호출에서 유용 필드 전량 수집 (§6.1 원칙)
+9.  official/direct source 모두 확인 후 → Naver Place only
+10. Naver phone 확인 → same-pass 누락 factual 수집
+11. Naver phone 없음 → EXCLUDED_NO_VERIFIABLE_PHONE
+12. Google Maps / Kakao 전화 검증 금지
+13. phone missing != CLOSED_CONFIRMED
+14. unknown → no 변환 금지 (UNKNOWN_DISTINCT_FROM_NO)
+15. AI 추론 사실 입력 금지 (AI_INFERRED_RESTAURANT_FACT = FORBIDDEN)
+```
+
 ### 16.8 도시별 Phone Gate 상태 (2026-08-11)
 
 | 도시 | 상태 | 비고 |
@@ -515,7 +557,8 @@ Naver 전 도메인 차단 시:
 | 날짜 | 변경 | SHA |
 |---|---|---|
 | 2026-08-11 | 초안 작성 (서울 R1 수집 기반) | _(FOOD-DISCOVERY-R1 커밋)_ |
-| 2026-08-11 | Section 16 Phone Gate 추가 (경주 V2 검증 기반). Section 4 KTO detailIntro2 infocenterfood 경로 추가. Section 9 KTO firstmenu 참조 추가. Section 11 KTO opentimefood 참조 추가. Applies to 업데이트. | 8dedbfe → (V2 커밋) |
+| 2026-08-11 | Section 16 Phone Gate 추가 (경주 V2 검증 기반). Section 4 KTO detailIntro2 infocenterfood 경로 추가. Section 9 KTO firstmenu 참조 추가. Section 11 KTO opentimefood 참조 추가. Applies to 업데이트. | 8dedbfe → bfcf495 |
+| 2026-08-11 | Section 4 KTO type39 anti-pattern 규칙 추가 (KTO_DETAILCOMMON2_TEL_EMPTY≠NO_PHONE, TYPE39_DETAILINTRO2_MUST_BE_CHECKED). Section 16.2 phone 수집 8단계 chain 확장. Section 16.9 다음 도시 precheck 체크리스트 추가(15항목). | TASK-GYEONGJU-FOOD-NAVER-CLOSEOUT-R1 |
 
 ---
 

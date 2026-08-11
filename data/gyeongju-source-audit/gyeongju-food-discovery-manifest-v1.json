@@ -132,7 +132,7 @@
     "match_audit": "data/gyeongju-source-audit/gyeongju-food-source-match-audit-v1.jsonl",
     "lossless_audit": "data/gyeongju-source-audit/gyeongju-food-lossless-mapping-audit-v1.json"
   },
-  "NEXT_TASK": "GYEONGJU_FOOD_PHONE_GATE_NAVER_CLOSEOUT_NO_WORDS_ONLY",
+  "NEXT_TASK": "GYEONGJU_NAVER_PHONE_VERIFICATION_FOLLOWUP",
   "FINAL_SHA": "a49bc83",
   "PUSH": "PASS",
   "GYEONGJU_FOOD_DISCOVERY_V1": "PASS",
@@ -233,5 +233,34 @@
     },
     "NEXT_ACTION": "Naver Place verification for 'No Words' (gyeongju-KTO-2838694) when Naver env available",
     "PHONE_GATE_V2_COMPLETE_EXCEPT_NAVER": true
+  },
+
+  "NAVER_CLOSEOUT_R1": {
+    "task": "TASK-GYEONGJU-FOOD-NAVER-FINAL-CLOSEOUT-AND-KTO-FOOD-LESSONS-V1-R1",
+    "as_of": "2026-08-11",
+    "TASK_RESULT": "PASS_WITH_NAVER_BLOCKER",
+    "NAVER_ACCESS_PRECHECK": "FAIL",
+    "NAVER_SECTIONS_5_TO_16_EXECUTED": false,
+    "SECTIONS_17_TO_29_EXECUTED": true,
+    "NO_WORDS_FINAL_DISPOSITION": "VERIFICATION_BLOCKED",
+    "NO_WORDS_NAVER_MATCH": "NOT_CHECKED",
+    "NO_WORDS_PHONE_FOUND": "NOT_CHECKED",
+    "NAVER_SAME_PASS_ENRICHMENT": "NOT_APPLICABLE",
+    "PHONE_GATE_STATUS": "OPEN_PHONE_VERIFICATION",
+    "GYEONGJU_FOOD_PHONE_GATE": "OPEN",
+    "GYEONGJU_FOOD_STATUS": "OPEN_PHONE_VERIFICATION",
+    "KTO_TECHNICAL_LESSONS_STATUS": "DOCUMENTED",
+    "COMMON_POLICY_UPDATE_STATUS": "PASS",
+    "BUSAN_CARRY_FORWARD_STATUS": "PASS",
+    "POLICY_ADDITIONS": [
+      "Section 4: KTO type39 anti-pattern rules (KTO_DETAILCOMMON2_TEL_EMPTY≠NO_PHONE, TYPE39_DETAILINTRO2_MUST_BE_CHECKED=YES)",
+      "Section 16.2: 8-step phone verification chain (expanded from 4-step)",
+      "Section 16.9: BUSAN_FOOD_PRECHECK_MUST_CHECK checklist (15 items)"
+    ],
+    "CANDIDATES_MODIFIED_THIS_TASK": false,
+    "NORMALIZATION_BYTE_IDENTICAL": "NOT_REQUIRED_NO_CANDIDATE_CHANGE",
+    "AUDIT_SHA256": "C13433EDF3D8B52B",
+    "NEXT_TASK": "GYEONGJU_NAVER_PHONE_VERIFICATION_FOLLOWUP",
+    "NEXT_TASK_NOTE": "No Words (gyeongju-KTO-2838694) awaits Naver verification when env available. After that: BUSAN_FOOD_DISCOVERY_PRECHECK."
   }
 }
