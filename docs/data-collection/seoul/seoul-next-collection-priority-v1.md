@@ -201,3 +201,29 @@ PRIORITY_GROUP_1 = PLACE_CORE_DETAIL + EXPERIENCE_DETAIL + TEMPLE_STAY
 PRIORITY_GROUP_2 = EVENT_DATE_PIPELINE + RESTAURANT_UTILITY + CONDITIONAL_REVIEW_SUBSET
 PRIORITY_GROUP_3 = KPOP_OFFICIAL + HALAL_OFFICIAL + NATURE_ROUTE_ENRICHMENT
 ```
+
+---
+
+## V2 Routing 기반 업데이트 (2026-08-10)
+
+TASK-SEOUL-FULL-ENRICHMENT-ROUTING-V2-CORRECTION 완료 후 재확인.
+
+```
+ROUTING_V2_READY = YES
+BLANKET_RULE_DEFECTS_FIXED = YES
+
+V2 Primary 분포 변화:
+  A: 1,318 → 1,344  (+26: bar 17건 A 상향 + edu 9건 A 상향)
+  C: 921 → 931      (+10: bar 9건 C 상향 + edu 1건 C 상향)
+  F: 72 → 49        (−23: bar/edu blanket fix)
+  H: 48 → 35        (−13: edu blanket fix)
+  B/D: 변경 없음
+
+RECOMMENDED_NEXT_TASK = TASK-SEOUL-PLACE-CORE-DETAIL-COLLECTION-V1 (유지)
+
+근거 (V2 실제 수치 기반):
+  - PLACE_CORE A(~194건) + EXPERIENCE A(~108건) → 합계 ~302건 단일 배치
+  - V2 bar blanket fix는 collection task가 아닌 routing script 변경으로 완료
+  - Education 9건 A 상향 → PLACE_CORE collection 배치에 포함 가능
+  - Event D: 1,152건 여전히 최대 규모이나 date pipeline 설정 비용 고려
+```

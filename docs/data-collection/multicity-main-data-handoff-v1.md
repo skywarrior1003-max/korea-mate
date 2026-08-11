@@ -701,3 +701,70 @@ RULE_MH_10: routing 스크립트는 blanket rule 감사 포함 QA를 통과해�
 - `data/seoul-source-audit/seoul-night-quality-review-queue-v1.jsonl` (526건)
 - `data/seoul-source-audit/seoul-night-quality-audit-manifest-v1.json`
 - `scripts/run-seoul-offline-entity-relation-quality-audit-v1.py`
+
+---
+
+## SECTION 11 — 서울 Routing V2 Correction 결과 (2026-08-10)
+
+**TASK**: TASK-SEOUL-FULL-ENRICHMENT-ROUTING-V2-CORRECTION  
+**방법**: 오프라인 V1→V2 전수 재라우팅 (API=0, 자동변경=0)
+
+### Blanket Rule 수정 결과 (전국 공통 적용)
+
+```
+PRIMARY_ROUTING_CHANGED = 39건
+  BLANKET_01_FIX (주점 Ck6n0w6): F→A/C/F 3-tier = 26건 변경
+  BLANKET_02_FIX (교육시설 Cl2d2s1): H→A/C/F = 13건 변경
+```
+
+### ⚠️ 전국 규칙 수정 (RULE_MH_09, RULE_MH_10, RULE_MH_11)
+
+```
+RULE_MH_09 (수정):
+  OLD: 주점 category(Ck6n0w6) blanket F = 정책 위반
+  NEW: keyword evidence 3-tier
+    A: 루프탑/야경/전통주/양조장/재즈/한류/클럽/한강뷰/남산뷰
+    C: 포차/포장마차/외국인/이자카야
+    F: 위 신호 없는 일반 주점 (default)
+  → 모든 도시 주점 routing에 동일 3-tier 원칙 적용
+
+RULE_MH_10 (수정):
+  OLD: 교육시설 category(Cl2d2s1) blanket H = 정책 위반
+  NEW: evidence-based
+    A: 체험/전시/박물관/과학관/복합문화공간/한옥/어린이체험
+    C: 아카데미/한국어수업/교육과정
+    F: 일반 civic facility
+  → 모든 도시 교육시설 routing에 동일 원칙 적용
+
+RULE_MH_11 (신규):
+  대형마트 category(Ct1z4k9) latent blanket F
+    K-food/specialty signal → A, 없으면 → F
+    현재 3건은 B(기존 detail)로 실제 영향 없으나 script 보정 완료
+```
+
+### V2 Primary 분포
+
+| Primary | V1 | V2 |
+|---|---|---|
+| A | 1,318 | 1,344 |
+| B | 254 | 254 |
+| C | 921 | 931 |
+| D | 1,152 | 1,152 |
+| F | 72 | 49 |
+| H | 48 | 35 |
+
+### RECOMMENDED_NEXT_TASK
+
+```
+TASK-SEOUL-PLACE-CORE-DETAIL-COLLECTION-V1 (유지)
+  V2 blanket fix는 routing script 레벨 완료 — 별도 collection task 불필요
+```
+
+### 상세 문서
+
+- `docs/data-collection/seoul/seoul-routing-v1-v2-correction-report.md`
+- `docs/data-collection/seoul/seoul-full-enrichment-routing-v2-summary.md`
+- `data/seoul-source-audit/seoul-full-enrichment-routing-v2.jsonl` (3,765건)
+- `data/seoul-source-audit/seoul-full-enrichment-routing-v1-v2-delta.jsonl` (41건)
+- `data/seoul-source-audit/seoul-full-enrichment-routing-v2-manifest.json`
+- `scripts/run-seoul-full-enrichment-routing-v2.py`
