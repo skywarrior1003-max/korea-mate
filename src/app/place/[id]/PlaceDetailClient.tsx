@@ -182,50 +182,89 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 5h5v5" /><path d="M19 5l-8 8" /><path d="M18 14v4.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 014 18.5v-11A1.5 1.5 0 015.5 6H10" /></svg>
         </a>
       ) : (
+        // 자리는 남기되 버튼처럼 보이지 않게 한다. 예전엔 옆의 두 링크와 크기·
+        // 모서리·테두리가 같아서 점선 하나로만 구분됐고, 눌러도 아무 일이
+        // 없는 세 번째 버튼처럼 읽혔다. 테두리와 높이를 걷어내면 남는 건
+        // 문구뿐이라 "링크가 없다"는 상태 그대로 읽힌다. 문구·의미는 그대로다.
         <span
           aria-disabled="true"
-          className="flex-1 min-h-11 inline-flex items-center justify-center rounded-control border border-line border-dashed text-sm font-medium text-faint cursor-default"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 text-xs text-faint cursor-default"
         >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden
+               stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16.5v.01" />
+          </svg>
           {t("officialUnavailable")}
         </span>
       )}
     </div>
   );
 
+  // 정보 그룹 — 시안(place_detail_refined)은 라벨을 24칸짜리 왼쪽 열에 밀어
+  // 넣지 않고, 아이콘 + 파란 소제목을 얹은 뒤 값을 그 아래 본문 크기로 둔다.
+  // 라벨 열 방식은 주소처럼 긴 값이 좁은 폭(모바일 358 · 데스크톱 사이드바 340)
+  // 에서 서너 줄로 접히는데, 값이 접힐수록 라벨과의 대응이 흐려졌다.
+  // 라벨 문구는 기존 키를 그대로 쓴다 — 새 키를 만들지 않는다.
+  const InfoRow = ({ icon, label, children }: {
+    icon: React.ReactNode; label: string; children: React.ReactNode;
+  }) => (
+    <div>
+      <dt className="flex items-center gap-1.5 text-[11px] font-black text-action uppercase tracking-wider">
+        <span aria-hidden className="inline-flex">{icon}</span>
+        {label}
+      </dt>
+      <dd className="mt-1 text-sm text-ink leading-relaxed">{children}</dd>
+    </div>
+  );
+
+  // 아이콘은 이 화면이 이미 쓰는 방식 그대로 인라인 SVG · currentColor 다.
+  // width/height 를 줄여 쓰지 않는다 — w/h 로 적으면 SVG 속성이 아니라서
+  // 브라우저가 무시하고 0x0 으로 그린다(개수만 세는 검사는 이걸 못 잡는다).
+  const ICON = { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
+                 strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+
   const essentials = (
-    <dl className="flex flex-col gap-3 text-sm">
+    <dl className="flex flex-col gap-4">
       {/* 운영시간은 값이 없다고 영역을 지우지 않는다. 여행자가 가장 먼저 찾는
           정보인데 칸이 사라지면 "없다"인지 "안 보여준다"인지 알 수 없다.
           가짜 Open now 나 휴무일을 만드는 대신 바뀔 수 있다고 말하고 아래
           외부 연결로 보낸다. */}
-      <div className="flex gap-3">
-        <dt className="w-24 shrink-0 text-faint font-medium">{t("hours")}</dt>
+      <InfoRow
+        label={t("hours")}
+        icon={<svg {...ICON} aria-hidden><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>}
+      >
         {spot.opening_hours ? (
-          <dd className="text-ink font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</dd>
+          <span className="font-medium">{spot.opening_hours.open} – {spot.opening_hours.close}</span>
         ) : (
-          <dd className="text-sub">
-            {t("hoursMayChange")}<br />
+          <>
+            <span className="text-sub">{t("hoursMayChange")}</span><br />
             <span className="text-faint">{t("checkLatest")}</span>
-          </dd>
+          </>
         )}
-      </div>
+      </InfoRow>
       {spot.entry_fee && (
-        <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-faint font-medium">{t("entryFee")}</dt>
-          <dd className="text-ink font-medium">{spot.entry_fee}</dd>
-        </div>
+        <InfoRow
+          label={t("entryFee")}
+          icon={<svg {...ICON} aria-hidden><rect x="3" y="6.5" width="18" height="11" rx="2" /><circle cx="12" cy="12" r="2.6" /></svg>}
+        >
+          <span className="font-medium">{spot.entry_fee}</span>
+        </InfoRow>
       )}
       {typeof spot.duration_minutes === "number" && spot.duration_minutes > 0 && (
-        <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-faint font-medium">{t("duration")}</dt>
-          <dd className="text-ink font-medium">~{spot.duration_minutes} min</dd>
-        </div>
+        <InfoRow
+          label={t("duration")}
+          icon={<svg {...ICON} aria-hidden><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3.5 1.4" /></svg>}
+        >
+          <span className="font-medium">~{spot.duration_minutes} min</span>
+        </InfoRow>
       )}
       {spot.address && (
-        <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-faint font-medium">{t("address")}</dt>
-          <dd className="text-ink">{spot.address}</dd>
-        </div>
+        <InfoRow
+          label={t("address")}
+          icon={<svg {...ICON} aria-hidden><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>}
+        >
+          {spot.address}
+        </InfoRow>
       )}
     </dl>
   );
@@ -423,10 +462,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
         className="md:hidden fixed left-0 right-0 bottom-16 z-40 bg-surface border-t border-line px-4 py-3 flex items-center gap-2"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
-        {/* 이 버튼은 아이콘만 있고 글자가 없다. 이름을 붙여 두지 않으면 화면을
-            읽어 주는 도구에는 "버튼"이라고만 들리고, 이 화면에서 가장 중요한
-            동작이 무엇인지 알 수 없다. 데스크톱이 보여 주는 라벨과 같은 문구를
-            쓴다 — 상태는 aria-pressed 가 함께 알린다. */}
+        {/* 이 화면에서 가장 중요한 동작인데 아이콘 하나만 있고 글자가 없어서,
+            폭 300px 짜리 파란 막대에 15px 북마크만 떠 있었다. 데스크톱 버튼이
+            이미 쓰는 아이콘+라벨 조합(아래 aside)을 그대로 가져온다.
+            aria-label 은 그대로 두고 상태는 aria-pressed 가 함께 알린다. */}
         <button
           onClick={handleSave}
           aria-pressed={saved}
@@ -435,7 +474,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
             saved ? "bg-action-tint text-action" : "bg-action text-white shadow-cta"
           }`}
         >
-          {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
+          <span className="inline-flex items-center justify-center gap-1.5">
+            {saved ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 12.5l5 5 10-11" /></svg> : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 4.5h11a1 1 0 011 1v14l-6.5-4-6.5 4v-14a1 1 0 011-1z" /></svg>}
+            {saved ? t("savedState") : t("save")}
+          </span>
         </button>
         <button
           onClick={handleShare}
