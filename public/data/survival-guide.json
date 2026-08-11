@@ -45,18 +45,6 @@
     ],
     "affiliates": [
       {
-        "id": "aff-esim",
-        "name": "Korea eSIM — Airalo",
-        "tagline": "Stay connected from the moment you land",
-        "description": "Get a Korean data eSIM before departure. Activate in 2 minutes, no SIM swap needed. Works on all major Korean carriers (SKT, KT, LG). 10% off with gokoreamate link.",
-        "url": "https://www.airalo.com/south-korea-esim",
-        "partner": "Airalo",
-        "category": "connectivity",
-        "discountNote": "10% discount via gokoreamate partner link",
-        "ctaLabel": "Get Korea eSIM →",
-        "isPrimary": true
-      },
-      {
         "id": "aff-tmoney",
         "name": "T-Money Card — Klook",
         "tagline": "Pre-loaded transit card, skip the machine queue",
@@ -246,18 +234,6 @@
         "category": "dining",
         "discountNote": null,
         "ctaLabel": "Book Food Tour →",
-        "isPrimary": false
-      },
-      {
-        "id": "aff-airalo-dining",
-        "name": "Stay Connected to Find the Best Spots",
-        "tagline": "You need data to find great food in Korea",
-        "description": "Finding solo-friendly restaurants requires Naver Maps and real-time Google Translate for menus. Don't rely on café WiFi — get a reliable Korean eSIM so you can search, translate, and navigate anywhere.",
-        "url": "https://www.airalo.com/south-korea-esim",
-        "partner": "Airalo",
-        "category": "connectivity",
-        "discountNote": "10% off with gokoreamate partner link",
-        "ctaLabel": "Get Korea eSIM →",
         "isPrimary": false
       }
     ]
