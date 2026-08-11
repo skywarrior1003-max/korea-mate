@@ -1,6 +1,7 @@
 # Multicity Event Freshness Policy v1
 
-> **Task**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1  
+> **최초 작성**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1  
+> **R1 수정**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION  
 > **As-of**: 2026-08-11  
 > **Product role**: AI Travel Scheduler (not event archive / search engine)
 
@@ -44,24 +45,29 @@ GoKoreaMate는 여행 일정 AI이다. 이벤트 데이터의 목적은 **여행
 | `creat_dt_text` | `contents/list` 응답 | `YYYY.MM.DD` | `"2026.04.30"` |
 | `updt_dt_text` | `contents/list` 응답 | `YYYY.MM.DD` | `"2026.07.08"` |
 
-**핵심**: 이벤트 날짜(`schdul_info_bgnde`/`schdul_info_endde`)는 상세 API에만 존재한다. 목록 API의 `updt_dt_text`는 Recency Pre-Filter에만 사용 가능하다.
+**핵심**: 이벤트 날짜(`schdul_info_bgnde`/`schdul_info_endde`)는 상세 API에만 존재한다.  
+`updt_dt_text`는 **source 수정 날짜**이며 event date가 아니다 — Discovery 필터로 사용 금지.
 
 ---
 
-## 4. Discovery 전략
+## 4. Discovery 전략 (R1 기준)
 
-### 4.1 Recency Pre-Filter (HISTORICAL_BULK_DETAIL_CALLS = 0 보장)
+### 4.1 탐색 파이프라인
 
 ```
 Step 1: contents/list 전체 페이징 (76페이지 × 50건 = 3,765건)
 Step 2: 로컬 필터 → EVENT 카테고리 코드 (Cd4y5u1 / Cu9u5z7 / Cv7s8m5)
-         → 약 1,190~1,232건 추출
-Step 3: Recency filter: updt_dt_text >= RECENCY_CUTOFF (기본: 2026-01-01)
-         → 상세 call 대상 범위로 축소
-Step 4: 필터된 후보군에만 contents/info 상세 call (targeted)
+         → 약 1,232건 추출
+Step 3: updt_dt_text DESC 정렬 (최신순 힌트 — hard gate 아님)
+         + MAX_DETAIL_CANDIDATES = 200 (soft ceiling)
+Step 4: 후보군에 contents/info 상세 call (targeted)
 Step 5: schdul_info_bgnde / schdul_info_endde 추출 → AS_OF 날짜 gate
 Step 6: ONGOING / UPCOMING 상태 판정 → service eligible 검사
 ```
+
+> ⚠️ **R1 변경**: V1의 `updt_dt_text >= RECENCY_CUTOFF` hard gate는 **제거**되었다.  
+> `updt_dt_text`는 source 수정 날짜이며 행사 진행 여부와 무관하다.  
+> SOURCE_UPDATED_AT_HARD_DISCOVERY_GATE = **FORBIDDEN**
 
 ### 4.2 상태 판정 기준 (AS_OF = 수집 날짜)
 
@@ -78,23 +84,52 @@ Step 6: ONGOING / UPCOMING 상태 판정 → service eligible 검사
 |---|---|
 | `has_exact_dates` | `schdul_info_bgnde` + `schdul_info_endde` 모두 파싱 가능 |
 | `temporal_status` | `ONGOING` 또는 `UPCOMING` |
-| `official_url` | 주최 공식 URL 존재 (`cmmn_hmpg_url` 기준) |
+| `official_url` | 공식 정보 URL 존재 (우선순위 정책 Section 5 참조) |
 | `is_seoul_location` | 행사 장소가 서울 내 (`place`/`address` 서울 지표 확인) |
 
 > **참고**: VisitSeoul 데이터베이스에 비서울 이벤트(예: 경북 의성군 행사)가 포함될 수 있음. 지리 검증 필수.
 
 ---
 
-## 5. Official URL 정책
+## 5. Official URL 정책 (R1 기준)
 
-| 우선순위 | 소스 | url_type |
-|---|---|---|
-| 1 | `extra.cmmn_hmpg_url` (주최사 공식 홈페이지) | `ORGANIZER_DIRECT` |
-| 2 | (미지원) VisitSeoul 공개 페이지 URL 포맷 미확인 | `OFFICIAL_VISIT_SOURCE_FALLBACK` |
-| — | URL 없는 경우 | SERVICE_EVENT_POOL 제외 |
+### 5.1 우선순위
 
-> **정책 근거**: VisitSeoul public 이벤트 상세 페이지 URL 포맷이 파악되지 않아 fallback URL 구성 불가.  
-> 공식 URL 없는 이벤트(`옹기콘서트`, `연희판판` 등)는 SERVICE_EVENT_POOL 제외 — 품질 기준 유지.
+| 우선순위 | 소스 | url_type | 비고 |
+|---|---|---|---|
+| 1 | `extra.cmmn_hmpg_url` (주최사 공식 홈페이지) | `ORGANIZER_DIRECT` | 가장 강한 신호 |
+| 2 | VERIFIED_URL_TABLE (스크립트 내 사전 검증된 URL) | `OFFICIAL_VISIT_OR_PUBLIC_PAGE` | 알고리즘 실패 또는 slug 불일치 시 |
+| 3 | VisitSeoul English 상세 페이지 (알고리즘 생성 + HTTP 검증) | `OFFICIAL_VISIT_OR_PUBLIC_PAGE` | URL 패턴: `english.visitseoul.net/events/{slug}/{EN-CID}` |
+| — | URL 없는 경우 | `NONE` | SERVICE_EVENT_POOL 제외 |
+
+### 5.2 VisitSeoul English URL 알고리즘
+
+```python
+# EN CID: Korean CID에서 KOP→ENP 접두사 교체
+# Slug: English API 제목을 공백→하이픈 변환
+# 패턴: https://english.visitseoul.net/events/{slug}/{EN-CID}
+# 필수: HTTP GET으로 200 응답 확인 후에만 사용
+```
+
+> **FABRICATED_OFFICIAL_URL = FORBIDDEN**: URL은 실제 존재 확인 후에만 official_url로 기록한다.
+
+### 5.3 VERIFIED_URL_TABLE (v1.1.0-R1 기준)
+
+| CID | 제목 | URL | 검증 날짜 |
+|---|---|---|---|
+| KOPsj8gga | 옹기콘서트 | `https://english.visitseoul.net/events/Joseon-Yangban-.../ENPsj8gga` | 2026-08-11 |
+| KOPnkfasx | 연희판판 | `https://english.visitseoul.net/events/Yeonhee-Standing-.../ENPnkfasx` | 2026-08-11 |
+
+> 비고: `연희판판`은 VisitSeoul의 커스텀 slug가 API English 제목과 달라 알고리즘이 실패함 → 수동 검증 후 테이블 등록.
+
+### 5.4 R1 핵심 원칙
+
+```
+ORGANIZER_DIRECT_URL_REQUIRED = NO
+OFFICIAL_INFORMATION_URL_REQUIRED = YES
+SOURCE_UPDATED_AT_IS_NOT_EVENT_DATE = YES
+SOURCE_UPDATED_AT_HARD_DISCOVERY_GATE = FORBIDDEN
+```
 
 ---
 
@@ -133,10 +168,10 @@ Pool 기록이 있어도 여행자 날짜와 겹치지 않으면 제안하지 �
 | 금지 | 이유 |
 |---|---|
 | 전체 1,190건 상세 bulk call | HISTORICAL_BULK_DETAIL_CALLS = 0 정책 |
-| Recency filter 없이 event category 전체 상세 | 동일 |
+| `updt_dt_text`를 행사 날짜 또는 discovery hard gate로 사용 | SOURCE_UPDATED_AT_IS_NOT_EVENT_DATE = YES |
 | 날짜 없는 이벤트의 가능성 기반 포함 | POSSIBILITY_BASED_API_CALLS = 0 정책 |
 | `INACTIVE` 또는 `ENDED` 상태 기록의 SERVICE_EVENT_POOL 진입 | 여행 일정 AI 원칙 |
-| 공식 URL 없는 이벤트의 SERVICE_EVENT_POOL 진입 | 최소 정보 기준 |
+| HTTP 검증 없이 VisitSeoul URL을 임의 생성하여 기록 | FABRICATED_OFFICIAL_URL = FORBIDDEN |
 
 ---
 
@@ -144,7 +179,7 @@ Pool 기록이 있어도 여행자 날짜와 겹치지 않으면 제안하지 �
 
 | 도시 | 1차 소스 | 상태 |
 |---|---|---|
-| 서울 | VisitSeoul API | ✅ v1 완료 (2026-08-11) |
+| 서울 | VisitSeoul API | ✅ v1.1.0-R1 완료 (2026-08-11) |
 | 부산 | 미정 (KTO 또는 VisitBusan API) | 미착수 |
 | 경주 | 미정 (KTO 또는 경주시 공식 소스) | 미착수 |
 
@@ -155,7 +190,7 @@ Pool 기록이 있어도 여행자 날짜와 겹치지 않으면 제안하지 �
 ## 9. 스크립트 참조
 
 ```
-scripts/run-seoul-current-upcoming-event-sync-v1.py
+scripts/run-seoul-current-upcoming-event-sync-v1.py  (v1.1.0-R1)
   --discover-only   : 목록+상세 조회 → gate 확인 (파일 쓰기 없음)
   --collect         : 전체 수집 + 파일 출력
   --normalize-only  : raw 파일 기반 재정규화
@@ -165,30 +200,48 @@ scripts/run-seoul-current-upcoming-event-sync-v1.py
 
 | 파일 | 내용 |
 |---|---|
-| `seoul-current-upcoming-event-discovery-v1.jsonl` | 전체 60건 상세 결과 (gate 포함) |
-| `seoul-current-upcoming-event-pool-v1.jsonl` | SERVICE_EVENT_POOL 4건 |
+| `seoul-current-upcoming-event-discovery-v1.jsonl` | 전체 200건 상세 결과 (gate 포함) |
+| `seoul-current-upcoming-event-pool-v1.jsonl` | SERVICE_EVENT_POOL 6건 |
 | `seoul-current-upcoming-event-attempts-v1.jsonl` | 상세 call 시도 기록 |
 | `seoul-current-upcoming-event-detail-raw-v1.jsonl` | raw API 응답 |
 | `seoul-current-upcoming-event-sync-manifest-v1.json` | gate 수치 + SHA256 |
 
 ---
 
-## 10. v1 수집 결과 (2026-08-11 기준)
+## 10. 수집 결과 이력
+
+### V1 결과 (c99095e — 2026-08-11 최초)
 
 | 지표 | 값 |
 |---|---|
 | VisitSeoul 전체 레코드 | 3,765건 |
 | EVENT_CATEGORY 식별 | 1,232건 |
-| Recency 후보 (updt≥2026-01-01) | 60건 |
+| 상세 call 후보 (updt≥2026-01-01 hard gate) | 60건 |
 | 상세 call 성공 | 60/60 |
-| 날짜 확정 레코드 | 37건 |
-| 날짜 없음(INACTIVE) | 23건 |
 | ONGOING | 6건 |
-| UPCOMING | 1건 (비서울 — pool 제외) |
-| ENDED | 30건 |
+| UPCOMING | 1건 (비서울) |
 | **SERVICE_EVENT_POOL** | **4건** |
 
-### Pool 4건 목록
+**Pool 제외 ONGOING 이유 (V1 결함)**:
+- 옹기콘서트 → `NO_OFFICIAL_URL` (FIX-1 미적용)
+- 연희판판 → `NO_OFFICIAL_URL` (FIX-1 미적용)
+
+### R1 결과 (R1 커밋 — 2026-08-11)
+
+| 지표 | 값 |
+|---|---|
+| VisitSeoul 전체 레코드 | 3,765건 |
+| EVENT_CATEGORY 식별 | 1,232건 |
+| 상세 call 후보 (recency 정렬 soft limit 200) | 200건 |
+| 상세 call 성공 | 200/200 |
+| Outside V1 hard gate (old updt) — 추가 탐색 | 140건 |
+| ONGOING | 6건 |
+| UPCOMING | 1건 (비서울) |
+| **SERVICE_EVENT_POOL** | **6건** |
+| RECENCY_HARD_GATE_FALSE_NEGATIVE_COUNT | 0 |
+| VISIT_FALLBACK_COUNT | 2 |
+
+**Pool 6건 목록**:
 
 | 제목 | 기간 | URL type |
 |---|---|---|
@@ -196,24 +249,28 @@ scripts/run-seoul-current-upcoming-event-sync-v1.py
 | 2026 서울국제정원박람회 | 2026-05-01 ~ 2026-10-27 | ORGANIZER_DIRECT |
 | 2026 서울야외도서관 | 2026-04-23 ~ 2026-11-01 | ORGANIZER_DIRECT |
 | 2026 서울 한옥체험 : 어제와의 오늘 시간 | 2026-04-03 ~ 2026-10-25 | ORGANIZER_DIRECT |
+| 옹기콘서트 (조선 양반 접객 문화 체험 공연) | 2026-07-02 ~ 2026-12-10 | OFFICIAL_VISIT_OR_PUBLIC_PAGE |
+| 연희판판 (연희 상설 공연) | 2026-04-04 ~ 2026-10-31 | OFFICIAL_VISIT_OR_PUBLIC_PAGE |
 
-### Pool 미포함 ONGOING/UPCOMING (3건)
+### Regression Fixture 결과 (R1 최종)
 
-| 제목 | 이유 |
-|---|---|
-| 제3회 의성 썸머 뮤직 페스타 | NON_SEOUL_LOCATION + NO_OFFICIAL_URL |
-| 조선 양반 접객 문화 체험 공연 '옹기콘서트' | NO_OFFICIAL_URL (서울 공연) |
-| 연희 상설 공연 〈연희판판〉 | NO_OFFICIAL_URL (서울 공연) |
+| CID | 이벤트 | 기대 | 실제 | 판정 |
+|---|---|---|---|---|
+| KOPsj8gga | 옹기콘서트 | IN_POOL | IN_POOL | ✅ |
+| KOPnkfasx | 연희판판 | IN_POOL | IN_POOL | ✅ |
+| KOPl5u8ht | 의성 썸머뮤직 | NOT_IN_POOL | NOT_IN_POOL | ✅ |
+| KOPz4etr5 | 서울썸머비치 | NOT_IN_POOL | NOT_IN_POOL | ✅ |
 
 ---
 
 ## 11. 다음 단계
 
-1. **7일 주기 재수집**: 2026-08-18 기준으로 `--collect` 재실행
-2. **전통 공연 URL 수동 보완**: 옹기콘서트·연희판판 주최사 URL 파악 후 추가 가능성 검토
-3. **AI 일정 통합**: SERVICE_EVENT_POOL 4건 → 여행자 날짜 overlap 검사 후 일정 연동
-4. **타 도시 확장**: 부산·경주 이벤트 소스 발굴 후 동일 정책 적용
+1. **7일 주기 재수집**: 2026-08-18 기준으로 `--collect` 재실행 (VERIFIED_URL_TABLE 재검증 포함)
+2. **AI 일정 통합**: SERVICE_EVENT_POOL 6건 → 여행자 날짜 overlap 검사 후 일정 연동
+3. **타 도시 확장**: 부산·경주 이벤트 소스 발굴 후 동일 정책 적용
+4. **VERIFIED_URL_TABLE 관리**: 재수집 시 기존 URL 유효성 확인; 만료된 항목 교체
 
 ---
 
-*생성: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1 / 2026-08-11*
+*최초 생성: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1 / 2026-08-11*  
+*R1 업데이트: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION / 2026-08-11*

@@ -870,7 +870,8 @@ TASK-SEOUL-EVENT-DATE-STATUS-PIPELINE-V1
 
 ## SECTION 13 — 서울 현재/예정 이벤트 수집 결과 (2026-08-11)
 
-> **Task**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1  
+> **최초 Task**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1  
+> **R1 수정 Task**: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION  
 > **정책 문서**: `docs/data-collection/multicity-event-freshness-policy-v1.md`
 
 ### 핵심 원칙
@@ -881,12 +882,16 @@ PRODUCT_ROLE = AI_TRAVEL_SCHEDULER (이벤트 아카이브 아님)
 이벤트 새로고침 주기: 7일 (전체 재수집)
 FUTURE_DATE_THRESHOLD_GATE = 없음
 RECURRING_EVENT_WATCHLIST = 미운영 (v1)
+SOURCE_UPDATED_AT_HARD_DISCOVERY_GATE = FORBIDDEN (R1에서 확립)
+ORGANIZER_DIRECT_URL_REQUIRED = NO (R1에서 확립)
+OFFICIAL_INFORMATION_URL_REQUIRED = YES
 ```
 
 ### Section 30 API 검증 결과 (2026-08-11 실측)
 
 ```
-VisitSeoul contents/list → 날짜 필드 없음 (updt_dt_text만 recency proxy)
+VisitSeoul contents/list → 날짜 필드 없음
+  updt_dt_text = source 수정 날짜 (행사 날짜 아님)
 VisitSeoul contents/info → 이벤트 전용 날짜 필드 존재:
   schdul_info_bgnde = 이벤트 시작일 (형식: "2026.07.31")
   schdul_info_endde = 이벤트 종료일 (형식: "2026.08.02")
@@ -896,62 +901,81 @@ VisitSeoul contents/info → 이벤트 전용 날짜 필드 존재:
   KOPz4etr5 (서울썸머비치): 2026.07.20~2026.08.09 → ENDED
 ```
 
-### 수집 전략
+### 수집 전략 (R1 기준)
 
 ```
 1. contents/list 전체 페이징 (76페이지, 3,765건)
 2. 로컬 필터: EVENT 카테고리 코드 → 1,232건
-3. Recency pre-filter: updt_dt_text >= 2026-01-01 → 60건
-4. targeted contents/info 60건 호출
+3. updt_dt_text DESC 정렬 (최신 우선 힌트 — hard gate 아님)
+   MAX_DETAIL_CANDIDATES = 200 (soft ceiling)
+4. targeted contents/info 200건 호출
 5. schdul_info_bgnde/schdul_info_endde 추출 → AS_OF date gate
 6. ONGOING/UPCOMING + official_url + Seoul location 검증
 HISTORICAL_BULK_DETAIL_CALLS = 0
 POSSIBILITY_BASED_API_CALLS = 0
+SOURCE_UPDATED_AT_IS_NOT_EVENT_DATE = YES
 ```
 
-### v1 수집 결과 (AS_OF = 2026-08-11)
+### V1 결과 (c99095e — REFERENCE ONLY)
+
+| 지표 | 값 |
+|---|---|
+| 상세 call 후보 (old hard gate) | 60건 |
+| **SERVICE_EVENT_POOL** | **4건** |
+| Pool 제외 ONGOING 2건 이유 | NO_OFFICIAL_URL (FIX-1 미적용) |
+
+### R1 최종 결과 (AS_OF = 2026-08-11)
 
 | 지표 | 값 |
 |---|---|
 | VisitSeoul 전체 | 3,765건 |
-| EVENT_CATEGORY 식별 | 1,232건 (v1 routing 1,190 + 신규 42건) |
-| Recency 후보 | 60건 |
-| 날짜 확정 | 37건 |
+| EVENT_CATEGORY 식별 | 1,232건 |
+| 상세 call 후보 (soft limit 200) | 200건 |
+| Outside V1 hard gate (추가 탐색) | 140건 |
+| 날짜 확정 | 162건 |
 | ONGOING | 6건 |
 | UPCOMING | 1건 (비서울 — 제외) |
-| ENDED | 30건 |
-| INACTIVE | 23건 (날짜 없음) |
-| **SERVICE_EVENT_POOL** | **4건** |
+| ENDED | 155건 |
+| INACTIVE | 38건 (날짜 없음) |
+| RECENCY_HARD_GATE_FALSE_NEGATIVE_COUNT | 0 |
+| **SERVICE_EVENT_POOL** | **6건** |
 
-### SERVICE_EVENT_POOL 4건
+### SERVICE_EVENT_POOL 6건 (R1 최종)
 
-| 제목 | 기간 | URL |
+| 제목 | 기간 | URL type |
 |---|---|---|
-| 2026 서울 태권도 광장 | 2026-05-09 ~ 2026-10-18 | instagram.com/seoul.tkd |
-| 2026 서울국제정원박람회 | 2026-05-01 ~ 2026-10-27 | seoul.go.kr/festa/garden/y2026 |
-| 2026 서울야외도서관 | 2026-04-23 ~ 2026-11-01 | seouloutdoorlibrary.kr |
-| 2026 서울 한옥체험 | 2026-04-03 ~ 2026-10-25 | hanokmaeul.co.kr |
-
-Pool 미포함 이유:
-- 의성 썸머뮤직: NON_SEOUL_LOCATION + NO_OFFICIAL_URL (경북 의성군)
-- 옹기콘서트, 연희판판: NO_OFFICIAL_URL (서울 공연, URL 미등록)
+| 2026 서울 태권도 광장 | 2026-05-09 ~ 2026-10-18 | ORGANIZER_DIRECT |
+| 2026 서울국제정원박람회 | 2026-05-01 ~ 2026-10-27 | ORGANIZER_DIRECT |
+| 2026 서울야외도서관 | 2026-04-23 ~ 2026-11-01 | ORGANIZER_DIRECT |
+| 2026 서울 한옥체험 : 어제와의 오늘 시간 | 2026-04-03 ~ 2026-10-25 | ORGANIZER_DIRECT |
+| 옹기콘서트 (조선 양반 접객 문화 체험 공연) | 2026-07-02 ~ 2026-12-10 | OFFICIAL_VISIT_OR_PUBLIC_PAGE |
+| 연희판판 (연희 상설 공연) | 2026-04-04 ~ 2026-10-31 | OFFICIAL_VISIT_OR_PUBLIC_PAGE |
 
 ```
-POOL_SHA256 = 854B2A9414E860110C5DA18B42F9E7D52C44DF8EA148AC85A4A1A5CD528ADCF1
+POOL_SHA256 = EC89604497EEB544483E688E2FABCAD439BA2905F2359BD27499F8F14ACF3C89
 SERVICE_EVENT_WITHOUT_EXACT_DATE = 0
 SERVICE_EVENT_WITHOUT_OFFICIAL_URL = 0
 SECRET_LEAK = 0  DB_CHANGE = 0  SRC_MODIFIED = 0
 ```
 
+### Regression Fixture (R1 통과)
+
+| CID | 이벤트 | 결과 |
+|---|---|---|
+| KOPsj8gga | 옹기콘서트 | IN_POOL ✅ |
+| KOPnkfasx | 연희판판 | IN_POOL ✅ |
+| KOPl5u8ht | 의성 썸머뮤직 | NOT_IN_POOL ✅ |
+| KOPz4etr5 | 서울썸머비치 | NOT_IN_POOL ✅ |
+
 ### 산출물
 
-- `data/seoul-source-audit/seoul-current-upcoming-event-discovery-v1.jsonl` (60건)
-- `data/seoul-source-audit/seoul-current-upcoming-event-pool-v1.jsonl` (4건)
-- `data/seoul-source-audit/seoul-current-upcoming-event-attempts-v1.jsonl` (60건)
-- `data/seoul-source-audit/seoul-current-upcoming-event-detail-raw-v1.jsonl` (60건)
+- `data/seoul-source-audit/seoul-current-upcoming-event-discovery-v1.jsonl` (200건)
+- `data/seoul-source-audit/seoul-current-upcoming-event-pool-v1.jsonl` (6건)
+- `data/seoul-source-audit/seoul-current-upcoming-event-attempts-v1.jsonl` (200건)
+- `data/seoul-source-audit/seoul-current-upcoming-event-detail-raw-v1.jsonl` (200건)
 - `data/seoul-source-audit/seoul-current-upcoming-event-sync-manifest-v1.json`
-- `docs/data-collection/multicity-event-freshness-policy-v1.md`
-- `scripts/run-seoul-current-upcoming-event-sync-v1.py`
+- `docs/data-collection/multicity-event-freshness-policy-v1.md` (R1 업데이트)
+- `scripts/run-seoul-current-upcoming-event-sync-v1.py` (v1.1.0-R1)
 
 ### AI 일정 통합 요구사항
 
@@ -961,4 +985,5 @@ SECRET_LEAK = 0  DB_CHANGE = 0  SRC_MODIFIED = 0
 2. BASE_REFRESH = 7일 주기 (--collect 재실행)
 3. AI_EVENT_TRIP_DATE_OVERLAP_REQUIRED = YES
 4. 다음 재수집 예정: 2026-08-18 이후
+5. OFFICIAL_VISIT_OR_PUBLIC_PAGE URL도 valid official_url — AI에서 사용 가능
 ```
