@@ -132,7 +132,7 @@
     "match_audit": "data/gyeongju-source-audit/gyeongju-food-source-match-audit-v1.jsonl",
     "lossless_audit": "data/gyeongju-source-audit/gyeongju-food-lossless-mapping-audit-v1.json"
   },
-  "NEXT_TASK": "GYEONGJU_FOOD_PHONE_GATE_RESUME_IN_NAVER_ENV",
+  "NEXT_TASK": "GYEONGJU_FOOD_PHONE_GATE_NAVER_CLOSEOUT_NO_WORDS_ONLY",
   "FINAL_SHA": "a49bc83",
   "PUSH": "PASS",
   "GYEONGJU_FOOD_DISCOVERY_V1": "PASS",
@@ -175,25 +175,63 @@
   "PHONE_GATE_TASK": {
     "task": "TASK-GYEONGJU-FOOD-PHONE-GATE-AND-NAVER-ENRICHMENT-V1",
     "as_of": "2026-08-11",
-    "PHONE_GATE_STATUS": "OPEN_PHONE_VERIFICATION",
-    "NAVER_VERIFICATION_COMPLETE": false,
-    "STOP_REASON": "NAVER_DOMAIN_INACCESSIBLE (all subdomains blocked in current environment)",
+    "PHONE_GATE_STATUS": "OPEN_PHONE_VERIFICATION (V1 STOP)",
+    "STOP_REASON_V1": "NAVER_DOMAIN_INACCESSIBLE (all subdomains blocked in current environment)",
+    "STOP_FILE": "data/gyeongju-source-audit/gyeongju-food-phone-gate-stop-v1.json",
+    "NOTE_V1_ERROR": "detailCommon2 tel field was checked (0 results). This was incomplete — the phone for type39 is in detailIntro2 infocenterfood (corrected in V2).",
+    "SUPERSEDED_BY": "PHONE_GATE_V2"
+  },
+
+  "PHONE_GATE_V2": {
+    "task": "TASK-GYEONGJU-FOOD-PHONE-GATE-V2-OFFICIAL-DETAIL-THEN-NAVER-CLOSEOUT",
+    "as_of": "2026-08-11",
+    "STATUS": "NEAR_COMPLETE",
     "PREFLIGHT": {
-      "PHONE_PRESENT_BEFORE": 128,
-      "PHONE_MISSING_BEFORE": 71,
+      "PHONE_PRESENT_BEFORE_V2": 128,
+      "PHONE_MISSING_BEFORE_V2": 71,
       "PHONE_MISSING_CANONICAL_102": 2,
       "PHONE_MISSING_KTO_TYPE39_NEW": 69
     },
-    "KTO_DETAIL_CHECK": {
-      "ENDPOINT": "KorService2/detailCommon2",
+    "KTO_DETAIL_INTRO2": {
+      "ENDPOINT": "KorService2/detailIntro2",
+      "CONTENT_TYPE_ID": 39,
+      "PHONE_FIELD": "infocenterfood",
+      "HOURS_FIELD": "opentimefood",
       "QUERIED": 69,
-      "TEL_FOUND": 0,
-      "CONCLUSION": "KTO official source exhausted — 0 phones recoverable via API"
+      "PHONE_FOUND": 68,
+      "PHONE_MISSING": 1,
+      "HOURS_FOUND": 69,
+      "FIRST_MENU_FOUND": 68
     },
-    "CANDIDATES_MODIFIED": false,
-    "PENDING_QUEUE": 71,
-    "STOP_FILE": "data/gyeongju-source-audit/gyeongju-food-phone-gate-stop-v1.json",
+    "DISPOSITION_SUMMARY": {
+      "OFFICIAL_PHONE_RECOVERED": 68,
+      "EXCLUDED_NOT_SINGLE_RESTAURANT_ENTITY": 2,
+      "VERIFICATION_BLOCKED_NAVER_REQUIRED": 1,
+      "ENTITY_EXCLUDED": ["성동시장 한식뷔페촌 (gyeongju-GJ08-80)", "성동시장 분식골목 (gyeongju-GJ08-81)"],
+      "VERIFICATION_BLOCKED_RECORDS": ["No Words (gyeongju-KTO-2838694) — infocenterfood empty, Naver 차단"]
+    },
+    "FINAL_POOL": {
+      "TOTAL_CANDIDATES": 199,
+      "ACTIVE_POOL_AFTER_EXCLUSIONS": 197,
+      "ACTIVE_WITH_PHONE": 196,
+      "ACTIVE_MISSING_PHONE": 1,
+      "PHONE_COVERAGE_ACTIVE_POOL_PCT": 99.5
+    },
+    "NAVER_VERIFICATION_COMPLETE": false,
+    "NAVER_CHECK_REQUIRED": 1,
+    "NAVER_BLOCKED": true,
+    "CANDIDATES_MODIFIED": true,
+    "CANDIDATES_SHA256_AFTER_V2": "120AC91C966DD71B6E90D721C7BA3C5892464E95281D5B5EBBAA92060DBA51CD",
+    "NORMALIZATION_BYTE_IDENTICAL": true,
     "POLICY_DOC": "docs/data-collection/multicity-food-discovery-collection-policy-v1.md",
-    "NEXT_ACTION": "Re-run in environment with Naver Place access"
+    "POLICY_DOC_NOTE": "Seoul canonical version (15 sections) merged + Phone Gate as Section 16",
+    "OUTPUT_FILES_V2": {
+      "candidates": "data/gyeongju-source-audit/gyeongju-food-discovery-candidates-v1.jsonl",
+      "phone_verification_audit": "data/gyeongju-source-audit/gyeongju-food-phone-verification-v2.jsonl",
+      "stop_file_v1": "data/gyeongju-source-audit/gyeongju-food-phone-gate-stop-v1.json",
+      "policy_doc": "docs/data-collection/multicity-food-discovery-collection-policy-v1.md"
+    },
+    "NEXT_ACTION": "Naver Place verification for 'No Words' (gyeongju-KTO-2838694) when Naver env available",
+    "PHONE_GATE_V2_COMPLETE_EXCEPT_NAVER": true
   }
 }
