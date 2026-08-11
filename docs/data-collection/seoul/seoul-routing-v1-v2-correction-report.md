@@ -333,8 +333,8 @@ AUTO_EXCLUDE = 0
 ```
 START_SHA = 6d09d4c
 BRANCH = data/seoul-collection-v1
-FINAL_SHA = (commit 후 기재)
-PUSH = (commit 후 확인)
+FINAL_SHA = caa72bb
+PUSH = YES (data/seoul-collection-v1 → origin)
 ```
 
 ---
