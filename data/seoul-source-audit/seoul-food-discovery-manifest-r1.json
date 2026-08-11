@@ -91,7 +91,7 @@
     "opening_hours_raw_text": {"has": 1243, "missing": 16, "pct": 98.7},
     "closed_days": {"has": 836, "missing": 423, "pct": 66.4},
     "price_range_krw": {"has": 266, "missing": 993, "pct": 21.1},
-    "menu_evidence": {"has": 1259, "pct": 100.0},
+    "source_tags": {"has": 1259, "pct": 100.0, "note": "VisitSeoul general recommendation tags (mixed: location + food + awards); renamed from menu_evidence (semantic overreach)"},
     "image_main_url": {"has": 1259, "pct": 100.0},
     "transit_info": {"has": 1194, "missing": 65, "pct": 94.8},
     "dietary_evidence": {"has": 17, "pct": 1.4, "note": "official source evidence (restaurant.dietary); dietary category label, not formal certification"},
@@ -164,6 +164,24 @@
     "REASON_DIETARY": "dietary label (채식 etc.) = dietary category, not formal certification",
     "REASON_MUSLIM": "value '할랄 자가 인증' = self-declared, not formal external certification",
     "REASON_SALAM": "no schema documentation proves restaurant.salam = official Salam certification status",
+    "SEOUL_FOOD_STATUS": "CLOSED_WITH_LIMITATION"
+  },
+
+  "MENU_EVIDENCE_SEMANTIC_CHECK": {
+    "task": "TASK-SEOUL-FOOD-DISCOVERY-V1-MENU-EVIDENCE-SEMANTIC-CHECK",
+    "date": "2026-08-11",
+    "start_sha": "3dff5d4",
+    "GENERAL_TAGS_INCLUDED_IN_MENU_EVIDENCE": true,
+    "TAG_TYPES_FOUND": ["location (강남맛집/안국역/이태원 etc.)", "awards (미쉐린가이드/수요미식회/백년가게)", "programs (살람서울/할랄푸드)", "food items (칼국수/냉면/갈비)", "restaurant names"],
+    "MENU_EVIDENCE_RENAMED_TO": "source_tags",
+    "MENU_EVIDENCE_COUNT_BEFORE": 1259,
+    "SOURCE_TAGS_COUNT_AFTER": 1259,
+    "DATA_LOSS": 0,
+    "CANDIDATE_COUNT_CHANGE": 0,
+    "NORMALIZATION_BYTE_IDENTICAL": true,
+    "SCRIPT_FIXED": "run-seoul-food-discovery-r1-gapfill.py (tag → source_tags, 3 locations)",
+    "POOL_SHA256_AFTER": "7B4D9EFFBC37CC17D281BAC0895E4E58B4048F920EE5F49D0DFA382FE93CAECD",
+    "MENU_EVIDENCE_SEMANTICS": "CORRECTED",
     "SEOUL_FOOD_STATUS": "CLOSED_WITH_LIMITATION"
   },
 

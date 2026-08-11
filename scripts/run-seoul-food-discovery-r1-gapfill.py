@@ -23,7 +23,7 @@ R1 수정 사항:
     restaurant.salam → salam_certification
     restaurant.price_range → price_range_krw
     restaurant.type / kind → restaurant type codes
-    tag → menu_evidence_tags (이미 수집됨)
+    tag → source_tags (VisitSeoul general recommendation tags; NOT menu-specific evidence)
 
 모드:
   --fix-priority : 42 priority records 재수집 (parser fix)
@@ -374,8 +374,10 @@ def _extract_restaurant_facts_r1(detail: dict, cid: str) -> tuple[dict, dict, li
     # Tags (menu evidence)
     tags = detail.get("tag", [])
     if isinstance(tags, list) and tags:
-        facts["menu_evidence"] = {"tags": tags, "source": "visitseoul_tags"}
-        prov["menu_evidence"] = {"source": "visitseoul:contents_info", "cid": cid, "field": "tag", "verified_at": now}
+        # source_tags: VisitSeoul general recommendation tags (location + food + awards mixed)
+        # NOT menu_evidence — contains non-menu tags (area names, awards, etc.)
+        facts["source_tags"] = {"tags": tags, "source": "visitseoul_tags"}
+        prov["source_tags"] = {"source": "visitseoul:contents_info", "cid": cid, "field": "tag", "verified_at": now}
 
     # Image URLs (from main_img and relate_img)
     main_img = str(detail.get("main_img", "") or "").strip()
@@ -487,7 +489,7 @@ def compute_coverage(candidates: dict) -> dict:
         "name", "address", "lat", "lng", "district", "neighborhood",
         "cuisine", "signature_dishes", "description",
         "official_url", "phone", "opening_hours_raw_text", "closed_days",
-        "price_range_krw", "menu_evidence",
+        "price_range_krw", "source_tags",
         "image_main_url", "transit_info",
         "dietary_evidence", "halal_evidence",
         "language_menu", "language_staff",
