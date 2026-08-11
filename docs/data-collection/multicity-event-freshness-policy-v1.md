@@ -204,7 +204,7 @@ scripts/run-seoul-current-upcoming-event-sync-v1.py  (v1.1.0-R1)
 | `seoul-current-upcoming-event-discovery-v1.jsonl` | 전체 200건 상세 결과 (gate 포함) |
 | `seoul-current-upcoming-event-pool-v1.jsonl` | SERVICE_EVENT_POOL 6건 |
 | `seoul-current-upcoming-event-attempts-v1.jsonl` | 상세 call 시도 기록 |
-| `seoul-current-upcoming-event-detail-raw-v1.jsonl` | raw API 응답 |
+| ~~`seoul-current-upcoming-event-detail-raw-v1.jsonl`~~ | ~~raw API 응답~~ — **삭제됨** (FINAL-HANDOFF-CLEANUP, SAFE_TO_DELETE 확인 후 제거) |
 | `seoul-current-upcoming-event-sync-manifest-v1.json` | gate 수치 + SHA256 |
 
 ---
@@ -311,11 +311,15 @@ DISCOVERY_COMPLETENESS = NOT_PROVEN
 
 ```
 EVENT_DISCOVERY_R2           = PASS_WITH_LIMITATION
-MAIN_EVENT_SOURCE            = VISITSEOUL_OFFICIAL_API
+UPSTREAM_EVENT_SOURCE        = VISITSEOUL_OFFICIAL_API
+MAIN_EVENT_IMPORT_SOURCE     = CURRENT_VERIFIED_EVENT_POOL_ONLY
+MAIN_EVENT_IMPORT_FILE       = data/seoul-source-audit/seoul-current-upcoming-event-pool-v1.jsonl
+EVENT_COVERAGE_COMPLETENESS  = NOT_PROVEN
 SECONDARY_SOURCE             = SEOUL_OPEN_DATA_OA15486_IDENTIFIED_NOT_ACCESSED
 CURRENT_VERIFIED_EVENT_POOL  = 6 (R1 FROZEN — 2026-08-11)
 POOL_SHA256                  = EC89604497EEB544483E688E2FABCAD439BA2905F2359BD27499F8F14ACF3C89
 NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
+EVENT_WORK_STATUS            = CLOSED
 ```
 
 ### 12.5 파일 정리 분류
@@ -326,7 +330,7 @@ NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
 | `seoul-current-upcoming-event-sync-manifest-v1.json` | ACTIVE_PIPELINE_OUTPUT |
 | `seoul-current-upcoming-event-discovery-v1.jsonl` | KEEP_FOR_REPRODUCIBILITY |
 | `seoul-current-upcoming-event-attempts-v1.jsonl` | KEEP_FOR_REPRODUCIBILITY |
-| `seoul-current-upcoming-event-detail-raw-v1.jsonl` | SAFE_TO_DELETE |
+| ~~`seoul-current-upcoming-event-detail-raw-v1.jsonl`~~ | ~~SAFE_TO_DELETE~~ → **DELETED** (FINAL-HANDOFF-CLEANUP) |
 
 > VisitSeoul API는 현재 유일하게 검증·운영 중인 서울 이벤트 소스다.  
 > 서울 열린데이터광장 OA-15486은 API 키 확보 후 보완 소스로 통합할 수 있다.
@@ -335,4 +339,5 @@ NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
 
 *최초 생성: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-AND-REFRESH-POLICY-V1 / 2026-08-11*  
 *R1 업데이트: TASK-SEOUL-EVENT-CURRENT-UPCOMING-SYNC-R1-CORRECTION / 2026-08-11*  
-*R2 업데이트: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP / 2026-08-11*
+*R2 업데이트: TASK-SEOUL-EVENT-DISCOVERY-R2-OFFICIAL-SOURCE-FINALIZE-AND-CLEANUP / 2026-08-11*  
+*FINAL-HANDOFF-CLEANUP: TASK-SEOUL-EVENT-FINAL-HANDOFF-CLEANUP-V1 / 2026-08-11 — UPSTREAM/IMPORT 용어 확정, EVENT_WORK_STATUS = CLOSED*

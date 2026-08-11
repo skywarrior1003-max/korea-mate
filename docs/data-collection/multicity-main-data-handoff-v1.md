@@ -972,7 +972,7 @@ SECRET_LEAK = 0  DB_CHANGE = 0  SRC_MODIFIED = 0
 - `data/seoul-source-audit/seoul-current-upcoming-event-discovery-v1.jsonl` (200건)
 - `data/seoul-source-audit/seoul-current-upcoming-event-pool-v1.jsonl` (6건)
 - `data/seoul-source-audit/seoul-current-upcoming-event-attempts-v1.jsonl` (200건)
-- `data/seoul-source-audit/seoul-current-upcoming-event-detail-raw-v1.jsonl` (200건)
+- ~~`data/seoul-source-audit/seoul-current-upcoming-event-detail-raw-v1.jsonl`~~ — **삭제됨** (SAFE_TO_DELETE 확인 후 FINAL-HANDOFF-CLEANUP에서 제거)
 - `data/seoul-source-audit/seoul-current-upcoming-event-sync-manifest-v1.json`
 - `docs/data-collection/multicity-event-freshness-policy-v1.md` (R1 업데이트)
 - `scripts/run-seoul-current-upcoming-event-sync-v1.py` (v1.1.0-R1)
@@ -994,16 +994,40 @@ SECRET_LEAK = 0  DB_CHANGE = 0  SRC_MODIFIED = 0
 
 ```
 EVENT_DISCOVERY_R2           = PASS_WITH_LIMITATION
-MAIN_EVENT_SOURCE            = VISITSEOUL_OFFICIAL_API
+UPSTREAM_EVENT_SOURCE        = VISITSEOUL_OFFICIAL_API
+MAIN_EVENT_IMPORT_SOURCE     = CURRENT_VERIFIED_EVENT_POOL_ONLY
+MAIN_EVENT_IMPORT_FILE       = data/seoul-source-audit/seoul-current-upcoming-event-pool-v1.jsonl
+EVENT_COVERAGE_COMPLETENESS  = NOT_PROVEN
 SECONDARY_SOURCE             = SEOUL_OPEN_DATA_OA15486_IDENTIFIED_NOT_ACCESSED
   — data.seoul.go.kr OA-15486 「서울시 문화행사 정보」
   — 일 업데이트 / 날짜 필드 있음 / API 키 미보유로 접근 불가
 DISCOVERY_COMPLETENESS       = NOT_PROVEN
 CURRENT_VERIFIED_EVENT_POOL  = 6건 (R1 FROZEN — 2026-08-11)
 POOL_FREEZE_STATUS           = FROZEN_R1_2026_08_11
+EVENT_WORK_STATUS            = CLOSED
 NEXT_TASK                    = FOOD_DISCOVERY_COLLECTION
 ```
 
-**의미**: VisitSeoul API는 현재 유일하게 검증·운영 중인 서울 이벤트 소스. AI 일정 생성 시 이 6건을 event pool로 사용. 서울 열린데이터광장 OA-15486은 API 키 확보 후 보완 소스로 추가 예정.
+### MAIN Event Import Contract
+
+```
+VisitSeoul Official API
+        ↓  upstream provenance / collection source
+수집·검증·날짜 gate·서울 geo gate·official URL gate
+        ↓  스크립트: run-seoul-current-upcoming-event-sync-v1.py (v1.1.0-R1)
+seoul-current-upcoming-event-pool-v1.jsonl  ← MAIN import 유일 대상
+```
+
+| DO NOT IMPORT | 이유 |
+|---|---|
+| VisitSeoul raw Event inventory (3,765건) | upstream raw — gate 미통과 |
+| Event discovery audit rows (200건) | 내부 탐색 결과, 서비스 대상 아님 |
+| legacy Event inventory (1,190 / 1,232건) | 날짜 미확인 포함, 종료 이벤트 포함 |
+| ended 이벤트 | end_date < AS_OF |
+| unknown-date 이벤트 | INACTIVE 상태 |
+| attempt logs | API call 감사 로그 |
+| ~~detail-raw (삭제됨)~~ | SAFE_TO_DELETE → DELETED |
+
+**의미**: "서울 전체 current/upcoming Event coverage가 완전하다"는 의미가 아님 (EVENT_COVERAGE_COMPLETENESS = NOT_PROVEN). VisitSeoul API가 upstream이고, MAIN이 가져가는 것은 6건 검증 pool만이다.
 
 상세 정책: `docs/data-collection/multicity-event-freshness-policy-v1.md` Section 12
