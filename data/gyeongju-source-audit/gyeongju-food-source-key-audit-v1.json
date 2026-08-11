@@ -1,0 +1,1326 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-DISCOVERY-V1-FINAL-REVIEW-AND-CLOSEOUT",
+  "as_of": "2026-08-11",
+  "SOURCE_KEY_AUDIT": "PASS",
+  "SOURCE_KEY_CHANGE_REQUIRED": "YES",
+  "SOURCE_KEY_CHANGED_COUNT": 28,
+  "SOURCE_KEY_COLLISION_COUNT": 0,
+  "SOURCE_KEY_UNSTABLE_NAME_BASED_REMAINING": 0,
+  "changes": [
+    {
+      "candidate_id": "gyeongju-FD28-001",
+      "before": "food-190-ready:고향밀면",
+      "after": "kto:39:2838855"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-002",
+      "before": "food-190-ready:소소밀밀 서악",
+      "after": "kto:39:3101705"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-003",
+      "before": "food-190-ready:르씨엘",
+      "after": "kto:39:3456352"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-004",
+      "before": "food-190-ready:우렁각시쌈밥",
+      "after": "kto:39:2840332"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-005",
+      "before": "food-190-ready:장군암소숯불",
+      "after": "kto:39:2840275"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-006",
+      "before": "food-190-ready:경주다방",
+      "after": "kto:39:2838756"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-007",
+      "before": "food-190-ready:영양숯불갈비",
+      "after": "kto:39:2736691"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-008",
+      "before": "food-190-ready:히든씨",
+      "after": "kto:39:2840968"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-009",
+      "before": "food-190-ready:카페솔(Sol)",
+      "after": "kto:39:2840804"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-010",
+      "before": "food-190-ready:인터폴 커피",
+      "after": "kto:39:3458332"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-011",
+      "before": "food-190-ready:소풍가다",
+      "after": "kto:39:2840458"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-012",
+      "before": "food-190-ready:카페 35mm",
+      "after": "kto:39:2838676"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-013",
+      "before": "food-190-ready:이스트앵글",
+      "after": "kto:39:2840301"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-014",
+      "before": "food-190-ready:스타트커피",
+      "after": "kto:39:2840446"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-015",
+      "before": "food-190-ready:산드레",
+      "after": "kto:39:2840506"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-016",
+      "before": "food-190-ready:카페 로드100",
+      "after": "kto:39:2840767"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-017",
+      "before": "food-190-ready:야생화일기",
+      "after": "kto:39:2840403"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-018",
+      "before": "food-190-ready:벤자마스",
+      "after": "kto:39:2876473"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-019",
+      "before": "food-190-ready:기와골맷돌순두부",
+      "after": "kto:39:2838924"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-020",
+      "before": "food-190-ready:향미사",
+      "after": "kto:39:2840432"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-021",
+      "before": "food-190-ready:라플레르",
+      "after": "kto:39:2838992"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-022",
+      "before": "food-190-ready:이재원과자공방",
+      "after": "kto:39:2840291"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-023",
+      "before": "food-190-ready:블리스",
+      "after": "kto:39:2838742"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-024",
+      "before": "food-190-ready:나이프(naif)",
+      "after": "kto:39:2838936"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-025",
+      "before": "food-190-ready:가봉반과",
+      "after": "kto:39:2838704"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-026",
+      "before": "food-190-ready:야드",
+      "after": "kto:39:2840413"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-027",
+      "before": "food-190-ready:아덴",
+      "after": "kto:39:2831874"
+    },
+    {
+      "candidate_id": "gyeongju-FD28-028",
+      "before": "food-190-ready:페이지나인",
+      "after": "kto:39:2840841"
+    }
+  ],
+  "phase_a_note": "Canonical 102 source_key = candidate_id (stable internal ID from getMenuRstrt). No change.",
+  "phase_b_note": "READY 28 source_key changed from food-190-ready:{name} to kto:39:{contentid}. All 28 changed.",
+  "phase_c_note": "New KTO 69 source_key = kto:39:{contentid}. Stable public ID.",
+  "audit": [
+    {
+      "candidate_id": "gyeongju-GJ08-105",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-105",
+      "proposed_source_key": "gyeongju-GJ08-105",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-106",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-106",
+      "proposed_source_key": "gyeongju-GJ08-106",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-109",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-109",
+      "proposed_source_key": "gyeongju-GJ08-109",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-111",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-111",
+      "proposed_source_key": "gyeongju-GJ08-111",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-112",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-112",
+      "proposed_source_key": "gyeongju-GJ08-112",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-114",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-114",
+      "proposed_source_key": "gyeongju-GJ08-114",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-115",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-115",
+      "proposed_source_key": "gyeongju-GJ08-115",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-123",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-123",
+      "proposed_source_key": "gyeongju-GJ08-123",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-126",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-126",
+      "proposed_source_key": "gyeongju-GJ08-126",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-1677",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-1677",
+      "proposed_source_key": "gyeongju-GJ08-1677",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-1681",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-1681",
+      "proposed_source_key": "gyeongju-GJ08-1681",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-1695",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-1695",
+      "proposed_source_key": "gyeongju-GJ08-1695",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-1704",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-1704",
+      "proposed_source_key": "gyeongju-GJ08-1704",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-1717",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-1717",
+      "proposed_source_key": "gyeongju-GJ08-1717",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-365",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-365",
+      "proposed_source_key": "gyeongju-GJ08-365",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-384",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-384",
+      "proposed_source_key": "gyeongju-GJ08-384",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-385",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-385",
+      "proposed_source_key": "gyeongju-GJ08-385",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-398",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-398",
+      "proposed_source_key": "gyeongju-GJ08-398",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-404",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-404",
+      "proposed_source_key": "gyeongju-GJ08-404",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-405",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-405",
+      "proposed_source_key": "gyeongju-GJ08-405",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-409",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-409",
+      "proposed_source_key": "gyeongju-GJ08-409",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-410",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-410",
+      "proposed_source_key": "gyeongju-GJ08-410",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-411",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-411",
+      "proposed_source_key": "gyeongju-GJ08-411",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-412",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-412",
+      "proposed_source_key": "gyeongju-GJ08-412",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-413",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-413",
+      "proposed_source_key": "gyeongju-GJ08-413",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-414",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-414",
+      "proposed_source_key": "gyeongju-GJ08-414",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-66",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-66",
+      "proposed_source_key": "gyeongju-GJ08-66",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6671",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6671",
+      "proposed_source_key": "gyeongju-GJ08-6671",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6673",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6673",
+      "proposed_source_key": "gyeongju-GJ08-6673",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6718",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6718",
+      "proposed_source_key": "gyeongju-GJ08-6718",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6723",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6723",
+      "proposed_source_key": "gyeongju-GJ08-6723",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6724",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6724",
+      "proposed_source_key": "gyeongju-GJ08-6724",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6735",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6735",
+      "proposed_source_key": "gyeongju-GJ08-6735",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6736",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6736",
+      "proposed_source_key": "gyeongju-GJ08-6736",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6739",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6739",
+      "proposed_source_key": "gyeongju-GJ08-6739",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6740",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6740",
+      "proposed_source_key": "gyeongju-GJ08-6740",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6741",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6741",
+      "proposed_source_key": "gyeongju-GJ08-6741",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6746",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6746",
+      "proposed_source_key": "gyeongju-GJ08-6746",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6857",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6857",
+      "proposed_source_key": "gyeongju-GJ08-6857",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6859",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6859",
+      "proposed_source_key": "gyeongju-GJ08-6859",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6865",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6865",
+      "proposed_source_key": "gyeongju-GJ08-6865",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6870",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6870",
+      "proposed_source_key": "gyeongju-GJ08-6870",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6871",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6871",
+      "proposed_source_key": "gyeongju-GJ08-6871",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6872",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6872",
+      "proposed_source_key": "gyeongju-GJ08-6872",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6900",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6900",
+      "proposed_source_key": "gyeongju-GJ08-6900",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6903",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6903",
+      "proposed_source_key": "gyeongju-GJ08-6903",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6907",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6907",
+      "proposed_source_key": "gyeongju-GJ08-6907",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6910",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6910",
+      "proposed_source_key": "gyeongju-GJ08-6910",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6915",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6915",
+      "proposed_source_key": "gyeongju-GJ08-6915",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6917",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6917",
+      "proposed_source_key": "gyeongju-GJ08-6917",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6963",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6963",
+      "proposed_source_key": "gyeongju-GJ08-6963",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-6967",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-6967",
+      "proposed_source_key": "gyeongju-GJ08-6967",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7066",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7066",
+      "proposed_source_key": "gyeongju-GJ08-7066",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7111",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7111",
+      "proposed_source_key": "gyeongju-GJ08-7111",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7121",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7121",
+      "proposed_source_key": "gyeongju-GJ08-7121",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7122",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7122",
+      "proposed_source_key": "gyeongju-GJ08-7122",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7123",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7123",
+      "proposed_source_key": "gyeongju-GJ08-7123",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7124",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7124",
+      "proposed_source_key": "gyeongju-GJ08-7124",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7125",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7125",
+      "proposed_source_key": "gyeongju-GJ08-7125",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7126",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7126",
+      "proposed_source_key": "gyeongju-GJ08-7126",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7127",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7127",
+      "proposed_source_key": "gyeongju-GJ08-7127",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7128",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7128",
+      "proposed_source_key": "gyeongju-GJ08-7128",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7133",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7133",
+      "proposed_source_key": "gyeongju-GJ08-7133",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7225",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7225",
+      "proposed_source_key": "gyeongju-GJ08-7225",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7262",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7262",
+      "proposed_source_key": "gyeongju-GJ08-7262",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7263",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7263",
+      "proposed_source_key": "gyeongju-GJ08-7263",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7268",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7268",
+      "proposed_source_key": "gyeongju-GJ08-7268",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7269",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7269",
+      "proposed_source_key": "gyeongju-GJ08-7269",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7278",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7278",
+      "proposed_source_key": "gyeongju-GJ08-7278",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7285",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7285",
+      "proposed_source_key": "gyeongju-GJ08-7285",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7286",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7286",
+      "proposed_source_key": "gyeongju-GJ08-7286",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7288",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7288",
+      "proposed_source_key": "gyeongju-GJ08-7288",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7289",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7289",
+      "proposed_source_key": "gyeongju-GJ08-7289",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7297",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7297",
+      "proposed_source_key": "gyeongju-GJ08-7297",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-73",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-73",
+      "proposed_source_key": "gyeongju-GJ08-73",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-732",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-732",
+      "proposed_source_key": "gyeongju-GJ08-732",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-733",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-733",
+      "proposed_source_key": "gyeongju-GJ08-733",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7425",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7425",
+      "proposed_source_key": "gyeongju-GJ08-7425",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7486",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7486",
+      "proposed_source_key": "gyeongju-GJ08-7486",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7493",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7493",
+      "proposed_source_key": "gyeongju-GJ08-7493",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7496",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7496",
+      "proposed_source_key": "gyeongju-GJ08-7496",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7498",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7498",
+      "proposed_source_key": "gyeongju-GJ08-7498",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7510",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7510",
+      "proposed_source_key": "gyeongju-GJ08-7510",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-7563",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-7563",
+      "proposed_source_key": "gyeongju-GJ08-7563",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-759",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-759",
+      "proposed_source_key": "gyeongju-GJ08-759",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-76",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-76",
+      "proposed_source_key": "gyeongju-GJ08-76",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-760",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-760",
+      "proposed_source_key": "gyeongju-GJ08-760",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-78",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-78",
+      "proposed_source_key": "gyeongju-GJ08-78",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-79",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-79",
+      "proposed_source_key": "gyeongju-GJ08-79",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-80",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-80",
+      "proposed_source_key": "gyeongju-GJ08-80",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-81",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-81",
+      "proposed_source_key": "gyeongju-GJ08-81",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-82",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-82",
+      "proposed_source_key": "gyeongju-GJ08-82",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-84",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-84",
+      "proposed_source_key": "gyeongju-GJ08-84",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-85",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-85",
+      "proposed_source_key": "gyeongju-GJ08-85",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-86",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-86",
+      "proposed_source_key": "gyeongju-GJ08-86",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-87",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-87",
+      "proposed_source_key": "gyeongju-GJ08-87",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-88",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-88",
+      "proposed_source_key": "gyeongju-GJ08-88",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-91",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-91",
+      "proposed_source_key": "gyeongju-GJ08-91",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-93",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-93",
+      "proposed_source_key": "gyeongju-GJ08-93",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-95",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-95",
+      "proposed_source_key": "gyeongju-GJ08-95",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-96",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-96",
+      "proposed_source_key": "gyeongju-GJ08-96",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-99",
+      "source_phase": "CANONICAL_102",
+      "current_source_key": "gyeongju-GJ08-99",
+      "proposed_source_key": "gyeongju-GJ08-99",
+      "change_required": false,
+      "stability_assessment": "STABLE_INTERNAL_ID",
+      "reason": "getMenuRstrt candidate_id is stable internal identity from source collection."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-001",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:고향밀면",
+      "proposed_source_key": "kto:39:2838855",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-002",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:소소밀밀 서악",
+      "proposed_source_key": "kto:39:3101705",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-003",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:르씨엘",
+      "proposed_source_key": "kto:39:3456352",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-004",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:우렁각시쌈밥",
+      "proposed_source_key": "kto:39:2840332",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-005",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:장군암소숯불",
+      "proposed_source_key": "kto:39:2840275",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-006",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:경주다방",
+      "proposed_source_key": "kto:39:2838756",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-007",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:영양숯불갈비",
+      "proposed_source_key": "kto:39:2736691",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-008",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:히든씨",
+      "proposed_source_key": "kto:39:2840968",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-009",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:카페솔(Sol)",
+      "proposed_source_key": "kto:39:2840804",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-010",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:인터폴 커피",
+      "proposed_source_key": "kto:39:3458332",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-011",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:소풍가다",
+      "proposed_source_key": "kto:39:2840458",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-012",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:카페 35mm",
+      "proposed_source_key": "kto:39:2838676",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-013",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:이스트앵글",
+      "proposed_source_key": "kto:39:2840301",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-014",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:스타트커피",
+      "proposed_source_key": "kto:39:2840446",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-015",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:산드레",
+      "proposed_source_key": "kto:39:2840506",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-016",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:카페 로드100",
+      "proposed_source_key": "kto:39:2840767",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-017",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:야생화일기",
+      "proposed_source_key": "kto:39:2840403",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-018",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:벤자마스",
+      "proposed_source_key": "kto:39:2876473",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-019",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:기와골맷돌순두부",
+      "proposed_source_key": "kto:39:2838924",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-020",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:향미사",
+      "proposed_source_key": "kto:39:2840432",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-021",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:라플레르",
+      "proposed_source_key": "kto:39:2838992",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-022",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:이재원과자공방",
+      "proposed_source_key": "kto:39:2840291",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-023",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:블리스",
+      "proposed_source_key": "kto:39:2838742",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-024",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:나이프(naif)",
+      "proposed_source_key": "kto:39:2838936",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-025",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:가봉반과",
+      "proposed_source_key": "kto:39:2838704",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-026",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:야드",
+      "proposed_source_key": "kto:39:2840413",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-027",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:아덴",
+      "proposed_source_key": "kto:39:2831874",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    },
+    {
+      "candidate_id": "gyeongju-FD28-028",
+      "source_phase": "READY_28",
+      "current_source_key": "food-190-ready:페이지나인",
+      "proposed_source_key": "kto:39:2840841",
+      "change_required": true,
+      "stability_assessment": "STABLE_KTO_ID",
+      "reason": "KTO contentid is stable public record identifier. Replaces name-based key."
+    }
+  ]
+}
