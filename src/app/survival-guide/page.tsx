@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { isEditorialAffiliateEnabled } from "@/config/commerce-surfaces";
 
 export const metadata = {
@@ -40,7 +41,10 @@ export default function SurvivalGuidePage() {
               <span className="font-black tracking-tight">gokoreamate</span>
             </Link>
           </div>
-          <nav className="flex items-center gap-8">
+          <LanguageSwitcher variant="icon" className="sm:hidden text-[#2C2520]" />
+          {/* 좁은 화면에서는 이 링크들이 하단 More 탭(/more)에 모여 있다.
+              가로 폭이 이미 x=378 까지 차 있어 지구본과 공존할 수 없다. */}
+          <nav className="hidden sm:flex items-center gap-8">
             <Link
               href="/blog"
               className="text-base font-bold hover:text-[#D4AF37] transition-colors"

@@ -9,6 +9,15 @@
     "home": "Home",
     "about": "About"
   },
+  "more": {
+    "subtitle": "About gokoreamate, and the guides we keep for your trip.",
+    "groupInfo": "Information",
+    "groupSupport": "Help & Support",
+    "aboutDesc": "Our mission, data sources, and the AI behind the plans",
+    "blogDesc": "Travel notes and city guides",
+    "guideDesc": "Cash, transit, taxis, and eating alone in Korea",
+    "contactDesc": "Send feedback or report something wrong"
+  },
   "explore": {
     "title": "Explore {city}",
     "spotCount": "{count} spot",

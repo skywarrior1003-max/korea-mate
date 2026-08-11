@@ -39,7 +39,10 @@ test("★BottomNav 는 Home·Explore·Picks·Trips·More 5개를 이 순서로 �
     ["explore", "/explore/busan"],
     ["picks",   "/picks"],
     ["trips",   "/my-trips"],
-    ["more",    "/about"],
+    // More 는 /more 정보 허브다. 예전엔 /about 글로 바로 떨어져서 Blog·
+    // Survival Guide 가 좁은 화면에서 갈 곳이 없었다. /about 자체는 그대로 있고
+    // /more 에서 연결한다.
+    ["more",    "/more"],
   ]);
 });
 

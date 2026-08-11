@@ -9,6 +9,15 @@
     "home": "ホーム",
     "about": "サービス紹介"
   },
+  "more": {
+    "subtitle": "gokoreamate について、そして旅に必要な案内をまとめました。",
+    "groupInfo": "インフォメーション",
+    "groupSupport": "お問い合わせ・ヘルプ",
+    "aboutDesc": "私たちの目標、データの出典、旅程をつくる AI",
+    "blogDesc": "旅の記録と都市ガイド",
+    "guideDesc": "現金・交通・タクシー・ひとりごはんまで",
+    "contactDesc": "ご意見を送る・誤りを知らせる"
+  },
   "explore": {
     "title": "{city}を探索",
     "spotCount": "{count}件のスポット",

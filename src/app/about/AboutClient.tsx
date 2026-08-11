@@ -120,8 +120,10 @@ export default function AboutClient() {
 
           <hr className="border-[#FAF7F2]" />
 
-          {/* Section 4 - Contact */}
-          <section className="space-y-4">
+          {/* Section 4 - Contact
+              id 는 /more 의 문의 항목이 도착하는 자리다. sticky 헤더(h-20)에
+              가리지 않도록 scroll-mt 를 함께 준다. */}
+          <section id="contact" className="scroll-mt-24 space-y-4">
             <h2 className="text-2xl font-black text-[#2C2520] flex items-center gap-2">
               ✉️ {t("contactTitle")}
             </h2>

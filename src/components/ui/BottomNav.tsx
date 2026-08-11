@@ -1,5 +1,7 @@
 // GoKoreaMate UI 기반 — 모바일 하단 5-탭 내비 셸
 // Home · Explore · Picks(count badge) · Trips · More
+// More 는 /more 보조 정보 허브다 — 예전엔 /about 글로 바로 떨어져서
+// Blog·Survival Guide 가 좁은 화면에서 갈 곳이 없었다.
 // 배지는 Selected(cart) 개수다. Saved 개수가 아니다 — 사용자가 다음에 할 일
 // (일정 만들기)에 직접 연결된 숫자만 배지로 보여준다.
 // 라벨은 i18n shell.* — 4개 언어 확장 대응(고정폭 금지, truncate 금지).
@@ -36,7 +38,7 @@ const TABS = [
   { key: "explore", href: "/explore/busan" },
   { key: "picks",   href: "/picks" },
   { key: "trips",   href: "/my-trips" },
-  { key: "more",    href: "/about" },
+  { key: "more",    href: "/more" },
 ] as const;
 
 export default function BottomNav({ selectedCount }: BottomNavProps) {

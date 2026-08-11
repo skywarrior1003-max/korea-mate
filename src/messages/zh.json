@@ -9,6 +9,15 @@
     "home": "首页",
     "about": "关于"
   },
+  "more": {
+    "subtitle": "关于 gokoreamate，以及旅途中需要的各种指南。",
+    "groupInfo": "信息",
+    "groupSupport": "帮助与联系",
+    "aboutDesc": "我们的目标、数据来源，以及规划行程的 AI",
+    "blogDesc": "旅行随笔与城市指南",
+    "guideDesc": "现金、交通、出租车、一个人吃饭",
+    "contactDesc": "发送反馈或报告错误信息"
+  },
   "explore": {
     "title": "探索{city}",
     "spotCount": "{count}个景点",
