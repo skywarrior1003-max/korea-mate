@@ -41,13 +41,15 @@ If your phone supports NFC, you can add a virtual T-money card to Kakao Pay (And
 
 ### Key Routes & Times
 
-| Route | Duration | Price (Standard) |
-|-------|----------|-----------------|
-| Seoul → Busan | 2hr 15min | ₩59,800 |
-| Seoul → Daejeon | 50min | ₩23,700 |
-| Seoul → Daegu | 1hr 40min | ₩43,500 |
-| Seoul → Gwangju | 1hr 33min | ₩46,800 |
-| Seoul → Gyeongju | 2hr 10min | ₩53,400 |
+| Route | Duration | Book ahead? |
+|-------|----------|-------------|
+| Seoul → Busan | 2hr 15min | Yes on weekends and holidays |
+| Seoul → Daejeon | 50min | Usually walk-up |
+| Seoul → Daegu | 1hr 40min | Usually walk-up |
+| Seoul → Gwangju | 1hr 33min | Usually walk-up |
+| Seoul → Gyeongju | 2hr 10min | Yes on weekends and holidays |
+
+Fares are distance-based and are shown on the booking page below. We do not quote them here — they change, and the operator's own page is the only place they are reliably current.
 
 ### Booking KTX
 
@@ -55,15 +57,13 @@ If your phone supports NFC, you can add a virtual T-money card to Kakao Pay (And
 2. **KORAIL app** — iOS and Android, English language available
 3. **At stations** — ticket machines have English mode; manned windows available
 
-**Tip:** Book at least 1 week ahead on weekends and public holidays. First-class (KTX-Sancheon) upgrades are worth it for the extra legroom (~₩10,000 more).
+**Tip:** Book at least 1 week ahead on weekends and public holidays. First class (KTX-Sancheon) costs more but gives you noticeably more legroom, which is worth considering on the longer Seoul–Busan run.
 
 ### Rail Pass Options
 
 The **Korea Rail Pass (KR Pass)** allows unlimited KTX travel for 3, 5, or 7 consecutive days. Available only for foreign visitors; purchase before arriving in Korea or at major KTX stations.
 
-- 3-day pass: ~₩182,000
-- 5-day pass: ~₩240,000
-- **Worth buying if:** You plan 3+ inter-city train trips
+**Worth buying if:** you plan 3 or more inter-city train trips. For a single round trip it generally is not — compare the pass against the individual fares on KORAIL's site before deciding.
 
 ---
 
@@ -106,12 +106,14 @@ For cities not well-served by KTX (like Gyeongju, Jeonju, Gangneung), intercity 
 
 ### Key Routes by Bus
 
-| Route | Duration | Price |
+| Route | Duration | Notes |
 |-------|----------|-------|
-| Seoul → Gyeongju | ~3hr 20min | ₩26,000 |
-| Seoul → Jeonju | ~2hr 30min | ₩14,500 |
-| Seoul → Gangneung | ~2hr 20min | ₩18,700 |
-| Busan → Gyeongju | ~50min | ₩4,900 |
+| Seoul → Gyeongju | ~3hr 20min | No direct KTX to central Gyeongju |
+| Seoul → Jeonju | ~2hr 30min | Bus is the practical choice |
+| Seoul → Gangneung | ~2hr 20min | KTX also runs on this route |
+| Busan → Gyeongju | ~50min | Short hop, frequent departures |
+
+Intercity buses are usually the cheaper option where both exist, but check the fare on the booking site rather than assuming.
 
 ### Booking Buses
 
@@ -162,15 +164,16 @@ Recommended **only** for:
 
 ---
 
-## Budget Transport Summary (7-day Seoul + Busan trip)
+## What Drives Your Transport Cost (7-day Seoul + Busan trip)
 
-| Item | Estimated Cost |
-|------|----------------|
-| AREX Express (airport) | ₩9,500 × 2 = ₩19,000 |
-| Seoul Metro daily (7 days) | ~₩6,000/day × 5 = ₩30,000 |
-| Seoul → Busan KTX | ₩59,800 × 2 = ₩119,600 |
-| Busan Metro (2 days) | ~₩4,000/day × 2 = ₩8,000 |
-| **Total transport** | **~₩177,000 (~$130 USD)** |
+For a week split between Seoul and Busan, the shape of the spending is easy to predict even without the numbers:
+
+- **The inter-city leg dominates.** One Seoul–Busan round trip on KTX will outweigh everything else on this list combined. If the budget is tight, this is the line to look at first — an express bus over the same route costs meaningfully less for a couple of extra hours.
+- **Daily city transit is minor by comparison.** Seoul and Busan metro fares are distance-based and modest; a week of normal sightseeing adds up to a fraction of the KTX leg.
+- **The airport run is a one-off.** AREX to central Seoul and back is two fixed fares, listed above.
+- **T-money removes the friction, not the cost.** It saves a small amount per bus ride and spares you buying tickets each time.
+
+Check the current fares on the operators' own sites — KORAIL for rail, kobus.co.kr for buses — when you build your budget.
 
 ## Plan Your Korea Transport with AI
 

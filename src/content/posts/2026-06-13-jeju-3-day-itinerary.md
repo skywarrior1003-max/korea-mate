@@ -11,11 +11,11 @@ Jeju is Korea's volcanic island paradise — a UNESCO triple heritage site (natu
 
 ## Getting to Jeju
 
-**By air:** From Seoul (Gimpo GMP): 55 min, from ₩35,000 (budget, one-way). From Busan (PUS): 50 min. Jeju has its own airport (CJU) with domestic and some international flights.
+**By air:** From Seoul (Gimpo GMP): 55 min. From Busan (PUS): 50 min. Jeju is one of the busiest domestic routes in the world, so departures are frequent. Jeju has its own airport (CJU) with domestic and some international flights.
 
 **Accommodation:** Jeju City (north) for central access, or **Seogwipo** (south) for proximity to southern coastal attractions. A car is essential — staying in one area and driving is the most efficient approach.
 
-**Car rental:** From ₩35,000–₩80,000/day. International Driver's License accepted. Book ahead in summer peak season.
+**Car rental:** International Driver's License accepted. Book ahead in summer peak season — the island runs short of cars in July and August.
 
 ---
 
@@ -106,16 +106,11 @@ Grab grilled seafood from the beachside restaurants for lunch (₩20,000–₩35
 
 ---
 
-## Jeju Island Costs
+## What Jeju Costs You
 
-| Item | Cost |
-|------|------|
-| Flight Seoul–Jeju | ₩35,000–₩80,000 |
-| Car rental (3 days) | ₩105,000–₩240,000 |
-| Accommodation (per night) | ₩50,000–₩150,000 |
-| Seongsan entry | ₩2,000 |
-| Hallasan (free) | ₩0 |
-| Manjanggul | ₩4,000 |
+Three things decide a Jeju budget, and none of them are the sights. **Flights** swing widely with the season and how early you book. **Car rental** is close to unavoidable here and runs for the whole trip, not per outing. **Where you sleep** — Jeju City or Seogwipo — sets the third line.
+
+Against those, entry fees are almost an afterthought: Seongsan and Manjanggul each cost a few thousand won, and Hallasan National Park is free. The itinerary above lists each one where it comes up.
 
 ## Plan Your Jeju Trip with AI
 

@@ -11,7 +11,7 @@ Busan is everything Seoul isn't — wide ocean beaches, mountain hiking trails t
 
 ## Getting to Busan
 
-**From Seoul:** KTX from Seoul Station → Busan Station: 2hr 15min (₩59,800 standard). Book online at Korail or via the KORAIL app — seats sell out on weekends and holidays.
+**From Seoul:** KTX from Seoul Station → Busan Station: 2hr 15min. Book online at Korail or via the KORAIL app — seats sell out on weekends and holidays.
 
 **International:** Gimhae International Airport (PUS) has direct flights from Japan, China, Southeast Asia, and the US (via connections). Airport bus or subway Line 2 connects to the city.
 
@@ -91,7 +91,7 @@ The traditional commercial heart of Busan.
 
 ### Late Afternoon: Songdo Beach & Sky Walk (17:00–19:00)
 
-Korea's first public beach (1913), now home to a **glass-bottom sky walk** extending over the sea and a cable car (Aircruse) connecting two cliffsides (₩15,000 round trip).
+Korea's first public beach (1913), now home to a **glass-bottom sky walk** extending over the sea and a cable car (Aircruse) connecting two cliffsides. The sky walk is free to enter; the cable car is ticketed, with a round-trip option.
 
 The sky walk gives genuinely vertiginous views over the Busan coastline — worth the detour before catching your KTX back to Seoul.
 
