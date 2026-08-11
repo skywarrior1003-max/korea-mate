@@ -133,7 +133,7 @@
     "lossless_audit": "data/gyeongju-source-audit/gyeongju-food-lossless-mapping-audit-v1.json"
   },
   "NEXT_TASK": "BUSAN_FOOD_DISCOVERY_PRECHECK",
-  "FINAL_SHA": "d994471",
+  "FINAL_SHA": "a49bc83",
   "PUSH": "PASS",
   "GYEONGJU_FOOD_DISCOVERY_V1": "PASS",
   "task_closeout": "TASK-GYEONGJU-FOOD-DISCOVERY-V1-FINAL-REVIEW-AND-CLOSEOUT",
