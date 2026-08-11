@@ -162,7 +162,41 @@ test("★외부 고유명사를 번역하지 않았다", () => {
 test("★itin 번역 훅이 필요한 컴포넌트에 붙어 있다", () => {
   assert.equal((BODY.match(/useTranslations\("itin"\)/g) ?? []).length, 3,
     "PlaceModal · ItineraryResult · ItineraryPage 세 곳");
-  assert.ok((BODY.match(/\bt\("/g) ?? []).length >= 40, "t() 호출이 너무 적다");
+});
+
+// 예전에는 `t("` 리터럴 호출 개수를 품질 지표로 썼다. 그런데 에러 문구를
+// t("errX") 에서 t(error.key) 로 옮기자 — 번역이 더 정확해졌는데도 — 개수가
+// 줄어 가드가 깨졌다. 개수는 번역 품질을 대변하지 못한다.
+//
+// 그래서 개수 대신 "이 화면이 번역을 실제로 거치는가" 를 본다.
+test("★에러 문구는 던질 때가 아니라 그릴 때 번역된다", () => {
+  // state 에 완성된 문장을 넣으면 locale 이 정해지기 전 영어로 굳는다.
+  assert.doesNotMatch(BODY, /setError\(\s*t\(/,
+    "setError(t(...)) 는 locale 확정 전에 문장을 고정시킨다");
+  // 키를 담고 렌더에서 푼다
+  assert.match(BODY, /setError\(\{\s*key:/, "에러 state 는 키를 담아야 한다");
+  assert.match(BODY, /t\(error\.key/,        "렌더 시점에 t(error.key) 로 푼다");
+  // 서버 원문은 번역 대상이 아니라 값으로 함께 들고 간다
+  assert.match(BODY, /key:\s*"errLoadFailed",\s*message:/);
+});
+
+test("★에러·이탈 문구 키가 4개 언어에 모두 있다", () => {
+  // 화면이 실제로 부르는 키들. 하나라도 빠지면 그 언어에서 키가 그대로 노출된다.
+  for (const k of ["errNoDates", "errCorrupted", "errEmpty", "errGenerate",
+                   "errNetwork", "errLoadFailed", "errGenerateFailed",
+                   "errLoadSavedFailed", "somethingWrong", "backHome"]) {
+    assert.match(BODY, new RegExp(`"${k}"`), `page.tsx 가 ${k} 를 쓰지 않는다`);
+    for (const l of LOCALES) {
+      assert.ok(msg(l).itin?.[k], `${l}.itin.${k} 없음`);
+    }
+  }
+});
+
+test("★저작권 문구를 화면이 직접 적지 않는다", () => {
+  // footer 네임스페이스에 4개 언어가 이미 있는데 영어를 직접 적으면
+  // 한국어 화면에 영어 저작권이 남는다.
+  assert.doesNotMatch(BODY, /All rights reserved/);
+  assert.match(BODY, /tFooter\("copyright"/);
 });
 
 // ── 7·8·9. 구조·토큰·지도 무변경 ────────────────────────────────────────────

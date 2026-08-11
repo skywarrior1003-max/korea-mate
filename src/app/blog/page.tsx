@@ -6,6 +6,7 @@ import EditorialNav from "@/components/ui/EditorialNav";
 export const metadata = {
   title: "Korea Travel Blog — gokoreamate.com",
   description: "Tips, guides, and stories for foreign travelers in Korea.",
+  alternates: { canonical: "https://gokoreamate.com/blog/" },
 };
 
 export default function BlogListPage() {

@@ -195,14 +195,27 @@ test("★Like 와 Report 를 한 점수로 합치지 않는다", () => {
 
 // ── L20~L22 UI ──────────────────────────────────────────────────────────────
 
-test("★L20 모바일·데스크톱 모두에서 닿고, Saved 와 모양이 겹치지 않는다", () => {
+// 이 가드는 원래 Place Detail 에 PlaceLikeButton 이 두 곳 있어야 한다고 요구했다.
+// 그 뒤 4fa94ad "make Save the only action when a place is first seen" 로 장소
+// 상세의 일반 Like 는 제품에서 빠졌다. 제거된 기능을 계속 요구하면 가드가
+// 상시 빨간 상태가 되어 진짜 회귀를 가린다.
+//
+// 그래서 요구를 뒤집는다 — 지금 지켜야 할 규칙은 "장소 상세의 첫 액션은
+// Save 이고, 거기에 일반 Like 를 되살리지 않는다" 이다.
+test("★L20 장소 상세의 첫 액션은 Save 이고 일반 Like 를 되살리지 않는다", () => {
   const page = read("src", "app", "place", "[id]", "PlaceDetailClient.tsx");
-  // 데스크톱 카드 + 모바일 본문 두 곳에 배치
-  assert.equal((page.match(/<PlaceLikeButton/g) ?? []).length, 2);
-  assert.match(page, /md:hidden">\s*\n\s*<PlaceLikeButton/);
+  assert.equal((page.match(/<PlaceLikeButton/g) ?? []).length, 0,
+    "장소 상세에 일반 Like 를 다시 넣지 않는다 (4fa94ad)");
+  // Save 는 남아 있어야 한다 — 이 화면의 유일한 1차 액션이다
+  assert.match(page, /toggleFavorite/, "Save 액션이 사라졌다");
+  assert.match(page, /useTranslations\("saved"\)/, "Save 문구는 번역을 거친다");
+});
+
+// 컴포넌트 자체는 Story·Memory 쪽 재사용을 위해 남아 있다. 되살릴 때를 대비해
+// Saved 와 모양이 겹치지 않는다는 규칙만 컴포넌트 단위로 계속 지킨다.
+test("★L20-b Like 버튼은 Saved 북마크와 모양이 겹치지 않는다", () => {
   const ui = read("src", "components", "PlaceLikeButton.tsx");
   assert.match(ui, /min-h-11/);                 // 터치 타깃
-  // Saved 는 북마크, Like 는 엄지 — 같은 하트를 쓰지 않는다
   assert.doesNotMatch(ui, /M6\.5 4\.5h11/);     // Saved 북마크 path
   assert.match(ui, /aria-pressed=\{liked\}/);
 });

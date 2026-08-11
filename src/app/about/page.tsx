@@ -8,6 +8,7 @@ import AboutClient from "./AboutClient";
 export const metadata = {
   title: "About gokoreamate",
   description: "Learn about the mission, data sources, and AI technologies powering gokoreamate.",
+  alternates: { canonical: "https://gokoreamate.com/about/" },
 };
 
 export default function AboutPage() {

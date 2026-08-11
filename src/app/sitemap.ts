@@ -48,6 +48,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/all-spots/`,             lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: `${siteUrl}/trending/`,              lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
     { url: `${siteUrl}/blog/`,                  lastModified: new Date(), changeFrequency: "weekly",  priority: 0.7 },
+    // 실제 콘텐츠가 있는 소개 페이지인데 지금까지 sitemap 에서 빠져 있었다.
+    { url: `${siteUrl}/about/`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
     ...blogPosts,
     ...placePages,
   ];

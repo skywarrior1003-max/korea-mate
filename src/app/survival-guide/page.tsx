@@ -9,6 +9,7 @@ import SurvivalGuideClient from "./SurvivalGuideClient";
 export const metadata = {
   title: "Korea Survival Guide - gokoreamate",
   description: "Everything foreign travelers need to know before and during their trip to Korea.",
+  alternates: { canonical: "https://gokoreamate.com/survival-guide/" },
 };
 
 export default function SurvivalGuidePage() {

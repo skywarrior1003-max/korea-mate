@@ -1830,7 +1830,7 @@ function ItineraryResult() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-ink text-surface-dim rounded-xl hover:bg-black transition-colors">
-            ← Back to Home
+            ← {t("backHome")}
           </Link>
           {shareId && (
             <Link href="/my-trips" className="inline-flex items-center justify-center px-6 py-3.5 text-base font-extrabold bg-red-50 text-red-600 border-2 border-red-200 rounded-xl hover:bg-red-100 transition-colors">
@@ -2042,7 +2042,7 @@ function ItineraryResult() {
           )}
 
           <Link href="/" className="inline-flex items-center justify-center px-6 py-3 text-sm font-extrabold bg-surface-dim hover:bg-[#F3EEE3] text-ink border border-line rounded-xl transition-all shadow-sm">
-            ← Back to Home
+            ← {t("backHome")}
           </Link>
 
           {/* Compact 편집 캔버스 진입 — 비공유 or 본인 일정 */}
@@ -2792,6 +2792,8 @@ function ItineraryResult() {
 // ══════════════════════════════════════════════════════════════
 export default function ItineraryPage() {
   const t = useTranslations("itin");
+  // 저작권 문구는 footer 네임스페이스에 이미 4개 언어로 있다.
+  const tFooter = useTranslations("footer");
   return (
     <div className="min-h-screen flex flex-col bg-surface-dim text-ink font-sans antialiased">
       <header className="border-b border-line bg-surface-dim/90 backdrop-blur-md sticky top-0 z-40">
@@ -2815,7 +2817,7 @@ export default function ItineraryPage() {
 
       <footer className="mt-auto border-t border-line bg-surface-dim py-8 text-center text-sm text-sub px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} gokoreamate. All rights reserved.</p>
+          <p>{tFooter("copyright", { year: new Date().getFullYear() })}</p>
           <p className="font-bold tracking-wide">{t("attribution")}</p>
         </div>
       </footer>
