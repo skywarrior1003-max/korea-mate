@@ -20,6 +20,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
@@ -337,6 +338,15 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   <path d="M15 5l-7 7 7 7" />
                 </svg>
               </Link>
+              {/* 이 화면만 모바일 헤더가 없다. 언어 전환이 여기서만 끊기지 않도록
+                  뒤로가기와 같은 알약을 반대편에 둔다 — 데스크톱은 TopNav 가
+                  이미 갖고 있으므로 md:hidden 이다. 사진을 가리지 않게 40px. */}
+              <span
+                className="md:hidden absolute right-3 top-3 w-10 h-10 rounded-full inline-flex items-center justify-center text-ink shadow-lg"
+                style={{ backgroundColor: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)" }}
+              >
+                <LanguageSwitcher variant="icon" />
+              </span>
             </div>
 
             {/* 사진 위로 6px 올라오는 정보 카드 */}

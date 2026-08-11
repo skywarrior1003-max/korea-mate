@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventDetailModal from "@/components/EventDetailModal";
 import SpotCard from "@/components/SpotCard";
 import NaverMap, { type MapSpot } from "@/components/NaverMap";
@@ -757,6 +758,7 @@ export default function ExploreCity({ city }: { city: CityConfig }) {
           {/* 모바일 헤더는 시안처럼 얇게. 예전엔 주황 Plan 버튼과 이모지 배지가
               첫 화면을 눌러 검색·토글이 아래로 밀려 있었다. */}
           <div className="sm:hidden flex items-center gap-1">
+            <LanguageSwitcher variant="icon" className="text-gray-700" />
             <Link
               href="/my-trips"
               aria-label={tN("myTrips")}

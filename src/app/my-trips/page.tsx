@@ -6,6 +6,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
   apiFetchItinerariesByDevice,
   apiDeleteItinerary,
@@ -206,12 +207,15 @@ export default function MyTripsPage() {
           <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
             <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
-          <Link
-            href="/"
-            className="text-sm font-bold text-[#565D66] hover:text-[#191C21] transition-colors"
-          >
-            ← Home
-          </Link>
+          <span className="flex items-center gap-1">
+            <LanguageSwitcher variant="icon" className="sm:hidden text-[#565D66]" />
+            <Link
+              href="/"
+              className="gkm-focus inline-flex items-center min-h-11 px-2 -mr-2 text-sm font-bold text-[#565D66] hover:text-[#191C21] transition-colors"
+            >
+              ← Home
+            </Link>
+          </span>
         </div>
       </header>
 

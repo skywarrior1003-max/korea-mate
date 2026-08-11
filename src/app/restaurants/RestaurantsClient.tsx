@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { getRestaurantPlaces } from "@/lib/places";
 import type { RestaurantItem } from "@/lib/places";
 
@@ -435,9 +436,12 @@ export default function RestaurantsClient() {
             <span className="text-gray-300 text-lg">/</span>
             <h1 className="text-sm font-black text-gray-700 truncate">2026 Busan Food Guide</h1>
           </div>
-          <Link href="/all-spots" className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors">
-            All Spots
-          </Link>
+          <span className="flex items-center gap-1 shrink-0">
+            <LanguageSwitcher variant="icon" className="sm:hidden text-gray-700" />
+            <Link href="/all-spots" className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors">
+              All Spots
+            </Link>
+          </span>
         </div>
       </header>
 

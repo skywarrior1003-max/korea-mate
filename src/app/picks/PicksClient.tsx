@@ -12,6 +12,7 @@
 
 import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
@@ -286,12 +287,15 @@ function PicksContent() {
         {/* 글자만 두면 41×20 이라 손가락으로는 빗나간다. 글자 크기는 그대로 두고
             좌우 padding 과 min-height 로 누를 수 있는 넓이만 44 까지 넓힌다.
             -mr-2 로 늘어난 padding 만큼 되당겨 헤더 오른쪽 정렬은 유지한다. */}
-        <Link
-          href="/"
-          className="gkm-focus inline-flex items-center min-h-11 px-2 -mr-2 text-sm font-semibold text-sub"
-        >
-          {tS("home")}
-        </Link>
+        <span className="flex items-center gap-1 -mr-2">
+          <LanguageSwitcher variant="icon" className="text-sub" />
+          <Link
+            href="/"
+            className="gkm-focus inline-flex items-center min-h-11 px-2 text-sm font-semibold text-sub"
+          >
+            {tS("home")}
+          </Link>
+        </span>
       </header>
 
       <main className="flex-1 w-full max-w-[720px] mx-auto px-4 py-5">

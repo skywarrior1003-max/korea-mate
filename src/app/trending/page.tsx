@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
@@ -363,6 +364,7 @@ export default function TrendingPage() {
           <Link href="/" className="text-xl font-normal text-gray-900 flex items-center gap-1.5">
             <span className="font-black tracking-tight">gokoreamate</span>
           </Link>
+          <LanguageSwitcher variant="icon" className="sm:hidden text-gray-700" />
           <nav className="hidden sm:flex items-center gap-6">
             <Link
               href="/busan"

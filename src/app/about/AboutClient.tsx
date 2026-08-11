@@ -9,6 +9,7 @@
 // 만들 수 없고, 이번 범위에서는 영어로 고정한다.
 
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 import ContactSection from "@/components/ContactSection";
 
@@ -32,6 +33,7 @@ export default function AboutClient() {
           </div>
           {/* 모바일에서는 이 메뉴가 브랜드와 붙어 "gokoreamateBlog" 처럼 읽혔다.
               좁은 화면에서는 하단 내비가 같은 곳으로 데려가므로 숨긴다. */}
+          <LanguageSwitcher variant="icon" className="sm:hidden text-[#2C2520]" />
           <nav className="hidden sm:flex items-center gap-8">
             <Link
               href="/blog"

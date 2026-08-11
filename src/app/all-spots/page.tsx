@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EventCard from "@/components/EventCard";
 import EventDetailModal from "@/components/EventDetailModal";
 import type { EventItem } from "@/lib/cart";
@@ -266,9 +267,12 @@ export default function AllSpotsPage() {
             <span className="text-gray-300 text-lg">/</span>
             <h1 className="text-base font-black text-gray-700">{t("title")}</h1>
           </div>
+          <span className="flex items-center gap-1 shrink-0">
+          <LanguageSwitcher variant="icon" className="sm:hidden text-gray-700" />
           <Link href="/my-trips" className="shrink-0 px-3 py-1.5 rounded-lg text-sm font-bold text-orange-600 border border-orange-200 bg-orange-50 hover:bg-orange-100 transition-colors">
             🧳 {tNav("myTrips")}
           </Link>
+          </span>
         </div>
       </header>
 

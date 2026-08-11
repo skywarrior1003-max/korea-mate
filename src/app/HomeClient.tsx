@@ -5,6 +5,7 @@ import { resolveCityParam, stripCityParam } from "@/lib/home-city-param-core";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import Image from "next/image";
 import AdBanner from "@/components/AdBanner";
 import EventCard from "@/components/EventCard";
@@ -940,6 +941,7 @@ export default function HomeClient() {
               화면의 3분의 1을 먹고 Hero 위계를 눌렀다. 두 경로 모두 살아 있다:
               일정 만들기는 화면 안 CTA 와 하단 내비, My Trips 는 아래 아이콘. */}
           <div className="sm:hidden flex items-center gap-1 shrink-0">
+            <LanguageSwitcher variant="icon" className="text-gray-700" />
             <button
               onClick={() => document.getElementById("spots-main")?.scrollIntoView({ behavior: "smooth" })}
               aria-label={th("searchPlaces")}
