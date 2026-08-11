@@ -185,6 +185,38 @@
     "styleSolo": "혼자",
     "styleExplorer": "탐험가"
   },
+  "blogAffiliate": {
+    "card": {
+      "ktxSeoulBusan": {
+        "title": "서울 → 부산 KTX",
+        "desc": "한국에서 가장 빠른 도시 간 열차. 주말·연휴에는 좌석이 빨리 나가니 미리 예매하세요."
+      },
+      "transferTransport": {
+        "title": "인천공항 이동",
+        "desc": "서울 도심까지 직행 리무진 버스. 짐을 들고 환승할 일이 없습니다."
+      },
+      "transferEsim": {
+        "title": "인천공항 이동",
+        "desc": "연결된 상태로 도착해 문 앞까지. 서울 도심행 리무진 버스."
+      },
+      "esimKlook": {
+        "title": "한국 eSIM — 도착과 동시에 연결",
+        "desc": "착륙 전에 개통하세요. 인천공항에 내리는 순간부터 5G/LTE 데이터."
+      },
+      "carJeju": {
+        "title": "제주 렌터카",
+        "desc": "제주는 좋은 곳이 섬 전체에 흩어져 있어 차가 사실상 필수입니다. 국제운전면허증 사용 가능."
+      }
+    },
+    "partnerNetwork": "gokoreamate 파트너 네트워크",
+    "sponsored": "제휴 링크 · gokoreamate가 수수료를 받을 수 있으며, 이용자가 더 내는 금액은 없습니다",
+    "publishedOn": "{date} 발행",
+    "backToBlog": "블로그 목록으로",
+    "contentNotice": "콘텐츠 안내",
+    "aiNotice": "이 글은 AI의 도움을 받아 작성했습니다. 여행 정보는 바뀔 수 있으니, 중요한 내용은 여행 전에 공식 출처에서 확인해 주세요.",
+    "originalSource": "원본 출처",
+    "dataCredit": "장소 정보는 한국관광공사 자료를 사용합니다. 일정 생성은 AI가 맡습니다."
+  },
   "map": {
     "google": "구글",
     "naver": "네이버",
@@ -199,7 +231,7 @@
     "cta": "가이드 보기 →"
   },
   "footer": {
-    "copyright": "© {year} gokoreamate. All rights reserved."
+    "copyright": "© {year} gokoreamate. 모든 권리 보유."
   },
   "modal": {
     "close": "✕",

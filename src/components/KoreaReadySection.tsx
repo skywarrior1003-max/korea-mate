@@ -1,5 +1,5 @@
 import AffiliateLink from "@/components/AffiliateLink";
-import { KLOOK, VIATOR, KTX } from "@/config/affiliates";
+import { KLOOK, KTX } from "@/config/affiliates";
 import {
   isEditorialAffiliateEnabled,
   type CommerceSurface,
@@ -31,13 +31,6 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
       desc: "Limousine bus direct to Seoul city center. Skip the AREX queue with luggage.",
       url: KLOOK.transferUrl,
     },
-    {
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Seoul Tours & Experiences",
-      desc: "Palace tours, K-culture, Gangnam night tours — curated by local Seoul guides.",
-      url: VIATOR.seoulHub(),
-    },
   ],
   busan: [
     {
@@ -54,13 +47,6 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
       desc: "Korea's fastest train. 2hr 15min from Seoul. Book seats in advance on weekends.",
       url: KTX.seoulBusanUrl,
     },
-    {
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Busan Tours & Experiences",
-      desc: "Haeundae, Gamcheon Village, seafood market tours — curated by local Busan guides.",
-      url: VIATOR.busanHub(),
-    },
   ],
   jeju: [
     {
@@ -74,15 +60,8 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
       emoji: "🚗",
       provider: "Klook",
       title: "Jeju Car Rental",
-      desc: "Essential for Jeju island. From ₩35,000/day. International license accepted.",
+      desc: "Essential for Jeju island — the best spots are spread island-wide. International license accepted.",
       url: KLOOK.jejuCarRentalUrl,
-    },
-    {
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Jeju Tours & Experiences",
-      desc: "Hallasan hike, lava cave tours, Seongsan sunrise — curated by local Jeju guides.",
-      url: VIATOR.searchUrl("tours", "Jeju"),
     },
   ],
   gyeongju: [
@@ -99,13 +78,6 @@ const CITY_CARDS: Record<City, AffiliateCard[]> = {
       title: "Seoul → Gyeongju KTX",
       desc: "2hr 10min from Seoul Station. Book in advance — weekends sell out fast.",
       url: KTX.seoulGyeongjuUrl,
-    },
-    {
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Gyeongju Tours & Experiences",
-      desc: "Bulguksa Temple, royal tumuli, Cheomseongdae — guided tours of Korea's ancient capital.",
-      url: VIATOR.searchUrl("tours", "Gyeongju"),
     },
   ],
 };
@@ -148,8 +120,8 @@ export default function KoreaReadySection({ city, surface }: Props) {
           </div>
         </div>
 
-        {/* Cards grid */}
-        <div className="p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Cards grid — 도시당 카드 2장이다. 3열로 두면 마지막 칸이 빈다. */}
+        <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {cards.map((card) => (
             <AffiliateLink
               key={card.title}

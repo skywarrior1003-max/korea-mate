@@ -185,6 +185,38 @@
     "styleSolo": "Solo",
     "styleExplorer": "Explorer"
   },
+  "blogAffiliate": {
+    "card": {
+      "ktxSeoulBusan": {
+        "title": "Seoul → Busan KTX Train",
+        "desc": "Book Korea's fastest inter-city train in advance. Seats sell out on weekends and holidays."
+      },
+      "transferTransport": {
+        "title": "Incheon Airport Transfer",
+        "desc": "Limousine bus direct to Seoul city center. No transit hassle with luggage."
+      },
+      "transferEsim": {
+        "title": "Incheon Airport Transfer",
+        "desc": "Arrive connected and door-to-door. Limousine bus to Seoul city center."
+      },
+      "esimKlook": {
+        "title": "Korea eSIM — Stay Connected",
+        "desc": "Activate before landing. 5G/LTE data from the moment you arrive at Incheon."
+      },
+      "carJeju": {
+        "title": "Jeju Car Rental",
+        "desc": "Essential for Jeju island — the best spots are spread island-wide. International license accepted."
+      }
+    },
+    "partnerNetwork": "gokoreamate partner network",
+    "sponsored": "Sponsored · gokoreamate may earn a commission, at no extra cost to you",
+    "publishedOn": "Published on {date}",
+    "backToBlog": "Back to Blog",
+    "contentNotice": "Content Notice",
+    "aiNotice": "This article was written with AI assistance. Travel information changes — check anything important with the official source before your trip.",
+    "originalSource": "Original Source",
+    "dataCredit": "Place data provided by the Korea Tourism Organization. Trip planning powered by AI."
+  },
   "map": {
     "google": "Google",
     "naver": "Naver",

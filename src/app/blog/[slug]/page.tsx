@@ -9,7 +9,15 @@ import remarkGfm from "remark-gfm";
 import fs from "fs";
 import path from "path";
 import AdBanner from "@/components/AdBanner";
-import { KLOOK, VIATOR, KTX } from "@/config/affiliates";
+import { KLOOK, KTX } from "@/config/affiliates";
+import {
+  BlogAffiliateCards,
+  BlogBackLink,
+  BlogFooterCredit,
+  BlogNotices,
+  BlogPublishedDate,
+  type BlogCardProps,
+} from "@/components/blog/BlogDetailI18n";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -72,15 +80,9 @@ function getAffiliateLink(postTitle: string): string {
   return "https://visitkorea.or.kr";
 }
 
-interface BlogCard {
-  emoji: string;
-  provider: string;
-  title: string;
-  desc: string;
-  url: string;
-}
-
-function getBlogAffiliateCards(post: PostData): BlogCard[] {
+// 카드의 제목·설명은 여기 없다. locale 별 문구는 BlogDetailI18n 이 id 로 찾는다.
+// 여기 남는 것은 서버가 결정하는 것 — 어떤 카드를 고를지, provider, 목적지 URL.
+function getBlogAffiliateCards(post: PostData): BlogCardProps[] {
   const tags = post.tags.map((t) => t.toLowerCase());
   const hasTag = (...terms: string[]) => terms.some((t) => tags.includes(t));
   const img = post.image ?? "";
@@ -90,72 +92,32 @@ function getBlogAffiliateCards(post: PostData): BlogCard[] {
     : img.includes("/og/gyeongju/") ? "gyeongju"
     : "seoul";
 
-  const cards: BlogCard[] = [];
+  const cards: BlogCardProps[] = [];
 
   // Transportation guide: KTX + airport transfer
   if (hasTag("transportation", "ktx", "t-money")) {
-    cards.push({
-      emoji: "🚄",
-      provider: "Klook",
-      title: "Seoul → Busan KTX Train",
-      desc: "Book Korea's fastest inter-city train in advance. 2hr 15min, from ₩59,800.",
-      url: KTX.seoulBusanUrl,
-    });
-    cards.push({
-      emoji: "✈️",
-      provider: "Klook",
-      title: "Incheon Airport Transfer",
-      desc: "Limousine bus direct to Seoul city center. No transit hassle with luggage.",
-      url: KLOOK.transferUrl,
-    });
+    cards.push({ id: "ktxSeoulBusan",     emoji: "🚄", provider: "Klook", url: KTX.seoulBusanUrl });
+    cards.push({ id: "transferTransport", emoji: "✈️", provider: "Klook", url: KLOOK.transferUrl });
     return cards.slice(0, 2);
   }
 
-  // eSIM guide: airport transfer as companion (avoid eSIM redundancy)
+  // eSIM guide: 예전에는 이 글이 provider 를 순위로 나열했기 때문에 eSIM 카드를
+  // 중복으로 보고 공항 이동만 붙였다. 그 글을 실용 가이드로 다시 쓰면서 본문의
+  // 상품 추천이 사라졌으므로, 이제 이 글의 구매 연결은 eSIM 카드가 맡는다.
   if (hasTag("esim", "sim card", "connectivity")) {
-    cards.push({
-      emoji: "✈️",
-      provider: "Klook",
-      title: "Incheon Airport Transfer",
-      desc: "Arrive connected and door-to-door. Limousine bus to Seoul city center.",
-      url: KLOOK.transferUrl,
-    });
-  } else {
-    // All other posts: eSIM is always first
-    cards.push({
-      emoji: "📱",
-      provider: "Klook",
-      title: "Korea eSIM — Stay Connected",
-      desc: "Activate before landing. Fast 5G/LTE data from the moment you arrive at Incheon.",
-      url: KLOOK.esimUrl,
-    });
+    cards.push({ id: "esimKlook",     emoji: "📱", provider: "Klook", url: KLOOK.esimUrl });
+    cards.push({ id: "transferEsim",  emoji: "✈️", provider: "Klook", url: KLOOK.transferUrl });
+    return cards.slice(0, 2);
   }
 
-  // City-specific tour card
-  if (city === "seoul") {
-    cards.push({
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Seoul Tours & Day Trips",
-      desc: "Palace tours, K-culture, Gangnam night tours — curated by local Seoul guides.",
-      url: VIATOR.seoulHub(),
-    });
-  } else if (city === "busan") {
-    cards.push({
-      emoji: "🎟️",
-      provider: "Viator",
-      title: "Busan Tours & Day Trips",
-      desc: "Haeundae, Gamcheon, seafood market tours — curated by local Busan guides.",
-      url: VIATOR.busanHub(),
-    });
-  } else if (city === "jeju") {
-    cards.push({
-      emoji: "🚗",
-      provider: "Klook",
-      title: "Jeju Car Rental",
-      desc: "Essential for Jeju island. From ₩35,000/day. International license accepted.",
-      url: KLOOK.jejuCarRentalUrl,
-    });
+  // All other posts: eSIM is always first
+  cards.push({ id: "esimKlook", emoji: "📱", provider: "Klook", url: KLOOK.esimUrl });
+
+  // 도시별 카드. seoul·busan·gyeongju 자리에 있던 투어 카드는 Viator 소속이었고,
+  // Viator 는 현재 승인 파트너가 아니라 제거했다. 빈자리를 다른 파트너로 메우지
+  // 않는다 — 승인 파트너가 없으면 카드 없이 정보만 남는 것이 정상이다.
+  if (city === "jeju") {
+    cards.push({ id: "carJeju", emoji: "🚗", provider: "Klook", url: KLOOK.jejuCarRentalUrl });
   }
 
   return cards.slice(0, 2);
@@ -191,12 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Blog Article Layout */}
       <main className="max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 flex-1">
         {/* Back Link */}
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1.5 text-base font-extrabold hover:text-[#D4AF37] transition-colors mb-8"
-        >
-          ← Back to Blog
-        </Link>
+        <BlogBackLink />
 
         <script
           type="application/ld+json"
@@ -218,12 +175,10 @@ export default async function BlogPostPage({ params }: Props) {
             <span className="text-xs font-black uppercase bg-[#EAE3D2] text-[#8C6239] px-2.5 py-0.5 rounded-md">
               {post.category}
             </span>
-            <span className="text-sm font-bold text-[#61554D]">
-              📅 Published on {post.date}
-            </span>
-            <span className="text-sm font-bold text-[#61554D]">
-              🔄 Last updated: {post.date}
-            </span>
+            {/* "Last updated" 행이 여기 있었다. 값이 post.date 라서 모든 글에서
+                발행일과 같았고, frontmatter 에 실제 updated 필드가 없다.
+                갱신된 적 없는 글에 갱신 신호를 붙이는 셈이라 지웠다. */}
+            <BlogPublishedDate date={post.date} />
           </div>
 
           {/* Title */}
@@ -242,90 +197,18 @@ export default async function BlogPostPage({ params }: Props) {
               blog 는 승인된 표면이다. 가시적 제휴 고지(하단 Sponsored 문구)를 갖추고
               있고 일정·Cart·scheduler 와 데이터 연결이 없다. allowlist 판정을
               명시적으로 통과할 때만 렌더한다. */}
-          {(() => {
-            if (!isEditorialAffiliateEnabled("blog")) return null;
-            const cards = getBlogAffiliateCards(post!);
-            if (cards.length === 0) return null;
-            return (
-              <div className="mt-8 mb-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#8C6239] mb-3 flex items-center gap-1.5">
-                  gokoreamate partner network
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {cards.map((card) => (
-                    <a
-                      key={card.title}
-                      href={card.url}
-                      target="_blank"
-                      rel="noopener noreferrer sponsored"
-                      className="flex items-start gap-3 p-4 rounded-2xl border border-[#E6DFD5] bg-[#FAF7F2] hover:border-[#D4AF37] hover:shadow-sm transition-all group"
-                    >
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 bg-[#EAE3D2]">
-                        {card.emoji}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-black uppercase tracking-wide text-[#8C6239]">
-                          {card.provider}
-                        </p>
-                        <p className="text-sm font-black text-[#2C2520] leading-tight">
-                          {card.title}
-                        </p>
-                        <p className="text-xs text-[#61554D] leading-relaxed mt-0.5 line-clamp-2">
-                          {card.desc}
-                        </p>
-                      </div>
-                      <span className="text-[#D4AF37] text-sm font-black shrink-0 mt-0.5 group-hover:underline">
-                        →
-                      </span>
-                    </a>
-                  ))}
-                </div>
-                <p className="text-[9px] text-[#B8A89A] mt-2 text-center">
-                  Sponsored · Commission may be earned at no cost to you
-                </p>
-              </div>
-            );
-          })()}
+          {isEditorialAffiliateEnabled("blog") && (
+            <BlogAffiliateCards cards={getBlogAffiliateCards(post!)} />
+          )}
 
-          {/* AI Disclosure Warning */}
-          <div className="mt-8 bg-[#FAF7F2] border border-[#E6DFD5] rounded-2xl p-6 text-sm sm:text-base text-[#61554D] leading-relaxed">
-            <p className="font-bold flex items-center gap-1.5 text-[#8C6239] mb-1">
-              ⚠️ Content Notice
-            </p>
-            This post was written by AI based on data from the Korea Tourism Organization (
-            <a
-              href="https://visitkorea.or.kr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold underline hover:text-[#D4AF37]"
-            >
-              visitkorea.or.kr
-            </a>
-            ). Please verify details through the original source before your trip.
-          </div>
-
-          {/* Original Source Link */}
-          <div className="mt-4 text-sm text-[#61554D]">
-            <a
-              href={sourceLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold underline hover:text-[#D4AF37]"
-            >
-              Original Source
-            </a>
-          </div>
+          {/* AI Disclosure Warning · Original Source */}
+          <BlogNotices sourceLink={sourceLink} />
         </article>
       </main>
 
       {/* Footer */}
       <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} gokoreamate.com. All rights reserved.</p>
-          <p className="font-bold tracking-wide">
-            Data provided by Korea Tourism Organization. AI-powered by Gemini.
-          </p>
-        </div>
+        <BlogFooterCredit />
       </footer>
     </div>
   );

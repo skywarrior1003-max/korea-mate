@@ -100,7 +100,8 @@ export const BUSAN_ENTRY: CityEntryContent = {
   },
 ],
   practical: [
-  { icon: "🚄", label: "Getting There", value: "KTX from Seoul Station: 2hr 15min, from ₩59,800. Busan (PUS) airport for international flights." },
+  // 예약상품(KTX 티켓) 가격은 표시하지 않는다. 소요시간·경로 같은 이동 정보만 남긴다.
+  { icon: "🚄", label: "Getting There", value: "KTX from Seoul Station: 2hr 15min. Busan (PUS) airport for international flights." },
   { icon: "🚇", label: "Getting Around", value: "Busan Metro (4 lines + BRT). T-money card works. Haeundae–Nampo area taxi: ₩8,000–₩15,000." },
   { icon: "🚌", label: "Airport Bus", value: "Limousine Bus 7 links Gimhae Airport to Haeundae in ~55 min (₩8,000). Fastest option without luggage." },
   { icon: "💳", label: "Payments", value: "Cards accepted in tourist areas. Carry ₩30,000 cash for Jagalchi Market and street vendors." },
@@ -229,7 +230,8 @@ export const JEJU_ENTRY: CityEntryContent = {
 ],
   practical: [
   { icon: "✈️", label: "Getting There", value: "Direct flights from Seoul (GMP→CJU): 55 min. From Busan (PUS→CJU): 50 min. Jeju has no ferries from Seoul." },
-  { icon: "🚗", label: "Getting Around", value: "Rent a car — Jeju's best spots are spread island-wide. Budget: ₩40,000–₩80,000/day. International license accepted." },
+  // 렌터카는 예약상품이다. 일당 요금을 싣지 않고 필요성·자격 요건만 안내한다.
+  { icon: "🚗", label: "Getting Around", value: "Rent a car — Jeju's best spots are spread island-wide. International license accepted." },
   { icon: "🚌", label: "Without a Car", value: "Intercity buses connect major spots. Airport → Seongsan: ~1.5hr by bus 101. Slower but scenic." },
   { icon: "💳", label: "Payments", value: "Cards accepted widely. Carry some cash for smaller eateries and farm stalls." },
   { icon: "🌤️", label: "Best Season", value: "Spring (Mar–May) canola & cherry blossoms · Autumn (Sep–Nov) foliage. Typhoon risk Jul–Sep." },
@@ -292,7 +294,8 @@ export const GYEONGJU_ENTRY: CityEntryContent = {
   },
 ],
   practical: [
-  { icon: "🚄", label: "Getting There", value: "KTX from Seoul to Singyeongju: 2hr (₩42,800). From Busan: 23 min (₩9,800). Gyeongju sits between them." },
+  // 부산과 같은 이유로 KTX 티켓 가격은 뺀다. 경주의 위치 감각은 소요시간만으로 전달된다.
+  { icon: "🚄", label: "Getting There", value: "KTX from Seoul to Singyeongju: 2hr. From Busan: 23 min. Gyeongju sits between them." },
   { icon: "🚌", label: "Getting Around", value: "City bus #10 & #11 loop the main sites (Bulguksa, Tumuli, Cheomseongdae). All-day bus pass: ₩5,000" },
   { icon: "🚴", label: "Best Way", value: "Rent a bike near Gyeongju Station — the city is flat and the royal tombs area is perfect for cycling. ₩3,000–₩5,000/hr." },
   { icon: "💳", label: "Payments", value: "Cards accepted at major sites. Carry cash for street stalls near Bulguksa and the local market." },

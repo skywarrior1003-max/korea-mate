@@ -185,6 +185,38 @@
     "styleSolo": "一个人",
     "styleExplorer": "探索者"
   },
+  "blogAffiliate": {
+    "card": {
+      "ktxSeoulBusan": {
+        "title": "首尔 → 釜山 KTX",
+        "desc": "韩国最快的城际列车。周末和假期座位很快售完，建议提前预订。"
+      },
+      "transferTransport": {
+        "title": "仁川机场接送",
+        "desc": "直达首尔市中心的豪华巴士。不用拖着行李换乘。"
+      },
+      "transferEsim": {
+        "title": "仁川机场接送",
+        "desc": "落地即联网，一路直达。前往首尔市中心的豪华巴士。"
+      },
+      "esimKlook": {
+        "title": "韩国 eSIM — 落地即联网",
+        "desc": "落地前先开通。走出仁川机场那一刻就有 5G/LTE 数据。"
+      },
+      "carJeju": {
+        "title": "济州租车",
+        "desc": "济州的好去处分散在全岛，租车几乎是必需。可使用国际驾照。"
+      }
+    },
+    "partnerNetwork": "gokoreamate 合作伙伴网络",
+    "sponsored": "推广链接 · gokoreamate 可能获得佣金，你无需为此多付任何费用",
+    "publishedOn": "发布于 {date}",
+    "backToBlog": "返回博客列表",
+    "contentNotice": "内容说明",
+    "aiNotice": "本文在 AI 协助下撰写。旅行信息可能发生变化，重要内容请在出行前向官方来源核实。",
+    "originalSource": "原始来源",
+    "dataCredit": "地点信息采用韩国观光公社的资料。行程规划由 AI 完成。"
+  },
   "map": {
     "google": "谷歌地图",
     "naver": "Naver地图",

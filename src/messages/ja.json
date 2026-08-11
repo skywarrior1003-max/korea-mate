@@ -185,6 +185,38 @@
     "styleSolo": "ひとり",
     "styleExplorer": "探検家"
   },
+  "blogAffiliate": {
+    "card": {
+      "ktxSeoulBusan": {
+        "title": "ソウル → 釜山 KTX",
+        "desc": "韓国で最も速い都市間列車。週末・連休は席が埋まりやすいので早めの予約を。"
+      },
+      "transferTransport": {
+        "title": "仁川空港からの移動",
+        "desc": "ソウル都心へ直行のリムジンバス。荷物を持っての乗り換えが要りません。"
+      },
+      "transferEsim": {
+        "title": "仁川空港からの移動",
+        "desc": "つながった状態で到着し、そのまま目的地へ。ソウル都心行きのリムジンバス。"
+      },
+      "esimKlook": {
+        "title": "韓国 eSIM — 着いた瞬間からつながる",
+        "desc": "着陸前に開通を。仁川に降りたそのときから 5G/LTE データが使えます。"
+      },
+      "carJeju": {
+        "title": "済州レンタカー",
+        "desc": "済州は見どころが島全体に散らばっていて、車がほぼ必須です。国際運転免許証が利用できます。"
+      }
+    },
+    "partnerNetwork": "gokoreamate パートナーネットワーク",
+    "sponsored": "アフィリエイトリンク · gokoreamate が手数料を受け取る場合があります。ご利用者の追加負担はありません",
+    "publishedOn": "{date} 公開",
+    "backToBlog": "ブログ一覧へ",
+    "contentNotice": "コンテンツについて",
+    "aiNotice": "この記事は AI の助けを借りて作成しました。旅の情報は変わることがあります。大切な内容は出発前に公式の情報源でご確認ください。",
+    "originalSource": "元の出典",
+    "dataCredit": "スポット情報は韓国観光公社の資料を使用しています。旅程づくりは AI が担当します。"
+  },
   "map": {
     "google": "Google",
     "naver": "Naver",
@@ -199,7 +231,7 @@
     "cta": "ガイドを見る →"
   },
   "footer": {
-    "copyright": "© {year} gokoreamate. All rights reserved."
+    "copyright": "© {year} gokoreamate. 無断転載を禁じます。"
   },
   "modal": {
     "close": "✕",
