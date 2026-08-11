@@ -347,17 +347,18 @@ def _extract_restaurant_facts_r1(detail: dict, cid: str) -> tuple[dict, dict, li
                 "field": "restaurant.kind"
             }
 
-    # Dietary certifications (official evidence — NEVER inferred)
-    # dietary / halal / muslim / salam are lists; empty = unknown
+    # Dietary/halal/muslim/salam evidence (official source — NEVER inferred, NEVER auto-certified)
+    # restaurant.dietary/halal/muslim/salam are lists; empty = unknown
+    # SEMANTIC: source field != formal external certification → use *_evidence naming
     for cert_field, cert_key in [
-        ("dietary", "dietary_certification"),
+        ("dietary", "dietary_evidence"),     # SEMANTIC: dietary category, not a certification
         ("halal",   "halal_evidence"),       # SEMANTIC: restaurant.halal != formal certification
-        ("muslim",  "muslim_certification"),
-        ("salam",   "salam_certification"),
+        ("muslim",  "muslim_evidence"),      # SEMANTIC: may be self-declared (e.g. 할랄 자가 인증)
+        ("salam",   "salam_evidence"),       # SEMANTIC: Salam program evidence, certification unverified
     ]:
         cert_list = restaurant.get(cert_field, [])
         if isinstance(cert_list, list) and cert_list:
-            # Non-empty list = explicit official certification
+            # Non-empty list = explicit official source evidence
             cert_names = [x.get("code_nm", "") for x in cert_list if isinstance(x, dict)]
             if cert_names:
                 facts[cert_key] = cert_names
@@ -488,7 +489,7 @@ def compute_coverage(candidates: dict) -> dict:
         "official_url", "phone", "opening_hours_raw_text", "closed_days",
         "price_range_krw", "menu_evidence",
         "image_main_url", "transit_info",
-        "dietary_certification", "halal_evidence",
+        "dietary_evidence", "halal_evidence",
         "language_menu", "language_staff",
         "payment", "seating_solo_counter", "accessibility_step_free",
         "reservation",

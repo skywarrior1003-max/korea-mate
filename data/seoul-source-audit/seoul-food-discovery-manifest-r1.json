@@ -94,8 +94,10 @@
     "menu_evidence": {"has": 1259, "pct": 100.0},
     "image_main_url": {"has": 1259, "pct": 100.0},
     "transit_info": {"has": 1194, "missing": 65, "pct": 94.8},
-    "dietary_certification": {"has": 17, "pct": 1.4, "note": "official certification only; 0 does not mean none"},
+    "dietary_evidence": {"has": 17, "pct": 1.4, "note": "official source evidence (restaurant.dietary); dietary category label, not formal certification"},
     "halal_evidence": {"has": 94, "pct": 7.5, "note": "official source evidence (restaurant.halal); formal certification unverified"},
+    "muslim_evidence": {"has": 2, "pct": 0.2, "note": "official source evidence (restaurant.muslim); may include self-declarations"},
+    "salam_evidence": {"has": 95, "pct": 7.5, "note": "official source evidence (restaurant.salam); Salam program evidence, certification unverified"},
     "language_menu": {"has": 0, "note": "UNKNOWN by design — VisitSeoul does not provide; requires official restaurant source"},
     "language_staff": {"has": 0, "note": "UNKNOWN by design"},
     "payment": {"has": 0, "note": "UNKNOWN by design — requires official restaurant source"},
@@ -139,7 +141,30 @@
     "FIELD_PROVENANCE_MISSING_COUNT": 0,
     "UNKNOWN_DISTINCT_FROM_NO": "PASS",
     "SOURCE_FIELD_SEMANTICS_PRESERVED": true,
-    "OUT_OF_SCOPE_NOTE": "muslim_certification / salam_certification / dietary_certification have same semantic issue but are outside this task scope — future task candidate"
+    "OUT_OF_SCOPE_NOTE": "muslim_certification / salam_certification / dietary_certification addressed in TASK-SEOUL-FOOD-DISCOVERY-V1-SEMANTIC-CONSISTENCY-CLEANUP (d3747e4 → next SHA)"
+  },
+
+  "SEMANTIC_CONSISTENCY_CLEANUP": {
+    "task": "TASK-SEOUL-FOOD-DISCOVERY-V1-SEMANTIC-CONSISTENCY-CLEANUP",
+    "date": "2026-08-11",
+    "start_sha": "d3747e4",
+    "DIETARY_CERTIFICATION_RENAMED_TO": "dietary_evidence",
+    "DIETARY_EVIDENCE_COUNT": 17,
+    "MUSLIM_CERTIFICATION_RENAMED_TO": "muslim_evidence",
+    "MUSLIM_EVIDENCE_COUNT": 2,
+    "SALAM_CERTIFICATION_RENAMED_TO": "salam_evidence",
+    "SALAM_EVIDENCE_COUNT": 95,
+    "CANDIDATE_COUNT_CHANGE": 0,
+    "DATA_LOSS": 0,
+    "NORMALIZATION_BYTE_IDENTICAL": true,
+    "SCRIPT_FIXED": "run-seoul-food-discovery-r1-gapfill.py (cert loop + FOOD_FIELDS)",
+    "POOL_SHA256_AFTER": "1E26BA6AFC21003E732FD295004F05C7B1E924AB6DE545E5D91E45F8565B4DE6",
+    "CERTIFICATION_FIELDS_KEPT": [],
+    "CERTIFICATION_FIELDS_RENAMED": ["dietary_certification", "muslim_certification", "salam_certification"],
+    "REASON_DIETARY": "dietary label (채식 etc.) = dietary category, not formal certification",
+    "REASON_MUSLIM": "value '할랄 자가 인증' = self-declared, not formal external certification",
+    "REASON_SALAM": "no schema documentation proves restaurant.salam = official Salam certification status",
+    "SEOUL_FOOD_STATUS": "CLOSED_WITH_LIMITATION"
   },
 
   "PRODUCTION_WRITE": 0,
