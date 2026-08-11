@@ -132,7 +132,7 @@
     "match_audit": "data/gyeongju-source-audit/gyeongju-food-source-match-audit-v1.jsonl",
     "lossless_audit": "data/gyeongju-source-audit/gyeongju-food-lossless-mapping-audit-v1.json"
   },
-  "NEXT_TASK": "BUSAN_FOOD_DISCOVERY_PRECHECK",
+  "NEXT_TASK": "GYEONGJU_FOOD_PHONE_GATE_RESUME_IN_NAVER_ENV",
   "FINAL_SHA": "a49bc83",
   "PUSH": "PASS",
   "GYEONGJU_FOOD_DISCOVERY_V1": "PASS",
@@ -170,5 +170,30 @@
   "FINAL_HOLD_AUTO_PROMOTED": 0,
   "GYEONGJU_FOOD_STATUS": "CLOSED_WITH_LIMITATION",
   "GYEONGJU_FOOD_FINAL_REVIEW": "PASS",
-  "GYEONGJU_FOOD_STATUS_LIMITATION": "KTO tel=empty for all 109 records. Phone data not available from KTO getAreaBasedList2 source for these records."
+  "GYEONGJU_FOOD_STATUS_LIMITATION": "KTO tel=empty for all 109 records. Phone data not available from KTO getAreaBasedList2 source for these records.",
+
+  "PHONE_GATE_TASK": {
+    "task": "TASK-GYEONGJU-FOOD-PHONE-GATE-AND-NAVER-ENRICHMENT-V1",
+    "as_of": "2026-08-11",
+    "PHONE_GATE_STATUS": "OPEN_PHONE_VERIFICATION",
+    "NAVER_VERIFICATION_COMPLETE": false,
+    "STOP_REASON": "NAVER_DOMAIN_INACCESSIBLE (all subdomains blocked in current environment)",
+    "PREFLIGHT": {
+      "PHONE_PRESENT_BEFORE": 128,
+      "PHONE_MISSING_BEFORE": 71,
+      "PHONE_MISSING_CANONICAL_102": 2,
+      "PHONE_MISSING_KTO_TYPE39_NEW": 69
+    },
+    "KTO_DETAIL_CHECK": {
+      "ENDPOINT": "KorService2/detailCommon2",
+      "QUERIED": 69,
+      "TEL_FOUND": 0,
+      "CONCLUSION": "KTO official source exhausted — 0 phones recoverable via API"
+    },
+    "CANDIDATES_MODIFIED": false,
+    "PENDING_QUEUE": 71,
+    "STOP_FILE": "data/gyeongju-source-audit/gyeongju-food-phone-gate-stop-v1.json",
+    "POLICY_DOC": "docs/data-collection/multicity-food-discovery-collection-policy-v1.md",
+    "NEXT_ACTION": "Re-run in environment with Naver Place access"
+  }
 }

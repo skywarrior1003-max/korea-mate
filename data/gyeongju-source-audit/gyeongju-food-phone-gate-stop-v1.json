@@ -1,0 +1,101 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-PHONE-GATE-AND-NAVER-ENRICHMENT-V1",
+  "as_of": "2026-08-11",
+  "working_branch": "data/gyeongju-food-discovery-v1",
+  "base_sha": "a835b8f",
+  "STOP_STATUS": "NAVER_ACCESS_BLOCKED",
+  "NAVER_VERIFICATION_COMPLETE": false,
+  "PHONE_GATE_STATUS": "OPEN_PHONE_VERIFICATION",
+  "CANDIDATES_FILE_MODIFIED": false,
+
+  "PREFLIGHT": {
+    "TOTAL_CANDIDATES": 199,
+    "PHONE_PRESENT_BEFORE": 128,
+    "PHONE_MISSING_BEFORE": 71,
+    "PHONE_MISSING_BY_PHASE": {
+      "CANONICAL_102": 2,
+      "READY_28": 0,
+      "KTO_TYPE39_NEW": 69
+    }
+  },
+
+  "CANONICAL_MISSING_2": [
+    {
+      "candidate_id": "gyeongju-GJ08-80",
+      "name": "성동시장 한식뷔페촌",
+      "address": "경상북도 경주시 원화로 279",
+      "note": "시장 내 집합형 한식 뷔페 구역 — 단일 대표 전화번호 미보유 가능성 높음",
+      "classification_note": "MARKET_COLLECTIVE_ZONE_SPECIAL_CASE"
+    },
+    {
+      "candidate_id": "gyeongju-GJ08-81",
+      "name": "성동시장 분식골목",
+      "address": "경북 경주시 성동동 63",
+      "note": "시장 내 분식 골목 구역 — 개별 전화번호 없이 시장 대표번호만 존재 가능",
+      "classification_note": "MARKET_COLLECTIVE_ZONE_SPECIAL_CASE"
+    }
+  ],
+
+  "KTO_OFFICIAL_SOURCE_CHECK": {
+    "ENDPOINT": "KorService2/detailCommon2",
+    "QUERIED": 69,
+    "TEL_FOUND": 0,
+    "TEL_MISSING": 69,
+    "NETWORK_ACCESSIBLE": true,
+    "RC_0000_COUNT": 69,
+    "CONCLUSION": "KTO detailCommon2 반환 tel 전 69건 공란. KTO type39 수집 한계 확정.",
+    "KTO_OFFICIAL_PHONE_RECOVERED": 0
+  },
+
+  "NAVER_ACCESS_ATTEMPTS": [
+    {"url": "https://search.naver.com/...", "result": "BLOCKED"},
+    {"url": "https://m.search.naver.com/...", "result": "BLOCKED"},
+    {"url": "https://map.naver.com/...", "result": "BLOCKED"},
+    {"url": "https://place.naver.com/...", "result": "BLOCKED"}
+  ],
+
+  "OFFICIAL_SITE_ATTEMPTS": [
+    {"url": "https://www.gyeongju.go.kr/tour/...", "result": "EMPTY_CONTENT_JS_DEPENDENT"},
+    {"url": "https://www.visitgyeongju.net/...", "result": "TIMEOUT"}
+  ],
+
+  "STOP_CONDITION": {
+    "TRIGGER": "NAVER_DOMAIN_INACCESSIBLE",
+    "SCOPE": "ALL_NAVER_SUBDOMAINS",
+    "ACTION": "STOP_BEFORE_CANDIDATES_MODIFICATION",
+    "NEXT_ACTION": "OPEN_PHONE_VERIFICATION",
+    "REQUIRED_ENV": "Environment with Naver Place access (e.g. main desktop with browser automation or manual)"
+  },
+
+  "PENDING_VERIFICATION_QUEUE": {
+    "TOTAL_PENDING": 71,
+    "BREAKDOWN": {
+      "KTO_TYPE39_ZERO_PHONE": 69,
+      "CANONICAL_SPECIAL_CASE": 2
+    },
+    "VERIFICATION_PRIORITY": [
+      "KTO_TYPE39_NEW 69건 — Naver Place 검색으로 전화번호 확인",
+      "CANONICAL 2건 (성동시장) — 시장 공식 전화 또는 Naver Place 개별 매장 확인",
+      "전화번호 미확인 → EXCLUDED_NO_VERIFIABLE_PHONE (폐업 아님)"
+    ]
+  },
+
+  "POLICY_REFERENCES": {
+    "NAVER_FINAL_VERIFICATION_ONLY": true,
+    "GOOGLE_MAPS_VERIFICATION": "FORBIDDEN",
+    "KAKAO_VERIFICATION": "FORBIDDEN",
+    "RESTAURANT_SERVICE_PHONE_REQUIRED": true,
+    "MISSING_PHONE_EQUALS_CLOSED_CONFIRMED": false,
+    "AI_INFERRED_RESTAURANT_FACT": "FORBIDDEN",
+    "UNKNOWN_DISTINCT_FROM_NO": "REQUIRED"
+  },
+
+  "SAFETY": {
+    "CANDIDATES_MODIFIED": false,
+    "MAIN_IMPORT": 0,
+    "PRODUCTION_WRITE": 0,
+    "SECRET_LEAK": 0,
+    "BUSAN_CHANGE": 0,
+    "GYEONGJU_CANDIDATE_REMOVAL_WITHOUT_VERIFICATION": 0
+  }
+}
