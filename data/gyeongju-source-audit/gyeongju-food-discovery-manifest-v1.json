@@ -1,0 +1,135 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-DISCOVERY-V1-MIGRATION-AND-TARGETED-GAPFILL",
+  "as_of": "2026-08-11",
+  "base_branch": "data/busan-gyeongju-gap-fill-v1",
+  "base_sha": "8dfdc6d",
+  "working_branch": "data/gyeongju-food-discovery-v1",
+  "FOOD_DISCOVERY_SPEC_STATUS": "ACTIVE_PROVISIONAL",
+  "FOOD_SPEC_FROZEN": false,
+  "CANONICAL_TARGET": "city_spots",
+  "RESTAURANT_ATTRIBUTE_AI_INFERENCE": "FORBIDDEN",
+  "UNKNOWN_DISTINCT_FROM_NO": "PASS",
+  "SOURCE_FIELD_SEMANTICS_MUST_BE_PRESERVED": true,
+  "RAW_OPENING_HOURS_IS_WEEKLY_STRUCTURE": false,
+  "GENERAL_SOURCE_TAG_IS_MENU_EVIDENCE": false,
+  "CERTIFICATION_SEMANTIC_OVERREACH": 0,
+  "IMAGE_URL_EQUALS_PRODUCT_USABLE": false,
+  "INPUT_SOURCES": {
+    "CANONICAL_RESTAURANTS_INPUT": 102,
+    "READY_PROPOSALS_INPUT": 28,
+    "FINAL_HOLD_AUTO_PROMOTED": 0,
+    "KTO_TYPE39_INPUT": 109,
+    "OFFICIAL_FOOD_RELATIONS_TOTAL": 292,
+    "COUNT_TARGET": "NOT_DEFINED_BY_DESIGN"
+  },
+  "READY_28_DISPOSITION": {
+    "READY_28_NEW_DISTINCT": 28,
+    "READY_28_MATCH_EXISTING": 0,
+    "READY_28_AMBIGUOUS": 0,
+    "READY_28_NOT_RESTAURANT": 0,
+    "READY_28_SOURCE_CONFLICT": 0
+  },
+  "KTO_109_DISPOSITION": {
+    "KTO_109_MATCHES_READY_28": 28,
+    "KTO_109_MATCH_CANONICAL_CONFIRMED": 0,
+    "KTO_109_MATCH_REVIEW_REQUIRED": 12,
+    "KTO_109_NEW_CANDIDATE": 69,
+    "KTO_109_OTHER": 0
+  },
+  "FINAL_RESULTS": {
+    "FINAL_FOOD_CANDIDATE_COUNT": 130,
+    "PHASE_A_CANONICAL": 102,
+    "PHASE_B_READY_28": 28,
+    "NEW_DISTINCT_RESTAURANTS": 28,
+    "MATCHED_MULTI_SOURCE_RESTAURANTS": 28,
+    "AMBIGUOUS_MATCH_REVIEW": 12,
+    "FIELD_PROVENANCE_MISSING_COUNT": 0
+  },
+  "FIELD_COVERAGE": {
+    "name": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    },
+    "address": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    },
+    "lat": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    },
+    "lng": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    },
+    "phone": {
+      "has": 128,
+      "total": 130,
+      "pct": 98.5
+    },
+    "description": {
+      "has": 102,
+      "total": 130,
+      "pct": 78.5
+    },
+    "official_url": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    },
+    "subcategory": {
+      "has": 102,
+      "total": 130,
+      "pct": 78.5
+    },
+    "cuisine": {
+      "has": 25,
+      "total": 130,
+      "pct": 19.2
+    },
+    "opening_hours_raw_text": {
+      "has": 102,
+      "total": 130,
+      "pct": 78.5
+    },
+    "image_main_url": {
+      "has": 130,
+      "total": 130,
+      "pct": 100.0
+    }
+  },
+  "TARGETED_GAP_FILL": {
+    "TARGETED_GAP_FILL_REQUIRED": "NO",
+    "REASON": "All 102 canonical restaurants have sufficient factual data. READY 28 have KTO+patch. No official API calls needed.",
+    "API_CALLS": 0
+  },
+  "QA": {
+    "NORMALIZATION_BYTE_IDENTICAL": true,
+    "CANDIDATE_ID_UNIQUE": true,
+    "SOURCE_KEY_UNIQUE": true,
+    "FINAL_HOLD_AUTO_PROMOTED": 0,
+    "UNKNOWN_DISTINCT_FROM_NO": "PASS"
+  },
+  "SAFETY": {
+    "AI_INFERRED_RESTAURANT_FACT": 0,
+    "NUMERIC_PRUNING": "FORBIDDEN",
+    "MAIN_IMPORT": 0,
+    "PRODUCTION_WRITE": 0,
+    "BUSAN_DATA_CHANGE": 0,
+    "SEOUL_DATA_CHANGE": 0,
+    "JEJU_DATA_CHANGE": 0,
+    "SECRET_LEAK": 0
+  },
+  "POOL_SHA256": "92EB775C30057E92F50606EA9C69BE5E123BC1D70F0904133CA32EDF857FD215",
+  "OUTPUT_FILES": {
+    "candidates": "data/gyeongju-source-audit/gyeongju-food-discovery-candidates-v1.jsonl",
+    "manifest": "data/gyeongju-source-audit/gyeongju-food-discovery-manifest-v1.json",
+    "match_audit": "data/gyeongju-source-audit/gyeongju-food-source-match-audit-v1.jsonl",
+    "lossless_audit": "data/gyeongju-source-audit/gyeongju-food-lossless-mapping-audit-v1.json"
+  },
+  "NEXT_TASK": "BUSAN_FOOD_DISCOVERY_PRECHECK"
+}

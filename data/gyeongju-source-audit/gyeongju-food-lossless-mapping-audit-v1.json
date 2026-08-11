@@ -1,0 +1,450 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-DISCOVERY-V1-MIGRATION-AND-TARGETED-GAPFILL",
+  "as_of": "2026-08-11",
+  "ready28_disposition_summary": {
+    "NEW_DISTINCT_RESTAURANT": 28
+  },
+  "ready28_detail": [
+    {
+      "food_name": "고향밀면",
+      "new_candidate_id": "gyeongju-FD28-001",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838855",
+      "kto_title": "고향밀면 본점",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "소소밀밀 서악",
+      "new_candidate_id": "gyeongju-FD28-002",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "3101705",
+      "kto_title": "소소밀밀 서악점",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "르씨엘",
+      "new_candidate_id": "gyeongju-FD28-003",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "3456352",
+      "kto_title": "르씨엘",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "우렁각시쌈밥",
+      "new_candidate_id": "gyeongju-FD28-004",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840332",
+      "kto_title": "우렁각시쌈밥",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "장군암소숯불",
+      "new_candidate_id": "gyeongju-FD28-005",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840275",
+      "kto_title": "장군암소숯불",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "경주다방",
+      "new_candidate_id": "gyeongju-FD28-006",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838756",
+      "kto_title": "경주다방",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "영양숯불갈비",
+      "new_candidate_id": "gyeongju-FD28-007",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2736691",
+      "kto_title": "영양숯불갈비 경주점",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "히든씨",
+      "new_candidate_id": "gyeongju-FD28-008",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840968",
+      "kto_title": "히든씨",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "카페솔(Sol)",
+      "new_candidate_id": "gyeongju-FD28-009",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840804",
+      "kto_title": "카페솔",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "인터폴 커피",
+      "new_candidate_id": "gyeongju-FD28-010",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "3458332",
+      "kto_title": "인터폴",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "소풍가다",
+      "new_candidate_id": "gyeongju-FD28-011",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840458",
+      "kto_title": "소풍가다",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "카페 35mm",
+      "new_candidate_id": "gyeongju-FD28-012",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838676",
+      "kto_title": "35mm",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "이스트앵글",
+      "new_candidate_id": "gyeongju-FD28-013",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840301",
+      "kto_title": "이스트앵글 베이커리카페",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "스타트커피",
+      "new_candidate_id": "gyeongju-FD28-014",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840446",
+      "kto_title": "스타트커피",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "산드레",
+      "new_candidate_id": "gyeongju-FD28-015",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840506",
+      "kto_title": "산드레",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "카페 로드100",
+      "new_candidate_id": "gyeongju-FD28-016",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840767",
+      "kto_title": "카페 로드100",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "야생화일기",
+      "new_candidate_id": "gyeongju-FD28-017",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840403",
+      "kto_title": "카페 야생화일기",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "벤자마스",
+      "new_candidate_id": "gyeongju-FD28-018",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2876473",
+      "kto_title": "벤자마스",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "기와골맷돌순두부",
+      "new_candidate_id": "gyeongju-FD28-019",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838924",
+      "kto_title": "기와골맷돌순두부",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "향미사",
+      "new_candidate_id": "gyeongju-FD28-020",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840432",
+      "kto_title": "향미사",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "라플레르",
+      "new_candidate_id": "gyeongju-FD28-021",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838992",
+      "kto_title": "라플레르",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "이재원과자공방",
+      "new_candidate_id": "gyeongju-FD28-022",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840291",
+      "kto_title": "이재원과자공방",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "블리스",
+      "new_candidate_id": "gyeongju-FD28-023",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838742",
+      "kto_title": "경주 블리스커피",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "나이프(naif)",
+      "new_candidate_id": "gyeongju-FD28-024",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838936",
+      "kto_title": "나이프",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "가봉반과",
+      "new_candidate_id": "gyeongju-FD28-025",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2838704",
+      "kto_title": "가봉반과",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "야드",
+      "new_candidate_id": "gyeongju-FD28-026",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840413",
+      "kto_title": "야드",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "아덴",
+      "new_candidate_id": "gyeongju-FD28-027",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2831874",
+      "kto_title": "아덴",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    },
+    {
+      "food_name": "페이지나인",
+      "new_candidate_id": "gyeongju-FD28-028",
+      "disposition": "NEW_DISTINCT_RESTAURANT",
+      "kto_content_id": "2840841",
+      "kto_title": "페이지나인",
+      "kto_match_method": "LEVEL1_KTO_CONTENT_ID",
+      "coord_verified": true,
+      "patch_applied": true,
+      "official_relation_linked": true
+    }
+  ],
+  "kto_disposition_summary": {
+    "KTO_109_MATCHES_READY_28": 28,
+    "KTO_109_MATCH_CANONICAL_AMBIGUOUS": 12,
+    "KTO_109_UNMATCHED": 69
+  },
+  "canonical_field_mapping": {
+    "address": {
+      "disposition": "MAPPED"
+    },
+    "admission": {
+      "disposition": "NOT_APPLICABLE"
+    },
+    "as_of": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "candidate_id": {
+      "disposition": "NOT_APPLICABLE"
+    },
+    "category": {
+      "disposition": "MAPPED"
+    },
+    "city": {
+      "disposition": "MAPPED"
+    },
+    "content_rich_ready": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "coord_validated": {
+      "disposition": "NOT_APPLICABLE"
+    },
+    "description_ko": {
+      "disposition": "MAPPED"
+    },
+    "district": {
+      "disposition": "MAPPED"
+    },
+    "en_overview_claimed": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "en_provenance": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "en_status": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "en_title_claimed": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "has_address_actual": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "has_coords_actual": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "has_description_actual": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "has_image_actual": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "identity_status": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_attribution_required": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_display_eligible": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_display_ready": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_rights_note": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_rights_status": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "image_url": {
+      "disposition": "MAPPED"
+    },
+    "lat": {
+      "disposition": "MAPPED"
+    },
+    "lng": {
+      "disposition": "MAPPED"
+    },
+    "official_en_available": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "official_en_description": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "official_en_title": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "official_url": {
+      "disposition": "MAPPED"
+    },
+    "opening_hours": {
+      "disposition": "MAPPED_AS"
+    },
+    "phone": {
+      "disposition": "MAPPED"
+    },
+    "provenance": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "publishability": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "quality_tier": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "route_data_ready": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "source_candidate_sha": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "source_set": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "source_tier": {
+      "disposition": "PRESERVED_AS_SOURCE_EVIDENCE"
+    },
+    "subcategory": {
+      "disposition": "MAPPED"
+    },
+    "title_ko": {
+      "disposition": "MAPPED"
+    }
+  }
+}
