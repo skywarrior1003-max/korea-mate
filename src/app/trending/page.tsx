@@ -378,8 +378,10 @@ export default function TrendingPage() {
             >
               Survival Guide
             </Link>
+            {/* /planner 라는 route 는 없다. 플래너는 Home 안의 섹션이고,
+                Picks·Place Detail·도시 랜딩이 모두 /#planner 로 들어간다. */}
             <Link
-              href="/planner"
+              href="/#planner"
               className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--gkm-action-primary)" }}
             >

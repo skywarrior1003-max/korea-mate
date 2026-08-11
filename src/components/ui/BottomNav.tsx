@@ -41,6 +41,19 @@ const TABS = [
   { key: "more",    href: "/more" },
 ] as const;
 
+// More 는 허브 하나가 아니라 그 허브가 모아 둔 정보 화면 전체를 대표한다.
+// /more 에서 About 을 눌러 들어가면 아무 탭도 켜지지 않아, 어디에 있는지
+// 알려 주는 표시가 그 순간 사라졌다.
+//
+// Food Guide(/restaurants)·Trending 은 여기 묶지 않는다. 둘 다 More 가
+// 링크하지 않는 발견 화면이고, 정보 허브의 하위가 아니다.
+const MORE_SECTION = ["/more", "/about", "/blog", "/survival-guide"];
+
+/** 정확히 그 경로이거나 그 아래(/blog/slug)일 때만 — /aboutxyz 는 아니다 */
+function inSection(pathname: string, base: string): boolean {
+  return pathname === base || pathname.startsWith(base + "/");
+}
+
 export default function BottomNav({ selectedCount }: BottomNavProps) {
   const t = useTranslations("shell");
   const pathname = usePathname();
@@ -53,7 +66,9 @@ export default function BottomNav({ selectedCount }: BottomNavProps) {
     >
       {TABS.map(tab => {
         const active =
-          tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href.split("/").slice(0, 2).join("/"));
+          tab.key === "more" ? MORE_SECTION.some(base => inSection(pathname, base))
+          : tab.href === "/" ? pathname === "/"
+          : pathname.startsWith(tab.href.split("/").slice(0, 2).join("/"));
         return (
           <Link
             key={tab.key}
