@@ -312,6 +312,113 @@ SEOUL_MICHELIN_REUSABLE = 0
 
 ---
 
+## 15.1 Source Field Semantics Preservation (R1 추가 — 2026-08-11)
+
+**SOURCE_FIELD_SEMANTICS_MUST_BE_PRESERVED = YES**
+
+source에 특정 field가 존재한다고 해서 그 field가 인증(certification), 공식 분류, 검증된 속성을 의미한다고 자동 단정하지 않는다.
+
+### 적용 예시 (서울 R1 교훈)
+
+VisitSeoul `restaurant.halal` 필드:
+- 필드가 존재함 → OK
+- 비어있지 않음 → OK
+- **필드명이 "halal"이라고 해서 공식 Halal 인증 = NO**
+
+올바른 처리:
+```
+restaurant.halal (비어있지 않음)
+  → halal_evidence (또는 halal_declared)
+  + review_flag: HALAL_CERTIFICATION_STATUS_UNVERIFIED
+```
+
+금지:
+```
+restaurant.halal → halal_certification (자동 인증 선언)
+```
+
+동일 원칙 적용:
+- `restaurant.dietary` → `dietary_evidence` (not `dietary_certification`)
+- `restaurant.muslim` → `muslim_evidence`
+- `restaurant.salam` → `salam_evidence`
+- source `recommended` field → fact로 승격 금지
+- source `friendly` tag → fact로 승격 금지
+
+> **서울 R1 현황**: CANDIDATES_R1에서 이미 `halal_certification` 명칭 사용됨.
+> MAIN 임포트 전 → `halal_evidence`로 rename + HALAL_CERTIFICATION_STATUS_UNVERIFIED flag 추가 필요.
+
+---
+
+## 15.2 Opening Hours — Raw Text vs Normalized Structure (R1 추가 — 2026-08-11)
+
+**RAW_OPENING_HOURS_IS_WEEKLY_STRUCTURE = NO**
+
+source에서 가져온 raw text는 `opening_hours_weekly`가 아니다.
+
+### 올바른 필드 구분
+
+| 필드명 | 설명 | 허용 값 |
+|---|---|---|
+| `opening_hours_raw_text` | source 원문 그대로 보존 | 문자열 (예: "평일 11:00~22:00\r\n주말 12:00~22:00") |
+| `opening_hours_weekly` | 구조화 완료된 요일별 시간 | `{"mon": [{"open": "11:00", "close": "22:00"}], ...}` |
+
+raw text가 있다고 `opening_hours_weekly` = 완료로 취급 금지.
+
+### 구조화 방식
+
+raw text → `opening_hours_weekly` 변환:
+- deterministic rule 기반 파싱만 허용 (AI 해석 금지)
+- 변환 실패 시: `opening_hours_weekly` 부재, `opening_hours_raw_text` 보존 + flag
+
+### Gyeongju 특이사항
+
+경주 데이터의 `opening_hours` 필드:
+"대표메뉴 : 파스타, 오믈렛 영업시간 : 11:00-20:50 (Break Time 15:00-17:00) 휴무일 : 매주 월,화요일 주차 : ..."
+
+이 string은 단일 source 필드에 **대표메뉴 + 영업시간 + 휴무일 + 주차** 혼합.
+→ `opening_hours_raw_text`로 보존 (전체)
+→ 파싱 시 `signature_dishes` / `opening_hours_weekly` / `closed_days`로 분리 가능하나, 파싱 정확도 검증 필수
+
+> **서울 R1 현황**: `opening_hours_weekly`에 VisitSeoul `extra.cmmn_use_time` raw text 저장됨.
+> MAIN 임포트 전 → `opening_hours_raw_text`로 rename 필요.
+> `opening_hours_weekly` 구조화는 별도 parsing 스텝.
+
+---
+
+## 15.3 Seoul Completion Meaning (확정 — 2026-08-11)
+
+`SEOUL_FOOD_ENRICHMENT_COMPLETE = YES`의 정확한 의미:
+
+**의미 O**: "현재 접근 가능한 공식/공공 source에서 대량 factual enrichment와 source audit을 완료했다."
+
+**의미 X** (이 의미가 아님):
+- ALL_FIELDS_KNOWN = YES
+- language/payment/seating/accessibility/reservation 등 모든 utility field가 채워짐
+
+서울에서 이 필드들이 UNKNOWN인 것 = 정상.
+
+**UNKNOWN_IS_NOT_DATA_FAILURE = YES**
+
+---
+
+## 15.4 Image Rights (확정 — 2026-08-11)
+
+```
+IMAGE_URL_PRESENT != PRODUCT_USABLE_IMAGE
+```
+
+image URL이 있더라도:
+- 권리 확인 전 product에서 사용 금지
+- `image_rights_status` 추적 필요
+- 서울 R1: VisitSeoul 이미지 URL 1259건 → 권리 미확인 상태
+
+허용 image_rights_status 값:
+- `VG_RESTAURANT_OFFICIAL` (경주 gyeongju.go.kr)
+- `VISITSEOUL_UNCLEARED` (서울 R1)
+- `RIGHTS_VERIFIED` (공식 확인)
+
+---
+
 ## 15. FINAL_FREEZE 조건
 
 FOOD_DISCOVERY_SPEC_STATUS = ACTIVE_PROVISIONAL
