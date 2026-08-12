@@ -243,6 +243,34 @@ Generic "음식" = CUISINE_UNKNOWN (억지 할당 금지).
 
 MAP_SOURCE_FOR_TRAVELER_UTILITY = FORBIDDEN
 
+### 8.1 Reservation / Payment 의미론 확정 규칙 (2026-08-12)
+
+```
+RESERVATION_AVAILABILITY_IS_NOT_RECOMMENDATION = YES
+PAYMENT_LIST_SEMANTICS = CONFIRMED_SUPPORTED_METHODS_NON_EXHAUSTIVE
+PAYMENT_METHOD_ABSENT_FROM_LIST != NOT_ACCEPTED
+```
+
+**Reservation 규칙:**
+
+KTO `reservationfood` 값 (`가능`, `예약 가능`, `전화 예약 가능`, `불가`, `전화 문의` 등)을
+Food V1 `reservation` enum (`required / recommended / not_needed`)으로 변환 금지.
+
+`예약 가능` (availability) ≠ `recommended` (recommendation)  
+`불가` (not available) ≠ `not_needed` (walk-in semantics)
+
+원본 evidence는 `field_provenance._kto_detailIntro2_raw`에 보존. 새 enum 생성 금지.
+
+**Payment 규칙:**
+
+`payment = ["credit_card"]` 의미: "신용카드 사용이 확인됨" (비포괄적 목록)
+
+- 목록에 없는 결제수단 = 지원 불가 추론 금지
+- 부정 사실 (`없음`) = 목록 구조에 표현 불가 → 미반영
+- 새 vocabulary는 기존 활성 Food V1 vocabulary에 없으면 생성 금지
+
+이 규칙은 서울/경주/부산/제주 공통이며 향후 메인 핸드오프에도 유지.
+
 ---
 
 ## 9. Signature Dishes
@@ -624,6 +652,7 @@ FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES
 | 2026-08-11 | Section 16 Phone Gate 추가 (경주 V2 검증 기반). Section 4 KTO detailIntro2 infocenterfood 경로 추가. Section 9 KTO firstmenu 참조 추가. Section 11 KTO opentimefood 참조 추가. Applies to 업데이트. | 8dedbfe → bfcf495 |
 | 2026-08-11 | Section 4 KTO type39 anti-pattern 규칙 추가 (KTO_DETAILCOMMON2_TEL_EMPTY≠NO_PHONE, TYPE39_DETAILINTRO2_MUST_BE_CHECKED). Section 16.2 phone 수집 8단계 chain 확장. Section 16.9 다음 도시 precheck 체크리스트 추가(15항목). | TASK-GYEONGJU-FOOD-NAVER-CLOSEOUT-R1 |
 | 2026-08-12 | Section 17 Official/Public Source Use Policy 추가. visitbusan.net 이미지 usable 확정(2026-08-12). PRIVATE_IDENTIFIABLE_PERSON_IMAGE = EXCLUDE. FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES. | TASK-BUSAN-FOOD-EXISTING-SOURCE-FIELD-RECOVERY-R2 |
+| 2026-08-12 | Section 8.1 추가. RESERVATION_AVAILABILITY_IS_NOT_RECOMMENDATION = YES. PAYMENT_LIST_SEMANTICS = CONFIRMED_SUPPORTED_METHODS_NON_EXHAUSTIVE. PAYMENT_METHOD_ABSENT_FROM_LIST != NOT_ACCEPTED. 서울/경주/부산/제주 공통 규칙. | TASK-BUSAN-FOOD-RESERVATION-PAYMENT-RECOVERY-CORRECTION-R2 |
 
 ---
 
