@@ -1,0 +1,37 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-KTO-IMAGE-GAPFILL-R1",
+  "generated_at": "2026-08-12T07:42:30.203457Z",
+  "verdict": "PASS",
+  "input_sha": "f3af0c8f112afaa66f63d2cd0ac14b225ef80621ef421c3746719c0acc193b3e",
+  "output_sha": "f3af0c8f112afaa66f63d2cd0ac14b225ef80621ef421c3746719c0acc193b3e",
+  "jsonl_written": false,
+  "normalization_byte_identical": true,
+  "targets": {
+    "EMPTY_KTO_IMAGE_TARGET": 44,
+    "KTO_IMAGE_API_SUCCESS": 44,
+    "IMAGE_RECOVERED": 0,
+    "NO_IMAGE_ITEM": 44,
+    "PRIVATE_PERSON_IMAGE_EXCLUDED": 0,
+    "API_ERROR": 0
+  },
+  "coverage": {
+    "TOTAL_RECORDS": 721,
+    "INDIVIDUAL": 684,
+    "IMAGE_COVERAGE_BEFORE": 601,
+    "IMAGE_COVERAGE_AFTER": 601,
+    "REVIEW_REQUIRED_IMAGE_REMAINING": 0
+  },
+  "api": {
+    "KTO_API_CALLS": 0,
+    "NAVER_CALLS": 0,
+    "note": "44 raw files pre-existing in detailImage2/full (totalCount=0 for all 44, genuine KTO source gap)"
+  },
+  "continuity": {
+    "NO_OFFICIAL_EN_MATCH_FOUND_IN_CURRENT_INVENTORY": 266,
+    "OPEN_PHONE_VERIFICATION": 7,
+    "COLLECTIVE_HANDOFF_RULE_PRESERVED": true,
+    "NEW_SCHEMA_FIELD_COUNT": 0,
+    "FIELD_PROVENANCE_MISSING": 0
+  },
+  "next_task": "BUSAN_FOOD_FINAL_QA_AND_CLOSEOUT_WITH_NAVER_BLOCKER"
+}
