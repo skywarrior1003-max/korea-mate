@@ -1,8 +1,8 @@
 # Multicity Food Discovery Collection Policy v1
 
-**Status**: ACTIVE_PROVISIONAL  
-**Applies to**: Seoul (applied 2026-08-11), Gyeongju (active 2026-08-11), Busan (planned)  
-**FINAL_FREEZE_AFTER**: SEOUL_GYEONGJU_BUSAN_VALIDATION  
+**Status**: ACTIVE_FINAL  
+**Applies to**: Seoul (applied 2026-08-11), Gyeongju (active 2026-08-11), Busan (closeout 2026-08-12)  
+**FINAL_FREEZE_CONDITION_MET**: SEOUL_GYEONGJU_BUSAN_VALIDATION = COMPLETE (2026-08-12)  
 **Canonical Target**: city_spots  
 
 ---
@@ -132,6 +132,44 @@ KTO_LIST_TEL_EMPTY != RESTAURANT_PHONE_NOT_AVAILABLE
 - `getAreaBasedList2.tel` 또는 `detailCommon2.tel` 공란만 보고 "type39 전화 없음" 판정 금지
 - 반드시 `detailIntro2.infocenterfood` 까지 확인 후 phone 없음 결론 가능
 - `detailIntro2` 호출 시 `infocenterfood` 외 유용 필드 동시 수집 (→ §6.1 `ONE_FETCH_COLLECT_ALL_USEFUL_FACTS` 원칙 적용)
+
+**도시별 검증 결과 (FINAL 기준):**
+
+### 부산 (Busan) — 검증 완료 2026-08-12
+
+```
+PRIMARY_LOCAL_SOURCE   = FoodService (VisitBusan API, UC_SEQ 기반)
+MULTILINGUAL_COMMON_ID = UC_SEQ  (KO/EN/JA/ZHS/ZHT 공통; 99.8% 일치)
+KTO_UNIVERSE           = SEPARATE (KorService2 contentId ≠ FoodService UC_SEQ)
+EN_INVENTORY           = EngService2 (별도 contentId; 부산 FD=9건만 food)
+IMAGE_SOURCE           = VisitBusan(usable) + KTO detailImage2(usable)
+```
+
+- FoodService와 KorService2는 완전히 별개의 venue universe — phone_exact=0, 50m latlng 매칭도 false positive
+- UC_SEQ로 KO/EN/JA/ZHS/ZHT 다국어 연결 바로 가능
+- KorService2 contentId ≠ EngService2 contentId — EN 수집은 별도 EngService2 수집 후 identity 매칭 필수
+
+### 경주 (Gyeongju) — 검증 완료 2026-08-11
+
+```
+PRIMARY_LOCAL_SOURCE   = gyeongju.go.kr/tour (최우선)
+FOOD_SPECIFIC_SOURCE   = VisitGyeongju
+KTO_DETAIL_CRITICAL    = detailIntro2 (infocenterfood for phone)
+```
+
+- gyeongju.go.kr/tour = 경주 최신 관광 source 우선
+- KTO type39 phone은 반드시 `detailIntro2.infocenterfood` 확인
+
+### 서울 (Seoul) — 검증 완료 2026-08-11
+
+```
+PRIMARY_LOCAL_SOURCE   = VisitSeoul 공식 API (POST /api/v1/contents/info)
+MULTILINGUAL_SUPPORT   = 단일 cid + multi_lang_list
+```
+
+- VisitSeoul API 상세 구조는 §5 참조
+
+지역 source와 KTO가 같은 장소 universe라고 가정 금지.
 
 ---
 
@@ -347,11 +385,15 @@ SEOUL_MICHELIN_REUSABLE = 0
 - 처음부터 재수집 금지
 - Food V1 envelope으로 wrap → provenance 보존 → missing audit → targeted gap-fill
 
-### 14.2 부산 (Busan)
+### 14.2 부산 (Busan) — CLOSEOUT COMPLETE 2026-08-12
 
-- restaurants.json에 Michelin 55건 + busan-mat 119건 + taegshlang 20건 존재
-- 이 데이터를 Food V1 envelope으로 wrap 가능
-- 기존 canonical 구조 유지
+- TOTAL=721 (INDIVIDUAL=684, COLLECTIVE=3, EXCLUDED=4, DUPLICATE=30)
+- JSONL: `data/tourapi/enriched/busan/busan-food-discovery-candidates-v1.jsonl`
+- FINAL SHA: `f3af0c8f112afaa66f63d2cd0ac14b225ef80621ef421c3746719c0acc193b3e`
+- Phone: 677/684 verified, 7 OPEN_PHONE_VERIFICATION (Naver blocked)
+- Image: 601/684 present, 83 empty (KTO 44 NO_IMAGE_ITEM + 39 source exhausted)
+- EN: 266건 NO_OFFICIAL_EN_MATCH_FOUND_IN_CURRENT_INVENTORY
+- 상세: `docs/data-collection/busan-food-discovery-v1-closeout-handoff.md`
 
 ### 14.3 규칙
 
@@ -469,13 +511,19 @@ image URL이 있더라도:
 
 ## 15. FINAL_FREEZE 조건
 
-FOOD_DISCOVERY_SPEC_STATUS = ACTIVE_PROVISIONAL
+```
+FOOD_DISCOVERY_SPEC_STATUS = ACTIVE_FINAL
+FINAL_FREEZE_CONDITION = SEOUL_GYEONGJU_BUSAN_VALIDATION
+FINAL_FREEZE_DATE = 2026-08-12
+FINAL_FREEZE_COMMIT = TASK-MULTICITY-FOOD-COLLECTION-SPEC-FINAL-FREEZE-R1
+```
 
-서울 → 경주 → 부산 검증 완료 후:
+서울 + 경주 + 부산 검증 완료 → FINAL FREEZE 조건 충족.
 
-FINAL_FREEZE_AFTER = SEOUL_GYEONGJU_BUSAN_VALIDATION
-
-그 전까지: 수정 가능. 변경 시 이 문서에 반영 + 버전 메모 추가.
+이 상태에서:
+- 새 도시에서 단순히 다른 데이터 형태가 나왔다는 이유만으로 공통 규칙 즉시 변경 금지
+- 실제 공통 계약 결함 발견 시에만 메인에서 변경 승인
+- 변경 시 반드시 변경이력 기록 + 이유 명시
 
 ---
 
@@ -570,12 +618,12 @@ BUSAN_FOOD_PRECHECK_MUST_CHECK:
 15. AI 추론 사실 입력 금지 (AI_INFERRED_RESTAURANT_FACT = FORBIDDEN)
 ```
 
-### 16.8 도시별 Phone Gate 상태 (2026-08-11)
+### 16.8 도시별 Phone Gate 상태 (최종 2026-08-12)
 
 | 도시 | 상태 | 비고 |
 |---|---|---|
 | 경주 | NEAR_COMPLETE | detailIntro2 68/69 phone 복구. No Words 1건 Naver 차단 대기. 성동시장 2건 entity 제외. |
-| 부산 | NOT_STARTED | 부산 food discovery 프리체크 선행 필요 |
+| 부산 | **CLOSEOUT** | 677/684 verified. 7건 OPEN_PHONE_VERIFICATION (Naver blocked). |
 | 서울 | NOT_STARTED | Phone Gate 적용 예정 |
 
 ---
@@ -644,6 +692,149 @@ FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES
 
 ---
 
+---
+
+## 18. Collective Food Destination (부산 검증 추가 — 2026-08-12)
+
+모든 도시에서 individual restaurant와 collective food destination을 명확히 구분한다.
+
+### 18.1 Collective Food Destination 정의
+
+**복합 식음료 관광지** 예:
+
+| 유형 | 부산 예시 |
+|---|---|
+| 해산물 복합 공간 | 영도해녀촌, 광안리 민락회타운 |
+| 전통시장 내 식당군 | 해운대시장 |
+| 먹거리 거리 | 도시별 음식 특화 거리 |
+
+### 18.2 규칙
+
+```
+COLLECTIVE_FOOD_DESTINATION_POLICY = YES
+
+PHONE_GATE_APPLY = NO
+EXCLUDE_ON_MISSING_PHONE = NO
+GENERIC_ENTITY_QA_BULK_EXCLUSION = FORBIDDEN
+```
+
+- Food/tourism destination으로 유지 가능
+- Individual restaurant Phone Gate 적용 금지 — phone 없음으로 제거 금지
+- `ENTITY_QA: NOT_SINGLE_RESTAURANT_ENTITY` 플래그 → generic `ENTITY_QA:*` 전체 제외 필터 적용 금지
+- `ENTITY_QA: FOOD_SCOPE_EXCLUDED`(쿠킹클래스 등)와 반드시 구분
+- 새 city-specific schema 생성 금지
+
+---
+
+## 19. Cooking Class / Experience (부산 검증 추가 — 2026-08-12)
+
+쿠킹클래스·학원형 체험은 current Food/Place individual restaurant 후보에 자동 포함하지 않는다.
+
+```
+COOKING_CLASS_FOOD_SCOPE_EXCLUSION = CONDITIONAL
+BLANKET_EXPERIENCE_EXCLUSION = FORBIDDEN
+```
+
+- 실제 restaurant/food destination인지 product scope로 판단
+- 부산에서 확정한 4개 cooking class (코리아쿠킹클래스, 부산 오키친 쿠킹하우스, 배로모디 쿠킹클래스, 부산 로컬푸드 쿠킹클래스)는 Food candidate에서 제외
+- 이를 모든 도시의 모든 체험에 blanket exclusion 규칙으로 확대하지 않는다
+- 향후 Experience 카테고리 검토 가능
+
+---
+
+## 20. Multilingual 규칙 (3도시 검증 통합 — 2026-08-12)
+
+### 20.1 Identity 검증 우선순위
+
+지역 공식 multilingual source가 stable language ID를 제공하면 ID 우선 연결.
+
+이름 fuzzy match보다:
+
+1. stable ID (UC_SEQ, contentId 등)
+2. 공식 relation (연결 테이블)
+3. phone exact match
+4. address/coordinates
+5. name + location exact evidence
+
+### 20.2 KTO 언어 시스템 분리
+
+```
+KORSERVICE2_CONTENTID != ENGSERVICE2_CONTENTID
+KTO_SAME_CONTENTID_DIFFERENT_LANGUAGE = FORBIDDEN_ASSUMPTION
+```
+
+- 동일 장소도 KorService2와 EngService2의 contentId가 다름
+- "같은 contentId + language 파라미터"로 다국어 회수 불가
+- EN 수집은 EngService2 별도 수집 후 lat/lng + 이름 identity 매칭 필수
+
+### 20.3 FoodService UC_SEQ 다국어 공통 ID (부산 검증)
+
+```
+FOODSERVICE_UC_SEQ_IS_MULTILINGUAL_ID = YES
+UC_SEQ_CONSISTENCY = 99.8%  (KO/EN/JA/ZHS/ZHT 동일)
+```
+
+- 부산 VisitBusan FoodService: UC_SEQ = KO/EN/JA/ZHS/ZHT 공통 ID
+- 파서 키: `getFoodZhs` (소문자 s) — `getFoodZhS` (대문자 S) 아님 주의
+
+### 20.4 EN 미매칭 표현
+
+공식 EN exact match를 찾지 못한 경우 반드시 이 표현 사용:
+
+```
+NO_OFFICIAL_EN_MATCH_FOUND_IN_CURRENT_INVENTORY
+```
+
+이를 절대로 아래 의미로 해석하지 않는다:
+- "영어가 존재하지 않는다" → ❌
+- "폐업했다" → ❌
+- "비활성 장소다" → ❌
+- "잘못된 장소다" → ❌
+
+```
+AI_TRANSLATION_AS_SOURCE_RECOVERY = FORBIDDEN
+```
+
+---
+
+## 21. Source-State Audit 선행 (3도시 검증 통합 — 2026-08-12)
+
+새 도시 또는 오래된 도시 재수집 전 **Source State Audit 먼저** 실행.
+
+```
+EXISTING_SOURCE_RECOVERY_BEFORE_NEW_API = YES
+```
+
+### 21.1 Audit 확인 항목
+
+| 항목 | 내용 |
+|---|---|
+| endpoint 현재 상태 | 응답 가능 여부, URL 변경 여부 |
+| 기존 raw 존재 여부 | 이미 수집된 파일 확인 |
+| 기존 수집 완료 여부 | pagination completeness |
+| language availability | 언어별 endpoint 상태 (ZHS/ZHT parser key 포함) |
+| stored source에서 회수 가능한 gap | detailIntro2, detailImage2 등 미수집 상세 endpoint |
+
+기존 raw가 있는데 API부터 재호출 금지.
+
+### 21.2 다음 도시 handoff 시 필수 포함 항목
+
+향후 모든 도시 Food handoff에 반드시 포함:
+
+- candidate 총계/분류 (individual / collective / excluded / duplicate / unresolved)
+- source inventory (사용한 source 목록, raw 위치)
+- provenance/freshness
+- multilingual linking 방식
+- open verification blocker (NAVER_BLOCKED 건수)
+- UNKNOWN 종료 항목 목록
+- 공식/공공 정보·이미지 사용 규칙
+- downstream에서 보호해야 할 특수 candidate (collective 등)
+- main import 미실행 여부 확인 (`MAIN_IMPORT = 0`)
+
+보조컴퓨터는 product schema/DB/import를 임의 설계하지 않는다.
+
+---
+
 ## 변경 이력
 
 | 날짜 | 변경 | SHA |
@@ -653,8 +844,10 @@ FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES
 | 2026-08-11 | Section 4 KTO type39 anti-pattern 규칙 추가 (KTO_DETAILCOMMON2_TEL_EMPTY≠NO_PHONE, TYPE39_DETAILINTRO2_MUST_BE_CHECKED). Section 16.2 phone 수집 8단계 chain 확장. Section 16.9 다음 도시 precheck 체크리스트 추가(15항목). | TASK-GYEONGJU-FOOD-NAVER-CLOSEOUT-R1 |
 | 2026-08-12 | Section 17 Official/Public Source Use Policy 추가. visitbusan.net 이미지 usable 확정(2026-08-12). PRIVATE_IDENTIFIABLE_PERSON_IMAGE = EXCLUDE. FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES. | TASK-BUSAN-FOOD-EXISTING-SOURCE-FIELD-RECOVERY-R2 |
 | 2026-08-12 | Section 8.1 추가. RESERVATION_AVAILABILITY_IS_NOT_RECOMMENDATION = YES. PAYMENT_LIST_SEMANTICS = CONFIRMED_SUPPORTED_METHODS_NON_EXHAUSTIVE. PAYMENT_METHOD_ABSENT_FROM_LIST != NOT_ACCEPTED. 서울/경주/부산/제주 공통 규칙. | TASK-BUSAN-FOOD-RESERVATION-PAYMENT-RECOVERY-CORRECTION-R2 |
+| 2026-08-12 | **FINAL FREEZE.** Section 4 도시별 검증 결과(Busan/Gyeongju/Seoul) 추가. Section 14.2 Busan CLOSEOUT 업데이트(721건). Section 15 ACTIVE_FINAL 변경. Section 16.8 부산 Phone Gate CLOSEOUT. Section 18 Collective Food Destination 신규. Section 19 Cooking Class/Experience 신규. Section 20 Multilingual 규칙 신규(KTO 언어 분리·UC_SEQ·NO_OFFICIAL_EN_MATCH). Section 21 Source-State Audit 선행 신규(EXISTING_SOURCE_RECOVERY_BEFORE_NEW_API=YES). | TASK-MULTICITY-FOOD-COLLECTION-SPEC-FINAL-FREEZE-R1 |
 
 ---
 
-*FOOD_DISCOVERY_SPEC_STATUS = ACTIVE_PROVISIONAL*  
-*FINAL_FREEZE_AFTER = SEOUL_GYEONGJU_BUSAN_VALIDATION*
+*FOOD_DISCOVERY_SPEC_STATUS = ACTIVE_FINAL*  
+*FINAL_FREEZE_DATE = 2026-08-12*  
+*FINAL_FREEZE_CONDITION = SEOUL_GYEONGJU_BUSAN_VALIDATION = COMPLETE*
