@@ -24,7 +24,7 @@ V2 routing 실데이터 기반 exact 수치로 교체.
 | SEARCHABLE_ONLY_OR_USER_PICK | ~716 | 250 | **250** | 변경 없음 |
 | EXISTING_RAW_RECOVERY | 미분류 | 38 | **38** | 변경 없음 |
 | COMPLETE_NO_ACTION | 미분류 | 1,697 | **1,697** | FOOD=PROTECTED_COMPLETE 표현 명확화 |
-| ACTIVE_EVENT_SERVICE_POOL | 미분류 | 미분류 | **4** | 신규 — EVENT_TRACK active 4건 EXCLUDED에서 분리 |
+| ACTIVE_EVENT_SERVICE_POOL | 미분류 | 미분류 | **6** | 6건 전체 서비스 풀 (D-routing 4건 + Place-routing 2건). routing 분리: ACTIVE_EVENT_D_ROUTING=4 / ACTIVE_EVENT_PLACE_ROUTING=2 |
 | INACTIVE_OR_HISTORICAL_EVENT | 미분류 | 미분류 | **1,186** | 1,190 - active 4 |
 | GENERAL_ACCOMMODATION_EXCLUDE | 미분류 | 미분류 | **17** | 변경 없음 |
 | EXCLUDED_TOTAL | 미분류 | 1,207 (오류) | **1,203** | 1,186 + 17 (active 4 분리 후) |
@@ -106,10 +106,10 @@ manifest: `data/seoul-source-audit/seoul-nonfood-existing-raw-recovery-manifest-
 
 현재 SERVICE_EVENT_POOL. 7일 refresh cycle (~2026-08-18).
 
-> **중요**: 6건의 routing track이 단일하지 않음.  
-> · 2건 (옹기콘서트, 연희판판): PLACE_CONDITIONAL_REVIEW A-routing → **PLACE_DETAIL_TARGET(573)에 포함**  
-> · 4건 (태권도공연, 정원박람회, 남산골, 야외도서관): EVENT_TRACK D-routing → **ACTIVE_EVENT_SERVICE_POOL(4)로 분리**  
-> Disjoint 분류에서 각 CID는 하나의 class에만 속함. SERVICE_EVENT_POOL은 routing class를 초과하는 개념.
+> **ACTIVE_EVENT_SERVICE_POOL = 6** (전체 서비스 풀). routing 기준 분리:  
+> · ACTIVE_EVENT_PLACE_ROUTING = 2 (옹기콘서트, 연희판판): PLACE_CONDITIONAL_REVIEW A-routing → **PLACE_DETAIL_TARGET(573)에 포함** — existing_detail_available=False, TV Gate 평가 위해 신규 detail 필요  
+> · ACTIVE_EVENT_D_ROUTING = 4 (태권도공연, 정원박람회, 남산골, 야외도서관): EVENT_TRACK D-routing → **disjoint class에서 별도 계상**  
+> Disjoint 합산에서는 ACTIVE_EVENT_D_ROUTING=4 사용. ACTIVE_EVENT_SERVICE_POOL=6은 routing class를 초과하는 pool 전체 개념.
 
 | source_record_id | 제목 | 상태 | 기간 | routing_class |
 |---|---|---|---|---|
@@ -136,16 +136,21 @@ manifest: `data/seoul-source-audit/seoul-nonfood-active-event-manifest-v1.json`
 | TEMPLE_STAY_CANDIDATE | 2 | TEMPLE_STAY_COMPLETE |
 | **합계** | **1,697** | |
 
-### ACTIVE_EVENT_SERVICE_POOL = 4 (EVENT_TRACK 출신)
+### ACTIVE_EVENT_SERVICE_POOL = 6 / ACTIVE_EVENT_D_ROUTING = 4 / ACTIVE_EVENT_PLACE_ROUTING = 2
 
-EVENT_TRACK 1,190건 중 현재 서비스 pool에 있는 4건. EXCLUDED가 아닌 별도 class.
+현재 서비스 풀 전체 6건. routing 기준으로 두 class로 분리.
 
-| 항목 | 건수 | 근거 |
-|---|---|---|
-| EVENT_TRACK active (KOPd5mmfg, KOP47mbp7, KOPw5jg9e, KOPvro3vg) | 4 | ACTIVE_EVENT_SERVICE_POOL — freshness 대상, AI itinerary/event 노출 가능 |
+| routing_class | 건수 | CID | 비고 |
+|---|---|---|---|
+| ACTIVE_EVENT_D_ROUTING | 4 | KOPd5mmfg, KOP47mbp7, KOPw5jg9e, KOPvro3vg | EVENT_TRACK D-routing — disjoint class, EXCLUDED 아님 |
+| ACTIVE_EVENT_PLACE_ROUTING | 2 | KOPsj8gga, KOPnkfasx | PLACE_CONDITIONAL_REVIEW A-routing → PLACE_DETAIL_TARGET(573)에 포함 |
+| **ACTIVE_EVENT_SERVICE_POOL (합계)** | **6** | — | 전체 서비스 풀 (pool 개념, cross-class) |
 
-> 나머지 2건 (KOPsj8gga, KOPnkfasx)은 PLACE_CONDITIONAL_REVIEW A-routing → PLACE_DETAIL_TARGET(573)에 포함됨.  
-> 이 2건은 상설 공연 venue로 routing 상 물리적 장소(PHYSICAL_PLACE)로 분류.
+> **Raw 중복 확인 결과** (TASK-SEOUL-ACTIVE-EVENT-FLAG-AND-RAW-DEDUPE-CORRECTION-R1):  
+> KOPsj8gga·KOPnkfasx: event sync에서 `contents/info` 수집했으나 `existing_detail_available=False`.  
+> `desc_plain` = CSS/style 아티팩트 (파싱 불가). routing reason = `CONDITIONAL_REVIEW_DETAIL_NEEDED_FOR_TV_GATE`.  
+> → KOPSJ8GGA_EXISTING_RAW_SUFFICIENT=NO, KOPNKFASX_EXISTING_RAW_SUFFICIENT=NO  
+> → **PLACE_DETAIL_TARGET 유지, API 중복 없음 (신규 호출 1회로 충분)**
 
 ### INACTIVE_OR_HISTORICAL_EVENT = 1,186
 
@@ -252,14 +257,20 @@ PLACE_DETAIL_TARGET           = 573   (CONDITIONAL A 528 + Shopping HIGH/INTENT 
 SEARCHABLE_ONLY_OR_USER_PICK  = 250
 EXISTING_RAW_RECOVERY_TARGET  = 38
 COMPLETE_NO_ACTION            = 1697  (FOOD=PROTECTED_COMPLETE 1259 + CORE 316 + EXP 120 + TEMPLE 2)
-ACTIVE_EVENT_SERVICE_POOL     = 4     (EVENT_TRACK active: KOPd5mmfg/KOP47mbp7/KOPw5jg9e/KOPvro3vg)
+ACTIVE_EVENT_D_ROUTING        = 4     (EVENT_TRACK active: KOPd5mmfg/KOP47mbp7/KOPw5jg9e/KOPvro3vg — disjoint 합산 사용)
 INACTIVE_OR_HISTORICAL_EVENT  = 1186  (EVENT_TRACK 1190 - active 4)
 GENERAL_ACCOMMODATION_EXCLUDE = 17
 EXCLUDED_TOTAL                = 1203  (1186 + 17)
   합계 = 573+250+38+1697+4+1186+17 = 3765  ✓
+  (합산 4 = ACTIVE_EVENT_D_ROUTING; ACTIVE_EVENT_PLACE_ROUTING=2는 PLACE_DETAIL_TARGET=573에 포함)
 
-CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6  (SERVICE_POOL: 4 EVENT_TRACK + 2 PLACE_CONDITIONAL venue)
+ACTIVE_EVENT_SERVICE_POOL     = 6     (전체 pool: D-routing 4건 + Place-routing 2건)
+ACTIVE_EVENT_PLACE_ROUTING    = 2     (KOPsj8gga·KOPnkfasx — PLACE_DETAIL_TARGET에 포함)
+CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6  (= ACTIVE_EVENT_SERVICE_POOL)
 ACTIVE_EVENT_INSIDE_GENERIC_EXCLUDED = 0
+
+KOPSJ8GGA_EXISTING_RAW_SUFFICIENT = NO  (existing_detail_available=False, TV Gate 평가 필요)
+KOPNKFASX_EXISTING_RAW_SUFFICIENT = NO  (existing_detail_available=False, TV Gate 평가 필요)
 PAST_EVENT_ACTIVE_TARGET = 0
 UNCONFIRMED_RECURRING_EVENT_ACTIVE_TARGET = 0
 DATELESS_EVENT_ACTIVE_TARGET = 0
@@ -294,3 +305,5 @@ NEXT_TASK = SEOUL_NONFOOD_TARGETED_EXECUTION_BATCH_1
 | 날짜 | 내용 |
 |---|---|
 | 2026-08-12 | v1 최초 작성 — TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1 |
+| 2026-08-12 | R1 — TASK-SEOUL-EVENT-ACCOUNTING-CORRECTION-R1: ACTIVE_EVENT_SERVICE_POOL(4) 분리, EXCLUDED_TOTAL=1203 교정 |
+| 2026-08-12 | R2 — TASK-SEOUL-ACTIVE-EVENT-FLAG-AND-RAW-DEDUPE-CORRECTION-R1: ACTIVE_EVENT_SERVICE_POOL=6(전체 풀), D_ROUTING=4, PLACE_ROUTING=2 명칭 정정. Raw 충분성 확인: KOPsj8gga/KOPnkfasx NO → PLACE_DETAIL_TARGET=573 유지 |
