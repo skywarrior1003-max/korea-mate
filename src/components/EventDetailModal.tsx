@@ -9,10 +9,12 @@ import { useTranslations } from "next-intl";
 import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
 
 // ── koreanSurvivalScore 색상 + 라벨 ──────────────
+// 라벨은 문장이 아니라 키를 돌려준다. 이 함수는 훅 밖이라 여기서 번역하면
+// 언어가 바뀌어도 갱신되지 않는다. 색상·구간은 그대로다.
 function scoreMeta(score: number) {
-  if (score >= 85) return { color: "bg-emerald-500", label: "Very Foreigner-Friendly" };
-  if (score >= 70) return { color: "bg-yellow-400",  label: "Manageable"              };
-  return              { color: "bg-red-400",         label: "Prepare in Advance"      };
+  if (score >= 85) return { color: "bg-emerald-500", labelKey: "scoreVeryFriendly" as const };
+  if (score >= 70) return { color: "bg-yellow-400",  labelKey: "scoreManageable"   as const };
+  return              { color: "bg-red-400",         labelKey: "scorePrepare"      as const };
 }
 
 // ── 이동수단 아이콘 ────────────────────────────────
@@ -89,6 +91,10 @@ export default function EventDetailModal({ event, onClose }: Props) {
   const sourceKey    = getItemSourceKey(event);
   const tModal       = useTranslations("modal");
   const tPicks       = useTranslations("picks");
+  const tPlace       = useTranslations("place");
+  const tBadges      = useTranslations("badges");
+  const tEvents      = useTranslations("events");
+  const tItin        = useTranslations("itin");
   const citySpotDbId = parseCitySpotId(sourceKey);
   const [imgError,  setImgError]  = useState(false);
   const [favorited, setFavorited] = useState(false);
@@ -192,7 +198,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src="/images/placeholder-spot.svg" alt="No image" className="w-full h-full object-cover" />
+            <img src="/images/placeholder-spot.svg" alt={tModal("noImageAlt")} className="w-full h-full object-cover" />
           )}
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -201,7 +207,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-sm text-lg font-bold"
-            aria-label="Close"
+            aria-label={tModal("closeAria")}
           >
             ✕
           </button>
@@ -229,10 +235,10 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* 뱃지들 */}
           <div className="absolute top-4 left-16 flex flex-wrap gap-2">
             {event.isTrending && (
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-500 text-white">🔥 Trending</span>
+              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-500 text-white">🔥 {tModal("trending")}</span>
             )}
             {event.isAnchor && (
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400 text-gray-900">⭐ Anchor</span>
+              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400 text-gray-900">⭐ {tModal("anchor")}</span>
             )}
           </div>
 
@@ -266,8 +272,8 @@ export default function EventDetailModal({ event, onClose }: Props) {
             >
               <span className="text-xl shrink-0">🗺️</span>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-black text-blue-700 uppercase tracking-wide leading-tight">Google Maps</p>
-                <p className="text-[10px] text-blue-400 mt-0.5">Directions</p>
+                <p className="text-xs font-black text-blue-700 uppercase tracking-wide leading-tight">{tPlace("googleMaps")}</p>
+                <p className="text-[10px] text-blue-400 mt-0.5">{tModal("directions")}</p>
               </div>
             </a>
             <a
@@ -278,8 +284,8 @@ export default function EventDetailModal({ event, onClose }: Props) {
             >
               <span className="text-xl shrink-0">🟢</span>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-black text-green-700 uppercase tracking-wide leading-tight">Naver Map</p>
-                <p className="text-[10px] text-green-500 mt-0.5">Korean transit</p>
+                <p className="text-xs font-black text-green-700 uppercase tracking-wide leading-tight">{tPlace("naverMaps")}</p>
+                <p className="text-[10px] text-green-500 mt-0.5">{tModal("koreanTransit")}</p>
               </div>
             </a>
           </div>
@@ -300,7 +306,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* 네이버 지도 한국어 안내 (외국인용) */}
           <div className="rounded-xl bg-green-50 border border-green-200 p-4 space-y-2">
             <p className="text-xs font-bold text-green-700 flex items-center gap-1.5">
-              💡 If Naver Maps doesn&apos;t find the place, copy the Korean name or address below and paste it into Naver Maps directly.
+              💡 {tModal("naverCopyHint")}
             </p>
             {naverKeyword && (
               <div className="flex items-center gap-2">
@@ -309,7 +315,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
                   onClick={() => handleCopyAddress(naverKeyword)}
                   className="shrink-0 px-3 py-1 rounded-lg text-xs font-bold bg-green-600 text-white hover:bg-green-700 transition-colors"
                 >
-                  {copied ? "✅ Copied!" : "Copy"}
+                  {copied ? tItin("copied") : tModal("copy")}
                 </button>
               </div>
             )}
@@ -320,7 +326,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
                   onClick={() => handleCopyAddress(koreanAddr)}
                   className="shrink-0 px-2 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
                 >
-                  {copied ? "✅" : "Copy"}
+                  {copied ? "✅" : tModal("copy")}
                 </button>
               </div>
             )}
@@ -330,52 +336,56 @@ export default function EventDetailModal({ event, onClose }: Props) {
 
           {/* Why It Matters */}
           <div className="rounded-2xl p-4" style={{ backgroundColor: "#1a1f36" }}>
-            <p className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">Why It Matters</p>
+            <p className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">{tModal("whyItMatters")}</p>
             <p className="text-sm text-white/90 leading-relaxed">{event.whyItMatters}</p>
           </div>
 
           {/* 상세 설명 */}
           <div>
-            <h3 className="text-sm font-bold text-gray-900 mb-1.5">About This Stop</h3>
+            <h3 className="text-sm font-bold text-gray-900 mb-1.5">{tModal("aboutStop")}</h3>
             <p className="text-sm text-gray-600 leading-relaxed">{event.description}</p>
           </div>
 
           {/* 실용 정보 그리드 */}
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-gray-50 p-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Duration</p>
-              <p className="text-sm font-semibold text-gray-800">🕐 {event.recommendedDurationMinutes} min</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("durationLabel")}</p>
+              <p className="text-sm font-semibold text-gray-800">🕐 {tModal("duration", { min: event.recommendedDurationMinutes })}</p>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Best Time</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("bestTime")}</p>
               <p className="text-sm font-semibold text-gray-800 capitalize">☀️ {event.bestTimeSlot}</p>
             </div>
             {event.openingHours && (
               <div className="rounded-xl bg-gray-50 p-3">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Hours</p>
-                <p className="text-sm font-semibold text-gray-800">🕑 {event.openingHours.open} – {event.openingHours.close}</p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tPlace("hours")}</p>
+                <p className="text-sm font-semibold text-gray-800">🕑 {tModal("openHours", { open: event.openingHours.open, close: event.openingHours.close })}</p>
               </div>
             )}
             <div className="rounded-xl bg-gray-50 p-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Payment</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("payment")}</p>
               <p className="text-sm font-semibold text-gray-800">
-                {event.cashOnly ? "💵 Cash Only" : event.foreignCardAccepted ? "💳 Card OK" : "—"}
+                {event.cashOnly
+                  ? `💵 ${tBadges("cashOnly")}`
+                  : event.foreignCardAccepted
+                    ? `💳 ${tBadges("cardOk")}`
+                    : tModal("paymentUnknown")}
               </p>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">English Menu</p>
-              <p className="text-sm font-semibold text-gray-800">{event.englishMenu ? "✅ Available" : "❌ Korean only"}</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("englishMenu")}</p>
+              <p className="text-sm font-semibold text-gray-800">{event.englishMenu ? `✅ ${tModal("menuAvailable")}` : `❌ ${tModal("menuKoreanOnly")}`}</p>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Accessibility</p>
-              <p className="text-sm font-semibold text-gray-800">{event.barrierFree ? "♿ Accessible" : "⚠️ Stairs/Uneven"}</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{tModal("accessibility")}</p>
+              <p className="text-sm font-semibold text-gray-800">{event.barrierFree ? `♿ ${tModal("accessible")}` : `⚠️ ${tModal("stairsUneven")}`}</p>
             </div>
           </div>
 
           {/* Korean Survival Score */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-bold text-gray-900">Korean Survival Score</h3>
+              <h3 className="text-sm font-bold text-gray-900">{tModal("survivalScore")}</h3>
               <span className="text-sm font-black text-gray-800">
                 {event.koreanSurvivalScore}<span className="text-gray-400 font-normal">/100</span>
               </span>
@@ -383,27 +393,27 @@ export default function EventDetailModal({ event, onClose }: Props) {
             <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
               <div className={`h-full rounded-full transition-all ${scoreInfo.color}`} style={{ width: `${event.koreanSurvivalScore}%` }} />
             </div>
-            <p className="text-xs text-gray-500 mt-1">{scoreInfo.label}</p>
+            <p className="text-xs text-gray-500 mt-1">{tModal(scoreInfo.labelKey)}</p>
           </div>
 
           {/* Transit from Anchor */}
           {transit && (
             <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4">
-              <h3 className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-3">Getting There from Anchor</h3>
+              <h3 className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-3">{tModal("transitFromAnchor")}</h3>
               <div className="flex flex-wrap gap-3">
                 {transit.walkMinutes && (
                   <span className="flex items-center gap-1.5 text-sm font-semibold text-gray-700">
-                    {transitIcon("walk")} {transit.walkMinutes} min walk
+                    {transitIcon("walk")} {tEvents("transitWalk", { n: transit.walkMinutes })}
                   </span>
                 )}
                 {transit.subwayMinutes && (
                   <span className="flex items-center gap-1.5 text-sm font-semibold text-gray-700">
-                    {transitIcon("subway")} {transit.subwayMinutes} min subway
+                    {transitIcon("subway")} {tEvents("transitSubway", { n: transit.subwayMinutes })}
                   </span>
                 )}
                 {transit.taxiMinutes && (
                   <span className="flex items-center gap-1.5 text-sm font-semibold text-gray-700">
-                    {transitIcon("taxi")} {transit.taxiMinutes} min taxi
+                    {transitIcon("taxi")} {tEvents("transitTaxi", { n: transit.taxiMinutes })}
                   </span>
                 )}
               </div>
@@ -421,7 +431,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
           {/* 공지 */}
           {event.notice && (
             <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
-              <p className="text-xs font-bold text-amber-700 mb-0.5">⚠️ Good to Know</p>
+              <p className="text-xs font-bold text-amber-700 mb-0.5">⚠️ {tModal("goodToKnow")}</p>
               <p className="text-xs text-amber-800 leading-relaxed">{event.notice}</p>
             </div>
           )}
@@ -513,7 +523,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
               onClick={() => setShowReview((v) => !v)}
               className="w-full flex items-center justify-between px-5 py-3.5 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
             >
-              <span className="text-sm font-bold text-gray-700">✏️ My Notes & Review</span>
+              <span className="text-sm font-bold text-gray-700">✏️ {tModal("notesTitle")}</span>
               <span className="text-gray-400">{showReview ? "▲" : "▼"}</span>
             </button>
             {showReview && (
@@ -521,12 +531,12 @@ export default function EventDetailModal({ event, onClose }: Props) {
                 <textarea
                   value={review}
                   onChange={(e) => handleReviewChange(e.target.value)}
-                  placeholder="Write your notes, tips, or experience here... (saved locally)"
+                  placeholder={tModal("notesPlaceholder")}
                   rows={3}
                   className="w-full text-sm border border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-300 resize-none text-gray-700 placeholder:text-gray-400"
                 />
                 {review && (
-                  <p className="text-xs text-emerald-600 font-medium">✅ Saved locally on this device</p>
+                  <p className="text-xs text-emerald-600 font-medium">✅ {tModal("notesSavedLocal")}</p>
                 )}
               </div>
             )}
