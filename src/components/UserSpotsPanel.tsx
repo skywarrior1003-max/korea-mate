@@ -9,7 +9,7 @@ import { runCreateFlow } from "@/lib/user-spots/create-flow";
 import { canEdit } from "@/lib/user-spots/anchor-core";
 import {
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
-  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto,
+  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
 } from "@/lib/user-spots-api";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
@@ -108,6 +108,8 @@ export default function UserSpotsPanel({
   const [photoNotice,     setPhotoNotice]     = useState<string | null>(null);
   const [photoUrl,        setPhotoUrl]        = useState<string | null>(null);
   const [editingHasPhoto, setEditingHasPhoto] = useState(false);
+  const [canonImg,        setCanonImg]        = useState<string | null>(null);
+  const [canonSource,     setCanonSource]     = useState<string | null>(null);
   // Per-spot selected times
   const [timeMap, setTimeMap] = useState<Record<string, string>>({});
 
@@ -157,6 +159,7 @@ export default function UserSpotsPanel({
   function resetPhotoState() {
     setPhotoFile(null); setPhotoBusy(false); setPhotoNotice(null);
     setPhotoUrl(null); setEditingHasPhoto(false);
+    setCanonImg(null); setCanonSource(null);
   }
 
   function openCreate() {
@@ -264,6 +267,10 @@ export default function UserSpotsPanel({
     // 만료되는 URL 이라 폼을 열 때 한 번만 받아 온다. 저장하지 않는다.
     if (spot.has_photo) {
       void apiGetUserSpotPhotoUrl(spot.id).then(r => { if (r) setPhotoUrl(r.signedUrl); });
+    } else {
+      void apiGetUserSpotCanonicalImage(spot.id).then(r => {
+        setCanonImg(r.imageUrl); setCanonSource(r.sourceUrl);
+      });
     }
   }
 
@@ -412,6 +419,8 @@ export default function UserSpotsPanel({
         onRemoveExistingPhoto={editSpotId ? () => void removeStoredPhoto(editSpotId) : undefined}
         photoBusy={photoBusy}
         photoNotice={photoNotice}
+        canonicalImageUrl={editSpotId ? canonImg : null}
+        canonicalSourceUrl={editSpotId ? canonSource : null}
       />
     );
   }

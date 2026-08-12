@@ -342,7 +342,10 @@
     "officialUnavailable": "공식 정보 없음",
     "hoursMayChange": "운영시간은 바뀔 수 있어요.",
     "checkLatest": "아래 링크에서 최신 정보를 확인하세요.",
-    "openExternal": "새 탭에서 {service} 열기"
+    "openExternal": "새 탭에서 {service} 열기",
+    "keepAsMyPlace": "내 장소로 남기기",
+    "keptAsMyPlace": "내 장소에 남겼어요",
+    "keepFailed": "이 장소를 남기지 못했습니다. 다시 시도해 주세요."
   },
   "adaptive": {
     "inTripTitle": "여행 중이시네요",
@@ -657,7 +660,10 @@
     "savedPhotoFailed": "장소는 저장했어요. 사진만 올리지 못했습니다.",
     "needAnchor": "사진을 추가하거나, 현재 위치를 사용해 주세요.",
     "photoOnlyAnchor": "이 사진이 이 장소에 대해 아는 전부입니다. 현재 위치를 먼저 추가하거나, 장소를 삭제해 주세요.",
-    "photoDeleted": "사진을 삭제했습니다."
+    "photoDeleted": "사진을 삭제했습니다.",
+    "canonicalPhotoAlt": "이 장소의 사진",
+    "canonicalPhotoNote": "장소 정보에 등록된 사진입니다. 직접 찍은 사진이 아닙니다.",
+    "photoSource": "출처"
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

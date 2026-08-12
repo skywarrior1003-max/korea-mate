@@ -80,6 +80,13 @@ interface Props {
   photoBusy?:       boolean;
   /** 사진 관련 안내·오류 문구 */
   photoNotice?:     string | null;
+  /**
+   * 개인 사진이 없을 때만 쓰는 공개 장소 대표 이미지.
+   * 개인 사진이 있으면 서버가 주지 않는다 — 내가 찍은 사진 위에 덮이지 않는다.
+   */
+  canonicalImageUrl?:  string | null;
+  /** 표기가 필요한 이미지일 때의 출처 링크. 없으면 표기할 것이 없다는 뜻이다. */
+  canonicalSourceUrl?: string | null;
 }
 
 const INPUT =
@@ -95,6 +102,7 @@ export default function UserSpotForm({
   mode, photoFile, onPickPhoto,
   existingPhotoUrl = null, hasExistingPhoto = false,
   onRemoveExistingPhoto, photoBusy = false, photoNotice = null,
+  canonicalImageUrl = null, canonicalSourceUrl = null,
 }: Props) {
   const t = useTranslations("picks");
   const [gps, setGps] = useState<GpsState>("idle");
@@ -132,6 +140,9 @@ export default function UserSpotForm({
 
   const hasLocation = form.lat !== null && form.lng !== null;
   const shownPhoto  = localPreview ?? existingPhotoUrl;
+  // 내 사진이 하나도 없을 때만 장소 사진을 보여준다. 순서를 바꾸면 내가 찍은
+  // 사진 대신 카탈로그 사진이 뜬다 — 그건 내 기록이 아니다.
+  const shownCanonical = !shownPhoto ? canonicalImageUrl : null;
 
   // 저장할 수 있는가 — 이름은 여기에 영향을 주지 않는다.
   const anchorInput = { lat: form.lat, lng: form.lng, hasPhoto: photoFile !== null };
@@ -200,6 +211,30 @@ export default function UserSpotForm({
             </button>
           )}
         </div>
+
+        {/* 장소 사진 fallback — 내 사진이 없을 때만 */}
+        {shownCanonical && (
+          <div className="mt-1">
+            <div className="relative w-full max-w-[280px] aspect-[4/3] rounded-xl overflow-hidden bg-[#F6F7F8] border border-[#E5E7EA]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={shownCanonical} alt={t("canonicalPhotoAlt")} className="w-full h-full object-cover" />
+            </div>
+            <p className="mt-1 text-[11px] text-[#565D66]/70">
+              {t("canonicalPhotoNote")}
+              {canonicalSourceUrl && (
+                <>
+                  {" · "}
+                  <a
+                    href={canonicalSourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >{t("photoSource")}</a>
+                </>
+              )}
+            </p>
+          </div>
+        )}
 
         {photoNotice && (
           <p role="status" className="mt-1 text-[11px] text-[#565D66]">{photoNotice}</p>

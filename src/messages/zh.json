@@ -342,7 +342,10 @@
     "officialUnavailable": "暂无官方信息",
     "hoursMayChange": "营业时间可能变更。",
     "checkLatest": "请通过下方链接查看最新信息。",
-    "openExternal": "在新标签页打开{service}"
+    "openExternal": "在新标签页打开{service}",
+    "keepAsMyPlace": "留作我的地点",
+    "keptAsMyPlace": "已留在我的地点",
+    "keepFailed": "无法保存这个地点，请重试。"
   },
   "adaptive": {
     "inTripTitle": "您正在旅行中",
@@ -657,7 +660,10 @@
     "savedPhotoFailed": "地点已保存，只有照片未能上传。",
     "needAnchor": "请添加照片，或使用当前位置。",
     "photoOnlyAnchor": "这张照片是我们对这个地点了解的全部。请先添加当前位置，或删除整个地点。",
-    "photoDeleted": "已删除照片。"
+    "photoDeleted": "已删除照片。",
+    "canonicalPhotoAlt": "这个地点的照片",
+    "canonicalPhotoNote": "来自地点信息的照片，不是你自己拍的。",
+    "photoSource": "来源"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

@@ -342,7 +342,10 @@
     "officialUnavailable": "公式情報なし",
     "hoursMayChange": "営業時間は変更されることがあります。",
     "checkLatest": "下のリンクで最新情報をご確認ください。",
-    "openExternal": "新しいタブで{service}を開く"
+    "openExternal": "新しいタブで{service}を開く",
+    "keepAsMyPlace": "自分の場所に残す",
+    "keptAsMyPlace": "自分の場所に残しました",
+    "keepFailed": "この場所を残せませんでした。もう一度お試しください。"
   },
   "adaptive": {
     "inTripTitle": "旅行中ですね",
@@ -657,7 +660,10 @@
     "savedPhotoFailed": "場所は保存しました。写真だけアップロードできませんでした。",
     "needAnchor": "写真を追加するか、現在地を使ってください。",
     "photoOnlyAnchor": "この写真がこの場所について分かるすべてです。先に現在地を追加するか、場所ごと削除してください。",
-    "photoDeleted": "写真を削除しました。"
+    "photoDeleted": "写真を削除しました。",
+    "canonicalPhotoAlt": "この場所の写真",
+    "canonicalPhotoNote": "場所情報に登録された写真です。ご自身で撮った写真ではありません。",
+    "photoSource": "出典"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

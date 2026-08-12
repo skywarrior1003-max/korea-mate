@@ -15,9 +15,13 @@ import { getDeviceId } from "@/lib/deviceId";
  * 순서: 사용자가 적은 이름 → 사용자가 적은 주소 → 중립적인 기본 문구
  */
 export function userSpotDisplayName(
-  spot: { name?: string | null; address?: string | null },
+  spot: { display_title?: string | null; name?: string | null; address?: string | null },
   fallback: string,
 ): string {
+  // 사용자가 붙인 개인 제목이 있으면 그것이 먼저다. factual name 은 그 장소가
+  // 무엇인지 말하고, display_title 은 그 사람에게 무엇이었는지 말한다.
+  const title = (spot.display_title ?? "").trim();
+  if (title) return title;
   const name = (spot.name ?? "").trim();
   if (name) return name;
   const address = (spot.address ?? "").trim();
@@ -376,5 +380,66 @@ async function errorMessage(res: Response): Promise<string> {
     return body.error ?? `HTTP ${res.status}`;
   } catch {
     return `HTTP ${res.status}`;
+  }
+}
+
+// ── 공개 장소에서 남기기 ───────────────────────────────────────────────────────
+//
+// 클라이언트는 어느 장소인가만 보낸다. 이름·좌표·도시·분류는 서버가 city_spots
+// 에서 직접 읽는다 — 화면이 들고 있는 값을 사실로 올려보내지 않는다.
+
+export interface CreateFromCanonicalResult {
+  ok: boolean;
+  spot?: UserSpot;
+  /** CANONICAL_PLACE_NOT_FOUND · CANONICAL_PLACE_NOT_USABLE 등 */
+  code?: string;
+  error?: string;
+}
+
+export async function apiCreateUserSpotFromCanonical(
+  citySpotId: number,
+): Promise<CreateFromCanonicalResult> {
+  const deviceId = getDeviceId();
+  let res: Response;
+  try {
+    res = await fetch("/api/user-spots/from-canonical", {
+      method:  "POST",
+      headers: deviceHeader(deviceId),
+      body:    JSON.stringify({ city_spot_id: citySpotId }),
+    });
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+  if (res.ok) {
+    try { return { ok: true, spot: (await res.json()) as UserSpot }; }
+    catch { return { ok: true }; }
+  }
+  let code: string | undefined;
+  let error = `HTTP ${res.status}`;
+  try {
+    const body = (await res.json()) as { error?: string; code?: string };
+    code  = body.code;
+    error = body.error ?? error;
+  } catch { /* ignore */ }
+  return { ok: false, code, error };
+}
+
+/**
+ * 개인 사진이 없는 My Place 에 보여줄 공개 대표 이미지.
+ * 개인 사진이 있으면 서버가 null 을 준다 — 덮어쓰지 않는다.
+ */
+export async function apiGetUserSpotCanonicalImage(
+  id: string,
+): Promise<{ imageUrl: string | null; sourceUrl: string | null }> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/canonical-image`, {
+      headers: getHeader(deviceId),
+    });
+    if (!res.ok) return { imageUrl: null, sourceUrl: null };
+    const body = (await res.json()) as { imageUrl?: string | null; sourceUrl?: string | null };
+    return { imageUrl: body.imageUrl ?? null, sourceUrl: body.sourceUrl ?? null };
+  } catch {
+    return { imageUrl: null, sourceUrl: null };
   }
 }

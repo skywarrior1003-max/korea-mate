@@ -22,7 +22,7 @@ import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
-  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto,
+  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
   type UserSpot,
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
@@ -132,6 +132,9 @@ function PicksContent() {
   const [photoNotice, setPhotoNotice] = useState<string | null>(null);
   const [photoUrl,    setPhotoUrl]    = useState<string | null>(null);
   const [editingHasPhoto, setEditingHasPhoto] = useState(false);
+  // 개인 사진이 없을 때만 서버가 장소 사진을 준다.
+  const [canonImg,    setCanonImg]    = useState<string | null>(null);
+  const [canonSource, setCanonSource] = useState<string | null>(null);
 
   // 로딩 플래그는 여기서 세우지 않는다 — 최초 마운트에서 effect 가 동기 setState
   // 를 호출하면 렌더가 한 번 더 돈다. 초기값이 이미 true 이고, 재시도는 클릭
@@ -153,6 +156,7 @@ function PicksContent() {
   function resetPhotoState() {
     setPhotoFile(null); setPhotoBusy(false); setPhotoNotice(null);
     setPhotoUrl(null); setEditingHasPhoto(false);
+    setCanonImg(null); setCanonSource(null);
   }
   function openCreate() {
     setForm(EMPTY_USER_SPOT_FORM); setFormError(null); setEditingId(null); setShowCreate(true);
@@ -171,6 +175,12 @@ function PicksContent() {
     // 만료되는 URL 이라 폼을 열 때 한 번만 받아 온다. 저장하지 않는다.
     if (s.has_photo) {
       void apiGetUserSpotPhotoUrl(s.id).then(r => { if (r) setPhotoUrl(r.signedUrl); });
+    } else {
+      // 내 사진이 없을 때만 물어본다. 있으면 서버도 null 을 주지만
+      // 굳이 부르지 않는다.
+      void apiGetUserSpotCanonicalImage(s.id).then(r => {
+        setCanonImg(r.imageUrl); setCanonSource(r.sourceUrl);
+      });
     }
   }
   function closeForm() {
@@ -712,6 +722,7 @@ function PicksContent() {
                                 hasExistingPhoto={editingHasPhoto}
                                 onRemoveExistingPhoto={() => void removeStoredPhoto(s.id)}
                                 photoBusy={photoBusy} photoNotice={photoNotice}
+                                canonicalImageUrl={canonImg} canonicalSourceUrl={canonSource}
                               />
                             </>
                           ) : (

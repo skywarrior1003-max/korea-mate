@@ -24,6 +24,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
+import { apiCreateUserSpotFromCanonical } from "@/lib/user-spots-api";
 import PlaceReportModal from "@/components/PlaceReportModal";
 import { citySpotSourceKey } from "@/lib/place-identity";
 import { trackEvent } from "@/lib/analytics";
@@ -71,6 +72,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const [saved, setSaved]       = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [savedToast, setSavedT] = useState(false);
+  // 내 장소로 남기기 — Saved 와 다른 행동이다. Saved 는 북마크,
+  // 이쪽은 개인 기록을 하나 만드는 것이다.
+  const [keeping,   setKeeping]   = useState(false);
+  const [keptOnce,  setKeptOnce]  = useState(false);
+  const [keepError, setKeepError] = useState(false);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   const [imgFailed, setImgFail] = useState(false);
 
@@ -121,6 +127,21 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     trackEvent("place_map_open", { place_id: spot.id, city: spot.city, map_provider: provider });
   }
 
+  async function handleKeepAsMyPlace() {
+    // 연타로 같은 기록이 두 개 생기지 않게 요청 중에는 막는다. 다만 사용자가
+    // 다시 눌러 또 남기는 것 자체는 막지 않는다 — 같은 장소라도 다른 날
+    // 다른 기억일 수 있다.
+    if (keeping) return;
+    setKeeping(true); setKeepError(false);
+    try {
+      const r = await apiCreateUserSpotFromCanonical(spot.id);
+      if (r.ok) setKeptOnce(true);
+      else setKeepError(true);
+    } finally {
+      setKeeping(false);
+    }
+  }
+
   async function handleShare() {
     const content = buildShareContent(spot, text.name);
     try {
@@ -154,6 +175,27 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   // 있고 어떤 장소는 없다는 것 자체가 정보다. 빈 href 나 # 를 넣지 않는다.
   const EXT_LINK =
     "gkm-focus flex-1 min-h-11 inline-flex items-center justify-center gap-1.5 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink";
+
+  // Saved 와 합치지 않는다 — 북마크와 개인 기록은 서로 다른 행동이고,
+  // 하나로 묶으면 저장을 눌렀다는 이유로 기록이 생긴다.
+  const keepAsMyPlaceAction = (
+    <div>
+      <button
+        onClick={handleKeepAsMyPlace}
+        disabled={keeping}
+        className="gkm-focus w-full min-h-11 rounded-control border border-line text-sm font-semibold text-sub hover:text-ink disabled:opacity-60"
+      >
+        <span className="inline-flex items-center justify-center gap-1.5">
+          {/* 하트·북마크 계열을 쓰지 않는다. 기록을 남긴다는 뜻의 펜 자국. */}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h4.5L19 9.5a2.1 2.1 0 10-3-3L5.5 17V20z" /><path d="M14.5 6.5l3 3" /></svg>
+          {keptOnce ? t("keptAsMyPlace") : t("keepAsMyPlace")}
+        </span>
+      </button>
+      {keepError && (
+        <p role="alert" className="mt-1 text-xs text-red-500 font-medium">{t("keepFailed")}</p>
+      )}
+    </div>
+  );
 
   const externalLinks = (
     <div className="flex flex-col sm:flex-row gap-2">
@@ -381,6 +423,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
               {/* 모바일에서만 본문에 essentials — 데스크톱은 오른쪽 카드가 갖는다 */}
               <div className="mt-6 md:hidden">{essentials}</div>
 
+              {/* 모바일 배치는 본문이다. 하단 sticky 바에는 Save·Share 둘만 둔다 —
+                  거기에 세 번째를 넣으면 390px 에서 탭 타깃이 좁아지고, 무엇보다
+                  Saved 바로 옆에 서면 같은 종류의 행동으로 보인다. */}
+              <div className="mt-4 md:hidden">{keepAsMyPlaceAction}</div>
+
               {text.description && (
                 <section className="mt-6">
                   <h2 className="text-[11px] font-black text-faint uppercase tracking-[0.14em] mb-2">{tD("whyVisit")}</h2>
@@ -447,6 +494,8 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
                   {saved ? t("savedState") : t("save")}
                 </span>
               </button>
+
+              {keepAsMyPlaceAction}
 
               {externalLinks}
 

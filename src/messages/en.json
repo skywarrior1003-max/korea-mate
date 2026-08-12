@@ -342,7 +342,10 @@
     "officialUnavailable": "Official information unavailable",
     "hoursMayChange": "Opening hours may change.",
     "checkLatest": "Check the latest information using the links below.",
-    "openExternal": "Opens {service} in a new tab"
+    "openExternal": "Opens {service} in a new tab",
+    "keepAsMyPlace": "Keep as my place",
+    "keptAsMyPlace": "Kept in My Places",
+    "keepFailed": "Could not save this place. Please try again."
   },
   "adaptive": {
     "inTripTitle": "You're traveling now",
@@ -657,7 +660,10 @@
     "savedPhotoFailed": "The place is saved. Only the photo did not upload.",
     "needAnchor": "Add a photo, or use your current location.",
     "photoOnlyAnchor": "This photo is the only thing we know about this place. Add your current location first, or delete the place.",
-    "photoDeleted": "Photo removed."
+    "photoDeleted": "Photo removed.",
+    "canonicalPhotoAlt": "Photo of this place",
+    "canonicalPhotoNote": "Photo from the place listing, not your own.",
+    "photoSource": "Source"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",
