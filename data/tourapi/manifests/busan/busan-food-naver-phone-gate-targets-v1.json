@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "task": "TASK-BUSAN-FOOD-ENTITY-REVIEW-AND-PHONE-GATE-PREP-R1",
+    "created_at": "2026-08-12",
+    "source_file": "busan-food-discovery-candidates-v1.jsonl",
+    "description": "부산 음식점 Naver Phone Gate 대상 목록. VB:food 334건 FoodService batch gap-fill, entity review 305건 resolve 완료 후 생성."
+  },
+  "summary": {
+    "total_food_records": 721,
+    "phone_verified_before_task": 372,
+    "vb_food_phone_gap_filled": 334,
+    "phone_verified_after_task": 706,
+    "phone_missing_after_task": 15,
+    "entity_review_start": 314,
+    "entity_review_resolved": 305,
+    "entity_review_remaining": 9,
+    "duplicate_confirmed": 30,
+    "naver_gate_targets": 6
+  },
+  "exclusion_criteria": {
+    "DUPLICATE_CONFIRMED": "phone 확인 불필요 — 중복 확정 엔티티",
+    "REVIEW_REQUIRED_ENTITY": "entity 확인 미완료 — 기존 evidence로 해결 불가",
+    "phone_already_verified": "공식/공공 source에서 이미 phone 확보됨",
+    "OFFICIAL_PHONE_CHECK_INCOMPLETE": "해당 없음 — 모든 phone-missing 건 official check 완료"
+  },
+  "targets": [
+    {
+      "candidate_id": "busan-K-00283",
+      "source_key": "KorService2:2670518:ko",
+      "name_ko": "동래원조산곰장어",
+      "address": "부산광역시 동래구 명륜로98번길 42",
+      "lat": 35.2021625913,
+      "lng": 129.0857576472,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "KTO_DETAIL_FETCH_FAILED"
+      ],
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+    },
+    {
+      "candidate_id": "busan-K-00284",
+      "source_key": "KorService2:2670566:ko",
+      "name_ko": "스시몬",
+      "address": "부산광역시 동래구 삼성대길 40",
+      "lat": 35.2047566751,
+      "lng": 129.0819690166,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "KTO_DETAIL_FETCH_FAILED"
+      ],
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+    },
+    {
+      "candidate_id": "busan-K-00285",
+      "source_key": "KorService2:2670611:ko",
+      "name_ko": "청와정",
+      "address": "부산광역시 부산진구 동평로44번길 55",
+      "lat": 35.1641103825,
+      "lng": 129.036163006,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "KTO_DETAIL_FETCH_FAILED"
+      ],
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+    },
+    {
+      "candidate_id": "busan-K-00512",
+      "source_key": "KorService2:2848939:ko",
+      "name_ko": "튼튼장어 무한리필",
+      "address": "부산광역시 기장군 기장해안로 1301",
+      "lat": 35.2601393874,
+      "lng": 129.2331682209,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "KTO_DETAIL_FETCH_FAILED"
+      ],
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+    },
+    {
+      "candidate_id": "busan-K-00536",
+      "source_key": "KorService2:2853131:ko",
+      "name_ko": "부산조개창고",
+      "address": "부산광역시 기장군 정관읍 구연3로 17",
+      "lat": 35.3214426643,
+      "lng": 129.181571014,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "HOURS_SOURCE_UNKNOWN",
+        "PHONE_NOT_FOUND_KTO_DETAIL"
+      ],
+      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND"
+    },
+    {
+      "candidate_id": "busan-K-00668",
+      "source_key": "KorService2:2891868:ko",
+      "name_ko": "문토스트",
+      "address": "부산광역시 해운대구 송정해변로 16 (송정동)",
+      "lat": 35.1809477221,
+      "lng": 129.2043979105,
+      "review_flags": [
+        "needs_content",
+        "needs_hours",
+        "needs_map_name_ko",
+        "needs_translation",
+        "HOURS_SOURCE_UNKNOWN",
+        "PHONE_NOT_FOUND_KTO_DETAIL"
+      ],
+      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND"
+    }
+  ]
+}
