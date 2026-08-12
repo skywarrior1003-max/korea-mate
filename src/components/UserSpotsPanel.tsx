@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
   type UserSpotCategory,
@@ -77,6 +78,7 @@ export default function UserSpotsPanel({
   existingPlaces,
   onAddToDay,
 }: Props) {
+  const t = useTranslations("picks");
   const [spots,           setSpots]           = useState<UserSpot[]>([]);
   const [loading,         setLoading]         = useState(true);
   const [loadError,       setLoadError]       = useState(false);
@@ -147,7 +149,7 @@ export default function UserSpotsPanel({
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError("Name is required."); return; }
+    if (!name) { setFormError(t("nameRequired")); return; }
     if (submitting) return;
     setSubmitting(true);
     setFormError(null);
@@ -172,7 +174,7 @@ export default function UserSpotsPanel({
       setShowCreate(false);
       setForm(EMPTY_FORM);
     } catch {
-      setFormError("Could not save. Please try again.");
+      setFormError(t("saveFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -196,7 +198,7 @@ export default function UserSpotsPanel({
   async function handleEdit(e: React.FormEvent, spot: UserSpot) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError("Name is required."); return; }
+    if (!name) { setFormError(t("nameRequired")); return; }
     if (submitting) return;
     setSubmitting(true);
     setFormError(null);
@@ -209,7 +211,7 @@ export default function UserSpotsPanel({
         note:    form.note.trim()    || null,
       };
       const ok = await apiUpdateUserSpot(spot.id, input);
-      if (!ok) { setFormError("Place not found."); return; }
+      if (!ok) { setFormError(t("notFound")); return; }
       setSpots(prev => prev.map(s => s.id !== spot.id ? s : {
         ...s,
         name:     input.name,
@@ -220,7 +222,7 @@ export default function UserSpotsPanel({
       }));
       setEditingId(null);
     } catch {
-      setFormError("Could not update. Please try again.");
+      setFormError(t("updateFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -254,7 +256,7 @@ export default function UserSpotsPanel({
         s.id === spot.id ? { ...s, submission_status: "pending" } : s
       ));
     } else {
-      setSubmitErrors(prev => ({ ...prev, [spot.id]: result.error ?? "Submit failed" }));
+      setSubmitErrors(prev => ({ ...prev, [spot.id]: result.error ?? t("submitFailed") }));
     }
     setSubmittingId(null);
   }
@@ -269,7 +271,7 @@ export default function UserSpotsPanel({
       p => p.source === "user_spot" && p.place_id === spot.id,
     );
     if (isDup) {
-      setAddErrors(prev => ({ ...prev, [spot.id]: "This place is already in this day." }));
+      setAddErrors(prev => ({ ...prev, [spot.id]: t("alreadyInDay") }));
       return;
     }
 
@@ -314,7 +316,7 @@ export default function UserSpotsPanel({
     <div className="mt-5">
       {/* Section header */}
       <div className="flex items-center gap-2 mb-2 px-1">
-        <span className="text-xs font-black text-[#565D66]">📍 My Places</span>
+        <span className="text-xs font-black text-[#565D66]">📍 {t("tabMine")}</span>
         {!loading && spots.length > 0 && (
           <span className="text-[10px] font-bold bg-[#F6F7F8]/60 text-[#565D66] px-2 py-0.5 rounded-full">
             {spots.length}
@@ -325,9 +327,9 @@ export default function UserSpotsPanel({
             onClick={openCreate}
             className="ml-auto text-[10px] font-black px-2.5 py-1 rounded-full text-white transition-opacity hover:opacity-80 cursor-pointer"
             style={{ backgroundColor: "#FF4A2D" }}
-            title="Add a new personal place"
+            title={t("addPlaceTitle")}
           >
-            + Add Place
+            + {t("addPlace")}
           </button>
         )}
       </div>
@@ -335,11 +337,11 @@ export default function UserSpotsPanel({
       {/* Create form */}
       {showCreate && (
         <div className="bg-white rounded-2xl border border-[#FF4A2D]/40 p-4 shadow-sm mb-3">
-          <p className="text-xs font-black text-[#191C21] mb-1">New Place</p>
+          <p className="text-xs font-black text-[#191C21] mb-1">{t("newPlace")}</p>
           {renderForm(
             handleCreate,
             () => { setShowCreate(false); setFormError(null); setForm(EMPTY_FORM); },
-            "Save Place",
+            t("save"),
           )}
         </div>
       )}
@@ -351,19 +353,19 @@ export default function UserSpotsPanel({
         {loading && (
           <div className="py-8 flex items-center justify-center gap-2">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#FF4A2D]" />
-            <span className="text-xs font-bold text-[#565D66]">Loading…</span>
+            <span className="text-xs font-bold text-[#565D66]">{t("loading")}</span>
           </div>
         )}
 
         {/* Load error */}
         {!loading && loadError && (
           <div className="py-8 text-center">
-            <p className="text-xs font-bold text-red-500 mb-2">Could not load your places.</p>
+            <p className="text-xs font-bold text-red-500 mb-2">{t("loadFailed")}</p>
             <button
               onClick={() => void loadSpots()}
               className="text-xs font-black text-[#FF4A2D] underline cursor-pointer"
             >
-              Try again
+              {t("retry")}
             </button>
           </div>
         )}
@@ -372,7 +374,7 @@ export default function UserSpotsPanel({
         {!loading && !loadError && spots.length === 0 && (
           <div className="py-10 text-center px-4">
             <p className="text-xs text-[#565D66]/60 italic">
-              Save your own restaurant, café, hotel, or hidden spot here.
+              {t("mineEmptyHint")}
             </p>
           </div>
         )}
@@ -397,11 +399,11 @@ export default function UserSpotsPanel({
               {isEditing ? (
                 /* ── Inline edit form ── */
                 <div className="px-4 py-3">
-                  <p className="text-xs font-black text-[#191C21] mb-1">Edit Place</p>
+                  <p className="text-xs font-black text-[#191C21] mb-1">{t("editPlace")}</p>
                   {renderForm(
                     (e) => handleEdit(e, spot),
                     () => { setEditingId(null); setFormError(null); },
-                    "Update",
+                    t("update"),
                   )}
                 </div>
               ) : (
@@ -427,12 +429,12 @@ export default function UserSpotsPanel({
                       <button
                         onClick={() => openEdit(spot)}
                         className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-[#FF4A2D] hover:text-white transition-colors cursor-pointer"
-                        title="Edit"
+                        title={t("edit")}
                       >✏️</button>
                       <button
                         onClick={() => setConfirmDeleteId(spot.id)}
                         className="w-6 h-6 rounded-full bg-[#F6F7F8] text-[#565D66] text-xs flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors cursor-pointer"
-                        title="Delete"
+                        title={t("delete")}
                       >🗑️</button>
                     </div>
                   </div>
@@ -440,21 +442,21 @@ export default function UserSpotsPanel({
                   {/* Delete confirmation */}
                   {isConfirmDelete && (
                     <div className="rounded-xl bg-red-50 border border-red-200 px-3 py-2 space-y-1">
-                      <p className="text-xs font-bold text-red-700">Delete this personal place?</p>
-                      <p className="text-[11px] text-red-500">Trips where you already added it will not be affected.</p>
+                      <p className="text-xs font-bold text-red-700">{t("deleteConfirmQ")}</p>
+                      <p className="text-[11px] text-red-500">{t("deleteConfirmNote")}</p>
                       <div className="flex gap-2 pt-1">
                         <button
                           onClick={() => void handleDelete(spot.id)}
                           disabled={!!isDeleting}
                           className="flex-1 py-1.5 rounded-lg text-xs font-black text-white bg-red-500 hover:bg-red-600 disabled:opacity-50 transition-colors cursor-pointer"
                         >
-                          {isDeleting ? "Deleting…" : "Delete"}
+                          {isDeleting ? t("deleting") : t("delete")}
                         </button>
                         <button
                           onClick={() => setConfirmDeleteId(null)}
                           className="flex-1 py-1.5 rounded-lg text-xs font-bold bg-white border border-red-200 text-red-500 hover:bg-red-50 transition-colors cursor-pointer"
                         >
-                          Cancel
+                          {t("cancel")}
                         </button>
                       </div>
                     </div>
@@ -465,17 +467,17 @@ export default function UserSpotsPanel({
                     <div className="flex items-center gap-2 flex-wrap">
                       {subStatus === "pending" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 border border-yellow-200">
-                          🟡 Under Review
+                          🟡 {t("statusPending")}
                         </span>
                       )}
                       {subStatus === "approved" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-200">
-                          ✅ Approved Public
+                          ✅ {t("statusApproved")}
                         </span>
                       )}
                       {subStatus === "rejected" && (
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-red-100 text-red-600 border border-red-200">
-                          ❌ Rejected
+                          ❌ {t("statusRejected")}
                         </span>
                       )}
                       {(subStatus === "none" || subStatus === "rejected") && (
@@ -513,8 +515,8 @@ export default function UserSpotsPanel({
                         style={{ backgroundColor: "#FF4A2D" }}
                       >
                         {isAdding
-                          ? "Added ✓"
-                          : `+ Add to ${selectedDayLabel}`}
+                          ? t("addedToDay")
+                          : t("addToDay", { day: selectedDayLabel })}
                       </button>
                     </div>
                   )}
