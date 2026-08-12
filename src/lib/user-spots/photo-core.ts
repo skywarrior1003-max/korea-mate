@@ -79,6 +79,21 @@ export async function removeUserSpotPhoto(
 }
 
 /**
+ * 사진을 뺐을 때 이 장소를 이해할 근거가 남는가.
+ *
+ * 지금 구현된 실질 Anchor 는 좌표 짝 하나뿐이다. canonical place 관계와
+ * trip context 는 저장할 컬럼이 아직 없으므로 있는 것처럼 계산하지 않는다.
+ *
+ * name 은 세지 않는다. 제목은 장소를 이해하는 근거가 아니라 표현 값이고,
+ * 사진만 있는 장소에 사용자가 아무 제목이나 적어 두었다는 이유로 그 사진을
+ * 지워 아무것도 남지 않는 행을 만들 수는 없다.
+ */
+export function hasNonPhotoAnchor(row: { lat?: number | null; lng?: number | null }): boolean {
+  return row.lat !== null && row.lat !== undefined
+      && row.lng !== null && row.lng !== undefined;
+}
+
+/**
  * 응답에 담을 사진 상태.
  *
  * storage path 는 어떤 경우에도 클라이언트로 나가지 않는다. 화면이 알아야

@@ -141,7 +141,7 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   // 이름만 지우는 요청은 그 행에 좌표가 있을 때만 안전하다.
   const { data: current, error: readErr } = await admin
     .from("user_spots")
-    .select("name, lat, lng")
+    .select("name, lat, lng, photo_storage_path")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -152,15 +152,22 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   }
   if (!current) return json({ error: "Not found or permission denied" }, 404);
 
-  const cur = current as { name: string | null; lat: number | null; lng: number | null };
+  const cur = current as {
+    name: string | null; lat: number | null; lng: number | null;
+    photo_storage_path: string | null;
+  };
   const finalName = (row.name !== undefined ? row.name : cur.name) as string | null;
   const finalLat  = (row.lat  !== undefined ? row.lat  : cur.lat)  as number | null;
   const finalLng  = (row.lng  !== undefined ? row.lng  : cur.lng)  as number | null;
+  // 사진 경로는 이 요청으로 바뀌지 않는다. 전용 photo API 만 건드린다.
+  const hasPhoto  = typeof cur.photo_storage_path === "string" && cur.photo_storage_path.length > 0;
 
   if ((finalLat === null) !== (finalLng === null)) {
     return json({ error: "lat and lng must be provided together" }, 400);
   }
-  if (!(finalName ?? "").trim() && finalLat === null) {
+  // 사진만으로 만들어진 장소도 메모·분류를 고칠 수 있어야 한다.
+  // name 조항은 legacy 호환이며 최종 Anchor 가 아니다 (migration 049 주석 참조).
+  if (!(finalName ?? "").trim() && finalLat === null && !hasPhoto) {
     return json({ error: "Provide a name, or a location (lat and lng)" }, 400);
   }
 

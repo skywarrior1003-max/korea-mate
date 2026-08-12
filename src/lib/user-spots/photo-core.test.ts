@@ -16,6 +16,7 @@ import {
   isUserSpotPhotoQuotaExceeded,
   removeUserSpotPhoto,
   toPhotoMeta,
+  hasNonPhotoAnchor,
 } from "./photo-core.ts";
 
 const ROOT   = join(import.meta.dirname, "..", "..", "..");
@@ -24,6 +25,8 @@ const URLFN  = readFileSync(join(ROOT, "functions/api/user-spots/[id]/photo-url.
 const SPOTID = readFileSync(join(ROOT, "functions/api/user-spots/[id].ts"), "utf8");
 const LIST   = readFileSync(join(ROOT, "functions/api/user-spots.ts"), "utf8");
 const MOMENT = readFileSync(join(ROOT, "functions/api/trip-moments/[momentId]/photo.ts"), "utf8");
+const WITHPHOTO = readFileSync(join(ROOT, "functions/api/user-spots/with-photo.ts"), "utf8");
+const MIG049 = readFileSync(join(ROOT, "supabase/migrations/049_user_spots_photo_anchor.sql"), "utf8");
 
 /**
  * "이 토큰이 있으면 안 된다" 류 검사는 주석을 걷어내고 해야 한다.
@@ -44,6 +47,7 @@ const CODE = {
   spotId: code(SPOTID),
   list:   code(LIST),
   moment: code(MOMENT),
+  withPhoto: code(WITHPHOTO),
 };
 
 // ── 경로 ──────────────────────────────────────────────────────────────────────
@@ -223,4 +227,120 @@ test("city_spots 를 건드리지 않는다", () => {
   for (const src of [CODE.photo, CODE.url, CODE.spotId, CODE.list]) {
     assert.ok(!src.includes("city_spots"), "사진 경로는 공개 테이블과 무관하다");
   }
+});
+
+// ── 049: 사진 Anchor ──────────────────────────────────────────────────────────
+
+test("좌표 짝이 있으면 사진 외 Anchor 가 있다", () => {
+  assert.equal(hasNonPhotoAnchor({ lat: 35.1, lng: 129.0 }), true);
+});
+
+test("좌표가 없거나 한쪽뿐이면 사진 외 Anchor 가 없다", () => {
+  assert.equal(hasNonPhotoAnchor({ lat: null, lng: null }), false);
+  assert.equal(hasNonPhotoAnchor({ lat: 35.1, lng: null }), false);
+  assert.equal(hasNonPhotoAnchor({ lat: null, lng: 129.0 }), false);
+  assert.equal(hasNonPhotoAnchor({}), false);
+});
+
+test("name 은 Anchor 로 세지 않는다", () => {
+  // 제목이 있어도 좌표가 없으면 사진이 유일한 근거다
+  assert.equal(hasNonPhotoAnchor({ lat: null, lng: null }), false);
+  assert.equal(hasNonPhotoAnchor.length, 1, "인자는 행 하나뿐 — name 을 보지 않는다");
+});
+
+/** SQL 에서 주석 줄을 걷어낸 실행부만 남긴다. */
+function sql(src: string): string {
+  return src
+    .split(/\r?\n/)
+    .filter(l => l.trim().length > 0 && !l.trim().startsWith("--"))
+    .join("\n");
+}
+
+test("migration 049 는 min_identity CHECK 만 바꾼다", () => {
+  const U = sql(MIG049).toUpperCase();
+  assert.equal((U.match(/BEGIN;/g) ?? []).length, 1);
+  assert.equal((U.match(/COMMIT;/g) ?? []).length, 1);
+  assert.ok(!/\b(UPDATE|DELETE FROM|INSERT INTO|TRUNCATE|DROP TABLE|DROP COLUMN)\b/.test(U), "데이터 변경 금지");
+  assert.ok(!U.includes("POLICY") && !U.includes("ROW LEVEL SECURITY"), "RLS 무변경");
+  assert.ok(!U.includes("FUNCTION"), "publish RPC 무변경");
+  assert.ok(!U.includes("LATLNG_PAIR_CHK"), "좌표 짝 CHECK 무변경");
+  assert.ok(!U.includes("PHOTO_PUBLIC_REQUIRES_PHOTO_CHK"), "동의 CHECK 무변경");
+  assert.ok(!U.includes("PHOTO_STORAGE_PATH_CHK"), "경로 CHECK 무변경");
+  const tables = new Set([...U.matchAll(/ALTER TABLE PUBLIC\.([A-Z_]+)/g)].map(m => m[1]));
+  assert.deepEqual([...tables], ["USER_SPOTS"]);
+  assert.equal((U.match(/USER_SPOTS_MIN_IDENTITY_CHK/g) ?? []).length, 2, "같은 이름으로 DROP 후 ADD");
+});
+
+test("049 CHECK 는 name·GPS·photo 세 항의 OR", () => {
+  const live = sql(MIG049);
+  const body = live.slice(live.indexOf("ADD CONSTRAINT user_spots_min_identity_chk"));
+  assert.ok(body.includes("BTRIM(COALESCE(name"), "legacy name 항");
+  assert.ok(body.includes("lat IS NOT NULL AND lng IS NOT NULL"), "GPS 는 짝으로만");
+  assert.ok(body.includes("photo_storage_path IS NOT NULL"), "photo 항");
+  assert.equal((body.match(/\bOR\b/g) ?? []).length, 2, "세 항을 OR 두 번으로 잇는다");
+});
+
+// ── create-with-photo 계약 ────────────────────────────────────────────────────
+
+test("with-photo 는 사진 검증을 기존과 같은 함수로 한다", () => {
+  for (const fn of ["validateMimeType", "validatePhotoSize", "hasJpegSoi", "stripJpegApp1"]) {
+    assert.ok(WITHPHOTO.includes(fn), `with-photo 에 ${fn} 필요`);
+  }
+});
+
+test("spotId 와 object 경로는 서버가 만든다", () => {
+  assert.match(CODE.withPhoto, /const spotId\s*=\s*crypto\.randomUUID\(\)/);
+  assert.match(CODE.withPhoto, /makeUserSpotPhotoPath\(spotId, crypto\.randomUUID\(\)\)/);
+  // 클라이언트가 보낸 id·경로·동의를 읽지 않는다
+  assert.ok(!/formData\.get\("id"\)/.test(CODE.withPhoto), "client id 수용 금지");
+  assert.ok(!/formData\.get\("photo_storage_path"\)/.test(CODE.withPhoto), "client path 수용 금지");
+  assert.ok(!/formData\.get\("photo_public"\)/.test(CODE.withPhoto), "client 동의 수용 금지");
+});
+
+test("Storage 업로드가 INSERT 보다 먼저다", () => {
+  const up  = CODE.withPhoto.indexOf(".upload(storagePath");
+  const ins = CODE.withPhoto.indexOf(".insert(row)");
+  assert.ok(up >= 0 && ins >= 0, "두 단계가 모두 있어야 한다");
+  assert.ok(up < ins, "경로를 담아 INSERT 해야 CHECK 가 처음부터 만족된다");
+});
+
+test("INSERT 실패 시 방금 올린 파일을 되돌린다", () => {
+  assert.match(CODE.withPhoto, /insert failed, rolling back[\s\S]{0,300}removeUserSpotPhoto/);
+});
+
+test("provisional 빈 row 를 만들지 않는다", () => {
+  assert.equal((CODE.withPhoto.match(/\.insert\(/g) ?? []).length, 1, "INSERT 는 한 번뿐");
+  assert.match(CODE.withPhoto, /photo_storage_path:\s*storagePath/);
+  assert.match(CODE.withPhoto, /photo_public:\s*false/);
+});
+
+test("with-photo 응답에 storage path 가 없다", () => {
+  const sel = CODE.withPhoto.match(/\.select\("([^"]+)"\)/);
+  assert.ok(sel, "select 목록 필요");
+  assert.ok(!sel![1]!.includes("photo_storage_path"), "select 에 경로 없음");
+  assert.ok(!/json\(\s*\{[^}]*storagePath/.test(CODE.withPhoto), "응답에 경로 없음");
+});
+
+// ── photo-only 행 보호 ────────────────────────────────────────────────────────
+
+test("사진이 유일한 Anchor 면 사진 DELETE 를 거부한다", () => {
+  const del      = CODE.photo.slice(CODE.photo.indexOf("onRequestDelete"));
+  const guard    = del.indexOf("hasNonPhotoAnchor");
+  const removeAt = del.indexOf("removeUserSpotPhoto");
+  assert.ok(guard >= 0, "가드 필요");
+  assert.ok(guard < removeAt, "Storage 를 건드리기 전에 막아야 한다");
+  assert.ok(del.includes("PHOTO_IS_ONLY_ANCHOR"), "안정적인 error code 필요");
+  assert.match(del, /PHOTO_IS_ONLY_ANCHOR[\s\S]{0,40}409/, "409 로 응답");
+});
+
+test("장소 전체 삭제는 photo-only 여도 막지 않는다", () => {
+  const del = CODE.spotId.slice(CODE.spotId.indexOf("onRequestDelete"));
+  assert.ok(!del.includes("hasNonPhotoAnchor"), "전체 삭제에는 Anchor 가드가 없어야 한다");
+  assert.ok(del.includes("removeUserSpotPhoto"), "Storage 정리는 그대로");
+});
+
+test("PUT 최종 상태가 기존 사진을 Anchor 로 인정한다", () => {
+  assert.ok(CODE.spotId.includes('select("name, lat, lng, photo_storage_path")'), "현재 사진 상태를 읽어야 한다");
+  assert.match(CODE.spotId, /finalLat === null && !hasPhoto/, "사진이 있으면 통과");
+  assert.ok(!/body\.photo_storage_path/.test(CODE.spotId), "클라이언트 payload 로 열지 않는다");
 });

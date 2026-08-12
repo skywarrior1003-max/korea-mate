@@ -29,6 +29,7 @@ import {
   makeUserSpotPhotoPath,
   isUserSpotPhotoQuotaExceeded,
   removeUserSpotPhoto,
+  hasNonPhotoAnchor,
 } from "../../../../src/lib/user-spots/photo-core";
 
 interface Env {
@@ -56,7 +57,13 @@ function adminClient(env: Env) {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
-type SpotPhotoRow = { id: string; photo_storage_path: string | null; photo_public: boolean };
+type SpotPhotoRow = {
+  id: string;
+  photo_storage_path: string | null;
+  photo_public: boolean;
+  lat: number | null;
+  lng: number | null;
+};
 
 /** id·device 검증 후 소유한 행의 사진 상태를 읽는다. 실패하면 Response 를 준다. */
 async function loadOwnedSpot(
@@ -74,7 +81,7 @@ async function loadOwnedSpot(
 
   const { data, error } = await admin
     .from("user_spots")
-    .select("id, photo_storage_path, photo_public")
+    .select("id, photo_storage_path, photo_public, lat, lng")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -233,6 +240,17 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
   // 재시도와 중복 클릭이 같은 결과를 내야 한다.
   if (!spot.photo_storage_path) {
     return json({ ok: true, has_photo: false, photo_public: false });
+  }
+
+  // ── 사진이 유일한 근거이면 지우지 않는다 ────────────────────────────────────
+  // 사진만으로 만들어진 장소에서 그 사진을 빼면 아무것도 남지 않는다. 그건
+  // "사진 삭제" 가 아니라 "장소 삭제" 인데, 사용자는 후자를 누른 적이 없다.
+  // 장소 전체를 지우는 것은 DELETE /api/user-spots/:id 로 여전히 가능하다.
+  if (!hasNonPhotoAnchor(spot)) {
+    return json({
+      error: "This photo is the only information about this place. Add a location first, or delete the place itself.",
+      code:  "PHOTO_IS_ONLY_ANCHOR",
+    }, 409);
   }
 
   // ── STEP A — 공개 동의부터 끈다 ─────────────────────────────────────────────
