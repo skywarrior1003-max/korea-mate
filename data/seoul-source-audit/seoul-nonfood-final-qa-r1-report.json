@@ -3,19 +3,15 @@
   "as_of": "2026-08-13",
   "s1a_html_residue": {
     "total": 16,
-    "TITLE_MARKUP_FALSE_POSITIVE": 13,
-    "TEXT_CLEANUP_REQUIRED": 3,
+    "TITLE_MARKUP_FALSE_POSITIVE": 16,
+    "TEXT_CLEANUP_REQUIRED": 0,
     "detail": {
       "KOP16izx7": {
         "title": "김지희 개인전 DIVINITY",
-        "desc_sample": "를 개최한다. 안경을 쓴 소녀와 동물 이미지로 국내외에 알려진 김지희 작가는 특히 중국, 홍콩, 대만 등 중화권에서 큰 인기를 얻어온 작가이다.",
-        "has_real_html": true,
-        "real_hits_sample": [
-          "\"}\">",
-          "\"}\">",
-          "\"}\">"
-        ],
-        "verdict": "TEXT_CLEANUP_REQUIRED"
+        "desc_sample": "뮤지엄 웨이브가 개관 1주년을 기념하는 첫 전관 전시로 김지희 개인전 <DIVINITY>를 개최한다. 안경을 쓴 소녀와 동물 이미지로 국내외에 ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
       },
       "KOP1wimla": {
         "title": "BEAUTY, TRANSLATED",
@@ -61,14 +57,10 @@
       },
       "KOPpq0clc": {
         "title": "정재일 콘서트 - Listen",
-        "desc_sample": "와 K콘텐츠의 저력을 보여준 영화 의 음악감독이자 한국을 대표하는 뮤지션 정재일의 단독콘서트가 오는 12월 세종문화회관 대극장에서 열립니다.\\n",
-        "has_real_html": true,
-        "real_hits_sample": [
-          "\"}\">",
-          "\"}\">",
-          "\"}\">"
-        ],
-        "verdict": "TEXT_CLEANUP_REQUIRED"
+        "desc_sample": "전 세계에서 메가히트를 기록한 넷플릭스 시리즈 <오징어 게임>와 K콘텐츠의 저력을 보여준 영화 <기생충>의 음악감독이자 한국을 대표하는 뮤지션 ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
       },
       "KOPqnwgc7": {
         "title": "Mood, sunday",
@@ -79,14 +71,10 @@
       },
       "KOPsbarih": {
         "title": "A Magical day",
-        "desc_sample": "전시는 슈페리어갤러리에서 오는 8월 9일까지 진행됩니다.\"}\">슈페리어갤러리는 경계와 비경계, 의식과 무의식 사이에서 삶의 순간을 포착하는 김기",
-        "has_real_html": true,
-        "real_hits_sample": [
-          "\"}\">",
-          "\"}\">",
-          "<A Magical day>"
-        ],
-        "verdict": "TEXT_CLEANUP_REQUIRED"
+        "desc_sample": "슈페리어갤러리는 경계와 비경계, 의식과 무의식 사이에서 삶의 순간을 포착하는 김기태, 신선애 작가의 2인전을 선보입니다. 자연의 빛과 순간의 광",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
       },
       "KOPt9l0a3": {
         "title": "DDP 가을 스페셜투어 : 디자인&아트 투어",
@@ -872,16 +860,14 @@
     "PASS": true
   },
   "final": {
-    "TASK_RESULT": "HOLD",
-    "blockers": [
-      "TEXT_CLEANUP_REQUIRED=3 — desc_plain 오염: ['KOP16izx7', 'KOPpq0clc', 'KOPsbarih']. JSON/template injection ('\"\">\"{\"}\">') detected. desc 재수집 또는 수동 정제 필요."
-    ],
+    "TASK_RESULT": "PASS",
+    "blockers": [],
     "review_notes": [
       "REVIEW_NOTE: 인천공항 서울관광안내시설 3건(KOP011863/KOP024807/KOP042078) AI_ITINERARY 과도 허용. SEARCHABLE+USER_PICK 적절. 다음 eligibility update 사이클에서 AI_ITINERARY=NO 정정 권장."
     ],
     "HTML_TAG_RESIDUE_TOTAL": 16,
-    "TITLE_MARKUP_FALSE_POSITIVE": 13,
-    "TEXT_CLEANUP_REQUIRED": 3,
+    "TITLE_MARKUP_FALSE_POSITIVE": 16,
+    "TEXT_CLEANUP_REQUIRED": 0,
     "INCHEON_AIRPORT_INFO_CENTER_REVIEWED": 3,
     "HIGH_RISK_SAMPLE_REVIEWED": 40,
     "HIGH_RISK_SAMPLE_PASS": 40,
@@ -899,8 +885,8 @@
     "MANIFEST_OVERLAP": 0,
     "UNCLASSIFIED": 0,
     "PROVENANCE_MISSING_COUNT": 0,
-    "SEOUL_NONFOOD_FINAL_QA": "HOLD",
-    "SEOUL_NONFOOD_COLLECTION_STATUS": "HOLD",
+    "SEOUL_NONFOOD_FINAL_QA": "PASS",
+    "SEOUL_NONFOOD_COLLECTION_STATUS": "COMPLETE",
     "API_CALLS": 0,
     "WEB_COLLECTION": 0,
     "PRODUCTION_WRITE": 0,
