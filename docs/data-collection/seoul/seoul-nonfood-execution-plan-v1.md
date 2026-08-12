@@ -18,13 +18,16 @@
 이전 근사 수치(`TASK-SEOUL-RECOVER-APPROVED-PLACE-EVENT-POLICY-AND-CORRECT-NONFOOD-SCOPE-R1`)를
 V2 routing 실데이터 기반 exact 수치로 교체.
 
-| 분류 | 근사 (Task 3) | 확정 (이번 Task) | 교정 방향 |
-|---|---|---|---|
-| PLACE_DETAIL_TARGET | ~123 | **573** | 확대 — V2 A-routing 전체 반영 |
-| SEARCHABLE_ONLY_OR_USER_PICK | ~716 | **250** | 축소 — H-routing 35 + 일반 shopping 211 + 교육 4 |
-| EXISTING_RAW_RECOVERY | 미분류 | **38** | 신규 — B-routing 기존 detail 보유 |
-| COMPLETE_NO_ACTION | 미분류 | **1,697** | 신규 — CORE 316 + EXP 120 + TEMPLE 2 + FOOD 1,259 |
-| EXCLUDED | 미분류 | **1,207** | 신규 — EVENT 1,190 + ACCOMMODATION 17 |
+| 분류 | 근사 (Task 3) | 확정 (Task 4) | R1 교정 (이번) | 교정 방향 |
+|---|---|---|---|---|
+| PLACE_DETAIL_TARGET | ~123 | 573 | **573** | 변경 없음 (상설공연 venue 2건 포함) |
+| SEARCHABLE_ONLY_OR_USER_PICK | ~716 | 250 | **250** | 변경 없음 |
+| EXISTING_RAW_RECOVERY | 미분류 | 38 | **38** | 변경 없음 |
+| COMPLETE_NO_ACTION | 미분류 | 1,697 | **1,697** | FOOD=PROTECTED_COMPLETE 표현 명확화 |
+| ACTIVE_EVENT_SERVICE_POOL | 미분류 | 미분류 | **4** | 신규 — EVENT_TRACK active 4건 EXCLUDED에서 분리 |
+| INACTIVE_OR_HISTORICAL_EVENT | 미분류 | 미분류 | **1,186** | 1,190 - active 4 |
+| GENERAL_ACCOMMODATION_EXCLUDE | 미분류 | 미분류 | **17** | 변경 없음 |
+| EXCLUDED_TOTAL | 미분류 | 1,207 (오류) | **1,203** | 1,186 + 17 (active 4 분리 후) |
 
 ---
 
@@ -99,38 +102,64 @@ manifest: `data/seoul-source-audit/seoul-nonfood-searchable-user-pick-manifest-v
 
 manifest: `data/seoul-source-audit/seoul-nonfood-existing-raw-recovery-manifest-v1.json`
 
-### CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6
+### CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6 (SERVICE_EVENT_POOL)
 
 현재 SERVICE_EVENT_POOL. 7일 refresh cycle (~2026-08-18).
 
-| source_record_id | 제목 | 상태 | 기간 |
-|---|---|---|---|
-| KOPsj8gga | 조선 양반 접객 문화 체험 공연 '옹기콘서트' | ONGOING | 2026-07-02~2026-12-10 |
-| KOPnkfasx | 연희 상설 공연 〈연희판판〉 | ONGOING | 2026-04-04~2026-10-31 |
-| KOPd5mmfg | 2026 서울시 태권도 공연 | ONGOING | 2026-05-09~2026-10-18 |
-| KOP47mbp7 | 2026 서울국제정원박람회 | ONGOING | 2026-05-01~2026-10-27 |
-| KOPw5jg9e | 2026 남산골 전통체험 : 예술가의 시간 | ONGOING | 2026-04-03~2026-10-25 |
-| KOPvro3vg | 2026 서울야외도서관 | ONGOING | 2026-04-23~2026-11-01 |
+> **중요**: 6건의 routing track이 단일하지 않음.  
+> · 2건 (옹기콘서트, 연희판판): PLACE_CONDITIONAL_REVIEW A-routing → **PLACE_DETAIL_TARGET(573)에 포함**  
+> · 4건 (태권도공연, 정원박람회, 남산골, 야외도서관): EVENT_TRACK D-routing → **ACTIVE_EVENT_SERVICE_POOL(4)로 분리**  
+> Disjoint 분류에서 각 CID는 하나의 class에만 속함. SERVICE_EVENT_POOL은 routing class를 초과하는 개념.
+
+| source_record_id | 제목 | 상태 | 기간 | routing_class |
+|---|---|---|---|---|
+| KOPsj8gga | 조선 양반 접객 문화 체험 공연 '옹기콘서트' | ONGOING | 2026-07-02~2026-12-10 | PLACE_DETAIL_TARGET |
+| KOPnkfasx | 연희 상설 공연 〈연희판판〉 | ONGOING | 2026-04-04~2026-10-31 | PLACE_DETAIL_TARGET |
+| KOPd5mmfg | 2026 서울시 태권도 공연 | ONGOING | 2026-05-09~2026-10-18 | ACTIVE_EVENT_SERVICE_POOL |
+| KOP47mbp7 | 2026 서울국제정원박람회 | ONGOING | 2026-05-01~2026-10-27 | ACTIVE_EVENT_SERVICE_POOL |
+| KOPw5jg9e | 2026 남산골 전통체험 : 예술가의 시간 | ONGOING | 2026-04-03~2026-10-25 | ACTIVE_EVENT_SERVICE_POOL |
+| KOPvro3vg | 2026 서울야외도서관 | ONGOING | 2026-04-23~2026-11-01 | ACTIVE_EVENT_SERVICE_POOL |
 
 manifest: `data/seoul-source-audit/seoul-nonfood-active-event-manifest-v1.json`
 
 ### COMPLETE_NO_ACTION = 1,697
 
+> **FOOD 표현**: RESTAURANT_TRACK 1,259건은 전체 accounting에서 COMPLETE_NO_ACTION으로 계상.  
+> 실행 문서 상 의미: `FOOD = PROTECTED_COMPLETE / NO_EXECUTION` — 서울 non-Food 실행 대상 아님.  
+> `SEOUL_FOOD_EXECUTION_TARGET = 0` 유지.
+
 | 항목 | 건수 | 상태 |
 |---|---|---|
-| RESTAURANT_TRACK | 1,259 | FOOD_CLOSED (CLOSED_WITH_LIMITATION) |
+| RESTAURANT_TRACK | 1,259 | **FOOD = PROTECTED_COMPLETE / NO_EXECUTION** (CLOSED_WITH_LIMITATION, 재개 금지) |
 | PLACE_CORE_CANDIDATE | 316 | CORE_DETAIL_COMPLETE (PLACE_CORE detail task 완료) |
 | EXPERIENCE_CANDIDATE | 120 | EXPERIENCE_DETAIL_COMPLETE (동일 task 완료) |
 | TEMPLE_STAY_CANDIDATE | 2 | TEMPLE_STAY_COMPLETE |
 | **합계** | **1,697** | |
 
-### EXCLUDED = 1,207
+### ACTIVE_EVENT_SERVICE_POOL = 4 (EVENT_TRACK 출신)
+
+EVENT_TRACK 1,190건 중 현재 서비스 pool에 있는 4건. EXCLUDED가 아닌 별도 class.
 
 | 항목 | 건수 | 근거 |
 |---|---|---|
-| EVENT_TRACK | 1,190 | EVENT_HISTORY_EXCLUDED — HISTORICAL_BULK_DETAIL_CALLS=0, EVENT_WORK_STATUS=CLOSED |
+| EVENT_TRACK active (KOPd5mmfg, KOP47mbp7, KOPw5jg9e, KOPvro3vg) | 4 | ACTIVE_EVENT_SERVICE_POOL — freshness 대상, AI itinerary/event 노출 가능 |
+
+> 나머지 2건 (KOPsj8gga, KOPnkfasx)은 PLACE_CONDITIONAL_REVIEW A-routing → PLACE_DETAIL_TARGET(573)에 포함됨.  
+> 이 2건은 상설 공연 venue로 routing 상 물리적 장소(PHYSICAL_PLACE)로 분류.
+
+### INACTIVE_OR_HISTORICAL_EVENT = 1,186
+
+| 항목 | 건수 | 근거 |
+|---|---|---|
+| EVENT_TRACK (active 4건 제외) | 1,186 | HISTORICAL_BULK_DETAIL_CALLS=0, EVENT_WORK_STATUS=CLOSED |
+
+### EXCLUDED_TOTAL = 1,203
+
+| 항목 | 건수 | 근거 |
+|---|---|---|
+| INACTIVE_OR_HISTORICAL_EVENT | 1,186 | 과거/날짜미확정/recurring미발표 event archive |
 | GENERAL_ACCOMMODATION_EXCLUDE | 17 | ACCOMMODATION_EXCLUDE |
-| **합계** | **1,207** | |
+| **합계** | **1,203** | |
 
 ---
 
@@ -216,14 +245,21 @@ DB_IMPORT = NOT_IN_THIS_PLAN
 ## 검증 결과
 
 ```
-PLACE_DETAIL_TARGET = 573
-SEARCHABLE_ONLY_OR_USER_PICK = 250
-EXISTING_RAW_RECOVERY_TARGET = 38
-COMPLETE_NO_ACTION = 1697
-EXCLUDED = 1207
-  합계 = 3765  (= INPUT_TOTAL, MANIFEST_OVERLAP=0)
+TOTAL = 3765  (= INPUT_TOTAL)
 
-CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6
+PLACE_DETAIL_TARGET           = 573   (CONDITIONAL A 528 + Shopping HIGH/INTENT 30 + UNRESOLVED 15)
+  [포함] 상설공연 venue: KOPsj8gga(옹기콘서트), KOPnkfasx(연희판판) — PLACE_CONDITIONAL_REVIEW A-routing
+SEARCHABLE_ONLY_OR_USER_PICK  = 250
+EXISTING_RAW_RECOVERY_TARGET  = 38
+COMPLETE_NO_ACTION            = 1697  (FOOD=PROTECTED_COMPLETE 1259 + CORE 316 + EXP 120 + TEMPLE 2)
+ACTIVE_EVENT_SERVICE_POOL     = 4     (EVENT_TRACK active: KOPd5mmfg/KOP47mbp7/KOPw5jg9e/KOPvro3vg)
+INACTIVE_OR_HISTORICAL_EVENT  = 1186  (EVENT_TRACK 1190 - active 4)
+GENERAL_ACCOMMODATION_EXCLUDE = 17
+EXCLUDED_TOTAL                = 1203  (1186 + 17)
+  합계 = 573+250+38+1697+4+1186+17 = 3765  ✓
+
+CURRENT_OR_FUTURE_CONFIRMED_EVENT = 6  (SERVICE_POOL: 4 EVENT_TRACK + 2 PLACE_CONDITIONAL venue)
+ACTIVE_EVENT_INSIDE_GENERIC_EXCLUDED = 0
 PAST_EVENT_ACTIVE_TARGET = 0
 UNCONFIRMED_RECURRING_EVENT_ACTIVE_TARGET = 0
 DATELESS_EVENT_ACTIVE_TARGET = 0

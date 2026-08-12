@@ -7,7 +7,12 @@
     "BATCH": "Batch3",
     "NEXT_REFRESH": "2026-08-18",
     "EVENT_WORK_STATUS": "CLOSED_REFRESH_ONLY",
-    "policy": "multicity-event-freshness-policy-v1.md"
+    "policy": "multicity-event-freshness-policy-v1.md",
+    "task_updated": "TASK-SEOUL-EVENT-ACCOUNTING-CORRECTION-R1",
+    "as_of_correction": "2026-08-12",
+    "ACTIVE_EVENT_SERVICE_POOL_ROUTING": 4,
+    "NOTE_ROUTING_SPLIT": "6건 중 2건(KOPsj8gga 옹기콘서트, KOPnkfasx 연희판판)은 PLACE_CONDITIONAL_REVIEW A-routing → PLACE_DETAIL_TARGET(573)에 포함. 나머지 4건은 EVENT_TRACK D-routing → ACTIVE_EVENT_SERVICE_POOL.",
+    "ACTIVE_EVENT_INSIDE_GENERIC_EXCLUDED": 0
   },
   "records": [
     {
@@ -20,7 +25,11 @@
       "official_url": "https://english.visitseoul.net/events/Joseon-Yangban-Hospitality-Culture-Experience-Performance-Onggi-Concert/ENPsj8gga",
       "official_url_type": "OFFICIAL_VISIT_OR_PUBLIC_PAGE",
       "venue": "동대문종합시장 신관(N동) 9층 전통공연창작마루 광무대",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "PLACE_DETAIL_TARGET",
+      "legacy_routing_track": "PLACE_CONDITIONAL_REVIEW",
+      "excluded": false,
+      "note": "PLACE_DETAIL_TARGET(573)에도 포함 — 상설 공연 venue. routing class = PLACE_CONDITIONAL_REVIEW."
     },
     {
       "source_record_id": "KOPnkfasx",
@@ -32,7 +41,11 @@
       "official_url": "https://english.visitseoul.net/events/Yeonhee-Standing-Performance-Yeonheepanpan/ENPnkfasx",
       "official_url_type": "OFFICIAL_VISIT_OR_PUBLIC_PAGE",
       "venue": "국립국악원 연희마당",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "PLACE_DETAIL_TARGET",
+      "legacy_routing_track": "PLACE_CONDITIONAL_REVIEW",
+      "excluded": false,
+      "note": "PLACE_DETAIL_TARGET(573)에도 포함 — 상설 공연 venue. routing class = PLACE_CONDITIONAL_REVIEW."
     },
     {
       "source_record_id": "KOPd5mmfg",
@@ -44,7 +57,11 @@
       "official_url": "https://www.instagram.com/seoul.tkd",
       "official_url_type": "ORGANIZER_DIRECT",
       "venue": "남산골한옥마을 및 DDP",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "ACTIVE_EVENT_SERVICE_POOL",
+      "legacy_routing_track": "EVENT_TRACK",
+      "excluded": false,
+      "note": "EVENT_TRACK active. EXCLUDED 아님."
     },
     {
       "source_record_id": "KOP47mbp7",
@@ -56,7 +73,11 @@
       "official_url": "https://www.seoul.go.kr/festa/garden/y2026",
       "official_url_type": "ORGANIZER_DIRECT",
       "venue": "서울숲 일대 & 매헌시민의숲",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "ACTIVE_EVENT_SERVICE_POOL",
+      "legacy_routing_track": "EVENT_TRACK",
+      "excluded": false,
+      "note": "EVENT_TRACK active. EXCLUDED 아님."
     },
     {
       "source_record_id": "KOPw5jg9e",
@@ -68,7 +89,11 @@
       "official_url": "https://hanokmaeul.co.kr/161",
       "official_url_type": "ORGANIZER_DIRECT",
       "venue": "남산골한옥마을 전통가옥 프로그램별 상이",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "ACTIVE_EVENT_SERVICE_POOL",
+      "legacy_routing_track": "EVENT_TRACK",
+      "excluded": false,
+      "note": "EVENT_TRACK active. EXCLUDED 아님."
     },
     {
       "source_record_id": "KOPvro3vg",
@@ -80,7 +105,11 @@
       "official_url": "https://seouloutdoorlibrary.kr/user/main/mainIndex.do",
       "official_url_type": "ORGANIZER_DIRECT",
       "venue": "서울광장, 광화문광장, 청계천(모전교~광통교)",
-      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT",
+      "routing_class": "ACTIVE_EVENT_SERVICE_POOL",
+      "legacy_routing_track": "EVENT_TRACK",
+      "excluded": false,
+      "note": "EVENT_TRACK active. EXCLUDED 아님."
     }
   ]
 }
