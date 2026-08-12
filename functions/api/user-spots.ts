@@ -56,7 +56,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("user_spots")
-    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public")
+    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public, related_city_spot_id, display_title, display_memo")
     .eq("device_id", deviceId)
     .order("created_at", { ascending: false })
     .limit(200);

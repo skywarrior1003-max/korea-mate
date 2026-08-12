@@ -40,6 +40,15 @@ export interface UserSpot {
   has_photo?:         boolean;
   /** 사진을 다른 여행자에게 공개해도 된다는 동의. 기본 false. */
   photo_public?:      boolean;
+  /**
+   * 관련 있는 공개 장소(city_spots.id). 게시 상태가 아니다 — 게시는 city_spot_id.
+   * city_spots.id 는 BIGINT 지만 이 저장소는 이미 number 로 다룬다(admin 화면 동일).
+   */
+  related_city_spot_id?: number | null;
+  /** 개인용 제목. factual name 과 분리된 값이다. */
+  display_title?:     string | null;
+  /** 개인용 짧은 기록. note 와 분리된 값이다. */
+  display_memo?:      string | null;
   created_at:         string;
   updated_at:         string;
   submission_status?: "none" | "pending" | "approved" | "rejected";
@@ -66,6 +75,10 @@ export interface CreateUserSpotInput {
 // **최종 상태**를 보고 결정한다 — name 을 지우는 요청이 안전한지는 그 행에
 // 좌표가 있는지에 달려 있기 때문이다.
 export interface UpdateUserSpotInput {
+  /** 개인용 제목. 생략=유지 · null=지움 · 문자열=교체. */
+  display_title?: string | null;
+  /** 개인용 짧은 기록. 같은 3-state. */
+  display_memo?:  string | null;
   name?:     string | null;
   category?: string;
   address?:  string | null;
@@ -176,6 +189,8 @@ export async function apiUpdateUserSpot(
   if (input.note     !== undefined) body.note     = input.note;
   if (input.lat      !== undefined) body.lat      = input.lat;
   if (input.lng      !== undefined) body.lng      = input.lng;
+  if (input.display_title !== undefined) body.display_title = input.display_title;
+  if (input.display_memo  !== undefined) body.display_memo  = input.display_memo;
 
   let res: Response | null = null;
   try {

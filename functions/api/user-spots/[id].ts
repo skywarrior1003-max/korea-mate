@@ -61,7 +61,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("user_spots")
-    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public")
+    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public, related_city_spot_id, display_title, display_memo")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -118,6 +118,15 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   const address  = nullableStr(body.address,   500); if (address !== undefined)  row.address   = address;
   const note     = nullableStr(body.note,     2000); if (note !== undefined)     row.note      = note;
   const photoUrl = nullableStr(body.photo_url, 500); if (photoUrl !== undefined) row.photo_url = photoUrl;
+
+  // 개인용 제목·기록. 생략=유지 / null 또는 빈 문자열=지움 / 문자열=교체.
+  // DB CHECK 와 같은 상한을 쓴다 — 서버가 먼저 잘라야 제약 위반 500 이 나지 않는다.
+  const dTitle = nullableStr(body.display_title,  300); if (dTitle !== undefined) row.display_title = dTitle;
+  const dMemo  = nullableStr(body.display_memo,  1000); if (dMemo  !== undefined) row.display_memo  = dMemo;
+
+  // related_city_spot_id 는 여기서 열지 않는다. 관계는 서버가 실제 city_spots
+  // 행을 확인하고 그 시점 context 와 함께 저장하는 전용 흐름에서만 만든다.
+  // 여기에 열면 클라이언트가 임의의 BIGINT 로 남의 장소와의 관계를 지어낼 수 있다.
 
   if (body.lat !== undefined) {
     if (body.lat === null) { row.lat = null; }
