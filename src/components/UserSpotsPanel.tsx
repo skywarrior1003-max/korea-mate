@@ -3,7 +3,14 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
-import { hasMinimumIdentity, userSpotCategoryLabelKey } from "@/components/UserSpotForm";
+import { userSpotCategoryLabelKey } from "@/components/UserSpotForm";
+import { compressPhotoBlob } from "@/lib/trip-moments/storage";
+import { runCreateFlow } from "@/lib/user-spots/create-flow";
+import { canEdit } from "@/lib/user-spots/anchor-core";
+import {
+  apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
+  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto,
+} from "@/lib/user-spots-api";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
   type UserSpotCategory,
@@ -95,6 +102,12 @@ export default function UserSpotsPanel({
   const [submitErrors,    setSubmitErrors]    = useState<Record<string, string>>({});
   const [formError,       setFormError]       = useState<string | null>(null);
   const [form,            setForm]            = useState<FormState>(EMPTY_FORM);
+  // 사진은 폼 데이터가 아니라 별도 자산이다. 파일만 들고 바이트를 복제하지 않는다.
+  const [photoFile,       setPhotoFile]       = useState<File | null>(null);
+  const [photoBusy,       setPhotoBusy]       = useState(false);
+  const [photoNotice,     setPhotoNotice]     = useState<string | null>(null);
+  const [photoUrl,        setPhotoUrl]        = useState<string | null>(null);
+  const [editingHasPhoto, setEditingHasPhoto] = useState(false);
   // Per-spot selected times
   const [timeMap, setTimeMap] = useState<Record<string, string>>({});
 
@@ -141,45 +154,89 @@ export default function UserSpotsPanel({
 
   // ── Create ────────────────────────────────────────────────────────────────
 
+  function resetPhotoState() {
+    setPhotoFile(null); setPhotoBusy(false); setPhotoNotice(null);
+    setPhotoUrl(null); setEditingHasPhoto(false);
+  }
+
   function openCreate() {
     setForm(EMPTY_FORM);
     setFormError(null);
     setEditingId(null);
     setShowCreate(true);
+    resetPhotoState();
+  }
+
+  /** 저장된 사진 삭제. 사진이 유일한 근거이면 서버가 409 로 막는다. */
+  async function removeStoredPhoto(spotId: string) {
+    if (photoBusy) return;
+    setPhotoBusy(true); setPhotoNotice(null);
+    try {
+      const r = await apiDeleteUserSpotPhoto(spotId);
+      if (r.ok) {
+        setPhotoUrl(null); setEditingHasPhoto(false);
+        setSpots(prev => prev.map(x => x.id === spotId ? { ...x, has_photo: false } : x));
+        setPhotoNotice(t("photoDeleted"));
+      } else if (r.code === "PHOTO_IS_ONLY_ANCHOR") {
+        setPhotoNotice(t("photoOnlyAnchor"));
+      } else {
+        setPhotoNotice(t("photoFailed"));
+      }
+    } finally {
+      setPhotoBusy(false);
+    }
   }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    const name = form.name.trim();
-    // 이름이 없어도 좌표가 있으면 저장한다. 둘 다 없을 때만 막는다.
-    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
+    const name = form.name.trim();
+    const input = {
+      name: name || undefined,
+      category: form.category,
+      city:     city || undefined,
+      address:  form.address.trim() || undefined,
+      note:     form.note.trim()    || undefined,
+      lat:      form.lat,
+      lng:      form.lng,
+    };
     setSubmitting(true);
     setFormError(null);
+    setPhotoNotice(null);
     try {
-      const created = await apiCreateUserSpot({
-        name: name || undefined,
-        category: form.category,
-        city:     city || undefined,
-        address:  form.address.trim() || undefined,
-        note:     form.note.trim()    || undefined,
-        lat:      form.lat ?? undefined,
-        lng:      form.lng ?? undefined,
+      const r = await runCreateFlow(input, photoFile, {
+        compress:        compressPhotoBlob,
+        createJson:      async i => (await apiCreateUserSpot({
+          ...i, lat: i.lat ?? undefined, lng: i.lng ?? undefined,
+        })).id,
+        createWithPhoto: async (i, blob) => {
+          const res = await apiCreateUserSpotWithPhoto({
+            ...i, lat: i.lat ?? undefined, lng: i.lng ?? undefined,
+          }, blob);
+          return { ok: res.ok, id: res.spot?.id };
+        },
+        uploadPhoto:     (id, blob) => apiUploadUserSpotPhoto(id, blob),
       });
-      setSpots(prev => [{
-        id:         created.id,
-        name:       name || null,
-        category:   form.category,
-        city:       city || undefined,
-        address:    form.address.trim() || undefined,
-        note:       form.note.trim()    || undefined,
-        lat:        form.lat ?? undefined,
-        lng:        form.lng ?? undefined,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }, ...prev]);
+
+      if (!r.created) {
+        if (r.notice === "photoUnreadable") setPhotoNotice(t("photoUnreadable"));
+        else setFormError(t(r.errorKey === "needAnchor" ? "needAnchor" : "saveFailed"));
+        return;
+      }
+
+      // 서버가 만든 값을 다시 읽는다 — id·has_photo 를 화면이 지어내지 않는다.
+      await loadSpots();
+      if (r.notice === "savedPhotoFailed") {
+        // 장소는 저장됐다. 폼을 닫지 않고 사진만 다시 시도할 수 있게 둔다.
+        setShowCreate(false);
+        setEditingId(r.spotId ?? null);
+        setEditingHasPhoto(false);
+        setPhotoNotice(t("savedPhotoFailed"));
+        return;
+      }
       setShowCreate(false);
       setForm(EMPTY_FORM);
+      resetPhotoState();
     } catch {
       setFormError(t("saveFailed"));
     } finally {
@@ -202,15 +259,25 @@ export default function UserSpotsPanel({
     setShowCreate(false);
     setConfirmDeleteId(null);
     setEditingId(spot.id);
+    resetPhotoState();
+    setEditingHasPhoto(spot.has_photo === true);
+    // 만료되는 URL 이라 폼을 열 때 한 번만 받아 온다. 저장하지 않는다.
+    if (spot.has_photo) {
+      void apiGetUserSpotPhotoUrl(spot.id).then(r => { if (r) setPhotoUrl(r.signedUrl); });
+    }
   }
 
   async function handleEdit(e: React.FormEvent, spot: UserSpot) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
+    if (!canEdit({
+      lat: form.lat, lng: form.lng, hasPhoto: photoFile !== null,
+      name: form.name, hasExistingPhoto: editingHasPhoto,
+    })) { setFormError(t("needAnchor")); return; }
     if (submitting) return;
     setSubmitting(true);
     setFormError(null);
+    setPhotoNotice(null);
     try {
       const input: UpdateUserSpotInput = {
         name: name || null,
@@ -233,7 +300,24 @@ export default function UserSpotsPanel({
         note:     input.note     === null ? undefined : (input.note    ?? s.note),
         updated_at: new Date().toISOString(),
       }));
+
+      // 새 사진을 골랐으면 붙이거나 바꾼다. 실패해도 방금 고친 내용은 살아 있다.
+      if (photoFile) {
+        setPhotoBusy(true);
+        try {
+          const blob = await compressPhotoBlob(photoFile);
+          const up   = await apiUploadUserSpotPhoto(spot.id, blob);
+          if (!up.ok) { setPhotoNotice(t("photoFailed")); return; }
+          setSpots(prev => prev.map(x => x.id === spot.id ? { ...x, has_photo: true } : x));
+        } catch {
+          setPhotoNotice(t("photoUnreadable")); return;
+        } finally {
+          setPhotoBusy(false);
+        }
+      }
+
       setEditingId(null);
+      resetPhotoState();
     } catch {
       setFormError(t("updateFailed"));
     } finally {
@@ -309,6 +393,7 @@ export default function UserSpotsPanel({
     onSubmit: (e: React.FormEvent) => Promise<void>,
     onCancel: () => void,
     submitLabel: string,
+    editSpotId?: string,
   ) {
     return (
       <UserSpotForm
@@ -319,6 +404,14 @@ export default function UserSpotsPanel({
         submitLabel={submitLabel}
         onSubmit={onSubmit}
         onCancel={onCancel}
+        mode={editSpotId ? "edit" : "create"}
+        photoFile={photoFile}
+        onPickPhoto={setPhotoFile}
+        existingPhotoUrl={editSpotId ? photoUrl : null}
+        hasExistingPhoto={editSpotId ? editingHasPhoto : false}
+        onRemoveExistingPhoto={editSpotId ? () => void removeStoredPhoto(editSpotId) : undefined}
+        photoBusy={photoBusy}
+        photoNotice={photoNotice}
       />
     );
   }
@@ -415,8 +508,9 @@ export default function UserSpotsPanel({
                   <p className="text-xs font-black text-[#191C21] mb-1">{t("editPlace")}</p>
                   {renderForm(
                     (e) => handleEdit(e, spot),
-                    () => { setEditingId(null); setFormError(null); },
+                    () => { setEditingId(null); setFormError(null); resetPhotoState(); },
                     t("update"),
+                    spot.id,
                   )}
                 </div>
               ) : (

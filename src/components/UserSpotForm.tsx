@@ -9,8 +9,9 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { canCreate, canEdit } from "@/lib/user-spots/anchor-core";
 
 // 값(value)은 저장되는 데이터라 그대로 두고, 화면에 찍는 라벨만 키로 바꾼다.
 export const USER_SPOT_CATEGORIES = [
@@ -29,7 +30,7 @@ export type UserSpotCategoryLabelKey = typeof USER_SPOT_CATEGORIES[number]["labe
  *
  * DB 에 들어 있는 값은 그대로 두고 보여줄 때만 번역한다. 폼의 select 와
  * 목록 카드가 같은 키를 쓰게 하려고 여기 둔다 — 두 곳이 갈라지면 폼에서는
- * "명소" 인데 목록에서는 "attraction" 인 지금 상태가 다시 생긴다.
+ * "명소" 인데 목록에서는 "attraction" 인 상태가 다시 생긴다.
  *
  * 아는 값이 아니면 null 을 준다. 호출부는 원본 값을 그대로 보여준다 —
  * 모르는 값을 감추면 사용자는 자기 데이터가 사라진 것처럼 본다.
@@ -55,23 +56,6 @@ export const EMPTY_USER_SPOT_FORM: UserSpotFormState = {
   name: "", category: "attraction", address: "", note: "", lat: null, lng: null,
 };
 
-/**
- * 저장할 수 있는 최소 조건 — 이름이 있거나, 좌표가 짝으로 있거나.
- *
- * 이름을 손으로 적는 것을 필수로 두면 "여기, 이 자리" 라고만 말하고 싶은
- * 장소를 담을 수 없다. 그렇다고 아무것도 없는 행을 만들면 나중에 그게
- * 무엇이었는지 아무도 알 수 없다. 그래서 둘 중 하나다.
- *
- * API 와 DB CHECK 도 같은 규칙을 검사한다. 세 곳이 같은 말을 하도록
- * 이 함수를 단일 출처로 쓴다.
- */
-export function hasMinimumIdentity(form: {
-  name: string; lat: number | null; lng: number | null;
-}): boolean {
-  if (form.name.trim().length > 0) return true;
-  return form.lat !== null && form.lng !== null;
-}
-
 interface Props {
   form:        UserSpotFormState;
   setForm:     React.Dispatch<React.SetStateAction<UserSpotFormState>>;
@@ -80,22 +64,53 @@ interface Props {
   submitLabel: string;
   onSubmit:    (e: React.FormEvent) => Promise<void>;
   onCancel:    () => void;
+
+  // ── 사진 ────────────────────────────────────────────────────────────────────
+  /** 새로 만드는 중인지 고치는 중인지. 저장 가능 조건이 다르다. */
+  mode:             "create" | "edit";
+  /** 이번에 고른 파일. 폼은 파일 자체만 들고 있고 바이트를 복제하지 않는다. */
+  photoFile:        File | null;
+  onPickPhoto:      (file: File | null) => void;
+  /** 이미 저장된 사진의 만료되는 URL. 없으면 null. */
+  existingPhotoUrl?: string | null;
+  hasExistingPhoto?: boolean;
+  /** 저장된 사진 삭제. 서버가 409 로 막을 수 있어 호출부가 결과를 처리한다. */
+  onRemoveExistingPhoto?: () => void;
+  /** 사진 관련 진행 중 상태 (압축·업로드·삭제) */
+  photoBusy?:       boolean;
+  /** 사진 관련 안내·오류 문구 */
+  photoNotice?:     string | null;
 }
 
 const INPUT =
   "mt-1 w-full px-3 py-2 rounded-xl border border-[#E5E7EA] text-sm font-medium text-[#191C21] bg-white focus:outline-none focus:border-[#FF4A2D] focus:ring-1 focus:ring-[#FF4A2D]";
 const LABEL = "text-xs font-black text-[#565D66] uppercase tracking-wider";
+const CHIP_BTN =
+  "gkm-focus px-3 min-h-11 py-2 rounded-xl text-xs font-bold border border-[#E5E7EA] text-[#565D66] hover:bg-[#F6F7F8] transition-colors disabled:opacity-60 cursor-pointer";
 
 type GpsState = "idle" | "loading" | "denied" | "failed";
 
 export default function UserSpotForm({
   form, setForm, formError, submitting, submitLabel, onSubmit, onCancel,
+  mode, photoFile, onPickPhoto,
+  existingPhotoUrl = null, hasExistingPhoto = false,
+  onRemoveExistingPhoto, photoBusy = false, photoNotice = null,
 }: Props) {
   const t = useTranslations("picks");
   const [gps, setGps] = useState<GpsState>("idle");
 
+  // 고른 파일의 미리보기. Object URL 은 만든 쪽이 반드시 되돌려줘야 한다 —
+  // 안 하면 탭을 닫을 때까지 그 이미지가 메모리에 남는다.
+  const [localPreview, setLocalPreview] = useState<string | null>(null);
+  useEffect(() => {
+    if (!photoFile) { setLocalPreview(null); return; }
+    const url = URL.createObjectURL(photoFile);
+    setLocalPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [photoFile]);
+
   // 버튼을 눌렀을 때만 권한을 묻는다. 폼을 열자마자 위치를 요구하면
-  // 이름만 적고 싶은 사람에게도 권한 팝업이 뜬다.
+  // 사진만 올리고 싶은 사람에게도 권한 팝업이 뜬다.
   function requestLocation() {
     if (!navigator.geolocation) { setGps("failed"); return; }
     setGps("loading");
@@ -116,24 +131,79 @@ export default function UserSpotForm({
   }
 
   const hasLocation = form.lat !== null && form.lng !== null;
-  const canSubmit   = hasMinimumIdentity(form);
+  const shownPhoto  = localPreview ?? existingPhotoUrl;
+
+  // 저장할 수 있는가 — 이름은 여기에 영향을 주지 않는다.
+  const anchorInput = { lat: form.lat, lng: form.lng, hasPhoto: photoFile !== null };
+  const canSubmit = mode === "create"
+    ? canCreate(anchorInput)
+    : canEdit({ ...anchorInput, name: form.name, hasExistingPhoto });
 
   return (
     <form onSubmit={(e) => void onSubmit(e)} className="space-y-3 mt-3">
-      {/* Name — 손으로 적는 것은 선택이다. 위치만으로도 장소가 성립한다. */}
+      {/* Photo — 위치와 함께 이 장소를 아는 근거가 된다. 사진만으로도 저장된다. */}
       <div>
         <label className={LABEL}>
-          {t("fieldName")}{" "}
+          {t("fieldPhoto")}{" "}
           <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
         </label>
-        <input
-          type="text"
-          value={form.name}
-          onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-          maxLength={300}
-          placeholder={t("phName")}
-          className={INPUT}
-        />
+
+        {shownPhoto && (
+          <div className="mt-1 relative w-full max-w-[280px] aspect-[4/3] rounded-xl overflow-hidden bg-[#F6F7F8] border border-[#E5E7EA]">
+            {/* 만료되는 URL 이라 next/image 최적화 대상이 아니다. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={shownPhoto}
+              alt={t("photoAlt")}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        <div className="mt-1 flex items-center gap-2 flex-wrap">
+          <label className={`${CHIP_BTN} inline-flex items-center ${photoBusy ? "opacity-60 pointer-events-none" : ""}`}>
+            {shownPhoto ? t("photoChange") : t("photoAdd")}
+            <input
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              disabled={photoBusy || submitting}
+              onChange={e => {
+                const f = e.target.files?.[0] ?? null;
+                onPickPhoto(f);
+                // 같은 파일을 다시 골라도 change 가 나도록 비운다.
+                e.target.value = "";
+              }}
+            />
+          </label>
+
+          {photoFile && (
+            <button
+              type="button"
+              onClick={() => onPickPhoto(null)}
+              disabled={photoBusy || submitting}
+              className={CHIP_BTN}
+            >
+              {t("photoRemove")}
+            </button>
+          )}
+
+          {/* 저장된 사진 삭제는 서버 호출이라 고르기 취소와 다른 동작이다. */}
+          {!photoFile && hasExistingPhoto && onRemoveExistingPhoto && (
+            <button
+              type="button"
+              onClick={onRemoveExistingPhoto}
+              disabled={photoBusy || submitting}
+              className={CHIP_BTN}
+            >
+              {t("photoRemove")}
+            </button>
+          )}
+        </div>
+
+        {photoNotice && (
+          <p role="status" className="mt-1 text-[11px] text-[#565D66]">{photoNotice}</p>
+        )}
       </div>
 
       {/* Location — 지도 선택기는 아직 없다. 지금 안전하게 줄 수 있는 것은
@@ -149,11 +219,7 @@ export default function UserSpotForm({
               <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#F6F7F8] text-sm font-bold text-[#191C21]">
                 ✓ {t("locationSet")}
               </span>
-              <button
-                type="button"
-                onClick={clearLocation}
-                className="gkm-focus px-3 min-h-11 py-2 rounded-xl text-xs font-bold border border-[#E5E7EA] text-[#565D66] hover:bg-[#F6F7F8] transition-colors cursor-pointer"
-              >
+              <button type="button" onClick={clearLocation} className={CHIP_BTN}>
                 {t("locationClear")}
               </button>
             </>
@@ -177,6 +243,22 @@ export default function UserSpotForm({
         {gps === "failed" && (
           <p className="mt-1 text-[11px] text-[#565D66]">{t("locationFailed")}</p>
         )}
+      </div>
+
+      {/* Name — 손으로 적는 것은 선택이다. 저장 여부에는 영향을 주지 않는다. */}
+      <div>
+        <label className={LABEL}>
+          {t("fieldName")}{" "}
+          <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
+        </label>
+        <input
+          type="text"
+          value={form.name}
+          onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+          maxLength={300}
+          placeholder={t("phName")}
+          className={INPUT}
+        />
       </div>
 
       {/* Category */}
@@ -223,10 +305,16 @@ export default function UserSpotForm({
         <p role="alert" className="text-xs text-red-500 font-medium">{formError}</p>
       )}
 
+      {/* 저장할 수 없는 이유를 버튼이 비활성인 채로 두지 않고 말해 준다. */}
+      {!canSubmit && !formError && (
+        <p className="text-[11px] text-[#565D66]/80">{t("needAnchor")}</p>
+      )}
+
       <div className="flex gap-2 pt-1">
         <button
           type="submit"
-          disabled={submitting || !canSubmit}
+          disabled={submitting || photoBusy || !canSubmit}
+          aria-describedby={!canSubmit ? "gkm-anchor-hint" : undefined}
           className="gkm-focus flex-1 min-h-11 py-2.5 rounded-xl text-sm font-black text-white transition-opacity disabled:opacity-60 cursor-pointer"
           style={{ backgroundColor: "#FF4A2D" }}
         >
@@ -240,6 +328,9 @@ export default function UserSpotForm({
           {t("cancel")}
         </button>
       </div>
+      {!canSubmit && (
+        <span id="gkm-anchor-hint" className="sr-only">{t("needAnchor")}</span>
+      )}
     </form>
   );
 }

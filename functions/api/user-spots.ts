@@ -135,8 +135,19 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
 
   // 최소 식별 계약 판정. DB CHECK 가 잡기 전에 여기서 정상 validation 으로
   // 돌려준다 — 사용자에게 DB 제약 위반 500 을 보여주지 않는다.
-  if (!name && !(hasLat && hasLng)) {
-    return json({ error: "Provide a name, or a location (lat and lng)" }, 400);
+  // 이 경로에는 사진이 오지 않는다. 그래서 여기서 만들 수 있는 근거는 좌표뿐이다.
+  //
+  // 이름·주소·메모·분류는 아무리 채워도 근거가 아니다. 제목은 장소를 이해하는
+  // 근거가 아니라 표현 값이고, 그것만 있는 행은 나중에 그게 무엇이었는지 아무도
+  // 알 수 없다. 사진만으로 만들려면 /api/user-spots/with-photo 를 쓴다.
+  //
+  // DB CHECK 의 legacy name 항은 그대로 둔다 — 이름만으로 만들어진 예전 행이
+  // 아직 있고, 그 행을 고치는 길까지 막을 이유는 없다. 새로 만드는 길만 닫는다.
+  if (!(hasLat && hasLng)) {
+    return json({
+      error: "A new place needs a location. Use the photo endpoint to save a place from a photo.",
+      code:  "ANCHOR_REQUIRED",
+    }, 400);
   }
 
   let admin;

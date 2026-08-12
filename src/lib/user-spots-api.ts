@@ -238,3 +238,128 @@ export async function apiDeleteUserSpot(id: string): Promise<boolean> {
   if (!res.ok) throw safeError(res);
   return true;
 }
+
+// ── 사진 ──────────────────────────────────────────────────────────────────────
+//
+// 사진 바이트는 multipart 로만 보낸다. base64 로 감싸면 33% 커지고, 그 문자열이
+// 상태나 저장소에 남으면 지우기 어려운 사본이 하나 더 생긴다.
+//
+// storage path 는 서버가 정하고 응답에도 담기지 않는다. 화면이 아는 것은
+// "사진이 있다" 와, 필요할 때 받아 오는 만료되는 URL 뿐이다.
+
+function photoBody(blob: Blob): FormData {
+  const fd = new FormData();
+  fd.append("photo", blob, "photo.jpg");
+  return fd;
+}
+
+export interface CreateWithPhotoResult {
+  ok: boolean;
+  spot?: UserSpot;
+  error?: string;
+}
+
+/**
+ * 사진이 유일한 근거일 때 쓴다. 서버가 id 를 만들고, 파일을 올리고, 행을 넣는
+ * 것까지 한 요청으로 처리한다. 실패하면 아무것도 남지 않는다.
+ */
+export async function apiCreateUserSpotWithPhoto(
+  input: CreateUserSpotInput,
+  photo: Blob,
+): Promise<CreateWithPhotoResult> {
+  const deviceId = getDeviceId();
+  const fd = photoBody(photo);
+  if (input.name     !== undefined) fd.append("name",     input.name);
+  if (input.category !== undefined) fd.append("category", input.category);
+  if (input.city     !== undefined) fd.append("city",     input.city);
+  if (input.address  !== undefined) fd.append("address",  input.address);
+  if (input.note     !== undefined) fd.append("note",     input.note);
+  if (input.lat      !== undefined) fd.append("lat",      String(input.lat));
+  if (input.lng      !== undefined) fd.append("lng",      String(input.lng));
+
+  let res: Response;
+  try {
+    res = await fetch("/api/user-spots/with-photo", {
+      method: "POST", headers: getHeader(deviceId), body: fd,
+    });
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+  if (res.ok) {
+    try { return { ok: true, spot: (await res.json()) as UserSpot }; }
+    catch { return { ok: true }; }
+  }
+  return { ok: false, error: await errorMessage(res) };
+}
+
+/** 이미 있는 장소에 사진을 붙이거나 바꾼다. 교체해도 공개 동의는 물려받지 않는다. */
+export async function apiUploadUserSpotPhoto(
+  id: string,
+  photo: Blob,
+): Promise<{ ok: boolean; error?: string }> {
+  const deviceId = getDeviceId();
+  let res: Response;
+  try {
+    res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo`, {
+      method: "POST", headers: getHeader(deviceId), body: photoBody(photo),
+    });
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+  if (res.ok) return { ok: true };
+  return { ok: false, error: await errorMessage(res) };
+}
+
+/** 소유자 전용 · 600초 만료. 받은 URL 을 저장하지 않는다. */
+export async function apiGetUserSpotPhotoUrl(
+  id: string,
+): Promise<{ signedUrl: string; expiresAt: string } | null> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo-url`, {
+      headers: getHeader(deviceId),
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as { signedUrl: string; expiresAt: string };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 사진 자체를 지운다. 공개 동의를 끄는 것과 다르다.
+ *
+ * 사진이 그 장소의 유일한 근거이면 서버가 409 로 막는다. 그 경우 code 를
+ * 그대로 돌려주어 화면이 사용자에게 뜻을 설명할 수 있게 한다.
+ */
+export async function apiDeleteUserSpotPhoto(
+  id: string,
+): Promise<{ ok: boolean; code?: string; error?: string }> {
+  const deviceId = getDeviceId();
+  let res: Response;
+  try {
+    res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/photo`, {
+      method: "DELETE", headers: getHeader(deviceId),
+    });
+  } catch {
+    return { ok: false, error: "Network error" };
+  }
+  if (res.ok) return { ok: true };
+  let code: string | undefined;
+  let error = `HTTP ${res.status}`;
+  try {
+    const body = (await res.json()) as { error?: string; code?: string };
+    code  = body.code;
+    error = body.error ?? error;
+  } catch { /* ignore */ }
+  return { ok: false, code, error };
+}
+
+async function errorMessage(res: Response): Promise<string> {
+  try {
+    const body = (await res.json()) as { error?: string };
+    return body.error ?? `HTTP ${res.status}`;
+  } catch {
+    return `HTTP ${res.status}`;
+  }
+}

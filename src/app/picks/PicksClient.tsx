@@ -21,12 +21,16 @@ import { getCart, removeFromCart, clearCart, addToCart, CART_EVENT, type CartIte
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
+  apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
+  apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto,
   type UserSpot,
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
+import { compressPhotoBlob } from "@/lib/trip-moments/storage";
+import { runCreateFlow } from "@/lib/user-spots/create-flow";
+import { canEdit } from "@/lib/user-spots/anchor-core";
 import { trackEvent } from "@/lib/analytics";
 import UserSpotForm, {
-  hasMinimumIdentity,
   EMPTY_USER_SPOT_FORM,
   userSpotCategoryLabelKey,
   type UserSpotFormState,
@@ -121,6 +125,13 @@ function PicksContent() {
   const [deletingId,  setDeletingId]  = useState<string | null>(null);
   const [formError,   setFormError]   = useState<string | null>(null);
   const [form,        setForm]        = useState<UserSpotFormState>(EMPTY_USER_SPOT_FORM);
+  // 사진은 폼 데이터가 아니라 별도 자산이라 따로 들고 있는다. 파일 자체만
+  // 보관하고 바이트를 복제하지 않는다.
+  const [photoFile,   setPhotoFile]   = useState<File | null>(null);
+  const [photoBusy,   setPhotoBusy]   = useState(false);
+  const [photoNotice, setPhotoNotice] = useState<string | null>(null);
+  const [photoUrl,    setPhotoUrl]    = useState<string | null>(null);
+  const [editingHasPhoto, setEditingHasPhoto] = useState(false);
 
   // 로딩 플래그는 여기서 세우지 않는다 — 최초 마운트에서 effect 가 동기 setState
   // 를 호출하면 렌더가 한 번 더 돈다. 초기값이 이미 true 이고, 재시도는 클릭
@@ -139,8 +150,13 @@ function PicksContent() {
     loadMine();
   }
 
+  function resetPhotoState() {
+    setPhotoFile(null); setPhotoBusy(false); setPhotoNotice(null);
+    setPhotoUrl(null); setEditingHasPhoto(false);
+  }
   function openCreate() {
     setForm(EMPTY_USER_SPOT_FORM); setFormError(null); setEditingId(null); setShowCreate(true);
+    resetPhotoState();
   }
   function openEdit(s: UserSpot) {
     setForm({
@@ -150,29 +166,83 @@ function PicksContent() {
       lat: s.lat ?? null, lng: s.lng ?? null,
     });
     setFormError(null); setShowCreate(false); setEditingId(s.id);
+    resetPhotoState();
+    setEditingHasPhoto(s.has_photo === true);
+    // 만료되는 URL 이라 폼을 열 때 한 번만 받아 온다. 저장하지 않는다.
+    if (s.has_photo) {
+      void apiGetUserSpotPhotoUrl(s.id).then(r => { if (r) setPhotoUrl(r.signedUrl); });
+    }
   }
   function closeForm() {
     setShowCreate(false); setEditingId(null); setFormError(null); setForm(EMPTY_USER_SPOT_FORM);
+    resetPhotoState();
+  }
+
+  /** 저장된 사진 삭제. 사진이 그 장소의 유일한 근거이면 서버가 409 로 막는다. */
+  async function removeStoredPhoto(spotId: string) {
+    if (photoBusy) return;
+    setPhotoBusy(true); setPhotoNotice(null);
+    try {
+      const r = await apiDeleteUserSpotPhoto(spotId);
+      if (r.ok) {
+        setPhotoUrl(null); setEditingHasPhoto(false);
+        setPhotoNotice(t("photoDeleted"));
+        loadMine();
+      } else if (r.code === "PHOTO_IS_ONLY_ANCHOR") {
+        // 기술 오류가 아니라 계약이다. 무엇을 하면 되는지 말해 준다.
+        setPhotoNotice(t("photoOnlyAnchor"));
+      } else {
+        setPhotoNotice(t("photoFailed"));
+      }
+    } finally {
+      setPhotoBusy(false);
+    }
   }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    const name = form.name.trim();
-    // 이름이 없어도 좌표가 있으면 저장할 수 있다. 둘 다 없을 때만 막는다.
-    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
-    setSubmitting(true); setFormError(null);
+    const name = form.name.trim();
+    const input = {
+      name:     name || undefined,
+      category: form.category,
+      address:  form.address.trim() || undefined,
+      note:     form.note.trim()    || undefined,
+      lat:      form.lat,
+      lng:      form.lng,
+    };
+    setSubmitting(true); setFormError(null); setPhotoNotice(null);
     try {
-      await apiCreateUserSpot({
-        name:     name || undefined,
-        category: form.category,
-        address:  form.address.trim() || undefined,
-        note:     form.note.trim()    || undefined,
-        lat:      form.lat ?? undefined,
-        lng:      form.lng ?? undefined,
+      const r = await runCreateFlow(input, photoFile, {
+        compress:        compressPhotoBlob,
+        createJson:      async i => (await apiCreateUserSpot({
+          ...i, lat: i.lat ?? undefined, lng: i.lng ?? undefined,
+        })).id,
+        createWithPhoto: async (i, blob) => {
+          const res = await apiCreateUserSpotWithPhoto({
+            ...i, lat: i.lat ?? undefined, lng: i.lng ?? undefined,
+          }, blob);
+          return { ok: res.ok, id: res.spot?.id };
+        },
+        uploadPhoto:     (id, blob) => apiUploadUserSpotPhoto(id, blob),
       });
-      closeForm();
+
+      if (!r.created) {
+        // 사진을 읽지 못한 경우는 오류가 아니라 안내다 — 다른 사진을 고르면 된다.
+        if (r.notice === "photoUnreadable") setPhotoNotice(t("photoUnreadable"));
+        else setFormError(t(r.errorKey === "needAnchor" ? "needAnchor" : "saveFailed"));
+        return;
+      }
+
       loadMine();                       // 서버 응답을 진실로 삼는다
+      if (r.notice === "savedPhotoFailed") {
+        // 장소는 저장됐다. 폼을 닫지 않고 사진만 다시 시도할 수 있게 둔다.
+        setEditingId(r.spotId ?? null); setShowCreate(false);
+        setEditingHasPhoto(false);
+        setPhotoNotice(t("savedPhotoFailed"));
+        return;
+      }
+      closeForm();
     } catch {
       setFormError(t("saveFailed"));
     } finally {
@@ -183,9 +253,12 @@ function PicksContent() {
   async function handleEdit(e: React.FormEvent, spot: UserSpot) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
+    if (!canEdit({
+      lat: form.lat, lng: form.lng, hasPhoto: photoFile !== null,
+      name: form.name, hasExistingPhoto: editingHasPhoto,
+    })) { setFormError(t("needAnchor")); return; }
     if (submitting) return;
-    setSubmitting(true); setFormError(null);
+    setSubmitting(true); setFormError(null); setPhotoNotice(null);
     try {
       const ok = await apiUpdateUserSpot(spot.id, {
         name:     name || null,
@@ -196,6 +269,21 @@ function PicksContent() {
         lng:      form.lng,
       });
       if (!ok) { setFormError(t("saveFailed")); return; }
+
+      // 새 사진을 골랐으면 붙이거나 바꾼다. 실패해도 방금 고친 내용은 살아 있다.
+      if (photoFile) {
+        setPhotoBusy(true);
+        try {
+          const blob = await compressPhotoBlob(photoFile);
+          const up   = await apiUploadUserSpotPhoto(spot.id, blob);
+          if (!up.ok) { setPhotoNotice(t("photoFailed")); loadMine(); return; }
+        } catch {
+          setPhotoNotice(t("photoUnreadable")); loadMine(); return;
+        } finally {
+          setPhotoBusy(false);
+        }
+      }
+
       closeForm();
       loadMine();
     } catch {
@@ -570,6 +658,9 @@ function PicksContent() {
                     form={form} setForm={setForm} formError={formError}
                     submitting={submitting} submitLabel={t("save")}
                     onSubmit={handleCreate} onCancel={closeForm}
+                    mode="create"
+                    photoFile={photoFile} onPickPhoto={setPhotoFile}
+                    photoBusy={photoBusy} photoNotice={photoNotice}
                   />
                 </Card>
               )}
@@ -615,6 +706,12 @@ function PicksContent() {
                                 form={form} setForm={setForm} formError={formError}
                                 submitting={submitting} submitLabel={t("save")}
                                 onSubmit={(e) => handleEdit(e, s)} onCancel={closeForm}
+                                mode="edit"
+                                photoFile={photoFile} onPickPhoto={setPhotoFile}
+                                existingPhotoUrl={photoUrl}
+                                hasExistingPhoto={editingHasPhoto}
+                                onRemoveExistingPhoto={() => void removeStoredPhoto(s.id)}
+                                photoBusy={photoBusy} photoNotice={photoNotice}
                               />
                             </>
                           ) : (
