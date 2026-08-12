@@ -18,7 +18,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
@@ -74,6 +74,10 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
   const [savedToast, setSavedT] = useState(false);
   // 내 장소로 남기기 — Saved 와 다른 행동이다. Saved 는 북마크,
   // 이쪽은 개인 기록을 하나 만드는 것이다.
+  // state 는 다음 렌더에나 반영된다. 같은 tick 에 두 번 눌리면 두 번째 클릭이
+  // 아직 false 인 keeping 을 보고 통과한다 — 실제로 요청이 2건 나갔다.
+  // 동기적으로 즉시 잠기는 ref 로 막고, 화면 비활성화만 state 로 한다.
+  const keepingRef = useRef(false);
   const [keeping,   setKeeping]   = useState(false);
   const [keptOnce,  setKeptOnce]  = useState(false);
   const [keepError, setKeepError] = useState(false);
@@ -131,13 +135,15 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     // 연타로 같은 기록이 두 개 생기지 않게 요청 중에는 막는다. 다만 사용자가
     // 다시 눌러 또 남기는 것 자체는 막지 않는다 — 같은 장소라도 다른 날
     // 다른 기억일 수 있다.
-    if (keeping) return;
+    if (keepingRef.current) return;
+    keepingRef.current = true;
     setKeeping(true); setKeepError(false);
     try {
       const r = await apiCreateUserSpotFromCanonical(spot.id);
       if (r.ok) setKeptOnce(true);
       else setKeepError(true);
     } finally {
+      keepingRef.current = false;
       setKeeping(false);
     }
   }

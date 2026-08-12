@@ -252,8 +252,12 @@ test("Saved 와 다른 액션이다", () => {
 });
 
 test("연타로 두 번 저장되지 않는다", () => {
-  assert.match(C.place, /if \(keeping\) return;/);
-  assert.match(C.place, /disabled=\{keeping\}/);
+  // state 로만 막으면 같은 tick 의 두 번째 클릭이 아직 false 인 값을 본다.
+  // Production QA 에서 실제로 요청이 2건 나갔다. 동기적으로 잠기는 ref 가 필요하다.
+  assert.match(C.place, /if \(keepingRef\.current\) return;/,  "동기 가드");
+  assert.match(C.place, /keepingRef\.current = true;/,          "즉시 잠금");
+  assert.match(C.place, /keepingRef\.current = false;/,         "finally 에서 해제");
+  assert.match(C.place, /disabled=\{keeping\}/,                 "화면 비활성화는 state");
 });
 
 test("데스크톱과 모바일 양쪽에 배치했다", () => {
