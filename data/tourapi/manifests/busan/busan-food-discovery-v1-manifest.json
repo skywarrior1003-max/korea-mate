@@ -1,0 +1,91 @@
+{
+  "task": "TASK-BUSAN-FOOD-V1-MIGRATION-ENTITY-VALIDATION-AND-OFFICIAL-GAPFILL-R2",
+  "completed_at": "2026-08-12T00:00:00Z",
+  "base_commit": "9a0be89",
+  "branch": "data/busan-food-discovery-v1",
+
+  "input": {
+    "legacy_input": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+    "total_records": 1642,
+    "food_records_filtered": 721
+  },
+
+  "output": {
+    "food_v1_output": "data/tourapi/enriched/busan/busan-food-discovery-candidates-v1.jsonl",
+    "total_records": 721,
+    "sha256": "f2c15123f4072bf32efd3ada8aa5a83ddb018e591e093f3cd5ac17d6c347dab7",
+    "normalization_byte_identical": "PASS"
+  },
+
+  "source_breakdown": {
+    "kto_tourapi": 266,
+    "visitbusan_web": 343,
+    "busan_official_api": 112
+  },
+
+  "entity_validation": {
+    "VALID_SINGLE_RESTAURANT": 370,
+    "REVIEW_REQUIRED_ENTITY": 314,
+    "DUPLICATE_CONFIRMED": 30,
+    "VALID_DISTINCT_BRANCH": 7,
+    "total": 721
+  },
+
+  "kto_detailIntro2": {
+    "type39_targets": 266,
+    "enriched": 262,
+    "phone_found": 260,
+    "hours_found": 262,
+    "no_item_returned": 4,
+    "no_item_contentids": ["2670518", "2670566", "2670611", "2848939"],
+    "phone_without_phone_count": 2,
+    "checkpoint_file": "data/tourapi/checkpoints/busan/kto-detailIntro2-full-checkpoint.json",
+    "raw_dir": "data/tourapi/raw/busan/kto-detailIntro2-full/ (gitignored)"
+  },
+
+  "visitbusan_phone_gapfill": {
+    "status": "OFFICIAL_DETAIL_UNRESOLVED",
+    "reason": "Pilot API call (UC_SEQ=218) returned empty response. CNTCT_TEL field not confirmed.",
+    "action": "endpoint/field추정 금지 원칙 적용",
+    "records_affected": 112,
+    "phone_recovered": 0,
+    "next_steps": "VisitBusan FoodService API 파라미터 재조사 필요 (별도 태스크)"
+  },
+
+  "phone_coverage": {
+    "total_food": 721,
+    "phone_resolved": 260,
+    "phone_missing": 461,
+    "phone_resolved_pct": "36.1%",
+    "kto_coverage": "260/266 (97.7%)",
+    "visitbusan_api_coverage": "0/112 (OFFICIAL_DETAIL_UNRESOLVED)",
+    "visitbusan_web_coverage": "0/343 (no official phone source)",
+    "source": "official_only — NAVER/GOOGLE/KAKAO=0"
+  },
+
+  "hours_coverage": {
+    "legacy_hours_facts": 603,
+    "new_hours_proposed": 262,
+    "total_food": 721
+  },
+
+  "description_coverage": {
+    "description_ko": "699/721 (97.0%)",
+    "description_en": "451/721 (62.5%)"
+  },
+
+  "safety_counters": {
+    "GYEONGJU_DATA_CHANGE": 0,
+    "SEOUL_DATA_CHANGE": 0,
+    "JEJU_DATA_CHANGE": 0,
+    "PRODUCTION_WRITE": 0,
+    "SECRET_LEAK": 0,
+    "AI_INFERRED_FACTS": 0,
+    "NAVER_CALLS": 0,
+    "GOOGLE_CALLS": 0,
+    "KAKAO_CALLS": 0,
+    "SCHEMA_GAP_FOUND_COUNT": 0
+  },
+
+  "next_task_recommendation": "BUSAN_FOOD_NAVER_PHONE_GATE — 261건 미확보 중 visitbusan_web 343건 + KTO 6건 대상 Naver 공식 확인 (단계 분리)"
+}
