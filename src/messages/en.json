@@ -703,7 +703,8 @@
     "contactTitle": "Contact Us",
     "contactBody": "Have feedback or suggestions? We'd love to hear from you. Feel free to contact our team to share your thoughts or report details that need updates. Together, let's make traveling in Korea an unforgettable experience!",
     "lastUpdated": "Last updated: {date}",
-    "footerNote": "Place data provided by the Korea Tourism Organization. Trip planning powered by AI."
+    "footerNote": "Place data provided by the Korea Tourism Organization. Trip planning powered by AI.",
+    "contactCta": "Contact gokoreamate"
   },
   "allSpots": {
     "title": "All Spots",
@@ -739,7 +740,8 @@
     "district_seomyeon": "Seomyeon · Busanjin",
     "district_nampo": "Nampo · Jung · Seo-gu",
     "district_dongnae": "Dongnae · Geumjeong",
-    "district_bukgu": "Buk · Sasang · Gangseo"
+    "district_bukgu": "Buk · Sasang · Gangseo",
+    "gpsNearby": "Within 3km of me"
   },
   "tripForm": {
     "title": "✨ Plan Your Korea Trip with AI",

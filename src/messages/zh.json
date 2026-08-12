@@ -703,7 +703,8 @@
     "contactTitle": "联系我们",
     "contactBody": "有反馈或建议吗？我们很想听。欢迎分享你的想法，或告诉我们哪些信息需要更新。让我们一起把这趟韩国之旅变成难忘的回忆。",
     "lastUpdated": "最后更新：{date}",
-    "footerNote": "地点信息采用韩国观光公社的资料。行程规划由 AI 完成。"
+    "footerNote": "地点信息采用韩国观光公社的资料。行程规划由 AI 完成。",
+    "contactCta": "联系 gokoreamate"
   },
   "allSpots": {
     "title": "全部地点",
@@ -739,7 +740,8 @@
     "district_seomyeon": "西面 · 釜山镇",
     "district_nampo": "南浦 · 中区 · 西区",
     "district_dongnae": "东莱 · 金井",
-    "district_bukgu": "北区 · 沙上 · 江西"
+    "district_bukgu": "北区 · 沙上 · 江西",
+    "gpsNearby": "距我 3 公里内"
   },
   "tripForm": {
     "title": "✨ 用 AI 规划你的韩国之旅",

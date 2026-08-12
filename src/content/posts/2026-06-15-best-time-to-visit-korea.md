@@ -13,7 +13,7 @@ Korea has four distinct seasons, each with its own character, festivals, and tra
 
 - **Best overall:** Spring (March–May) and Autumn (September–November)
 - **Best for beaches:** Summer (June–August, best in Busan and Jeju)
-- **Best for budget travel:** Winter (December–February) — lowest prices, thinner crowds
+- **Best for a quiet trip:** Winter (December–February) — off-season, thinner crowds
 - **Avoid:** Chuseok and Lunar New Year weeks (nationwide closures and transport chaos)
 
 ---
@@ -106,7 +106,7 @@ Korea's winter is cold and dry. Snow falls in Seoul 10–15 days per year (usual
 
 ### February
 - **Weather:** -4°C–6°C. The coldest period ends; late February hints at coming spring.
-- **Advantages:** Lowest hotel prices, fewest crowds, and paradoxically good photography conditions — Gyeongbokgung in snow is spectacular.
+- **Advantages:** Off-season, fewest crowds, and paradoxically good photography conditions — Gyeongbokgung in snow is spectacular.
 - **Prep for spring:** Cherry blossom forecasts start appearing. Book accommodation now for April.
 
 **Winter verdict:** Ideal for budget travelers and those who prefer uncrowded sites. Not recommended if you dislike cold or if this is your first Korea trip (access to attractions can be limited during holiday weeks).

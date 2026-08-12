@@ -703,7 +703,8 @@
     "contactTitle": "お問い合わせ",
     "contactBody": "ご意見やご提案はありますか。ぜひお聞かせください。お考えを共有いただくか、更新が必要な情報をお知らせください。韓国の旅が忘れられないものになるよう、一緒に作っていきましょう。",
     "lastUpdated": "最終更新: {date}",
-    "footerNote": "スポット情報は韓国観光公社の資料を使用しています。旅程づくりは AI が担当します。"
+    "footerNote": "スポット情報は韓国観光公社の資料を使用しています。旅程づくりは AI が担当します。",
+    "contactCta": "gokoreamate に問い合わせる"
   },
   "allSpots": {
     "title": "すべてのスポット",
@@ -739,7 +740,8 @@
     "district_seomyeon": "西面 · 釜山鎮",
     "district_nampo": "南浦 · 中区 · 西区",
     "district_dongnae": "東莱 · 金井",
-    "district_bukgu": "北区 · 沙上 · 江西"
+    "district_bukgu": "北区 · 沙上 · 江西",
+    "gpsNearby": "現在地から3km以内"
   },
   "tripForm": {
     "title": "✨ AI と韓国旅行を計画する",

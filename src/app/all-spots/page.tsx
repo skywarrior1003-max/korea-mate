@@ -352,7 +352,7 @@ export default function AllSpotsPage() {
               }`}
             >
               <span className="text-sm">{gpsLoading ? "⏳" : gpsActive ? "📍" : "📡"}</span>
-              Within 3km of me
+              {t("gpsNearby")}
               {/* 토글 인디케이터 */}
               <span
                 className={`inline-block w-8 h-4 rounded-full transition-colors relative ${gpsActive ? "bg-white/30" : "bg-gray-200"}`}

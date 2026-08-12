@@ -418,6 +418,9 @@ export default function TrendingPage() {
       </header>
 
       {/* ── Page content wrapped in Suspense for useSearchParams ── */}
+      {/* 이 화면만 main 랜드마크가 없어서 보조기술이 본문으로 건너뛸 수 없었다.
+          다른 화면(all-spots·picks·my-trips·itinerary)과 같은 위치에 둔다. */}
+      <main className="flex-1 flex flex-col">
       <Suspense
         fallback={
           <div className="flex-1 flex items-center justify-center py-24">
@@ -430,6 +433,7 @@ export default function TrendingPage() {
       >
         <TrendingContent />
       </Suspense>
+      </main>
 
       {/* ── Footer ─────────────────────────────────── */}
       <footer className="mt-auto py-8 px-4 border-t border-gray-100 text-center text-sm text-gray-500">

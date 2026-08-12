@@ -2,6 +2,7 @@ import { getSortedPostsData } from "@/lib/posts";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import EditorialNav from "@/components/ui/EditorialNav";
+import { BlogFooterCredit } from "@/components/blog/BlogDetailI18n";
 
 export const metadata = {
   title: "Korea Travel Blog — gokoreamate.com",
@@ -94,12 +95,10 @@ export default function BlogListPage() {
 
       {/* Footer */}
       <footer className="border-t border-[#E6DFD5] bg-[#FAF7F2] py-8 text-center text-sm text-[#8C6239] px-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} gokoreamate.com. All rights reserved.</p>
-          <p className="font-bold tracking-wide">
-            Data provided by Korea Tourism Organization. AI-powered by Gemini.
-          </p>
-        </div>
+        {/* 저작권·출처 문구는 blog 상세와 같은 조각을 쓴다. 예전에는 여기 영어가
+            직접 적혀 있어 한국어 화면에도 영어가 남았고, 모든 글이 Gemini 로
+            만들어진다고 단언하고 있었다. */}
+        <BlogFooterCredit />
       </footer>
     </div>
   );

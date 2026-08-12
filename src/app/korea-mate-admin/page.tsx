@@ -434,7 +434,7 @@ export default function AdminPage() {
             <div className="p-4 rounded-xl bg-yellow-900/30 border border-yellow-700 mb-4">
               <p className="text-yellow-300 text-sm font-black mb-2">⚠️ SUPABASE_ACCESS_TOKEN 미설정</p>
               <p className="text-yellow-200 text-xs leading-relaxed">
-                1. <a href="https://supabase.com/dashboard/account/tokens" target="_blank" rel="noopener" className="underline">supabase.com/dashboard/account/tokens</a> 에서 토큰 생성<br />
+                1. <a href="https://supabase.com/dashboard/account/tokens" target="_blank" rel="noopener noreferrer" className="underline">supabase.com/dashboard/account/tokens</a> 에서 토큰 생성<br />
                 2. <code className="bg-gray-800 px-1 rounded">.env.local</code>에 추가: <code className="bg-gray-800 px-1 rounded">SUPABASE_ACCESS_TOKEN=your_token</code><br />
                 3. 개발 서버 재시작 후 아래 버튼 클릭
               </p>

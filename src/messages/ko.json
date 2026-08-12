@@ -703,7 +703,8 @@
     "contactTitle": "문의하기",
     "contactBody": "의견이나 제안이 있으신가요? 언제든 들려주세요. 생각을 나눠 주시거나 고쳐야 할 정보를 알려 주시면 반영하겠습니다. 한국 여행이 오래 남는 기억이 되도록 함께 만들어 가요.",
     "lastUpdated": "최종 업데이트: {date}",
-    "footerNote": "장소 정보는 한국관광공사 자료를 사용합니다. 일정 생성은 AI 가 맡습니다."
+    "footerNote": "장소 정보는 한국관광공사 자료를 사용합니다. 일정 생성은 AI 가 맡습니다.",
+    "contactCta": "gokoreamate 에 문의하기"
   },
   "allSpots": {
     "title": "전체 장소",
@@ -739,7 +740,8 @@
     "district_seomyeon": "서면 · 부산진",
     "district_nampo": "남포 · 중구 · 서구",
     "district_dongnae": "동래 · 금정",
-    "district_bukgu": "북구 · 사상 · 강서"
+    "district_bukgu": "북구 · 사상 · 강서",
+    "gpsNearby": "내 위치에서 3km 이내"
   },
   "tripForm": {
     "title": "✨ AI 와 함께 한국 여행 계획하기",
