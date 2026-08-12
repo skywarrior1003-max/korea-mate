@@ -629,6 +629,7 @@
     "addToDay": "+ 加入{day}",
     "notFound": "未找到该地点。",
     "updateFailed": "更新失败，请重试。",
+    "submitForReview": "提交审核",
     "submitFailed": "提交失败。",
     "alreadyInDay": "该地点已在当天行程中。",
     "optionalSuffix": "（选填）",

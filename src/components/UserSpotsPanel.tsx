@@ -504,7 +504,10 @@ export default function UserSpotsPanel({
                           disabled={isSubmitting}
                           className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#FF4A2D]/50 text-[#565D66] hover:bg-[#FF4A2D]/10 transition-colors disabled:opacity-50 cursor-pointer"
                         >
-                          {isSubmitting ? "…" : "📤 Submit for public"}
+                          {/* 사용자가 만들 수 있는 상태는 pending 까지다. 공개 여부는
+                              관리자가 정한다 — "public" 이라고 쓰면 누르는 순간
+                              공개되는 것처럼 읽힌다. */}
+                          {isSubmitting ? "…" : `📤 ${t("submitForReview")}`}
                         </button>
                       )}
                       {submitErr && (

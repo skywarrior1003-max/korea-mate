@@ -629,6 +629,7 @@
     "addToDay": "+ {day} に追加",
     "notFound": "場所が見つかりませんでした。",
     "updateFailed": "更新できませんでした。もう一度お試しください。",
+    "submitForReview": "審査に出す",
     "submitFailed": "送信できませんでした。",
     "alreadyInDay": "その日の旅程にすでにあります。",
     "optionalSuffix": "（任意）",

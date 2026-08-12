@@ -629,6 +629,7 @@
     "addToDay": "+ Add to {day}",
     "notFound": "Place not found.",
     "updateFailed": "Could not update. Please try again.",
+    "submitForReview": "Submit for review",
     "submitFailed": "Could not submit.",
     "alreadyInDay": "This place is already in that day.",
     "optionalSuffix": "(optional)",
