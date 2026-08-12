@@ -663,7 +663,13 @@
     "photoDeleted": "사진을 삭제했습니다.",
     "canonicalPhotoAlt": "이 장소의 사진",
     "canonicalPhotoNote": "장소 정보에 등록된 사진입니다. 직접 찍은 사진이 아닙니다.",
-    "photoSource": "출처"
+    "photoSource": "출처",
+    "fieldDisplayTitle": "나만의 제목",
+    "fieldDisplayMemo": "나만의 기록",
+    "phDisplayTitle": "이곳이 나에게 어떤 곳이었는지",
+    "phDisplayMemo": "남겨 두고 싶은 한두 줄",
+    "displayVsName": "나만 봅니다. 장소 이름은 그대로 둡니다.",
+    "displayVsNote": "이 장소를 추천할 때 함께 나갈 수 있는 메모와는 별개입니다."
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

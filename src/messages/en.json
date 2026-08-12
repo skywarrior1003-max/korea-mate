@@ -663,7 +663,13 @@
     "photoDeleted": "Photo removed.",
     "canonicalPhotoAlt": "Photo of this place",
     "canonicalPhotoNote": "Photo from the place listing, not your own.",
-    "photoSource": "Source"
+    "photoSource": "Source",
+    "fieldDisplayTitle": "Personal title",
+    "fieldDisplayMemo": "Personal note",
+    "phDisplayTitle": "What this place was to you",
+    "phDisplayMemo": "A line or two you want to keep",
+    "displayVsName": "Only you see this. The place name stays as it is.",
+    "displayVsNote": "Separate from the note you may share when suggesting this place."
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

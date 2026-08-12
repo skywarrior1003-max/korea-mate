@@ -216,7 +216,15 @@ test("개인 필드는 검증된 사용자 입력으로만 채워진다", () => 
   assert.ok(!/row\.display_/.test(C.list), "POST 는 개인 필드를 쓰지 않는다");
 });
 
-test("AI enrichment route 는 아직 없다", () => {
-  assert.equal(existsSync(join(ROOT, "functions/api/user-spots/[id]/enrich.ts")), false,
-    "enrich route 는 다음 단계다");
+test("AI enrichment route 는 두 컬럼만 쓴다", () => {
+  // route 가 생겼다. 계약 검증은 enrichment-core.test.ts 가 맡고,
+  // 여기서는 이 파일의 관심사 — 개인 값이 공개로 새지 않는가 — 만 본다.
+  const enrich = readFileSync(join(ROOT, "functions/api/user-spots/[id]/enrich.ts"), "utf8");
+  const updates = [...code(enrich).matchAll(/\.update\(\{([^}]*)\}/g)].map(m => m[1]!);
+  assert.ok(updates.length > 0, "UPDATE 가 있어야 한다");
+  for (const u of updates) {
+    for (const k of ["note", "city_spot_id", "submission_status", "photo_public"]) {
+      assert.ok(!u.includes(k), `enrich UPDATE 에 ${k} 없음`);
+    }
+  }
 });

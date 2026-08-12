@@ -663,7 +663,13 @@
     "photoDeleted": "写真を削除しました。",
     "canonicalPhotoAlt": "この場所の写真",
     "canonicalPhotoNote": "場所情報に登録された写真です。ご自身で撮った写真ではありません。",
-    "photoSource": "出典"
+    "photoSource": "出典",
+    "fieldDisplayTitle": "自分だけのタイトル",
+    "fieldDisplayMemo": "自分だけの記録",
+    "phDisplayTitle": "ここが自分にとってどんな場所だったか",
+    "phDisplayMemo": "残しておきたい一言",
+    "displayVsName": "自分だけに表示されます。場所の名前はそのままです。",
+    "displayVsNote": "この場所を提案するときに一緒に出るメモとは別です。"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

@@ -443,3 +443,32 @@ export async function apiGetUserSpotCanonicalImage(
     return { imageUrl: null, sourceUrl: null };
   }
 }
+
+// ── 개인 표시값 채우기 ─────────────────────────────────────────────────────────
+//
+// 저장이 끝난 뒤에 부른다. 실패해도 방금 남긴 장소는 그대로다. 화면은 결과를
+// 기다리지 않아도 되고, 꺼져 있으면 서버가 즉시 disabled 를 준다.
+
+export interface EnrichResult {
+  status:  "ok" | "disabled" | "already_enriched" | "insufficient_context"
+         | "provider_unavailable" | "provider_failed" | "error";
+  updated: { title: boolean; memo: boolean };
+}
+
+export async function apiEnrichUserSpot(
+  id: string,
+  locale: string,
+): Promise<EnrichResult> {
+  const deviceId = getDeviceId();
+  try {
+    const res = await fetch(`/api/user-spots/${encodeURIComponent(id)}/enrich`, {
+      method:  "POST",
+      headers: deviceHeader(deviceId),
+      body:    JSON.stringify({ locale }),
+    });
+    if (!res.ok) return { status: "error", updated: { title: false, memo: false } };
+    return (await res.json()) as EnrichResult;
+  } catch {
+    return { status: "error", updated: { title: false, memo: false } };
+  }
+}

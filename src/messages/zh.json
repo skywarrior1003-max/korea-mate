@@ -663,7 +663,13 @@
     "photoDeleted": "已删除照片。",
     "canonicalPhotoAlt": "这个地点的照片",
     "canonicalPhotoNote": "来自地点信息的照片，不是你自己拍的。",
-    "photoSource": "来源"
+    "photoSource": "来源",
+    "fieldDisplayTitle": "我的标题",
+    "fieldDisplayMemo": "我的记录",
+    "phDisplayTitle": "这个地点对你意味着什么",
+    "phDisplayMemo": "想留下的一两句话",
+    "displayVsName": "只有你能看到，地点名称保持不变。",
+    "displayVsNote": "与推荐这个地点时可能一起公开的备注是分开的。"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

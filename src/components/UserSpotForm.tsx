@@ -44,6 +44,10 @@ export function userSpotCategoryLabelKey(
 
 export interface UserSpotFormState {
   name:     string;
+  /** 나만 보는 제목. factual name 과 다른 값이다. 편집 화면에서만 다룬다. */
+  displayTitle: string;
+  /** 나만 보는 기록. 공개로 나갈 수 있는 note 와 다른 값이다. */
+  displayMemo:  string;
   category: UserSpotCategory;
   address:  string;
   note:     string;
@@ -53,7 +57,8 @@ export interface UserSpotFormState {
 }
 
 export const EMPTY_USER_SPOT_FORM: UserSpotFormState = {
-  name: "", category: "attraction", address: "", note: "", lat: null, lng: null,
+  name: "", displayTitle: "", displayMemo: "",
+  category: "attraction", address: "", note: "", lat: null, lng: null,
 };
 
 interface Props {
@@ -295,6 +300,43 @@ export default function UserSpotForm({
           className={INPUT}
         />
       </div>
+
+      {/* 나만 보는 값 — 만들 때는 묻지 않는다. 저장을 복잡하게 만들지 않는다. */}
+      {mode === "edit" && (
+        <>
+          <div>
+            <label className={LABEL}>
+              {t("fieldDisplayTitle")}{" "}
+              <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
+            </label>
+            <input
+              type="text"
+              value={form.displayTitle}
+              onChange={e => setForm(p => ({ ...p, displayTitle: e.target.value }))}
+              maxLength={300}
+              placeholder={t("phDisplayTitle")}
+              className={INPUT}
+            />
+            <p className="mt-1 text-[11px] text-[#565D66]/70">{t("displayVsName")}</p>
+          </div>
+
+          <div>
+            <label className={LABEL}>
+              {t("fieldDisplayMemo")}{" "}
+              <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
+            </label>
+            <textarea
+              value={form.displayMemo}
+              onChange={e => setForm(p => ({ ...p, displayMemo: e.target.value }))}
+              maxLength={1000}
+              rows={2}
+              placeholder={t("phDisplayMemo")}
+              className={`${INPUT} resize-none`}
+            />
+            <p className="mt-1 text-[11px] text-[#565D66]/70">{t("displayVsNote")}</p>
+          </div>
+        </>
+      )}
 
       {/* Category */}
       <div>

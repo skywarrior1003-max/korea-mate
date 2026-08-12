@@ -14,7 +14,7 @@ import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { getCart, removeFromCart, clearCart, addToCart, CART_EVENT, type CartItem, type EventItem } from "@/lib/cart";
@@ -23,6 +23,7 @@ import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
   apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
+  apiEnrichUserSpot,
   type UserSpot,
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
@@ -84,6 +85,7 @@ function PlaceCardMedia({ image, type }: { image: string | null; type: string })
 
 function PicksContent() {
   const t   = useTranslations("picks");
+  const locale = useLocale();
   const tS  = useTranslations("shell");
   const tP  = useTranslations("place");
   const router = useRouter();
@@ -165,6 +167,8 @@ function PicksContent() {
   function openEdit(s: UserSpot) {
     setForm({
       name: s.name ?? "",
+      displayTitle: s.display_title ?? "",
+      displayMemo:  s.display_memo  ?? "",
       category: (s.category as UserSpotFormState["category"]) || "attraction",
       address: s.address ?? "", note: s.note ?? "",
       lat: s.lat ?? null, lng: s.lng ?? null,
@@ -245,6 +249,10 @@ function PicksContent() {
       }
 
       loadMine();                       // 서버 응답을 진실로 삼는다
+      // 저장은 끝났다. 개인 표시값 채우기는 그 뒤의 별도 일이고, 기다리지
+      // 않는다 — 꺼져 있으면 서버가 즉시 disabled 를 주고, 실패해도 방금
+      // 남긴 장소는 그대로다.
+      if (r.spotId) void apiEnrichUserSpot(r.spotId, locale);
       if (r.notice === "savedPhotoFailed") {
         // 장소는 저장됐다. 폼을 닫지 않고 사진만 다시 시도할 수 있게 둔다.
         setEditingId(r.spotId ?? null); setShowCreate(false);
@@ -272,6 +280,9 @@ function PicksContent() {
     try {
       const ok = await apiUpdateUserSpot(spot.id, {
         name:     name || null,
+        // 나만 보는 값. 빈 문자열은 지움(null)이다 — note 와 같은 3-state.
+        display_title: form.displayTitle.trim() || null,
+        display_memo:  form.displayMemo.trim()  || null,
         category: form.category,
         address:  form.address.trim() || undefined,
         note:     form.note.trim()    || undefined,

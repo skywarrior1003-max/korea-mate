@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
 import { userSpotCategoryLabelKey } from "@/components/UserSpotForm";
 import { compressPhotoBlob } from "@/lib/trip-moments/storage";
@@ -10,6 +10,7 @@ import { canEdit } from "@/lib/user-spots/anchor-core";
 import {
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
   apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
+  apiEnrichUserSpot,
 } from "@/lib/user-spots-api";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
@@ -88,6 +89,7 @@ export default function UserSpotsPanel({
   onAddToDay,
 }: Props) {
   const t = useTranslations("picks");
+  const locale = useLocale();
   const [spots,           setSpots]           = useState<UserSpot[]>([]);
   const [loading,         setLoading]         = useState(true);
   const [loadError,       setLoadError]       = useState(false);
@@ -229,6 +231,8 @@ export default function UserSpotsPanel({
 
       // 서버가 만든 값을 다시 읽는다 — id·has_photo 를 화면이 지어내지 않는다.
       await loadSpots();
+      // 저장이 끝난 뒤의 별도 일이다. 기다리지 않는다.
+      if (r.spotId) void apiEnrichUserSpot(r.spotId, locale);
       if (r.notice === "savedPhotoFailed") {
         // 장소는 저장됐다. 폼을 닫지 않고 사진만 다시 시도할 수 있게 둔다.
         setShowCreate(false);
@@ -252,6 +256,8 @@ export default function UserSpotsPanel({
   function openEdit(spot: UserSpot) {
     setForm({
       name:     spot.name ?? "",
+      displayTitle: spot.display_title ?? "",
+      displayMemo:  spot.display_memo  ?? "",
       category: (spot.category as CategoryValue) || "attraction",
       address:  spot.address ?? "",
       note:     spot.note    ?? "",
@@ -288,6 +294,8 @@ export default function UserSpotsPanel({
     try {
       const input: UpdateUserSpotInput = {
         name: name || null,
+        display_title: form.displayTitle.trim() || null,
+        display_memo:  form.displayMemo.trim()  || null,
         category: form.category,
         // Empty string → null (clear DB value), value → update
         address: form.address.trim() || null,

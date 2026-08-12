@@ -24,7 +24,7 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
 import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
-import { apiCreateUserSpotFromCanonical } from "@/lib/user-spots-api";
+import { apiCreateUserSpotFromCanonical, apiEnrichUserSpot } from "@/lib/user-spots-api";
 import PlaceReportModal from "@/components/PlaceReportModal";
 import { citySpotSourceKey } from "@/lib/place-identity";
 import { trackEvent } from "@/lib/analytics";
@@ -140,7 +140,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
     setKeeping(true); setKeepError(false);
     try {
       const r = await apiCreateUserSpotFromCanonical(spot.id);
-      if (r.ok) setKeptOnce(true);
+      if (r.ok) {
+        setKeptOnce(true);
+        // 저장 성공이 먼저다. 표시값 채우기는 기다리지 않는다.
+        if (r.spot?.id) void apiEnrichUserSpot(r.spot.id, locale);
+      }
       else setKeepError(true);
     } finally {
       keepingRef.current = false;
