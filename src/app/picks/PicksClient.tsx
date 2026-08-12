@@ -28,6 +28,7 @@ import { trackEvent } from "@/lib/analytics";
 import UserSpotForm, {
   hasMinimumIdentity,
   EMPTY_USER_SPOT_FORM,
+  userSpotCategoryLabelKey,
   type UserSpotFormState,
 } from "@/components/UserSpotForm";
 
@@ -599,6 +600,9 @@ function PicksContent() {
                   {mine.map(s => {
                     // 이름 없는 장소도 This Trip 카드에는 부를 이름이 있어야 한다.
                     const display = userSpotDisplayName(s, t("displayFallback"));
+                    // 저장값(s.category)은 그대로 두고 보여줄 때만 번역한다.
+                    const catKey = userSpotCategoryLabelKey(s.category);
+                    const catLabel = catKey ? t(catKey) : s.category;
                     const ev = userSpotToEvent(s, display);
                     const already = selectedKeys.has(getItemSourceKey(ev));
                     return (
@@ -619,7 +623,7 @@ function PicksContent() {
                                 <div className="min-w-0">
                                   <p className="font-semibold text-ink text-[15px]">{display}</p>
                                   <p className="text-xs text-faint mt-0.5">
-                                    {[s.category, s.city, s.address].filter(Boolean).join(" · ")}
+                                    {[catLabel, s.city, s.address].filter(Boolean).join(" · ")}
                                   </p>
                                   {s.note && <p className="text-sm text-sub mt-2 leading-relaxed">{s.note}</p>}
                                 </div>

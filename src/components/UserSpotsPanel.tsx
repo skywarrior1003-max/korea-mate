@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
-import { hasMinimumIdentity } from "@/components/UserSpotForm";
+import { hasMinimumIdentity, userSpotCategoryLabelKey } from "@/components/UserSpotForm";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
   type UserSpotCategory,
@@ -428,7 +428,12 @@ export default function UserSpotsPanel({
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span className="text-sm font-black text-[#191C21] truncate">{userSpotDisplayName(spot, t("displayFallback"))}</span>
                         <span className="text-[10px] font-bold bg-[#F6F7F8] text-[#565D66] px-1.5 py-0.5 rounded capitalize shrink-0">
-                          {spot.category || "attraction"}
+                          {(() => {
+                            // 저장값은 그대로. 화면 라벨만 locale 에 맞춘다.
+                            const raw = spot.category || "attraction";
+                            const key = userSpotCategoryLabelKey(raw);
+                            return key ? t(key) : raw;
+                          })()}
                         </span>
                       </div>
                       {(spot.address || spot.note) && (

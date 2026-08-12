@@ -22,6 +22,24 @@ export const USER_SPOT_CATEGORIES = [
 ] as const;
 
 export type UserSpotCategory = typeof USER_SPOT_CATEGORIES[number]["value"];
+export type UserSpotCategoryLabelKey = typeof USER_SPOT_CATEGORIES[number]["labelKey"];
+
+/**
+ * 저장된 category value 를 화면 라벨 키로 바꾼다.
+ *
+ * DB 에 들어 있는 값은 그대로 두고 보여줄 때만 번역한다. 폼의 select 와
+ * 목록 카드가 같은 키를 쓰게 하려고 여기 둔다 — 두 곳이 갈라지면 폼에서는
+ * "명소" 인데 목록에서는 "attraction" 인 지금 상태가 다시 생긴다.
+ *
+ * 아는 값이 아니면 null 을 준다. 호출부는 원본 값을 그대로 보여준다 —
+ * 모르는 값을 감추면 사용자는 자기 데이터가 사라진 것처럼 본다.
+ */
+export function userSpotCategoryLabelKey(
+  value: string | null | undefined,
+): UserSpotCategoryLabelKey | null {
+  const v = (value ?? "").trim();
+  return USER_SPOT_CATEGORIES.find(c => c.value === v)?.labelKey ?? null;
+}
 
 export interface UserSpotFormState {
   name:     string;
