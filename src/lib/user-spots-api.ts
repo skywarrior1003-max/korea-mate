@@ -36,6 +36,10 @@ export interface UserSpot {
   category?:          string;
   note?:              string;
   photo_url?:         string;
+  /** 사진이 있는지. 서버가 storage path 대신 이 boolean 만 내보낸다. */
+  has_photo?:         boolean;
+  /** 사진을 다른 여행자에게 공개해도 된다는 동의. 기본 false. */
+  photo_public?:      boolean;
   created_at:         string;
   updated_at:         string;
   submission_status?: "none" | "pending" | "approved" | "rejected";

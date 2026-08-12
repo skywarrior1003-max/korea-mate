@@ -17,6 +17,7 @@ import {
   str,
   optStr,
 } from "../../src/lib/itinerary-validate";
+import { toPhotoMeta } from "../../src/lib/user-spots/photo-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -55,7 +56,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("user_spots")
-    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status")
+    .select("id, name, city, address, lat, lng, category, note, photo_url, created_at, updated_at, submission_status, photo_storage_path, photo_public")
     .eq("device_id", deviceId)
     .order("created_at", { ascending: false })
     .limit(200);
@@ -65,7 +66,14 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to fetch spots" }, 500);
   }
 
-  return json(data ?? []);
+  // 목록에도 storage path 는 내보내지 않는다. 사진 유무와 공개 동의만 준다.
+  const rows = (data ?? []).map(raw => {
+    const row = raw as Record<string, unknown>;
+    const { photo_storage_path: _path, ...rest } = row;
+    return { ...rest, ...toPhotoMeta(row) };
+  });
+
+  return json(rows);
 }
 
 // ── POST — 새 My Pick 등록 ────────────────────────────────────────────────────
