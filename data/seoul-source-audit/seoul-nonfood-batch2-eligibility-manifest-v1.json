@@ -1,0 +1,61 @@
+{
+  "task": "TASK-SEOUL-NONFOOD-TARGETED-EXECUTION-BATCH-2",
+  "script_version": "v1.0.0",
+  "as_of": "2026-08-12",
+  "routing_sha": "9f3aa47",
+  "INPUT_PLACE_DETAIL_TARGET": 573,
+  "INPUT_ENTITY_LIFECYCLE_RECHECK": 2,
+  "MAX_DETAIL_TARGET": 575,
+  "EXISTING_SOURCE_RECOVERY_BEFORE_NEW_API": "YES",
+  "EXISTING_RAW_REUSED": 9,
+  "ACTUAL_VISITSEOUL_DETAIL_API_CALLS": 566,
+  "API_SUCCESS": 566,
+  "API_FAILED": 0,
+  "API_EMPTY_RESPONSE": 0,
+  "PLACE_AI_OR_EXPLORE_ELIGIBLE": 560,
+  "PLACE_SEARCHABLE_USER_PICK": 14,
+  "PLACE_COMPLETE_NO_ACTION": 0,
+  "EVENT_ACTIVE_CONFIRMED": 0,
+  "EVENT_INACTIVE_OR_ENDED": 0,
+  "MULTI_LOCATION_NON_PLACE": 1,
+  "UNRESOLVED": 0,
+  "TARGET_OVERLAP": 0,
+  "SEOUL_FOOD_EXECUTION_TARGET": 0,
+  "KTO_SEOUL_EXECUTION_TARGET": 0,
+  "special_2_gate_results": {
+    "KOPc3g5o6": {
+      "title": "서울, 세계와 노래하다",
+      "gate_result": "D_MULTI_LOCATION",
+      "gate_evidence": "addr_field_contains_3_slash_separated_locations",
+      "addr_evidence": "남산공원팔각광장 / 여의도한강공원이벤트광장 / 청계천광장",
+      "correction_note": "Initial auto-gate missed multi-location in addr field (desc-only check). Manual review of addr confirmed 3 venues. Single Place creation forbidden.",
+      "final_class": "MULTI_LOCATION_NON_PLACE"
+    },
+    "KOPgdf9ry": {
+      "title": "파인캐릭터 2026 (FineCharacter 2026)",
+      "gate_result": "A_PHYSICAL_PLACE",
+      "gate_evidence": "single_addr_DDP_쇼룸1층_no_event_dates_in_desc",
+      "gate_note": "Title contains '2026' suggesting potential annual edition. No end dates found in API desc. DDP 쇼룸 1층 = permanent venue. 국내최초 캐릭터아트전시 signals ongoing platform. Accepted as physical place.",
+      "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE"
+    }
+  },
+  "eligibility_breakdown_573": {
+    "EXPLORE_COUNTS": {
+      "YES": 544,
+      "NO": 14,
+      "CONDITIONAL": 15
+    },
+    "AI_ITINERARY_COUNTS": {
+      "YES": 417,
+      "CONDITIONAL": 129,
+      "NO": 27
+    },
+    "FINAL_CLASS_COUNTS": {
+      "PLACE_AI_OR_EXPLORE_ELIGIBLE": 559,
+      "PLACE_SEARCHABLE_USER_PICK": 14
+    }
+  },
+  "api_status_counts": {
+    "SUCCESS": 564
+  }
+}

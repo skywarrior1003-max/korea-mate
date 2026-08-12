@@ -1,0 +1,566 @@
+{"kind": "detail", "cid": "KOP000034", "attempted_at": "2026-08-12T10:54:21.163335+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "청계천", "error": null}
+{"kind": "detail", "cid": "KOP000217", "attempted_at": "2026-08-12T10:54:22.982803+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "롯데백화점 본점", "error": null}
+{"kind": "detail", "cid": "KOP000305", "attempted_at": "2026-08-12T10:54:24.588344+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "세종문화회관", "error": null}
+{"kind": "detail", "cid": "KOP000380", "attempted_at": "2026-08-12T10:54:26.173507+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "명동실탄사격장", "error": null}
+{"kind": "detail", "cid": "KOP000405", "attempted_at": "2026-08-12T10:54:27.702555+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "롯데월드 아이스링크", "error": null}
+{"kind": "detail", "cid": "KOP000411", "attempted_at": "2026-08-12T10:54:29.267426+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "봉은사 ", "error": null}
+{"kind": "detail", "cid": "KOP000450", "attempted_at": "2026-08-12T10:54:30.852527+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "문화역서울 284", "error": null}
+{"kind": "detail", "cid": "KOP000475", "attempted_at": "2026-08-12T10:54:32.401690+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리아 명품관", "error": null}
+{"kind": "detail", "cid": "KOP000859", "attempted_at": "2026-08-12T10:54:33.985454+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "전쟁기념관", "error": null}
+{"kind": "detail", "cid": "KOP001153", "attempted_at": "2026-08-12T10:54:35.537516+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "양화진외국인선교사묘원", "error": null}
+{"kind": "detail", "cid": "KOP001232", "attempted_at": "2026-08-12T10:54:37.080152+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "리움 미술관 ", "error": null}
+{"kind": "detail", "cid": "KOP001441", "attempted_at": "2026-08-12T10:54:38.631082+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스페이스 씨", "error": null}
+{"kind": "detail", "cid": "KOP001478", "attempted_at": "2026-08-12T10:54:40.181009+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "라트어린이극장 ", "error": null}
+{"kind": "detail", "cid": "KOP001525", "attempted_at": "2026-08-12T10:54:41.712995+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립미술관 (서소문본관)", "error": null}
+{"kind": "detail", "cid": "KOP001615", "attempted_at": "2026-08-12T10:54:43.280073+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "JUMP(점프) 전용극장", "error": null}
+{"kind": "detail", "cid": "KOP001676", "attempted_at": "2026-08-12T10:54:44.845634+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아름지기", "error": null}
+{"kind": "detail", "cid": "KOP001694", "attempted_at": "2026-08-12T10:54:46.378267+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리 현대", "error": null}
+{"kind": "detail", "cid": "KOP001707", "attempted_at": "2026-08-12T10:54:47.911312+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립현대미술관 덕수궁관", "error": null}
+{"kind": "detail", "cid": "KOP001761", "attempted_at": "2026-08-12T10:54:49.484211+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울놀이마당", "error": null}
+{"kind": "detail", "cid": "KOP001778", "attempted_at": "2026-08-12T10:54:51.046303+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "목동 아이스링크", "error": null}
+{"kind": "detail", "cid": "KOP001780", "attempted_at": "2026-08-12T10:54:52.612162+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "민속극장 풍류", "error": null}
+{"kind": "detail", "cid": "KOP001845", "attempted_at": "2026-08-12T10:54:54.159077+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "약현성당", "error": null}
+{"kind": "detail", "cid": "KOP001862", "attempted_at": "2026-08-12T10:54:55.692399+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "원효로성당", "error": null}
+{"kind": "detail", "cid": "KOP001871", "attempted_at": "2026-08-12T10:54:57.227181+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리 학고재", "error": null}
+{"kind": "detail", "cid": "KOP001907", "attempted_at": "2026-08-12T10:54:58.744808+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "성곡미술관", "error": null}
+{"kind": "detail", "cid": "KOP001913", "attempted_at": "2026-08-12T10:55:00.339709+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "여의도 한강공원 수영장", "error": null}
+{"kind": "detail", "cid": "KOP001919", "attempted_at": "2026-08-12T10:55:01.904268+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "명보아트홀", "error": null}
+{"kind": "detail", "cid": "KOP001951", "attempted_at": "2026-08-12T10:55:03.481906+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "보라매 암벽등반장", "error": null}
+{"kind": "detail", "cid": "KOP001961", "attempted_at": "2026-08-12T10:55:05.034078+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "겸재정선미술관", "error": null}
+{"kind": "detail", "cid": "KOP001981", "attempted_at": "2026-08-12T10:55:06.596163+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "중랑천 제방", "error": null}
+{"kind": "detail", "cid": "KOP002010", "attempted_at": "2026-08-12T10:55:08.121087+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "안동교회 소허당", "error": null}
+{"kind": "detail", "cid": "KOP002011", "attempted_at": "2026-08-12T10:55:09.672732+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "경인미술관", "error": null}
+{"kind": "detail", "cid": "KOP002021", "attempted_at": "2026-08-12T10:55:11.252105+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "화계사", "error": null}
+{"kind": "detail", "cid": "KOP002028", "attempted_at": "2026-08-12T10:55:12.820867+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리아백화점 WEST", "error": null}
+{"kind": "detail", "cid": "KOP002030", "attempted_at": "2026-08-12T10:55:14.460716+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "대한성공회서울주교좌성당(서울성공회성당)", "error": null}
+{"kind": "detail", "cid": "KOP002066", "attempted_at": "2026-08-12T10:55:15.983007+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김종영 미술관", "error": null}
+{"kind": "detail", "cid": "KOP002082", "attempted_at": "2026-08-12T10:55:17.579764+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "가나아트센터", "error": null}
+{"kind": "detail", "cid": "KOP002101", "attempted_at": "2026-08-12T10:55:19.100008+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울월드컵경기장", "error": null}
+{"kind": "detail", "cid": "KOP002132", "attempted_at": "2026-08-12T10:55:20.664144+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정동제일교회", "error": null}
+{"kind": "detail", "cid": "KOP002247", "attempted_at": "2026-08-12T10:55:22.176971+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리 팩토리", "error": null}
+{"kind": "detail", "cid": "KOP002251", "attempted_at": "2026-08-12T10:55:23.727972+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "일민미술관", "error": null}
+{"kind": "detail", "cid": "KOP002257", "attempted_at": "2026-08-12T10:55:25.294024+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "불광천", "error": null}
+{"kind": "detail", "cid": "KOP002285", "attempted_at": "2026-08-12T10:55:26.827895+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립현대미술관 창동레지던시", "error": null}
+{"kind": "detail", "cid": "KOP002287", "attempted_at": "2026-08-12T10:55:28.361591+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "홍제천", "error": null}
+{"kind": "detail", "cid": "KOP002293", "attempted_at": "2026-08-12T10:55:29.931991+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "태릉국제스케이트장 ", "error": null}
+{"kind": "detail", "cid": "KOP002300", "attempted_at": "2026-08-12T10:55:31.497684+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "불광천 해담는다리", "error": null}
+{"kind": "detail", "cid": "KOP002388", "attempted_at": "2026-08-12T10:55:33.034706+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아라리오갤러리 서울", "error": null}
+{"kind": "detail", "cid": "KOP002405", "attempted_at": "2026-08-12T10:55:34.597895+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아트선재센터", "error": null}
+{"kind": "detail", "cid": "KOP002429", "attempted_at": "2026-08-12T10:55:36.115143+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "양재천&탄천", "error": null}
+{"kind": "detail", "cid": "KOP002586", "attempted_at": "2026-08-12T10:55:37.662977+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "조계사", "error": null}
+{"kind": "detail", "cid": "KOP002642", "attempted_at": "2026-08-12T10:55:39.228824+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "잠실야구장", "error": null}
+{"kind": "detail", "cid": "KOP002871", "attempted_at": "2026-08-12T10:55:40.779881+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한강 자전거 코스", "error": null}
+{"kind": "detail", "cid": "KOP002885", "attempted_at": "2026-08-12T10:55:42.316738+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "PKM갤러리", "error": null}
+{"kind": "detail", "cid": "KOP002925", "attempted_at": "2026-08-12T10:55:43.863176+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국기원", "error": null}
+{"kind": "detail", "cid": "KOP002939", "attempted_at": "2026-08-12T10:55:45.429454+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "하얏트 아이스링크", "error": null}
+{"kind": "detail", "cid": "KOP002962", "attempted_at": "2026-08-12T10:55:46.935234+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "고려대학교 본관 및 구 중앙도서관", "error": null}
+{"kind": "detail", "cid": "KOP002971", "attempted_at": "2026-08-12T10:55:48.483687+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립극장", "error": null}
+{"kind": "detail", "cid": "KOP003100", "attempted_at": "2026-08-12T10:55:50.051866+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "금호미술관", "error": null}
+{"kind": "detail", "cid": "KOP003241", "attempted_at": "2026-08-12T10:55:51.633492+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국제갤러리", "error": null}
+{"kind": "detail", "cid": "KOP003255", "attempted_at": "2026-08-12T10:55:53.183785+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "길상사", "error": null}
+{"kind": "detail", "cid": "KOP003319", "attempted_at": "2026-08-12T10:55:54.729943+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울대학교 미술관 MoA", "error": null}
+{"kind": "detail", "cid": "KOP003411", "attempted_at": "2026-08-12T10:55:56.277633+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "명동예술극장", "error": null}
+{"kind": "detail", "cid": "KOP003759", "attempted_at": "2026-08-12T10:55:57.829925+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "윤봉길 의사 기념관", "error": null}
+{"kind": "detail", "cid": "KOP003778", "attempted_at": "2026-08-12T10:55:59.394859+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "송은(SONGEUN)", "error": null}
+{"kind": "detail", "cid": "KOP003986", "attempted_at": "2026-08-12T10:56:00.959154+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "예술의전당", "error": null}
+{"kind": "detail", "cid": "KOP004036", "attempted_at": "2026-08-12T10:56:02.523611+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "명동성당", "error": null}
+{"kind": "detail", "cid": "KOP004281", "attempted_at": "2026-08-12T10:56:04.088456+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "안중근의사기념관", "error": null}
+{"kind": "detail", "cid": "KOP004325", "attempted_at": "2026-08-12T10:56:05.648132+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "예술의전당 한가람미술관", "error": null}
+{"kind": "detail", "cid": "KOP004863", "attempted_at": "2026-08-12T10:56:07.199736+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울중앙성원", "error": null}
+{"kind": "detail", "cid": "KOP005015", "attempted_at": "2026-08-12T10:56:08.761031+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "대각사", "error": null}
+{"kind": "detail", "cid": "KOP005060", "attempted_at": "2026-08-12T10:56:10.338415+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "신당창작아케이드", "error": null}
+{"kind": "detail", "cid": "KOP005156", "attempted_at": "2026-08-12T10:56:11.904627+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "홍대난타극장", "error": null}
+{"kind": "detail", "cid": "KOP005328", "attempted_at": "2026-08-12T10:56:13.410995+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "유니버설아트센터", "error": null}
+{"kind": "detail", "cid": "KOP005333", "attempted_at": "2026-08-12T10:56:14.932242+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울올림픽기념관", "error": null}
+{"kind": "detail", "cid": "KOP005750", "attempted_at": "2026-08-12T10:56:16.445612+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬 한강공원 수영장", "error": null}
+{"kind": "detail", "cid": "KOP005788", "attempted_at": "2026-08-12T10:56:17.995879+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "명동난타극장", "error": null}
+{"kind": "detail", "cid": "KOP006225", "attempted_at": "2026-08-12T10:56:19.561413+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립국악원", "error": null}
+{"kind": "detail", "cid": "KOP006251", "attempted_at": "2026-08-12T10:56:21.124018+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "진관사", "error": null}
+{"kind": "detail", "cid": "KOP006995", "attempted_at": "2026-08-12T10:56:22.702131+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "손기정기념관", "error": null}
+{"kind": "detail", "cid": "KOP009575", "attempted_at": "2026-08-12T10:56:24.299192+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "신세계백화점 강남점", "error": null}
+{"kind": "detail", "cid": "KOP009626", "attempted_at": "2026-08-12T10:56:25.925721+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "현대백화점 본점", "error": null}
+{"kind": "detail", "cid": "KOP009641", "attempted_at": "2026-08-12T10:56:27.581359+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "롯데면세점 본점", "error": null}
+{"kind": "detail", "cid": "KOP009667", "attempted_at": "2026-08-12T10:56:29.206477+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "더 페이스샵", "error": null}
+{"kind": "detail", "cid": "KOP009756", "attempted_at": "2026-08-12T10:56:30.787341+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리아백화점 EAST", "error": null}
+{"kind": "detail", "cid": "KOP009991", "attempted_at": "2026-08-12T10:56:32.427028+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "노을공원 캠핑장", "error": null}
+{"kind": "detail", "cid": "KOP010231", "attempted_at": "2026-08-12T10:56:33.990914+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울도서관 (옛 서울시청사)", "error": null}
+{"kind": "detail", "cid": "KOP010521", "attempted_at": "2026-08-12T10:56:35.540563+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "롯데 영플라자 명동점", "error": null}
+{"kind": "detail", "cid": "KOP011395", "attempted_at": "2026-08-12T10:56:37.157307+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬유원지", "error": null}
+{"kind": "detail", "cid": "KOP011524", "attempted_at": "2026-08-12T10:56:38.721130+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "롤링홀", "error": null}
+{"kind": "detail", "cid": "KOP011658", "attempted_at": "2026-08-12T10:56:40.274617+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립현대미술관 서울관", "error": null}
+{"kind": "detail", "cid": "KOP011835", "attempted_at": "2026-08-12T10:56:41.845141+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김포공항관광정보센터", "error": null}
+{"kind": "detail", "cid": "KOP011863", "attempted_at": "2026-08-12T10:56:43.390080+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "인천국제공항 제 1터미널 서울관광정보센터 (동편)", "error": null}
+{"kind": "detail", "cid": "KOP011882", "attempted_at": "2026-08-12T10:56:44.917546+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정샘물 인스피레이션", "error": null}
+{"kind": "detail", "cid": "KOP012015", "attempted_at": "2026-08-12T10:56:46.652650+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "올리브영 명동 플래그십", "error": null}
+{"kind": "detail", "cid": "KOP015060", "attempted_at": "2026-08-12T10:56:48.351610+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한강", "error": null}
+{"kind": "detail", "cid": "KOP015402", "attempted_at": "2026-08-12T10:56:49.891701+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "고척 스카이돔", "error": null}
+{"kind": "detail", "cid": "KOP016327", "attempted_at": "2026-08-12T10:56:51.441572+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "선유도 야경", "error": null}
+{"kind": "detail", "cid": "KOP016792", "attempted_at": "2026-08-12T10:56:52.991051+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립현대미술관 서울관 갤러리아트존", "error": null}
+{"kind": "detail", "cid": "KOP017598", "attempted_at": "2026-08-12T10:56:54.553085+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "신세계백화점 본점", "error": null}
+{"kind": "detail", "cid": "KOP017740", "attempted_at": "2026-08-12T10:56:56.210230+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "강남역 지하쇼핑센터", "error": null}
+{"kind": "detail", "cid": "KOP018992", "attempted_at": "2026-08-12T10:56:57.877221+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아르코미술관", "error": null}
+{"kind": "detail", "cid": "KOP020048", "attempted_at": "2026-08-12T10:56:59.413630+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "에이바이봄", "error": null}
+{"kind": "detail", "cid": "KOP022073", "attempted_at": "2026-08-12T10:57:01.059478+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "성수동 유니온스타 볼링클럽", "error": null}
+{"kind": "detail", "cid": "KOP022602", "attempted_at": "2026-08-12T10:57:02.623012+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "성재전통건축자료관", "error": null}
+{"kind": "detail", "cid": "KOP022993", "attempted_at": "2026-08-12T10:57:04.201187+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정샘물 플롭스", "error": null}
+{"kind": "detail", "cid": "KOP023460", "attempted_at": "2026-08-12T10:57:05.854604+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "백남준기념관", "error": null}
+{"kind": "detail", "cid": "KOP024463", "attempted_at": "2026-08-12T10:57:07.406223+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "신세계면세점", "error": null}
+{"kind": "detail", "cid": "KOP024561", "attempted_at": "2026-08-12T10:57:09.018990+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "KT&G 상상마당", "error": null}
+{"kind": "detail", "cid": "KOP024596", "attempted_at": "2026-08-12T10:57:10.628897+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울돈화문국악당", "error": null}
+{"kind": "detail", "cid": "KOP024710", "attempted_at": "2026-08-12T10:57:12.148464+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정동마루", "error": null}
+{"kind": "detail", "cid": "KOP024732", "attempted_at": "2026-08-12T10:57:13.695753+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SJ쿤스트할레", "error": null}
+{"kind": "detail", "cid": "KOP024755", "attempted_at": "2026-08-12T10:57:15.263697+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "골든블루마리나", "error": null}
+{"kind": "detail", "cid": "KOP024807", "attempted_at": "2026-08-12T10:57:16.850949+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "인천공항 제2여객터미널 관광정보센터 ", "error": null}
+{"kind": "detail", "cid": "KOP025929", "attempted_at": "2026-08-12T10:57:18.357324+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "탈방 ", "error": null}
+{"kind": "detail", "cid": "KOP026206", "attempted_at": "2026-08-12T10:57:19.955821+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "동대문역사관 상설전시실 재개관", "error": null}
+{"kind": "detail", "cid": "KOP026558", "attempted_at": "2026-08-12T10:57:21.540291+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "별마당 도서관", "error": null}
+{"kind": "detail", "cid": "KOP026675", "attempted_at": "2026-08-12T10:57:23.119346+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "공평도시유적전시관", "error": null}
+{"kind": "detail", "cid": "KOP026676", "attempted_at": "2026-08-12T10:57:24.671536+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "공근혜갤러리", "error": null}
+{"kind": "detail", "cid": "KOP027105", "attempted_at": "2026-08-12T10:57:26.223511+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "근현대사기념관", "error": null}
+{"kind": "detail", "cid": "KOP027111", "attempted_at": "2026-08-12T10:57:27.816075+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "평화문화진지", "error": null}
+{"kind": "detail", "cid": "KOP027189", "attempted_at": "2026-08-12T10:57:29.437606+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "북촌마을관광안내소", "error": null}
+{"kind": "detail", "cid": "KOP027190", "attempted_at": "2026-08-12T10:57:30.928100+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마포관광정보센터", "error": null}
+{"kind": "detail", "cid": "KOP027193", "attempted_at": "2026-08-12T10:57:32.463165+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "송파관광정보센터", "error": null}
+{"kind": "detail", "cid": "KOP027215", "attempted_at": "2026-08-12T10:57:33.964400+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "동대문 관광안내소", "error": null}
+{"kind": "detail", "cid": "KOP027218", "attempted_at": "2026-08-12T10:57:35.443940+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이태원 관광안내소(지하)", "error": null}
+{"kind": "detail", "cid": "KOP027219", "attempted_at": "2026-08-12T10:57:36.930497+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "남대문시장 관광안내소", "error": null}
+{"kind": "detail", "cid": "KOP027221", "attempted_at": "2026-08-12T10:57:38.401808+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울 관광기념품 전시관•여행자지원센터", "error": null}
+{"kind": "detail", "cid": "KOP027225", "attempted_at": "2026-08-12T10:57:39.905308+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "광화문 관광안내소", "error": null}
+{"kind": "detail", "cid": "KOP027231", "attempted_at": "2026-08-12T10:57:41.440903+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "신촌역사 관광안내소", "error": null}
+{"kind": "detail", "cid": "KOP027688", "attempted_at": "2026-08-12T10:57:42.954062+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서래섬", "error": null}
+{"kind": "detail", "cid": "KOP028334", "attempted_at": "2026-08-12T10:57:44.611405+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "CGV 씨네 라이브러리", "error": null}
+{"kind": "detail", "cid": "KOP028339", "attempted_at": "2026-08-12T10:57:46.138023+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "봉원사", "error": null}
+{"kind": "detail", "cid": "KOP028656", "attempted_at": "2026-08-12T10:57:47.672906+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "백범광장공원", "error": null}
+{"kind": "detail", "cid": "KOP029236", "attempted_at": "2026-08-12T10:57:49.224145+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "오!재미동", "error": null}
+{"kind": "detail", "cid": "KOP029394", "attempted_at": "2026-08-12T10:57:50.772076+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "절두산순교성지", "error": null}
+{"kind": "detail", "cid": "KOP029568", "attempted_at": "2026-08-12T10:57:52.319730+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "무계원", "error": null}
+{"kind": "detail", "cid": "KOP030803", "attempted_at": "2026-08-12T10:57:53.887152+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아모레퍼시픽미술관", "error": null}
+{"kind": "detail", "cid": "KOP031922", "attempted_at": "2026-08-12T10:57:55.486885+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "노들섬", "error": null}
+{"kind": "detail", "cid": "KOP032529", "attempted_at": "2026-08-12T10:57:57.054895+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정동1928 아트센터", "error": null}
+{"kind": "detail", "cid": "KOP033516", "attempted_at": "2026-08-12T10:57:58.615602+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스탬프 힐링투어 '너랑나랑우리랑'", "error": null}
+{"kind": "detail", "cid": "KOP033825", "attempted_at": "2026-08-12T10:58:00.209787+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울하수도과학관", "error": null}
+{"kind": "detail", "cid": "KOP033829", "attempted_at": "2026-08-12T10:58:01.776551+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "화계사", "error": null}
+{"kind": "detail", "cid": "KOP034360", "attempted_at": "2026-08-12T10:58:03.354938+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "원밀리언 댄스 스튜디오", "error": null}
+{"kind": "detail", "cid": "KOP034490", "attempted_at": "2026-08-12T10:58:04.929902+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "루미에르 붙임머리", "error": null}
+{"kind": "detail", "cid": "KOP034492", "attempted_at": "2026-08-12T10:58:06.536647+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스매싱볼 청담점", "error": null}
+{"kind": "detail", "cid": "KOP034857", "attempted_at": "2026-08-12T10:58:08.102815+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울기록원", "error": null}
+{"kind": "detail", "cid": "KOP034860", "attempted_at": "2026-08-12T10:58:09.630173+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "전태일기념관", "error": null}
+{"kind": "detail", "cid": "KOP034909", "attempted_at": "2026-08-12T10:58:11.180348+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김달진미술자료박물관", "error": null}
+{"kind": "detail", "cid": "KOP035405", "attempted_at": "2026-08-12T10:58:12.729111+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립한글박물관 ", "error": null}
+{"kind": "detail", "cid": "KOP036843", "attempted_at": "2026-08-12T10:58:14.290247+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "금선사", "error": null}
+{"kind": "detail", "cid": "KOP037044", "attempted_at": "2026-08-12T10:58:15.855547+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "KCDF갤러리", "error": null}
+{"kind": "detail", "cid": "KOP037583", "attempted_at": "2026-08-12T10:58:17.440040+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울관광플라자 관광정보센터", "error": null}
+{"kind": "detail", "cid": "KOP038399", "attempted_at": "2026-08-12T10:58:19.021876+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아모레 플래그십 스토어 (성수)", "error": null}
+{"kind": "detail", "cid": "KOP038445", "attempted_at": "2026-08-12T10:58:20.645916+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "설화수 플래그십 스토어", "error": null}
+{"kind": "detail", "cid": "KOP039305", "attempted_at": "2026-08-12T10:58:22.316715+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "용마산", "error": null}
+{"kind": "detail", "cid": "KOP040770", "attempted_at": "2026-08-12T10:58:23.890180+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립기상박물관", "error": null}
+{"kind": "detail", "cid": "KOP040795", "attempted_at": "2026-08-12T10:58:25.454153+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "용산공원 부분개방부지", "error": null}
+{"kind": "detail", "cid": "KOP040938", "attempted_at": "2026-08-12T10:58:27.022436+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립한글박물관 상설전시 <br><훈민정음, 천년의 문자 계획>", "error": null}
+{"kind": "detail", "cid": "KOP041116", "attempted_at": "2026-08-12T10:58:28.585156+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제12회 서울미디어시티비엔날레 사전프로그램 <br>《정거장》", "error": null}
+{"kind": "detail", "cid": "KOP041681", "attempted_at": "2026-08-12T10:58:30.135882+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한국금융사박물관", "error": null}
+{"kind": "detail", "cid": "KOP041871", "attempted_at": "2026-08-12T10:58:31.700939+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "하우스 오브 아로마티카", "error": null}
+{"kind": "detail", "cid": "KOP041903", "attempted_at": "2026-08-12T10:58:33.357462+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김근태기념도서관", "error": null}
+{"kind": "detail", "cid": "KOP042078", "attempted_at": "2026-08-12T10:58:34.904058+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "인천국제공항 제 1터미널 서울관광정보센터 (서편)", "error": null}
+{"kind": "detail", "cid": "KOP042170", "attempted_at": "2026-08-12T10:58:36.421315+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "어린이대공원 꿈마루", "error": null}
+{"kind": "detail", "cid": "KOP042350", "attempted_at": "2026-08-12T10:58:38.030067+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "박노수미술관", "error": null}
+{"kind": "detail", "cid": "KOP042352", "attempted_at": "2026-08-12T10:58:39.582201+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "최만린미술관", "error": null}
+{"kind": "detail", "cid": "KOP042446", "attempted_at": "2026-08-12T10:58:41.123118+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김중업 건축문화의집", "error": null}
+{"kind": "detail", "cid": "KOP07kl3f", "attempted_at": "2026-08-12T10:58:42.702100+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "내셔널지오그래픽 특별기획 OCEAN 가장 거대한 기록", "error": null}
+{"kind": "detail", "cid": "KOP0aa7qh", "attempted_at": "2026-08-12T10:58:44.264948+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "송정제방길", "error": null}
+{"kind": "detail", "cid": "KOP0b6sv3", "attempted_at": "2026-08-12T10:58:45.802286+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 서울시향 드뷔시와 라벨 ①", "error": null}
+{"kind": "detail", "cid": "KOP0e0w4k", "attempted_at": "2026-08-12T10:58:47.307743+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "삼일로창고극장", "error": null}
+{"kind": "detail", "cid": "KOP0gxkdq", "attempted_at": "2026-08-12T10:58:48.837678+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "논픽션 한남", "error": null}
+{"kind": "detail", "cid": "KOP0rc3u4", "attempted_at": "2026-08-12T10:58:50.509321+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "케이타운포유 코엑스", "error": null}
+{"kind": "detail", "cid": "KOP0skv41", "attempted_at": "2026-08-12T10:58:52.056966+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 렌트", "error": null}
+{"kind": "detail", "cid": "KOP1287z8", "attempted_at": "2026-08-12T10:58:53.544244+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Nubim Kim Group 내한 공연", "error": null}
+{"kind": "detail", "cid": "KOP129lpb", "attempted_at": "2026-08-12T10:58:55.081524+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SM엔터테인먼트", "error": null}
+{"kind": "detail", "cid": "KOP15st7z", "attempted_at": "2026-08-12T10:58:56.600507+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "석파정 서울미술관", "error": null}
+{"kind": "detail", "cid": "KOP16izx7", "attempted_at": "2026-08-12T10:58:58.144298+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김지희 개인전 DIVINITY", "error": null}
+{"kind": "detail", "cid": "KOP18biiq", "attempted_at": "2026-08-12T10:58:59.678162+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "보신각, 시간의 울림", "error": null}
+{"kind": "detail", "cid": "KOP1azypy", "attempted_at": "2026-08-12T10:59:01.243349+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SeMA 옴니버스 <제9행성>", "error": null}
+{"kind": "detail", "cid": "KOP1f5yex", "attempted_at": "2026-08-12T10:59:02.809993+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립 북서울미술관", "error": null}
+{"kind": "detail", "cid": "KOP1fbrx6", "attempted_at": "2026-08-12T10:59:04.372614+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 LEE MU JIN CONCERT [별책부록] - SEOUL", "error": null}
+{"kind": "detail", "cid": "KOP1kv0hq", "attempted_at": "2026-08-12T10:59:05.875074+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "진찬 ", "error": null}
+{"kind": "detail", "cid": "KOP1lezus", "attempted_at": "2026-08-12T10:59:07.372115+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "메디큐브 플래그십 스토어", "error": null}
+{"kind": "detail", "cid": "KOP1ps3fb", "attempted_at": "2026-08-12T10:59:09.035227+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "≪쉿!≫", "error": null}
+{"kind": "detail", "cid": "KOP1sxxhi", "attempted_at": "2026-08-12T10:59:10.619933+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "떨어지는 눈", "error": null}
+{"kind": "detail", "cid": "KOP1udvdv", "attempted_at": "2026-08-12T10:59:12.163774+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "출발! 한양탐험대", "error": null}
+{"kind": "detail", "cid": "KOP1wimla", "attempted_at": "2026-08-12T10:59:13.716976+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "BEAUTY, TRANSLATED", "error": null}
+{"kind": "detail", "cid": "KOP1wzrx2", "attempted_at": "2026-08-12T10:59:15.264668+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《수집된 순간들 (Collection of Moments)》 ", "error": null}
+{"kind": "detail", "cid": "KOP1zyxhn", "attempted_at": "2026-08-12T10:59:16.854580+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "공중정원", "error": null}
+{"kind": "detail", "cid": "KOP20kefn", "attempted_at": "2026-08-12T10:59:18.402616+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "청계천 미디어아트 <청계 소울 오션>", "error": null}
+{"kind": "detail", "cid": "KOP21zkoz", "attempted_at": "2026-08-12T10:59:19.971955+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 <빌리 엘리어트>", "error": null}
+{"kind": "detail", "cid": "KOP24o1g5", "attempted_at": "2026-08-12T10:59:21.513085+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "조경재 <절대적 재구축 : Absolute Reconstruction>", "error": null}
+{"kind": "detail", "cid": "KOP2bo6vv", "attempted_at": "2026-08-12T10:59:23.060206+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 도경수 아시아 팬콘서트 투어 BLOOM THE FINAL ", "error": null}
+{"kind": "detail", "cid": "KOP2c8enb", "attempted_at": "2026-08-12T10:59:24.574382+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "99아트컴퍼니 <회랑(回廊)에서; 총체성으로의 회귀>", "error": null}
+{"kind": "detail", "cid": "KOP2dc0q5", "attempted_at": "2026-08-12T10:59:26.145485+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Veil Undrawn 열어 둔 베일", "error": null}
+{"kind": "detail", "cid": "KOP2fcbi7", "attempted_at": "2026-08-12T10:59:27.699654+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Rest and Rise : 남겨진 것과 떠오른 것들", "error": null}
+{"kind": "detail", "cid": "KOP2ite3z", "attempted_at": "2026-08-12T10:59:29.195309+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "호국보훈의 달 기념 공연 <영웅에게>", "error": null}
+{"kind": "detail", "cid": "KOP2qn4qq", "attempted_at": "2026-08-12T10:59:30.749724+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "K-드라마 스포트라이트", "error": null}
+{"kind": "detail", "cid": "KOP2s8isl", "attempted_at": "2026-08-12T10:59:32.318003+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "잠원 한강공원 수영장", "error": null}
+{"kind": "detail", "cid": "KOP2w30uj", "attempted_at": "2026-08-12T10:59:33.871863+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 타이틀 매치 《장영혜중공업 vs. 홍진훤 : 중간지대는 없다》", "error": null}
+{"kind": "detail", "cid": "KOP2xzi3t", "attempted_at": "2026-08-12T10:59:35.424978+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서대문 홍제폭포", "error": null}
+{"kind": "detail", "cid": "KOP2yacfo", "attempted_at": "2026-08-12T10:59:36.974328+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 노들섬 <아트 스페이스 엣지>", "error": null}
+{"kind": "detail", "cid": "KOP32m3he", "attempted_at": "2026-08-12T10:59:38.467854+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "코엑스 물품보관소", "error": null}
+{"kind": "detail", "cid": "KOP3b4gfv", "attempted_at": "2026-08-12T10:59:40.079906+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 애채숲", "error": null}
+{"kind": "detail", "cid": "KOP3elqxf", "attempted_at": "2026-08-12T10:59:41.583903+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "월하보이", "error": null}
+{"kind": "detail", "cid": "KOP3fknzc", "attempted_at": "2026-08-12T10:59:43.117392+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "BLUE SQUARE 블루스퀘어", "error": null}
+{"kind": "detail", "cid": "KOP3mz1mm", "attempted_at": "2026-08-12T10:59:44.710579+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024년 특별전 ‘태평계태평太平繼太平: 태평성대로 기억된 18세기 서울'", "error": null}
+{"kind": "detail", "cid": "KOP3o0027", "attempted_at": "2026-08-12T10:59:46.200761+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "키자니아 서울", "error": null}
+{"kind": "detail", "cid": "KOP3pv6se", "attempted_at": "2026-08-12T10:59:47.731800+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "허상욱《분청산책 : Buncheong Stroll》", "error": null}
+{"kind": "detail", "cid": "KOP3r5br9", "attempted_at": "2026-08-12T10:59:49.299464+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2023 홈·테이블데코페어", "error": null}
+{"kind": "detail", "cid": "KOP3r7zs1", "attempted_at": "2026-08-12T10:59:50.847154+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울의 젊은이와 대중가요", "error": null}
+{"kind": "detail", "cid": "KOP3u747h", "attempted_at": "2026-08-12T10:59:52.407590+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[스페이스 톤 갤러리] 고소미 개인전: 다양체(Multiplicity)", "error": null}
+{"kind": "detail", "cid": "KOP4984rf", "attempted_at": "2026-08-12T10:59:54.005107+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울의 이용원 ", "error": null}
+{"kind": "detail", "cid": "KOP49nma5", "attempted_at": "2026-08-12T10:59:55.539343+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "전시 〈서울일러스트레이션페어〉", "error": null}
+{"kind": "detail", "cid": "KOP4cq7rr", "attempted_at": "2026-08-12T10:59:57.045235+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울라이트 DDP 2023 가을", "error": null}
+{"kind": "detail", "cid": "KOP4cyqe3", "attempted_at": "2026-08-12T10:59:58.535693+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "무나씨 《우리가 지워지는 계절에》", "error": null}
+{"kind": "detail", "cid": "KOP4ec5o3", "attempted_at": "2026-08-12T11:00:00.085847+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울의 작은 산", "error": null}
+{"kind": "detail", "cid": "KOP4groc4", "attempted_at": "2026-08-12T11:00:01.567617+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시무용단 <미메시스>", "error": null}
+{"kind": "detail", "cid": "KOP4gtoyu", "attempted_at": "2026-08-12T11:00:03.078176+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Happy voyage", "error": null}
+{"kind": "detail", "cid": "KOP4khc7y", "attempted_at": "2026-08-12T11:00:04.633174+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스페이스K 서울", "error": null}
+{"kind": "detail", "cid": "KOP4n0w9a", "attempted_at": "2026-08-12T11:00:06.190442+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 젊은국악 단장", "error": null}
+{"kind": "detail", "cid": "KOP4q4n0f", "attempted_at": "2026-08-12T11:00:07.758982+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "인상주의를 넘어: 르누아르,드가,고흐,마티스,피카소", "error": null}
+{"kind": "detail", "cid": "KOP4s22t5", "attempted_at": "2026-08-12T11:00:09.283195+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "믹스드 오케스트라  : 넥스트 레벨 ", "error": null}
+{"kind": "detail", "cid": "KOP4u05qa", "attempted_at": "2026-08-12T11:00:10.865121+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "성북예술창작터", "error": null}
+{"kind": "detail", "cid": "KOP52w7m1", "attempted_at": "2026-08-12T11:00:12.396252+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "드로잉룸", "error": null}
+{"kind": "detail", "cid": "KOP57x3om", "attempted_at": "2026-08-12T11:00:13.964897+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[2025 청계천 공공미술 프로젝트 청계공존] 도슨트 프로그램 ", "error": null}
+{"kind": "detail", "cid": "KOP5db89m", "attempted_at": "2026-08-12T11:00:15.528396+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "다시, 지구 : 다른 감각으로 응답하기", "error": null}
+{"kind": "detail", "cid": "KOP5h6ubl", "attempted_at": "2026-08-12T11:00:17.020252+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "더현대 서울 크리스마스 빌리지 'H-Village'", "error": null}
+{"kind": "detail", "cid": "KOP5hau1h", "attempted_at": "2026-08-12T11:00:18.580583+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리조선", "error": null}
+{"kind": "detail", "cid": "KOP5icc8k", "attempted_at": "2026-08-12T11:00:20.148543+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "바라보다 展 ", "error": null}
+{"kind": "detail", "cid": "KOP5k7sv5", "attempted_at": "2026-08-12T11:00:21.702842+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "구본창의 항해", "error": null}
+{"kind": "detail", "cid": "KOP5nlj26", "attempted_at": "2026-08-12T11:00:23.208259+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "남산 하늘숲길", "error": null}
+{"kind": "detail", "cid": "KOP5uw5dz", "attempted_at": "2026-08-12T11:00:24.740098+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마이아트뮤지엄 원그로브점", "error": null}
+{"kind": "detail", "cid": "KOP5vp58h", "attempted_at": "2026-08-12T11:00:26.267968+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《내가 좋아하게 될 전시》 展 ", "error": null}
+{"kind": "detail", "cid": "KOP5y25gn", "attempted_at": "2026-08-12T11:00:27.819937+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "우리는 어디서 왔고 무엇이며 어디로 가는가? 展", "error": null}
+{"kind": "detail", "cid": "KOP5y6ztl", "attempted_at": "2026-08-12T11:00:29.381378+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울YMCA, 청년이 만든 시민의 역사", "error": null}
+{"kind": "detail", "cid": "KOP5zna0p", "attempted_at": "2026-08-12T11:00:30.963483+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "가나아트 컬렉션 기획상설전 《80 도시현실》 ", "error": null}
+{"kind": "detail", "cid": "KOP678cv8", "attempted_at": "2026-08-12T11:00:32.504296+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "옛시장실 재현 공간", "error": null}
+{"kind": "detail", "cid": "KOP67o3xb", "attempted_at": "2026-08-12T11:00:34.069391+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울올림픽주경기장", "error": null}
+{"kind": "detail", "cid": "KOP68y59t", "attempted_at": "2026-08-12T11:00:35.682345+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬한강공원 눈썰매장", "error": null}
+{"kind": "detail", "cid": "KOP68z1mg", "attempted_at": "2026-08-12T11:00:37.215205+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SeMA 공용공간 프로젝트 《영원히 교차하는 춤》", "error": null}
+{"kind": "detail", "cid": "KOP69gpsk", "attempted_at": "2026-08-12T11:00:38.794447+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "DOEZNY《MOVEMENT》 ", "error": null}
+{"kind": "detail", "cid": "KOP6edc88", "attempted_at": "2026-08-12T11:00:40.330524+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울아트센터 도암갤러리", "error": null}
+{"kind": "detail", "cid": "KOP6hqs2t", "attempted_at": "2026-08-12T11:00:41.837132+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "천경자 탄생 100주년 기념 《격변의 시대, 여성 삶 예술》", "error": null}
+{"kind": "detail", "cid": "KOP6kc5mf", "attempted_at": "2026-08-12T11:00:43.389242+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "일무일악 一舞一樂", "error": null}
+{"kind": "detail", "cid": "KOP6ljerd", "attempted_at": "2026-08-12T11:00:44.879152+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "PEAK FESTIVAL 2025", "error": null}
+{"kind": "detail", "cid": "KOP6s1tnd", "attempted_at": "2026-08-12T11:00:46.382229+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "판소리아지트 놀애박스 <판소리 쑛스토리 II : 모파상편>", "error": null}
+{"kind": "detail", "cid": "KOP6w9tgb", "attempted_at": "2026-08-12T11:00:47.964311+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SEOUL VIBE[서울 바이브]", "error": null}
+{"kind": "detail", "cid": "KOP6y9jr9", "attempted_at": "2026-08-12T11:00:49.462052+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "IBK 모두다 가족콘서트 2026", "error": null}
+{"kind": "detail", "cid": "KOP6zvjr6", "attempted_at": "2026-08-12T11:00:50.994136+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬한강공원 X-게임장", "error": null}
+{"kind": "detail", "cid": "KOP70mg3c", "attempted_at": "2026-08-12T11:00:52.545968+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "광복 80주년 기념 특별전 우리들의 이순신", "error": null}
+{"kind": "detail", "cid": "KOP71zsbw", "attempted_at": "2026-08-12T11:00:54.097572+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "삼각G7: 시작의 자리", "error": null}
+{"kind": "detail", "cid": "KOP72zzo1", "attempted_at": "2026-08-12T11:00:55.583318+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아트사이드 갤러리", "error": null}
+{"kind": "detail", "cid": "KOP76n5f5", "attempted_at": "2026-08-12T11:00:57.138182+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "선라이즈 투 선라잇(Sunrise to Sunlight)", "error": null}
+{"kind": "detail", "cid": "KOP7hqfq3", "attempted_at": "2026-08-12T11:00:58.761508+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "천개의 소원", "error": null}
+{"kind": "detail", "cid": "KOP7lrfs0", "attempted_at": "2026-08-12T11:01:00.301090+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "시선의 확장 Broadening of visions", "error": null}
+{"kind": "detail", "cid": "KOP7o9oit", "attempted_at": "2026-08-12T11:01:01.870449+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Empty Houses on the Coast", "error": null}
+{"kind": "detail", "cid": "KOP7u9qht", "attempted_at": "2026-08-12T11:01:03.403392+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "선우풍월(扇友風月): 부채, 바람과 달을 함께 나누는 벗", "error": null}
+{"kind": "detail", "cid": "KOP8j7w39", "attempted_at": "2026-08-12T11:01:04.881998+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "권진규의 영원한 집", "error": null}
+{"kind": "detail", "cid": "KOP8kwn54", "attempted_at": "2026-08-12T11:01:06.434369+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아르코꿈밭극장", "error": null}
+{"kind": "detail", "cid": "KOP8pkdcm", "attempted_at": "2026-08-12T11:01:08.000496+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "나의 보물, 나의 유산", "error": null}
+{"kind": "detail", "cid": "KOP8r0zj2", "attempted_at": "2026-08-12T11:01:09.592263+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이회영 기념관", "error": null}
+{"kind": "detail", "cid": "KOP9923r7", "attempted_at": "2026-08-12T11:01:11.163975+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "너와 나 그리고 그곳에 展", "error": null}
+{"kind": "detail", "cid": "KOP9dtud4", "attempted_at": "2026-08-12T11:01:12.684418+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "무용 - 녕(寧), 왕자의 길", "error": null}
+{"kind": "detail", "cid": "KOP9fwlch", "attempted_at": "2026-08-12T11:01:14.340385+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "그라운드시소 서촌", "error": null}
+{"kind": "detail", "cid": "KOP9hdag0", "attempted_at": "2026-08-12T11:01:15.892074+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Piknic", "error": null}
+{"kind": "detail", "cid": "KOP9kal14", "attempted_at": "2026-08-12T11:01:17.470189+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 성북구립미술관 기획전시 《이정윤: 노래하는 집》 ", "error": null}
+{"kind": "detail", "cid": "KOP9puqbn", "attempted_at": "2026-08-12T11:01:18.977888+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "최민영: 꿈을 빌려드립니다", "error": null}
+{"kind": "detail", "cid": "KOP9q04ig", "attempted_at": "2026-08-12T11:01:20.615285+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "THEO 띠오", "error": null}
+{"kind": "detail", "cid": "KOP9vuxuv", "attempted_at": "2026-08-12T11:01:22.195973+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김병구 개인전 《7am Green pew》", "error": null}
+{"kind": "detail", "cid": "KOP9xfhqw", "attempted_at": "2026-08-12T11:01:23.755470+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SeMA 옴니버스 《나는 우리를 사랑하고 싶다》", "error": null}
+{"kind": "detail", "cid": "KOP9zw186", "attempted_at": "2026-08-12T11:01:25.332114+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "눈", "error": null}
+{"kind": "detail", "cid": "KOPa0muuu", "attempted_at": "2026-08-12T11:01:26.873709+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한강이야기전시관 ", "error": null}
+{"kind": "detail", "cid": "KOPa3er53", "attempted_at": "2026-08-12T11:01:28.438350+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "K-아이돌 뷰티체험존 WINTER GLAM SEOUL", "error": null}
+{"kind": "detail", "cid": "KOPa4m2cj", "attempted_at": "2026-08-12T11:01:29.960069+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "상상력 옷장 – 이랜드 컬렉션 특별전", "error": null}
+{"kind": "detail", "cid": "KOPa4udir", "attempted_at": "2026-08-12T11:01:31.536842+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "카일리 매닝 : 황해", "error": null}
+{"kind": "detail", "cid": "KOPaacet0", "attempted_at": "2026-08-12T11:01:33.117409+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "매키탄호텔", "error": null}
+{"kind": "detail", "cid": "KOPabxqit", "attempted_at": "2026-08-12T11:01:34.779082+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "세계우표전시회 필라코리아 2025", "error": null}
+{"kind": "detail", "cid": "KOPad2n9b", "attempted_at": "2026-08-12T11:01:36.300869+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "crosswalk ", "error": null}
+{"kind": "detail", "cid": "KOPadxt74", "attempted_at": "2026-08-12T11:01:37.824326+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "근접한 세계", "error": null}
+{"kind": "detail", "cid": "KOPae1cn5", "attempted_at": "2026-08-12T11:01:39.425154+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한양도성의 사라진 옛문, 소의문", "error": null}
+{"kind": "detail", "cid": "KOPah6vze", "attempted_at": "2026-08-12T11:01:40.929702+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "옛서울역 준공 100주년 기념전시 <백년과 하루, 기억에서 상상으로>", "error": null}
+{"kind": "detail", "cid": "KOPapcfqb", "attempted_at": "2026-08-12T11:01:42.537371+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《따스함이 빛나는 그곳엔 (Where Warmth Shines)》  展 ", "error": null}
+{"kind": "detail", "cid": "KOPav9wgq", "attempted_at": "2026-08-12T11:01:44.086809+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "B the B", "error": null}
+{"kind": "detail", "cid": "KOPb2qbin", "attempted_at": "2026-08-12T11:01:45.647243+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "그때, 이곳의 기록-청계천 판자촌", "error": null}
+{"kind": "detail", "cid": "KOPb3chj1", "attempted_at": "2026-08-12T11:01:47.202376+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울로봇인공지능과학관(RAIM)", "error": null}
+{"kind": "detail", "cid": "KOPb4al47", "attempted_at": "2026-08-12T11:01:48.802108+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "일렉트릭 쇼크", "error": null}
+{"kind": "detail", "cid": "KOPbhq8vy", "attempted_at": "2026-08-12T11:01:50.442671+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬 인공암벽장", "error": null}
+{"kind": "detail", "cid": "KOPbhrawk", "attempted_at": "2026-08-12T11:01:52.068039+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "<희미한 기억, 짙은 그리움> ", "error": null}
+{"kind": "detail", "cid": "KOPbl8ts0", "attempted_at": "2026-08-12T11:01:53.685080+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "쿠푸왕의 피라미드", "error": null}
+{"kind": "detail", "cid": "KOPbrcjal", "attempted_at": "2026-08-12T11:01:55.272347+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 <위키드> 내한 공연(WICKED The Musical)", "error": null}
+{"kind": "detail", "cid": "KOPbtl4l5", "attempted_at": "2026-08-12T11:01:56.818324+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "유이치 히라코《여행》", "error": null}
+{"kind": "detail", "cid": "KOPc2dpb9", "attempted_at": "2026-08-12T11:01:58.394465+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "시간을 잇는 展 ", "error": null}
+{"kind": "detail", "cid": "KOPc4jh4a", "attempted_at": "2026-08-12T11:01:59.972943+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "그림이라는 별세계 : 이건희컬렉션과 함께", "error": null}
+{"kind": "detail", "cid": "KOPcahnf0", "attempted_at": "2026-08-12T11:02:01.540445+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "평보 서희환 : 보통의 걸음", "error": null}
+{"kind": "detail", "cid": "KOPcgjih3", "attempted_at": "2026-08-12T11:02:03.134717+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뷰티풀 민트 라이프 2025", "error": null}
+{"kind": "detail", "cid": "KOPch67xl", "attempted_at": "2026-08-12T11:02:04.640353+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 서울시향 림스키코르사코프 '셰에라자드' ①", "error": null}
+{"kind": "detail", "cid": "KOPcjuosl", "attempted_at": "2026-08-12T11:02:06.161907+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "〈센과 치히로의 행방불명〉오리지널 투어 (SPIRITED AWAY)", "error": null}
+{"kind": "detail", "cid": "KOPcyotr4", "attempted_at": "2026-08-12T11:02:07.688911+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "THART 띠아트", "error": null}
+{"kind": "detail", "cid": "KOPcyxke6", "attempted_at": "2026-08-12T11:02:09.238637+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "페인터즈", "error": null}
+{"kind": "detail", "cid": "KOPczsr0z", "attempted_at": "2026-08-12T11:02:10.763226+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 윤하 연말 콘서트 〈GROWTH THEORY〉", "error": null}
+{"kind": "detail", "cid": "KOPd5oub3", "attempted_at": "2026-08-12T11:02:12.268500+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한강, 소리로 흐른다", "error": null}
+{"kind": "detail", "cid": "KOPd8ek6k", "attempted_at": "2026-08-12T11:02:13.837204+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립 사진미술관 《사진이 할 수 있는 모든 것》", "error": null}
+{"kind": "detail", "cid": "KOPd8sx8c", "attempted_at": "2026-08-12T11:02:15.415798+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이머시브K (Immersive-K) 간송미술관 디지털 미디어아트 전시", "error": null}
+{"kind": "detail", "cid": "KOPda1e2c", "attempted_at": "2026-08-12T11:02:17.004766+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "수락산 벽운계곡", "error": null}
+{"kind": "detail", "cid": "KOPdb8gvb", "attempted_at": "2026-08-12T11:02:18.570417+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 삼각산금암미술관 공예 전시 공모전 선정- EUNPYEONG &lt;형형색색 形形色色&gt;", "error": null}
+{"kind": "detail", "cid": "KOPdhvwbf", "attempted_at": "2026-08-12T11:02:20.062219+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "낯선 시선으로부터 ", "error": null}
+{"kind": "detail", "cid": "KOPdq9fcr", "attempted_at": "2026-08-12T11:02:21.618578+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2023 세종미술관 기획전시《필묵변혁-송수남 황창배》 '현대수묵의 두 시선'", "error": null}
+{"kind": "detail", "cid": "KOPdqsfd3", "attempted_at": "2026-08-12T11:02:23.132468+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 여유작 콘서트", "error": null}
+{"kind": "detail", "cid": "KOPdr8hdy", "attempted_at": "2026-08-12T11:02:24.649991+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 공성환 초대전 <파문 波紋 ; Ripple>", "error": null}
+{"kind": "detail", "cid": "KOPdxudlq", "attempted_at": "2026-08-12T11:02:26.218653+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "MINSEONG KIM: False Alarm", "error": null}
+{"kind": "detail", "cid": "KOPe3alnl", "attempted_at": "2026-08-12T11:02:27.805205+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "불빛정원(옛 화랑대역)", "error": null}
+{"kind": "detail", "cid": "KOPe3w8e1", "attempted_at": "2026-08-12T11:02:29.405990+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "현대공예 특별기획전 《물질-실천》 ", "error": null}
+{"kind": "detail", "cid": "KOPe89h7l", "attempted_at": "2026-08-12T11:02:30.942367+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "슈니따, 오제성 <도깨비: 멀티 페르소나> ", "error": null}
+{"kind": "detail", "cid": "KOPecp151", "attempted_at": "2026-08-12T11:02:32.554141+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이영준 《Ingoing Escape》 ", "error": null}
+{"kind": "detail", "cid": "KOPer1hnq", "attempted_at": "2026-08-12T11:02:34.168536+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[S-TCEP]2023 서울시향 오스모 벤스케의 시벨리우스 교향곡 2번", "error": null}
+{"kind": "detail", "cid": "KOPer9yef", "attempted_at": "2026-08-12T11:02:35.653137+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리에서 찾은 행복 Recipe", "error": null}
+{"kind": "detail", "cid": "KOPerykvq", "attempted_at": "2026-08-12T11:02:37.142721+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 <더 퍼스트 그레잇 쇼>", "error": null}
+{"kind": "detail", "cid": "KOPet80lf", "attempted_at": "2026-08-12T11:02:38.755301+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "페이스갤러리 서울", "error": null}
+{"kind": "detail", "cid": "KOPet9p1i", "attempted_at": "2026-08-12T11:02:40.309112+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "케이팝 스퀘어 홍대", "error": null}
+{"kind": "detail", "cid": "KOPexzzw3", "attempted_at": "2026-08-12T11:02:41.979891+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "석굴암", "error": null}
+{"kind": "detail", "cid": "KOPf5hpob", "attempted_at": "2026-08-12T11:02:43.559258+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "픽셀 스페이스 2025", "error": null}
+{"kind": "detail", "cid": "KOPfb8q7l", "attempted_at": "2026-08-12T11:02:45.071956+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "순성기행(巡城紀行) : 19세기 선비의 눈을 통해 본 한양도성", "error": null}
+{"kind": "detail", "cid": "KOPfdzfap", "attempted_at": "2026-08-12T11:02:46.626633+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "우리들의 광복절", "error": null}
+{"kind": "detail", "cid": "KOPfgv1jj", "attempted_at": "2026-08-12T11:02:48.223822+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "쿠오카 성수", "error": null}
+{"kind": "detail", "cid": "KOPfpky3x", "attempted_at": "2026-08-12T11:02:49.865496+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "e스포츠 명예의 전당", "error": null}
+{"kind": "detail", "cid": "KOPfppq98", "attempted_at": "2026-08-12T11:02:51.443653+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한성부입니다", "error": null}
+{"kind": "detail", "cid": "KOPfv3al6", "attempted_at": "2026-08-12T11:02:53.009092+00:00", "status": "SUCCESS", "n_attempts": 1, "title": " 유영국: 산은 내 안에 있다", "error": null}
+{"kind": "detail", "cid": "KOPfyfhxg", "attempted_at": "2026-08-12T11:02:54.540661+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "북한인권오페라 <냉면> ", "error": null}
+{"kind": "detail", "cid": "KOPfyj86p", "attempted_at": "2026-08-12T11:02:56.060963+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "<찬란한 에르미타주> 공식 디지털 특별전", "error": null}
+{"kind": "detail", "cid": "KOPfztlks", "attempted_at": "2026-08-12T11:02:57.638049+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "유토피아: 노웨어, 나우 히어", "error": null}
+{"kind": "detail", "cid": "KOPg1x5kx", "attempted_at": "2026-08-12T11:02:59.177943+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "맨디 엘-사예: 테레사, 이후", "error": null}
+{"kind": "detail", "cid": "KOPg4osmd", "attempted_at": "2026-08-12T11:03:00.775152+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "미증유의 대홍수 : 1925 을축년", "error": null}
+{"kind": "detail", "cid": "KOPg4p0aa", "attempted_at": "2026-08-12T11:03:02.401716+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립교향악단 광복 78주년 기념음악회", "error": null}
+{"kind": "detail", "cid": "KOPg8me67", "attempted_at": "2026-08-12T11:03:03.922333+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "투명하고 향기나는 천사의 날개 빛깔처럼", "error": null}
+{"kind": "detail", "cid": "KOPgd8ldd", "attempted_at": "2026-08-12T11:03:05.530062+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시국악관현악단 실내악 시리즈 <소리섬 : 시대와 함께한 아리랑>", "error": null}
+{"kind": "detail", "cid": "KOPgeb6on", "attempted_at": "2026-08-12T11:03:07.123001+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립 사진미술관 《마틴 파: We Are Martin Parr》", "error": null}
+{"kind": "detail", "cid": "KOPgep0bg", "attempted_at": "2026-08-12T11:03:08.726809+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "고요한 빛과 파란 하늘을 바라보며 展 ", "error": null}
+{"kind": "detail", "cid": "KOPgftn4l", "attempted_at": "2026-08-12T11:03:10.260911+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "다만 고요히 앉아 있을 뿐이다", "error": null}
+{"kind": "detail", "cid": "KOPghsior", "attempted_at": "2026-08-12T11:03:11.838930+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "포스터 전시 POSTER HOUSE", "error": null}
+{"kind": "detail", "cid": "KOPgklb6g", "attempted_at": "2026-08-12T11:03:13.496109+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정관, 김혜주 <미해결의 장 : Unresolved Chapter>", "error": null}
+{"kind": "detail", "cid": "KOPgmiqls", "attempted_at": "2026-08-12T11:03:15.071560+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "몸을 위한 간주곡 ― 소목장세미", "error": null}
+{"kind": "detail", "cid": "KOPgpl1c3", "attempted_at": "2026-08-12T11:03:16.663073+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "발푸르기스의 밤: 한국의 마녀들", "error": null}
+{"kind": "detail", "cid": "KOPgrw5c5", "attempted_at": "2026-08-12T11:03:18.185087+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "고터·세빛 관광안내소", "error": null}
+{"kind": "detail", "cid": "KOPgwovaw", "attempted_at": "2026-08-12T11:03:19.700397+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "UAUS 14기 파빌리온 전시 Ask Nature : Biomimicry ", "error": null}
+{"kind": "detail", "cid": "KOPgxl8qf", "attempted_at": "2026-08-12T11:03:21.296876+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "세계유산과 한양의 수도성곽", "error": null}
+{"kind": "detail", "cid": "KOPgykl1q", "attempted_at": "2026-08-12T11:03:22.843746+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "싱그러움을 그러모아", "error": null}
+{"kind": "detail", "cid": "KOPgzt4p3", "attempted_at": "2026-08-12T11:03:24.409241+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[S-TCEP]2023 서울시향 코파친스카야의 쇼스타코비치", "error": null}
+{"kind": "detail", "cid": "KOPh15wjf", "attempted_at": "2026-08-12T11:03:25.895899+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "여의나루역 러너스테이션", "error": null}
+{"kind": "detail", "cid": "KOPh1rw9d", "attempted_at": "2026-08-12T11:03:27.465782+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "범:BEOM 지민선 전시회", "error": null}
+{"kind": "detail", "cid": "KOPh2aqcf", "attempted_at": "2026-08-12T11:03:28.983242+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "지구울림 - 헤르츠앤도우", "error": null}
+{"kind": "detail", "cid": "KOPh4kp0u", "attempted_at": "2026-08-12T11:03:30.564568+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "언젠가, 우리가 같은", "error": null}
+{"kind": "detail", "cid": "KOPhax5cj", "attempted_at": "2026-08-12T11:03:32.209550+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "아트큐브 2R2", "error": null}
+{"kind": "detail", "cid": "KOPhcg1td", "attempted_at": "2026-08-12T11:03:33.766829+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《The Mindscape ; Encounters of the Third Kind (심상 풍경 : 미지와의 조우 )》", "error": null}
+{"kind": "detail", "cid": "KOPhcuknk", "attempted_at": "2026-08-12T11:03:35.280829+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 BIBI 1st WORLD TOUR ［EVE］ IN SEOUL", "error": null}
+{"kind": "detail", "cid": "KOPhd2f4q", "attempted_at": "2026-08-12T11:03:36.799968+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "딜쿠샤", "error": null}
+{"kind": "detail", "cid": "KOPhi142j", "attempted_at": "2026-08-12T11:03:38.318763+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "NUMAZ WHOLESALE WEEK", "error": null}
+{"kind": "detail", "cid": "KOPhl9uml", "attempted_at": "2026-08-12T11:03:39.899738+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "기쁜 마음을 그리다", "error": null}
+{"kind": "detail", "cid": "KOPhr5agm", "attempted_at": "2026-08-12T11:03:41.461926+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Warm&Cool ART Collection 展", "error": null}
+{"kind": "detail", "cid": "KOPhs2wlq", "attempted_at": "2026-08-12T11:03:43.058174+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "ICON: The Chair Series", "error": null}
+{"kind": "detail", "cid": "KOPhwbm10", "attempted_at": "2026-08-12T11:03:44.609034+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "≪SeMA 앤솔러지: 열 개의 주문≫", "error": null}
+{"kind": "detail", "cid": "KOPhxe78f", "attempted_at": "2026-08-12T11:03:46.168917+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제 14회 에듀플러스위크 (Korea lnt’l EDUCATION WEEK 2023)", "error": null}
+{"kind": "detail", "cid": "KOPhxlwke", "attempted_at": "2026-08-12T11:03:47.797667+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026년 제2회 가락테이블콘서트", "error": null}
+{"kind": "detail", "cid": "KOPhxyp50", "attempted_at": "2026-08-12T11:03:49.376871+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "최재은 : 약속", "error": null}
+{"kind": "detail", "cid": "KOPhyd9ee", "attempted_at": "2026-08-12T11:03:50.926770+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서촌한옥마을", "error": null}
+{"kind": "detail", "cid": "KOPi1olcq", "attempted_at": "2026-08-12T11:03:52.474720+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "‘환혼: 빛과 그림자’ 몰입형 미디어 아트 전시", "error": null}
+{"kind": "detail", "cid": "KOPi1u9ze", "attempted_at": "2026-08-12T11:03:54.050168+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "루이 비통 비저너리 저니 서울", "error": null}
+{"kind": "detail", "cid": "KOPi3s4ab", "attempted_at": "2026-08-12T11:03:55.641496+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "성수 레디영 약국", "error": null}
+{"kind": "detail", "cid": "KOPic9f47", "attempted_at": "2026-08-12T11:03:57.374197+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 돈화문 야광명월 II : 한국의 탈, 웃음과 신명이 깃든 얼굴 展", "error": null}
+{"kind": "detail", "cid": "KOPig96uk", "attempted_at": "2026-08-12T11:03:58.882592+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "배윤환 개인전 《딥다이버(Deep Diver)》", "error": null}
+{"kind": "detail", "cid": "KOPihmlac", "attempted_at": "2026-08-12T11:04:00.450148+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 긴긴밤", "error": null}
+{"kind": "detail", "cid": "KOPiibcte", "attempted_at": "2026-08-12T11:04:01.944764+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "렘브란트에서 고야까지, 톨레도 미술관 명작展", "error": null}
+{"kind": "detail", "cid": "KOPij6dx2", "attempted_at": "2026-08-12T11:04:03.512649+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 한강 불빛 공연 : 드론라이트쇼", "error": null}
+{"kind": "detail", "cid": "KOPij99b4", "attempted_at": "2026-08-12T11:04:05.083717+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "팔색찬란-K로 가득한 지역", "error": null}
+{"kind": "detail", "cid": "KOPinmv7s", "attempted_at": "2026-08-12T11:04:06.630148+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 서울 북한인권세계대회 남북 클래식 대중음악 콘서트", "error": null}
+{"kind": "detail", "cid": "KOPj1ro8q", "attempted_at": "2026-08-12T11:04:08.234061+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "광화문광장 해치마당 (Haechi Madang)", "error": null}
+{"kind": "detail", "cid": "KOPj6a5ja", "attempted_at": "2026-08-12T11:04:09.788344+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "GS아트센터 X 서울재즈페스티벌 <팻 메시니: 드림 박스 - 문다이얼 투어>", "error": null}
+{"kind": "detail", "cid": "KOPjhzbgg", "attempted_at": "2026-08-12T11:04:11.312478+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "믹스드 오케스트라 26", "error": null}
+{"kind": "detail", "cid": "KOPjlda9f", "attempted_at": "2026-08-12T11:04:12.832552+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "자기의 고집", "error": null}
+{"kind": "detail", "cid": "KOPjltxu8", "attempted_at": "2026-08-12T11:04:14.402509+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 delight Seoul (딜라이트 서울)", "error": null}
+{"kind": "detail", "cid": "KOPjn2f1j", "attempted_at": "2026-08-12T11:04:15.940738+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제46회 전통공예명품전", "error": null}
+{"kind": "detail", "cid": "KOPjtj4tl", "attempted_at": "2026-08-12T11:04:17.446043+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 <한강노들섬클래식> 한강노들섬발레 '잠자는 숲속의 미녀'", "error": null}
+{"kind": "detail", "cid": "KOPjw94y2", "attempted_at": "2026-08-12T11:04:18.937218+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 〈이터니티〉", "error": null}
+{"kind": "detail", "cid": "KOPjy51fz", "attempted_at": "2026-08-12T11:04:20.460866+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "LG아트센터 서울", "error": null}
+{"kind": "detail", "cid": "KOPjzn3w7", "attempted_at": "2026-08-12T11:04:22.059997+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬〈라이카〉", "error": null}
+{"kind": "detail", "cid": "KOPk2a199", "attempted_at": "2026-08-12T11:04:23.566901+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지엄김치간 Story & History", "error": null}
+{"kind": "detail", "cid": "KOPk4sx8q", "attempted_at": "2026-08-12T11:04:25.058945+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2023 서울국제공연예술제(SPAF)", "error": null}
+{"kind": "detail", "cid": "KOPkhtg5h", "attempted_at": "2026-08-12T11:04:26.749055+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 <한강노들섬클래식> 한강노들섬오페라 '카르멘'", "error": null}
+{"kind": "detail", "cid": "KOPkifmep", "attempted_at": "2026-08-12T11:04:28.240282+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "새벽부터 황혼까지 - 스웨덴국립미술관 컬렉션", "error": null}
+{"kind": "detail", "cid": "KOPkkmg5t", "attempted_at": "2026-08-12T11:04:29.774876+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서서울미술관 개관특별전 《우리의 시간은 여기서부터》", "error": null}
+{"kind": "detail", "cid": "KOPkq13lf", "attempted_at": "2026-08-12T11:04:31.340786+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립극장 마당놀이 <홍길동이 온다>", "error": null}
+{"kind": "detail", "cid": "KOPkxi16h", "attempted_at": "2026-08-12T11:04:32.842902+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "경국사 ", "error": null}
+{"kind": "detail", "cid": "KOPkzbkyo", "attempted_at": "2026-08-12T11:04:34.392942+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마음을 채우는 전시 展 ", "error": null}
+{"kind": "detail", "cid": "KOPkzupx6", "attempted_at": "2026-08-12T11:04:35.911782+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "JW이종호재단 장애인 예술가 미술 전시회  'JW아트어워즈'", "error": null}
+{"kind": "detail", "cid": "KOPl3j0oy", "attempted_at": "2026-08-12T11:04:37.401678+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립사진미술관 ", "error": null}
+{"kind": "detail", "cid": "KOPl4rnb2", "attempted_at": "2026-08-12T11:04:38.965550+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "하늘그네 왕십리", "error": null}
+{"kind": "detail", "cid": "KOPl57sqg", "attempted_at": "2026-08-12T11:04:40.531413+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "글자의 깊이, 1.5㎜", "error": null}
+{"kind": "detail", "cid": "KOPlcw3a4", "attempted_at": "2026-08-12T11:04:42.094108+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "인상주의에서 초기 모더니즘까지, 빛을 수집한 사람들 - 메트로폴리탄박물관 소장 로버트 리먼 컬렉션", "error": null}
+{"kind": "detail", "cid": "KOPlhr9s8", "attempted_at": "2026-08-12T11:04:43.659818+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "보편타당한 당신 –심이다은", "error": null}
+{"kind": "detail", "cid": "KOPlhrsqk", "attempted_at": "2026-08-12T11:04:45.234700+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이상한 K-뷰티 : 엄마의 서랍장", "error": null}
+{"kind": "detail", "cid": "KOPli2f4y", "attempted_at": "2026-08-12T11:04:46.797780+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마음을 휴식하다", "error": null}
+{"kind": "detail", "cid": "KOPloaxhb", "attempted_at": "2026-08-12T11:04:48.358691+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한운성컬렉션 기증기획전 《그림과 현실》", "error": null}
+{"kind": "detail", "cid": "KOPloueuq", "attempted_at": "2026-08-12T11:04:49.922600+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Dreaming Paradise 展", "error": null}
+{"kind": "detail", "cid": "KOPlt15e6", "attempted_at": "2026-08-12T11:04:51.461776+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김지혜 〈파도〉", "error": null}
+{"kind": "detail", "cid": "KOPm8j6gm", "attempted_at": "2026-08-12T11:04:52.947150+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "권병준: 내 마음 속에 너는", "error": null}
+{"kind": "detail", "cid": "KOPmbgpkh", "attempted_at": "2026-08-12T11:04:54.509654+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Bathtub & Feather", "error": null}
+{"kind": "detail", "cid": "KOPmcgru1", "attempted_at": "2026-08-12T11:04:56.046895+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Play with K", "error": null}
+{"kind": "detail", "cid": "KOPmdl0dd", "attempted_at": "2026-08-12T11:04:57.536641+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "크리스찬 히다카 : 하늘이 극장이 되고 극장이 하늘에 있으니", "error": null}
+{"kind": "detail", "cid": "KOPmfskyu", "attempted_at": "2026-08-12T11:04:59.086704+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "기록으로 산책하기_서울의 공원", "error": null}
+{"kind": "detail", "cid": "KOPmnz7ln", "attempted_at": "2026-08-12T11:05:00.624376+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김인순 컬렉션 ≪일어서는 삶≫  ", "error": null}
+{"kind": "detail", "cid": "KOPmvbf3l", "attempted_at": "2026-08-12T11:05:02.170380+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "삼각산금암미술관 <초등 미술 교과서, 밖으로>", "error": null}
+{"kind": "detail", "cid": "KOPn0qtcb", "attempted_at": "2026-08-12T11:05:03.726659+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "리버시티수상스키장", "error": null}
+{"kind": "detail", "cid": "KOPn0wsm1", "attempted_at": "2026-08-12T11:05:05.285959+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "플랫폼엘 (PLATFORM-L)", "error": null}
+{"kind": "detail", "cid": "KOPn3k0fb", "attempted_at": "2026-08-12T11:05:06.865340+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제13회 서울미디어시티비엔날레 《강령: 영혼의 기술》", "error": null}
+{"kind": "detail", "cid": "KOPnambcz", "attempted_at": "2026-08-12T11:05:08.366637+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "선유도 : 조용한 공존", "error": null}
+{"kind": "detail", "cid": "KOPnd5dx1", "attempted_at": "2026-08-12T11:05:09.943194+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이유진 개인전《미기후 사랑방 - 의존하는 개인전》", "error": null}
+{"kind": "detail", "cid": "KOPnfu7l4", "attempted_at": "2026-08-12T11:05:11.531710+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "연극  울며 마늘 먹기", "error": null}
+{"kind": "detail", "cid": "KOPni951h", "attempted_at": "2026-08-12T11:05:13.079438+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 성북 신문인사 프로젝트 &lt;이태준: 달밤은 그에게도 유감한 듯하였다&gt; 展", "error": null}
+{"kind": "detail", "cid": "KOPnizi31", "attempted_at": "2026-08-12T11:05:14.646830+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "강남 파인 크래프트 아트 클럽 전시회 展", "error": null}
+{"kind": "detail", "cid": "KOPnkfasx", "attempted_at": "2026-08-12T11:05:16.201915+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "연희 상설 공연 〈연희판판〉", "error": null}
+{"kind": "detail", "cid": "KOPnmp0dt", "attempted_at": "2026-08-12T11:05:17.751811+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "캘린더전 2024", "error": null}
+{"kind": "detail", "cid": "KOPnpbfuz", "attempted_at": "2026-08-12T11:05:19.297849+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "우리를 지켜주세요", "error": null}
+{"kind": "detail", "cid": "KOPnw33eg", "attempted_at": "2026-08-12T11:05:20.832579+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "club 설화", "error": null}
+{"kind": "detail", "cid": "KOPny8ty6", "attempted_at": "2026-08-12T11:05:22.331304+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스페인의 거장 고야: 이성이 잠들 때, 괴물이 깨어난다展", "error": null}
+{"kind": "detail", "cid": "KOPo1wsp6", "attempted_at": "2026-08-12T11:05:23.861644+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "DMAU 프로젝트 <인잇>", "error": null}
+{"kind": "detail", "cid": "KOPoig3k4", "attempted_at": "2026-08-12T11:05:25.426794+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "시공時空 시나리오", "error": null}
+{"kind": "detail", "cid": "KOPokonim", "attempted_at": "2026-08-12T11:05:26.918506+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "〈슬립노모어 서울〉 (Sleep No More Seoul)", "error": null}
+{"kind": "detail", "cid": "KOPoo9a6e", "attempted_at": "2026-08-12T11:05:28.424957+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "청계천박물관, 스물", "error": null}
+{"kind": "detail", "cid": "KOPoovshm", "attempted_at": "2026-08-12T11:05:29.961392+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한국경제인협회와 함께하는 2025 서울시립교향악단 강변음악회", "error": null}
+{"kind": "detail", "cid": "KOPotdpky", "attempted_at": "2026-08-12T11:05:31.479883+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "예술가의 연구 《미완의 식물지―이소요》, 《꽃 시계―안나 리들러》", "error": null}
+{"kind": "detail", "cid": "KOPotfyui", "attempted_at": "2026-08-12T11:05:33.038723+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국악공연 시리즈 첫번째 <일각이> ", "error": null}
+{"kind": "detail", "cid": "KOPp0vgx2", "attempted_at": "2026-08-12T11:05:34.546323+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "소운컬렉션 소중현대展 작은 것 속에 큰 것이 드러나다", "error": null}
+{"kind": "detail", "cid": "KOPp64y00", "attempted_at": "2026-08-12T11:05:36.114409+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "토이콘 서울 (TOY CON SEOUL)", "error": null}
+{"kind": "detail", "cid": "KOPpbvzoo", "attempted_at": "2026-08-12T11:05:37.617978+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "동심(童心)", "error": null}
+{"kind": "detail", "cid": "KOPpiajmm", "attempted_at": "2026-08-12T11:05:39.182016+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "보이스 오브 햄릿", "error": null}
+{"kind": "detail", "cid": "KOPpm3s33", "attempted_at": "2026-08-12T11:05:40.656466+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 국제수면치유박람회 | Sleep & Wellness Festa", "error": null}
+{"kind": "detail", "cid": "KOPpq0clc", "attempted_at": "2026-08-12T11:05:42.158375+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "정재일 콘서트 - Listen", "error": null}
+{"kind": "detail", "cid": "KOPpqthfq", "attempted_at": "2026-08-12T11:05:43.704962+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "월리를 찾아라 특별전", "error": null}
+{"kind": "detail", "cid": "KOPpuxifv", "attempted_at": "2026-08-12T11:05:45.196647+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한양도성 훼철, 한양의 경계를 허물다", "error": null}
+{"kind": "detail", "cid": "KOPpx5985", "attempted_at": "2026-08-12T11:05:46.721582+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "유의정 《The 백자 》", "error": null}
+{"kind": "detail", "cid": "KOPpx8z5o", "attempted_at": "2026-08-12T11:05:48.293026+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "김소진의 보성소리 적벽가 완창", "error": null}
+{"kind": "detail", "cid": "KOPpylv57", "attempted_at": "2026-08-12T11:05:49.781339+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "GWTF: Go with the Flow", "error": null}
+{"kind": "detail", "cid": "KOPq3sf3y", "attempted_at": "2026-08-12T11:05:51.328531+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 2NE1 CONCERT［WELCOME BACK］ IN SEOUL", "error": null}
+{"kind": "detail", "cid": "KOPq52hjp", "attempted_at": "2026-08-12T11:05:52.814471+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "가든뷰", "error": null}
+{"kind": "detail", "cid": "KOPqbt49i", "attempted_at": "2026-08-12T11:05:54.488763+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 영등포아트스퀘어 X 카이스트 경험디자인 연구실 특별전시 <Living Geometry>", "error": null}
+{"kind": "detail", "cid": "KOPqbvlpa", "attempted_at": "2026-08-12T11:05:55.973280+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "COMPANY World Affair", "error": null}
+{"kind": "detail", "cid": "KOPqfnqr2", "attempted_at": "2026-08-12T11:05:57.488648+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "기술로 이어가는 헤리티지, 가장 인간적인 미래", "error": null}
+{"kind": "detail", "cid": "KOPqft0dj", "attempted_at": "2026-08-12T11:05:59.023276+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "길드는 서로들", "error": null}
+{"kind": "detail", "cid": "KOPqgqpqj", "attempted_at": "2026-08-12T11:06:00.515799+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 궁 페스티벌", "error": null}
+{"kind": "detail", "cid": "KOPqkuw4r", "attempted_at": "2026-08-12T11:06:02.047934+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뚝섬 윈드서핑장", "error": null}
+{"kind": "detail", "cid": "KOPqljohs", "attempted_at": "2026-08-12T11:06:03.601378+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[S-TCEP]DDP 디자인 아카이브 KSVD: 1972~1993", "error": null}
+{"kind": "detail", "cid": "KOPqnwgc7", "attempted_at": "2026-08-12T11:06:05.103204+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Mood, sunday", "error": null}
+{"kind": "detail", "cid": "KOPqosaz0", "attempted_at": "2026-08-12T11:06:06.638924+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "여름식탁 : 여섯 개의 손, 하나의 식탁", "error": null}
+{"kind": "detail", "cid": "KOPqphj9g", "attempted_at": "2026-08-12T11:06:08.139470+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "글짓, 쓰는 예술", "error": null}
+{"kind": "detail", "cid": "KOPqspquw", "attempted_at": "2026-08-12T11:06:09.691405+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "스트라이크존 서울 잠실구장", "error": null}
+{"kind": "detail", "cid": "KOPquzsjk", "attempted_at": "2026-08-12T11:06:11.231527+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Always-Already-There", "error": null}
+{"kind": "detail", "cid": "KOPr1o3h2", "attempted_at": "2026-08-12T11:06:12.801367+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "수상음악 프로젝트 <웨이브>", "error": null}
+{"kind": "detail", "cid": "KOPr2k2ja", "attempted_at": "2026-08-12T11:06:14.319634+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울기록원 전시 : 어느 도시의 탑승록 ", "error": null}
+{"kind": "detail", "cid": "KOPr5aepl", "attempted_at": "2026-08-12T11:06:15.882034+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "문도 픽사(Mundo Pixar): 픽사, 상상의 세계로", "error": null}
+{"kind": "detail", "cid": "KOPr5izii", "attempted_at": "2026-08-12T11:06:17.391822+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 KISS OF LIFE 1ST WORLD TOUR ［KISS ROAD］ IN SEOUL", "error": null}
+{"kind": "detail", "cid": "KOPr5wmx4", "attempted_at": "2026-08-12T11:06:18.903884+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "창립 65주년 기념 한국경제인협회와 함께하는 2026 서울시향 강변음악회", "error": null}
+{"kind": "detail", "cid": "KOPr6qnov", "attempted_at": "2026-08-12T11:06:20.395884+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2036 서울, 두 번째 올림픽", "error": null}
+{"kind": "detail", "cid": "KOPr6uuc7", "attempted_at": "2026-08-12T11:06:21.889756+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "라이징 북서울", "error": null}
+{"kind": "detail", "cid": "KOPrflwgm", "attempted_at": "2026-08-12T11:06:23.412290+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "청계천의 낮과 밤", "error": null}
+{"kind": "detail", "cid": "KOPrfwk6e", "attempted_at": "2026-08-12T11:06:24.963538+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2023 코리아빌드위크", "error": null}
+{"kind": "detail", "cid": "KOPrisi5i", "attempted_at": "2026-08-12T11:06:26.542345+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "이길이구 갤러리", "error": null}
+{"kind": "detail", "cid": "KOPrlt4bh", "attempted_at": "2026-08-12T11:06:28.077462+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "빛의 시어터 : 달리, 끝없는 수수께끼", "error": null}
+{"kind": "detail", "cid": "KOPrnh215", "attempted_at": "2026-08-12T11:06:29.614353+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "the SamE", "error": null}
+{"kind": "detail", "cid": "KOPrpwzjs", "attempted_at": "2026-08-12T11:06:31.272511+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "홍익대학교 박물관 기획전 《백색 이후 1975-1995》", "error": null}
+{"kind": "detail", "cid": "KOPrxkd9g", "attempted_at": "2026-08-12T11:06:32.823541+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "GALLERY J. ONE", "error": null}
+{"kind": "detail", "cid": "KOPrzvy6d", "attempted_at": "2026-08-12T11:06:34.364348+00:00", "status": "SUCCESS", "n_attempts": 1, "title": " 에디 마티네즈 개인전 <투 비 컨티뉴드>", "error": null}
+{"kind": "detail", "cid": "KOPs5o5q6", "attempted_at": "2026-08-12T11:06:35.926328+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "조용진 · 황태인 <조금만 바꿔볼까?> ", "error": null}
+{"kind": "detail", "cid": "KOPs96x6t", "attempted_at": "2026-08-12T11:06:37.460419+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제주 해녀 : 사라져 가는 세계", "error": null}
+{"kind": "detail", "cid": "KOPs9gkpe", "attempted_at": "2026-08-12T11:06:39.028605+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울기록원 어린이 기록체험실 <꼬불꼬불 기록 탐험>", "error": null}
+{"kind": "detail", "cid": "KOPsbarih", "attempted_at": "2026-08-12T11:06:40.568856+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "A Magical day", "error": null}
+{"kind": "detail", "cid": "KOPsbk889", "attempted_at": "2026-08-12T11:06:42.138133+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《농담 : 내게서 번져, 당신에게 건네는》", "error": null}
+{"kind": "detail", "cid": "KOPsfb8bl", "attempted_at": "2026-08-12T11:06:43.720668+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2023 서울시립교향악단 파크 콘서트", "error": null}
+{"kind": "detail", "cid": "KOPsj8gga", "attempted_at": "2026-08-12T11:06:45.236470+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "조선 양반 접객 문화 체험 공연 '옹기콘서트' ", "error": null}
+{"kind": "detail", "cid": "KOPski6au", "attempted_at": "2026-08-12T11:06:46.818526+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Alone but Together 展", "error": null}
+{"kind": "detail", "cid": "KOPsnugjh", "attempted_at": "2026-08-12T11:06:48.455399+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2018-2022 가파도 아티스트 인 레지던스 참여작가전 《투명성: 감각과 마음》 ", "error": null}
+{"kind": "detail", "cid": "KOPsrn1p5", "attempted_at": "2026-08-12T11:06:50.013145+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울 지하철 개통 50주년 기념 전시 &lt;서울의 지하철&gt;", "error": null}
+{"kind": "detail", "cid": "KOPt1364i", "attempted_at": "2026-08-12T11:06:51.578412+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "심원의 정원 : 먹과 묵", "error": null}
+{"kind": "detail", "cid": "KOPt72ki7", "attempted_at": "2026-08-12T11:06:53.064787+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "어긋난 파동, 흔들리는 시간: 오민, 카밀 노먼트", "error": null}
+{"kind": "detail", "cid": "KOPt9l0a3", "attempted_at": "2026-08-12T11:06:54.556856+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "DDP 가을 스페셜투어 : 디자인&아트 투어", "error": null}
+{"kind": "detail", "cid": "KOPtbjmj6", "attempted_at": "2026-08-12T11:06:56.141278+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "고흐, 손 끝에 담다", "error": null}
+{"kind": "detail", "cid": "KOPtp4vgi", "attempted_at": "2026-08-12T11:06:57.663757+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "추분 : 가을의 시작", "error": null}
+{"kind": "detail", "cid": "KOPtpyykt", "attempted_at": "2026-08-12T11:06:59.143915+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "슬립노모어 서울  Sleep No More Seoul", "error": null}
+{"kind": "detail", "cid": "KOPtrioy0", "attempted_at": "2026-08-12T11:07:00.694300+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "전쟁을 겪은 어린이들의 이야기", "error": null}
+{"kind": "detail", "cid": "KOPtu01xt", "attempted_at": "2026-08-12T11:07:02.248924+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "내 손 위의 Super Moon : 달항아리 展", "error": null}
+{"kind": "detail", "cid": "KOPu1vba8", "attempted_at": "2026-08-12T11:07:03.821487+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《오픈 에어 뮤지엄_풍납토성》", "error": null}
+{"kind": "detail", "cid": "KOPu2zkva", "attempted_at": "2026-08-12T11:07:05.368271+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울시립미술관 난지미술창작스튜디오  20주년 기념전 《사랑의 기원》", "error": null}
+{"kind": "detail", "cid": "KOPu3xofd", "attempted_at": "2026-08-12T11:07:06.947206+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "PLAVE FAN CONCERT ‘Hello, Asterum!’ ENCORE", "error": null}
+{"kind": "detail", "cid": "KOPu69ib8", "attempted_at": "2026-08-12T11:07:08.433749+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "바자전 : IN-BETWEEN", "error": null}
+{"kind": "detail", "cid": "KOPua5zwq", "attempted_at": "2026-08-12T11:07:10.012998+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "[S-TCEP]뮤지컬 캣츠 내한공연-서울 (Musical CATS)", "error": null}
+{"kind": "detail", "cid": "KOPubcv55", "attempted_at": "2026-08-12T11:07:11.508315+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "SeMA 옴니버스 &lt;끝없이 갈라지는 세계의 끝에서&gt;", "error": null}
+{"kind": "detail", "cid": "KOPuf1clc", "attempted_at": "2026-08-12T11:07:13.045014+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "타카하타 이사오전", "error": null}
+{"kind": "detail", "cid": "KOPup1c05", "attempted_at": "2026-08-12T11:07:14.593193+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "국립정동극장 세실", "error": null}
+{"kind": "detail", "cid": "KOPv4bofj", "attempted_at": "2026-08-12T11:07:16.131124+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "감사의 정원", "error": null}
+{"kind": "detail", "cid": "KOPv5q129", "attempted_at": "2026-08-12T11:07:17.705125+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마음의 사귐, 여운이 물결처럼", "error": null}
+{"kind": "detail", "cid": "KOPv7nwyv", "attempted_at": "2026-08-12T11:07:19.293992+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Play with K", "error": null}
+{"kind": "detail", "cid": "KOPvgjqek", "attempted_at": "2026-08-12T11:07:20.820114+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "도봉 김선영 개인전 「이, 별에 서서」展", "error": null}
+{"kind": "detail", "cid": "KOPvgrv8o", "attempted_at": "2026-08-12T11:07:22.398981+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 〈로빈〉", "error": null}
+{"kind": "detail", "cid": "KOPvi3cne", "attempted_at": "2026-08-12T11:07:23.896090+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Happy Holidays", "error": null}
+{"kind": "detail", "cid": "KOPvp4h52", "attempted_at": "2026-08-12T11:07:25.387712+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제1회 한별아트페어ㅣ여여자연 如如自然", "error": null}
+{"kind": "detail", "cid": "KOPvtrfxs", "attempted_at": "2026-08-12T11:07:26.952218+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "오지윤(Oh Jiyoon) 개인展, 《존엄: 축적된 시간》", "error": null}
+{"kind": "detail", "cid": "KOPvvlkpy", "attempted_at": "2026-08-12T11:07:28.459170+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 성시경 with friends ［자, 오늘은］", "error": null}
+{"kind": "detail", "cid": "KOPvvsy1q", "attempted_at": "2026-08-12T11:07:29.945268+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Someday Festival 2024", "error": null}
+{"kind": "detail", "cid": "KOPvwyyh4", "attempted_at": "2026-08-12T11:07:31.434395+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뮤지컬 킹키부츠", "error": null}
+{"kind": "detail", "cid": "KOPw0mro9", "attempted_at": "2026-08-12T11:07:32.925217+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "상자루 <플러그 인 남산>", "error": null}
+{"kind": "detail", "cid": "KOPw7lepl", "attempted_at": "2026-08-12T11:07:34.466471+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "페르난도 보테로: 형태의 미학", "error": null}
+{"kind": "detail", "cid": "KOPw9eym0", "attempted_at": "2026-08-12T11:07:35.968275+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "달마사", "error": null}
+{"kind": "detail", "cid": "KOPwamqsm", "attempted_at": "2026-08-12T11:07:37.536470+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울 가족 삼대 결혼 이야기", "error": null}
+{"kind": "detail", "cid": "KOPwdbw7j", "attempted_at": "2026-08-12T11:07:39.105292+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Everything Dance Hall", "error": null}
+{"kind": "detail", "cid": "KOPwgc1w7", "attempted_at": "2026-08-12T11:07:40.656234+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "20 Episodes of her 展", "error": null}
+{"kind": "detail", "cid": "KOPwglig5", "attempted_at": "2026-08-12T11:07:42.149673+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "소원을 말해봐", "error": null}
+{"kind": "detail", "cid": "KOPwly2p0", "attempted_at": "2026-08-12T11:07:43.698465+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026년 1월~2월 어둠속의 대화", "error": null}
+{"kind": "detail", "cid": "KOPwo1ido", "attempted_at": "2026-08-12T11:07:45.186179+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "여의도 눈썰매장", "error": null}
+{"kind": "detail", "cid": "KOPwpc03s", "attempted_at": "2026-08-12T11:07:46.729149+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "볼 빨간 돼지의 종이 모험", "error": null}
+{"kind": "detail", "cid": "KOPwqfyfs", "attempted_at": "2026-08-12T11:07:48.266795+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "더, 자연스러운 展 ", "error": null}
+{"kind": "detail", "cid": "KOPwsz1hv", "attempted_at": "2026-08-12T11:07:49.800891+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Beauty For All : 경계 없는 아름다움", "error": null}
+{"kind": "detail", "cid": "KOPx0x7wx", "attempted_at": "2026-08-12T11:07:51.352254+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "뱅크시 : Still Here", "error": null}
+{"kind": "detail", "cid": "KOPx138ls", "attempted_at": "2026-08-12T11:07:52.879809+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "거안", "error": null}
+{"kind": "detail", "cid": "KOPx2ckxb", "attempted_at": "2026-08-12T11:07:54.436322+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "광복80주년 가나아트컬렉션 특별전 《서시: 별을 노래하는 마음으로》", "error": null}
+{"kind": "detail", "cid": "KOPx2foc9", "attempted_at": "2026-08-12T11:07:55.944401+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "광야@서울", "error": null}
+{"kind": "detail", "cid": "KOPx61vzb", "attempted_at": "2026-08-12T11:07:57.640180+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "박현성, 윤석원 <어저께의 나머지에 오늘을 붙여 : The rest of today going to tomorrow>", "error": null}
+{"kind": "detail", "cid": "KOPx9hgr2", "attempted_at": "2026-08-12T11:07:59.233333+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "마리아 스바르보바 : 어제의 미래 展", "error": null}
+{"kind": "detail", "cid": "KOPxa3w2o", "attempted_at": "2026-08-12T11:08:00.759596+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "간송미술관", "error": null}
+{"kind": "detail", "cid": "KOPxj9byw", "attempted_at": "2026-08-12T11:08:02.321950+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리 지우헌", "error": null}
+{"kind": "detail", "cid": "KOPxjlehm", "attempted_at": "2026-08-12T11:08:03.878324+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "안양천", "error": null}
+{"kind": "detail", "cid": "KOPxl8ya1", "attempted_at": "2026-08-12T11:08:05.429743+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "<예술과 함께 쑥쑥! 아이프칠드런 성장축제>  AiF children 2nd Anniversary 𝙎𝙋𝙀𝘾𝙄𝘼𝙇 𝘼𝙍𝙏 𝙁𝙀𝙎𝙏𝘼", "error": null}
+{"kind": "detail", "cid": "KOPxp3cfn", "attempted_at": "2026-08-12T11:08:06.907198+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2024 젊은국악 단장 ", "error": null}
+{"kind": "detail", "cid": "KOPxrmedb", "attempted_at": "2026-08-12T11:08:08.447145+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "군기시유적전시실", "error": null}
+{"kind": "detail", "cid": "KOPxua216", "attempted_at": "2026-08-12T11:08:09.976329+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "갤러리모순", "error": null}
+{"kind": "detail", "cid": "KOPxv4p1y", "attempted_at": "2026-08-12T11:08:11.517378+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "무한기둥-확산", "error": null}
+{"kind": "detail", "cid": "KOPxwctrd", "attempted_at": "2026-08-12T11:08:13.026438+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "자연을 훔친 붓질 (Gesture Beyond the Canvas) 展 ", "error": null}
+{"kind": "detail", "cid": "KOPxzn4e4", "attempted_at": "2026-08-12T11:08:14.556556+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "행복이 오는 전시 (Where Happiness Arrives)", "error": null}
+{"kind": "detail", "cid": "KOPy1hneb", "attempted_at": "2026-08-12T11:08:16.129141+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "하루키를 말할 때 우리가 하고 싶은 이야기", "error": null}
+{"kind": "detail", "cid": "KOPy3qot3", "attempted_at": "2026-08-12T11:08:17.661095+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2026 돈화문 국악위크 <사이… 소리… 숨…>", "error": null}
+{"kind": "detail", "cid": "KOPy89nt5", "attempted_at": "2026-08-12T11:08:19.202229+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "다시, 그리다展", "error": null}
+{"kind": "detail", "cid": "KOPy8r22r", "attempted_at": "2026-08-12T11:08:20.785086+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "서울라이트 DDP 2025 가을", "error": null}
+{"kind": "detail", "cid": "KOPyfebh0", "attempted_at": "2026-08-12T11:08:22.364736+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 창경궁 물빛연화", "error": null}
+{"kind": "detail", "cid": "KOPyfsp0k", "attempted_at": "2026-08-12T11:08:23.888853+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "손길모양", "error": null}
+{"kind": "detail", "cid": "KOPyie8if", "attempted_at": "2026-08-12T11:08:25.515053+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제4회 서울도시건축비엔날레", "error": null}
+{"kind": "detail", "cid": "KOPyst2iu", "attempted_at": "2026-08-12T11:08:27.065656+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "클림트와 라치오디의 기적", "error": null}
+{"kind": "detail", "cid": "KOPytf3yk", "attempted_at": "2026-08-12T11:08:28.568848+00:00", "status": "SUCCESS", "n_attempts": 1, "title": " 2025 Summer Project 《허윤희: 영원은 순간 속에》 -HUH, Yun-hee: The Eternal within a Moment-", "error": null}
+{"kind": "detail", "cid": "KOPyw61fy", "attempted_at": "2026-08-12T11:08:30.166322+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "청색변주 Blue Variations", "error": null}
+{"kind": "detail", "cid": "KOPyy3nfg", "attempted_at": "2026-08-12T11:08:31.673896+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025서울아트쇼", "error": null}
+{"kind": "detail", "cid": "KOPz20943", "attempted_at": "2026-08-12T11:08:33.146392+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한 권의 책에서 온 세계로, K-콘텐츠: K-BOOK to the WORLD", "error": null}
+{"kind": "detail", "cid": "KOPz5kf0x", "attempted_at": "2026-08-12T11:08:34.679286+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "로카 3주년 기념 사진전 : 뉴욕을 걷다", "error": null}
+{"kind": "detail", "cid": "KOPz8531l", "attempted_at": "2026-08-12T11:08:36.243197+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "윤기와 구홍의 <구홍과 윤기> Yoonkee & Guhong's Guhong & Yoonkee", "error": null}
+{"kind": "detail", "cid": "KOPza4e3a", "attempted_at": "2026-08-12T11:08:37.793398+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "올리브베러 광화문점", "error": null}
+{"kind": "detail", "cid": "KOPzcpf02", "attempted_at": "2026-08-12T11:08:39.415864+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "삼세영", "error": null}
+{"kind": "detail", "cid": "KOPzd1i95", "attempted_at": "2026-08-12T11:08:40.996487+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "〈한복 입은 남자〉", "error": null}
+{"kind": "detail", "cid": "KOPzef7ak", "attempted_at": "2026-08-12T11:08:42.491049+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "황홀한 증식 : Euphoric Proliferation", "error": null}
+{"kind": "detail", "cid": "KOPzeh3y8", "attempted_at": "2026-08-12T11:08:44.071297+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 ＆TEAM CONCERT TOUR ‘AWAKEN THE BLOODLINE’ in SEOUL", "error": null}
+{"kind": "detail", "cid": "KOPzgws5p", "attempted_at": "2026-08-12T11:08:45.578915+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "《Imagination Garden : Fantasy Time》  展 ", "error": null}
+{"kind": "detail", "cid": "KOPzm8tt4", "attempted_at": "2026-08-12T11:08:47.101836+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "조민열  Blue, Hidden, Nature", "error": null}
+{"kind": "detail", "cid": "KOPzncurn", "attempted_at": "2026-08-12T11:08:48.684806+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "한지가헌 도슨트 프로그램ￜ상설체험프로그램ￜ한지인화소", "error": null}
+{"kind": "detail", "cid": "KOPzpe3qy", "attempted_at": "2026-08-12T11:08:50.194867+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제65주년 4·19혁명 서울시 기념음악회", "error": null}
+{"kind": "detail", "cid": "KOPztit27", "attempted_at": "2026-08-12T11:08:51.706128+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제5회 서울도시건축비엔날레", "error": null}
+{"kind": "detail", "cid": "KOPzx9rx4", "attempted_at": "2026-08-12T11:08:53.267936+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "2025 서울무형문화축제", "error": null}
+{"kind": "detail", "cid": "KOPzyabwl", "attempted_at": "2026-08-12T11:08:54.881017+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "Smile Keeper 展", "error": null}
+{"kind": "detail", "cid": "KOPzyjusk", "attempted_at": "2026-08-12T11:08:56.407933+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "제10회 한일포토콘테스트 수상작품전 (김포국제공항)", "error": null}
+{"kind": "detail", "cid": "KOPc3g5o6", "attempted_at": "2026-08-12T11:08:57.116379+00:00", "status": "SUCCESS", "n_attempts": 2, "title": "서울, 세계와 노래하다", "error": null}
+{"kind": "detail", "cid": "KOPgdf9ry", "attempted_at": "2026-08-12T11:09:00.949366+00:00", "status": "SUCCESS", "n_attempts": 1, "title": "파인캐릭터 2026 (FineCharacter 2026)", "error": null}
