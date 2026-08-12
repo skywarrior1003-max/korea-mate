@@ -630,7 +630,19 @@
     "notFound": "場所が見つかりませんでした。",
     "updateFailed": "更新できませんでした。もう一度お試しください。",
     "submitFailed": "送信できませんでした。",
-    "alreadyInDay": "その日の旅程にすでにあります。"
+    "alreadyInDay": "その日の旅程にすでにあります。",
+    "optionalSuffix": "（任意）",
+    "useMyLocation": "現在地を使う",
+    "locating": "現在地を取得中…",
+    "locationSet": "現在地を追加しました",
+    "locationClear": "現在地を削除",
+    "locationDenied": "位置情報の許可が拒否されました。代わりに名前を入力できます。",
+    "locationFailed": "現在地を取得できませんでした。代わりに名前を入力できます。",
+    "locationHint": "この場所を示すために一度だけ使います。追跡はしません。",
+    "needNameOrPlace": "名前を入力するか、現在地を使ってください。",
+    "displayFallback": "自分の場所",
+    "submitNeedsName": "審査に出す前に名前を入力してください。",
+    "fieldLocation": "位置"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",

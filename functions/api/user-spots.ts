@@ -82,9 +82,12 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   if (!read.ok) return json({ error: read.error }, read.status);
   const body = read.body as Record<string, unknown>;
 
-  // name 필수
+  // 최소 식별 계약 — 이름이 있거나, 좌표가 짝으로 있거나.
+  //
+  // 예전에는 name 만 필수였다. 그러면 "여기, 이 자리" 라고만 말하고 싶은
+  // 장소를 담을 수 없다. 반대로 아무 조건도 없으면 나중에 아무도 알아볼 수
+  // 없는 빈 행이 남는다. DB CHECK(047)도 같은 규칙을 건다.
   const name = str(body.name, 300);
-  if (!name) return json({ error: "name is required" }, 400);
 
   // category 검증
   const category = str(body.category, 50);
@@ -94,9 +97,9 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
 
   const row: Record<string, unknown> = {
     device_id:  deviceId,
-    name,
     updated_at: new Date().toISOString(),
   };
+  if (name) row.name = name;
 
   if (category)                    row.category  = category;
   const city     = optStr(body.city,      100); if (city)     row.city      = city;
@@ -113,6 +116,19 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     if (typeof body.lng !== "number") return json({ error: "lng must be a finite number" }, 400);
     if (!isFinite(body.lng) || body.lng < -180 || body.lng > 180) return json({ error: "lng must be between -180 and 180" }, 400);
     row.lng = body.lng;
+  }
+
+  // 좌표는 짝으로만 — 한쪽만 있으면 지도에 찍을 수도 고칠 수도 없다.
+  const hasLat = row.lat !== undefined;
+  const hasLng = row.lng !== undefined;
+  if (hasLat !== hasLng) {
+    return json({ error: "lat and lng must be provided together" }, 400);
+  }
+
+  // 최소 식별 계약 판정. DB CHECK 가 잡기 전에 여기서 정상 validation 으로
+  // 돌려준다 — 사용자에게 DB 제약 위반 500 을 보여주지 않는다.
+  if (!name && !(hasLat && hasLng)) {
+    return json({ error: "Provide a name, or a location (lat and lng)" }, 400);
   }
 
   let admin;

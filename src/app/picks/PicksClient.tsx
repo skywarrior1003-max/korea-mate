@@ -22,9 +22,11 @@ import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
   type UserSpot,
+  userSpotDisplayName,
 } from "@/lib/user-spots-api";
 import { trackEvent } from "@/lib/analytics";
 import UserSpotForm, {
+  hasMinimumIdentity,
   EMPTY_USER_SPOT_FORM,
   type UserSpotFormState,
 } from "@/components/UserSpotForm";
@@ -42,14 +44,14 @@ const CATEGORY_EMOJI: Record<string, string> = {
 };
 
 /** user_spots 행을 Cart 항목으로 — 좌표가 없으므로 일정 배치는 보관함을 거친다. */
-function userSpotToEvent(s: UserSpot): EventItem {
+function userSpotToEvent(s: UserSpot, displayName: string): EventItem {
   return {
     id: `user_spot-${s.id}`,
     sourceKey: `user_spot:${s.id}`,
     type: s.category || "attraction",
     isAnchor: false, journeyCluster: null, stage: "", anchorEventId: null,
     relatedSpotIds: [], relatedSurvivalGuides: [], transitFromAnchor: null,
-    name: s.name, shortName: s.name, tags: [],
+    name: displayName, shortName: displayName, tags: [],
     city: s.city ?? "", district: "", address: s.address ?? "",
     mapUrl: "", description: s.note ?? "", whyItMatters: "",
     recommendedDurationMinutes: 60, bestTimeSlot: "", openingHours: null,
@@ -141,9 +143,10 @@ function PicksContent() {
   }
   function openEdit(s: UserSpot) {
     setForm({
-      name: s.name,
+      name: s.name ?? "",
       category: (s.category as UserSpotFormState["category"]) || "attraction",
       address: s.address ?? "", note: s.note ?? "",
+      lat: s.lat ?? null, lng: s.lng ?? null,
     });
     setFormError(null); setShowCreate(false); setEditingId(s.id);
   }
@@ -154,15 +157,18 @@ function PicksContent() {
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError(t("nameRequired")); return; }
+    // 이름이 없어도 좌표가 있으면 저장할 수 있다. 둘 다 없을 때만 막는다.
+    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
     setSubmitting(true); setFormError(null);
     try {
       await apiCreateUserSpot({
-        name,
+        name:     name || undefined,
         category: form.category,
         address:  form.address.trim() || undefined,
         note:     form.note.trim()    || undefined,
+        lat:      form.lat ?? undefined,
+        lng:      form.lng ?? undefined,
       });
       closeForm();
       loadMine();                       // 서버 응답을 진실로 삼는다
@@ -176,15 +182,17 @@ function PicksContent() {
   async function handleEdit(e: React.FormEvent, spot: UserSpot) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError(t("nameRequired")); return; }
+    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
     setSubmitting(true); setFormError(null);
     try {
       const ok = await apiUpdateUserSpot(spot.id, {
-        name,
+        name:     name || null,
         category: form.category,
         address:  form.address.trim() || undefined,
         note:     form.note.trim()    || undefined,
+        lat:      form.lat,
+        lng:      form.lng,
       });
       if (!ok) { setFormError(t("saveFailed")); return; }
       closeForm();
@@ -589,7 +597,9 @@ function PicksContent() {
               ) : (
                 <ul className="flex flex-col gap-3">
                   {mine.map(s => {
-                    const ev = userSpotToEvent(s);
+                    // 이름 없는 장소도 This Trip 카드에는 부를 이름이 있어야 한다.
+                    const display = userSpotDisplayName(s, t("displayFallback"));
+                    const ev = userSpotToEvent(s, display);
                     const already = selectedKeys.has(getItemSourceKey(ev));
                     return (
                       <li key={s.id}>
@@ -607,7 +617,7 @@ function PicksContent() {
                             <>
                               <div className="flex items-start justify-between gap-3">
                                 <div className="min-w-0">
-                                  <p className="font-semibold text-ink text-[15px]">{s.name}</p>
+                                  <p className="font-semibold text-ink text-[15px]">{display}</p>
                                   <p className="text-xs text-faint mt-0.5">
                                     {[s.category, s.city, s.address].filter(Boolean).join(" · ")}
                                   </p>
@@ -624,7 +634,7 @@ function PicksContent() {
                                   {already ? `✓ ${t("inSelected")}` : `+ ${t("addToSelected")}`}
                                 </button>
                                 <span className="flex-1" />
-                                <Button variant="icon" aria-label={`${t("edit")}: ${s.name}`} onClick={() => openEdit(s)}>✏️</Button>
+                                <Button variant="icon" aria-label={`${t("edit")}: ${display}`} onClick={() => openEdit(s)}>✏️</Button>
                                 {confirmId === s.id ? (
                                   <button
                                     onClick={() => void handleDelete(s.id)}
@@ -634,7 +644,7 @@ function PicksContent() {
                                     {deletingId === s.id ? t("deleting") : t("confirmDelete")}
                                   </button>
                                 ) : (
-                                  <Button variant="icon" aria-label={`${t("delete")}: ${s.name}`} onClick={() => setConfirmId(s.id)}>🗑️</Button>
+                                  <Button variant="icon" aria-label={`${t("delete")}: ${display}`} onClick={() => setConfirmId(s.id)}>🗑️</Button>
                                 )}
                               </div>
                             </>

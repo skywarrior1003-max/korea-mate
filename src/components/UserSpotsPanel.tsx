@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { userSpotDisplayName } from "@/lib/user-spots-api";
+import { hasMinimumIdentity } from "@/components/UserSpotForm";
 import UserSpotForm, {
   EMPTY_USER_SPOT_FORM,
   type UserSpotCategory,
@@ -149,25 +151,30 @@ export default function UserSpotsPanel({
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError(t("nameRequired")); return; }
+    // 이름이 없어도 좌표가 있으면 저장한다. 둘 다 없을 때만 막는다.
+    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
     setSubmitting(true);
     setFormError(null);
     try {
       const created = await apiCreateUserSpot({
-        name,
+        name: name || undefined,
         category: form.category,
         city:     city || undefined,
         address:  form.address.trim() || undefined,
         note:     form.note.trim()    || undefined,
+        lat:      form.lat ?? undefined,
+        lng:      form.lng ?? undefined,
       });
       setSpots(prev => [{
         id:         created.id,
-        name,
+        name:       name || null,
         category:   form.category,
         city:       city || undefined,
         address:    form.address.trim() || undefined,
         note:       form.note.trim()    || undefined,
+        lat:        form.lat ?? undefined,
+        lng:        form.lng ?? undefined,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }, ...prev]);
@@ -184,10 +191,12 @@ export default function UserSpotsPanel({
 
   function openEdit(spot: UserSpot) {
     setForm({
-      name:     spot.name,
+      name:     spot.name ?? "",
       category: (spot.category as CategoryValue) || "attraction",
       address:  spot.address ?? "",
       note:     spot.note    ?? "",
+      lat:      spot.lat ?? null,
+      lng:      spot.lng ?? null,
     });
     setFormError(null);
     setShowCreate(false);
@@ -198,25 +207,29 @@ export default function UserSpotsPanel({
   async function handleEdit(e: React.FormEvent, spot: UserSpot) {
     e.preventDefault();
     const name = form.name.trim();
-    if (!name) { setFormError(t("nameRequired")); return; }
+    if (!hasMinimumIdentity(form)) { setFormError(t("needNameOrPlace")); return; }
     if (submitting) return;
     setSubmitting(true);
     setFormError(null);
     try {
       const input: UpdateUserSpotInput = {
-        name,
+        name: name || null,
         category: form.category,
         // Empty string → null (clear DB value), value → update
         address: form.address.trim() || null,
         note:    form.note.trim()    || null,
+        lat:     form.lat,
+        lng:     form.lng,
       };
       const ok = await apiUpdateUserSpot(spot.id, input);
       if (!ok) { setFormError(t("notFound")); return; }
       setSpots(prev => prev.map(s => s.id !== spot.id ? s : {
         ...s,
-        name:     input.name,
+        name:     input.name === undefined ? s.name : (input.name || null),
         category: input.category,
         address:  input.address  === null ? undefined : (input.address ?? s.address),
+        lat:      input.lat === null ? undefined : (input.lat ?? s.lat),
+        lng:      input.lng === null ? undefined : (input.lng ?? s.lng),
         note:     input.note     === null ? undefined : (input.note    ?? s.note),
         updated_at: new Date().toISOString(),
       }));
@@ -413,7 +426,7 @@ export default function UserSpotsPanel({
                   <div className="flex items-start gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-sm font-black text-[#191C21] truncate">{spot.name}</span>
+                        <span className="text-sm font-black text-[#191C21] truncate">{userSpotDisplayName(spot, t("displayFallback"))}</span>
                         <span className="text-[10px] font-bold bg-[#F6F7F8] text-[#565D66] px-1.5 py-0.5 rounded capitalize shrink-0">
                           {spot.category || "attraction"}
                         </span>

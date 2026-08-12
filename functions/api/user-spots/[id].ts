@@ -91,9 +91,11 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   if (!read.ok) return json({ error: read.error }, read.status);
   const body = read.body as Record<string, unknown>;
 
-  // name 필수
+  // name 은 3-state 다: 생략=유지 · null 또는 빈 문자열=지움 · 문자열=교체.
+  // 최소 식별 계약은 아래에서 **기존 행과 합친 최종 상태**로 판정한다 —
+  // payload 만 보면 "이름을 지워도 되는가" 에 답할 수 없기 때문이다.
+  const nameTouched = body.name !== undefined;
   const name = str(body.name, 300);
-  if (!name) return json({ error: "name is required" }, 400);
 
   // category 검증
   const category = str(body.category, 50);
@@ -102,9 +104,9 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   }
 
   const row: Record<string, unknown> = {
-    name,
     updated_at: new Date().toISOString(),
   };
+  if (nameTouched) row.name = name || null;
 
   if (category)                    row.category  = category;
   const city     = nullableStr(body.city,      100); if (city !== undefined)     row.city      = city;
@@ -128,6 +130,34 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   let admin;
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
+
+  // ── 최종 상태 검증 ────────────────────────────────────────────────────────
+  // 소유한 기존 행을 먼저 읽어 patch 를 얹은 결과를 만든다. 이름이 있던 행에서
+  // 이름만 지우는 요청은 그 행에 좌표가 있을 때만 안전하다.
+  const { data: current, error: readErr } = await admin
+    .from("user_spots")
+    .select("name, lat, lng")
+    .eq("id", id)
+    .eq("device_id", deviceId)
+    .maybeSingle();
+
+  if (readErr) {
+    console.error("[user-spots/:id PUT] read error:", readErr.code);
+    return json({ error: "Failed to update spot" }, 500);
+  }
+  if (!current) return json({ error: "Not found or permission denied" }, 404);
+
+  const cur = current as { name: string | null; lat: number | null; lng: number | null };
+  const finalName = (row.name !== undefined ? row.name : cur.name) as string | null;
+  const finalLat  = (row.lat  !== undefined ? row.lat  : cur.lat)  as number | null;
+  const finalLng  = (row.lng  !== undefined ? row.lng  : cur.lng)  as number | null;
+
+  if ((finalLat === null) !== (finalLng === null)) {
+    return json({ error: "lat and lng must be provided together" }, 400);
+  }
+  if (!(finalName ?? "").trim() && finalLat === null) {
+    return json({ error: "Provide a name, or a location (lat and lng)" }, 400);
+  }
 
   const { data, error } = await admin
     .from("user_spots")

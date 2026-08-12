@@ -5,9 +5,30 @@ import { getDeviceId } from "@/lib/deviceId";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
+/**
+ * 화면에 쓸 이름. 사용자가 이름을 적지 않은 장소도 있어서, 목록이 빈 줄로
+ * 보이지 않게 여기서 한 번만 정한다.
+ *
+ * 이 값은 절대 저장하지 않는다. 저장하면 우리가 지어낸 이름이 그 장소의
+ * 진짜 이름인 것처럼 굳는다. 화면에 그릴 때만 쓴다.
+ *
+ * 순서: 사용자가 적은 이름 → 사용자가 적은 주소 → 중립적인 기본 문구
+ */
+export function userSpotDisplayName(
+  spot: { name?: string | null; address?: string | null },
+  fallback: string,
+): string {
+  const name = (spot.name ?? "").trim();
+  if (name) return name;
+  const address = (spot.address ?? "").trim();
+  if (address) return address;
+  return fallback;
+}
+
 export interface UserSpot {
   id:                 string;
-  name:               string;
+  /** 사용자가 적지 않았으면 없다. 화면에는 userSpotDisplayName 을 쓴다. */
+  name:               string | null;
   city?:              string;
   address?:           string;
   lat?:               number;
@@ -20,8 +41,10 @@ export interface UserSpot {
   submission_status?: "none" | "pending" | "approved" | "rejected";
 }
 
+// 최소 식별 계약: name 또는 (lat AND lng). 서버와 DB CHECK 가 같은 규칙을
+// 검사하므로 여기서 name 을 optional 로 열어도 빈 행은 만들어지지 않는다.
 export interface CreateUserSpotInput {
-  name:      string;
+  name?:     string;
   category?: string;
   city?:     string;
   address?:  string;
@@ -31,11 +54,20 @@ export interface CreateUserSpotInput {
 }
 
 // PUT 3-state: undefined=keep, null=clear, string=update
+//
+// 좌표도 같은 3-state 로 고칠 수 있어야 한다. 생성 때만 넣을 수 있고 이후에
+// 못 고치면, 좌표만 있는 장소는 영원히 그 좌표에 묶인다.
+//
+// 최소 식별 계약은 payload 만 봐서는 판정할 수 없다. 서버가 기존 행과 합친
+// **최종 상태**를 보고 결정한다 — name 을 지우는 요청이 안전한지는 그 행에
+// 좌표가 있는지에 달려 있기 때문이다.
 export interface UpdateUserSpotInput {
-  name:      string;
+  name?:     string | null;
   category?: string;
   address?:  string | null;
   note?:     string | null;
+  lat?:      number | null;
+  lng?:      number | null;
 }
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
@@ -83,7 +115,10 @@ export async function apiCreateUserSpot(
   const deviceId = getDeviceId();
 
   // Whitelist body — no spread to prevent field injection
-  const body: Record<string, unknown> = { name: input.name };
+  // name 은 이제 선택이다. 값이 없으면 아예 보내지 않는다 — 빈 문자열을
+  // 이름으로 저장하면 화면에는 이름이 없는데 DB 에는 있는 상태가 된다.
+  const body: Record<string, unknown> = {};
+  if (input.name     !== undefined) body.name      = input.name;
   if (input.category !== undefined) body.category = input.category;
   if (input.city     !== undefined) body.city      = input.city;
   if (input.address  !== undefined) body.address   = input.address;
@@ -127,11 +162,16 @@ export async function apiUpdateUserSpot(
   const deviceId = getDeviceId();
 
   // Whitelist body — null values intentionally sent to clear DB fields
-  const body: Record<string, unknown> = { name: input.name };
+  const body: Record<string, unknown> = {};
+  // name·address·note·lat·lng 는 3-state 다: undefined=유지 · null=지움 · 값=교체.
+  // 서버가 기존 행과 합쳐 최소 식별 계약을 판정하므로, 지우려는 의도를 그대로
+  // 실어 보내야 한다. 여기서 undefined 로 뭉개면 "이름을 지웠다" 가 전달되지 않는다.
+  if (input.name     !== undefined) body.name     = input.name;
   if (input.category !== undefined) body.category = input.category;
-  // address and note: undefined=keep, null=clear, string=update
-  if (input.address !== undefined) body.address = input.address;
-  if (input.note    !== undefined) body.note    = input.note;
+  if (input.address  !== undefined) body.address  = input.address;
+  if (input.note     !== undefined) body.note     = input.note;
+  if (input.lat      !== undefined) body.lat      = input.lat;
+  if (input.lng      !== undefined) body.lng      = input.lng;
 
   let res: Response | null = null;
   try {

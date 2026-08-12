@@ -34,6 +34,7 @@ import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 import UserSpotsPanel from "@/components/UserSpotsPanel";
+import { userSpotDisplayName } from "@/lib/user-spots-api";
 import ItineraryDayMap from "@/components/ItineraryDayMap";
 import { visitedStorageKey, visitedPlaceKey } from "@/lib/visited";
 import PublishPreviewModal from "@/components/PublishPreviewModal";
@@ -967,6 +968,8 @@ function ItineraryResult() {
   const t = useTranslations("itin");
   const tMemo = useTranslations("memo");
   const tPlanner = useTranslations("planner");
+  // My Place 표시 이름 fallback 에 쓴다 (picks 네임스페이스 공용).
+  const tPicks = useTranslations("picks");
   const locale = useLocale();
   const [itinId,      setItinId]      = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
@@ -1620,8 +1623,10 @@ function ItineraryResult() {
   // ── user_spot → 현재 editDay에 추가 (PHASE 1) ────────────────
   function addUserSpotToDay(userSpot: UserSpot, selectedTime: string, slot: string) {
     const newPlace: Place = {
-      name:          userSpot.name,
-      title:         userSpot.name,
+      // 이름 없는 My Place 도 일정 카드에는 부를 이름이 있어야 한다.
+      // 원본 user_spot 에는 아무것도 쓰지 않는다 — 화면에서만 정한다.
+      name:          userSpotDisplayName(userSpot, tPicks("displayFallback")),
+      title:         userSpotDisplayName(userSpot, tPicks("displayFallback")),
       source:        "user_spot",
       place_id:      userSpot.id,
       sourceKey:     userSpotSourceKey(userSpot.id),

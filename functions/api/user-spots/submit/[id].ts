@@ -53,7 +53,7 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   // 1. 현재 장소 조회 (소유자 확인)
   const { data: spot, error: fetchErr } = await admin
     .from("user_spots")
-    .select("id, submission_status")
+    .select("id, name, submission_status")
     .eq("id", id)
     .eq("device_id", deviceId)
     .maybeSingle();
@@ -64,7 +64,18 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   }
   if (!spot) return json({ error: "Not found" }, 404);
 
-  const current = (spot as { submission_status: string }).submission_status;
+  const row = spot as { name: string | null; submission_status: string };
+  const current = row.submission_status;
+
+  // 1-b. 공개 제출에는 사람이 알아볼 이름이 있어야 한다.
+  //
+  // private My Place 는 좌표만으로도 존재할 수 있다(047). 하지만 공개로
+  // 나가는 순간 다른 사람이 목록에서 그것을 알아봐야 하고, 게시 RPC 도
+  // name 을 요구한다. 그 이름은 사용자가 적은 것이어야 한다 — 우리가
+  // 좌표나 주소로 지어내지 않는다.
+  if (!(row.name ?? "").trim()) {
+    return json({ error: "Add a name before submitting this place for review" }, 400);
+  }
 
   // 2. 상태 검증
   if (current === "pending")  return json({ error: "Already submitted for review" }, 409);

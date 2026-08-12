@@ -630,7 +630,19 @@
     "notFound": "Place not found.",
     "updateFailed": "Could not update. Please try again.",
     "submitFailed": "Could not submit.",
-    "alreadyInDay": "This place is already in that day."
+    "alreadyInDay": "This place is already in that day.",
+    "optionalSuffix": "(optional)",
+    "useMyLocation": "Use my current location",
+    "locating": "Getting your location…",
+    "locationSet": "Location added",
+    "locationClear": "Remove location",
+    "locationDenied": "Location permission was declined. You can still add a name instead.",
+    "locationFailed": "Could not get your location. You can still add a name instead.",
+    "locationHint": "Used once, only to mark this place. Nothing is tracked.",
+    "needNameOrPlace": "Add a name, or use your current location.",
+    "displayFallback": "My place",
+    "submitNeedsName": "Add a name before submitting this place for review.",
+    "fieldLocation": "Location"
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",
