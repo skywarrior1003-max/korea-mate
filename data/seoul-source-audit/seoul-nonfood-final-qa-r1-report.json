@@ -1,0 +1,909 @@
+{
+  "task": "TASK-SEOUL-NONFOOD-FINAL-QA-R1",
+  "as_of": "2026-08-13",
+  "s1a_html_residue": {
+    "total": 16,
+    "TITLE_MARKUP_FALSE_POSITIVE": 13,
+    "TEXT_CLEANUP_REQUIRED": 3,
+    "detail": {
+      "KOP16izx7": {
+        "title": "김지희 개인전 DIVINITY",
+        "desc_sample": "를 개최한다. 안경을 쓴 소녀와 동물 이미지로 국내외에 알려진 김지희 작가는 특히 중국, 홍콩, 대만 등 중화권에서 큰 인기를 얻어온 작가이다.",
+        "has_real_html": true,
+        "real_hits_sample": [
+          "\"}\">",
+          "\"}\">",
+          "\"}\">"
+        ],
+        "verdict": "TEXT_CLEANUP_REQUIRED"
+      },
+      "KOP1wimla": {
+        "title": "BEAUTY, TRANSLATED",
+        "desc_sample": "비더비는 서울의 매력적인 뷰티 브랜드를 B the B만의 감각으로 큐레이팅한 상설 전시 공간입니다. 쉽게 만나볼 수 없던 AI 기반의 뷰티테크 ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOP2fcbi7": {
+        "title": "Rest and Rise : 남겨진 것과 떠오른 것들",
+        "desc_sample": "남겨진 것들은 사라지지 않고, 고요히 머물며 또 다른 숨을 쉽니다. 흙과 금속, 작은 파편 속에 스민 시간은 우리 곁에 쉼이 되어 다가옵니다. ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOP2ite3z": {
+        "title": "호국보훈의 달 기념 공연 <영웅에게>",
+        "desc_sample": "호국보훈의 달 기념 공연 <영웅에게> Honoring Our Heroes: Patriots and Veterans Month Performanc",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOP4n0w9a": {
+        "title": "2025 젊은국악 단장",
+        "desc_sample": "* 공연일시 2025.9.19.(금) 20:00 강나현 <sick sick 씩씩> 2025.9.26.(금) 20:00 트리거 <小ciety> *",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPjltxu8": {
+        "title": "2024 delight Seoul (딜라이트 서울)",
+        "desc_sample": "서울의 과거와 미래를 다이나믹하게 재해석한 디지털 콘텐츠 미디어 아트. 현재 런던에서 핫하게 전시되는 \"delight\" 서울 전시. <delig",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPmbgpkh": {
+        "title": "Bathtub & Feather",
+        "desc_sample": "Sea Choi 작가는 개인전 [ Bathtub & Feather ]에서 관객 참여형 업싸이클링 연작 Bathtub과 날개를 연상시키는 '깃털'",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPpq0clc": {
+        "title": "정재일 콘서트 - Listen",
+        "desc_sample": "와 K콘텐츠의 저력을 보여준 영화 의 음악감독이자 한국을 대표하는 뮤지션 정재일의 단독콘서트가 오는 12월 세종문화회관 대극장에서 열립니다.\\n",
+        "has_real_html": true,
+        "real_hits_sample": [
+          "\"}\">",
+          "\"}\">",
+          "\"}\">"
+        ],
+        "verdict": "TEXT_CLEANUP_REQUIRED"
+      },
+      "KOPqnwgc7": {
+        "title": "Mood, sunday",
+        "desc_sample": "슈페리어갤러리는 6월을 맞아 자연을 닮고 사람을 닮고 사랑을 닮은 정화백과 조이스진 작가의 2인전을 선보입니다. 두 작가는 자연과 사람에서 느껴",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPsbarih": {
+        "title": "A Magical day",
+        "desc_sample": "전시는 슈페리어갤러리에서 오는 8월 9일까지 진행됩니다.\"}\">슈페리어갤러리는 경계와 비경계, 의식과 무의식 사이에서 삶의 순간을 포착하는 김기",
+        "has_real_html": true,
+        "real_hits_sample": [
+          "\"}\">",
+          "\"}\">",
+          "<A Magical day>"
+        ],
+        "verdict": "TEXT_CLEANUP_REQUIRED"
+      },
+      "KOPt9l0a3": {
+        "title": "DDP 가을 스페셜투어 : 디자인&아트 투어",
+        "desc_sample": "서울디자인재단은 '디자인&아트' 전시와 연계한 DDP 가을 스페셜투어를 운영합니다. '디자인 체험 극과 극 : 거리에서 갤러리까지'라는 주제로 ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPu69ib8": {
+        "title": "바자전 : IN-BETWEEN",
+        "desc_sample": "패션 매거진 <하퍼스 바자>의 세 번째 전시회. 이번 전시는 <IN-BETWEEN>을 주제로 3인의 작가들(니키 리, 크리스틴 선 킴, 엠마누엘",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPvi3cne": {
+        "title": "Happy Holidays",
+        "desc_sample": "한 해에 끝에 찾아오는 설렘, 들뜬 공기, 그리고 조금은 천천히 머물고 싶은 마음. 그런 연말의 온도를 담은 전시 <Happy Holidays>",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPwsz1hv": {
+        "title": "Beauty For All : 경계 없는 아름다움",
+        "desc_sample": "비더비는 서울의 매력적인 뷰티 브랜드를 B the B만의 감각으로 큐레이팅한 상설 전시 공간입니다. 쉽게 만나볼 수 없던 AI 기반의 뷰티테크 ",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPy8r22r": {
+        "title": "서울라이트 DDP 2025 가을",
+        "desc_sample": "“Everflow : 움직이는 장(場)” 밤을 감싸는 동대문디자인플라자(DDP) 곡면 파사드를 살아있는 캔버스로 변모시킵니다. 거대한 건축의 표",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      },
+      "KOPzm8tt4": {
+        "title": "조민열  Blue, Hidden, Nature",
+        "desc_sample": "전시의 두 번째 주제인 ECO 분야는 <Blue, Hidden Nature> 展으로 작가의 작업실 인근의 봉제소에서 버리는 자투리 청바지 원단(",
+        "has_real_html": false,
+        "real_hits_sample": [],
+        "verdict": "TITLE_MARKUP_FALSE_POSITIVE"
+      }
+    }
+  },
+  "s1b_incheon": {
+    "KOP011863": {
+      "title": "인천국제공항 제 1터미널 서울관광정보센터 (동편)",
+      "category": "문화관광",
+      "addr": "인천광역시 중구 공항로 272 (운서동) 인천국제공항 제1여객터미널",
+      "lat": "37.4476109663729",
+      "lng": "126.452346738588",
+      "raw_explore": "YES",
+      "raw_ai": "YES",
+      "raw_searchable": "YES",
+      "raw_final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+      "is_duplicate_pair": true,
+      "qa_searchable": "YES",
+      "qa_explore": "CONDITIONAL",
+      "qa_ai_itinerary": "NO",
+      "qa_user_can_select": "YES",
+      "qa_user_can_save": "YES",
+      "qa_verdict": "KEEP_AS_SEARCHABLE_USER_PICK",
+      "qa_rationale": "Official 서울 관광안내시설(공식). 인천공항 물리 위치이나 서울관광 정보제공 기능. SEARCHABLE+USER_PICK 적절. AI 자동 일정 포함 불적절."
+    },
+    "KOP024807": {
+      "title": "인천공항 제2여객터미널 관광정보센터",
+      "category": "문화관광",
+      "addr": "인천광역시 중구 제2터미널대로 444 (운서동)",
+      "lat": "37.4686409554406",
+      "lng": "126.43378033879",
+      "raw_explore": "YES",
+      "raw_ai": "CONDITIONAL",
+      "raw_searchable": "YES",
+      "raw_final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+      "is_duplicate_pair": false,
+      "qa_searchable": "YES",
+      "qa_explore": "CONDITIONAL",
+      "qa_ai_itinerary": "NO",
+      "qa_user_can_select": "YES",
+      "qa_user_can_save": "YES",
+      "qa_verdict": "KEEP_AS_SEARCHABLE_USER_PICK",
+      "qa_rationale": "Official 서울 관광안내시설(공식). 인천공항 물리 위치이나 서울관광 정보제공 기능. SEARCHABLE+USER_PICK 적절. AI 자동 일정 포함 불적절."
+    },
+    "KOP042078": {
+      "title": "인천국제공항 제 1터미널 서울관광정보센터 (서편)",
+      "category": "문화관광",
+      "addr": "인천광역시 중구 공항로 272 (운서동) 인천국제공항 제1여객터미널",
+      "lat": "37.4476109663729",
+      "lng": "126.452346738588",
+      "raw_explore": "YES",
+      "raw_ai": "YES",
+      "raw_searchable": "YES",
+      "raw_final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+      "is_duplicate_pair": true,
+      "qa_searchable": "YES",
+      "qa_explore": "CONDITIONAL",
+      "qa_ai_itinerary": "NO",
+      "qa_user_can_select": "YES",
+      "qa_user_can_save": "YES",
+      "qa_verdict": "KEEP_AS_SEARCHABLE_USER_PICK",
+      "qa_rationale": "Official 서울 관광안내시설(공식). 인천공항 물리 위치이나 서울관광 정보제공 기능. SEARCHABLE+USER_PICK 적절. AI 자동 일정 포함 불적절.",
+      "note": "KOP011863과 T1 위치 공유(동/서편). 동일 공항 터미널, 별개 창구. 중복 아님."
+    }
+  },
+  "s1c_kopij99b4": {
+    "cid": "KOPij99b4",
+    "title": "팔색찬란-K로 가득한 지역",
+    "category": "문화관광>전시시설",
+    "addr": "서울 종로구 효자로13길 45 (효자동, 청와대사랑채)",
+    "addr_slash_count": 0,
+    "desc_full": "청와대 사랑채에서는 6월 4일 부터 12월 31일까지 한국의 역사와 문화예술, 지역 고유의 문화 자원이 오늘날 K-콘텐츠로 이어지는 흐름을 지역 콘텐츠 전시와 미디어 아트로 소개하고 있습니다. [전시기간] 상설전시 2026.06.04. ~ 2026.12.31. 기획전시 추후공지 [공연일시] 매주 수요일 12:10 기획전시 연계, 토요일 공연 16회(1일2회) 예정 [주최/주관] 문화체육관광부/지역문화진흥원 [협력] 국립중앙박물관 [운영] 주성디자인랩",
+    "tags": [
+      "무료전시",
+      "지역콘텐츠",
+      "미디어아트",
+      "K-콘텐츠",
+      "청와대사랑채"
+    ],
+    "summary": "한국의 역사와 문화예술, 지역 고유의 문화 자원이 오늘날 K-콘텐츠로 이어지는 흐름을 지역 콘텐츠 전시와 미디어 아트로 소개",
+    "dates_in_desc": [
+      "2026.06.04",
+      "~ 2026"
+    ],
+    "period_signals": [
+      "전시기간",
+      "~"
+    ],
+    "multi_loc_signals": [
+      "주최/주관",
+      "문화체육관광부/지역문화진흥원"
+    ],
+    "current_final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+    "explore_eligible": "YES",
+    "ai_itinerary": "YES",
+    "resolution": {
+      "addr_slash_count": 0,
+      "multi_loc_source": "organizer_field_not_address",
+      "exhibition_active": true,
+      "venue_type": "permanent_cultural_venue",
+      "venue_name": "청와대사랑채",
+      "resolution": "PLACE_CLASSIFICATION_ACCEPTED",
+      "entity_anomaly_fp": true,
+      "correction_required": false,
+      "note": "PLACE_AI_OR_EXPLORE_ELIGIBLE 유지. 기간 신호는 콘텐츠 속성이지 venue type이 아님. v2 secondary_routing=['E'] 이미 event 인식됨."
+    }
+  },
+  "s1d_high_risk": {
+    "total_reviewed": 40,
+    "HIGH_RISK_SAMPLE_REVIEWED": 40,
+    "HIGH_RISK_SAMPLE_PASS": 40,
+    "HIGH_RISK_SAMPLE_CORRECTION_REQUIRED": 0,
+    "ELIGIBILITY_SYSTEMIC_ISSUE": "NO",
+    "correction_required_list": [],
+    "detail": [
+      {
+        "cid": "KOPwly2p0",
+        "title": "2026년 1월~2월 어둠속의 대화",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "CONDITIONAL",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": true,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP000450",
+        "title": "문화역서울 284",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP001961",
+        "title": "겸재정선미술관",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP003319",
+        "title": "서울대학교 미술관 MoA",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP005328",
+        "title": "유니버설아트센터",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP006995",
+        "title": "손기정기념관",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP027105",
+        "title": "근현대사기념관",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP029236",
+        "title": "오!재미동",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP037583",
+        "title": "서울관광플라자 관광정보센터",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP07kl3f",
+        "title": "내셔널지오그래픽 특별기획 OCEAN 가장 거대한 기록",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP0skv41",
+        "title": "뮤지컬 렌트",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "CONDITIONAL",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP1kv0hq",
+        "title": "진찬",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP1wzrx2",
+        "title": "《수집된 순간들 (Collection of Moments)》",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP20kefn",
+        "title": "청계천 미디어아트 <청계 소울 오션>",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "CONDITIONAL",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP21zkoz",
+        "title": "뮤지컬 <빌리 엘리어트>",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP2bo6vv",
+        "title": "2024 도경수 아시아 팬콘서트 투어 BLOOM THE FINAL",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "CONDITIONAL",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP2fcbi7",
+        "title": "Rest and Rise : 남겨진 것과 떠오른 것들",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP3b4gfv",
+        "title": "2025 애채숲",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP3mz1mm",
+        "title": "2024년 특별전 ‘태평계태평太平繼太平: 태평성대로 기억된 18세기 서울'",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "YES",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP3r5br9",
+        "title": "2023 홈·테이블데코페어",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP3u747h",
+        "title": "[스페이스 톤 갤러리] 고소미 개인전: 다양체(Multiplicity)",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP4cyqe3",
+        "title": "무나씨 《우리가 지워지는 계절에》",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP4gtoyu",
+        "title": "Happy voyage",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP4khc7y",
+        "title": "스페이스K 서울",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP4q4n0f",
+        "title": "인상주의를 넘어: 르누아르,드가,고흐,마티스,피카소",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP4u05qa",
+        "title": "성북예술창작터",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP52w7m1",
+        "title": "드로잉룸",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP5y25gn",
+        "title": "우리는 어디서 왔고 무엇이며 어디로 가는가? 展",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": true,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP678cv8",
+        "title": "옛시장실 재현 공간",
+        "category": "문화관광>전시시설>기타전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP6ljerd",
+        "title": "PEAK FESTIVAL 2025",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP7hqfq3",
+        "title": "천개의 소원",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP7lrfs0",
+        "title": "시선의 확장 Broadening of visions",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": true,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP9923r7",
+        "title": "너와 나 그리고 그곳에 展",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": true,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP9fwlch",
+        "title": "그라운드시소 서촌",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP9kal14",
+        "title": "2026 성북구립미술관 기획전시 《이정윤: 노래하는 집》",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP9q04ig",
+        "title": "THEO 띠오",
+        "category": "문화관광>전시시설>미술관/화랑",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOP9vuxuv",
+        "title": "김병구 개인전 《7am Green pew》",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOPa4m2cj",
+        "title": "상상력 옷장 – 이랜드 컬렉션 특별전",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": false,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOPad2n9b",
+        "title": "crosswalk",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": true,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      },
+      {
+        "cid": "KOPapcfqb",
+        "title": "《따스함이 빛나는 그곳엔 (Where Warmth Shines)》  展",
+        "category": "문화관광>전시시설",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "explore": "YES",
+        "ai_itinerary": "CONDITIONAL",
+        "has_temp_ex": true,
+        "has_yr_range": false,
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "s4_entity": {
+    "total": 13,
+    "ENTITY_ANOMALY_CONFIRMED": 0,
+    "ENTITY_ANOMALY_FALSE_POSITIVE": 13,
+    "detail": [
+      {
+        "cid": "KOP002939",
+        "title": "하얏트 아이스링크",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOP009626",
+        "title": "현대백화점 본점",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOP24o1g5",
+        "title": "조경재 <절대적 재구축 : Absolute Reconstruction>",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOP2c8enb",
+        "title": "99아트컴퍼니 <회랑(回廊)에서; 총체성으로의 회귀>",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPg4p0aa",
+        "title": "서울시립교향악단 광복 78주년 기념음악회",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPhxe78f",
+        "title": "제 14회 에듀플러스위크 (Korea lnt’l EDUCATION WEE",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPij99b4",
+        "title": "팔색찬란-K로 가득한 지역",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "place_has_period_date_in_desc",
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": true,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPjhzbgg",
+        "title": "믹스드 오케스트라 26",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPk4sx8q",
+        "title": "2023 서울국제공연예술제(SPAF)",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPn3k0fb",
+        "title": "제13회 서울미디어시티비엔날레 《강령: 영혼의 기술》",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPotfyui",
+        "title": "국악공연 시리즈 첫번째 <일각이>",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPu1vba8",
+        "title": "《오픈 에어 뮤지엄_풍납토성》",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      },
+      {
+        "cid": "KOPubcv55",
+        "title": "SeMA 옴니버스 &lt;끝없이 갈라지는 세계의 끝에서&gt;",
+        "final_class": "PLACE_AI_OR_EXPLORE_ELIGIBLE",
+        "reasons": [
+          "multi_location_signal_in_desc"
+        ],
+        "has_multi_addr": false,
+        "has_temporal": false,
+        "verdict": "FALSE_POSITIVE"
+      }
+    ]
+  },
+  "s2_batch2": {
+    "manifest_norm_count": 573,
+    "special2_count": 2,
+    "output_total": 575,
+    "reused_count": 9,
+    "api_new_count": 564,
+    "attempts_count": 566,
+    "EXISTING_RAW_REUSED_EXACT": 9,
+    "classifications": {
+      "PLACE_AI_OR_EXPLORE_ELIGIBLE": 560,
+      "PLACE_SEARCHABLE_USER_PICK": 14,
+      "MULTI_LOCATION_NON_PLACE": 1
+    }
+  },
+  "s5_event": {
+    "ACTIVE_EVENT_SERVICE_POOL": 6,
+    "ACTIVE_EVENT_D_ROUTING": 4,
+    "ACTIVE_EVENT_PLACE_ROUTING": 2,
+    "ACTIVE_EVENT_INSIDE_GENERIC_EXCLUDED": 0,
+    "HISTORICAL_BULK_EVENT_DETAIL_TARGET": 0,
+    "PASS": true
+  },
+  "s6_food": {
+    "SEOUL_FOOD_EXECUTION_TARGET": 0,
+    "KTO_SEOUL_EXECUTION_TARGET": 0,
+    "food_in_target": [],
+    "PASS": true
+  },
+  "s7_universe": {
+    "TOTAL_SEOUL_UNIVERSE": 3765,
+    "ROUTING_V2_DUP_CID": [],
+    "ACTUALLY_UNCLASSIFIED": 0,
+    "MANIFEST_OVERLAP": 0,
+    "PROVENANCE_MISSING": 0,
+    "PASS": true
+  },
+  "final": {
+    "TASK_RESULT": "HOLD",
+    "blockers": [
+      "TEXT_CLEANUP_REQUIRED=3 — desc_plain 오염: ['KOP16izx7', 'KOPpq0clc', 'KOPsbarih']. JSON/template injection ('\"\">\"{\"}\">') detected. desc 재수집 또는 수동 정제 필요."
+    ],
+    "review_notes": [
+      "REVIEW_NOTE: 인천공항 서울관광안내시설 3건(KOP011863/KOP024807/KOP042078) AI_ITINERARY 과도 허용. SEARCHABLE+USER_PICK 적절. 다음 eligibility update 사이클에서 AI_ITINERARY=NO 정정 권장."
+    ],
+    "HTML_TAG_RESIDUE_TOTAL": 16,
+    "TITLE_MARKUP_FALSE_POSITIVE": 13,
+    "TEXT_CLEANUP_REQUIRED": 3,
+    "INCHEON_AIRPORT_INFO_CENTER_REVIEWED": 3,
+    "HIGH_RISK_SAMPLE_REVIEWED": 40,
+    "HIGH_RISK_SAMPLE_PASS": 40,
+    "HIGH_RISK_SAMPLE_CORRECTION_REQUIRED": 0,
+    "ELIGIBILITY_SYSTEMIC_ISSUE": "NO",
+    "EXISTING_RAW_REUSED_EXACT": 9,
+    "ENTITY_ANOMALY_CONFIRMED": 0,
+    "ENTITY_ANOMALY_FALSE_POSITIVE": 13,
+    "ACTIVE_EVENT_SERVICE_POOL": 6,
+    "ACTIVE_EVENT_INSIDE_GENERIC_EXCLUDED": 0,
+    "HISTORICAL_BULK_EVENT_DETAIL_TARGET": 0,
+    "SEOUL_FOOD_EXECUTION_TARGET": 0,
+    "KTO_SEOUL_EXECUTION_TARGET": 0,
+    "TOTAL_SEOUL_UNIVERSE": 3765,
+    "MANIFEST_OVERLAP": 0,
+    "UNCLASSIFIED": 0,
+    "PROVENANCE_MISSING_COUNT": 0,
+    "SEOUL_NONFOOD_FINAL_QA": "HOLD",
+    "SEOUL_NONFOOD_COLLECTION_STATUS": "HOLD",
+    "API_CALLS": 0,
+    "WEB_COLLECTION": 0,
+    "PRODUCTION_WRITE": 0,
+    "MASTER_WRITE": 0
+  }
+}
