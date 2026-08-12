@@ -1,45 +1,30 @@
 {
   "metadata": {
-    "task": "TASK-BUSAN-FOOD-ENTITY-REVIEW-AND-PHONE-GATE-PREP-R1",
-    "created_at": "2026-08-12",
+    "task": "TASK-BUSAN-FOOD-SCOPE-PERSISTENCE-AND-PHONE-GATE-CORRECTION-R1",
+    "previous_task": "TASK-BUSAN-FOOD-ENTITY-REVIEW-AND-PHONE-GATE-PREP-R1",
+    "updated_at": "2026-08-12",
     "source_file": "busan-food-discovery-candidates-v1.jsonl",
-    "description": "부산 음식점 Naver Phone Gate 대상 목록. VB:food 334건 FoodService batch gap-fill, entity review 305건 resolve 완료 후 생성."
+    "description": "부산 음식점 Naver Phone Gate 재검증 대상 목록 (v2). DiningCode 비공식 phone 4건 취소 + 스시몬 EXCLUDED 취소 + VB 개별음식점 2건(클래식캠퍼·부산샌드) 추가. 동래원조산곰장어 제거(visitkorea.or.kr 공식 확인 완료)."
   },
   "summary": {
     "total_food_records": 721,
-    "phone_verified_before_task": 372,
-    "vb_food_phone_gap_filled": 334,
-    "phone_verified_after_task": 706,
-    "phone_missing_after_task": 15,
-    "entity_review_start": 314,
-    "entity_review_resolved": 305,
-    "entity_review_remaining": 9,
-    "duplicate_confirmed": 30,
-    "naver_gate_targets": 6
+    "phone_verified_total": 707,
+    "phone_missing_total": 14,
+    "official_confirmed_removed_from_gate": 1,
+    "unofficial_phone_reverted": 4,
+    "food_scope_valid_added": 2,
+    "naver_gate_targets": 7,
+    "entity_review_required_remaining": 3,
+    "food_scope_excluded": 4
   },
   "exclusion_criteria": {
     "DUPLICATE_CONFIRMED": "phone 확인 불필요 — 중복 확정 엔티티",
-    "REVIEW_REQUIRED_ENTITY": "entity 확인 미완료 — 기존 evidence로 해결 불가",
-    "phone_already_verified": "공식/공공 source에서 이미 phone 확보됨",
-    "OFFICIAL_PHONE_CHECK_INCOMPLETE": "해당 없음 — 모든 phone-missing 건 official check 완료"
+    "COLLECTIVE_FOOD_DESTINATION": "집단 먹거리 관광지 — 개별 phone gate 미적용 (영도해녀촌, 민락회타운, 해운대시장)",
+    "FOOD_SCOPE_EXCLUDED": "음식점 scope 제외 — 쿠킹클래스 4건",
+    "phone_official_confirmed": "공식 source phone 확인 완료 (동래원조산곰장어: visitkorea.or.kr)",
+    "REVIEW_REQUIRED_ENTITY_UNRESOLVED": "entity 미확인 — 집단 관광지 3건 (phone gate 제외, 관광 후보 유지)"
   },
   "targets": [
-    {
-      "candidate_id": "busan-K-00283",
-      "source_key": "KorService2:2670518:ko",
-      "name_ko": "동래원조산곰장어",
-      "address": "부산광역시 동래구 명륜로98번길 42",
-      "lat": 35.2021625913,
-      "lng": 129.0857576472,
-      "review_flags": [
-        "needs_content",
-        "needs_hours",
-        "needs_map_name_ko",
-        "needs_translation",
-        "KTO_DETAIL_FETCH_FAILED"
-      ],
-      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
-    },
     {
       "candidate_id": "busan-K-00284",
       "source_key": "KorService2:2670566:ko",
@@ -54,7 +39,8 @@
         "needs_translation",
         "KTO_DETAIL_FETCH_FAILED"
       ],
-      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED",
+      "gate_reason": "KTO NO_ITEM; phone absent; Naver access blocked in previous gate attempt"
     },
     {
       "candidate_id": "busan-K-00285",
@@ -70,7 +56,8 @@
         "needs_translation",
         "KTO_DETAIL_FETCH_FAILED"
       ],
-      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED",
+      "gate_reason": "KTO NO_ITEM; DiningCode phone reverted (non-official source); requires Naver official confirmation"
     },
     {
       "candidate_id": "busan-K-00512",
@@ -86,7 +73,8 @@
         "needs_translation",
         "KTO_DETAIL_FETCH_FAILED"
       ],
-      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED"
+      "official_check_status": "KTO_DETAIL_NO_ITEM_RETURNED",
+      "gate_reason": "KTO NO_ITEM; DiningCode phone reverted (non-official source); requires Naver official confirmation"
     },
     {
       "candidate_id": "busan-K-00536",
@@ -100,10 +88,10 @@
         "needs_hours",
         "needs_map_name_ko",
         "needs_translation",
-        "HOURS_SOURCE_UNKNOWN",
         "PHONE_NOT_FOUND_KTO_DETAIL"
       ],
-      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND"
+      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND",
+      "gate_reason": "KTO detailIntro2 phone absent; DiningCode phone reverted; requires Naver official confirmation"
     },
     {
       "candidate_id": "busan-K-00668",
@@ -117,10 +105,32 @@
         "needs_hours",
         "needs_map_name_ko",
         "needs_translation",
-        "HOURS_SOURCE_UNKNOWN",
         "PHONE_NOT_FOUND_KTO_DETAIL"
       ],
-      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND"
+      "official_check_status": "KTO_DETAIL_PHONE_NOT_FOUND",
+      "gate_reason": "KTO detailIntro2 phone absent; non-official phone reverted; requires Naver official confirmation"
+    },
+    {
+      "candidate_id": "busan-VB-1853",
+      "source_key": "VisitBusanContent:experience:1853:ko",
+      "name_ko": "클래식 캠퍼",
+      "address": "부산광역시 사상구 대동로 224",
+      "lat": 35.147255,
+      "lng": 128.98535,
+      "review_flags": [],
+      "official_check_status": "VB_ENTITY_REVIEW_CONFIRMED_FOOD_SCOPE_VALID",
+      "gate_reason": "FOOD_SCOPE_VALID confirmed (camping-concept cafe); entity resolved this task; no official phone source"
+    },
+    {
+      "candidate_id": "busan-VB-2579",
+      "source_key": "VisitBusanContent:shopping:2579:ko",
+      "name_ko": "부산샌드",
+      "address": "부산광역시 해운대구 우동1로 13-29 1층",
+      "lat": 35.163223,
+      "lng": 129.15552,
+      "review_flags": [],
+      "official_check_status": "VB_ENTITY_REVIEW_CONFIRMED_FOOD_SCOPE_VALID",
+      "gate_reason": "FOOD_SCOPE_VALID confirmed (cookie/dessert shop); entity resolved this task; no official phone source"
     }
   ]
 }
