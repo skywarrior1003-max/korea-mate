@@ -552,6 +552,70 @@ BUSAN_FOOD_PRECHECK_MUST_CHECK:
 
 ---
 
+## 17. Official/Public Source Use Policy (2026-08-12 확정)
+
+### 17.1 이미지 권리 원칙
+
+```
+OFFICIAL_PUBLIC_IMAGE_USE = ALLOWED_WITH_REQUIRED_ATTRIBUTION
+PRIVATE_IDENTIFIABLE_PERSON_IMAGE = EXCLUDE
+OFFICIAL_PROMOTIONAL_PUBLIC_FIGURE_IMAGE = ALLOWED
+REOPEN_APPROVED_SOURCE_RIGHTS_REVIEW = NO
+FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES
+CONCRETE_RIGHTS_OBJECTION_ACTION = HIDE_OR_REMOVE_AFFECTED_CONTENT_AND_REVIEW
+```
+
+#### 허용 이미지 소스
+
+| 소스 | 도메인 예시 | 상태 |
+|---|---|---|
+| KTO 공식 | tong.visitkorea.or.kr | `rights: "usable"` |
+| VisitBusan 공식 | www.visitbusan.net | `rights: "usable"` (2026-08-12 확정) |
+| 부산시 공식 관광 | visitbusan.net 계열 | `rights: "usable"` |
+| 지자체 공식 사이트 | 공식 관광 도메인 | `rights: "usable"` |
+| 공공 API 이미지 | FoodService / TourAPI | `rights: "usable"` |
+
+#### 제외 대상
+
+- 일반 개인이 식별 가능하게 나온 사진 (사적 촬영 추정) → `rights: "excluded"`
+- 출처 불명 이미지 URL → `rights: "review_required"` (usable 승격 금지)
+- 블로그·SNS 임의 사진 → 수집 자체 금지
+
+#### 공인 행사·홍보 자료의 공인인사 사진
+
+- 공식 관광 홍보 자료에 공인이 등장하는 경우 → ALLOWED
+- 단, 개인 명의 초상권 계약이 별도 존재하는 경우 → 별도 검토 필요
+
+### 17.2 Fact 권리 원칙
+
+```
+OFFICIAL_PUBLIC_FACT_USE = ALLOWED_WITH_PROVENANCE
+```
+
+- KTO, VisitBusan, 지자체, 공공 API에서 수집된 factual field → 사용 허용
+- 출처(source)는 반드시 `field_provenance`에 보존
+- source 미기재 fact 승격 금지 (`FIELD_PROVENANCE = REQUIRED` 절대 고정 원칙과 동일)
+
+### 17.3 visitbusan.net 이미지 소급 적용 (2026-08-12)
+
+- 부산 Food V1 JSONL: `rights: "review_required"` (www.visitbusan.net) → `rights: "usable"` 전환
+- 대상: 415건 (TASK-BUSAN-FOOD-EXISTING-SOURCE-FIELD-RECOVERY-R2)
+- 근거: VisitBusan은 부산시 공식 관광 플랫폼 → Official/Public Source
+- 사후 의무: 향후 실제 권리 이의 제기 또는 source 조건 변경 시 → 해당 asset 즉시 비노출 후 재검토
+
+### 17.4 Main Handoff 시 필수 전달 항목
+
+```
+FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES
+```
+
+부산 Food V1 MAIN 임포트 시 반드시 포함:
+1. image_urls[].rights = "usable" (KTO, VisitBusan) vs "excluded" (private person)
+2. source attribution (field_provenance, image source) 전달
+3. 이의 제기 대응 절차: HIDE_OR_REMOVE_AFFECTED_CONTENT → REVIEW
+
+---
+
 ## 변경 이력
 
 | 날짜 | 변경 | SHA |
@@ -559,6 +623,7 @@ BUSAN_FOOD_PRECHECK_MUST_CHECK:
 | 2026-08-11 | 초안 작성 (서울 R1 수집 기반) | _(FOOD-DISCOVERY-R1 커밋)_ |
 | 2026-08-11 | Section 16 Phone Gate 추가 (경주 V2 검증 기반). Section 4 KTO detailIntro2 infocenterfood 경로 추가. Section 9 KTO firstmenu 참조 추가. Section 11 KTO opentimefood 참조 추가. Applies to 업데이트. | 8dedbfe → bfcf495 |
 | 2026-08-11 | Section 4 KTO type39 anti-pattern 규칙 추가 (KTO_DETAILCOMMON2_TEL_EMPTY≠NO_PHONE, TYPE39_DETAILINTRO2_MUST_BE_CHECKED). Section 16.2 phone 수집 8단계 chain 확장. Section 16.9 다음 도시 precheck 체크리스트 추가(15항목). | TASK-GYEONGJU-FOOD-NAVER-CLOSEOUT-R1 |
+| 2026-08-12 | Section 17 Official/Public Source Use Policy 추가. visitbusan.net 이미지 usable 확정(2026-08-12). PRIVATE_IDENTIFIABLE_PERSON_IMAGE = EXCLUDE. FUTURE_MAIN_HANDOFF_MUST_INCLUDE_THIS_RULE = YES. | TASK-BUSAN-FOOD-EXISTING-SOURCE-FIELD-RECOVERY-R2 |
 
 ---
 
