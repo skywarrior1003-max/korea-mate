@@ -1,0 +1,4710 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1",
+    "as_of": "2026-08-12",
+    "description": "Seoul non-Food Place Detail Target — VisitSeoul detail API 호출 대상. A-routing CONDITIONAL+SHOPPING HIGH/INTENT+UNRESOLVED.",
+    "total": 573,
+    "policy": [
+      "multicity-place-eligibility-policy-v1.md",
+      "multicity-event-freshness-policy-v1.md"
+    ],
+    "source": "seoul-full-enrichment-routing-v2.jsonl",
+    "VISITSEOUL_DETAIL_API_TARGET": 573,
+    "BATCH": "Batch2"
+  },
+  "records": [
+    {
+      "cid": "KOP000034",
+      "title": "청계천",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP000217",
+      "title": "롯데백화점 본점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP000305",
+      "title": "세종문화회관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP000380",
+      "title": "명동실탄사격장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP000405",
+      "title": "롯데월드 아이스링크",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP000411",
+      "title": "봉은사 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP000450",
+      "title": "문화역서울 284",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP000475",
+      "title": "갤러리아 명품관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP000859",
+      "title": "전쟁기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP001153",
+      "title": "양화진외국인선교사묘원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP001232",
+      "title": "리움 미술관 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001441",
+      "title": "스페이스 씨",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001478",
+      "title": "라트어린이극장 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001525",
+      "title": "서울시립미술관 (서소문본관)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001615",
+      "title": "JUMP(점프) 전용극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001676",
+      "title": "아름지기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001694",
+      "title": "갤러리 현대",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001707",
+      "title": "국립현대미술관 덕수궁관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001761",
+      "title": "서울놀이마당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001778",
+      "title": "목동 아이스링크",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP001780",
+      "title": "민속극장 풍류",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001845",
+      "title": "약현성당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP001862",
+      "title": "원효로성당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP001871",
+      "title": "갤러리 학고재",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001907",
+      "title": "성곡미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001912",
+      "title": "서울시민 광나루안전체험관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP001913",
+      "title": "여의도 한강공원 수영장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP001919",
+      "title": "명보아트홀",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001951",
+      "title": "보라매 암벽등반장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP001961",
+      "title": "겸재정선미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001981",
+      "title": "중랑천 제방",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP002010",
+      "title": "안동교회 소허당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP002011",
+      "title": "경인미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002021",
+      "title": "화계사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP002028",
+      "title": "갤러리아백화점 WEST",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP002030",
+      "title": "대한성공회서울주교좌성당(서울성공회성당)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP002066",
+      "title": "김종영 미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002082",
+      "title": "가나아트센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002101",
+      "title": "서울월드컵경기장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002132",
+      "title": "정동제일교회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP002247",
+      "title": "갤러리 팩토리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002251",
+      "title": "일민미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002257",
+      "title": "불광천",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP002285",
+      "title": "국립현대미술관 창동레지던시",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP002287",
+      "title": "홍제천",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP002293",
+      "title": "태릉국제스케이트장 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002300",
+      "title": "불광천 해담는다리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP002388",
+      "title": "아라리오갤러리 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002405",
+      "title": "아트선재센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002429",
+      "title": "양재천&탄천",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP002586",
+      "title": "조계사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP002642",
+      "title": "잠실야구장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002871",
+      "title": "한강 자전거 코스",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002885",
+      "title": "PKM갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP002925",
+      "title": "국기원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002939",
+      "title": "하얏트 아이스링크",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP002962",
+      "title": "고려대학교 본관 및 구 중앙도서관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP002971",
+      "title": "국립극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP003100",
+      "title": "금호미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP003241",
+      "title": "국제갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP003255",
+      "title": "길상사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP003319",
+      "title": "서울대학교 미술관 MoA",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP003411",
+      "title": "명동예술극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP003759",
+      "title": "윤봉길 의사 기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP003778",
+      "title": "송은(SONGEUN)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP003986",
+      "title": "예술의전당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP004036",
+      "title": "명동성당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP004281",
+      "title": "안중근의사기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP004325",
+      "title": "예술의전당 한가람미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP004863",
+      "title": "서울중앙성원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP005015",
+      "title": "대각사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP005060",
+      "title": "신당창작아케이드",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP005156",
+      "title": "홍대난타극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP005328",
+      "title": "유니버설아트센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP005333",
+      "title": "서울올림픽기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP005750",
+      "title": "뚝섬 한강공원 수영장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP005788",
+      "title": "명동난타극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP006225",
+      "title": "국립국악원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP006251",
+      "title": "진관사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP006995",
+      "title": "손기정기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP009575",
+      "title": "신세계백화점 강남점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP009626",
+      "title": "현대백화점 본점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP009641",
+      "title": "롯데면세점 본점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>면세점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP009667",
+      "title": "더 페이스샵",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP009756",
+      "title": "갤러리아백화점 EAST",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP009991",
+      "title": "노을공원 캠핑장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP010231",
+      "title": "서울도서관 (옛 서울시청사)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP010521",
+      "title": "롯데 영플라자 명동점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP011395",
+      "title": "뚝섬유원지",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP011524",
+      "title": "롤링홀",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP011622",
+      "title": "서울에너지드림센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP011658",
+      "title": "국립현대미술관 서울관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP011835",
+      "title": "김포공항관광정보센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP011863",
+      "title": "인천국제공항 제 1터미널 서울관광정보센터 (동편)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP011882",
+      "title": "정샘물 인스피레이션",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP012015",
+      "title": "올리브영 명동 플래그십",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP015060",
+      "title": "한강",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP015402",
+      "title": "고척 스카이돔",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP016327",
+      "title": "선유도 야경",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP016792",
+      "title": "국립현대미술관 서울관 갤러리아트존",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP017598",
+      "title": "신세계백화점 본점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP017740",
+      "title": "강남역 지하쇼핑센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>쇼핑몰",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP018992",
+      "title": "아르코미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP020048",
+      "title": "에이바이봄",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP022073",
+      "title": "성수동 유니온스타 볼링클럽",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP022602",
+      "title": "성재전통건축자료관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP022993",
+      "title": "정샘물 플롭스",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP023460",
+      "title": "백남준기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP024463",
+      "title": "신세계면세점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>면세점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP024561",
+      "title": "KT&G 상상마당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP024596",
+      "title": "서울돈화문국악당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP024710",
+      "title": "정동마루",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP024732",
+      "title": "SJ쿤스트할레",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP024755",
+      "title": "골든블루마리나",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP024807",
+      "title": "인천공항 제2여객터미널 관광정보센터 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP025929",
+      "title": "탈방 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP026206",
+      "title": "동대문역사관 상설전시실 재개관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP026558",
+      "title": "별마당 도서관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP026675",
+      "title": "공평도시유적전시관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP026676",
+      "title": "공근혜갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP027105",
+      "title": "근현대사기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP027111",
+      "title": "평화문화진지",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP027189",
+      "title": "북촌마을관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027190",
+      "title": "마포관광정보센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027193",
+      "title": "송파관광정보센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027215",
+      "title": "동대문 관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027218",
+      "title": "이태원 관광안내소(지하)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027219",
+      "title": "남대문시장 관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027221",
+      "title": "서울 관광기념품 전시관•여행자지원센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027225",
+      "title": "광화문 관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027231",
+      "title": "신촌역사 관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP027688",
+      "title": "서래섬",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP028334",
+      "title": "CGV 씨네 라이브러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP028339",
+      "title": "봉원사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP028656",
+      "title": "백범광장공원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP029236",
+      "title": "오!재미동",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP029394",
+      "title": "절두산순교성지",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP029564",
+      "title": "서울여성플라자",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP029568",
+      "title": "무계원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP029759",
+      "title": "중랑 청소년 체험의 숲 운영센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP030789",
+      "title": "서울책보고",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP030803",
+      "title": "아모레퍼시픽미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP031055",
+      "title": "서울특별시교육청과학전시관 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOP031922",
+      "title": "노들섬",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP032529",
+      "title": "정동1928 아트센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP033516",
+      "title": "스탬프 힐링투어 '너랑나랑우리랑'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP033825",
+      "title": "서울하수도과학관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP033829",
+      "title": "화계사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP034360",
+      "title": "원밀리언 댄스 스튜디오",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP034490",
+      "title": "루미에르 붙임머리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP034492",
+      "title": "스매싱볼 청담점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP034857",
+      "title": "서울기록원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP034860",
+      "title": "전태일기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP034909",
+      "title": "김달진미술자료박물관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP035405",
+      "title": "국립한글박물관 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP036843",
+      "title": "금선사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOP037044",
+      "title": "KCDF갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP037583",
+      "title": "서울관광플라자 관광정보센터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP038399",
+      "title": "아모레 플래그십 스토어 (성수)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP038445",
+      "title": "설화수 플래그십 스토어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP039305",
+      "title": "용마산",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP040770",
+      "title": "국립기상박물관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP040795",
+      "title": "용산공원 부분개방부지",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP040938",
+      "title": "국립한글박물관 상설전시 <br><훈민정음, 천년의 문자 계획>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP041116",
+      "title": "제12회 서울미디어시티비엔날레 사전프로그램 <br>《정거장》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP041681",
+      "title": "한국금융사박물관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP041871",
+      "title": "하우스 오브 아로마티카",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP041903",
+      "title": "김근태기념도서관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP042078",
+      "title": "인천국제공항 제 1터미널 서울관광정보센터 (서편)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP042170",
+      "title": "어린이대공원 꿈마루",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP042350",
+      "title": "박노수미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP042352",
+      "title": "최만린미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP042446",
+      "title": "김중업 건축문화의집",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP07kl3f",
+      "title": "내셔널지오그래픽 특별기획 OCEAN 가장 거대한 기록",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP0aa7qh",
+      "title": "송정제방길",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP0b6sv3",
+      "title": "2025 서울시향 드뷔시와 라벨 ①",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP0e0w4k",
+      "title": "삼일로창고극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>기타문화관광지"
+    },
+    {
+      "cid": "KOP0gxkdq",
+      "title": "논픽션 한남",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP0rc3u4",
+      "title": "케이타운포유 코엑스",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>기타문화관광지"
+    },
+    {
+      "cid": "KOP0skv41",
+      "title": "뮤지컬 렌트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1287z8",
+      "title": "Nubim Kim Group 내한 공연",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP129lpb",
+      "title": "SM엔터테인먼트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP15st7z",
+      "title": "석파정 서울미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP16izx7",
+      "title": "김지희 개인전 DIVINITY",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP18biiq",
+      "title": "보신각, 시간의 울림",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1azypy",
+      "title": "SeMA 옴니버스 <제9행성>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1f5yex",
+      "title": "서울시립 북서울미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP1fbrx6",
+      "title": "2024 LEE MU JIN CONCERT [별책부록] - SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1kv0hq",
+      "title": "진찬 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1lezus",
+      "title": "메디큐브 플래그십 스토어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP1ps3fb",
+      "title": "≪쉿!≫",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1sxxhi",
+      "title": "떨어지는 눈",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1udvdv",
+      "title": "출발! 한양탐험대",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1wimla",
+      "title": "BEAUTY, TRANSLATED",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1wzrx2",
+      "title": "《수집된 순간들 (Collection of Moments)》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP1zyxhn",
+      "title": "공중정원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP20kefn",
+      "title": "청계천 미디어아트 <청계 소울 오션>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP21zkoz",
+      "title": "뮤지컬 <빌리 엘리어트>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP24o1g5",
+      "title": "조경재 <절대적 재구축 : Absolute Reconstruction>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2bo6vv",
+      "title": "2024 도경수 아시아 팬콘서트 투어 BLOOM THE FINAL ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2c8enb",
+      "title": "99아트컴퍼니 <회랑(回廊)에서; 총체성으로의 회귀>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2dc0q5",
+      "title": "Veil Undrawn 열어 둔 베일",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2fcbi7",
+      "title": "Rest and Rise : 남겨진 것과 떠오른 것들",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2ite3z",
+      "title": "호국보훈의 달 기념 공연 <영웅에게>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2qn4qq",
+      "title": "K-드라마 스포트라이트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2s8isl",
+      "title": "잠원 한강공원 수영장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP2w30uj",
+      "title": "2025 타이틀 매치 《장영혜중공업 vs. 홍진훤 : 중간지대는 없다》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP2xzi3t",
+      "title": "서대문 홍제폭포",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOP2yacfo",
+      "title": "2025 노들섬 <아트 스페이스 엣지>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP32m3he",
+      "title": "코엑스 물품보관소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>백화점",
+      "travel_value_signals": [
+        "HIGH_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOP3b4gfv",
+      "title": "2025 애채숲",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP3elqxf",
+      "title": "월하보이",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP3fknzc",
+      "title": "BLUE SQUARE 블루스퀘어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP3mz1mm",
+      "title": "2024년 특별전 ‘태평계태평太平繼太平: 태평성대로 기억된 18세기 서울'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP3o0027",
+      "title": "키자니아 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP3pv6se",
+      "title": "허상욱《분청산책 : Buncheong Stroll》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP3r5br9",
+      "title": "2023 홈·테이블데코페어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP3r7zs1",
+      "title": "서울의 젊은이와 대중가요",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP3u747h",
+      "title": "[스페이스 톤 갤러리] 고소미 개인전: 다양체(Multiplicity)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4984rf",
+      "title": "서울의 이용원 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP49nma5",
+      "title": "전시 〈서울일러스트레이션페어〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4cq7rr",
+      "title": "서울라이트 DDP 2023 가을",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4cyqe3",
+      "title": "무나씨 《우리가 지워지는 계절에》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4ec5o3",
+      "title": "서울의 작은 산",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4groc4",
+      "title": "서울시무용단 <미메시스>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4gtoyu",
+      "title": "Happy voyage",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4khc7y",
+      "title": "스페이스K 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP4n0w9a",
+      "title": "2025 젊은국악 단장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4q4n0f",
+      "title": "인상주의를 넘어: 르누아르,드가,고흐,마티스,피카소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4s22t5",
+      "title": "믹스드 오케스트라  : 넥스트 레벨 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP4u05qa",
+      "title": "성북예술창작터",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP52w7m1",
+      "title": "드로잉룸",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP57x3om",
+      "title": "[2025 청계천 공공미술 프로젝트 청계공존] 도슨트 프로그램 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5db89m",
+      "title": "다시, 지구 : 다른 감각으로 응답하기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5h6ubl",
+      "title": "더현대 서울 크리스마스 빌리지 'H-Village'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5hau1h",
+      "title": "갤러리조선",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP5icc8k",
+      "title": "바라보다 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5k7sv5",
+      "title": "구본창의 항해",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5nlj26",
+      "title": "남산 하늘숲길",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOP5uw5dz",
+      "title": "마이아트뮤지엄 원그로브점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP5vp58h",
+      "title": "《내가 좋아하게 될 전시》 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5y25gn",
+      "title": "우리는 어디서 왔고 무엇이며 어디로 가는가? 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5y6ztl",
+      "title": "서울YMCA, 청년이 만든 시민의 역사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP5zna0p",
+      "title": "가나아트 컬렉션 기획상설전 《80 도시현실》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP678cv8",
+      "title": "옛시장실 재현 공간",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP67o3xb",
+      "title": "서울올림픽주경기장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP68y59t",
+      "title": "뚝섬한강공원 눈썰매장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP68z1mg",
+      "title": "SeMA 공용공간 프로젝트 《영원히 교차하는 춤》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP69gpsk",
+      "title": "DOEZNY《MOVEMENT》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6edc88",
+      "title": "서울아트센터 도암갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP6hqs2t",
+      "title": "천경자 탄생 100주년 기념 《격변의 시대, 여성 삶 예술》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6kc5mf",
+      "title": "일무일악 一舞一樂",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6ljerd",
+      "title": "PEAK FESTIVAL 2025",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6s1tnd",
+      "title": "판소리아지트 놀애박스 <판소리 쑛스토리 II : 모파상편>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6w9tgb",
+      "title": "SEOUL VIBE[서울 바이브]",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6y9jr9",
+      "title": "IBK 모두다 가족콘서트 2026",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP6zvjr6",
+      "title": "뚝섬한강공원 X-게임장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOP70mg3c",
+      "title": "광복 80주년 기념 특별전 우리들의 이순신",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP71zsbw",
+      "title": "삼각G7: 시작의 자리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP72zzo1",
+      "title": "아트사이드 갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP76n5f5",
+      "title": "선라이즈 투 선라잇(Sunrise to Sunlight)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP7hqfq3",
+      "title": "천개의 소원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP7lrfs0",
+      "title": "시선의 확장 Broadening of visions",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP7o9oit",
+      "title": "Empty Houses on the Coast",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP7u9qht",
+      "title": "선우풍월(扇友風月): 부채, 바람과 달을 함께 나누는 벗",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP8j7w39",
+      "title": "권진규의 영원한 집",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP8kwn54",
+      "title": "아르코꿈밭극장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP8pkdcm",
+      "title": "나의 보물, 나의 유산",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP8r0zj2",
+      "title": "이회영 기념관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOP9923r7",
+      "title": "너와 나 그리고 그곳에 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9dtud4",
+      "title": "무용 - 녕(寧), 왕자의 길",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9fwlch",
+      "title": "그라운드시소 서촌",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9hdag0",
+      "title": "Piknic",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOP9kal14",
+      "title": "2026 성북구립미술관 기획전시 《이정윤: 노래하는 집》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9puqbn",
+      "title": "최민영: 꿈을 빌려드립니다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9q04ig",
+      "title": "THEO 띠오",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP9vuxuv",
+      "title": "김병구 개인전 《7am Green pew》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9xfhqw",
+      "title": "SeMA 옴니버스 《나는 우리를 사랑하고 싶다》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOP9zw186",
+      "title": "눈",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPa0muuu",
+      "title": "한강이야기전시관 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>기타문화관광지"
+    },
+    {
+      "cid": "KOPa3er53",
+      "title": "K-아이돌 뷰티체험존 WINTER GLAM SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPa4m2cj",
+      "title": "상상력 옷장 – 이랜드 컬렉션 특별전",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPa4udir",
+      "title": "카일리 매닝 : 황해",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPaacet0",
+      "title": "매키탄호텔",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOPabxqit",
+      "title": "세계우표전시회 필라코리아 2025",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPad2n9b",
+      "title": "crosswalk ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPadxt74",
+      "title": "근접한 세계",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPae1cn5",
+      "title": "한양도성의 사라진 옛문, 소의문",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPah6vze",
+      "title": "옛서울역 준공 100주년 기념전시 <백년과 하루, 기억에서 상상으로>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPapcfqb",
+      "title": "《따스함이 빛나는 그곳엔 (Where Warmth Shines)》  展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPav9wgq",
+      "title": "B the B",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPb2qbin",
+      "title": "그때, 이곳의 기록-청계천 판자촌",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPb3chj1",
+      "title": "서울로봇인공지능과학관(RAIM)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPb4al47",
+      "title": "일렉트릭 쇼크",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPbhq8vy",
+      "title": "뚝섬 인공암벽장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPbhrawk",
+      "title": "<희미한 기억, 짙은 그리움> ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPbl8ts0",
+      "title": "쿠푸왕의 피라미드",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPbrcjal",
+      "title": "뮤지컬 <위키드> 내한 공연(WICKED The Musical)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPbtl4l5",
+      "title": "유이치 히라코《여행》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPc2dpb9",
+      "title": "시간을 잇는 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPc4jh4a",
+      "title": "그림이라는 별세계 : 이건희컬렉션과 함께",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPcahnf0",
+      "title": "평보 서희환 : 보통의 걸음",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPcgjih3",
+      "title": "뷰티풀 민트 라이프 2025",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPch67xl",
+      "title": "2025 서울시향 림스키코르사코프 '셰에라자드' ①",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPcjuosl",
+      "title": "〈센과 치히로의 행방불명〉오리지널 투어 (SPIRITED AWAY)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPcyotr4",
+      "title": "THART 띠아트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPcyxke6",
+      "title": "페인터즈",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPczsr0z",
+      "title": "2024 윤하 연말 콘서트 〈GROWTH THEORY〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPd5oub3",
+      "title": "한강, 소리로 흐른다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPd8ek6k",
+      "title": "서울시립 사진미술관 《사진이 할 수 있는 모든 것》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPd8sx8c",
+      "title": "이머시브K (Immersive-K) 간송미술관 디지털 미디어아트 전시",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPda1e2c",
+      "title": "수락산 벽운계곡",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOPdb8gvb",
+      "title": "2024 삼각산금암미술관 공예 전시 공모전 선정- EUNPYEONG &lt;형형색색 形形色色&gt;",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPdhvwbf",
+      "title": "낯선 시선으로부터 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPdq9fcr",
+      "title": "2023 세종미술관 기획전시《필묵변혁-송수남 황창배》 '현대수묵의 두 시선'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPdqsfd3",
+      "title": "2025 여유작 콘서트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPdr8hdy",
+      "title": "2026 공성환 초대전 <파문 波紋 ; Ripple>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPdxudlq",
+      "title": "MINSEONG KIM: False Alarm",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPe3alnl",
+      "title": "불빛정원(옛 화랑대역)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOPe3w8e1",
+      "title": "현대공예 특별기획전 《물질-실천》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPe89h7l",
+      "title": "슈니따, 오제성 <도깨비: 멀티 페르소나> ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPecp151",
+      "title": "이영준 《Ingoing Escape》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPer1hnq",
+      "title": "[S-TCEP]2023 서울시향 오스모 벤스케의 시벨리우스 교향곡 2번",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPer9yef",
+      "title": "갤러리에서 찾은 행복 Recipe",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPerykvq",
+      "title": "뮤지컬 <더 퍼스트 그레잇 쇼>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPet80lf",
+      "title": "페이스갤러리 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPet9p1i",
+      "title": "케이팝 스퀘어 홍대",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPexzzw3",
+      "title": "석굴암",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOPf5hpob",
+      "title": "픽셀 스페이스 2025",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfb8q7l",
+      "title": "순성기행(巡城紀行) : 19세기 선비의 눈을 통해 본 한양도성",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfdzfap",
+      "title": "우리들의 광복절",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfgv1jj",
+      "title": "쿠오카 성수",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPfpky3x",
+      "title": "e스포츠 명예의 전당",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOPfppq98",
+      "title": "한성부입니다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfv3al6",
+      "title": " 유영국: 산은 내 안에 있다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfyfhxg",
+      "title": "북한인권오페라 <냉면> ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfyj86p",
+      "title": "<찬란한 에르미타주> 공식 디지털 특별전",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPfztlks",
+      "title": "유토피아: 노웨어, 나우 히어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPg1x5kx",
+      "title": "맨디 엘-사예: 테레사, 이후",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPg4osmd",
+      "title": "미증유의 대홍수 : 1925 을축년",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPg4p0aa",
+      "title": "서울시립교향악단 광복 78주년 기념음악회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPg8me67",
+      "title": "투명하고 향기나는 천사의 날개 빛깔처럼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgcblme",
+      "title": "중앙고등학교",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOPgd8ldd",
+      "title": "서울시국악관현악단 실내악 시리즈 <소리섬 : 시대와 함께한 아리랑>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgeb6on",
+      "title": "서울시립 사진미술관 《마틴 파: We Are Martin Parr》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgep0bg",
+      "title": "고요한 빛과 파란 하늘을 바라보며 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgftn4l",
+      "title": "다만 고요히 앉아 있을 뿐이다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPghsior",
+      "title": "포스터 전시 POSTER HOUSE",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgklb6g",
+      "title": "정관, 김혜주 <미해결의 장 : Unresolved Chapter>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgmiqls",
+      "title": "몸을 위한 간주곡 ― 소목장세미",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgpl1c3",
+      "title": "발푸르기스의 밤: 한국의 마녀들",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgrw5c5",
+      "title": "고터·세빛 관광안내소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOPgwovaw",
+      "title": "UAUS 14기 파빌리온 전시 Ask Nature : Biomimicry ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgxl8qf",
+      "title": "세계유산과 한양의 수도성곽",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgykl1q",
+      "title": "싱그러움을 그러모아",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPgzt4p3",
+      "title": "[S-TCEP]2023 서울시향 코파친스카야의 쇼스타코비치",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPh15wjf",
+      "title": "여의나루역 러너스테이션",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPh1rw9d",
+      "title": "범:BEOM 지민선 전시회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPh2aqcf",
+      "title": "지구울림 - 헤르츠앤도우",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPh4kp0u",
+      "title": "언젠가, 우리가 같은",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhax5cj",
+      "title": "아트큐브 2R2",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOPhcg1td",
+      "title": "《The Mindscape ; Encounters of the Third Kind (심상 풍경 : 미지와의 조우 )》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhcuknk",
+      "title": "2025 BIBI 1st WORLD TOUR ［EVE］ IN SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhd2f4q",
+      "title": "딜쿠샤",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOPhi142j",
+      "title": "NUMAZ WHOLESALE WEEK",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhl9uml",
+      "title": "기쁜 마음을 그리다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhr5agm",
+      "title": "Warm&Cool ART Collection 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhs2wlq",
+      "title": "ICON: The Chair Series",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhwbm10",
+      "title": "≪SeMA 앤솔러지: 열 개의 주문≫",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhxe78f",
+      "title": "제 14회 에듀플러스위크 (Korea lnt’l EDUCATION WEEK 2023)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhxlwke",
+      "title": "2026년 제2회 가락테이블콘서트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhxyp50",
+      "title": "최재은 : 약속",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPhyd9ee",
+      "title": "서촌한옥마을",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광"
+    },
+    {
+      "cid": "KOPi1olcq",
+      "title": "‘환혼: 빛과 그림자’ 몰입형 미디어 아트 전시",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPi1u9ze",
+      "title": "루이 비통 비저너리 저니 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPi3s4ab",
+      "title": "성수 레디영 약국",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPic9f47",
+      "title": "2025 돈화문 야광명월 II : 한국의 탈, 웃음과 신명이 깃든 얼굴 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPig96uk",
+      "title": "배윤환 개인전 《딥다이버(Deep Diver)》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPihmlac",
+      "title": "뮤지컬 긴긴밤",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPiibcte",
+      "title": "렘브란트에서 고야까지, 톨레도 미술관 명작展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPij6dx2",
+      "title": "2026 한강 불빛 공연 : 드론라이트쇼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPij99b4",
+      "title": "팔색찬란-K로 가득한 지역",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPinmv7s",
+      "title": "2025 서울 북한인권세계대회 남북 클래식 대중음악 콘서트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPj1ro8q",
+      "title": "광화문광장 해치마당 (Haechi Madang)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOPj6a5ja",
+      "title": "GS아트센터 X 서울재즈페스티벌 <팻 메시니: 드림 박스 - 문다이얼 투어>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjhzbgg",
+      "title": "믹스드 오케스트라 26",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjlda9f",
+      "title": "자기의 고집",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjltxu8",
+      "title": "2024 delight Seoul (딜라이트 서울)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjn2f1j",
+      "title": "제46회 전통공예명품전",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjtj4tl",
+      "title": "2024 <한강노들섬클래식> 한강노들섬발레 '잠자는 숲속의 미녀'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjw94y2",
+      "title": "뮤지컬 〈이터니티〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPjy51fz",
+      "title": "LG아트센터 서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOPjzn3w7",
+      "title": "뮤지컬〈라이카〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPk2a199",
+      "title": "뮤지엄김치간 Story & History",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPk4sx8q",
+      "title": "2023 서울국제공연예술제(SPAF)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkhtg5h",
+      "title": "2024 <한강노들섬클래식> 한강노들섬오페라 '카르멘'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkifmep",
+      "title": "새벽부터 황혼까지 - 스웨덴국립미술관 컬렉션",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkkmg5t",
+      "title": "서서울미술관 개관특별전 《우리의 시간은 여기서부터》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkq13lf",
+      "title": "국립극장 마당놀이 <홍길동이 온다>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkxi16h",
+      "title": "경국사 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOPkzbkyo",
+      "title": "마음을 채우는 전시 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkzupx6",
+      "title": "JW이종호재단 장애인 예술가 미술 전시회  'JW아트어워즈'",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPl3j0oy",
+      "title": "서울시립사진미술관 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPl4rnb2",
+      "title": "하늘그네 왕십리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPl57sqg",
+      "title": "글자의 깊이, 1.5㎜",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPlcw3a4",
+      "title": "인상주의에서 초기 모더니즘까지, 빛을 수집한 사람들 - 메트로폴리탄박물관 소장 로버트 리먼 컬렉션",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPlhr9s8",
+      "title": "보편타당한 당신 –심이다은",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPlhrsqk",
+      "title": "이상한 K-뷰티 : 엄마의 서랍장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPli2f4y",
+      "title": "마음을 휴식하다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPloaxhb",
+      "title": "한운성컬렉션 기증기획전 《그림과 현실》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPloueuq",
+      "title": "Dreaming Paradise 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPlt15e6",
+      "title": "김지혜 〈파도〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPm8j6gm",
+      "title": "권병준: 내 마음 속에 너는",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmbgpkh",
+      "title": "Bathtub & Feather",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmcgru1",
+      "title": "Play with K",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmdl0dd",
+      "title": "크리스찬 히다카 : 하늘이 극장이 되고 극장이 하늘에 있으니",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmfskyu",
+      "title": "기록으로 산책하기_서울의 공원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmnz7ln",
+      "title": "김인순 컬렉션 ≪일어서는 삶≫  ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPmvbf3l",
+      "title": "삼각산금암미술관 <초등 미술 교과서, 밖으로>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPn0qtcb",
+      "title": "리버시티수상스키장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPn0wsm1",
+      "title": "플랫폼엘 (PLATFORM-L)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPn1ua1r",
+      "title": "서울시립과학관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOPn3k0fb",
+      "title": "제13회 서울미디어시티비엔날레 《강령: 영혼의 기술》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnambcz",
+      "title": "선유도 : 조용한 공존",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnd5dx1",
+      "title": "이유진 개인전《미기후 사랑방 - 의존하는 개인전》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnfu7l4",
+      "title": "연극  울며 마늘 먹기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPni951h",
+      "title": "2024 성북 신문인사 프로젝트 &lt;이태준: 달밤은 그에게도 유감한 듯하였다&gt; 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnizi31",
+      "title": "강남 파인 크래프트 아트 클럽 전시회 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnkfasx",
+      "title": "연희 상설 공연 〈연희판판〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnmp0dt",
+      "title": "캘린더전 2024",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnpbfuz",
+      "title": "우리를 지켜주세요",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPnw33eg",
+      "title": "club 설화",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPny8ty6",
+      "title": "스페인의 거장 고야: 이성이 잠들 때, 괴물이 깨어난다展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPo1wsp6",
+      "title": "DMAU 프로젝트 <인잇>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPoig3k4",
+      "title": "시공時空 시나리오",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPojrz90",
+      "title": "청운문학도서관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>교육시설"
+    },
+    {
+      "cid": "KOPokonim",
+      "title": "〈슬립노모어 서울〉 (Sleep No More Seoul)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPoo9a6e",
+      "title": "청계천박물관, 스물",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPoovshm",
+      "title": "한국경제인협회와 함께하는 2025 서울시립교향악단 강변음악회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPotdpky",
+      "title": "예술가의 연구 《미완의 식물지―이소요》, 《꽃 시계―안나 리들러》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPotfyui",
+      "title": "국악공연 시리즈 첫번째 <일각이> ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPp0vgx2",
+      "title": "소운컬렉션 소중현대展 작은 것 속에 큰 것이 드러나다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPp64y00",
+      "title": "토이콘 서울 (TOY CON SEOUL)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpbvzoo",
+      "title": "동심(童心)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpiajmm",
+      "title": "보이스 오브 햄릿",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpm3s33",
+      "title": "2026 국제수면치유박람회 | Sleep & Wellness Festa",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpq0clc",
+      "title": "정재일 콘서트 - Listen",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpqthfq",
+      "title": "월리를 찾아라 특별전",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpuxifv",
+      "title": "한양도성 훼철, 한양의 경계를 허물다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpx5985",
+      "title": "유의정 《The 백자 》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpx8z5o",
+      "title": "김소진의 보성소리 적벽가 완창",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPpylv57",
+      "title": "GWTF: Go with the Flow",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPq3sf3y",
+      "title": "2024 2NE1 CONCERT［WELCOME BACK］ IN SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPq52hjp",
+      "title": "가든뷰",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPqbt49i",
+      "title": "2026 영등포아트스퀘어 X 카이스트 경험디자인 연구실 특별전시 <Living Geometry>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqbvlpa",
+      "title": "COMPANY World Affair",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqfnqr2",
+      "title": "기술로 이어가는 헤리티지, 가장 인간적인 미래",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqft0dj",
+      "title": "길드는 서로들",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqgqpqj",
+      "title": "2024 궁 페스티벌",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqkuw4r",
+      "title": "뚝섬 윈드서핑장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPqljohs",
+      "title": "[S-TCEP]DDP 디자인 아카이브 KSVD: 1972~1993",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqnwgc7",
+      "title": "Mood, sunday",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqosaz0",
+      "title": "여름식탁 : 여섯 개의 손, 하나의 식탁",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqphj9g",
+      "title": "글짓, 쓰는 예술",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPqspquw",
+      "title": "스트라이크존 서울 잠실구장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPquzsjk",
+      "title": "Always-Already-There",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr1o3h2",
+      "title": "수상음악 프로젝트 <웨이브>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr2k2ja",
+      "title": "서울기록원 전시 : 어느 도시의 탑승록 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr5aepl",
+      "title": "문도 픽사(Mundo Pixar): 픽사, 상상의 세계로",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr5izii",
+      "title": "2024 KISS OF LIFE 1ST WORLD TOUR ［KISS ROAD］ IN SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr5wmx4",
+      "title": "창립 65주년 기념 한국경제인협회와 함께하는 2026 서울시향 강변음악회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr6qnov",
+      "title": "2036 서울, 두 번째 올림픽",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPr6uuc7",
+      "title": "라이징 북서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPrflwgm",
+      "title": "청계천의 낮과 밤",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPrfwk6e",
+      "title": "2023 코리아빌드위크",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPrisi5i",
+      "title": "이길이구 갤러리",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPrlt4bh",
+      "title": "빛의 시어터 : 달리, 끝없는 수수께끼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPrnh215",
+      "title": "the SamE",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>전문매장/상가",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPrpwzjs",
+      "title": "홍익대학교 박물관 기획전 《백색 이후 1975-1995》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPrxkd9g",
+      "title": "GALLERY J. ONE",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPrzvy6d",
+      "title": " 에디 마티네즈 개인전 <투 비 컨티뉴드>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPs5o5q6",
+      "title": "조용진 · 황태인 <조금만 바꿔볼까?> ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPs96x6t",
+      "title": "제주 해녀 : 사라져 가는 세계",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPs9gkpe",
+      "title": "서울기록원 어린이 기록체험실 <꼬불꼬불 기록 탐험>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPsbarih",
+      "title": "A Magical day",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPsbk889",
+      "title": "《농담 : 내게서 번져, 당신에게 건네는》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPsfb8bl",
+      "title": "2023 서울시립교향악단 파크 콘서트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPsj8gga",
+      "title": "조선 양반 접객 문화 체험 공연 '옹기콘서트' ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPski6au",
+      "title": "Alone but Together 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOPsnugjh",
+      "title": "2018-2022 가파도 아티스트 인 레지던스 참여작가전 《투명성: 감각과 마음》 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPsrn1p5",
+      "title": "서울 지하철 개통 50주년 기념 전시 &lt;서울의 지하철&gt;",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPt1364i",
+      "title": "심원의 정원 : 먹과 묵",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPt72ki7",
+      "title": "어긋난 파동, 흔들리는 시간: 오민, 카밀 노먼트",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPt9l0a3",
+      "title": "DDP 가을 스페셜투어 : 디자인&아트 투어",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPtbjmj6",
+      "title": "고흐, 손 끝에 담다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPtp4vgi",
+      "title": "추분 : 가을의 시작",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPtpyykt",
+      "title": "슬립노모어 서울  Sleep No More Seoul",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPtrioy0",
+      "title": "전쟁을 겪은 어린이들의 이야기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPtu01xt",
+      "title": "내 손 위의 Super Moon : 달항아리 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPu1vba8",
+      "title": "《오픈 에어 뮤지엄_풍납토성》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPu2zkva",
+      "title": "서울시립미술관 난지미술창작스튜디오  20주년 기념전 《사랑의 기원》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPu3xofd",
+      "title": "PLAVE FAN CONCERT ‘Hello, Asterum!’ ENCORE",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPu69ib8",
+      "title": "바자전 : IN-BETWEEN",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPua5zwq",
+      "title": "[S-TCEP]뮤지컬 캣츠 내한공연-서울 (Musical CATS)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPubcv55",
+      "title": "SeMA 옴니버스 &lt;끝없이 갈라지는 세계의 끝에서&gt;",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPuf1clc",
+      "title": "타카하타 이사오전",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPup1c05",
+      "title": "국립정동극장 세실",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOPv4bofj",
+      "title": "감사의 정원",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광"
+    },
+    {
+      "cid": "KOPv5q129",
+      "title": "마음의 사귐, 여운이 물결처럼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPv7nwyv",
+      "title": "Play with K",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvgjqek",
+      "title": "도봉 김선영 개인전 「이, 별에 서서」展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvgrv8o",
+      "title": "뮤지컬 〈로빈〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvi3cne",
+      "title": "Happy Holidays",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvp4h52",
+      "title": "제1회 한별아트페어ㅣ여여자연 如如自然",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvtrfxs",
+      "title": "오지윤(Oh Jiyoon) 개인展, 《존엄: 축적된 시간》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvvlkpy",
+      "title": "2024 성시경 with friends ［자, 오늘은］",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvvsy1q",
+      "title": "Someday Festival 2024",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPvwyyh4",
+      "title": "뮤지컬 킹키부츠",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPw0mro9",
+      "title": "상자루 <플러그 인 남산>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPw7lepl",
+      "title": "페르난도 보테로: 형태의 미학",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPw9eym0",
+      "title": "달마사",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOPwamqsm",
+      "title": "서울 가족 삼대 결혼 이야기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwdbw7j",
+      "title": "Everything Dance Hall",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwgc1w7",
+      "title": "20 Episodes of her 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwglig5",
+      "title": "소원을 말해봐",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwly2p0",
+      "title": "2026년 1월~2월 어둠속의 대화",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwo1ido",
+      "title": "여의도 눈썰매장",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>레저스포츠시설"
+    },
+    {
+      "cid": "KOPwpc03s",
+      "title": "볼 빨간 돼지의 종이 모험",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwqfyfs",
+      "title": "더, 자연스러운 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPwsz1hv",
+      "title": "Beauty For All : 경계 없는 아름다움",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPx0x7wx",
+      "title": "뱅크시 : Still Here",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPx138ls",
+      "title": "거안",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOPx2ckxb",
+      "title": "광복80주년 가나아트컬렉션 특별전 《서시: 별을 노래하는 마음으로》",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPx2foc9",
+      "title": "광야@서울",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑>쇼핑몰",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPx61vzb",
+      "title": "박현성, 윤석원 <어저께의 나머지에 오늘을 붙여 : The rest of today going to tomorrow>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPx9hgr2",
+      "title": "마리아 스바르보바 : 어제의 미래 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxa3w2o",
+      "title": "간송미술관",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPxj9byw",
+      "title": "갤러리 지우헌",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxjlehm",
+      "title": "안양천",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "UNRESOLVED_A_DETAIL",
+      "routing": "A",
+      "category": "자연관광>자연경관(하천)"
+    },
+    {
+      "cid": "KOPxl8ya1",
+      "title": "<예술과 함께 쑥쑥! 아이프칠드런 성장축제>  AiF children 2nd Anniversary 𝙎𝙋𝙀𝘾𝙄𝘼𝙇 𝘼𝙍𝙏 𝙁𝙀𝙎𝙏𝘼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxp3cfn",
+      "title": "2024 젊은국악 단장 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxrmedb",
+      "title": "군기시유적전시실",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>기타전시시설"
+    },
+    {
+      "cid": "KOPxua216",
+      "title": "갤러리모순",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPxv4p1y",
+      "title": "무한기둥-확산",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxwctrd",
+      "title": "자연을 훔친 붓질 (Gesture Beyond the Canvas) 展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPxzn4e4",
+      "title": "행복이 오는 전시 (Where Happiness Arrives)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPy1hneb",
+      "title": "하루키를 말할 때 우리가 하고 싶은 이야기",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPy3qot3",
+      "title": "2026 돈화문 국악위크 <사이… 소리… 숨…>",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPy89nt5",
+      "title": "다시, 그리다展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPy8r22r",
+      "title": "서울라이트 DDP 2025 가을",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyfebh0",
+      "title": "2025 창경궁 물빛연화",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyfsp0k",
+      "title": "손길모양",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyie8if",
+      "title": "제4회 서울도시건축비엔날레",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyst2iu",
+      "title": "클림트와 라치오디의 기적",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPytf3yk",
+      "title": " 2025 Summer Project 《허윤희: 영원은 순간 속에》 -HUH, Yun-hee: The Eternal within a Moment-",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyw61fy",
+      "title": "청색변주 Blue Variations",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPyy3nfg",
+      "title": "2025서울아트쇼",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPz20943",
+      "title": "한 권의 책에서 온 세계로, K-콘텐츠: K-BOOK to the WORLD",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPz5kf0x",
+      "title": "로카 3주년 기념 사진전 : 뉴욕을 걷다",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPz8531l",
+      "title": "윤기와 구홍의 <구홍과 윤기> Yoonkee & Guhong's Guhong & Yoonkee",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPza4e3a",
+      "title": "올리브베러 광화문점",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "SHOPPING_HIGH_OR_INTENT",
+      "routing": "A",
+      "category": "쇼핑",
+      "travel_value_signals": [
+        "INTENT_SPECIFIC_VALUE",
+        "GENERAL_TRAVEL_VALUE"
+      ]
+    },
+    {
+      "cid": "KOPzcpf02",
+      "title": "삼세영",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOPzd1i95",
+      "title": "〈한복 입은 남자〉",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzef7ak",
+      "title": "황홀한 증식 : Euphoric Proliferation",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzeh3y8",
+      "title": "2025 ＆TEAM CONCERT TOUR ‘AWAKEN THE BLOODLINE’ in SEOUL",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzgws5p",
+      "title": "《Imagination Garden : Fantasy Time》  展 ",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzm8tt4",
+      "title": "조민열  Blue, Hidden, Nature",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzncurn",
+      "title": "한지가헌 도슨트 프로그램ￜ상설체험프로그램ￜ한지인화소",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>기타문화관광지"
+    },
+    {
+      "cid": "KOPzpe3qy",
+      "title": "제65주년 4·19혁명 서울시 기념음악회",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPztit27",
+      "title": "제5회 서울도시건축비엔날레",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzx9rx4",
+      "title": "2025 서울무형문화축제",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzyabwl",
+      "title": "Smile Keeper 展",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPzyjusk",
+      "title": "제10회 한일포토콘테스트 수상작품전 (김포국제공항)",
+      "class": "PLACE_DETAIL_TARGET",
+      "reason": "CONDITIONAL_A_DETAIL",
+      "routing": "A",
+      "category": "문화관광>전시시설"
+    }
+  ]
+}

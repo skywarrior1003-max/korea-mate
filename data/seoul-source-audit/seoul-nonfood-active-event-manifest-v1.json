@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1",
+    "as_of": "2026-08-12",
+    "description": "Seoul Active Event Service Pool -- 현재/미래 확정 Event. 7일 refresh cycle (~2026-08-18)",
+    "CURRENT_OR_FUTURE_CONFIRMED_EVENT": 6,
+    "BATCH": "Batch3",
+    "NEXT_REFRESH": "2026-08-18",
+    "EVENT_WORK_STATUS": "CLOSED_REFRESH_ONLY",
+    "policy": "multicity-event-freshness-policy-v1.md"
+  },
+  "records": [
+    {
+      "source_record_id": "KOPsj8gga",
+      "cid": "KOPsj8gga",
+      "title": "조선 양반 접객 문화 체험 공연 '옹기콘서트'",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-07-02",
+      "end_date": "2026-12-10",
+      "official_url": "https://english.visitseoul.net/events/Joseon-Yangban-Hospitality-Culture-Experience-Performance-Onggi-Concert/ENPsj8gga",
+      "official_url_type": "OFFICIAL_VISIT_OR_PUBLIC_PAGE",
+      "venue": "동대문종합시장 신관(N동) 9층 전통공연창작마루 광무대",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    },
+    {
+      "source_record_id": "KOPnkfasx",
+      "cid": "KOPnkfasx",
+      "title": "연희 상설 공연 〈연희판판〉",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-04-04",
+      "end_date": "2026-10-31",
+      "official_url": "https://english.visitseoul.net/events/Yeonhee-Standing-Performance-Yeonheepanpan/ENPnkfasx",
+      "official_url_type": "OFFICIAL_VISIT_OR_PUBLIC_PAGE",
+      "venue": "국립국악원 연희마당",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    },
+    {
+      "source_record_id": "KOPd5mmfg",
+      "cid": "KOPd5mmfg",
+      "title": "2026 서울시 태권도 공연",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-05-09",
+      "end_date": "2026-10-18",
+      "official_url": "https://www.instagram.com/seoul.tkd",
+      "official_url_type": "ORGANIZER_DIRECT",
+      "venue": "남산골한옥마을 및 DDP",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    },
+    {
+      "source_record_id": "KOP47mbp7",
+      "cid": "KOP47mbp7",
+      "title": "2026 서울국제정원박람회",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-05-01",
+      "end_date": "2026-10-27",
+      "official_url": "https://www.seoul.go.kr/festa/garden/y2026",
+      "official_url_type": "ORGANIZER_DIRECT",
+      "venue": "서울숲 일대 & 매헌시민의숲",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    },
+    {
+      "source_record_id": "KOPw5jg9e",
+      "cid": "KOPw5jg9e",
+      "title": "2026 남산골 전통체험 : 예술가의 시간",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-04-03",
+      "end_date": "2026-10-25",
+      "official_url": "https://hanokmaeul.co.kr/161",
+      "official_url_type": "ORGANIZER_DIRECT",
+      "venue": "남산골한옥마을 전통가옥 프로그램별 상이",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    },
+    {
+      "source_record_id": "KOPvro3vg",
+      "cid": "KOPvro3vg",
+      "title": "2026 서울야외도서관",
+      "temporal_status": "ONGOING",
+      "start_date": "2026-04-23",
+      "end_date": "2026-11-01",
+      "official_url": "https://seouloutdoorlibrary.kr/user/main/mainIndex.do",
+      "official_url_type": "ORGANIZER_DIRECT",
+      "venue": "서울광장, 광화문광장, 청계천(모전교~광통교)",
+      "class": "CURRENT_OR_FUTURE_CONFIRMED_EVENT"
+    }
+  ]
+}

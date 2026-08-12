@@ -85,50 +85,65 @@ PRIORITY_BASIS = traveler_need + data_freshness + ai_value + source_reliability
 
 ## Priority Group 2 — 여행자 Utility + 현재성
 
-### 2-A. Event Date/Status Pipeline
+### ~~2-A. Event Date/Status Pipeline~~ ⚠️ RETIRED
 
-**대상**: D 라우팅 1,152건 (기존 detail 미보유)
+> **STATUS: RETIRED** — `TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1` (2026-08-12)  
+> 근거: `multicity-event-freshness-policy-v1.md` (commit 0076664)  
+> `EVENT_WORK_STATUS = CLOSED` · `HISTORICAL_BULK_DETAIL_CALLS = 0`
+>
+> **D 라우팅 1,152건은 실행 대상 아님.** 과거 archive이며 bulk detail 호출 금지.  
+> 현재 Service Event Pool = **6건 ONGOING** (7일 refresh cycle, 다음 ~2026-08-18).  
+> 신규 event target = 공식 source의 현재/미래 확정 날짜 event만.  
+> 참조: `data/seoul-source-audit/seoul-nonfood-active-event-manifest-v1.json`
 
-전략:
-- VisitSeoul description → regex 날짜 추출
-- 추출 실패 → official site URL 사용
-- ACTIVE/ENDED/RECURRING/UNKNOWN lifecycle 할당
-- 대형 반복 축제 (서울 빛초롱, 한강 페스티벌 등) 우선
+~~**대상**: D 라우팅 1,152건 (기존 detail 미보유)~~
 
-이유:
-- ENDED Event → AI 일정 제외
-- RECURRING → 시즌 AI 추천 가능
-- ACTIVE → 날짜 기반 여행 일정 연동 가능
-- **날짜 없이는 1,152건 AI 사용 불가**
+~~전략:~~
+~~- VisitSeoul description → regex 날짜 추출~~
+~~- 추출 실패 → official site URL 사용~~
+~~- ACTIVE/ENDED/RECURRING/UNKNOWN lifecycle 할당~~
+~~- 대형 반복 축제 (서울 빛초롱, 한강 페스티벌 등) 우선~~
+
+~~이유:~~
+~~- ENDED Event → AI 일정 제외~~
+~~- RECURRING → 시즌 AI 추천 가능~~
+~~- ACTIVE → 날짜 기반 여행 일정 연동 가능~~
+~~- **날짜 없이는 1,152건 AI 사용 불가**~~
 
 ---
 
-### 2-B. Restaurant Utility Enrichment
+### ~~2-B. Restaurant Utility Enrichment~~ ⚠️ SUPERSEDED
 
-**대상**: C 라우팅 921건
+> **STATUS: SUPERSEDED** — `TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1` (2026-08-12)  
+> `SEOUL_FOOD_EXECUTION_TARGET = 0`  
+> `multicity-food-discovery-collection-policy-v1.md` §14.3: CLOSED_WITH_LIMITATION  
+> 1,259건 저장 완료. Food pipeline 재개 조건 없음.  
+> 할랄/채식 인증 리스트 연동은 별도 Main 판단 영역.
 
-우선순위 내:
-1. 할랄 가능 restaurant (현재 감지: 26건) — 공식 인증 확인
-2. 채식/비건 가능 (29건) — HappyCow / 공식 정보
-3. 솔로 다이닝 가능 (18건) — description 분석
-4. 한식 대표 restaurant — 한국 cuisine intent 연결
+~~**대상**: C 라우팅 921건~~
 
-이유:
-- vegetarian, halal, solo_travel intent = CRITICAL GAP
-- VISITSEOUL_DETAIL에서 일부 확인 가능
-- 공식 인증은 외부 source 필요 (별도 pipeline)
+~~우선순위 내:~~  
+~~1. 할랄 가능 restaurant (현재 감지: 26건) — 공식 인증 확인~~  
+~~2. 채식/비건 가능 (29건) — HappyCow / 공식 정보~~  
+~~3. 솔로 다이닝 가능 (18건) — description 분석~~  
+~~4. 한식 대표 restaurant — 한국 cuisine intent 연결~~
 
 ---
 
 ### 2-C. PLACE_CONDITIONAL_REVIEW 우선 대상 선별
 
-**대상**: A 라우팅 내 PLACE_CONDITIONAL_REVIEW (516건)
+> **UPDATED** — `TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1` (2026-08-12)  
+> Exact manifest 생성 완료. 아래 approximate 수치는 superseded.  
+> PLACE_DETAIL_TARGET = **573** (CONDITIONAL A-routing 528 + Shopping HIGH/INTENT 30 + UNRESOLVED 15)  
+> 참조: `data/seoul-source-audit/seoul-nonfood-place-detail-target-manifest-v1.json`
 
-우선 sub-group:
-- 문화관광 > 공연시설 (22건): 공연 AI 추천용
-- 역사관광 > 종교성지 (21건): temple_stay/heritage 연결
-- 문화관광 > 레저스포츠시설 (27건): 가족/액티비티 intent
-- 문화관광 > 전시시설 (340건): 미술관/갤러리 우선 30건
+~~**대상**: A 라우팅 내 PLACE_CONDITIONAL_REVIEW (516건)~~
+
+~~우선 sub-group:~~  
+~~- 문화관광 > 공연시설 (22건): 공연 AI 추천용~~  
+~~- 역사관광 > 종교성지 (21건): temple_stay/heritage 연결~~  
+~~- 문화관광 > 레저스포츠시설 (27건): 가족/액티비티 intent~~  
+~~- 문화관광 > 전시시설 (340건): 미술관/갤러리 우선 30건~~
 
 ---
 

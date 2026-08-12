@@ -1,0 +1,321 @@
+{
+  "meta": {
+    "task": "TASK-SEOUL-NONFOOD-EXECUTION-PLAN-V1",
+    "as_of": "2026-08-12",
+    "description": "Seoul non-Food Existing Raw Recovery — 기존 detail 보유, 신규 API 불필요. Eligibility 평가만 필요.",
+    "total": 38,
+    "policy": [
+      "multicity-place-eligibility-policy-v1.md",
+      "multicity-event-freshness-policy-v1.md"
+    ],
+    "source": "seoul-full-enrichment-routing-v2.jsonl",
+    "EXISTING_RAW_RECOVERY_TARGET": 38,
+    "BATCH": "Batch1"
+  },
+  "records": [
+    {
+      "cid": "KOP000374",
+      "title": "씨라이프 코엑스아쿠아리움",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP000465",
+      "title": "제니하우스",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOP000511",
+      "title": "청계5가 지하쇼핑센터",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>쇼핑몰"
+    },
+    {
+      "cid": "KOP000521",
+      "title": "신라면세점 서울점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>면세점"
+    },
+    {
+      "cid": "KOP000541",
+      "title": "롯데마트  제타플렉스 서울역점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>대형마트"
+    },
+    {
+      "cid": "KOP001278",
+      "title": "서울남산국악당",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP001434",
+      "title": "서울랜드 ",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP001453",
+      "title": "두산아트센터",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP001732",
+      "title": "아르코(ARKO)예술극장",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>공연시설"
+    },
+    {
+      "cid": "KOP002192",
+      "title": "롯데월드 어드벤처",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP002231",
+      "title": "테크노마트",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>쇼핑몰"
+    },
+    {
+      "cid": "KOP002446",
+      "title": "충무아트센터",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP003085",
+      "title": "토탈미술관",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설>미술관/화랑"
+    },
+    {
+      "cid": "KOP009521",
+      "title": "롯데백화점 에비뉴엘관",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>백화점"
+    },
+    {
+      "cid": "KOP009606",
+      "title": "현대백화점 무역센터점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>백화점"
+    },
+    {
+      "cid": "KOP009677",
+      "title": "동화면세점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>면세점"
+    },
+    {
+      "cid": "KOP009885",
+      "title": "이마트 왕십리점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>대형마트"
+    },
+    {
+      "cid": "KOP015857",
+      "title": "엔터식스 왕십리점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>쇼핑몰"
+    },
+    {
+      "cid": "KOP016352",
+      "title": "신라아이파크면세점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>면세점"
+    },
+    {
+      "cid": "KOP020068",
+      "title": "컬처앤네이처",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOP028776",
+      "title": "어린이대공원 반려견 놀이터",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP029502",
+      "title": "라바타운",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP037367",
+      "title": "롯데월드 아쿠아리움",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>테마공원"
+    },
+    {
+      "cid": "KOP041904",
+      "title": "중랑망우공간",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "UNRESOLVED_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "역사관광"
+    },
+    {
+      "cid": "KOP3iuk2x",
+      "title": "대성표구사",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOP6ptemj",
+      "title": "신세계 더 헤리티지",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>백화점"
+    },
+    {
+      "cid": "KOP92zc2g",
+      "title": "서울 흥천사",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "역사관광>종교성지"
+    },
+    {
+      "cid": "KOPb3kzdm",
+      "title": "비앤씨마켓",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑"
+    },
+    {
+      "cid": "KOPc3g5o6",
+      "title": "서울, 세계와 노래하다",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPc90jlv",
+      "title": "위글위글 플래그십스토어 도산점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑"
+    },
+    {
+      "cid": "KOPftj6y4",
+      "title": "서울마이소울샵 5호점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOPgdf9ry",
+      "title": "파인캐릭터 2026 (FineCharacter 2026)",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설"
+    },
+    {
+      "cid": "KOPkptqaw",
+      "title": "치이카와샵 아이파크몰 용산점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOPmwrtiq",
+      "title": "뉴뉴하우스 성수역점",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>전문매장/상가"
+    },
+    {
+      "cid": "KOPpp5dae",
+      "title": "승진완구\t",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑>대형마트"
+    },
+    {
+      "cid": "KOPqyg4ls",
+      "title": "마이초이스 서촌",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "SHOPPING_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "쇼핑"
+    },
+    {
+      "cid": "KOPwd3ohy",
+      "title": "아뜰리에 광화",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광"
+    },
+    {
+      "cid": "KOPzy336c",
+      "title": "카우스: 친구, 그리고 이웃",
+      "class": "EXISTING_RAW_RECOVERY",
+      "reason": "CONDITIONAL_EXISTING_DETAIL",
+      "routing": "B",
+      "category": "문화관광>전시시설"
+    }
+  ]
+}
