@@ -228,7 +228,11 @@
   "cityLinks": {
     "label": "Explore Korea",
     "subtitle": "Which city are you visiting?",
-    "cta": "View Guide →"
+    "cta": "View Guide →",
+    "descSeoul": "K-pop · Palaces · Street Food",
+    "descBusan": "Beaches · Seafood · Night Views",
+    "descJeju": "Hallasan · Olle Trail · Nature",
+    "descGyeongju": "Temples · Royal Tombs · History"
   },
   "footer": {
     "copyright": "© {year} gokoreamate. All rights reserved."

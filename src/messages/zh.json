@@ -228,7 +228,11 @@
   "cityLinks": {
     "label": "探索韩国",
     "subtitle": "您想去哪个城市？",
-    "cta": "查看指南 →"
+    "cta": "查看指南 →",
+    "descSeoul": "K-POP · 古宫 · 街头小吃",
+    "descBusan": "海滩 · 海鲜 · 夜景",
+    "descJeju": "汉拿山 · 偶来小路 · 自然",
+    "descGyeongju": "寺庙 · 王陵 · 历史"
   },
   "footer": {
     "copyright": "© {year} gokoreamate. 版权所有。"

@@ -3,15 +3,18 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-// 도시 이름과 한 줄 소개는 고유명사·장소 특징이라 번역하지 않는다.
-// 감싸는 UI 문구만 cityLinks 네임스페이스를 쓴다 — 키는 이미 4개 언어에
-// 들어 있었는데 배선이 빠져 있었다.
+// 도시 이름은 고유명사라 그대로 둔다. 한 줄 소개는 "이 도시에 뭐가 있는지"를
+// 설명하는 일반 UI 문구다 — 편집 의도로 영어를 고정한 문구(AI PRECISION ·
+// BUSAN: GOLDEN HOUR 등) 목록에 들어 있지 않으므로 번역한다.
+//
+// 한라산·올레길처럼 한국 지명은 각 언어에서 실제로 쓰는 표기를 따른다.
+// 로마자 그대로 두는 것보다 그쪽이 같은 장소를 더 잘 가리킨다.
 const CITIES = [
-  { name: "Seoul",     emoji: "🏙️", desc: "K-pop · Palaces · Street Food",   href: "/explore/seoul" },
-  { name: "Busan",     emoji: "🌊", desc: "Beaches · Seafood · Night Views",  href: "/explore/busan" },
-  { name: "Jeju",      emoji: "🌋", desc: "Hallasan · Olle Trail · Nature",   href: "/explore/jeju" },
-  { name: "Gyeongju",  emoji: "🏛️", desc: "Temples · Royal Tombs · History", href: "/explore/gyeongju" },
-];
+  { name: "Seoul",    emoji: "🏙️", descKey: "descSeoul",    href: "/explore/seoul" },
+  { name: "Busan",    emoji: "🌊", descKey: "descBusan",    href: "/explore/busan" },
+  { name: "Jeju",     emoji: "🌋", descKey: "descJeju",     href: "/explore/jeju" },
+  { name: "Gyeongju", emoji: "🏛️", descKey: "descGyeongju", href: "/explore/gyeongju" },
+] as const;
 
 export default function CityQuickLinks() {
   const t = useTranslations("cityLinks");
@@ -37,7 +40,7 @@ export default function CityQuickLinks() {
                 <p className="text-base font-black text-[#2C2520] group-hover:text-[#D4AF37] transition-colors">
                   {city.name}
                 </p>
-                <p className="text-xs text-[#8C6239] mt-0.5 leading-relaxed">{city.desc}</p>
+                <p className="text-xs text-[#8C6239] mt-0.5 leading-relaxed">{t(city.descKey)}</p>
               </div>
               <span className="text-xs font-black text-[#D4AF37] mt-auto">{t("cta")}</span>
             </Link>
