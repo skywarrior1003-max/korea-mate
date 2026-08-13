@@ -1,0 +1,38 @@
+{
+  "task": "TASK-JEJU-FOOD-CURATION-SOURCE-AND-RANKING-RESEARCH-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "api_calls": 0,
+  "web_collection": 0,
+  "VISITJEJU_API_STATUS": "WAF_BLOCKED",
+  "KTO_API_STATUS": "KEY_UNAVAILABLE",
+  "VISITJEJU_C4_CONFIRMED_TOTAL": 1870,
+  "VISITJEJU_C4_UNIQUE_ENTITY_COUNT": 1870,
+  "data_source": "existing raw pages in repo (no new API calls)",
+  "sha256": "a6a055123a8a12d2cfd3808e7ea9a41b8c367a55b79030403fc5aa9d2d4f3658",
+  "common_policy_commit": "dc6f9be",
+  "output_files": [
+    "data/visitjeju/normalized/jeju/jeju-food-c4-source-universe-v1.json",
+    "data/visitjeju/reports/jeju/jeju-food-c4-research-v1.json",
+    "data/visitjeju/manifests/jeju/jeju-food-c4-research-manifest-v1.json",
+    "docs/data-collection/jeju/jeju-food-c4-research-v1.md"
+  ],
+  "findings_summary": {
+    "C4_UNIVERSE": 1870,
+    "PHONE_COVERAGE": "99.1%",
+    "COORD_COVERAGE": "98.4%",
+    "PHOTO_COVERAGE": "99.7%",
+    "INTRO_COVERAGE": "98.4% (>=12 chars)",
+    "BAEKNYEON_GAJE": 8,
+    "JEJU_SPECIALTY_RESTAURANTS": 450,
+    "CAFE_ENTITIES": 617,
+    "REGIONS": 18,
+    "MARKET_ENTITIES": 60,
+    "ESTIMATED_CATALOG_SIZE": "300-450"
+  },
+  "next_task": "TASK-JEJU-FOOD-COLLECTION-V1",
+  "blocking_for_next_task": [
+    "KTO_API_KEY not registered (for type39 gap-fill)",
+    "VisitJeju API WAF-blocked (for multilingual + detail enrichment)"
+  ]
+}

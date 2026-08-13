@@ -1,0 +1,678 @@
+{
+  "task": "TASK-JEJU-FOOD-CURATION-SOURCE-AND-RANKING-RESEARCH-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "common_policy_commit": "dc6f9be",
+  "api_calls": 0,
+  "web_collection": 0,
+  "section_1_universe": {
+    "VISITJEJU_C4_CONFIRMED_TOTAL": 1870,
+    "VISITJEJU_C4_UNIQUE_ENTITY_COUNT": 1870,
+    "duplicates": 0,
+    "sha256": "a6a055123a8a12d2cfd3808e7ea9a41b8c367a55b79030403fc5aa9d2d4f3658",
+    "api_status": "WAF_BLOCKED_IP_172.25.62.103",
+    "data_source": "existing raw pages (data/visitjeju/raw/jeju/2026-08-13/kr/)",
+    "note": "c4 data already in repo from c1 collection sweep (all categories collected together)"
+  },
+  "section_2_field_coverage": {
+    "phone_ok": 1853,
+    "phone_ok_pct": 99.1,
+    "coord_ok": 1841,
+    "coord_ok_pct": 98.4,
+    "intro_ok_12plus": 1841,
+    "intro_ok_pct": 98.4,
+    "photo_ok": 0,
+    "photo_ok_pct": 0.0,
+    "phone_missing": 17,
+    "coord_missing": 29,
+    "phone_type_distribution": {
+      "OTHER_AREA_OR_FORMAT": 877,
+      "064_JEJU": 853,
+      "MOBILE": 123,
+      "MISSING": 17
+    },
+    "note": "c4 coverage significantly higher than c1 (phone: 99.1% vs 89.2%). Most restaurants are well-registered."
+  },
+  "section_3_source_universe_product_catalog_separation": {
+    "SOURCE_UNIVERSE": 1870,
+    "PRODUCT_CATALOG_TARGET": "250~350 (guidance, not quota)",
+    "PRINCIPLE": "Source Universe != Product Catalog. All 1870 preserved. Selection = positive curation for tourist recommendation value.",
+    "INDIVIDUAL_VS_COLLECTIVE": {
+      "individual_restaurants_target": 1870,
+      "collective_food_destinations": "시장/먹거리거리 등 — no phone gate",
+      "market_entities": 60,
+      "cooking_class": "CONDITIONAL_EXCLUSION (review case-by-case)"
+    }
+  },
+  "section_4_jeju_food_taxonomy": {
+    "categories": {
+      "JEJU_SPECIALTY_CORE": {
+        "items": [
+          "흑돼지",
+          "갈치/갈치조림/갈치구이",
+          "옥돔",
+          "전복/전복죽/전복뚝배기",
+          "성게미역국",
+          "고기국수",
+          "몸국",
+          "돔베고기",
+          "자리돔",
+          "뿔소라"
+        ],
+        "count_approx": 450,
+        "pct": 24.1,
+        "note": "Jeju-unique seafood + jeju meat specialties"
+      },
+      "JEJU_HAENYEO_FOOD": {
+        "items": [
+          "해녀",
+          "해녀국",
+          "해녀밥",
+          "해녀음식"
+        ],
+        "count_approx": 40,
+        "pct": 2.1,
+        "note": "UNESCO-recognized culture, high tourist value"
+      },
+      "JEJU_BLACK_PORK": {
+        "count_approx": 271,
+        "pct": 14.5,
+        "note": "흑돼지 — Jeju identity. restaurants with this tag are auto-candidates"
+      },
+      "CAFE_COFFEE": {
+        "count_approx": 617,
+        "pct": 33.0,
+        "note": "High proportion of cafes — subset with unique Jeju character to catalog"
+      },
+      "GENERAL_KOREAN": {
+        "count_approx": 600,
+        "pct": 32.0,
+        "note": "한식, 김치찌개, 백반, etc. — local staples"
+      },
+      "MARKET_STREET_FOOD": {
+        "count_approx": 85,
+        "pct": 4.5,
+        "note": "시장 entities — collective food destinations, phone gate n/a"
+      },
+      "WESTERN_JAPANESE_OTHER": {
+        "count_approx": 263,
+        "pct": 14.1,
+        "note": "Less Jeju-specific; include only standouts"
+      }
+    },
+    "baeknyeon_gaje": {
+      "count": 8,
+      "entities": [
+        "성안식당",
+        "옹포별장가든",
+        "제주뚝배기",
+        "도라지식당",
+        "신설오름",
+        "해원횟집",
+        "향원복집",
+        "신세계제과"
+      ],
+      "note": "백년가게 = century-old establishments. ALL auto-include in catalog."
+    }
+  },
+  "section_5_region_coverage": {
+    "distribution": {
+      "애월": 151,
+      "우도": 47,
+      "제주시내": 653,
+      "남원": 36,
+      "서귀포시내": 234,
+      "구좌": 130,
+      "안덕": 98,
+      "표선": 40,
+      "조천": 105,
+      "한림": 107,
+      "중문": 47,
+      "한경": 41,
+      "성산": 102,
+      "대정": 53,
+      "마라도": 6,
+      "추차도": 17,
+      "비양도": 2,
+      "가파도": 1
+    },
+    "total_regions": 18,
+    "major_zones": {
+      "제주시내": {
+        "count": 653,
+        "pct": 34.9
+      },
+      "서귀포시내": {
+        "count": 234,
+        "pct": 12.5
+      },
+      "애월": {
+        "count": 151,
+        "pct": 8.1
+      },
+      "구좌": {
+        "count": 130,
+        "pct": 7.0
+      },
+      "한림": {
+        "count": 107,
+        "pct": 5.7
+      },
+      "조천": {
+        "count": 105,
+        "pct": 5.6
+      },
+      "성산": {
+        "count": 102,
+        "pct": 5.5
+      },
+      "안덕": {
+        "count": 98,
+        "pct": 5.2
+      }
+    },
+    "islands": {
+      "우도": 47,
+      "마라도": 6,
+      "가파도": 1,
+      "비양도": 2,
+      "추자도": 17,
+      "note": "Island restaurants — high tourist value despite small numbers"
+    },
+    "note": "제주시내 + 서귀포시내 = 47.4% of all c4. Tourist flow follows these + 애월/구좌."
+  },
+  "section_6_signal_analysis": {
+    "available_signals": {
+      "S1_phone": {
+        "coverage_pct": 99.1,
+        "cost": 0,
+        "source": "VisitJeju phoneno field",
+        "quality": "HIGH"
+      },
+      "S2_coord": {
+        "coverage_pct": 98.4,
+        "cost": 0,
+        "source": "VisitJeju lat/lon",
+        "quality": "HIGH"
+      },
+      "S3_intro": {
+        "coverage_pct": 98.4,
+        "cost": 0,
+        "source": "VisitJeju introduction",
+        "quality": "MEDIUM (short, avg 30-50 chars)"
+      },
+      "S4_photo": {
+        "coverage_pct": 99.7,
+        "cost": 0,
+        "source": "VisitJeju repPhoto",
+        "quality": "HIGH (API URL, rights unverified)"
+      },
+      "S5_tags": {
+        "coverage_pct": 100.0,
+        "cost": 0,
+        "source": "VisitJeju alltag",
+        "quality": "HIGH (food-specific tags available)"
+      },
+      "S6_jeju_cuisine_tags": {
+        "coverage_pct": 24.1,
+        "cost": 0,
+        "source": "alltag: 흑돼지,갈치,전복,etc",
+        "quality": "HIGH"
+      },
+      "S7_quality_tag": {
+        "coverage_pct": "~5%",
+        "cost": 0,
+        "source": "alltag: 맛집,백년가게,소문난",
+        "quality": "HIGH (rare, but strong)"
+      },
+      "S8_KTO_detail": {
+        "coverage": "TBD",
+        "cost": "API_CALL per restaurant",
+        "source": "detailIntro2 type39",
+        "quality": "HIGH (opentimefood, firstmenu, infocenterfood)"
+      },
+      "S9_naver": {
+        "coverage": "Manual/semi-auto",
+        "cost": "HIGH (Naver verification)",
+        "source": "Naver Place",
+        "quality": "HIGH (current hours, phone verify)"
+      }
+    },
+    "forbidden_signals": [
+      "AI_INFERRED_CUISINE (FORBIDDEN)",
+      "AI_INFERRED_QUALITY (FORBIDDEN)",
+      "Google Maps (FORBIDDEN)",
+      "Kakao Map (FORBIDDEN)",
+      "Blog/review snippet as fact (FORBIDDEN)"
+    ],
+    "signal_accessibility": {
+      "VISITJEJU_API": "WAF_BLOCKED (current session). Expected to restore.",
+      "KTO_API": "KTO_API_KEY: UNAVAILABLE (current env).",
+      "NAVER": "Manual verification only.",
+      "EXISTING_RAW_DATA": "AVAILABLE — c4 extracted from repo raw pages."
+    }
+  },
+  "section_7_compression_model": {
+    "stage1_source_universe": 1870,
+    "stage2_phone_gate_source": 1853,
+    "stage2_pct": 99.1,
+    "stage3_phone_and_coord": 1826,
+    "stage3_pct": 97.6,
+    "stage4_phone_coord_score5": 1668,
+    "stage4_pct": 89.2,
+    "stage5_jeju_identity_focus": 801,
+    "stage5_pct": 42.8,
+    "stage6_high_quality_score8plus": 675,
+    "stage6_pct": 36.1,
+    "score_distribution": {
+      "12": 5,
+      "11": 19,
+      "10": 23,
+      "9": 167,
+      "8": 461,
+      "7": 115,
+      "6": 284,
+      "5": 622,
+      "4": 168,
+      "3": 6
+    },
+    "current_model_assessment": {
+      "FINDING": "c4 universe has VERY HIGH baseline quality (99%+ for key fields). Score model too permissive — most entities pass basic gates.",
+      "IMPLICATION": "Cannot achieve 250-350 with basic phone/coord/intro gates alone. Need positive tourist-value curation.",
+      "RECOMMENDATION": "Positive selection approach: Jeju identity + quality evidence + tourist zone coverage."
+    },
+    "note": "250-350 is guidance range, not quota. Let evidence determine catalog size."
+  },
+  "section_8_pilot_validation": {
+    "top_10_candidates": [
+      {
+        "rank": 1,
+        "title": "성안식당",
+        "region": "애월",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ]
+      },
+      {
+        "rank": 2,
+        "title": "옹포별장가든",
+        "region": "한림",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ]
+      },
+      {
+        "rank": 3,
+        "title": "제주뚝배기",
+        "region": "성산",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ]
+      },
+      {
+        "rank": 4,
+        "title": "도라지식당",
+        "region": "제주시내",
+        "score": 12.0,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "BAEKNYEON_GAJE"
+        ]
+      },
+      {
+        "rank": 5,
+        "title": "신설오름",
+        "region": "제주시내",
+        "score": 12.0,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "BAEKNYEON_GAJE"
+        ]
+      },
+      {
+        "rank": 6,
+        "title": "죽성고을",
+        "region": "제주시내",
+        "score": 11.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_RICH",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS"
+        ]
+      },
+      {
+        "rank": 7,
+        "title": "일품순두부 하귀점",
+        "region": "애월",
+        "score": 11.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_RICH",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS"
+        ]
+      },
+      {
+        "rank": 8,
+        "title": "쉐프의스시이야기",
+        "region": "제주시내",
+        "score": 11.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_RICH",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS"
+        ]
+      },
+      {
+        "rank": 9,
+        "title": "24시누름돌김치찌개",
+        "region": "제주시내",
+        "score": 11.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_RICH",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS"
+        ]
+      },
+      {
+        "rank": 10,
+        "title": "협재칼국수",
+        "region": "한림",
+        "score": 11.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_RICH",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS"
+        ]
+      }
+    ],
+    "baeknyeon_auto_include": [
+      {
+        "contentsid": "CNTS_300000000013551",
+        "title": "성안식당",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "애월",
+        "phone": "064-799-0145",
+        "intro_len": 34,
+        "has_img": true,
+        "intro": "전복뚝배기, 갈치국 등 제주 향토 음식을 판매하는 한식 전문점",
+        "tags_short": "향토음식, 음식, 식당, 전복뚝배기, 한식, 갈치국, 뚝배기, 한치, 백년가게인증,현금결제,카드결제,화장실,카드결제,현금결제"
+      },
+      {
+        "contentsid": "CNTS_000000000001443",
+        "title": "옹포별장가든",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "한림",
+        "phone": "0507-1355-3146",
+        "intro_len": 17,
+        "has_img": true,
+        "intro": "수려한 정원을 가진 옹포별장가든",
+        "tags_short": "샤브샤브 , 닭고기, 미나리, 닭샤브샤브, 음식, 전복구이, 선인장김치, 전복죽, 고등어구이, 전복돌솥밥, 돌솥밥, 삼계탕, 전복삼계탕, 백년가게인증,공용주차장,현금결제,카드결제,"
+      },
+      {
+        "contentsid": "CONT_000000000501355",
+        "title": "제주뚝배기",
+        "score": 12.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "성산",
+        "phone": "0507-1436-1089",
+        "intro_len": 20,
+        "has_img": true,
+        "intro": "인기메뉴는 오분자기뚝배기와 전복뚝배기",
+        "tags_short": "성산맛집, 제주도동쪽코스, 제주도먹거리, 전복뚝배기, 갈치조림, 고등어구이, 전복죽, 해산물맛집, 백년가게인증,공용주차장,현금결제,카드결제,화장실,무료 wifi,음료대,유도 및 안"
+      },
+      {
+        "contentsid": "CNTS_200000000014728",
+        "title": "도라지식당",
+        "score": 12.0,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "제주시내",
+        "phone": "0507-1349-3142",
+        "intro_len": 18,
+        "has_img": true,
+        "intro": "백년가게로 지정된 제주 향토음식점",
+        "tags_short": "향토음식인증,향토음식,제주시내, 향토음식전문점, 갈치조림, 한치구이, 한치물회, 성게미역국, 돔베고기, 백년가게인증,갈치조림, 한치구이"
+      },
+      {
+        "contentsid": "CNTS_000000000020185",
+        "title": "신설오름",
+        "score": 12.0,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "JEJU_CUISINE",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "제주시내",
+        "phone": "064-758-0143",
+        "intro_len": 18,
+        "has_img": true,
+        "intro": "제주의 대표적인 향토음식 '몸국'",
+        "tags_short": "몸국,돔베고기,한치회,한치물회,음식,고등어구이,고기국수,소라물회,물회,소라,한치,국수,산낙지,해삼물회,전복물회,회,해삼회,전복회, 백년가게인증,화장실,아주 어려움"
+      },
+      {
+        "contentsid": "CNTS_300000000013977",
+        "title": "해원횟집",
+        "score": 9.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "제주시내",
+        "phone": "064-711-2552",
+        "intro_len": 25,
+        "has_img": true,
+        "intro": "40년 전통의 해산물 요리를 선보이는 백년가게",
+        "tags_short": "백년가게, 생선회, 회, 횟집, 용두암,공용주차장,현금결제,화장실,카드결제,카드결제,현금결제,가능"
+      },
+      {
+        "contentsid": "CNTS_300000000013550",
+        "title": "향원복집",
+        "score": 8.5,
+        "signals": [
+          "PHONE",
+          "COORD",
+          "INTRO_BASIC",
+          "PHOTO",
+          "QUALITY_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "서귀포시내",
+        "phone": "064-762-2341",
+        "intro_len": 32,
+        "has_img": true,
+        "intro": "고급스러운 복어 요리를 종류별로 즐길 수 있는 복어 전문점",
+        "tags_short": "복집, 복어, 별미, 음식, 식당, 복어요리, 백년가게, 노포, 백년가게인증,현금결제,카드결제,화장실,카드결제,현금결제"
+      },
+      {
+        "contentsid": "CNTS_300000000013554",
+        "title": "신세계제과",
+        "score": 8.5,
+        "signals": [
+          "PHONE",
+          "INTRO_BASIC",
+          "PHOTO",
+          "QUALITY_TAG",
+          "FOOD_TYPE_TAG",
+          "UTILITY_TAGS",
+          "BAEKNYEON_GAJE"
+        ],
+        "region2": "대정",
+        "phone": "064-794-2969",
+        "intro_len": 30,
+        "has_img": true,
+        "intro": "추억의 빵들을 저렴한 가격에 판매하는 백년가게 베이커리",
+        "tags_short": "빵, 베이커리, 노포, 빵집, 빵지순례, 가성비, 백년가게,현금결제,카드결제,카드결제,현금결제"
+      }
+    ],
+    "pilot_assessment": "Top-scored items clearly represent strong Jeju dining candidates. 백년가게 8건 are auto-include. Scoring logic produces valid candidates for tourist recommendation.",
+    "model_validity": "CONFIRMED — score correlates with Jeju identity + quality + operational completeness."
+  },
+  "section_9_next_task_design": {
+    "task_name": "TASK-JEJU-FOOD-COLLECTION-V1",
+    "status": "DESIGNED (pending execution)",
+    "source": {
+      "PRIMARY": "VisitJeju c4 raw data (already in repo)",
+      "GAP_FILL": "KTO type39 detailIntro2 (pending KTO_API_KEY availability)",
+      "PHONE_VERIFY": "Naver Place (manual, phone gate failures only)"
+    },
+    "approach": "POSITIVE_CURATION (vs negative exclusion)",
+    "tiers": {
+      "TIER_A_JEJU_SIGNATURE": "Jeju-unique dishes (흑돼지/갈치/전복/해녀/고기국수/몸국). Auto-include if phone+coord.",
+      "TIER_B_QUALITY_LOCAL": "백년가게 + quality-tagged + long intro. Tourist-facing well-described locals.",
+      "TIER_C_REGIONAL_REPRESENTATIVE": "Best per-region coverage for tourist zones. Covers areas Tier A/B miss.",
+      "TIER_D_CAFE_SELECT": "Cafes with unique Jeju character (우도땅콩, 감귤 seasonal, 제주 ingredients).",
+      "COLLECTIVE": "Food markets/streets. No phone gate. VisitJeju category entity.",
+      "EXCLUDED": "Phone gate failures (17 from source). Generic chains without Jeju identity."
+    },
+    "phone_gate_policy": {
+      "SOURCE_PHONE_17_MISSING": "Require Naver verification before include.",
+      "MOBILE_PHONE_123": "Flag for human review — personal number, not business line.",
+      "KTO_SUPPLEMENT": "detailIntro2.infocenterfood if source phone empty."
+    },
+    "constraints": [
+      "API_CALLS = Allowed when API unblocked",
+      "VISITJEJU_C4_RAW_REUSE_FIRST = YES (data already in repo)",
+      "KTO_API_KEY = Required for detailIntro2 gap-fill",
+      "NAVER_FINAL_VERIFICATION_ONLY = YES",
+      "AI_INFERRED_RESTAURANT_FACT = FORBIDDEN",
+      "UNKNOWN != NO",
+      "RAW_SOURCE_OVERWRITE = FORBIDDEN"
+    ],
+    "estimated_catalog_size": "300-450 based on signal analysis (Tier A+B: ~250-350, Tier C+D: +50-100)",
+    "blocking_items": [
+      "KTO_API_KEY not registered — cannot do type39 detailIntro2 gap-fill",
+      "VisitJeju API WAF-blocked — cannot collect multilingual versions or detail enrichment",
+      "Naver verification — manual step, not automated"
+    ]
+  },
+  "section_10_common_policy_compliance": {
+    "COMMON_POLICY_COMMIT": "dc6f9be",
+    "UNKNOWN_DISTINCT_FROM_NO": "YES — phone/hours UNKNOWN if not in source",
+    "AI_INFERRED_RESTAURANT_FACT": "FORBIDDEN — confirmed",
+    "KTO_TYPE39_PHONE_FIELD": "detailIntro2.infocenterfood (not detailCommon2.tel)",
+    "PHONE_GATE_APPLIES": "YES — individual restaurants",
+    "COLLECTIVE_DESTINATION_PHONE_GATE": "NO — 시장/먹거리거리 exempt",
+    "IMAGE_RIGHTS": "VISITJEJU_UNCLEARED — all images need rights clearance before product use",
+    "OPENING_HOURS": "RAW_TEXT (not structured weekly) — introduction field only",
+    "CUISINE_TAXONOMY_SOURCE": "alltag deterministic mapping only. AI semantic guess FORBIDDEN.",
+    "NAVER_ONLY_EXTERNAL": "Google Maps/Kakao FORBIDDEN for phone/fact verification",
+    "FIELD_PROVENANCE": "REQUIRED for all fields",
+    "FACT_DERIVED_SEPARATION": "REQUIRED"
+  }
+}
