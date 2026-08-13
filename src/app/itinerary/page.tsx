@@ -386,8 +386,8 @@ async function generateWithNewApi(
   // Collect names of cart items without coordinates so we can show a UI warning.
   const skippedCartNames = cart
     .filter(item => !item.lat || !item.lng)
-    .map(item => item.shortName || item.name);
-
+    .map(item => item.shortName || item.name);
+
   // 하루 시간 창 밖으로 지정된 고정 일정. 조용히 무시하지 않고 이름을 알린다.
   const fixedOutOfWindowNames: string[] = [];
 
