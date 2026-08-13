@@ -86,10 +86,30 @@ export interface EventItem {
   displayUntil?: string | null;
 }
 
+/**
+ * 반드시 지켜야 하는 일정. 공연·약속·예약·교통처럼 시간이 이미 정해진 것들이다.
+ *
+ * `preferredTimeSlot`(가능하면 오전) 과는 다른 축이다. 그쪽은 취향이고
+ * 이쪽은 사실이다 — 둘을 섞지 않는다.
+ *
+ * 종료시각은 저장하지 않는다. 사용자가 적은 소요시간으로만 계산한다.
+ * 공연이 몇 시에 끝나는지 우리가 추정하지 않는다.
+ */
+export interface CartFixed {
+  /** 여행 기간 안의 날짜. "YYYY-MM-DD". */
+  date:            string;
+  /** "HH:MM" 24시간. */
+  startTime:       string;
+  /** 사용자가 직접 적은 소요시간(분). 추천 체류시간으로 덮어쓰지 않는다. */
+  durationMinutes: number;
+}
+
 /** 장바구니에 저장되는 항목 = EventItem + 장바구니 전용 필드 */
 export interface CartItem extends EventItem {
   addedAt: number;   // Date.now() — 추가된 시각 (ms)
   sortOrder: number; // 타임라인에서의 순서 (드래그앤드롭용)
+  /** 없으면 평범한 장소다. 있으면 그 날짜·시각이 hard constraint 가 된다. */
+  fixed?: CartFixed | null;
 }
 
 // ── 내부 헬퍼 ──────────────────────────────────
@@ -188,6 +208,27 @@ export function removeFromCart(sourceKey: string): void {
  */
 export function isInCart(sourceKey: string): boolean {
   return readStorage().some((item) => getItemSourceKey(item) === sourceKey);
+}
+
+/**
+ * 장소 하나의 고정 일정을 설정하거나(값) 해제한다(null).
+ *
+ * 인자는 sourceKey 다. 값 검증은 호출부에서 끝낸 뒤 넘긴다 — 저장소는
+ * 사용자가 정한 것을 그대로 보관할 뿐 시간을 만들어내지 않는다.
+ */
+export function setCartFixed(sourceKey: string, fixed: CartFixed | null): void {
+  const items = readStorage();
+  let changed = false;
+  const next = items.map((item) => {
+    if (getItemSourceKey(item) !== sourceKey) return item;
+    changed = true;
+    if (fixed === null) {
+      const { fixed: _drop, ...rest } = item;
+      return rest as CartItem;
+    }
+    return { ...item, fixed };
+  });
+  if (changed) writeStorage(next);
 }
 
 /**

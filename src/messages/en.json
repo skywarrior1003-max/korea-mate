@@ -669,7 +669,22 @@
     "phDisplayTitle": "What this place was to you",
     "phDisplayMemo": "A line or two you want to keep",
     "displayVsName": "Only you see this. The place name stays as it is.",
-    "displayVsNote": "Separate from the note you may share when suggesting this place."
+    "displayVsNote": "Separate from the note you may share when suggesting this place.",
+    "fixedToggle": "Must happen at a set time",
+    "fixedHint": "For concerts, reservations, meetings, or transport.",
+    "fixedDate": "Date",
+    "fixedStart": "Start time",
+    "fixedDuration": "How long (minutes)",
+    "fixedEnds": "Ends at {time}",
+    "fixedClear": "Not fixed",
+    "fixedNeedTripDates": "Pick your trip dates first, then you can pin a time.",
+    "errMissingDate": "Choose a date.",
+    "errMissingTime": "Enter a start time.",
+    "errMissingDuration": "Enter how long it lasts.",
+    "errDurationTooLong": "That is longer than a day.",
+    "errDateOutOfTrip": "That date is outside your trip.",
+    "errEndsPastMidnight": "This would run past midnight.",
+    "fixedOutOfWindow": "{name} is set for a time outside that day’s plan."
   },
   "cityEntry": {
     "exploreCity": "Explore {city}",

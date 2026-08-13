@@ -17,7 +17,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
-import { getCart, removeFromCart, clearCart, addToCart, CART_EVENT, type CartItem, type EventItem } from "@/lib/cart";
+import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
+import { getPlannerMeta } from "@/lib/plannerStore";
+import { tripDates } from "@/lib/trip-fixed/fixed-core";
+import FixedScheduleFields from "@/components/FixedScheduleFields";
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
@@ -97,6 +100,13 @@ function PicksContent() {
 
   // ── Selected (cart) ─────────────────────────────────────────────────────────
   const [selected, setSelected] = useState<CartItem[]>([]);
+
+  // 고정 일정은 여행 날짜 안에서만 고를 수 있다. 날짜가 아직 없으면 입력을 열지 않는다.
+  const [tripDays, setTripDays] = useState<string[]>([]);
+  useEffect(() => {
+    const meta = getPlannerMeta();
+    setTripDays(meta ? tripDates(meta.startDate, meta.numDays) : []);
+  }, []);
   useEffect(() => {
     const sync = () => setSelected(getCart());
     sync();
@@ -519,6 +529,14 @@ function PicksContent() {
                           {/* 글리프 하나뿐이라 text 변형은 폭이 43 에서 멈춘다.
                               같은 색을 쓰면서 min-w-11 을 갖는 icon 변형으로 바꾼다. */}
                           <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key)}>✕</Button>
+                        </div>
+                        <div className="px-4 pb-4">
+                          <FixedScheduleFields
+                            name={item.shortName || item.name}
+                            value={item.fixed}
+                            tripDays={tripDays}
+                            onChange={(next: CartFixed | null) => setCartFixed(key, next)}
+                          />
                         </div>
                       </Card>
                     </li>

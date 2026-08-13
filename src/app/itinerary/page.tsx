@@ -30,6 +30,7 @@ import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 // planner 로 보내는 키는 반드시 이 helper 하나만 쓴다 — cart_hints·조회 맵이
 // 서로 다른 규칙을 쓰면 같은 장소가 다시 어긋난다.
 import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
+import { planDayAnchors, mergeDayHints } from "@/lib/trip-fixed/anchor-build";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
@@ -372,7 +373,7 @@ async function generateWithNewApi(
   deptType?: string,
   arrivalCoord?: { lat: number; lng: number },
   departureCoord?: { lat: number; lng: number },
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -385,7 +386,10 @@ async function generateWithNewApi(
   // Collect names of cart items without coordinates so we can show a UI warning.
   const skippedCartNames = cart
     .filter(item => !item.lat || !item.lng)
-    .map(item => item.shortName || item.name);
+    .map(item => item.shortName || item.name);
+
+  // 하루 시간 창 밖으로 지정된 고정 일정. 조용히 무시하지 않고 이름을 알린다.
+  const fixedOutOfWindowNames: string[] = [];
 
   // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
   const cartHints = cart
@@ -404,6 +408,9 @@ async function generateWithNewApi(
       duration_min:        item.recommendedDurationMinutes,
       preferred_time_slot: toPreferredTimeSlot(item.bestTimeSlot),
       name:                item.name,
+      // 고정 일정. preferred_time_slot 과 다른 축이다 — 저쪽은 취향, 이쪽은 사실.
+      // plan API 로는 보내지 않고 이 루프 안에서 anchors 로만 바뀐다.
+      fixed:               item.fixed ?? null,
       // Trip-Flow Commerce (§14-1-A) — plan API 요청 payload 에 상업 문맥을
       // 넣지 않는다. "렌더용" 이라는 이유로도 보내지 않는다.
     }));
@@ -508,9 +515,20 @@ async function generateWithNewApi(
       remainingCartHints = remainingCartHints.filter(h => !placedSet.has(String(h.place_id)));
     }
     const maxKm = i === 0 ? DAY1_CART_HINT_MAX_KM : DEFAULT_CART_HINT_MAX_KM;
-    const todayCartHints = remainingCartHints.filter(h =>
+    const nearEnough = remainingCartHints.filter(h =>
       haversineKm(currentCoordinate.lat, currentCoordinate.lng, h.lat, h.lng) <= maxKm
     );
+
+    // 고정 일정 — 오늘 것만 anchor 로 보내고, 다른 날 것은 오늘 후보에서 뺀다.
+    // 거리 필터는 "오늘 가기엔 먼 픽" 을 다음 날로 미루는 장치지만 오늘로 고정된
+    // 약속은 미룰 수 있는 것이 아니므로 거리와 무관하게 남긴다. 좌표가 빠지면
+    // 엔진이 그 장소의 위치를 몰라 앞뒤 시간을 통째로 비운다.
+    const anchorPlan     = planDayAnchors(remainingCartHints, trip_date, start_time, end_time);
+    const todayCartHints = mergeDayHints(nearEnough, anchorPlan);
+    const todayAnchors   = anchorPlan.anchors;
+    for (const h of anchorPlan.outOfWindow) {
+      fixedOutOfWindowNames.push(h.name ?? "");
+    }
 
     // TASK-057-B2-2: Override NearMe search center to My Pick cluster centroid when safe.
     // Only applies when the centroid is within NEAR_ME_CLUSTER_SEARCH_MAX_KM of dayStartCoordinate
@@ -551,6 +569,7 @@ async function generateWithNewApi(
           pace,
           event_coords:       evtCoords.length         > 0 ? evtCoords         : undefined,
           cart_coord_hints:   todayCartHints.length    > 0 ? todayCartHints    : undefined,
+          anchors:            todayAnchors.length      > 0 ? todayAnchors      : undefined,
           exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
           city,
           locale,
@@ -690,7 +709,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, hadDeferredCartHints, usedCartHintCentroid };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, hadDeferredCartHints, usedCartHintCentroid };
 }
 
 function getCategoryColor(category: string): string {
@@ -1002,6 +1021,7 @@ function ItineraryResult() {
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
   // ── TASK-049: Cart 아이템 좌표 없음 경고 표시용 ────────────────────────────────
   const [skippedCartNames, setSkippedCartNames] = useState<string[]>([]);
+  const [fixedOutOfWindow, setFixedOutOfWindow] = useState<string[]>([]);
   // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
   const [tripNotes,        setTripNotes]        = useState<string[]>([]);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
@@ -1261,12 +1281,14 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
               if (skipped.length > 0) setSkippedCartNames(skipped);
+          if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
+              if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
               const notes: string[] = [];
               if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
               if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
@@ -1304,7 +1326,7 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
@@ -1886,6 +1908,23 @@ function ItineraryResult() {
           </ul>
           <p className="mt-2 text-xs text-orange-500">
             These places are still saved in your cart and can be added manually.
+          </p>
+        </div>
+      )}
+
+      {/* 고정 일정이 그날 시간 창 밖이라 배치할 수 없었다. 조용히 넘기지 않는다. */}
+      {fixedOutOfWindow.length > 0 && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
+          <p className="text-sm font-bold text-orange-700 mb-1">
+            Some fixed times fall outside that day&apos;s schedule window.
+          </p>
+          <ul className="mt-1.5 space-y-0.5">
+            {fixedOutOfWindow.map(name => (
+              <li key={name} className="text-xs text-orange-600 font-medium">· {name}</li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-orange-500">
+            Open Picks and adjust the date or time.
           </p>
         </div>
       )}

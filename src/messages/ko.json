@@ -669,7 +669,22 @@
     "phDisplayTitle": "이곳이 나에게 어떤 곳이었는지",
     "phDisplayMemo": "남겨 두고 싶은 한두 줄",
     "displayVsName": "나만 봅니다. 장소 이름은 그대로 둡니다.",
-    "displayVsNote": "이 장소를 추천할 때 함께 나갈 수 있는 메모와는 별개입니다."
+    "displayVsNote": "이 장소를 추천할 때 함께 나갈 수 있는 메모와는 별개입니다.",
+    "fixedToggle": "시간이 정해진 일정",
+    "fixedHint": "공연·예약·약속·교통처럼 반드시 지켜야 하는 일정에 씁니다.",
+    "fixedDate": "날짜",
+    "fixedStart": "시작 시간",
+    "fixedDuration": "소요 시간(분)",
+    "fixedEnds": "{time}에 끝나요",
+    "fixedClear": "고정 해제",
+    "fixedNeedTripDates": "여행 날짜를 먼저 정하면 시간을 고정할 수 있어요.",
+    "errMissingDate": "날짜를 골라 주세요.",
+    "errMissingTime": "시작 시간을 입력해 주세요.",
+    "errMissingDuration": "소요 시간을 입력해 주세요.",
+    "errDurationTooLong": "하루보다 길어요.",
+    "errDateOutOfTrip": "여행 기간 밖의 날짜예요.",
+    "errEndsPastMidnight": "자정을 넘겨서 끝나요.",
+    "fixedOutOfWindow": "{name}의 고정 시간이 그날 일정 시간 밖이에요."
   },
   "cityEntry": {
     "exploreCity": "{city} 둘러보기",

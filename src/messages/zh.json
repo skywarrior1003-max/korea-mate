@@ -669,7 +669,22 @@
     "phDisplayTitle": "这个地点对你意味着什么",
     "phDisplayMemo": "想留下的一两句话",
     "displayVsName": "只有你能看到，地点名称保持不变。",
-    "displayVsNote": "与推荐这个地点时可能一起公开的备注是分开的。"
+    "displayVsNote": "与推荐这个地点时可能一起公开的备注是分开的。",
+    "fixedToggle": "时间已定的安排",
+    "fixedHint": "用于演出、预订、约会、交通等必须遵守的安排。",
+    "fixedDate": "日期",
+    "fixedStart": "开始时间",
+    "fixedDuration": "时长（分钟）",
+    "fixedEnds": "{time}结束",
+    "fixedClear": "取消固定",
+    "fixedNeedTripDates": "先确定行程日期，就可以固定时间了。",
+    "errMissingDate": "请选择日期。",
+    "errMissingTime": "请输入开始时间。",
+    "errMissingDuration": "请输入时长。",
+    "errDurationTooLong": "比一天还长。",
+    "errDateOutOfTrip": "该日期不在行程范围内。",
+    "errEndsPastMidnight": "会跨过午夜结束。",
+    "fixedOutOfWindow": "{name}的固定时间不在当天的行程时段内。"
   },
   "cityEntry": {
     "exploreCity": "探索{city}",

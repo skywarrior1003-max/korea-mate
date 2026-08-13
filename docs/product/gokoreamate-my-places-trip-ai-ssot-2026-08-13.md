@@ -13,6 +13,7 @@
 > ④ 코드 재감사 결과를 §17에 **제품 결정과 분리해** 기록했다. **§17은 현재 사실이지 목표가 아니다. §17을 근거로 위의 제품 결정을 약화시키지 않는다.**
 > **rev.3 (2026-08-13, TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01)** — §3-7에 Invariant 1(직전 장소)·Invariant 2(고정 앞 이동시간)를 명시하고 엔진에 구현했다. 구현 내역은 §17-10.
 > **rev.4 (2026-08-13, TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01)** — Invariant 2 를 고정 항목 전용에서 **모든 다음 배치 항목**으로 확장하고, 다음 항목의 위치를 알 수 없을 때의 fail-closed 정책을 명시했다. 일반 항목 앞 중간 삽입에서 순간이동 일정이 실제로 재현됐다(§17-11).
+> **rev.5 (2026-08-13, TASK-THIS-TRIP-FIXED-CONSTRAINT-02)** — §3-7 고정 일정의 **입력 경로가 활성화**됐다. 제품 계약은 그대로이고 구현 상태만 바뀐다(§17-13).
 
 ---
 
@@ -238,7 +239,7 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 
 예외는 하나다 — 다음 배치 항목이 **아예 없는** 하루 마지막 자리는 진입 이동과 체류만 본다.
 
-> Invariant 1과 Invariant 2의 fixed 부분은 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서, Invariant 2의 일반 항목 확장과 fail-closed 정책은 `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10 참조. **This Trip 장소에 날짜·시간을 지정하는 입력 경로는 여전히 없다.**
+> Invariant 1과 Invariant 2의 fixed 부분은 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서, Invariant 2의 일반 항목 확장과 fail-closed 정책은 `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10·§17-13 참조. **This Trip 장소의 날짜·시간 입력 경로는 rev.5 에서 열렸다.**
 
 ### 3-8. This Trip 과다
 
@@ -876,6 +877,26 @@ near(끝 10:36) → lunch(시작 11:00) : 여유 24분 / 필요 40분
 | 마지막 자리 | 진입+체류 | 변화 없음 |
 
 회귀 테스트 10개: `src/lib/scheduler/insertion-feasibility.test.ts`. 수정 전 엔진에서 5개가 실패함을 확인했다.
+
+### 17-13. 고정 일정 입력 경로 활성화 (2026-08-13, `TASK-THIS-TRIP-FIXED-CONSTRAINT-02`)
+
+§17-4 가 "엔진 능력은 있고 입력 경로가 없다" 로 남겨 둔 부분이 채워졌다. **엔진·API 계약은 바꾸지 않았다** — 기존 `TripAnchor`/`anchors`/`placeAnchors` 를 그대로 쓴다.
+
+| 항목 | 구현 |
+|---|---|
+| 저장 | cart localStorage 의 optional `fixed { date, startTime, durationMinutes }`. DB·migration 없음 |
+| 입력 | This Trip 카드에만 노출되는 토글. 켠 항목에만 날짜·시작시간·소요시간이 나타난다 |
+| 종료시각 | `startTime + durationMinutes`. 추천 체류시간이 덮어쓰지 않는다 |
+| 날짜 분리 | 자기 날짜 요청에만 anchor 로 실린다. 다른 날 요청에서는 후보 풀에서도 빠진다 |
+| 좌표 | 오늘 고정 장소는 거리 필터와 무관하게 `cart_coord_hints` 에 남는다 |
+| 충돌 | 겹치면 HC-5 → 409 → conflict. 조용히 이동·축소·삭제하지 않는다 |
+| 창 밖 | 그날 시간 창을 벗어나면 배치하지 않고 장소 이름을 알린다 |
+
+**좌표를 남기는 것이 필수다.** `TripAnchor` 에는 좌표가 없어 엔진이 `input.candidates` 에서 되찾는다. 고정 장소를 hint 에서 빼면 Invariant 2 의 fail-closed 에 걸려 그 앞 시간이 통째로 비워진다.
+
+**다른 날 후보 풀에서 빼는 것도 필수다.** 3일차 고정 장소를 1일차에 일반 후보로 써 버리면 정작 3일차에 anchor 로 부를 때 이미 소비돼 있다.
+
+회귀 테스트 21개: `src/lib/trip-fixed/fixed-schedule.test.ts`
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

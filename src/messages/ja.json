@@ -669,7 +669,22 @@
     "phDisplayTitle": "ここが自分にとってどんな場所だったか",
     "phDisplayMemo": "残しておきたい一言",
     "displayVsName": "自分だけに表示されます。場所の名前はそのままです。",
-    "displayVsNote": "この場所を提案するときに一緒に出るメモとは別です。"
+    "displayVsNote": "この場所を提案するときに一緒に出るメモとは別です。",
+    "fixedToggle": "時間が決まっている予定",
+    "fixedHint": "公演・予約・待ち合わせ・交通など必ず守る予定に使います。",
+    "fixedDate": "日付",
+    "fixedStart": "開始時刻",
+    "fixedDuration": "所要時間（分）",
+    "fixedEnds": "{time}に終わります",
+    "fixedClear": "固定を解除",
+    "fixedNeedTripDates": "旅行の日程を先に決めると時間を固定できます。",
+    "errMissingDate": "日付を選んでください。",
+    "errMissingTime": "開始時刻を入力してください。",
+    "errMissingDuration": "所要時間を入力してください。",
+    "errDurationTooLong": "1日より長いです。",
+    "errDateOutOfTrip": "旅行期間外の日付です。",
+    "errEndsPastMidnight": "日付をまたいで終わります。",
+    "fixedOutOfWindow": "{name}の固定時間はその日の予定時間外です。"
   },
   "cityEntry": {
     "exploreCity": "{city}を探す",
