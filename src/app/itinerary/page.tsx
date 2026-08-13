@@ -373,7 +373,7 @@ async function generateWithNewApi(
   deptType?: string,
   arrivalCoord?: { lat: number; lng: number },
   departureCoord?: { lat: number; lng: number },
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -705,11 +705,22 @@ async function generateWithNewApi(
     if (map) Object.assign(affiliateMap, map);
   }
 
+  // 사용자가 직접 This Trip 에 넣은 것 중 끝내 어느 날에도 못 들어간 것.
+  //
+  // API 를 늘리지 않는다. 배치된 place_id 는 이미 usedPlaceIds 로 모으고 있고,
+  // cartHints 는 사용자가 고른 것만 담고 있다. 둘의 차집합이 곧 답이다.
+  // 일반 추천 후보는 cartHints 에 없으므로 자연히 빠진다 — 추천이 안 들어간 것은
+  // 사용자의 문제가 아니다.
+  const placedKeys = new Set(usedPlaceIds.map(String));
+  const unplacedPicks = cartHints
+    .filter(h => !placedKeys.has(String(h.place_id)))
+    .map(h => ({ key: h.source_key, name: h.name, hasFixed: Boolean(h.fixed) }));
+
   const elapsed = Date.now() - t0;
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, hadDeferredCartHints, usedCartHintCentroid };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid };
 }
 
 function getCategoryColor(category: string): string {
@@ -1022,6 +1033,7 @@ function ItineraryResult() {
   // ── TASK-049: Cart 아이템 좌표 없음 경고 표시용 ────────────────────────────────
   const [skippedCartNames, setSkippedCartNames] = useState<string[]>([]);
   const [fixedOutOfWindow, setFixedOutOfWindow] = useState<string[]>([]);
+  const [unplacedPicks, setUnplacedPicks] = useState<{ key: string; name: string; hasFixed: boolean }[]>([]);
   // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
   const [tripNotes,        setTripNotes]        = useState<string[]>([]);
   // ── TASK-021: Supabase affiliate 표시 맵 ─────────────────────────────────────
@@ -1281,7 +1293,7 @@ function ItineraryResult() {
           setLoading(true);
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
@@ -1289,6 +1301,7 @@ function ItineraryResult() {
               if (skipped.length > 0) setSkippedCartNames(skipped);
           if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
               if (outOfWindow.length > 0) setFixedOutOfWindow(outOfWindow);
+              setUnplacedPicks(unplaced);
               const notes: string[] = [];
               if (deferred)     notes.push("Some of your picks were saved for a later day to keep the route efficient.");
               if (centroidUsed) notes.push("Nearby places were added around your selected spots.");
@@ -1326,7 +1339,7 @@ function ItineraryResult() {
       setLoading(true);
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
@@ -1909,6 +1922,35 @@ function ItineraryResult() {
           <p className="mt-2 text-xs text-orange-500">
             These places are still saved in your cart and can be added manually.
           </p>
+        </div>
+      )}
+
+      {/* This Trip 이 다 들어가지 못했다. 순위를 매기게 하지 않는다 —
+          시간을 정해 둔 일정은 그대로 두고, 몇 곳만 빼고 다시 만들면 된다. */}
+      {unplacedPicks.length > 0 && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-surface border border-line">
+          <p className="text-sm font-bold text-ink mb-1">{tPicks("overflowTitle")}</p>
+          <p className="text-xs text-sub leading-relaxed">{tPicks("overflowBody")}</p>
+          <ul className="mt-2 space-y-0.5">
+            {unplacedPicks.map(u => (
+              <li key={u.key} className="text-xs text-faint font-medium">· {u.name}</li>
+            ))}
+          </ul>
+          <Link href="/picks/?tab=selected"
+            className="gkm-focus mt-3 inline-flex items-center min-h-11 text-xs font-bold text-action hover:text-action-hover">
+            {tPicks("overflowAction")} →
+          </Link>
+        </div>
+      )}
+
+      {/* 시간을 정해 둔 일정끼리 이동이 빠듯할 수 있다. 해결 메뉴를 만들지 않는다. */}
+      {conflictDays.size > 0 && (
+        <div className="mb-6 px-5 py-4 rounded-2xl bg-surface border border-line">
+          <p className="text-sm font-bold text-ink">{tPicks("conflictTitle")}</p>
+          <Link href="/picks/?tab=selected"
+            className="gkm-focus mt-2 inline-flex items-center min-h-11 text-xs font-bold text-action hover:text-action-hover">
+            {tPicks("overflowAction")} →
+          </Link>
         </div>
       )}
 

@@ -21,6 +21,8 @@ import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT
 import { getPlannerMeta } from "@/lib/plannerStore";
 import { tripDates } from "@/lib/trip-fixed/fixed-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
+import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
+import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
 import { getFavorites, getSavedSpotsData, removeFavorite, FAVORITES_EVENT } from "@/lib/favorites";
 import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
@@ -103,6 +105,16 @@ function PicksContent() {
 
   // 고정 일정은 여행 날짜 안에서만 고를 수 있다. 날짜가 아직 없으면 입력을 열지 않는다.
   const [tripDays, setTripDays] = useState<string[]>([]);
+
+  // 처음 쓰는 사람에게만 두 걸음. 끝나면 다시 오지 않는다.
+  const [coach, setCoach] = useState<CoachStep>("done");
+  useEffect(() => { setCoach(readCoachStep()); }, []);
+  function advanceCoach() {
+    setCoach(prev => { const n = nextCoachStep(prev); writeCoachStep(n); return n; });
+  }
+
+  /** 시간 입력이 펼쳐진 카드. 한 번에 하나만 연다. */
+  const [openTimeKey, setOpenTimeKey] = useState<string | null>(null);
   useEffect(() => {
     const meta = getPlannerMeta();
     setTripDays(meta ? tripDates(meta.startDate, meta.numDays) : []);
@@ -504,9 +516,12 @@ function PicksContent() {
               </div>
 
               <ul className="flex flex-col gap-3">
-                {selected.map(item => {
+                {selected.map((item, cardIndex) => {
                   const key = getItemSourceKey(item);
                   const placeId = parseCitySpotId(key);
+                  // 두 번째 안내는 첫 카드 하나만 가리킨다. 모든 카드가 동시에
+                  // 뛰면 안내가 아니라 화면 전체가 흔들린다.
+                  const isFirstCard = cardIndex === 0;
                   return (
                     <li key={key}>
                       <Card className="overflow-hidden p-0">
@@ -528,13 +543,30 @@ function PicksContent() {
                           </div>
                           {/* 글리프 하나뿐이라 text 변형은 폭이 43 에서 멈춘다.
                               같은 색을 쓰면서 min-w-11 을 갖는 icon 변형으로 바꾼다. */}
+                          <Button
+                            variant="icon"
+                            aria-label={`${t("timeAction")}: ${item.name}`}
+                            aria-expanded={openTimeKey === key}
+                            className={coach === "time" && isFirstCard ? COACH_PULSE : undefined}
+                            onClick={() => setOpenTimeKey(openTimeKey === key ? null : key)}
+                          >🕘</Button>
                           <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key)}>✕</Button>
                         </div>
                         <div className="px-4 pb-4">
+                          {coach === "time" && isFirstCard && (
+                            <Coachmark
+                              title={t("coachTimeTitle")}
+                              body={t("coachTimeBody")}
+                              onDismiss={advanceCoach}
+                            />
+                          )}
                           <FixedScheduleFields
                             name={item.shortName || item.name}
                             value={item.fixed}
                             tripDays={tripDays}
+                            open={openTimeKey === key}
+                            onOpen={() => setOpenTimeKey(key)}
+                            onClose={() => setOpenTimeKey(null)}
                             onChange={(next: CartFixed | null) => setCartFixed(key, next)}
                           />
                         </div>
@@ -549,9 +581,19 @@ function PicksContent() {
               </Link>
 
               <div className="sticky bottom-20 md:bottom-6 mt-6">
+                {coach === "plan" && (
+                  <Coachmark
+                    title={t("coachPlanTitle")}
+                    body={t("coachPlanBody")}
+                    onDismiss={advanceCoach}
+                    placement="above"
+                  />
+                )}
+                {/* 안내는 버튼 옆에 놓일 뿐 버튼을 덮지 않는다.
+                    사용자가 바로 눌러도 원래 동작이 그대로 일어나야 한다. */}
                 <button
                   onClick={handleBuild}
-                  className="gkm-focus w-full flex items-center justify-center gap-2 min-h-12 rounded-control bg-action text-white font-bold shadow-cta hover:bg-action-hover"
+                  className={`gkm-focus w-full flex items-center justify-center gap-2 min-h-12 rounded-control bg-action text-white font-bold shadow-cta hover:bg-action-hover${coach === "plan" ? ` ${COACH_PULSE}` : ""}`}
                 >
                   ✨ {t("build")}
                 </button>

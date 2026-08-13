@@ -15,6 +15,7 @@
 > **rev.4 (2026-08-13, TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01)** — Invariant 2 를 고정 항목 전용에서 **모든 다음 배치 항목**으로 확장하고, 다음 항목의 위치를 알 수 없을 때의 fail-closed 정책을 명시했다. 일반 항목 앞 중간 삽입에서 순간이동 일정이 실제로 재현됐다(§17-11).
 > **rev.5 (2026-08-13, TASK-THIS-TRIP-FIXED-CONSTRAINT-02)** — §3-7 고정 일정의 **입력 경로가 활성화**됐다. 제품 계약은 그대로이고 구현 상태만 바뀐다(§17-13).
 > **rev.6 (2026-08-13, TASK-SCHEDULER-FIXED-TO-FIXED-FEASIBILITY-01)** — §3-7 에 Invariant 3(고정 일정끼리의 이동 가능성)을 추가하고 HC-9 로 구현했다. 좌표를 모를 때는 검증하지 않고 Fixed 를 유지한다(§17-14).
+> **rev.7 (2026-08-13, TASK-THIS-TRIP-SIMPLE-GUIDANCE-AND-OVERFLOW-01)** — This Trip 의 사용자 경험 계약을 §3-9 에 명시했다. CTA 문구, 1회성 2단계 안내, 사용자-facing 용어 금지, 넘침 안내의 단순성(§17-15).
 
 ---
 
@@ -266,6 +267,23 @@ My Trip 생성 후에는 사용자가 장소를 넣기/빼기/이동/수정할 �
 > 현재 구현 수준은 §17-5 참조. 조용히 삭제하지는 않지만 **전 일정 미배치 사유를 알리는 경로가 없다.**
 
 ---
+
+### 3-9. This Trip 사용자 경험 계약
+
+1. 사용자-facing AI 일정 생성 CTA는 **`Plan My Trip`**이다. 버튼에서 AI를 다시 설명하지 않는다 — 첫 안내에서 한 번이면 충분하다.
+2. 첫 This Trip 사용 시 **실제 CTA와 실제 날짜/시간 action을 가리키는 2단계 1회성 coachmark**를 제공한다. 별도 tutorial 페이지·wizard·modal sequence를 만들지 않는다.
+3. onboarding은 **반복 노출하지 않는다.** 사용자가 닫아도 완료로 본다.
+4. **`Fixed`는 내부 Scheduler 용어이며 사용자에게 노출하지 않는다.** `Fixed Schedule`·`Hard Constraint`도 마찬가지다.
+5. 사용자는 This Trip 장소에서 **Date / Start / End만** 설정한다. `durationMinutes`는 두 시각의 차이일 뿐 화면에 나오지 않는다. 장소는 다시 묻지 않는다 — 그 카드가 곧 그 장소다.
+6. 사용자 지정 날짜·시간 일정은 **hard constraint**이고, overflow 해결 대상으로 **제거·변경하도록 제안하지 않는다.**
+7. This Trip이 너무 많으면 **복잡한 우선순위 없이** 비고정 장소 몇 곳을 제거하도록 부드럽게 안내한다. 행동은 하나(`Review This Trip`)다.
+8. This Trip에서 제거해도 **Saved / My Places 원본은 유지된다.** `Remove from This Trip` ≠ `Delete`.
+9. 사용자 선택 장소의 **silent drop 금지.** 배치되었거나, 배치되지 못했다고 알리거나 둘 중 하나다.
+10. 생성된 My Trip은 사용자가 자유롭게 수정한다. 입력 단계에서 모든 개인 선택을 해결하려 하지 않는다.
+11. 기본 UX에 **Must include · priority ranking · 다중 해결 메뉴를 만들지 않는다.**
+
+> 제품 원칙 — **AI/Scheduler가 현실적으로 가능한 초안을 만든다 → 사용자가 My Trip에서 자유롭게 수정한다.**
+
 
 ## 4. `name/note`와 `display_title/display_memo`
 
@@ -931,6 +949,23 @@ A→B 이동 40분 / 여유 15분   →  이전: success 200 / 이후: HC-9 → 
 새 HTTP 상태나 별도 오류 체계를 만들지 않았다. `HardConstraintCode` 유니온에 `HC-9` 한 줄만 늘었다.
 
 회귀 테스트 14개: `src/lib/scheduler/fixed-pair-feasibility.test.ts`. 수정 전 엔진에서 5개가 실패함을 확인했다.
+
+### 17-15. This Trip 안내·넘침 구현 (2026-08-13, `TASK-THIS-TRIP-SIMPLE-GUIDANCE-AND-OVERFLOW-01`)
+
+| 항목 | 구현 |
+|---|---|
+| CTA | `picks.build` = `Plan My Trip` (4 locale). 동작은 `handleBuild` 그대로 |
+| 안내 | `Coachmark` + `COACH_PULSE`. 대상 **옆에** 놓이고 덮지 않는다 — overlay·z-index·pointer-events 없음 |
+| 1회성 | localStorage `koreamate_this_trip_coach_v1`, `plan → time → done`. 읽기 실패 시 `done`(보여주지 않는 쪽) |
+| 시간 action | 카드 우측 기존 액션 그룹에 시계 아이콘 1개. 눌렀을 때만 입력이 펼쳐진다 |
+| 요약 | 설정한 카드만 `Intl` 로 `Oct 17 · 7:00–9:00 PM` 한 줄. 미설정 카드는 `null` |
+| 입력 | Date / Start / End. `validateFixedRange` 가 `End − Start` 로 `durationMinutes` 를 만든다 |
+| 넘침 추적 | **API·DB 확장 없음.** `cartHints − usedPlaceIds` 차집합. 추천 후보는 `cartHints` 에 없어 자연히 제외된다 |
+| pulse | 3회 후 정지. `prefers-reduced-motion` 에서 `animation: none` |
+
+**§11의 `unplaced_items` API 확장 대신 클라이언트 도출을 택했다.** 배치된 `place_id` 는 이미 `usedPlaceIds` 로 모으고 있고 `cartHints` 는 사용자가 고른 것만 담으므로, 차집합이 정확히 답이다. API 계약을 늘리지 않는 쪽이 요구를 모두 만족하면서 더 작다.
+
+회귀 테스트 21개: `src/lib/trip-fixed/this-trip-guidance.test.ts`
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

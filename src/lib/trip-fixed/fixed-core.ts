@@ -14,6 +14,8 @@ export const FIXED_MAX_DURATION_MINUTES = 12 * 60;
 export type FixedErrorCode =
   | "missingDate"
   | "missingTime"
+  | "missingEnd"
+  | "endBeforeStart"
   | "missingDuration"
   | "durationTooLong"
   | "dateOutOfTrip"
@@ -103,6 +105,42 @@ export function validateFixedDraft(
 /** 저장된 고정 일정의 종료시각. 소요시간으로만 계산한다. */
 export function fixedEndTime(fixed: CartFixed): string {
   return minutesToTime(timeToMinutes(fixed.startTime) + fixed.durationMinutes);
+}
+
+// ── 화면이 쓰는 형태 ─────────────────────────────────────────────────────────
+//
+// 사용자는 "몇 분 걸리나요" 를 생각하지 않는다. 시작과 끝을 안다. 그래서
+// 화면은 Date / Start / End 만 묻고, 저장 구조는 기존 그대로 둔다.
+// duration 은 두 시각의 차이일 뿐이며 사용자에게 보여주지 않는다.
+
+export interface FixedRangeDraft {
+  date:      string;
+  startTime: string;
+  endTime:   string;
+}
+
+export function validateFixedRange(
+  draft:    FixedRangeDraft,
+  tripDays: readonly string[],
+): { ok: true; value: CartFixed } | { ok: false; error: FixedErrorCode } {
+  const start = timeToMinutes(draft.startTime.trim());
+  if (Number.isNaN(start)) return { ok: false, error: "missingTime" };
+
+  const end = timeToMinutes(draft.endTime.trim());
+  // 끝나는 시각이 없거나 시작보다 이르면 우리가 고쳐 주지 않는다.
+  // "아마 다음 날이겠지" 같은 추측은 사용자가 적지 않은 일정을 만드는 것이다.
+  if (Number.isNaN(end)) return { ok: false, error: "missingEnd" };
+  if (end <= start)      return { ok: false, error: "endBeforeStart" };
+
+  return validateFixedDraft(
+    { date: draft.date, startTime: draft.startTime, durationMinutes: end - start },
+    tripDays,
+  );
+}
+
+/** 저장값을 화면 입력 형태로 되돌린다. */
+export function toRangeDraft(fixed: CartFixed): FixedRangeDraft {
+  return { date: fixed.date, startTime: fixed.startTime, endTime: fixedEndTime(fixed) };
 }
 
 /**
