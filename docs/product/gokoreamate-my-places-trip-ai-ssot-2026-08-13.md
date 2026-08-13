@@ -17,6 +17,7 @@
 > **rev.6 (2026-08-13, TASK-SCHEDULER-FIXED-TO-FIXED-FEASIBILITY-01)** — §3-7 에 Invariant 3(고정 일정끼리의 이동 가능성)을 추가하고 HC-9 로 구현했다. 좌표를 모를 때는 검증하지 않고 Fixed 를 유지한다(§17-14).
 > **rev.7 (2026-08-13, TASK-THIS-TRIP-SIMPLE-GUIDANCE-AND-OVERFLOW-01)** — This Trip 의 사용자 경험 계약을 §3-9 에 명시했다. CTA 문구, 1회성 2단계 안내, 사용자-facing 용어 금지, 넘침 안내의 단순성(§17-15).
 > **rev.8 (2026-08-13, TASK-SCHEDULER-EXPLICIT-SCHEDULE-WINDOW-FIX-AND-REAL-AI-CANARY-R2)** — 자동 추천 창과 사용자 지정 일정을 분리했다(§3-7 Invariant 4). 기본 21:00 때문에 19시 공연이 아침으로 밀리던 결함을 고쳤다(§17-16).
+> **rev.9 (2026-08-13, TASK-SCHEDULER-DEPARTURE-HARD-DESTINATION-01)** — §3-7 에 Invariant 5(출발 목적지)를 추가했다. 출발지는 검색 중심점이 아니라 마감시각까지 실제로 닿아야 하는 지점이며, process buffer 를 이동시간으로 이중 계산하지 않는다(§17-17).
 
 ---
 
@@ -266,6 +267,27 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 > explicit schedule을 정상 배치할 수 없을 때 **일반 후보로 강등해 다른 시간에 자동 배치하지 않는다.** 배치되거나, 배치할 수 없다고 알리거나 둘 중 하나다.
 
 > 실제 arrival/departure 등 hard boundary가 우선하며, 충돌 시 **explicit 시간을 임의 변경하지 않는다** — 앞당기기·늦추기·축소·제거 모두 금지다.
+
+#### Invariant 5 — 출발 목적지 (Departure Hard Destination)
+
+> **출발 공항·역·터미널·항만은 마지막 날의 검색 중심점이 아니라, 정해진 시각까지 실제 이동시간을 확보하여 도착해야 하는 hard destination 이다.**
+
+마감시각은 출발 시각 자체가 아니다.
+
+```
+requiredDestinationArrival = departureTime − departureProcessBuffer
+lastPlace.end + travel(lastPlace → destination) ≤ requiredDestinationArrival
+```
+
+> **process buffer 는 목적지에 도착한 뒤 출발 전까지 확보하는 시간이다** — 체크인·보안검색·승차. 마지막 장소에서 목적지까지의 실제 이동시간과 **중복 계산하지 않는다.** buffer 는 마감시각을 구할 때 한 번만 쓰고, 이동시간은 Invariant 2(HC-8)가 따로 잰다.
+
+> 마감시각은 그날 **자동 추천 창의 끝**이기도 하다. 그 뒤에 자동 추천을 넣지 않는다 — 이미 공항에 있어야 할 시간이다.
+
+> 출발 좌표를 후보 검색 원점으로 쓰지 않는다. 쓰면 마지막 날이 공항 주변에 갇힌다.
+
+> 목적지에 닿을 수 없으면 **사용자 지정 일정도 목적지 시각도 옮기지 않는다.** Invariant 3 과 같은 판정으로 충돌을 알린다.
+
+> 출발 좌표나 시각이 없으면 목적지를 만들지 않는다. 모르는 지점을 지어내지 않는다.
 
 ### 3-8. This Trip 과다
 
@@ -1001,6 +1023,31 @@ live-AI canary 감사에서 재현된 결함이다.
 엔진은 원래부터 창 밖 anchor 를 그대로 배치했고 그 뒤에 자동 후보를 붙이지도 않았다. 막고 있던 것은 이 한 줄의 판정 기준뿐이었다.
 
 회귀 테스트 13개: `src/lib/trip-fixed/explicit-schedule-window.test.ts` (수정 전 9개 실패 확인)
+
+### 17-17. Invariant 5 구현 (2026-08-13, `TASK-SCHEDULER-DEPARTURE-HARD-DESTINATION-01`)
+
+`departureCoord` 는 URL·state 를 거쳐 `generateWithNewApi` 인자까지 오고 있었지만 **본문에서 한 번도 쓰이지 않았다.** 마지막 장소에서 공항까지 갈 수 있는지 검증하는 코드가 어디에도 없었다.
+
+합성 fixture 실측 (비행기 17:00 · airport buffer 60 → 마감 16:00 · 공항까지 40분):
+
+```text
+해운대 출발일  이전: 마지막 15:46 종료 + 40분 → 16:26 도착  ⛔ 비행기를 놓친다
+               이후: 마지막 14:53 종료 + 40분 → 15:33 도착  ✅
+부산역 출발일  이전: 15:46 → 16:26  ⛔     이후: 15:16 → 15:56  ✅
+서면 출발일    이전: 16:00 → 16:40  ⛔     이후: 15:00 → 15:40  ✅
+```
+
+| 항목 | 이전 | 현재 |
+|---|---|---|
+| 출발 좌표 | 인자까지만 오고 미사용 | `fixed_events` 1건의 목적지 |
+| buffer 역할 | 하루 끝을 앞당겨 이동시간을 대신함 | 마감시각 계산에만. 이동시간은 HC-8 |
+| 이동 검증 | 없음 | HC-8 (일반) · HC-9 (사용자 고정과의 쌍) |
+| 검색 원점 | 변화 없음 | **변화 없음** — 공항은 원점이 되지 않는다 |
+| 엔진 | — | 변경 0. 기존 `fixed_events` 배선을 처음 사용한 것뿐이다 |
+
+새 타입·새 제약 코드·새 숫자를 만들지 않았다. buffer 값(airport 60 / port 45 / bus_terminal 45 / train_station 30 / 기본 30)은 그대로 옮겼고 의미만 확정했다. 목적지는 체류 0 이며 내부 `event_id` 로만 식별해 일정 카드로 노출하지 않는다.
+
+회귀 테스트 18개: `src/lib/trip-fixed/departure-destination.test.ts`
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

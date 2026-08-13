@@ -31,6 +31,8 @@ import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 // 서로 다른 규칙을 쓰면 같은 장소가 다시 어긋난다.
 import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import { planDayAnchors, mergeDayHints } from "@/lib/trip-fixed/anchor-build";
+import { buildDepartureDestination, isDepartureDestination } from "@/lib/trip-fixed/departure-destination";
+import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
@@ -344,22 +346,11 @@ function getCartHintsCentroid(
   return { lat, lng };
 }
 
-// ── TASK-058: Departure buffer — reserves travel time before departure ────────
-// Prevents the scheduler from filling the day right up to departure time,
-// leaving no room for travel to the airport / station / terminal / port.
-const DEPARTURE_BUFFER_MINUTES: Record<string, number> = {
-  airport:       60,
-  port:          45,
-  bus_terminal:  45,
-  train_station: 30,
-};
-const DEFAULT_DEPARTURE_BUFFER_MINUTES = 30;
-
-function applyDepartureBuffer(hhmm: string, bufferMin: number): string {
-  const [h, m] = hhmm.split(":").map(Number);
-  const total   = Math.max(0, (h ?? 0) * 60 + (m ?? 0) - bufferMin);
-  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
-}
+// ── TASK-058 → 출발 목적지 ────────────────────────────────────────────────────
+// 이 자리에 있던 buffer 표와 applyDepartureBuffer 는 trip-fixed/departure-destination.ts
+// 로 옮겼다. 숫자는 그대로다. 바뀐 것은 책임이다 — "하루를 대충 일찍 끝내는 값"
+// 에서 "목적지 도착 마감시각을 구하는 값" 이 됐고, 마지막 장소에서 공항까지의
+// 실제 이동시간은 스케줄러의 HC-8 이 따로 잰다.
 
 // ── TASK-018: 신규 일정 생성 오케스트레이터 (레거시 generateWithDwell 대체) ─────────
 async function generateWithNewApi(
@@ -492,20 +483,38 @@ async function generateWithNewApi(
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
-    // TASK-058: On the last day apply a departure buffer so the scheduler leaves
-    // time to travel from the final place to the departure point.
-    // end_time already constrains departure timing (TASK-056-B); this just
-    // pulls it back by the transport-specific buffer before passing to scheduler.
-    const effectiveDeptTime = (i === dates.length - 1 && deptTime)
-      ? applyDepartureBuffer(deptTime, DEPARTURE_BUFFER_MINUTES[deptType ?? ""] ?? DEFAULT_DEPARTURE_BUFFER_MINUTES)
-      : undefined;
-    const end_time = i === dates.length - 1 ? (effectiveDeptTime ?? "21:00") : "21:00";
+    const isLastDay = i === dates.length - 1;
 
     // TASK-056-B: Always use currentCoordinate (previous day's last position) as NearMe base.
-    // departureCoord on the last day caused airport-area coordinate collision with Day 1,
-    // exhausting candidates and leaving Day 4 empty. end_time already constrains departure timing.
     // TASK-057-B2: dayStartCoordinate is the immutable scheduler base for this day.
+    //
+    // 예전에는 마지막 날 출발지를 이 기준점으로 썼다가 Day 1 과 좌표가 겹쳐 후보가
+    // 고갈됐고, 그래서 출발 좌표를 통째로 버렸다. 진단이 반쪽이었다 — 문제는 좌표가
+    // 아니라 **출발지를 검색 원점으로 쓴 것** 이었다.
+    //
+    // 공항은 닿아야 하는 곳이지 그 주변을 뒤져야 하는 곳이 아니다. 그래서 기준점은
+    // 그대로 두고, 출발 좌표는 아래에서 목적지로만 실어 보낸다.
     const dayStartCoordinate = currentCoordinate;
+
+    // 마지막 날의 출발 목적지. 좌표나 시각이 없으면 null 이고 예전과 똑같이 돈다.
+    const departureDestination = isLastDay
+      ? buildDepartureDestination({
+          coordinate:    departureCoord,
+          departureTime: deptTime,
+          transportType: deptType,
+          zoneId:        departureCoord
+            ? (assignZoneId(haversineKm(
+                dayStartCoordinate.lat, dayStartCoordinate.lng,
+                departureCoord.lat,     departureCoord.lng,
+              ) * 1000) ?? 3)
+            : 3,
+        })
+      : null;
+
+    // 목적지 도착 마감시각이 곧 그날 자동 추천 창의 끝이다. buffer 는 이 한 번만
+    // 쓴다 — day end 에서 또 빼면 이동시간을 두 번 확보하는 셈이 된다.
+    const effectiveDeptTime = departureDestination?.requiredDestinationArrival;
+    const end_time = isLastDay ? (effectiveDeptTime ?? "21:00") : "21:00";
 
     // TASK-057-B1: Evict already-placed My Picks from the remaining pool, then
     // build today's cart_hints from hints within today's distance threshold.
@@ -577,6 +586,9 @@ async function generateWithNewApi(
           event_coords:       evtCoords.length         > 0 ? evtCoords         : undefined,
           cart_coord_hints:   todayCartHints.length    > 0 ? todayCartHints    : undefined,
           anchors:            todayAnchors.length      > 0 ? todayAnchors      : undefined,
+          // 출발 목적지. 기존 fixed_events 채널 그대로다 — 엔진이 이미 P2 에서
+          // 놓고, HC-8 이 "마지막 장소 → 여기" 이동시간을 잰다.
+          fixed_events:       departureDestination ? [departureDestination.event] : undefined,
           exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
           city,
           locale,
@@ -660,6 +672,9 @@ async function generateWithNewApi(
 
     const places: Place[] = (plan.items as ApiScheduledItem[])
       .filter(item => item.item_type !== "affiliate")
+      // 출발 목적지는 스케줄러 제약이지 일정 카드가 아니다. 여기를 빼지 않으면
+      // 화면에 이름 없는 관광지처럼 한 줄 생긴다.
+      .filter(item => !isDepartureDestination(item))
       .map(item => {
         const key      = item.place_id ?? item.event_id ?? "";
         const cartFull = cartItemByKey[key];
