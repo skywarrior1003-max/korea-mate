@@ -1,0 +1,725 @@
+{
+  "meta": {
+    "task": "TASK-JEJU-PLACE-ELIGIBILITY-V1",
+    "version": "v2",
+    "as_of": "2026-08-13T07:42:44Z",
+    "total": 37,
+    "sha256": "21ea269fe28a1d1ddff73842cbd6e29336302af000caf13836489c3f96ed6a41"
+  },
+  "entity_anomalies": [
+    {
+      "contentsid": "CNTS_000000000020606",
+      "title": "아라리오뮤지엄동문모텔2",
+      "flags": [
+        "POSSIBLE_ACCOMMODATION_IN_C1"
+      ]
+    },
+    {
+      "contentsid": "CNTS_000000000020607",
+      "title": "아라리오뮤지엄 동문모텔",
+      "flags": [
+        "POSSIBLE_ACCOMMODATION_IN_C1"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000012851",
+      "title": "쇠소깍 테우 매표소",
+      "flags": [
+        "UTILITY_ADJACENT_IN_C1"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013415",
+      "title": "마라도가는여객선매표소",
+      "flags": [
+        "UTILITY_ADJACENT_IN_C1"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013568",
+      "title": "제주도 코난비치 스노쿨링 대여점 월정뷰게스트하우스",
+      "flags": [
+        "POSSIBLE_ACCOMMODATION_IN_C1"
+      ]
+    }
+  ],
+  "review_items": [
+    {
+      "contentsid": "CNTS_000000000020606",
+      "title": "아라리오뮤지엄동문모텔2",
+      "place_class": "REVIEW_REQUIRED",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "VALID",
+      "entity_anomaly": true,
+      "review_flags": [
+        "REVIEW: accommodation-named entity in c1 — confirm type"
+      ],
+      "reason_codes": [
+        "ENTITY_TYPE_REVIEW"
+      ]
+    },
+    {
+      "contentsid": "CNTS_000000000020607",
+      "title": "아라리오뮤지엄 동문모텔",
+      "place_class": "REVIEW_REQUIRED",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "VALID",
+      "entity_anomaly": true,
+      "review_flags": [
+        "REVIEW: accommodation-named entity in c1 — confirm type"
+      ],
+      "reason_codes": [
+        "ENTITY_TYPE_REVIEW"
+      ]
+    },
+    {
+      "contentsid": "CNTS_000000000022255",
+      "title": "제주 카약올레",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "CONDITIONAL",
+      "coord_status": "INVALID_SOURCE_ZERO",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=INVALID_SOURCE_ZERO — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "EXPERIENCE_BOOKING_REQUIRED",
+        "COORD_INVALID_SOURCE_ZERO",
+        "AI_CONDITIONAL_BOOKING"
+      ]
+    },
+    {
+      "contentsid": "CNTS_000000000022390",
+      "title": "병악현무암지대",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "INVALID_SOURCE_ZERO",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=INVALID_SOURCE_ZERO — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_INVALID_SOURCE_ZERO",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000007159",
+      "title": "신산신양해안도로",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000010375",
+      "title": "제주환상자전거길",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable",
+        "REVIEW: no coord and no address — Explore display uncertain"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000011254",
+      "title": "제주친구",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000011313",
+      "title": "케이제주해양사업단",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000011915",
+      "title": "신흥리 동백 & 향나무길",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000012073",
+      "title": "영등할망신화공원",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000012075",
+      "title": "헌마공신김만일기념관",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000012138",
+      "title": "영아리",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable",
+        "REVIEW: no coord and no address — Explore display uncertain"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000012139",
+      "title": "진지동굴",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable",
+        "REVIEW: no coord and no address — Explore display uncertain"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_200000000012327",
+      "title": "종달고망난돌쉼터",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000012851",
+      "title": "쇠소깍 테우 매표소",
+      "place_class": "REVIEW_REQUIRED",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "VALID",
+      "entity_anomaly": true,
+      "review_flags": [
+        "REVIEW: utility-adjacent entity (매표소/안내소/화장실) — manual check needed"
+      ],
+      "reason_codes": [
+        "UTILITY_ADJACENT_REVIEW"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000012898",
+      "title": "성안올레",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable",
+        "REVIEW: no coord and no address — Explore display uncertain"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013415",
+      "title": "마라도가는여객선매표소",
+      "place_class": "REVIEW_REQUIRED",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "VALID",
+      "entity_anomaly": true,
+      "review_flags": [
+        "REVIEW: utility-adjacent entity (매표소/안내소/화장실) — manual check needed"
+      ],
+      "reason_codes": [
+        "UTILITY_ADJACENT_REVIEW"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013561",
+      "title": "아이바가든",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013568",
+      "title": "제주도 코난비치 스노쿨링 대여점 월정뷰게스트하우스",
+      "place_class": "REVIEW_REQUIRED",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "VALID",
+      "entity_anomaly": true,
+      "review_flags": [
+        "REVIEW: accommodation-named entity in c1 — confirm type"
+      ],
+      "reason_codes": [
+        "ENTITY_TYPE_REVIEW"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013654",
+      "title": "김정문알로에 알로에숲",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013657",
+      "title": "오투힐",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013707",
+      "title": "그림휴가",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013749",
+      "title": "영천동 해바라기축제",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013755",
+      "title": "국수문화거리",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013757",
+      "title": "중앙로",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013798",
+      "title": "쏙인제주",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000013959",
+      "title": "자연인제주족욕",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014075",
+      "title": "마리에 인 제주",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014092",
+      "title": "파호이호이 라바필드 파크 제주",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014330",
+      "title": "안덕면사무소 수국길 ",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014331",
+      "title": "곽지 과물노천탕",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014461",
+      "title": "색달포레스트",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014486",
+      "title": "노틸러스다이브제주",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "CONDITIONAL",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "EXPERIENCE_BOOKING_REQUIRED",
+        "COORD_MISSING_COORDINATE",
+        "AI_CONDITIONAL_BOOKING"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014529",
+      "title": "피크닉인제주",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "CLEAR_DESTINATION",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014534",
+      "title": "스카이 다이어리",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014605",
+      "title": "드르쿰다 in 성산",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "CONDITIONAL",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    },
+    {
+      "contentsid": "CNTS_300000000014728",
+      "title": "애월 몽달",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE": "REVIEW_REQUIRED",
+      "AI_ITINERARY": "REVIEW_REQUIRED",
+      "coord_status": "MISSING_COORDINATE",
+      "entity_anomaly": false,
+      "review_flags": [
+        "REVIEW: coord=MISSING_COORDINATE — navigation and mapping unreliable",
+        "REVIEW: no coord and no address — Explore display uncertain"
+      ],
+      "reason_codes": [
+        "OFFICIAL_TOURISM_ENTITY",
+        "COORD_MISSING_COORDINATE",
+        "AI_BLOCKED_INVALID_COORD"
+      ]
+    }
+  ]
+}

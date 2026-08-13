@@ -1,0 +1,72 @@
+{
+  "universe": {
+    "expected": 1341,
+    "actual": 1341,
+    "match": true
+  },
+  "SEARCHABLE": {
+    "YES": 1336,
+    "CONDITIONAL": 0,
+    "NO": 0,
+    "REVIEW_REQUIRED": 5,
+    "TOTAL": 1341,
+    "MATCH_1341": true
+  },
+  "EXPLORE_ELIGIBLE": {
+    "YES": 1304,
+    "CONDITIONAL": 27,
+    "NO": 0,
+    "REVIEW_REQUIRED": 10,
+    "TOTAL": 1341,
+    "MATCH_1341": true
+  },
+  "AI_ITINERARY_ELIGIBLE": {
+    "YES": 1225,
+    "CONDITIONAL": 81,
+    "NO": 0,
+    "REVIEW_REQUIRED": 35,
+    "TOTAL": 1341,
+    "MATCH_1341": true
+  },
+  "USER_CAN_SELECT": {
+    "YES": 1336,
+    "CONDITIONAL": 0,
+    "NO": 0,
+    "REVIEW_REQUIRED": 5,
+    "TOTAL": 1341,
+    "MATCH_1341": true
+  },
+  "USER_CAN_SAVE": {
+    "YES": 1336,
+    "CONDITIONAL": 0,
+    "NO": 0,
+    "REVIEW_REQUIRED": 5,
+    "TOTAL": 1341,
+    "MATCH_1341": true
+  },
+  "REVIEW_REQUIRED_TOTAL": 37,
+  "ENTITY_ANOMALY_COUNT": 5,
+  "ZERO_COORDINATE_COUNT": 2,
+  "OTHER_COORDINATE_ANOMALY": 0,
+  "MISSING_COORDINATE_COUNT": 30,
+  "MULTILINGUAL_ANOMALY_COUNT": 2,
+  "DUPLICATE_ID_COUNT": 0,
+  "ENTITY_LOSS": 0,
+  "KTO_CALLS": 0,
+  "API_CALLS": 0,
+  "WEB_COLLECTION": 0,
+  "ELIGIBLE_COORDINATE_GAP_COUNT": 32,
+  "ELIGIBLE_PHONE_GAP_COUNT": 145,
+  "SECRET_LEAK": 0,
+  "MAIN_IMPORT": 0,
+  "PRODUCTION_WRITE": 0,
+  "RAW_SOURCE_MODIFIED": 0,
+  "ZERO_COORD_USED_AS_VALID": 0,
+  "place_class_distribution": {
+    "CORE_TRAVEL_PLACE": 1336,
+    "REVIEW_REQUIRED": 5
+  },
+  "eligibility_sha256": "e9a0836b307d2cf4dba453f827093111d3f10c7a824116a2d0b5e5b4ee080e4d",
+  "review_sha256": "21ea269fe28a1d1ddff73842cbd6e29336302af000caf13836489c3f96ed6a41",
+  "DETERMINISM_STATUS": "CONFIRMED_RUN1_EQ_RUN2"
+}

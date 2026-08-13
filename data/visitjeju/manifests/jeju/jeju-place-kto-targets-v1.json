@@ -1,0 +1,1359 @@
+{
+  "meta": {
+    "task": "TASK-JEJU-PLACE-ELIGIBILITY-V1",
+    "version": "v2",
+    "as_of": "2026-08-13T07:42:44Z",
+    "enrichment_gate": "SEARCHABLE=YES",
+    "KTO_CALLS": 0,
+    "note": "KTO enrichment = TASK-JEJU-KTO-PLACE-GAP-FILL-V1"
+  },
+  "coordinate_targets": {
+    "count": 32,
+    "items": [
+      {
+        "contentsid": "CNTS_000000000022255",
+        "title": "제주 카약올레",
+        "title_en": "Jeju Kayak Olle",
+        "coord_status": "INVALID_SOURCE_ZERO",
+        "address": "제주시 애월읍 애월리 2490-1",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "CONDITIONAL"
+      },
+      {
+        "contentsid": "CNTS_000000000022390",
+        "title": "병악현무암지대",
+        "title_en": "Byeongak Basalt Zone",
+        "coord_status": "INVALID_SOURCE_ZERO",
+        "address": "제주특별자치도 서귀포시 안덕면 사계리",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000007159",
+        "title": "신산신양해안도로",
+        "title_en": "Shinsan-Sinyang Coastal Road (Seafood)",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 성산읍 고성리",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000010375",
+        "title": "제주환상자전거길",
+        "title_en": "Mulleung Bicycle Road (3rd section of the Ring Bicycle Road)",
+        "coord_status": "MISSING_COORDINATE",
+        "address": null,
+        "EXPLORE": "REVIEW_REQUIRED",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000011254",
+        "title": "제주친구",
+        "title_en": "Jeju Friends",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 동홍동 1255-2",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000011313",
+        "title": "케이제주해양사업단",
+        "title_en": "K-Jeju Marine Business Division",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 대정읍 하모리 646-20",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000011915",
+        "title": "신흥리 동백 & 향나무길",
+        "title_en": "Sinheung-ri Camellia & Juniper Road",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 남원읍 수망리 59",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000012073",
+        "title": "영등할망신화공원",
+        "title_en": "Yeongdeung Halmang Mythical Park",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주 제주시 한림읍 귀덕11길 19",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000012075",
+        "title": "헌마공신김만일기념관",
+        "title_en": "Kim Man-il Memorial Hall",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "서귀포시 남원읍 서성로 919",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000012138",
+        "title": "영아리",
+        "title_en": "Seoyoung Ari Oreum / Yongwai Oreum",
+        "coord_status": "MISSING_COORDINATE",
+        "address": null,
+        "EXPLORE": "REVIEW_REQUIRED",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000012139",
+        "title": "진지동굴",
+        "title_en": "Wollabong Jinji Cave (Andeok-myeon)",
+        "coord_status": "MISSING_COORDINATE",
+        "address": null,
+        "EXPLORE": "REVIEW_REQUIRED",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_200000000012327",
+        "title": "종달고망난돌쉼터",
+        "title_en": "Jongdal Gomangnandol Shelter",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주 제주시 구좌읍 종달리 112-4",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000012898",
+        "title": "성안올레",
+        "title_en": "Seongan Olle",
+        "coord_status": "MISSING_COORDINATE",
+        "address": null,
+        "EXPLORE": "REVIEW_REQUIRED",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013561",
+        "title": "아이바가든",
+        "title_en": "IVAR Garden",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 애월읍 고성리 937 아이바가든",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013654",
+        "title": "김정문알로에 알로에숲",
+        "title_en": "Kim Jeong-moon Aloe Aloe Forest",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 성산읍 신풍리 1680 김정문알로에 알로에숲",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013657",
+        "title": "오투힐",
+        "title_en": "O2Hill Jeju Branch",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 봉개동 700-5 2층 오투힐 제주점",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013707",
+        "title": "그림휴가",
+        "title_en": "Painting vacation",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 신효동 768-3 1층",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013749",
+        "title": "영천동 해바라기축제",
+        "title_en": "Yeongcheon Sunflower Festival [Category]",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 토평동 2982 일원",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013755",
+        "title": "국수문화거리",
+        "title_en": "Noodle Culture Street (Guksu Geori)",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 일도2동 1050-1",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013757",
+        "title": "중앙로",
+        "title_en": "Jungang-ro",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 중앙로",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013798",
+        "title": "쏙인제주",
+        "title_en": "Soak in Jeju",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 한경면 용수리 638-1 1층 ",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000013959",
+        "title": "자연인제주족욕",
+        "title_en": "Nature In Jeju Foot Bath",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주 제주시 월평동 827",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014075",
+        "title": "마리에 인 제주",
+        "title_en": "Marie in Jeju",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 애월읍 평화로 2504 (고성리) 마리에제주",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014092",
+        "title": "파호이호이 라바필드 파크 제주",
+        "title_en": "Pahoehoe Lavafield Park Jeju",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 애월읍 중산간서로 5994-47 (장전리) ",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014330",
+        "title": "안덕면사무소 수국길 ",
+        "title_en": "Andeok-myeon Office Hydrangea Road ",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 안덕면 화순리 1961-1",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014331",
+        "title": "곽지 과물노천탕",
+        "title_en": "Gwakji Gwamul Open-air Bath",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 애월읍 곽지리 1565",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014461",
+        "title": "색달포레스트",
+        "title_en": "Saekdal Forest",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 산록남로1241번길 196-16 (색달동) 색달포레스트",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014486",
+        "title": "노틸러스다이브제주",
+        "title_en": "Nautilus Dive Jeju",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 이어도로 693-7 (강정동) 노틸러스다이브 제주 ",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "CONDITIONAL"
+      },
+      {
+        "contentsid": "CNTS_300000000014529",
+        "title": "피크닉인제주",
+        "title_en": "Picnic in Jeju",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 조천읍 조함해안로 50-1 (조천리) 1층 피크닉인제주",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014534",
+        "title": "스카이 다이어리",
+        "title_en": "Sky Diary",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 제주시 애월읍 월각로 927 (봉성리) 제주당 야외광장 내 부스",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014605",
+        "title": "드르쿰다 in 성산",
+        "title_en": "Deureukumda in Seongsan",
+        "coord_status": "MISSING_COORDINATE",
+        "address": "제주특별자치도 서귀포시 성산읍 섭지코지로25번길 64 (고성리) ",
+        "EXPLORE": "CONDITIONAL",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      },
+      {
+        "contentsid": "CNTS_300000000014728",
+        "title": "애월 몽달",
+        "title_en": "Aewol Mongdal",
+        "coord_status": "MISSING_COORDINATE",
+        "address": null,
+        "EXPLORE": "REVIEW_REQUIRED",
+        "AI_ITINERARY": "REVIEW_REQUIRED"
+      }
+    ],
+    "ids": [
+      "CNTS_000000000022255",
+      "CNTS_000000000022390",
+      "CNTS_200000000007159",
+      "CNTS_200000000010375",
+      "CNTS_200000000011254",
+      "CNTS_200000000011313",
+      "CNTS_200000000011915",
+      "CNTS_200000000012073",
+      "CNTS_200000000012075",
+      "CNTS_200000000012138",
+      "CNTS_200000000012139",
+      "CNTS_200000000012327",
+      "CNTS_300000000012898",
+      "CNTS_300000000013561",
+      "CNTS_300000000013654",
+      "CNTS_300000000013657",
+      "CNTS_300000000013707",
+      "CNTS_300000000013749",
+      "CNTS_300000000013755",
+      "CNTS_300000000013757",
+      "CNTS_300000000013798",
+      "CNTS_300000000013959",
+      "CNTS_300000000014075",
+      "CNTS_300000000014092",
+      "CNTS_300000000014330",
+      "CNTS_300000000014331",
+      "CNTS_300000000014461",
+      "CNTS_300000000014486",
+      "CNTS_300000000014529",
+      "CNTS_300000000014534",
+      "CNTS_300000000014605",
+      "CNTS_300000000014728"
+    ]
+  },
+  "phone_targets": {
+    "count": 145,
+    "items": [
+      {
+        "contentsid": "CNTS_000000000018320",
+        "title": "동거문이오름",
+        "title_en": "Donggeomunioreum",
+        "address": "제주특별자치도 제주시 구좌읍 종달리 산 70"
+      },
+      {
+        "contentsid": "CNTS_000000000018446",
+        "title": "안친오름",
+        "title_en": "Aljin Oreum (Anchin Oreum) Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 880-1"
+      },
+      {
+        "contentsid": "CNTS_000000000018455",
+        "title": "중문관광단지",
+        "title_en": "Jungmun Tourist Complex",
+        "address": "제주특별자치도 서귀포시 색달동 2812-4"
+      },
+      {
+        "contentsid": "CNTS_000000000020159",
+        "title": "한담해안산책로",
+        "title_en": "Handam Coastal Trail",
+        "address": "제주특별자치도 제주시 애월읍 곽지리 1359"
+      },
+      {
+        "contentsid": "CNTS_000000000020236",
+        "title": "산지천",
+        "title_en": "Sanjicheon Stream",
+        "address": "제주특별자치도 제주시 건입동"
+      },
+      {
+        "contentsid": "CNTS_000000000020277",
+        "title": "공천포",
+        "title_en": "Gongcheonpo",
+        "address": "제주특별자치도 서귀포시 남원읍 신례리"
+      },
+      {
+        "contentsid": "CNTS_000000000021259",
+        "title": "문석이오름 [출입제한]",
+        "title_en": "Moonseok Oreum [Entry Restricted]",
+        "address": "제주특별자치도 제주시 구좌읍 송당리"
+      },
+      {
+        "contentsid": "CNTS_200000000007157",
+        "title": "사계해안",
+        "title_en": "Four Seasons Yongmeori Coast (Seafood)",
+        "address": "제주특별자치도 서귀포시 안덕면 사계리 118-3"
+      },
+      {
+        "contentsid": "CNTS_200000000007159",
+        "title": "신산신양해안도로",
+        "title_en": "Shinsan-Sinyang Coastal Road (Seafood)",
+        "address": "제주특별자치도 서귀포시 성산읍 고성리"
+      },
+      {
+        "contentsid": "CNTS_200000000007218",
+        "title": "중엄리새물",
+        "title_en": "Jung-eom-ri Saemul",
+        "address": "제주특별자치도 제주시 애월읍 애월리 2059-5"
+      },
+      {
+        "contentsid": "CNTS_200000000007222",
+        "title": "샛도리물",
+        "title_en": "Samyang Setdari Water",
+        "address": "제주특별자치도 제주시 삼양1동 1938-9"
+      },
+      {
+        "contentsid": "CNTS_200000000007223",
+        "title": "태웃개",
+        "title_en": "Taeutgae",
+        "address": "제주특별자치도 서귀포시 남원읍 위미리 70-1"
+      },
+      {
+        "contentsid": "CNTS_200000000007278",
+        "title": "농개",
+        "title_en": "Farmer",
+        "address": "제주특별자치도 서귀포시 성산읍 신산리 561-1"
+      },
+      {
+        "contentsid": "CNTS_200000000007279",
+        "title": "막숙",
+        "title_en": "Maksuk",
+        "address": "제주특별자치도 서귀포시 법환동 287-3"
+      },
+      {
+        "contentsid": "CNTS_200000000007281",
+        "title": "정모시쉼터",
+        "title_en": "Jeongmo Shelter",
+        "address": "제주특별자치도 서귀포시 서귀동 962"
+      },
+      {
+        "contentsid": "CNTS_200000000007283",
+        "title": "신엄항",
+        "title_en": "Sineom Port",
+        "address": "제주특별자치도 제주시 애월읍 신엄리"
+      },
+      {
+        "contentsid": "CNTS_200000000007284",
+        "title": "삼양방파제",
+        "title_en": "Samyang Breakwater",
+        "address": "제주 제주시 삼양3동"
+      },
+      {
+        "contentsid": "CNTS_200000000007287",
+        "title": "흑돼지거리",
+        "title_en": "Black Pork Street",
+        "address": "제주특별자치도 제주시 건입동"
+      },
+      {
+        "contentsid": "CNTS_200000000007288",
+        "title": "동귀방파제",
+        "title_en": "Donggwi Breakwater",
+        "address": "제주특별자치도 제주시 애월읍 하귀리"
+      },
+      {
+        "contentsid": "CNTS_200000000007292",
+        "title": "하물공원 ",
+        "title_en": "Aewol Hamul",
+        "address": "제주특별자치도 제주시 애월읍 애월리 1727-4"
+      },
+      {
+        "contentsid": "CNTS_200000000007345",
+        "title": "망장포",
+        "title_en": "Mangjangpo Port",
+        "address": "제주특별자치도 서귀포시 남원읍 하례리 64-10"
+      },
+      {
+        "contentsid": "CNTS_200000000007346",
+        "title": "설쿰바당",
+        "title_en": "Seolkumbadang Beach",
+        "address": "제주특별자치도 서귀포시 안덕면 사계리"
+      },
+      {
+        "contentsid": "CNTS_200000000007375",
+        "title": "감수굴 밭담길",
+        "title_en": "Gamsugul stone wall paths",
+        "address": "제주특별자치도 제주시 구좌읍 평대리 584-1"
+      },
+      {
+        "contentsid": "CNTS_200000000007491",
+        "title": "유리멘탈스튜디오",
+        "title_en": "Yuri Mental Studio",
+        "address": "제주특별자치도 제주시 한경면 조수리 553-1"
+      },
+      {
+        "contentsid": "CNTS_200000000007521",
+        "title": "팔자 좋아 길",
+        "title_en": "Deokcheon Palja Choagil Path",
+        "address": "제주특별자치도 제주시 구좌읍 덕천리 "
+      },
+      {
+        "contentsid": "CNTS_200000000007522",
+        "title": "이호-내도 해안도로",
+        "title_en": "Iho-Naedo Coastal Road",
+        "address": "제주특별자치도 제주시 내도동 475"
+      },
+      {
+        "contentsid": "CNTS_200000000007625",
+        "title": "도두동무지개해안도로",
+        "title_en": "Dodu-dong Rainbow Coastal Road",
+        "address": "제주특별자치도 제주시 도두1동 1734"
+      },
+      {
+        "contentsid": "CNTS_200000000007634",
+        "title": "법정사",
+        "title_en": "Beopjeongsa Temple",
+        "address": "제주특별자치도 서귀포시 도순동 산 1"
+      },
+      {
+        "contentsid": "CNTS_200000000007676",
+        "title": "신창풍차해안도로",
+        "title_en": "Sinchang Windmill Coastal Road",
+        "address": "제주특별자치도 제주시 한경면 신창리 1481-21"
+      },
+      {
+        "contentsid": "CNTS_200000000007677",
+        "title": " 남수각하늘길벽화거리 ",
+        "title_en": "Namsugak Mural Street",
+        "address": "제주특별자치도 제주시 일도1동 1100-12"
+      },
+      {
+        "contentsid": "CNTS_200000000007859",
+        "title": "게우지코지",
+        "title_en": "Geujikoji",
+        "address": "제주특별자치도 서귀포시 하효동"
+      },
+      {
+        "contentsid": "CNTS_200000000007861",
+        "title": "남내소",
+        "title_en": "Namnaeso",
+        "address": "제주특별자치도 서귀포시 남원읍 하례리"
+      },
+      {
+        "contentsid": "CNTS_200000000007919",
+        "title": "행원육상양식단지",
+        "title_en": "Haengwon Inland Fish Farm ",
+        "address": "제주특별자치도 제주시 구좌읍 행원리 1-33"
+      },
+      {
+        "contentsid": "CNTS_200000000008003",
+        "title": "동백포레스트",
+        "title_en": "Camellia Forest",
+        "address": "서귀포시 남원읍 신례리 1767"
+      },
+      {
+        "contentsid": "CNTS_200000000008011",
+        "title": "느지리오름",
+        "title_en": "Neujiri Oreum (Mangoreum)",
+        "address": "제주특별자치도 제주시 한림읍 상명리 산 5"
+      },
+      {
+        "contentsid": "CNTS_200000000008012",
+        "title": "새시물",
+        "title_en": "New product",
+        "address": "제주특별자치도 제주시 한림읍 상명리"
+      },
+      {
+        "contentsid": "CNTS_200000000008013",
+        "title": "샤이니숲길",
+        "title_en": "Shinee Forest Path",
+        "address": "제주특별자치도 제주시 조천읍 교래리 719-10"
+      },
+      {
+        "contentsid": "CNTS_200000000008020",
+        "title": "어영공원",
+        "title_en": "Eoyeong Park",
+        "address": "제주특별자치도 제주시 용담3동 2396 (맞은편 공원)"
+      },
+      {
+        "contentsid": "CNTS_200000000008026",
+        "title": "용담 1동 벽화거리",
+        "title_en": "Yongdam 1-dong Mural Street ",
+        "address": "제주특별자치도 제주시 용담1동 130-6"
+      },
+      {
+        "contentsid": "CNTS_200000000008029",
+        "title": "도두추억애거리",
+        "title_en": "Nostalgic",
+        "address": "제주특별자치도 제주시 도두1동 2630-1"
+      },
+      {
+        "contentsid": "CNTS_200000000008053",
+        "title": "성이시돌목장",
+        "title_en": "St. Isidore Farm",
+        "address": "제주특별자치도 제주시 한림읍 금악리 116"
+      },
+      {
+        "contentsid": "CNTS_200000000008054",
+        "title": "다락쉼터",
+        "title_en": "Gonae-ri Cliffside Shelter",
+        "address": "제주특별자치도 제주시 애월읍 고내리 463"
+      },
+      {
+        "contentsid": "CNTS_200000000008075",
+        "title": "칠머리길",
+        "title_en": "Chilmeori-gil",
+        "address": "제주특별자치도 제주시 건입동 956-16"
+      },
+      {
+        "contentsid": "CNTS_200000000008091",
+        "title": "유채꽃재배단지",
+        "title_en": "Seongsan Canola Flower Cultivation Area",
+        "address": "제주특별자치도 서귀포시 성산읍 고성리"
+      },
+      {
+        "contentsid": "CNTS_200000000008156",
+        "title": "대정현역사자료전시관",
+        "title_en": "Daejeonghyeon Historical Document Exhibition Hall",
+        "address": "제주특별자치도 서귀포시 대정읍 상모리 3862-1"
+      },
+      {
+        "contentsid": "CNTS_200000000008159",
+        "title": "예래생태체험관",
+        "title_en": "Yerae Eco Experience Center",
+        "address": "제주특별자치도 서귀포시 상예동 5002-26"
+      },
+      {
+        "contentsid": "CNTS_200000000010375",
+        "title": "제주환상자전거길",
+        "title_en": "Mulleung Bicycle Road (3rd section of the Ring Bicycle Road)",
+        "address": null
+      },
+      {
+        "contentsid": "CNTS_200000000011915",
+        "title": "신흥리 동백 & 향나무길",
+        "title_en": "Sinheung-ri Camellia & Juniper Road",
+        "address": "제주특별자치도 서귀포시 남원읍 수망리 59"
+      },
+      {
+        "contentsid": "CNTS_200000000011916",
+        "title": "남원항",
+        "title_en": "Namwon Port",
+        "address": "제주특별자치도 서귀포시 남원읍 남원리 91-6"
+      },
+      {
+        "contentsid": "CNTS_200000000011918",
+        "title": "옥돔마을",
+        "title_en": "Okdom Village",
+        "address": "제주특별자치도 서귀포시 남원읍 태흥리 364-4"
+      },
+      {
+        "contentsid": "CNTS_200000000011919",
+        "title": "감귤박물관 월라봉 산책로 - 생이소리길",
+        "title_en": "Citrus Museum Wollabong Promenade",
+        "address": "제주특별자치도 서귀포시 신효동 1200-6"
+      },
+      {
+        "contentsid": "CNTS_200000000011920",
+        "title": "서중천탐방로",
+        "title_en": "Seojungcheon Trail",
+        "address": "제주특별자치도 서귀포시 남원읍 한남리 1622-3"
+      },
+      {
+        "contentsid": "CNTS_200000000012138",
+        "title": "영아리",
+        "title_en": "Seoyoung Ari Oreum / Yongwai Oreum",
+        "address": null
+      },
+      {
+        "contentsid": "CNTS_200000000012139",
+        "title": "진지동굴",
+        "title_en": "Wollabong Jinji Cave (Andeok-myeon)",
+        "address": null
+      },
+      {
+        "contentsid": "CNTS_200000000012327",
+        "title": "종달고망난돌쉼터",
+        "title_en": "Jongdal Gomangnandol Shelter",
+        "address": "제주 제주시 구좌읍 종달리 112-4"
+      },
+      {
+        "contentsid": "CNTS_200000000012455",
+        "title": "서부두명품횟집거리",
+        "title_en": "Seobudu Myeongpum Hoejip geori",
+        "address": "제주특별자치도 제주시 건입동 1319-31"
+      },
+      {
+        "contentsid": "CNTS_200000000012670",
+        "title": "세화소품관",
+        "title_en": "Sehwa Props Store",
+        "address": "제주특별자치도 제주시 구좌읍 세화리 1500-6"
+      },
+      {
+        "contentsid": "CNTS_200000000014275",
+        "title": "댕댕놀이터",
+        "title_en": "Dog Playground",
+        "address": "제주특별자치도 제주시 내도동 720"
+      },
+      {
+        "contentsid": "CNTS_200000000014277",
+        "title": "도도펫",
+        "title_en": "Dodopet",
+        "address": "제주특별자치도 제주시 외도일동 633-17"
+      },
+      {
+        "contentsid": "CNTS_200000000014286",
+        "title": "도곤도곤 애견미용실",
+        "title_en": "Dogon Dogon Dog Grooming Salon",
+        "address": "제주특별자치도 제주시 연동 2326-13"
+      },
+      {
+        "contentsid": "CNTS_200000000014288",
+        "title": "제라펫",
+        "title_en": "Jerapet",
+        "address": "제주특별자치도 제주시 용담일동 246-28"
+      },
+      {
+        "contentsid": "CNTS_200000000014330",
+        "title": "산방산둘레길",
+        "title_en": "Sanbangsan Mountain Trail",
+        "address": "제주특별자치도 서귀포시 안덕면 사계리 112-3"
+      },
+      {
+        "contentsid": "CNTS_200000000015508",
+        "title": "제주국제평화센터 제주 아세안홀",
+        "title_en": "Jeju ASEAN Hall",
+        "address": "제주특별자치도 서귀포시 중문동 2571"
+      },
+      {
+        "contentsid": "CNTS_300000000012709",
+        "title": "미나그루밍",
+        "title_en": "minagrooming(미나그루밍)",
+        "address": "제주특별자치도 제주시 한림읍 한림리 1589-4"
+      },
+      {
+        "contentsid": "CNTS_300000000012722",
+        "title": "퍼피홀릭",
+        "title_en": "Puppyholic",
+        "address": "제주특별자치도 제주시 노형동 1276-6"
+      },
+      {
+        "contentsid": "CNTS_300000000012852",
+        "title": "아랑조을거리",
+        "title_en": "Arang Joeul Street",
+        "address": "제주특별자치도 서귀포시 서귀동 341"
+      },
+      {
+        "contentsid": "CNTS_300000000012866",
+        "title": "김녕떠오르길",
+        "title_en": "Rising Road",
+        "address": "제주특별자치도 제주시 구좌읍 김녕리 1352-3"
+      },
+      {
+        "contentsid": "CNTS_300000000012897",
+        "title": "칠십리 음식특화거리  ",
+        "title_en": "Chilsimni Food Specialty Street",
+        "address": null
+      },
+      {
+        "contentsid": "CNTS_300000000012898",
+        "title": "성안올레",
+        "title_en": "Seongan Olle",
+        "address": null
+      },
+      {
+        "contentsid": "CNTS_300000000013092",
+        "title": "송당곶자왈",
+        "title_en": "Songdang Gotjawal",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 8-1"
+      },
+      {
+        "contentsid": "CNTS_300000000013097",
+        "title": "신촌포구",
+        "title_en": "Sinchon Port",
+        "address": "제주특별자치도 제주시 조천읍 신촌리 2202"
+      },
+      {
+        "contentsid": "CNTS_300000000013099",
+        "title": "뿔소라공원",
+        "title_en": "Ppulsora Park",
+        "address": "제주특별자치도 서귀포시 대정읍 신도리 3125-5"
+      },
+      {
+        "contentsid": "CNTS_300000000013100",
+        "title": "영락리방파제",
+        "title_en": "Yeongnak-ri Breakwater",
+        "address": "제주특별자치도 서귀포시 대정읍 무릉리 3783-3"
+      },
+      {
+        "contentsid": "CNTS_300000000013101",
+        "title": "후박나무길",
+        "title_en": "Thunberg’s Bay-tree Road",
+        "address": "제주특별자치도 제주시 조천읍 선흘리 4137"
+      },
+      {
+        "contentsid": "CNTS_300000000013102",
+        "title": "코난해변",
+        "title_en": "Konan Beach",
+        "address": "제주특별자치도 제주시 구좌읍 행원리 575"
+      },
+      {
+        "contentsid": "CNTS_300000000013110",
+        "title": "오레브 핫스프링 앤 스파",
+        "title_en": "O’REVE Hot Spring & Spa",
+        "address": "제주특별자치도 서귀포시 호근동 2163"
+      },
+      {
+        "contentsid": "CNTS_300000000013112",
+        "title": "세기알 해변",
+        "title_en": "Gimnyeong Segial Beach",
+        "address": "제주특별자치도 제주시 구좌읍 김녕리 1270-3"
+      },
+      {
+        "contentsid": "CNTS_300000000013115",
+        "title": "구두미포구",
+        "title_en": "Gudumi Port",
+        "address": "제주특별자치도 서귀포시 보목동 1351"
+      },
+      {
+        "contentsid": "CNTS_300000000013556",
+        "title": "책계일주",
+        "title_en": "The Bookdrunkers",
+        "address": "제주특별자치도 서귀포시 표선면 토산리 468-1 1층"
+      },
+      {
+        "contentsid": "CNTS_300000000013676",
+        "title": "(주)시트러스",
+        "title_en": "Citrus Co., Ltd.",
+        "address": "제주특별자치도 서귀포시 남원읍 신례리 766 1층"
+      },
+      {
+        "contentsid": "CNTS_300000000013693",
+        "title": "길갈 팜 랜드",
+        "title_en": "Gilgal Farm Land",
+        "address": "제주특별자치도 제주시 조천읍 교래리 619"
+      },
+      {
+        "contentsid": "CNTS_300000000013755",
+        "title": "국수문화거리",
+        "title_en": "Noodle Culture Street (Guksu Geori)",
+        "address": "제주특별자치도 제주시 일도2동 1050-1"
+      },
+      {
+        "contentsid": "CNTS_300000000013757",
+        "title": "중앙로",
+        "title_en": "Jungang-ro",
+        "address": "제주특별자치도 제주시 중앙로"
+      },
+      {
+        "contentsid": "CNTS_300000000013922",
+        "title": "방어축제의거리",
+        "title_en": "Bangeo (Yellowtail) Festival Street",
+        "address": "제주특별자치도 서귀포시 대정읍 하모리 772-9"
+      },
+      {
+        "contentsid": "CNTS_300000000014330",
+        "title": "안덕면사무소 수국길 ",
+        "title_en": "Andeok-myeon Office Hydrangea Road ",
+        "address": "제주특별자치도 서귀포시 안덕면 화순리 1961-1"
+      },
+      {
+        "contentsid": "CNTS_300000000014331",
+        "title": "곽지 과물노천탕",
+        "title_en": "Gwakji Gwamul Open-air Bath",
+        "address": "제주특별자치도 제주시 애월읍 곽지리 1565"
+      },
+      {
+        "contentsid": "CONT_000000000500011",
+        "title": "가마오름",
+        "title_en": "Gama Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 한경면 청수리 1166"
+      },
+      {
+        "contentsid": "CONT_000000000500027",
+        "title": "개오리오름",
+        "title_en": "Gaeori Oreum Volcanic Cone ",
+        "address": "제주특별자치도 제주시 봉개동"
+      },
+      {
+        "contentsid": "CONT_000000000500033",
+        "title": "거린오름 (북오름)",
+        "title_en": "Georin Oreum Volcanic Cone (Buk Oreum Volcanic Cone) ",
+        "address": "제주특별자치도 서귀포시 안덕면 동광리 산 94"
+      },
+      {
+        "contentsid": "CONT_000000000500124",
+        "title": "단산(바굼지오름)",
+        "title_en": "Dansan Mountain (Bagumji Oreum Volcanic Cone)",
+        "address": "제주특별자치도 서귀포시 안덕면 향교로 165-23"
+      },
+      {
+        "contentsid": "CONT_000000000500128",
+        "title": "당산봉(당오름,차귀오름)",
+        "title_en": "Dangsanbong Volcanic Cone (Dang Oreum Volcanic Cone, Chagwi Oreum Volcanic Cone)",
+        "address": "제주특별자치도 제주시 한경면 고산리 산 15"
+      },
+      {
+        "contentsid": "CONT_000000000500129",
+        "title": "당오름",
+        "title_en": "Dang Oreum Volcanic Cone (Gujwa-eup)",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 199-1"
+      },
+      {
+        "contentsid": "CONT_000000000500130",
+        "title": "당오름(안덕면)",
+        "title_en": "Dang Oreum Volcanic Cone (Andeok-myeon)",
+        "address": "제주특별자치도 서귀포시 안덕면 동광리 산 68-1"
+      },
+      {
+        "contentsid": "CONT_000000000500134",
+        "title": "대수산봉(큰물뫼,물미오름)",
+        "title_en": "Daesusanbong Volcanic Cone (Keunmulmoe, Mulmi Oreum Volcanic Cone)",
+        "address": "제주특별자치도 서귀포시 성산읍 고성리 2039-1"
+      },
+      {
+        "contentsid": "CONT_000000000500135",
+        "title": "대왕산 (왕뫼, 왕메, 왕미)",
+        "title_en": "Daewangsan Volcanic Cone (Wanmoe, Wangme, Wangmi)",
+        "address": "제주특별자치도 서귀포시 성산읍 수산리 1429"
+      },
+      {
+        "contentsid": "CONT_000000000500143",
+        "title": "도두봉",
+        "title_en": "Dodubong Peak",
+        "address": "제주특별자치도 제주시 도두일동 산 2"
+      },
+      {
+        "contentsid": "CONT_000000000500144",
+        "title": "도리미오름",
+        "title_en": "Dorimi Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 255-1"
+      },
+      {
+        "contentsid": "CONT_000000000500151",
+        "title": "돔박이오름 (동박악)",
+        "title_en": "Dombaki Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 안덕면 광평리 산 89"
+      },
+      {
+        "contentsid": "CONT_000000000500159",
+        "title": "동알오름",
+        "title_en": "Dongal Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 대정읍 상모리 153"
+      },
+      {
+        "contentsid": "CONT_000000000500168",
+        "title": "따라비오름",
+        "title_en": "Ttarabi Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 표선면 가시리 산 62"
+      },
+      {
+        "contentsid": "CONT_000000000500190",
+        "title": "모구리오름",
+        "title_en": "Moguri Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 성산읍 난산리 2971"
+      },
+      {
+        "contentsid": "CONT_000000000500191",
+        "title": "모라이악",
+        "title_en": "Morai Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 산록남로 (색달동)"
+      },
+      {
+        "contentsid": "CONT_000000000500196",
+        "title": "무수천",
+        "title_en": "Musucheon Stream",
+        "address": "제주특별자치도 제주시 애월읍 무수천길"
+      },
+      {
+        "contentsid": "CONT_000000000500198",
+        "title": "문도지오름 (문돗지)",
+        "title_en": "Mundoji Oreum Volcanic Cone (Mundotji )",
+        "address": "제주특별자치도 제주시 한림읍 금악리 3444"
+      },
+      {
+        "contentsid": "CONT_000000000500205",
+        "title": "물찻오름 [출입제한 - 자연휴식년제 적용 중]",
+        "title_en": "Mulchat Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 조천읍 교래길"
+      },
+      {
+        "contentsid": "CONT_000000000500209",
+        "title": "민오름(구좌읍)",
+        "title_en": "Min Oreum Volcanic Cone (Gujwa-eup)",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 155"
+      },
+      {
+        "contentsid": "CONT_000000000500212",
+        "title": "민오름(봉개동)",
+        "title_en": "Min Oreum (Bonggae-dong)",
+        "address": "제주특별자치도 제주시 칠오름길 (봉개동)"
+      },
+      {
+        "contentsid": "CONT_000000000500213",
+        "title": "민오름(조천읍)",
+        "title_en": "Min Oreum Volcanic Cone (Jocheon-eup)",
+        "address": "제주특별자치도 제주시 조천읍 선흘리 산 141"
+      },
+      {
+        "contentsid": "CONT_000000000500217",
+        "title": "발이오름",
+        "title_en": "Bali Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 애월읍 어음리 산 1"
+      },
+      {
+        "contentsid": "CONT_000000000500232",
+        "title": "백약이오름",
+        "title_en": "Baekyaki Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 표선면 성읍리 산 1"
+      },
+      {
+        "contentsid": "CONT_000000000500247",
+        "title": "보름이",
+        "title_en": "Boromi (Hanon)",
+        "address": "제주특별자치도 서귀포시 하논로 (서홍동)"
+      },
+      {
+        "contentsid": "CONT_000000000500253",
+        "title": "부대악오름",
+        "title_en": "Budaeak Volcanic Cone",
+        "address": "제주특별자치도 제주시 조천읍 선흘리 산 103"
+      },
+      {
+        "contentsid": "CONT_000000000500271",
+        "title": "비치미오름",
+        "title_en": "Bichimi Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 255-1"
+      },
+      {
+        "contentsid": "CONT_000000000500335",
+        "title": "서우봉",
+        "title_en": "Seoubong ",
+        "address": "제주특별자치도 제주시 조천읍 함덕리 169-1"
+      },
+      {
+        "contentsid": "CONT_000000000500339",
+        "title": "선족이오름(알선족이)",
+        "title_en": "Seonjoki Oreum Volcanic Cone (Alseonjoki)",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 140-2"
+      },
+      {
+        "contentsid": "CONT_000000000500344",
+        "title": "섯알오름",
+        "title_en": "Seotal Oreum Volcanic cone",
+        "address": "제주특별자치도 서귀포시 대정읍 상모리 1618"
+      },
+      {
+        "contentsid": "CONT_000000000500346",
+        "title": "성불오름",
+        "title_en": "Seongbul Oreum Volcanic Cone",
+        "address": "제주 제주시 구좌읍 중산간동로 2532"
+      },
+      {
+        "contentsid": "CONT_000000000500359",
+        "title": "세미오름(삼의양오름)",
+        "title_en": "Semi Oreum Volcanic Cone (Samuiyang Oreum Volcanic Cone)",
+        "address": "제주특별자치도 제주시 아라동 산 24-2"
+      },
+      {
+        "contentsid": "CONT_000000000500360",
+        "title": "세미오름(샘이오름)",
+        "title_en": "Semi Oreum Volcanic Cone (Saemi Oreum Volcanic Cone)",
+        "address": "제주특별자치도 제주시 조천읍 대흘리 산 27-8"
+      },
+      {
+        "contentsid": "CONT_000000000500366",
+        "title": "족은오름",
+        "title_en": "Sobyeongak Volcanic Cone (Jokeun Oreum Volcanic Cone)",
+        "address": "제주특별자치도 서귀포시 안덕면 상창리 산 2-1"
+      },
+      {
+        "contentsid": "CONT_000000000500369",
+        "title": "소수산봉",
+        "title_en": "Sosusanbong Volcanic Cone (Jokeunmulmoe)",
+        "address": "제주특별자치도 서귀포시 성산읍 고성리 887"
+      },
+      {
+        "contentsid": "CONT_000000000500373",
+        "title": "소정방폭포",
+        "title_en": "Sojeongbang Falls",
+        "address": "제주특별자치도 서귀포시 동홍동 234-8"
+      },
+      {
+        "contentsid": "CONT_000000000500374",
+        "title": "손지오름",
+        "title_en": "Sonji Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 종달리 산 52"
+      },
+      {
+        "contentsid": "CONT_000000000500406",
+        "title": "아끈다랑쉬",
+        "title_en": "Akkeundarangswi Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 세화리 2593"
+      },
+      {
+        "contentsid": "CONT_000000000500407",
+        "title": "아부오름",
+        "title_en": "Abu Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 164-1"
+      },
+      {
+        "contentsid": "CONT_000000000500413",
+        "title": "안돌오름",
+        "title_en": "Andol Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 송당리 산 66-2"
+      },
+      {
+        "contentsid": "CONT_000000000500418",
+        "title": "알밤(알바매기, 알밤오름)",
+        "title_en": "Albam (Albamaegi, Albam Oreum Volcanic Cone)",
+        "address": "제주특별자치도 제주시 조천읍 선흘리 산 60"
+      },
+      {
+        "contentsid": "CONT_000000000500422",
+        "title": "알오름(성산읍)",
+        "title_en": "Al Oreum Volcanic Cone (Seongsan-eup)",
+        "address": "제주특별자치도 서귀포시 성산읍 시흥상동로"
+      },
+      {
+        "contentsid": "CONT_000000000500435",
+        "title": "엉알해안",
+        "title_en": "Eongal Coast ",
+        "address": "제주특별자치도 제주시 한경면 고산리 3427-33"
+      },
+      {
+        "contentsid": "CONT_000000000500444",
+        "title": "연북정",
+        "title_en": "Yeonbukjeong Pavilion ",
+        "address": "제주특별자치도 제주시 조천읍 조천리 2690"
+      },
+      {
+        "contentsid": "CONT_000000000500449",
+        "title": "영주산",
+        "title_en": "Yeongjusan Mountain",
+        "address": "제주특별자치도 서귀포시 표선면 번영로"
+      },
+      {
+        "contentsid": "CONT_000000000500482",
+        "title": "윗밤오름",
+        "title_en": "Utbam Oreum Volcanic Cone (Utbamaegi)",
+        "address": "제주특별자치도 제주시 조천읍 선흘리 산 84"
+      },
+      {
+        "contentsid": "CONT_000000000500488",
+        "title": "원당봉",
+        "title_en": "Wondangbong Volcanic Cone",
+        "address": "제주특별자치도 제주시 삼양일동 산 1-2"
+      },
+      {
+        "contentsid": "CONT_000000000500491",
+        "title": "월나봉(도래오름)",
+        "title_en": "Wolnabong Volcanic Cone (Dorae Oreum Volcanic Cone)",
+        "address": "제주특별자치도 서귀포시 안덕면 감산리 1148 일대"
+      },
+      {
+        "contentsid": "CONT_000000000500494",
+        "title": "제주월령리선인장군락",
+        "title_en": "Population of Cacti, Wollyeong-ri",
+        "address": "제주특별자치도 제주시 한림읍 월령리 359-4"
+      },
+      {
+        "contentsid": "CONT_000000000500516",
+        "title": "자배봉(자배오름,망오름)",
+        "title_en": "Jabaebong Volcanic Cone (Jabae Oreum Volcanic Cone, Mang Oreum Volcanic Cone)",
+        "address": "제주특별자치도 서귀포시 남원읍  위미리 산 132-1"
+      },
+      {
+        "contentsid": "CONT_000000000500530",
+        "title": "정물오름",
+        "title_en": "Jeongmul Oreum Volcanic Cone",
+        "address": "제주특별자치도 제주시 한림읍 금악리 산 52-1"
+      },
+      {
+        "contentsid": "CONT_000000000500555",
+        "title": "제주별빛누리공원",
+        "title_en": "Jeju Starlight World Park and Planetarium(temporary closure)",
+        "address": "제주특별자치도 제주시 선돌목동길 60 (오등동, 별빛누리공원)"
+      },
+      {
+        "contentsid": "CONT_000000000500597",
+        "title": "족은사슴이오름",
+        "title_en": "Jokeunsaseumi Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 표선면 가시리 산 87-24"
+      },
+      {
+        "contentsid": "CONT_000000000500608",
+        "title": "지그리오름",
+        "title_en": "Jigeuri Oreum (Jokeunjigeuri)",
+        "address": "제주특별자치도 제주시 조천읍 교래리 산 137-1"
+      },
+      {
+        "contentsid": "CONT_000000000500610",
+        "title": "지미봉",
+        "title_en": "Jimibong Volcanic Cone",
+        "address": "제주특별자치도 제주시 구좌읍 종달리 513"
+      },
+      {
+        "contentsid": "CONT_000000000500646",
+        "title": "대록산",
+        "title_en": "Keunsaseumi Oreum Volcanic Cone ",
+        "address": "제주특별자치도 서귀포시 표선면 중산간동로"
+      },
+      {
+        "contentsid": "CONT_000000000500655",
+        "title": "통오름",
+        "title_en": "Tong Oreum Volcanic Cone",
+        "address": "제주특별자치도 서귀포시 성산읍 신산리 1754-1"
+      },
+      {
+        "contentsid": "CONT_000000000500659",
+        "title": "바굼지오름",
+        "title_en": "Pagunbong Volcanic Cone (Bagumji Oreum Volcanic Cong)",
+        "address": "제주특별자치도 제주시 애월읍 하귀1리 688-1"
+      },
+      {
+        "contentsid": "CONT_000000000500698",
+        "title": "형제섬",
+        "title_en": "Hyeongjeseom Islet",
+        "address": "제주특별자치도 서귀포시 안덕면 사계리 산 44"
+      }
+    ],
+    "ids": [
+      "CNTS_000000000018320",
+      "CNTS_000000000018446",
+      "CNTS_000000000018455",
+      "CNTS_000000000020159",
+      "CNTS_000000000020236",
+      "CNTS_000000000020277",
+      "CNTS_000000000021259",
+      "CNTS_200000000007157",
+      "CNTS_200000000007159",
+      "CNTS_200000000007218",
+      "CNTS_200000000007222",
+      "CNTS_200000000007223",
+      "CNTS_200000000007278",
+      "CNTS_200000000007279",
+      "CNTS_200000000007281",
+      "CNTS_200000000007283",
+      "CNTS_200000000007284",
+      "CNTS_200000000007287",
+      "CNTS_200000000007288",
+      "CNTS_200000000007292",
+      "CNTS_200000000007345",
+      "CNTS_200000000007346",
+      "CNTS_200000000007375",
+      "CNTS_200000000007491",
+      "CNTS_200000000007521",
+      "CNTS_200000000007522",
+      "CNTS_200000000007625",
+      "CNTS_200000000007634",
+      "CNTS_200000000007676",
+      "CNTS_200000000007677",
+      "CNTS_200000000007859",
+      "CNTS_200000000007861",
+      "CNTS_200000000007919",
+      "CNTS_200000000008003",
+      "CNTS_200000000008011",
+      "CNTS_200000000008012",
+      "CNTS_200000000008013",
+      "CNTS_200000000008020",
+      "CNTS_200000000008026",
+      "CNTS_200000000008029",
+      "CNTS_200000000008053",
+      "CNTS_200000000008054",
+      "CNTS_200000000008075",
+      "CNTS_200000000008091",
+      "CNTS_200000000008156",
+      "CNTS_200000000008159",
+      "CNTS_200000000010375",
+      "CNTS_200000000011915",
+      "CNTS_200000000011916",
+      "CNTS_200000000011918",
+      "CNTS_200000000011919",
+      "CNTS_200000000011920",
+      "CNTS_200000000012138",
+      "CNTS_200000000012139",
+      "CNTS_200000000012327",
+      "CNTS_200000000012455",
+      "CNTS_200000000012670",
+      "CNTS_200000000014275",
+      "CNTS_200000000014277",
+      "CNTS_200000000014286",
+      "CNTS_200000000014288",
+      "CNTS_200000000014330",
+      "CNTS_200000000015508",
+      "CNTS_300000000012709",
+      "CNTS_300000000012722",
+      "CNTS_300000000012852",
+      "CNTS_300000000012866",
+      "CNTS_300000000012897",
+      "CNTS_300000000012898",
+      "CNTS_300000000013092",
+      "CNTS_300000000013097",
+      "CNTS_300000000013099",
+      "CNTS_300000000013100",
+      "CNTS_300000000013101",
+      "CNTS_300000000013102",
+      "CNTS_300000000013110",
+      "CNTS_300000000013112",
+      "CNTS_300000000013115",
+      "CNTS_300000000013556",
+      "CNTS_300000000013676",
+      "CNTS_300000000013693",
+      "CNTS_300000000013755",
+      "CNTS_300000000013757",
+      "CNTS_300000000013922",
+      "CNTS_300000000014330",
+      "CNTS_300000000014331",
+      "CONT_000000000500011",
+      "CONT_000000000500027",
+      "CONT_000000000500033",
+      "CONT_000000000500124",
+      "CONT_000000000500128",
+      "CONT_000000000500129",
+      "CONT_000000000500130",
+      "CONT_000000000500134",
+      "CONT_000000000500135",
+      "CONT_000000000500143",
+      "CONT_000000000500144",
+      "CONT_000000000500151",
+      "CONT_000000000500159",
+      "CONT_000000000500168",
+      "CONT_000000000500190",
+      "CONT_000000000500191",
+      "CONT_000000000500196",
+      "CONT_000000000500198",
+      "CONT_000000000500205",
+      "CONT_000000000500209",
+      "CONT_000000000500212",
+      "CONT_000000000500213",
+      "CONT_000000000500217",
+      "CONT_000000000500232",
+      "CONT_000000000500247",
+      "CONT_000000000500253",
+      "CONT_000000000500271",
+      "CONT_000000000500335",
+      "CONT_000000000500339",
+      "CONT_000000000500344",
+      "CONT_000000000500346",
+      "CONT_000000000500359",
+      "CONT_000000000500360",
+      "CONT_000000000500366",
+      "CONT_000000000500369",
+      "CONT_000000000500373",
+      "CONT_000000000500374",
+      "CONT_000000000500406",
+      "CONT_000000000500407",
+      "CONT_000000000500413",
+      "CONT_000000000500418",
+      "CONT_000000000500422",
+      "CONT_000000000500435",
+      "CONT_000000000500444",
+      "CONT_000000000500449",
+      "CONT_000000000500482",
+      "CONT_000000000500488",
+      "CONT_000000000500491",
+      "CONT_000000000500494",
+      "CONT_000000000500516",
+      "CONT_000000000500530",
+      "CONT_000000000500555",
+      "CONT_000000000500597",
+      "CONT_000000000500608",
+      "CONT_000000000500610",
+      "CONT_000000000500646",
+      "CONT_000000000500655",
+      "CONT_000000000500659",
+      "CONT_000000000500698"
+    ]
+  }
+}
