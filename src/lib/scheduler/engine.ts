@@ -29,7 +29,7 @@ import {
   hc4StayFits,
   hc6WithinDayWindow,
   hc7MaxItems,
-  hc8FixedEgressFits,
+  hc8InsertionEgressFits,
 } from "./constraint-validator.ts";
 
 // ─── Greedy Candidate with adjusted score ────────────────────────────────────
@@ -76,12 +76,17 @@ function itemBeforeGap(placed: ScheduledItem[], gapStart: number): ScheduledItem
   return best;
 }
 
-/** gap 이 끝난 뒤 처음 오는 고정 항목. 없으면 undefined. */
-function fixedItemAfterGap(placed: ScheduledItem[], gapEnd: number): ScheduledItem | undefined {
+/**
+ * gap 이 끝난 뒤 처음 오는 배치 항목. 없으면 undefined — 하루 마지막 gap 이다.
+ *
+ * 고정 항목만 보지 않는다. 식사 이연이 일반 항목 앞에 구멍을 만들면 그 구멍도
+ * "이미 배치된 두 항목 사이" 이고, 거기에 후보를 끼워 넣을 때 다음 항목까지
+ * 갈 수 있는지 따져야 하는 것은 똑같다.
+ */
+function nextPlacedItemAfterGap(placed: ScheduledItem[], gapEnd: number): ScheduledItem | undefined {
   let best: ScheduledItem | undefined;
   let bestStart = Infinity;
   for (const it of placed) {
-    if (!it.is_fixed) continue;
     const start = timeToMinutes(it.start_time);
     if (start >= gapEnd && start < bestStart) {
       bestStart = start;
@@ -164,10 +169,16 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
       const predecessor = itemBeforeGap(placed, gap.start_minutes);
       const fromCoord   = itemCoordinate(predecessor, input) ?? input.base_coordinate;
 
-      // 이 gap 바로 뒤에 고정 일정이 있으면 거기까지 갈 시간도 남겨야 한다.
-      const nextFixed      = fixedItemAfterGap(placed, gap.end_minutes);
-      const nextFixedCoord = nextFixed ? itemCoordinate(nextFixed, input) : null;
-      const nextFixedStart = nextFixed ? timeToMinutes(nextFixed.start_time) : null;
+      // 이 gap 뒤에 다음 항목이 있으면 거기까지 갈 시간도 남겨야 한다.
+      // 없으면 하루 마지막 gap 이고, 그때는 기존대로 진입+체류만 본다.
+      const nextPlaced      = nextPlacedItemAfterGap(placed, gap.end_minutes);
+      const nextPlacedCoord = nextPlaced ? itemCoordinate(nextPlaced, input) : null;
+      const nextPlacedStart = nextPlaced ? timeToMinutes(nextPlaced.start_time) : null;
+
+      // fail-closed — 다음 항목이 있는데 그 위치를 모르면 이 gap 은 비워 둔다.
+      // 이동 가능성을 확인할 수 없는 자리에 장소를 끼워 넣느니 빈 시간이 낫다.
+      // 모르는 이동시간을 지어내는 선택지는 없다.
+      if (nextPlaced && !nextPlacedCoord) continue;
 
       // Score candidates with zone bonus applied, then pick best fit for this gap
       const candidates = pq.toArray();
@@ -208,13 +219,13 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
           }
         }
 
-        // ── HC-8: 다음 고정 일정까지 이동할 시간 ──────────────────────────────
-        // 체류가 gap 을 꽉 채우면 공연 시작 시각에 이동시간이 0 분이 된다.
-        // 좌표를 모르면 검사하지 않는다 — 모르는 이동시간을 지어내는 대신
-        // 기존 동작을 그대로 둔다.
-        if (nextFixedStart !== null && nextFixedCoord) {
-          const egressMin = estimateTravelMinutes(c.coordinate, nextFixedCoord);
-          if (hc8FixedEgressFits(placeStart + stayMin, egressMin, nextFixedStart) !== null) continue;
+        // ── HC-8: 다음 배치 항목까지 이동할 시간 ──────────────────────────────
+        // 체류가 gap 을 꽉 채우면 다음 항목 시작 시각에 이동시간이 0 분이 된다.
+        // This Trip 이든 일반 추천이든, 고정이든 아니든 똑같이 적용한다 —
+        // 우선순위가 높다고 순간이동할 수 있는 것은 아니다.
+        if (nextPlacedStart !== null && nextPlacedCoord) {
+          const egressMin = estimateTravelMinutes(c.coordinate, nextPlacedCoord);
+          if (hc8InsertionEgressFits(placeStart + stayMin, egressMin, nextPlacedStart) !== null) continue;
         }
 
         const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);

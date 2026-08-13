@@ -12,6 +12,7 @@
 > ③ GPS context V1 범위 제한(§9-1)을 신규 명시했다. 전국 reverse-geocoding을 새로 만들지 않는다.
 > ④ 코드 재감사 결과를 §17에 **제품 결정과 분리해** 기록했다. **§17은 현재 사실이지 목표가 아니다. §17을 근거로 위의 제품 결정을 약화시키지 않는다.**
 > **rev.3 (2026-08-13, TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01)** — §3-7에 Invariant 1(직전 장소)·Invariant 2(고정 앞 이동시간)를 명시하고 엔진에 구현했다. 구현 내역은 §17-10.
+> **rev.4 (2026-08-13, TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01)** — Invariant 2 를 고정 항목 전용에서 **모든 다음 배치 항목**으로 확장하고, 다음 항목의 위치를 알 수 없을 때의 fail-closed 정책을 명시했다. 일반 항목 앞 중간 삽입에서 순간이동 일정이 실제로 재현됐다(§17-11).
 
 ---
 
@@ -225,15 +226,19 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 
 이동시간·거리 페널티·zone 판단이 모두 이 하나의 기준점을 쓴다.
 
-#### Invariant 2 — 고정 일정 앞의 물리적 타당성
+#### Invariant 2 — 다음 일정까지의 물리적 타당성 (Insertion Egress Feasibility)
 
-> Fixed 일정 앞에 배치되는 장소는 해당 장소의 **체류시간뿐 아니라 그 장소에서 다음 fixed 위치까지 이동할 시간까지 포함해** 물리적으로 가능해야 한다.
+> 이미 배치된 두 일정 사이에 새로운 장소를 자동 삽입하려면 **이전 장소에서 후보까지의 이동, 후보의 체류, 후보에서 다음 배치 장소까지의 이동**이 실제 시간축 안에서 모두 가능해야 한다.
 
-후보의 체류 종료시각과 fixed 시작시각이 같다는 이유만으로 배치해서는 안 된다.
+후보의 체류 종료시각과 다음 일정 시작시각이 같다는 이유만으로 배치해서는 안 된다.
+**fixed든 일반이든 구분하지 않는다** — 사람은 우선순위가 높다고 순간이동하지 못한다.
 이 계약은 supplemental 추천과 This Trip 장소에 **동일하게** 적용된다.
-다음 fixed의 좌표를 알 수 없으면 이동시간을 **지어내지 않는다** — 검사를 건너뛰고 기존 안전 계약을 따른다.
 
-> 두 invariant는 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10 참조. **This Trip 장소에 날짜·시간을 지정하는 입력 경로는 여전히 없다.**
+> 다음 배치 장소는 있으나 위치를 확인할 수 없어 이동 가능성을 검증할 수 없는 경우, Scheduler는 가짜 이동시간을 추정하지 않고 **해당 중간 gap에 자동 삽입하지 않는다**(fail-closed).
+
+예외는 하나다 — 다음 배치 항목이 **아예 없는** 하루 마지막 자리는 진입 이동과 체류만 본다.
+
+> Invariant 1과 Invariant 2의 fixed 부분은 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서, Invariant 2의 일반 항목 확장과 fail-closed 정책은 `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10 참조. **This Trip 장소에 날짜·시간을 지정하는 입력 경로는 여전히 없다.**
 
 ### 3-8. This Trip 과다
 
@@ -849,7 +854,30 @@ AI 호출비용 감소 + 표현 품질 향상
 
 회귀 테스트 9개: `src/lib/scheduler/previous-place-and-egress.test.ts`
 
-### 17-9. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
+### 17-11. Invariant 2 일반화 (2026-08-13, `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`)
+
+HC-8 이 고정 항목에만 걸려 있어 **일반 항목 앞 중간 삽입**이 무방비였다. 순수 harness 에서 재현됐다.
+
+```text
+09:08–10:08  bfast
+10:16–10:36  near      ← 식사 이연이 만든 구멍에 삽입
+11:00–12:00  lunch     ← 이미 배치된 일반 항목
+
+near(끝 10:36) → lunch(시작 11:00) : 여유 24분 / 필요 40분
+```
+
+운영 기본값 `start_time="09:00"` 에서 도달한다. cart fallback pass 에서는 **This Trip 항목**이 같은 자리에 놓였다.
+
+| 항목 | 이전 | 현재 |
+|---|---|---|
+| 다음 항목 탐색 | `fixedItemAfterGap` — `is_fixed` 만 | `nextPlacedItemAfterGap` — 모든 배치 항목 |
+| 검사 이름 | `hc8FixedEgressFits` | `hc8InsertionEgressFits` |
+| 좌표 미확인 | 검사 건너뜀(통과) | **fail-closed** — 그 gap 에 삽입 안 함 |
+| 마지막 자리 | 진입+체류 | 변화 없음 |
+
+회귀 테스트 10개: `src/lib/scheduler/insertion-feasibility.test.ts`. 수정 전 엔진에서 5개가 실패함을 확인했다.
+
+### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 
 1. **고정 일정 입력 경로** — This Trip 장소별 날짜·시간 지정 UI + `anchors`/`fixed_events` 전달. 엔진 변경은 불필요할 가능성이 높다
 2. **미배치 사유 리포트** — `SchedulerResult`에 미배치 목록·사유를 추가하고 여행 단위로 집계해 사용자에게 알림 + 우선순위 재선택 후 재계산

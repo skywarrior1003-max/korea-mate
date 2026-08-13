@@ -104,22 +104,26 @@ export function hc6WithinDayWindow(
   return null;
 }
 
-// HC-8: 다음 고정 항목까지 이동할 시간이 남아야 한다.
+// HC-8: 다음 배치 항목까지 이동할 시간이 남아야 한다.
 //
-// HC-3/HC-4 는 **들어오는** 이동만 본다. gap 의 끝은 다음 고정 항목의 시작
-// 시각에 그대로 붙어 있으므로, 체류가 gap 을 꽉 채우면 이동시간이 0 분이 된다.
+// HC-3/HC-4 는 **들어오는** 이동만 본다. gap 의 끝은 다음 항목의 시작 시각에
+// 그대로 붙어 있으므로, 체류가 gap 을 꽉 채우면 이동시간이 0 분이 된다.
 // 19:00 공연인데 18:59 까지 다른 동네에 있는 일정이 그렇게 만들어진다.
-export function hc8FixedEgressFits(
+//
+// 처음에는 고정 항목에만 걸었지만, 같은 일이 일반 항목 앞에서도 일어난다 —
+// 식사 이연이 항목 앞에 구멍을 만들고 그 구멍에 후보가 들어가는 경로다.
+// 고정이든 아니든 사람은 순간이동하지 못하므로 구분하지 않는다.
+export function hc8InsertionEgressFits(
   candidateEndMinutes: number,
   egressMinutes: number,
-  nextFixedStartMinutes: number
+  nextItemStartMinutes: number
 ): ConflictError | null {
-  if (candidateEndMinutes + egressMinutes > nextFixedStartMinutes) {
+  if (candidateEndMinutes + egressMinutes > nextItemStartMinutes) {
     return {
       code: "HC-8",
       message:
         `Candidate ends at ${candidateEndMinutes} and needs ${egressMinutes}min to reach ` +
-        `the fixed item starting at ${nextFixedStartMinutes}.`,
+        `the next placed item starting at ${nextItemStartMinutes}.`,
     };
   }
   return null;
