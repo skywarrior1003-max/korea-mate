@@ -1,0 +1,606 @@
+{
+  "meta": {
+    "version": "v1-corrected",
+    "created": "2026-08-10",
+    "corrected": "2026-08-10",
+    "correction_task": "TASK-MULTICITY-ELIGIBILITY-POLICY-CORRECTION-V1",
+    "task": "TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1",
+    "branch": "data/seoul-collection-v1",
+    "base_sha_busan_gyeongju": "8dfdc6d",
+    "policy_doc": "docs/data-collection/multicity-place-eligibility-policy-v1.md",
+    "audit_scope": "READ ONLY — 부산/경주 데이터를 새 eligibility policy 기준으로 감사. DB 변경 없음. 이 감사 결과는 BACKFILL RECOMMENDATION이며 DB 변경·patch 지시가 아니다. 실제 적용은 MAIN 결정 후 별도 TASK에서 수행.",
+    "data_sources_read": [
+      "data/busan-gap-fill/busan-user-excluded-14-v1.jsonl",
+      "data/busan-gap-fill/busan-enrichment-universe-audit-v3.json",
+      "data/busan-gap-fill/busan-canonical-count-clarification-v3.json",
+      "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+      "data/tourapi/reports/busan/busan-final-place-event-release-manifest.json",
+      "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+      "data/gyeongju-final-release/gyeongju-final-ready-302-v1.jsonl",
+      "data/gyeongju-final-release/gyeongju-canonical-release-summary-v1.json",
+      "docs/data-collection/multicity-data-quality-guardrail-v1.md"
+    ],
+    "denominator_note": "이 감사는 eligibility policy 적용 범위 분석용이다. 분모는 도시별로 구분해 이해해야 한다. 세부 사항은 아래 audit 섹션의 DENOMINATOR 필드 참조."
+  },
+
+  "summary": {
+    "BACKFILL_STATUS": "RECOMMENDATION_ONLY — DB 변경 아님. MAIN 결정 후 별도 TASK에서 실행.",
+    "BUSAN_BACKFILL_REQUIRED": "YES",
+    "GYEONGJU_BACKFILL_REQUIRED": "YES",
+    "BUSAN_ELIGIBILITY_AUDIT_DENOMINATOR": 1642,
+    "BUSAN_ELIGIBILITY_AUDIT_SOURCE": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl (enrichment universe, 비어 있지 않은 행 기준)",
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_PLACES": 1529,
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_EVENTS": 4,
+    "BUSAN_FINAL_CANONICAL_DENOMINATOR_TOTAL": 1533,
+    "BUSAN_CANONICAL_SOURCE": "data/tourapi/reports/busan/busan-final-place-event-release-manifest.json",
+    "BUSAN_DENOMINATOR_NOTE": "eligibility 감사 분모 = 1,642 (enrichment universe, 부산 전체 후보). city_spots import 대상(canonical)은 1,529 places + 4 events = 1,533. restaurant 721건은 universe 기준(canonical에서는 680건만 포함, 41건 hold/exclude).",
+    "GYEONGJU_ELIGIBILITY_AUDIT_DENOMINATOR": 302,
+    "GYEONGJU_FINAL_CANONICAL_DENOMINATOR": 302,
+    "GYEONGJU_SERVICE_CANDIDATE_DENOMINATOR": 300,
+    "GYEONGJU_CANONICAL_SOURCE": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl 및 gyeongju-final-ready-302-v1.jsonl (양 파일 302행 확인)",
+    "GYEONGJU_DENOMINATOR_NOTE": "canonical 302에는 사용자 제외 결정 2건(경주생활체육공원, 경주축구공원)이 제외 마커 없이 포함되어 있음. MAIN이 service 적용 시 제외 처리 → service candidate 300건.",
+    "busan_excluded_14_auto_restore": 0,
+    "db_change": 0,
+    "finding": "양 도시 모두 ai_itinerary_eligible / searchable / explore_eligible 필드가 존재하지 않는다. 새 policy 적용 시 백필 필요. 단, 이 감사는 RECOMMENDATION이며 MAIN 결정 없이 자동 확정·DB 반영 금지."
+  },
+
+  "busan_audit": {
+    "data_as_of": "2026-08-09",
+    "source_file": "data/tourapi/enriched/busan/busan-enriched-candidates-v1.jsonl",
+    "DENOMINATOR_UNIVERSE": 1642,
+    "DENOMINATOR_CANONICAL_PLACES": 1529,
+    "DENOMINATOR_CANONICAL_EVENTS": 4,
+    "DENOMINATOR_NOTE": "total_records=1642는 enrichment universe(전체 후보). city_spots import 대상(canonical)은 1,529 places + 4 events. 아래 category_breakdown은 universe(1,642) 기준. canonical 기준에서 restaurant는 721건 아닌 680건(41건 hold/exclude).",
+    "total_records": 1642,
+    "eligibility_field_status": {
+      "ai_itinerary_eligible": "ABSENT — 전건 없음",
+      "searchable": "ABSENT — 전건 없음",
+      "explore_eligible": "ABSENT — 전건 없음",
+      "user_can_select": "ABSENT — 전건 없음",
+      "user_can_save": "ABSENT — 전건 없음"
+    },
+    "category_breakdown_universe": {
+      "_note": "enrichment universe(1,642) 기준. canonical(1,529)에서는 restaurant가 680건(41건 hold/exclude). accommodation 82건은 canonical에 포함.",
+      "attraction": 716,
+      "restaurant": 721,
+      "nature": 50,
+      "accommodation": 82,
+      "event": 72,
+      "restaurant_canonical_note": "canonical 1,529에서 restaurant=680(universe 721 - hold/exclude 41건)"
+    },
+
+    "excluded_14_status": {
+      "count": 14,
+      "status": "EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE",
+      "auto_restore": false,
+      "note": "이미 사용자 최종 결정으로 제외됨. 새 policy에서도 복구하지 않는다.",
+      "policy_lesson": "SOURCE PRESENCE 단독으로 SEARCHABLE/AI-ready가 되는 것은 아니다."
+    },
+
+    "backfill_categories": [
+      {
+        "group": "A",
+        "label": "Accommodation (숙박시설)",
+        "estimated_count": 82,
+        "current_category": "accommodation",
+        "issue": "GoKoreaMate는 일반 숙박을 AI 자동 추천하지 않는 정책이나 ai_itinerary_eligible 필드가 없어 명시적으로 제외되지 않음",
+        "proposed_class": "ACCOMMODATION_POLICY",
+        "proposed_eligibility": {
+          "SEARCHABLE": "REVIEW_REQUIRED (affiliate 경유 검토)",
+          "EXPLORE_ELIGIBLE": "NO",
+          "AI_ITINERARY": "NO",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES"
+        },
+        "exception": "Temple Stay / 한옥 문화 체험은 CORE_TRAVEL_PLACE로 재분류 필요",
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "HIGH",
+        "examples": ["코모도 호텔 부산", "파라다이스 호텔 부산", "롯데호텔 부산"],
+        "action": "ai_itinerary_eligible=NO 백필. explore_eligible=NO 백필."
+      },
+      {
+        "group": "B",
+        "label": "Tourism-Specific Markets (관광 특화 시장)",
+        "estimated_count": 10,
+        "current_category": "attraction",
+        "issue": "전통시장 중 관광객 primary destination인 곳(자갈치·부산진시장)과 일반 지역시장(명지시장·광안종합시장)이 동일 취급됨",
+        "proposed_class": "CORE_TRAVEL_PLACE (관광형) vs TRAVEL_USEFUL (일반)",
+        "proposed_eligibility": {
+          "관광형 시장": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES",
+            "AI_ITINERARY": "YES 또는 CONDITIONAL",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          },
+          "일반 지역 시장": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "CONDITIONAL",
+            "AI_ITINERARY": "NO 또는 CONDITIONAL",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": true,
+        "confidence": "MEDIUM",
+        "market_candidates_in_data": [
+          {"name": "부산 자갈치시장", "proposed_class": "CORE_TRAVEL_PLACE", "ai": "YES"},
+          {"name": "부산진시장", "proposed_class": "TRAVEL_USEFUL", "ai": "CONDITIONAL"},
+          {"name": "광안종합시장", "proposed_class": "TRAVEL_USEFUL", "ai": "NO 기본", "note": "USER_REVIEW_REQUIRED"},
+          {"name": "충무동 해안시장", "proposed_class": "TRAVEL_USEFUL", "ai": "CONDITIONAL"},
+          {"name": "남포동 지하도상가", "proposed_class": "TRAVEL_USEFUL", "ai": "CONDITIONAL (쇼핑 intent)"},
+          {"name": "명지시장", "status": "EXCLUDED_USER_DECISION", "note": "복구 금지"}
+        ],
+        "action": "MAIN이 관광형 시장 선정 기준 확정 후 ai_itinerary_eligible 백필."
+      },
+      {
+        "group": "C",
+        "label": "Experience & Theme Attractions (체험·테마 관광)",
+        "estimated_count": 25,
+        "current_category": "attraction",
+        "issue": "체험형 관광시설이 일반 attraction과 동일 취급. AI 자격 판정이 없음.",
+        "proposed_class": "CORE_TRAVEL_PLACE (유명 체험관) vs TRAVEL_USEFUL (일부)",
+        "proposed_eligibility": {
+          "관광 대표 체험관": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES",
+            "AI_ITINERARY": "YES 또는 CONDITIONAL",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "HIGH",
+        "representative_examples": [
+          {"name": "부산영화체험박물관/씨네뮤지엄", "proposed_class": "CORE_TRAVEL_PLACE", "ai": "YES"},
+          {"name": "씨라이프부산아쿠아리움", "proposed_class": "CORE_TRAVEL_PLACE", "ai": "YES"},
+          {"name": "국립부산국악원 국악체험관", "proposed_class": "CORE_TRAVEL_PLACE", "ai": "CONDITIONAL (문화 관심)"},
+          {"name": "스포원파크재난안전체험관", "proposed_class": "TRAVEL_USEFUL", "ai": "CONDITIONAL"},
+          {"name": "대항 어촌체험 휴양마을", "proposed_class": "TRAVEL_USEFUL", "ai": "CONDITIONAL (체험 관심)"}
+        ],
+        "action": "ai_itinerary_eligible 분류 필요. MAIN 검토 후 CORE/TRAVEL_USEFUL 확정."
+      },
+      {
+        "group": "D",
+        "label": "Restaurant (음식점)",
+        "estimated_count": 721,
+        "current_category": "restaurant",
+        "issue": "전체 721건 음식점이 AI 후보에 동등하게 노출될 위험. 관광 대표 식당과 일반 식당 구분 없음.",
+        "proposed_class": "음식점 내 traveler-value 분류 필요",
+        "proposed_eligibility": {
+          "관광 대표 식당 (전통·대표)": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES 또는 CONDITIONAL",
+            "AI_ITINERARY": "CONDITIONAL (식사 유형·동선·선호)",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          },
+          "일반 식당": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "CONDITIONAL",
+            "AI_ITINERARY": "NO 기본",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": true,
+        "confidence": "MEDIUM",
+        "note": "이번 TASK에서 음식점 전체 재분류는 하지 않음. 정책 기록만.",
+        "action": "향후 restaurant ai_itinerary_eligible 판정 TASK 별도 수행 필요."
+      },
+      {
+        "group": "E",
+        "label": "Nature (자연)",
+        "estimated_count": 50,
+        "current_category": "nature",
+        "issue": "자연 명소 50건이 AI 자격 판정 없이 동등 취급됨. 대표 해안·공원 vs 로컬 등산로 구분 필요.",
+        "proposed_class": "CORE_TRAVEL_PLACE (대표 자연) vs TRAVEL_USEFUL (일반 산책로 등)",
+        "proposed_eligibility": {
+          "대표 자연 (해운대·광안리·태종대 등)": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES",
+            "AI_ITINERARY": "YES",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          },
+          "갈맷길·산책로 등": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "CONDITIONAL",
+            "AI_ITINERARY": "CONDITIONAL (active travel 관심)",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "MEDIUM",
+        "examples": [
+          {"name": "용호동일대 바다낚시", "proposed": "TRAVEL_USEFUL"},
+          {"name": "[부산 갈맷길] 2코스 2구간", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL"},
+          {"name": "송도 구름산책로", "proposed": "CORE 또는 TRAVEL_USEFUL"}
+        ],
+        "action": "MAIN 검토 후 대표 자연 vs 일반 자연 구분 백필."
+      }
+    ],
+
+    "busan_backfill_summary": {
+      "total_requiring_classification": 1642,
+      "_total_note": "eligibility 감사 universe 기준(1,642). BACKFILL RECOMMENDATION — DB 변경 아님.",
+      "high_confidence_no_ai": {
+        "count_estimate": 82,
+        "label": "accommodation",
+        "action": "ai_itinerary_eligible=NO 즉시 백필 가능"
+      },
+      "requires_main_decision": {
+        "count_estimate": "약 800+",
+        "label": "restaurant + market + experience 분류",
+        "action": "MAIN이 기준 확정 후 bulk 백필"
+      },
+      "busan_excluded_14_do_not_restore": 14
+    }
+  },
+
+  "gyeongju_audit": {
+    "data_as_of": "2026-08-09",
+    "source_file": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+    "DENOMINATOR_CANONICAL": 302,
+    "DENOMINATOR_SERVICE_CANDIDATES": 300,
+    "DENOMINATOR_NOTE": "total_records=302는 canonical 전체(gyeongju-canonical-places-v1.jsonl 및 gyeongju-final-ready-302-v1.jsonl 양 파일 동일). 단, 사용자 제외 결정 2건(경주생활체육공원, 경주축구공원)이 canonical에 제외 마커 없이 포함. MAIN service 적용 시 제외 → service candidates=300.",
+    "USER_EXCLUDED_IN_CANONICAL": {
+      "count": 2,
+      "records": ["경주생활체육공원", "경주축구공원"],
+      "status": "canonical 302에 포함(제외 마커 없음) — MAIN이 service 적용 시 명시적 제외 필요",
+      "auto_restore": false
+    },
+    "total_records": 302,
+    "eligibility_field_status": {
+      "ai_itinerary_eligible": "ABSENT — 전건 없음",
+      "searchable": "ABSENT — 전건 없음",
+      "explore_eligible": "ABSENT — 전건 없음",
+      "user_can_select": "ABSENT — 전건 없음",
+      "user_can_save": "ABSENT — 전건 없음"
+    },
+    "category_breakdown": {
+      "_note": "canonical 302건 기준. attraction 200+restaurant 102=302 (attraction은 release summary 기준 200).",
+      "attraction": 200,
+      "restaurant": 102
+    },
+    "quality_tier": {
+      "TIER_A": 192,
+      "TIER_B": 7
+    },
+
+    "backfill_categories": [
+      {
+        "group": "A",
+        "label": "Heritage Attractions (문화유산·역사유적)",
+        "estimated_count": 81,
+        "current_category": "attraction",
+        "issue": "81건 heritage 유형(릉·총·탑·사지·마애불·석탑·사·서원 등)이 ai_itinerary_eligible 필드 없이 일반 attraction과 동등 취급",
+        "proposed_class": "CORE_TRAVEL_PLACE",
+        "proposed_eligibility": {
+          "SEARCHABLE": "YES",
+          "EXPLORE_ELIGIBLE": "YES",
+          "AI_ITINERARY": "YES",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES"
+        },
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "HIGH",
+        "representative_examples": [
+          "경주 월성", "대릉원", "동궁과 월지", "석굴암", "불국사",
+          "경주 석빙고", "경주 포석정지", "경주역사유적지구"
+        ],
+        "action": "ai_itinerary_eligible=YES 백필 가능. MAIN 확정 후 bulk 적용."
+      },
+      {
+        "group": "B",
+        "label": "Resort / Hotel type in Attraction category",
+        "estimated_count": 8,
+        "current_category": "attraction",
+        "issue": "더케이경주호텔·한화리조트·마우나오션리조트·강동리조트 등이 attraction 카테고리에 포함됨. 실질적으로 숙박시설.",
+        "proposed_class": "ACCOMMODATION_POLICY (attraction 아님)",
+        "proposed_eligibility": {
+          "SEARCHABLE": "REVIEW_REQUIRED",
+          "EXPLORE_ELIGIBLE": "NO",
+          "AI_ITINERARY": "NO",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES"
+        },
+        "USER_REVIEW_REQUIRED": true,
+        "confidence": "HIGH",
+        "candidates": [
+          {"name": "더케이경주호텔 스파온천", "note": "스파 체험 요소 있음 — AI=CONDITIONAL 가능"},
+          {"name": "한화리조트 경주", "note": "숙박 primary → AI=NO"},
+          {"name": "경주 마우나오션 리조트", "note": "숙박 primary → AI=NO"},
+          {"name": "강동리조트 프라이빗콘도", "note": "숙박 primary → AI=NO"},
+          {"name": "성호리조트", "note": "숙박 primary → AI=NO"}
+        ],
+        "action": "USER_REVIEW_REQUIRED. MAIN이 스파/체험 요소 있는 경우 예외 적용 여부 결정."
+      },
+      {
+        "group": "C",
+        "label": "Culture Facilities (박물관·미술관·문화관)",
+        "estimated_count": 9,
+        "current_category": "attraction",
+        "issue": "문화시설이 유산 유형과 구분 없이 동일 취급. 일부는 CORE, 일부는 TRAVEL_USEFUL.",
+        "proposed_class": "CORE_TRAVEL_PLACE (대표) vs TRAVEL_USEFUL (일반)",
+        "proposed_eligibility": {
+          "국립경주박물관 등 대표 문화시설": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES",
+            "AI_ITINERARY": "YES",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          },
+          "경주 문화원 등 지역 문화시설": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "CONDITIONAL",
+            "AI_ITINERARY": "CONDITIONAL 또는 NO",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "MEDIUM",
+        "examples": [
+          {"name": "국립경주박물관", "proposed": "CORE_TRAVEL_PLACE, ai=YES"},
+          {"name": "황룡사역사문화관", "proposed": "CORE_TRAVEL_PLACE, ai=YES"},
+          {"name": "경주세계자동차박물관", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL"},
+          {"name": "경주 문화원", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL"},
+          {"name": "솔거미술관", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL"}
+        ],
+        "action": "대표 문화시설 ai=YES, 일반 문화원 ai=CONDITIONAL 백필."
+      },
+      {
+        "group": "D",
+        "label": "Restaurant (음식점)",
+        "estimated_count": 102,
+        "current_category": "restaurant",
+        "issue": "경주 음식점 102건이 ai_itinerary_eligible 필드 없이 동등 취급. 관광 대표 식당과 일반 식당 구분 없음.",
+        "proposed_class": "restaurant 내 traveler-value 분류",
+        "proposed_eligibility": {
+          "관광 대표 경주 향토 음식점": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "YES 또는 CONDITIONAL",
+            "AI_ITINERARY": "CONDITIONAL",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          },
+          "일반 식당": {
+            "SEARCHABLE": "YES",
+            "EXPLORE_ELIGIBLE": "CONDITIONAL",
+            "AI_ITINERARY": "NO 기본",
+            "USER_CAN_SELECT": "YES",
+            "USER_CAN_SAVE": "YES"
+          }
+        },
+        "USER_REVIEW_REQUIRED": true,
+        "confidence": "MEDIUM",
+        "note": "이번 TASK에서 음식점 재분류는 하지 않음. 정책 기록만.",
+        "action": "향후 restaurant ai_itinerary_eligible 판정 TASK 필요."
+      },
+      {
+        "group": "E",
+        "label": "Experience / Leisure (체험·레포츠)",
+        "estimated_count": 5,
+        "current_category": "attraction",
+        "issue": "체험형 장소(경상북도교육청 발명체험교육관 등)가 heritage와 동일 취급",
+        "proposed_class": "TRAVEL_USEFUL",
+        "proposed_eligibility": {
+          "SEARCHABLE": "YES",
+          "EXPLORE_ELIGIBLE": "CONDITIONAL",
+          "AI_ITINERARY": "CONDITIONAL (체험 관심)",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES"
+        },
+        "USER_REVIEW_REQUIRED": false,
+        "confidence": "MEDIUM",
+        "examples": [
+          {"name": "키즈베리 딸기체험장", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL (가족 여행)"},
+          {"name": "경상북도교육청 발명체험교육관", "proposed": "TRAVEL_USEFUL, ai=CONDITIONAL"}
+        ],
+        "action": "ai_itinerary_eligible=CONDITIONAL 백필. MAIN 확정 후."
+      }
+    ],
+
+    "gyeongju_policy_lessons_maintained": {
+      "SOURCE_ABSENCE_NOT_NONTORUISM": "유지 — 경주 heritage 59건 rescue 교훈",
+      "LISTING_FAILURE_NOT_DETAIL_ABSENT": "유지 — gyeongju.go.kr JS-shell 교훈",
+      "HERITAGE_REQUIRES_CASCADE": "유지 — 국가유산 유형은 모든 source 시도 후에만 EXCLUDE",
+      "NEW_POLICY_ADDITION": "CORE_TRAVEL_PLACE(heritage)는 AI_ITINERARY=YES로 백필 필요"
+    },
+
+    "gyeongju_backfill_summary": {
+      "total_requiring_classification": 302,
+      "_total_note": "canonical 302건 기준. service candidates는 302-2=300. BACKFILL RECOMMENDATION — DB 변경 아님.",
+      "high_confidence_core": {
+        "count_estimate": 81,
+        "label": "heritage attractions",
+        "action": "ai_itinerary_eligible=YES 즉시 백필 가능"
+      },
+      "requires_main_decision": {
+        "count_estimate": "약 130",
+        "label": "restaurant + resort + culture facility 분류",
+        "action": "MAIN이 기준 확정 후 bulk 백필"
+      }
+    }
+  },
+
+  "cross_city_findings": {
+    "common_gap": "부산/경주 모두 ai_itinerary_eligible, searchable, explore_eligible 필드가 전건 없음. 새 policy 적용 시 전체 백필 필요.",
+    "safe_immediate_backfill": [
+      "accommodation → ai_itinerary_eligible=NO (부산 82건)",
+      "resort-type in attraction → ai_itinerary_eligible=NO (경주 5건)",
+      "heritage attractions → ai_itinerary_eligible=YES (경주 81건 고신뢰)"
+    ],
+    "requires_main_decision": [
+      "restaurant 분류 (부산 universe 721건/canonical 680건 + 경주 102건)",
+      "market tourism threshold (부산 시장 ~10건)",
+      "resort vs spa 구분 (경주 8건)",
+      "culture facility 분류 (경주 9건)"
+    ],
+    "do_not_change": [
+      "부산 excluded 14건 (EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE) — 복구 금지"
+    ]
+  },
+
+  "representative_backfill_candidates": [
+    {
+      "city": "busan",
+      "source_id": "busan-enriched (accommodation category)",
+      "name_ko": "코모도 호텔 부산",
+      "current_category": "accommodation",
+      "current_disposition": "READY (추정)",
+      "proposed_place_class": "ACCOMMODATION_POLICY",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE_ELIGIBLE": "NO",
+      "AI_ITINERARY_ELIGIBLE": "NO",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "숙박시설. AI 자동 추천 정책 제외 대상.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "busan",
+      "source_id": "busan-enriched (attraction, market)",
+      "name_ko": "부산 자갈치시장",
+      "current_category": "attraction",
+      "current_disposition": "READY (추정)",
+      "proposed_place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "YES",
+      "AI_ITINERARY_ELIGIBLE": "YES",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "외국인 관광객 primary destination. 공식 관광 source 등재. 부산 대표 시장.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "busan",
+      "source_id": "busan-enriched (attraction, market)",
+      "name_ko": "광안종합시장",
+      "current_category": "attraction",
+      "current_disposition": "READY (추정)",
+      "proposed_place_class": "TRAVEL_USEFUL",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "CONDITIONAL",
+      "AI_ITINERARY_ELIGIBLE": "NO",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "지역 시장. 관광 특화 아님. AI 자동 일정 삽입 부적합.",
+      "confidence": "MEDIUM",
+      "USER_REVIEW_REQUIRED": true
+    },
+    {
+      "city": "busan",
+      "source_id": "busan-enriched (attraction, experience)",
+      "name_ko": "씨라이프부산아쿠아리움",
+      "current_category": "attraction",
+      "current_disposition": "READY (추정)",
+      "proposed_place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "YES",
+      "AI_ITINERARY_ELIGIBLE": "YES",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "대표 관광 체험시설. 외국인 관광객 primary destination.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "busan",
+      "source_id": "busan-excluded-14",
+      "name_ko": "주식회사감천아울",
+      "current_category": "attraction",
+      "current_disposition": "EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE",
+      "proposed_place_class": "EXTERNAL_OR_USER_PLACE (또는 TOURISM_RELEVANCE_REJECTED)",
+      "SEARCHABLE": "NO (canonical)",
+      "EXPLORE_ELIGIBLE": "NO",
+      "AI_ITINERARY_ELIGIBLE": "NO",
+      "USER_CAN_SELECT": "YES (외부 경유만)",
+      "USER_CAN_SAVE": "YES (My Places)",
+      "reason": "법인 명칭. 사용자 결정으로 제외됨. 새 policy에서도 복구하지 않음.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false,
+      "restore_forbidden": true
+    },
+    {
+      "city": "gyeongju",
+      "source_id": "gyeongju-canonical (attraction, heritage)",
+      "name_ko": "대릉원",
+      "current_category": "attraction",
+      "current_disposition": "publishability=pending_review",
+      "proposed_place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "YES",
+      "AI_ITINERARY_ELIGIBLE": "YES",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "신라 고분군. 경주 대표 유산. 외국인 관광객 primary destination.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "gyeongju",
+      "source_id": "gyeongju-canonical (attraction, resort)",
+      "name_ko": "한화리조트 경주",
+      "current_category": "attraction",
+      "current_disposition": "publishability=pending_review",
+      "proposed_place_class": "ACCOMMODATION_POLICY",
+      "SEARCHABLE": "REVIEW_REQUIRED",
+      "EXPLORE_ELIGIBLE": "NO",
+      "AI_ITINERARY_ELIGIBLE": "NO",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "숙박 시설. attraction으로 분류됐으나 실질적으로 리조트. AI 자동 추천 제외.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "gyeongju",
+      "source_id": "gyeongju-canonical (attraction, culture)",
+      "name_ko": "국립경주박물관",
+      "current_category": "attraction",
+      "current_disposition": "publishability=pending_review",
+      "proposed_place_class": "CORE_TRAVEL_PLACE",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "YES",
+      "AI_ITINERARY_ELIGIBLE": "YES",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "국립박물관. 외국인 관광객 primary destination. 공식 관광 source 등재.",
+      "confidence": "HIGH",
+      "USER_REVIEW_REQUIRED": false
+    },
+    {
+      "city": "gyeongju",
+      "source_id": "gyeongju-canonical (attraction, culture)",
+      "name_ko": "경주 문화원",
+      "current_category": "attraction",
+      "current_disposition": "publishability=pending_review",
+      "proposed_place_class": "TRAVEL_USEFUL",
+      "SEARCHABLE": "YES",
+      "EXPLORE_ELIGIBLE": "CONDITIONAL",
+      "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+      "USER_CAN_SELECT": "YES",
+      "USER_CAN_SAVE": "YES",
+      "reason": "지역 문화원. 주민 문화 활동 중심이지만 관광 프로그램 가능. CONDITIONAL 판정.",
+      "confidence": "MEDIUM",
+      "USER_REVIEW_REQUIRED": true
+    }
+  ],
+
+  "qa": {
+    "busan_excluded_14_auto_restore": 0,
+    "gyeongju_excluded_2_auto_restore": 0,
+    "db_change": 0,
+    "src_change": 0,
+    "functions_change": 0,
+    "master_change": 0,
+    "busan_gyeongju_branch_commit": 0,
+    "BUSAN_BACKFILL_AUDITED": "YES",
+    "GYEONGJU_BACKFILL_AUDITED": "YES"
+  }
+}

@@ -1,0 +1,499 @@
+{
+  "meta": {
+    "version": "v1-corrected",
+    "created": "2026-08-10",
+    "corrected": "2026-08-10",
+    "correction_task": "TASK-MULTICITY-ELIGIBILITY-POLICY-CORRECTION-V1",
+    "task": "TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1",
+    "branch": "data/seoul-collection-v1",
+    "extends": "docs/data-collection/multicity-regression-fixtures-v1.json (on data/busan-gyeongju-gap-fill-v1)",
+    "description": "5개 eligibility 축(SEARCHABLE / EXPLORE / AI_ITINERARY / USER_SELECT / USER_SAVE) 회귀 테스트. 기존 guardrail regression과 독립적으로 추가. v1-corrected: ELG_006 Temple Stay AI=CONDITIONAL 정정, ELG_015~017 신규 추가."
+  },
+
+  "eligibility_core_rules": [
+    {
+      "rule_id": "RULE_1",
+      "name": "DATA_PRESENCE_NOT_AI_ELIGIBLE",
+      "statement": "city_spots에 존재하거나 READY=true라는 이유만으로 ai_itinerary_eligible=YES 금지.",
+      "test_assertion": "all(place.ai_itinerary_eligible != 'AUTO_YES_FROM_READY' for place in city_spots)"
+    },
+    {
+      "rule_id": "RULE_2",
+      "name": "SEARCH_VALUE_NOT_ITINERARY_VALUE",
+      "statement": "SEARCHABLE=YES 장소도 AI_ITINERARY가 NO 또는 CONDITIONAL일 수 있음.",
+      "test_assertion": "any(place.searchable=='YES' and place.ai_itinerary_eligible=='NO' for place in city_spots)"
+    },
+    {
+      "rule_id": "RULE_3",
+      "name": "COMMERCIAL_NOT_AUTO_EXCLUDE_FROM_SEARCH",
+      "statement": "상업시설이라는 이유만으로 searchable=NO 자동 처리 금지.",
+      "test_assertion": "all(place.searchable != 'AUTO_NO_FROM_COMMERCIAL' for place in city_spots)"
+    },
+    {
+      "rule_id": "RULE_4",
+      "name": "USER_PICKED_OVERRIDES_AUTO_FILTER",
+      "statement": "사용자가 Selected에 추가한 장소는 ai_itinerary_eligible=NO이더라도 일정 포함 허용.",
+      "test_assertion": "user_selected_place.itinerary_allowed == true regardless of ai_itinerary_eligible"
+    }
+  ],
+
+  "eligibility_fixtures": [
+    {
+      "fixture_id": "ELG_001",
+      "name": "경복궁 — CORE_TRAVEL_PLACE",
+      "description": "유네스코 세계유산 인접, 조선 정궁. 모든 axis YES.",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "inputs": {
+        "category": "attraction",
+        "tourism_relevance": "CONFIRMED",
+        "official_source": "KTO contentId=126508",
+        "foreign_visitor_intent": "HIGH",
+        "kto_content_type": 12
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "YES",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "ELG_002",
+      "name": "일반 Olive Young 지점 (대표점 아닌 일반 지점)",
+      "description": "K-beauty 브랜드 일반 지점. 검색 가치는 있지만 AI 자동 일정 삽입 금지.",
+      "place_class": "TRAVEL_USEFUL_PLACE",
+      "inputs": {
+        "category": "shopping",
+        "tourism_relevance": "CONDITIONAL (K-beauty traveler only)",
+        "official_source": "VisitSeoul API (shopping)",
+        "foreign_visitor_intent": "MEDIUM (generic)",
+        "is_flagship": false
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "CONDITIONAL",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2", "RULE_3"],
+      "status": "PASS",
+      "notes": "일반 지점 수백 개를 curated city_spots로 전체 구축하지 않는다."
+    },
+    {
+      "fixture_id": "ELG_003",
+      "name": "Olive Young 명동 Flagship (관광형 대표점)",
+      "description": "명동 대표 K-beauty 플래그십. 관광 목적성 높음. AI CONDITIONAL.",
+      "place_class": "TRAVEL_USEFUL_PLACE (→ AI CONDITIONAL)",
+      "inputs": {
+        "category": "shopping",
+        "tourism_relevance": "CONFIRMED (official tourism content)",
+        "official_source": "VisitSeoul / 공식 관광 source",
+        "foreign_visitor_intent": "HIGH",
+        "is_flagship": true,
+        "district": "Myeongdong"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["k_beauty", "shopping", "myeongdong", "cosmetics"]
+        },
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "USER_REVIEW_REQUIRED": true,
+      "notes": "관광형 flagship 선정 기준은 MAIN 결정. 이 fixture는 정책 방향만 기록."
+    },
+    {
+      "fixture_id": "ELG_004",
+      "name": "뉴뉴하우스 성수 (상업 공간, 외국인 관광 목적성 미확정)",
+      "description": "성수 트렌디 공간. 외국인 visitor intent 실측 evidence 미확보.",
+      "place_class": "TRAVEL_USEFUL_PLACE",
+      "inputs": {
+        "category": "commercial",
+        "tourism_relevance": "CONDITIONAL (domestic trendy, foreign intent unverified)",
+        "official_source": "VisitSeoul 또는 미등재",
+        "foreign_visitor_intent": "UNVERIFIED"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "CONDITIONAL",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2", "RULE_3"],
+      "status": "PASS",
+      "upgrade_condition": "외국인 visitor intent 실측 evidence 확보 시 AI=CONDITIONAL 승격 가능. MAIN 결정."
+    },
+    {
+      "fixture_id": "ELG_005",
+      "name": "K-pop 공식 체험 공간 (하이브 인사이트, SM 아티움 등)",
+      "description": "K-pop 팬덤 공식 체험 공간. 관광 primary destination.",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "inputs": {
+        "category": "attraction",
+        "tourism_relevance": "CONFIRMED",
+        "official_source": "공식 관광 source 등재",
+        "foreign_visitor_intent": "HIGH",
+        "kpop_official": true
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["kpop", "hallyu", "fan_experience", "k_culture"]
+        },
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "notes": "K-pop 관심 여행자 → YES. 비관심 여행자 → CONDITIONAL에서 탈락."
+    },
+    {
+      "fixture_id": "ELG_006",
+      "name": "Temple Stay (사찰 문화 체험)",
+      "description": "숙박이 아닌 문화 체험 목적의 템플스테이. 숙박 정책 예외. 관광/문화 가치 높으나 예약 필요·숙박 포함·시간 제약 크므로 AI=CONDITIONAL.",
+      "_correction": "v1에서 AI_ITINERARY_ELIGIBLE=YES였으나 CONDITIONAL로 정정. 이유: 예약 필요, 시간 제약, 일정 구조 충돌 위험. traveler intent 매칭 조건 추가.",
+      "place_class": "CORE_TRAVEL_PLACE (체험/문화)",
+      "inputs": {
+        "category": "experience",
+        "tourism_relevance": "CONFIRMED",
+        "official_source": "KTO / 한국불교문화사업단",
+        "foreign_visitor_intent": "HIGH",
+        "is_accommodation": false,
+        "is_cultural_experience": true,
+        "booking_required": true,
+        "overnight_stay_typical": true
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["temple_stay", "traditional_culture", "wellness", "meditation", "slow_travel", "overnight_cultural_experience"],
+          "notes": "traveler intent 매칭 시에만 AI 후보 포함. 일정 구조·예약 가능 여부 확인 필요."
+        },
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES",
+        "user_selected_override": "사용자가 Selected에 직접 추가한 경우 AI CONDITIONAL 조건 무관하게 일정 포함 허용 (USER PICKED > AI AUTO FILTER)"
+      },
+      "rule_tests": ["RULE_1", "RULE_4"],
+      "status": "PASS",
+      "notes": "숙박 정책 예외 — accommodation이 아닌 culture/experience 분류. AI는 CONDITIONAL(예약·시간 제약 큼)."
+    },
+    {
+      "fixture_id": "ELG_007",
+      "name": "일반 생활시설 (동사무소·주민센터·청소년수련관 등)",
+      "description": "부산 사용자 제외 14건 교훈. 행정·복지 시설은 관광 맥락 없음.",
+      "place_class": "EXTERNAL_OR_USER_PLACE (또는 TOURISM_RELEVANCE_REJECTED)",
+      "inputs": {
+        "category": "attraction (KTO 분류)",
+        "tourism_relevance": "REJECTED",
+        "official_source": "KTO contentTypeId=12 (범주 과확장)",
+        "foreign_visitor_intent": "NONE"
+      },
+      "expected": {
+        "SEARCHABLE": "NO (canonical)",
+        "EXPLORE_ELIGIBLE": "NO",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES (My Places 경유만)",
+        "USER_CAN_SAVE": "YES (My Places)"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "notes": "부산 14건 regression 교훈: KTO 등재 = 관광지 아님. 이 fixture에서도 동일 원칙."
+    },
+    {
+      "fixture_id": "ELG_008",
+      "name": "부산 자갈치시장 (관광 특화 전통시장)",
+      "description": "외국인 관광객 primary destination. 부산 대표 시장.",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "inputs": {
+        "city": "busan",
+        "category": "attraction",
+        "tourism_relevance": "CONFIRMED",
+        "official_source": "KTO / VisitBusan",
+        "foreign_visitor_intent": "HIGH",
+        "market_type": "tourist_destination"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "YES",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "ELG_009",
+      "name": "명지시장 (부산 제외 14건 중 1건)",
+      "description": "강서구 지역 시장. 사용자 결정으로 제외됨. 새 policy에서도 복구 금지.",
+      "place_class": "EXCLUDED_USER_DECISION",
+      "inputs": {
+        "city": "busan",
+        "candidate_id": "busan-K-00322",
+        "exclusion_status": "EXCLUDED_USER_DECISION_NON_TRAVEL_OR_LOW_VALUE",
+        "new_policy_applied": true
+      },
+      "expected": {
+        "SEARCHABLE": "NO",
+        "EXPLORE_ELIGIBLE": "NO",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "NO (curated)",
+        "USER_CAN_SAVE": "NO (curated)",
+        "restore_forbidden": true
+      },
+      "rule_tests": ["RULE_1"],
+      "status": "PASS",
+      "notes": "사용자 결정 overturn 금지. 새 policy는 이 결정을 변경하지 않는다."
+    },
+    {
+      "fixture_id": "ELG_010",
+      "name": "경주 대릉원 (CORE 유산)",
+      "description": "신라 고분군. 경주 대표 유산. 세계문화유산.",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "inputs": {
+        "city": "gyeongju",
+        "category": "attraction",
+        "tourism_relevance": "CONFIRMED",
+        "heritage_type": "세계문화유산 (신라역사유적지구)",
+        "official_source": "KTO + gyeongju.go.kr",
+        "foreign_visitor_intent": "HIGH"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "YES",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1"],
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "ELG_011",
+      "name": "한화리조트 경주 (attraction으로 분류된 숙박시설)",
+      "description": "경주 attraction 카테고리에 있지만 실질적으로 리조트. AI 제외.",
+      "place_class": "ACCOMMODATION_POLICY",
+      "inputs": {
+        "city": "gyeongju",
+        "category": "attraction (오분류)",
+        "actual_type": "resort / accommodation",
+        "tourism_relevance": "ACCOMMODATION",
+        "official_source": "KTO"
+      },
+      "expected": {
+        "SEARCHABLE": "REVIEW_REQUIRED",
+        "EXPLORE_ELIGIBLE": "NO",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "notes": "attraction 카테고리 오분류 주의. 실질 entity type 확인 필요."
+    },
+    {
+      "fixture_id": "ELG_012",
+      "name": "USER SELECTED 우선 원칙",
+      "description": "ai_itinerary_eligible=NO인 장소라도 사용자가 직접 Selected에 추가하면 일정 포함 허용.",
+      "place_class": "ANY",
+      "inputs": {
+        "ai_itinerary_eligible": "NO",
+        "user_selected": true
+      },
+      "expected": {
+        "itinerary_allowed": true,
+        "override_reason": "USER_PICKED > AI_AUTO_FILTER"
+      },
+      "rule_tests": ["RULE_4"],
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "ELG_013",
+      "name": "VisitSeoul 음식 카테고리 6,561건 — 자동 AI 후보 금지",
+      "description": "VisitSeoul의 공식 콘텐츠라는 이유만으로 음식점 6561건을 AI 후보로 처리 금지.",
+      "place_class": "MULTIPLE (restaurant mix)",
+      "inputs": {
+        "source": "VisitSeoul API",
+        "source_category": "음식 (Cuisine)",
+        "source_count": 6561,
+        "source_authority": "공식 서울관광재단"
+      },
+      "expected": {
+        "auto_ai_eligible_from_source_alone": false,
+        "required_gate": "GoKoreaMate eligibility gate (tourism relevance + traveler value)"
+      },
+      "rule_tests": ["RULE_1"],
+      "status": "PASS"
+    },
+    {
+      "fixture_id": "ELG_014",
+      "name": "경주 석빙고 (SOURCE ABSENCE ≠ NON-TOURISM, 이전 guardrail 연장)",
+      "description": "gyeongju.go.kr listing 실패 → targeted fetch로 구제. 기존 guardrail 교훈 유지.",
+      "place_class": "CORE_TRAVEL_PLACE",
+      "inputs": {
+        "city": "gyeongju",
+        "candidate_id": "gyeongju-KTO12-126204",
+        "kto_content_id": "126204",
+        "initial_status": "OFFICIAL_DETAIL_NOT_FOUND",
+        "final_status": "RESCUED_KTO",
+        "new_eligibility_check": true
+      },
+      "expected": {
+        "source_absence_excludes": false,
+        "SEARCHABLE": "YES",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "YES",
+        "USER_CAN_SELECT": "YES",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "guardrail_cross_reference": "multicity-data-quality-guardrail-v1.md PRINCIPLE 2: SOURCE ABSENCE ≠ NON-TOURISM"
+    },
+    {
+      "fixture_id": "ELG_015",
+      "name": "일반 Chain Store 지점 (canonical bulk ingest 금지 케이스)",
+      "description": "대표점이 아닌 일반 chain 지점. canonical city_spots에 전체 구축하지 않고 외부 검색으로 처리.",
+      "place_class": "TRAVEL_USEFUL_PLACE",
+      "inputs": {
+        "category": "shopping",
+        "entity": "Olive Young 일반 지점 (대표점 아님)",
+        "is_flagship": false,
+        "is_chain": true,
+        "canonical_bulk_ingest_attempted": true
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "SEARCHABLE_method": "EXTERNAL_SEARCH (B) — canonical city_spots bulk 구축 금지",
+        "canonical_city_spots_required": false,
+        "EXPLORE_ELIGIBLE": "NO",
+        "AI_ITINERARY_ELIGIBLE": "NO",
+        "USER_CAN_SELECT": "YES (외부 장소 검색 경유)",
+        "USER_CAN_SAVE": "YES (My Places)"
+      },
+      "rule_tests": ["RULE_1", "RULE_2", "RULE_3"],
+      "status": "PASS",
+      "notes": "SEARCHABLE=YES이지만 실현 방식은 (B) external search. canonical bulk 구축이 SEARCHABLE의 필요조건이 아님."
+    },
+    {
+      "fixture_id": "ELG_016",
+      "name": "관광형 Flagship 장소 (curated 가능, AI CONDITIONAL)",
+      "description": "명동 Olive Young flagship 등 외국인 primary destination급 관광형 chain 대표점. curated canonical 가능, AI는 CONDITIONAL.",
+      "place_class": "TRAVEL_USEFUL_PLACE (→ curated 선정 시 CORE 경계)",
+      "inputs": {
+        "category": "shopping",
+        "entity": "Olive Young 명동 flagship",
+        "is_flagship": true,
+        "is_chain": true,
+        "district": "Myeongdong",
+        "foreign_visitor_intent": "HIGH",
+        "tourism_relevance": "CONFIRMED (official tourism content)"
+      },
+      "expected": {
+        "SEARCHABLE": "YES",
+        "SEARCHABLE_method": "CANONICAL (A) — curated 선정 가능",
+        "canonical_city_spots_required": "USER_REVIEW_REQUIRED (MAIN 결정)",
+        "EXPLORE_ELIGIBLE": "YES",
+        "AI_ITINERARY_ELIGIBLE": "CONDITIONAL",
+        "eligibility_conditions": {
+          "ai_intents": ["k_beauty", "shopping", "myeongdong", "cosmetics"]
+        },
+        "USER_CAN_SELECT": "YES (canonical 또는 외부 검색)",
+        "USER_CAN_SAVE": "YES"
+      },
+      "rule_tests": ["RULE_1", "RULE_2"],
+      "status": "PASS",
+      "USER_REVIEW_REQUIRED": true,
+      "notes": "관광형 flagship 선정 기준(도시별 몇 개까지 curated로 구축할지)은 MAIN 결정. 이 fixture는 정책 방향 기록."
+    },
+    {
+      "fixture_id": "ELG_017",
+      "name": "사용자가 외부 검색으로 추가한 장소 (canonical 없음)",
+      "description": "canonical city_spots에 없는 장소를 사용자가 외부 장소 검색으로 Selected에 추가. AI eligibility 무관하게 일정 포함 허용.",
+      "place_class": "EXTERNAL_OR_USER_PLACE",
+      "inputs": {
+        "in_canonical_city_spots": false,
+        "user_added_via_external_search": true,
+        "user_selected": true,
+        "ai_itinerary_eligible": "N/A (canonical 없음)"
+      },
+      "expected": {
+        "SEARCHABLE": "YES (외부 검색 경유, canonical 아님)",
+        "EXPLORE_ELIGIBLE": "N/A",
+        "AI_ITINERARY_ELIGIBLE": "N/A — 이 장소에 대한 AI 자동 추가는 없으나 사용자 Selected에 있으면 일정 포함",
+        "USER_CAN_SELECT": "YES (EXTERNAL_SEARCH USER_ADD_ALLOWED)",
+        "USER_CAN_SAVE": "YES (My Places)",
+        "itinerary_allowed": true,
+        "override_reason": "USER PICKED > AI AUTO FILTER. canonical SEARCHABLE=NO이더라도 사용자 직접 추가 가능."
+      },
+      "rule_tests": ["RULE_3", "RULE_4"],
+      "status": "PASS",
+      "notes": "CANONICAL USER_CAN_SELECT과 EXTERNAL_SEARCH USER_ADD_ALLOWED를 혼동하지 않는다. canonical에 없어도 사용자는 외부 검색으로 추가 가능."
+    }
+  ],
+
+  "anti_patterns": [
+    {
+      "pattern_id": "AP_001",
+      "name": "READY_EQUALS_AI_CANDIDATE",
+      "bad": "if place.ready: place.ai_itinerary_eligible = True",
+      "correct": "ai_itinerary_eligible is evaluated independently with tourism_relevance + traveler intent + category",
+      "rule_violated": "RULE_1"
+    },
+    {
+      "pattern_id": "AP_002",
+      "name": "COMMERCIAL_EQUALS_EXCLUDE_FROM_SEARCH",
+      "bad": "if place.is_commercial: place.searchable = False",
+      "correct": "SEARCHABLE is evaluated by visitor intent and search value, not category alone",
+      "rule_violated": "RULE_3"
+    },
+    {
+      "pattern_id": "AP_003",
+      "name": "VISITSEOUL_SOURCE_EQUALS_AI_CANDIDATE",
+      "bad": "if place.source == 'VisitSeoul': place.ai_itinerary_eligible = True",
+      "correct": "VisitSeoul source → GoKoreaMate eligibility gate → axis evaluation",
+      "rule_violated": "RULE_1"
+    },
+    {
+      "pattern_id": "AP_004",
+      "name": "USER_SELECTED_BLOCKED_BY_AI_FILTER",
+      "bad": "if place.ai_itinerary_eligible == 'NO': block_from_user_itinerary(place)",
+      "correct": "user_selected == true → allow in itinerary regardless of ai_itinerary_eligible",
+      "rule_violated": "RULE_4"
+    },
+    {
+      "pattern_id": "AP_005",
+      "name": "BULK_EXCLUDE_ALL_SHOPPING",
+      "bad": "if place.category == 'shopping': place.searchable = False",
+      "correct": "Each shopping place is evaluated individually. Tourism-oriented flagship may be SEARCHABLE=YES, EXPLORE=YES",
+      "rule_violated": "RULE_3"
+    }
+  ],
+
+  "cross_reference": {
+    "extends": [
+      {
+        "doc": "docs/data-collection/multicity-regression-fixtures-v1.json",
+        "branch": "data/busan-gyeongju-gap-fill-v1",
+        "sha": "8dfdc6d",
+        "note": "이 파일은 기존 busan_false_positive + gyeongju_false_negative fixture를 확장. 충돌 없음."
+      }
+    ],
+    "policy_doc": "docs/data-collection/multicity-place-eligibility-policy-v1.md",
+    "guardrail_v1": "docs/data-collection/multicity-data-quality-guardrail-v1.md"
+  }
+}
