@@ -117,6 +117,8 @@ async function runNearMeDirect(
     itinerary_coords?: Coord[];
     event_coords?:     Coord[];
     limit:             number;
+    /** 이전 날짜에 이미 배치된 place_id. limit 을 적용하기 **전에** 뺀다. */
+    exclude_place_ids?: string[];
   },
   env: Record<string, string | undefined>,
 ): Promise<{ results: any[]; nearMeCount: number }> {
@@ -207,9 +209,22 @@ async function runNearMeDirect(
     }, likedCategories),
   }));
 
+  // 이미 다녀온 곳을 **먼저** 뺀다.
+  //
+  // 전에는 자르고 나서 뺐다. 그러면 잘라낸 30 개가 전부 어제 간 곳일 때 오늘
+  // 후보가 0 이 된다 — 반경 안에 아직 안 가 본 곳이 수백 개 남아 있는데도.
+  // 3 일차·4 일차가 12 시간 창에 한 곳만 배치되던 이유가 이것이다.
+  //
+  // 자르는 것은 "고를 수 있는 후보" 에 적용해야 한다. 고를 수 없는 것을 세어
+  // 놓고 자리를 차지하게 두지 않는다.
+  const excluded = new Set((input.exclude_place_ids ?? []).map(String));
+  const usable = excluded.size > 0
+    ? scored.filter((c: any) => !excluded.has(String(c.place_id)))
+    : scored;
+
   // 후보 수가 많은 카테고리가 자동으로 이기지 않게 자른다 (candidate-diversity.ts).
   // 실측: 부산 restaurant 327 vs attraction 48 → 기존 방식은 top30 의 80~93% 가 식당이었다.
-  const results = diversifyByCategory(scored as any, input.limit);
+  const results = diversifyByCategory(usable as any, input.limit);
 
   return { results, nearMeCount: results.length };
 }
@@ -398,6 +413,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     itinerary_coords,
     event_coords,
     limit: near_me_limit,
+    exclude_place_ids,
   }, ctx.env);
 
   // 7. Adapt Near Me results to scheduler candidates
@@ -441,6 +457,10 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
 
   // TASK-054: Remove candidates already placed in a previous day
   // Comparison uses String(place_id) to handle both "94" and "local-23" formats
+  //
+  // NearMe 후보는 이미 runNearMeDirect 안에서 잘리기 전에 걸러졌다. 여기 남은
+  // 일은 cartCandidates 다 — This Trip 픽은 그 경로를 지나지 않으므로, 이 줄이
+  // 없으면 어제 간 픽이 오늘 다시 배치된다. 중복처럼 보여도 지우지 않는다.
   const excludeSet = new Set(exclude_place_ids);
   const filteredCandidates = excludeSet.size > 0
     ? allCandidates.filter(c => !excludeSet.has(String(c.place_id)))

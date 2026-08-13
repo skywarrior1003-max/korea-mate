@@ -205,7 +205,9 @@ test("★다양화는 기존 동작을 깨지 않는다", () => {
 
 test("★후보 다양화가 실제 두 경로에 모두 배선돼 있다", () => {
   assert.match(read("src", "lib", "near-me", "near-me-engine.ts"), /diversifyByCategory\(scored, limit\)/);
-  assert.match(read("functions", "api", "trip", "plan.ts"), /diversifyByCategory\(scored as any, input\.limit\)/);
+  // 넘기는 배열의 변수명은 고정하지 않는다 — 제외를 먼저 적용하면서 이름이 usable 로 바뀌었다.
+  // 이 guard 가 지키는 것은 "다양화가 input.limit 으로 실제 배선돼 있는가" 이고 그것은 그대로다.
+  assert.match(read("functions", "api", "trip", "plan.ts"), /diversifyByCategory\(\w+ as any, input\.limit\)/);
 });
 
 // ── Copy (§18) ───────────────────────────────────────────────────────────────
