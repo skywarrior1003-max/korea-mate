@@ -31,6 +31,7 @@ const CLIENT   = read("src", "lib", "scheduler", "ai", "gemini-client.ts");
 const ENDPOINT = [
   read("functions", "api", "trip", "personalize.ts"),
   read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+  read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
 ].join("\n");
 const PLAN     = read("functions", "api", "trip", "plan.ts");
 const LEGACY   = read("functions", "api", "generate-itinerary.ts");
@@ -87,7 +88,10 @@ test("★endpoint 에 재시도 루프가 없다 — fetch 는 정확히 한 번
   // 넘길 수 있게 주입 경계를 뒀을 뿐, 호출 지점 수와 재시도 0 은 그대로다.
   assert.equal((s.match(/await providerFetch\(/g) ?? []).length, 1);
   assert.equal((s.match(/await fetch\(/g) ?? []).length, 0);   // 주입을 우회하는 직접 호출 없음
-  assert.match(s, /const providerFetch = ctx\.fetchFn \?\? fetch;/);
+  // 호출 코드가 공용 provider 로 옮겨졌다. 주입 경계는 그대로 두 지점에 있다 —
+  // provider 가 기본값을 정하고, route 가 자기 ctx.fetchFn 을 그대로 넘긴다.
+  assert.match(s, /const providerFetch = args\.fetchFn \?\? fetch;/);
+  assert.match(s, /callProfileProvider\(\{ prompt, apiKey, fetchFn: ctx\.fetchFn \}\)/);
   assert.doesNotMatch(s, /for\s*\([^)]*attempt/);
   assert.doesNotMatch(s, /while\s*\(/);
   assert.doesNotMatch(s, /\.retry|retryCount|setInterval/);
@@ -296,9 +300,29 @@ test("★신규 personalize 가 유일한 AI 진입점이다", () => {
   const hits = walk(join(ROOT, "functions"))
     .filter(f => /generativelanguage/.test(readFileSync(f, "utf8")))
     .map(f => f.replace(ROOT, "").replace(/\\/g, "/"));
-  assert.deepEqual(hits.sort(), [
-    "/functions/api/generate-itinerary.ts",
-    "/functions/api/trip/personalize.ts",
+  // profile AI 의 호출 코드는 공용 provider 로 옮겨졌다. functions/ 에 직접
+  // provider 를 부르는 것은 legacy 하나뿐이고, 그건 위 테스트가 게이트를 강제한다.
+  assert.deepEqual(hits.sort(), ["/functions/api/generate-itinerary.ts"]);
+
+  // 그리고 profile AI 의 provider 는 src/lib 의 그 한 파일뿐이어야 한다.
+  const libHits = walk(join(ROOT, "src", "lib"))
+    .filter(f => !f.endsWith(".test.ts"))
+    .filter(f => /generativelanguage/.test(readFileSync(f, "utf8")))
+    .map(f => f.replace(ROOT, "").replace(/\\/g, "/"));
+  assert.deepEqual(libHits.sort(), [
+    // canary 가 provider 요청을 세려고 호스트 이름을 상수로 갖는다. 부르지는 않는다.
+    "/src/lib/scheduler/ai/canary-fixture.ts",
+    "/src/lib/scheduler/ai/gemini-client.ts",            // 장소 설명문 AI (별개 기능)
+    "/src/lib/scheduler/ai/profile-gemini-provider.ts",  // profile AI
+  ]);
+
+  // 실제로 provider URL 을 만드는 것은 두 파일뿐이다 — 기능당 하나씩.
+  // canary-fixture 는 호스트 이름만 상수로 갖는다(요청을 세는 프록시다).
+  const callers = libHits.filter(f =>
+    /https:\/\/generativelanguage/.test(readFileSync(join(ROOT, f.slice(1)), "utf8")));
+  assert.deepEqual(callers.sort(), [
+    "/src/lib/scheduler/ai/gemini-client.ts",
+    "/src/lib/scheduler/ai/profile-gemini-provider.ts",
   ]);
 });
 

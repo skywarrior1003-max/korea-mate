@@ -20,7 +20,7 @@ import {
 } from "./profile-personalization-core.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
-const read = (...p: string[]) => readFileSync(join(ROOT, ...p), "utf8");
+const read = (...p: string[]) => readFileSync(join(ROOT, ...p.join("/").split("/")), "utf8");
 
 interface Golden {
   prompts:        { name: string; out: string }[];
@@ -125,15 +125,19 @@ test("D route 가 core 를 쓰고 자기 복사본을 갖지 않는다", () => {
 });
 
 test("D provider 호출 계약이 그대로다", () => {
-  // 호출 지점은 여전히 route 하나뿐이고 재시도 루프가 없다.
-  assert.equal((routeCode.match(/providerFetch\(/g) ?? []).length, 1);
-  assert.ok(!/for\s*\(|while\s*\(/.test(routeCode.slice(routeCode.indexOf("providerFetch"))),
-    "provider 호출 이후에 반복문이 없어야 한다");
-  assert.match(routeCode, /generativelanguage\.googleapis\.com\/v1beta\/models\/\$\{MODEL\}:generateContent/);
-  assert.match(routeCode, /temperature:\s*0\.3/);
-  assert.match(routeCode, /thinkingBudget:\s*0/);
-  assert.match(routeCode, /responseMimeType:\s*"application\/json"/);
-  assert.match(routeCode, /responseSchema:\s*RESPONSE_SCHEMA/);
+  // 호출 코드는 공용 provider 로 옮겨졌다. route 는 그것을 한 번 부를 뿐이다.
+  const prov = read("src/lib/scheduler/ai/profile-gemini-provider.ts")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .split(/\r?\n/).map(l => l.replace(/(^|\s)\/\/.*/, "")).join("\n");
+  assert.equal((routeCode.match(/callProfileProvider\(/g) ?? []).length, 1);
+  assert.equal((prov.match(/providerFetch\(/g) ?? []).length, 1);   // 호출 지점 하나
+  assert.match(prov, /const providerFetch = args\.fetchFn \?\? fetch;/);
+  assert.ok(!/for\s*\(|while\s*\(/.test(prov), "provider 에 반복문이 없어야 한다");
+  assert.match(prov, /generativelanguage\.googleapis\.com\/v1beta\/models\/\$\{MODEL\}:generateContent/);
+  assert.match(prov, /temperature:\s*0\.3/);
+  assert.match(prov, /thinkingBudget:\s*0/);
+  assert.match(prov, /responseMimeType:\s*"application\/json"/);
+  assert.match(prov, /responseSchema:\s*RESPONSE_SCHEMA/);
 });
 
 test("D gate·응답 계약이 그대로다", () => {

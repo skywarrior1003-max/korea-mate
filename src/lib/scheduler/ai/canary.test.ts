@@ -445,12 +445,16 @@ test("C22 계수기가 모듈 스코프에 없다 — 요청마다 새로 만든
 });
 
 test("C23 일반 요청은 주입 없이 런타임 기본 fetch 를 쓴다", () => {
+  // 호출 코드는 공용 provider 로 옮겨졌다. 주입 경계는 두 지점에 그대로 있다 —
+  // route 가 자기 ctx.fetchFn 을 넘기고, provider 가 기본값을 정한다.
   const per = code(readFileSync("functions/api/trip/personalize.ts", "utf8"));
-  assert.match(per, /const providerFetch = ctx\.fetchFn \?\? fetch;/);
-  assert.match(per, /fetchFn\?: typeof fetch;/);
+  const prov = code(readFileSync("src/lib/scheduler/ai/profile-gemini-provider.ts", "utf8"));
+  assert.match(per,  /fetchFn\?: typeof fetch;/);
+  assert.match(per,  /callProfileProvider\(\{ prompt, apiKey, fetchFn: ctx\.fetchFn \}\)/);
+  assert.match(prov, /const providerFetch = args\.fetchFn \?\? fetch;/);
   // Cloudflare 가 넘기는 ctx 에는 fetchFn 이 없다 → 기본 fetch
-  assert.equal((per.match(/await providerFetch\(/g) ?? []).length, 1);
-  assert.equal((per.match(/await fetch\(/g) ?? []).length, 0);
+  assert.equal((prov.match(/await providerFetch\(/g) ?? []).length, 1);
+  assert.equal(((per + prov).match(/await fetch\(/g) ?? []).length, 0);
 });
 
 test("C24 provider 상한은 요청 안에서 차단한다 — 2회째는 네트워크로 안 나간다", async () => {

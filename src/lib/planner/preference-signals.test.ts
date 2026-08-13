@@ -237,6 +237,7 @@ test("★P1 AI 입력에 좌표·주소·가격을 넣지 않는다", () => {
   const fn = [
     read("functions", "api", "trip", "personalize.ts"),
     read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+    read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
   ].join("\n");
   // prompt 가 **값을 꺼내 쓰는** 자리를 본다.
   // "do NOT invent addresses/prices" 같은 금지 문구는 있어야 정상이므로 문자열 검색이 아니라
@@ -252,6 +253,7 @@ test("★P2 Route Coherence Contract 가 prompt 에 실제로 들어간다", () 
   const fn = [
     read("functions", "api", "trip", "personalize.ts"),
     read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+    read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
   ].join("\n");
   assert.match(fn, /You are NOT the route planner/);
   assert.match(fn, /Preference never outranks route coherence/);
@@ -269,6 +271,7 @@ test("★P3 비용 안전장치가 그대로다", () => {
   const fn = [
     read("functions", "api", "trip", "personalize.ts"),
     read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+    read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
   ].join("\n");
   assert.match(fn, /MAX_ATTEMPTS|정확히 1회/);
   assert.doesNotMatch(fn, /for\s*\([^)]*attempt|while\s*\([^)]*attempt|retry/i);
@@ -289,6 +292,7 @@ test("★P4 Saved 가 많아도 prompt 가 무한히 커지지 않는다", () =>
   const fn = [
     read("functions", "api", "trip", "personalize.ts"),
     read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+    read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
   ].join("\n");
   assert.match(fn, /body\.liked_places\s*\)\s*\n?\s*\?\s*body\.liked_places\.slice\(0, MAX_PROFILE_PLACES\)/);
   assert.match(fn, /liked\.slice\(0, MAX_PROFILE_PLACES\)/);

@@ -20,6 +20,7 @@ const read = (...p: string[]) => readFileSync(join(ROOT, ...p), "utf8");
 const FN   = () => [
   read("functions", "api", "trip", "personalize.ts"),
   read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+  read("src", "lib", "scheduler", "ai", "profile-gemini-provider.ts"),
 ].join("\n");
 
 test("★P6·P7·P8 thinking 을 끄고 Structured Output 으로 형식을 계약한다", () => {

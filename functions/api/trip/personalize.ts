@@ -28,6 +28,7 @@ import {
   MODEL, TIMEOUT_MS, MAX_OUTPUT_TOKENS,
   type PlaceHint, type Body,
 } from "../../../src/lib/scheduler/ai/profile-personalization-core";
+import { callProfileProvider } from "../../../src/lib/scheduler/ai/profile-gemini-provider";
 
 interface Env {
   GEMINI_API_KEY?:           string;
@@ -128,56 +129,31 @@ export async function onRequestPost(
   const started = Date.now();
 
   // ── 실제 호출: 정확히 1회. 재시도 루프가 없다. ──
-  // provider 호출 지점은 이 한 곳뿐이다. 주입이 없으면 런타임 기본 fetch 다.
-  const providerFetch = ctx.fetchFn ?? fetch;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-  try {
-    const res = await providerFetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
-      {
-        method:  "POST",
-        headers: { "Content-Type": "application/json" },
-        signal:  controller.signal,
-        body: JSON.stringify({
-          contents:         [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            maxOutputTokens:  MAX_OUTPUT_TOKENS,
-            temperature:      0.3,
-            // 형식을 부탁하지 않고 계약으로 건다
-            responseMimeType: "application/json",
-            responseSchema:   RESPONSE_SCHEMA,
-            // 제한된 스키마 채우기다. thinking 을 켜두면 그 토큰이
-            // maxOutputTokens 를 먹어 답이 잘린다.
-            thinkingConfig:   { thinkingBudget: 0 },
-          },
-        }),
-      },
-    );
-    clearTimeout(timer);
-    const latency = Date.now() - started;
+  // 호출 코드는 공용 provider 한 벌뿐이다. 로컬 harness 도 같은 것을 쓴다 —
+  // 검증한 것과 실제로 나가는 것이 달라지면 검증이 아니다.
+  const call = await callProfileProvider({ prompt, apiKey, fetchFn: ctx.fetchFn });
 
-    if (!res.ok) {
+  if (!call.ok) {
+    if (call.kind === "http") {
       // 400·401·403·404·408·429·5xx 전부 여기로 온다. 재호출하지 않는다.
-      log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: res.status,
-            latency, status: "fallback_provider_error" });
+      log({ requestId, mode, providerCalled: true, attempts: 1, httpStatus: call.httpStatus,
+            latency: call.latencyMs, status: "fallback_provider_error" });
       return reply(null, "fallback_provider_error");
     }
+    const isAbort = call.kind === "timeout";
+    // timeout·network 모두 재호출하지 않는다. 늦게 오는 응답도 버린다.
+    log({ requestId, mode, providerCalled: true, attempts: 1,
+          latency: call.latencyMs, timedOut: isAbort,
+          status: isAbort ? "fallback_timeout" : "fallback_provider_error" });
+    return reply(null, isAbort ? "fallback_timeout" : "fallback_provider_error");
+  }
 
-    const raw = await res.json() as {
-      candidates?: {
-        content?: { parts?: { text?: string }[] };
-        finishReason?: string; finishMessage?: string;
-      }[];
-      usageMetadata?: {
-        promptTokenCount?: number; candidatesTokenCount?: number;
-        thoughtsTokenCount?: number; totalTokenCount?: number;
-        cachedContentTokenCount?: number;
-      };
-    };
+  {
+    const raw     = call.raw;
+    const latency = call.latencyMs;
     const cand    = raw.candidates?.[0];
     const parts   = cand?.content?.parts ?? [];
-    const text    = parts[0]?.text ?? "";
+    const text    = call.text;
     const parsed  = extractJson(text);
     const profile = validateProfile(parsed, allowedIds);
 
@@ -204,15 +180,6 @@ export async function onRequestPost(
           status: profile ? "applied" : "fallback_invalid_response" });
 
     return profile ? reply(profile, "applied") : reply(null, "fallback_invalid_response");
-
-  } catch (err) {
-    clearTimeout(timer);
-    const isAbort = err instanceof Error && err.name === "AbortError";
-    // timeout·network 모두 재호출하지 않는다. 늦게 오는 응답도 버린다.
-    log({ requestId, mode, providerCalled: true, attempts: 1,
-          latency: Date.now() - started, timedOut: isAbort,
-          status: isAbort ? "fallback_timeout" : "fallback_provider_error" });
-    return reply(null, isAbort ? "fallback_timeout" : "fallback_provider_error");
   }
 }
 
