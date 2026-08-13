@@ -161,7 +161,9 @@ test("plan.ts: 제외 identity 는 String(place_id) 그대로다", () => {
 test("반경·limit·zone 상수는 그대로다", () => {
   assert.match(planSrc, /const MAX_RADIUS_KM = 7;/);
   assert.match(planSrc, /const DEFAULT_LIMIT = 30;/);
-  assert.match(planSrc, /expandZones\(zonedPlaces\)/);
+  // 인자는 늘어날 수 있다 — 이 guard 가 지키는 것은 zone 단계 확대가 여전히
+  // 배선돼 있다는 것이지, 호출 형태가 아니다.
+  assert.match(planSrc, /expandZones\(zonedPlaces\b/);
 });
 
 console.log(`\ncandidate-supply-order: ${passed} passed`);

@@ -8,11 +8,11 @@ export type {
   Coordinate,
   ZoneId,
   PlaceCategory,
-} from "../scheduler/types";
+} from "../scheduler/types.ts";
 
 // ─── Near Me Input ────────────────────────────────────────────────────────────
 
-import type { Coordinate, ZoneId, PlaceCategory } from "../scheduler/types";
+import type { Coordinate, ZoneId, PlaceCategory } from "../scheduler/types.ts";
 
 export interface NearMeInput {
   coordinate:        Coordinate;         // GPS current location

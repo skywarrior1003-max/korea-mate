@@ -166,9 +166,18 @@ async function runNearMeDirect(
     }
   }
 
+  const excluded = new Set((input.exclude_place_ids ?? []).map(String));
+
   // rowsToZonedPlaces uses haversineDistance internally (imported from utils.ts)
   const zonedPlaces = rowsToZonedPlaces(rawRows as any, input.coordinate as any);
-  let { candidates } = expandZones(zonedPlaces);
+
+  // "가까운 데 다섯 곳" 이 아니라 "오늘 고를 수 있는 후보가 이만큼" 을 기준으로 넓힌다.
+  // 어제 간 곳은 zone 안에 그대로 남아 있어서, 개수만 세면 공항·외곽처럼 가까운
+  // 장소가 몇 개뿐인 곳에서 3km·7km 후보가 스케줄러에 아예 도달하지 못했다.
+  let { candidates } = expandZones(zonedPlaces, {
+    targetSupply: input.limit,
+    isUsable:     (p) => !excluded.has(String(p.place_id)),
+  });
 
   // Mock fallback when no live candidates (mirrors near-me-engine.ts L32-52)
   if (candidates.length === 0) {
@@ -217,7 +226,6 @@ async function runNearMeDirect(
   //
   // 자르는 것은 "고를 수 있는 후보" 에 적용해야 한다. 고를 수 없는 것을 세어
   // 놓고 자리를 차지하게 두지 않는다.
-  const excluded = new Set((input.exclude_place_ids ?? []).map(String));
   const usable = excluded.size > 0
     ? scored.filter((c: any) => !excluded.has(String(c.place_id)))
     : scored;
