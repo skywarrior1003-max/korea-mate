@@ -146,8 +146,9 @@ export function toRangeDraft(fixed: CartFixed): FixedRangeDraft {
 /**
  * 하루의 시간 창 안에 들어가는가.
  *
- * 창은 도착·출발 시각이 반영된 값이라 화면에서는 알 수 없다. 그래서 이 검사는
- * 일정 생성 시점에 한 번 더 한다.
+ * ⚠ 이 창은 **자동 추천이 채우는 범위**(보통 09:00~21:00)다. 사용자가 직접
+ * 정한 일정을 이 값으로 막으면 안 된다 — 21시에 끝나는 기본값 때문에 19시
+ * 공연을 못 넣는 일이 그래서 생겼다. 그 판정에는 아래 hard boundary 를 쓴다.
  */
 export function fixedFitsDayWindow(
   fixed:     CartFixed,
@@ -159,6 +160,37 @@ export function fixedFitsDayWindow(
   const ws = timeToMinutes(dayStart), we = timeToMinutes(dayEnd);
   if ([s, ws, we].some(Number.isNaN)) return false;
   return s >= ws && e <= we;
+}
+
+/**
+ * 실제로 그 시각에 있을 수 있는가.
+ *
+ * 자동 추천 범위와 다르다. 09:00~21:00 은 "이 시간대에 알아서 채워 준다" 는
+ * 기본값일 뿐이고, 진짜 못 넘는 선은 그날 도착 시각과 출발 시각이다.
+ * 비행기가 22시에 뜨는데 21시 공연을 잡을 수는 없지만, 단지 기본값이 21시라는
+ * 이유로 19시 공연을 거절해서는 안 된다.
+ *
+ * 경계가 없는 쪽은 null 이다. 중간 날들에는 대개 양쪽 다 없다.
+ */
+export function fixedFitsHardBoundary(
+  fixed:     CartFixed,
+  hardStart: string | null,
+  hardEnd:   string | null,
+): boolean {
+  const s = timeToMinutes(fixed.startTime);
+  if (Number.isNaN(s)) return false;
+  const e = s + fixed.durationMinutes;
+
+  if (hardStart !== null) {
+    const hs = timeToMinutes(hardStart);
+    if (Number.isNaN(hs) || s < hs) return false;
+  }
+  if (hardEnd !== null) {
+    const he = timeToMinutes(hardEnd);
+    if (Number.isNaN(he) || e > he) return false;
+  }
+  // 자정을 넘기는 값은 입력 단계에서 이미 막혔지만 여기서도 한 번 더 본다.
+  return e <= 24 * 60;
 }
 
 /** 서로 시간이 겹치는 고정 일정 쌍이 있는가. 같은 날짜끼리만 본다. */

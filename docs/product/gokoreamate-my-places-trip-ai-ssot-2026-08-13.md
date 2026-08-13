@@ -16,6 +16,7 @@
 > **rev.5 (2026-08-13, TASK-THIS-TRIP-FIXED-CONSTRAINT-02)** — §3-7 고정 일정의 **입력 경로가 활성화**됐다. 제품 계약은 그대로이고 구현 상태만 바뀐다(§17-13).
 > **rev.6 (2026-08-13, TASK-SCHEDULER-FIXED-TO-FIXED-FEASIBILITY-01)** — §3-7 에 Invariant 3(고정 일정끼리의 이동 가능성)을 추가하고 HC-9 로 구현했다. 좌표를 모를 때는 검증하지 않고 Fixed 를 유지한다(§17-14).
 > **rev.7 (2026-08-13, TASK-THIS-TRIP-SIMPLE-GUIDANCE-AND-OVERFLOW-01)** — This Trip 의 사용자 경험 계약을 §3-9 에 명시했다. CTA 문구, 1회성 2단계 안내, 사용자-facing 용어 금지, 넘침 안내의 단순성(§17-15).
+> **rev.8 (2026-08-13, TASK-SCHEDULER-EXPLICIT-SCHEDULE-WINDOW-FIX-AND-REAL-AI-CANARY-R2)** — 자동 추천 창과 사용자 지정 일정을 분리했다(§3-7 Invariant 4). 기본 21:00 때문에 19시 공연이 아침으로 밀리던 결함을 고쳤다(§17-16).
 
 ---
 
@@ -252,6 +253,19 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 여기서 중간 삽입 후보(Invariant 2)와 정책이 갈린다. 후보는 확인할 수 없으면 넣지 않는다(fail-closed). Fixed는 확인할 수 없다는 이유로 막지 않는다 — 사용자가 지정한 것을 우리가 확신하지 못한다는 이유로 지울 수는 없다.
 
 > Invariant 1과 Invariant 2의 fixed 부분은 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서, Invariant 2의 일반 항목 확장과 fail-closed 정책은 `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10·§17-13 참조. **This Trip 장소의 날짜·시간 입력 경로는 rev.5 에서 열렸다.**
+
+
+#### Invariant 4 — 자동 추천 창 ≠ 사용자 지정 일정
+
+> `09:00–21:00` 같은 값은 **일반 자동 일정 생성 범위**다. 사용자가 직접 설정한 Date/Start/End 일정은 이 기본 창보다 우선하며, **실제 trip hard boundary와 충돌하지 않는 한 그 시간 그대로 유지**한다.
+
+실제 hard boundary는 그날의 **도착 시각**과 **출발 시각**뿐이다. 중간 날의 09:00·21:00은 "이 시간대에 알아서 채워 준다"는 기본값이지 못 넘는 선이 아니다.
+
+> explicit schedule 때문에 auto planning window가 **자동 확장되지 않는다.** 22시에 끝나는 공연이 있다고 해서 22:20 카페를 붙이지 않는다.
+
+> explicit schedule을 정상 배치할 수 없을 때 **일반 후보로 강등해 다른 시간에 자동 배치하지 않는다.** 배치되거나, 배치할 수 없다고 알리거나 둘 중 하나다.
+
+> 실제 arrival/departure 등 hard boundary가 우선하며, 충돌 시 **explicit 시간을 임의 변경하지 않는다** — 앞당기기·늦추기·축소·제거 모두 금지다.
 
 ### 3-8. This Trip 과다
 
@@ -966,6 +980,27 @@ A→B 이동 40분 / 여유 15분   →  이전: success 200 / 이후: HC-9 → 
 **§11의 `unplaced_items` API 확장 대신 클라이언트 도출을 택했다.** 배치된 `place_id` 는 이미 `usedPlaceIds` 로 모으고 있고 `cartHints` 는 사용자가 고른 것만 담으므로, 차집합이 정확히 답이다. API 계약을 늘리지 않는 쪽이 요구를 모두 만족하면서 더 작다.
 
 회귀 테스트 21개: `src/lib/trip-fixed/this-trip-guidance.test.ts`
+
+### 17-16. Invariant 4 구현 (2026-08-13, `TASK-SCHEDULER-EXPLICIT-SCHEDULE-WINDOW-FIX-AND-REAL-AI-CANARY-R2`)
+
+live-AI canary 감사에서 재현된 결함이다.
+
+```text
+자동 창 09:00–21:00 / 사용자 지정 19:00–22:00
+이전:  planDayAnchors 가 자동 창으로 판정 → anchor 탈락 → 후보 풀에 남음 → 09:08 배치
+이후:  진짜 경계로만 판정 → 19:00–22:00 그대로. 21:00 이후 자동 후보 0개
+```
+
+| 항목 | 이전 | 현재 |
+|---|---|---|
+| 판정 기준 | `fixedFitsDayWindow(자동 창)` | `fixedFitsHardBoundary(도착, 출발)` |
+| 경계 값 | 항상 `start_time`/`end_time` | 첫날 `arrTime`, 마지막 날 `effectiveDeptTime`, 그 외 `null` |
+| 걸린 항목 | `outOfWindow` — **후보 풀에 남아 재배치됨** | `outOfBoundary` — `mergeDayHints` 에서도 제거 |
+| 자동 추천 범위 | — | 변화 없음. `findFreeGaps` 와 HC-6 가 그대로 `end_time` 을 쓴다 |
+
+엔진은 원래부터 창 밖 anchor 를 그대로 배치했고 그 뒤에 자동 후보를 붙이지도 않았다. 막고 있던 것은 이 한 줄의 판정 기준뿐이었다.
+
+회귀 테스트 13개: `src/lib/trip-fixed/explicit-schedule-window.test.ts` (수정 전 9개 실패 확인)
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

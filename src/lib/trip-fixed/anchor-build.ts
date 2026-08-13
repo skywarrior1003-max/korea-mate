@@ -8,7 +8,7 @@
 // 빼 버리면 엔진이 그 장소의 위치를 모르게 되고, 지금의 fail-closed 규칙에
 // 걸려 그 앞뒤 시간이 통째로 비워진다.
 
-import { fixedEndTime, fixedFitsDayWindow } from "./fixed-core.ts";
+import { fixedEndTime, fixedFitsHardBoundary } from "./fixed-core.ts";
 import type { CartFixed } from "../cart.ts";
 
 /** 이 계층이 필요로 하는 것만. 화면의 CartItem 전체를 알 필요가 없다. */
@@ -33,8 +33,13 @@ export interface DayAnchorPlan<T extends FixedHintLike> {
   keep: T[];
   /** 이 날짜에서 후보로 쓰면 안 되는 항목 — 다른 날짜에 고정된 장소다. */
   drop: T[];
-  /** 하루 창을 벗어나 배치할 수 없는 고정 일정. 조용히 무시하지 않는다. */
-  outOfWindow: T[];
+  /**
+   * 실제 도착·출발 경계를 벗어나 배치할 수 없는 고정 일정.
+   *
+   * 조용히 무시하지 않고, 일반 후보로도 내려보내지 않는다. 사용자가 19시라고
+   * 정한 것을 09시에 놓아 주는 것은 도와주는 게 아니다.
+   */
+  outOfBoundary: T[];
 }
 
 /**
@@ -46,21 +51,26 @@ export interface DayAnchorPlan<T extends FixedHintLike> {
  * - 고정이 없는 장소 → 지금까지와 똑같이 둔다
  */
 export function planDayAnchors<T extends FixedHintLike>(
-  hints:    readonly T[],
-  tripDate: string,
-  dayStart: string,
-  dayEnd:   string,
+  hints:     readonly T[],
+  tripDate:  string,
+  hardStart: string | null,
+  hardEnd:   string | null,
 ): DayAnchorPlan<T> {
   const anchors: BuiltAnchor[] = [];
   const keep: T[] = [];
   const drop: T[] = [];
-  const outOfWindow: T[] = [];
+  const outOfBoundary: T[] = [];
 
   for (const h of hints) {
     const f = h.fixed;
     if (!f) continue;                       // 평범한 장소는 이 계층이 손대지 않는다
     if (f.date !== tripDate) { drop.push(h); continue; }
-    if (!fixedFitsDayWindow(f, dayStart, dayEnd)) { outOfWindow.push(h); continue; }
+    if (!fixedFitsHardBoundary(f, hardStart, hardEnd)) {
+      // 배치할 수 없다는 사실만 알린다. 후보 풀에서도 빼서 다른 시각에
+      // 슬그머니 놓이는 일을 막는다.
+      outOfBoundary.push(h);
+      continue;
+    }
 
     anchors.push({
       place_id:   h.place_id,
@@ -71,7 +81,7 @@ export function planDayAnchors<T extends FixedHintLike>(
     keep.push(h);
   }
 
-  return { anchors, keep, drop, outOfWindow };
+  return { anchors, keep, drop, outOfBoundary };
 }
 
 /**
@@ -85,7 +95,8 @@ export function mergeDayHints<T extends FixedHintLike>(
   distanceFiltered: readonly T[],
   plan:             DayAnchorPlan<T>,
 ): T[] {
-  const dropped = new Set(plan.drop.map(h => h.place_id));
+  // 다른 날 고정 + 경계를 벗어난 고정. 둘 다 오늘 일반 후보가 되면 안 된다.
+  const dropped = new Set([...plan.drop, ...plan.outOfBoundary].map(h => h.place_id));
   const out = distanceFiltered.filter(h => !dropped.has(h.place_id));
   const present = new Set(out.map(h => h.place_id));
   for (const h of plan.keep) {

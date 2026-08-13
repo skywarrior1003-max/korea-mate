@@ -16,7 +16,7 @@ import { join } from "node:path";
 import { runScheduler } from "../scheduler/engine.ts";
 import { estimateTravelMinutes } from "../scheduler/travel-time-estimator.ts";
 import {
-  validateFixedDraft, fixedEndTime, fixedFitsDayWindow, hasFixedOverlap,
+  validateFixedDraft, fixedEndTime, fixedFitsDayWindow, fixedFitsHardBoundary, hasFixedOverlap,
   tripDates, timeToMinutes, FIXED_MAX_DURATION_MINUTES,
 } from "./fixed-core.ts";
 import { planDayAnchors, mergeDayHints } from "./anchor-build.ts";
@@ -314,16 +314,33 @@ test("A 고정이 하나도 없으면 anchors 는 비고 후보도 그대로다"
   assert.deepEqual(mergeDayHints(hints, plan).map(h => h.place_id), ["a", "b"]);
 });
 
-// ── 하루 창 밖 ───────────────────────────────────────────────────────────────
+// ── 진짜 경계 밖 ─────────────────────────────────────────────────────────────
 
-test("하루 창 밖 고정은 anchor 로 보내지 않고 이름을 남긴다", () => {
+test("실제 경계를 벗어난 고정은 anchor 로 보내지 않고 이름을 남긴다", () => {
+  // 21:00 에 실제로 떠나는 날. 22:00 일정은 그날 존재할 수 없다.
   const hints = [{ place_id: "late", lat: at(1).lat, lng: at(1).lng,
                    fixed: { date: DAYS[1]!, startTime: "22:00", durationMinutes: 60 } }];
   const plan = planDayAnchors(hints, DAYS[1]!, "09:00", "21:00");
-  assert.deepEqual(plan.anchors, [], "창 밖이면 배치하지 않는다");
-  assert.deepEqual(plan.outOfWindow.map(h => h.place_id), ["late"], "조용히 사라지면 안 된다");
-  assert.equal(fixedFitsDayWindow({ date: DAYS[1]!, startTime: "22:00", durationMinutes: 60 }, "09:00", "21:00"), false);
-  assert.equal(fixedFitsDayWindow({ date: DAYS[1]!, startTime: "19:00", durationMinutes: 120 }, "09:00", "21:00"), true);
+  assert.deepEqual(plan.anchors, [], "경계 밖이면 배치하지 않는다");
+  assert.deepEqual(plan.outOfBoundary.map(h => h.place_id), ["late"], "조용히 사라지면 안 된다");
+  assert.deepEqual(mergeDayHints(hints, plan).map(h => h.place_id), [],
+    "일반 후보로 강등되어 다른 시각에 놓이면 안 된다");
+});
+
+test("자동 추천 창은 사용자 지정을 막지 않는다", () => {
+  // 09:00~21:00 은 자동으로 채우는 범위일 뿐이다. 경계가 없는 중간 날이면
+  // 19:00~22:00 공연도 그대로 들어가야 한다.
+  const fixed = { date: DAYS[1]!, startTime: "19:00", durationMinutes: 180 };
+  assert.equal(fixedFitsDayWindow(fixed, "09:00", "21:00"), false,
+    "자동 창 기준으로는 벗어난다 — 그래서 이 값으로 판정하면 안 된다");
+  assert.equal(fixedFitsHardBoundary(fixed, null, null), true,
+    "실제 경계가 없으면 허용한다");
+
+  const hints = [{ place_id: "gig", lat: at(1).lat, lng: at(1).lng, fixed }];
+  const plan = planDayAnchors(hints, DAYS[1]!, null, null);
+  assert.deepEqual(plan.anchors.map(a => `${a.place_id} ${a.start_time}-${a.end_time}`),
+    ["gig 19:00-22:00"], "사용자가 정한 시각 그대로여야 한다");
+  assert.equal(plan.outOfBoundary.length, 0);
 });
 
 // ── I. My Place 경로 ─────────────────────────────────────────────────────────

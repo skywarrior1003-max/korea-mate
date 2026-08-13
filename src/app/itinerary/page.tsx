@@ -523,10 +523,17 @@ async function generateWithNewApi(
     // 거리 필터는 "오늘 가기엔 먼 픽" 을 다음 날로 미루는 장치지만 오늘로 고정된
     // 약속은 미룰 수 있는 것이 아니므로 거리와 무관하게 남긴다. 좌표가 빠지면
     // 엔진이 그 장소의 위치를 몰라 앞뒤 시간을 통째로 비운다.
-    const anchorPlan     = planDayAnchors(remainingCartHints, trip_date, start_time, end_time);
+    //
+    // 여기서 넘기는 것은 자동 추천 창(09:00~21:00)이 아니라 **진짜 못 넘는 선**이다.
+    // 첫날의 도착 시각과 마지막 날의 출발 시각만 실제 경계이고, 중간 날들의
+    // 09:00·21:00 은 "이 시간대에 알아서 채워 준다" 는 기본값일 뿐이다.
+    // 기본값으로 사용자가 정한 19시 공연을 막으면 안 된다.
+    const hardStart = i === 0                 ? (arrTime          ?? null) : null;
+    const hardEnd   = i === dates.length - 1  ? (effectiveDeptTime ?? null) : null;
+    const anchorPlan     = planDayAnchors(remainingCartHints, trip_date, hardStart, hardEnd);
     const todayCartHints = mergeDayHints(nearEnough, anchorPlan);
     const todayAnchors   = anchorPlan.anchors;
-    for (const h of anchorPlan.outOfWindow) {
+    for (const h of anchorPlan.outOfBoundary) {
       fixedOutOfWindowNames.push(h.name ?? "");
     }
 
