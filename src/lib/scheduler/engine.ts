@@ -7,6 +7,7 @@ import type {
   SchedulerResult,
   ScheduledItem,
   NearMeCandidate,
+  Coordinate,
 } from "./types.ts";
 import { SCHEDULER_VERSION } from "./constants.ts";
 import { timeToMinutes, minutesToTime } from "./utils.ts";
@@ -28,6 +29,7 @@ import {
   hc4StayFits,
   hc6WithinDayWindow,
   hc7MaxItems,
+  hc8FixedEgressFits,
 } from "./constraint-validator.ts";
 
 // ─── Greedy Candidate with adjusted score ────────────────────────────────────
@@ -51,6 +53,60 @@ function consecutiveDistancePenalty(travelMinutes: number): number {
   if (travelMinutes <= 20) return  40;  //  ~3km  — medium ride
   if (travelMinutes <= 30) return  60;  //  ~7km  — long ride
   return 90;                            //   7km+ — far destination
+}
+
+// ─── Gap 기준 항목 찾기 ───────────────────────────────────────────────────────
+//
+// gap 은 greedyLoop 에 들어올 때 한 번만 계산되고, 바깥 while 이 그것을 최대 20회
+// 다시 부른다. 그래서 이른 gap 을 채우는 시점에 이미 늦은 항목이 placed 에 들어와
+// 있을 수 있다. "그날 가장 늦은 항목" 을 직전 장소로 쓰면 오전 후보의 거리를
+// 저녁 장소 기준으로 재게 되고, 거리 페널티가 정반대로 작동한다.
+
+/** gap 이 시작하기 전에 끝난 항목 중 시간축상 가장 가까운 것. */
+function itemBeforeGap(placed: ScheduledItem[], gapStart: number): ScheduledItem | undefined {
+  let best: ScheduledItem | undefined;
+  let bestEnd = -1;
+  for (const it of placed) {
+    const end = timeToMinutes(it.end_time);
+    if (end <= gapStart && end > bestEnd) {
+      bestEnd = end;
+      best    = it;
+    }
+  }
+  return best;
+}
+
+/** gap 이 끝난 뒤 처음 오는 고정 항목. 없으면 undefined. */
+function fixedItemAfterGap(placed: ScheduledItem[], gapEnd: number): ScheduledItem | undefined {
+  let best: ScheduledItem | undefined;
+  let bestStart = Infinity;
+  for (const it of placed) {
+    if (!it.is_fixed) continue;
+    const start = timeToMinutes(it.start_time);
+    if (start >= gapEnd && start < bestStart) {
+      bestStart = start;
+      best      = it;
+    }
+  }
+  return best;
+}
+
+/**
+ * 배치된 항목의 좌표. ScheduledItem 자체는 좌표를 들고 다니지 않으므로
+ * 입력에서 되찾는다. 찾지 못하면 null 이다 — 모르는 위치를 지어내지 않는다.
+ */
+function itemCoordinate(
+  item:  ScheduledItem | undefined,
+  input: SchedulerInput,
+): Coordinate | null {
+  if (!item) return null;
+  if (item.item_type === "place" && item.place_id) {
+    return input.candidates.find((c) => c.place_id === item.place_id)?.coordinate ?? null;
+  }
+  if (item.item_type === "event" && item.event_id) {
+    return input.fixed_events?.find((e) => e.event_id === item.event_id)?.coordinate ?? null;
+  }
+  return null;
 }
 
 // ─── Main entry point ─────────────────────────────────────────────────────────
@@ -104,25 +160,21 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
       const hc7 = hc7MaxItems(placed);
       if (hc7) break;
 
+      // 이 gap 의 직전 항목에서 출발한다. 좌표를 못 찾으면 기준점으로 돌아간다.
+      const predecessor = itemBeforeGap(placed, gap.start_minutes);
+      const fromCoord   = itemCoordinate(predecessor, input) ?? input.base_coordinate;
+
+      // 이 gap 바로 뒤에 고정 일정이 있으면 거기까지 갈 시간도 남겨야 한다.
+      const nextFixed      = fixedItemAfterGap(placed, gap.end_minutes);
+      const nextFixedCoord = nextFixed ? itemCoordinate(nextFixed, input) : null;
+      const nextFixedStart = nextFixed ? timeToMinutes(nextFixed.start_time) : null;
+
       // Score candidates with zone bonus applied, then pick best fit for this gap
       const candidates = pq.toArray();
       const scored: ScoredCandidate[] = [];
 
       for (const c of candidates) {
         const zoneBonus = c.zone_id !== undefined ? zoneTracker.calculateBonus(c.zone_id) : 0;
-
-        // Estimate travel from the last placed item to this candidate
-        const lastItem = [...placed].sort(
-          (a, b) => timeToMinutes(a.start_time) - timeToMinutes(b.start_time)
-        ).at(-1);
-
-        // We need coordinates of the last item — anchors don't carry coords,
-        // so fall back to base_coordinate when no candidate coord is available.
-        const fromCoord =
-          lastItem?.item_type === "place"
-            ? (input.candidates.find((c2) => c2.place_id === lastItem.place_id)?.coordinate ??
-               input.base_coordinate)
-            : input.base_coordinate;
 
         const travelMin = estimateTravelMinutes(fromCoord, c.coordinate);
         const { stay_minutes: stayMin } = resolveStayMinutes(c, input);
@@ -154,6 +206,15 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
             if (!later) continue;
             placeStart = later.start_minutes;
           }
+        }
+
+        // ── HC-8: 다음 고정 일정까지 이동할 시간 ──────────────────────────────
+        // 체류가 gap 을 꽉 채우면 공연 시작 시각에 이동시간이 0 분이 된다.
+        // 좌표를 모르면 검사하지 않는다 — 모르는 이동시간을 지어내는 대신
+        // 기존 동작을 그대로 둔다.
+        if (nextFixedStart !== null && nextFixedCoord) {
+          const egressMin = estimateTravelMinutes(c.coordinate, nextFixedCoord);
+          if (hc8FixedEgressFits(placeStart + stayMin, egressMin, nextFixedStart) !== null) continue;
         }
 
         const preferredItem = input.preferred_items?.find(p => p.place_id === c.place_id);

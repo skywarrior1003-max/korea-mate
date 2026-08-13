@@ -11,6 +11,7 @@
 > ② 고정 일정(§3-7)과 This Trip 과다 처리(§3-8)를 신규 명시했다.
 > ③ GPS context V1 범위 제한(§9-1)을 신규 명시했다. 전국 reverse-geocoding을 새로 만들지 않는다.
 > ④ 코드 재감사 결과를 §17에 **제품 결정과 분리해** 기록했다. **§17은 현재 사실이지 목표가 아니다. §17을 근거로 위의 제품 결정을 약화시키지 않는다.**
+> **rev.3 (2026-08-13, TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01)** — §3-7에 Invariant 1(직전 장소)·Invariant 2(고정 앞 이동시간)를 명시하고 엔진에 구현했다. 구현 내역은 §17-10.
 
 ---
 
@@ -218,7 +219,21 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 이 조건은 **hard constraint**이며 AI/Scheduler가 임의로 이동하거나 침범하면 안 된다.
 취향 보정·거리 최적화·식사 보장 등 어떤 소프트 규칙도 고정 일정을 밀어낼 수 없다.
 
-> 현재 구현 수준은 §17-4 참조. 엔진에는 고정 배치 능력이 있으나 **This Trip 장소에 날짜·시간을 지정하는 입력 경로가 없다.**
+#### Invariant 1 — 직전 장소
+
+> Scheduler의 "직전 장소"는 하루 전체에서 가장 늦은 item이 아니라 **현재 gap 직전의 시간축상 가장 가까운 실제 item**이다. 미래 anchor/fixed item은 current gap의 previous place로 취급하지 않는다.
+
+이동시간·거리 페널티·zone 판단이 모두 이 하나의 기준점을 쓴다.
+
+#### Invariant 2 — 고정 일정 앞의 물리적 타당성
+
+> Fixed 일정 앞에 배치되는 장소는 해당 장소의 **체류시간뿐 아니라 그 장소에서 다음 fixed 위치까지 이동할 시간까지 포함해** 물리적으로 가능해야 한다.
+
+후보의 체류 종료시각과 fixed 시작시각이 같다는 이유만으로 배치해서는 안 된다.
+이 계약은 supplemental 추천과 This Trip 장소에 **동일하게** 적용된다.
+다음 fixed의 좌표를 알 수 없으면 이동시간을 **지어내지 않는다** — 검사를 건너뛰고 기존 안전 계약을 따른다.
+
+> 두 invariant는 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10 참조. **This Trip 장소에 날짜·시간을 지정하는 입력 경로는 여전히 없다.**
 
 ### 3-8. This Trip 과다
 
@@ -817,6 +832,22 @@ AI 호출비용 감소 + 표현 품질 향상
 - `AI_PERSONALIZATION_MODE`와 My Places AI 혼동 → docs 내 다른 문서에 해당 기록 없음
 - `gokoreamate-product-constitution-v1.md` · `content-action-semantics-v1.md` · `picks-trip-memory-lifecycle-decision-v1.md` → 이 SSOT와 충돌 없음
 - 테스트에 "This Trip only" 단정 없음
+
+### 17-10. Invariant 1·2 구현 (2026-08-13, `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`)
+
+§17-4의 "미구현" 판정 중 **엔진 쪽 두 결함**이 해소되었다. 입력 경로(UI)는 여전히 없다.
+
+| 항목 | 이전 | 현재 |
+|---|---|---|
+| 직전 장소 기준 | `[...placed].sort(asc).at(-1)` = 그날 최댓값 | `itemBeforeGap()` = gap 시작 전 끝난 항목 중 가장 늦은 것 |
+| 좌표 해석 | `place`만, `event`는 base로 폴백 | `place`는 `candidates`, `event`는 `fixed_events`에서 |
+| 고정 앞 이동시간 | 검사 없음 | `hc8FixedEgressFits` — 체류 종료 + egress ≤ 고정 시작 |
+
+**원인은 회귀가 아니라 최초 구현부터의 미구현이었다**(직전 감사 `TASK-SCHEDULER-TELEPORT-HISTORY-REAUDIT-01`). `lastItem`은 `0bf6491`부터, egress 검사는 rule engine에 존재한 적이 없다.
+
+기준점 결함은 **고정 일정과 무관하게 이미 활성 상태**였다 — `gaps`가 `greedyLoop` 진입 시 1회만 계산되고 바깥 while이 최대 20회 재호출하므로, 2회차부터 이른 gap을 채울 때 늦은 항목이 기준이 되었다.
+
+회귀 테스트 9개: `src/lib/scheduler/previous-place-and-egress.test.ts`
 
 ### 17-9. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

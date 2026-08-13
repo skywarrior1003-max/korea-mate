@@ -104,6 +104,27 @@ export function hc6WithinDayWindow(
   return null;
 }
 
+// HC-8: 다음 고정 항목까지 이동할 시간이 남아야 한다.
+//
+// HC-3/HC-4 는 **들어오는** 이동만 본다. gap 의 끝은 다음 고정 항목의 시작
+// 시각에 그대로 붙어 있으므로, 체류가 gap 을 꽉 채우면 이동시간이 0 분이 된다.
+// 19:00 공연인데 18:59 까지 다른 동네에 있는 일정이 그렇게 만들어진다.
+export function hc8FixedEgressFits(
+  candidateEndMinutes: number,
+  egressMinutes: number,
+  nextFixedStartMinutes: number
+): ConflictError | null {
+  if (candidateEndMinutes + egressMinutes > nextFixedStartMinutes) {
+    return {
+      code: "HC-8",
+      message:
+        `Candidate ends at ${candidateEndMinutes} and needs ${egressMinutes}min to reach ` +
+        `the fixed item starting at ${nextFixedStartMinutes}.`,
+    };
+  }
+  return null;
+}
+
 // HC-7: Total placed items (places + events) must not exceed max
 export function hc7MaxItems(placed: ScheduledItem[]): ConflictError | null {
   const nonAffiliate = placed.filter((it) => it.item_type !== "affiliate");
