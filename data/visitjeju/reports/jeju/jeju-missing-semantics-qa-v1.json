@@ -1,0 +1,61 @@
+{
+  "task": "TASK-JEJU-MISSING-SEMANTICS-AND-SOURCE-ANCHOR-RULE-FINALIZE-V1",
+  "branch": "data/jeju-collection-v2",
+  "head": "ce042bd4c5520355e40bb9ad831466d407cef8e9",
+  "common_policy_commit": "dc6f9be563983d369f400e4e8b0eea139f82da7c",
+  "generated_at": "2026-08-13",
+  "determinism_status": "CONFIRMED_RUN1_EQ_RUN2",
+  "sha256_phone": "77898c79a0d3300d9691434a5ec854f6cbc88066ab82c72b9e92508c9f7cdb6b",
+  "sha256_coord": "5f0a19ee152eecec6b2c0cfb45cfdd24a5cdca8411585115e978f957861ba3ea",
+  "sha256_targets": "c9c5f30932d85bc289b343761c79d2261c1b743f95f19a6078ead31feddb7446",
+  "qa_result": "PASS_WITH_WARN",
+  "qa_warnings": [
+    {
+      "code": "WARN-001",
+      "message": "phone_no_value = 348 (previous estimate was 347). +1 SOURCE_MALFORMED: contentsid=CONT_000000000500665, title=평화통일 불사리탑, phoneno='.'. New finding, not a regression."
+    },
+    {
+      "code": "WARN-002",
+      "message": "geometry UNKNOWN = 2 entities (영아리, 안덕면사무소 수국길). Insufficient evidence in title+tags for classification. UNKNOWN is appropriate — not a classification error."
+    },
+    {
+      "code": "WARN-003",
+      "message": "phone_semantic UNKNOWN = 238 (68% of no-value). Large proportion reflects genuine entity type ambiguity in VisitJeju c1 data — not a rule failure."
+    }
+  ],
+  "integrity_check": {
+    "API_CALLS": 0,
+    "WEB_COLLECTION": 0,
+    "KTO_CALLS": 0,
+    "MAP_API_CALLS": 0,
+    "RAW_CHANGES": 0,
+    "SOURCE_FACT_CHANGES": 0,
+    "SECRET_LEAK": 0
+  },
+  "reconciliation": {
+    "canonical_total": 1341,
+    "phone_src_sum": 1341,
+    "phone_no_value": 348,
+    "phone_sem_sum": 348,
+    "coord_missing": 32,
+    "coord_geo_sum": 32,
+    "coord_nav_sum": 32,
+    "both_phone_and_coord": 12,
+    "either_gap": 368
+  },
+  "eligibility_independence_check": {
+    "phone_not_expected_causing_searchable_restriction": 0,
+    "coord_area_route_causing_searchable_loss": 0,
+    "result": "PASS — no eligibility violations from phone/coord missing"
+  },
+  "rule_assessment": {
+    "RULE_A_placeholder_normalization": "NEW_COMMON_RULE_CANDIDATE — current policy lacks explicit placeholder taxonomy",
+    "RULE_B_missing_semantics": "NEW_COMMON_RULE_CANDIDATE — 2-layer (source_state + semantic_status) not in current policy",
+    "RULE_C_phone_independence": "ALREADY_COVERED (implicitly) + NEW_COMMON_RULE_CANDIDATE (explicit statement needed)",
+    "RULE_D_geometry_separation": "NEW_COMMON_RULE_CANDIDATE — POINT/AREA/LINEAR_ROUTE taxonomy not in current policy",
+    "RULE_E_source_anchor_only": "NEW_COMMON_RULE_CANDIDATE — implicit but not documented",
+    "RULE_F_navigation_independence": "ALREADY_COVERED (coord_missing→EXPLORE=CONDITIONAL not NO) + NEEDS_CLARIFICATION (not explicit)",
+    "RULE_G_ai_independence": "ALREADY_COVERED (AI=REVIEW_REQUIRED not AI=NO) + NEEDS_CLARIFICATION (not explicit)"
+  },
+  "common_policy_improvement_candidate": "YES"
+}
