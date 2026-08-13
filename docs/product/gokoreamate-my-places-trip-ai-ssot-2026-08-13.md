@@ -14,6 +14,7 @@
 > **rev.3 (2026-08-13, TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01)** — §3-7에 Invariant 1(직전 장소)·Invariant 2(고정 앞 이동시간)를 명시하고 엔진에 구현했다. 구현 내역은 §17-10.
 > **rev.4 (2026-08-13, TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01)** — Invariant 2 를 고정 항목 전용에서 **모든 다음 배치 항목**으로 확장하고, 다음 항목의 위치를 알 수 없을 때의 fail-closed 정책을 명시했다. 일반 항목 앞 중간 삽입에서 순간이동 일정이 실제로 재현됐다(§17-11).
 > **rev.5 (2026-08-13, TASK-THIS-TRIP-FIXED-CONSTRAINT-02)** — §3-7 고정 일정의 **입력 경로가 활성화**됐다. 제품 계약은 그대로이고 구현 상태만 바뀐다(§17-13).
+> **rev.6 (2026-08-13, TASK-SCHEDULER-FIXED-TO-FIXED-FEASIBILITY-01)** — §3-7 에 Invariant 3(고정 일정끼리의 이동 가능성)을 추가하고 HC-9 로 구현했다. 좌표를 모를 때는 검증하지 않고 Fixed 를 유지한다(§17-14).
 
 ---
 
@@ -238,6 +239,16 @@ This Trip 장소에는 필요 시 **고정 날짜·시간·장소 조건**을 �
 > 다음 배치 장소는 있으나 위치를 확인할 수 없어 이동 가능성을 검증할 수 없는 경우, Scheduler는 가짜 이동시간을 추정하지 않고 **해당 중간 gap에 자동 삽입하지 않는다**(fail-closed).
 
 예외는 하나다 — 다음 배치 항목이 **아예 없는** 하루 마지막 자리는 진입 이동과 체류만 본다.
+
+#### Invariant 3 — 고정 일정끼리의 이동 가능성
+
+> 시간상 겹치지 않는 Fixed 일정이라도 **연속된 Fixed 장소 사이의 실제 이동시간이 확보되지 않으면** Scheduler는 해당 일정을 성공으로 생성하지 않는다. Fixed 시간·duration·장소를 임의 변경하지 않고 conflict로 표면화한다.
+
+앞당기기·늦추기·duration 축소·한쪽 제거·AI에 의한 시간 변경은 **전부 금지**다. Fixed는 사용자가 정한 사실이므로, 담을 수 없으면 절충안을 만들지 말고 사용자가 직접 고치게 한다.
+
+> Fixed 장소의 좌표를 확인할 수 없어 이동 가능성을 검증할 수 없는 경우 **가짜 이동시간을 생성하지 않으며, Fixed 자체를 자동 삭제·이동하지 않는다.** 이 상태의 사용자 안내는 별도 Planning Issues UX에서 다룬다.
+
+여기서 중간 삽입 후보(Invariant 2)와 정책이 갈린다. 후보는 확인할 수 없으면 넣지 않는다(fail-closed). Fixed는 확인할 수 없다는 이유로 막지 않는다 — 사용자가 지정한 것을 우리가 확신하지 못한다는 이유로 지울 수는 없다.
 
 > Invariant 1과 Invariant 2의 fixed 부분은 `TASK-SCHEDULER-PREVIOUS-PLACE-AND-FIXED-EGRESS-01`에서, Invariant 2의 일반 항목 확장과 fail-closed 정책은 `TASK-SCHEDULER-GENERAL-INSERTION-FEASIBILITY-01`에서 구현·검증되었다. 구현 상태는 §17-4·§17-10·§17-13 참조. **This Trip 장소의 날짜·시간 입력 경로는 rev.5 에서 열렸다.**
 
@@ -897,6 +908,29 @@ near(끝 10:36) → lunch(시작 11:00) : 여유 24분 / 필요 40분
 **다른 날 후보 풀에서 빼는 것도 필수다.** 3일차 고정 장소를 1일차에 일반 후보로 써 버리면 정작 3일차에 anchor 로 부를 때 이미 소비돼 있다.
 
 회귀 테스트 21개: `src/lib/trip-fixed/fixed-schedule.test.ts`
+
+### 17-14. Invariant 3 구현 (2026-08-13, `TASK-SCHEDULER-FIXED-TO-FIXED-FEASIBILITY-01`)
+
+§17-13 으로 입력 경로가 열리면서 **두 Fixed 가 동시에 존재할 수 있게 됐고**, 그때 드러난 마지막 물리 결함이다. 그전에는 anchors 가 dormant 라 도달할 수 없었다.
+
+```text
+A 10:00–10:45 (at 1)
+B 11:00–12:00 (at 200, 약 18km)
+A→B 이동 40분 / 여유 15분   →  이전: success 200 / 이후: HC-9 → 409
+```
+
+| 항목 | 구현 |
+|---|---|
+| 위치 | P2.5 — anchors·fixed_events 배치 직후, greedy 이전 |
+| pair 탐색 | `is_fixed` 항목을 **시작 시각으로 정렬**한 뒤 이웃 쌍. 배열 입력 순서를 믿지 않는다 |
+| 판정 | `hc9FixedPairReachable(끝, 이동, 다음 시작)` — 기존 `estimateTravelMinutes` 재사용 |
+| 좌표 미확인 | 검증 건너뜀(UNVERIFIED). Fixed 유지, 가짜 이동시간 없음 |
+| 오류 | 기존 `ConflictError` → `runScheduler success:false` → `plan.ts` 409 → client `kind:"conflict"` |
+| 시간 겹침 | 기존 HC-5 그대로. HC-9 와 구분된다 |
+
+새 HTTP 상태나 별도 오류 체계를 만들지 않았다. `HardConstraintCode` 유니온에 `HC-9` 한 줄만 늘었다.
+
+회귀 테스트 14개: `src/lib/scheduler/fixed-pair-feasibility.test.ts`. 수정 전 엔진에서 5개가 실패함을 확인했다.
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

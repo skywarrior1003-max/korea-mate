@@ -30,6 +30,7 @@ import {
   hc6WithinDayWindow,
   hc7MaxItems,
   hc8InsertionEgressFits,
+  hc9FixedPairReachable,
 } from "./constraint-validator.ts";
 
 // ─── Greedy Candidate with adjusted score ────────────────────────────────────
@@ -130,6 +131,34 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
   const { items: eventItems, error: eventError } = placeFixedEvents(input, placed);
   if (eventError) return { success: false, error: eventError };
   placed.push(...eventItems);
+
+  // ── P2.5: 연속된 고정 일정 사이를 실제로 이동할 수 있는가 ──────────────────
+  //
+  // HC-5 는 시간이 겹치는지만 본다. 시계가 안 겹친다고 갈 수 있는 것은 아니다.
+  //
+  // 배열에 들어온 순서가 아니라 **시간순** 으로 이웃한 쌍을 본다. anchors 가
+  // C, A, B 순으로 들어와도 확인해야 하는 것은 A→B 와 B→C 다.
+  //
+  // 좌표를 모르면 확인하지 않는다. 모르는 이동시간을 지어내지 않고, 확인하지
+  // 못했다는 이유로 사용자가 정한 고정 일정을 막지도 않는다.
+  const fixedInOrder = placed
+    .filter((it) => it.is_fixed)
+    .sort((a, b) => timeToMinutes(a.start_time) - timeToMinutes(b.start_time));
+
+  for (let i = 1; i < fixedInOrder.length; i++) {
+    const earlier = fixedInOrder[i - 1]!;
+    const later   = fixedInOrder[i]!;
+    const from = itemCoordinate(earlier, input);
+    const to   = itemCoordinate(later,   input);
+    if (!from || !to) continue;
+
+    const pairError = hc9FixedPairReachable(
+      timeToMinutes(earlier.end_time),
+      estimateTravelMinutes(from, to),
+      timeToMinutes(later.start_time),
+    );
+    if (pairError) return { success: false, error: pairError };
+  }
 
   // ── P3: Greedy Slot Fill ───────────────────────────────────────────────────
 

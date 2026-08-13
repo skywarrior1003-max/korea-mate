@@ -129,6 +129,29 @@ export function hc8InsertionEgressFits(
   return null;
 }
 
+// HC-9: 시간순으로 연속한 두 고정 일정 사이를 실제로 이동할 수 있어야 한다.
+//
+// HC-5 는 시간이 겹치는지만 본다. 10:45 에 끝나고 11:00 에 18km 떨어진 곳에서
+// 시작하는 일정은 시계상으로는 겹치지 않지만 사람이 갈 수 없다.
+//
+// 고정 일정은 사용자가 정한 사실이다. 앞당기거나 늦추거나 줄이거나 지우지
+// 않는다 — 대신 일정 생성을 실패시켜 사용자가 직접 고르게 한다.
+export function hc9FixedPairReachable(
+  earlierEndMinutes: number,
+  travelMinutes:     number,
+  laterStartMinutes: number
+): ConflictError | null {
+  if (earlierEndMinutes + travelMinutes > laterStartMinutes) {
+    return {
+      code: "HC-9",
+      message:
+        `Fixed item ends at ${earlierEndMinutes} and needs ${travelMinutes}min to reach ` +
+        `the next fixed item starting at ${laterStartMinutes}.`,
+    };
+  }
+  return null;
+}
+
 // HC-7: Total placed items (places + events) must not exceed max
 export function hc7MaxItems(placed: ScheduledItem[]): ConflictError | null {
   const nonAffiliate = placed.filter((it) => it.item_type !== "affiliate");

@@ -133,7 +133,8 @@ export type HardConstraintCode =
   | "HC-5" // anchor conflict
   | "HC-6" // daily time window exceeded
   | "HC-7" // max items exceeded
-  | "HC-8" // cannot reach the next fixed item in time
+  | "HC-8" // cannot reach the next placed item in time
+  | "HC-9" // cannot travel between two consecutive fixed items
 
 export interface ConflictError {
   code: HardConstraintCode;
