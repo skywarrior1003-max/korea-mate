@@ -1,0 +1,3611 @@
+{
+  "meta": {
+    "page": 57,
+    "locale": "kr",
+    "as_of": "2026-08-13T06:56:21Z",
+    "totalCount": 5938,
+    "pageCount": 60
+  },
+  "items": [
+    {
+      "alltag": "두멩이골목,걷기/등산,경관/포토,흐림,봄,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500161",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "두맹이골목",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 동문로16길 17-4",
+      "roadaddress": "제주특별자치도 제주시 동문로16길 17-4",
+      "tag": "두멩이골목,걷기/등산,경관/포토,흐림,봄,자연경관,포토스팟",
+      "introduction": "옛추억을 꺼내주는 제주의 벽화마을",
+      "latitude": 33.51202,
+      "longitude": 126.53499,
+      "postcode": null,
+      "phoneno": "064-728-4436",
+      "repPhoto": {
+        "descseo": "두맹이골목",
+        "photoid": {
+          "photoid": 2019022591382,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/25/8f6e28bc-4422-4817-9ae7-a8bc5ff8de53.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/25/ca52c880-dfdf-4824-a289-978949072bbc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "커플,친구,일출,봄,오름,자연경관,도보여행,도보,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "contentsid": "CONT_000000000500162",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "두산봉(말미오름)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 시흥리 산 1-5",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 시흥리 산 1-5",
+      "tag": "커플,친구,일출,봄,오름,자연경관,도보여행,도보,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "introduction": "올레1코스의 마스코트 두산봉",
+      "latitude": 33.47950858344703,
+      "longitude": 126.88414743068847,
+      "postcode": null,
+      "phoneno": "064-782-3180",
+      "repPhoto": {
+        "descseo": "두산봉(말미오름)",
+        "photoid": {
+          "photoid": 2019022592244,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/01/de800f68-9d34-472b-bcb9-5a697cca35e4.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/01/32c18c86-fa52-4864-a28a-abd73d42ce3c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산",
+      "contentsid": "CONT_000000000500163",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "둔지봉",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 한동리 산 40",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 한동리 산 40",
+      "tag": "오름,걷기/등산,자연경관",
+      "introduction": "제주도를 한눈에 내려다볼 수 있는 둔지봉",
+      "latitude": 33.50136,
+      "longitude": 126.79464,
+      "postcode": null,
+      "phoneno": "064-783-2619",
+      "repPhoto": {
+        "descseo": "둔지봉",
+        "photoid": {
+          "photoid": 2019022558521,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/29/1184805a-d761-4d03-a9d1-5e96684d3342.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/29/3acce4dc-9217-4767-9be6-51baaa584a02.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일출,오름,걷기/등산,친구,가을,자연경관,도보여행,도보,억새,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "contentsid": "CONT_000000000500168",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "따라비오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 가시리 산 62",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 가시리 산 62",
+      "tag": "일출,오름,걷기/등산,친구,가을,자연경관,도보여행,도보,억새,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "introduction": "표선면 가시리에 위치한 따라비오름은 3개의 분화구(굼부리)와 6개의 봉우리로 이루어져 있다. 화산이 폭발할 때 분출된 용암은 부드러운 산세를 만들어냈고, 가을이면 오름을 뒤덮은 억새 군락이 장관을 이룬다. ",
+      "latitude": 33.389156,
+      "longitude": 126.75325,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "따라비오름",
+        "photoid": {
+          "photoid": 2019022585901,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/01/2807b2be-5aa2-4e3e-bd91-23a92d2985a6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/01/3b6ae16c-68ba-4607-b01f-2ae5b1d3a98d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "커플,친구,액티비티,골프,체험,레저/체험,어트랙션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500169",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "라온CC골프연습장",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 저지리 산 18",
+      "roadaddress": "제주특별자치도 제주시 한경면 용금로 998",
+      "tag": "커플,친구,액티비티,골프,체험,레저/체험,어트랙션",
+      "introduction": "타이거우즈가 격찬하고 콜린 몽고메리가 설계한 제주서부의 명품 골프클럽",
+      "latitude": 33.3448687,
+      "longitude": 126.2782452,
+      "postcode": null,
+      "phoneno": "064-795-8000",
+      "repPhoto": {
+        "descseo": "라온골프클럽",
+        "photoid": {
+          "photoid": 2019022594031,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/10/f0c45fe9-e63a-4afe-9be0-12875831aec6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/10/a121f31a-3cd0-45a2-9529-d74964df5b7e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "승마,액티비티,커플,체험,레저/체험,어트랙션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500170",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "라온랜드",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 월림7길 155",
+      "roadaddress": "제주특별자치도 제주시 한림읍 월림7길 155",
+      "tag": "승마,액티비티,커플,체험,레저/체험,어트랙션",
+      "introduction": "국제규격의 승마시설을 갖춘 제주서부의 명품승마클럽. 초보자부터 전문가까지 아우르는 승마시설 보유",
+      "latitude": 33.355453,
+      "longitude": 126.2419,
+      "postcode": null,
+      "phoneno": "064-795-8095",
+      "repPhoto": {
+        "descseo": "라온승마클럽",
+        "photoid": {
+          "photoid": 2019022593240,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/07/06ea0727-38aa-42ff-87b8-4b2378a3d090.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/07/ae283799-1bd5-456f-8861-027e93756077.webp"
+        }
+      }
+    },
+    {
+      "alltag": "섬속의섬,휴식/힐링,부모,아이,맑음,가을,자연경관,어린이,공영관광지, 공영관광지인증,화장실,편의점,아주 어려움",
+      "contentsid": "CONT_000000000500171",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "마라도(마라해양도립공원)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 가파리 600",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 마라로101번길 46",
+      "tag": "섬속의섬,휴식/힐링,부모,아이,맑음,가을,자연경관,어린이,공영관광지, 공영관광지인증",
+      "introduction": "난대성 해양 동식물이 풍부하고 경관이 아름다운 유인도 중에 국토 최남단인 섬, 천연기념물 제423호",
+      "latitude": 33.1170928491147,
+      "longitude": 126.26747322880556,
+      "postcode": null,
+      "phoneno": "064-760-4014",
+      "repPhoto": {
+        "descseo": "Marado Island (Mara Ocean Park)",
+        "photoid": {
+          "photoid": 17618,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c88bc373-ce5d-418f-9635-b6afb4dbb394.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0c267f62-8261-4cc7-bca9-99aa4f446365.webp"
+        }
+      }
+    },
+    {
+      "alltag": "경관/포토,문화유적지,아이,맑음,봄,자연경관,역사유적,포토스팟,어린이,무장애관광, 문화관광해설사인증,공용주차장,단독접근가능,단차없음,어려움",
+      "contentsid": "CONT_000000000500177",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "제주특별자치도축산생명연구원제주마방목지",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용강동",
+      "roadaddress": "제주특별자치도 제주시 516로 2480",
+      "tag": "경관/포토,문화유적지,아이,맑음,봄,자연경관,역사유적,포토스팟,어린이,무장애관광, 문화관광해설사인증",
+      "introduction": "제주혈통 조랑말이 뛰어노는 초원지대",
+      "latitude": 33.42824,
+      "longitude": 126.60599,
+      "postcode": "63312",
+      "phoneno": "064-710-7942",
+      "repPhoto": {
+        "descseo": "Jeju Horse Pastureland",
+        "photoid": {
+          "photoid": 17647,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9701ce03-cb6e-4035-9f31-5d7b619de3bf.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6772b54b-d077-4285-8d38-00107f56479f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "contentsid": "CONT_000000000500178",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "마복이오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 상천리 산 83",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 상천리 산 83",
+      "tag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "introduction": "마파람이 시원한 마복이 오름",
+      "latitude": 33.31936889858197,
+      "longitude": 126.39236368786618,
+      "postcode": null,
+      "phoneno": "064-793-5015",
+      "repPhoto": {
+        "descseo": "마복이오름",
+        "photoid": {
+          "photoid": 2019022599873,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202203/28/d5337dd1-5ace-4e17-bcbf-570eccc8f0a9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202203/28/4fe3aac4-c96b-4f77-bafa-a71d8042d244.webp"
+        }
+      }
+    },
+    {
+      "alltag": "만장굴, 공영관광지, 동굴, 경관/포토, 아이, 흐림, 여름, 자연경관, 포토스팟, 어린이, 유네스코, 세계지질공원, 용암동굴, 거문오름용암동굴계, 천연기념물, 세계자연유산, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,아주 어려움,UNESCO 세계지질공원",
+      "contentsid": "CONT_000000000500182",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "만장굴",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 월정리 산 41-5",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 만장굴길 182",
+      "tag": "만장굴, 공영관광지, 동굴, 경관/포토, 아이, 흐림, 여름, 자연경관, 포토스팟, 어린이, 유네스코, 세계지질공원, 용암동굴, 거문오름용암동굴계, 천연기념물, 세계자연유산, visitjeju, 비짓제주",
+      "introduction": "세계적인 규모의 용암동굴이자 유네스코 세계자연유산을 구성하는 거문오름용암동굴계의 대표 동굴",
+      "latitude": 33.5548185,
+      "longitude": 126.7969015,
+      "postcode": null,
+      "phoneno": "064-710-7903",
+      "repPhoto": {
+        "descseo": "만장굴",
+        "photoid": {
+          "photoid": 20220905167800,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202608/12/71968712-4e81-415a-bc16-703f03a8937b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202608/12/373fe5f6-6add-410a-8b28-b0855b7da087.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,공용주차장,화장실,아주 어려움",
+      "contentsid": "CONT_000000000500190",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "모구리오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 난산리 2971",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 서성일로 260",
+      "tag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "introduction": "편백나무 숲길에서 느끼는 깨끗한 공기와 모구리 야영장에서의 특별한 추억",
+      "latitude": 33.4059591,
+      "longitude": 126.821694,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "모구리오름",
+        "photoid": {
+          "photoid": 2019022594056,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/10/2d959586-9f08-4099-bdca-0324603692f5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/10/339d2abf-91ce-45fa-af6e-d68b6e791c19.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "contentsid": "CONT_000000000500193",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "모슬봉 (모슬개오름)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리 3540-2",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 상모리 3540-2",
+      "tag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "완만한 지형을 가진 모슬봉",
+      "latitude": 33.2387353,
+      "longitude": 126.2586981,
+      "postcode": null,
+      "phoneno": "064-760-2912",
+      "repPhoto": {
+        "descseo": "모슬봉 (모슬개오름)",
+        "photoid": {
+          "photoid": 2019022595061,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/21/888e53c7-515a-46a4-b929-7109f623bb36.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/21/3112abe1-c274-48e1-838f-842025305b6f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "혼자,친구,맑음,경관/포토,휴식/힐링,액티비티,오름,사계절,자연경관,체험,도보여행,도보,레저/체험,포토스팟,어트랙션",
+      "contentsid": "CONT_000000000500194",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "모지오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 성읍리 산 22",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 성읍리 산 22",
+      "tag": "혼자,친구,맑음,경관/포토,휴식/힐링,액티비티,오름,사계절,자연경관,체험,도보여행,도보,레저/체험,포토스팟,어트랙션",
+      "introduction": "어머니가 아들을 안은 형체 모지오름",
+      "latitude": 33.393745,
+      "longitude": 126.76842,
+      "postcode": null,
+      "phoneno": "064-760-2913",
+      "repPhoto": {
+        "descseo": "Moji Oreum Volcanic Cone",
+        "photoid": {
+          "photoid": 17710,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1ce955b9-a8dd-4f54-bda1-eec9ce6c1096.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/328fb40a-6044-4741-8a67-befbffbd1108.webp"
+        }
+      }
+    },
+    {
+      "alltag": "친구,혼자,커플,맑음,오름,자연경관",
+      "contentsid": "CONT_000000000500195",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "묘산봉오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 김녕리 2723",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 김녕리 2723",
+      "tag": "친구,혼자,커플,맑음,오름,자연경관",
+      "introduction": "고양이가 누워 있는 모양을 하고 있는 오름",
+      "latitude": 33.542805,
+      "longitude": 126.744316,
+      "postcode": null,
+      "phoneno": "064-783-5040",
+      "repPhoto": {
+        "descseo": "Myosanbong Volcanic Cone (Goesalme)",
+        "photoid": {
+          "photoid": 17717,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/b8a9f2dd-b3ed-4a0b-bfab-9cdfc96d566f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d87c5be1-522c-45cc-8cef-9da1ffbbb38d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산",
+      "contentsid": "CONT_000000000500198",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "문도지오름 (문돗지)",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 금악리 3444",
+      "roadaddress": "제주특별자치도 제주시 한림읍 금악리 3444",
+      "tag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "introduction": "문도지오름은 저지에서 오설록 녹차밭까지 이어지는 제주올레 14-1코스 중간 부근에 위치해있다. 한경면 방림원 사잇길을 따라 차량으로 10분 정도 들어가면 차도가 끝나는 지점에 명성목장이 나타나고 그곳부터 오름길은 시작된다. 문도지오름은 명성목장의 말 방목지로도 이용되고 있다. 오름 대부분은 사유지이지만 소유주의 배려로 자유롭게 탐방할 수 있다. ",
+      "latitude": 33.33229622334082,
+      "longitude": 126.25204764863281,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "문도지오름 (문돗지)",
+        "photoid": {
+          "photoid": 2019022569640,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202002/25/0dfb8693-2a32-4fb1-9b3e-41ab57964f01.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202002/25/eac1e84a-227d-4002-b0c0-b5df6322b019.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,맑음,경관/포토,해변,자연경관,섬속의섬,포토스팟,어린이,공영관광지, 서귀포해양도립공원, 생물권보전지역,아주 어려움,UNESCO 생물권보전지역",
+      "contentsid": "CONT_000000000500200",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "문섬(서귀포해양도립공원)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 칠십리로",
+      "roadaddress": "제주특별자치도 서귀포시 칠십리로",
+      "tag": "부모,커플,혼자,친구,아이,맑음,경관/포토,해변,자연경관,섬속의섬,포토스팟,어린이,공영관광지, 서귀포해양도립공원, 생물권보전지역",
+      "introduction": "섬에 아무것도 자라지 않는 민둥섬이라서 붙여진 이름의 섬",
+      "latitude": 33.226475,
+      "longitude": 126.565994,
+      "postcode": null,
+      "phoneno": "064-710-6656",
+      "repPhoto": {
+        "descseo": "Munseom Island (Seogwipo Marine Park )",
+        "photoid": {
+          "photoid": 17747,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/56d5e737-509c-4e54-ab73-5e3fb90fcb01.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7ddd0eed-2304-4cdc-88f5-b3b41ab1fc90.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일출,오름,걷기/등산,흐림,여름,자연경관,도보여행,도보,언택트",
+      "contentsid": "CONT_000000000500202",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "물영아리",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 수망리 산 182-2",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 남조로 988-11",
+      "tag": "일출,오름,걷기/등산,흐림,여름,자연경관,도보여행,도보,언택트",
+      "introduction": "영아리는 신령스런 산이란 뜻이다. 앞에 ‘물’이란 접두어가 붙은 것은 분화구에 물이 고인 습지를 품고 있기 때문이다. 물영아리오름은 수망리 중잣성 생태 탐방로와 연계되어 있다. 잣성은 제주도의 전통적인 목축 문화 유물로 목초지에 쌓아 올린 경계용 돌담을 뜻한다.",
+      "latitude": 33.361296,
+      "longitude": 126.6926145,
+      "postcode": null,
+      "phoneno": "064-728-6205",
+      "repPhoto": {
+        "descseo": "물영아리오름",
+        "photoid": {
+          "photoid": 2019022558203,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/24/67082bf5-af9a-4723-b9a1-ee8ce2a296b3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/24/38029480-a1e6-4705-90e6-1569272cab75.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,흐림,여름,자연경관,도보여행,도보",
+      "contentsid": "CONT_000000000500205",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "물찻오름 [출입제한 - 자연휴식년제 적용 중]",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 교래길",
+      "roadaddress": "제주특별자치도 제주시 조천읍 교래길",
+      "tag": "오름,걷기/등산,흐림,여름,자연경관,도보여행,도보",
+      "introduction": "샤려니숲길의 끝에서 만날 수 있는 우리나라 명품 숲길",
+      "latitude": 33.39523354393575,
+      "longitude": 126.65173159089356,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "Mulchat Oreum Volcanic Cone",
+        "photoid": {
+          "photoid": 17768,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/dbe0d8ce-f480-4618-876c-1ba0283fb625.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b6f20aa1-97f6-48d2-80f5-0ace92bd77c7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "contentsid": "CONT_000000000500206",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "미악산 (쌀오름, 솔오름, 탭오름)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 동홍동 산 7-1",
+      "roadaddress": "제주특별자치도 서귀포시 인정오름로 387-63",
+      "tag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "서귀포 시내를 한눈에 담을 수 있는 미악산",
+      "latitude": 33.30508705271701,
+      "longitude": 126.51715030361333,
+      "postcode": null,
+      "phoneno": "064-760-4693",
+      "repPhoto": {
+        "descseo": "Miaksan Mountain (Taep Oreum Volcanic Cone, Ssal Oreum Volcanic Cone)",
+        "photoid": {
+          "photoid": 17778,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/cf08dcd2-531e-480f-9a23-da2c50412cc7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/84c0bffd-1dd6-48f5-b02d-a86ac547c0c1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "동굴,경관/포토,커플,아이,맑음,여름,자연경관,포토스팟,어린이,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,저상버스 접근 가능,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,쉬움",
+      "contentsid": "CONT_000000000500207",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "미천굴",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 삼달리 1010",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 중산간동로 4150-30",
+      "tag": "동굴,경관/포토,커플,아이,맑음,여름,자연경관,포토스팟,어린이,무장애관광",
+      "introduction": "지하(地下)의 신비(神秘)를 간직한 특별한 천연용암동굴",
+      "latitude": 33.3835243,
+      "longitude": 126.8413634,
+      "postcode": "63633",
+      "phoneno": "064-784-2080",
+      "repPhoto": {
+        "descseo": "미천굴",
+        "photoid": {
+          "photoid": 2019022595091,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/21/5d2e84f4-d58b-4fa0-b7bb-a2f32cf63428.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/21/f12af44a-5cd7-4bd5-818e-62c302bff783.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이,아주 어려움",
+      "contentsid": "CONT_000000000500209",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "민오름(구좌읍)",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 송당리 산 155",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 비자림로 1456",
+      "tag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "故 이승만 대통령의 별장이였던 귀빈사가 있는 곳",
+      "latitude": 33.43717332970755,
+      "longitude": 126.76182586733398,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "민오름(구좌읍)",
+        "photoid": {
+          "photoid": 2019022591659,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/26/714f3038-a2b6-44c0-bae2-b673c77e5b54.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/26/31f16cc7-49c2-4ad0-9585-977be18b4188.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,유도 및 안내시설",
+      "contentsid": "CONT_000000000500212",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "민오름(봉개동)",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 칠오름길 (봉개동)",
+      "roadaddress": "제주특별자치도 제주시 칠오름길 (봉개동)",
+      "tag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "introduction": "매년 봄 야생화의 절경을 감상할 수 있는 봉개 민오름",
+      "latitude": 33.47778961794571,
+      "longitude": 126.61844660373538,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "민오름(봉개동)",
+        "photoid": {
+          "photoid": 2019022593270,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/07/2fbc656b-cce6-4090-a472-bb7d0c52ff7b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/07/d4714d62-9fe0-4083-a07e-dcc78e59ac06.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,경관/포토,휴식/힐링,액티비티,오름,청년,중/장년,휴식/치유",
+      "contentsid": "CONT_000000000500213",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "민오름(조천읍)",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 선흘리 산 141",
+      "roadaddress": "제주특별자치도 제주시 조천읍 선흘리 산 141",
+      "tag": "부모,커플,혼자,경관/포토,휴식/힐링,액티비티,오름,청년,중/장년,휴식/치유,자연경관,체험,도보여행,도보,레저/체험,포토스팟",
+      "introduction": "개척을 거부하는 제주 자연의 민오름",
+      "latitude": 33.47484039573691,
+      "longitude": 126.49502656713867,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "민오름(조천읍)",
+        "photoid": {
+          "photoid": 2019022594061,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/10/b5a63858-1d68-4956-9633-bf9bdde3ccdb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/10/eb1d1ad1-d892-4440-ad0d-2ce0d7f03e36.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,경관/포토,휴식/힐링,체험관광,액티비티,오름,사계절,청년,중/장년,휴식/치유,자연경관,체험,도보여행,도보,레저/체험,포토스팟",
+      "contentsid": "CONT_000000000500215",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "바농오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 교래리 산 108",
+      "roadaddress": "제주특별자치도 제주시 조천읍 교래리 산 108",
+      "tag": "부모,커플,혼자,친구,경관/포토,휴식/힐링,체험관광,액티비티,오름,사계절,청년,중/장년,휴식/치유,자연경관,체험,도보여행,도보,레저/체험,포토스팟",
+      "introduction": "교래리의 바늘오름",
+      "latitude": 33.42869208511108,
+      "longitude": 126.66829691376961,
+      "postcode": "695961",
+      "phoneno": "064-782-1746",
+      "repPhoto": {
+        "descseo": "바늘오름",
+        "photoid": {
+          "photoid": 2019022558357,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/26/ac25890f-612d-4e4b-b5a6-d29a0410f5e4.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/26/87339564-66a6-4368-9e49-bd393c02252b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "박살2 : K-아일랜드제주, 실내, 테마공원, 아이, 비. 눈, 겨울, 사계절, 실내관광지, 문화관광, 박물관, 어트랙션, 포토스팟, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,임산부 휴게시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,쉬움,실내,하,공연/전시,포토스팟,1~2시간",
+      "contentsid": "CONT_000000000500216",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "박살2 : K-아일랜드제주",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2629",
+      "roadaddress": "제주특별자치도 서귀포시 중문관광로 42",
+      "tag": "박살2 : K-아일랜드제주, 실내, 테마공원, 아이, 비. 눈, 겨울, 사계절, 실내관광지, 문화관광, 박물관, 어트랙션, 포토스팟, visitjeju, 비짓제주",
+      "introduction": "감귤·돌·곶자왈·바다·바람, 다섯 가지 제주 테마로 구성된 참여형 실내 전시 공간",
+      "latitude": 33.255043,
+      "longitude": 126.409065,
+      "postcode": "63535",
+      "phoneno": "064-805-0888",
+      "repPhoto": {
+        "descseo": "Alive Museum ",
+        "photoid": {
+          "photoid": 17846,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/327fb774-0376-475b-9367-e007cdec546b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/3b0d8581-7bfa-452b-8bff-83145155c38c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "contentsid": "CONT_000000000500223",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "밧돌오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 송당리 산 66-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 송당리 산 66-1",
+      "tag": "부모,커플,혼자,친구,아이,맑음,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "안돌오름과 연결되어 있는 오름",
+      "latitude": 33.46076476786175,
+      "longitude": 126.75995986079101,
+      "postcode": null,
+      "phoneno": "064-783-4093",
+      "repPhoto": {
+        "descseo": "밧돌오름",
+        "photoid": {
+          "photoid": 2019022595195,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/22/d70826d1-5608-4821-a0a2-2948909ad470.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/22/5a51dbb8-2b40-413c-a96c-27b8b6d7e294.webp"
+        }
+      }
+    },
+    {
+      "alltag": "반려동물, 반려동물동반입장, 혼저옵서개, 반려동물동반_관광지, 휴식/힐링,자연경관,안전여행스탬프,테마공원,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,어려움,실내+실외,중,공연/전시,포토스팟,1시간 미만",
+      "contentsid": "CONT_000000000500225",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "방림원",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 용금로 864",
+      "roadaddress": "제주특별자치도 제주시 한경면 용금로 864",
+      "tag": "반려동물, 반려동물동반입장, 혼저옵서개, 반려동물동반_관광지, 휴식/힐링,자연경관,안전여행스탬프,테마공원,무장애관광",
+      "introduction": "국내최초 세계야생화 작품 전시 박물관, 저지리 예술인 마을에 위치",
+      "latitude": 33.336983,
+      "longitude": 126.26866,
+      "postcode": null,
+      "phoneno": "064-773-0090",
+      "repPhoto": {
+        "descseo": "방림원",
+        "photoid": {
+          "photoid": 2019022601112,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202205/30/725e93f1-8ed2-4290-84e3-431ac76b78b3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202205/30/c783bc80-2b73-4f3d-bff9-55745d58c880.webp"
+        }
+      }
+    },
+    {
+      "alltag": "계곡,휴식/힐링,봄,자연경관,물놀이",
+      "contentsid": "CONT_000000000500226",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "방선문",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 오라2동 3322",
+      "roadaddress": "제주특별자치도 제주시 종천길 39-1",
+      "tag": "계곡,휴식/힐링,봄,자연경관,물놀이",
+      "introduction": "영주 10경중의 한 곳, 신선이 머무는 곳 방선문계곡으로 오세요.",
+      "latitude": 33.45228391344958,
+      "longitude": 126.51781678437806,
+      "postcode": "63147",
+      "phoneno": "064-728-4802",
+      "repPhoto": {
+        "descseo": "방선문",
+        "photoid": {
+          "photoid": 2019022595204,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/22/a66a124f-9f1c-4490-9c71-2899539b21b7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/22/d84e1db5-5c01-449d-95a8-deec4093b5b0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주동쪽가볼만한곳, 제주오름, 제주핫플, 제주억새, 산책로, 오름추천, 제주동쪽, 서귀포오름,실외,중,1~2시간",
+      "contentsid": "CONT_000000000500232",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "백약이오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 성읍리 산 1",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 성읍리 산 1",
+      "tag": "제주동쪽가볼만한곳, 제주오름, 제주핫플, 제주억새, 산책로, 오름추천, 제주동쪽, 서귀포오름",
+      "introduction": "하늘로 향하는 길, 백약이오름",
+      "latitude": 33.437283,
+      "longitude": 126.79018,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "백약이오름",
+        "photoid": {
+          "photoid": 2019022643097,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/451c6ced-dd69-41e5-af5b-94002ce18c19.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/31417b5a-75dd-4d6a-b43c-a3a49ffce286.webp"
+        }
+      }
+    },
+    {
+      "alltag": "문화유적지,자연경관,문화관광,역사유적,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500233",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "백조일손지묘(백조일손지지)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계리",
+      "tag": "문화유적지,자연경관,문화관광,역사유적",
+      "introduction": "4.3항쟁시 억울하게 죽은 유골들을 모아 추모할 수 있도록 만든 묘",
+      "latitude": 33.20672,
+      "longitude": 126.2813,
+      "postcode": null,
+      "phoneno": "064-710-8452",
+      "repPhoto": {
+        "descseo": "Cemetery of Unnamed Korean War Victims",
+        "photoid": {
+          "photoid": 17908,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e5578ff7-eaf4-445f-b75d-797593b45de1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/ad1ef4d3-9b44-454d-927d-0094e6571b1d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "경관/포토,휴식/힐링,휴식/치유,맑음,자연경관,섬속의섬,포토스팟,생물권보전지역,아주 어려움,UNESCO 생물권보전지역",
+      "contentsid": "CONT_000000000500237",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "범섬",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 법환동",
+      "roadaddress": "제주특별자치도 서귀포시 법환동",
+      "tag": "경관/포토,휴식/힐링,휴식/치유,맑음,자연경관,섬속의섬,포토스팟,생물권보전지역",
+      "introduction": "면면이 기괴한 자태의 신비함을 간직한 섬",
+      "latitude": 33.218575,
+      "longitude": 126.517075,
+      "postcode": null,
+      "phoneno": "064-710-6656",
+      "repPhoto": {
+        "descseo": "범섬",
+        "photoid": {
+          "photoid": 2019022588505,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/12/7c4ce45c-884f-4a99-ad0c-3195b71a9c7b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/12/cc892067-dbbc-483d-83bd-68f6817a6e85.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,아이,경관/포토,휴식/힐링,문화유적지,중/장년,휴식/치유,노년,역사유적,포토스팟,어린이,공용주차장,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500239",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "법화사지",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 하원동 1071-1",
+      "roadaddress": "제주특별자치도 서귀포시 하원북로35번길 15-28",
+      "tag": "부모,커플,혼자,아이,경관/포토,휴식/힐링,문화유적지,중/장년,휴식/치유,노년,역사유적,포토스팟,어린이",
+      "introduction": "서귀포시 하원동에 있는 신라시대의 절터",
+      "latitude": 33.2653454,
+      "longitude": 126.4576828,
+      "postcode": null,
+      "phoneno": "064-760-2505",
+      "repPhoto": {
+        "descseo": "법화사지",
+        "photoid": {
+          "photoid": 2019022594106,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/13/db820a17-680e-43e5-857a-a9b5a810eafb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/13/d69e42ae-e24c-4e16-91dc-6da3f9a19a0e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "contentsid": "CONT_000000000500241",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "베릿네오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 중문동 2273",
+      "roadaddress": "제주특별자치도 서귀포시 중문상로17번길 51",
+      "tag": "오름,걷기/등산,자연경관,도보여행,도보",
+      "introduction": "가족과 함께 걷기 좋은길 베릿네오름",
+      "latitude": 33.24894540638588,
+      "longitude": 126.41982192341766,
+      "postcode": null,
+      "phoneno": "064-760-4831",
+      "repPhoto": {
+        "descseo": "베릿네오름",
+        "photoid": {
+          "photoid": 2019022595209,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/22/3cb4f64f-a064-4be1-b667-e162fcb4ab0b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/22/5f2da95d-ca69-47c0-97b7-4b2b8c8e2be5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,봄,자연경관",
+      "contentsid": "CONT_000000000500243",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "별도봉",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 선반로 (화북일동)",
+      "roadaddress": "제주특별자치도 제주시 선반로 (화북일동)",
+      "tag": "오름,걷기/등산,봄,자연경관",
+      "introduction": "화북악이라고 부르는 곳으로 제주항과 앞바다 등이 한눈에 내려다보이는 오름",
+      "latitude": 33.51933304545922,
+      "longitude": 126.55299740626833,
+      "postcode": null,
+      "phoneno": "064-728-3605",
+      "repPhoto": {
+        "descseo": "Byeoldobong Peak",
+        "photoid": {
+          "photoid": 17958,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/2deaa7b2-328c-4241-92f5-8d685db26894.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5baf2687-7d68-4605-a067-c5c0522d9e73.webp"
+        }
+      }
+    },
+    {
+      "alltag": "문화유적지,맑음,자연경관,문화관광,역사유적,봄꽃,유채꽃,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500244",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "별방진",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 하도리 3354",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 하도리 3354",
+      "tag": "문화유적지,맑음,자연경관,문화관광,역사유적,봄꽃,유채꽃",
+      "introduction": "조선시대 제주도 동부지역 최대 기지였던 성",
+      "latitude": 33.52612,
+      "longitude": 126.88438,
+      "postcode": null,
+      "phoneno": "064-710-6704",
+      "repPhoto": {
+        "descseo": "Byeolbangjin Fortress",
+        "photoid": {
+          "photoid": 17967,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9e1691e1-2199-4b38-86f1-9b141a532f68.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/07881143-cb33-40b0-97d3-c1e47afd1837.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주관광,제주도실내가볼만한곳,제주전시,안도다다오,쿠사마야요이,백남준,고미술,현대미술,제주건축,실내명소,단독접근가능,단차없음,수동 휠체어 대여 가능,어려움,실내,하,1~2시간",
+      "contentsid": "CONT_000000000500250",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "본태박물관",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 상천리 380",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 산록남로762번길 69",
+      "tag": "제주관광,제주도실내가볼만한곳,제주전시,안도다다오,쿠사마야요이,백남준,고미술,현대미술,제주건축,실내명소",
+      "introduction": "세계적인 건축가 안도다다오의 자연 친화적인 건축과 전통공예 · 현대미술의 조화",
+      "latitude": 33.3038302,
+      "longitude": 126.3925024,
+      "postcode": "63525",
+      "phoneno": "064-792-8108",
+      "repPhoto": {
+        "descseo": "본태박물관",
+        "photoid": {
+          "photoid": 2019022586722,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/04/c0e907e9-4cf5-4803-a3a5-bd3806b6e218.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/04/0bbf3619-d244-443c-b314-6c5e8ccfb8ed.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이",
+      "contentsid": "CONT_000000000500259",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "북오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 동광리 산 94",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 동광리 산 94",
+      "tag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "안덕 곶자왈 지대에 위치한 북오름",
+      "latitude": 33.306194,
+      "longitude": 126.332054,
+      "postcode": null,
+      "phoneno": "064-794-8722",
+      "repPhoto": {
+        "descseo": "북오름",
+        "photoid": {
+          "photoid": 2019022593287,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/07/9e8e12c3-8fd1-43bd-8cab-4939179ca0d9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/07/02803de4-a54f-47a8-8d96-e8393a025835.webp"
+        }
+      }
+    },
+    {
+      "alltag": "4.3,실내,미술/박물관,부모,비.눈,봄,자연경관,문화관광,제주4.3,역사유적,어트랙션,무장애관광,2022_마을산책_봄,Moment_봄, 문화관광해설사인증,공용주차장,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,저상버스 접근 가능,장애인 화장실,장애인 전용 주차장,쉬움,실내+실외,하,공연/전시,기타,문화관광,1~2시간",
+      "contentsid": "CONT_000000000500260",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "너븐숭이 4.3기념관",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 북촌리 1599",
+      "roadaddress": "제주특별자치도 제주시 조천읍 북촌3길 3",
+      "tag": "4.3,실내,미술/박물관,부모,비.눈,봄,자연경관,문화관광,제주4.3,역사유적,어트랙션,무장애관광,2022_마을산책_봄,Moment_봄, 문화관광해설사인증",
+      "introduction": "제주 4.3의 상징인 조천읍 북촌리에 4.3 희생자들을 위로하여 후세들의 산 교육장으로 활용하는 기념관",
+      "latitude": 33.545986,
+      "longitude": 126.68877,
+      "postcode": null,
+      "phoneno": "064-783-4303",
+      "repPhoto": {
+        "descseo": "Bukchon Neobeunsungi 4.3 Memorial Hall",
+        "photoid": {
+          "photoid": 18045,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/52196c91-7250-4b38-bbab-ea4310c2f193.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/c140bf48-da58-4125-aaa1-fa6d9ddb6c7d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행, 제주도오름, 사려니숲길, 힐링코스, 제주산책, 휴양림, 삼나무숲길, 등산, 무장애관광",
+      "contentsid": "CONT_000000000500265",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "붉은오름(표선면)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 가시리 산 158",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 남조로 1487-73",
+      "tag": "제주여행, 제주도오름, 사려니숲길, 힐링코스, 제주산책, 휴양림, 삼나무숲길, 등산, 무장애관광",
+      "introduction": "제주 힐링여행의 명소, 붉은오름",
+      "latitude": 33.3828211,
+      "longitude": 126.7313785,
+      "postcode": null,
+      "phoneno": "064-760-3481",
+      "repPhoto": {
+        "descseo": "붉은오름(표선면)",
+        "photoid": {
+          "photoid": 2019022638609,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/19/b8bc5382-40d5-4af7-8332-67d6ba623063.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/19/ef727a9a-95b3-47ac-8fd8-27ac801a5f51.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴양림,걷기/등산,휴식/힐링,커플,흐림,가을,자연경관,도보여행,도보,무장애관광,공영관광지, 공영관광지인증,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,저상버스 접근 가능,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,어려움,실외,상,등산,등산로, 산책로,1~2시간",
+      "contentsid": "CONT_000000000500266",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "붉은오름자연휴양림",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 가시리 산 158",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 남조로 1487-73",
+      "tag": "휴양림,걷기/등산,휴식/힐링,커플,흐림,가을,자연경관,도보여행,도보,무장애관광,공영관광지, 공영관광지인증",
+      "introduction": "계절마다 각기 다른 아름다움을 뽐내는 붉은 오름 자연휴양림",
+      "latitude": 33.395905,
+      "longitude": 126.669785,
+      "postcode": "63622",
+      "phoneno": "064-760-3559",
+      "repPhoto": {
+        "descseo": "붉은오름 자연휴양림",
+        "photoid": {
+          "photoid": 2019022588201,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/11/e91e2593-82f1-40e4-9d4c-321aa393be20.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/11/f918f315-d44f-4404-8dea-2a5009fbd6a6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주도여행, 제주도서쪽코스, 섬속의섬, 한림읍, 제주바다, 트래킹, 제주힐링, 포토존, 유네스코,세계지질공원,공용주차장,현금결제,카드결제,화장실,편의점,음료대,유도 및 안내시설,아주 어려움,UNESCO 세계지질공원,1~2시간",
+      "contentsid": "CONT_000000000500267",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "비양도",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주 제주시 한림읍 한림해안로 146",
+      "roadaddress": "제주특별자치도 제주시 한림읍 협재리",
+      "tag": "제주도여행, 제주도서쪽코스, 섬속의섬, 한림읍, 제주바다, 트래킹, 제주힐링, 포토존, 유네스코,세계지질공원",
+      "introduction": "천 년의 시간을 간직한 섬 · 천연기념물 제439호 · 제주도기념물 제48호 · 올레15코스",
+      "latitude": 33.3819398,
+      "longitude": 126.2497525,
+      "postcode": "63032",
+      "phoneno": "064-796-2730",
+      "repPhoto": {
+        "descseo": "비양도",
+        "photoid": {
+          "photoid": 2019022639023,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/22/a18ce446-b6a3-4819-8ebd-6881f79410ab.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/22/81361294-639a-4b1e-a565-097e84754b62.webp"
+        }
+      }
+    },
+    {
+      "alltag": "공영관광지,제주가볼만한곳, 제주도동쪽코스, 산책로, 산림욕, 제주자연, 피톤치드, 비자나무, 제주도볼거리,visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,어려움,실외,중,기타,산책로,1시간 미만",
+      "contentsid": "CONT_000000000500270",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "비자림",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 평대리 3161-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 비자숲길 55",
+      "tag": "공영관광지,제주가볼만한곳, 제주도동쪽코스, 산책로, 산림욕, 제주자연, 피톤치드, 비자나무, 제주도볼거리,visitjeju, 비짓제주",
+      "introduction": "천년의 세월이 녹아들어 신비로움이 가득한 자연 명소",
+      "latitude": 33.491318,
+      "longitude": 126.811386,
+      "postcode": "63351",
+      "phoneno": "064-710-7912",
+      "repPhoto": {
+        "descseo": "비자림",
+        "photoid": {
+          "photoid": 2019022643111,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/908a37e8-918e-46a8-bc2e-e7569eba8a8d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/eda139ae-6a88-486f-b2df-f23ecca6326e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,맑음,경관/포토,오름",
+      "contentsid": "CONT_000000000500271",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "비치미오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 송당리 산 255-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 송당리 산 255-1",
+      "tag": "부모,커플,혼자,친구,아이,맑음,경관/포토,오름,자연경관,도보여행,도보,포토스팟,어린이",
+      "introduction": "불러도 대답이 없지만 또 부르고 싶은 비치미오름",
+      "latitude": 33.428295,
+      "longitude": 126.764145,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "비치미오름",
+        "photoid": {
+          "photoid": 2019022595285,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/22/61178a20-a01b-4cf5-88e5-6a4bf7a911d4.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/22/9751d34d-0f3f-46f1-861a-74ca0c0c62ae.webp"
+        }
+      }
+    },
+    {
+      "alltag": "4.3,문화유적지,부모,커플,혼자,친구,아이,청년,중/장년,노년,자연경관,문화관광,제주4.3,역사유적,어린이,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500273",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "빌레못동굴",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 어음리 1391",
+      "roadaddress": "제주특별자치도 제주시 애월읍 어음리 1391",
+      "tag": "4.3,문화유적지,부모,커플,혼자,친구,아이,청년,중/장년,노년,자연경관,문화관광,제주4.3,역사유적,어린이",
+      "introduction": "천연기념물 제342호, 총길이 11,749m의 세계에서 가장 긴 동굴",
+      "latitude": 33.408165,
+      "longitude": 126.35178,
+      "postcode": null,
+      "phoneno": "064-756-4325",
+      "repPhoto": {
+        "descseo": "Billemotdonggul Lava Tube",
+        "photoid": {
+          "photoid": 18122,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e9938086-65e5-4d3e-b1bf-72924167a7cf.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7883bec6-1652-458a-8025-3630ebfb7489.webp"
+        }
+      }
+    },
+    {
+      "alltag": "서귀포여행, 제주서귀포가볼만한곳, 제주바다, 용머리, 산방산, 힐링, 현무암, 포토존,공용주차장,편의점,음료대,유도 및 안내시설,아주 어려움,실외",
+      "contentsid": "CONT_000000000500274",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사계해변",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 2147-35",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계리 2147-35",
+      "tag": "서귀포여행, 제주서귀포가볼만한곳, 제주바다, 용머리, 산방산, 힐링, 현무암, 포토존",
+      "introduction": "산방산과 용머리, 에메랄드 빛 바다가 그림처럼 아름다운 곳",
+      "latitude": 33.22811456446537,
+      "longitude": 126.3084815391785,
+      "postcode": null,
+      "phoneno": "064-760-4372",
+      "repPhoto": {
+        "descseo": "사계해변",
+        "photoid": {
+          "photoid": 2019022638966,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/21/6e10d06a-73eb-4240-92f9-c5d837e5390d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/21/f1662547-acb1-436d-9ff4-b24e3324dc4c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일출,해변,드라이브,커플,맑음,가을,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500275",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사계해안도로",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계리",
+      "tag": "일출,해변,드라이브,커플,맑음,가을,자연경관,제주명품42,포토스팟,제주7대도로",
+      "introduction": "산방산과 형제섬을 즐길 수 있는 해안도로",
+      "latitude": 33.21973,
+      "longitude": 126.29425,
+      "postcode": null,
+      "phoneno": "064-760-2772",
+      "repPhoto": {
+        "descseo": "사계해안도로",
+        "photoid": {
+          "photoid": 2019022589313,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/15/4fcaac11-7f36-41c7-99a8-416b7bda3fd6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/15/465a7e6f-5d83-4ed2-9fc5-4eeaa7ca7857.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일몰,일출,오름,걷기/등산,친구,겨울,자연경관",
+      "contentsid": "CONT_000000000500276",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사라봉",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 건입동 388",
+      "roadaddress": "제주특별자치도 제주시 사라봉동길 61",
+      "tag": "일몰,일출,오름,걷기/등산,친구,겨울,자연경관",
+      "introduction": "붉은 노을이 온 바다를 물들이는 모습이 아름다운 사라봉",
+      "latitude": 33.51839777686117,
+      "longitude": 126.54391681003415,
+      "postcode": null,
+      "phoneno": "064-728-3605",
+      "repPhoto": {
+        "descseo": "사라봉",
+        "photoid": {
+          "photoid": 2019022591100,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/24/74dc9cae-c275-4611-9219-b18902814f7d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/24/6fc1a542-4741-4972-81c2-c94b7585e1cd.webp"
+        }
+      }
+    },
+    {
+      "alltag": "커플,친구,일몰,걷기,단차없음,아주 어려움",
+      "contentsid": "CONT_000000000500277",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사라봉공원",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 사라봉동길 74 (건입동)",
+      "roadaddress": "제주특별자치도 제주시 사라봉동길 74 (건입동)",
+      "tag": "커플,친구,일몰,걷기,자연경관,무장애관광",
+      "introduction": "제주의 아침이 열리는 사라봉공원, 영주 10경 중의 하나인 사봉낙조의 장관을 볼 수 있는 곳",
+      "latitude": 33.51921,
+      "longitude": 126.5473,
+      "postcode": null,
+      "phoneno": "064-728-3605",
+      "repPhoto": {
+        "descseo": "사라봉공원",
+        "photoid": {
+          "photoid": 2019022591114,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/24/495664c1-2a08-453c-b914-ed3322c29f9f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/24/8ffefbf7-b20c-4c5f-869a-bc52cb4728eb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,커플,겨울",
+      "contentsid": "CONT_000000000500278",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사라오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 신례리 산 2-1",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 신례리 산 2-1",
+      "tag": "오름,걷기/등산,커플,겨울,자연경관,도보여행,도보,한라산,언택트",
+      "introduction": "노루떼가 뛰어노는 모습이 한 폭의 그림 같은 곳",
+      "latitude": 33.371944,
+      "longitude": 126.570915,
+      "postcode": null,
+      "phoneno": "064-710-7826",
+      "repPhoto": {
+        "descseo": "사라오름",
+        "photoid": {
+          "photoid": 2019022587917,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/10/088edd31-403a-4eca-a0ee-3327c32ce43a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/10/3b72914a-8a8f-4a2a-9139-82cabebbb1b9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,커플,흐림,봄,자연경관,도보여행,도보,단풍",
+      "contentsid": "CONT_000000000500279",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사려니오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 한남리 산 2-1",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 516로 1648-87",
+      "tag": "오름,걷기/등산,커플,흐림,봄,자연경관,도보여행,도보,단풍",
+      "introduction": "볼록한 제주 오름들이 한눈에 보이는 사려니오름",
+      "latitude": 33.3350665992182,
+      "longitude": 126.6432355849854,
+      "postcode": null,
+      "phoneno": " 064-730-7272",
+      "repPhoto": {
+        "descseo": "Saryeoni Oreum Volcanic Cone (Taepraengi Oreum Volcanic Cone)",
+        "photoid": {
+          "photoid": 18160,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/cd21b3f1-1e1a-4168-b325-2e344c5791d9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/3b77ea2e-ce66-4990-9a93-a366d711cffe.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행, 제주도갈만한곳, 한라산둘레길, 힐링제주, 삼나무,스트레스해소, 힐링제주, 화산송이, 공영관광지인증,visitjeju, 비짓제주,화장실,어려움",
+      "contentsid": "CONT_000000000500281",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "사려니숲길",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 교래리 산 137-1",
+      "roadaddress": "제주특별자치도 제주시 조천읍 교래리 산 137-1",
+      "tag": "제주여행, 제주도갈만한곳, 한라산둘레길, 힐링제주, 삼나무,스트레스해소, 힐링제주, 화산송이, 공영관광지인증,visitjeju, 비짓제주",
+      "introduction": "제주 숨은 비경 31곳 중 하나로, 삼나무 향을 느끼며 걷는 아름답고 청정한 숲길",
+      "latitude": 33.4180631,
+      "longitude": 126.6534847,
+      "postcode": null,
+      "phoneno": "064-900-8800",
+      "repPhoto": {
+        "descseo": "사려니숲길",
+        "photoid": {
+          "photoid": 2019022559871,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/19/c611b079-dade-41d1-bb69-486fc6986e65.webp"
+        }
+      }
+    },
+    {
+      "alltag": "산굼부리, 오름, 걷기/등산, 친구, 맑음, 가을, 우수관광사업체, 자연경관, 억새, 무장애관광, 우수관광사업체인증, 천연기념물, 분화구, 마르형분화구, 분화구식물원, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,편의점,음료대,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,어려움,실외,하,관람,1시간 미만",
+      "contentsid": "CONT_000000000500283",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산굼부리",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 교래리 342-2",
+      "roadaddress": "제주특별자치도 제주시 조천읍 비자림로 768",
+      "tag": "산굼부리, 오름, 걷기/등산, 친구, 맑음, 가을, 우수관광사업체, 자연경관, 억새, 무장애관광, 우수관광사업체인증, 천연기념물, 분화구, 마르형분화구, 분화구식물원, visitjeju, 비짓제주",
+      "introduction": "사계절마다 새로운 풍경을 선사하는 ‘분화구 식물원’이자 국가 지정 천연기념물 제263호",
+      "latitude": 33.4316207,
+      "longitude": 126.6900058,
+      "postcode": null,
+      "phoneno": "064-783-9900",
+      "repPhoto": {
+        "descseo": "Sangumburi Crater",
+        "photoid": {
+          "photoid": 18173,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c44bb372-4717-4e89-ad89-2c5dba285168.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a7b4a973-40e9-44e6-87d9-46a4c4f3b367.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주도여행, 제주서쪽가볼만한곳, 지질트레일, 서귀포, 제주도볼거리, 트래킹, 등산로, 제주자연, 문화관광해설사인증, 공영관광지인증, 실시간정보, 실시간정보LIVE,세계지질공원, visitjeju, 비짓제주,공용주차장,장애인 화장실,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CONT_000000000500285",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산방산",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 산 16번지 일원",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계리 산 16",
+      "tag": "제주도여행, 제주서쪽가볼만한곳, 지질트레일, 서귀포, 제주도볼거리, 트래킹, 등산로, 제주자연, 문화관광해설사인증, 공영관광지인증, 실시간정보, 실시간정보LIVE,세계지질공원, visitjeju, 비짓제주",
+      "introduction": "설문대할망이 한라산 꼭대기를 뽑아 던졌다는 전설이 전해지는 산방산 · 명승 제77호 · 산방산 암벽식물지대 천연기념물 제376호 · 제주올레 10코스",
+      "latitude": 33.236614,
+      "longitude": 126.31289,
+      "postcode": null,
+      "phoneno": "064-794-2940",
+      "repPhoto": {
+        "descseo": "산방산",
+        "photoid": {
+          "photoid": 2019022643119,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/c2172c06-dda2-4f16-ae3f-a2314b6f9f05.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/5eedc065-a33e-4729-89c9-776c52af62c0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "문화유적지,부모,맑음,문화관광,역사유적,공용주차장,현금결제,카드결제,화장실,편의점,음료대,유도 및 안내시설,아주 어려움,UNESCO 세계지질공원",
+      "contentsid": "CONT_000000000500287",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산방굴사",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 산 16",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계리 산 16",
+      "tag": "문화유적지,부모,맑음,문화관광,역사유적",
+      "introduction": "불상이 있어 사찰로 불리는 아름다운 풍광을 가진 산방굴사",
+      "latitude": 33.243855,
+      "longitude": 126.31332,
+      "postcode": null,
+      "phoneno": "064-760-6321",
+      "repPhoto": {
+        "descseo": "산방굴사",
+        "photoid": {
+          "photoid": 2019022588720,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/12/0ff17322-5323-4be7-911f-c2c737e2cd9d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/12/4bb55fed-1be0-4556-bd39-b425be82c82f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "산방산 탄산온천, 실내, 휴식/힐링, 자연경관, 실내관광지, 탄산온천, 노천탕, visitjeju, 비짓제주",
+      "contentsid": "CONT_000000000500288",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산방산 탄산온천",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 981",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계북로41번길 192",
+      "tag": "산방산 탄산온천, 실내, 휴식/힐링, 자연경관, 실내관광지, 탄산온천, 노천탕, visitjeju, 비짓제주",
+      "introduction": "제주 최초의 대중온천으로 알려진 국내에서도 보기 드문 탄산온천, 산방산 탄산온천",
+      "latitude": 33.2487082,
+      "longitude": 126.2990433,
+      "postcode": null,
+      "phoneno": "064-792-8300",
+      "repPhoto": {
+        "descseo": "산방산탄산온천",
+        "photoid": {
+          "photoid": 2019022590520,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/19/07c8d978-3c3c-49e1-9ae5-9b4b7a92ab61.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/19/bfe1ec5a-970c-416a-8336-72f89b7e723d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "등대,일몰,경관/포토,친구,맑음,가을,포토스팟,공용주차장,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500290",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산지등대",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 사라봉동길 108-1 (건입동)",
+      "roadaddress": "제주특별자치도 제주시 사라봉동길 108-1 (건입동)",
+      "tag": "등대,일몰,경관/포토,친구,맑음,가을,포토스팟",
+      "introduction": "오랜 역사를 지니고 있는 제주의 대표 등대 중 하나",
+      "latitude": 33.52147,
+      "longitude": 126.54543,
+      "postcode": null,
+      "phoneno": "064-720-2672",
+      "repPhoto": {
+        "descseo": "산지등대",
+        "photoid": {
+          "photoid": 2019022593297,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/07/272be9bc-ac7c-41ea-9f8d-aa715205799f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/07/7a1cf260-a02d-43b0-9689-f22e34fe5ed8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/힐링,문화유적지,사계절,자연경관,역사유적,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500292",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산천단",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 아라일동 375-4",
+      "roadaddress": "제주특별자치도 제주시 아라일동 375-4",
+      "tag": "휴식/힐링,문화유적지,사계절,자연경관,역사유적",
+      "introduction": "우리나라에서 가장 오래된 노목인 곰솔과 함께한 산천단의 역사",
+      "latitude": 33.44791,
+      "longitude": 126.552986,
+      "postcode": "63244",
+      "phoneno": "064-710-6652",
+      "repPhoto": {
+        "descseo": "Sancheondan Altar",
+        "photoid": {
+          "photoid": 18237,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8f563396-883f-4572-8eb2-2d71d6ad2b4c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/e65859f4-e635-4715-80ba-02b344deca40.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,휴식/힐링,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500293",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "산천단곰솔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 아라일동 375-1",
+      "roadaddress": "제주특별자치도 제주시 516로 3041-24",
+      "tag": "부모,커플,혼자,친구,휴식/힐링,자연경관",
+      "introduction": "여덟그루의 곰솔과 제단, 제주시 숨은 비경",
+      "latitude": 33.4474924,
+      "longitude": 126.5550308,
+      "postcode": null,
+      "phoneno": "064-710-6655",
+      "repPhoto": {
+        "descseo": "산천단곰솔",
+        "photoid": {
+          "photoid": 2019022595313,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/23/7134beae-bcaa-4da6-8fb9-2576c5d26f06.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/23/fc5d258b-5ee0-42e0-90eb-75731034f8ad.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,경관/포토,오름,사계절",
+      "contentsid": "CONT_000000000500295",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "삼각봉",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 해안동 산 220-13",
+      "roadaddress": "제주특별자치도 제주시 1100로 2070-61",
+      "tag": "부모,커플,혼자,친구,경관/포토,오름,사계절,자연경관,포토스팟",
+      "introduction": "한라산 관음사 코스 중 유난히 신비스러운 삼각봉",
+      "latitude": 33.3616666,
+      "longitude": 126.5291666,
+      "postcode": null,
+      "phoneno": "064-710-7826",
+      "repPhoto": {
+        "descseo": "Samgakbong Peak",
+        "photoid": {
+          "photoid": 18258,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/47944e62-f36d-4ef1-ac1e-d63f1ddd1851.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7780d8b2-524c-4c75-9d36-4a0665a8cfe1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,맑음,아이,경관/포토,휴식/힐링,오름,사계절,자연경관,포토스팟,어린이,공용주차장,화장실,편의점,음료대",
+      "contentsid": "CONT_000000000500297",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "삼매봉공원",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 819",
+      "roadaddress": "제주특별자치도 서귀포시 남성로115번길 83",
+      "tag": "부모,커플,혼자,친구,맑음,아이,경관/포토,휴식/힐링,오름,사계절,자연경관,포토스팟,어린이",
+      "introduction": "외돌개 앞에 위치한 작은 오름",
+      "latitude": 33.2639577,
+      "longitude": 126.5507293,
+      "postcode": "63594",
+      "phoneno": "064-760-3193",
+      "repPhoto": {
+        "descseo": "삼매봉",
+        "photoid": {
+          "photoid": 2019022595337,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/23/e0ca782d-df62-4b58-bda3-e16920b10611.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/23/0bcde1a9-9250-48a4-b73f-afcfe54a0e6e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "문화유적지,부모,맑음,자연경관,문화관광,역사유적,봄꽃,벚꽃,무장애관광, 문화관광해설사인증, 우수관광사업체인증,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,저상버스 접근 가능,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,쉬움,실외,하,공연/전시,1시간 미만",
+      "contentsid": "CONT_000000000500300",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "삼성혈",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼성로 22",
+      "roadaddress": "제주특별자치도 제주시 삼성로 22",
+      "tag": "문화유적지,부모,맑음,자연경관,문화관광,역사유적,봄꽃,벚꽃,무장애관광, 문화관광해설사인증, 우수관광사업체인증",
+      "introduction": "제주도에서 가장 유명한 신화 중 하나가 삼신인(三神人) 신화이다. 신화에 따르면 탐라(제주도의 옛 지명)에 아직 사람이 살고 있지 않던 시기, 신성한 한라산의 기운이 내린 곳에 삼신인이 땅에서 솟아났다고 한다. 전설적인 신화의 흔적이 삼성혈(三姓穴)에 남아 있다. ",
+      "latitude": 33.504166,
+      "longitude": 126.5288,
+      "postcode": null,
+      "phoneno": "064-722-3315",
+      "repPhoto": {
+        "descseo": "Samseonghyeol Shrine",
+        "photoid": {
+          "photoid": 18272,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/71db4312-7faa-412e-a815-417405350a69.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/068efab1-4eaf-4b14-ab81-f43ef586fb72.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해수욕장,액티비티,친구,커플,맑음,여름,자연경관,체험,레저/체험,해변,물놀이,무장애관광,반려동물동반_해변,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연,화장실,편의점,음료대,유도 및 안내시설,단독접근가능,단차없음,장애인 화장실,아주 어려움",
+      "contentsid": "CONT_000000000500301",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "삼양해수욕장",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼양동",
+      "roadaddress": "제주특별자치도 제주시 삼양동",
+      "tag": "해수욕장,액티비티,친구,커플,맑음,여름,자연경관,체험,레저/체험,해변,물놀이,무장애관광,반려동물동반_해변,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "introduction": "반짝이는 검은 모래가 특색인 해수욕장",
+      "latitude": 33.525845,
+      "longitude": 126.5863,
+      "postcode": null,
+      "phoneno": "064-728-3991",
+      "repPhoto": {
+        "descseo": "Samyang Black Sand Beach",
+        "photoid": {
+          "photoid": 18285,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/5ddda0d0-4174-4fd6-aa65-c9594d7ae77d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a7f5d9d3-ddba-4dcc-9a5f-1966c701028c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "새별오름, 제주가볼만한곳, 제주오름, 제주산책, 억새, 애월, 제주가을, 초보자탐방로, 반려동물, 반려동물동반입장, 문화관광해설사인증, 제주들불축제, 비양도, visitjeju, 비짓제주,공용주차장,화장실,유도 및 안내시설,아주 어려움,실외,1시간 미만",
+      "contentsid": "CONT_000000000500309",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "새별오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 봉성리 산 59-8",
+      "roadaddress": "제주특별자치도 제주시 애월읍 봉성리 산 59-8",
+      "tag": "새별오름, 제주가볼만한곳, 제주오름, 제주산책, 억새, 애월, 제주가을, 초보자탐방로, 반려동물, 반려동물동반입장, 문화관광해설사인증, 제주들불축제, 비양도, visitjeju, 비짓제주",
+      "introduction": "제주 서부 애월에 위치한 억새가 아름다운 대표 오름",
+      "latitude": 33.36723,
+      "longitude": 126.35711,
+      "postcode": "63040",
+      "phoneno": "064-728-2753/064-728-2762",
+      "repPhoto": {
+        "descseo": "새별오름",
+        "photoid": {
+          "photoid": 2019022643576,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/21/dd229994-9625-44a2-985c-f710bca7f286.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/21/2a2a3ba3-e7c4-49f5-9409-da274ca547cb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "경관/포토,맑음,자연경관,섬속의섬,포토스팟, 실시간정보, 실시간정보LIVE,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500310",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "새섬",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 707-5",
+      "roadaddress": "제주특별자치도 서귀포시 남성중로 40",
+      "tag": "경관/포토,맑음,자연경관,섬속의섬,포토스팟, 실시간정보, 실시간정보LIVE",
+      "introduction": "섬 속의 섬. 바다를 향한 산책",
+      "latitude": 33.23647274214606,
+      "longitude": 126.56159064340818,
+      "postcode": "63594",
+      "phoneno": "064-760-3192",
+      "repPhoto": {
+        "descseo": "Saeseom Island",
+        "photoid": {
+          "photoid": 18325,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1d695dc7-0acc-4c09-8087-5b8773fda5af.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b1ef476a-b49f-4910-90d6-93ef0fd1f058.webp"
+        }
+      }
+    },
+    {
+      "alltag": "밤,경관/포토,커플,맑음,포토스팟,무장애관광, 실시간정보, 실시간정보LIVE,공용주차장,화장실,편의점,음료대,유도 및 안내시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500312",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "새연교",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 707-4",
+      "roadaddress": "제주특별자치도 서귀포시 서홍동 707-4",
+      "tag": "밤,경관/포토,커플,맑음,포토스팟,무장애관광, 실시간정보, 실시간정보LIVE",
+      "introduction": "새섬으로 가는 통로, '새'로운 인'연'을 만들어가는 다리",
+      "latitude": 33.238186,
+      "longitude": 126.55907,
+      "postcode": null,
+      "phoneno": "064-760-3471",
+      "repPhoto": {
+        "descseo": "Saeyeongyo Bridge",
+        "photoid": {
+          "photoid": 18340,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9f1410ca-8feb-4857-a55c-78eaa995a11b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5a0e11cb-20ab-43b5-8cba-8fe0bd3e530a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "경관/포토,휴식/힐링,공용주차장,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500316",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서건도",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 산 1",
+      "roadaddress": "제주특별자치도 서귀포시 강정동 산 1",
+      "tag": "경관/포토,휴식/힐링,자연경관,포토스팟,언택트",
+      "introduction": "바다 걸어서 섬까지, 제주도에 있는 모세의 기적으로 제주의 숨은 명소.",
+      "latitude": 33.23007,
+      "longitude": 126.49852,
+      "postcode": null,
+      "phoneno": "064-760-2674",
+      "repPhoto": {
+        "descseo": "Seogeondo Island",
+        "photoid": {
+          "photoid": 18360,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3ae2ce08-1b6d-4646-91c8-b93a520a455f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f5e10188-a1a1-4cf1-806a-03cc4dcce5b2.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행, 제주서귀포가볼만한곳, 제주도서쪽, 자연휴양림, 제주캠핑, 산책로, 삼림욕, 힐링, 공영관광지인증 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,흡연구역,카드결제,현금결제,계좌이체, 무통장입금 등,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,단독접근가능,청각장애인 접근성,시각장애인 접근성,어려움,실외,중,등산,체험,1~2시간",
+      "contentsid": "CONT_000000000500327",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서귀포자연휴양림",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 대포동 산 1-8",
+      "roadaddress": "제주특별자치도 서귀포시 1100로 882",
+      "tag": "제주여행, 제주서귀포가볼만한곳, 제주도서쪽, 자연휴양림, 제주캠핑, 산책로, 삼림욕, 힐링, 공영관광지인증 ",
+      "introduction": "다양한 생태계를 보여주고 뚜렷한 계절적 감각을 느낄 수 있는 제주권 최고의 휴양림",
+      "latitude": 33.31167,
+      "longitude": 126.45876,
+      "postcode": "63554",
+      "phoneno": "064-738-4544",
+      "repPhoto": {
+        "descseo": "서귀포자연휴양림",
+        "photoid": {
+          "photoid": 2019022643135,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/bdc8ed55-c4f5-4258-994f-eab4449f2016.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/464b2236-ec1a-4acb-832c-eceb6e2bceb9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "액티비티,커플,아이,체험,레저/체험,어린이,수상레저,어트랙션,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,저상버스 접근 가능,장애인 전용 주차장,수동 휠체어 대여 가능,어려움",
+      "contentsid": "CONT_000000000500329",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서귀포잠수함(대국해저관광)",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 707-5 서귀포잠수함",
+      "roadaddress": "제주특별자치도 서귀포시 남성중로 40 (서홍동, 유람선매표소) 서귀포잠수함",
+      "tag": "액티비티,커플,아이,체험,레저/체험,어린이,수상레저,어트랙션,무장애관광",
+      "introduction": "세계최대 연산호군락지와 해저 비경을 발견하는 잠수함체험",
+      "latitude": 33.2392231,
+      "longitude": 126.5586562,
+      "postcode": null,
+      "phoneno": "064-732-6060",
+      "repPhoto": {
+        "descseo": "서귀포잠수함(대국해저관광)",
+        "photoid": {
+          "photoid": 2019022587119,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/05/956a7a7f-9f3e-4cac-8923-be4cef5bc44b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/05/2b2dbac1-451d-4272-83cc-924e3727bb68.webp"
+        }
+      }
+    },
+    {
+      "alltag": "밤,실내,미술/박물관,겨울,실내관광지,어트랙션,공영관광지, 공영관광지인증,공용주차장,현금결제,카드결제,화장실,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움,실내,공연/전시,1시간 미만",
+      "contentsid": "CONT_000000000500330",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서귀포천문과학문화관",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 1100로 506-1",
+      "roadaddress": "제주특별자치도 서귀포시 1100로 506-1",
+      "tag": "밤,실내,미술/박물관,겨울,실내관광지,어트랙션,공영관광지, 공영관광지인증",
+      "introduction": "제주도내 최초 천문우주 관련 과학관",
+      "latitude": 33.28769,
+      "longitude": 126.46199,
+      "postcode": null,
+      "phoneno": "064-739-9701",
+      "repPhoto": {
+        "descseo": "서귀포천문과학문화관[시범개방중]",
+        "photoid": {
+          "photoid": 2019022573264,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202008/28/4797c592-4502-4298-ac25-31d68b58400f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202008/28/a0c896b5-8bfe-4ae1-bb55-97e57b7887ab.webp"
+        }
+      }
+    },
+    {
+      "alltag": "커플,친구,맑음,휴식/힐링,해변,공용주차장,화장실,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500331",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서귀포해안",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서호동",
+      "roadaddress": "제주특별자치도 서귀포시 서호동",
+      "tag": "커플,친구,맑음,휴식/힐링,해변,자연경관",
+      "introduction": "서귀포시 호근동 일대에 펼쳐진 해안경승지",
+      "latitude": 33.23262984674832,
+      "longitude": 126.49828110991211,
+      "postcode": null,
+      "phoneno": "064-760-2772",
+      "repPhoto": {
+        "descseo": "서귀포해안",
+        "photoid": {
+          "photoid": 2019022589993,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/17/e6e2895e-9073-4a46-956f-2e2e3a88e1d0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/17/41495004-c126-47a4-8914-0dc1d3e4407b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "실내,미술/박물관,사계절,어트랙션,무장애관광,공영관광지, 공영관광지인증 ,공용주차장,화장실,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,어려움,실내+실외,하,공연/전시,공원산책,1시간 미만",
+      "contentsid": "CONT_000000000500333",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서복전시관",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 100-2",
+      "roadaddress": "제주특별자치도 서귀포시 칠십리로 156-8",
+      "tag": "실내,미술/박물관,사계절,어트랙션,무장애관광,공영관광지, 공영관광지인증 ",
+      "introduction": "진시황의 불로장생의 꿈인 불로초를 찾아 제주도에 온 것으로 전해지는 서복(徐福)을 기념하는 전시관",
+      "latitude": 33.2448641,
+      "longitude": 126.5706551,
+      "postcode": null,
+      "phoneno": "064-760-6361",
+      "repPhoto": {
+        "descseo": "서복전시관",
+        "photoid": {
+          "photoid": 2019022595428,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/23/968cc936-9abe-4648-8a7b-d12fd67f2b06.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/23/4516dfa4-ec70-4f42-a9c9-ce8bcd7fbc09.webp"
+        }
+      }
+    },
+    {
+      "alltag": "맑음,봄,걷기/등산,유채꽃,오름,코스모스,자연경관,봄꽃,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연,2022_마을산책_봄,Moment_봄",
+      "contentsid": "CONT_000000000500335",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "서우봉",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 함덕리 169-1",
+      "roadaddress": "제주특별자치도 제주시 조천읍 함덕리 169-1",
+      "tag": "맑음,봄,걷기/등산,유채꽃,오름,코스모스,자연경관,봄꽃,반려동물동반_오름,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연,2022_마을산책_봄,Moment_봄",
+      "introduction": "푸른 바다와 예쁜 유채꽃밭이 어우러진 멋진 풍경이 있는 곳",
+      "latitude": 33.5344076,
+      "longitude": 126.63424550000002,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "서우봉",
+        "photoid": {
+          "photoid": 2018052301822,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201807/09/bccbe406-82e1-4858-b5d5-05743df44d9c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201807/09/44e6831f-d009-48bd-9ace-34375b775c44.webp"
+        }
+      }
+    },
+    {
+      "alltag": "공연, 극장,  서커스, 스쿠터, 코끼리쇼, 실내관광, 제주도실내관광지, 제주도여행지, 서귀포여행지,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,쉬움,실내,하,공연/전시,1~2시간",
+      "contentsid": "CONT_000000000500336",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "제주아트서커스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 동광로 214",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 동광로 214",
+      "tag": "공연, 극장,  서커스, 스쿠터, 코끼리쇼, 실내관광, 제주도실내관광지, 제주도여행지, 서귀포여행지",
+      "introduction": "국내 최초로 선보이는 7인 여전사 오토바이쇼",
+      "latitude": 33.313927,
+      "longitude": 126.34488,
+      "postcode": null,
+      "phoneno": "064-794-4444",
+      "repPhoto": {
+        "descseo": "서커스월드공연장",
+        "photoid": {
+          "photoid": 2019022592467,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/02/0bf4675c-1d69-41a3-9594-dd6c5fe70a5a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/02/04f62f4a-a370-4517-a0ec-0447b38e8e0a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "테마공원,비.눈,흐림,사계절,실내관광지,문화관광,박물관,언택트,어트랙션,우수관광사업체,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_관광지,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움,우수관광사업체",
+      "contentsid": "CONT_000000000500337",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "숨도, 귤림성",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 일주동로 8941 (호근동)",
+      "roadaddress": "제주특별자치도 서귀포시 일주동로 8941 (호근동)",
+      "tag": "테마공원,비.눈,흐림,사계절,실내관광지,문화관광,박물관,언택트,어트랙션,우수관광사업체,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_관광지",
+      "introduction": "용암의 신비를 담은 예술 정원",
+      "latitude": 33.250103,
+      "longitude": 126.53654,
+      "postcode": null,
+      "phoneno": "064-739-5588",
+      "repPhoto": {
+        "descseo": "석부작박물관",
+        "photoid": {
+          "photoid": 2019022594186,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/13/cb11d55b-0162-44df-bc5c-10c5ff19a2a2.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/13/fa57d032-e5fd-4ca4-be56-122e6133e054.webp"
+        }
+      }
+    },
+    {
+      "alltag": "서귀포가볼만한곳, 제주도서쪽코스, 제주도관광코스, 제주바다, 해안길, 성산, 선녀바위, 붉은오름, 공영관광지인증,visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,편의점,음료대,저상버스 접근 가능,장애인 화장실,장애인 전용 주차장,어려움,실외,상,등산,기타,산책로,1시간 미만",
+      "contentsid": "CONT_000000000500343",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "섭지코지",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 고성리 ",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 섭지코지로 262",
+      "tag": "서귀포가볼만한곳, 제주도서쪽코스, 제주도관광코스, 제주바다, 해안길, 성산, 선녀바위, 붉은오름, 공영관광지인증,visitjeju, 비짓제주",
+      "introduction": "성산일출봉을 배경으로 아름다운 해안 절경과 독특한 화산지형을 감상할 수 있는 제주 동부의 해안 명소",
+      "latitude": 33.4236948,
+      "longitude": 126.9296022,
+      "postcode": null,
+      "phoneno": "064-784-2810",
+      "repPhoto": {
+        "descseo": "섭지코지",
+        "photoid": {
+          "photoid": 2019022638471,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/6efa0dd8-7e17-47b9-8265-caf514b7ccef.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/f18ca648-b42f-4209-b87a-2410b8da656d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,오름,4.3",
+      "contentsid": "CONT_000000000500344",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "섯알오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리 1618",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 상모리 1618",
+      "tag": "부모,커플,혼자,친구,아이,오름,4.3,자연경관,제주4.3,역사유적,도보여행,도보,어린이",
+      "introduction": "역사의 아픔을 간직한곳",
+      "latitude": 33.20450505762628,
+      "longitude": 126.28167600000006,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "섯알오름",
+        "photoid": {
+          "photoid": 2019022559509,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/09/fac531a3-7e22-4230-a9e2-29dac004a002.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/09/d1f2b53d-5247-4ed8-a694-7a31370e5d5c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "오름,걷기/등산,봄,자연경관,도보여행,도보,한라산,언택트",
+      "contentsid": "CONT_000000000500345",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "성널오름",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 신례리",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 신례리",
+      "tag": "오름,걷기/등산,봄,자연경관,도보여행,도보,한라산,언택트",
+      "introduction": "널판지로 성을 쌓은것 처럼 보이는 바위 절벽",
+      "latitude": 33.37372,
+      "longitude": 126.59245,
+      "postcode": null,
+      "phoneno": "064-710-7826",
+      "repPhoto": {
+        "descseo": "성널오름 (성판악)",
+        "photoid": {
+          "photoid": 2019022558371,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/26/1c04315e-d3a4-4d31-8ed4-fdc016116a53.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/26/544500dc-1c64-4065-bdf9-92d0ac31179b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이,아주 어려움",
+      "contentsid": "CONT_000000000500346",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "성불오름",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주 제주시 구좌읍 중산간동로 2532",
+      "roadaddress": "제주 제주시 구좌읍 중산간동로 2532",
+      "tag": "부모,커플,혼자,친구,아이,오름,자연경관,도보여행,도보,어린이",
+      "introduction": "삼나무와 편백나무가 우거진 오름",
+      "latitude": 33.42295,
+      "longitude": 126.74975,
+      "postcode": "63355",
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "성불오름",
+        "photoid": {
+          "photoid": 2019022558435,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/26/44288dfd-8496-4e9e-bcc5-9d277469b6c7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/26/9f2c439f-e804-48c0-9d59-868b6d65b305.webp"
+        }
+      }
+    },
+    {
+      "alltag": "공영관광지,제주도관광,제주동쪽코스,세계자연유산,유네스코,제주자연,산책로,제주올레,포토스팟,무장애관광,세계지질공원,visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,임산부 휴게시설,장애인 화장실,장애인 전용 주차장,아주 어려움,UNESCO 세계자연유산,UNESCO 세계지질공원,실외,상,등산,산책로. 올레코스. 오름,1시간 미만",
+      "contentsid": "CONT_000000000500349",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "성산일출봉",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 1",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 일출로 284-12",
+      "tag": "공영관광지,제주도관광,제주동쪽코스,세계자연유산,유네스코,제주자연,산책로,제주올레,포토스팟,무장애관광,세계지질공원,visitjeju, 비짓제주",
+      "introduction": "바다 위로 우뚝 솟은 수성 화산체이자 유네스코 세계자연유산 · 천연기념물 제420호 · 제주올레 1코스",
+      "latitude": 33.462147,
+      "longitude": 126.936424,
+      "postcode": "63643",
+      "phoneno": "064-783-0959",
+      "repPhoto": {
+        "descseo": "성산일출봉(UNESCO 세계자연유산)",
+        "photoid": {
+          "photoid": 2019022640791,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/20/b2087c57-7cb6-420d-a840-c6e7e581072e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/20/464d6099-295a-4e60-bd93-9e65388f4d0d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "공영관광지,제주도여행, 제주도동쪽코스, 전통체험, 향토음식, 실외관광지, 문화체험, 문화유적, 세계문화유산, 문화관광해설사인증,공용주차장,화장실,무료 WIFI,편의점,경보 및 피난시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,어려움,실외,하,공연/전시,포토스팟,1~2시간",
+      "contentsid": "CONT_000000000500351",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "성읍민속마을",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 성읍리 855-1",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 성읍정의현로 30",
+      "tag": "공영관광지,제주도여행, 제주도동쪽코스, 전통체험, 향토음식, 실외관광지, 문화체험, 문화유적, 세계문화유산, 문화관광해설사인증",
+      "introduction": "문화유산과 조화롭게 살아가는 성읍주민들의 모습에서 제주의 옛모습을 엿보다",
+      "latitude": 33.3850547,
+      "longitude": 126.8015662,
+      "postcode": "63624",
+      "phoneno": "064-710-6797",
+      "repPhoto": {
+        "descseo": "성읍민속마을",
+        "photoid": {
+          "photoid": 2019022639966,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/06/840e4c6b-c729-488b-bc2c-2bb946f85677.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/06/c21dcb87-742f-443b-a0a6-08bf488eab6d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "섬,경관/포토,휴식/힐링,자연경관,섬속의섬,포토스팟,공영관광지, 공영관광지인증,생물권보전지역,유도 및 안내시설,아주 어려움,UNESCO 생물권보전지역",
+      "contentsid": "CONT_000000000500353",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "섶섬",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 마소물로",
+      "roadaddress": "제주특별자치도 서귀포시 마소물로",
+      "tag": "섬,경관/포토,휴식/힐링,자연경관,섬속의섬,포토스팟,공영관광지, 공영관광지인증,생물권보전지역",
+      "introduction": "용이 되려는 꿈을 이루지 못하고 죽은 구렁이에 대한 전설이 전해지는 숲섬, '섶섬'\r\n· 서귀포시 보목동",
+      "latitude": 33.230137,
+      "longitude": 126.5992,
+      "postcode": null,
+      "phoneno": "064-710-6656",
+      "repPhoto": {
+        "descseo": "섶섬(서귀포해양도립공원)",
+        "photoid": {
+          "photoid": 2019022590326,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/19/9a1a3547-bd2a-45b0-b1e7-0928fd16086c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/19/77ea5aa6-503b-4a1e-aefa-b1900b13349d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "실내,미술/박물관,아이,비.눈,사계절,실내관광지,문화관광,박물관,어트랙션,안전여행스탬프,무장애관광,공용주차장,현금결제,카드결제,화장실,흡연구역,음료대,유도 및 안내시설,단독접근가능,단차없음,시각장애인 접근성,장애인 화장실,장애인 전용 주차장,수동 휠체어 대여 가능,쉬움,실내,하,공연/전시,1~2시간",
+      "contentsid": "CONT_000000000500355",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "세계자동차&피아노 박물관",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 상창리 2065-4",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 중산간서로 1610",
+      "tag": "실내,미술/박물관,아이,비.눈,사계절,실내관광지,문화관광,박물관,어트랙션,안전여행스탬프,무장애관광",
+      "introduction": "인간이 만든 가장 위대한 발명품인 역동적인 자동차와 인간의 감성을 가장 잘 표현해주는 악기. 예술의 상징 피아노의 역사와 문화의 모든 것 \r\n",
+      "latitude": 33.283195,
+      "longitude": 126.34977,
+      "postcode": "63526",
+      "phoneno": "064-792-3000",
+      "repPhoto": {
+        "descseo": "세계자동차 & 피아노박물관",
+        "photoid": {
+          "photoid": 2019022602471,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202207/06/335554bd-1dcf-4580-8b50-8d4452a41e35.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202207/06/4ec316ab-dda3-4832-9c72-44cd56a5e64d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "실내,미술/박물관,아이,비.눈,사계절,실내관광지,문화관광,박물관,어트랙션,안전여행스탬프,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움,실내,하,공연/전시,1시간 미만",
+      "contentsid": "CONT_000000000500356",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "세계조가비박물관",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 557-1",
+      "roadaddress": "제주특별자치도 서귀포시 태평로 284",
+      "tag": "실내,미술/박물관,아이,비.눈,사계절,실내관광지,문화관광,박물관,어트랙션,안전여행스탬프",
+      "introduction": "바다 속 아름다운 조가비 세계를 엿볼 수 있는 곳",
+      "latitude": 33.2475156,
+      "longitude": 126.55173,
+      "postcode": null,
+      "phoneno": "064-762-5551",
+      "repPhoto": {
+        "descseo": "세계조가비박물관",
+        "photoid": {
+          "photoid": 2019022602522,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202207/07/797d138f-1382-46eb-9b8c-4c5a33a84d28.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202207/07/f0692408-568a-440b-9225-ea123c856920.webp"
+        }
+      }
+    },
+    {
+      "alltag": "세화해수욕장, 제주, 제주바다, 해변, 세화해변, 제주해변, 토끼섬, 가족, 세화민속오일시장, 제주해녀박물관, 제주올레20코스, 포토스팟, visitjeju, 비짓제주,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움,실외,물놀이,물놀이, 해변, 일광욕",
+      "contentsid": "CONT_000000000500361",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "세화해수욕장",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 세화리",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 세화길",
+      "tag": "세화해수욕장, 제주, 제주바다, 해변, 세화해변, 제주해변, 토끼섬, 가족, 세화민속오일시장, 제주해녀박물관, 제주올레20코스, 포토스팟, visitjeju, 비짓제주",
+      "introduction": "인생 사진을 남길 수 있는 인생 바다",
+      "latitude": 33.52530490304795,
+      "longitude": 126.86127604404146,
+      "postcode": null,
+      "phoneno": "064-728-7783",
+      "repPhoto": {
+        "descseo": "세화해변",
+        "photoid": {
+          "photoid": 2019022636729,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202407/24/1618588d-74d2-49e3-a527-d2637b6ca018.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202407/24/26a940f4-8517-437c-bef2-88be65dfd157.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해변,드라이브,커플,맑음,여름,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500362",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "세화해안도로",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 구좌로",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 구좌로",
+      "tag": "해변,드라이브,커플,맑음,여름",
+      "introduction": "아기자기함과 아름다움에 탄성이 나오는 해안도로",
+      "latitude": 33.527126,
+      "longitude": 126.88261,
+      "postcode": null,
+      "phoneno": "064-728-3394",
+      "repPhoto": {
+        "descseo": "세화해안도로",
+        "photoid": {
+          "photoid": 2019022590550,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/22/45a7db18-0d54-479f-8bd0-4bcec1e78f68.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/22/695f6c39-8f1b-4b5f-ae05-486f53d2d494.webp"
+        }
+      }
+    },
+    {
+      "alltag": "테마공원,아이,봄,실내관광지,어린이,어트랙션,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_관광지,무장애관광,우수관광사업체, 우수관광사업체인증, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단독접근가능,단차없음,장애인 화장실,장애인 전용 주차장,어려움,실내+실외,하,공연/전시,기타,1시간 미만",
+      "contentsid": "CONT_000000000500372",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "소인국 테마파크",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 서광리 164",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 화순서동로 347",
+      "tag": "테마공원,아이,봄,실내관광지,어린이,어트랙션,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_관광지,무장애관광,우수관광사업체, 우수관광사업체인증, visitjeju, 비짓제주",
+      "introduction": "돌하루방 가족의 정원! 디오라마 전시관을 관람하며 캐릭터 정원을 지나 무료로 운행되는 통통열차 탑승",
+      "latitude": 33.28166,
+      "longitude": 126.3312397,
+      "postcode": null,
+      "phoneno": "064-794-5400",
+      "repPhoto": {
+        "descseo": "소인국테마파크",
+        "photoid": {
+          "photoid": 2019022651332,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202505/13/e90e70ab-70a3-4ebe-9935-89b7cb7a328b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202505/13/212084db-c33c-4a16-85d5-8afbd8cb4e77.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,친구,아이,맑음,경관/포토,폭포,자연경관,포토스팟,어린이,공용주차장,유도 및 안내시설",
+      "contentsid": "CONT_000000000500373",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "소정방폭포",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 동홍동 234-8",
+      "roadaddress": "제주특별자치도 서귀포시 칠십리로214번길 17-17",
+      "tag": "부모,커플,친구,아이,맑음,경관/포토,폭포,자연경관,포토스팟,어린이",
+      "introduction": "국내 유일의 해안 폭포",
+      "latitude": 33.24507449653245,
+      "longitude": 126.57749384028932,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "Sojeongbang Falls",
+        "photoid": {
+          "photoid": 18641,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/fec4430a-317a-4cb4-bd20-9fba73026012.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/45d0c99f-3064-48a0-aff6-251051b02d40.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,문화유적지,자연경관,문화관광,역사유적,어린이,2023_관광10선_봄,Moment_봄,공용주차장,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500376",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "송당본향당",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주시 구좌읍 송당리 산 199-1",
+      "roadaddress": "제주시 구좌읍 송당리 산 199-1",
+      "tag": "부모,커플,혼자,친구,아이,문화유적지,자연경관,문화관광,역사유적,어린이,2023_관광10선_봄,Moment_봄",
+      "introduction": "제주 민간신앙의 자취를 확인할 수 있는 송당본향당",
+      "latitude": 33.45618,
+      "longitude": 126.76734,
+      "postcode": null,
+      "phoneno": "064-783-4093",
+      "repPhoto": {
+        "descseo": "Songdang Bonhyangdang Shrine",
+        "photoid": {
+          "photoid": 18676,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7c4987a6-d528-40fc-840b-c1877e7e07fa.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/daa8b1e3-f710-4869-9b0b-9f4cb658def4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "공영관광지,일몰,일출,산,해변,걷기/등산,친구,커플,맑음,가을,자연경관,수국,무장애관광,공영관광지,공영관광지인증,공용주차장,화장실,편의점,음료대,유도 및 안내시설,장애인 전용 주차장,아주 어려움,실외,상,등산,1~2시간",
+      "contentsid": "CONT_000000000500378",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "송악산",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리 179-4",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 상모리 179-4",
+      "tag": "공영관광지,일몰,일출,산,해변,걷기/등산,친구,커플,맑음,가을,자연경관,수국,무장애관광,공영관광지,공영관광지인증",
+      "introduction": "서남부의 절경을 선사하는 산방산의 이웃산",
+      "latitude": 33.2077419,
+      "longitude": 126.2909048,
+      "postcode": "63512",
+      "phoneno": "064-760-2917",
+      "repPhoto": {
+        "descseo": "송악산",
+        "photoid": {
+          "photoid": 2019022573129,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202008/21/a8ee7cef-10ef-42a1-b1f7-d5730021f0dc.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202008/21/c0635c84-2f2a-4681-823f-c21203ae28d3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "부모,커플,혼자,친구,아이,문화유적지,동굴,자연경관,문화관광,역사유적,어린이,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500379",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "송악산진지동굴",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 상모리",
+      "tag": "부모,커플,혼자,친구,아이,문화유적지,동굴,자연경관,문화관광,역사유적,어린이",
+      "introduction": "전쟁의 상처를 간직한 일제 동굴진지",
+      "latitude": 33.19995931177139,
+      "longitude": 126.29322692818596,
+      "postcode": null,
+      "phoneno": "064-710-6704",
+      "repPhoto": {
+        "descseo": "송악산 진지동굴",
+        "photoid": {
+          "photoid": 2019022593477,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/07/4891ca3d-df51-43ff-935c-5c5e20240370.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/07/b2b36cbf-5347-4237-8ab1-ccb6198b55c3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행, 제주서귀포가볼만한곳, 제주도체험, 제주자연, 카약체험, 제주바다, 검은모래, 서귀포, 문화관광해설사인증,visitjeju, 비짓제주,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움,UNESCO 생물권보전지역,실외,체험,1~2시간",
+      "contentsid": "CONT_000000000500384",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "쇠소깍",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 하효동 990-1",
+      "roadaddress": "제주특별자치도 서귀포시 쇠소깍로 104",
+      "tag": "제주여행, 제주서귀포가볼만한곳, 제주도체험, 제주자연, 카약체험, 제주바다, 검은모래, 서귀포, 문화관광해설사인증,visitjeju, 비짓제주",
+      "introduction": "제주올레 5코스의 끝이자 6코스의 시작으로, 바닷물과 민물이 만나는 비밀스러운 계곡",
+      "latitude": 33.2540919,
+      "longitude": 126.6222974,
+      "postcode": "63600",
+      "phoneno": "064-732-1562",
+      "repPhoto": {
+        "descseo": "쇠소깍",
+        "photoid": {
+          "photoid": 2019022643150,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/16/a8784094-08b6-4e9e-acf2-d86ab445dda5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/16/54503744-a4b3-4e68-b819-47e67df59100.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해변,경관/포토,커플,맑음,여름",
+      "contentsid": "CONT_000000000500385",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "쇠소깍해변",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 하효동",
+      "roadaddress": "제주특별자치도 서귀포시 하효동",
+      "tag": "해변,경관/포토,커플,맑음,여름,자연경관,포토스팟",
+      "introduction": "효돈천과 검은모래 해변이 만나는 곳",
+      "latitude": 33.25114,
+      "longitude": 126.62344,
+      "postcode": null,
+      "phoneno": "064-760-2772",
+      "repPhoto": {
+        "descseo": "Soesokkak Estuary",
+        "photoid": {
+          "photoid": 18739,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8785871d-7aa0-48c6-bf3f-8b65a6105495.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/4c97d5f8-4397-4b96-a34c-d8cfe6b6637a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주도여행, 제주도놀거리, 제주체험, 테마파크, 한라수목원, 실내관광지, 어린이, 야시장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,카드결제,현금결제,장애인 화장실,승강기,장애인 전용 주차장,수동 휠체어 대여 가능,쉬움,1~2시간",
+      "contentsid": "CONT_000000000500386",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "수목원테마파크수목원길",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 1320",
+      "roadaddress": "제주특별자치도 제주시 은수길 69",
+      "tag": "제주도여행, 제주도놀거리, 제주체험, 테마파크, 한라수목원, 실내관광지, 어린이, 야시장",
+      "introduction": "제주아이스뮤지엄, 3D 착시아트, 5D 영상관 등의 독특한 테마를 볼 수 있는 실내 관광지",
+      "latitude": 33.4705937,
+      "longitude": 126.4883601,
+      "postcode": null,
+      "phoneno": "064-742-3700",
+      "repPhoto": {
+        "descseo": "Jeju arboretum Thema Park",
+        "photoid": {
+          "photoid": 18749,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9bf34a74-0bd5-4394-95be-c088b44805c6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/ec2eb438-81f2-48d0-84c2-79ae9b1c69ee.webp"
+        }
+      }
+    },
+    {
+      "alltag": "지질트레일,걷기/등산,친구,맑음,가을,화장실,편의점,저상버스 접근 가능,장애인 화장실,아주 어려움,UNESCO 세계지질공원,지오브랜드",
+      "contentsid": "CONT_000000000500388",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "수월봉 지질트레일",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 고산리 3762",
+      "roadaddress": "제주특별자치도 제주시 한경면 노을해안로 1013-70",
+      "tag": "지질트레일,걷기/등산,친구,맑음,가을,자연경관,언택트,유네스코,무장애관광",
+      "introduction": "오누이의 효심이 담긴 이야기가 있는 지질트레일",
+      "latitude": 33.293736,
+      "longitude": 126.16281,
+      "postcode": "63008",
+      "phoneno": "064-772-3334",
+      "repPhoto": {
+        "descseo": "수월봉 지질트레일",
+        "photoid": {
+          "photoid": 2019022586600,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202111/03/53190c82-4ef7-4950-951d-aa591ae17b73.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202111/03/426006df-0cf6-4581-8ef7-1c43be79b1e8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행, 제주도서귀포가볼만한곳, 영화촬영지, 쉬리, 중문관광단지, 제주자연, 산책로, 코스모스,아주 어려움",
+      "contentsid": "CONT_000000000500390",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "쉬리의언덕",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 3039-1",
+      "roadaddress": "제주특별자치도 서귀포시 중문관광로72번길 114",
+      "tag": "제주여행, 제주도서귀포가볼만한곳, 영화촬영지, 쉬리, 중문관광단지, 제주자연, 산책로, 코스모스",
+      "introduction": "쉬리의 마지막 장면 속으로",
+      "latitude": 33.244597,
+      "longitude": 126.406077,
+      "postcode": "63535",
+      "phoneno": "064-735-5114",
+      "repPhoto": {
+        "descseo": "쉬리의언덕",
+        "photoid": {
+          "photoid": 2019022643607,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/21/f375a8c1-61d3-4cdd-810b-5c14e0e6fe18.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/21/f655e025-fabc-4d79-a395-cc003b54caff.webp"
+        }
+      }
+    },
+    {
+      "alltag": "아이,맑음,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움,실외,기타,도로,1시간 미만",
+      "contentsid": "CONT_000000000500396",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "신비의도로",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 1100로 2894-63",
+      "roadaddress": "제주특별자치도 제주시 1100로 2894-63",
+      "tag": "아이,맑음,자연경관,어린이,드라이브,공영관광지",
+      "introduction": "세워둔 차가 언덕 위로 올라가는 신비한 도깨비 도로",
+      "latitude": 33.451225,
+      "longitude": 126.487305,
+      "postcode": null,
+      "phoneno": "064-728-2755",
+      "repPhoto": {
+        "descseo": "신비의도로",
+        "photoid": {
+          "photoid": 2019022561068,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/28/0701011a-e0fa-4f7f-89a2-b5cdc93ccf7d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/28/52e63210-761a-486c-ba2d-4f218875287e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해수욕장,액티비티,커플,맑음,여름,자연경관,체험,레저/체험,해변,물놀이,수상레저,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연,공용주차장,화장실,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500400",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "신양섭지해수욕장",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 고성리 186-2",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 섭지코지로 88",
+      "tag": "해수욕장,액티비티,커플,맑음,여름,자연경관,체험,레저/체험,해변,물놀이,수상레저,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_자연",
+      "introduction": "섭지코지 가는 길, 멋진 풍경과 아늑한 바다에 빠지다",
+      "latitude": 33.4351929,
+      "longitude": 126.9232266,
+      "postcode": "63641",
+      "phoneno": "064-760-4282",
+      "repPhoto": {
+        "descseo": "신양섭지해수욕장",
+        "photoid": {
+          "photoid": 2019022559478,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/08/9d19a7d3-97a8-4999-b849-123e46fc88bc.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/08/80cbe593-d592-441d-8995-f44a6c2f0b69.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일몰,드라이브,커플,맑음,가을,화장실,편의점,음료대,유도 및 안내시설,단독접근가능,단차없음,쉬움",
+      "contentsid": "CONT_000000000500403",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "신창~차귀해안도로",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 신창리 1353-1",
+      "roadaddress": "제주특별자치도 제주시 한경면 한경해안로 470",
+      "tag": "일몰,드라이브,커플,맑음,가을,자연경관,무장애관광",
+      "introduction": "붉은 낙조에 물든 해안을 볼수 있는 제주 일몰명소",
+      "latitude": 33.33567,
+      "longitude": 126.16328,
+      "postcode": "63002",
+      "phoneno": "--",
+      "repPhoto": {
+        "descseo": "Sinchang - Chagwi Coastal Road",
+        "photoid": {
+          "photoid": 18826,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/16e93d32-005e-48c0-a4f0-896c16e2c9e6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8d283833-b6a4-42ac-a7d5-67b7351a6c5a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "동굴,경관/포토,부모,흐림,여름,자연경관,포토스팟,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,장애인 화장실,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CONT_000000000500405",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "쌍용동굴",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 2487",
+      "roadaddress": "제주특별자치도 제주시 한림읍 한림로 300",
+      "tag": "동굴,경관/포토,부모,흐림,여름,자연경관,포토스팟,무장애관광",
+      "introduction": "한림공원 내에 위치한 두 마리의 용이 빠져 나온 것 같다고 하여 이름 붙여진 쌍용굴",
+      "latitude": 33.3894949,
+      "longitude": 126.2396825,
+      "postcode": null,
+      "phoneno": "064-796-0001",
+      "repPhoto": {
+        "descseo": "쌍용굴(한림공원)",
+        "photoid": {
+          "photoid": 2019022553525,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201903/27/c2d75ff6-4d04-4017-85ec-e28fa341d7a0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201903/27/c4d39dd8-f02c-454e-b77a-6b40fb74155a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주도관광, 제주동쪽코스, 제주억새, 제주오름, 오름추천, 트래킹, 산책로, 다랑쉬오름,공용주차장,실외,상,1~2시간",
+      "contentsid": "CONT_000000000500406",
+      "contentscd": {
+        "value": "c1",
+        "label": "관광지",
+        "refId": "contentscd>c1"
+      },
+      "title": "아끈다랑쉬",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 세화리 2593",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 세화리 2593",
+      "tag": "제주도관광, 제주동쪽코스, 제주억새, 제주오름, 오름추천, 트래킹, 산책로, 다랑쉬오름",
+      "introduction": "낮고 평탄해. 산책하기 좋은 가을억새오름",
+      "latitude": 33.47431258110307,
+      "longitude": 126.83114941586916,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "아끈다랑쉬",
+        "photoid": {
+          "photoid": 2019022643267,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/17/047feb01-61eb-4a93-88a2-c534ffb36bd3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/17/e1d8d23a-0ce6-4d9e-83a9-41dcf06fdfbf.webp"
+        }
+      }
+    }
+  ]
+}

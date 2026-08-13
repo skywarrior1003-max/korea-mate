@@ -1,0 +1,3611 @@
+{
+  "meta": {
+    "page": 20,
+    "locale": "kr",
+    "as_of": "2026-08-13T06:56:21Z",
+    "totalCount": 5938,
+    "pageCount": 60
+  },
+  "items": [
+    {
+      "alltag": "호텔,숙소,게스트하우스,공공와이파이존,양식레스토랑,주차장,환전,자연경관,조식,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,단독접근가능,단차없음,장애인 화장실,승강기,장애인 전용 객실,쉬움,4성급",
+      "contentsid": "CNTS_000000000018140",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주 빠레브호텔",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 173",
+      "roadaddress": "제주특별자치도 서귀포시 김정문화로 15",
+      "tag": "호텔,숙소,게스트하우스,공공와이파이존,양식레스토랑,주차장,환전,자연경관,조식,관광호텔,무장애관광",
+      "introduction": "호텔 빠레브는 순수 제주 토착자본으로 건립 되었으며, 서귀포를 대표하는 특1급 호텔로서 자부심과 책임감을 가지고 제주의 관광 서비스 산업을 선도하고자 함.",
+      "latitude": 33.2524864,
+      "longitude": 126.5066594,
+      "postcode": null,
+      "phoneno": "064-735-8899",
+      "repPhoto": {
+        "descseo": "호텔빠레브",
+        "photoid": {
+          "photoid": 2019022568900,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202002/04/da7c94bd-fe60-40ca-a211-cc66eb839f1a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202002/04/ab2fc963-4c2d-405e-8787-6a6b04d54383.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,조식,골프,주차장,카페,가족호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 객실,쉬움",
+      "contentsid": "CNTS_000000000018152",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "테디밸리 골프앤리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 상창리 2892",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 한창로 365",
+      "tag": "호텔,숙소,조식,골프,주차장,카페,가족호텔,무장애관광",
+      "introduction": "아름다운 곶자왈 숲에서 느끼는 여유있는 골프텔",
+      "latitude": 33.293447,
+      "longitude": 126.3489252,
+      "postcode": null,
+      "phoneno": "064-793-1000",
+      "repPhoto": {
+        "descseo": "테디밸리호텔",
+        "photoid": {
+          "photoid": 1222,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0a886e06-89ab-444b-927e-ff10fe664659.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/799e5b03-d210-40c3-ad57-e7fe626519c5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,4성급호텔,공공와이파이존,양식레스토랑,주차장,공항,관광호텔,안전여행스탬프,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,어려움",
+      "contentsid": "CNTS_000000000018153",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아스타호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼도일동 535-10",
+      "roadaddress": "제주특별자치도 제주시 서사로 129",
+      "tag": "호텔,숙소,4성급호텔,공공와이파이존,양식레스토랑,주차장,공항,관광호텔,안전여행스탬프,무장애관광",
+      "introduction": "제주공항 및 여객선터미널로부터 10분 이내 거리인 제주시내 중심가에 위치하고있어 매우 편리한 호텔",
+      "latitude": 33.500881,
+      "longitude": 126.5204994,
+      "postcode": null,
+      "phoneno": "064-710-1112",
+      "repPhoto": {
+        "descseo": "아스타호텔",
+        "photoid": {
+          "photoid": 2019022601103,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202205/30/3e757e36-606b-48e2-84b8-eed31ac4c063.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202205/30/2b068621-ae28-4f05-a877-f1bbfa81f074.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,환전,엘리베이터,자연경관,해변,산책로,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 화장실,장애인 전용 주차장,어려움",
+      "contentsid": "CNTS_000000000018158",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주팔레스호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼도이동 1192-18",
+      "roadaddress": "제주특별자치도 제주시 탑동로 9",
+      "tag": "호텔,숙소,환전,엘리베이터,자연경관,해변,산책로,관광호텔,무장애관광",
+      "introduction": "제주국제공항에서 차로 10분거리인 탑동에 위치한 제주팔레스호텔입니다.",
+      "latitude": 33.5168631,
+      "longitude": 126.5237566,
+      "postcode": null,
+      "phoneno": "064-753-8811",
+      "repPhoto": {
+        "descseo": "Jeju Palace Hotel",
+        "photoid": {
+          "photoid": 1276,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9dabf554-101c-4df3-89fd-fd9ce25c1c09.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8e4ae181-a42e-4929-82be-e2a526141644.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,4성급호텔,수영장,공공와이파이존,주차장,엘리베이터,환전,양식레스토랑,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018161",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "유니호텔제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 구엄리 1216",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월해안로 656",
+      "tag": "호텔,숙소,4성급호텔,수영장,공공와이파이존,주차장,엘리베이터,환전,양식레스토랑,관광호텔,무장애관광",
+      "introduction": "제주 유니호텔은 제주에서 가장 아릅답기로 유명한 애월 해안도로에서만 느끼실 수 있는 석양을 모티브로 하여 제주의 푸른바다와 아름다운 한라산이 마주보고 있는 구엄리에 2015년 3월 개관하였습니다.",
+      "latitude": 33.4794113,
+      "longitude": 126.3732685,
+      "postcode": null,
+      "phoneno": "064-741-5001",
+      "repPhoto": {
+        "descseo": "Uni Hotel Jeju",
+        "photoid": {
+          "photoid": 1316,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9c9a388b-ade5-46d9-a705-4920cb6bfb35.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/638509a5-b742-4f9c-a1e1-9bff8b4a0625.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,4성급호텔,공공와이파이존,주차장,엘리베이터,비즈니스센터,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,수동 휠체어 대여 가능,장애인 전용 객실,쉬움",
+      "contentsid": "CNTS_000000000018162",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주 호텔 더원",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 279-3",
+      "roadaddress": "제주특별자치도 제주시 사장3길 33",
+      "tag": "호텔,숙소,4성급호텔,공공와이파이존,주차장,엘리베이터,비즈니스센터,관광호텔,무장애관광",
+      "introduction": "삼다의 섬 제주에서 돌처럼 굳건하게, 여인처럼 부드럽게, 바다처럼 신속한 서비스를 약속하는 호텔",
+      "latitude": 33.4827145,
+      "longitude": 126.491349,
+      "postcode": null,
+      "phoneno": "064-798-0001",
+      "repPhoto": {
+        "descseo": "HOTEL THE ONE",
+        "photoid": {
+          "photoid": 1332,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/37dc5fc0-1561-477b-aff6-f9c8a2c05069.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/dd8db481-44e7-4b68-8564-2013c41b10a7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공항,주차장,공공와이파이존,양식레스토랑,카페라떼,바비큐,관광호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CNTS_000000000018163",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "에스호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두1동 2272-2",
+      "roadaddress": "제주특별자치도 제주시 오일장중길 26",
+      "tag": "호텔,숙소,공항,주차장,공공와이파이존,양식레스토랑,카페라떼,바비큐,관광호텔",
+      "introduction": "제주오일장과 가깝고 활주로와 바다가 내려다보이는 호텔",
+      "latitude": 33.495434,
+      "longitude": 126.47151,
+      "postcode": "63116",
+      "phoneno": "0507-1398-9926",
+      "repPhoto": {
+        "descseo": "에스호텔",
+        "photoid": {
+          "photoid": 1347,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c814bf3a-f5eb-4360-8eed-52a8f2463435.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/54271d4d-41c3-4de7-aea1-625d2ff64a2e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,교통,양식레스토랑,주차장,관광호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,영어,중국어,아주 어려움,유료제공,전체금연",
+      "contentsid": "CNTS_000000000018164",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "펄호텔제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 277-1",
+      "roadaddress": "제주특별자치도 제주시 신대로20길 49",
+      "tag": "호텔,숙소,공공와이파이존,교통,양식레스토랑,주차장,관광호텔",
+      "introduction": "제주시에 위치한 관광호텔",
+      "latitude": 33.483475,
+      "longitude": 126.491264,
+      "postcode": "63136",
+      "phoneno": "064-742-8871",
+      "repPhoto": {
+        "descseo": "제주펄관광호텔",
+        "photoid": {
+          "photoid": 2019022554505,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201904/22/9e2a9d28-574b-4762-a2d3-a5e69bdd2a42.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201904/22/b6ff3f16-635e-408b-a40d-3325ebaf8ebc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,양식레스토랑,환전,주차장,자연경관,관광호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018168",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "하니크라운호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도일동 1315",
+      "roadaddress": "제주특별자치도 제주시 삼성로 10",
+      "tag": "호텔,숙소,공공와이파이존,양식레스토랑,환전,주차장,자연경관,관광호텔",
+      "introduction": "하니크라운호텔은 쾌적하고 안락하게 잘 꾸며진 객실과 훌륭한 편의시설, 넓은 주차장을 완비하고 있다.\r\n",
+      "latitude": 33.5049614,
+      "longitude": 126.5273789,
+      "postcode": null,
+      "phoneno": "010-2653-0324",
+      "repPhoto": {
+        "descseo": "하니크라운호텔",
+        "photoid": {
+          "photoid": 1371,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d48cd39e-7385-4b5e-aa68-bbca707301cb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/4ccb8faf-ed0f-4ead-9ac5-39fe205898f3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,주차장,양식레스토랑,오션뷰호텔,자연경관,해변,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018173",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "베니키아호텔제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 신엄리 2736-1",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월해안로 554-6",
+      "tag": "호텔,숙소,공공와이파이존,주차장,양식레스토랑,오션뷰호텔,자연경관,해변,관광호텔,무장애관광",
+      "introduction": "애월하귀 해안도로 중심지에 위치한 내 집에 온 것처럼 편안한 호텔",
+      "latitude": 33.4777407,
+      "longitude": 126.3624077,
+      "postcode": null,
+      "phoneno": "064-799-9977",
+      "repPhoto": {
+        "descseo": "Benikea Hotel Jeju",
+        "photoid": {
+          "photoid": 1418,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/adb724ba-eb6c-41e7-abc2-88b6c2cd9640.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1ca1d3de-bb1a-4c25-9714-f1fefa819372.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,주차장,환전,연회장,해수욕장,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,단독접근가능,단차없음,시각장애인 접근성,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018181",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "블랙샌즈호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼양이동 2140-1",
+      "roadaddress": "제주특별자치도 제주시 선사로 8",
+      "tag": "호텔,숙소,공공와이파이존,주차장,환전,연회장,해수욕장,관광호텔,무장애관광",
+      "introduction": "삼양 검은모래 해변이 가까이에 있는 호텔",
+      "latitude": 33.5219994,
+      "longitude": 126.587389,
+      "postcode": null,
+      "phoneno": "064-740-0888",
+      "repPhoto": {
+        "descseo": "Black Sands Hotel Jeju",
+        "photoid": {
+          "photoid": 1452,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/868916d9-b150-44f9-a48d-cad01c638d53.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/fb3a1f48-4577-4f28-a75c-b91f69ce58c2.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,수영장,공항,카페,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,수동 휠체어 대여 가능,장애인 전용 객실,쉬움",
+      "contentsid": "CNTS_000000000018182",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제니아관광호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 282-20",
+      "roadaddress": "제주특별자치도 제주시 은남1길 25",
+      "tag": "호텔,숙소,수영장,공항,카페,관광호텔,무장애관광",
+      "introduction": "고객을 가족처럼 따뜻하고 편안히 맞이하는 비지니스형 호텔",
+      "latitude": 33.48913,
+      "longitude": 126.493164,
+      "postcode": "63124",
+      "phoneno": "064-797-9000",
+      "repPhoto": {
+        "descseo": "Xenia Hotel",
+        "photoid": {
+          "photoid": 1462,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d416071e-274b-4e4c-a9f2-9b94287bf7c8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/63ce8cec-aa98-4477-afb1-c44142fd4789.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,자연경관,주차장,해변,가족,가족호텔,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,엘리베이터,단독접근가능,단차없음,승강기,장애인 전용 주차장,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018183",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "블루마운틴호텔",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 196-5",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 일출로 297",
+      "tag": "호텔,숙소,자연경관,주차장,해변,가족,가족호텔,관광호텔,무장애관광",
+      "introduction": "블루마운틴 호텔은 UNESCO 세계자연유산으로 등재된 성산일출봉과 걸어서 3분 거리에 위치하고 있는 제주의 하늘과 바다, 태양을 담고 있는 호텔이다.",
+      "latitude": 33.4637856,
+      "longitude": 126.9343976,
+      "postcode": null,
+      "phoneno": "064-731-8888",
+      "repPhoto": {
+        "descseo": "블루마운틴호텔",
+        "photoid": {
+          "photoid": 1472,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ac06f513-5b1e-40bd-bf0f-9b6b0ba0a3a3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/4d3ac45d-a613-468f-99d1-90111de454c9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공항,조식,주차장,양식레스토랑,관광호텔,안전여행스탬프,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,쉬움",
+      "contentsid": "CNTS_000000000018184",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해마호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 261-3",
+      "roadaddress": "제주특별자치도 제주시 삼무로 28",
+      "tag": "호텔,숙소,공항,조식,주차장,양식레스토랑,관광호텔,안전여행스탬프,무장애관광",
+      "introduction": "제주시내에 위치한 심플하고 우아한 호텔",
+      "latitude": 33.4897057,
+      "longitude": 126.4896117,
+      "postcode": null,
+      "phoneno": "064-766-4000",
+      "repPhoto": {
+        "descseo": "해마관광호텔",
+        "photoid": {
+          "photoid": 2019022601060,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202205/30/95825163-cd9d-472c-9028-10911ca08aa8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202205/30/8af01c4b-8155-44d4-a321-33d7169863a3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,어린이,공항,단체여행객,공공와이파이존,무장애여행,편의시설,온돌방,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018191",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "파크사이드호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 270-1",
+      "roadaddress": "제주특별자치도 제주시 도령로 126",
+      "tag": "호텔,숙소,어린이,공항,단체여행객,공공와이파이존,무장애여행,편의시설,온돌방,관광호텔,무장애관광",
+      "introduction": "신제주 중심에 위치한 깔끔한 호텔",
+      "latitude": 33.4923991,
+      "longitude": 126.4908271,
+      "postcode": null,
+      "phoneno": "064-746-4544",
+      "repPhoto": {
+        "descseo": "Parkside Hotel",
+        "photoid": {
+          "photoid": 1502,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3979f77b-18f4-41e8-9411-a1931b0ac08f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/23cbf962-6c2f-4783-a4ae-377f8392e41a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,가족호텔,공항,자연경관,온돌방,가족,조식 포함,바비큐,공공와이파이존,정원,물품보관서비스,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018196",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "오로라호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 내도동 239-1",
+      "roadaddress": "제주특별자치도 제주시 논세길 51",
+      "tag": "호텔,숙소,가족호텔,공항,자연경관,온돌방,가족,조식 포함,바비큐,공공와이파이존,정원,물품보관서비스,무장애관광",
+      "introduction": "에메랄드 빛 바다와 황금해변, 명품가족호텔",
+      "latitude": 33.489447,
+      "longitude": 126.4421364,
+      "postcode": null,
+      "phoneno": "064-749-1701",
+      "repPhoto": {
+        "descseo": "Ain People Hotel",
+        "photoid": {
+          "photoid": 1529,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/90a3b595-c179-442b-9e20-87e123a35165.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5cbf6b8f-ec97-4a79-aca5-7e9981c57c80.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,관광호텔,골프,패키지관광,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,장애인 화장실,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CNTS_000000000018198",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "부영CC관광호텔",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 수망리 628-8",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 남조로 960",
+      "tag": "호텔,숙소,관광호텔,골프,패키지관광,무장애관광",
+      "introduction": "쾌적하고 편안한 삶과 휴식을 얻을 수 있는 부영관광호텔",
+      "latitude": 33.3508829,
+      "longitude": 126.6980129,
+      "postcode": null,
+      "phoneno": "064-766-5511",
+      "repPhoto": {
+        "descseo": "부영CC관광호텔",
+        "photoid": {
+          "photoid": 1546,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/fd62aec6-1c70-4bb2-9a50-67df506931d1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a510f17b-d692-4c81-901f-857f0fdfd9b9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,주차장,엘리베이터,물품보관서비스,해안도로,공항,관광호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018199",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담삼동 1161",
+      "roadaddress": "제주특별자치도 제주시 서해안로 526",
+      "tag": "호텔,숙소,주차장,엘리베이터,물품보관서비스,해안도로,공항,관광호텔",
+      "introduction": "공항에서 5분, 제주항에서 10분인 거리에 있으며, 주변관광지인 용담해안도로가 있어 시원한 바다풍경을 보기에 좋은 호텔",
+      "latitude": 33.5197387,
+      "longitude": 126.495252,
+      "postcode": null,
+      "phoneno": "064-742-5356",
+      "repPhoto": {
+        "descseo": "해호텔",
+        "photoid": {
+          "photoid": 1557,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c95eee1e-0bc6-41b7-884a-a7910397c783.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2ba7a5e8-b2e9-4a91-8cd8-772992d3ce11.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,공항,발렛파킹,카페,관광호텔,안전여행스탬프,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,승강기,장애인 전용 주차장,장애인 전용 객실,어려움,2성급",
+      "contentsid": "CNTS_000000000018195",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "호텔컬리넌제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 284-8",
+      "roadaddress": "제주특별자치도 제주시 사장1길 26",
+      "tag": "호텔,숙소,공공와이파이존,공항,발렛파킹,카페,관광호텔,안전여행스탬프,무장애관광",
+      "introduction": "제주의 중심 연동에 위치한 BOUTIQUE&BUSINESS 호텔",
+      "latitude": 33.4853573,
+      "longitude": 126.4928515,
+      "postcode": null,
+      "phoneno": "064-743-6500",
+      "repPhoto": {
+        "descseo": "호텔컬리넌제주",
+        "photoid": {
+          "photoid": 2019022601065,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202205/30/ea85063f-67b7-472c-8ef7-5b9cf307c7fa.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202205/30/a42dd45a-b3c1-477b-95bf-c9ee40b3cdd6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,관광호텔,공공와이파이존,엘리베이터,가족호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 화장실,장애인 전용 주차장,장애인 전용 객실,쉬움",
+      "contentsid": "CNTS_000000000018201",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "K관광호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 251-79",
+      "roadaddress": "제주특별자치도 제주시 연동3길 10",
+      "tag": "호텔,숙소,관광호텔,공공와이파이존,엘리베이터,가족호텔,무장애관광",
+      "introduction": "제주시내 상권에 위치하고 있는 모던한 이미지의 관광호텔",
+      "latitude": 33.4890764,
+      "longitude": 126.4879086,
+      "postcode": null,
+      "phoneno": "064-743-2123",
+      "repPhoto": {
+        "descseo": "케이관광호텔제주",
+        "photoid": {
+          "photoid": 1573,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a65e66f1-2abf-43e4-9b0b-533e683a5c71.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/31a089f1-8e44-4482-bd09-999cc40cc3fb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,주차장,관광호텔,온돌방,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,장애인 화장실,장애인 전용 객실,어려움",
+      "contentsid": "CNTS_000000000018204",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "올레관광호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼도1동 580-31",
+      "roadaddress": "제주특별자치도 제주시 서광로 254",
+      "tag": "호텔,숙소,공공와이파이존,주차장,관광호텔,온돌방,무장애관광",
+      "introduction": "깔끔하고 편리한 제주 올레관광호텔",
+      "latitude": 33.49953,
+      "longitude": 126.52372,
+      "postcode": "63187",
+      "phoneno": "064-723-2727",
+      "repPhoto": {
+        "descseo": "Olle Tourist Hotel",
+        "photoid": {
+          "photoid": 1602,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ff9b93da-587f-43fb-a3ba-768d07e04a2d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/09760580-e5d7-4d5f-a624-e3d7dff8e294.webp"
+        }
+      }
+    },
+    {
+      "alltag": "리조트,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018224",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "알앤비타운",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 2479",
+      "roadaddress": "제주특별자치도 서귀포시 분토왓로174번길 45",
+      "tag": "리조트,숙소,펜션,휴양펜션,공공와이파이존,바비큐,주차장",
+      "introduction": "가슴 한 가득 상쾌한 공기와 푸른바다의 아름다움을 만날 수 있는 RNBTOWN",
+      "latitude": 33.279873,
+      "longitude": 126.5518126,
+      "postcode": null,
+      "phoneno": "064-763-1131",
+      "repPhoto": {
+        "descseo": "RnB Town",
+        "photoid": {
+          "photoid": 1657,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0465e62f-28c7-4408-8c81-848b1dc46d1f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/12a3956d-6062-4a7c-8944-aed67bef9f1c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,민박,해수욕장,바비큐,해안도로,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018227",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다추억",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담3동 1015-1",
+      "roadaddress": "제주특별자치도 제주시 용해로 27",
+      "tag": "펜션,숙소,휴양펜션,민박,해수욕장,바비큐,해안도로",
+      "introduction": "다양함과 편리함으로 무장한 바다 추억 펜션",
+      "latitude": 33.514744,
+      "longitude": 126.502945,
+      "postcode": "63150",
+      "phoneno": "064-742-2831",
+      "repPhoto": {
+        "descseo": "Pension Bada Chueok",
+        "photoid": {
+          "photoid": 1680,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9ac0f59c-5c4c-4723-adb0-90938977aeac.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/288b9661-65e9-40a5-8cef-9ef43c1cb6c7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주차장,중문관광단지,서귀포,체험,바비큐,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018221",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아침의향기",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 1609-1",
+      "roadaddress": "제주특별자치도 서귀포시 색달중앙로 122",
+      "tag": "펜션,숙소,휴양펜션,주차장,중문관광단지,서귀포,체험,바비큐",
+      "introduction": "제주에서 즐기는 고품격 서비스, 아침의 향기와 함께 하세요",
+      "latitude": 33.265678,
+      "longitude": 126.414409,
+      "postcode": null,
+      "phoneno": "064-738-4679",
+      "repPhoto": {
+        "descseo": "Morning Fragrance",
+        "photoid": {
+          "photoid": 1637,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/518bdb42-4a2f-402a-821a-e1488f4c6fc1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/3843a80e-a9ee-4440-a1f4-863603431fe0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,민박,바비큐,해수욕장,공항,온돌방,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018229",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "테마하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이호일동 360-1",
+      "roadaddress": "제주특별자치도 제주시 백포북길 24",
+      "tag": "펜션,숙소,휴양펜션,민박,바비큐,해수욕장,공항,온돌방",
+      "introduction": "파도가 웃음으로 반겨주는 펜션",
+      "latitude": 33.5024275,
+      "longitude": 126.4586378,
+      "postcode": null,
+      "phoneno": "064-742-4275",
+      "repPhoto": {
+        "descseo": "테마하우스",
+        "photoid": {
+          "photoid": 1682,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3dc3a851-b1ff-4633-b069-b82deb6494f2.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f40035ac-dfd8-4ac6-8ec1-4c95030f1d2b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018230",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "예다움휴양펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이호일동 350-1",
+      "roadaddress": "제주특별자치도 제주시 백포북길 25",
+      "tag": "펜션,숙소,휴양펜션,자연경관,해변,바비큐",
+      "introduction": "예쁘고 정다움이 깃든 팬션",
+      "latitude": 33.5029118,
+      "longitude": 126.4589403,
+      "postcode": null,
+      "phoneno": "064-711-3030",
+      "repPhoto": {
+        "descseo": "Yedaoom Pension",
+        "photoid": {
+          "photoid": 1684,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f8372039-d7fe-422f-8e2f-10f370082fcf.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a57df206-7b88-49d1-998c-ae9d7cfdeb72.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주차장,카페,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018231",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "비치조아",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼양일동 1622",
+      "roadaddress": "제주특별자치도 제주시 서흘길 7",
+      "tag": "펜션,숙소,휴양펜션,주차장,카페",
+      "introduction": "제주 시내에 위치한 바다가 보이는 펜션",
+      "latitude": 33.5268068,
+      "longitude": 126.5876413,
+      "postcode": null,
+      "phoneno": "064-757-8200",
+      "repPhoto": {
+        "descseo": "비치조아",
+        "photoid": {
+          "photoid": 1698,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8a1a4248-36fa-4640-b7d5-84e4c9b05625.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/49ae88ef-8dce-4ae8-a556-bfe6f77f9d2b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018233",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아마빌레",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하귀2리 2708",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월해안로 909",
+      "tag": "민박,숙소,모텔,공항,해변,자연경관,펜션,휴양펜션,주방기구",
+      "introduction": "공항에서 차로 15분 거리의 애월해안도로에 위치한 펜션",
+      "latitude": 33.4847294,
+      "longitude": 126.3926699,
+      "postcode": null,
+      "phoneno": "064-743-6009",
+      "repPhoto": {
+        "descseo": "Badabitdungji",
+        "photoid": {
+          "photoid": 1722,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/70d9d41e-1edb-4c0e-88bf-8244f35ce775.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/94b5bb67-46df-4096-bec3-a5aec061ace1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018234",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "캐빈타운",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하귀2리 2720-3",
+      "roadaddress": "제주특별자치도 제주시 애월읍 가문동상2길 29-3",
+      "tag": "펜션,숙소,휴양펜션,독채,통나무집민박,단체여행객,바비큐,가족,노래방,공공와이파이존,자연학습장,해수욕장,해변",
+      "introduction": "아름답고 편안함을 제공하는 단체 여행객 전용 펜션",
+      "latitude": 33.4849359,
+      "longitude": 126.3910124,
+      "postcode": null,
+      "phoneno": "064-712-1558",
+      "repPhoto": {
+        "descseo": "Cabin Town",
+        "photoid": {
+          "photoid": 1724,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/74266d6c-d369-4d70-8eac-c2ce71c489f5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/55b2dfad-a8de-44ee-a1bc-fa4b626c4005.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,민박,해안도로,바비큐,해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설",
+      "contentsid": "CNTS_000000000018235",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해아래펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하귀2리 2968-1",
+      "roadaddress": "제주특별자치도 제주시 애월읍 번대동길 5",
+      "tag": "펜션,숙소,휴양펜션,민박,해안도로,바비큐,해수욕장",
+      "introduction": "제주도 하늘 아래에 있는 해아래 펜션",
+      "latitude": 33.478264,
+      "longitude": 126.39237,
+      "postcode": "63050",
+      "phoneno": "0507-1384-8992",
+      "repPhoto": {
+        "descseo": "해아래펜션",
+        "photoid": {
+          "photoid": 1734,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/11b324f2-84b6-4b1e-a17f-3908bf429c9a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/3011255b-6859-41db-a348-50c96836942b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018237",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "호도하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 법환동 1523",
+      "roadaddress": "제주특별자치도 서귀포시 막숙포로 134",
+      "tag": "펜션,숙소,휴양펜션,바비큐,공공와이파이존,해수욕장",
+      "introduction": "바람이 머물고 가는 올레 7코스에 위치한 숙소",
+      "latitude": 33.2319569,
+      "longitude": 126.5089298,
+      "postcode": null,
+      "phoneno": "064-739-1152",
+      "repPhoto": {
+        "descseo": "호도하우스",
+        "photoid": {
+          "photoid": 1746,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9013cb5a-540d-4521-89a9-4a5e9689dc23.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1c198a60-1db2-4819-b626-1d871195db84.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018238",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "발로바쉬",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 곽지리 1500-1",
+      "roadaddress": "제주특별자치도 제주시 애월읍 일주서로 6066",
+      "tag": "펜션,숙소,휴양펜션,해수욕장,주차장,정원,주방기구",
+      "introduction": "전 객실이 곽지해수욕장을 바라보는 전망이 좋은 펜션",
+      "latitude": 33.4521196,
+      "longitude": 126.3093209,
+      "postcode": "63034",
+      "phoneno": "064-799-0303",
+      "repPhoto": {
+        "descseo": "Barobasui",
+        "photoid": {
+          "photoid": 1762,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e76e8cec-c030-4e3d-846f-e108b5de0d83.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5a23a252-b58a-4ebb-bb96-6e5d02e56a18.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,자연경관,해변,농어촌민박,민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018259",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아리스토캣펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담3동 2289",
+      "roadaddress": "제주특별자치도 제주시 서해안로 518",
+      "tag": "펜션,숙소,휴양펜션,자연경관,해변,농어촌민박,민박",
+      "introduction": "일몰과 야경이 인상적인 해안도로의 휴식처",
+      "latitude": 33.51983,
+      "longitude": 126.49447,
+      "postcode": "63114",
+      "phoneno": "064-711-9780",
+      "repPhoto": {
+        "descseo": "아리스토캣펜션",
+        "photoid": {
+          "photoid": 1810,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/74e8d478-2ddd-4b78-aba7-4765e0002945.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/ecfc0669-3c2b-4094-93a4-33960049e39e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,해안도로,단체여행객,독채,바비큐,온돌방,가족,수영장,공공와이파이존,해수욕장,수상레저,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018266",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "CS빌리지",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 신엄리 2758",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월해안로 532-7",
+      "tag": "펜션,숙소,휴양펜션,해안도로,단체여행객,독채,바비큐,온돌방,가족,수영장,공공와이파이존,해수욕장,수상레저,해변",
+      "introduction": "제주 바다가 훤히 보이는 애월의 유럽풍 펜션",
+      "latitude": 33.47845,
+      "longitude": 126.36037,
+      "postcode": "63047",
+      "phoneno": "064-799-8259",
+      "repPhoto": {
+        "descseo": "CS빌리지",
+        "photoid": {
+          "photoid": 1824,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/67fdf7be-bf26-4a28-9803-be9a4de1bc5d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a5018e1e-cf3e-45c2-8832-34a3c8d9669a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018269",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "갯바위펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 하예동 1747",
+      "roadaddress": "제주특별자치도 서귀포시 하예하동로 37",
+      "tag": "펜션,숙소,휴양펜션,낚시,해수욕장,수상레저,바비큐,농어촌민박",
+      "introduction": "중문관광단지에서 차로 10분거리인 난드르에 위치해 있는 펜션",
+      "latitude": 33.2335467,
+      "longitude": 126.3727955,
+      "postcode": null,
+      "phoneno": "064-738-2761",
+      "repPhoto": {
+        "descseo": "갯바위펜션",
+        "photoid": {
+          "photoid": 1825,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d266aae1-3aac-4840-8bf4-05b4bbb8a61f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/3cb4e2d9-8a42-499c-be1d-6139f3c9a2bd.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,자연경관,해변,바비큐,해수욕장,가족,반려동물보호소,공공와이파이존,단체여행객,갯벌체험학습장,수상레저,온돌방,체험,반려동물동반입장,반려동물,반려동물동반_숙소,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018278",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바산올레 애견동반 펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 창천리 844-15",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 대평로 29",
+      "tag": "펜션,숙소,휴양펜션,자연경관,해변,바비큐,해수욕장,가족,반려동물보호소,공공와이파이존,단체여행객,갯벌체험학습장,수상레저,온돌방,체험,반려동물동반입장,반려동물,반려동물동반_숙소,농어촌민박",
+      "introduction": "중문관광단지와 화순해수욕장 중간에 위치한 바산올레펜션입니다.",
+      "latitude": 33.2365893,
+      "longitude": 126.3639804,
+      "postcode": null,
+      "phoneno": "070-4364-9456",
+      "repPhoto": {
+        "descseo": "바산올레펜션",
+        "photoid": {
+          "photoid": 1859,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d29fce50-455e-4de6-a742-9340a10e456b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/26c9987c-dc22-407f-b20b-4baf66231503.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,수영장,독채,단체여행객,바비큐,해수욕장,해변,계곡,공공와이파이존,온돌방,수상레저,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CNTS_000000000018281",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "이디살래",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 1007-5",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 일주서로 2027",
+      "tag": "펜션,숙소,휴양펜션,수영장,독채,단체여행객,바비큐,해수욕장,해변,계곡,공공와이파이존,온돌방,수상레저,무장애관광",
+      "introduction": "가족과 함께라면, 이디살래",
+      "latitude": 33.249626,
+      "longitude": 126.30132,
+      "postcode": "63528",
+      "phoneno": "064-792-7171",
+      "repPhoto": {
+        "descseo": "이디살래",
+        "photoid": {
+          "photoid": 1878,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/4a069be0-aaa0-45c9-a755-6bd175f514e8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b1e6e835-9324-4272-a0cf-e359da33e0ea.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,반려동물보호소,가족,해수욕장,단체여행객,바비큐,온돌방,공공와이파이존,수상레저,반려동물동반입장,반려동물,반려동물동반_숙소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018282",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다스케치",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 150",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계남로216번길 52",
+      "tag": "펜션,숙소,휴양펜션,반려동물보호소,가족,해수욕장,단체여행객,바비큐,온돌방,공공와이파이존,수상레저,반려동물동반입장,반려동물,반려동물동반_숙소",
+      "introduction": "직접 설계하고 지은 바다 위 펜션",
+      "latitude": 33.235,
+      "longitude": 126.30998,
+      "postcode": "63528",
+      "phoneno": "064-794-0030",
+      "repPhoto": {
+        "descseo": "Pension Bada sketch",
+        "photoid": {
+          "photoid": 1880,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f2a33ecd-e6b4-4777-8dea-0ca2e0b56204.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/aa25c1dc-5045-40b6-b28c-635c2dc56bb5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,반려동물보호소,독채,바비큐,계곡,단체여행객,가족,해변,체험,반려동물동반입장,반려동물,무장애관광,반려동물동반_숙소,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CNTS_000000000018280",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "서귀포 늘바다 애견동반펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 창천리 901-6",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 대평로 38",
+      "tag": "펜션,숙소,휴양펜션,반려동물보호소,독채,바비큐,계곡,단체여행객,가족,해변,체험,반려동물동반입장,반려동물,무장애관광,반려동물동반_숙소,농어촌민박",
+      "introduction": "100이상 수령의 소나무로 지어진 통나무별장",
+      "latitude": 33.237247,
+      "longitude": 126.3636731,
+      "postcode": null,
+      "phoneno": "070-4364-9474",
+      "repPhoto": {
+        "descseo": "Ocean Log Pension",
+        "photoid": {
+          "photoid": 1868,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/bd18780f-1c85-4ba5-9d5c-356dbc60a5b4.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7b3e1e0a-f665-4282-b6fc-90f635cc3467.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,일몰명소,바비큐,해변,가족,교통,수영장,해수욕장,수상레저",
+      "contentsid": "CNTS_000000000018509",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "우도올레펜션",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 781-5",
+      "roadaddress": "제주특별자치도 제주시 우도면 전흘길 42",
+      "tag": "펜션,숙소,휴양펜션,일몰명소,바비큐,해변,가족,교통,수영장,해수욕장,수상레저",
+      "introduction": "우도의 명물인 답다니탑 해변 근처에 위치한 우도 올레펜션입니다.",
+      "latitude": 33.521879,
+      "longitude": 126.9532976,
+      "postcode": null,
+      "phoneno": "064-783-0995",
+      "repPhoto": {
+        "descseo": "Udo Olle Pension",
+        "photoid": {
+          "photoid": 3169,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9605e3ec-d38a-4ab4-aa5b-3b9650172ec0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7de64227-9da5-4146-a35f-0141d60b65ef.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,주차장,공공와이파이존,주방기구,조식,자연경관,해변,온돌방,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018517",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "전원민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 2393",
+      "roadaddress": "제주특별자치도 제주시 우도면 우목길 104",
+      "tag": "민박,숙소,농어촌민박,주차장,공공와이파이존,주방기구,조식,자연경관,해변,온돌방",
+      "introduction": "우도 하우목동항 앞에 있는 민박집",
+      "latitude": 33.509663,
+      "longitude": 126.944084,
+      "postcode": "63365",
+      "phoneno": "010-2604-0410",
+      "repPhoto": {
+        "descseo": "Jeonwon Minbak",
+        "photoid": {
+          "photoid": 3238,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a4e00672-dcc3-469e-9011-7208b65bde55.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1fec45fe-8e63-4f45-86fe-f886e1db9b8b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,공용주차장,현금결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설",
+      "contentsid": "CNTS_000000000018528",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "썬비치민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 1290-1",
+      "roadaddress": "제주특별자치도 제주시 우도면 우도해안길 810",
+      "tag": "민박,숙소,농어촌민박,우도,해수욕장,주방기구,식당,매점",
+      "introduction": "제주 우도 하고수동해수욕장 앞에 위치한 펜션",
+      "latitude": 33.5134476,
+      "longitude": 126.9575361,
+      "postcode": null,
+      "phoneno": "064-738-5003",
+      "repPhoto": {
+        "descseo": "Sun Beach Minbak",
+        "photoid": {
+          "photoid": 3273,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f73047bc-8ef2-4e8d-b097-00c1cf3d0c6d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/585b77ef-bfa5-413e-8846-9c85a5a32a2f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,우도,자연경관,해변,공용주차장,현금결제,화장실,편의점",
+      "contentsid": "CNTS_000000000018531",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "백악관민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 1290-2",
+      "roadaddress": "제주특별자치도 제주시 우도면 우도해안길 816",
+      "tag": "민박,숙소,농어촌민박,우도,자연경관,해변",
+      "introduction": "하고수동해수욕장 앞 민박집인 백악관민박입니다.",
+      "latitude": 33.5131507,
+      "longitude": 126.9579066,
+      "postcode": null,
+      "phoneno": "064-783-0232",
+      "repPhoto": {
+        "descseo": "Baekakgwan Minbak",
+        "photoid": {
+          "photoid": 3275,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/946eb1a3-56c0-4371-994c-534c30874c00.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/08f6e4aa-1772-4e58-99b2-ee415a762ade.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,우도,올레길,식당,자전거대여점,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000018536",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "동굴민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 242-4",
+      "roadaddress": "제주특별자치도 제주시 우도면 영일길 156-12",
+      "tag": "민박,숙소,농어촌민박,우도,올레길,식당,자전거대여점",
+      "introduction": "우도 검멀레해변 근처의 동굴민박",
+      "latitude": 33.501167,
+      "longitude": 126.96757,
+      "postcode": "63365",
+      "phoneno": "010-5845-2528",
+      "repPhoto": {
+        "descseo": "Donggeul Minbak",
+        "photoid": {
+          "photoid": 3279,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/b23172b6-cac9-4a07-9b05-b82253117b74.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/022e5f2b-20de-43c0-bc03-dc5ff443b501.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,공용주차장,현금결제,화장실,흡연구역,편의점",
+      "contentsid": "CNTS_000000000018527",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "지현민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 1199-5",
+      "roadaddress": "제주특별자치도 제주시 우도면 우도해안길 794",
+      "tag": "민박,숙소,농어촌민박,우도,해수욕장",
+      "introduction": "하고수동 해수욕장 초입에 있는 민박",
+      "latitude": 33.5151524,
+      "longitude": 126.9568199,
+      "postcode": null,
+      "phoneno": "064-783-0217",
+      "repPhoto": {
+        "descseo": "Jihyeon Minbak",
+        "photoid": {
+          "photoid": 3269,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d250ad93-9279-4327-a4f0-9eb4810cd10a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6ec2f470-516e-4c3b-95d5-812d190e22ba.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,현금결제,화장실,무료 WIFI,흡연구역,아주 어려움",
+      "contentsid": "CNTS_000000000018539",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "연지민박",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 2120-2",
+      "roadaddress": "제주특별자치도 제주시 우도면 상우목길 26",
+      "tag": "민박,숙소,농어촌민박,우도,해수욕장,주차장,고향민박,텃밭집",
+      "introduction": "땅콩 밭이 보이는 소박한 민박",
+      "latitude": 33.5033191,
+      "longitude": 126.9556775,
+      "postcode": null,
+      "phoneno": "064-783-0031",
+      "repPhoto": {
+        "descseo": "연지민박",
+        "photoid": {
+          "photoid": 3281,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c2869f21-e1b6-4410-a4f2-80093aa396cb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d11bdb13-dd31-408f-8606-9adf2fb7257c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,펜션,휴양펜션,바비큐,해수욕장,해변,공공와이파이존,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018680",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주파도소리",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 하도리 43-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 해맞이해안로 1950",
+      "tag": "민박,숙소,펜션,휴양펜션,바비큐,해수욕장,해변,공공와이파이존",
+      "introduction": "청정자연지역 명품제주에 걸맞은 친절하고 편안한 숙박시설",
+      "latitude": 33.5150151,
+      "longitude": 126.9004638,
+      "postcode": "63363",
+      "phoneno": "064-783-3338",
+      "repPhoto": {
+        "descseo": "Jeju Ocean Sound",
+        "photoid": {
+          "photoid": 3463,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/faf0ffcc-98dc-49ae-8307-8aa1548f1e18.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/865949da-5374-486b-a752-5b370f27612d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,바비큐,공공와이파이존,가족,온돌방,정자,체험,마을산책,해변,해수욕장,수상레저,자연경관,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018686",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "하늘조각휴양펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 2880-1",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계북로 75",
+      "tag": "펜션,숙소,휴양펜션,바비큐,공공와이파이존,가족,온돌방,정자,체험,마을산책,해변,해수욕장,수상레저,자연경관",
+      "introduction": "자연, 조형미가 함께하는 편안함과 휴식, 그리고 즐거움을 위한 모든 것이 마련된 곳입니다. 그 어디에서도 없었던 특별한 시간 하늘정원에서 경험해 보시기 바랍니다.",
+      "latitude": 33.235546,
+      "longitude": 126.2959547,
+      "postcode": null,
+      "phoneno": "064-792-6161",
+      "repPhoto": {
+        "descseo": "Hanul Gogak Pension (Sky Piece Pension)",
+        "photoid": {
+          "photoid": 3485,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/5cae7e17-e0f1-49e0-90ba-7e3ecd3b9e28.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6bd2906b-57e7-4165-9af5-807ece6e9f42.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,민박,농어촌민박,단체여행객,주차장,공공와이파이존,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018691",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다의향기",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리 71-8",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 송악관광로177번길 254-6",
+      "tag": "펜션,숙소,민박,농어촌민박,단체여행객,주차장,공공와이파이존,해변",
+      "introduction": "낭만과 추억이 가득한 아름다운 바다의 향기 펜션",
+      "latitude": 33.2130528,
+      "longitude": 126.292268,
+      "postcode": null,
+      "phoneno": "070-4376-6473",
+      "repPhoto": {
+        "descseo": "Bada eui Hyanggi",
+        "photoid": {
+          "photoid": 3523,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ee6e20e8-6b4f-4451-9fad-5d3e80d6ca06.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a3902d24-8a73-42c9-ab86-62142b91687b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,공공와이파이존,바비큐,체험,독채,단체여행객,온돌방,계곡,해수욕장,수영장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018701",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "산방산에펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 사계리 1125-1",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 사계북로41번길 151",
+      "tag": "펜션,숙소,휴양펜션,공공와이파이존,바비큐,체험,독채,단체여행객,온돌방,계곡,해수욕장,수영장",
+      "introduction": "단독형 휴양펜션",
+      "latitude": 33.246136,
+      "longitude": 126.29697,
+      "postcode": "63528",
+      "phoneno": "064-794-3100",
+      "repPhoto": {
+        "descseo": "Sanbangsan Pension",
+        "photoid": {
+          "photoid": 3537,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/bd2f2097-a77c-4fb3-bf10-f83b11bb20bb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2194cf45-dbe9-4f1c-8c1f-2bda01216658.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,해안도로,자연경관,해변,해수욕장,수영장,바비큐,가족,단체여행객,공공와이파이존,수상레저,안전인증민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018702",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아침해변",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 조천리 2996-2",
+      "roadaddress": "제주특별자치도 제주시 조천읍 조함해안로 76-9",
+      "tag": "펜션,숙소,휴양펜션,해안도로,자연경관,해변,해수욕장,수영장,바비큐,가족,단체여행객,공공와이파이존,수상레저,안전인증민박",
+      "introduction": "제주의 아름다운 바다, 바람, 그리고 자연으로의 초대.",
+      "latitude": 33.5439418,
+      "longitude": 126.6380689,
+      "postcode": null,
+      "phoneno": "064-784-6564",
+      "repPhoto": {
+        "descseo": "아침해변",
+        "photoid": {
+          "photoid": 3540,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a3cc1a64-04ae-4833-a2d2-2d1453d9fe22.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/57227089-d1d0-48be-a800-8d249248be07.webp"
+        }
+      }
+    },
+    {
+      "alltag": "유스호스텔,숙소,휴양콘도,리조트,주차장,펜션,휴양펜션,가족,단체여행객,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018704",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "메이풀하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 대흘리 1728-2",
+      "roadaddress": "제주특별자치도 제주시 조천읍 곱은달서길 165",
+      "tag": "유스호스텔,숙소,휴양콘도,리조트,주차장,펜션,휴양펜션,가족,단체여행객",
+      "introduction": "각종 휴양레포츠를 즐길수 있는 함덕해수욕장과 섭지코지, 성산일출봉과 근접한 북제주군에 위치한 메이풀유스호스텔입니다.",
+      "latitude": 33.5011023,
+      "longitude": 126.6616581,
+      "postcode": null,
+      "phoneno": "064-784-7823",
+      "repPhoto": {
+        "descseo": "Mayfull House",
+        "photoid": {
+          "photoid": 3549,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ed412e89-e6db-4f46-b273-67f37c6c3543.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9c99123f-6592-4234-a9f5-c618e89d8eaf.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,휴양펜션,펜션,자연경관,해변,어린이,해수욕장,어린이놀이방,공공와이파이존,온돌방,가족,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018700",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바닷가하우스펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 상모리 73",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 형제해안로 254",
+      "tag": "민박,숙소,휴양펜션,펜션,자연경관,해변,어린이,해수욕장,어린이놀이방,공공와이파이존,온돌방,가족",
+      "introduction": "산방산과 송악산의 맑은 공기가 숨쉬는 마을",
+      "latitude": 33.2122165,
+      "longitude": 126.2921599,
+      "postcode": null,
+      "phoneno": "064-794-0977",
+      "repPhoto": {
+        "descseo": "Badatga House Pension",
+        "photoid": {
+          "photoid": 3527,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/af159557-bdf4-4fcf-82eb-edf0b8896be5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/09e8485e-0427-4fa3-83c7-1ad26a9cb2b5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,게스트하우스,정원,주차장,해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018784",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주 또올레 펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 판포리 2711",
+      "roadaddress": "제주특별자치도 제주시 한경면 판포2길 44",
+      "tag": "펜션,숙소,휴양펜션,게스트하우스,정원,주차장,해수욕장",
+      "introduction": "맑고 신선한 제주의 공기와 함께, 일상탈출의 여유가 느껴지는 펜션",
+      "latitude": 33.3608375,
+      "longitude": 126.2014235,
+      "postcode": null,
+      "phoneno": "010-4311-4833",
+      "repPhoto": {
+        "descseo": "Again Olle Pension & Guest House",
+        "photoid": {
+          "photoid": 3719,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1d6367ec-36d3-4905-bf5e-3cf637919b56.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0736d55c-e0e2-41f7-b880-3b5fa603daaf.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018828",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "노을과원담",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 용수리 3934",
+      "roadaddress": "제주특별자치도 제주시 한경면 한경해안로 282",
+      "tag": "민박,숙소,휴양펜션,펜션,가족,단체여행객,주방기구,주차장,바비큐",
+      "introduction": "노을이 멋진 신창풍차해안도로와 가까운 아담한 민박",
+      "latitude": 33.3318117,
+      "longitude": 126.1662152,
+      "postcode": null,
+      "phoneno": "070-4205-1892",
+      "repPhoto": {
+        "descseo": "Noeulgwa Wondam",
+        "photoid": {
+          "photoid": 3753,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e59440fc-4d15-4950-90da-1f02ac4623b7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/939a1aa2-6099-4255-9b4e-766f314c5134.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,리조트,자연경관,해변,휴양콘도,오션뷰호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018857",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "태흥리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 태흥리 372-3",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 태위로 988-6",
+      "tag": "호텔,숙소,리조트,자연경관,해변,휴양콘도,오션뷰호텔",
+      "introduction": "바다가 한눈에 보이는 리조트",
+      "latitude": 33.288475,
+      "longitude": 126.750114,
+      "postcode": "63617",
+      "phoneno": "064-764-8118",
+      "repPhoto": {
+        "descseo": "태흥리조트",
+        "photoid": {
+          "photoid": 3770,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7ea5a19a-5faa-4e83-9ec5-b78aa271e449.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5aedc4e2-887e-43e6-865a-61ed54a8a4c2.webp"
+        }
+      }
+    },
+    {
+      "alltag": "게스트하우스,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018870",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "우도쉼팡게스트하우스",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "31",
+        "label": "우도",
+        "refId": "region3>31"
+      },
+      "address": "제주특별자치도 제주시 우도면 연평리 1750-7",
+      "roadaddress": "제주특별자치도 제주시 우도면 우도로 7",
+      "tag": "게스트하우스,숙소,우도,자연경관,해변,식당,음식",
+      "introduction": "우도 천진항(여객선 하차후 100m)에 위치하고 있으며 우도의 옛날 집을 리모델링하여 남자동 여자동으로 구분하여 운영하고 있는 우도 쉼팡 게스트하우스이다.",
+      "latitude": 33.5033191,
+      "longitude": 126.9556775,
+      "postcode": null,
+      "phoneno": "010-9866-0185",
+      "repPhoto": {
+        "descseo": "Udo Spang Guest House",
+        "photoid": {
+          "photoid": 3821,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a2f35875-cb79-4b2b-9c20-03265ce9e29f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1d5355cc-3f3f-4353-8a1c-45b25a04d64e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,스파,휴양펜션,자연경관,해변,바비큐,공공와이파이존,조식 포함,단체여행객,온돌방,가족,해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018774",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바사팬스파",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 신창리 1455-4",
+      "roadaddress": "제주특별자치도 제주시 한경면 한경해안로 448-6",
+      "tag": "펜션,숙소,스파,휴양펜션,자연경관,해변,바비큐,공공와이파이존,조식 포함,단체여행객,온돌방,가족,해수욕장",
+      "introduction": "저녁 노을을 보며 스파를 즐길 수 있는 펜션",
+      "latitude": 33.340268,
+      "longitude": 126.1683515,
+      "postcode": null,
+      "phoneno": "070-7719-9811",
+      "repPhoto": {
+        "descseo": "Panda Who Loves the Sea",
+        "photoid": {
+          "photoid": 3677,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9b368389-b8e3-4462-b262-73103344f668.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f1a00fda-6afd-4c68-b0d9-d628bc851c1d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주차장,자연경관,가족,민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018974",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주목화휴양펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 남원리 2453-5",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 태위로 485",
+      "tag": "펜션,숙소,휴양펜션,주차장,자연경관,가족,민박",
+      "introduction": "이국적인 느낌의 제주목화휴양펜션",
+      "latitude": 33.2751664,
+      "longitude": 126.6990735,
+      "postcode": null,
+      "phoneno": "064-764-7942",
+      "repPhoto": {
+        "descseo": "제주목화휴양펜션",
+        "photoid": {
+          "photoid": 4071,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/77089094-b1cd-4136-bf60-ab79ee4c8ce0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/52bda08c-a354-4090-90af-cdf48e2d9ef1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,자연경관,해변,바비큐,주차장,해안도로,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000018975",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "더하우스펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 종달리 1397",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 해맞이해안로 2060",
+      "tag": "펜션,숙소,휴양펜션,자연경관,해변,바비큐,주차장,해안도로",
+      "introduction": "종달리해안도로 초입에 위치한 펜션",
+      "latitude": 33.5096018,
+      "longitude": 126.902997,
+      "postcode": null,
+      "phoneno": "064-784-6040",
+      "repPhoto": {
+        "descseo": "The House Pension",
+        "photoid": {
+          "photoid": 4077,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f7003f0a-f6d1-4b07-ab5a-c4b4823bcbc3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cd9286b3-7645-4a22-81e3-231feb906013.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,민박,독채,반려동물보호소,공공와이파이존,해수욕장,문화관광,수상레저,갯벌체험학습장,바비큐,가족,단체여행객,온돌방,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_숙소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움,동반가능,바베큐장",
+      "contentsid": "CNTS_000000000018982",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "그림그리는펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주도 서귀포시 성산읍 수산리 3342-6",
+      "roadaddress": "제주도 서귀포시 성산읍 금백조로131번길 181",
+      "tag": "펜션,숙소,휴양펜션,민박,독채,반려동물보호소,공공와이파이존,해수욕장,문화관광,수상레저,갯벌체험학습장,바비큐,가족,단체여행객,온돌방,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_숙소",
+      "introduction": "성산인근에서는 픽업서비스가 가능한 펜션",
+      "latitude": 33.43122,
+      "longitude": 126.84392,
+      "postcode": null,
+      "phoneno": "010-4949-7953",
+      "repPhoto": {
+        "descseo": "Arting pension",
+        "photoid": {
+          "photoid": 4107,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f7d70c19-7783-4b46-adf8-0d429592a335.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6e5dc17c-91a3-44e1-9614-d25282fbfbeb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,통나무집민박,가족,바비큐,자연경관,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019013",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "폴라리스펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 유수암리 726",
+      "roadaddress": "제주특별자치도 제주시 애월읍 유수암동3길 45",
+      "tag": "펜션,숙소,휴양펜션,통나무집민박,가족,바비큐,자연경관",
+      "introduction": "가족 단위로 머물기 좋은 펜션",
+      "latitude": 33.438095,
+      "longitude": 126.408424,
+      "postcode": "63067",
+      "phoneno": "064-799-9800",
+      "repPhoto": {
+        "descseo": "폴라리스인제주",
+        "photoid": {
+          "photoid": 4151,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a23adf88-726d-4e5b-9dba-84ebf87193e9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/272719b2-2d9f-4ac2-baf7-b52c9ebec9a6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019017",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "파크빌리지",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 상귀리 667-5",
+      "roadaddress": "제주특별자치도 제주시 애월읍 상귀서길 82-12",
+      "tag": "펜션,숙소,어린이,테마공원,휴양펜션,공공와이파이존,노래방,통나무집민박,주차장,바비큐,수영장,힐링쉼터,정원,가족,어린이놀이터",
+      "introduction": "잣나무 낙엽송으로 내부 인테리어를 한 자연 웰빙테마의 펜션",
+      "latitude": 33.4651885,
+      "longitude": 126.4053912,
+      "postcode": null,
+      "phoneno": "064-713-2627",
+      "repPhoto": {
+        "descseo": "Park Village",
+        "photoid": {
+          "photoid": 4169,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f3c146ad-9a8c-4798-a00b-fba8bcea6741.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/519c1d9b-7dc4-424d-823d-9b28c66de3ab.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,바비큐,해수욕장,공공와이파이존,노래방,해변,자연경관,산책로,안전인증민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019022",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "별마로펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이호1동 687",
+      "roadaddress": "제주특별자치도 제주시 항골남길 32-16",
+      "tag": "펜션,숙소,휴양펜션,바비큐,해수욕장,공공와이파이존,노래방,해변,자연경관,산책로,안전인증민박",
+      "introduction": "아름다운 별이 보이는 야경과 한라산이 한눈에 보이는 곳",
+      "latitude": 33.49821,
+      "longitude": 126.46017,
+      "postcode": "63108",
+      "phoneno": "064-713-8788",
+      "repPhoto": {
+        "descseo": "별마로펜션",
+        "photoid": {
+          "photoid": 4173,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/020216f9-4dcd-420b-bbdb-00a5c7e15c6a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/433ea5b7-a6f1-469d-96d4-2507e25ce2a5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,독채,바비큐,해수욕장,통나무집민박,공공와이파이존,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019023",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "로그맨하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 소길리 975",
+      "roadaddress": "제주특별자치도 제주시 애월읍 소길남길 179",
+      "tag": "펜션,숙소,휴양펜션,독채,바비큐,해수욕장,통나무집민박,공공와이파이존",
+      "introduction": "제주경마장쪽에 위치해 있는 로그맨하우스 펜션입니다.",
+      "latitude": 33.4194584,
+      "longitude": 126.383518,
+      "postcode": null,
+      "phoneno": "064-799-3177",
+      "repPhoto": {
+        "descseo": "로그맨하우스",
+        "photoid": {
+          "photoid": 4180,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/c7ae1f75-1266-4735-b566-eb29ae46c283.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7e036091-a0fa-4906-8f0c-2761fa27cfd1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,해수욕장,온돌방,바비큐,해변,자연경관,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019025",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "플로라펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이호일동 640-4",
+      "roadaddress": "제주특별자치도 제주시 도리로 78-2",
+      "tag": "펜션,숙소,휴양펜션,해수욕장,온돌방,바비큐,해변,자연경관",
+      "introduction": "제주공항에서 10분거리에 위치한 플로라펜션은 고급 건축물에만 사용하는 자재를 사용한 펜션입니다.",
+      "latitude": 33.4994903,
+      "longitude": 126.4602395,
+      "postcode": null,
+      "phoneno": "0507-1369-7055",
+      "repPhoto": {
+        "descseo": "Flora Pension",
+        "photoid": {
+          "photoid": 4190,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e6cce9d7-bbbd-4afd-bfc1-a5c1e1b5aab6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1d0b585d-b8fd-4fee-9a7c-d7f1458bdb7c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019075",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "이어도펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두일동 2617-3",
+      "roadaddress": "제주특별자치도 제주시 도두항서5길 3",
+      "tag": "휴식,숙소,휴양펜션,펜션,민박,고향민박,해안도로,바비큐,공공와이파이존",
+      "introduction": "공항에서 10분거리에 위치한 펜션",
+      "latitude": 33.5045692,
+      "longitude": 126.4640453,
+      "postcode": null,
+      "phoneno": "064-711-2144",
+      "repPhoto": {
+        "descseo": "Iedo Pension",
+        "photoid": {
+          "photoid": 4214,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3d78377d-b058-4ced-83d8-b89cdcb61e23.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6b7de1c7-adfc-420c-8693-f66316700e41.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,펜션,휴양펜션,주차장,해안도로,해수욕장,체험,바비큐,찜질방,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019076",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해변의집",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두일동 1725",
+      "roadaddress": "제주특별자치도 제주시 서해안로 224-1",
+      "tag": "휴식,숙소,펜션,휴양펜션,주차장,해안도로,해수욕장,체험,바비큐,찜질방",
+      "introduction": "용두암과 이호해수욕장사이 해안도로변에 위치한 해변의집 펜션은 주변에 제주해수피아가 있으며 유명먹거리식당도 많이 있습니다.",
+      "latitude": 33.508289,
+      "longitude": 126.470821,
+      "postcode": null,
+      "phoneno": "064-713-1255",
+      "repPhoto": {
+        "descseo": "Haebyeon House",
+        "photoid": {
+          "photoid": 4223,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/6c4a7e21-da67-4b56-84ce-19882a4390b1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cfaed659-9c87-42de-a7be-9efdb4fde873.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019078",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "미래하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두일동 1725-2",
+      "roadaddress": "제주특별자치도 제주시 서해안로 224-10",
+      "tag": "휴식,숙소,펜션,휴양펜션,바비큐,공공와이파이존,해안도로",
+      "introduction": "일출과 월출을 함께 볼 수 있는 펜션",
+      "latitude": 33.5081334,
+      "longitude": 126.4711466,
+      "postcode": null,
+      "phoneno": "064-746-6131",
+      "repPhoto": {
+        "descseo": "Mirae House",
+        "photoid": {
+          "photoid": 4241,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e3cb71b8-3281-41ae-b8d6-259e8902051d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/220ce31d-e1dd-4636-81de-82490b1a3ab1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,해수욕장,자연경관,바비큐,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019086",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "골든비치",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주도 제주시 용담삼동 2342",
+      "roadaddress": "제주도 제주시 서해안로 486-3",
+      "tag": "펜션,숙소,휴양펜션,해수욕장,자연경관,바비큐,해변",
+      "introduction": "공항과 가까운 해안도로에 위치한 휴양형 펜션",
+      "latitude": 33.518623,
+      "longitude": 126.49125,
+      "postcode": null,
+      "phoneno": "064-743-8100",
+      "repPhoto": {
+        "descseo": "Golden Beach",
+        "photoid": {
+          "photoid": 4277,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1e084d83-beaf-4b73-b540-7d51663e9203.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/03215146-56c2-4e43-933d-c11a8684b39f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,민박,농어촌민박,펜션,휴양펜션,독채,단체여행객,가족,온돌방,공공와이파이존,해수욕장,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019094",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아림민박",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담삼동 2383",
+      "roadaddress": "제주특별자치도 제주시 서해안로 456-8",
+      "tag": "휴식,숙소,민박,농어촌민박,펜션,휴양펜션,독채,단체여행객,가족,온돌방,공공와이파이존,해수욕장,해변",
+      "introduction": "제주시내 용담해안도로에 위치한 바다가 보이는 펜션",
+      "latitude": 33.5179022,
+      "longitude": 126.4891045,
+      "postcode": null,
+      "phoneno": "064-712-6969",
+      "repPhoto": {
+        "descseo": "Arim Pension",
+        "photoid": {
+          "photoid": 4304,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7f48dd6d-5465-40b1-8569-18dbf424b49c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/1a76af76-071c-4d87-bec9-e95dd4619640.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,휴양펜션,펜션,바비큐,체험,단체여행객,가족,공공와이파이존,안전인증민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019096",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "하늘타리펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 외도이동 1991",
+      "roadaddress": "제주특별자치도 제주시 연대마을길 59",
+      "tag": "휴식,숙소,휴양펜션,펜션,바비큐,체험,단체여행객,가족,공공와이파이존,안전인증민박",
+      "introduction": "전객실 바닷가 전망이 가능한 펜션",
+      "latitude": 33.4938535,
+      "longitude": 126.4245732,
+      "postcode": null,
+      "phoneno": "064-742-7042",
+      "repPhoto": {
+        "descseo": "하늘타리펜션",
+        "photoid": {
+          "photoid": 4320,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f1d108c7-7b16-428e-acd2-c369af145fd7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f509b8d8-2728-48b4-b5b9-67d3422d02a3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,공공와이파이존,조식 포함,가족,온돌방,단체여행객,풀빌라,일몰명소,독채,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019097",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "그린나래",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주도 서귀포시 성산읍 수산리 3251",
+      "roadaddress": "제주도 서귀포시 성산읍 서성일로 615",
+      "tag": "펜션,숙소,휴양펜션,공공와이파이존,조식 포함,가족,온돌방,단체여행객,풀빌라,일몰명소,독채",
+      "introduction": "성산일출봉이 한눈에 보이는곳에 자리잡은 펜션",
+      "latitude": 33.42784,
+      "longitude": 126.8509,
+      "postcode": null,
+      "phoneno": "0507-1333-7071",
+      "repPhoto": {
+        "descseo": "Guerinnarae",
+        "photoid": {
+          "photoid": 4329,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d9d0ed07-082f-459c-9ad8-1896627f32f4.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cb7f0078-cd1b-49aa-b8ad-68a79162b4da.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,펜션,휴양펜션,바비큐,단체여행객,힐링쉼터,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019099",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아일랜드펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 수산리 3988-3",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 금백조로131번길 176",
+      "tag": "휴식,숙소,펜션,휴양펜션,바비큐,단체여행객,힐링쉼터",
+      "introduction": "성산일출봉 인근에 위치한 펜션",
+      "latitude": 33.4311796,
+      "longitude": 126.8443512,
+      "postcode": null,
+      "phoneno": "010-3789-1645",
+      "repPhoto": {
+        "descseo": "제주성산아일랜드",
+        "photoid": {
+          "photoid": 4343,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a99f42c9-7ad6-4626-ba6f-19f23eda227b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/e6d979d9-fb5e-475e-b7d0-8b7bf57fcd4d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,펜션,휴양펜션,자연경관,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019110",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "블루마린",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 표선리 1282",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 민속해안로 349",
+      "tag": "민박,숙소,펜션,휴양펜션,자연경관,해변",
+      "introduction": "표선 올레 4코스에 위치한 푸른 바다 전망이 멋진 펜션",
+      "latitude": 33.311348,
+      "longitude": 126.83387,
+      "postcode": "63629",
+      "phoneno": "064-787-0721",
+      "repPhoto": {
+        "descseo": "Blue Marine",
+        "photoid": {
+          "photoid": 4367,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7935e6c4-5476-4d1a-a1b7-f5eb1b14f60e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cf0bbf6f-6c65-4dab-b53d-5b3e54b191dc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,바비큐,체험,공공와이파이존,단체여행객,가족,해수욕장,물품보관서비스,주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019111",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "포유펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 남원리 398-2",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 서의로 40-6",
+      "tag": "펜션,숙소,휴양펜션,바비큐,체험,공공와이파이존,단체여행객,가족,해수욕장,물품보관서비스,주차장",
+      "introduction": "남원에 위치한 감귤과수원 및 연못이 있는 펜션",
+      "latitude": 33.2959968,
+      "longitude": 126.7109459,
+      "postcode": "63619",
+      "phoneno": "064-764-2777",
+      "repPhoto": {
+        "descseo": "Poyu Pension",
+        "photoid": {
+          "photoid": 4377,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e426ee85-4e4a-4bab-8da6-1c0de21ad660.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/07380618-9dd7-4fe3-bcad-de8f9a16af2d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,펜션,휴양펜션,자연경관,주차장,힐링,안전인증민박,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019120",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해뜨는집",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 오조리 3-14",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 한도로 137",
+      "tag": "휴식,숙소,펜션,휴양펜션,자연경관,주차장,힐링,안전인증민박",
+      "introduction": "강중훈 시인이 운영하는 펜션",
+      "latitude": 33.46913079999999,
+      "longitude": 126.9226464,
+      "postcode": null,
+      "phoneno": "064-784-8812",
+      "repPhoto": {
+        "descseo": "해뜨는집",
+        "photoid": {
+          "photoid": 2019022619595,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202307/14/cdb624ac-e635-4acb-8109-19e3b39c2ea8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202307/14/fc8e485b-ba7c-4473-9854-1ff9cf15c2da.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,온돌방,가족,바비큐,독채,공공와이파이존,계곡,해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019121",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제이제이하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주도 서귀포시 강정동 3786-1",
+      "roadaddress": "제주도 서귀포시 중산간서로 241",
+      "tag": "펜션,숙소,휴양펜션,온돌방,가족,바비큐,독채,공공와이파이존,계곡,해수욕장",
+      "introduction": "산방산, 마라도, 여미지식물원 등이 10분 이내에 가까운 펜션",
+      "latitude": 33.26077,
+      "longitude": 126.485535,
+      "postcode": null,
+      "phoneno": "064-739-7891",
+      "repPhoto": {
+        "descseo": "JJ House",
+        "photoid": {
+          "photoid": 4423,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8b2b008f-a934-4363-998f-1567b9c74f6f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8a6ec4c3-d28f-4abd-b8f9-e6027c07a820.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,휴양펜션,펜션,해변,자연경관,공항,안전인증민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019127",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "사랑터울펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담삼동 1170-1",
+      "roadaddress": "제주특별자치도 제주시 어영길 25",
+      "tag": "휴식,숙소,휴양펜션,펜션,해변,자연경관,공항,안전인증민박",
+      "introduction": "레포츠공원근처 / 용두암해안도로변에 위치해 있음",
+      "latitude": 33.5186026,
+      "longitude": 126.495911,
+      "postcode": null,
+      "phoneno": "064-742-7360",
+      "repPhoto": {
+        "descseo": "Sarang Teoul",
+        "photoid": {
+          "photoid": 4445,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8650f489-fdd9-4ae3-8bb6-77586d9d2677.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/96d4228f-a6a5-4759-aa87-7c7339a6577d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019128",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주쉼표",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담삼동 2319-6",
+      "roadaddress": "제주특별자치도 제주시 서해안로 504",
+      "tag": "휴식,숙소,휴양펜션,펜션,가족,공공와이파이존,해수욕장,해변,체험,자연경관",
+      "introduction": "바쁜 세상 걸음을 멈추고 따뜻한 햇살, 포근한 휴식을 느낄 수 있는 곳",
+      "latitude": 33.5194453,
+      "longitude": 126.493001,
+      "postcode": null,
+      "phoneno": "064-711-0044",
+      "repPhoto": {
+        "descseo": "Swimpyo Pension",
+        "photoid": {
+          "photoid": 4455,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9593bcf1-1749-443d-9b90-bd8e963309ef.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/fdfde412-e918-4e1c-a643-1565c65836c6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주차장,단체여행객,자연경관,올레길,가족,농어촌민박,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000019140",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다위올레펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 630-1",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 826-13",
+      "tag": "펜션,숙소,휴양펜션,주차장,단체여행객,자연경관,올레길,가족,농어촌민박",
+      "introduction": "넓은 바다가 한눈에",
+      "latitude": 33.234726,
+      "longitude": 126.503136,
+      "postcode": "63564",
+      "phoneno": "064-738-6349",
+      "repPhoto": {
+        "descseo": "바다위올레펜션",
+        "photoid": {
+          "photoid": 4473,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/09efe6a0-73aa-42d7-8adc-de53edb49a95.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5529954f-1bcf-41d5-9e90-adee9c3a67c7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,휴양펜션,펜션,가족,단체여행객,바비큐,해변,자연경관,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019143",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "낭만펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두일동 1852-1",
+      "roadaddress": "제주특별자치도 제주시 도두5길 28",
+      "tag": "휴식,숙소,휴양펜션,펜션,가족,단체여행객,바비큐,해변,자연경관",
+      "introduction": "공항과 가깝고 올레길 17코스에 위치해있는 낭만제주펜션은 주변에 이호테우해변 용두암 곽지해변이있습니다.",
+      "latitude": 33.5048108,
+      "longitude": 126.472066,
+      "postcode": null,
+      "phoneno": "064-713-7705",
+      "repPhoto": {
+        "descseo": "Nangman Pension",
+        "photoid": {
+          "photoid": 4479,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/76d7ea19-203e-48e7-aa40-d0fb28ea60b7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/98e3ffbe-2823-439e-9aa0-d38bdac7c5b7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "리조트,숙소,휴양콘도,주차장,골프,가족,펜션,바비큐,조식,식당,자연경관,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019157",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "UTS제주골프빌리지",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주도 제주시 애월읍 광령리 2807-3",
+      "roadaddress": "제주도 제주시 애월읍 광령평화2길 170-2",
+      "tag": "리조트,숙소,휴양콘도,주차장,골프,가족,펜션,바비큐,조식,식당,자연경관,해변",
+      "introduction": "골퍼를 위한 미국식 목조 세컨하우스",
+      "latitude": 33.430923,
+      "longitude": 126.4344,
+      "postcode": null,
+      "phoneno": "064-799-0794",
+      "repPhoto": {
+        "descseo": "UTS제주골프빌리지",
+        "photoid": {
+          "photoid": 4498,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/619de546-15c7-4416-b6fd-c8ecd1287050.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0e7e4e03-80ae-4d0b-9d64-0cc3cac1237f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,공공와이파이존,해변,가족,온돌방,단체여행객,바비큐,독채,갯벌체험학습장,물품보관서비스,주차장,교통,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019179",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "토마토하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 359-4",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 성산등용로 96-7",
+      "tag": "펜션,숙소,휴양펜션,공공와이파이존,해변,가족,온돌방,단체여행객,바비큐,독채,갯벌체험학습장,물품보관서비스,주차장,교통",
+      "introduction": "성산일출봉, 섭지코지 등 볼거리와 성산항 수산시장, 잠수함, 낚시배 등의 체험관광을 도보 5분 거리에서 즐길 수 있는 곳",
+      "latitude": 33.4698532,
+      "longitude": 126.9305924,
+      "postcode": null,
+      "phoneno": "064-784-2214",
+      "repPhoto": {
+        "descseo": "Tomato House",
+        "photoid": {
+          "photoid": 4509,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/867dbafe-6a62-45ea-82bf-f17d442ce57b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0bc7b715-5cc6-4df0-8764-edc836b4e0c1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,숲,민박,농어촌민박,힐링쉼터,바비큐,서귀포,공용주차장,현금결제,카드결제,화장실,무료 WIFI,아주 어려움",
+      "contentsid": "CNTS_000000000019229",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "펜션형민박꿈꾸는숲",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 호근동 214-6",
+      "roadaddress": "제주특별자치도 서귀포시 태평로205번길 43-7",
+      "tag": "펜션,숙소,휴양펜션,숲,민박,농어촌민박,힐링쉼터,바비큐,서귀포",
+      "introduction": "바다가 한눈에 보이는 리조트",
+      "latitude": 33.24747,
+      "longitude": 126.53994,
+      "postcode": "63571",
+      "phoneno": "064-738-1010",
+      "repPhoto": {
+        "descseo": "펜션형민박꿈꾸는숲",
+        "photoid": {
+          "photoid": 4571,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0700c545-9108-474d-bc92-9a7b7987c5e1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5d83984d-79ea-49b1-a5bc-8f84cf9047b3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,펜션,휴양펜션,바비큐,해수욕장,자연경관,해변,산책로,해안도로,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019230",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바닷가하얀집",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 호근동 405-1",
+      "roadaddress": "제주특별자치도 서귀포시 태평로120번길 29-2",
+      "tag": "휴식,숙소,펜션,휴양펜션,바비큐,해수욕장,자연경관,해변,산책로,해안도로,농어촌민박",
+      "introduction": "객실에서 금방이라도 손에 잡힐듯한 바다가 펼쳐지는 곳",
+      "latitude": 33.2419106,
+      "longitude": 126.5361713,
+      "postcode": null,
+      "phoneno": "064-739-2733",
+      "repPhoto": {
+        "descseo": "Badaga Hayanjip",
+        "photoid": {
+          "photoid": 4578,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/acaa653b-1418-4ca2-af58-3c1ed2029de0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/72bcc684-9cfd-4417-8484-00aeba02dfa5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019235",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "유러하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 법환동 1523-1",
+      "roadaddress": "제주특별자치도 서귀포시 막숙포로 136",
+      "tag": "펜션,숙소,휴양펜션,바비큐,단체여행객,낚시,자연경관,해변,해수욕장,편의시설,조식",
+      "introduction": "빨간지붕, 하얀건물, 테라스가 그림같은 곳",
+      "latitude": 33.2318082,
+      "longitude": 126.50878,
+      "postcode": null,
+      "phoneno": "064-739-2522",
+      "repPhoto": {
+        "descseo": "Euro House",
+        "photoid": {
+          "photoid": 4604,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/2a8cd153-efc9-4867-a0b2-0eba206503d6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/74987390-6f56-4288-9b6a-db03666a7530.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,휴양펜션,펜션,온돌방,해변,가족,자연경관,휴양콘도,민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019183",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해돋는마을",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 오조리 16-1",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 한도로 116-1",
+      "tag": "휴식,숙소,휴양펜션,펜션,온돌방,해변,가족,자연경관,휴양콘도,민박",
+      "introduction": "해돋는 마을은 우도와 일출봉이 눈앞에 보이는 곳에 위치한 콘도형 민박입니다.",
+      "latitude": 33.468183,
+      "longitude": 126.9203552,
+      "postcode": null,
+      "phoneno": "010-9898-0767",
+      "repPhoto": {
+        "descseo": "해돋는마을",
+        "photoid": {
+          "photoid": 4519,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ec84d137-ff30-4c67-83ce-4f0313d58c87.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/01847aaa-6d57-43b5-aa77-275b1cdb2f26.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,민박,주차장,바비큐,교통,물품보관서비스,공공와이파이존,부대시설,식당,노래방,정원,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019239",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "밀레니엄빌",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 보목동 1502",
+      "roadaddress": "제주특별자치도 서귀포시 보목로64번길 196",
+      "tag": "휴식,숙소,민박,주차장,바비큐,교통,물품보관서비스,공공와이파이존,부대시설,식당,노래방,정원,농어촌민박",
+      "introduction": "겨울에도 꽃이 피는 제주도에서 제일 따뜻한 화훼단지 옆에 위치한 곳",
+      "latitude": 33.2452066,
+      "longitude": 126.5899924,
+      "postcode": null,
+      "phoneno": "064-763-1796",
+      "repPhoto": {
+        "descseo": "MilleniumVill",
+        "photoid": {
+          "photoid": 4641,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/86dc8af3-f117-4da7-8ec9-4f9954673436.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/aea27dd6-a077-47ac-8c9a-af32dad0087f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019240",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주펜션향림원",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 보목동 1239-4",
+      "roadaddress": "제주특별자치도 서귀포시 칠십리로394번길 8-3",
+      "tag": "휴식,숙소,휴양펜션,펜션,바비큐,해수욕장,공공와이파이존",
+      "introduction": "서귀포 시내와 가까워 이용이 편리하고 저렴한 펜션",
+      "latitude": 33.2437437,
+      "longitude": 126.5932198,
+      "postcode": null,
+      "phoneno": "064-733-5799",
+      "repPhoto": {
+        "descseo": "Hyangrimwon Pension Jeju",
+        "photoid": {
+          "photoid": 4647,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/280856e8-8efa-4818-bedd-271a7bb5d90c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a108a9e6-6747-4ed7-b722-86f41579c6fc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019248",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "썬베이펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼양일동 1599-23",
+      "roadaddress": "제주특별자치도 제주시 서흘길 14",
+      "tag": "펜션,숙소,휴양펜션,올레길,해수욕장,낚시,가족,단체여행객",
+      "introduction": "삼양검은모래 해수욕장 앞에 위치한 펜션",
+      "latitude": 33.526944,
+      "longitude": 126.5883635,
+      "postcode": null,
+      "phoneno": "064-726-3132",
+      "repPhoto": {
+        "descseo": "Sunbay Pension",
+        "photoid": {
+          "photoid": 4691,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/fd344b3d-e817-48af-a205-3726a3b9bf4a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0c6d111c-8010-4436-993b-ef016f454bed.webp"
+        }
+      }
+    },
+    {
+      "alltag": "숙소,펜션,휴양펜션,해수욕장,수상레저,해변,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019252",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다향기펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼양일동 1599-1",
+      "roadaddress": "제주특별자치도 제주시 서흘길 24",
+      "tag": "숙소,펜션,휴양펜션,해수욕장,수상레저,해변,농어촌민박",
+      "introduction": "검은모래해수욕장 앞에 위치해 있는 조용한 펜션",
+      "latitude": 33.5275634,
+      "longitude": 126.5889207,
+      "postcode": null,
+      "phoneno": "064-756-3412",
+      "repPhoto": {
+        "descseo": "Scent of the Sea",
+        "photoid": {
+          "photoid": 4725,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/83f59038-cf64-48f6-b3ad-71c232a4f8cd.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9dd3b46d-7d7c-4546-a38d-c283d9c14270.webp"
+        }
+      }
+    },
+    {
+      "alltag": "숙소,리조트,휴양콘도,서귀포,공공와이파이존,올레길,주차장,부대시설,바비큐,카페,조식,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,승강기",
+      "contentsid": "CNTS_000000000019256",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "올레요리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 2498-3",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 720",
+      "tag": "숙소,리조트,휴양콘도,서귀포,공공와이파이존,올레길,주차장,부대시설,바비큐,카페,조식,무장애관광",
+      "introduction": "제주 올레 7코스에 위치한 리조트",
+      "latitude": 33.2615636,
+      "longitude": 126.49447,
+      "postcode": null,
+      "phoneno": "064-739-8558",
+      "repPhoto": {
+        "descseo": "Olleyo Resort",
+        "photoid": {
+          "photoid": 4751,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/499d4a0e-4f98-4e3b-858c-67498dd9cd2c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/90815c70-45b6-42c2-bad3-0f0d40a9f9e6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,승강기,아주 어려움",
+      "contentsid": "CNTS_000000000019260",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "오션트리",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 702-2",
+      "roadaddress": "제주특별자치도 서귀포시 월드컵로 188",
+      "tag": "펜션,숙소,휴양펜션,수영장,자연경관,해변,체험,수상레저,스쿠버다이빙,무장애관광",
+      "introduction": "스쿠버다이빙을 즐길 수 있는 펜션",
+      "latitude": 33.23305190000001,
+      "longitude": 126.5055822,
+      "postcode": "63564",
+      "phoneno": "064-739-1239",
+      "repPhoto": {
+        "descseo": "Ocean Tree",
+        "photoid": {
+          "photoid": 4773,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/b266d303-0ce7-4f45-aac7-4533501402ee.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/39db09b5-6ad4-47e5-af8b-88b504449e29.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주방기구,바비큐,공항,단체여행객,농어촌민박,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000019274",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "남쪽나라빌",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 중문동 1489-18",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 133-1",
+      "tag": "펜션,숙소,휴양펜션,주방기구,바비큐,공항,단체여행객,농어촌민박",
+      "introduction": "제주 천제연폭포 앞에 위치한 남쪽나라빌",
+      "latitude": 33.254112,
+      "longitude": 126.419876,
+      "postcode": "63545",
+      "phoneno": "064-738-5679",
+      "repPhoto": {
+        "descseo": "남쪽나라빌",
+        "photoid": {
+          "photoid": 4807,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f482b199-3eac-42a4-ae93-8b273a372bac.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/75524068-0a2b-4c0d-9456-926c6786a61e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,휴양펜션,펜션,주차장,해수욕장,자연경관,바비큐,해변,해안도로,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019276",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주비치펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 고내리 328-4",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월해안로 384-12",
+      "tag": "휴식,숙소,휴양펜션,펜션,주차장,해수욕장,자연경관,바비큐,해변,해안도로",
+      "introduction": "전 객실이 제주의 바다와 노을을 한눈에 볼 수 있는 구조도 되어 있는 곳",
+      "latitude": 33.471894,
+      "longitude": 126.3495201,
+      "postcode": null,
+      "phoneno": "064-799-9910",
+      "repPhoto": {
+        "descseo": "Jeju Beach Pension",
+        "photoid": {
+          "photoid": 4817,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/45f54b05-1fb8-4aa3-b94c-bee0298ec8cc.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/fa4ab624-ea6d-42c2-8e86-50bf6e392ad9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,주차장,공공와이파이존,해수욕장,자연경관",
+      "contentsid": "CNTS_000000000019278",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "리버풀펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두봉6길 13",
+      "roadaddress": "제주특별자치도 제주시 도두봉6길 13",
+      "tag": "펜션,숙소,휴양펜션,주차장,공공와이파이존,해수욕장,자연경관",
+      "introduction": "도두봉과 인접한 리버풀펜션",
+      "latitude": 33.50805,
+      "longitude": 126.47207,
+      "postcode": "63112",
+      "phoneno": "064-711-0004",
+      "repPhoto": {
+        "descseo": "리버풀펜션",
+        "photoid": {
+          "photoid": 4823,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9ecba914-39d6-4b24-8c69-1661235645ca.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/66157835-46a7-4eb9-826c-17760cbe324d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "숙소,펜션,휴양펜션,자연경관,바비큐,공공와이파이존,해수욕장,해안도로,해변,가족,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000019279",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "마니주펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도두일동 1688-9",
+      "roadaddress": "제주특별자치도 제주시 서해안로 248",
+      "tag": "숙소,펜션,휴양펜션,자연경관,바비큐,공공와이파이존,해수욕장,해안도로,해변,가족",
+      "introduction": "관광지와 가까운 마니주펜션",
+      "latitude": 33.5089545,
+      "longitude": 126.4722988,
+      "postcode": null,
+      "phoneno": "064-711-6141",
+      "repPhoto": {
+        "descseo": "마니주팬션",
+        "photoid": {
+          "photoid": 4825,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/eddfa8cd-20ea-4d6d-96fb-a206dd58e0ae.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9574d60b-5eff-4887-98a3-a4247b28c257.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,승강기,장애인 전용 주차장",
+      "contentsid": "CNTS_000000000019282",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "마린포트리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 2483-3",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 744",
+      "tag": "호텔,숙소,리조트,휴양콘도,서귀포,해수욕장,온돌방,주차장,자연경관,무장애관광",
+      "introduction": "제주의 아름다운 자연환경과 어우러지는 휴식의 공간",
+      "latitude": 33.2354436,
+      "longitude": 126.4948834,
+      "postcode": null,
+      "phoneno": "064-738-2277",
+      "repPhoto": {
+        "descseo": "Marine Port Resort",
+        "photoid": {
+          "photoid": 4831,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/73d0304e-cecf-4d73-abfc-b090b411ebc2.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/96523398-b834-46ec-92fb-03b6b13ff41b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,리조트,서귀포,휴양콘도,공공와이파이존,수영장,주차장,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 화장실,장애인 전용 주차장",
+      "contentsid": "CNTS_000000000019325",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "라오체리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 852-1",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 763 (강정동)",
+      "tag": "휴식,숙소,리조트,서귀포,휴양콘도,공공와이파이존,수영장,주차장,무장애관광",
+      "introduction": "소각족이 이용하기 좋은 디럭스 객실, 친구들이나 가족이 이용하기좋은 스위트 객실, 두 가족 이상이 함께 사용할 수 있는 복층구조의 단독형 그랜드스위트로 구성되어 있는 라오체 리조트입니다.",
+      "latitude": 33.236057,
+      "longitude": 126.49679,
+      "postcode": null,
+      "phoneno": "064-738-7575",
+      "repPhoto": {
+        "descseo": "Laotzu Resort",
+        "photoid": {
+          "photoid": 4931,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/55cb4b23-dd6a-41d8-accb-7689dd5d228f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cc56b3b9-51e0-40a4-8bcb-f229a132095d.webp"
+        }
+      }
+    }
+  ]
+}

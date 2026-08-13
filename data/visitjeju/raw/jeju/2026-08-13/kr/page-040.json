@@ -1,0 +1,3611 @@
+{
+  "meta": {
+    "page": 40,
+    "locale": "kr",
+    "as_of": "2026-08-13T06:56:21Z",
+    "totalCount": 5938,
+    "pageCount": 60
+  },
+  "items": [
+    {
+      "alltag": "파스타,피자,음료,음식,해물스튜,해물파스타,새우로제파스타,돈까스,크림스프,샐러드,오일파스타,크림파스타,토마토파스타,스테이크,안심스테이크,연어샐러드,티본스테이크,찹스테이크,리코타치즈샐러드,나시고랭,짬뽕파스타,해산물토마토파스타,토마호크스테이크,공용주차장,화장실,무료 WIFI",
+      "contentsid": "CNTS_000000000022528",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "마농 제주본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도평동 48-10",
+      "roadaddress": "제주특별자치도 제주시 우평로 45-1",
+      "tag": "파스타,피자,음료,음식,해물스튜,해물파스타,새우로제파스타,돈까스,크림스프,샐러드,오일파스타,크림파스타,토마토파스타,스테이크,안심스테이크,연어샐러드,티본스테이크,찹스테이크,리코타치즈샐러드,나시고랭,짬뽕파스타,해산물토마토파스타,토마호크스테이크",
+      "introduction": "제주산 재료를 이용한 로컬푸드 레스토랑",
+      "latitude": 33.4789982,
+      "longitude": 126.4612864,
+      "postcode": null,
+      "phoneno": "0507-1423-1166",
+      "repPhoto": {
+        "descseo": "마농",
+        "photoid": {
+          "photoid": 2019022608440,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202211/08/407ba7de-9a3b-4d0e-afd7-8a9a9b385413.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202211/08/76adcc43-0a6e-454d-ac28-b09712d6d38f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "문어빵,빵,문어,디저트,음식,전통시장,쇼핑,상점/상가,주스,과일주스",
+      "contentsid": "CNTS_000000000022420",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "문어빵 굽는 문빵9",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 277-1",
+      "roadaddress": "제주특별자치도 서귀포시 중앙로62번길 18-1",
+      "tag": "문어빵,빵,문어,디저트,음식,전통시장,쇼핑,상점/상가,주스,과일주스",
+      "introduction": "문어빵 굽는 문빵9 서귀포 올레시장점.",
+      "latitude": 33.2501708,
+      "longitude": 126.5636786,
+      "postcode": null,
+      "phoneno": "--",
+      "repPhoto": {
+        "descseo": "문어빵굽는 문빵9 서귀포올레시장",
+        "photoid": {
+          "photoid": 2019022581648,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202107/30/514562df-88d4-4a4b-b3bc-2200545c3027.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202107/30/1ab54408-5cf5-417a-9f0b-b096da59ec41.webp"
+        }
+      }
+    },
+    {
+      "alltag": "중식,자장면,짬뽕,음식,해물짬뽕,탕수육,해물짜장,짜장면,해산물모둠,군만두",
+      "contentsid": "CNTS_000000000021640",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "짜장면 시키신 분",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 가파리 592",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 마라로 48",
+      "tag": "중식,자장면,짬뽕,음식,해물짬뽕,탕수육,해물짜장,짜장면,해산물모둠,군만두",
+      "introduction": "이창명의 짜장면시키신분 마라점",
+      "latitude": 33.1194634,
+      "longitude": 126.2669391,
+      "postcode": "63514",
+      "phoneno": "0507-1434-3506",
+      "repPhoto": {
+        "descseo": "짜장면시키신분 마라점",
+        "photoid": {
+          "photoid": 11628,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/973632fb-8928-4873-bdbd-b74b39778541.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/e9712b28-a852-44cb-84a6-6fbf09686e0a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "국밥,짬뽕국밥,청국장,음식,순두부찌개,순대국밥,고기국수,돼지국밥,콩나물국밥,모듬국밥,순두부,순대,모둠순대,머리고기,현금결제,카드결제,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021403",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "세가름식당",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 신창리 151-2",
+      "roadaddress": "제주특별자치도 제주시 한경면 신한로 20",
+      "tag": "국밥,짬뽕국밥,청국장,음식,순두부찌개,순대국밥,고기국수,돼지국밥,콩나물국밥,모듬국밥,순두부,순대,모둠순대,머리고기",
+      "introduction": "청국장이 유명한 국밥집",
+      "latitude": 33.34942,
+      "longitude": 126.18502,
+      "postcode": "63002",
+      "phoneno": "064-772-7079",
+      "repPhoto": {
+        "descseo": "세가름",
+        "photoid": {
+          "photoid": 2019022566015,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201911/12/8a990429-86ba-4e30-b026-2ad645a1f0f0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201911/12/aa7f02aa-e992-4757-bfe4-f8c1fac8567c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "분식,떡볶이,튀김,순대,음식,즉석떡볶이,김밥,튀김만두,고구마튀김,오징어튀김,김말이튀김,라볶이,라면,국수,쫄면,냉면,공용주차장,아주 어려움",
+      "contentsid": "CNTS_000000000021400",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "서울분식",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 일도1동 1103-8",
+      "roadaddress": "제주특별자치도 제주시 동문로4길 11",
+      "tag": "분식,떡볶이,튀김,순대,음식,즉석떡볶이,김밥,튀김만두,고구마튀김,오징어튀김,김말이튀김,라볶이,라면,국수,쫄면,냉면",
+      "introduction": "동문 재래시장 추억의 떡볶이",
+      "latitude": 33.51228,
+      "longitude": 126.52786,
+      "postcode": "63264",
+      "phoneno": "064-726-9266",
+      "repPhoto": {
+        "descseo": "서울떡볶이",
+        "photoid": {
+          "photoid": 2019022564076,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201910/14/1f12ea87-c7d5-451c-8c22-9dd6eac5e567.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201910/14/c2b68815-a54f-4204-81c4-fab959bbf4e3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,샌드위치,치아바타,떡볶이,음식,브런치,디저트,허니브레드,핸드드립커피,핸드드립과테말라,핸드드립콜롬비아슈프리모,핸드드립에티오피아예가체프,에스프레소,아메리카노,카페라떼,카라멜마끼아또,비엔나커피,아포가토,녹차라떼,복숭아아이스티,아이스티,코코아,라떼,생과일주스,토마토주스,키위주스,딸기주스,블루베리주스,스무디,블루베리스무디,망고스무디,딸기스무디,에이드,유자에이드,레몬에이드,자몽에이드,공용주차장,현금결제,카드결제,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021205",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "카페 슬로우",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 남원리 167",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 일주동로 7137",
+      "tag": "카페,샌드위치,치아바타,떡볶이,음식,브런치,디저트,허니브레드,핸드드립커피,핸드드립과테말라,핸드드립콜롬비아슈프리모,핸드드립에티오피아예가체프,에스프레소,아메리카노,카페라떼,카라멜마끼아또,비엔나커피,아포가토,녹차라떼,복숭아아이스티,아이스티,코코아,라떼,생과일주스,토마토주스,키위주스,딸기주스,블루베리주스,스무디,블루베리스무디,망고스무디,딸기스무디,에이드,유자에이드,레몬에이드,자몽에이드",
+      "introduction": "제주 바다와 함께하는 휴식",
+      "latitude": 33.2827341,
+      "longitude": 126.7177653,
+      "postcode": "63626",
+      "phoneno": "064-764-7734",
+      "repPhoto": {
+        "descseo": "슬로우카페",
+        "photoid": {
+          "photoid": 10867,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3f4dfe16-43d8-4e29-a7d9-5db1eebc9b7a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2929f9d6-5e6e-4423-a13c-ad8d50f16c14.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일식,돈까스,우동,나베,음식,어묵나베,김치나베정식,치즈돈까스,김치우동,치킨까스,돈가스,돈까스나베,새우튀김우동,어묵우동,소바,카레우동,로스등심가스,히레카츠,생선까스,흑돼지치즈롤돈가스,카레돈까스,매운카레돈까스,왕새우튀김,고로케,굴튀김",
+      "contentsid": "CNTS_000000000021192",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "촵촵 본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도2동 1962-8",
+      "roadaddress": "제주특별자치도 제주시 신설로9길 8-1",
+      "tag": "일식,돈까스,우동,나베,음식,어묵나베,김치나베정식,치즈돈까스,김치우동,치킨까스,돈가스,돈까스나베,새우튀김우동,어묵우동,소바,카레우동,로스등심가스,히레카츠,생선까스,흑돼지치즈롤돈가스,카레돈까스,매운카레돈까스,왕새우튀김,고로케,굴튀김",
+      "introduction": "이름만큼 중독성 있는 수제돈가스 집",
+      "latitude": 33.496986,
+      "longitude": 126.53534,
+      "postcode": "63229",
+      "phoneno": "0507-1321-6468",
+      "repPhoto": {
+        "descseo": "촵촵",
+        "photoid": {
+          "photoid": 10836,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/26276c93-00ff-4372-b767-d9ed5833b33e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/785f2c66-7c02-4b40-9694-59ad348d7762.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,커피,더치커피,라면,음식,아메리카노,에이드,카페라떼,핸드드립커피,핸드드립과테말라안티구아,핸드드립에티오피아예가체프,핸드드립콜롬비아슈프리모,핸드드립브라질산토스,스무디,자몽에이드,석류에이드,차,자몽차,석류차,유자차,레몬차,허브티,루이보스,캐모마일,홍차,쌍화차,핫초코,현금결제,카드결제,화장실",
+      "contentsid": "CNTS_000000000021188",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "재게재게옵서CAFE",
+      "region1cd": {
+        "value": "region3",
+        "label": "섬 속의 섬",
+        "refId": "region>region3"
+      },
+      "region2cd": {
+        "value": "34",
+        "label": "비양도",
+        "refId": "region3>34"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 2974",
+      "roadaddress": "제주특별자치도 제주시 한림읍 비양도길 32-3",
+      "tag": "카페,커피,더치커피,라면,음식,아메리카노,에이드,카페라떼,핸드드립커피,핸드드립과테말라안티구아,핸드드립에티오피아예가체프,핸드드립콜롬비아슈프리모,핸드드립브라질산토스,스무디,자몽에이드,석류에이드,차,자몽차,석류차,유자차,레몬차,허브티,루이보스,캐모마일,홍차,쌍화차,핫초코",
+      "introduction": "비양도에서 만날 수 있는 특색있는 카페, 직접 볶는 커피의 맛",
+      "latitude": 33.405247,
+      "longitude": 126.22827,
+      "postcode": "63033",
+      "phoneno": "010-2942-7829",
+      "repPhoto": {
+        "descseo": "재게재게옵서 카페",
+        "photoid": {
+          "photoid": 10820,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f381590d-9823-47a0-ba21-663b93c69567.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/dd296f99-b42c-4dca-b647-c56a221b10cd.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵,팡도르,마늘빵,음식,마늘바게트,디저트,바게트,밤식빵,베이커리,2022고메페스타,샌드위치,크로와상샌드위치,햄버거,크로아상,에그타르트,소보루빵,팥빵,야채빵,생크림단판빵,브리오슈,깜파뉴,마들렌,케이크,머핀,블루베리머핀,블루베리타르트,초코타르트,우유식빵,잼,딸기잼,요거트,에이드,레몬에이드,자몽에이드,복숭아아이스티,아메리카노,카페라떼,바닐라라떼,현금결제,카드결제,화장실",
+      "contentsid": "CNTS_000000000021125",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "채점석 베이커리 혁신도시점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서호동 1554-4",
+      "roadaddress": "제주특별자치도 서귀포시 서호남로32번길 29",
+      "tag": "빵,팡도르,마늘빵,음식,마늘바게트,디저트,바게트,밤식빵,베이커리,2022고메페스타,샌드위치,크로와상샌드위치,햄버거,크로아상,에그타르트,소보루빵,팥빵,야채빵,생크림단판빵,브리오슈,깜파뉴,마들렌,케이크,머핀,블루베리머핀,블루베리타르트,초코타르트,우유식빵,잼,딸기잼,요거트,에이드,레몬에이드,자몽에이드,복숭아아이스티,아메리카노,카페라떼,바닐라라떼",
+      "introduction": "눈 덮인 한라산의 모습을 한 팡도르가 맛있는 곳",
+      "latitude": 33.248505937890194,
+      "longitude": 126.51420806704255,
+      "postcode": "63566",
+      "phoneno": "0507-1424-0175",
+      "repPhoto": {
+        "descseo": "채점석베이커리",
+        "photoid": {
+          "photoid": 10681,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/b1ef6ffb-38b0-4154-ba64-fabd7b9b1083.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/c4a8457f-0b94-4aa1-b27e-5f14653b2193.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,오름라떼,커피,케이크,베이글,샌드위치,음식,아메리카노,에스프레소,카페라떼,에이드,쿠키,초코파운드,플랫화이트,카푸치노,핸드드립커피,바닐라라떼,헤이즐넛라떼,돌체라떼,카페모카,카라멜마끼아또,아포가토,라떼,아인슈페너,녹차라떼,프라페,민트초코라떼,레몬에이드,자몽에이드,패션후르츠에이드,요거트스무디,딸기요거트스무디,블루베리요거트스무디,플레인요거트스무디,차,자몽차,레몬차,녹차,얼그레이,페퍼민트,카모마일,얼그레이밀크티,콜드브루,콜드브루라떼,치즈케이크,티라미수,사과파이,현금결제,카드결제,아주 어려움",
+      "contentsid": "CNTS_000000000021122",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "컴플리트커피 연동점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 1523-3",
+      "roadaddress": "제주특별자치도 제주시 국기로4길 1",
+      "tag": "카페,오름라떼,커피,케이크,베이글,샌드위치,음식,아메리카노,에스프레소,카페라떼,에이드,쿠키,초코파운드,플랫화이트,카푸치노,핸드드립커피,바닐라라떼,헤이즐넛라떼,돌체라떼,카페모카,카라멜마끼아또,아포가토,라떼,아인슈페너,녹차라떼,프라페,민트초코라떼,레몬에이드,자몽에이드,패션후르츠에이드,요거트스무디,딸기요거트스무디,블루베리요거트스무디,플레인요거트스무디,차,자몽차,레몬차,녹차,얼그레이,페퍼민트,카모마일,얼그레이밀크티,콜드브루,콜드브루라떼,치즈케이크,티라미수,사과파이",
+      "introduction": "인테리어와 함께 특색 있는 메뉴가 매력적인 카페",
+      "latitude": 33.47824,
+      "longitude": 126.49136,
+      "postcode": "63139",
+      "phoneno": "070-4129-0315",
+      "repPhoto": {
+        "descseo": "컴플리트커피",
+        "photoid": {
+          "photoid": 10675,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9e0ee9db-6298-42eb-acda-ab81c694877b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b8be32f3-75cc-4e8f-b29f-4043c9562afa.webp"
+        }
+      }
+    },
+    {
+      "alltag": "흑돼지,통오징어,낙치김치찜,음식,김치찜,갈비,오겹살,소곱창전골,흑돼지오겹살,항정살,가브리살,생갈비,양념갈비,우삼겹,근고기,전복,문어,김치전골,전복갈비탕,전복왕갈비탕,냉면,비빔냉면,물냉면,누룽지탕,된장찌개,공용주차장,현금결제,카드결제,아주 어려움",
+      "contentsid": "CNTS_000000000021117",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "애월흑돼지 백번가든",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 애월리 1584-4",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월로 120",
+      "tag": "흑돼지,통오징어,낙치김치찜,음식,김치찜,갈비,오겹살,소곱창전골,흑돼지오겹살,항정살,가브리살,생갈비,양념갈비,우삼겹,근고기,전복,문어,김치전골,전복갈비탕,전복왕갈비탕,냉면,비빔냉면,물냉면,누룽지탕,된장찌개",
+      "introduction": "애월의 터줏대감 백번가든에서 맛보는 제주도 흑돼지의 맛",
+      "latitude": 33.464375,
+      "longitude": 126.32004,
+      "postcode": "63043",
+      "phoneno": "0507-1345-6901",
+      "repPhoto": {
+        "descseo": "백번가든",
+        "photoid": {
+          "photoid": 2019022565513,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201911/04/5966ebbf-4a2b-486f-97e9-acdce7cd17a5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201911/04/33be0c51-2799-4082-b643-5a20d4548eab.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,브런치카페,위더스풀블랙퍼스트,에그메네딕트,음식,브런치,샌드위치,아메리카노,와플,파니니,카페라떼,카푸치노,플랫화이트,카페모카,돌체라떼,바닐라빈라떼,아포가토,라떼,차,자몽차,레몬티,레몬에이드,요거트스무디,딸기요거트스무디,플레인요거트스무디,고구마라떼,과일주스,공용주차장,현금결제,카드결제,화장실,무료 WIFI",
+      "contentsid": "CNTS_000000000021106",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "위더스트래블 아라",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 아라1동 6113-16",
+      "roadaddress": "제주특별자치도 제주시 인다9길 29",
+      "tag": "카페,브런치카페,위더스풀블랙퍼스트,에그메네딕트,음식,브런치,샌드위치,아메리카노,와플,파니니,카페라떼,카푸치노,플랫화이트,카페모카,돌체라떼,바닐라빈라떼,아포가토,라떼,차,자몽차,레몬티,레몬에이드,요거트스무디,딸기요거트스무디,플레인요거트스무디,고구마라떼,과일주스",
+      "introduction": "아라동에 위치한 브런치 카페",
+      "latitude": 33.475548,
+      "longitude": 126.54848,
+      "postcode": "63247",
+      "phoneno": "0507-1391-0829",
+      "repPhoto": {
+        "descseo": "위더스트래블",
+        "photoid": {
+          "photoid": 10639,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/104fb5fe-bcdb-4839-b1f5-4e6767d4388d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/39ddda4d-be8e-441e-94f0-ad53031f27ca.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,보말칼국수,한라봉 생면,청귤 아이스,토네이도,음식,수제비,순두부찌개,칼국수,비빔밥,도시락,추억의도시락,옹심이,미역국,한우미역국,한우무국,콩나물해장국,한우된장찌개,황태해장국,콩나물국,소불고기,들깨미역국,황태미역국,우삼겹된장찌개,청국장,김치찌개,참치찌개,김치청국장찌개,공용주차장,현금결제,카드결제,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021095",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "홍요깃거리 애월점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 323-2",
+      "roadaddress": "제주특별자치도 제주시 신대로13길 36-1",
+      "tag": "카페,보말칼국수,한라봉 생면,청귤 아이스,토네이도,음식,수제비,순두부찌개,칼국수,비빔밥,도시락,추억의도시락,옹심이,미역국,한우미역국,한우무국,콩나물해장국,한우된장찌개,황태해장국,콩나물국,소불고기,들깨미역국,황태미역국,우삼겹된장찌개,청국장,김치찌개,참치찌개,김치청국장찌개",
+      "introduction": "카페에서 맛보는 고소한 보말칼국수",
+      "latitude": 33.4873244,
+      "longitude": 126.5002749,
+      "postcode": "63046",
+      "phoneno": "064-747-0607",
+      "repPhoto": {
+        "descseo": "홍요깃거리카페",
+        "photoid": {
+          "photoid": 10618,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/db87e0af-611b-4d74-863d-2740447af48f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8adf6209-6837-4e68-bc9b-788eec93594d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "향토음식,전복죽,묵은지고등어조림,전복뚝배기,음식,고등어조림,칼국수,갈치조림,해물전골,해물뚝배기,성게미역국,갈치구이,옥돔구이,고등어구이,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021069",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주고가네식당",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 170-13",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 성산중앙로19번길 14",
+      "tag": "향토음식,전복죽,묵은지고등어조림,전복뚝배기,음식,고등어조림,칼국수,갈치조림,해물전골,해물뚝배기,성게미역국,갈치구이,옥돔구이,고등어구이",
+      "introduction": "제주 해산물의 다양한 변신",
+      "latitude": 33.46273,
+      "longitude": 126.931366,
+      "postcode": "63643",
+      "phoneno": "0507-1312-5559",
+      "repPhoto": {
+        "descseo": "고가네",
+        "photoid": {
+          "photoid": 2019022606750,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202210/21/2a427981-7339-4f38-8f1e-21793f56217b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202210/21/46bab1a4-9e1f-4105-8592-71269825c76f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "향토음식,갈치정식,해물뚝배기,전복회,전복죽,음식,전복해물탕,전복뚝배기,전복버터구이,전복갈비탕,오분작뚝배기,갈치조림,고등어조림,갈치구이,옥돔구이,고등어구이,갈치국,성게미역국,흑돼지구이,제육볶음,정식,회,갈치회,고등어회,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021066",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "중문갈치조림 이조은식당",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2476-3",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 97",
+      "tag": "향토음식,갈치정식,해물뚝배기,전복회,전복죽,음식,전복해물탕,전복뚝배기,전복버터구이,전복갈비탕,오분작뚝배기,갈치조림,고등어조림,갈치구이,옥돔구이,고등어구이,갈치국,성게미역국,흑돼지구이,제육볶음,정식,회,갈치회,고등어회",
+      "introduction": "제주 향토음식의 모든 것",
+      "latitude": 33.25506,
+      "longitude": 126.41622,
+      "postcode": "63534",
+      "phoneno": "0507-1330-7123",
+      "repPhoto": {
+        "descseo": "이조은식당",
+        "photoid": {
+          "photoid": 10547,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3c6f4f33-9061-4ff6-92f6-19e52a895c7c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/972ce981-4f31-4f6a-b936-743b10f694ed.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵,커피,음료,음식,디저트,아메리카노,카페라떼,카페모카,생크림케익,수제요거트,요거트스무디,딸기요거트스무디,블루베리요거트스무디,망고요거트스무디,주스,에이드,레몬에이드,자몽에이드,차,밀크티,아이스티,말차라떼,초코라떼,스무디,팥빙수,망고빙수,라떼,팥라떼,유자차,레몬차,에스프레소,카푸치노,모카라떼,카라멜라떼,바닐라빈라떼,돌체라떼,아인슈페너,자몽차,매실차,얼그레이,캐모마일,공용주차장,현금결제,카드결제,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021061",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "브와두스 공항연동본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 1498-2",
+      "roadaddress": "제주특별자치도 제주시 국기로 35",
+      "tag": "빵,커피,음료,음식,디저트,아메리카노,카페라떼,카페모카,생크림케익,수제요거트,요거트스무디,딸기요거트스무디,블루베리요거트스무디,망고요거트스무디,주스,에이드,레몬에이드,자몽에이드,차,밀크티,아이스티,말차라떼,초코라떼,스무디,팥빙수,망고빙수,라떼,팥라떼,유자차,레몬차,에스프레소,카푸치노,모카라떼,카라멜라떼,바닐라빈라떼,돌체라떼,아인슈페너,자몽차,매실차,얼그레이,캐모마일",
+      "introduction": "제주 시내, 파티쉐의 베이커리 카페",
+      "latitude": 33.478786,
+      "longitude": 126.49037,
+      "postcode": "63139",
+      "phoneno": "0507-1413-4469",
+      "repPhoto": {
+        "descseo": "브와두스",
+        "photoid": {
+          "photoid": 2019022606741,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202210/21/bbca0e9d-bf4d-46d7-8c86-b5621a9ac70c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202210/21/51b6d424-70bf-4e96-a319-cdcf9d2bd1af.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵,빵집,케이크,커피,음식,마늘바게트,바게트,에그타르트,베이커리,팥빵,생크림단판빵,아보카도,크로크무슈,브리오슈,마늘빵,수제마카롱,크로아상,머핀,쿠키,브라우니,마들렌,우유식빵,치즈케이크,티라미수,초코케이크,청포도타르트,아메리카노,카페모카,카페라떼,카푸치노,카라멜마끼아또,샤케라또,라떼,녹차라떼,초코라떼,고구마라떼,팥라떼,차,페퍼민트,카모마일,레몬차,홍차,에이드,레몬에이드,자몽에이드,스무디,망고스무디,요거트스무디,키위스무디,잼,무료 WIFI,아주 어려움",
+      "contentsid": "CNTS_000000000021059",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "어머니빵집 연동본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 2325-7",
+      "roadaddress": "제주특별자치도 제주시 도령로 103",
+      "tag": "빵,빵집,케이크,커피,음식,마늘바게트,바게트,에그타르트,베이커리,팥빵,생크림단판빵,아보카도,크로크무슈,브리오슈,마늘빵,수제마카롱,크로아상,머핀,쿠키,브라우니,마들렌,우유식빵,치즈케이크,티라미수,초코케이크,청포도타르트,아메리카노,카페모카,카페라떼,카푸치노,카라멜마끼아또,샤케라또,라떼,녹차라떼,초코라떼,고구마라떼,팥라떼,차,페퍼민트,카모마일,레몬차,홍차,에이드,레몬에이드,자몽에이드,스무디,망고스무디,요거트스무디,키위스무디,잼",
+      "introduction": "엄마의 마음으로 만드는 건강한 빵",
+      "latitude": 33.491585,
+      "longitude": 126.488625,
+      "postcode": "63126",
+      "phoneno": "0507-1306-1281",
+      "repPhoto": {
+        "descseo": "어머니빵집",
+        "photoid": {
+          "photoid": 10509,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1b4bf786-865f-47ea-961d-cd4abd2b5de3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2207d6b9-e44d-4ad2-a29c-dec1bbe2a343.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주, 서귀포시, 중문, 흑돼지, 토종흑돼지,  근고기, 초벌구이, 숯불구이, 음식, 흑돼지구이, 돼지구이, 김치찌개, 돼지김치찌개, 오겹살, 흑돼지오겹살, 목살, 비빔국수, 된장찌개, 흑돼지김치찌개,공용주차장,화장실,현금결제,카드결제,무료 WIFI,카드결제,현금결제,제로페이 지역화폐,영어,중국어,저상버스 접근 가능,쉬움,흑돼지,흑돼지근고기,어린이 출입가능,유아의자,유아식기: 수저, 포크,가능",
+      "contentsid": "CNTS_000000000021052",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "까망돼지 중문점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2534-9 1층 까망돼지",
+      "roadaddress": "제주특별자치도 서귀포시 색달중앙로 21 (색달동, 여미지하우스) 1층 까망돼지",
+      "tag": "제주, 서귀포시, 중문, 흑돼지, 토종흑돼지,  근고기, 초벌구이, 숯불구이, 음식, 흑돼지구이, 돼지구이, 김치찌개, 돼지김치찌개, 오겹살, 흑돼지오겹살, 목살, 비빔국수, 된장찌개, 흑돼지김치찌개",
+      "introduction": "두툼한 흑돼지구이와 특제소스의 조합",
+      "latitude": 33.28141,
+      "longitude": 126.41111,
+      "postcode": "63534",
+      "phoneno": "0507-1316-6543",
+      "repPhoto": {
+        "descseo": "까망돼지",
+        "photoid": {
+          "photoid": 2019022606724,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202210/21/4d49e328-b64c-415e-af9b-d052b32dd087.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202210/21/6be732e0-0b63-4f50-af9e-a9aa959259e5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "찹쌀떡,모찌,과일모찌,음식,케이크,떡,공용주차장,아주 어려움",
+      "contentsid": "CNTS_000000000021046",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "수제홍과일모찌 연동본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 294-25",
+      "roadaddress": "제주특별자치도 제주시 연동14길 14",
+      "tag": "찹쌀떡,모찌,과일모찌,음식,케이크,떡",
+      "introduction": "엄마와 아들이 만든 수제과일모찌",
+      "latitude": 33.48444,
+      "longitude": 126.494316,
+      "postcode": "63133",
+      "phoneno": "0507-1410-1228",
+      "repPhoto": {
+        "descseo": "수제홍과일모찌",
+        "photoid": {
+          "photoid": 10475,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/fa5176d9-8970-4f45-958d-0df588cfa6a7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0f6825f0-3ed8-4a90-88e0-9ee42e4e0044.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,커피,미트파이,감귤파이,음식,아메리카노,에이드,드립커피,단호박라떼,핫초코,유자차,라떼,차,유자에이드,청포도에이드,레몬에이드,요거트,허니브레드,핫도그,공용주차장,현금결제,카드결제,화장실,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000020990",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "유끼네카페",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 성읍리 1633-8",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 성읍정의현로136번길 5-8",
+      "tag": "카페,커피,미트파이,감귤파이,음식,아메리카노,에이드,드립커피,단호박라떼,핫초코,유자차,라떼,차,유자에이드,청포도에이드,레몬에이드,요거트,허니브레드,핫도그",
+      "introduction": "특별한 수제파이를 맛볼 수 있는 곳",
+      "latitude": 33.393875,
+      "longitude": 126.7976,
+      "postcode": "63624",
+      "phoneno": "010-3307-5164",
+      "repPhoto": {
+        "descseo": "유끼네",
+        "photoid": {
+          "photoid": 10347,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/269afbc6-df4e-41af-af67-60431638eba9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9528560c-9499-4b9b-bd72-cc4a83b063af.webp"
+        }
+      }
+    },
+    {
+      "alltag": "백반,고등어조림,정식,한식,물회,음식,우럭매운탕,횔어우럭매운탕,우럭조림,생선구이정식,주물럭,해물뚝배기,고등어구이,옥돔구이,갈치조림,오겹살,한치물회,자리물회,착한가격업소,아주 어려움",
+      "contentsid": "CNTS_000000000020978",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "우리두리",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 김녕리 1202-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 김녕로 173",
+      "tag": "백반,고등어조림,정식,한식,물회,음식,우럭매운탕,횔어우럭매운탕,우럭조림,생선구이정식,주물럭,해물뚝배기,고등어구이,옥돔구이,갈치조림,오겹살,한치물회,자리물회,착한가격업소",
+      "introduction": "푸근하고 정겨운 정식의 맛, 우리두리 식당",
+      "latitude": 33.55623,
+      "longitude": 126.75624,
+      "postcode": "63357",
+      "phoneno": "064-782-5442",
+      "repPhoto": {
+        "descseo": "우리두리식당",
+        "photoid": {
+          "photoid": 1019022595269,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/29/44485551-a2a2-4756-bc55-55b21dc2256f.jpg",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/29/d7202c0d-0e7e-4641-b49b-80942a472f76.jpg"
+        }
+      }
+    },
+    {
+      "alltag": "카페,애플망고빙수,애플망고음료,음식,애플망고스무디,파스타,과일주스,주스,샌드위치,해산물토마토파스타,바질페스토파스타,크림파스타,알리오올리오파스타,딱새우,덮밥,불고기덮밥,필라프,새우필라프,호박수프,바게트,토스트,요거트,아이스크림,녹차아이스크림,에스프레소,아메리카노,카페라떼,카라멜마끼아또,바닐라라떼,차,레몬차,유자차,라떼,망고라떼,그린티라떼,딸기라떼,흑당버블티,초코라떼,에이드,망고에이드,유자에이드,레몬에이드,망고주스,요거트스무디,스무디,딸기스무디,초코스무디,녹차스무디,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대",
+      "contentsid": "CNTS_000000000020252",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "먹쿠슬낭카페",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 오라삼동 2319-8",
+      "roadaddress": "제주특별자치도 제주시 오라로 24",
+      "tag": "카페,애플망고빙수,애플망고음료,음식,애플망고스무디,파스타,과일주스,주스,샌드위치,해산물토마토파스타,바질페스토파스타,크림파스타,알리오올리오파스타,딱새우,덮밥,불고기덮밥,필라프,새우필라프,호박수프,바게트,토스트,요거트,아이스크림,녹차아이스크림,에스프레소,아메리카노,카페라떼,카라멜마끼아또,바닐라라떼,차,레몬차,유자차,라떼,망고라떼,그린티라떼,딸기라떼,흑당버블티,초코라떼,에이드,망고에이드,유자에이드,레몬에이드,망고주스,요거트스무디,스무디,딸기스무디,초코스무디,녹차스무디",
+      "introduction": "애플망고가 유명한 여행자카페",
+      "latitude": 33.4980411,
+      "longitude": 126.5070556,
+      "postcode": null,
+      "phoneno": "064-747-0360",
+      "repPhoto": {
+        "descseo": "Jeju Myeongpum",
+        "photoid": {
+          "photoid": 8071,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e818e0d6-889f-4480-8053-cf349cbd2beb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/87aaa013-42a7-4fd9-856a-dad89df64944.webp"
+        }
+      }
+    },
+    {
+      "alltag": "또복상점, 핸드메이드소품, 원데이클래스, 우드카빙, 제주기념품, 제주동쪽여행, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제,네이버페이, 애플페이 등,영어,중국어,일본어,,단독접근가능,단차없음,청각장애인 접근성,시각장애인 접근성,쉬움,기념품/소품,브랜드,화장품 및 프레그런스 제품(자체제작) ,가능",
+      "contentsid": "CNTS_300000000014549",
+      "contentscd": {
+        "value": "c2",
+        "label": "쇼핑",
+        "refId": "contentscd>c2"
+      },
+      "title": "또복상점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 일주동로 1376 (북촌리) ",
+      "roadaddress": "제주특별자치도 제주시 조천읍 일주동로 1376 (북촌리) ",
+      "tag": "또복상점, 핸드메이드소품, 원데이클래스, 우드카빙, 제주기념품, 제주동쪽여행, visitjeju, 비짓제주",
+      "introduction": "함덕 근처 제주 동쪽 소품샵, 핸드메이드 우드 소품과 제주 여행 선물을 만나는 공간",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63339",
+      "phoneno": "010-9965-2592",
+      "repPhoto": {
+        "descseo": "또복상점",
+        "photoid": {
+          "photoid": 20220905165909,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/bb71136f-c632-4b01-9e8d-aea875608042.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/edbd19f9-1370-4a60-bc53-07ee4c537edd.webp"
+        }
+      }
+    },
+    {
+      "alltag": "한국마사회제주목장, 제주목장, 웨딩사진, 가족사진, 사진공모전, 제주이벤트, visitjeju, 비짓제주,,",
+      "contentsid": "CNTS_300000000014551",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "한국마사회 제주목장에서 웨딩ㆍ가족 사진 자랑 대회",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 남조로 1660 (교래리, 제주경마목장) ",
+      "roadaddress": "제주특별자치도 제주시 조천읍 남조로 1660 (교래리, 제주경마목장) ",
+      "tag": "한국마사회제주목장, 제주목장, 웨딩사진, 가족사진, 사진공모전, 제주이벤트, visitjeju, 비짓제주",
+      "introduction": "한국마사회 제주목장에서 웨딩ㆍ가족 사진 촬영 후 본인 인스타그램 업로드, 한국마사회 공식 인스타그램(@letsrun_official) 팔로인하면 탐나는전을 드립니다",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63346",
+      "phoneno": "064-780-0139",
+      "repPhoto": {
+        "descseo": "한국마사회 제주목장에서 웨딩ㆍ가족 사진 자랑 대회",
+        "photoid": {
+          "photoid": 20220905165929,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/26f28bd5-b3c6-4eb0-a620-96fca13c88f5.jpg",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/4fa1bfde-bcb2-486a-a1cd-97380aa5c4ce.jpg"
+        }
+      }
+    },
+    {
+      "alltag": "성읍민속마을, 생생국가유산, 제주전통문화, 제례문화체험, 제주문화체험, visitjeju, 비짓제주,,",
+      "contentsid": "CNTS_300000000014552",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "2026 생생 국가유산 활용사업 \"멩심헹 성읍에 가게마씀\"",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 성읍정의현로 35 (성읍리) ",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 성읍정의현로 35 (성읍리) ",
+      "tag": "성읍민속마을, 생생국가유산, 제주전통문화, 제례문화체험, 제주문화체험, visitjeju, 비짓제주",
+      "introduction": "제주에서 태어난 한 개인의 삶의 일대기를 소개하는 마지막 무료체험 행사( 삶의 마지막 편지 작성/ 장례음식시식/ 상여행렬 체험/ 전통등 단청/ 전통놀이 체험 등)",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63624",
+      "phoneno": "064-724-8513",
+      "repPhoto": {
+        "descseo": "2026 생생 국가유산 활용사업 \"멩심헹 성읍에 가게마씀\"",
+        "photoid": {
+          "photoid": 20220905165934,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/70d6f934-76ad-43c8-a5b1-354088474291.jpg",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/da110321-df9a-4b21-9527-9f936705df0a.jpg"
+        }
+      }
+    },
+    {
+      "alltag": "제주교향악단, 신인음악회, 제주문예회관, 클래식공연, 오케스트라, visitjeju, 비짓제주,,",
+      "contentsid": "CNTS_300000000014555",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "제주특별자치도립 제주교향악단 2026 신인음악회",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 동광로 69 (일도이동, 제주도문예회관) 대극장",
+      "roadaddress": "제주특별자치도 제주시 동광로 69 (일도이동, 제주도문예회관) 대극장",
+      "tag": "제주교향악단, 신인음악회, 제주문예회관, 클래식공연, 오케스트라, visitjeju, 비짓제주",
+      "introduction": "젊은 음악가들의 열정과 도립 제주교향악단의 깊이 있는 연주가 어우러지는  \"도립 제주교향악단 신인음악회\"에 여러분을 초대합니다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63270",
+      "phoneno": "064-728-2776",
+      "repPhoto": {
+        "descseo": "제주특별자치도립 제주교향악단 2026 신인음악회",
+        "photoid": {
+          "photoid": 20220905165944,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/c859d8fb-821a-41a9-ae16-359fb0f9ab3b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/f97b95eb-05a8-4449-adef-7ad51582b4ea.webp"
+        }
+      }
+    },
+    {
+      "alltag": "김만덕기념관, 특별기획전, 산지천, 제주전시, 제주원도심, visitjeju, 비짓제주",
+      "contentsid": "CNTS_300000000014557",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "2026 김만덕기념관 특별기획전 <물길을 따라, 사람길을 잇다>",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 건입동 1164",
+      "roadaddress": "제주특별자치도 제주시 산지로 7",
+      "tag": "김만덕기념관, 특별기획전, 산지천, 제주전시, 제주원도심, visitjeju, 비짓제주",
+      "introduction": "2026 김만덕기념관 특별기획전 <물길을 따라, 사람길을 잇다>",
+      "latitude": 33.51589540000001,
+      "longitude": 126.5304318,
+      "postcode": null,
+      "phoneno": "064-759-6093",
+      "repPhoto": {
+        "descseo": "2026 김만덕기념관 특별기획전 <물길을 따라, 사람길을 잇다>",
+        "photoid": {
+          "photoid": 20220905165971,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/7211a970-b69d-4eee-978d-d2439210cc69.JPG",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/aeafe50c-537b-4ce0-aaa7-ac3ac2fa635a.JPG"
+        }
+      }
+    },
+    {
+      "alltag": "김택화미술관, 제주의풍경전, 제주전시, 상설전시, 미술관, visitjeju, 비짓제주",
+      "contentsid": "CNTS_300000000014558",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "김택화 : 제주의 풍경展",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 신흥리 227-5",
+      "roadaddress": "제주특별자치도 제주시 조천읍 신흥로 1",
+      "tag": "김택화미술관, 제주의풍경전, 제주전시, 상설전시, 미술관, visitjeju, 비짓제주",
+      "introduction": "김택화 : 제주의 풍경展",
+      "latitude": 33.5437307,
+      "longitude": 126.6532369,
+      "postcode": null,
+      "phoneno": "064-900-9097",
+      "repPhoto": {
+        "descseo": "김택화 : 제주의 풍경展",
+        "photoid": {
+          "photoid": 20220905165973,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/f1319285-bb88-4759-94ba-40f469cf94ec.JPG",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/d1576d39-485f-4c87-b54d-bfaa8079ab79.JPG"
+        }
+      }
+    },
+    {
+      "alltag": "제주체임버오케스트라, 울림의경계너머, 클래식공연, 서귀포예술의전당, 제주공연, visitjeju, 비짓제주",
+      "contentsid": "CNTS_300000000014559",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "울림의 경계 너머",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 551-1",
+      "roadaddress": "제주특별자치도 서귀포시 태평로 270",
+      "tag": "제주체임버오케스트라, 울림의경계너머, 클래식공연, 서귀포예술의전당, 제주공연, visitjeju, 비짓제주",
+      "introduction": "울림의 경계 너머",
+      "latitude": 33.2462166,
+      "longitude": 126.550832,
+      "postcode": null,
+      "phoneno": "064-900-1171",
+      "repPhoto": {
+        "descseo": "울림의 경계 너머",
+        "photoid": {
+          "photoid": 20220905165976,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/4f618cfb-8bf1-4f9e-86e4-7a5071cc00f9.jpg",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/157143ec-5732-4ace-b69d-190ab3afd9c7.jpg"
+        }
+      }
+    },
+    {
+      "alltag": "펫미팅, 유기견산책, 댕플로깅, 마핑고, 반려동물체험, visitjeju, 비짓제주",
+      "contentsid": "CNTS_300000000014562",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "유기견 산책 팝업 <펫 미팅> ",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도이동 441-9",
+      "roadaddress": "제주특별자치도 제주시 이도공원길 42",
+      "tag": "펫미팅, 유기견산책, 댕플로깅, 마핑고, 반려동물체험, visitjeju, 비짓제주",
+      "introduction": "유기견 산책 팝업 <펫 미팅> ",
+      "latitude": 33.4982882,
+      "longitude": 126.5444925,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "유기견 산책 팝업 <펫 미팅> ",
+        "photoid": {
+          "photoid": 20220905165995,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/154a1a2a-2546-4061-887d-f4071d0b80a2.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/229a9366-1ec4-40cc-9eb6-4bee7863c895.webp"
+        }
+      }
+    },
+    {
+      "alltag": "쇠소깍, 리타르스튜디오, 수제쿠키, 제주기념품, 제주디저트, 선물추천, visitjeju, 비짓제주,공용주차장,현금결제,카드결제,화장실,무료 WIFI,카드결제,카카오 페이, 알리 페이, 탐나는전,영어,,단차없음,쉬움,리타르 쿠키 선물세트(4개입, 6개입, 18개입),어린이 출입가능,,가능,없음",
+      "contentsid": "CNTS_300000000014547",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "리타르 스튜디오",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 효돈순환로 197 (하효동) 1층, 리타르 스튜디오",
+      "roadaddress": "제주특별자치도 서귀포시 효돈순환로 197 (하효동) 1층, 리타르 스튜디오",
+      "tag": "쇠소깍, 리타르스튜디오, 수제쿠키, 제주기념품, 제주디저트, 선물추천, visitjeju, 비짓제주",
+      "introduction": "작곡가의 작은 쿠키 스튜디오",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63601",
+      "phoneno": "010-4155-5665",
+      "repPhoto": {
+        "descseo": "리타르 스튜디오",
+        "photoid": {
+          "photoid": 20220905165898,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/a8d3749b-bb99-4822-bad2-2e64d6833986.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/ecd41458-2503-41ef-8fea-476a9b47e823.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주고향사랑기부, 고향사랑e음, 제주이벤트, 제주돼지고기, 복날이벤트, visitjeju, 비짓제주,,",
+      "contentsid": "CNTS_300000000014553",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "복날엔 제주에 기부하고, 고기 먹으면 돼지!",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 문연로 6 (연동, 제주특별자치도청) 제주특별자치도청",
+      "roadaddress": "제주특별자치도 제주시 문연로 6 (연동, 제주특별자치도청) 제주특별자치도청",
+      "tag": "제주고향사랑기부, 고향사랑e음, 제주이벤트, 제주돼지고기, 복날이벤트, visitjeju, 비짓제주",
+      "introduction": "10만 원 이상 기부자 중 100명 추첨 …‘제주 돼지고기 세트’증정",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63122",
+      "phoneno": "064-710-6873",
+      "repPhoto": {
+        "descseo": "복날엔 제주에 기부하고, 고기 먹으면 돼지!",
+        "photoid": {
+          "photoid": 20220905165939,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/08/2332e1f9-55f6-4a70-a61d-34ee7332af3f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/08/f22fcddb-3a61-4286-939e-8c4c346a8c8f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "KDreamDanceFesta, 제주댄스페스타, 제주공연, 제주축제, 제주맥주와함께",
+      "contentsid": "CNTS_300000000014299",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "K-Dream Dance Festa in JEJU",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 금능리 2040",
+      "roadaddress": "제주특별자치도 제주시 한림읍 한림로 247",
+      "tag": "KDreamDanceFesta, 제주댄스페스타, 제주공연, 제주축제, 제주맥주와함께",
+      "introduction": "제주맥주와 함께하는 케이드림댄스페스타",
+      "latitude": 33.3885872,
+      "longitude": 126.2333055,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "K-Dream Dance Festa in JEJU",
+        "photoid": {
+          "photoid": 20220905163216,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202605/20/f3d3a7c0-d268-4829-a0fc-8fff7440b4bc.webp",
+          "thumbnailpath": null
+        }
+      }
+    },
+    {
+      "alltag": "카페,핸드드립,커피,음식,핸드드립커피,딸기라떼,과일주스,카페라떼,카페모카,바닐라라떼,카라멜마끼아또,비엔나커피,라떼,녹차라떼,초코라떼,고구마라떼,밀크티,모카프라푸치노,녹차프라푸치노,케이크,베이글,브라우니,에그타르트,차,루이보스,캐모마일,자스민티,자몽차,레몬차,에이드,블루베리레몬에이드,자몽에이드,치즈케이크,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000021042",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "조아찌커피",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이호1동 1776",
+      "roadaddress": "제주특별자치도 제주시 테우해안로 158",
+      "tag": "카페,핸드드립,커피,음식,핸드드립커피,딸기라떼,과일주스,카페라떼,카페모카,바닐라라떼,카라멜마끼아또,비엔나커피,라떼,녹차라떼,초코라떼,고구마라떼,밀크티,모카프라푸치노,녹차프라푸치노,케이크,베이글,브라우니,에그타르트,차,루이보스,캐모마일,자스민티,자몽차,레몬차,에이드,블루베리레몬에이드,자몽에이드,치즈케이크",
+      "introduction": "멘트에 따라 커피 가격이 달라지는 재미있는 카페",
+      "latitude": 33.496723,
+      "longitude": 126.45083,
+      "postcode": "63111",
+      "phoneno": "0507-1349-6226",
+      "repPhoto": {
+        "descseo": "조아찌",
+        "photoid": {
+          "photoid": 10460,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f709e5b1-4441-44a7-8369-07e85013cc3d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/cc0eef68-e8d8-4884-b8e5-3376efdb8d4a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "중식,자장면,톳,짬뽕,음식,해물짬뽕,탕수육,해물짜장,짜장면",
+      "contentsid": "CNTS_000000000021643",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "원조마라도해물짜장면집",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 가파리 600-1",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 마라로101번길 46",
+      "tag": "중식,자장면,톳,짬뽕,음식,해물짬뽕,탕수육,해물짜장,짜장면",
+      "introduction": "마라도에 처음으로 짜장면을 판매한 원조 마라도짜장면",
+      "latitude": 33.1185831,
+      "longitude": 126.2669135,
+      "postcode": "63515",
+      "phoneno": "064-792-8506",
+      "repPhoto": {
+        "descseo": "Original Marado Jajangmyeon",
+        "photoid": {
+          "photoid": 11646,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a57cbb99-b0db-4b8f-8c03-3f9624b9c5d3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/04231669-e833-4f2e-80c4-1a6bf64d3058.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵집,베이커리,제과,제빵,음식,빵,아메리카노,과일주스,카푸치노,카페모카,카페라떼,카라멜마끼아또,라떼,아이스티,청귤차,차,허브티,녹차,얼그레이,잉글리쉬브렉퍼스트,루이보스,레몬에이드,그린티라떼,팥빙수,케이크,베이글,샌드위치,치즈케이크,현금결제,카드결제",
+      "contentsid": "CNTS_000000000022239",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "파리바게뜨 제주애월점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 애월리 2062",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애월로 89",
+      "tag": "빵집,베이커리,제과,제빵,음식,빵,아메리카노,과일주스,카푸치노,카페모카,카페라떼,카라멜마끼아또,라떼,아이스티,청귤차,차,허브티,녹차,얼그레이,잉글리쉬브렉퍼스트,루이보스,레몬에이드,그린티라떼,팥빙수,케이크,베이글,샌드위치,치즈케이크",
+      "introduction": "프랑스 전통의 베이커리 프랜차이즈 시스템을 운영하고 있는 제과, 제빵업체로 전국적으로 다수의 매장을 보유하고 있다.",
+      "latitude": 33.4647757,
+      "longitude": 126.3169422,
+      "postcode": "63043",
+      "phoneno": "064-799-8211",
+      "repPhoto": {
+        "descseo": "PARIS BAGUETTE Aewol store",
+        "photoid": {
+          "photoid": 13618,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0041257d-2c60-47d7-81d9-817213733730.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9a49ad14-2e1d-4052-8619-6e50b24e11b3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주여행혜택, 제주장기체류, 제주관광이벤트, 탐나는전, 제주여행지원금,,",
+      "contentsid": "CNTS_300000000014342",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "2박 이상 제주 체류 개별 관광객 대상 감사 프로모션 안내",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 선덕로 23 (연동, 제주웰컴센터) ",
+      "roadaddress": "제주특별자치도 제주시 선덕로 23 (연동, 제주웰컴센터) ",
+      "tag": "제주여행혜택, 제주장기체류, 제주관광이벤트, 탐나는전, 제주여행지원금",
+      "introduction": " 개별관광객 대상 감사 프로모션 운영",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63122",
+      "phoneno": "*",
+      "repPhoto": {
+        "descseo": " 2박 이상 제주 체류 개별 관광객 대상 감사 프로모션 안내",
+        "photoid": {
+          "photoid": 20220905163936,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202605/29/abe89984-acdd-4fe7-871d-3836c1b2da0c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202605/29/8cb1d9af-ce7e-44e1-aafd-d1face476c67.webp"
+        }
+      }
+    },
+    {
+      "alltag": "한식,비빔밥,뚝배기,흑돼지,정식,고등어구이,두부,음식,갈치조림,제주갈치조림,고등어조림,갈치구이,한정식,제육볶음,제육정식,고등어구이정식,공용주차장,현금결제,카드결제",
+      "contentsid": "CNTS_000000000001425",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주뜰향기",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 와흘리 122-3",
+      "roadaddress": "제주특별자치도 제주시 조천읍 남조로 2326",
+      "tag": "한식,비빔밥,뚝배기,흑돼지,정식,고등어구이,두부,음식,갈치조림,제주갈치조림,고등어조림,갈치구이,한정식,제육볶음,제육정식,고등어구이정식",
+      "introduction": "넓은 뜰이 있는 정성 가득한 정식 집",
+      "latitude": 33.499622,
+      "longitude": 126.53119,
+      "postcode": "63344",
+      "phoneno": "064-782-9449",
+      "repPhoto": {
+        "descseo": "뜰향기",
+        "photoid": {
+          "photoid": 2017020007251,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202512/21/18d93a40-cb3a-4b5a-bed3-898ead71fa0a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202512/21/2f897434-8224-41dd-abd0-920bb4ed2d41.webp"
+        }
+      }
+    },
+    {
+      "alltag": "정식,고등어조림,몸국,갈치국,성게국,자리물회,음식,갈치조림,갈치구이,갈치회,고등어회,우럭매운탕,전복죽,착한가격업소",
+      "contentsid": "CNTS_000000000001206",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "오솔길식당",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 건입동 1037-4",
+      "roadaddress": "제주특별자치도 제주시 임항로 264",
+      "tag": "정식,고등어조림,몸국,갈치국,성게국,자리물회,음식,갈치조림,갈치구이,갈치회,고등어회,우럭매운탕,전복죽,착한가격업소",
+      "introduction": "고등어조림, 옥돔구이, 갈치국, 성게국, 한치물회, 자리물회까지 다양한 제주 음식을 맛 볼 수 있는 곳",
+      "latitude": 33.5173738,
+      "longitude": 126.5382333,
+      "postcode": null,
+      "phoneno": "0507-1394-3663",
+      "repPhoto": {
+        "descseo": "오솔길",
+        "photoid": {
+          "photoid": 645,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a3f35207-4a37-4127-b83b-85efc0039fce.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/41c42340-29c0-46a1-9331-fec026b930e3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해산물,회,횟집,모둠회,자연산,음식,다금바리,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000001173",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "다미진횟집 제주표선본점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 표선리 40-51",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 민속해안로 578-1",
+      "tag": "해산물,회,횟집,모둠회,자연산,음식,다금바리",
+      "introduction": "제주도민이 인정한 해비치 맛집 다미진횟집",
+      "latitude": 33.325073,
+      "longitude": 126.84412,
+      "postcode": "63629",
+      "phoneno": "0507-1448-5051",
+      "repPhoto": {
+        "descseo": "다미진",
+        "photoid": {
+          "photoid": 2019022619626,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202307/14/20e96243-0e16-435e-b5df-47ccb8c7a349.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202307/14/2a1afcdb-edfe-4b16-b7b7-28e0657ad069.webp"
+        }
+      }
+    },
+    {
+      "alltag": "뚝배기,갈치조림,통갈치,돔베고기,음식,제주갈치조림,갈치구이,제주갈치구이,공용주차장,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000001154",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주 성산 해마루&쌈총사횟집",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 고성리 236",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 일출로 84",
+      "tag": "뚝배기,갈치조림,통갈치,돔베고기,음식,제주갈치조림,갈치구이,제주갈치구이",
+      "introduction": "성산일출봉과 가까운 제주 향토 음식점",
+      "latitude": 33.4499,
+      "longitude": 126.92107,
+      "postcode": "63641",
+      "phoneno": "0507-1368-1168",
+      "repPhoto": {
+        "descseo": "해마루",
+        "photoid": {
+          "photoid": 544,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d5c36a22-f900-43e9-8449-b0a88466a098.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d3a8c0c8-1e93-4a35-8d4c-132722512079.webp"
+        }
+      }
+    },
+    {
+      "alltag": "흑돼지,소고기,전골,음식,흑돼지구이,오겹살,갈비,육회,차돌박이,갈비탕,화장실,아주 어려움",
+      "contentsid": "CNTS_000000000001125",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "삼수정식당",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 고성리 316-4",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 동류암로 45",
+      "tag": "흑돼지,소고기,전골,음식,흑돼지구이,오겹살,갈비,육회,차돌박이,갈비탕",
+      "introduction": "40년 전통 성산 흑돼지 맛집 삼수정",
+      "latitude": 33.448635,
+      "longitude": 126.91573,
+      "postcode": "63640",
+      "phoneno": "064-782-2146",
+      "repPhoto": {
+        "descseo": "삼수정",
+        "photoid": {
+          "photoid": 2019022563391,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201910/02/1b1e0c6e-40aa-40ee-9265-a5516b819f88.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201910/02/63cba03b-3951-480d-b6b3-90d00b9e1df7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "은갈치,갈치조림,갈치구이,성게미역국,음식,제주갈치구이,제주갈치조림,생선구이정식,생선조림,성게비빔밥,전복돌솥밥,공용주차장,카드결제,화장실,무료 WIFI,아주 어려움",
+      "contentsid": "CNTS_000000000001097",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주갈치대기정",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 대포동 1787",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 41",
+      "tag": "은갈치,갈치조림,갈치구이,성게미역국,음식,제주갈치구이,제주갈치조림,생선구이정식,생선조림,성게비빔밥,전복돌솥밥",
+      "introduction": "취향에 따라 고르는 제주 음식",
+      "latitude": 33.24031,
+      "longitude": 126.428665,
+      "postcode": "63544",
+      "phoneno": "0507-1403-1041",
+      "repPhoto": {
+        "descseo": "대기정",
+        "photoid": {
+          "photoid": 2019022605886,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202210/06/6cc68b8e-e1f5-4104-b056-b9df24c0e5c6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202210/06/655bab41-348a-4a20-a72f-6d0bb469e5a4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "참치,회,해산물,초밥,음식,스시,현금결제,카드결제,화장실",
+      "contentsid": "CNTS_000000000001058",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "독도참치 서귀포점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 256-23",
+      "roadaddress": "제주특별자치도 서귀포시 동문로 62-1",
+      "tag": "참치,회,해산물,초밥,음식,스시",
+      "introduction": "참치 요리 전문점, 독도참치",
+      "latitude": 33.249107,
+      "longitude": 126.56686,
+      "postcode": "63591",
+      "phoneno": "064-762-5656",
+      "repPhoto": {
+        "descseo": "독도참치",
+        "photoid": {
+          "photoid": 2017020002442,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202512/21/4a5de7d4-0d06-430c-b07b-18e76412490a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202512/21/3d5161ee-4f4c-409b-a031-b050edd8882c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "중화요리,중식당,짜장면,탕수육,흑돼지,냉면,두루치기,음식,중식,무장애관광,공용주차장,현금결제,카드결제,화장실,단독접근가능,단차없음,테이블 비치,쉬움",
+      "contentsid": "CNTS_000000000001035",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "사해방",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 중문동 1891-7",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 263",
+      "tag": "중화요리,중식당,짜장면,탕수육,흑돼지,냉면,두루치기,음식,중식,무장애관광",
+      "introduction": "제주의 아름다움을 배경으로 최고의 맛과 서비스를 지향해온 정통 중화요리 전문점",
+      "latitude": 33.2515411,
+      "longitude": 126.4327965,
+      "postcode": null,
+      "phoneno": "064-738-7776",
+      "repPhoto": {
+        "descseo": "중화요리 사해방",
+        "photoid": {
+          "photoid": 2019022553324,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201903/25/9a946e8a-ec1f-4585-bc51-f3c7d1e4b03c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201903/25/7fe68fb5-374b-4503-90ab-add4c98cec3c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "굴국밥,굴파전,한식,음식,굴전,굴떡국,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,어려움,착한가격 업소",
+      "contentsid": "CONT_000000000501181",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "김명자굴국밥전문점 본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연북로 168",
+      "roadaddress": "제주특별자치도 제주시 연북로 168",
+      "tag": "굴국밥,굴파전,한식,음식,굴전,굴떡국,무장애관광",
+      "introduction": "팔팔 끓인 굴국밥을 전문으로하는 착한가격업소이자 모범음식점",
+      "latitude": 33.481873,
+      "longitude": 126.497406,
+      "postcode": null,
+      "phoneno": "064-747-0320",
+      "repPhoto": {
+        "descseo": "Kimmyeongja Gulgukbap (Jeju Main Branch)",
+        "photoid": {
+          "photoid": 24288,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/414bca69-6652-40ef-978f-6594d71fc4a5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/196e5ab4-b707-43f3-b95e-a51669c0a9e7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "돌솥정식,성산정식,만조정식,한식,음식,해물뚝배기,전복뚝배기,갈치조림,고등어조림,청국장,전복돌솥밥,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000501233",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "만조이천쌀밥 제주성산점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 168-8",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 성산중앙로 5",
+      "tag": "돌솥정식,성산정식,만조정식,한식,음식,해물뚝배기,전복뚝배기,갈치조림,고등어조림,청국장,전복돌솥밥",
+      "introduction": "성산에 위치한 정식과 해물조림이 전문인 만조이천쌀밥 성산포점",
+      "latitude": 33.4609007,
+      "longitude": 126.9311907,
+      "postcode": null,
+      "phoneno": "064-784-9793",
+      "repPhoto": {
+        "descseo": "Manjo Icheon Ssalbap",
+        "photoid": {
+          "photoid": 24574,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/78a22cee-ae5c-4a54-aff4-90e0cffd62ff.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/25317513-4873-4412-b1e7-17820ea49d3b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "흑돼지,김치찌개,한식,음식,오겹살,삼겹살,항정살,가브리살,흑돼지구이,돼지구이,된장찌개,냉면,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501325",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "오르막가든 중문본점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 대포중앙로 12",
+      "roadaddress": "제주특별자치도 서귀포시 대포중앙로 12",
+      "tag": "흑돼지,김치찌개,한식,음식,오겹살,삼겹살,항정살,가브리살,흑돼지구이,돼지구이,된장찌개,냉면",
+      "introduction": "중문관광단지 근처에 위치한 제주산 친환경 무항생제 흑돼지만을 제공하며 놀이방 구비된 모범음식점",
+      "latitude": 33.250298,
+      "longitude": 126.43307,
+      "postcode": null,
+      "phoneno": "064-738-7755",
+      "repPhoto": {
+        "descseo": "Oreumak Garden",
+        "photoid": {
+          "photoid": 25043,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/796c0f03-4ff3-4a97-99d4-61e375a5bea3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/43f0589e-117f-43eb-b414-03b279005ba0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "순대국밥,순두부,고기국수,음식,순두부찌개,착한가격업소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움,착한가격 업소",
+      "contentsid": "CONT_000000000501286",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "성춘",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 성지로 68 (일도2동)",
+      "roadaddress": "제주특별자치도 제주시 성지로 68 (일도2동)",
+      "tag": "순대국밥,순두부,고기국수,음식,순두부찌개,착한가격업소",
+      "introduction": "개업 후 지금까지 음식값이 그대로인 착한가격업소인 토종순대전문점",
+      "latitude": 33.511223,
+      "longitude": 126.53033,
+      "postcode": null,
+      "phoneno": "064-753-0528",
+      "repPhoto": {
+        "descseo": "Seongchun (Tojong Sundae)",
+        "photoid": {
+          "photoid": 24881,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0adf6c02-694c-451f-b5f3-054188124a0c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/7c959366-2a26-4f2e-8b55-e89ee9a3e31d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "흑돼지,말고기,한식,음식,육회,말고기사시미,갈비찜,오겹살,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,경보 및 피난시설,단차없음,아주 어려움",
+      "contentsid": "CONT_000000000501225",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주섭지회관&마돈",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 고성리 206-11",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 섭지코지로 56",
+      "tag": "흑돼지,말고기,한식,음식,육회,말고기사시미,갈비찜,오겹살,무장애관광",
+      "introduction": "성산 흑돼지, 말고기 전문점 마돈입니다.",
+      "latitude": 33.4375266,
+      "longitude": 126.9218868,
+      "postcode": null,
+      "phoneno": "064-784-5379",
+      "repPhoto": {
+        "descseo": "Madon",
+        "photoid": {
+          "photoid": 24513,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/4029d9bf-fece-45d6-8867-9534eb5b3866.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/968cda9f-c622-471f-b495-49f0352e71da.webp"
+        }
+      }
+    },
+    {
+      "alltag": "갈치,옥돔,고등어,한식,향토음식,음식,갈치조림,제주갈치조림,성게미역국,성게비빔밥,전복뚝배기,전복물회,전복죽,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,아주 어려움",
+      "contentsid": "CONT_000000000501378",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "천제연토속",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2539",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 45",
+      "tag": "갈치,옥돔,고등어,한식,향토음식,음식,갈치조림,제주갈치조림,성게미역국,성게비빔밥,전복뚝배기,전복물회,전복죽,무장애관광",
+      "introduction": "제주 별미인 오분작구이와 갈치회를 세트로 맛볼 수 있는 중문관광단지에 위치한 제주토속음식전문점",
+      "latitude": 33.2569568,
+      "longitude": 126.4111595,
+      "postcode": null,
+      "phoneno": "064-738-3120",
+      "repPhoto": {
+        "descseo": "Cheonjeyeon Tosok Restaurant",
+        "photoid": {
+          "photoid": 25312,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8ba97580-082f-4e4f-9e90-82e17a30433b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2efb78b8-50bb-4c8a-9261-916de0ab4541.webp"
+        }
+      }
+    },
+    {
+      "alltag": "블랙홀엑시트, 코인사냥대회, 제주실내체험, 제주이색체험, 제주신화월드, visitjeju, 비짓제주,,영어,,승강기,장애인 전용 주차장",
+      "contentsid": "CNTS_300000000014560",
+      "contentscd": {
+        "value": "c5",
+        "label": "축제/행사",
+        "refId": "contentscd>c5"
+      },
+      "title": "블랙홀 엑시트 제2회 코인 사냥 대회",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 89 (서광리) 3층 블랙홀 엑시트",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 89 (서광리) 3층 블랙홀 엑시트",
+      "tag": "블랙홀엑시트, 코인사냥대회, 제주실내체험, 제주이색체험, 제주신화월드, visitjeju, 비짓제주",
+      "introduction": "블랙홀 엑시트에서 참가자들이 30분 동안 미션을 진행하며 성공 시 배출되는 '루미 코인'을 많이 획득하는 대회",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63522",
+      "phoneno": "064-792-0702",
+      "repPhoto": {
+        "descseo": "블랙홀 엑시트 제2회 코인 사냥 대회",
+        "photoid": {
+          "photoid": 20220905165978,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/6957a34f-388e-4870-a143-6b3e72942a80.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/4b32efab-39e9-480b-8c85-47f196577f90.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제라진마카롱, 제주수제마카롱, 한입뚱카롱, 떠먹는마카롱, 제주기념품, visitjeju, 비짓제주,탐라는전, 온누리상품권 등 지역화폐, 카카오페이,,수제마카롱,",
+      "contentsid": "CNTS_300000000014561",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제라진마카롱",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하귀9길 2 (하귀1리) 모닝시티 117호",
+      "roadaddress": "제주특별자치도 제주시 애월읍 하귀9길 2 (하귀1리) 모닝시티 117호",
+      "tag": "제라진마카롱, 제주수제마카롱, 한입뚱카롱, 떠먹는마카롱, 제주기념품, visitjeju, 비짓제주",
+      "introduction": "제라진마카롱은 덜 달고 덜 느끼한 수제마카롱 전문점입니다. 누구나 즐길 수 있는 맛과 다양한 제주 캐릭터 마카롱으로 제주만의 색깔을 담았습니다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": "63054",
+      "phoneno": "070-7724-7367",
+      "repPhoto": {
+        "descseo": "제라진마카롱",
+        "photoid": {
+          "photoid": 20220905165989,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202607/09/aa40df0f-ce3f-4580-8a02-1080ad6050a8.jpg",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202607/09/74e473ab-9745-418e-8ba1-79b28ddcb8c3.jpg"
+        }
+      }
+    },
+    {
+      "alltag": "제주시, 아라일동, 파스타, 리조또, 바질, 딱새우, 새우, 갈비,뼈갈비토마토파스타, 새우크림리조또",
+      "contentsid": "CNTS_300000000015639",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "농부파스타집",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 아라일동 6157-13",
+      "roadaddress": "제주특별자치도 제주시 인다2길 65",
+      "tag": "제주시, 아라일동, 파스타, 리조또, 바질, 딱새우, 새우, 갈비",
+      "introduction": "제주 아라동에서 신선한 재료로 만든 파스타와 리조또를 선보이는 양식당",
+      "latitude": 33.4720643,
+      "longitude": 126.5501791,
+      "postcode": null,
+      "phoneno": "064-725-7990",
+      "repPhoto": {
+        "descseo": "농부파스타집",
+        "photoid": {
+          "photoid": 2019022614998,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202305/26/7dc2599c-2e95-40c6-9f9a-2aaa6b6aeec5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202305/26/be9bc906-d02f-4e4c-87cf-1eb9d96b6164.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,베이커리,삼양해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제,모바결재,탐나는전,,어려움,패스트푸드,디저트,빵,음료,어린이 출입가능,,가능,없음",
+      "contentsid": "CNTS_300000000015627",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "아사라베이커리 결",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담삼동 1003-9",
+      "roadaddress": "제주특별자치도 제주시 서해안로 638",
+      "tag": "카페,베이커리,삼양해수욕장",
+      "introduction": "제주시 삼양 검은모래 해수욕장 인근에 위치한 작은 베이커리카페",
+      "latitude": 33.5166243,
+      "longitude": 126.5051821,
+      "postcode": "63317",
+      "phoneno": "0507-1315-6871",
+      "repPhoto": {
+        "descseo": "아사라베이커리카페",
+        "photoid": {
+          "photoid": 2019022615244,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202305/30/37a6ad56-f9f1-4b7e-8bde-845fcc9bda38.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202305/30/c166bf2e-c215-410f-89e9-659f978b97be.webp"
+        }
+      }
+    },
+    {
+      "alltag": "서귀포, 중문, 짬뽕, 돈까스, 파스타, 볶음밥, 샐러드,왕갈비짬뽕, 흑돼지돈까스",
+      "contentsid": "CNTS_200000000014644",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "함쉐프키친 서귀포 본점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 대포동 2237-1",
+      "roadaddress": "제주특별자치도 서귀포시 이어도로 217-4",
+      "tag": "서귀포, 중문, 짬뽕, 돈까스, 파스타, 볶음밥, 샐러드",
+      "introduction": "신라호텔 15년 경력 셰프의 최고급 짬뽕",
+      "latitude": 33.2420477,
+      "longitude": 126.4436587,
+      "postcode": null,
+      "phoneno": "0507-1420-1142",
+      "repPhoto": {
+        "descseo": "함쉐프키친",
+        "photoid": {
+          "photoid": 2019022614356,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202305/24/16e699e3-d377-457d-8074-d1ae035f3cd8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202305/24/6ac9a5b5-854c-4a8a-97f9-712a37585554.webp"
+        }
+      }
+    },
+    {
+      "alltag": "냉우동,에이드,일식,텐동,식당,음식,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000014191",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "513텐동",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도이동 2006-10",
+      "roadaddress": "제주특별자치도 제주시 구남로8길 17",
+      "tag": "냉우동,에이드,일식,텐동,식당,음식",
+      "introduction": "513텐동은 이도2동 위치한 텐동 맛집이다. ",
+      "latitude": 33.4902505,
+      "longitude": 126.5370547,
+      "postcode": null,
+      "phoneno": "010-9492-4345",
+      "repPhoto": {
+        "descseo": "513텐동",
+        "photoid": {
+          "photoid": 2019022616270,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202306/02/e2b41423-e76d-4c41-baf2-c2e2762d95c5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202306/02/64f270b6-c11b-40a4-afa4-d272bbdbe57c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주, 음식점, 무한리필, 셀프바, 샤브샤브, 한우, 제주산, 돼지고기, 채소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,카드결제,현금결제,계좌이체,영어,중국어,일본어,,단독접근가능,단차없음,어려움,흑돼지,제주산 돼지 목심 샤브샤브,어린이 출입가능,유아의자,,가능,있음",
+      "contentsid": "CNTS_300000000013486",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "담담샤브 신제주점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 노형동 1053-3 1층 담담샤브 신제주점",
+      "roadaddress": "제주특별자치도 제주시 월랑로 30 (노형동) 1층 담담샤브 신제주점",
+      "tag": "제주, 음식점, 무한리필, 셀프바, 샤브샤브, 한우, 제주산, 돼지고기, 채소",
+      "introduction": "신선한 야채와 제주산 한우, 돼지고기가 있는 무한리필 셀프 샤브샤브",
+      "latitude": 33.4885012,
+      "longitude": 126.4767945,
+      "postcode": "63097",
+      "phoneno": "0507-1429-0471",
+      "repPhoto": {
+        "descseo": "담담샤브 신제주점",
+        "photoid": {
+          "photoid": 2019022650809,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202504/13/5c250279-b7a8-489f-a822-5a21caa5a438.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202504/13/2abc11da-973d-404f-b981-8f576c9f31a5.webp"
+        }
+      }
+    },
+    {
+      "alltag": "성산,해물짬뽕,해물짜장,음식,식당,탕수육,볶음밥,짜장면,짬뽕,찹쌀탕수육,문어,군만두,냉우동,화장실,무료 WIFI,해녀짬뽕, 해녀짜장,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000013125",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "성산해녀짬뽕",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 158-4",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 일출로 275",
+      "tag": "성산,해물짬뽕,해물짜장,음식,식당,탕수육,볶음밥,짜장면,짬뽕,찹쌀탕수육,문어,군만두,냉우동",
+      "introduction": "성산일출봉 인근에 위치한 성산해녀짬뽕은 제주 해녀가 갓 잡아올린 신선한 해산물만 취금하여 만든 다양한 음식들이 마련되어 있다.",
+      "latitude": 33.4623623,
+      "longitude": 126.9342769,
+      "postcode": null,
+      "phoneno": "0507-1445-1743",
+      "repPhoto": {
+        "descseo": "성산해녀짬뽕",
+        "photoid": {
+          "photoid": 2019022599457,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202203/11/2a6db254-5762-45d8-8340-61aebb52edfb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202203/11/ccad0eb0-b8c3-433b-bdcd-53a7238a27a4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "신창,짬뽕,중식,중국집,탕수육,매생이,굴,제철음식,음식,식당,2022고메페스타,깐풍육,깐풍기,칠리새우,해물볶음,해물누룽지탕,고추잡채,양장피,유산슬,꽃빵,짜장밥,짬뽕밥,볶음밥,새우볶음밥,유산슬밥,짜장면,우동,해물우동,화장실,무료 WIFI,매생이굴탕면, 굴탕면,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000013119",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "중국집마씸",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 동홍동 471-2",
+      "roadaddress": "제주특별자치도 서귀포시 동홍중앙로52번길 7",
+      "tag": "신창,짬뽕,중식,중국집,탕수육,매생이,굴,제철음식,음식,식당,2022고메페스타,깐풍육,깐풍기,칠리새우,해물볶음,해물누룽지탕,고추잡채,양장피,유산슬,꽃빵,짜장밥,짬뽕밥,볶음밥,새우볶음밥,유산슬밥,짜장면,우동,해물우동",
+      "introduction": "제주시 동홍동에 위치한 중화요리 전문점인 중국집마씸은 제철의 재료를 사용하여 계절마다 속재료가 바뀌는 특색있는 짬뽕을 만들어낸다.",
+      "latitude": 33.2554735,
+      "longitude": 126.5729712,
+      "postcode": null,
+      "phoneno": "064-772-3789",
+      "repPhoto": {
+        "descseo": "중국집마씸",
+        "photoid": {
+          "photoid": 2019022599420,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202203/11/97d5115c-f4d9-47f8-aef1-422b2f4cbb04.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202203/11/f7f234d7-c27e-41f3-b1fe-a9533463609f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "선흘,숲,쌈밥,음식,식당,정식,한정식,쌈밥정식,2022_마을산책_봄,Moment_봄,공용주차장,화장실,무료 WIFI,쌈밥정식,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000013095",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "선흘곶",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 선흘리 3263-1",
+      "roadaddress": "제주특별자치도 제주시 조천읍 선흘서2길 22",
+      "tag": "선흘,숲,쌈밥,음식,식당,정식,한정식,쌈밥정식,2022_마을산책_봄,Moment_봄",
+      "introduction": "제주시 조천읍에 위치한 쌈밥정식 전문점인 선흘곶은 신선한 재료들을 사용하여 정갈하고 푸짐한 자연식 한상차림을 즐길 수 있는 곳이다.",
+      "latitude": 33.5107848,
+      "longitude": 126.690293,
+      "postcode": null,
+      "phoneno": "064-783-5753",
+      "repPhoto": {
+        "descseo": "선흘곶",
+        "photoid": {
+          "photoid": 2019022599270,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202203/10/bc1bcef0-3fd0-486c-bb8d-88737694ae90.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202203/10/d1b9113f-d051-4c74-bcae-1570a66fb501.webp"
+        }
+      }
+    },
+    {
+      "alltag": "코리아마트,서귀포빵집,타르트,빵지순례,음식,카페,빵,베이커리,머핀,크림빵,소보루빵,케이크,바게트,쿠키,에그타르트,꽈배기,도너츠,허니브레드,공용주차장,화장실,무료 WIFI,견과류타르트, 꽈배기, 쁘띠, 식빵,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000012773",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "빵하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 동홍동 645-2",
+      "roadaddress": "제주특별자치도 서귀포시 태평로537번길 45",
+      "tag": "코리아마트,서귀포빵집,타르트,빵지순례,음식,카페,빵,베이커리,머핀,크림빵,소보루빵,케이크,바게트,쿠키,에그타르트,꽈배기,도너츠,허니브레드",
+      "introduction": "빵하우스는 견과류타르트, 꽈배기, 식빵 등 다양한 빵이 준비되어 있는 빵집이다.",
+      "latitude": 33.2528303,
+      "longitude": 126.5703204,
+      "postcode": null,
+      "phoneno": "064-762-7234",
+      "repPhoto": {
+        "descseo": "빵하우스",
+        "photoid": {
+          "photoid": 2019022597093,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/05/8312c2c7-68a9-464c-bc3c-4ecf593d1fb7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/05/75e7d116-1cb6-48b4-8d6c-bc455e7048d8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주신화월드맛집,중식,짜장면,짬뽕,푸드코트,음식,식당,제주신화월드,쟁반짜장,해물짬뽕,탕수육,삼선짬뽕,백짬뽕,새우볶음밥,볶음밥,군만두,멘보샤,칠리새우,크림새우,깐풍기,짜장밥,고추짬뽕,나가사키짬뽕,전복짬뽕,무장애관광,공용주차장,화장실,무료 WIFI,장애인 화장실,장애인 전용 주차장,제주오일장짜장면, 해물쟁반짜장,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000012757",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "제주오일장반점신화월드점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 서광리 산 24",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 신화역사로304번길 38",
+      "tag": "제주신화월드맛집,중식,짜장면,짬뽕,푸드코트,음식,식당,제주신화월드,쟁반짜장,해물짬뽕,탕수육,삼선짬뽕,백짬뽕,새우볶음밥,볶음밥,군만두,멘보샤,칠리새우,크림새우,깐풍기,짜장밥,고추짬뽕,나가사키짬뽕,전복짬뽕,무장애관광",
+      "introduction": "제주신화월드 내 지하 1층 푸드코트인 Selec The Table에 위치한 중국음식점 제주오일장반점에서는 제주에서만 맛 볼 수 있는 특별한 메뉴와 신선한 재료들로 든든한 한끼 식사를 제공하고 있다.",
+      "latitude": 33.3071802,
+      "longitude": 126.3174379,
+      "postcode": null,
+      "phoneno": "010-3745-1278",
+      "repPhoto": {
+        "descseo": "제주오일장반점 제주신화월드점",
+        "photoid": {
+          "photoid": 2019022597128,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/06/dea2bab9-f214-4088-8b3e-f499a1c85a80.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/06/1cd7f841-2f2d-408c-bb55-02e2c2e91d5e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "올레시장,카페,커피,음료,아이스크림,디저트,음식,과일주스,아메리카노,카페라떼,카푸치노,바닐라라떼,카페모카,카라멜마끼아또,에스프레소,라떼,스무디,요거트스무디,바닐라스무디,초코스무디,아포가토,망고요거트스무디,화장실,무료 WIFI,우도땅콩아이스크림,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000012727",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "쉬멍가",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 275-6",
+      "roadaddress": "제주특별자치도 서귀포시 중정로73번길 9",
+      "tag": "올레시장,카페,커피,음료,아이스크림,디저트,음식,과일주스,아메리카노,카페라떼,카푸치노,바닐라라떼,카페모카,카라멜마끼아또,에스프레소,라떼,스무디,요거트스무디,바닐라스무디,초코스무디,아포가토,망고요거트스무디",
+      "introduction": "서귀포 올레시장 내 위치한 쉬멍가는 제주산 과일을 이용하여 다양한 음료를 만드는 리얼주스 맛집으로 주스 이외에도 우도땅콩아이스크림이 인기 메뉴이다.",
+      "latitude": 33.2489457,
+      "longitude": 126.5639028,
+      "postcode": null,
+      "phoneno": "064-732-0277",
+      "repPhoto": {
+        "descseo": "쉬멍가",
+        "photoid": {
+          "photoid": 2019022596768,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/04/c32db1d5-859f-4b67-bbad-24e604d98f1a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/04/0a726284-d921-4437-b51c-4e223e8b693f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "누웨마루,숯불닭갈비,양념갈비,음식,식당,닭갈비,양념닭갈비,양념숯불닭갈비,막국수,흑돼지김치찌개,된장찌개,소금구이닭갈비,닭목살구이,안심,안창살,닭연골구이,야채모듬구이,공용주차장,화장실,무료 WIFI,흡연구역,엘리베이터,양념숯불닭갈비, 소금구이, 흑돼지 양념갈비,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000012707",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "서서방숯불닭갈비 제주 본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 272-46",
+      "roadaddress": "제주특별자치도 제주시 연동7길 20",
+      "tag": "누웨마루,숯불닭갈비,양념갈비,음식,식당,닭갈비,양념닭갈비,양념숯불닭갈비,막국수,흑돼지김치찌개,된장찌개,소금구이닭갈비,닭목살구이,안심,안창살,닭연골구이,야채모듬구이",
+      "introduction": "제주산 무항생제 닭다리 살을 최고급 비장탄을 사용하여 구워낸 숯불닭갈비. 숙성된 양념으로 맛을 낸 양념닭갈비와 소금구이를 즐길 수 있으며 흑돼지 양념갈비도 주문할 수 있다.",
+      "latitude": 33.4882478,
+      "longitude": 126.4905785,
+      "postcode": null,
+      "phoneno": "0507-1301-7745",
+      "repPhoto": {
+        "descseo": "서서방 숯불닭갈비",
+        "photoid": {
+          "photoid": 2019022596650,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/04/37bd5485-3acd-43f7-90cd-36c643d5d9a2.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/04/6dbab533-acb8-438b-8038-2f262cb8f933.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주시청,꽈배기,도너츠,간식,빵지순례,음식,빵,베이커리,카페,팥도너츠,고로케,핫도그,공용주차장,화장실,무료 WIFI,꽈배기, 대파꽈배기, 팥도너츠,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000012651",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "용꽈배기",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 일도이동 1045-4",
+      "roadaddress": "제주특별자치도 제주시 삼성로5길 6",
+      "tag": "제주시청,꽈배기,도너츠,간식,빵지순례,음식,빵,베이커리,카페,팥도너츠,고로케,핫도그",
+      "introduction": "용꽈베기는 남녀노소 누구나 즐겨찾는 꽈배기를 다양한 종류로 판매하며 낱개와 선물용 세트 구매가 가능하다.",
+      "latitude": 33.5071838,
+      "longitude": 126.5298399,
+      "postcode": null,
+      "phoneno": "064-725-6772",
+      "repPhoto": {
+        "descseo": "용꽈배기",
+        "photoid": {
+          "photoid": 2019022596306,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/03/5122e227-d1d2-45ff-b238-580a7b03470d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/03/443afacf-a705-4fd2-a5cd-58523cf34b8c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "협재포구,비빔밥,퓨전음식,음식,식당,딱새우,새우장,전복비빔밥,문어비빔밥,돼지수육,수육,공용주차장,무료 WIFI,화장실,딱새우장비빔밥, 통전복내장비빔밥, 돌문어장비빔밥,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000012631",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "안녕협재씨 제주점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 1668-1",
+      "roadaddress": "제주특별자치도 제주시 한림읍 협재1길 30",
+      "tag": "협재포구,비빔밥,퓨전음식,음식,식당,딱새우,새우장,전복비빔밥,문어비빔밥,돼지수육,수육",
+      "introduction": "협재포구 앞에 위치한 비빔밥 전문점 안녕협재씨는 신선한 바다 재료와 특제소스가 만들어내는 즐겁고 건강한 조화로 건강한 한끼를 제공한다.",
+      "latitude": 33.3978895,
+      "longitude": 126.2434592,
+      "postcode": null,
+      "phoneno": "0507-1347-0624",
+      "repPhoto": {
+        "descseo": "안녕협재씨",
+        "photoid": {
+          "photoid": 2019022596187,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202201/03/3ff3a2e8-705e-4af8-bdde-bbd45c20ce55.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202201/03/53af27b0-e1c6-4517-9055-dc82a3cc2e9f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "내도,돈까스전문점,쫄면,음식,식당,왕돈까스,매운돈까스,반반돈까스,카레돈까스,치즈돈까스,고구마치즈돈까스,생선까스,함박스테이크,카레라이스,크림스파게티,토마토미트스파게티,메밀소바,공용주차장,화장실,무료 WIFI,돈까스,나라왕돈까스, 흑돼지왕돈까스, 불타는왕돈까스, 치즈돈까스,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000012566",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "나라돈까스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 내도동 551-1",
+      "roadaddress": "제주특별자치도 제주시 내도1길 23",
+      "tag": "내도,돈까스전문점,쫄면,음식,식당,왕돈까스,매운돈까스,반반돈까스,카레돈까스,치즈돈까스,고구마치즈돈까스,생선까스,함박스테이크,카레라이스,크림스파게티,토마토미트스파게티,메밀소바",
+      "introduction": "내도동에 위치한 돈까스 전문점 나라왕돈까스는 상호명 답게 푸짐한 양은 물론이며 모든 메뉴를 100% 수제 제작하여 즉석에서 바로 요리한다. ",
+      "latitude": 33.4951957,
+      "longitude": 126.4370146,
+      "postcode": null,
+      "phoneno": "064-711-0221",
+      "repPhoto": {
+        "descseo": "나라돈까스",
+        "photoid": {
+          "photoid": 2019022595861,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/30/570abda1-0f72-4c58-8e8a-6fb540a38a05.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/30/120e8804-e801-4906-9978-49e70fd3fec8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "산굼부리,커피,기념품,음식,카페,에스프레소,아메리카노,헤이즐넛,콜드브루,콜드브루라떼,카페라떼,모카라떼,바닐라라떼,카라멜마끼아또,라떼,얼그레이,페퍼민트,캐모마일,진피차,청귤차,레몬티,차,초코라떼,녹차라떼,홍차라떼,에이드,레몬에이드,아이스크림,허니브레드,크림치즈프레즐,공용주차장,화장실,무료 WIFI,커피,아메리카노, 청귤차, 아이스크림,어린이 출입가능,가능",
+      "contentsid": "CNTS_200000000012563",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "산굼부리식당",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 교래리 342-5",
+      "roadaddress": "제주특별자치도 제주시 조천읍 비자림로 768",
+      "tag": "산굼부리,커피,기념품,음식,카페,에스프레소,아메리카노,헤이즐넛,콜드브루,콜드브루라떼,카페라떼,모카라떼,바닐라라떼,카라멜마끼아또,라떼,얼그레이,페퍼민트,캐모마일,진피차,청귤차,레몬티,차,초코라떼,녹차라떼,홍차라떼,에이드,레몬에이드,아이스크림,허니브레드,크림치즈프레즐",
+      "introduction": "산굼부리 내에 위치한 이곳 산굼부리카페는 제주를 주제로 한 다양한 기념품 판매와 함께 차 한잔의 여유를 즐길 수 있는 음료메뉴가 준비되어 있다.",
+      "latitude": 33.4180631,
+      "longitude": 126.6534847,
+      "postcode": null,
+      "phoneno": "064-783-3779",
+      "repPhoto": {
+        "descseo": "산굼부리카페",
+        "photoid": {
+          "photoid": 2019022595839,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202112/30/32baccc8-fcb9-4f15-b9a7-b3cc86da438d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202112/30/ff6fec9b-ea7c-4e6a-91d1-d5d520bcaef8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵집,베이커리,카페,음식,빵,밤식빵,우유식빵,샌드위치,식당,팥빵,소보루빵,바게트,크로아상,아메리카노,카페라떼,카푸치노,카페모카,블루베리레몬에이드,블루베리요거트스무디,라떼,에이드,스무디,요거트,닭가슴살샌드위치,현금결제,카드결제,무료 WIFI,카드결제,현금결제,,,어려움",
+      "contentsid": "CNTS_200000000009573",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "호도제과",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주특별자치도 서귀포시 안덕면 화순리 1091-4",
+      "roadaddress": "제주특별자치도 서귀포시 안덕면 화순로 132",
+      "tag": "빵집,베이커리,카페,음식,빵,밤식빵,우유식빵,샌드위치,식당,팥빵,소보루빵,바게트,크로아상,아메리카노,카페라떼,카푸치노,카페모카,블루베리레몬에이드,블루베리요거트스무디,라떼,에이드,스무디,요거트,닭가슴살샌드위치",
+      "introduction": "서귀포에 위치한 호도제과\r\n유기농 밀과 좋은 재료를 고집하고 유화제와 개량제를 일체 사용하지 않으며, 오로지 시간이 만들어주는 건강한 빵을 당일 생산 당일 판매한다.",
+      "latitude": 33.2465864,
+      "longitude": 126.3323617,
+      "postcode": "805-697",
+      "phoneno": "0507-1477-0047",
+      "repPhoto": {
+        "descseo": "호도베이커리",
+        "photoid": {
+          "photoid": 2019022567834,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/12/a39437cd-c238-4dfb-a180-c69e78d610ec.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/12/52ff5470-56db-4c7d-b05b-862affc6f6ce.webp"
+        }
+      }
+    },
+    {
+      "alltag": "추자야식,추자도야식,추자식당,추자음식점,추자도,음식,갈비찜,낙지볶음,국물닭발,식당,백반,제육볶음,돼지짜글이,육개장,소고기육개장,황태해장국,해장국,돼지갈비찜,닭볶음탕,돼지김치찌개,청국장,순두부찌개,냉채족발,생선구이,모듬생선구이,국물떡볶이,골뱅이,골뱅이소면,두부김치,얼큰라면,무료 WIFI,화장실,카드결제,현금결제",
+      "contentsid": "CNTS_200000000009125",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "마마식당야식",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 추자면 대서리 144-1",
+      "roadaddress": "제주특별자치도 제주시 추자면 추자로 42-1",
+      "tag": "추자야식,추자도야식,추자식당,추자음식점,추자도,음식,갈비찜,낙지볶음,국물닭발,식당,백반,제육볶음,돼지짜글이,육개장,소고기육개장,황태해장국,해장국,돼지갈비찜,닭볶음탕,돼지김치찌개,청국장,순두부찌개,냉채족발,생선구이,모듬생선구이,국물떡볶이,골뱅이,골뱅이소면,두부김치,얼큰라면",
+      "introduction": "추자에서 야식을 먹을 수 있는 곳",
+      "latitude": 33.9627709,
+      "longitude": 126.2951467,
+      "postcode": null,
+      "phoneno": "064-747-2655",
+      "repPhoto": {
+        "descseo": "마마식당",
+        "photoid": {
+          "photoid": 2019022560408,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/20/39ae0dfe-afdf-498d-91c3-0fea159e67ae.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/20/10f7f5ca-5ca6-4663-83a8-647698720978.webp"
+        }
+      }
+    },
+    {
+      "alltag": "추자식당,추자도음식점,추자음식점,추자정식,추자굴비정식,추자정식백반,추자도,음식,오삼불고기,정식,백반,굴비정식,식당,비빔밥,뚝배기불고기,김치찌개,된장찌개,삼겹살,옻닭백숙,백숙,동태탕,닭볶음탕,생선구이,생선조림,매운탕,아구탕,아구찜,불고기전골,무료 WIFI,화장실,현금결제,카드결제",
+      "contentsid": "CNTS_200000000009120",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "오누이밥상",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 추자면 영흥리 332-4",
+      "roadaddress": "제주특별자치도 제주시 추자면 영흥1길 20",
+      "tag": "추자식당,추자도음식점,추자음식점,추자정식,추자굴비정식,추자정식백반,추자도,음식,오삼불고기,정식,백반,굴비정식,식당,비빔밥,뚝배기불고기,김치찌개,된장찌개,삼겹살,옻닭백숙,백숙,동태탕,닭볶음탕,생선구이,생선조림,매운탕,아구탕,아구찜,불고기전골",
+      "introduction": "밑반찬이 10가지가 넘는 밥상\r\n*매주 금요일 정기휴일",
+      "latitude": 33.9608702,
+      "longitude": 126.2947584,
+      "postcode": null,
+      "phoneno": "010-7129-5479",
+      "repPhoto": {
+        "descseo": "오누이밥상",
+        "photoid": {
+          "photoid": 2019022560324,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/20/9811ddfe-b2d1-412e-bc41-8c73306076ce.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201908/20/0776d22b-9251-4b81-a1d6-94216c80a456.webp"
+        }
+      }
+    },
+    {
+      "alltag": "베이커리,시나몬롤,밀크셰이크,음식,빵,커스터드푸딩,2022고메페스타,아메리카노,카페라떼,바닐라빈라떼,라떼,쿠키,브라우니",
+      "contentsid": "CNTS_200000000008378",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "베이크샵스니프",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 구억리 1115",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 에듀시티로 23",
+      "tag": "베이커리,시나몬롤,밀크셰이크,음식,빵,커스터드푸딩,2022고메페스타,아메리카노,카페라떼,바닐라빈라떼,라떼,쿠키,브라우니",
+      "introduction": "서귀포에 위치한 시나몬롤 전문 베이커리숍.",
+      "latitude": 33.2926868,
+      "longitude": 126.2862265,
+      "postcode": null,
+      "phoneno": "064-794-0727",
+      "repPhoto": {
+        "descseo": "베이크샵스니프",
+        "photoid": {
+          "photoid": 2019022552845,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201903/12/50b6d7e0-f08f-4c09-9211-587b215e6956.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201903/12/6c9230e6-a8ef-41e9-93ed-c9585d9680e6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "베이커리,카페,크루아상,음식,빵,아메리카노,크로아상,우유식빵,카페라떼,모카라떼,바닐라라떼,라떼,핫초코,아이스초코,에이드,망고에이드,블루베리에이드,차,얼그레이",
+      "contentsid": "CNTS_200000000008377",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "겹겹의 의도",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 노형동 3802-14",
+      "roadaddress": "제주특별자치도 제주시 노형5길 11",
+      "tag": "베이커리,카페,크루아상,음식,빵,아메리카노,크로아상,우유식빵,카페라떼,모카라떼,바닐라라떼,라떼,핫초코,아이스초코,에이드,망고에이드,블루베리에이드,차,얼그레이",
+      "introduction": "노형동에 위치한 크루아상 카페. ",
+      "latitude": 33.4811339,
+      "longitude": 126.476393,
+      "postcode": null,
+      "phoneno": "064-763-0990 ",
+      "repPhoto": {
+        "descseo": "겹겹의 의도",
+        "photoid": {
+          "photoid": 2019022552821,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201903/12/cb624379-4740-4bb3-b720-fcce4c3f9c12.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201903/12/5c1c8d19-3617-43f7-90d7-3697958b34b2.webp"
+        }
+      }
+    },
+    {
+      "alltag": "순두부찌개,오징어젓갈,김치찌개,백두부찌개,음식,참치찌개,우동,비빔밥,식당,순두부,냄비우동,비빔국수,국수,착한가격업소,공용주차장,현금결제,카드결제,화장실,카드결제,현금결제,순두부찌개, 김치찌개,어린이 출입가능",
+      "contentsid": "CNTS_200000000007530",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "해바라기본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 일도일동 1337-1",
+      "roadaddress": "제주특별자치도 제주시 칠성로길 34-1",
+      "tag": "순두부찌개,오징어젓갈,김치찌개,백두부찌개,음식,참치찌개,우동,비빔밥,식당,순두부,냄비우동,비빔국수,국수,착한가격업소",
+      "introduction": "칼칼하고 매콤한 순두부찌개와 고소한 두부의 독특한 식감으로 사랑받는 제주 원도심 음식점이다.",
+      "latitude": 33.5142915,
+      "longitude": 126.5264232,
+      "postcode": null,
+      "phoneno": "064-757-3277",
+      "repPhoto": {
+        "descseo": "신 해바라기분식",
+        "photoid": {
+          "photoid": 2018052306009,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201809/21/fd10d1dc-d263-4b12-a99b-f70eede530e9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201809/21/653a60b4-f32c-497a-a089-86798c0a7a0f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,커피,맥주,와인,요거트,빙수,음식,에이드,팥빙수",
+      "contentsid": "CNTS_200000000007488",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "앙카페",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 하모리 1051-1",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 하모항구로 75-1",
+      "tag": "카페,커피,맥주,와인,요거트,빙수,음식,에이드,팥빙수",
+      "introduction": "모슬포 방어축제의 거리 입구에 위치한 카페&바",
+      "latitude": 33.2202789,
+      "longitude": 126.2515752,
+      "postcode": null,
+      "phoneno": "010-9984-5871",
+      "repPhoto": {
+        "descseo": "앙카페",
+        "photoid": {
+          "photoid": 2018052305393,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201809/10/b31edde5-0780-41d7-80fc-8f8a69e08791.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201809/10/3fd7cfda-6daa-460f-bc0e-10df866b0ace.webp"
+        }
+      }
+    },
+    {
+      "alltag": "커피,샌드위치,디저트,사진창고,갤러리,음식,아메리카노,바닐라라떼,카페라떼,돌체라떼,에이드,쿠키,카푸치노,카페모카,카라멜마끼아또,초코라떼,고구마라떼,그린티라떼,얼그레이,자스민티,딸기라떼,라떼,차,레몬티,자몽티,블루베리요거트,요거트,레몬에이드,자몽에이드,요거트스무디,딸기요거트스무디,플레인요거트스무디,블루베리요거트스무디,팥빙수,식혜,케이크,무료 WIFI,카드결제,현금결제,화장실,흡연구역,수유실",
+      "contentsid": "CNTS_200000000007332",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "감저카페",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 동일리 2918",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 대한로 22",
+      "tag": "커피,샌드위치,디저트,사진창고,갤러리,음식,아메리카노,바닐라라떼,카페라떼,돌체라떼,에이드,쿠키,카푸치노,카페모카,카라멜마끼아또,초코라떼,고구마라떼,그린티라떼,얼그레이,자스민티,딸기라떼,라떼,차,레몬티,자몽티,블루베리요거트,요거트,레몬에이드,자몽에이드,요거트스무디,딸기요거트스무디,플레인요거트스무디,블루베리요거트스무디,팥빙수,식혜,케이크",
+      "introduction": "옛 고구마전분공장을 리모델링해 만든 카페",
+      "latitude": 33.2293689,
+      "longitude": 126.2453336,
+      "postcode": null,
+      "phoneno": "064-794-5929",
+      "repPhoto": {
+        "descseo": "감저",
+        "photoid": {
+          "photoid": 2018052303647,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201808/07/721a69e1-dc98-4fd2-8bfe-26eafe5de497.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201808/07/53990fcf-d45d-46d9-8758-1d84b250fae4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "치킨,통닭,닭똥집 튀김,음식,후라이드치킨,양념치킨,반반치킨",
+      "contentsid": "CNTS_200000000007136",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "동우통닭 신제주점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 290-1",
+      "roadaddress": "제주특별자치도 제주시 연삼로 12",
+      "tag": "치킨,통닭,닭똥집 튀김,음식,후라이드치킨,양념치킨,반반치킨",
+      "introduction": "오랫동안 사랑받아 온 시장통닭 스타일의 바삭한 후라이드치킨을 홀과 포장으로 즐길 수 있는 신제주 치킨집이다.",
+      "latitude": 33.4934631,
+      "longitude": 126.4936147,
+      "postcode": null,
+      "phoneno": "064-757-9352",
+      "repPhoto": {
+        "descseo": "동우통닭",
+        "photoid": {
+          "photoid": 2018052301068,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201807/02/d701757e-1597-4071-97b2-aeaae51a9d68.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201807/02/dcdeb0f4-4728-4e2c-b275-c604182c7f28.webp"
+        }
+      }
+    },
+    {
+      "alltag": "리조또,파스타,음식,아메리카노,에이드,에스프레소,디저트,커피,카페라떼,아인슈페너,라떼,스무디,어린이 출입불가",
+      "contentsid": "CNTS_200000000007135",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "세러데이아일랜드",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 남원리 1262",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 남한로21번길 28",
+      "tag": "리조또,파스타,음식,아메리카노,에이드,에스프레소,디저트,커피,카페라떼,아인슈페너,라떼,스무디",
+      "introduction": " 이탈리안 레스토랑",
+      "latitude": 33.2813306,
+      "longitude": 126.7144775,
+      "postcode": null,
+      "phoneno": "0507-1471-2822",
+      "repPhoto": {
+        "descseo": "세러데이아일랜드",
+        "photoid": {
+          "photoid": 2018052301065,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201807/02/946eed7d-d7c7-472f-aa7b-9a24968fba19.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201807/02/c445f7fe-85b5-4cff-b74d-efbf650e07d9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "갈치,고등어,해물탕,음식,갈치구이,제주갈치구이,제주갈치조림,고등어구이,고등어조림,생선조림,갈치조림,해물전,미역국,보말죽,성게미역국,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,단독접근가능,단차없음,청각장애인 접근성,시각장애인 접근성,저상버스 접근 가능,쉬움",
+      "contentsid": "CNTS_000000000022802",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "올레삼다정",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 291-75",
+      "roadaddress": "제주특별자치도 서귀포시 중앙로54번길 18",
+      "tag": "갈치,고등어,해물탕,음식,갈치구이,제주갈치구이,제주갈치조림,고등어구이,고등어조림,생선조림,갈치조림,해물전,미역국,보말죽,성게미역국,무장애관광",
+      "introduction": "서귀포에 위치한 헤신믈요리 전문점",
+      "latitude": 33.2495215,
+      "longitude": 126.562558,
+      "postcode": "63589",
+      "phoneno": "0507-1406-7230",
+      "repPhoto": {
+        "descseo": "올레삼다정",
+        "photoid": {
+          "photoid": 16636,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/cb833beb-488c-4007-8080-a08f7170d856.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9c42ffe7-cbd0-4567-92d9-f34e16372891.webp"
+        }
+      }
+    },
+    {
+      "alltag": "망고음료,생망고와플,코코넛빙수,망고홀릭디저트,음식,망고,망고빙수,망고스무디,망고에이드,망고주스,망고요거트,팥빙수,눈꽃빙수,쉐이크,아메리카노,카페라떼,카푸치노,카페모카,카라멜라떼,요거트스무디,딸기요거트스무디,망고요거트스무디,에이드,자몽에이드,레몬에이드,차,자몽차,레몬차,유자차,모과차,와플,허니브레드,공용주차장",
+      "contentsid": "CNTS_000000000022663",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "망고홀릭서귀포법환점",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 법환동 277",
+      "roadaddress": "제주특별자치도 서귀포시 막숙포로 46",
+      "tag": "망고음료,생망고와플,코코넛빙수,망고홀릭디저트,음식,망고,망고빙수,망고스무디,망고에이드,망고주스,망고요거트,팥빙수,눈꽃빙수,쉐이크,아메리카노,카페라떼,카푸치노,카페모카,카라멜라떼,요거트스무디,딸기요거트스무디,망고요거트스무디,에이드,자몽에이드,레몬에이드,차,자몽차,레몬차,유자차,모과차,와플,허니브레드",
+      "introduction": "올레7코스 중간에 위치한 보라카이 망고카페",
+      "latitude": 33.2371908,
+      "longitude": 126.5152048,
+      "postcode": null,
+      "phoneno": "064-739-3339",
+      "repPhoto": {
+        "descseo": "망고홀릭 법환점",
+        "photoid": {
+          "photoid": 2017020007279,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202512/21/0ad22c01-847a-49b1-8206-7fab84a45e92.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202512/21/1706a878-2f55-41e7-a8d2-52ed7e2c8687.webp"
+        }
+      }
+    },
+    {
+      "alltag": "짜이,카페,음료,핸드드립,음식,핸드드립커피,커피,홍차",
+      "contentsid": "CNTS_000000000022577",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "바라나시책골목 서점&북카페",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 조천리 1446-8",
+      "roadaddress": "제주특별자치도 제주시 조천읍 일주동로 952-5",
+      "tag": "짜이,카페,음료,핸드드립,음식,핸드드립커피,커피,홍차",
+      "introduction": "낯선곳에서 만나는 인도의 향기, 바라나시 책골목",
+      "latitude": 33.5345003,
+      "longitude": 126.6431629,
+      "postcode": null,
+      "phoneno": "0507-1379-9720",
+      "repPhoto": {
+        "descseo": "바라나시 책골목",
+        "photoid": {
+          "photoid": 15399,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1d131c25-3944-4663-9887-dbce395449c1.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/518853d0-1d4e-485a-94b9-0573cec3a933.webp"
+        }
+      }
+    },
+    {
+      "alltag": "일식,와인,톳파스타,음식,파스타,해물파스타,오일파스타,크림파스타,아보카도,치킨가라아게,현금결제,카드결제,화장실,어린이 출입불가",
+      "contentsid": "CNTS_000000000022258",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "레이식당",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 송당리 1387-17",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 송당5길 18",
+      "tag": "일식,와인,톳파스타,음식,파스타,해물파스타,오일파스타,크림파스타,아보카도,치킨가라아게",
+      "introduction": "자그마한 일본 가정식 식당",
+      "latitude": 33.4730616,
+      "longitude": 126.7851106,
+      "postcode": null,
+      "phoneno": "064-782-1893",
+      "repPhoto": {
+        "descseo": "레이식당",
+        "photoid": {
+          "photoid": 13741,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ff52f5eb-bc73-4fa7-bb21-f465a0c02f95.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/14eb9b6a-24b7-421e-b686-e0cb02d9e1b7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "빵,제과,베이커리,음식,아메리카노,과일주스,카푸치노,카페모카,카페라떼,카라멜마끼아또,라떼,아이스티,청귤차,차,허브티,녹차,얼그레이,잉글리쉬브렉퍼스트,루이보스,레몬에이드,그린티라떼,팥빙수,케이크,베이글,샌드위치,치즈케이크",
+      "contentsid": "CNTS_000000000022236",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "파리바게뜨 제주도남점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 도남동 918-15",
+      "roadaddress": "제주특별자치도 제주시 도남로 49",
+      "tag": "빵,제과,베이커리,음식,아메리카노,과일주스,카푸치노,카페모카,카페라떼,카라멜마끼아또,라떼,아이스티,청귤차,차,허브티,녹차,얼그레이,잉글리쉬브렉퍼스트,루이보스,레몬에이드,그린티라떼,팥빙수,케이크,베이글,샌드위치,치즈케이크",
+      "introduction": "파리바게트는 프랑스 전통의 베이커리 프랜차이즈 시스템을 운영하고 있는 제과, 제빵업체로 전국적으로 다수의 매장을 보유하고 있다.",
+      "latitude": 33.49603070000001,
+      "longitude": 126.5271146,
+      "postcode": "63200",
+      "phoneno": "064-756-0820",
+      "repPhoto": {
+        "descseo": "PARIS BAGUETTE Donam Store",
+        "photoid": {
+          "photoid": 13597,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/92daa9f8-29c4-480f-b499-46d0b78bb929.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5224e703-bc55-4523-b056-d16f2e4e6f46.webp"
+        }
+      }
+    },
+    {
+      "alltag": "카페,디저트,시리얼아이스크림,티라미수케이크,라이스푸딩,음식,바나나팬케이크,수플레,아이스크림,바닐라라떼,아메리카노,케이크,라떼,연유라떼,코코넛라떼,카라멜마끼아또,아포가토,차,얼그레이,캐모마일,핫초코,에이드,망고스무디,코코넛스무디,스무디,브런치,샌드위치,공용주차장,화장실,무료 WIFI",
+      "contentsid": "CNTS_000000000022166",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "소바니 ",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도일동 1362-1",
+      "roadaddress": "제주특별자치도 제주시 중앙로11길 1",
+      "tag": "카페,디저트,시리얼아이스크림,티라미수케이크,라이스푸딩,음식,바나나팬케이크,수플레,아이스크림,바닐라라떼,아메리카노,케이크,라떼,연유라떼,코코넛라떼,카라멜마끼아또,아포가토,차,얼그레이,캐모마일,핫초코,에이드,망고스무디,코코넛스무디,스무디,브런치,샌드위치",
+      "introduction": "부드러운 쉬폰케이크로 만든 쉬폰산도를 선보이는 디저트 카페",
+      "latitude": 33.5127034,
+      "longitude": 126.5250912,
+      "postcode": "63034",
+      "phoneno": "010-9497-8704",
+      "repPhoto": {
+        "descseo": "Cafe SOBANI",
+        "photoid": {
+          "photoid": 13161,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/6db20eb2-e2e9-441b-b137-54d31b26553b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/160b88b2-699b-419c-8f4e-35a3d4c5932c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "횟집,문어,전복,음식,소라,문어숙회,회,라면,해물라면,해산물모둠,짜장면,해물짬뽕,뿔소라,짬뽕",
+      "contentsid": "CNTS_000000000021646",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "해녀3대할망네",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "22",
+        "label": "대정",
+        "refId": "region2>22"
+      },
+      "address": "제주특별자치도 서귀포시 대정읍 가파리 717",
+      "roadaddress": "제주특별자치도 서귀포시 대정읍 마라로77번길 3",
+      "tag": "횟집,문어,전복,음식,소라,문어숙회,회,라면,해물라면,해산물모둠,짜장면,해물짬뽕,뿔소라,짬뽕",
+      "introduction": "3대째 마라도에서 해녀를 이어온 집",
+      "latitude": 33.1171102,
+      "longitude": 126.2660117,
+      "postcode": "63515",
+      "phoneno": "064-792-4124",
+      "repPhoto": {
+        "descseo": "해녀3대할망네",
+        "photoid": {
+          "photoid": 11661,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d865ab38-8df5-4679-a2b1-33f47738cd6e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6a7367e6-9274-423e-b402-ede546a4ca12.webp"
+        }
+      }
+    },
+    {
+      "alltag": "버거,볶음밥,함박스테이크,수제버거,음식,햄버거스테이크,햄버거,흑돼지,파스타,불갈비버거,새우크림파스타,감자튀김,새우버거,핸드드립커피",
+      "contentsid": "CNTS_000000000021501",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "신스버거 애월 본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 애월리 385",
+      "roadaddress": "제주특별자치도 제주시 애월읍 고내북서길 49-54",
+      "tag": "버거,볶음밥,함박스테이크,수제버거,음식,햄버거스테이크,햄버거,흑돼지,파스타,불갈비버거,새우크림파스타,감자튀김,새우버거,핸드드립커피",
+      "introduction": "제주도 흑돼지로 만든 수제버거 전문점 신스버거",
+      "latitude": 33.4642225,
+      "longitude": 126.3304883,
+      "postcode": "63010",
+      "phoneno": "0507-1336-5574",
+      "repPhoto": {
+        "descseo": "신스버거",
+        "photoid": {
+          "photoid": 11429,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/40d5bcef-6ee7-49c5-b5a4-e6322d2c6794.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/accfa926-15da-4331-b8d1-d6608dc8ffe9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "갈치조림,고등어조림,갈치구이,성게미역국,전복죽,음식,제주갈치조림,회무침,한치회무침,고등어구이,옥돔구이,전복해물뚝배기,해물뚝배기,물회,한치물회,자리물회,공용주차장",
+      "contentsid": "CNTS_000000000021293",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "만덕본가",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "14",
+        "label": "한경",
+        "refId": "region1>14"
+      },
+      "address": "제주특별자치도 제주시 한경면 고산리 3592-1",
+      "roadaddress": "제주특별자치도 제주시 한경면 노을해안로 1163",
+      "tag": "갈치조림,고등어조림,갈치구이,성게미역국,전복죽,음식,제주갈치조림,회무침,한치회무침,고등어구이,옥돔구이,전복해물뚝배기,해물뚝배기,물회,한치물회,자리물회",
+      "introduction": "배낚시 가기 전 든든한 한 끼",
+      "latitude": 33.3089439,
+      "longitude": 126.1655204,
+      "postcode": "63008",
+      "phoneno": "064-772-3356",
+      "repPhoto": {
+        "descseo": "만덕식당",
+        "photoid": {
+          "photoid": 2019022607175,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202210/25/64bb048e-cb47-4666-90a8-6d995a11fa76.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202210/25/ff86228d-6483-4a87-897e-ff1e1d5eeec0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "한치물회,칼국수,향토음식,보말,음식,보말칼국수,비빔밥,생선구이정식,생선조림,갈치,갈치구이,제주갈치구이,고등어구이,옥돔구이,성게미역국,오분작뚝배기,한치,보말죽,보리비빔밥,전,부침개,성게비빔밥,멍게비빔밥,해물짬뽕라면,물회,모듬물회,해삼물회,뿔소라,소라회,돌문어숙회,해삼회,회",
+      "contentsid": "CNTS_000000000021186",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "보말이야기",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 3001",
+      "roadaddress": "제주특별자치도 제주시 한림읍 비양도길 27",
+      "tag": "한치물회,칼국수,향토음식,보말,음식,보말칼국수,비빔밥,생선구이정식,생선조림,갈치,갈치구이,제주갈치구이,고등어구이,옥돔구이,성게미역국,오분작뚝배기,한치,보말죽,보리비빔밥,전,부침개,성게비빔밥,멍게비빔밥,해물짬뽕라면,물회,모듬물회,해삼물회,뿔소라,소라회,돌문어숙회,해삼회,회",
+      "introduction": "옛모습을 잘 간직한 보말요리 전문음식점.",
+      "latitude": 33.4050114,
+      "longitude": 126.2286427,
+      "postcode": "63033",
+      "phoneno": "064-796-8422",
+      "repPhoto": {
+        "descseo": "보말이야기",
+        "photoid": {
+          "photoid": 10816,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/32800eed-9b03-4687-8a9b-657342954194.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d2f8962d-b566-49f9-baf0-93b8fcb57e88.webp"
+        }
+      }
+    },
+    {
+      "alltag": "향토음식인증,향토음식,깅이죽,깅이칼국수,음식,칼국수,문어,전복죽,성게국,2022고메페스타,공용주차장,현금결제,카드결제,화장실,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CNTS_000000000001265",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "모메존",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 김녕리 4218",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 구좌해안로 202",
+      "tag": "향토음식인증,향토음식,깅이죽,깅이칼국수,음식,칼국수,문어,전복죽,성게국,2022고메페스타",
+      "introduction": "2010년 제주향토음식경연대회 대상을 수상한 모메존 식당. 제주 토속음식점 맛집으로 유명한 곳이다.",
+      "latitude": 33.5579021,
+      "longitude": 126.7336098,
+      "postcode": null,
+      "phoneno": "0507-1308-0585",
+      "repPhoto": {
+        "descseo": "모메존",
+        "photoid": {
+          "photoid": 2019022601694,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202206/15/99f827d9-3926-462f-8fbc-6f610392e2f7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202206/15/a7964b0f-4e06-4b06-98b8-72aa260cb2a8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "닭갈비,등갈비,한식,돼지갈비,음식,양념갈비,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,아주 어려움,착한가격 업소",
+      "contentsid": "CONT_000000000501247",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "돈내코숯불갈비",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 256-10",
+      "roadaddress": "제주특별자치도 제주시 연동4길 28-16",
+      "tag": "닭갈비,등갈비,한식,돼지갈비,음식,양념갈비",
+      "introduction": "고기를 정량보다 더 많이 주는 인심 좋은 착한가게업소",
+      "latitude": 33.483602,
+      "longitude": 126.4867569,
+      "postcode": null,
+      "phoneno": "0507-1336-7454",
+      "repPhoto": {
+        "descseo": "Mirune",
+        "photoid": {
+          "photoid": 24660,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/eb31ce49-0d3c-47cd-a055-c89711cbfc0a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/be6de8fb-23e1-46a6-9bb2-f588de150d1c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "팥,팥빙수,디저트,카페,음식,녹차팥빙수,청귤차,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설",
+      "contentsid": "CONT_000000000501400",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "파시랑",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 551-2",
+      "roadaddress": "제주특별자치도 서귀포시 태평로 415",
+      "tag": "팥,팥빙수,디저트,카페,음식,녹차팥빙수,청귤차",
+      "introduction": "국내산 팥을 가마솥에 직접 삶아낸 팥빙수&단팥죽 전문점",
+      "latitude": 33.2450554,
+      "longitude": 126.5646611,
+      "postcode": null,
+      "phoneno": "064-733-8125",
+      "repPhoto": {
+        "descseo": "Pasirang",
+        "photoid": {
+          "photoid": 25468,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e3b049bb-898d-49b7-8695-0953a903bbdd.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/78862730-dfe7-4e23-b417-abe6941603b7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "향토음식,말사시미,말육회,말양념샤브샤브,말고기,흑돼지,해물뚝배기,향토음식,음식,2022고메페스타,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,아주 어려움",
+      "contentsid": "CONT_000000000501371",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "중문신라원 말고기",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 법환동 1436",
+      "roadaddress": "제주특별자치도 서귀포시 법환하로28번길 6",
+      "tag": "향토음식,말사시미,말육회,말양념샤브샤브,말고기,흑돼지,해물뚝배기,향토음식,음식,2022고메페스타,무장애관광",
+      "introduction": "법환동에서 다양한 말고기 코스요리와 흑돼지를 선보이는 제주 향토음식 전문점",
+      "latitude": 33.2344137,
+      "longitude": 126.5119915,
+      "postcode": "63534",
+      "phoneno": "064-739-7920",
+      "repPhoto": {
+        "descseo": "Jungmun Shillawon",
+        "photoid": {
+          "photoid": 25285,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/222b32eb-304d-4aed-8c3d-3e206a9ed22e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b13026a3-ae58-48ae-b2f0-ec7e03d56a25.webp"
+        }
+      }
+    },
+    {
+      "alltag": "해장국,김치찌개,한식,음식,감자탕,뼈다귀감자탕,공용주차장,현금결제,카드결제,화장실,음료대,아주 어려움,착한가격 업소",
+      "contentsid": "CONT_000000000501380",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "천하대장군",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 이도이동 1013-20",
+      "roadaddress": "제주특별자치도 제주시 신성로12길 12-1",
+      "tag": "해장국,김치찌개,한식,음식,감자탕,뼈다귀감자탕",
+      "introduction": "푸짐한 뼈다귀 감자탕을 선보이는 이도이동의 한식당",
+      "latitude": 33.49585,
+      "longitude": 126.5306534,
+      "postcode": null,
+      "phoneno": "064-711-2999",
+      "repPhoto": {
+        "descseo": "Cheonha Daejanggun",
+        "photoid": {
+          "photoid": 25333,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3e916dc5-52f8-4962-abdd-c4ca2e185aa0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8bb593f3-ffe4-488b-ba5d-e7a677c8f7a6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "식당,초밥,연어초밥,참치초밥,모둠초밥,광어초밥,음식,공용주차장,화장실,무료 WIFI,어린이 출입가능,불가능",
+      "contentsid": "CNTS_200000000014267",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "스시혼 제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 노형동 124-1",
+      "roadaddress": "제주특별자치도 제주시 1100로 3155",
+      "tag": "식당,초밥,연어초밥,참치초밥,모둠초밥,광어초밥,음식",
+      "introduction": "스시혼은 1983년 음식업계 진출하여 현재 롯데백화점, 현대백화점에 입점해 ‘소우조우’에서 론칭하였다.",
+      "latitude": 33.4682089,
+      "longitude": 126.4847052,
+      "postcode": null,
+      "phoneno": "0507-1367-7006",
+      "repPhoto": {
+        "descseo": "스시혼",
+        "photoid": {
+          "photoid": 2019022610798,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202212/14/78dba590-e9f5-416d-9b9d-5252dbc230db.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202212/14/4ba59461-ec22-4084-a1d5-e9d07b608e1b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "럭셔리트래블인제주,코스요리,와인,음식,공용주차장,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제",
+      "contentsid": "CNTS_200000000014067",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "드하르",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 261-23",
+      "roadaddress": "제주특별자치도 제주시 삼무로 18 2000",
+      "tag": "럭셔리트래블인제주,코스요리,와인,음식",
+      "introduction": "제주 연동에서 프렌치 코스를 즐기는 프라이빗 원테이블 레스토랑",
+      "latitude": 33.4896128,
+      "longitude": 126.4886767,
+      "postcode": null,
+      "phoneno": "0507-1489-1513",
+      "repPhoto": {
+        "descseo": "드하르",
+        "photoid": {
+          "photoid": 2019022609272,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202211/15/d7a1ab95-de5a-4990-a812-a656cc5ac824.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202211/15/e0044f7d-558e-4eac-ae28-c0e77f5b5808.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주맛집, 제주공항식당, 제주향토음식, 고사리육개장, 접착뼈국, 메밀, 착한가격업소, 제주시내맛집,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,제로페이,단차없음,어려움,착한가격 업소",
+      "contentsid": "CONT_000000000501191",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "넉둥베기",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담일동 306-23",
+      "roadaddress": "제주특별자치도 제주시 서문로 9",
+      "tag": "제주맛집, 제주공항식당, 제주향토음식, 고사리육개장, 접착뼈국, 메밀, 착한가격업소, 제주시내맛집",
+      "introduction": "청정고사리를 사용한 육개장이 일품인 착한가격업소",
+      "latitude": 33.5097717,
+      "longitude": 126.5124893,
+      "postcode": null,
+      "phoneno": "064-743-2585",
+      "repPhoto": {
+        "descseo": "Neokdungbegi Gosari Yukgaejang",
+        "photoid": {
+          "photoid": 24346,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1ad7aa07-f08f-4d2d-92d0-742a8c5ae3f0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0624af61-fcd6-4368-ab7c-24bf7b2f52fb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "불닭공장, 제주매운맛집, 제주맛집, 닭발맛집, 매운닭요리,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제",
+      "contentsid": "CNTS_300000000014237",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "불닭공장",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 용담일동 2818-4",
+      "roadaddress": "제주특별자치도 제주시 남성로 26",
+      "tag": "불닭공장, 제주매운맛집, 제주맛집, 닭발맛집, 매운닭요리",
+      "introduction": "매운 닭요리와 치즈닭발 등 다양한 메뉴를 제공하는 음식점",
+      "latitude": 33.5024504,
+      "longitude": 126.5131796,
+      "postcode": null,
+      "phoneno": "0507-1411-9204",
+      "repPhoto": {
+        "descseo": "불닭공장",
+        "photoid": {
+          "photoid": 20220905162499,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202604/21/8dc701c3-6f76-413e-a3df-5697588d732d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202604/21/10f72b94-6512-4f45-beff-624bbd1ea15e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주맛집, 제주로컬맛집, 부가네얼큰이, 매운맛맛집, 제주시맛집,공용주차장,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제",
+      "contentsid": "CNTS_300000000014236",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "부가네얼큰이 본점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 삼도이동 995-1",
+      "roadaddress": "제주특별자치도 제주시 관덕로 15",
+      "tag": "제주맛집, 제주로컬맛집, 부가네얼큰이, 매운맛맛집, 제주시맛집",
+      "introduction": "직화 조리 방식의 매운 닭요리를 제공하는 제주 로컬 음식점",
+      "latitude": 33.5132589,
+      "longitude": 126.5208707,
+      "postcode": null,
+      "phoneno": "0507-1436-9245",
+      "repPhoto": {
+        "descseo": "부가네얼큰이",
+        "photoid": {
+          "photoid": 20220905162496,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202604/21/e64c3154-9dee-41bf-8ff5-af1060fd3d93.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202604/21/a2888df4-a72c-49f8-b42a-c762c0671ba1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "홍열이네, 제주홍열이네, 제주매운맛집, 매운맛맛집, 제주맛집,현금결제,카드결제,화장실,무료 WIFI,카드결제,현금결제",
+      "contentsid": "CNTS_300000000014234",
+      "contentscd": {
+        "value": "c4",
+        "label": "음식점",
+        "refId": "contentscd>c4"
+      },
+      "title": "홍열이네 인제점",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 일도이동 409-2",
+      "roadaddress": "제주특별자치도 제주시 고마로17길 6",
+      "tag": "홍열이네, 제주홍열이네, 제주매운맛집, 매운맛맛집, 제주맛집",
+      "introduction": "매콤한 양념 닭날개를 전문으로 하는 제주 로컬 음식점",
+      "latitude": 33.505514,
+      "longitude": 126.5418049,
+      "postcode": null,
+      "phoneno": "064-722-8295",
+      "repPhoto": {
+        "descseo": "홍열이네",
+        "photoid": {
+          "photoid": 20220905162475,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202604/21/f7953e3e-5144-4107-98ba-ad851ba63986.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202604/21/477dfce1-bad3-4e6d-959a-04ebda457dd6.webp"
+        }
+      }
+    }
+  ]
+}

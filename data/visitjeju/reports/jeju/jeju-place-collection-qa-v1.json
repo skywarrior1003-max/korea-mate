@@ -1,0 +1,184 @@
+{
+  "universe": {
+    "api_kr_total_count": 5938,
+    "api_kr_page_count": 60,
+    "kr_items_collected": 5938,
+    "c1_raw": 1341,
+    "c1_unique": 1341,
+    "c1_duplicates": 0,
+    "c2_count": 265,
+    "pages_ok": 60,
+    "pages_fail": 0,
+    "category_breakdown": {
+      "c5": 788,
+      "c6": 751,
+      "c1": 1341,
+      "c4": 1870,
+      "c2": 265,
+      "c3": 920,
+      "c7": 2,
+      "c9": 1
+    },
+    "status": "PASS"
+  },
+  "core_fields": {
+    "title": {
+      "present": 1341,
+      "missing": 0,
+      "coverage_pct": 100.0
+    },
+    "address": {
+      "present": 1334,
+      "missing": 7,
+      "coverage_pct": 99.5
+    },
+    "roadaddress": {
+      "present": 1329,
+      "missing": 12,
+      "coverage_pct": 99.1
+    },
+    "latitude": {
+      "present": 1311,
+      "missing": 30,
+      "coverage_pct": 97.8
+    },
+    "longitude": {
+      "present": 1311,
+      "missing": 30,
+      "coverage_pct": 97.8
+    },
+    "phoneno": {
+      "present": 1196,
+      "missing": 145,
+      "coverage_pct": 89.2
+    },
+    "introduction": {
+      "present": 1341,
+      "missing": 0,
+      "coverage_pct": 100.0
+    },
+    "repPhoto_imgpath": {
+      "present": 1337,
+      "missing": 4,
+      "coverage_pct": 99.7
+    },
+    "phoneno_breakdown": {
+      "real": 1196,
+      "star_only": 0,
+      "empty": 145
+    }
+  },
+  "coordinates": {
+    "within_jeju_range": 1309,
+    "anomaly": 2,
+    "null": 30,
+    "anomaly_samples": [
+      {
+        "contentsid": "CNTS_000000000022255",
+        "title": "제주 카약올레",
+        "lat": 0.0,
+        "lon": 0.0
+      },
+      {
+        "contentsid": "CNTS_000000000022390",
+        "title": "병악현무암지대",
+        "lat": 0.0,
+        "lon": 0.0
+      }
+    ],
+    "status": "WARN",
+    "range_used": "lat 33.0–34.0 / lon 125.9–127.2"
+  },
+  "multilingual": {
+    "c1_count": 1341,
+    "locales": [
+      "en",
+      "jp",
+      "cn",
+      "zh"
+    ],
+    "en": {
+      "linked": 1339,
+      "missing": 2,
+      "coverage_pct": 99.9,
+      "total_count": 5298,
+      "page_count": 53,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "status": "ok"
+    },
+    "jp": {
+      "linked": 1339,
+      "missing": 2,
+      "coverage_pct": 99.9,
+      "total_count": 5160,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "status": "ok"
+    },
+    "cn": {
+      "linked": 1339,
+      "missing": 2,
+      "coverage_pct": 99.9,
+      "total_count": 5163,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "status": "ok"
+    },
+    "zh": {
+      "linked": 1339,
+      "missing": 2,
+      "coverage_pct": 99.9,
+      "total_count": 5149,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "status": "ok"
+    }
+  },
+  "integrity": {
+    "unique_contentsid": true,
+    "sha256": "4321c702473047c2ea97d77dc812be8dfa5be236b8a266595d3ff672ddb197b9",
+    "record_count": 1341,
+    "status": "PASS"
+  },
+  "c2_shopping": {
+    "count": 265,
+    "sample_ids": [
+      [
+        "CNTS_300000000013990",
+        "제주아이비타허니연구소"
+      ],
+      [
+        "CNTS_300000000013976",
+        "시간여행자의 집"
+      ],
+      [
+        "CNTS_300000000013936",
+        "(주)지엘지엔비"
+      ],
+      [
+        "CNTS_200000000015071",
+        "향기다움제주"
+      ],
+      [
+        "CNTS_200000000015070",
+        "달무지개"
+      ]
+    ],
+    "note": "Recorded; full eligibility review = next separate task"
+  },
+  "eligibility": {
+    "status": "REVIEW_REQUIRED",
+    "note": "5-axis classification = next task (TASK-JEJU-PLACE-ELIGIBILITY-V1)"
+  },
+  "secret_scan": {
+    "key_in_canonical": false,
+    "status": "PASS",
+    "note": "Key never added to record fields; structural guarantee"
+  },
+  "overall_status": "WARN",
+  "api_calls_total": 269
+}

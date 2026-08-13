@@ -1,0 +1,358 @@
+{
+  "task": "TASK-JEJU-PLACE-COLLECTION-V1",
+  "as_of": "2026-08-13T06:56:21Z",
+  "endpoint": "https://api.visitjeju.net/vsjApi/contents/searchList",
+  "key_param": "apiKey",
+  "source": "VisitJeju Open API",
+  "target_category": "c1 관광지",
+  "kr_total_count": 5938,
+  "kr_page_count": 60,
+  "page_size": 100,
+  "c1_canonical_count": 1341,
+  "c1_sha256": "4321c702473047c2ea97d77dc812be8dfa5be236b8a266595d3ff672ddb197b9",
+  "api_calls_total": 269,
+  "locales": [
+    "kr",
+    "en",
+    "jp",
+    "cn",
+    "zh"
+  ],
+  "ml_stats": {
+    "en": {
+      "total_count": 5298,
+      "page_count": 53,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "coverage_pct": 99.9,
+      "status": "ok"
+    },
+    "jp": {
+      "total_count": 5160,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "coverage_pct": 99.9,
+      "status": "ok"
+    },
+    "cn": {
+      "total_count": 5163,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "coverage_pct": 99.9,
+      "status": "ok"
+    },
+    "zh": {
+      "total_count": 5149,
+      "page_count": 52,
+      "c1_matched": 1339,
+      "c1_missing": 2,
+      "coverage_pct": 99.9,
+      "status": "ok"
+    }
+  },
+  "raw_dir": "c:\\기본저장\\나의 프로젝트\\KoreaMate\\korea-mate\\data\\visitjeju\\raw\\jeju\\2026-08-13\\kr",
+  "page_log_kr": [
+    {
+      "page": 1,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 2,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 3,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 4,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 5,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 6,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 7,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 8,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 9,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 10,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 11,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 12,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 13,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 14,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 15,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 16,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 17,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 18,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 19,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 20,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 21,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 22,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 23,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 24,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 25,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 26,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 27,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 28,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 29,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 30,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 31,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 32,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 33,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 34,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 35,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 36,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 37,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 38,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 39,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 40,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 41,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 42,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 43,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 44,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 45,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 46,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 47,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 48,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 49,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 50,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 51,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 52,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 53,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 54,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 55,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 56,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 57,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 58,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 59,
+      "count": 100,
+      "status": "ok"
+    },
+    {
+      "page": 60,
+      "count": 38,
+      "status": "ok"
+    }
+  ]
+}

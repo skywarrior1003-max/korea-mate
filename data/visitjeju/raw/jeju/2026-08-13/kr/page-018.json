@@ -1,0 +1,3259 @@
+{
+  "meta": {
+    "page": 18,
+    "locale": "kr",
+    "as_of": "2026-08-13T06:56:21Z",
+    "totalCount": 5938,
+    "pageCount": 60
+  },
+  "items": [
+    {
+      "alltag": "휴식,게스트하우스,숙소,민박,주차장,공공와이파이존,가족,물품보관서비스,착한가격업소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설",
+      "contentsid": "CONT_000000000501041",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주마실게스트하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 오라일동 2444-34",
+      "roadaddress": "제주특별자치도 제주시 서광로2길 11-16",
+      "tag": "휴식,게스트하우스,숙소,민박,주차장,공공와이파이존,가족,물품보관서비스,착한가격업소",
+      "introduction": "제주터미널 인근의 게스트하우스",
+      "latitude": 33.4988783,
+      "longitude": 126.5136184,
+      "postcode": null,
+      "phoneno": "064-753-0077",
+      "repPhoto": {
+        "descseo": "Guest House Jeju Masil",
+        "photoid": {
+          "photoid": 23174,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/6cc9e5e8-39e1-4194-8771-cd6627680412.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/c7ac1ab3-4eb8-4c58-9d01-d178157afdb3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,농어촌민박,단체여행객,주차장,발렛파킹,공공와이파이존,독채,펜션,돌집,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500837",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "돌집조앤정",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 세화리 834-1",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 세화합전1길 7",
+      "tag": "민박,농어촌민박,단체여행객,주차장,발렛파킹,공공와이파이존,독채,펜션,돌집",
+      "introduction": "제주도 동쪽 구좌읍 세화리 예쁜 마을의 원룸과 독채형의 B & B 형 농가 돌집 민박",
+      "latitude": 33.48959660000001,
+      "longitude": 126.8316644,
+      "postcode": null,
+      "phoneno": "0507-1402-4305",
+      "repPhoto": {
+        "descseo": "돌집조앤정",
+        "photoid": {
+          "photoid": 2019022567884,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/13/9ab02d39-757a-42f3-8760-afddc8e3c099.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/13/9773ec4a-073f-45e6-8ad6-6a72ee7435a6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,펜션,휴양펜션,바비큐,해수욕장,가족,고향민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501069",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주필하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 북촌리 1586-1",
+      "roadaddress": "제주특별자치도 제주시 조천읍 일주동로 1415",
+      "tag": "휴식,펜션,휴양펜션,바비큐,해수욕장,가족,고향민박",
+      "introduction": "창 밖으로 푸른 바다를 볼 수 있는 전망을 가진 가족형 펜션",
+      "latitude": 33.545048,
+      "longitude": 126.68642,
+      "postcode": "63339",
+      "phoneno": "064-783-4900",
+      "repPhoto": {
+        "descseo": "Jeju Feel House",
+        "photoid": {
+          "photoid": 23426,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/b77abff6-224a-45e1-b760-e63c39db731e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f20966b7-08b7-47bb-958e-b9f7a346d510.webp"
+        }
+      }
+    },
+    {
+      "alltag": "게스트하우스,숙소,공공와이파이존,해수욕장,독채,공용주차장,현금결제,카드결제,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500998",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "우리두리게스트하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 표선리 2390-2",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 민속해안로119번길 10-1",
+      "tag": "게스트하우스,숙소,공공와이파이존,해수욕장,독채",
+      "introduction": "제주도 표선면에 위치한 컨테이너로 지어진 컬러풀한 이색숙소\r\n",
+      "latitude": 33.307407,
+      "longitude": 126.81277,
+      "postcode": "63629",
+      "phoneno": "010-2616-1822",
+      "repPhoto": {
+        "descseo": "Uriduri Guest House",
+        "photoid": {
+          "photoid": 22783,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1f39d478-91a6-41b1-9839-4dedfa71f08d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a98dd285-6f21-450e-a680-2f8fbe010d55.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501097",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "팜밸리리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 3447-1",
+      "roadaddress": "제주특별자치도 서귀포시 중산간서로 193",
+      "tag": "휴식,숙소,리조트,펜션,휴양펜션,풀빌라,독채,바비큐,스파,수영장,공공와이파이존,가족",
+      "introduction": "서귀포시에 위치한 개인정원과 개인수영장을 갖춘 럭셔리 풀빌라 리조트",
+      "latitude": 33.2615636,
+      "longitude": 126.49447,
+      "postcode": null,
+      "phoneno": "064-738-7705",
+      "repPhoto": {
+        "descseo": "Palm Valley Pool Villa Resort",
+        "photoid": {
+          "photoid": 23696,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/718f193e-c0f4-4a12-a896-af0a2196d75a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/52fa2c91-77a7-46b5-93e1-4c752f3bae8a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500795",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "기분좋은 민박",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 김녕리 3182",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 선유로 36",
+      "tag": "휴식,숙소,민박,농어촌민박,주차장,공공와이파이존,교통,물품보관서비스,바비큐",
+      "introduction": "김녕에 위치한 바다 전망 민박",
+      "latitude": 33.53593,
+      "longitude": 126.772173,
+      "postcode": null,
+      "phoneno": "010-6693-1293",
+      "repPhoto": {
+        "descseo": "기분좋은 민박",
+        "photoid": {
+          "photoid": 2019022568273,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/19/b56cedbb-a707-490f-9617-4122e10e8cbe.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/19/533d040a-1dfa-497d-a6a7-b51c64028e05.webp"
+        }
+      }
+    },
+    {
+      "alltag": "게스트,게스트하우스,숙소,주차장,물품보관서비스,공공와이파이존,오름투어,고향민박,무장애관광,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,어려움",
+      "contentsid": "CONT_000000000500883",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "민중각 게스트하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서귀동 305-6",
+      "roadaddress": "제주특별자치도 서귀포시 서문로28번길 4",
+      "tag": "게스트,게스트하우스,숙소,주차장,물품보관서비스,공공와이파이존,오름투어,고향민박,무장애관광",
+      "introduction": "저렴한 비용의 게스트하우스",
+      "latitude": 33.250675,
+      "longitude": 126.5587815,
+      "postcode": null,
+      "phoneno": "064-763-0501",
+      "repPhoto": {
+        "descseo": "Minjunggak Guest House",
+        "photoid": {
+          "photoid": 21804,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/9f93d281-cc97-4e32-9e9c-e37c9bdd6e93.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/a91706f0-a9eb-419a-974b-d568c196e9df.webp"
+        }
+      }
+    },
+    {
+      "alltag": "모텔,숙소,주차장,엘리베이터,물품보관서비스,공공와이파이존,반려동물동반_숙소,반려동물동반입장,반려동물,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500947",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주스위트모텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 291-135",
+      "roadaddress": "제주특별자치도 제주시 삼무로3길 9",
+      "tag": "모텔,숙소,주차장,엘리베이터,물품보관서비스,공공와이파이존,반려동물동반_숙소,반려동물동반입장,반려동물",
+      "introduction": "깔끔하고 고급스러운 인테리어와 쾌적한 서비스로 고객여러분을 맞이하는 스위트 모텔입니다.",
+      "latitude": 33.4901961,
+      "longitude": 126.494939,
+      "postcode": null,
+      "phoneno": "064-744-1144",
+      "repPhoto": {
+        "descseo": "Sweet Hotel",
+        "photoid": {
+          "photoid": 22352,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8e6950c4-525e-4aa5-9a8f-c10009cea53d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/44a8e39f-5630-4b57-9bc9-0b3dffeb5b23.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,바비큐,온돌방,가족,체험,해수욕장,공용주차장,현금결제,카드결제,화장실,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500850",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "라파로마휴양펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 2086",
+      "roadaddress": "제주특별자치도 제주시 한림읍 협재로 62",
+      "tag": "펜션,휴양펜션,바비큐,온돌방,가족,체험,해수욕장",
+      "introduction": "제주 협재해수욕장 인근에 위치하여 바다 전망을 즐길 수 있는 곳",
+      "latitude": 33.3923816,
+      "longitude": 126.2473264,
+      "postcode": null,
+      "phoneno": "064-796-8121",
+      "repPhoto": {
+        "descseo": "Lapaloma Recreational Pension",
+        "photoid": {
+          "photoid": 21492,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f361b9fc-a934-4224-93fe-87c2edadf67d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b0b0cbc0-8bd9-4808-af19-f4c2edfd7800.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/치유,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501121",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "해마지펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 신천리 105-1",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 일주동로 5431",
+      "tag": "휴식/치유,펜션,휴양펜션,체험,독채,자연경관,산책로,올레길,승마체험,바비큐",
+      "introduction": "제주도 최고의 일출명소 해마지펜션",
+      "latitude": 33.3545979,
+      "longitude": 126.8612189,
+      "postcode": null,
+      "phoneno": "064-787-2465",
+      "repPhoto": {
+        "descseo": "Haemaji Pension",
+        "photoid": {
+          "photoid": 23880,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8c75673c-2764-40df-bccd-5b624b2b3f65.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/45e4eeca-c10f-429a-b2a9-18cf7424a2f8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,휴양펜션,펜션,주차장,공공와이파이존,가족,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500981",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "옛살라비펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 광령리 1182-1",
+      "roadaddress": "제주특별자치도 제주시 애월읍 광령8길 47",
+      "tag": "민박,휴양펜션,펜션,주차장,공공와이파이존,가족",
+      "introduction": "제주공항과 15분거리, 올래16코스 종점, 17코스 시작점에 위치한 옛살라비 펜션입니다.",
+      "latitude": 33.4408969,
+      "longitude": 126.4345309,
+      "postcode": null,
+      "phoneno": "064-744-9066",
+      "repPhoto": {
+        "descseo": "Yetsalrabi",
+        "photoid": {
+          "photoid": 22642,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7248cf24-409c-4c8f-bedf-038be3b58643.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0946415d-f7a8-4c8e-9e5d-baa9506511be.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,펜션,휴양펜션,단체여행객,주차장,공공와이파이존,정원,돌담길,바비큐,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500803",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "꿈꾸는정원",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 함덕리 1441-1",
+      "roadaddress": "제주특별자치도 제주시 조천읍 함덕서4길 47",
+      "tag": "민박,펜션,휴양펜션,단체여행객,주차장,공공와이파이존,정원,돌담길,바비큐",
+      "introduction": "함덕 서우봉해변에 위치한 독채 민박",
+      "latitude": 33.5389274,
+      "longitude": 126.6654131,
+      "postcode": null,
+      "phoneno": "010-6209-3150",
+      "repPhoto": {
+        "descseo": "Kkumkkuneun Garden",
+        "photoid": {
+          "photoid": 21100,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1d3f97f5-1dda-4ea5-89c3-17a13581270b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/db66f412-c362-4e2e-acaa-9837191544d7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "게스트하우스,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CONT_000000000500776",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "ZeZuZip",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주 특별자치도 서귀포시 성산읍 삼달리 1180-1",
+      "roadaddress": "제주 특별자치도 서귀포시 성산읍 삼달로 235-17",
+      "tag": "게스트하우스,민박,농어촌민박,주차장,공공와이파이존,독채",
+      "introduction": "성산읍 삼달리라는 작은 시골 마을에 있는 땅콩주택 민박",
+      "latitude": 33.371986,
+      "longitude": 126.858116,
+      "postcode": null,
+      "phoneno": "010-2695-4342",
+      "repPhoto": {
+        "descseo": "ZeZuZip",
+        "photoid": {
+          "photoid": 20817,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/89059ca6-4d3e-4444-b4a4-b488b28e417f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/75e82721-45c6-4013-a39b-d7ea7c52426a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "숙박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500977",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "여행스케치",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 중문동 1839-3",
+      "roadaddress": "제주특별자치도 서귀포시 일주서로 694",
+      "tag": "숙박,펜션,휴양펜션,가족,공공와이파이존,중문관광단지,해수욕장",
+      "introduction": "중문관광단지 인근 가족같은 분위기의 깨끗하고 저렴한 펜션",
+      "latitude": 33.2555333,
+      "longitude": 126.4360843,
+      "postcode": null,
+      "phoneno": "064-738-8250",
+      "repPhoto": {
+        "descseo": "Tour Sketch Pension",
+        "photoid": {
+          "photoid": 22618,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/976704c3-1303-4ec2-b178-498eae90dd3d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/bb49e7d9-bc80-449e-8f45-7436d2a613ec.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,펜션,휴양펜션,주차장,정원,게스트하우스,무장애관광,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500873",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "몬딱쉼터",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 토평동 1677-1",
+      "roadaddress": "제주특별자치도 서귀포시 토평로 137",
+      "tag": "민박,숙소,펜션,휴양펜션,주차장,정원,게스트하우스,무장애관광,농어촌민박",
+      "introduction": "친환경 유기농 체험농장과 함께하는 콘도형 펜션",
+      "latitude": 33.2844099,
+      "longitude": 126.5796743,
+      "postcode": null,
+      "phoneno": "064-732-9668",
+      "repPhoto": {
+        "descseo": "Monttak Rest Area",
+        "photoid": {
+          "photoid": 21709,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/19075e2b-48d2-4564-b6b1-444008018587.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/603f870c-3d6d-4c23-8328-7ef02f0d9dcc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "콘도,숙소,리조트,휴양콘도,양식레스토랑,조식 포함,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 화장실,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500951",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "스프링데일골프앤리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "25",
+        "label": "남원",
+        "refId": "region2>25"
+      },
+      "address": "제주특별자치도 서귀포시 남원읍 위미리 4625",
+      "roadaddress": "제주특별자치도 서귀포시 남원읍 서성로 459",
+      "tag": "콘도,숙소,리조트,휴양콘도,양식레스토랑,조식 포함,무장애관광",
+      "introduction": "한라산이 북서풍을 막아주는 따뜻한 위미리에 위치해 일년 내내 플레이가 가능한 곳",
+      "latitude": 33.306034,
+      "longitude": 126.65809,
+      "postcode": "63609",
+      "phoneno": "064-800-8000",
+      "repPhoto": {
+        "descseo": "Springdale Golf & Resort",
+        "photoid": {
+          "photoid": 22384,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/6df090a5-66a1-4e86-8c57-a971cf36f077.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6d054576-38cd-4ef4-9aa9-dfc72d9793a4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,주차장,온돌방,공공와이파이존,식당,협재해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500970",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "에너벨리민박",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 1740-1",
+      "roadaddress": "제주특별자치도 제주시 한림읍 한림로 356",
+      "tag": "민박,숙소,농어촌민박,주차장,온돌방,공공와이파이존,식당,협재해수욕장",
+      "introduction": "맛있는 음식점과 전망좋은 카페를 같이 운영하는 콘도형 민박",
+      "latitude": 33.3948825,
+      "longitude": 126.2418944,
+      "postcode": null,
+      "phoneno": "010-4298-1788",
+      "repPhoto": {
+        "descseo": "에너벨리민박",
+        "photoid": {
+          "photoid": 2019022557393,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/04/54827d52-452a-4697-a0cc-3e575a04a081.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/04/095b2841-0e09-4a1d-a2c9-3cc9243cfe9e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,펜션,휴양펜션,공공와이파이존,숙소,일반숙박,힐링쉼터,공용주차장,무료 WIFI",
+      "contentsid": "CONT_000000000501099",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "펠리스타운",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 시흥리 12-98",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 시흥하동로50번길 23",
+      "tag": "휴식,펜션,휴양펜션,공공와이파이존,숙소,일반숙박,힐링쉼터",
+      "introduction": "성산 일출봉에서 3km 떨어진 서귀포 해변의 인근에 있는 아늑한 호스텔",
+      "latitude": 33.474464,
+      "longitude": 126.9080372,
+      "postcode": null,
+      "phoneno": "064-782-4003",
+      "repPhoto": {
+        "descseo": "Feliz Town",
+        "photoid": {
+          "photoid": 23715,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a7931199-2c77-4f4f-b830-3d92ed4fca83.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8d106058-54f5-44df-90ea-987051e9474e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501047",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주빌레성 통나무휴양펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 온평리 1050",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 온평포구로 42",
+      "tag": "휴식,펜션,휴양펜션,민박,일반숙박,숙소,바비큐,노래방,공공와이파이존,해변,통나무집민박,주차장,정원",
+      "introduction": "자연그대로 통나무집의 명품 제주빌레성 통나무 휴양펜션",
+      "latitude": 33.40161,
+      "longitude": 126.89944,
+      "postcode": null,
+      "phoneno": "064-782-0559",
+      "repPhoto": {
+        "descseo": "Jeju Billeseong Log Recreational Pension",
+        "photoid": {
+          "photoid": 23227,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/dac1b1c5-fbc7-495b-b9a2-6f00d08eaefa.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/25cf58a3-d771-4d4c-b5bb-23eae80f9633.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,단체여행객,바비큐,공공와이파이존,온돌방,가족,해수욕장,해변,해안도로,엘리베이터,주방기구,무장애관광,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,승강기,어려움",
+      "contentsid": "CONT_000000000500876",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "물메랑",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 수산리 797-1",
+      "roadaddress": "제주특별자치도 제주시 애월읍 수산북길 3",
+      "tag": "펜션,휴양펜션,단체여행객,바비큐,공공와이파이존,온돌방,가족,해수욕장,해변,해안도로,엘리베이터,주방기구,무장애관광",
+      "introduction": "수산저수지와 한라산과 바다의 아름다운 경치가 한 눈에 들어오는 펜션",
+      "latitude": 33.4721057,
+      "longitude": 126.3913346,
+      "postcode": null,
+      "phoneno": "0507-1414-9400",
+      "repPhoto": {
+        "descseo": "MUL ME RANG",
+        "photoid": {
+          "photoid": 21746,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a82741ae-4e89-4878-a212-555f3753553d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/9db5eaf2-b62a-4c8c-9d12-d64e0038338b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,공공와이파이존,주차장,공항,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단독접근가능,장애인 전용 리프트,승강기,쉬움,우수관광사업체",
+      "contentsid": "CONT_000000000501138",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "엘린호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 292-32",
+      "roadaddress": "제주특별자치도 제주시 은남1길 4",
+      "tag": "호텔,숙소,공공와이파이존,주차장,공항,무장애관광",
+      "introduction": "제주공항 5분 거리, 시내 중심가에 위치하고 있어 관광지, 관공서, 쇼핑, 문화 등 주변 시설을 이용하기에 편리한 곳",
+      "latitude": 33.4893299,
+      "longitude": 126.4954791,
+      "postcode": null,
+      "phoneno": "064-743-5600",
+      "repPhoto": {
+        "descseo": "호텔엘린",
+        "photoid": {
+          "photoid": 2019022567960,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/13/1b62073b-d991-4eef-96a3-4348af7c540c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/13/f9828a01-839a-4313-b488-2ebb22bf955e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,게스트하우스,고향민박,민박,음식,계곡,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CONT_000000000500810",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "나무이야기 하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 세화리 200-1",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 민속해안로 32",
+      "tag": "펜션,게스트하우스,고향민박,민박,음식,계곡,농어촌민박",
+      "introduction": "표선에 위치한 바다가 보이는 펜션",
+      "latitude": 33.3255768,
+      "longitude": 126.7999334,
+      "postcode": null,
+      "phoneno": "010-9689-0425",
+      "repPhoto": {
+        "descseo": "Namu Iyagi",
+        "photoid": {
+          "photoid": 21146,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/3a176042-c712-4f9f-a51b-034f04d75eb0.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/78f1616e-7575-459d-92cd-85c8384170e4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,중문관광단지,자연경관,해변,조식,정원,바비큐,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,승강기,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CONT_000000000501140",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "블룸호텔 제주",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2812-2 블룸호텔",
+      "roadaddress": "제주특별자치도 서귀포시 중문관광로72번길 53",
+      "tag": "호텔,숙소,중문관광단지,자연경관,해변,조식,정원,바비큐,무장애관광",
+      "introduction": "중문단지 내에 위치한 경제적이면서 깔끔한 3성급 호텔",
+      "latitude": 33.2497631,
+      "longitude": 126.40827109999998,
+      "postcode": null,
+      "phoneno": "064-738-7000",
+      "repPhoto": {
+        "descseo": "제주하나호텔",
+        "photoid": {
+          "photoid": 2019022650564,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202503/29/f0400b58-ef39-45c5-8adc-1e9fe5995308.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202503/29/a95ae9e9-86d7-4fc7-af26-9286a574af5d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,바비큐,가족,공공와이파이존,해수욕장,온돌방,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500991",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "올레프로방스펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 광령리 2807-14",
+      "roadaddress": "제주특별자치도 제주시 애월읍 광령평화2길 170-23",
+      "tag": "펜션,휴양펜션,바비큐,가족,공공와이파이존,해수욕장,온돌방",
+      "introduction": "청정지역인 제주도에서도 생태보존지역에 근접해 맑은 공기와 탁 트인 경관을 자랑하는 곳",
+      "latitude": 33.3701721,
+      "longitude": 126.4819697,
+      "postcode": null,
+      "phoneno": "010-4740-6774",
+      "repPhoto": {
+        "descseo": "올레프로방스",
+        "photoid": {
+          "photoid": 22726,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/0f26d4b4-90a4-4c8b-9b2a-9e3fe6c10bd5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/5655b7dd-cd40-4e5e-bc4b-9d26ea22f1b9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "유스호스텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500864",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "마이테르유스호스텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 납읍리 549",
+      "roadaddress": "제주특별자치도 제주시 애월읍 애원로 474-29",
+      "tag": "유스호스텔,호스텔/소형호텔,수영장,매점,힐링쉼터,무장애관광",
+      "introduction": "애월읍에 위치한 숙박시설이자 복합청소년 교류공간",
+      "latitude": 33.4290068,
+      "longitude": 126.3475723,
+      "postcode": null,
+      "phoneno": "064-799-8811",
+      "repPhoto": {
+        "descseo": "Miterre Hotel",
+        "photoid": {
+          "photoid": 21624,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a5dcd562-03ee-4458-8c62-1c544bc3b51b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2ae9ddea-e767-4251-bd31-1c5e5fc6001f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "캠핑,언택트,민박,단체여행객,주차장,공공와이파이존,반려동물보호소,정원,글램핑,독채,펜션,반려동물동반입장,반려동물,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CONT_000000000501056",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주야자원",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 하천리 1385-4",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 풍천로273번길 143-13",
+      "tag": "캠핑,언택트,민박,단체여행객,주차장,공공와이파이존,반려동물보호소,정원,글램핑,독채,펜션,반려동물동반입장,반려동물,반려동물동반_숙소",
+      "introduction": "2만여평의 야자나무 식물원에 자리한 독립 별장형 펜션",
+      "latitude": 33.3608877,
+      "longitude": 126.8245549,
+      "postcode": null,
+      "phoneno": "064-787-7112",
+      "repPhoto": {
+        "descseo": "Jejuyajawon",
+        "photoid": {
+          "photoid": 23302,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f4690cdc-9323-4610-aa7e-42ea00ca3898.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/4f72474a-f96e-4717-99c5-c0feb841f1c7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "모텔,숙소,주차장,가족,일반숙박,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설",
+      "contentsid": "CONT_000000000500877",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "미도모텔",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 230-15",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 성산등용로 1",
+      "tag": "모텔,숙소,주차장,가족,일반숙박",
+      "introduction": "성산포에 위치한 미도모텔",
+      "latitude": 33.4641323,
+      "longitude": 126.933622,
+      "postcode": null,
+      "phoneno": "064-782-0820",
+      "repPhoto": {
+        "descseo": "미도모텔",
+        "photoid": {
+          "photoid": 2019022567965,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/13/a46b440f-22ae-46a9-bbdc-96b3c5af006d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/13/ea21cee2-ef22-4fc1-9b83-2dc81624051e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/힐링,캠핑,언택트,반려동물보호소,패키지관광,캠핑장,반려동물동반입장,반려동물,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CONT_000000000501064",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주캠핑올레",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주도 서귀포시 표선면 토산망동로 15",
+      "roadaddress": "제주도 서귀포시 표선면 토산망동로 15",
+      "tag": "휴식/힐링,캠핑,언택트,반려동물보호소,패키지관광,캠핑장,반려동물동반입장,반려동물,반려동물동반_숙소",
+      "introduction": "표선에 위치한 무지개 컨셉의 컨테이너 하우스",
+      "latitude": 33.310127,
+      "longitude": 126.78165,
+      "postcode": "63626",
+      "phoneno": "010-9091-1866",
+      "repPhoto": {
+        "descseo": "Jeju Camping Olle",
+        "photoid": {
+          "photoid": 23372,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/67e94ea3-7d1b-4b08-859f-aa6213a3727a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/02ee2c1d-2ea3-4773-a8dd-8f8de4044c53.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,독채,민박,휴양펜션,주차장,공공와이파이존,자연경관,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500938",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "소풍BnB",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 호근동 1405-4",
+      "roadaddress": "제주특별자치도 서귀포시 호근남로 82",
+      "tag": "펜션,독채,민박,휴양펜션,주차장,공공와이파이존,자연경관",
+      "introduction": "귤나무로 둘러쌓인 조용한 쉼터, 2인실,3인실, 커플룸, 조식포함(서귀포)",
+      "latitude": 33.25159370000001,
+      "longitude": 126.5323378,
+      "postcode": null,
+      "phoneno": "064-739-4054",
+      "repPhoto": {
+        "descseo": "Sopung BnB (Picnic BnB) ",
+        "photoid": {
+          "photoid": 22297,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e933bc91-eda8-44da-8c39-6c07b2186ad5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f667cf68-1109-4907-946f-84e4faa1faa7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/힐링,숙소,호텔,공항,주차장,공공와이파이존,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501067",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "포시즌호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 노형동 914",
+      "roadaddress": "제주특별자치도 제주시 원노형3길 19",
+      "tag": "휴식/힐링,숙소,호텔,공항,주차장,공공와이파이존",
+      "introduction": "세련되고 특별한 디자인의 호텔",
+      "latitude": 33.48309800000001,
+      "longitude": 126.4772312,
+      "postcode": null,
+      "phoneno": "064-900-5453",
+      "repPhoto": {
+        "descseo": "Jeju Hotel Fourseasons",
+        "photoid": {
+          "photoid": 23403,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1e878dc3-4ec1-40b6-8079-453bae91f561.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d0c03215-73e7-4f97-834c-e50a0020a1cc.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/치유,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501145",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "휴마루리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 서홍동 1777-3",
+      "roadaddress": "제주특별자치도 서귀포시 중산간동로8183번길 16",
+      "tag": "휴식/치유,숙소,리조트,휴양콘도,공공와이파이존,자연경관,수영장,환전",
+      "introduction": "문섬, 섶섬, 범섬이 보이는 바다와 한라산 조망이가능한 휴향형 휴마루리조트 입니다.",
+      "latitude": 33.2612932,
+      "longitude": 126.5427422,
+      "postcode": null,
+      "phoneno": "064-762-1111",
+      "repPhoto": {
+        "descseo": "Hyumaru Resort&Hotel",
+        "photoid": {
+          "photoid": 24083,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/a49c8ea9-77f4-4808-83d4-174e08d18065.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/6fb40508-1d1b-404f-923c-75f61ebb0aee.webp"
+        }
+      }
+    },
+    {
+      "alltag": "게스트하우스,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500994",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "와락 게스트하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 평대리 3346-10",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 세평항로 45-4",
+      "tag": "게스트하우스,숙소,민박,해수욕장,공공와이파이존,조식 포함,체험,가족,단체여행객,자연경관,해변",
+      "introduction": "제주시 구좌읍 평대리와 세화리 경계에 위치한 게스트하우스",
+      "latitude": 33.5275,
+      "longitude": 126.85471,
+      "postcode": "63360",
+      "phoneno": "010-6347-9777",
+      "repPhoto": {
+        "descseo": "Warak Guest House",
+        "photoid": {
+          "photoid": 22745,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/62cae4dd-deb2-420c-90a3-6d2e314ef37b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/887c2c81-5107-449b-ae9d-4edf094d306a.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,펜션,정원,자연경관,해변,온돌방,공공와이파이존,주차장,관광호텔,농어촌민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501050",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주스테이비우다",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 1534",
+      "roadaddress": "제주특별자치도 서귀포시 색달중앙로121번길 45",
+      "tag": "휴식,펜션,정원,자연경관,해변,온돌방,공공와이파이존,주차장,관광호텔,농어촌민박",
+      "introduction": "제주 남부 중문지역에 위치하며, 비우다, 채우다, 나누다, 품은 으로 나누어진 복합문화공간",
+      "latitude": 33.2651183,
+      "longitude": 126.4092475,
+      "postcode": null,
+      "phoneno": "064-739-5003",
+      "repPhoto": {
+        "descseo": "Jeju Stay Biuda",
+        "photoid": {
+          "photoid": 23255,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/e2e167fd-2f9a-47b9-b3b2-41c825ebd89c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8b73c14a-1c40-4108-9641-684229759f4d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,모텔,주차장,공공와이파이존,교통,물품보관서비스,무장애여행,엘리베이터,체험,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,승강기,장애인 전용 주차장,아주 어려움,2성급",
+      "contentsid": "CONT_000000000500824",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "다이아몬드 호텔 제주",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 282-12",
+      "roadaddress": "제주특별자치도 제주시 신대로12길 42",
+      "tag": "호텔,숙소,모텔,주차장,공공와이파이존,교통,물품보관서비스,무장애여행,엘리베이터,체험,무장애관광",
+      "introduction": "제주시 연동에 위치해 공항과 가까운 숙소",
+      "latitude": 33.4889189,
+      "longitude": 126.4922938,
+      "postcode": null,
+      "phoneno": "064-742-7744",
+      "repPhoto": {
+        "descseo": "Diamond Hotel Jeju",
+        "photoid": {
+          "photoid": 21274,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/223cc1f3-58b6-4aa8-b2f6-ea1c1fc6de56.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/76817eac-31d2-467f-9437-70aa493f26b6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,돌담길,공공와이파이존,올레길,돌담풍경마을,독채,텃밭집,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500902",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "별똥별채집소",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 하도리 883-2",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 하도13길 51-1",
+      "tag": "민박,숙소,농어촌민박,돌담길,공공와이파이존,올레길,돌담풍경마을,독채,텃밭집",
+      "introduction": "하늘과 별과 바다가 가까운 독채민박",
+      "latitude": 33.5112899,
+      "longitude": 126.8919993,
+      "postcode": null,
+      "phoneno": "010-7708-1024",
+      "repPhoto": {
+        "descseo": "별똥별채집소",
+        "photoid": {
+          "photoid": 2019022557455,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/04/2533618e-8658-4112-857f-d5cb17a65d05.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/04/e76a0a0a-03f7-4e97-a977-77ea542ed320.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500860",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "루하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 표선리 2390-5",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 민속해안로119번길 8",
+      "tag": "민박,숙소,펜션,휴양펜션,주차장,공공와이파이존,어린이놀이방,무장애관광,농어촌민박",
+      "introduction": "올레길 4코스에 위치한 독채 돌집",
+      "latitude": 33.307262,
+      "longitude": 126.81284,
+      "postcode": "63629",
+      "phoneno": "010-6609-8906",
+      "repPhoto": {
+        "descseo": "Lew House",
+        "photoid": {
+          "photoid": 21588,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/1ffc2c50-f6dd-4f89-a14a-0cb2461a4000.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/af796fc9-02f6-4725-baff-06c8ea855b10.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,숙소,휴양펜션,독채,해수욕장,공공와이파이존,해변,갯벌체험학습장,정원,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500942",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "수필하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 종달리 820",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 종달논길 50-1",
+      "tag": "펜션,숙소,휴양펜션,독채,해수욕장,공공와이파이존,해변,갯벌체험학습장,정원",
+      "introduction": "전통 제주돌집을 리모델링한 B&B형 민박",
+      "latitude": 33.492954,
+      "longitude": 126.899605,
+      "postcode": "63364",
+      "phoneno": "010-6678-8986",
+      "repPhoto": {
+        "descseo": "Soofeel House",
+        "photoid": {
+          "photoid": 22317,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/8e475dc8-417f-47b9-80f9-1d50782cec41.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/b35f83fc-b0fb-4f94-96a3-a702e5389185.webp"
+        }
+      }
+    },
+    {
+      "alltag": "통나무집,펜션,휴양펜션,반려동물보호소,독채,바비큐,가족,통나무집민박,정원,주방기구,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_숙소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,유도 및 안내시설,경보 및 피난시설,아주 어려움,동반가능,바베큐장",
+      "contentsid": "CONT_000000000501002",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "웨스티하우스",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "23",
+        "label": "안덕",
+        "refId": "region2>23"
+      },
+      "address": "제주도 서귀포시 안덕면 일주서로 1488번길9",
+      "roadaddress": "제주도 서귀포시 안덕면 일주서로 1488번길9",
+      "tag": "통나무집,펜션,휴양펜션,반려동물보호소,독채,바비큐,가족,통나무집민박,정원,주방기구,반려동물,반려동물동반입장,혼저옵서개,반려동물동반_숙소",
+      "introduction": "자연과 어우러진 수공식 통나무집",
+      "latitude": 33.241634,
+      "longitude": 126.36719,
+      "postcode": null,
+      "phoneno": "0507-1318-2933",
+      "repPhoto": {
+        "descseo": "Westie House",
+        "photoid": {
+          "photoid": 22822,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/2c41fb5b-cfbc-4371-b229-d47989bbed70.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8731bebc-df31-4ce6-8a2c-af3a5c568532.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,승강기,아주 어려움",
+      "contentsid": "CONT_000000000500802",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "꿈꾸는 노마드",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 강정동 1026-1",
+      "roadaddress": "제주특별자치도 서귀포시 선반로 54",
+      "tag": "펜션,한국관광품질인증업소,휴양펜션,바비큐,정원,주방기구,해수욕장,무장애관광",
+      "introduction": "노마드적 여행자들을 위한 쉼터",
+      "latitude": 33.2615636,
+      "longitude": 126.49447,
+      "postcode": null,
+      "phoneno": "064-739-3114",
+      "repPhoto": {
+        "descseo": "꿈꾸는 노마드",
+        "photoid": {
+          "photoid": 2019022568305,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/19/f10a3336-a305-4a06-b3c0-b787d164840a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/19/61efeae5-cf0b-418f-91ad-bb97623442f6.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,통나무집민박,바비큐,반려동물보호소,공공와이파이존,조식 포함,해수욕장,반려동물동반입장,반려동물,반려동물동반_숙소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500956",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "아뜨네통나무펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하귀1리 831-3",
+      "roadaddress": "제주특별자치도 제주시 애월읍 상하귀길 91",
+      "tag": "펜션,휴양펜션,통나무집민박,바비큐,반려동물보호소,공공와이파이존,조식 포함,해수욕장,반려동물동반입장,반려동물,반려동물동반_숙소",
+      "introduction": "상쾌한 자연 속에서 느끼는 제주의 풍경 제주공항 근처 아뜨네통나무펜션",
+      "latitude": 33.47573300000001,
+      "longitude": 126.4163508,
+      "postcode": null,
+      "phoneno": "010-2299-9514",
+      "repPhoto": {
+        "descseo": "Attene Log Pension",
+        "photoid": {
+          "photoid": 22426,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/81d64de4-8e72-44d8-af48-2aefc8aab61b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/bbd1618a-c2b1-43cd-ab30-54765b8a75fe.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,유도 및 안내시설,경보 및 피난시설,엘리베이터,단독접근가능,단차없음,시각장애인 접근성,저상버스 접근 가능,장애인 화장실,승강기,장애인 전용 주차장,장애인 전용 객실,테이블 비치,쉬움",
+      "contentsid": "CONT_000000000501078",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "중문훼미리리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 상예동 2729-1",
+      "roadaddress": "제주특별자치도 서귀포시 소보리당로164번길 83",
+      "tag": "휴식,숙소,리조트,휴양콘도,단체여행객,주차장,공공와이파이존,무장애여행,편의시설,무장애관광",
+      "introduction": "중문관광단지가 가깝고 관광하기에 교통이 편리한 가족호텔",
+      "latitude": 33.2659029,
+      "longitude": 126.3837498,
+      "postcode": null,
+      "phoneno": "064-738-7871",
+      "repPhoto": {
+        "descseo": "Jungmun Family Pension & Resort",
+        "photoid": {
+          "photoid": 23511,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7608dfb4-fd4c-4500-b6ee-6c30522b2e92.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d14d6afd-3b93-49e7-a71a-f3172e65d002.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,숙소,펜션,휴양펜션,바비큐,일반숙박,노래방,공공와이파이존,해수욕장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501092",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "파더하우스",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 하가리 1335-6",
+      "roadaddress": "제주특별자치도 제주시 애월읍 고하상로 88",
+      "tag": "휴식,숙소,펜션,휴양펜션,바비큐,일반숙박,노래방,공공와이파이존,해수욕장",
+      "introduction": "제주도 애월읍 하가리 마을 안에 위치한 아늑한 숙소",
+      "latitude": 33.457288,
+      "longitude": 126.3466068,
+      "postcode": null,
+      "phoneno": "010-8789-7007",
+      "repPhoto": {
+        "descseo": "Father House",
+        "photoid": {
+          "photoid": 23640,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7e34bdff-a88c-473b-840c-0abd81c60f73.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/f9c03c16-63b6-46da-a8d7-f7c2216b86f9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식/힐링,휴양펜션,펜션,자연경관,바비큐,온돌방,정원,우수관광사업체,공용주차장,현금결제,카드결제,화장실,무료 WIFI,편의점,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501101",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "포시즌펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 토평동 636",
+      "roadaddress": "제주특별자치도 서귀포시 칠십리로285번길 3",
+      "tag": "휴식/힐링,휴양펜션,펜션,자연경관,바비큐,온돌방,정원",
+      "introduction": "전객실 바다전망과 서귀포 시내에서 5분거리에 위치한 펜션",
+      "latitude": 33.2844099,
+      "longitude": 126.5796743,
+      "postcode": null,
+      "phoneno": "064-732-5222",
+      "repPhoto": {
+        "descseo": "Fourseason Pension",
+        "photoid": {
+          "photoid": 23746,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/7fd7fd35-26e3-48ee-8301-300b4448b463.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/2221c8b5-ad86-4f5a-8d23-df93631b1665.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,일반숙박,공공와이파이존,중문관광단지,올레길,카페,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CONT_000000000500780",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "가이아호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 연동 272-4",
+      "roadaddress": "제주특별자치도 제주시 연동7길 4",
+      "tag": "호텔,숙소,일반숙박,공공와이파이존,중문관광단지,올레길,카페,무장애관광",
+      "introduction": "바오젠거리 내에 위치하여, 관광 및 쇼핑을 편리하게 다닐수 있는 호텔",
+      "latitude": 33.4894172,
+      "longitude": 126.4906421,
+      "postcode": null,
+      "phoneno": "064-742-6110",
+      "repPhoto": {
+        "descseo": "Gaia Hotel",
+        "photoid": {
+          "photoid": 20856,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d9c820a8-91f7-49db-abad-d58c9f1a4dc5.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/bc6cfed1-eca4-45ca-9e02-b41f56f10880.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,수영장,양식레스토랑,공공와이파이존,주차장,관광호텔,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,단차없음,승강기,어려움",
+      "contentsid": "CONT_000000000500867",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "메이더호텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 동복리 1652-2",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 일주동로 1626",
+      "tag": "호텔,숙소,수영장,양식레스토랑,공공와이파이존,주차장,관광호텔,무장애관광",
+      "introduction": "아름다운 구좌에 있는 메이더호텔",
+      "latitude": 33.5517026,
+      "longitude": 126.7067636,
+      "postcode": "63347",
+      "phoneno": "064-766-8888",
+      "repPhoto": {
+        "descseo": "Mei The Hotel",
+        "photoid": {
+          "photoid": 21648,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/490736ed-44f1-4c9d-b4d6-8cc6bf8e2c2b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8d35d04e-d1f2-46dc-aada-3ee52193def1.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식 ,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,어려움",
+      "contentsid": "CONT_000000000501065",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "제주통나무휴양펜션",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "26",
+        "label": "표선",
+        "refId": "region2>26"
+      },
+      "address": "제주특별자치도 서귀포시 표선면 하천리 1583",
+      "roadaddress": "제주특별자치도 서귀포시 표선면 번영로 3328",
+      "tag": "휴식,펜션,휴양펜션,민박,통나무집민박,바비큐,독채,해수욕장",
+      "introduction": "고급 제주산 삼나무 통나무집으로 주인이 직접 지은 펜션",
+      "latitude": 33.3512467,
+      "longitude": 126.8233233,
+      "postcode": null,
+      "phoneno": "064-787-8800",
+      "repPhoto": {
+        "descseo": "제주통나무휴양펜션",
+        "photoid": {
+          "photoid": 2019022571134,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202007/01/1fa296d5-d0eb-40fe-a1dc-b3b1f25c7dcb.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202007/01/1415cf91-5a08-4625-8a73-2a1627f7fcff.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,호텔,주차장,공공와이파이존,골프,리조트,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,장애인 화장실,승강기,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500763",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "타미우스골프앤빌리지",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "12",
+        "label": "애월",
+        "refId": "region1>12"
+      },
+      "address": "제주특별자치도 제주시 애월읍 봉성리 52-5",
+      "roadaddress": "제주특별자치도 제주시 애월읍 화전길 201",
+      "tag": "휴식,호텔,주차장,공공와이파이존,골프,리조트,무장애관광",
+      "introduction": "일본 자연주의 철학자이자 코스설계자 가토슌수케의 코스디자인이 풍경화처럼 아름다운 골프장",
+      "latitude": 33.3689588,
+      "longitude": 126.3505941,
+      "postcode": null,
+      "phoneno": "064-793-0707",
+      "repPhoto": {
+        "descseo": "타미우스골프앤빌리지",
+        "photoid": {
+          "photoid": 2019022568366,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201912/20/cb08f0df-e96c-42bd-942f-1f658ddd8d33.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201912/20/f9ad3fd2-de71-4547-bf25-638a709f02c9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,해수욕장,공공와이파이존,바비큐,체험,해수풀장,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000500904",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "보물섬",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "17",
+        "label": "성산",
+        "refId": "region2>17"
+      },
+      "address": "제주특별자치도 서귀포시 성산읍 성산리 252-1번지",
+      "roadaddress": "제주특별자치도 서귀포시 성산읍 한도로242번길 10-11",
+      "tag": "펜션,휴양펜션,해수욕장,공공와이파이존,바비큐,체험,해수풀장",
+      "introduction": "성산일출봉 위치에 근처에 위치한 합리적인 가격의 펜션",
+      "latitude": 33.466354,
+      "longitude": 126.93157,
+      "postcode": null,
+      "phoneno": "064-784-0039",
+      "repPhoto": {
+        "descseo": "Bomulseon",
+        "photoid": {
+          "photoid": 22007,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/d08799d2-ab2d-4a56-9094-efadca476a36.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/8f88002f-d934-48d6-befc-09b4d8f45a88.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,숙소,농어촌민박,주차장,올레길,중문관광단지,부대시설,온돌방,주방기구,공공와이파이존,착한가격업소,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501020",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "장원민박",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 색달동 2539-3",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 49",
+      "tag": "민박,숙소,농어촌민박,주차장,올레길,중문관광단지,부대시설,온돌방,주방기구,공공와이파이존,착한가격업소",
+      "introduction": "중문관광단지와 올레8코스중간에 위치한 부담없고 아늑한 민박",
+      "latitude": 33.2569568,
+      "longitude": 126.4111595,
+      "postcode": null,
+      "phoneno": "064-738-1110",
+      "repPhoto": {
+        "descseo": "장원민박",
+        "photoid": {
+          "photoid": 2019022557357,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201907/04/c3c647f1-c033-4322-8b20-9f09a8298e45.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201907/04/07871785-7241-4071-af06-d95883496cad.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500797",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "김녕몽생이",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "16",
+        "label": "구좌",
+        "refId": "region1>16"
+      },
+      "address": "제주특별자치도 제주시 구좌읍 김녕리 1378",
+      "roadaddress": "제주특별자치도 제주시 구좌읍 김녕로1길 35-14",
+      "tag": "펜션,휴양펜션,주차장,공공와이파이존,마을관광,독채",
+      "introduction": "제주시 구좌에 위치한 제주돌집 독채펜션",
+      "latitude": 33.557205,
+      "longitude": 126.748215,
+      "postcode": "63357",
+      "phoneno": "010-5665-6347",
+      "repPhoto": {
+        "descseo": "Gimnyeong Mongsaengi",
+        "photoid": {
+          "photoid": 21032,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/999d327c-7598-4ade-bc07-dc1efc2d8e20.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/47a91217-02b5-4b00-94c0-7cc04e0245b2.webp"
+        }
+      }
+    },
+    {
+      "alltag": "펜션,휴양펜션,일반숙박,정원,바비큐,해수욕장,가족,공공와이파이존,체험,공용주차장,현금결제,카드결제,화장실,무료 WIFI,음료대,유도 및 안내시설,아주 어려움",
+      "contentsid": "CONT_000000000501015",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "이쁜새펜션",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "13",
+        "label": "한림",
+        "refId": "region1>13"
+      },
+      "address": "제주특별자치도 제주시 한림읍 협재리 2082-2",
+      "roadaddress": "제주특별자치도 제주시 한림읍 협재로 68-5",
+      "tag": "펜션,휴양펜션,일반숙박,정원,바비큐,해수욕장,가족,공공와이파이존,체험",
+      "introduction": "차로 1분 거리에 협재 해수욕장이 있는 전객실 바다전망의 펜션",
+      "latitude": 33.3922895,
+      "longitude": 126.2472499,
+      "postcode": null,
+      "phoneno": "064-796-8120",
+      "repPhoto": {
+        "descseo": "Ibbeunsae Ibbeuge Noraehago Pension",
+        "photoid": {
+          "photoid": 22937,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/088a9f9f-7642-4676-b004-34334de67c97.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/57bd142d-21d5-4e42-bfac-36d982fe93fb.webp"
+        }
+      }
+    },
+    {
+      "alltag": "어린이,일반숙박,숙소,온돌방,공항,한국관광품질인증업소,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,음료대,유도 및 안내시설,경보 및 피난시설,엘리베이터,승강기,아주 어려움",
+      "contentsid": "CONT_000000000500821",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "늘송파크텔",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "11",
+        "label": "제주시내",
+        "refId": "region1>11"
+      },
+      "address": "제주특별자치도 제주시 노형동 905-13",
+      "roadaddress": "제주특별자치도 제주시 원노형5길 22",
+      "tag": "어린이,일반숙박,숙소,온돌방,공항,한국관광품질인증업소,무장애관광",
+      "introduction": "공항과 인접하며, 시내중심지에 위치한 제주도 호텔",
+      "latitude": 33.4875793,
+      "longitude": 126.4832153,
+      "postcode": null,
+      "phoneno": "064-749-3303",
+      "repPhoto": {
+        "descseo": "Neulsong Parktel",
+        "photoid": {
+          "photoid": 21246,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/f42aa667-4520-4ee7-90ea-b4a56261513f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/e4754848-539e-4795-b7b3-d0c26e57092b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "호텔,숙소,중문관광단지,교통,주차장,공공와이파이존,자연경관,가족호텔,관광호텔,무장애관광,공용주차장,현금결제,카드결제,화장실,무료 WIFI,유도 및 안내시설,장애인 화장실,장애인 전용 주차장,아주 어려움",
+      "contentsid": "CONT_000000000500899",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "베니키아 중문호텔",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "24",
+        "label": "중문",
+        "refId": "region2>24"
+      },
+      "address": "제주특별자치도 서귀포시 중문동 2115-1",
+      "roadaddress": "제주특별자치도 서귀포시 천제연로 166",
+      "tag": "호텔,숙소,중문관광단지,교통,주차장,공공와이파이존,자연경관,가족호텔,관광호텔,무장애관광",
+      "introduction": "서귀포시 중문동에 위치해 좋은 접근성을 자랑하는 모던한 감각의 호텔입니다.",
+      "latitude": 33.2521468,
+      "longitude": 126.4220672,
+      "postcode": null,
+      "phoneno": "064-802-8888",
+      "repPhoto": {
+        "descseo": "BENIKEA JUNGMUN HOTEL",
+        "photoid": {
+          "photoid": 21946,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ee8c9b5e-2875-40d5-8373-045e3e65fc70.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/d9710d59-c927-4ce3-a40c-37ded90b9108.webp"
+        }
+      }
+    },
+    {
+      "alltag": "휴식,펜션,휴양펜션,바비큐,해수욕장,공공와이파이존,풀빌라,단체여행객,가족,수영장,조식 포함,교통,체험,해변,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,편의점,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000501098",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "펜션연리",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 하예동 463-4",
+      "roadaddress": "제주특별자치도 서귀포시 논짓물로 50",
+      "tag": "휴식,펜션,휴양펜션,바비큐,해수욕장,공공와이파이존,풀빌라,단체여행객,가족,수영장,조식 포함,교통,체험,해변",
+      "introduction": "서귀포 중문에 전망 좋은 곳에 위치한 아름다운 펜션",
+      "latitude": 33.2404221,
+      "longitude": 126.3860267,
+      "postcode": null,
+      "phoneno": "064-739-2564",
+      "repPhoto": {
+        "descseo": "Pension Maru",
+        "photoid": {
+          "photoid": 23708,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/691d1c7d-b3dd-4e1c-8b99-83b0aed4ee22.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/329c76ef-a8c3-4b2a-9b3e-8e8bc3883088.webp"
+        }
+      }
+    },
+    {
+      "alltag": "민박,독채,펜션,가족,바비큐,공공와이파이존,단체여행객,해수욕장,수상레저,공용주차장,현금결제,카드결제,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,아주 어려움",
+      "contentsid": "CONT_000000000500890",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "바다파파",
+      "region1cd": {
+        "value": "region1",
+        "label": "제주시",
+        "refId": "region>region1"
+      },
+      "region2cd": {
+        "value": "15",
+        "label": "조천",
+        "refId": "region1>15"
+      },
+      "address": "제주특별자치도 제주시 조천읍 신촌리 557",
+      "roadaddress": "제주특별자치도 제주시 조천읍 신촌10길 7",
+      "tag": "민박,독채,펜션,가족,바비큐,공공와이파이존,단체여행객,해수욕장,수상레저",
+      "introduction": "제주도 바닷가 앞, 가족펜션과 농장을 운영하는 바다파파입니다.",
+      "latitude": 33.5351405,
+      "longitude": 126.6258231,
+      "postcode": null,
+      "phoneno": "064-752-3551",
+      "repPhoto": {
+        "descseo": "Badapapa",
+        "photoid": {
+          "photoid": 21877,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ee57f586-f271-4faf-9070-1e23170adde8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/26fac5ca-5412-48d4-aec1-cddd4aa1c97b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "콘도,공용주차장,현금결제,카드결제,화장실,무료 WIFI,흡연구역,음료대,유도 및 안내시설,경보 및 피난시설,단차없음,장애인 화장실,장애인 전용 주차장,어려움",
+      "contentsid": "CONT_000000000500853",
+      "contentscd": {
+        "value": "c3",
+        "label": "숙박",
+        "refId": "contentscd>c3"
+      },
+      "title": "레이크힐스 제주 리조트",
+      "region1cd": {
+        "value": "region2",
+        "label": "서귀포시",
+        "refId": "region>region2"
+      },
+      "region2cd": {
+        "value": "21",
+        "label": "서귀포시내",
+        "refId": "region2>21"
+      },
+      "address": "제주특별자치도 서귀포시 상예동 4611",
+      "roadaddress": "제주특별자치도 서귀포시 존제로 24",
+      "tag": "콘도,숙소,리조트,휴양콘도,주차장,골프,스쿠버다이빙,수상레저,무장애관광",
+      "introduction": "골프장과 함께하는 제주에서 즐기는 최고급 별장 문화",
+      "latitude": 33.2674383,
+      "longitude": 126.3769731,
+      "postcode": null,
+      "phoneno": "064-738-8778",
+      "repPhoto": {
+        "descseo": "Lake Hills Jeju Resort",
+        "photoid": {
+          "photoid": 21519,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/2a3d54ef-de34-4893-9d67-db291b841865.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/201804/30/0f0f305f-c278-46be-ae15-96eda81f1978.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주관광서포터즈 #제주전통술 #한라산소주 #고소리술 #오메기술 #니모메 #제주수울",
+      "contentsid": "CNTS_300000000013304",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주도의 전통주 탐방 <청소년 출입금지>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주관광서포터즈 #제주전통술 #한라산소주 #고소리술 #오메기술 #니모메 #제주수울",
+      "introduction": "제주도 전통주는 제주도의 독특한 자연 환경과 문화적 특색을 반영한 전통적인 주류로 오랜역사를 지니고 있다. 현대에도 그 가치를 이어가고 있으며 제주 지역에서 나는 다양한 특산물과 전통적인 발효 및 증류 방법을 활용하여 만들어진 술은 제주도의 자연과 문화를 고스란히 담아내고 있다. 제주도 전통주를 살펴보면 지역 주민들의 생활방식,의례,자연과의 상호작용 등을 엿볼 수 있다. 제주여라와 함께 제주도 전통주를 알아보자",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주도의 전통주 탐방 <청소년 출입금지>",
+        "photoid": {
+          "photoid": 2019022643983,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/24/bbe4eed3-fcea-4c1d-93f0-cd12daf6e981.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/24/f9134d0e-ceb8-4859-9262-779a3dc6c71b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주관광서포터즈 #플로웨이브 #카페핀스 #오버더센스 #제주관광",
+      "contentsid": "CNTS_300000000013303",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "나만의 스타일과 스토리를 담은 곳을 찾아 떠나는 부캐 여행!2",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주관광서포터즈 #플로웨이브 #카페핀스 #오버더센스 #제주관광",
+      "introduction": "안녕하세요~! 제주 살고 있는 불도그 입니다! 날씨가 추웠다가, 더웠다가 아주 난리도 아닌 날씨가 계속 되는 요즘이네요~!! 커피를 좋아하는 저로써는 아침에는 따뜻한 라떼를 먹다가, 낮에는 너무 더워 시원한 아이스 아메리카노를,,, 저녁에는 커피 대신 다시 따뜻한 캐모마일 차를...크크 아주 이것저것 먹는 중입니다!! 서울 살 때에는 온 동네 카페를 누비고 다녔었는데, 제주에 와서 삶이 바빠지는 관계로,  이곳저곳 더 많이 다닐 줄 알았는데 그게 어려워지고 있는 요즘이네요ㅠㅠㅠㅠ 제주관광공사와 청년센터에서 진행하는 서포터즈를 시작한지 벌써 3달이 지나가고 있는데, 저는 커피를 짝꿍님은 디저트를 좋아해서 카페를 좋아하고 언젠간 카페를 주제로 하고싶다는 생각을 하고 있었죠~~!! 안그래도 저번에는 주인장들의 개성이나 컨셉이 뚜렷한 빈티지샵 투어를 했었는데,  이번에도 각 장소마다 특별한 스토리와 분위기를 담은 특별한 개성이 있는 곳들을 선정하여 빈티지샵에서 구매했던 의상들을 입고!!!!!!! 자신만의 스타일을 가진 카페를 돌면서 카페와 디저트를 하는 저희를  그려볼 수 있겠다고 생각이 들어 제주도 있는 이색적인 카페를 돌기로 했습니다!! 그렇다면 바로 고고고!!",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "나만의 스타일과 스토리를 담은 곳을 찾아 떠나는 부캐 여행!2",
+        "photoid": {
+          "photoid": 2019022643915,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/24/defe509f-d05f-4aa7-910e-78dcf758899e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/24/35adb053-49c1-4a8d-9780-121ed68eb76b.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주관광서포터즈 #제주올레길 #제주서귀포여행코스추천 #제주서귀포여행 #용머리해안 #가을여행 ",
+      "contentsid": "CNTS_300000000013302",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "이븐하게 올라온 메밀꽃 필 무렵 제주",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주관광서포터즈 #제주올레길 #제주서귀포여행코스추천 #제주서귀포여행 #용머리해안 #가을여행 ",
+      "introduction": "초여름과 가을 무렵에 피어나는 메밀꽃! 새하얀 흰눈꽃 메밀이 피어있는 걸 눈으로 보면 입가에 미소가 가득 머금어지더라고요. 이번 동네투어는 12개 행정리가 있는 안덕면에 알려진 스팟부터 나만 알고 싶은 신상 공간까지 알차게 담아보았습니다. 안덕은 해안과 넓은 중산간 목장지를 보유하고 있는 곳입니다. 명칭은 안덕 계곡을 끼고 있다는 데서 유래한 것이라고 추정되는 이 동네에서 힐링하러 떠나보시죠~",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "이븐하게 올라온 메밀꽃 필 무렵 제주",
+        "photoid": {
+          "photoid": 2019022643876,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/24/875fd8ea-b282-4178-b7d1-c55f81d96a36.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/24/9d8720f6-010a-4f56-beb4-846f7137167e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주관광서포터즈 #비짓제주 #제주도민추천 #제주원도심 #관덕정 #제주목관아 #들랑카페 #로베로호텔",
+      "contentsid": "CNTS_300000000013301",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주원도심에서 즐기는 뚜벅이 여행",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주관광서포터즈 #비짓제주 #제주도민추천 #제주원도심 #관덕정 #제주목관아 #들랑카페 #로베로호텔",
+      "introduction": "제주에는 많은 역사와 문화들이 보존되어 있는 원도심이 있어요. 고대로부터 조선시대에 이르기까지 제주도의 정치, 행정, 문화의 중심지 역할을 한 중요한 유적지인 <제주목 관아> 주변을 뚜.벅.뚜.벅. 걸으며 여행할 수 있는 곳을 소개하고자 합니다. 또한 대중교통이 잘 되어 있어 걸어서도 구경할 수 있는 곳. 공항과 매우 가까워 택시로 10분 정도 걸리는 아주 가까운 곳이에요. 또한 동문시장과도 가까워 제주도민들의 삶을 통째로 엿볼 수 있는 그런 곳이랍니다.  제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요.  그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주원도심에서 즐기는 뚜벅이 여행",
+        "photoid": {
+          "photoid": 2019022643811,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/24/191bd534-52bc-4d3e-979b-6640036bf5c6.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/24/611055ab-af43-45bd-accf-e544572cccd4.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주관광서포터즈 ＃제주시내맛집 ＃정성듬뿍제주 ＃제주찻집 ＃제주디저트 ＃비짓제주 ＃제주여행 ＃제주기념품",
+      "contentsid": "CNTS_300000000013300",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주 동네의 재발견, 관덕정! 어디까지 가봤수꽈?",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주관광서포터즈 ＃제주시내맛집 ＃정성듬뿍제주 ＃제주찻집 ＃제주디저트 ＃비짓제주 ＃제주여행 ＃제주기념품",
+      "introduction": "관덕정은 제주의 역사를 담고 있는 ‘보물’이자 조선 후기 목조건물로서, 제주 시내의 랜드마크로 오랜 시간 자리를 지키고 있다. 관덕정 주변에는 관광객들이 한복을 입고 여행을 즐기는 모습을 쉽게 볼 수 있다. 하지만 관덕정 주변에 제주도민들이 가는 밥집과 카페는 관광객이 알기 쉽지 않은 것 같다. 좋은 건 널리 알려야 하는 법! 도민들이 좋아하는 ‘동네 밥집’, ‘우리 동네 카페’, 선물을 준비할 때 꼭 들리는 선물 가게를 소개합니다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주 동네의 재발견, 관덕정! 어디까지 가봤수꽈?",
+        "photoid": {
+          "photoid": 2019022643758,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/24/8ce6bb2b-edb6-4088-812a-a92b0826e92a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/24/386b6954-f224-4bb2-bb45-ce0493b07134.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #비짓제주 #제주착한가격 #가성비 #제주도민추천 #초록제주 #그린샤워 #정모시쉼터 #서귀포시자연휴양림 #전원일기 #제주맛집 #흑돼지수육 #쌈밥맛집",
+      "contentsid": "CNTS_300000000013258",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "만원으로 제주에서 그린(GREEN) 샤워",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #비짓제주 #제주착한가격 #가성비 #제주도민추천 #초록제주 #그린샤워 #정모시쉼터 #서귀포시자연휴양림 #전원일기 #제주맛집 #흑돼지수육 #쌈밥맛집",
+      "introduction": "제주에는 많은 식물들이 자라고 있는데요. 특히 한라산에는 보물같은 식물들이 많이 자라고 있습니다. 한라산을 터전 삼아 살아가는 식물들을 어떤 공기를 마시며 살고 있을까요?우리나라의 산중에서 식물들이 가장 많이 터를 잡고 자생하는 곳이 바로 한라산입니다. 이 모두가 한라산을 보물산으로, 제주도를 보물섬으로 만드는 근본요소라고 합니다.  착한 가격으로 제주의 식물들을 눈으로 보고, 코로 냄새 맡고, 귀로 들으며, 혀로 맛볼수 있는 보물같은 곳을 함께 찾으러 떠나봅시다. 우리 함께 제주의 그린(green)색으로 온몸을 샤워해 보자구요. 킁킁킁. 제주의 산뜻하고 싱그러운 숲향기가 벌써 느껴지지 않으신가요? 제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요.  그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "만원으로 제주에서 그린(GREEN) 샤워",
+        "photoid": {
+          "photoid": 2019022642637,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/10/0aade622-9f0b-454a-b0ff-5f1e9b64104c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/10/976bdef1-34c5-4c35-8d28-deb019d139a8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #제주사랑방 #제주산지천 #제주구경할곳 #제주공항근처볼거리 #비짓제주 #제주소품샵 #서쪽부엌 #제주곰탕",
+      "contentsid": "CNTS_300000000013257",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주 동네의 재발견, 동문시장 주변엔 뭐가 있을까? 도민이 애정하는 보석같은 로케이션들.",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #제주사랑방 #제주산지천 #제주구경할곳 #제주공항근처볼거리 #비짓제주 #제주소품샵 #서쪽부엌 #제주곰탕",
+      "introduction": "“관광지로 이미 유명한 곳 말고, 진짜 도민들이 자주 가는 맛집 알려주세요!”, “제주에 계시는 부모님과 자주 가는 곳 소개해줘.” 이런 류의 질문은 제주 출신으로서, 주변 지인이 제주에 방문하기 전에 꼭 질문하는, 가장 많이 질문 받는 1순위에 당당히 오른다. 뻔한 관광지가 아닌 ‘진짜 도민이 가는 맛집’을 알고자 하는 마음은 뭘까? 난 타지로 여행을 가면 우선 무진장 유명한 “관광지” 먼저 도장을 깨고 싶던데. 아마 많은 사람들이 제주의 유명한 관광지는 이미 여러 번 다녀왔기 때문에 이젠 진짜 ‘보석같은’ 골목 사이사이 숨겨진 찐-맛집, “진짜”를 경험해보고 싶은 마음이 아닐까? 제주공항 근처 동문시장 주변 동네는 내가 작년 제주로 다시 내려온 이후 가장 많이 방문하고 애정하는 ‘최애 동네’이다. 만약 제주 여행의 끝에서 늘 동문시장만 방문하고 그 주변 동네의 진가는 아직 알지 못한다면, 주목! 입도 눈도 마음도 배부른 동문시장 근처 동네의 재발견을 해드리겠습니다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주 동네의 재발견, 동문시장 주변엔 뭐가 있을까? 도민이 애정하는 보석같은 로케이션들.",
+        "photoid": {
+          "photoid": 2019022642594,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/10/c6afaac9-4381-4c56-94cf-afeca8fe418d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/10/dc8e292a-1466-464f-97ca-b52551a58b66.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #말고기 #제주맛집 #제주여라 #비짓제주 #말고기연구소 #고수목마식당 #백마가든 ",
+      "contentsid": "CNTS_300000000013256",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "색다른 음식 말고기 업체  <말로 표현한 제주도>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #말고기 #제주맛집 #제주여라 #비짓제주 #말고기연구소 #고수목마식당 #백마가든 ",
+      "introduction": "제주도는 특유의 자연환경과 전통을 바탕으로 다양한 지역 특산품을 제공한다. 그중에서도 말고기는 특별한 음식으로 자리 잡고 있다. 말고기는 일반적으로 소고기나 돼지고기보다 단백질 함량이 높고 지방이 적어, 건강을 중시하는 현대인들에게 매력적인 대안이 되고 있다. 특유의 부드럽고 단백한 맛 덕분에 현지인뿐만 아니라 관광객들에게도 인기가 높다. 이번 기회에 흑돼지 말고 색다른 음식인 말고기를 알아보자 ",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "색다른 음식 말고기 업체  <말로 표현한 제주도>",
+        "photoid": {
+          "photoid": 2019022642520,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/10/f03ced1a-1910-4e5b-93c2-2aef702154ae.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/10/ec1eee79-d4c9-40a3-b033-fc136d76c49c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #캡퍼룸 #그로울 #퍼플모스빈티지 #제주 #빈티지 #옷",
+      "contentsid": "CNTS_300000000013255",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "나만의 스타일과 스토리를 담은 곳을 찾아 떠나는 부캐 여행!",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #캡퍼룸 #그로울 #퍼플모스빈티지 #제주 #빈티지 #옷",
+      "introduction": "안녕하세요~! 제주 살고 있는 불도그 입니다! 아니 날씨가 갑자기 무슨 일이래요????? 며칠 전까지만 해도 민소매에 반바지 착장 이였는데,,,,ㅋㅋㅋㅋㅋㅋㅋㅋㅋ 이제 곧 패딩 입어야 할 것 같은 날씨입니다!!!! 육지도 날씨가 많이 쌀쌀해졌나요??? 제주는 엊그제부터계속 비가 오더니,,, 많이 추워져서.. 이제 에어컨 끄고 났더니 바로 보일러 틀어야할 날씨,,,ㅎㅎㅎ 그래도 요즘 하늘도 정말 가을 하늘이고, 날씨도 계속 좋아서 나들이 가고 싶은 날씨가 연속인데요....ㅎㅎㅎ  날씨가 좋으나, 비가 오나 저희는 부캐찾기 여정은 쭈우우욱 ing지요 ㅎㅎㅎ 제주관광공사와 청년센터 덕분에 이렇게 좋은 경험도 해볼 수 있고, 얼마나 좋은지요 ㅎㅎㅎ 요즘 틈만 나면 이런 부캐가 잘 어울릴까? 이 부캐는 어떨까?? 생각만 하고 지낸답니다 >_< 흐흐흐",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "나만의 스타일과 스토리를 담은 곳을 찾아 떠나는 부캐 여행!",
+        "photoid": {
+          "photoid": 2019022642420,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/10/d9776e49-118c-4560-a81c-4a43762d5294.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/10/99a50d1b-9728-484c-bcff-8f02670d185d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년크리에이터 #제주청년서포터즈 #제주관광서포터즈 #제주가을 #제주가을동쪽코스 #제주억새스팟 #제주억새스팟추천 #산굼부리 #산굼부리억새 #제주동쪽억새스팟 #제주동쪽억새 #영미가든 #제주맛집 #제주토종닭 #제주토종닭맛집 #제주보양식맛집추천 #제주보양식 #제주가족여행 #제주가족여행코스 #제주맛집 #제주맛집추천 #제주동쪽맛집추천 #제주시맛집추천 #제주찻집 #제주흘 #제주카페흘 #흘카페 #제주티하우스 #제주예쁜카페추천 #제주감성카페추천 #제주동쪽카페 ##제주동쪽카페추천 #흘 #제주환승연애촬영지 #제주오름추천 #제주우진제비오름 #우진샘 #제주우진제비오름우진샘 #제주디저트맛집 #베카신 #제주디저트맛집추천 #베카신메뉴추천 #제주식료품샵 #제주식료품 ",
+      "contentsid": "CNTS_300000000013254",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "가을억새명소와 함께 가을타기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년크리에이터 #제주청년서포터즈 #제주관광서포터즈 #제주가을 #제주가을동쪽코스 #제주억새스팟 #제주억새스팟추천 #산굼부리 #산굼부리억새 #제주동쪽억새스팟 #제주동쪽억새 #영미가든 #제주맛집 #제주토종닭 #제주토종닭맛집 #제주보양식맛집추천 #제주보양식 #제주가족여행 #제주가족여행코스 #제주맛집 #제주맛집추천 #제주동쪽맛집추천 #제주시맛집추천 #제주찻집 #제주흘 #제주카페흘 #흘카페 #제주티하우스 #제주예쁜카페추천 #제주감성카페추천 #제주동쪽카페 ##제주동쪽카페추천 #흘 #제주환승연애촬영지 #제주오름추천 #제주우진제비오름 #우진샘 #제주우진제비오름우진샘 #제주디저트맛집 #베카신 #제주디저트맛집추천 #베카신메뉴추천 #제주식료품샵 #제주식료품 ",
+      "introduction": "여러분은 가을을 좋아하시나요? 저는 무척이나 사랑하는 계절이랍니다. 이제 밤에는 좀 쌀쌀하네~ 느껴질 정도로 기온이 내려갔어요. 가을 특유의 산뜻한 바람을 애정하거든요. 이번 편은 계절과 너무 잘 어울리는 억새와 차(tea)를 즐기기 좋은 코스로 구성해 보았습니다. 교래리는 한라산 동쪽에 위치한 중산간 마을로 주변에 오름도 많고 자연마을이라고도 알려져 있어요. 교래 쪽 부근은 닭이 유명해서 칼국수 가게가 많아요. 선흘은 한라산 북쪽사면 밑자락에 자리 잡은 중산간 마을이고 세계 최초 람사르습지로 인정받은 선흘 곶자왈과 동백동산으로 유명하답니다.\r\n",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "가을억새명소와 함께 가을타기",
+        "photoid": {
+          "photoid": 2019022642398,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202410/10/eea1f69a-85bc-4e7d-a0fa-805676e1af16.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202410/10/7ff66b66-6e83-4739-a1c5-ec737b0ceddd.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주원데이클래스",
+      "contentsid": "CNTS_300000000013245",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주 원데이클래스들을 들으며 내가 잘하는 부캐 찾기!",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주원데이클래스",
+      "introduction": "안녕하세요~! 제주 살고 있는 불도그 입니다! 추석연휴 잘 보내셨나요??? ㅎㅎㅎ 연휴가 지나고 나니 9월이 벌써 끝나가는 것 같아요!!!! 저희는 이번 9월이 정말 짧게 느껴지는데, 그 중 제주에 특색있다는 원데이클래스들을 들으러 다니며 저희가 가장 재밌어하고 잘~~ 하는 부캐를 찾고 있습니다!!!!!! 이번 원데이클래스는 총 3군데로 플라워클래스, 사격, 요가 분야로 체험을 해봤는데요!!!! 과연 저희는 어떤 분야를 제일 재밌어하고 잘했을까요??? ㅎㅎㅎㅎ 끝까지 많은 기대 해주세요~~!!! 지금부터 저희의 잘 하는 것 찾기가 시작됩니다!!!",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주 원데이클래스들을 들으며 내가 잘하는 부캐 찾기!",
+        "photoid": {
+          "photoid": 2019022641911,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/26/a410c29b-41b4-4655-a6a5-e305dcf441b7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/26/09068149-17ec-48c3-b7c6-a94761d2dbdf.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #우도#함덕#함덕해수욕장#애월#싱계물공원",
+      "contentsid": "CNTS_300000000013239",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "느긋한 제주도 명소 Best 3  <내가 알던 제주도>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #우도#함덕#함덕해수욕장#애월#싱계물공원",
+      "introduction": "요즘 제주도에 대한 부정적인 인식이 커지고 있다. 하지만 제주도는 여전히 천혜의 자연을 품은 아름다운 섬으로, 한라산을 중심으로 독특한 문화와 예술적 영감을 주는 장소이다. 예전 사람들이 보았던 아름다운 제주를 기억하며, 우리는 다시 그 섬의 진정한 매력을 느껴보아야 한다고 생각한다. 제주도의 본래 가치를 되새기며, 부정적인 시선에서 벗어나 자연과 문화의 아름다운을 찾아보자\r\n",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "느긋한 제주도 명소 Best 3  <내가 알던 제주도>",
+        "photoid": {
+          "photoid": 2019022641784,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/26/96851806-65cd-4135-9ec3-f280da266cab.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/26/c2602646-3172-4d98-bb56-7073a44ff1b8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #무우수카페로스터스 #카페작은방 #조천카페 #신촌카페 #제주시바다근처카페 #비짓제주 #제주관광서포터즈#피터펜슬 #제주피터펜슬 #조천피터펜슬 #조천연필가게 #제주시연필가게#제주페이퍼룸 #페이퍼룸 #페이퍼룸리소그래피 #리소그래피 #제주리소그래피 #별색인쇄",
+      "contentsid": "CNTS_300000000013237",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주의 아담한 조천 마을을 탐방하는 <영감 여행> 코스 _아날로그를 좋아하는 그대에게,",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #무우수카페로스터스 #카페작은방 #조천카페 #신촌카페 #제주시바다근처카페 #비짓제주 #제주관광서포터즈#피터펜슬 #제주피터펜슬 #조천피터펜슬 #조천연필가게 #제주시연필가게#제주페이퍼룸 #페이퍼룸 #페이퍼룸리소그래피 #리소그래피 #제주리소그래피 #별색인쇄",
+      "introduction": "아날로그를 좋아하나요? 일을 할 땐 어쩔 수 없이 타자를 치게 되지만, 손으로 연필을 꽉 쥐고 꾹꾹 눌러쓴 글을 더 애정하고, 그런 일에 낭만이 있다고 믿나요? 주로 노트북이나 디지털 기기로 일을 하며 핸드폰을 오래 들여다보는 그대. 요즘 영감이 떨어져 환기와 샘솟는 기운이 필요하다고 느낀 적은 없으신가요? 그렇다면 여기 제주의 아담한 조천 마을로 아날로그 여행을 떠나보아요. 사실 진짜 영감은 아날로그에서 나오던 것을 기억합니다. 손가락, 지문으로 감촉을 느끼고 팔과 몸을 움직여 자연스럽게 풀어내던 감정과 생각들. 그리고 그것을 나도 모르게 몸이 두고두고 기억하는 일. 아날로그는 깊은 곳에서 흘러나와 쉽게 휘발되지 않고 오래 남습니다. 디지털 세상에 길들여진 우리는 늘 아날로그에 목마른 상태일지도 모르겠습니다. 잠시 노트북을 닫고 연필을 쥐면 술술 아이디어가 샘솟는데 말이죠! 제주에서의 여행도 한 글자 한 글자 눌러적은 편지처럼 오래 기억되길 바라며, 옹기종기 모여 하늘을 올려다보는 조천 마을의 야트막한 지붕 사이로 흘러나오는 아날로그 인쇄물의 종이 냄새, 전세계 연필을 수집한 연필 가게의 속닥거리는 소리, 책을 넘기고 편지를 꾹꾹 눌러쓸 수 있는 카페의 고소한 커피 향을 보내드립니다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주의 아담한 조천 마을을 탐방하는 <영감 여행> 코스 _아날로그를 좋아하는 그대에게,",
+        "photoid": {
+          "photoid": 2019022641632,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/26/37e5bf14-0346-49ed-9eb4-8e19a6a29329.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/26/07ece328-b639-4d7f-ae6c-2c08a27081ae.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #제주올레길 #제주올레코스추천 #제주올레길6코스 #제주서귀포여행코스추천 #제주서귀포여행 #제주여행추천 #제주여행지추천 #제주오름추천 #제주일몰명소추천 #제주일몰명소 #서귀포일몰명소 #서귀포맛집추천 #제주서귀포맛집 #제주서귀포맛집추천 #제주가을여행코스 #제주가을여행코스추천 #제주도민추천스팟 #히비안도코하쿠 #스나오코히 #제지기오름 #소천지 #섶섬 #섶섬지기카페 #구두미포구 #제주남쪽코스추천 #제주서귀포카페추천 #서귀포카페 #서귀포카페추천",
+      "contentsid": "CNTS_300000000013236",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "걷기좋은 계절, 올레길 6코스 동네 뽀개기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #제주올레길 #제주올레코스추천 #제주올레길6코스 #제주서귀포여행코스추천 #제주서귀포여행 #제주여행추천 #제주여행지추천 #제주오름추천 #제주일몰명소추천 #제주일몰명소 #서귀포일몰명소 #서귀포맛집추천 #제주서귀포맛집 #제주서귀포맛집추천 #제주가을여행코스 #제주가을여행코스추천 #제주도민추천스팟 #히비안도코하쿠 #스나오코히 #제지기오름 #소천지 #섶섬 #섶섬지기카페 #구두미포구 #제주남쪽코스추천 #제주서귀포카페추천 #서귀포카페 #서귀포카페추천",
+      "introduction": "슬슬 걷기 좋아지는 날씨가 되며 나가고 싶은 셀렘이 뿜뿜 넘치시죠?ㅎㅎ 올레길 6코스의 대표적인 동네 효돈과 보목동을 따라 맛있는 것도 먹으며, 놀면서 쉬면서 다하는 코스를 준비했습니다. 효돈이라는 동네는 한라산 남쪽 바로 앞자락에 자리 잡고 있어 감귤 주산지로도 유명한 곳입니다. 어른을 존경하고 부모에게 효성이 지극한 주민이 사는 동네라는 뜻을 가지고 있어서 그런지 다정한 분위기가 흐르는 곳이기도 하죠. 보목동은 보리수 우거진 마을이라는 뜻을 가진 곳이에요. 동남쪽에 있는 해안 마을로 섶섬 등 풍경이 가슴을 펑 뚫리게 해주는 동네입니다. \r\n\r\n",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "걷기좋은 계절, 올레길 6코스 동네 뽀개기",
+        "photoid": {
+          "photoid": 2019022641601,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/26/f6d4f6d0-a92f-4947-b986-e14f887b131c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/26/62480b48-1c50-4df6-902c-942debb7d5e0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천  #노랑제주 #댄싱두루미 #카노푸스 #그림책방 #노란우산 ",
+      "contentsid": "CNTS_300000000013234",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "만원으로 100만원 호텔 즐기기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천  #노랑제주 #댄싱두루미 #카노푸스 #그림책방 #노란우산 ",
+      "introduction": "제주도에 가장 비싼 호텔은 어디일까요? 하룻밤 100만원을 내고 자본적 있으신가요? 이번 한 주도 고생한 나를 위해, 호캉스를 즐기며 호텔에서 흥.청.망.청. 사치를 부리고 싶지만 그렇지 못한다면, 그런 기분이라도 느껴볼 수 있는 비밀스러운 공간을 소개하려고 해요. 제 글을 자주 보신 분들이라면 이번테마에도 색깔이 있다는 것, 눈치채셨죠?이번테마는 바로바로 제주의 노랑노랑입니다. 노란색은 자존감이 떨어진 사람에게 자신감을 갖게 하는 색깔이기도 합니다. 또한 심리적 안정감을 준다는 이야기도 있는데요. 또한 노랑의 금속광택이 도는 황금색은 황금, 돈 등을 상징하여 부와 권위, 풍요로움을 나타내기도 한답니다. 신이 내린 보물섬, 제주에서 진짜노랑을 만날 수 있는 곳으로 저와 함께 떠나볼까요? 착한가격으로 노랑을 즐길 수 있는 보물같은 곳을 함께 찾으러 가봅시다. 제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요.  그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "만원으로 100만원 호텔 즐기기",
+        "photoid": {
+          "photoid": 2019022641527,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/26/8e5f1f0e-43b7-4bef-8d89-8c68100b90bc.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/26/fe454bc7-d59d-4840-8606-963166498572.webp"
+        }
+      }
+    },
+    {
+      "alltag": "곶자왈, 웰니스, 워케이션, 말문화, 해녀체험, 카름스테이",
+      "contentsid": "CNTS_300000000013233",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "2024 가을 제주 로컬여행 100선 <JEJU TO OTIUM>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "곶자왈, 웰니스, 워케이션, 말문화, 해녀체험, 카름스테이",
+      "introduction": "가을은 사계절 중 가장 여행하기 좋은 계절이다. 가을 제주 여행을 여러 번 왔지만 억새와 단풍 구경이 다인 줄 알았다면, 올가을엔 새로운 로컬여행을 통해 제주의 진짜 매력을 발견해보자. ‘영혼에 기쁨을 주는 능동적 여가 활동’을 뜻하는 라틴어 ‘오티움’을 콘셉트로 다섯 가지 테마의 제주 로컬여행 100선을 소개한다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "2024 가을 제주 로컬여행 100선 <JEJU TO OTIUM>",
+        "photoid": {
+          "photoid": 2019022641474,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/25/eedce612-af86-4915-b14e-cfe25a6fd7f9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/25/c1a0c602-f59a-4fe7-94d1-af85346a684c.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#세계유산축천제주 #거문오름 #한라산천연보호구역 #성산일출봉응회구 #선흘1리 #덕천리 #김녕리 #월정리 #행원리 #성산리 #제주세계자연유산센터",
+      "contentsid": "CNTS_300000000013204",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "문화유산을 즐기는 새로운 방법 <2024 세계유산축전 제주>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#세계유산축천제주 #거문오름 #한라산천연보호구역 #성산일출봉응회구 #선흘1리 #덕천리 #김녕리 #월정리 #행원리 #성산리 #제주세계자연유산센터",
+      "introduction": "섬 전체가 다양한 국가유산의 보고인 제주에는 ‘세계유산축전 제주’가 2020년부터 매년 개최되고 있다.  ‘화산박물관’이라고 불릴 만큼 다양하고 독특한 화산지형을 자랑하는 제주 땅 위에 있는 크고 작은 360여 개의 오름과 땅 아래에는 160여 개의 용암동굴의 아름다움을 발견할 수 있는 기회가 올해 10월에도 찾아온다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "문화유산을 즐기는 새로운 방법,, 2024 세계유산축전 제주",
+        "photoid": {
+          "photoid": 2019022640625,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/272b7435-eec3-45cf-854c-4053eac06106.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/1695e67c-5ca0-472f-99d4-ffda2caea67f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #상모리 #대흘리 #송당리 ",
+      "contentsid": "CNTS_300000000013199",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "정의 되지 않은 제주도 명소 Best 3  <의미 없는 제주도>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #상모리 #대흘리 #송당리 ",
+      "introduction": "전 세계 내에 정의 되어 있지 않아 찾기 힘들어 제대로 된 관광을 즐기는 경우가 많다. 특히 제주도는 아름다운 자연을 대표하는 관광지이므로 정의되어 있지 않은 장소/명소가 많아 완벽한 제주도를 즐기는 경우가 많다. 그래서 제주여라와 함께 숨겨진 아름다운 장소를 찾아보자",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "정의 되지 않은 제주도 명소 Best 3  <의미 없는 제주도>",
+        "photoid": {
+          "photoid": 2019022640591,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/0bac3297-af45-47a6-9344-83e49f98c301.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/1ea45fe6-c2c1-4c60-8763-23328cf754b0.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #루인홈 #종종제주 #베르니모텔 #만춘서점 #소리소문",
+      "contentsid": "CNTS_300000000013198",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "내가 진정으로 즐기고 행복해 하는 일로 나의 부캐찾기!",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #루인홈 #종종제주 #베르니모텔 #만춘서점 #소리소문",
+      "introduction": "안녕하세요~! 제주 살고 있는 불도그 입니다! 벌써 9월이 다가왔는데요! 9월에는 추석으로 연휴가 꽤 길어서 벌써 설레이는 하루하루를 지내고 있습니다 >＜꺅 ㅎㅎㅎ 이번에도 저희의 제주에서 부캐찾기!!! 프로젝트가 계속 진행되고 있는데요!!! 너무 재미있게 보고 있다고 연락주시고 저희가 다녀갔던 곳 가셔서 너무 좋았다고 후기 남겨주시는 분들도 있어서 완전 뿌듯뿌듯 했어요!!!!!!! 울 이웃님들 최고예요!!!!!!!! 헿ㅎㅎㅎㅎ 이번에는 아무래도 마음먹고 가지 않는 이상 잘 가지 않는 그곳,,,, 함덕,, 구좌,,, 조천,,,,ㅋㅋㅋㅋㅋㅋ 저희 집과는 반대인 곳으로 가서 그 지역의 느낌도 받고 분위기랑 또 반대지역이니 부캐찾기 여행 영감에 참 좋을 것 같다는 생각을 해서 반대지역에서 부캐찾기를 하고 왔어요!! 주로 소품샵과 독립서점 투어 여행을 주제로 잡고! 제가 사실 아기자기한 소품들 모으는 것도 좋아하고 책 소장하는 것도 좋아하고 읽는것도 참 좋아하거든요!! 독립서점은 그 서점 책방지기의 큐레이션들이 저의 취향과 일치하면 책방에서 몇시간이고 정취를 보내다가 책도 한보따리 사오는 저,,,,ㅎㅎㅎㅎㅎ 그래서! 저의 부캐를 책방지기나 소품샵주인으로 잡으면 어떨까 해서,,,ㅎㅎㅎ 내가 진정으로 즐기고 행복해 하는 일로 부캐를 설정하고 싶다는 욕구가 이번엔 아주 강하게 들었답니다!!! 그래서! 지금! 당장! 소개해드릴게요~ ^^",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "내가 진정으로 즐기고 행복해 하는 일로 나의 부캐찾기!",
+        "photoid": {
+          "photoid": 2019022640556,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/89720670-3f40-46f3-abdc-d8c39c7f01b7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/884c5f29-b458-458d-9b09-0e6469873b81.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #칠분의오 #코난비치 #르바게트 #카페바람 #청굴물 #모알보알",
+      "contentsid": "CNTS_300000000013197",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "여유롭게 즐기는 제주에서 늦캉스 <김녕-월정 행복충전코스> ",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #칠분의오 #코난비치 #르바게트 #카페바람 #청굴물 #모알보알",
+      "introduction": "제주의 동쪽 드라이브 길을 쭉 따라가다보면 저절로 멈춰가게 되는 동네! 김녕-월정 코스를 짜보았습니다. 직진해도 다 즐길 수있을 정도로 쭈욱 길이 잘 정리되었어요! 걸어다녀도 좋고, 차를 타고 가기에도 안성맞춤인 동네 코스를 추천해 보려합니다~ 김녕은 넉넉하고 편안한 마을이라는 뜻을 가져서 아주 늦캉스 스팟으로 제격이예요. 달이 머문다는 뜻을 가진 월정리는 특유의 잔잔한 듯 발랄한 분위기를 가진 동네입니다. 김녕과 월정에서 즐기는 행복 코스! 지금 바로 소개합니다~ ",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "여유롭게 즐기는 제주에서 늦캉스 <김녕-월정 행복충전코스> ",
+        "photoid": {
+          "photoid": 2019022640502,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/0b39dbb9-50d1-460f-ae63-0bd11d931e75.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/cc9524b2-9bee-48da-be6f-48c9dd0e2474.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #비짓제주 #제주착한가격 #가성비 #제주도민추천 #파란색제주 #법환포구 #제주올레7코스 #대포주상절리 #파랑책방",
+      "contentsid": "CNTS_300000000013196",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "만원으로 파랑파랑 제주 즐기기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈 #비짓제주 #제주착한가격 #가성비 #제주도민추천 #파란색제주 #법환포구 #제주올레7코스 #대포주상절리 #파랑책방",
+      "introduction": "제주하면 떠오르는 색깔은 무엇이 있으세요? 제주의 많은 색깔 중 저는 파란색을 떠올리고 싶은데요. 어디서도 볼 수 없는 파랑파랑한 제주를 소개하고자 합니다. 파란색은 세계적으로 선호도가 가장 높은 색깔인데요. 미국, 영국, 독일, 인도네시아 등 여러 국가에서 가장 선호하는 색깔이 파란색인 것으로 나타났으며, 심지어 빨간색을 좋아하기로 유명한 중국에서도 파란색 선호도가 가장 높았다고 해요. 파랑하면 젊음과 강력한 에너지가 느껴지지 않으신가요? 신이 내린 보물섬, 제주에서 진짜 파랑을 만날 수 있는 곳으로 함께 저와 떠나볼까요? 착한가격으로 파랑을 즐길 수 있는 보물같은 곳을 함께 찾으러 떠나봅시다. 제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요. 그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "만원으로 파랑파랑 제주 즐기기",
+        "photoid": {
+          "photoid": 2019022640444,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/172b7720-d658-4db6-97ef-fad9cca60062.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/c97c88cd-3b90-467b-865b-0c64eb52d24e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013195",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주에서 나를 찾는 여행 : 신발 밑창은 더럽게, 마음은 깨끗하게. 내면의 소리로 가득한 음소거 여행",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "introduction": "나를 찾기 위해 여행을 떠난다고 말한다. 여행지에서 나를 발견하는 일은 어떻게 하는 걸까? 낯선 곳에서 일상의 감각을 회복하거나, 일상의 공간에서 새로움을 발견하는 일, 그런 과정을 통해 가능하지 않을까? 여행이 낯선 곳에서 일상의 감각을 회복하는 과정, 산책이 일상의 공간에서 새로움을 발견하는 과정이라고 한다면 여행과 산책은 많은 부분 서로 닮은 것 같다. 그래서 나는 여행을 떠나면 꼭 그 여행지의 평범한 길을 오래 산책하며 걸어 다녀본다. 제주는 그렇게 ‘나’를 발견하기에 너무 좋은 공간이다. 그동안 일상 속에서 내 마음의 소리를 듣지 못하게 방해했던 외부 세계의 소음을 음소거하고, 드넓은 하늘과 바다를 양쪽에 끼고 오래오래 걸을 수 있다. 시간과 공간에 따라 하늘의 빛깔과 구름의 모양, 빛의 따스함과 바람의 세기가 제각각 달라 지루할 틈이 없다. 여기 제주까지 와서, 산책을 해보자. 거창하게 도보 여행이라고도 할 수 있다. 평소에 몇 시간씩 들여다보는 SNS, 핸드폰을 여행지에서는 과감하게 “OFF”해도 된다. 나 자신을 발견하기 위해서는 습관처럼 듣던 외부의 소리를 꺼야 하기 때문. 신발 밑창이 더러워지고 해질 때까지 오래오래 걸어보자. 마치 운동을 하면 몸은 힘들지만 마음은 후련해지는 것처럼, 신발 밑창이 해지고 헐수록 생각은 명쾌해지고 마음이 착 가라앉아 따뜻한 차(茶)처럼 투명해진다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주에서 나를 찾는 여행 : 신발 밑창은 더럽게, 마음은 깨끗하게. 내면의 소리로 가득한 음소거 여행",
+        "photoid": {
+          "photoid": 2019022640408,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/13/1728d1c1-f2bb-407e-af96-36c7f4b780c8.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/13/df705eee-283b-4053-970a-a51c6b7f35f3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주가족 #제주추석 #제주명절 #제주가족여행 #연휴 #어린이 #부모님 #명절여행 #약천사 #중문면세점 #윤재커피 #제주전통음식 #헬로키티아일랜드 ",
+      "contentsid": "CNTS_300000000013185",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": " 추석맞이 가족 여행 떠나기 <명절에 가면 좋은 제주 여행코스>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주가족 #제주추석 #제주명절 #제주가족여행 #연휴 #어린이 #부모님 #명절여행 #약천사 #중문면세점 #윤재커피 #제주전통음식 #헬로키티아일랜드 ",
+      "introduction": "명절 풍속이 시대 변화에 따라 자연스럽게 변화하고 있다. 정해진 형식에 얽매이기보다는 모처럼의 연휴를 온 가족이 함께 보내는 데 더 의의를 두는 것이다. 바쁜 직장인들에게 명절은 부모님, 아이들과 즐거운 한때를 지낼 수 있는 흔치 않은 기회기도 하다. 넉넉한 일정을 잡고 가족 여행에 나선 이들을 위해, 할아버지도 손주도 만족할 만한 제주 여행코스를 소개해 본다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": " 추석맞이 가족 여행 떠나기 <명절에 가면 좋은 제주 여행코>",
+        "photoid": {
+          "photoid": 2019022640089,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202409/10/f93b57b8-f617-495a-965d-d5ae4a0fbd4b.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202409/10/3b1544be-2693-453f-899b-56da0d07fead.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주여라 #사진스팟 #제주카페 ",
+      "contentsid": "CNTS_300000000013174",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "사진 스폿을 가진 카페 Best 3  <사진 스폿을 가진 카페>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주여라 #사진스팟 #제주카페 ",
+      "introduction": "제주도에서 사진 스폿을 찾아가는 관광객이 많다. 그렇지만 사진 스폿은 정의되어 있지 않는 장소에 있을뿐더러 교통이 매우 불편하다. 그래서 교통도 편리하고 커피/음식 모두 즐길 수 있는 카페를 소개해보려고 한다. 커피부터 맛, 사진 스폿까지 즐겨보자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "사진 스폿을 가진 카페 Best 3  <사진 스폿을 가진 카페>",
+        "photoid": {
+          "photoid": 2019022639718,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/29/188dae04-9419-44e3-a8eb-1b5c8249a5f3.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/29/165c9196-2b26-421b-a6af-bad8e288a9e3.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주 #제주여행 #로하스엑스포 #제주도립미술관 #포도뮤지엄 #렛츠런파크 #비짓제주 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013173",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "[제주 가볼만한곳] 제주에서만 할 수 있는 찐 제주찾기!!! 제주를 바로 알고 즐기다!",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주 #제주여행 #로하스엑스포 #제주도립미술관 #포도뮤지엄 #렛츠런파크 #비짓제주 #제주관광서포터즈",
+      "introduction": "안녕하세요~! 제주 살고 있는 불도그 입니다! 이번에도 저희의 제주에서 부캐찾기!!! 프로젝트를 소개해 드리려고 합니다 ^^ 제주청년센터와 제주관광공사가 함께 주관하는 제주관광 콘텐츠 크리에이터 서포터즈에 참여하게 된게 아직도 꿈만 같은데요! 벌써 두 번째 입니다!!! ㅎㅎㅎㅎ 저번 첫 번째 부캐찾기 에서는 물에서 할 수 있는 부캐를 찾아보았는데요, 여러 장소들 소개해 드렸는데 가보셨나 모르겠네요. ^^ 이번에는 제주에서만 할 수 있는 찐 제주를 찾아보려 합니다!!!! 꺄~~~ㅎㅎㅎㅎㅎ 사실 제주는 관광의 도시이기 때문에 지역축제도 많이 하고, 제주의 특색이 물씬 느껴지는 곳과 행사들이 엄청 많답니다!!! 그래서 이번에는 제주에서 하는 축제들과 제주에서만 즐길 수 있는 것들 위주로 부캐찾기를 다녀왔지요~~ :)",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "[제주 가볼만한곳] 제주에서만 할 수 있는 찐 제주찾기!!! 제주를 바로 알고 즐기다!",
+        "photoid": {
+          "photoid": 2019022639689,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/29/b9459d25-c862-4933-a630-a53cbf50018d.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/29/c093e761-ca17-40a8-8bdc-8f52ef187e30.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비양도 #카페이면 #금능샌드 #금능해수욕장 #제주 #제주여행 #비짓제주 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013172",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주의 여름을 만끽할 수 있는 동네<협재/금능 힐링 코스> ",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비양도 #카페이면 #금능샌드 #금능해수욕장 #제주 #제주여행 #비짓제주 #제주관광서포터즈",
+      "introduction": "제주를 잘 즐기는 방법은 동네 구석구석을 돌아보며 그 동네의 매력을 알아가는 것이다. 1편 원도심에 이어서 여름의 청량함을 느낄 수 있는 협재/금능 힐링 코스! 두곳의 이름은 여러 말로 불리다가 행정구역이 통폐합되면서 탕탕탕 이름이 정해진 동네이다.  협재는 섶나무가 많아 섭재 또는 협재로 불렸다. 금능은 배령이라고 불리기도 했고, 마을 안에 있는 속칭 금동산이라는 이름에서 따와 지금에 금능이 되었다. 두 곳은 매우 근접하여 이어진 동내를 걷기도 딱이다. 거기에다 바다를 즐기기에 아주 최적화되어 있으니 안 가고 못 배길 듯하다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주의 여름을 만끽할 수 있는 동네<협재/금능 힐링 코스> ",
+        "photoid": {
+          "photoid": 2019022639597,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/29/f74ca3fd-5847-438c-855e-e27a8991303c.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/29/202a053e-9d3e-4a7b-be53-b5227ecf5281.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천 #초록제주 #제주곶자왈 #제주돌창고 #쉰다리맛집",
+      "contentsid": "CNTS_300000000013171",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "만원으로 초록초록 제주 즐기기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천 #초록제주 #제주곶자왈 #제주돌창고 #쉰다리맛집",
+      "introduction": "제주하면 떠오르는 색깔은 무엇이 있으세요?8월의 제주의 많은 색깔 중 저는 초록색을 떠올리고 싶은데요. 어디서도 볼 수 없는 초록초록한 제주를 소개하고자 합니다. 초록색은 사람들에게 쉼과 안정감을 주는 색인데요. 사실 저는 초친자입니다 (초록에 미! 친! 자!)  \r\n신이 내린 보물섬, 제주도에서 진짜 초록을 만날 수 있는 곳으로 함께 저와 떠나볼까요? 착한가격으로 초록을 즐길 수 있는 보물같은 곳을 함께 찾으러 떠나봅시다. 제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요. 그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "만원으로 초록초록 제주 즐기기",
+        "photoid": {
+          "photoid": 2019022639569,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/29/aae98da4-771c-4a82-b181-7d305b01b10f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/29/185d954d-cf4c-4a0a-8392-1344953f4b4d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #힐링여행 #제주북카페 #고산의낮고산의밤 #제주요가 #민오름요가 #건강여행 #제주시내오름 #제주별도봉사라봉",
+      "contentsid": "CNTS_300000000013170",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주에서 도파민 디톡스하기 : 사색과 자연으로 나를 발견하는 힐링 여행지",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #힐링여행 #제주북카페 #고산의낮고산의밤 #제주요가 #민오름요가 #건강여행 #제주시내오름 #제주별도봉사라봉",
+      "introduction": "너무나 똑똑한 핸드폰, SNS의 알고리즘과 편리한 서비스에 푹 빠져 살다 보니 이제는 내가 디지털 치매와 중독적인 삶으로 답답함이 느껴질 때가 있습니다. 도파민 중독에 싫증이 나서 떠나고 싶은 그대여, 제주로 오시라. 제주에는 당신의 마음을 발견해 줄 다정한 친구들이 많아요. 나 홀로 고독과 사색을 즐길 수 있는 소박한 1인용 책방과 마음 수련을 도와줄 오름 옆 요가원, 숲과 바다를 한 번에 누리는 시내의 별 같은 오름까지. 필자가 실제로 도파민 중독을 끊어내기 위해 핸드폰을 사용하지 않고 다녔던 제주 여행지가 담겨 있어요! 함께 따라오세요. 그 끝에는 분명 자기 발견과 충만한 행복이 있을 거예요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주에서 도파민 디톡스하기 : 사색과 자연으로 나를 발견하는 힐링 여행지",
+        "photoid": {
+          "photoid": 2019022639499,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/29/c1edb14f-e462-43c7-9e9e-023a65ead01a.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/29/c33061e2-a2b5-47b5-82c3-65f5c0440010.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#이색힐링여행 #제주 #해녀 #제주여행 #해녀의부엌 #해녀마을 #해녀공연 #물질 #해녀마을스테이 #해녀박물관",
+      "contentsid": "CNTS_300000000013163",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "세계의 보물, 제주의 보물 제주 곳곳의 해녀 문화를 찾아서",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#이색힐링여행 #제주 #해녀 #제주여행 #해녀의부엌 #해녀마을 #해녀공연 #물질 #해녀마을스테이 #해녀박물관",
+      "introduction": "척박하고 억센 자연환경 속에서 가족을 지키기 위해 강해져야만 했던 제주 여인의 이야기는 국내는 물론 세계가 인정하는 문화가 됐다. 최소한의 도구만을 이용한 자연친화적인 해산물 채취를 지속하는 제주해녀 문화는 약자에 대한 배려, 공익에 대한 헌신과 참여, 자연과 공존하는 삶의 방식 등 인류사회가 지향해야 할 가치를 잘 보여준다.  그렇기에 제주해녀들의 강인한 정신과 이야기를 담은 문화 발자취를 따라가보는 것도 귀중한 삶의 경험이 될 것이다. ",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "세계의 보물, 제주의 보물 제주 곳곳의 해녀 문화를 찾아서",
+        "photoid": {
+          "photoid": 2019022639041,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/22/ef770001-4e91-41ce-9b36-e2c992fb09f7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/22/07e3fdb6-0bff-45a1-9cdf-8897c2829d61.webp"
+        }
+      }
+    },
+    {
+      "alltag": "착한가격업소,제주착한가격업소,우수업소",
+      "contentsid": "CNTS_300000000013147",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "착한 가격! 친절한 서비스! 청결한 내부! 제주착한가격업소 소개",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "착한가격업소,제주착한가격업소,우수업소",
+      "introduction": "최근 ‘고물가’ 등의 이유로 제주 관광에 대한 부정적 이미지가 심화되고 있다. 그러나 제주에는 고물가·재료비 상승 등 어려운 상황 속에서도 여전히 저렴한 가격을 유지하며 양질의 서비스를 제공하는 ‘착한가격업소’가 있다.\r\n 제주도는 2011년부터 ‘착한가격업소’ 제도를 도입하여 정부 차원에서 해당 업소들을 다방면으로 지원하고 있다. 이번 글에서는 비짓제주와 착한가격업소가 협업했던 지난 이벤트에서 가장 많은 추천을 받은 착한가격업소 10곳을 소개하고자 한다.\r\n",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주착한가격업소 이벤트 우수업소 소개 ",
+        "photoid": {
+          "photoid": 2019022638401,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/d7f99241-4454-48e0-b723-6fa8cbf9040e.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/d43aae02-65a6-433f-9e91-8985849cabb9.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013146",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "[서귀포 물놀이 하기 좋은 곳] Best 3! 아이와 함께, 연인과 함께 , 친구들과 함께",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "introduction": "안녕하세요~!제주 살고 있는 불도그 입니다! 이번여름이 유독 무더운 날씨가 지속 되는 것 같습니다. 이럴 땐 그냥 바다나 포구 같은 곳 가서 첨벙@@@뛰어 들어야 제주 살고 있구나~~~하지요!!제주 온 지 2년차, 아직은 물놀이가 신나고 재미있을때겠죠?! 가까운 동네이지만 사람들이 잘 모르는, 물놀이 하기 좋은 곳들이 많아 소개합니다",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "[서귀포 물놀이 하기 좋은 곳] Best 3! 아이와 함께, 연인과 함께 , 친구들과 함께",
+        "photoid": {
+          "photoid": 2019022638386,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/c5a26932-e7eb-4faf-bbef-a05277766808.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/2fad782d-a877-49df-9d3a-54b23cae2605.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013143",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주공항 근처 힙한 동네<원도심 워킹투어> ",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년서포터즈 #제주청년크리에이터 #청년서포터즈 #제주관광서포터즈",
+      "introduction": "제주를 잘 즐기는 방법은 동네 구석구석을 돌아보며 그 동네의 매력을 알아가는 것이다. 원도심은 도시의 옛 중심지를 말하며, 제주 원도심은 동문시장부터 탑동, 관덕정 그리고 서문공설시장 인근까지 옛 제주성의 흔적을 따라 동그랗게 흩어져 있는 곳이다. 맛집부터 숨은 사진스팟까지 원도심 구석구석 매력에 빠져보자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주공항 근처 힙한 동네<원도심 워킹투어> ",
+        "photoid": {
+          "photoid": 2019022638262,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/b949d2d3-e409-421d-9f87-3e2aaa16cec7.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/7c2d6c3d-590d-4aea-84bf-ec8246baf313.webp"
+        }
+      }
+    },
+    {
+      "alltag": " #제주맛집 #제주현지인맛집 #제주도로컬맛집 #제주도민맛집 #제주맛집추천 #제주시맛집 #서귀포맛집 #몰질식육식당 #고씨네천지국수 #만강촌옛날칼국수 #자연수산",
+      "contentsid": "CNTS_300000000013140",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "여긴 무조건 가야해! <제주 현지인이 인정한 제주 맛집>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": " #제주맛집 #제주현지인맛집 #제주도로컬맛집 #제주도민맛집 #제주맛집추천 #제주시맛집 #서귀포맛집 #몰질식육식당 #고씨네천지국수 #만강촌옛날칼국수 #자연수산",
+      "introduction": "제주에 살지 않는 사람들이 제주에서 과연 얼마나 많은 맛집을 알아차릴 수 있을까? 어쩌면 내가 찾은 맛집도 그저 인터넷에 올라온 수많은 마케팅에 불과한 곳일 수 있지 않을까? 정보의 홍수 속에서 이제 진짜를 찾아내려는 미식가들의 노력은 이제 이곳에 닿았다. 제주까지 와서 광고성 짙은 맛집들을 가보고 실망했다면, 또 현지인들이 인정한 진짜 제주 맛집을 찾아 떠나 보고 싶다면 우리와 함께 발걸음을 옮겨보자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "여긴 무조건 가야해! <제주 현지인이 인정한 제주 맛집>",
+        "photoid": {
+          "photoid": 2019022638164,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/aa8f52af-a078-4e65-aa56-f517ff998252.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/c7bf3c2f-cfec-49d5-aa2c-98981a9d51e8.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년크리에이터 #제주청년서포터즈 #비짓제주 #제주관광서포터즈 #이호해수욕장 #용천수 #온수샤워 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천",
+      "contentsid": "CNTS_300000000013138",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주에서 만원으로 진짜 제주 즐기기",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년크리에이터 #제주청년서포터즈 #비짓제주 #제주관광서포터즈 #이호해수욕장 #용천수 #온수샤워 #비짓제주 #제주관광서포터즈 #제주착한가격 #가성비 #제주도민추천",
+      "introduction": "제주여행이 비싸다구요? 제주도 물가가 비싸서 망설여지신다구요? 제주는 보물섬으로 자연경관이 끝내주는 명소가 엄청 많은데요. \r\n예쁜 구름, 맑은 공기, 신선한 바람! 이 모든것이 제주에서는 공짜예요!신이 내린 보물섬, 제주에서 착한가격으로 즐길 수 있는 보물같은 곳을 함께 찾으러 떠나봅시다.  제주에서 나고 자란 제가 찐으로 추천하는 가성비 갑, 제주 히든 플레이스를 여러분들께 소개하오니 우리들만의 젊은 감각으로 똑똑하고 기분 좋은 소비를 해보자구요. 그래서 방실방실 웃고 싶은 제주를 함께 만들어봐요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주에서 만원으로 진짜 제주 즐기기",
+        "photoid": {
+          "photoid": 2019022638136,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/429a5819-c770-42c1-80b0-af2ada7427fd.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/94cb8674-91fc-48c3-8432-b40243d36b75.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주청년크리에이터 #제주청년서포터즈 #플로깅 #쓰레기줍기 #봉그깅 #제주플로깅 #제주봉그깅 #제주디프다#새활용체험 #제주업사이클링체험 #제주체험 #친구와함께 #제주단체방문 #제주추억만들기#잠시멈춤 #제주요가 #제주힐링#빠우사 #자연명상 #자연요가 #힐링요가#비짓제주 #제주관광서포터즈",
+      "contentsid": "CNTS_300000000013137",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "제주에서 한 겹 더 가벼워지기 : 푸른 바다 플로깅과 요모조모 새활용 체험, 비워내는 힐링 요가",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주청년크리에이터 #제주청년서포터즈 #플로깅 #쓰레기줍기 #봉그깅 #제주플로깅 #제주봉그깅 #제주디프다#새활용체험 #제주업사이클링체험 #제주체험 #친구와함께 #제주단체방문 #제주추억만들기#잠시멈춤 #제주요가 #제주힐링#빠우사 #자연명상 #자연요가 #힐링요가#비짓제주 #제주관광서포터즈",
+      "introduction": "도파민 과잉 시대를 사는 우리. 힐링을 위한 여행에서조차도 핸드폰을 놓지 못하고 ‘여기 좋다더라’, ‘저기는 꼭 가봐야 한다더라’라는 말에 휘둘려 정신없는 시간을 보내고 있지는 않나요? 그렇게 바쁜 여행 끝에는 피로만 남아 후회했던 기억도 많지 않나요? 정말 제주도만의 진짜 얼굴을 마주하고 디톡스하는 여행, 가치 있는 여행길에 오르고 싶은 분도 계실 거예요.\r\n여기 제주에서 비워내는 여행, 가벼워지는 라이프 스타일을 제안합니다. 제주의 생태와 의미 있는 활동에 두 발을 딛고 차분히 몸을 움직일 때 우리는 오히려 더 가벼워지고 산뜻해집니다. 제주로 마음이 한 움큼 가벼워지는 여행을 떠나보세요.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "제주에서 한 겹 더 가벼워지기 : 푸른 바다 플로깅과 요모조모 새활용 체험, 비워내는 힐링 요가",
+        "photoid": {
+          "photoid": 2019022638090,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/16/52a54411-5bf7-4fb6-8fb3-d4602a008f28.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/16/cfec8b80-264f-45c9-8197-50893212d9a7.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주숲길 #제주곶자왈 #산양큰엉곶 #환상숲곶자왈공원 #제주생태공원 #제주자연 #BTS #이끼숲소길 #베케 #정원 #제주가볼만한곳 #서귀포가볼만한곳 #제주관광지추천 #제주핫플",
+      "contentsid": "CNTS_300000000013134",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "싱그러움 가득! <제주에서 즐기는 숲길 여행>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주숲길 #제주곶자왈 #산양큰엉곶 #환상숲곶자왈공원 #제주생태공원 #제주자연 #BTS #이끼숲소길 #베케 #정원 #제주가볼만한곳 #서귀포가볼만한곳 #제주관광지추천 #제주핫플",
+      "introduction": "여행하다 보면 맛집이나 이른바 ‘핫플레이스’에서 줄을 서는 이들을 흔히 볼 수 있다. 이런 북적거림 대신 고즈넉한 곳에서 힐링하고 싶은 여행객들에게는 자연과 함께할 수 있는 숲길 여행이 제격이다. 육지와는 다른 기후와 환경을 지닌 제주는 타지에서 볼 수 없는 독특한 자연 생태계가 형성돼 있다. 제주의 자연을 만끽할 수 있는 숲길들을 소개해 본다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "싱그러움 가득! <제주에서 즐기는 숲길 여행>",
+        "photoid": {
+          "photoid": 2019022637980,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/14/0df0a43f-9138-44d0-855f-dc1409608bd9.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/14/33b9c62d-1ccf-4fdb-849d-68e96f0e608e.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주놀이 #제주키즈카페 #제주어린이 #제주가족여행 #아이올레인포레스트 #아르떼키즈파크 #런닝맨제주점 #버디프렌즈플래닛 #캠핑 #수영장 #물놀이 #여름",
+      "contentsid": "CNTS_300000000013129",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "온 가족 제주 여름 여행 < 아이와 함께 즐기는 제주 관광지 모음>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주놀이 #제주키즈카페 #제주어린이 #제주가족여행 #아이올레인포레스트 #아르떼키즈파크 #런닝맨제주점 #버디프렌즈플래닛 #캠핑 #수영장 #물놀이 #여름",
+      "introduction": "본격적인 바캉스 철이다. 모처럼 온 가족이 즐거운 한때를 보낼 수 있는 시기이기도 하다. 특히 아이들이 일상에서 벗어나 신나게 노는 모습을 보면 어느덧 마음이 흐뭇해지게 된다. 여름 하면 빼놓을 수 없는 물놀이를 비롯해 자연의 아름다움에 흠뻑 젖어보는 것도 좋다. 그런가 하면 아이들의 오감을 깨우는 공간, 어른들도 함께 휴식을 취할 수 있는 공간 등 다양한 콘셉트를 선보이는 장소들을 소개한다. ",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "온 가족 제주 여름 여행 < 아이와 함께 즐기는 제주 관광지 모음>",
+        "photoid": {
+          "photoid": 2019022639069,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/22/2b7d5100-2713-45e2-b09d-78a0ffe652fd.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/22/d5c8ed42-f69b-4221-8b80-8776c10aac16.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주전시회 #제주실내전시회 #제주이색전시회 #제주비오는날 #포도뮤지엄 #제주워터월드 #하우스오브레퓨즈 #하리보해피월드 #제주신상전시회 #제주여름여행코스",
+      "contentsid": "CNTS_300000000013126",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "더운 여름, 오히려 좋아! <더위를 피해 만나는 제주 이색전시>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주전시회 #제주실내전시회 #제주이색전시회 #제주비오는날 #포도뮤지엄 #제주워터월드 #하우스오브레퓨즈 #하리보해피월드 #제주신상전시회 #제주여름여행코스",
+      "introduction": "제주의 날씨는 감히 예측하기 어렵다. 더운 여름을 맞이할 때면 제주에서 어디를 가야 좋을까 고민되기 마련이다. \r\n추적추적 비가 오는 날에도, 무더운 날씨에도 걱정없는 오직 제주에서만 만나볼 수 있는 이색적인 전시회들이 있다. 색다른 전시회로 제주 여행의 새로운 추억을 쌓으며 기분 전환을 해보는 건 어떨까.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "비 오는 날 제주 여행, 오히려 좋아! <비를 피해 만나는 제주 이색전시>",
+        "photoid": {
+          "photoid": 2019022637595,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202408/08/5d5615f0-5bb0-4806-bd4a-47e58e57b723.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202408/08/4162f02f-6b41-454a-ad8d-2b79f4b2b922.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주여름 #제주도민명소 #제주젤라또 #제주빙수 #부젤라또 #에니스케리 #정모시쉼터 #샛도리물 #제주폭염",
+      "contentsid": "CNTS_300000000013118",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "무더위를 피해 즐기는 여행 <도민 추천 제주 여름 여행지>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주여름 #제주도민명소 #제주젤라또 #제주빙수 #부젤라또 #에니스케리 #정모시쉼터 #샛도리물 #제주폭염",
+      "introduction": "이어지는 폭염이 여가문화에도 영향을 미치고 있다. 더운 날씨에 비행기, 기차를 타고 떠나는 것보다 집에서 에어컨을 틀어 놓고 쉬거나 호텔에서 호캉스를 즐기는 이들이 늘고 있는 것. 하지만 모처럼의 휴가에 ‘방콕’ 하기 아깝다면 더위를 피해 시원하게 보낼 수 있는 제주 여름 여행지를 소개한다. 제주 도민들이 친한 지인에게만 살짝 알려준다는 숨은 명소들을 만나보자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "무더위를 피해 즐기는 여행 <도민 추천 제주 여름 여행지>",
+        "photoid": {
+          "photoid": 2019022637244,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202407/31/e703133e-ef0a-4573-9c68-cc54df238608.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202407/31/14d37073-88e7-4dd0-9553-738d7384740d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주카페 #제주카페맛집 #제주커피 #제주카페명소 #제주도디저트맛집 #제주오션뷰카페 #제주베이커리카페 #제주카페추천 #웨이뷰 #휴즐리제주  #제주당베이커리카페 #온당",
+      "contentsid": "CNTS_300000000013114",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "디저트에 제주를 담았다! 제주에서만 맛볼 수 있는 <이색 디저트 순례>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주카페 #제주카페맛집 #제주커피 #제주카페명소 #제주도디저트맛집 #제주오션뷰카페 #제주베이커리카페 #제주카페추천 #웨이뷰 #휴즐리제주  #제주당베이커리카페 #온당",
+      "introduction": "여행에서 빼놓을 수 없는 것, 바로 맛있는 음식이 아닐까 싶다. 특히 제주에는 다양한 음식과 더불어 특별한 디저트들이 많다. 제주에서만 맛볼 수 있는 독특한 디저트들은 각기 다른 매력으로 여행을 더욱 풍성하고 의미 있게 만들어 준다. 제주의 매력을 담은 특별한 디저트와 함께, 제주 여행을 달콤한 추억으로 물들여 보자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "디저트에 제주를 담았다! 제주에서만 맛볼 수 있는 <이색 디저트 순례>",
+        "photoid": {
+          "photoid": 2019022636854,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202407/25/00597645-c4d4-4dfa-a047-e0e6c1f95349.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202407/25/98ed2f64-661b-4d15-a13c-0682fda14f60.webp"
+        }
+      }
+    },
+    {
+      "alltag": "#제주여행 #제주가볼만한곳 #제주카페 #제주돌문화공원 #이끼숲소길 #돌낭예술원 #송당동화마을 #제주핫플 #제주도가볼만한곳 #여름제주 #제주여행코스 #제주여행추천 #제주관광지 #제주도관광지",
+      "contentsid": "CNTS_300000000013098",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "지금 제주여행, 어디가 제일 핫해? <요즘 뜨고 있는 제주 인기 여행지>",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "#제주여행 #제주가볼만한곳 #제주카페 #제주돌문화공원 #이끼숲소길 #돌낭예술원 #송당동화마을 #제주핫플 #제주도가볼만한곳 #여름제주 #제주여행코스 #제주여행추천 #제주관광지 #제주도관광지",
+      "introduction": "제주는 매년 새로운 장소들이 많이 생겨난다. 다양한 테마로, 다양한 소재로 사람들을 사로잡는 제주의 장소들, 햇살과 푸른 하늘을 즐기기 더없이 좋은 여름 제주의 인기 여행지로 하루 여행을 계획해 보자. 하루만 여행해도 요즘 뜨고 있는 제주 여행지를 모두 만나볼 수 있는 제주여행 코스로 제주의 여름을 더욱 느껴보는 시간이 될 것이다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "지금 제주여행, 어디가 제일 핫해? <요즘 뜨고 있는 제주 인기 여행지>",
+        "photoid": {
+          "photoid": 2019022636284,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202407/22/3fe31d98-a19b-44dd-a5b9-ad73190baa41.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202407/22/31767aaa-14b3-4e20-9d1a-77273ee5046f.webp"
+        }
+      }
+    },
+    {
+      "alltag": "아이, 가족여행, 여름, 휴가, 체험, 부모, 방학, 키즈, 호텔, 비자숲힐링센터, 붉은오름",
+      "contentsid": "CNTS_300000000013060",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "<아이좋아! 제주라서> 가족여행으로 제주가 좋은 3가지 이유",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "아이, 가족여행, 여름, 휴가, 체험, 부모, 방학, 키즈, 호텔, 비자숲힐링센터, 붉은오름",
+      "introduction": "MBTI로 사람의 취향/성향을 파악하는 세상이다. 그렇지만 MBTI로도 해석이 불가능한 경우도 있다. 바로 자녀들이다. 시시각각 변하는 자녀들의 기분과 태도에 가족여행을 계획하기 어려운 부모들이 있을 것이다. 아이가 기분 좋아야 여행도 즐겁게 기억이 남을 테니말이다. 하지만 더불어 함께하는 부모도 즐거워야 그 여행은 행복한 추억으로 남을 것이다. 아이와 부모가 모두 만족할 수 있는 즐길거리가 많은 여행지가 바로 제주도다. 즐거운 가족여행을 계획하고 있다면 제주 가족여행 핫플레이스를 놓치지 말자.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "<아이좋아! 제주라서> 가족여행으로 제주가 좋은 3가지 이유",
+        "photoid": {
+          "photoid": 2019022634128,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202406/25/df7865f9-f690-4bbf-80ee-d107eb6d4144.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202406/25/0fdac99e-8f7f-418e-8c96-0ab360bfc931.webp"
+        }
+      }
+    },
+    {
+      "alltag": "친환경, 친환경라이프, 비건, 환경, 친환경체험, 비건맛집, 채식, 비건베이커리, 비건레트로",
+      "contentsid": "CNTS_300000000013047",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "친환경 라이프 스타일 여행-제주에서 찾는 무해한 즐거움",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "친환경, 친환경라이프, 비건, 환경, 친환경체험, 비건맛집, 채식, 비건베이커리, 비건레트로",
+      "introduction": "비건 식당과 비건 베이커리 등 관련 맛집들이 늘어나고, 비건 레토르트(Retort food) 식품 또한 간편함과 맛을 앞세워 인기를 끌고 있다. 과거보다 맛과 품질이 크게 향상된 제품이 등장하며 채식주의자뿐만 아니라 일반 소비자들 사이에서도 관심이 높아지고 있다.",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "친환경 라이프 스타일 여행-제주에서 찾는 무해한 즐거움",
+        "photoid": {
+          "photoid": 2019022633591,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202406/13/fa88c4c8-529e-4ac5-bc53-638137d4ba58.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202406/13/ae0fe143-59aa-44a2-8b03-bdf6be88144d.webp"
+        }
+      }
+    },
+    {
+      "alltag": "제주夜 놀자, 제주야간, 야간, 한여름밤, 여름, 한 여름, 밤바다, 삼양검은모래해변, 이호테우해수욕장, 금능원담해변, 표선해수욕장, 함덕해수욕장, 새연교 콘서트, 제주목관아 야간개",
+      "contentsid": "CNTS_300000000013030",
+      "contentscd": {
+        "value": "c6",
+        "label": "테마여행",
+        "refId": "contentscd>c6"
+      },
+      "title": "<제주夜 놀자> 해가 진 뒤에 시작되는 제주여행 ",
+      "region1cd": null,
+      "region2cd": null,
+      "address": null,
+      "roadaddress": null,
+      "tag": "제주夜 놀자, 제주야간, 야간, 한여름밤, 여름, 한 여름, 밤바다, 삼양검은모래해변, 이호테우해수욕장, 금능원담해변, 표선해수욕장, 함덕해수욕장, 새연교 콘서트, 제주목관아 야간개",
+      "introduction": "해가 지는 순간부터 밤까지, 제주의 여름은 매우 다채롭다. 화려한 네온사인이 가득한 도시의 밤과는 다른, 제주만이 갖고 있는 자연속에서 제주의 정서와 감성이 담겨있는 해가 진 뒤에 제주! 특히 여름이 다가올 수록 해진 뒤의 제주가 더욱 기다려진다",
+      "latitude": null,
+      "longitude": null,
+      "postcode": null,
+      "phoneno": null,
+      "repPhoto": {
+        "descseo": "<제주夜 놀자> 해가 진 뒤에 시작되는 제주여행 ",
+        "photoid": {
+          "photoid": 2019022633377,
+          "imgpath": "https://api.cdn.visitjeju.net/photomng/imgpath/202405/30/755632c3-c5e0-4fb2-97e0-8ed759a92d2f.webp",
+          "thumbnailpath": "https://api.cdn.visitjeju.net/photomng/thumbnailpath/202405/30/7073af3a-6566-46c7-bbdf-4c9f04734cc7.webp"
+        }
+      }
+    }
+  ]
+}
