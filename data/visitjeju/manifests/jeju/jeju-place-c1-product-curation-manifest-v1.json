@@ -1,0 +1,76 @@
+{
+  "task": "TASK-JEJU-PLACE-PRODUCT-CURATION-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "status": "PASS",
+  "api_calls": 0,
+  "web_collection": 0,
+  "source_universe_count": 1341,
+  "common_policy_commit_remote": "dc6f9be",
+  "common_policy_commit_local": "41d9915",
+  "classifier_version": "v3+patch",
+  "tier_distribution": {
+    "CORE_DESTINATION": {
+      "count": 658,
+      "pct": 49.1,
+      "note": "Standard destination. SEARCHABLE+EXPLORE candidate."
+    },
+    "CONDITIONAL_OR_SEASONAL": {
+      "count": 323,
+      "pct": 24.1,
+      "note": "Context-dependent. SEARCHABLE yes, EXPLORE conditional."
+    },
+    "ACTIVITY_OR_OPERATOR": {
+      "count": 132,
+      "pct": 9.8,
+      "note": "Service/activity provider. SEARCHABLE for activity search."
+    },
+    "SEARCH_OR_REFERENCE_ONLY": {
+      "count": 9,
+      "pct": 0.7,
+      "note": "Reference context only. SEARCHABLE but not EXPLORE."
+    },
+    "EXCLUDE_LOW_TRAVEL_VALUE": {
+      "count": 0,
+      "pct": 0.0,
+      "note": "Low travel value. Source universe preserved."
+    },
+    "REVIEW_REQUIRED": {
+      "count": 219,
+      "pct": 16.3,
+      "note": "Insufficient evidence for classification. Holds current eligibility."
+    }
+  },
+  "provenance_distribution": {
+    "HEURISTIC_MULTI_FIELD": 1069,
+    "MANUAL_REVIEW_DECISION": 32,
+    "RULE_BASED": 22,
+    "INSUFFICIENT_EVIDENCE": 218
+  },
+  "confidence_distribution": {
+    "HIGH": 277,
+    "MEDIUM": 626,
+    "LOW": 438
+  },
+  "guard_checks": {
+    "false_core_golf": "PASS",
+    "false_core_generic_roads": "PASS (2 borderline roads downgraded to CONDITIONAL)",
+    "false_core_operators": "PASS",
+    "false_exclusion_guard": "PASS (EXCLUDE=0; no phone/coord-based exclusions)",
+    "source_universe_preserved": "PASS (raw/source 삭제 없음)",
+    "total_count": "PASS (1341 == 1341)"
+  },
+  "design_notes": [
+    "Source Universe ≠ Product Catalog: 1,341 source records preserved.",
+    "EXCLUDE_LOW_TRAVEL_VALUE = 0: HIGH evidence bar. No coord/phone-based exclusions.",
+    "REVIEW_REQUIRED = 219: Entities with insufficient evidence. Holds current eligibility unchanged.",
+    "Classification provenance: RULE_BASED/HEURISTIC_MULTI_FIELD/MANUAL_REVIEW_DECISION/INSUFFICIENT_EVIDENCE.",
+    "자유형 LLM 판단 금지: 모든 분류에 provenance 레이블링 적용."
+  ],
+  "output_files": [
+    "data/visitjeju/normalized/jeju/jeju-place-c1-product-curation-v1.json",
+    "data/visitjeju/manifests/jeju/jeju-place-c1-product-curation-manifest-v1.json",
+    "data/visitjeju/reports/jeju/jeju-place-c1-product-curation-review-v1.json",
+    "data/visitjeju/reports/jeju/jeju-place-c1-product-curation-qa-v1.json"
+  ]
+}

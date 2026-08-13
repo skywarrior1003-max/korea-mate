@@ -1,0 +1,121 @@
+{
+  "task": "TASK-JEJU-PLACE-PRODUCT-CURATION-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "section9_mandatory_review": {
+    "all_pass": true,
+    "items": [
+      {
+        "contentsid": "CNTS_200000000011254",
+        "title": "제주친구",
+        "expected_tier": "ACTIVITY_OR_OPERATOR",
+        "actual_tier": "ACTIVITY_OR_OPERATOR",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "제주친구: 킥보드+전기자전거 대여점."
+      },
+      {
+        "contentsid": "CNTS_200000000011313",
+        "title": "케이제주해양사업단",
+        "expected_tier": "ACTIVITY_OR_OPERATOR",
+        "actual_tier": "ACTIVITY_OR_OPERATOR",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "케이제주해양사업단: 운진항 기반 해양레저 운영업체."
+      },
+      {
+        "contentsid": "CNTS_300000000013561",
+        "title": "아이바가든",
+        "expected_tier": "CORE_DESTINATION",
+        "actual_tier": "CORE_DESTINATION",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "아이바가든: 미디어아트 뮤지엄+갤러리+콘서트홀+복합문화공간. 독립 여행 목적지."
+      },
+      {
+        "contentsid": "CNTS_300000000013654",
+        "title": "김정문알로에 알로에숲",
+        "expected_tier": "CORE_DESTINATION",
+        "actual_tier": "CORE_DESTINATION",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "김정문알로에 알로에숲: 세계최대 알로에 전문식물원."
+      },
+      {
+        "contentsid": "CNTS_300000000013707",
+        "title": "그림휴가",
+        "expected_tier": "CONDITIONAL_OR_SEASONAL",
+        "actual_tier": "CONDITIONAL_OR_SEASONAL",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "그림휴가: 소규모 미술공간. 미술관심자 niche."
+      },
+      {
+        "contentsid": "CNTS_300000000013757",
+        "title": "중앙로",
+        "expected_tier": "SEARCH_OR_REFERENCE_ONLY",
+        "actual_tier": "SEARCH_OR_REFERENCE_ONLY",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "중앙로: 제주시 중심 도로. 도로 자체가 여행 목적지 아님."
+      },
+      {
+        "contentsid": "CNTS_300000000014330",
+        "title": "안덕면사무소 수국길",
+        "expected_tier": "CONDITIONAL_OR_SEASONAL",
+        "actual_tier": "CONDITIONAL_OR_SEASONAL",
+        "result": "MATCH",
+        "provenance": "MANUAL_REVIEW_DECISION",
+        "evidence": "안덕면사무소 수국길: 수국 계절 산책명소."
+      }
+    ]
+  },
+  "borderline_items": [
+    {
+      "item_id": "BORDERLINE-01",
+      "contentsid": "CNTS_000000000019998",
+      "title": "종달리해안도로",
+      "tier": "CORE_DESTINATION",
+      "note": "intro: \"파란 하늘과 고즈넉한 해변 길, 수국\". 수국 계절 드라이브 명소. CORE 유지 (2 signal: 해변+일몰).",
+      "action_required": null
+    },
+    {
+      "item_id": "BORDERLINE-02",
+      "contentsid": "CNTS_200000000007159",
+      "title": "신양해안도로",
+      "tier": "CONDITIONAL_OR_SEASONAL",
+      "note": "intro: \"성산일출봉을 배경으로 그림처럼 아름다운 풍경\". 성산 인근 경관 드라이브. CORE 유지.",
+      "action_required": null
+    },
+    {
+      "item_id": "BORDERLINE-03",
+      "contentsid": "CNTS_300000000014075",
+      "title": "마리에 인 제주",
+      "tier": "REVIEW_REQUIRED",
+      "note": "Coord-32 entity. Possible accommodation entity. REVIEW_REQUIRED 유지.",
+      "action_required": "Follow up with ANOMALY audit"
+    },
+    {
+      "item_id": "BORDERLINE-04",
+      "contentsid": null,
+      "title": "전화 6건 Naver 보류",
+      "tier": "N/A",
+      "note": "Source-verification task: 6 phone entities require Naver manual verification. Out of scope for curation.",
+      "action_required": "NAVER_FINAL_VERIFICATION_ONLY"
+    }
+  ],
+  "review_required_summary": {
+    "total": 219,
+    "provenance": {
+      "INSUFFICIENT_EVIDENCE": 218,
+      "RULE_BASED": 1
+    },
+    "note": "Entities with no intro or insufficient signals. Hold current eligibility unchanged."
+  },
+  "coord32_curation_cross_reference": {
+    "total_coord32": 32,
+    "classification_applied": "YES",
+    "high_priority_coord": 10,
+    "note": "coord_enrich_priority set per curation tier for future enrichment."
+  }
+}

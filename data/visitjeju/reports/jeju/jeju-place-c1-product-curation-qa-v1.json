@@ -1,0 +1,85 @@
+{
+  "task": "TASK-JEJU-PLACE-PRODUCT-CURATION-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "overall_status": "PASS",
+  "checks": [
+    {
+      "check": "TOTAL_COUNT",
+      "status": "PASS",
+      "detail": "records=1341 == 1341"
+    },
+    {
+      "check": "TIER_EXHAUSTIVE",
+      "status": "PASS",
+      "detail": "sum=1341"
+    },
+    {
+      "check": "EXCLUDE_HIGH_BAR",
+      "status": "PASS",
+      "detail": "EXCLUDE=0. No coord/phone-based exclusions."
+    },
+    {
+      "check": "FALSE_CORE_GOLF",
+      "status": "PASS",
+      "detail": "No golf courses in CORE_DESTINATION"
+    },
+    {
+      "check": "FALSE_CORE_OPERATORS",
+      "status": "PASS",
+      "detail": "No rental operators in CORE"
+    },
+    {
+      "check": "SOURCE_UNIVERSE_PRESERVED",
+      "status": "PASS",
+      "detail": "raw/source 삭제 없음. 1,341 source records preserved."
+    },
+    {
+      "check": "API_CALLS_ZERO",
+      "status": "PASS",
+      "detail": "api_calls=0"
+    },
+    {
+      "check": "WEB_COLLECTION_ZERO",
+      "status": "PASS",
+      "detail": "web_collection=0"
+    },
+    {
+      "check": "PROVENANCE_ALL_LABELED",
+      "status": "PASS",
+      "detail": "자유형 LLM 판단 없음. 모든 레코드에 provenance 레이블."
+    },
+    {
+      "check": "SECTION9_ALL_PASS",
+      "status": "PASS",
+      "detail": "Section 9 mandatory entities: ['MATCH', 'MATCH', 'MATCH', 'MATCH', 'MATCH', 'MATCH', 'MATCH']"
+    },
+    {
+      "check": "COORD32_CLASSIFIED",
+      "status": "PASS",
+      "detail": "32 coord-verified entities all classified. coord_enrich_priority set."
+    },
+    {
+      "check": "REVIEW_REQUIRED_BOUNDED",
+      "status": "PASS",
+      "detail": "REVIEW_REQUIRED=219 ≤ 300 (original 295 → 219)"
+    },
+    {
+      "check": "ACTIVITY_OPERATOR_IMPROVEMENT",
+      "status": "PASS",
+      "detail": "ACTIVITY_OR_OPERATOR=132 (v1 baseline: 58)"
+    },
+    {
+      "check": "NO_PHONE_COORD_BASED_EXCLUSION",
+      "status": "PASS",
+      "detail": "phone/coord missing 기반 EXCLUDE 없음. 4-axis independence 준수."
+    },
+    {
+      "check": "MULTICITY_COMMON_UNCHANGED",
+      "status": "PASS",
+      "detail": "data/multicity-common 수정 없음. Jeju-only 파일만 작성."
+    }
+  ],
+  "pass_count": 15,
+  "fail_count": 0
+}
