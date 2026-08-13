@@ -27,7 +27,11 @@ const strip = (s: string) =>
    .split("\n").filter(l => !l.trimStart().startsWith("//")).join("\n");
 
 const CLIENT   = read("src", "lib", "scheduler", "ai", "gemini-client.ts");
-const ENDPOINT = read("functions", "api", "trip", "personalize.ts");
+// route + 그 route 가 쓰는 순수 core. 상수가 core 로 옮겨졌다.
+const ENDPOINT = [
+  read("functions", "api", "trip", "personalize.ts"),
+  read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+].join("\n");
 const PLAN     = read("functions", "api", "trip", "plan.ts");
 const LEGACY   = read("functions", "api", "generate-itinerary.ts");
 const PAGE     = read("src", "app", "itinerary", "page.tsx");

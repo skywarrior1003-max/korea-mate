@@ -1,0 +1,292 @@
+{
+  "prompts": [
+    {
+      "name": "typical",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=2026-10-16..2026-10-18\nparty: style=culture travelers=2 pace=normal\nplaces the traveler already chose for THIS trip (id | category | name):\n- 1 | attraction | Gyeongbokgung\n- 2 | restaurant | Gwangjang Market\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "kpop-cafe-relaxed",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=2026-10-16..2026-10-18\nparty: style=local travelers=1 pace=relaxed\ninterests: k-pop, cafe, night view, first time in seoul\nplaces the traveler already chose for THIS trip (id | category | name):\n- 1 | attraction | Gyeongbokgung\n- 3 | cafe | Seongsu Cafe\n- user_spot:11111111-2222-3333-4444-555555555555 | cafe | My Spot\nplaces the traveler saved earlier — preference signal only, NOT required stops:\n- 16 | nature | Han River\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "empty-optional",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=? dates=?..?\nparty: style=? travelers=? pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "long-name-truncation",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=busan dates=?..?\nparty: style=? travelers=? pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\n- 9 | attraction | 가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "over-place-cap",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=?..?\nparty: style=? travelers=? pace=?\ninterests: i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11\nplaces the traveler already chose for THIS trip (id | category | name):\n- 0 | attraction | P0\n- 1 | attraction | P1\n- 2 | attraction | P2\n- 3 | attraction | P3\n- 4 | attraction | P4\n- 5 | attraction | P5\n- 6 | attraction | P6\n- 7 | attraction | P7\n- 8 | attraction | P8\n- 9 | attraction | P9\n- 10 | attraction | P10\n- 11 | attraction | P11\n- 12 | attraction | P12\n- 13 | attraction | P13\n- 14 | attraction | P14\n- 15 | attraction | P15\n- 16 | attraction | P16\n- 17 | attraction | P17\n- 18 | attraction | P18\n- 19 | attraction | P19\n- 20 | attraction | P20\n- 21 | attraction | P21\n- 22 | attraction | P22\n- 23 | attraction | P23\n- 24 | attraction | P24\n- 25 | attraction | P25\n- 26 | attraction | P26\n- 27 | attraction | P27\n- 28 | attraction | P28\n- 29 | attraction | P29\n- 30 | attraction | P30\n- 31 | attraction | P31\n- 32 | attraction | P32\n- 33 | attraction | P33\n- 34 | attraction | P34\n- 35 | attraction | P35\n- 36 | attraction | P36\n- 37 | attraction | P37\n- 38 | attraction | P38\n- 39 | attraction | P39\nplaces the traveler saved earlier — preference signal only, NOT required stops:\n- L0 | cafe | L0\n- L1 | cafe | L1\n- L2 | cafe | L2\n- L3 | cafe | L3\n- L4 | cafe | L4\n- L5 | cafe | L5\n- L6 | cafe | L6\n- L7 | cafe | L7\n- L8 | cafe | L8\n- L9 | cafe | L9\n- L10 | cafe | L10\n- L11 | cafe | L11\n- L12 | cafe | L12\n- L13 | cafe | L13\n- L14 | cafe | L14\n- L15 | cafe | L15\n- L16 | cafe | L16\n- L17 | cafe | L17\n- L18 | cafe | L18\n- L19 | cafe | L19\n- L20 | cafe | L20\n- L21 | cafe | L21\n- L22 | cafe | L22\n- L23 | cafe | L23\n- L24 | cafe | L24\n- L25 | cafe | L25\n- L26 | cafe | L26\n- L27 | cafe | L27\n- L28 | cafe | L28\n- L29 | cafe | L29\n- L30 | cafe | L30\n- L31 | cafe | L31\n- L32 | cafe | L32\n- L33 | cafe | L33\n- L34 | cafe | L34\n- L35 | cafe | L35\n- L36 | cafe | L36\n- L37 | cafe | L37\n- L38 | cafe | L38\n- L39 | cafe | L39\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "no-category-no-name",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=?..?\nparty: style=? travelers=2 pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\n- 7 | unknown | \nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    }
+  ],
+  "promptsNoLiked": [
+    {
+      "name": "typical",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=2026-10-16..2026-10-18\nparty: style=culture travelers=2 pace=normal\nplaces the traveler already chose for THIS trip (id | category | name):\n- 1 | attraction | Gyeongbokgung\n- 2 | restaurant | Gwangjang Market\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "kpop-cafe-relaxed",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=2026-10-16..2026-10-18\nparty: style=local travelers=1 pace=relaxed\ninterests: k-pop, cafe, night view, first time in seoul\nplaces the traveler already chose for THIS trip (id | category | name):\n- 1 | attraction | Gyeongbokgung\n- 3 | cafe | Seongsu Cafe\n- user_spot:11111111-2222-3333-4444-555555555555 | cafe | My Spot\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "empty-optional",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=? dates=?..?\nparty: style=? travelers=? pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "long-name-truncation",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=busan dates=?..?\nparty: style=? travelers=? pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\n- 9 | attraction | 가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "over-place-cap",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=?..?\nparty: style=? travelers=? pace=?\ninterests: i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11\nplaces the traveler already chose for THIS trip (id | category | name):\n- 0 | attraction | P0\n- 1 | attraction | P1\n- 2 | attraction | P2\n- 3 | attraction | P3\n- 4 | attraction | P4\n- 5 | attraction | P5\n- 6 | attraction | P6\n- 7 | attraction | P7\n- 8 | attraction | P8\n- 9 | attraction | P9\n- 10 | attraction | P10\n- 11 | attraction | P11\n- 12 | attraction | P12\n- 13 | attraction | P13\n- 14 | attraction | P14\n- 15 | attraction | P15\n- 16 | attraction | P16\n- 17 | attraction | P17\n- 18 | attraction | P18\n- 19 | attraction | P19\n- 20 | attraction | P20\n- 21 | attraction | P21\n- 22 | attraction | P22\n- 23 | attraction | P23\n- 24 | attraction | P24\n- 25 | attraction | P25\n- 26 | attraction | P26\n- 27 | attraction | P27\n- 28 | attraction | P28\n- 29 | attraction | P29\n- 30 | attraction | P30\n- 31 | attraction | P31\n- 32 | attraction | P32\n- 33 | attraction | P33\n- 34 | attraction | P34\n- 35 | attraction | P35\n- 36 | attraction | P36\n- 37 | attraction | P37\n- 38 | attraction | P38\n- 39 | attraction | P39\nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    },
+    {
+      "name": "no-category-no-name",
+      "out": "You infer a traveler preference profile. You do NOT create an itinerary.\nReturn ONLY compact JSON. No markdown, no code fence, no prose.\ntrip: city=seoul dates=?..?\nparty: style=? travelers=2 pace=?\nplaces the traveler already chose for THIS trip (id | category | name):\n- 7 | unknown | \nYour role:\n- You infer preferences. You are NOT the route planner.\n- The server rule engine decides real distance, travel time, zones, opening hours,\n  fixed events, arrival/departure, and every hard constraint. You cannot override it.\n- Preference never outranks route coherence.\nRoute coherence you must respect:\n- Prefer places in the same or adjacent area on the same day.\n- Never push a route that backtracks to a far area already left behind.\n- Do not favour a distant place just because it fits taste slightly better.\n- If chosen places are far apart, they get spread across days — never dropped.\n- Filler places should stay near the day's existing route.\n- Saved and copied-trip preferences rank below route coherence.\nRules:\n- category_weights keys must be from: attraction, restaurant, cafe, nature, culture, shopping, market, activity, nightlife; values 0..1\n- time_preferences values must be from: morning, afternoon, evening, flexible\n- preferred_place_ids MUST be a subset of the ids listed above\n- do NOT invent places, addresses, hours, prices, coordinates, or URLs\n- do NOT output any place_id that is not listed above\n- do NOT try to change fixed events, arrival, or departure\nJSON shape:\n{\"profile_version\":1,\"category_weights\":{},\"preferred_place_ids\":[],\"time_preferences\":{},\"pace_bias\":0,\"day_density_preference\":\"balanced\",\"cluster_preference\":\"balanced\",\"meal_preference\":\"flexible\",\"preference_summary\":\"\"}"
+    }
+  ],
+  "parses": [
+    {
+      "in": "{\"a\":1}",
+      "out": {
+        "a": 1
+      }
+    },
+    {
+      "in": "```json\n{\"a\":1}\n```",
+      "out": {
+        "a": 1
+      }
+    },
+    {
+      "in": "```\n{\"a\":2}\n```",
+      "out": {
+        "a": 2
+      }
+    },
+    {
+      "in": "here you go: {\"a\":3} thanks",
+      "out": {
+        "a": 3
+      }
+    },
+    {
+      "in": "no json here",
+      "out": null
+    },
+    {
+      "in": "",
+      "out": null
+    },
+    {
+      "in": "{\"a\":",
+      "out": null
+    },
+    {
+      "in": "{\"a\":1} trailing {\"b\":2}",
+      "out": null
+    },
+    {
+      "in": "   \n  {\"nested\":{\"x\":[1,2]}}  \n ",
+      "out": {
+        "nested": {
+          "x": [
+            1,
+            2
+          ]
+        }
+      }
+    }
+  ],
+  "schema": {
+    "type": "OBJECT",
+    "properties": {
+      "profile_version": {
+        "type": "INTEGER"
+      },
+      "category_weights": {
+        "type": "OBJECT",
+        "properties": {
+          "attraction": {
+            "type": "NUMBER"
+          },
+          "restaurant": {
+            "type": "NUMBER"
+          },
+          "cafe": {
+            "type": "NUMBER"
+          },
+          "nature": {
+            "type": "NUMBER"
+          },
+          "culture": {
+            "type": "NUMBER"
+          },
+          "shopping": {
+            "type": "NUMBER"
+          },
+          "market": {
+            "type": "NUMBER"
+          },
+          "activity": {
+            "type": "NUMBER"
+          },
+          "nightlife": {
+            "type": "NUMBER"
+          }
+        }
+      },
+      "preferred_place_ids": {
+        "type": "ARRAY",
+        "items": {
+          "type": "STRING"
+        }
+      },
+      "time_preferences": {
+        "type": "OBJECT",
+        "properties": {
+          "attraction": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "restaurant": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "cafe": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "nature": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "culture": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "shopping": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "market": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "activity": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          },
+          "nightlife": {
+            "type": "STRING",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening",
+              "flexible"
+            ]
+          }
+        }
+      },
+      "pace_bias": {
+        "type": "NUMBER"
+      },
+      "day_density_preference": {
+        "type": "STRING",
+        "enum": [
+          "lighter",
+          "balanced",
+          "fuller"
+        ]
+      },
+      "cluster_preference": {
+        "type": "STRING",
+        "enum": [
+          "tight",
+          "balanced",
+          "explore"
+        ]
+      },
+      "meal_preference": {
+        "type": "STRING",
+        "enum": [
+          "morning",
+          "afternoon",
+          "evening",
+          "flexible"
+        ]
+      },
+      "preference_summary": {
+        "type": "STRING"
+      }
+    },
+    "required": [
+      "profile_version",
+      "category_weights",
+      "preferred_place_ids",
+      "time_preferences",
+      "pace_bias",
+      "day_density_preference",
+      "cluster_preference",
+      "meal_preference",
+      "preference_summary"
+    ],
+    "propertyOrdering": [
+      "profile_version",
+      "category_weights",
+      "preferred_place_ids",
+      "time_preferences",
+      "pace_bias",
+      "day_density_preference",
+      "cluster_preference",
+      "meal_preference",
+      "preference_summary"
+    ]
+  }
+}

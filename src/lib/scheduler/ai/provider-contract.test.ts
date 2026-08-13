@@ -14,7 +14,13 @@ import { PROFILE_CATEGORIES, TIME_PREFERENCES } from "./personalization-profile.
 
 const ROOT = process.cwd();
 const read = (...p: string[]) => readFileSync(join(ROOT, ...p), "utf8");
-const FN   = () => read("functions", "api", "trip", "personalize.ts");
+// 엔드포인트 구현은 route 와 그 route 가 쓰는 순수 core 두 파일에 걸쳐 있다.
+// prompt·스키마·상수는 core 로 옮겨졌고 provider 호출은 route 에 남았다.
+// 계약은 둘을 합친 것이므로 여기서도 합쳐서 본다 — 단정은 그대로다.
+const FN   = () => [
+  read("functions", "api", "trip", "personalize.ts"),
+  read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts"),
+].join("\n");
 
 test("★P6·P7·P8 thinking 을 끄고 Structured Output 으로 형식을 계약한다", () => {
   const s = FN();
