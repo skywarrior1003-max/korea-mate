@@ -468,6 +468,15 @@ source별로 어떤 관광자원이 포함/누락되는지 사전 확인.
 - [ ] AI itinerary coordinate rule 유지
 - [ ] existing good fields overwrite 금지 유지
 
+### PHONE / GEOMETRY SEMANTICS (PRINCIPLE 14~17)
+- [ ] phone_source_state 4종 분류 적용 (PRESENT/SOURCE_EMPTY/SOURCE_PLACEHOLDER/SOURCE_MALFORMED)
+- [ ] phone_semantic_status 4종 분류 적용 (DIRECT_PHONE_PRESENT/NOT_EXPECTED/NEEDS_VERIFICATION/UNKNOWN)
+- [ ] phone 부재 → SEARCHABLE/SELECT/SAVE 자동 패널티 = 0
+- [ ] geometry_type 7종 분류 적용 (coord missing entity)
+- [ ] 좌표 자체 생성/추정 = 0 (SOURCE ANCHOR ONLY)
+- [ ] coord missing → AI=REVIEW_REQUIRED (영구 NO 없음)
+- [ ] NEEDS_VERIFICATION (phone) = targeted 대상만 (전체 no-value 아님)
+
 ### SAFETY
 - [ ] master change = 0
 - [ ] Production change = 0
@@ -477,11 +486,86 @@ source별로 어떤 관광자원이 포함/누락되는지 사전 확인.
 
 ---
 
+---
+
+## PRINCIPLE 14 — PHONE SOURCE STATE 2-LAYER SEMANTICS
+
+> **상세 정의:** `docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md` RULE-A~C
+
+전화번호 missing을 단일 boolean으로 처리하지 않는다.
+두 레이어를 분리한다:
+
+- `phone_source_state`: raw source fact
+  - `PRESENT` — 실제 전화번호 (숫자 포함)
+  - `SOURCE_EMPTY` — null 또는 빈 문자열
+  - `SOURCE_PLACEHOLDER` — 알려진 비-값 placeholder (`"--"`, `"-"`, `"N/A"`, `"없음"` 등)
+  - `SOURCE_MALFORMED` — 문자는 있으나 숫자 없음 (`"."` 등)
+
+- `phone_semantic_status`: entity 성격 기반 의미
+  - `DIRECT_PHONE_PRESENT` — phone 있음
+  - `NOT_EXPECTED` — 루트/자연지형 등 직통 번호 없음이 정상
+  - `NEEDS_VERIFICATION` — 박물관/체험관 등 번호 존재 가능성 높음
+  - `UNKNOWN` — title 기준으로 판단 불가
+
+**전화번호 부재는 SEARCHABLE / EXPLORE_ELIGIBLE / AI_ITINERARY / USER_CAN_SELECT / USER_CAN_SAVE에 자동 패널티 없음.**
+
+Jeju 실증: c1 1,341건 중 phone no-value 348건, SEARCHABLE 제한 0건.
+
+---
+
+## PRINCIPLE 15 — GEOMETRY TAXONOMY (좌표 missing entity)
+
+> **상세 정의:** `docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md` RULE-D~F
+
+좌표가 없거나 무효(`0.0/0.0` API placeholder 포함)인 entity의 공간 유형을 분류한다.
+
+**geometry_type 7종:** `POINT` / `AREA` / `LINEAR_ROUTE` / `ROUTE_SEGMENT` / `ROUTE_COLLECTION` / `MULTI_SITE` / `UNKNOWN`
+
+**navigation_status 4종:**
+- `READY` — 유효 source 좌표 존재
+- `NEEDS_SOURCE_ANCHOR` — AREA/LINEAR_ROUTE의 공식 대표 anchor 필요
+- `NEEDS_SOURCE_SEGMENTATION` — ROUTE 구간 구조 공식 소스 확인 필요
+- `NEEDS_SOURCE_VERIFICATION` — POINT/UNKNOWN의 정확한 좌표 공식 소스 확인 필요
+
+**navigation 불가 ≠ 관광 가치 손실 ≠ SEARCHABLE 제한**
+
+Jeju 실증: coord missing 32건 전체 SEARCHABLE=YES.
+
+---
+
+## PRINCIPLE 16 — SOURCE ANCHOR ONLY
+
+> **상세 정의:** `docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md` RULE-E
+
+GoKoreaMate (포함 Claude)는 좌표를 자체 생성하거나 추정하지 않는다.
+
+**금지:** 임의 대표 좌표 지정, 주소 중심 추정, 인근 시설 좌표 대체, AI 지식으로 생성, 지도 화면 scraping canonical 사용
+
+**허용:** 공식 API, 공공데이터, 약관이 허용하는 licensed geocoding API가 직접 제공한 값
+
+---
+
+## PRINCIPLE 17 — AI_ITINERARY READINESS ≠ AI=NO PERMANENT
+
+> **상세 정의:** `docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md` RULE-G
+
+navigation 불가 또는 좌표 missing entity에 대해 `AI_ITINERARY=NO`로 영구 배제하지 않는다.
+
+`AI_ITINERARY=REVIEW_REQUIRED` 또는 `CONDITIONAL`로 유지하여 source anchor 보완 후 재평가 가능하도록 한다.
+
+```
+USER_PICK_ABILITY ≥ AI_AUTO_SCHEDULING_ABILITY
+```
+
+---
+
 ## 관련 문서
 
 - `docs/automation/data-source-priority.md` — source 우선순위 상세
 - `docs/automation/image-curation-rules.md` — 이미지 선정 규칙
 - `docs/data-collection/multicity-regression-fixtures-v1.json` — 회귀 테스트 fixture 데이터
+- `docs/data-collection/multicity-eligibility-regression-fixtures-v1.json` — eligibility + PSG fixture (PSG_001~PSG_008)
+- `docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md` — 전화번호/좌표 semantics 전체 정의 (RULE-A~G)
 - `docs/data-collection/busan-gyeongju-gap-fill-main-handoff-final.md` — 부산·경주 최종 결과
 
-서울 데이터 수집 시작 전 이 문서를 반드시 읽는다.
+서울·제주 및 이후 모든 도시 데이터 수집 시작 전 이 문서를 반드시 읽는다.

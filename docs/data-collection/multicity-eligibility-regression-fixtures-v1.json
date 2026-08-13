@@ -1,13 +1,15 @@
 {
   "meta": {
-    "version": "v1-corrected",
+    "version": "v1-corrected-psg",
     "created": "2026-08-10",
     "corrected": "2026-08-10",
+    "psg_added": "2026-08-13",
     "correction_task": "TASK-MULTICITY-ELIGIBILITY-POLICY-CORRECTION-V1",
+    "psg_task": "TASK-COMMON-POLICY-PHONE-SEMANTICS-AND-GEOMETRY-V1",
     "task": "TASK-MULTICITY-PLACE-ELIGIBILITY-POLICY-AND-BACKFILL-V1",
     "branch": "data/seoul-collection-v1",
     "extends": "docs/data-collection/multicity-regression-fixtures-v1.json (on data/busan-gyeongju-gap-fill-v1)",
-    "description": "5개 eligibility 축(SEARCHABLE / EXPLORE / AI_ITINERARY / USER_SELECT / USER_SAVE) 회귀 테스트. 기존 guardrail regression과 독립적으로 추가. v1-corrected: ELG_006 Temple Stay AI=CONDITIONAL 정정, ELG_015~017 신규 추가."
+    "description": "5개 eligibility 축(SEARCHABLE / EXPLORE / AI_ITINERARY / USER_SELECT / USER_SAVE) 회귀 테스트. 기존 guardrail regression과 독립적으로 추가. v1-corrected: ELG_006 Temple Stay AI=CONDITIONAL 정정, ELG_015~017 신규 추가. v1-corrected-psg: RULE-A~G phone/geometry fixtures (PSG_001~PSG_008) 추가 (제주 실증 854740d 기반)."
   },
 
   "eligibility_core_rules": [
@@ -484,6 +486,247 @@
     }
   ],
 
+  "phone_geometry_fixtures": {
+    "_meta": {
+      "section": "Phone Semantics & Geometry — RULE-A~G Regression Cases",
+      "task": "TASK-COMMON-POLICY-PHONE-SEMANTICS-AND-GEOMETRY-V1",
+      "evidence_commit": "854740d (data/jeju-collection-v2)",
+      "evidence_file": "docs/data-collection/jeju/jeju-missing-semantics-and-source-anchor-rule-v1.md",
+      "policy_doc": "docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md",
+      "added": "2026-08-13"
+    },
+    "psg_core_rules": [
+      {
+        "rule_id": "RULE-A",
+        "name": "PLACEHOLDER_NORMALIZATION",
+        "statement": "\"--\", \"-\", \"N/A\", \"없음\", 단일 구두점 등은 SOURCE_PLACEHOLDER 또는 SOURCE_MALFORMED. PRESENT 또는 SOURCE_EMPTY와 구분.",
+        "test_assertion": "phoneno == \"--\" → phone_source_state == \"SOURCE_PLACEHOLDER\" (not PRESENT, not SOURCE_EMPTY)"
+      },
+      {
+        "rule_id": "RULE-B",
+        "name": "MISSING_SEMANTICS_2_LAYER",
+        "statement": "phone_source_state (source fact)와 phone_semantic_status (entity 성격)를 별도 필드로 분리.",
+        "test_assertion": "no-value entity must have both phone_source_state AND phone_semantic_status"
+      },
+      {
+        "rule_id": "RULE-C",
+        "name": "PHONE_INDEPENDENCE",
+        "statement": "phone 부재는 SEARCHABLE/EXPLORE/AI/SELECT/SAVE에 자동 패널티 없음.",
+        "test_assertion": "phone_source_state in [SOURCE_EMPTY, SOURCE_PLACEHOLDER, SOURCE_MALFORMED] → no automatic eligibility downgrade"
+      },
+      {
+        "rule_id": "RULE-D",
+        "name": "GEOMETRY_TAXONOMY",
+        "statement": "좌표 missing entity에 geometry_type 7종 분류 필수: POINT/AREA/LINEAR_ROUTE/ROUTE_SEGMENT/ROUTE_COLLECTION/MULTI_SITE/UNKNOWN",
+        "test_assertion": "coord_source_state != VALID_SOURCE_COORDINATE → geometry_type is classified"
+      },
+      {
+        "rule_id": "RULE-E",
+        "name": "SOURCE_ANCHOR_ONLY",
+        "statement": "GoKoreaMate는 좌표를 자체 생성/추정하지 않는다. 공식 API/공공데이터 제공값만 사용.",
+        "test_assertion": "coord_generated_by_claude = 0 in any pipeline output"
+      },
+      {
+        "rule_id": "RULE-F",
+        "name": "NAVIGATION_READINESS_INDEPENDENCE",
+        "statement": "NEEDS_SOURCE_ANCHOR/SEGMENTATION/VERIFICATION ≠ SEARCHABLE 제한. 관광 가치와 독립.",
+        "test_assertion": "navigation_status != READY → SEARCHABLE not downgraded"
+      },
+      {
+        "rule_id": "RULE-G",
+        "name": "AI_READINESS_INDEPENDENCE",
+        "statement": "coord missing → AI=REVIEW_REQUIRED, not AI=NO permanent. User Pick ≥ AI Auto.",
+        "test_assertion": "coord_source_state != VALID_SOURCE_COORDINATE → AI_ITINERARY != 'NO' (must be REVIEW_REQUIRED or CONDITIONAL)"
+      }
+    ],
+    "psg_fixtures": [
+      {
+        "fixture_id": "PSG_001",
+        "name": "전화번호 PRESENT — eligibility 영향 없음 확인",
+        "description": "phone_source_state=PRESENT인 정상 entity. 전화번호 존재가 eligibility를 높이지도 낮추지도 않음 (phone은 독립).",
+        "rule_tests": ["RULE-C"],
+        "inputs": {
+          "phoneno": "064-793-6006",
+          "entity_type": "POINT (박물관)",
+          "coord_source_state": "VALID_SOURCE_COORDINATE"
+        },
+        "expected": {
+          "phone_source_state": "PRESENT",
+          "phone_semantic_status": "DIRECT_PHONE_PRESENT",
+          "SEARCHABLE": "YES",
+          "eligibility_determined_by_phone": false
+        },
+        "status": "PASS"
+      },
+      {
+        "fixture_id": "PSG_002",
+        "name": "VisitJeju \"--\" 관행 — SOURCE_PLACEHOLDER 분류",
+        "description": "VisitJeju API가 phoneno=\"--\"를 반환하는 관행. PRESENT도 SOURCE_EMPTY도 아닌 SOURCE_PLACEHOLDER. 202건 실증.",
+        "rule_tests": ["RULE-A", "RULE-C"],
+        "inputs": {
+          "phoneno": "--",
+          "api": "VisitJeju c1",
+          "city": "jeju",
+          "observed_count": 202
+        },
+        "expected": {
+          "phone_source_state": "SOURCE_PLACEHOLDER",
+          "phone_source_state_not": ["PRESENT", "SOURCE_EMPTY"],
+          "raw_preserved": true,
+          "SEARCHABLE": "YES",
+          "SEARCHABLE_downgraded": false
+        },
+        "status": "PASS",
+        "notes": "VisitJeju는 좌표 미제공 시도 lat=0.0/lon=0.0을 반환. API별 placeholder 관행을 사전 파악 필수."
+      },
+      {
+        "fixture_id": "PSG_003",
+        "name": "단일 구두점 \".\": SOURCE_MALFORMED 분류",
+        "description": "평화통일 불사리탑(CONT_000000000500665), phoneno=\".\". 숫자 없는 문자 = SOURCE_MALFORMED. 제주 유일 1건.",
+        "rule_tests": ["RULE-A"],
+        "inputs": {
+          "phoneno": ".",
+          "contentsid": "CONT_000000000500665",
+          "title": "평화통일 불사리탑",
+          "city": "jeju"
+        },
+        "expected": {
+          "phone_source_state": "SOURCE_MALFORMED",
+          "phone_source_state_not": ["PRESENT", "SOURCE_EMPTY", "SOURCE_PLACEHOLDER"],
+          "phone_semantic_status": "UNKNOWN",
+          "SEARCHABLE": "YES"
+        },
+        "anti_pattern": {
+          "bad": "phoneno == \".\" → SOURCE_EMPTY",
+          "correct": "phoneno == \".\" (no digits) → SOURCE_MALFORMED"
+        },
+        "status": "PASS"
+      },
+      {
+        "fixture_id": "PSG_004",
+        "name": "SOURCE_EMPTY on NOT_EXPECTED entity — SEARCHABLE 패널티 없음",
+        "description": "올레길, 오름, 해변 등 루트/자연지형. phone_semantic_status=NOT_EXPECTED. SEARCHABLE 제한 없음.",
+        "rule_tests": ["RULE-B", "RULE-C"],
+        "inputs": {
+          "phoneno": null,
+          "entity_examples": ["올레 1코스", "용두암", "함덕해수욕장"],
+          "title_keywords": ["올레", "오름", "해수욕장"]
+        },
+        "expected": {
+          "phone_source_state": "SOURCE_EMPTY",
+          "phone_semantic_status": "NOT_EXPECTED",
+          "SEARCHABLE": "YES",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES",
+          "kto_verification_required": false
+        },
+        "status": "PASS",
+        "notes": "NOT_EXPECTED entity를 phone gap fill KTO 대상에 포함하지 않는다."
+      },
+      {
+        "fixture_id": "PSG_005",
+        "name": "NEEDS_VERIFICATION phone target — KTO targeted (6건 규칙)",
+        "description": "박물관·체험관 등 직통 번호가 있을 가능성이 높은 entity만 KTO 보강 대상. 제주 실증: 348건 중 6건.",
+        "rule_tests": ["RULE-B"],
+        "inputs": {
+          "phoneno": null,
+          "entity_examples": ["XX박물관", "YY체험관", "ZZ아쿠아리움"],
+          "title_keywords": ["박물관", "체험관", "아쿠아리움"]
+        },
+        "expected": {
+          "phone_source_state": "SOURCE_EMPTY",
+          "phone_semantic_status": "NEEDS_VERIFICATION",
+          "kto_verification_required": true,
+          "is_bulk_target": false
+        },
+        "anti_pattern": {
+          "bad": "all 348 phone no-value entities → KTO bulk query",
+          "correct": "only NEEDS_VERIFICATION (6 in Jeju) → KTO targeted fetch"
+        },
+        "status": "PASS"
+      },
+      {
+        "fixture_id": "PSG_006",
+        "name": "LINEAR_ROUTE geometry — NEEDS_SOURCE_SEGMENTATION",
+        "description": "제주환상자전거길 (ROUTE_COLLECTION, coord=SOURCE_EMPTY). 단일 좌표로 표현 불가. navigation_status=NEEDS_SOURCE_SEGMENTATION. 관광 가치 유지.",
+        "rule_tests": ["RULE-D", "RULE-E", "RULE-F", "RULE-G"],
+        "inputs": {
+          "title": "제주환상자전거길",
+          "coord_source_state": "SOURCE_EMPTY",
+          "city": "jeju"
+        },
+        "expected": {
+          "geometry_type": "ROUTE_COLLECTION",
+          "navigation_status": "NEEDS_SOURCE_SEGMENTATION",
+          "SEARCHABLE": "YES",
+          "EXPLORE_ELIGIBLE": "CONDITIONAL",
+          "AI_ITINERARY_ELIGIBLE": "REVIEW_REQUIRED",
+          "AI_ITINERARY_ELIGIBLE_not": "NO",
+          "coord_auto_generated": false,
+          "source_required": "공식 route operator source (제주환상자전거길 운영기관)"
+        },
+        "anti_pattern": {
+          "bad": "coord missing → geometry_type 분류 생략",
+          "correct": "coord missing이더라도 title 기반 geometry_type 분류 실행"
+        },
+        "status": "PASS"
+      },
+      {
+        "fixture_id": "PSG_007",
+        "name": "AREA geometry — NEEDS_SOURCE_ANCHOR (SEARCHABLE 유지)",
+        "description": "아이바가든 (AREA, coord=SOURCE_EMPTY). AREA는 단일 anchor 좌표 필요하나 관광 가치 유지. EXPLORE=CONDITIONAL, AI=REVIEW_REQUIRED.",
+        "rule_tests": ["RULE-D", "RULE-F", "RULE-G"],
+        "inputs": {
+          "title": "아이바가든",
+          "coord_source_state": "SOURCE_EMPTY",
+          "geometry_type_expected": "AREA",
+          "city": "jeju"
+        },
+        "expected": {
+          "geometry_type": "AREA",
+          "navigation_status": "NEEDS_SOURCE_ANCHOR",
+          "SEARCHABLE": "YES",
+          "EXPLORE_ELIGIBLE": "CONDITIONAL",
+          "AI_ITINERARY_ELIGIBLE": "REVIEW_REQUIRED",
+          "USER_CAN_SELECT": "YES",
+          "USER_CAN_SAVE": "YES",
+          "coord_auto_generated": false
+        },
+        "anti_pattern": {
+          "bad": "AREA entity → NEEDS_SOURCE_VERIFICATION (POINT 전략 적용)",
+          "correct": "AREA entity → NEEDS_SOURCE_ANCHOR (area anchor 방식)"
+        },
+        "status": "PASS"
+      },
+      {
+        "fixture_id": "PSG_008",
+        "name": "coord missing → AI=REVIEW_REQUIRED ≠ AI=NO permanent",
+        "description": "좌표 없는 관광지(오투힐, POINT+SOURCE_EMPTY). coord 보완 후 재평가 가능. AI=NO 영구 배제 금지.",
+        "rule_tests": ["RULE-G"],
+        "inputs": {
+          "title": "오투힐",
+          "coord_source_state": "SOURCE_EMPTY",
+          "geometry_type": "POINT",
+          "tourism_relevance": "CONDITIONAL",
+          "phone_source_state": "PRESENT"
+        },
+        "expected": {
+          "AI_ITINERARY_ELIGIBLE": "REVIEW_REQUIRED",
+          "AI_ITINERARY_ELIGIBLE_not": "NO",
+          "can_upgrade_after_coord_verification": true,
+          "SEARCHABLE": "YES",
+          "USER_CAN_SELECT": "YES"
+        },
+        "anti_pattern": {
+          "bad": "coord_source_state != VALID → AI_ITINERARY = 'NO'",
+          "correct": "coord_source_state != VALID → AI_ITINERARY = 'REVIEW_REQUIRED' (재평가 가능 상태 유지)"
+        },
+        "status": "PASS",
+        "notes": "사용자가 Selected에 직접 추가하면 AI=REVIEW_REQUIRED 무관하게 일정 포함 허용 (RULE-G + ELG_012 USER SELECTED 우선 원칙)."
+      }
+    ]
+  },
+
   "cross_reference": {
     "extends": [
       {
@@ -494,6 +737,8 @@
       }
     ],
     "policy_doc": "docs/data-collection/multicity-place-eligibility-policy-v1.md",
-    "guardrail_v1": "docs/data-collection/multicity-data-quality-guardrail-v1.md"
+    "guardrail_v1": "docs/data-collection/multicity-data-quality-guardrail-v1.md",
+    "phone_geometry_policy": "docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md",
+    "jeju_evidence": "data/visitjeju/reports/jeju/jeju-place-phone-semantics-v1.json + jeju-place-coordinate-geometry-v1.json (data/jeju-collection-v2, commit 854740d)"
   }
 }
