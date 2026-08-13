@@ -1,0 +1,106 @@
+{
+  "task": "TASK-JEJU-PLACE-SOURCE-VERIFICATION-TARGETED-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "status": "PASS_WITH_WARN",
+  "status_reason": "4건 KTO 검증 완료(12.5%). 28건 NO_SOURCE_COORDINATE_FOUND = VisitJeju-only 상업업체/로컬자산으로 KTO 미등재 예상. 6건 전화 NEEDS_VERIFICATION 확인(Naver 후속 필요)",
+  "input_summary": {
+    "coord_targets": 32,
+    "phone_targets": 6,
+    "total_targets": 38,
+    "sources_checked": [
+      "KTO_searchKeyword2_areaCode39",
+      "supplement_alt_keyword_KTO",
+      "VisitJeju_web_HTML_fetch"
+    ]
+  },
+  "coord_outcome_summary": {
+    "VERIFIED_SOURCE_COORDINATE": 3,
+    "VERIFIED_SOURCE_ANCHOR": 1,
+    "FOLLOWUP_REQUIRED": 1,
+    "NO_SOURCE_COORDINATE_FOUND": 27,
+    "total": 32
+  },
+  "phone_outcome_summary": {
+    "DIRECT_PHONE_VERIFIED": 0,
+    "SOURCE_PLACEHOLDER_CONFIRMED": 2,
+    "SOURCE_EMPTY_CONFIRMED": 4,
+    "NAVER_VERIFICATION_NEEDED": 6,
+    "total": 6
+  },
+  "verified_coord_entities": [
+    {
+      "contentsid": "CNTS_000000000022255",
+      "title": "제주 카약올레",
+      "result": "VERIFIED_SOURCE_ANCHOR",
+      "kto_id": "2738709",
+      "lat": 33.4623616693,
+      "lon": 126.3104869587,
+      "anchor_type": "KTO_REPRESENTATIVE_POINT"
+    },
+    {
+      "contentsid": "CNTS_200000000012138",
+      "title": "영아리",
+      "result": "VERIFIED_SOURCE_COORDINATE",
+      "kto_id": "2433925",
+      "lat": 33.3268525509,
+      "lon": 126.716996389
+    },
+    {
+      "contentsid": "CNTS_200000000012139",
+      "title": "진지동굴",
+      "result": "VERIFIED_SOURCE_COORDINATE",
+      "kto_id": "2765245",
+      "lat": 33.1991210589,
+      "lon": 126.2935109685
+    },
+    {
+      "contentsid": "CNTS_300000000014605",
+      "title": "드르쿰다 in 성산",
+      "result": "VERIFIED_SOURCE_COORDINATE",
+      "kto_id": "2755445",
+      "lat": 33.4444983695,
+      "lon": 126.9191261882
+    }
+  ],
+  "followup_entities": [
+    {
+      "contentsid": "CNTS_200000000010375",
+      "title": "제주환상자전거길",
+      "reason": "ROUTE_COLLECTION — segment 구조 필요, 공식 자전거도로 운영기관 데이터 필요"
+    }
+  ],
+  "phone_no_kto_match": [
+    "노을승마장",
+    "성읍목장",
+    "대정현역사자료전시관",
+    "예래생태체험관",
+    "감귤박물관 월라봉 산책로 - 생이소리길"
+  ],
+  "phone_kto_matched_no_phone": [
+    "성이시돌목장 (KTO contentid=2606298, detailCommon2 DETAIL_NOT_FOUND)"
+  ],
+  "kto_api_calls": {
+    "pass1_primary": 38,
+    "pass2_supplement": 23,
+    "pass3_finalize": 2,
+    "total": 63
+  },
+  "web_fetch_calls": {
+    "visitjeju_phone_pages": 6
+  },
+  "output_files": [
+    "data/visitjeju/normalized/jeju/jeju-place-source-verification-v1.json",
+    "data/visitjeju/manifests/jeju/jeju-place-source-verification-manifest-v1.json",
+    "data/visitjeju/reports/jeju/jeju-place-source-verification-review-v1.json",
+    "data/visitjeju/reports/jeju/jeju-place-source-verification-qa-v1.json",
+    "docs/data-collection/jeju/jeju-place-source-verification-targeted-v1.md"
+  ],
+  "rule_compliance": {
+    "RULE_E_SOURCE_ANCHOR_ONLY": "PASS — KTO API only, no coord generation, no map scraping",
+    "NAVER_FINAL_VERIFICATION_ONLY": "PASS — Naver 후속 확인은 이 태스크 범위 밖",
+    "GOOGLE_KAKAO_FORBIDDEN": "PASS — 미사용",
+    "AI_COORD_GENERATION_FORBIDDEN": "PASS — 미사용",
+    "FOOD_EVENT_FORBIDDEN": "PASS — c4/c5/c2/c6 미포함"
+  }
+}

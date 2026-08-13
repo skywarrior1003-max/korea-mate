@@ -1,0 +1,120 @@
+{
+  "task": "TASK-JEJU-PLACE-SOURCE-VERIFICATION-TARGETED-V1",
+  "generated_at": "2026-08-13",
+  "review_count": 11,
+  "items": [
+    {
+      "type": "COORD_VERIFIED",
+      "contentsid": "CNTS_000000000022255",
+      "title": "제주 카약올레",
+      "action_required": "UPDATE coordinate_source_state→VALID_SOURCE_COORDINATE, navigation_status→READY",
+      "new_lat": 33.4623616693,
+      "new_lon": 126.3104869587,
+      "new_coordinate_source_state": "VALID_SOURCE_COORDINATE",
+      "new_navigation_status": "READY",
+      "kto_contentid": "2738709",
+      "anchor_type": "KTO_REPRESENTATIVE_POINT",
+      "priority": "HIGH"
+    },
+    {
+      "type": "COORD_FOLLOWUP",
+      "contentsid": "CNTS_200000000010375",
+      "title": "제주환상자전거길",
+      "action_required": "ROUTE_COLLECTION segment structure — 공식 자전거도로 운영기관 연락 또는 제주도 GIS 데이터 필요",
+      "priority": "LOW"
+    },
+    {
+      "type": "COORD_VERIFIED",
+      "contentsid": "CNTS_200000000012138",
+      "title": "영아리",
+      "action_required": "UPDATE coordinate_source_state→VALID_SOURCE_COORDINATE, navigation_status→READY",
+      "new_lat": 33.3268525509,
+      "new_lon": 126.716996389,
+      "new_coordinate_source_state": "VALID_SOURCE_COORDINATE",
+      "new_navigation_status": "READY",
+      "kto_contentid": "2433925",
+      "anchor_type": null,
+      "priority": "HIGH"
+    },
+    {
+      "type": "COORD_VERIFIED",
+      "contentsid": "CNTS_200000000012139",
+      "title": "진지동굴",
+      "action_required": "UPDATE coordinate_source_state→VALID_SOURCE_COORDINATE, navigation_status→READY",
+      "new_lat": 33.1991210589,
+      "new_lon": 126.2935109685,
+      "new_coordinate_source_state": "VALID_SOURCE_COORDINATE",
+      "new_navigation_status": "READY",
+      "kto_contentid": "2765245",
+      "anchor_type": null,
+      "priority": "HIGH"
+    },
+    {
+      "type": "COORD_VERIFIED",
+      "contentsid": "CNTS_300000000014605",
+      "title": "드르쿰다 in 성산",
+      "action_required": "UPDATE coordinate_source_state→VALID_SOURCE_COORDINATE, navigation_status→READY",
+      "new_lat": 33.4444983695,
+      "new_lon": 126.9191261882,
+      "new_coordinate_source_state": "VALID_SOURCE_COORDINATE",
+      "new_navigation_status": "READY",
+      "kto_contentid": "2755445",
+      "anchor_type": null,
+      "priority": "HIGH"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_000000000018496",
+      "title": "노을승마장",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_PLACEHOLDER",
+      "kto_result": "NO_KTO_MATCH",
+      "priority": "LOW"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_000000000019988",
+      "title": "성읍목장",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_PLACEHOLDER",
+      "kto_result": "NO_KTO_MATCH",
+      "priority": "LOW"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_200000000008053",
+      "title": "성이시돌목장",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_EMPTY",
+      "kto_result": "KTO_MATCHED_NO_PHONE",
+      "priority": "LOW"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_200000000008156",
+      "title": "대정현역사자료전시관",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_EMPTY",
+      "kto_result": "NO_KTO_MATCH",
+      "priority": "LOW"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_200000000008159",
+      "title": "예래생태체험관",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_EMPTY",
+      "kto_result": "NO_KTO_MATCH",
+      "priority": "LOW"
+    },
+    {
+      "type": "PHONE_NAVER_FOLLOWUP",
+      "contentsid": "CNTS_200000000011919",
+      "title": "감귤박물관 월라봉 산책로 - 생이소리길",
+      "action_required": "Naver 검색으로 시설 직통전화 확인 (NAVER_FINAL_VERIFICATION_ONLY 정책 준수)",
+      "prev_phone_source_state": "SOURCE_EMPTY",
+      "kto_result": "NO_KTO_MATCH",
+      "priority": "LOW"
+    }
+  ]
+}

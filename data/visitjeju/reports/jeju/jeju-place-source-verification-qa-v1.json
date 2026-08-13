@@ -1,0 +1,80 @@
+{
+  "task": "TASK-JEJU-PLACE-SOURCE-VERIFICATION-TARGETED-V1",
+  "generated_at": "2026-08-13",
+  "qa_checks": [
+    {
+      "check": "INPUT_COORD_TARGET",
+      "expected": 32,
+      "actual": 32,
+      "result": "PASS"
+    },
+    {
+      "check": "INPUT_PHONE_TARGET",
+      "expected": 6,
+      "actual": 6,
+      "result": "PASS"
+    },
+    {
+      "check": "COORD_STATUS_SUM",
+      "expected": 32,
+      "actual": 32,
+      "result": "PASS",
+      "detail": "VERIFIED_SOURCE_COORDINATE=3 + VERIFIED_SOURCE_ANCHOR=1 + FOLLOWUP_REQUIRED=1 + NO_SOURCE_COORDINATE_FOUND=27"
+    },
+    {
+      "check": "PHONE_STATUS_SUM",
+      "expected": 6,
+      "actual": 6,
+      "result": "PASS",
+      "detail": "DIRECT_PHONE_VERIFIED=0 + SOURCE_PLACEHOLDER_CONFIRMED=2 + SOURCE_EMPTY_CONFIRMED=4"
+    },
+    {
+      "check": "VERIFIED_COORD_JEJU_RANGE",
+      "expected": "ALL lat 33.0~34.5, lon 126.0~127.0",
+      "actual": "영아리(33.33/126.72) 진지동굴(33.20/126.29) 드르쿰다(33.44/126.92) 카약올레(33.46/126.31)",
+      "result": "PASS"
+    },
+    {
+      "check": "RULE_E_COMPLIANCE",
+      "expected": "KTO API only, no coord generation",
+      "actual": "KTO searchKeyword2 areaCode=39 전용, 임의 좌표 생성 없음",
+      "result": "PASS"
+    },
+    {
+      "check": "RULE_C_COMPLIANCE",
+      "expected": "Phone missing ≠ eligibility penalty",
+      "actual": "전화 미확인 6건: SEARCHABLE/EXPLORE/SELECT/SAVE 변경 없음",
+      "result": "PASS"
+    },
+    {
+      "check": "VISITJEJU_PHONE_TEMPLATE_IDENTIFICATION",
+      "expected": "064-740-6000 = 관광정보센터 공통 번호 (모든 페이지 존재)",
+      "actual": "6개 페이지 모두에서 동일 번호 감지 → 시설 직통번호 아님",
+      "result": "PASS"
+    },
+    {
+      "check": "FOOD_EVENT_EXCLUDED",
+      "expected": "c4/c5/c2/c6 = 0",
+      "actual": "coord targets: c1 관광지만. phone targets: c1 관광지만",
+      "result": "PASS"
+    },
+    {
+      "check": "GYEONGJU_SEOUL_UNCHANGED",
+      "expected": 0,
+      "actual": 0,
+      "result": "PASS"
+    },
+    {
+      "check": "DATA_WRITTEN_TO_BRANCH",
+      "expected": "data/jeju-collection-v2 only",
+      "actual": "HEAD 854740d, 5 files added",
+      "result": "PENDING_COMMIT"
+    }
+  ],
+  "overall": "PASS_WITH_WARN",
+  "warnings": [
+    "제주환상자전거길(CNTS_200000000010375): ROUTE_COLLECTION segment 미확보 → FOLLOWUP_REQUIRED",
+    "전화 6건: Naver 후속 확인 필요 (현재 태스크 범위 밖)",
+    "27건 NO_SOURCE_COORDINATE_FOUND: VisitJeju-only 로컬 상업업체/비등재 자연지형"
+  ]
+}
