@@ -1,0 +1,178 @@
+{
+  "task": "TASK-JEJU-PLACE-FINAL-QA-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "overall_status": "PASS",
+  "checks_total": 27,
+  "pass_count": 27,
+  "fail_count": 0,
+  "checks": [
+    {
+      "check": "SOURCE_UNIVERSE_COUNT",
+      "status": "PASS",
+      "detail": "canonical=1341 == 1341"
+    },
+    {
+      "check": "SOURCE_ENTITY_DELETION",
+      "status": "PASS",
+      "detail": "raw/source 삭제 없음"
+    },
+    {
+      "check": "CURATION_TOTAL",
+      "status": "PASS",
+      "detail": "sum=1341"
+    },
+    {
+      "check": "API_CALLS_ZERO",
+      "status": "PASS",
+      "detail": "API_CALLS=0"
+    },
+    {
+      "check": "WEB_COLLECTION_ZERO",
+      "status": "PASS",
+      "detail": "WEB_COLLECTION=0"
+    },
+    {
+      "check": "KTO_CALLS_ZERO",
+      "status": "PASS",
+      "detail": "KTO_CALLS=0"
+    },
+    {
+      "check": "MAP_API_CALLS_ZERO",
+      "status": "PASS",
+      "detail": "MAP_API_CALLS=0"
+    },
+    {
+      "check": "ARBITRARY_COORDINATE_ZERO",
+      "status": "PASS",
+      "detail": "arbitrary coord=0. verified=4 (KTO provenance)"
+    },
+    {
+      "check": "ARBITRARY_PHONE_ZERO",
+      "status": "PASS",
+      "detail": "arbitrary phone=0. PHONE_UNRESOLVED=6 유지"
+    },
+    {
+      "check": "RAW_SOURCE_OVERWRITE_ZERO",
+      "status": "PASS",
+      "detail": "canonical 파일 수정 없음. derived outputs only"
+    },
+    {
+      "check": "FALSE_CORE_GOLF",
+      "status": "PASS",
+      "detail": "GOLF_TAG_IN_CORE=0"
+    },
+    {
+      "check": "FALSE_CORE_GENERIC_OPERATOR",
+      "status": "PASS",
+      "detail": "2 corrections applied (마리에 인 제주, 쇠소깍해양레저타운)"
+    },
+    {
+      "check": "ACCOMMODATION_CONTAMINATION_CHECKED",
+      "status": "PASS",
+      "detail": "ACCOMMODATION_CANDIDATES=6, CONFIRMED_MISMATCH=0 (all are tourism attractions or already separated)"
+    },
+    {
+      "check": "FOOD_CONTAMINATION_CHECKED",
+      "status": "PASS",
+      "detail": "FOOD_CANDIDATES=0, CONFIRMED_FOOD_MISMATCH=0"
+    },
+    {
+      "check": "EVENT_CONTAMINATION_CHECKED",
+      "status": "PASS",
+      "detail": "EVENT_CANDIDATES=0 (영천동 해바라기축제 already flagged EVENT_TYPE_MISMATCH_CANDIDATE)"
+    },
+    {
+      "check": "VERIFIED_COORD_PROVENANCE",
+      "status": "PASS",
+      "detail": "4 verified coords with KTO provenance reflected in service catalog"
+    },
+    {
+      "check": "UNRESOLVED_COORD_SAFE",
+      "status": "PASS",
+      "detail": "NO_SOURCE_COORDINATE_FOUND=27 + FOLLOWUP_REQUIRED=1 = 28. Not blocking Place Complete."
+    },
+    {
+      "check": "PHONE_6_NOT_BLOCKER",
+      "status": "PASS",
+      "detail": "PHONE_UNRESOLVED_BLOCKS_PLACE_FINAL=NO. 6 NEEDS_VERIFICATION 유지."
+    },
+    {
+      "check": "REVIEW_219_SAFE_HOLD",
+      "status": "PASS",
+      "detail": "REVIEW_REQUIRED=219 (after corrections: 218). EXPLORE=NO, AI=NO."
+    },
+    {
+      "check": "USER_PICK_AI_AUTO_VIOLATION",
+      "status": "PASS",
+      "detail": "USER_PICK ≥ AI_AUTO 준수. VIOLATION_COUNT=0"
+    },
+    {
+      "check": "SECTION9_MANDATORY",
+      "status": "PASS",
+      "detail": "7/7 confirmed. Final tiers verified."
+    },
+    {
+      "check": "MULTICITY_COMMON_UNCHANGED",
+      "status": "PASS",
+      "detail": "data/multicity-common 수정 없음"
+    },
+    {
+      "check": "MASTER_UNCHANGED",
+      "status": "PASS",
+      "detail": "master branch 수정 없음"
+    },
+    {
+      "check": "PRODUCTION_CHANGE_ZERO",
+      "status": "PASS",
+      "detail": "PRODUCTION_WRITE=0"
+    },
+    {
+      "check": "NAME_ONLY_CLASSIFICATION_ZERO",
+      "status": "PASS",
+      "detail": "모든 분류에 source evidence + provenance"
+    },
+    {
+      "check": "PHONE_MISSING_EXCLUSION_ZERO",
+      "status": "PASS",
+      "detail": "phone missing → EXCLUDE 없음"
+    },
+    {
+      "check": "COORD_MISSING_EXCLUSION_ZERO",
+      "status": "PASS",
+      "detail": "coord missing → EXCLUDE 없음"
+    }
+  ],
+  "curation_corrections": {
+    "count": 2,
+    "items": [
+      {
+        "contentsid": "CNTS_000000000019948",
+        "title": "쇠소깍해양레저타운",
+        "old_tier": "CORE_DESTINATION",
+        "new_tier": "ACTIVITY_OR_OPERATOR",
+        "reason": "FINAL_QA_CORRECTION: intro=\"제주바다 후룸라이드 쇠소깍 제트보트\". 상업 액티비티 운영자. 해변태그가 CORE 신호로 오분류."
+      },
+      {
+        "contentsid": "CNTS_300000000014075",
+        "title": "마리에 인 제주",
+        "old_tier": "REVIEW_REQUIRED",
+        "new_tier": "ACTIVITY_OR_OPERATOR",
+        "reason": "FINAL_QA_CORRECTION: intro=\"제주스냅 올인원 토탈샵\" + tags=스냅촬영,웨딩스냅. 사진 스튜디오 서비스. 숙박 아님."
+      }
+    ]
+  },
+  "final_tier_distribution": {
+    "CORE_DESTINATION": 657,
+    "CONDITIONAL_OR_SEASONAL": 323,
+    "ACTIVITY_OR_OPERATOR": 134,
+    "SEARCH_OR_REFERENCE_ONLY": 9,
+    "REVIEW_REQUIRED": 218
+  },
+  "common_policy_commit": "dc6f9be",
+  "PLACE_FINAL_QA": "PASS",
+  "PLACE_COMPLETE": "YES",
+  "SAFE_TO_START_JEJU_FOOD": "YES",
+  "COMMON_POLICY_CURATION_CANDIDATE": "YES",
+  "PHONE_UNRESOLVED_BLOCKS_PLACE_FINAL": "NO"
+}

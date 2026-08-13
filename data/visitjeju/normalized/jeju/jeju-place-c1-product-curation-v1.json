@@ -7,15 +7,13 @@
   "web_collection": 0,
   "common_policy_commit_remote": "dc6f9be",
   "common_policy_commit_local": "41d9915",
-  "classifier_version": "v3+patch",
+  "classifier_version": "v3+patch+final_qa_corrections",
   "tier_summary": {
-    "CORE_DESTINATION": 658,
+    "CORE_DESTINATION": 657,
     "CONDITIONAL_OR_SEASONAL": 323,
-    "ACTIVITY_OR_OPERATOR": 132,
+    "ACTIVITY_OR_OPERATOR": 134,
     "SEARCH_OR_REFERENCE_ONLY": 9,
-    "EXCLUDE_LOW_TRAVEL_VALUE": 0,
-    "REVIEW_REQUIRED": 219,
-    "TOTAL": 1341
+    "REVIEW_REQUIRED": 218
   },
   "provenance_summary": {
     "HEURISTIC_MULTI_FIELD": 1069,
@@ -4712,16 +4710,17 @@
       "region": "서귀포시 서귀포시내",
       "address": "제주특별자치도 서귀포시 하효동 999",
       "intro_snippet": "제주바다 후룸라이드 '쇠소깍 제트보트'",
-      "product_curation_tier": "CORE_DESTINATION",
+      "product_curation_tier": "ACTIVITY_OR_OPERATOR",
       "reason_codes": [
-        "STRONG_DESTINATION_INTENT",
-        "TAG_해변",
-        "TAG_해수욕장"
+        "ACTIVITY_OPERATOR",
+        "JET_BOAT_OPERATOR",
+        "MARINE_LEISURE",
+        "FINAL_QA_CORRECTION"
       ],
-      "confidence": "MEDIUM",
-      "classification_provenance": "HEURISTIC_MULTI_FIELD",
-      "evidence_summary": "signals=2|tags=해변,해수욕장|intro=제주바다 후룸라이드 '쇠소깍 제트보트'",
-      "coord_enrich_priority": "HIGH",
+      "confidence": "HIGH",
+      "classification_provenance": "MANUAL_REVIEW_DECISION",
+      "evidence_summary": "FINAL_QA_CORRECTION: intro=\"제주바다 후룸라이드 쇠소깍 제트보트\". 상업 액티비티 운영자. 해변태그가 CORE 신호로 오분류.",
+      "coord_enrich_priority": "LOW",
       "geometry_type": "UNKNOWN",
       "coord_verification_result": "NOT_IN_TARGET",
       "current_SEARCHABLE": "YES",
@@ -22479,15 +22478,16 @@
       "region": "제주시 애월",
       "address": "제주특별자치도 제주시 애월읍 평화로 2504 (고성리) 마리에제주",
       "intro_snippet": "제주스냅  올인원 토탈샵",
-      "product_curation_tier": "REVIEW_REQUIRED",
+      "product_curation_tier": "ACTIVITY_OR_OPERATOR",
       "reason_codes": [
-        "UNCLEAR_TRAVEL_VALUE",
-        "EVIDENCE_INCONCLUSIVE"
+        "ACTIVITY_OPERATOR",
+        "PHOTO_STUDIO_SERVICE",
+        "FINAL_QA_CORRECTION"
       ],
-      "confidence": "LOW",
-      "classification_provenance": "INSUFFICIENT_EVIDENCE",
-      "evidence_summary": "마리에 인 제주|intro=제주스냅  올인원 토탈샵",
-      "coord_enrich_priority": "HOLD",
+      "confidence": "HIGH",
+      "classification_provenance": "MANUAL_REVIEW_DECISION",
+      "evidence_summary": "FINAL_QA_CORRECTION: intro=\"제주스냅 올인원 토탈샵\" + tags=스냅촬영,웨딩스냅. 사진 스튜디오 서비스. 숙박 아님.",
+      "coord_enrich_priority": "LOW",
       "geometry_type": "POINT",
       "coord_verification_result": "NO_SOURCE_COORDINATE_FOUND",
       "current_SEARCHABLE": "YES",
@@ -33390,5 +33390,22 @@
       "current_USER_CAN_SAVE": "YES",
       "prev_place_class": "CORE_TRAVEL_PLACE"
     }
-  ]
+  ],
+  "final_qa_corrections": [
+    {
+      "contentsid": "CNTS_000000000019948",
+      "title": "쇠소깍해양레저타운",
+      "old_tier": "CORE_DESTINATION",
+      "new_tier": "ACTIVITY_OR_OPERATOR",
+      "reason": "FINAL_QA_CORRECTION: intro=\"제주바다 후룸라이드 쇠소깍 제트보트\". 상업 액티비티 운영자. 해변태그가 CORE 신호로 오분류."
+    },
+    {
+      "contentsid": "CNTS_300000000014075",
+      "title": "마리에 인 제주",
+      "old_tier": "REVIEW_REQUIRED",
+      "new_tier": "ACTIVITY_OR_OPERATOR",
+      "reason": "FINAL_QA_CORRECTION: intro=\"제주스냅 올인원 토탈샵\" + tags=스냅촬영,웨딩스냅. 사진 스튜디오 서비스. 숙박 아님."
+    }
+  ],
+  "final_qa_corrections_count": 2
 }

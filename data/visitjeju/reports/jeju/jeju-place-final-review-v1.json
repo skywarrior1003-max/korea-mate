@@ -1,0 +1,190 @@
+{
+  "task": "TASK-JEJU-PLACE-FINAL-QA-V1",
+  "branch": "data/jeju-collection-v2",
+  "generated_at": "2026-08-13",
+  "section9_mandatory": [
+    {
+      "title": "아이바가든",
+      "contentsid": "CNTS_300000000013561",
+      "final_tier": "CORE_DESTINATION",
+      "explore": "YES",
+      "ai_auto": "CONDITIONAL",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "EXPERIENCE_DESTINATION",
+        "MEDIA_ART_MUSEUM",
+        "COMPLEX_CULTURE_SPACE"
+      ]
+    },
+    {
+      "title": "김정문알로에 알로에숲",
+      "contentsid": "CNTS_300000000013654",
+      "final_tier": "CORE_DESTINATION",
+      "explore": "YES",
+      "ai_auto": "CONDITIONAL",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "BOTANICAL_OR_THEME_ATTRACTION",
+        "ALOE_BOTANICAL_GARDEN",
+        "EXPERIENCE_DESTINATION"
+      ]
+    },
+    {
+      "title": "그림휴가",
+      "contentsid": "CNTS_300000000013707",
+      "final_tier": "CONDITIONAL_OR_SEASONAL",
+      "explore": "CONDITIONAL",
+      "ai_auto": "CONDITIONAL",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "NICHE_INTEREST",
+        "SMALL_ART_GALLERY",
+        "EXPERIENCE_CLASS"
+      ]
+    },
+    {
+      "title": "케이제주해양사업단",
+      "contentsid": "CNTS_200000000011313",
+      "final_tier": "ACTIVITY_OR_OPERATOR",
+      "explore": "NO",
+      "ai_auto": "NO",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "ACTIVITY_OPERATOR",
+        "MARINE_LEISURE_OPERATOR",
+        "SERVICE_PROVIDER"
+      ]
+    },
+    {
+      "title": "제주친구",
+      "contentsid": "CNTS_200000000011254",
+      "final_tier": "ACTIVITY_OR_OPERATOR",
+      "explore": "NO",
+      "ai_auto": "NO",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "ACTIVITY_OPERATOR",
+        "RENTAL_OPERATOR",
+        "KICKBOARD_BICYCLE_RENTAL"
+      ]
+    },
+    {
+      "title": "중앙로",
+      "contentsid": "CNTS_300000000013757",
+      "final_tier": "SEARCH_OR_REFERENCE_ONLY",
+      "explore": "NO",
+      "ai_auto": "NO",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "GENERIC_ROAD_REFERENCE",
+        "NOT_INDEPENDENT_DESTINATION"
+      ]
+    },
+    {
+      "title": "안덕면사무소 수국길",
+      "contentsid": "CNTS_300000000014330",
+      "final_tier": "CONDITIONAL_OR_SEASONAL",
+      "explore": "CONDITIONAL",
+      "ai_auto": "CONDITIONAL",
+      "provenance": "MANUAL_REVIEW_DECISION",
+      "reason_codes": [
+        "SEASONAL_ATTRACTION",
+        "SEASONAL_수국",
+        "PHOTO_SPOT"
+      ]
+    }
+  ],
+  "deferred_items": [
+    {
+      "item": "PHONE_NEEDS_VERIFICATION_6",
+      "count": 6,
+      "blocker": false,
+      "status": "DEFERRED",
+      "policy": "NAVER_FINAL_VERIFICATION_ONLY",
+      "note": "Manual Naver verification required. PHONE_UNRESOLVED_BLOCKS_PLACE_FINAL=NO"
+    },
+    {
+      "item": "REVIEW_REQUIRED_ENTITIES",
+      "count": 218,
+      "blocker": false,
+      "status": "DEFERRED",
+      "policy": "DEMAND_REVIEW_TRIGGER",
+      "note": "Evidence insufficient for current classification. EXPLORE=NO, AI=NO. Future: demand signal triggers."
+    },
+    {
+      "item": "COORD_UNRESOLVED_NO_SOURCE",
+      "count": 27,
+      "blocker": false,
+      "status": "DEFERRED",
+      "policy": "NAVIGATION_UNRESOLVED_HOLD",
+      "note": "27 entities: VisitJeju-only local/unregistered assets. coord missing ≠ tourism value reduction."
+    },
+    {
+      "item": "JEJU_HWANSANG_BICYCLE_ROUTE",
+      "count": 1,
+      "blocker": false,
+      "status": "DEFERRED",
+      "policy": "ROUTE_COLLECTION_SEPARATE_TASK",
+      "note": "제주환상자전거길: FOLLOWUP_REQUIRED. CONDITIONAL_OR_SEASONAL 유지. Segment 수집 별도 태스크."
+    },
+    {
+      "item": "CURATION_CORRECTIONS",
+      "count": 2,
+      "blocker": false,
+      "status": "APPLIED",
+      "corrections": [
+        {
+          "contentsid": "CNTS_000000000019948",
+          "title": "쇠소깍해양레저타운",
+          "old_tier": "CORE_DESTINATION",
+          "new_tier": "ACTIVITY_OR_OPERATOR",
+          "reason": "FINAL_QA_CORRECTION: intro=\"제주바다 후룸라이드 쇠소깍 제트보트\". 상업 액티비티 운영자. 해변태그가 CORE 신호로 오분류."
+        },
+        {
+          "contentsid": "CNTS_300000000014075",
+          "title": "마리에 인 제주",
+          "old_tier": "REVIEW_REQUIRED",
+          "new_tier": "ACTIVITY_OR_OPERATOR",
+          "reason": "FINAL_QA_CORRECTION: intro=\"제주스냅 올인원 토탈샵\" + tags=스냅촬영,웨딩스냅. 사진 스튜디오 서비스. 숙박 아님."
+        }
+      ]
+    },
+    {
+      "item": "EVENT_TYPE_MISMATCH_CANDIDATES",
+      "count": 1,
+      "blocker": false,
+      "status": "NOTED",
+      "note": "영천동 해바라기축제: CONDITIONAL_OR_SEASONAL + EVENT_TYPE_MISMATCH_CANDIDATE. Source Universe 보존."
+    },
+    {
+      "item": "ACCOMMODATION_BORDERLINE",
+      "count": 6,
+      "blocker": false,
+      "status": "REVIEWED",
+      "note": "6 candidates reviewed. All are either tourism attractions (온천/박물관) or already correctly in ACTIVITY/REVIEW. CONFIRMED_MISMATCH=0."
+    },
+    {
+      "item": "COMMON_POLICY_CURATION_CANDIDATE",
+      "count": null,
+      "blocker": false,
+      "status": "NOTED",
+      "note": "Source Universe / Product Catalog separation + 6-tier curation system → data/multicity-common 승격 후보. 현재 Jeju-only."
+    }
+  ],
+  "false_core_summary": {
+    "CORE_FALSE_POSITIVE_CONFIRMED": 2,
+    "corrections_applied": [
+      "쇠소깍해양레저타운",
+      "마리에 인 제주"
+    ],
+    "borderline_kept": [
+      "쇠소깍 (CONDITIONAL 유지 — source evidence 부족)",
+      "렛츠런파크 제주 (ACTIVITY 유지 — 경마장 운영)"
+    ]
+  },
+  "conditional_downgrade_summary": {
+    "FALSE_DOWNGRADE_CONFIRMED": 0,
+    "borderline_candidates": 2,
+    "note": "신양항(CONDITIONAL), 쇠소깍(CONDITIONAL) — source evidence 기준으로 CORE 승격 불가. 유명함만으로 승격 금지 원칙 적용."
+  }
+}
