@@ -20,7 +20,7 @@
     "REVIEW_REQUIRED": 75
   },
   "BAEKNYEON_AUTO_FINAL_INCLUDE": 0,
-  "AI_AUTO_FOOD_READY": 225,
+  "AI_AUTO_FOOD_READY": 221,
   "publication_checksum": "5f68d1eb0a4f11471a189873",
   "records": [
     {
@@ -6770,13 +6770,21 @@
       "publication_status": "PUBLIC_GOOD_CHOICE",
       "publication_reason": "moderate_reason",
       "why_recommend": [
+        "LOCAL_SIGNATURE",
         "LOCAL_REPUTATION_EVIDENCE"
       ],
       "why_recommend_detail": [
         {
+          "code": "LOCAL_SIGNATURE",
+          "strength": "MODERATE",
+          "evidence": "하모항구(대정읍 어항) 인근 해산물 식당: 고등어회·방어회·한치회 등 제주 대표 해산물 메뉴 제공. 어항 인근 위치로 현지 어획물 기반 제주 해산물 음식 경험 제공. TIER_A. D_CODE_CORRECTION: LOCAL_REPUTATION_EVIDENCE 단독에서 LOCAL_SIGNATURE 추가."
+        },
+        {
           "code": "LOCAL_REPUTATION_EVIDENCE",
           "strength": "MODERATE",
-          "evidence": "소개문 지역인지도: '소문난' (고등어회가 맛있다고 소문난 미영이네식당)"
+          "evidence": "소개문 지역인지도: '소문난' (고등어회가 맛있다고 소문난 미영이네식당)",
+          "_role": "OPTIONAL_SUPPLEMENTARY",
+          "_d_code_correction": "D_CODE_CORRECTION_V1"
         }
       ],
       "evidence_strength": "MODERATE",
@@ -6800,7 +6808,11 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": true
+      "ai_auto_food_ready": true,
+      "d_code_correction_decision": "KEEP_PUBLIC_STRONGER_REASON_FOUND",
+      "d_code_correction_task": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+      "d_code_correction_date": "2026-08-14",
+      "d_code_primary_reason": "LOCAL_SIGNATURE"
     },
     {
       "contentsid": "CNTS_000000000020423",
@@ -14263,7 +14275,7 @@
       "latitude": 33.3668229,
       "longitude": 126.8391408,
       "original_tier": "TIER_C",
-      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
       "publication_reason": "moderate_reason",
       "why_recommend": [
         "LOCAL_REPUTATION_EVIDENCE"
@@ -14295,7 +14307,12 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": true
+      "ai_auto_food_ready": false,
+      "ai_auto_reason": "PUBLICATION_NOT_READY",
+      "d_code_correction_decision": "HOLD_NO_SUFFICIENT_REASON",
+      "d_code_correction_task": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+      "d_code_correction_date": "2026-08-14",
+      "d_code_hold_reason": "에그타르트 유럽풍 카페. WHY_RECOMMEND = LOCAL_REPUTATION_EVIDENCE 단독. 에그타르트는 제주 LOCAL_SIGNATURE 음식 아님. GUIDE/EDITORIAL/KOREAN_EXPERIENCE 근거 없음. consumer tag(컨셉카페/감성카페/포토스팟)만 존재. TIER_C."
     },
     {
       "contentsid": "CNTS_200000000008076",
@@ -17042,7 +17059,7 @@
       "latitude": 33.3892927,
       "longitude": 126.2323744,
       "original_tier": "TIER_C",
-      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
       "publication_reason": "moderate_reason",
       "why_recommend": [
         "LOCAL_REPUTATION_EVIDENCE"
@@ -17074,7 +17091,12 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": true
+      "ai_auto_food_ready": false,
+      "ai_auto_reason": "PUBLICATION_NOT_READY",
+      "d_code_correction_decision": "HOLD_NO_SUFFICIENT_REASON",
+      "d_code_correction_task": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+      "d_code_correction_date": "2026-08-14",
+      "d_code_hold_reason": "금능 해수욕장 인근 브런치 카페. WHY_RECOMMEND = LOCAL_REPUTATION_EVIDENCE 단독. 파스타/피자/브런치 = 제주 LOCAL_SIGNATURE 음식 아님. GUIDE/EDITORIAL 근거 없음. beach location은 TRAVELER_UTILITY 공식 근거 불충분. TIER_C."
     },
     {
       "contentsid": "CNTS_200000000012636",
@@ -29205,7 +29227,7 @@
       "latitude": 33.4852049,
       "longitude": 126.5434909,
       "original_tier": "TIER_C",
-      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
       "publication_reason": "moderate_reason",
       "why_recommend": [
         "LOCAL_REPUTATION_EVIDENCE"
@@ -29237,7 +29259,12 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": true
+      "ai_auto_food_ready": false,
+      "ai_auto_reason": "PUBLICATION_NOT_READY",
+      "d_code_correction_decision": "HOLD_NO_SUFFICIENT_REASON",
+      "d_code_correction_task": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+      "d_code_correction_date": "2026-08-14",
+      "d_code_hold_reason": "부산 브랜드 피자집 제주 분점. WHY_RECOMMEND = LOCAL_REPUTATION_EVIDENCE 단독. 브랜드 유명세(\"부산 핫플레이스 피자집\") = 제주 Food Guide 독립 추천 근거 아님. 피자는 제주 LOCAL_SIGNATURE 아님. consumer 인기 태그만. TIER_C."
     },
     {
       "contentsid": "CNTS_300000000013078",
@@ -29339,7 +29366,7 @@
       "latitude": 33.4595153,
       "longitude": 126.9301841,
       "original_tier": "TIER_C",
-      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
       "publication_reason": "moderate_reason",
       "why_recommend": [
         "LOCAL_REPUTATION_EVIDENCE"
@@ -29371,7 +29398,12 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": true
+      "ai_auto_food_ready": false,
+      "ai_auto_reason": "PUBLICATION_NOT_READY",
+      "d_code_correction_decision": "HOLD_NO_SUFFICIENT_REASON",
+      "d_code_correction_task": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+      "d_code_correction_date": "2026-08-14",
+      "d_code_hold_reason": "서울 스페셜티 커피 브랜드 성산 분점. WHY_RECOMMEND = LOCAL_REPUTATION_EVIDENCE 단독. 브랜드 로고 유명세 = 독립 추천 근거 아님. 성산 일출봉 인근이지만 TRAVELER_UTILITY 공식 근거 없음. TIER_C."
     },
     {
       "contentsid": "CNTS_300000000013081",
@@ -75079,5 +75111,11 @@
   "AI_AUTO_FOOD_READY_DEFERRED_TO_FINAL_QA": false,
   "FINAL_QA_COMMIT": "b4e595d",
   "FINAL_QA_DATE": "2026-08-14",
-  "FINAL_QA_TASK": "TASK-JEJU-FOOD-FINAL-QA-V1-R1"
+  "FINAL_QA_TASK": "TASK-JEJU-FOOD-FINAL-QA-V1-R1",
+  "FINAL_PUBLICATION_READY_COUNT": 256,
+  "D_CODE_CORRECTION_COMMIT": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+  "D_CODE_CORRECTION_DATE": "2026-08-14",
+  "HOLD_WEAK_EVIDENCE": 635,
+  "D_CODE_ONLY_FINAL": 0,
+  "PUBLICATION_CHECKSUM_AFTER_D_CODE": "3942195474e2427a5cac5223"
 }

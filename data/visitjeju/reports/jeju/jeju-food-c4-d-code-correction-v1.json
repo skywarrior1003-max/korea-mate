@@ -1,0 +1,131 @@
+{
+  "task_id": "TASK-JEJU-FOOD-D-CODE-TARGETED-CORRECTION-V1",
+  "task_date": "2026-08-14",
+  "base_commit": "80d67da",
+  "common_commit": "2476cac",
+  "pre_correction": {
+    "PUBLICATION_READY": 260,
+    "AI_AUTO_FOOD_READY": 225,
+    "D_CODE_PUBLIC": 35,
+    "D_CODE_ONLY": 5
+  },
+  "decisions": [
+    {
+      "contentsid": "CNTS_000000000020421",
+      "name": "미영이네",
+      "old_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "verdict": "KEEP_PUBLIC_STRONGER_REASON_FOUND",
+      "independent_evidence": "하모항구(어항) 인근 제주 대표 해산물 식당: 고등어회·방어회·한치회. TIER_A.",
+      "new_why_recommend": [
+        "LOCAL_SIGNATURE",
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "primary_reason": "LOCAL_SIGNATURE",
+      "local_reputation_role": "OPTIONAL_SUPPLEMENTARY",
+      "old_pub_status": "PUBLIC_GOOD_CHOICE",
+      "new_pub_status": "PUBLIC_GOOD_CHOICE",
+      "ai_auto_result": true,
+      "provenance": "D_CODE_CORRECTION_V1 / USER_MANUAL_CURATION_DECISION"
+    },
+    {
+      "contentsid": "CNTS_200000000008044",
+      "name": "아줄레주",
+      "old_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "verdict": "HOLD_NO_SUFFICIENT_REASON",
+      "hold_reason": "에그타르트 카페. 제주 LOCAL_SIGNATURE 아님. consumer tag 외 근거 없음. TIER_C.",
+      "new_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "old_pub_status": "PUBLIC_GOOD_CHOICE",
+      "new_pub_status": "HOLD_WEAK_EVIDENCE",
+      "ai_auto_result": false,
+      "provenance": "D_CODE_CORRECTION_V1"
+    },
+    {
+      "contentsid": "CNTS_200000000012635",
+      "name": "파라토도스",
+      "old_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "verdict": "HOLD_NO_SUFFICIENT_REASON",
+      "hold_reason": "금능해변 브런치 카페. 파스타/피자/브런치 = 제주 LOCAL_SIGNATURE 아님. beach location 공식 근거 불충분. TIER_C.",
+      "new_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "old_pub_status": "PUBLIC_GOOD_CHOICE",
+      "new_pub_status": "HOLD_WEAK_EVIDENCE",
+      "ai_auto_result": false,
+      "provenance": "D_CODE_CORRECTION_V1"
+    },
+    {
+      "contentsid": "CNTS_300000000013071",
+      "name": "이재모피자 제주점",
+      "old_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "verdict": "HOLD_NO_SUFFICIENT_REASON",
+      "hold_reason": "부산 브랜드 분점. 브랜드 유명세만으로 제주 Food Guide 독립 근거 불충분. TIER_C.",
+      "new_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "old_pub_status": "PUBLIC_GOOD_CHOICE",
+      "new_pub_status": "HOLD_WEAK_EVIDENCE",
+      "ai_auto_result": false,
+      "provenance": "D_CODE_CORRECTION_V1"
+    },
+    {
+      "contentsid": "CNTS_300000000013080",
+      "name": "프릳츠 제주성산점",
+      "old_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "verdict": "HOLD_NO_SUFFICIENT_REASON",
+      "hold_reason": "서울 카페 브랜드 분점. 로고 유명세 = 독립 추천 근거 아님. TRAVELER_UTILITY 공식 근거 없음. TIER_C.",
+      "new_why_recommend": [
+        "LOCAL_REPUTATION_EVIDENCE"
+      ],
+      "old_pub_status": "PUBLIC_GOOD_CHOICE",
+      "new_pub_status": "HOLD_WEAK_EVIDENCE",
+      "ai_auto_result": false,
+      "provenance": "D_CODE_CORRECTION_V1"
+    }
+  ],
+  "post_correction": {
+    "PUBLICATION_READY": 256,
+    "AI_AUTO_FOOD_READY": 221,
+    "D_CODE_PUBLIC": 31,
+    "D_CODE_ONLY": 0,
+    "PUBLICATION_CHECKSUM": "3942195474e2427a5cac5223",
+    "DELTA_PUBLICATION": -4,
+    "DELTA_AI_AUTO": -4
+  },
+  "rule9_assessment": {
+    "naver_final_verification_only_meaning": "Naver Place는 공식 소스 확인 후 필요할 때만 사용하는 최종 외부 검증 수단이며, 공식/공공 소스로 충분히 검증되면 Naver가 반드시 필요한 것은 아님. 금지: Google Maps (FORBIDDEN). Naver = 허용된 유일한 외부 최종 검증 소스.",
+    "RULE9_STATUS": "OK",
+    "COMMON_RULE9_FOLLOWUP_REQUIRED": false
+  },
+  "safety": {
+    "TARGET_ENTITY_COUNT": 5,
+    "NEW_CONSUMER_REPUTATION_LOOKUPS": 0,
+    "REVIEW_SCRAPING": 0,
+    "SOURCE_UNIVERSE_CHANGE": 0,
+    "COMMON_CHANGE": 0,
+    "BUSAN_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "SECRET_LEAK": 0
+  },
+  "final_verdict": {
+    "JEJU_D_CODE_CORRECTION": "PASS",
+    "JEJU_FOOD_FINAL_PUBLICATION_COUNT": 256,
+    "JEJU_FOOD_FINAL_AI_AUTO_COUNT": 221,
+    "D_CODE_ONLY_WHY_RECOMMEND_COUNT": 0,
+    "JEJU_FOOD_TARGETED_CORRECTION_COMPLETE": true,
+    "SAFE_TO_START_BUSAN_FOOD_TRUSTED_RECURATION": true
+  }
+}
