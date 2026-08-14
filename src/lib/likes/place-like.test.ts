@@ -207,7 +207,7 @@ test("★L20 장소 상세의 첫 액션은 Save 이고 일반 Like 를 되살�
   assert.equal((page.match(/<PlaceLikeButton/g) ?? []).length, 0,
     "장소 상세에 일반 Like 를 다시 넣지 않는다 (4fa94ad)");
   // Save 는 남아 있어야 한다 — 이 화면의 유일한 1차 액션이다
-  assert.match(page, /toggleFavorite/, "Save 액션이 사라졌다");
+  assert.match(page, /togglePlaceSaved/, "Save 액션이 사라졌다");
   assert.match(page, /useTranslations\("saved"\)/, "Save 문구는 번역을 거친다");
 });
 

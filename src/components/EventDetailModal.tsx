@@ -6,7 +6,8 @@ import { VIATOR, BOOKING, KLOOK, isViatorEligible, isBookingEligible } from "@/c
 import type { EventItem } from "@/lib/cart";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { useTranslations } from "next-intl";
-import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import { isFavorited, FAVORITES_EVENT } from "@/lib/favorites";
+import { togglePlaceSaved } from "@/lib/place-actions/place-actions-core";
 
 // ── koreanSurvivalScore 색상 + 라벨 ──────────────
 // 라벨은 문장이 아니라 키를 돌려준다. 이 함수는 훅 밖이라 여기서 번역하면
@@ -141,10 +142,7 @@ export default function EventDetailModal({ event, onClose }: Props) {
 
   function handleToggleFavorite() {
     // legacy id 와 sourceKey 를 함께 기록한다(롤백 호환).
-    const next = toggleFavorite(event.id, sourceKey);
-    setFavorited(next);
-    if (next) cacheSavedSpot(event);
-    else uncacheSavedSpot(event.id, sourceKey);
+    setFavorited(togglePlaceSaved(event));
   }
   async function handleCopyAddress(text: string) {
     try {

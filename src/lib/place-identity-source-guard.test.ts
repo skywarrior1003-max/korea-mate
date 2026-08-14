@@ -53,13 +53,13 @@ test("★Explore 의 staticSpots fallback 은 canonical 키를 만들지 않는�
 
 test("★canonical 경로는 그대로 city_spot 키를 만든다", () => {
   // 실제 city_spots 행에서 만드는 키까지 막으면 Place Detail 저장이 깨진다.
-  for (const f of [
-    ["src", "app", "place", "[id]", "PlaceDetailClient.tsx"],
-    ["src", "lib", "place-detail", "place-detail-core.ts"],
-  ]) {
-    const src = stripComments(read(...f));
-    assert.match(src, /citySpotSourceKey\s*\(/, `${f.join("/")}: canonical 경로가 사라졌다`);
-  }
+  //
+  // 키를 만드는 곳은 canonical adapter 하나다. Place Detail 은 저장할 때 그
+  // adapter 를 거치므로 직접 부르지 않아도 같은 키가 나온다.
+  assert.match(stripComments(read("src", "lib", "place-detail", "place-detail-core.ts")),
+    /citySpotSourceKey\s*\(/, "canonical 경로가 사라졌다");
+  assert.match(stripComments(read("src", "app", "place", "[id]", "PlaceDetailClient.tsx")),
+    /toItineraryEvent\(spot, text\)/, "Place Detail 이 canonical adapter 를 거치지 않는다");
 });
 
 test("★Version 1 정적 목록과 canonical id 는 서로 다른 공간이다", () => {

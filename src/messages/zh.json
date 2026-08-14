@@ -571,6 +571,7 @@
     "tabMine": "我的地点",
     "selectedCount": "本次行程 {count} 个",
     "remove": "移除",
+    "removeFromTrip": "移出 This Trip",
     "build": "生成行程",
     "legacyTitle": "之前选择的地点",
     "legacyHint": "无法确认这些属于哪次旅行。",

@@ -226,8 +226,9 @@ test("M 못 들어간 My Place 의 identity 가 유지된다", () => {
 
 test("K·L This Trip 제거는 cart 만 건드린다", () => {
   const picks = code("src/app/picks/PicksClient.tsx");
-  // 카드의 제거 버튼은 removeFromCart 만 부른다
-  assert.match(picks, /aria-label=\{`\$\{t\("remove"\)\}: \$\{item\.name\}`\}[\s\S]{0,80}removeFromCart\(key, tripCity \?\? undefined\)/);
+  // 카드의 제거 버튼은 이번 여행에서 빼기만 한다 — 장소를 지우지 않는다.
+  // 한국어에서 "삭제" 로 부르지 않도록 전용 문구를 쓴다.
+  assert.match(picks, /aria-label=\{`\$\{t\("removeFromTrip"\)\}: \$\{item\.name\}`\}[\s\S]{0,90}removePlaceFromThisTrip\(item, tripCity\)/);
   const cart = code("src/lib/cart.ts");
   // cart 모듈이 favorites/user-spots 를 지우지 않는다
   for (const bad of ["removeFavorite", "apiDeleteUserSpot", "favorites", "user-spots"]) {

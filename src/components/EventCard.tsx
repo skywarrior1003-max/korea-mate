@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { TRIP_FLOW_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import type { EventItem } from "@/lib/cart";
-import { isFavorited, toggleFavorite, FAVORITES_EVENT, cacheSavedSpot, uncacheSavedSpot } from "@/lib/favorites";
+import { isFavorited, FAVORITES_EVENT } from "@/lib/favorites";
+import { togglePlaceSaved } from "@/lib/place-actions/place-actions-core";
 import { getItemSourceKey } from "@/lib/place-identity";
 import { getVerifiedImage } from "@/lib/placeImages";
 import { dislikeSpot } from "@/lib/spots";
@@ -150,18 +151,12 @@ export default function EventCard({ event, onClick, distanceBadge }: Props) {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation();
-              const next = toggleFavorite(event.id, sourceKey);
-              setFavorited(next);
-              if (next) cacheSavedSpot(event);
-              else uncacheSavedSpot(event.id, sourceKey);
+              setFavorited(togglePlaceSaved(event));
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.stopPropagation();
-                const next = toggleFavorite(event.id, sourceKey);
-                setFavorited(next);
-                if (next) cacheSavedSpot(event);
-                else uncacheSavedSpot(event.id, sourceKey);
+                setFavorited(togglePlaceSaved(event));
               }
             }}
             aria-pressed={favorited}

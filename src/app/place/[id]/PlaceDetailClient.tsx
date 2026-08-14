@@ -23,10 +23,10 @@ import Link from "next/link";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge } from "@/components/ui";
-import { getFavorites, toggleFavorite, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT } from "@/lib/favorites";
+import { getFavorites, FAVORITES_EVENT } from "@/lib/favorites";
+import { togglePlaceSaved, sharePlace } from "@/lib/place-actions/place-actions-core";
 import { apiCreateUserSpotFromCanonical, apiEnrichUserSpot } from "@/lib/user-spots-api";
 import PlaceReportModal from "@/components/PlaceReportModal";
-import { citySpotSourceKey } from "@/lib/place-identity";
 import { trackEvent } from "@/lib/analytics";
 import {
   resolvePlaceText,
@@ -115,13 +115,11 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
 
   function handleSave() {
-    const nowSaved = toggleFavorite(eventId, citySpotSourceKey(spot.id));
+    // 저장은 다른 화면과 같은 한 곳을 쓴다 — 하트와 목록이 어긋나지 않는다.
+    const nowSaved = togglePlaceSaved(stripCommercialKeys(toItineraryEvent(spot, text)));
     if (nowSaved) {
-      cacheSavedSpot(stripCommercialKeys(toItineraryEvent(spot, text)));
       setSavedT(true);
       setTimeout(() => setSavedT(false), 4000);
-    } else {
-      uncacheSavedSpot(eventId, citySpotSourceKey(spot.id));
     }
     setSaved(nowSaved);
     trackEvent("place_save", { place_id: spot.id, city: spot.city, saved: nowSaved });
@@ -154,21 +152,19 @@ export default function PlaceDetailClient({ spot }: { spot: PlaceView }) {
 
   async function handleShare() {
     const content = buildShareContent(spot, text.name);
-    try {
-      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-        await navigator.share(content);
-        trackEvent("place_share", { place_id: spot.id, city: spot.city, method: "web_share" });
-        return;
-      }
-    } catch {
-      // 사용자가 취소했거나 Web Share 실패 — 복사로 떨어진다
+    // 어떻게 보낼지는 공통 action 이 정한다 — 기기 공유를 먼저 쓰고 안 되면
+    // 링크를 복사한다. 사용자가 공유 창을 닫은 것은 실패가 아니다.
+    const outcome = await sharePlace(content);
+    if (outcome === "shared" || outcome === "copied") {
+      trackEvent("place_share", {
+        place_id: spot.id, city: spot.city,
+        method: outcome === "shared" ? "web_share" : "copy",
+      });
     }
-    try {
-      await navigator.clipboard.writeText(content.url);
+    if (outcome === "copied") {
       setShareMsg(t("linkCopied"));
       setTimeout(() => setShareMsg(null), 3000);
-      trackEvent("place_share", { place_id: spot.id, city: spot.city, method: "copy" });
-    } catch {
+    } else if (outcome === "unavailable") {
       setShareMsg(content.url); // 복사도 막히면 URL 을 직접 보여준다
       setTimeout(() => setShareMsg(null), 6000);
     }

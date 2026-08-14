@@ -178,7 +178,7 @@ test("★My Places 는 user_spots 서버 API 만 쓴다 — 새 DB 구조를 만
 test("★Saved·My Places 에서 Selected 로 담는 기존 경로가 살아 있다", () => {
   assert.match(PICKS, /addToSelected\(e, "saved"\)/);
   assert.match(PICKS, /addToSelected\(ev, "mine"\)/);
-  assert.match(PICKS, /addToCart\(item, tripCity\)/);
+  assert.match(PICKS, /addPlaceToThisTrip\(item, tripCity\)/);
 });
 
 // ── 주 CTA 는 Selected 하나뿐 ────────────────────────────────────────────────

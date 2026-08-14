@@ -21,6 +21,7 @@ import { getCityCart, getUnresolvedCart, removeFromCart, removeFromAllCities, cl
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
+import { addPlaceToThisTrip, isInThisTrip, removePlaceFromThisTrip } from "@/lib/place-actions/place-actions-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
@@ -403,8 +404,7 @@ function PicksContent() {
   // ── 공통 동작 ───────────────────────────────────────────────────────────────
   function addToSelected(item: EventItem, from: "saved" | "mine") {
     // 어느 여행에 담는 것인지 모르면 담지 않는다. 아무 도시나 정해 주지 않는다.
-    if (!tripCity) { setBuildNotice(true); return; }
-    addToCart(item, tripCity);
+    if (!addPlaceToThisTrip(item, tripCity)) { setBuildNotice(true); return; }
     trackEvent("place_add_to_itinerary", {
       city: item.city || "", category: item.type || "",
       source_type: from === "saved" ? "saved" : "user_spot",
@@ -441,6 +441,7 @@ function PicksContent() {
     router.push(url);
   }
 
+  // 이 장소가 **이번 도시 여행에** 담겨 있는가. 전체 목록을 보지 않는다.
   const selectedKeys = new Set(selected.map(getItemSourceKey));
 
   // Saved 는 장기 보관함이고 This Trip 은 이번 여행 목록이다. 같은 장소가 두
@@ -661,7 +662,7 @@ function PicksContent() {
                             className={coach === "time" && isFirstCard ? COACH_PULSE : undefined}
                             onClick={() => setOpenTimeKey(openTimeKey === key ? null : key)}
                           >🕘</Button>
-                          <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key, tripCity ?? undefined)}>✕</Button>
+                          <Button variant="icon" aria-label={`${t("removeFromTrip")}: ${item.name}`} onClick={() => removePlaceFromThisTrip(item, tripCity)}>✕</Button>
                         </div>
                         <div className="px-4 pb-4">
                           {coach === "time" && isFirstCard && (

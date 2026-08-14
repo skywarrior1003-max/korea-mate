@@ -14,8 +14,9 @@ import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import { citySpotSourceKey, localInfoSourceKey, eventSourceKey } from "@/lib/place-identity";
 import { runCartIdentityMigration, toSourceCandidates, buildLegacyFingerprint } from "@/lib/cart-identity-migration";
 import {
-  toggleFavorite, getFavoriteSourceKeys, cacheSavedSpot, uncacheSavedSpot, FAVORITES_EVENT,
+  getFavoriteSourceKeys, FAVORITES_EVENT,
 } from "@/lib/favorites";
+import { togglePlaceSaved } from "@/lib/place-actions/place-actions-core";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { selectionKey, resolveClickedSpot, resolveSelection, clickTarget, nextPickedKey } from "@/lib/explore/map-selection-core";
 import { trackEvent } from "@/lib/analytics";
@@ -362,9 +363,7 @@ function ExploreCityContent({ city }: { city: CityConfig }) {
     // id 는 반드시 event.id 다. cacheSavedSpot 이 event.id 로 캐시하고 Picks 는
     // getFavorites() 와 캐시의 id 를 맞춰 목록을 만든다 — 여기서 city_spots 의
     // 숫자 id 를 넣으면 저장은 되는데 Picks > Saved 에는 안 보인다.
-    const next = toggleFavorite(event.id, key);
-    if (next) cacheSavedSpot(event);
-    else      uncacheSavedSpot(event.id, key);
+    const next = togglePlaceSaved(event);
     setSavedKeys(new Set(getFavoriteSourceKeys()));
     setLiveMessage(
       next ? tPicks("savedLive", { name: spot.name })
