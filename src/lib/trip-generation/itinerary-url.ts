@@ -17,6 +17,7 @@
 //   같은 표를 다시 보면 좌표가 나온다.
 
 import { CITY_ARRIVAL_OPTIONS } from "../../data/city-presets.ts";
+import type { TripDraft } from "../trip-draft/trip-draft-core.ts";
 
 /**
  * 일정 생성에 넘기는 여행 조건.
@@ -37,6 +38,35 @@ export interface ItineraryGenerationContext {
   departureTime?:  string;
   /** 숙박 지역 프리셋의 value. */
   stayArea?:       string;
+}
+
+/**
+ * 저장된 이번 여행 조건을 그대로 생성 조건으로 옮긴다.
+ *
+ * 옮기기만 한다 — 기본값을 채우지도, 이름을 바꾸지도 않는다. Home 과 This Trip
+ * 이 같은 여행을 보면서 서로 다른 주소를 만들지 않게 하는 것이 전부다.
+ *
+ * 정확한 숙소(`draft.stay`)는 넘기지 않는다. 받을 계약이 아직 없고, 주소에
+ * 실으면 사용자가 적어 넣은 숙소 이름과 주소가 브라우저 기록에 남는다.
+ *
+ * `travelStyle` 은 draft 에 없다. 아직 자기 자리에 있고, 아는 화면이 넘긴다.
+ */
+export function tripDraftGenerationContext(
+  draft: TripDraft, extra?: { travelStyle?: string },
+): ItineraryGenerationContext {
+  const ctx: ItineraryGenerationContext = {
+    city:      draft.city,
+    startDate: draft.startDate,
+    endDate:   draft.endDate,
+  };
+  if (draft.travelers)       ctx.travelers      = draft.travelers;
+  if (extra?.travelStyle)    ctx.travelStyle    = extra.travelStyle;
+  if (draft.startLocation)   ctx.startLocation  = draft.startLocation;
+  if (draft.arrivalTime)     ctx.arrivalTime    = draft.arrivalTime;
+  if (draft.departurePlace)  ctx.departurePlace = draft.departurePlace;
+  if (draft.departureTime)   ctx.departureTime  = draft.departureTime;
+  if (draft.stayArea)        ctx.stayArea       = draft.stayArea;
+  return ctx;
 }
 
 const ISO = /^\d{4}-\d{2}-\d{2}$/;

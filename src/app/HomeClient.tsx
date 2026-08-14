@@ -24,7 +24,7 @@ import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
-import { writeTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { readTripDraft, writeTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
@@ -557,18 +557,6 @@ export default function HomeClient() {
     setStartLocation(CITY_ARRIVAL_DEFAULTS[city] ?? city);
   }, [city]);
 
-  // ── 이번 여행의 도시·날짜를 This Trip 도 볼 수 있게 남긴다 ────────────────
-  //
-  // This Trip 은 여기 state 를 볼 수 없어서 지금까지 여행 날짜를 몰랐고, 그래서
-  // 고정 일정 입력이 화면에 나타난 적이 없다.
-  //
-  // 세 값이 모두 유효할 때만 쓴다. 날짜를 하나만 고른 순간에 저장하면 This Trip
-  // 이 하루짜리 여행을 보게 된다. 값이 실제로 바뀔 때만 도는 effect 라 매 렌더
-  // 마다 쓰지 않는다.
-  useEffect(() => {
-    writeTripDraft({ city, startDate, endDate });
-  }, [city, startDate, endDate]);
-
 
   useEffect(() => {
     if (!showBTSGuide) return;
@@ -679,6 +667,60 @@ export default function HomeClient() {
   const [stayArea,        setStayArea]        = useState("");
   const [showStaySection, setShowStaySection] = useState(false);
   const deptSectionRef = useRef<HTMLDivElement>(null);
+
+  // ── 이번 여행의 조건을 This Trip 도 볼 수 있게 남긴다 ─────────────────────
+  //
+  // 지금까지 도시와 날짜만 남겼다. 동행·도착·출발·숙박은 이 컴포넌트 안에만
+  // 있어서 화면을 떠나면 사라졌고, This Trip 은 그 값들을 볼 방법이 없었다.
+  // 같은 여행인데 두 화면이 서로 다른 것을 알고 있는 상태였다.
+  //
+  // 읽기가 먼저고 쓰기가 나중이다. 순서가 뒤집히면 첫 렌더의 기본값("1",
+  // "14:00", "")이 저장된 값을 덮어쓴다 — 돌아올 때마다 입력이 초기화되는 것과
+  // 같다. `restored` 가 그 순서를 지킨다.
+  const [restored, setRestored] = useState(false);
+  useEffect(() => {
+    const d = readTripDraft();
+    if (d) {
+      // 도시·날짜는 다른 곳(?city=, 날짜 선택)에서도 정해진다. 여기서 되돌리는
+      // 것은 이 컴포넌트 말고는 아무도 갖고 있지 않던 값들이다.
+      if (d.travelers)      setTravelers(d.travelers);
+      if (d.startLocation)  setStartLocation(d.startLocation);
+      if (d.arrivalTime)    setArrivalTime(d.arrivalTime);
+      if (d.departurePlace) setDeparturePlace(d.departurePlace);
+      if (d.departureTime)  setDepartureTime(d.departureTime);
+      if (d.stayArea)       setStayArea(d.stayArea);
+      // 되살린 값이 접힌 칸 안에 숨어 있으면 사용자는 자기가 입력한 것을 보지
+      // 못한 채 일정이 생성되는 것을 본다.
+      if (d.departurePlace || d.departureTime) setShowDeptSection(true);
+      if (d.stayArea)                          setShowStaySection(true);
+    }
+    setRestored(true);
+  }, []);
+
+  // ── 도시를 바꾸면 그 도시에 없는 지점은 버린다 ────────────────────────────
+  //
+  // 프리셋 value 는 도시별 목록에서 고른 것이다. 서울로 바꿔도 "해운대"가 남아
+  // 있으면 builder 가 좌표를 찾지 못한 채 이름만 넘기고, 사용자는 자기가 고르지
+  // 않은 지역이 선택돼 있는 것을 본다. 도착지는 이미 위에서 새 도시 기본값으로
+  // 바뀐다 — 출발지와 숙박 지역만 남아 있었다.
+  useEffect(() => {
+    if (!restored) return;
+    const options = CITY_ARRIVAL_OPTIONS[city] ?? [];
+    setDeparturePlace(p => (p && !options.some(o => o.value === p) ? "" : p));
+    setStayArea(s => (s && !stayAreaOptions(city).some(o => o.value === s) ? "" : s));
+  }, [city, restored]);
+
+  // 값이 실제로 바뀔 때만 도는 effect 라 매 렌더마다 쓰지 않는다.
+  // 도시·날짜가 모두 유효할 때만 저장된다 — 날짜를 하나만 고른 순간에 쓰면
+  // This Trip 이 하루짜리 여행을 보게 된다.
+  useEffect(() => {
+    if (!restored) return;
+    writeTripDraft({
+      city, startDate, endDate,
+      travelers, startLocation, arrivalTime, departurePlace, departureTime, stayArea,
+    });
+  }, [restored, city, startDate, endDate,
+      travelers, startLocation, arrivalTime, departurePlace, departureTime, stayArea]);
 
   // ── AI 일정 생성 ──────────────────────────────
   function doNavigate(overrideStyle?: string) {

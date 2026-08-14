@@ -186,7 +186,9 @@ test("2: 유효한 TripDraft 로 This Trip 이 곧바로 /itinerary 주소를 �
 test("3: This Trip 이 더 이상 /#planner 로 가지 않는다", () => {
   assert.doesNotMatch(picksSrc, /router\.push\("\/#planner"\)/);
   assert.doesNotMatch(picksSrc, /#planner/, "planner anchor 가 남았다");
-  assert.match(picksSrc, /const url = draft && buildItineraryGenerationUrl\(\{/);
+  // 조건은 draft 하나에서 온다. 예전에는 여기서 도시·날짜만 골라 넘겼고,
+  // 그래서 Home 에서 정한 도착·출발·숙박이 This Trip 에서 만들면 빠졌다.
+  assert.match(picksSrc, /const url = draft && buildItineraryGenerationUrl\(tripDraftGenerationContext\(draft\)\)/);
   assert.match(picksSrc, /router\.push\(url\);/);
 });
 
@@ -212,7 +214,10 @@ test("19: TripDraft core 계약과 provider schema 를 건드리지 않았다", 
   const draftCore = read("src", "lib", "trip-draft", "trip-draft-core.ts");
   const iface = /export interface TripDraft \{([\s\S]*?)\n\}/.exec(draftCore)?.[1] ?? "";
   assert.match(iface, /city/); assert.match(iface, /startDate/); assert.match(iface, /endDate/);
-  for (const f of ["arrival", "departure", "stayArea", "travelers", "intensity"]) {
+  // 도착·출발·숙박·동행은 이제 여기 있다 — Home 안에만 두면 화면을 떠날 때
+  // 사라지고 This Trip 이 같은 여행을 다르게 알게 된다. 이름은 아래 생성 조건과
+  // 같은 것을 쓴다. 아직 아무도 쓰지 않는 값만 막는다.
+  for (const f of ["intensity", "pace", "travelStyle"]) {
     assert.ok(!iface.includes(f), `TripDraft 에 ${f} 가 들어갔다`);
   }
   const aiCore = read("src", "lib", "scheduler", "ai", "profile-personalization-core.ts");

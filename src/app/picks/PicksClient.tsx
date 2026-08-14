@@ -19,7 +19,7 @@ import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
 import { getCityCart, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
-import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
+import { buildItineraryGenerationUrl, itineraryDayCount, tripDraftGenerationContext } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
 import { addPlaceToThisTrip, isInThisTrip, removePlaceFromThisTrip } from "@/lib/place-actions/place-actions-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
@@ -423,10 +423,11 @@ function PicksContent() {
     //
     // 고른 장소·좌표·고정 시각은 주소에 싣지 않는다. 이미 cart 에 있고 일정
     // 화면이 거기서 읽는다. 개인 좌표와 개인 제목을 브라우저 기록에 남기지 않는다.
+    // 도시·날짜만 넘기던 자리다. 사용자가 Home 에서 동행·도착·출발·숙박까지
+    // 정해 뒀는데 This Trip 에서 만들면 그 조건이 전부 빠진 일정이 나왔다.
+    // 같은 여행이니 같은 조건으로 만든다.
     const draft = readTripDraft();
-    const url = draft && buildItineraryGenerationUrl({
-      city: draft.city, startDate: draft.startDate, endDate: draft.endDate,
-    });
+    const url = draft && buildItineraryGenerationUrl(tripDraftGenerationContext(draft));
     if (!draft || !url) {
       // 도시·날짜가 없으면 만들지 않는다. 지어내지도, Home 으로 되돌리지도
       // 않는다 — 무엇이 있어야 하는지만 알린다.
@@ -435,7 +436,7 @@ function PicksContent() {
     }
     setBuildNotice(false);
     trackEvent("generate_itinerary", {
-      city: draft.city, travelers: "", travel_style: "",
+      city: draft.city, travelers: draft.travelers ?? "", travel_style: "",
       days: itineraryDayCount(draft.startDate, draft.endDate),
     });
     router.push(url);

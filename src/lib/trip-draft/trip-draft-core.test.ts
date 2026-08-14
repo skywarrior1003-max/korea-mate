@@ -226,9 +226,11 @@ const read = (...p: string[]) => readFileSync(path.join(process.cwd(), ...p), "u
 const homeSrc  = read("src", "app", "HomeClient.tsx");
 const picksSrc = read("src", "app", "picks", "PicksClient.tsx");
 
-test("HomeClient: 도시·날짜가 모두 바뀔 때만 draft 를 쓴다", () => {
-  assert.match(homeSrc, /writeTripDraft\(\{ city, startDate, endDate \}\);/);
-  assert.match(homeSrc, /\}, \[city, startDate, endDate\]\);/, "의존성 배열이 없다 — 매 렌더 저장 위험");
+test("HomeClient: 여행 조건이 실제로 바뀔 때만 draft 를 쓴다", () => {
+  // 도시·날짜만 저장하던 자리다. 이제 동행·도착·출발·숙박까지 같은 곳에 남긴다 —
+  // 그 여섯 개는 Home 컴포넌트 안에만 있어서 화면을 떠나면 사라졌다.
+  assert.match(homeSrc, /writeTripDraft\(\{\s*\n\s*city, startDate, endDate,/);
+  assert.match(homeSrc, /\}, \[restored, city, startDate, endDate,/, "의존성 배열이 없다 — 매 렌더 저장 위험");
 });
 
 test("PicksClient: 죽은 PlannerSnapshot 대신 TripDraft 를 읽는다", () => {
@@ -243,13 +245,19 @@ test("PicksClient: tripDays 가 기존 고정 일정 입력에 그대로 전달�
   assert.match(picksSrc, /onChange=\{\(next: CartFixed \| null\) => setCartFixed\(key, next, tripCity \?\? undefined\)\}/);
 });
 
-test("TripDraft 는 아직 도시와 날짜만 가진다", () => {
+test("TripDraft 는 쓰는 곳이 있는 값만 가진다", () => {
+  // 예전에는 도시와 날짜뿐이었다. 그때 이 가드가 막던 것은 "쓸 곳이 없는 필드를
+  // 미리 만들어 두는 것" 이었다. 지금은 아래 아홉 개 모두 Home 이 쓰고 This Trip
+  // 이 읽는다 — 그래서 막는 대상만 바꾼다. 아직 소비처가 없는 값들이다.
   const core = read("src", "lib", "trip-draft", "trip-draft-core.ts");
   const iface = /export interface TripDraft \{([\s\S]*?)\n\}/.exec(core)?.[1] ?? "";
-  for (const field of ["arrival", "departure", "stayArea", "travelers", "intensity", "pace"]) {
+  for (const field of ["intensity", "pace", "travelStyle", "budget"]) {
     assert.ok(!iface.includes(field), `${field} 가 미리 들어갔다`);
   }
-  assert.match(iface, /city/); assert.match(iface, /startDate/); assert.match(iface, /endDate/);
+  for (const field of ["city", "startDate", "endDate", "travelers", "startLocation",
+                       "arrivalTime", "departurePlace", "departureTime", "stayArea"]) {
+    assert.ok(iface.includes(field), `${field} 가 빠졌다`);
+  }
 });
 
 test("TripDraft 와 PlannerSnapshot 을 서로 동기화하지 않는다", () => {
