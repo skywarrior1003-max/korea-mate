@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "version": "v1",
+    "created": "2026-08-14",
+    "task": "TASK-COMMON-FOOD-TRUSTED-CURATION-POLICY-V1-R1",
+    "base_sha": "80d67da",
+    "description": "Food Trusted Curation Policy v1 — 12개 regression fixture. 제주 Food Final QA 실증 기반. 도시별 구체 entity 없이 원칙 수준 검증.",
+    "policy_doc": "multicity-food-trusted-curation-policy-v1.md",
+    "applies_to": ["jeju", "busan", "seoul", "all_future_cities"]
+  },
+
+  "fixtures": [
+    {
+      "id": "FOOD-CURATION-F01",
+      "scenario": "official_directory_only_no_why_recommend",
+      "description": "공식 디렉토리(VisitJeju, KTO, VisitSeoul 등)에 등재되어 있으나 WHY_RECOMMEND가 없는 entity를 PUBLIC으로 승격 시도",
+      "input": {
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "why_recommend": [],
+        "source": "official_directory"
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-2: WHY_RECOMMEND_REQUIRED_FOR_ALL_PUBLIC",
+      "fail_condition": "WHY_RECOMMEND missing",
+      "rationale": "official directory 등재 != recommendation. source에 있다는 사실만으로 여행자에게 보여주는 이유가 되지 않는다."
+    },
+    {
+      "id": "FOOD-CURATION-F02",
+      "scenario": "signature_menu_item_only_public",
+      "description": "도시 대표 메뉴 판매(흑돼지, 갈치, 돼지국밥 등)만 있고 다른 추천 근거 없는 entity → PUBLIC",
+      "input": {
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "why_recommend": ["LOCAL_SIGNATURE"],
+        "why_recommend_detail": [{"code": "LOCAL_SIGNATURE", "strength": "MENU_ONLY", "evidence": "흑돼지 판매"}]
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-3: MENU_PRESENCE_IS_NOT_RECOMMENDATION",
+      "fail_condition": "MENU_ONLY strength without additional evidence",
+      "rationale": "메뉴 판매 사실은 supporting fact. 이 식당이 그 음식 경험의 좋은 대표인지는 별도 근거 필요."
+    },
+    {
+      "id": "FOOD-CURATION-F03",
+      "scenario": "strong_guide_editorial_entity_public_candidate",
+      "description": "공식 가이드/인증(백년가게, 미쉐린, 관광청 공식 추천) 등재 + valid entity → PUBLIC 후보",
+      "input": {
+        "publication_status": "PUBLIC_STRONG",
+        "why_recommend": ["GUIDE_OR_STRONG_RECOGNITION", "LOCAL_SIGNATURE"],
+        "why_recommend_detail": [
+          {"code": "GUIDE_OR_STRONG_RECOGNITION", "strength": "STRONG", "evidence": "소상공인시장진흥공단 백년가게"},
+          {"code": "LOCAL_SIGNATURE", "strength": "MODERATE", "evidence": "도시 대표 음식 카테고리 대표 경험"}
+        ]
+      },
+      "expected_verdict": "PASS",
+      "policy_rule": "RULE-2: WHY_RECOMMEND with STRONG evidence",
+      "pass_condition": "GUIDE_OR_STRONG_RECOGNITION with official source",
+      "rationale": "공식 인증·가이드 등재 = 검증된 추천 근거. 복수 reason으로 PUBLIC_STRONG 적합."
+    },
+    {
+      "id": "FOOD-CURATION-F04",
+      "scenario": "consumer_matjip_tag_only_strong_evidence",
+      "description": "소비자 '맛집' 태그·해시태그만 있는 entity를 PUBLIC strong evidence로 처리",
+      "input": {
+        "publication_status": "PUBLIC_STRONG",
+        "why_recommend": ["LOCAL_REPUTATION_EVIDENCE"],
+        "why_recommend_detail": [{"code": "LOCAL_REPUTATION_EVIDENCE", "strength": "STRONG", "evidence": "소비자 맛집 태그 다수"}]
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-4: EVIDENCE_SEMANTICS_LIMIT + RULE-14: EXTERNAL_REPUTATION_POLICY=NOT_YET_ESTABLISHED",
+      "fail_condition": "consumer tag != official quality evidence; LOCAL_REPUTATION not verified common core",
+      "rationale": "소비자 '맛집' 태그는 미검증 외부 reputation. EXTERNAL_REPUTATION_POLICY=NOT_YET_ESTABLISHED 상태에서 STRONG 승격 금지."
+    },
+    {
+      "id": "FOOD-CURATION-F05",
+      "scenario": "sanitation_certification_only_public",
+      "description": "위생 인증만 있고 다른 추천 근거 없는 entity → PUBLIC 승격 + 맛 보증으로 처리",
+      "input": {
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "why_recommend": ["OFFICIAL_EDITORIAL"],
+        "why_recommend_detail": [{"code": "OFFICIAL_EDITORIAL", "strength": "MODERATE", "evidence": "위생 우수 업소 인증"}]
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-4: EVIDENCE_SEMANTICS_LIMIT",
+      "fail_condition": "위생 인증 != 맛 보증 != recommendation",
+      "rationale": "위생 인증은 안전 기준 충족이지 여행자 추천 이유가 아니다. OFFICIAL_EDITORIAL은 관광기관 편집 추천에만 적용."
+    },
+    {
+      "id": "FOOD-CURATION-F06",
+      "scenario": "individual_no_verified_contact_ai_auto_yes",
+      "description": "개별 식당(INDIVIDUAL_RESTAURANT) + 검증된 연락처 없음 → AI_AUTO=YES 시도",
+      "input": {
+        "entity_type": "INDIVIDUAL_RESTAURANT",
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "phoneno": null,
+        "contact_status": "NO_CONTACT",
+        "ai_auto_food_ready": true
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-8: AI_AUTO GATE-3 (contact_ready required for INDIVIDUAL)",
+      "fail_condition": "INDIVIDUAL + no verified contact → AI_AUTO must be NO",
+      "rationale": "검증 안 된 연락처로 AI가 식당을 추천하면 여행자가 갔을 때 영업 여부 확인 불가."
+    },
+    {
+      "id": "FOOD-CURATION-F07",
+      "scenario": "verified_mobile_contact_ai_auto_excluded_by_format",
+      "description": "MOBILE_VERIFIED_DIRECT_CONTACT 상태의 entity를 phone format(010-)만으로 AI_AUTO 제외",
+      "input": {
+        "entity_type": "INDIVIDUAL_RESTAURANT",
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "phoneno": "010-1234-5678",
+        "is_mobile_phone": true,
+        "manual_contact_status": "MOBILE_VERIFIED_DIRECT_CONTACT",
+        "ai_auto_food_ready": false,
+        "ai_auto_reason": "PHONE_NOT_LANDLINE"
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-9: PHONE_FORMAT_AS_QUALITY_GATE=FORBIDDEN; MOBILE_VERIFIED_ACCEPTED=YES",
+      "fail_condition": "MOBILE_VERIFIED_DIRECT_CONTACT entity should be AI_AUTO=YES if nav_ready",
+      "rationale": "직접 확인된 mobile = valid contact. 형식(010)으로 AI_AUTO 제외는 정책 위반."
+    },
+    {
+      "id": "FOOD-CURATION-F08",
+      "scenario": "collective_entity_individual_phone_gate_applied",
+      "description": "Collective entity(시장 매대, 복합 식당 구역)에 개별 식당 phone gate(전화 없음 → 제외) 동일 적용",
+      "input": {
+        "entity_type": "COLLECTIVE_MARKET_STALL",
+        "publication_status": "PUBLIC_SPECIAL_PURPOSE",
+        "phoneno": null,
+        "exclude_reason": "NO_VERIFIABLE_PHONE"
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-10: COLLECTIVE_PHONE_GATE=INDIVIDUAL_PHONE_GATE와 동일 적용 금지",
+      "fail_condition": "COLLECTIVE entity excluded solely due to phone gate",
+      "rationale": "시장 매대·집합 식당 구역은 개별 전화 없는 것이 정상. phone gate는 INDIVIDUAL에만 적용."
+    },
+    {
+      "id": "FOOD-CURATION-F09",
+      "scenario": "publication_ready_equals_ai_auto",
+      "description": "PUBLICATION_READY 상태를 AI_AUTO_FOOD_READY와 자동으로 동일시하여 모든 PUBLIC entity를 AI_AUTO=YES로 설정",
+      "input": {
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "ai_auto_food_ready": true,
+        "contact_status": "NO_CONTACT",
+        "latitude": null,
+        "longitude": null
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-8: PUBLICATION_READY_DISTINCT_FROM_AI_AUTO",
+      "fail_condition": "PUBLIC + no contact + no coord → AI_AUTO must be NO",
+      "rationale": "PUBLIC은 보여주는 기준, AI_AUTO는 자동 배치 기준. 추가 gate 없이 동일시 금지."
+    },
+    {
+      "id": "FOOD-CURATION-F10",
+      "scenario": "missing_coord_individual_ai_auto_yes",
+      "description": "lat/lon 없는 INDIVIDUAL entity → AI_AUTO=YES 시도",
+      "input": {
+        "entity_type": "INDIVIDUAL_RESTAURANT",
+        "publication_status": "PUBLIC_STRONG",
+        "phoneno": "064-123-4567",
+        "latitude": null,
+        "longitude": null,
+        "ai_auto_food_ready": true
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-11: MISSING_OR_INVALID_NAVIGATION → AI_AUTO=NO",
+      "fail_condition": "INDIVIDUAL + no lat/lon → AI_AUTO must be NO",
+      "rationale": "좌표 없이 AI가 일정에 포함하면 지도 표시·경로 안내 불가."
+    },
+    {
+      "id": "FOOD-CURATION-F11",
+      "scenario": "underserved_region_weak_entity_forced_public",
+      "description": "권역 내 식당 수가 적다는 이유로 weak evidence entity를 PUBLIC으로 강제 승격",
+      "input": {
+        "publication_status": "PUBLIC_GOOD_CHOICE",
+        "why_recommend": ["LOCAL_SIGNATURE"],
+        "why_recommend_detail": [{"code": "LOCAL_SIGNATURE", "strength": "WEAK", "evidence": "메뉴만 있음"}],
+        "region_public_count": 1,
+        "forced_include_reason": "UNDERSERVED_REGION_COVERAGE"
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-7: UNDERSERVED_REGION_FORCED_INCLUDE=FORBIDDEN + RULE-6: QUOTA_BASED_SELECTION=FORBIDDEN",
+      "fail_condition": "WEAK evidence entity promoted solely for regional coverage",
+      "rationale": "underserved region은 수집 gap·미래 우선순위. 약한 식당 강제 포함은 품질 훼손."
+    },
+    {
+      "id": "FOOD-CURATION-F12",
+      "scenario": "manual_rating_case_global_threshold_created",
+      "description": "한 식당의 수동 판정 사례(예: Naver 4.5점 보유 식당을 PUBLIC)를 기반으로 전역 rating threshold 생성",
+      "input": {
+        "manual_decision": "USER_MANUAL_CURATION_DECISION",
+        "entity": "specific_restaurant",
+        "evidence": "Naver rating 4.5",
+        "derived_rule": "naver_rating >= 4.5 → auto_public = true"
+      },
+      "expected_verdict": "FAIL",
+      "policy_rule": "RULE-13: MANUAL_CASE_TO_GLOBAL_RULE=FORBIDDEN + RULE-14: EXTERNAL_REPUTATION_POLICY=NOT_YET_ESTABLISHED",
+      "fail_condition": "global threshold created from single manual case",
+      "rationale": "수동 결정은 entity-specific. 단일 사례에서 전역 rating 기준 생성은 미검증 정책 도입."
+    }
+  ],
+
+  "d_code_audit_result": {
+    "source": "jeju_food_final_qa_80d67da",
+    "D_CODE_PUBLIC_COUNT": 35,
+    "D_CODE_ONLY_WHY_RECOMMEND_COUNT": 5,
+    "D_CODE_WITH_OTHER_STRONG_REASON_COUNT": 30,
+    "d_code_only_entities": [
+      {"contentsid": "CNTS_000000000020421", "name": "미영이네", "evidence": "소개문 '소문난'"},
+      {"contentsid": "CNTS_200000000008044", "name": "아줄레주", "evidence": "소개문 '유명한'"},
+      {"contentsid": "CNTS_200000000012635", "name": "파라토도스", "evidence": "소개문 '유명한'"},
+      {"contentsid": "CNTS_300000000013071", "name": "이재모피자 제주점", "evidence": "소개문 '유명한'"},
+      {"contentsid": "CNTS_300000000013080", "name": "프릳츠 제주성산점", "evidence": "소개문 '유명한'"}
+    ],
+    "verdict": "JEJU_FOOD_TARGETED_CORRECTION_REQUIRED = YES",
+    "impact": "LOW (5/260 = 1.9%, MODERATE strength only, official source origin)",
+    "common_policy_action": "LOCAL_REPUTATION = UNVERIFIED_OPTIONAL_FUTURE_SIGNAL (핵심 근거 승격 금지)"
+  },
+
+  "safety_check": {
+    "EXTERNAL_API_CALLS": 0,
+    "WEB_SCRAPING": 0,
+    "JEJU_DATA_CHANGE": 0,
+    "BUSAN_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "DB_CHANGE": 0,
+    "SECRET_LEAK": 0
+  }
+}
