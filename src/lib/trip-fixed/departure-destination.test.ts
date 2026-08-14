@@ -277,7 +277,9 @@ test("page.tsx: 출발지를 검색 원점으로 쓰지 않는다", () => {
   // 둘 다 그날 기준점에서 오고, 출발지는 어느 쪽에도 들어가지 않는다.
   assert.match(pageSrc, /coordinate:\s*nearMeSearchCoordinate,/);
   assert.match(pageSrc, /start_coordinate:\s*\{ lat: dayStartCoordinate\.lat, lng: dayStartCoordinate\.lng \}/);
-  assert.match(pageSrc, /const dayStartCoordinate = currentCoordinate;/);
+  // 기준점 앞에 우선순위가 붙을 수 있다(숙박 지역 등). 이 guard 가 지키는 것은
+  // "그날 기준점이 currentCoordinate 사슬에서 온다" 이지 그 줄의 모양이 아니다.
+  assert.match(pageSrc, /const dayStartCoordinate = .*currentCoordinate;/);
   assert.doesNotMatch(pageSrc, /nearMeSearchCoordinate\s*=\s*departureCoord/);
   assert.doesNotMatch(pageSrc, /dayStartCoordinate\s*=\s*departureCoord/);
   assert.doesNotMatch(pageSrc, /currentCoordinate\s*=\s*departureCoord/);

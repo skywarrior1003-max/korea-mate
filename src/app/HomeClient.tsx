@@ -23,6 +23,7 @@ import CityQuickLinks from "@/components/CityQuickLinks";
 import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
 import { useLocale, useTranslations } from "next-intl";
+import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -660,6 +661,9 @@ export default function HomeClient() {
   const [showDeptSection, setShowDeptSection] = useState(false);
   const [showDeptWarning, setShowDeptWarning] = useState(false);
   const [deptDismissed,   setDeptDismissed]   = useState(false);
+  // 숙박 지역 — 선택 입력. 정확한 숙소가 아니라 공개 지역 프리셋 하나다.
+  const [stayArea,        setStayArea]        = useState("");
+  const [showStaySection, setShowStaySection] = useState(false);
   const deptSectionRef = useRef<HTMLDivElement>(null);
 
   // ── AI 일정 생성 ──────────────────────────────
@@ -670,6 +674,8 @@ export default function HomeClient() {
     const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: effectiveStyle, startLocation, arrivalTime });
     if (departurePlace) params.set("departurePlace", departurePlace);
     if (departureTime)  params.set("departureTime",  departureTime);
+    // 좌표가 아니라 프리셋 value 만 남긴다 — itinerary 가 같은 표에서 좌표를 되찾는다.
+    if (stayArea)       params.set("stayArea",       stayArea);
     // Pass arrival/departure coordinates so the scheduler can use per-day base_coordinate
     const arrivalOpt   = cityOptions.find(o => o.value === startLocation);
     const departureOpt = cityOptions.find(o => o.value === departurePlace);
@@ -1234,6 +1240,59 @@ export default function HomeClient() {
                       onChange={(e) => setDepartureTime(e.target.value)}
                       className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400"
                     />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* -- Optional: Stay Area -- */}
+            <div className="mt-3">
+              {!showStaySection ? (
+                <button
+                  type="button"
+                  onClick={() => setShowStaySection(true)}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold border border-dashed border-gray-300 text-gray-500 hover:border-orange-300 hover:text-orange-600 transition-all bg-transparent"
+                >
+                  <span>🛏️</span>
+                  <span>{tf("addStayArea")}</span>
+                  <span className="text-[10px] font-normal text-gray-400">{tf("addStayAreaNote")}</span>
+                </button>
+              ) : (
+                <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-4 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-black uppercase tracking-wider text-orange-700">
+                      {tf("stayAreaTitle")}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => { setShowStaySection(false); setStayArea(""); }}
+                      className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      {tf("stayAreaRemove")}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-gray-500 -mt-1">
+                    {tf("stayAreaHint")}
+                  </p>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-gray-600">{tf("stayAreaLabel")}</label>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {stayAreaOptions(city).map((area) => (
+                        <button
+                          key={area.value}
+                          type="button"
+                          onClick={() => setStayArea(area.value)}
+                          className={`px-3 py-2 rounded-lg text-xs font-bold text-left transition-all border ${
+                            stayArea === area.value
+                              ? "border-orange-400 bg-orange-100 text-orange-700"
+                              : "border-gray-200 bg-white text-gray-600 hover:border-orange-300"
+                          }`}
+                        >
+                          {area.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}

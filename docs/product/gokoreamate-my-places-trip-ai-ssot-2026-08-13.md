@@ -18,6 +18,7 @@
 > **rev.7 (2026-08-13, TASK-THIS-TRIP-SIMPLE-GUIDANCE-AND-OVERFLOW-01)** — This Trip 의 사용자 경험 계약을 §3-9 에 명시했다. CTA 문구, 1회성 2단계 안내, 사용자-facing 용어 금지, 넘침 안내의 단순성(§17-15).
 > **rev.8 (2026-08-13, TASK-SCHEDULER-EXPLICIT-SCHEDULE-WINDOW-FIX-AND-REAL-AI-CANARY-R2)** — 자동 추천 창과 사용자 지정 일정을 분리했다(§3-7 Invariant 4). 기본 21:00 때문에 19시 공연이 아침으로 밀리던 결함을 고쳤다(§17-16).
 > **rev.9 (2026-08-13, TASK-SCHEDULER-DEPARTURE-HARD-DESTINATION-01)** — §3-7 에 Invariant 5(출발 목적지)를 추가했다. 출발지는 검색 중심점이 아니라 마감시각까지 실제로 닿아야 하는 지점이며, process buffer 를 이동시간으로 이중 계산하지 않는다(§17-17).
+> **rev.10 (2026-08-13, TASK-TRIP-ACCOMMODATION-DAY-START-01)** — §3-7 에 Invariant 6(숙박 지역)을 추가했다. 선택 입력이며 다음 날 **시작점만** 정한다. 하루의 끝(숙소 복귀)은 별도 계약이 필요해 구현하지 않았다(§17-18).
 
 ---
 
@@ -288,6 +289,27 @@ lastPlace.end + travel(lastPlace → destination) ≤ requiredDestinationArrival
 > 목적지에 닿을 수 없으면 **사용자 지정 일정도 목적지 시각도 옮기지 않는다.** Invariant 3 과 같은 판정으로 충돌을 알린다.
 
 > 출발 좌표나 시각이 없으면 목적지를 만들지 않는다. 모르는 지점을 지어내지 않는다.
+
+#### Invariant 6 — 숙박 지역 (Day Start Continuity)
+
+> **숙박 지역은 호텔 예약 상품이 아니라, 여행자가 실제로 밤을 보내고 다음 날 아침 출발하는 위치를 스케줄러에 알려 주는 선택 입력이다.**
+
+```
+Day D 의 시작점 = D-1 밤을 덮는 숙박이 있으면 그 좌표
+                  (checkInDate < D ≤ checkOutDate)
+```
+
+> **선택 입력이다.** 넣지 않으면 기존 fallback(전날 마지막 배치 장소 → 도착지 → city fallback)이 그대로다. 일정 생성을 위해 숙박 입력을 요구하지 않는다.
+
+> **정확한 호텔이 아니라 공개 지역 프리셋이다.** 스케줄러가 쓰는 것은 조회 원점과 이동시간 구간뿐이라 건물 단위 좌표가 주는 이득이 없고, 사용자가 자는 정확한 위치를 URL·히스토리에 남기지 않는 편이 낫다. URL 에는 프리셋 값만 넣고 좌표는 화면에서 되찾는다.
+
+> **첫날은 바뀌지 않는다.** 그 전날 밤이 이 여행에 없다. 도착지가 그대로 시작점이다.
+
+> **가두지 않는다.** 시작점 하나를 정할 뿐 후보를 강제하지 않는다. This Trip·고정 일정·거리 점수는 그대로이며, 먼 장소를 골랐다면 이동시간을 확보해 그대로 배치한다.
+
+> **숙소 좌표는 외부 개인화 AI 에 보내지 않는다.** 스케줄러 내부 이동 계산용이다.
+
+> **하루의 끝은 아직 없다.** 숙소 복귀는 시각 없는 도착지인데 엔진에 그 개념이 없다. 없다고 21:00 같은 시각을 지어내면 사용자가 정한 적 없는 통금이 된다. **임의 복귀시각·fixed event 변환 금지** — 별도 end-location 계약이 필요하다.
 
 ### 3-8. This Trip 과다
 
@@ -1048,6 +1070,31 @@ live-AI canary 감사에서 재현된 결함이다.
 새 타입·새 제약 코드·새 숫자를 만들지 않았다. buffer 값(airport 60 / port 45 / bus_terminal 45 / train_station 30 / 기본 30)은 그대로 옮겼고 의미만 확정했다. 목적지는 체류 0 이며 내부 `event_id` 로만 식별해 일정 카드로 노출하지 않는다.
 
 회귀 테스트 18개: `src/lib/trip-fixed/departure-destination.test.ts`
+
+### 17-18. Invariant 6 구현 (2026-08-13, `TASK-TRIP-ACCOMMODATION-DAY-START-01`)
+
+다음 날 시작점이 "어제 마지막으로 들른 곳" 이었다. 해운대에서 자도 어제 저녁을 남포에서 먹었으면 오늘 아침이 남포에서 시작했다.
+
+합성 fixture (부산 2박3일 · Day1 부산역 15:00 도착 · Day2 영도 14:00 고정 · Day3 김해공항 17:00):
+
+```text
+숙박 미선택   Day1 부산역 → Day2 부산역 → Day3 부산역   권역 [station] / [station,nampo]
+숙박 해운대   Day1 부산역 → Day2 해운대 → Day3 해운대   권역 [haeundae]
+둘 다 영도 약속 14:00–16:00 유지 · 공항 도달 ✅ (15:46 / 15:49 vs 마감 16:00)
+```
+
+| 항목 | 내용 |
+|---|---|
+| 입력 | 선택. `stayArea` URL 파라미터 하나 — 프리셋 값만, 좌표는 직렬화하지 않는다 |
+| 후보 | `CITY_ARRIVAL_OPTIONS` 중 `downtown`·`tourist_area` 만. 도시명 분기 없음 |
+| 계약 | `stays[]` — 화면은 1개만 만들지만 helper 는 숙소 변경도 해석한다 |
+| 변경 지점 | `dayStartCoordinate = stayStartFor(stays, trip_date) ?? currentCoordinate` |
+| 미변경 | `SchedulerInput` · `/api/trip/plan` · `engine.ts` · 후보 공급 · 거리 점수 · AI |
+| 미구현 | 하루의 끝(숙소 복귀). Day1·Day2 END 는 검증되지 않았다 |
+
+`stays[]` 를 서버로 보내지 않는다. 화면이 날짜별 최종 좌표 하나만 계산해 기존 `start_coordinate` 계약을 그대로 쓴다.
+
+회귀 테스트 16개: `src/lib/trip-stay/stay-core.test.ts`
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 

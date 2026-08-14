@@ -929,6 +929,12 @@
     "deptWarnBody": "列車や飛行機の出発時間を教えていただければ、最終日に無理のない動線にします。",
     "deptWarnSkip": "入力せずに続ける",
     "addDepartureNote": "（任意 — 最終日をより安全に）",
+    "addStayArea": "宿泊エリアを追加",
+    "addStayAreaNote": "（任意 — 毎朝泊まった場所から）",
+    "stayAreaTitle": "🛏️ 任意：宿泊エリア",
+    "stayAreaRemove": "✕ 削除",
+    "stayAreaHint": "泊まるエリアを選んでください。2日目以降の朝はそこから始まります。",
+    "stayAreaLabel": "🛏️ どのエリアに泊まりますか？",
     "errNoDates": "開始日と終了日の両方を選んでください。"
   },
   "homeUi": {

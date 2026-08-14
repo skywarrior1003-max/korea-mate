@@ -32,6 +32,7 @@ import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
 import { planDayAnchors, mergeDayHints } from "@/lib/trip-fixed/anchor-build";
 import { buildDepartureDestination, isDepartureDestination } from "@/lib/trip-fixed/departure-destination";
+import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
 import { haversineKm } from "@/lib/geo";
@@ -364,6 +365,8 @@ async function generateWithNewApi(
   deptType?: string,
   arrivalCoord?: { lat: number; lng: number },
   departureCoord?: { lat: number; lng: number },
+  /** 숙박 지역. 없으면 예전 그대로 전날 마지막 장소에서 이어진다. */
+  stays?: TripStay[],
 ): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
@@ -494,7 +497,10 @@ async function generateWithNewApi(
     //
     // 공항은 닿아야 하는 곳이지 그 주변을 뒤져야 하는 곳이 아니다. 그래서 기준점은
     // 그대로 두고, 출발 좌표는 아래에서 목적지로만 실어 보낸다.
-    const dayStartCoordinate = currentCoordinate;
+    // 전날 밤을 덮는 숙박이 있으면 거기서 아침을 시작한다. 어제 저녁을 남포에서
+    // 먹었어도 해운대에서 잤으면 오늘은 해운대에서 출발한다.
+    // 숙박을 고르지 않았으면 stayStartFor 가 null 이고 예전 흐름 그대로다.
+    const dayStartCoordinate = stayStartFor(stays, trip_date) ?? currentCoordinate;
 
     // 마지막 날의 출발 목적지. 좌표나 시각이 없으면 null 이고 예전과 똑같이 돈다.
     const departureDestination = isLastDay
@@ -982,6 +988,9 @@ function ItineraryResult() {
   // TASK-060-B3D: transport point type from city-presets.ts — replaces fragile string matching
   const paramArrivalType   = searchParams.get("arrivalType")   || "";
   const paramDepartureType = searchParams.get("departureType") || "";
+  // 숙박 지역. 정확한 숙소가 아니라 공개 지역 프리셋의 value 만 URL 에 남는다.
+  // 좌표는 여기서 프리셋 표로 되찾으므로 lat/lng 를 다시 직렬화하지 않는다.
+  const paramStayArea      = searchParams.get("stayArea")      || "";
 
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
@@ -1314,7 +1323,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate))
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
               setDays(sanitizeDays(days));
               if (isFallback) setIsFallback(true);
@@ -1360,7 +1369,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord)
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate))
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
           setDays(sanitizeDays(days));
           if (isFallback) setIsFallback(true);

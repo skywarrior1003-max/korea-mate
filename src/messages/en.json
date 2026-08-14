@@ -929,6 +929,12 @@
     "deptWarnBody": "Add your train or flight departure time so we can avoid risky routes on your final day.",
     "deptWarnSkip": "Continue Without It",
     "addDepartureNote": "(optional — for a safer last day)",
+    "addStayArea": "Add Stay Area",
+    "addStayAreaNote": "(optional — so each morning starts where you slept)",
+    "stayAreaTitle": "🛏️ Optional: Stay Area",
+    "stayAreaRemove": "✕ Remove",
+    "stayAreaHint": "Pick the area you're staying in. Every morning after the first will start from there.",
+    "stayAreaLabel": "🛏️ Which area are you staying in?",
     "errNoDates": "Please select both start and end travel dates."
   },
   "homeUi": {

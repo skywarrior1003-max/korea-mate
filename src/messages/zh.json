@@ -929,6 +929,12 @@
     "deptWarnBody": "告诉我们你的火车或航班出发时间，最后一天就能避开赶时间的路线。",
     "deptWarnSkip": "不填，继续",
     "addDepartureNote": "（可选 — 让最后一天更从容）",
+    "addStayArea": "添加住宿区域",
+    "addStayAreaNote": "（可选 — 让每天早上从住处出发）",
+    "stayAreaTitle": "🛏️ 可选：住宿区域",
+    "stayAreaRemove": "✕ 删除",
+    "stayAreaHint": "选择你住宿的区域。从第二天起，每天早上都从那里开始。",
+    "stayAreaLabel": "🛏️ 你住在哪个区域？",
     "errNoDates": "请选择出发日期和返回日期。"
   },
   "homeUi": {
