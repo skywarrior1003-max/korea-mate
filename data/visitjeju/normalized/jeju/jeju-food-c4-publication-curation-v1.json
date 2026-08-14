@@ -9,19 +9,19 @@
   "SOURCE_UNIVERSE": 1870,
   "ORIGINAL_POSITIVE_POOL": 891,
   "ORIGINAL_TIER_A": 638,
-  "PUBLICATION_READY_UNIQUE_COUNT": 261,
+  "PUBLICATION_READY_UNIQUE_COUNT": 260,
   "PUBLICATION_RANGE_ASSESSMENT": "APPROPRIATE",
   "pub_status_distribution": {
-    "HOLD_WEAK_EVIDENCE": 630,
+    "HOLD_WEAK_EVIDENCE": 631,
     "PUBLIC_STRONG": 78,
     "PUBLIC_GOOD_CHOICE": 150,
-    "PUBLIC_SPECIAL_PURPOSE": 33,
+    "PUBLIC_SPECIAL_PURPOSE": 32,
     "REFERENCE_ONLY": 904,
     "REVIEW_REQUIRED": 75
   },
   "BAEKNYEON_AUTO_FINAL_INCLUDE": 0,
   "AI_AUTO_FOOD_READY": 223,
-  "publication_checksum": "bb473bb0a467f53d0357f1ed",
+  "publication_checksum": "5f68d1eb0a4f11471a189873",
   "records": [
     {
       "contentsid": "CNTS_000000000000785",
@@ -3661,7 +3661,13 @@
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
       "ai_auto_food_ready": false,
-      "ai_auto_reason": "PHONE_NOT_LANDLINE"
+      "ai_auto_reason": "PHONE_NOT_LANDLINE",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "010-9090-3509 사용자 확인. 우도 소규모 개인 운영 식당, 모바일 직접 연락처 인정. 원 phoneno(source) 동일이므로 verified_phoneno 유지.",
+      "manual_contact_status": "MOBILE_VERIFIED_DIRECT_CONTACT",
+      "manual_business_status": "CURRENT_BUSINESS_VERIFIED"
     },
     {
       "contentsid": "CNTS_000000000018943",
@@ -12577,7 +12583,15 @@
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
       "ai_auto_food_ready": false,
-      "ai_auto_reason": "PHONE_NOT_LANDLINE"
+      "ai_auto_reason": "PHONE_NOT_LANDLINE",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 Google Business 화면에서 직접 확인: 현재 영업 중, 주소 존재, 전화번호 064-784-1312, 업체 identity 확인. SOURCE phoneno(010-2691-5862) 불변, 검증된 연락처는 manual_verified_phoneno에만 기록. rating/review 수집 없음. UNRESOLVED 해소.",
+      "manual_verified_phoneno": "064-784-1312",
+      "source_phoneno_original": "010-2691-5862",
+      "manual_contact_status": "VERIFIED_DIRECT_CONTACT",
+      "manual_business_status": "CURRENT_BUSINESS_VERIFIED"
     },
     {
       "contentsid": "CNTS_000000000022563",
@@ -16788,7 +16802,7 @@
       "latitude": 33.511714,
       "longitude": 126.5260773,
       "original_tier": "COLLECTIVE",
-      "publication_status": "PUBLIC_SPECIAL_PURPOSE",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
       "publication_reason": "market_food_experience",
       "why_recommend": [
         "LOCAL_SIGNATURE",
@@ -16827,7 +16841,13 @@
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
       "ai_auto_food_ready": false,
-      "ai_auto_reason": "SPECIAL_MANUAL_CURATION"
+      "ai_auto_reason": "SPECIAL_MANUAL_CURATION",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 외부 business 화면에서 매우 낮은 visible reputation evidence 확인. \"적게 보여줘도 신뢰할 수 있는 Food Guide\" 원칙. 이 사례로 전역 rating threshold 생성하지 않음. Source Universe 보존. PUBLICATION 제외, HOLD_WEAK_EVIDENCE로 상태 전환.",
+      "manual_contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "manual_business_status": "HOLD_BY_USER_DECISION"
     },
     {
       "contentsid": "CNTS_200000000012626",
@@ -32395,7 +32415,13 @@
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
       "ai_auto_food_ready": false,
-      "ai_auto_reason": "SPECIAL_MANUAL_CURATION"
+      "ai_auto_reason": "SPECIAL_MANUAL_CURATION",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 외부 business 정보 직접 확인 후 포함 결정. 이 사례의 평점 기준을 다른 entity에 자동 적용하지 않음. Publication 유지.",
+      "manual_contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "manual_business_status": "USER_MANUAL_ACCEPTED"
     },
     {
       "contentsid": "CNTS_300000000013991",
@@ -33626,7 +33652,15 @@
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
       "ai_auto_food_ready": false,
-      "ai_auto_reason": "MISSING_COORD"
+      "ai_auto_reason": "MISSING_COORD",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 확인: 현재 entity 존재 인정, COLLECTIVE_FOOD_CENTER로 분류. 연락처 없다는 이유만으로 publication에서 제외하지 않음. QA_NOTE: source intro는 단일 식당 형태 묘사지만 USER_MANUAL_CURATION_DECISION이 우선. 원 source fact 삭제 없음. AI_AUTO 최종 재계산은 DEFERRED_TO_FINAL_QA.",
+      "manual_entity_type": "COLLECTIVE_FOOD_CENTER",
+      "manual_entity_type_note": "USER_MANUAL_CURATION_DECISION: COLLECTIVE_FOOD_CENTER. QA_NOTE: source intro 단일 식당 묘사 존재, manual decision 우선 적용.",
+      "manual_contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "manual_business_status": "USER_MANUAL_ACCEPTED"
     },
     {
       "contentsid": "CNTS_300000000015591",
@@ -75035,5 +75069,10 @@
       "ai_auto_food_ready": false,
       "ai_auto_reason": "NOT_PUBLICATION_READY"
     }
-  ]
+  ],
+  "manual_corrections_applied": true,
+  "manual_corrections_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+  "manual_corrections_date": "2026-08-14",
+  "PUBLICATION_READY_BEFORE_MANUAL_CORRECTION": 261,
+  "PUBLICATION_READY_AFTER_MANUAL_CORRECTION": 260
 }

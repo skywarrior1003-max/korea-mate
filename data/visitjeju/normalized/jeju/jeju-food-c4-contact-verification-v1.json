@@ -4,9 +4,9 @@
   "ssot_commit": "f9af625",
   "verification_date": "2026-08-14",
   "source_universe_count": 1870,
-  "publication_ready_count": 261,
+  "publication_ready_count": 260,
   "direct_contact_present_count": 258,
-  "direct_contact_missing_count": 3,
+  "direct_contact_missing_count": 2,
   "contact_type_breakdown": {
     "landline": 159,
     "voip_050": 91,
@@ -15,21 +15,19 @@
     "no_phone": 3
   },
   "not_ai_auto_breakdown": {
-    "SPECIAL_MANUAL_CURATION": 33,
+    "SPECIAL_MANUAL_CURATION": 32,
     "MISSING_COORD": 3,
     "PHONE_NOT_LANDLINE": 2
   },
   "verification_targets": {
-    "p0_collective": 2,
+    "p0_collective": 1,
     "p1_individual_no_contact": 1,
     "p2_individual_mobile_only": 2
   },
   "verification_results": {
-    "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED": 2,
-    "ACTIVE_CONTACT_VERIFIED": 1,
-    "ACTIVE_NO_PUBLIC_CONTACT": 0,
-    "UNRESOLVED": 2,
-    "NOT_REQUIRED": 256
+    "NOT_REQUIRED": 256,
+    "ACTIVE_CONTACT_VERIFIED": 2,
+    "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED": 2
   },
   "blocked_sources": [
     {
@@ -47,7 +45,7 @@
     "SOURCE_UNIVERSE_DELETED": false,
     "EXTERNAL_LOOKUPS": "5 targeted only"
   },
-  "manifest_checksum": "11a97522061c286edf23e7ae",
+  "manifest_checksum": "95ec9ce46c700e90ee3ebca0",
   "records": [
     {
       "contentsid": "CNTS_000000000000991",
@@ -421,7 +419,12 @@
       "verification_priority": "P2",
       "verification_status": "ACTIVE_CONTACT_VERIFIED",
       "verification_source": "VISITJEJU_OFFICIAL + DININGCODE + TRIPLE_GUIDE + YEOGIYU",
-      "verification_note": "010-9090-3509 확인. VisitJeju 공식 페이지(contentsid=CNTS_000000000018942)에서 동일 전화번호 + 주소(우도면 우도해안길 440) + 영업시간(08:30~17:30) 확인. 다이닝코드, triple.guide, 여기유 등 복수 소스에서 동일 번호 일치. 우도 소규모 개인 운영 식당 특성상 모바일 번호 사용은 정상적. ACTIVE_CONTACT_VERIFIED."
+      "verification_note": "010-9090-3509 확인. VisitJeju 공식 페이지(contentsid=CNTS_000000000018942)에서 동일 전화번호 + 주소(우도면 우도해안길 440) + 영업시간(08:30~17:30) 확인. 다이닝코드, triple.guide, 여기유 등 복수 소스에서 동일 번호 일치. 우도 소규모 개인 운영 식당 특성상 모바일 번호 사용은 정상적. ACTIVE_CONTACT_VERIFIED.",
+      "contact_type_detail": "MOBILE_VERIFIED_DIRECT_CONTACT",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "010-9090-3509 사용자 확인. 우도 소규모 개인 운영 식당, 모바일 직접 연락처 인정. 원 phoneno(source) 동일이므로 verified_phoneno 유지."
     },
     {
       "contentsid": "CNTS_000000000018958",
@@ -1689,14 +1692,20 @@
       "publication_status": "PUBLIC_GOOD_CHOICE",
       "phoneno": "010-2691-5862",
       "contact_status": "DIRECT_CONTACT_PRESENT",
-      "contact_type": "MOBILE",
+      "contact_type": "LANDLINE",
       "entity_type": "INDIVIDUAL_RESTAURANT",
       "ai_auto_food_ready": false,
       "ai_auto_reason": "PHONE_NOT_LANDLINE",
       "verification_priority": "P2",
-      "verification_status": "UNRESOLVED",
+      "verification_status": "ACTIVE_CONTACT_VERIFIED",
       "verification_source": "WEB_SEARCH_TARGETED_NAVER",
-      "verification_note": "010-2691-5862 존재하나 current status 불명. 2회 targeted web search 수행: (1) \"방모루 구좌 제주 해산물 전화번호\" (2) \"방모루 제주 구좌 해산물 restaurant Jeju\". \"방모루\" 상호로 검색 결과 미발견. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음. 구좌 소규모 해산물 전문점은 온라인 노출이 제한적일 수 있음. UNRESOLVED."
+      "verification_note": "010-2691-5862 존재하나 current status 불명. 2회 targeted web search 수행: (1) \"방모루 구좌 제주 해산물 전화번호\" (2) \"방모루 제주 구좌 해산물 restaurant Jeju\". \"방모루\" 상호로 검색 결과 미발견. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음. 구좌 소규모 해산물 전문점은 온라인 노출이 제한적일 수 있음. UNRESOLVED.",
+      "verified_phoneno": "064-784-1312",
+      "source_phoneno_original": "010-2691-5862",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 Google Business 화면에서 직접 확인: 현재 영업 중, 주소 존재, 전화번호 064-784-1312, 업체 identity 확인. SOURCE phoneno(010-2691-5862) 불변, 검증된 연락처는 manual_verified_phoneno에만 기록. rating/review 수집 없음. UNRESOLVED 해소."
     },
     {
       "contentsid": "CNTS_000000000022632",
@@ -2187,9 +2196,14 @@
       "ai_auto_food_ready": false,
       "ai_auto_reason": "SPECIAL_MANUAL_CURATION",
       "verification_priority": "P0",
-      "verification_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "verification_status": "HOLD_MANUAL_EXCLUDED_FROM_PUBLICATION",
       "verification_source": null,
-      "verification_note": "동문시장 야시장 내 개별 노점. 야시장 운영 중 포장마차 형태로 개인 전화번호 미게시가 일반적. 야시장 자체 번호(동문시장 대표번호)를 개별 식당 번호로 등재 금지 정책 적용."
+      "verification_note": "동문시장 야시장 내 개별 노점. 야시장 운영 중 포장마차 형태로 개인 전화번호 미게시가 일반적. 야시장 자체 번호(동문시장 대표번호)를 개별 식당 번호로 등재 금지 정책 적용.",
+      "publication_status_override": "HOLD_WEAK_EVIDENCE",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 외부 business 화면에서 매우 낮은 visible reputation evidence 확인. \"적게 보여줘도 신뢰할 수 있는 Food Guide\" 원칙. 이 사례로 전역 rating threshold 생성하지 않음. Source Universe 보존. PUBLICATION 제외, HOLD_WEAK_EVIDENCE로 상태 전환."
     },
     {
       "contentsid": "CNTS_200000000012626",
@@ -3498,7 +3512,11 @@
       "verification_priority": "P0",
       "verification_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
       "verification_source": null,
-      "verification_note": "동문시장 내 전통과자(오란다/과즐) 판매점. 시장 내 개별 판매점으로 공개 전화번호 미게시. Instagram(@chungchunoranda) 존재 확인(연산자 채널)이나 전화번호 직접 확인 불가. 시장/집합 엔티티로 COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED 적용."
+      "verification_note": "동문시장 내 전통과자(오란다/과즐) 판매점. 시장 내 개별 판매점으로 공개 전화번호 미게시. Instagram(@chungchunoranda) 존재 확인(연산자 채널)이나 전화번호 직접 확인 불가. 시장/집합 엔티티로 COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED 적용.",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 외부 business 정보 직접 확인 후 포함 결정. 이 사례의 평점 기준을 다른 entity에 자동 적용하지 않음. Publication 유지."
     },
     {
       "contentsid": "CNTS_300000000013991",
@@ -3577,13 +3595,17 @@
       "phoneno": null,
       "contact_status": "DIRECT_CONTACT_MISSING",
       "contact_type": null,
-      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "entity_type": "COLLECTIVE_FOOD_CENTER",
       "ai_auto_food_ready": false,
       "ai_auto_reason": "MISSING_COORD",
       "verification_priority": "P1",
-      "verification_status": "UNRESOLVED",
+      "verification_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
       "verification_source": "WEB_SEARCH_TARGETED_NAVER",
-      "verification_note": "제주 노형동 공항 근처 횟집. 2회 targeted web search 수행: (1) \"베테랑회센터 제주 전화번호 위치\" (2) \"베테랑회센터 제주 노형동 횟집 공항맛집\". 검색 결과에서 해당 상호 발견 불가. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음 → CLOSED 판정 금지. 현재 정보로는 UNRESOLVED. 좌표(MISSING_COORD)와 전화번호 모두 미보유로 추후 수동 확인 권장."
+      "verification_note": "제주 노형동 공항 근처 횟집. 2회 targeted web search 수행: (1) \"베테랑회센터 제주 전화번호 위치\" (2) \"베테랑회센터 제주 노형동 횟집 공항맛집\". 검색 결과에서 해당 상호 발견 불가. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음 → CLOSED 판정 금지. 현재 정보로는 UNRESOLVED. 좌표(MISSING_COORD)와 전화번호 모두 미보유로 추후 수동 확인 권장.",
+      "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+      "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
+      "manual_correction_date": "2026-08-14",
+      "manual_correction_note": "사용자 확인: 현재 entity 존재 인정, COLLECTIVE_FOOD_CENTER로 분류. 연락처 없다는 이유만으로 publication에서 제외하지 않음. QA_NOTE: source intro는 단일 식당 형태 묘사지만 USER_MANUAL_CURATION_DECISION이 우선. 원 source fact 삭제 없음. AI_AUTO 최종 재계산은 DEFERRED_TO_FINAL_QA."
     },
     {
       "contentsid": "CNTS_300000000015591",
@@ -4486,5 +4508,10 @@
       "verification_source": null,
       "verification_note": null
     }
-  ]
+  ],
+  "manual_corrections_applied": true,
+  "manual_corrections_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+  "manual_corrections_date": "2026-08-14",
+  "PUBLICATION_READY_BEFORE_MANUAL_CORRECTION": 261,
+  "PUBLICATION_READY_AFTER_MANUAL_CORRECTION": 260
 }

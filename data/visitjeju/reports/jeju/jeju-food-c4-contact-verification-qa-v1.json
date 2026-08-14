@@ -3,13 +3,13 @@
   "ssot_commit": "f9af625",
   "verification_date": "2026-08-14",
   "summary": {
-    "TOTAL_PUBLICATION_READY": 261,
+    "TOTAL_PUBLICATION_READY": 260,
     "DIRECT_CONTACT_PRESENT": 258,
-    "DIRECT_CONTACT_MISSING": 3,
+    "DIRECT_CONTACT_MISSING": 2,
     "VERIFICATION_TARGETS": 5,
-    "ACTIVE_CONTACT_VERIFIED": 1,
+    "ACTIVE_CONTACT_VERIFIED": 2,
     "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED": 2,
-    "UNRESOLVED": 2,
+    "UNRESOLVED": 0,
     "ACTIVE_NO_PUBLIC_CONTACT": 0,
     "CLOSED_CONFIRMED": 0,
     "LIKELY_STALE_OR_CLOSED": 0
@@ -29,14 +29,14 @@
     {
       "entity": "베테랑회센터",
       "contentsid": "CNTS_300000000014742",
-      "issue": "UNRESOLVED - no phone, no coord. Targeted search failed to find entity.",
-      "recommendation": "Manual Naver Place or local phone directory lookup by operator."
+      "issue": "COLLECTIVE_FOOD_CENTER 분류는 USER_MANUAL_CURATION_DECISION. source intro는 단일 식당 묘사(단체석/주차장 안내). AI_AUTO 최종 판단은 DEFERRED_TO_FINAL_QA.",
+      "status": "DEFERRED_TO_FINAL_QA"
     },
     {
       "entity": "방모루",
       "contentsid": "CNTS_000000000022498",
-      "issue": "UNRESOLVED - mobile phone 010-2691-5862 currency unconfirmed.",
-      "recommendation": "Manual Naver Place lookup to confirm 방모루 구좌 is still operating."
+      "issue": "verified_phoneno=064-784-1312 (source: Google Business, user-manual). Source phoneno=010-2691-5862 보존. AI_AUTO 최종 판단 (landline verified → PHONE_NOT_LANDLINE 사유 해소 여부)은 DEFERRED_TO_FINAL_QA.",
+      "status": "DEFERRED_TO_FINAL_QA"
     }
   ],
   "qa_records": [
@@ -106,5 +106,8 @@
       "note": "제주 노형동 공항 근처 횟집. 2회 targeted web search 수행: (1) \"베테랑회센터 제주 전화번호 위치\" (2) \"베테랑회센터 제주 노형동 횟집 공항맛집\". 검색 결과에서 해당 상호 발견 불가. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음 → CLOSED 판정 금지. 현재 정보로는 UNRESOLVED. 좌표(MISSING_COORD)와 전화번호 모두 미보유로 추후 수동 확인 권장."
     }
   ],
-  "manifest_checksum": "11a97522061c286edf23e7ae"
+  "manifest_checksum": "95ec9ce46c700e90ee3ebca0",
+  "manual_corrections_applied": true,
+  "manual_corrections_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+  "manual_corrections_date": "2026-08-14"
 }

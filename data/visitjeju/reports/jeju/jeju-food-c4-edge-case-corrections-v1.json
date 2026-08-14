@@ -1,0 +1,84 @@
+{
+  "task_id": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
+  "correction_date": "2026-08-14",
+  "provenance": "USER_MANUAL_CURATION_DECISION",
+  "ssot_before": {
+    "trusted_curation": "f9af625",
+    "contact_verification": "45f2555",
+    "official_curation": "d69f16e",
+    "common_policy": "dc6f9be563983d369f400e4e8b0eea139f82da7c"
+  },
+  "publication_ready_before": 261,
+  "publication_ready_after": 260,
+  "source_universe_unchanged": 1870,
+  "ai_auto_final_recalculation": "DEFERRED_TO_FINAL_QA",
+  "corrections": [
+    {
+      "contentsid": "CNTS_000000000018942",
+      "title": "우도해녀식당",
+      "publication_change": null,
+      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "contact_status": "MOBILE_VERIFIED_DIRECT_CONTACT",
+      "business_status": "CURRENT_BUSINESS_VERIFIED",
+      "cv_status": "ACTIVE_CONTACT_VERIFIED",
+      "note": "010-9090-3509 사용자 확인. 우도 소규모 개인 운영 식당, 모바일 직접 연락처 인정. 원 phoneno(source) 동일이므로 verified_phoneno 유지.",
+      "provenance": "USER_MANUAL_CURATION_DECISION"
+    },
+    {
+      "contentsid": "CNTS_000000000022498",
+      "title": "방모루",
+      "publication_change": null,
+      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "contact_status": "VERIFIED_DIRECT_CONTACT",
+      "business_status": "CURRENT_BUSINESS_VERIFIED",
+      "cv_status": "ACTIVE_CONTACT_VERIFIED",
+      "note": "사용자 Google Business 화면에서 직접 확인: 현재 영업 중, 주소 존재, 전화번호 064-784-1312, 업체 identity 확인. SOURCE phoneno(010-2691-5862) 불변, 검증된 연락처는 manual_verified_phoneno에만 기록. rating/review 수집 없음. UNRESOLVED 해소.",
+      "provenance": "USER_MANUAL_CURATION_DECISION"
+    },
+    {
+      "contentsid": "CNTS_300000000014742",
+      "title": "베테랑회센터",
+      "publication_change": null,
+      "entity_type": "COLLECTIVE_FOOD_CENTER",
+      "contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "business_status": "USER_MANUAL_ACCEPTED",
+      "cv_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "note": "사용자 확인: 현재 entity 존재 인정, COLLECTIVE_FOOD_CENTER로 분류. 연락처 없다는 이유만으로 publication에서 제외하지 않음. QA_NOTE: source intro는 단일 식당 형태 묘사지만 USER_MANUAL_CURATION_DECISION이 우선. 원 source fact 삭제 없음. AI_AUTO 최종 재계산은 DEFERRED_TO_FINAL_QA.",
+      "provenance": "USER_MANUAL_CURATION_DECISION"
+    },
+    {
+      "contentsid": "CNTS_200000000012612",
+      "title": "야시장맛통령",
+      "publication_change": "HOLD_WEAK_EVIDENCE",
+      "entity_type": "COLLECTIVE_MARKET_STALL",
+      "contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "business_status": "HOLD_BY_USER_DECISION",
+      "cv_status": "HOLD_MANUAL_EXCLUDED_FROM_PUBLICATION",
+      "note": "사용자 외부 business 화면에서 매우 낮은 visible reputation evidence 확인. \"적게 보여줘도 신뢰할 수 있는 Food Guide\" 원칙. 이 사례로 전역 rating threshold 생성하지 않음. Source Universe 보존. PUBLICATION 제외, HOLD_WEAK_EVIDENCE로 상태 전환.",
+      "provenance": "USER_MANUAL_CURATION_DECISION"
+    },
+    {
+      "contentsid": "CNTS_300000000013979",
+      "title": "청춘이오란다 동문시장본점 탑동",
+      "publication_change": null,
+      "entity_type": "COLLECTIVE_MARKET_STALL",
+      "contact_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "business_status": "USER_MANUAL_ACCEPTED",
+      "cv_status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "note": "사용자 외부 business 정보 직접 확인 후 포함 결정. 이 사례의 평점 기준을 다른 entity에 자동 적용하지 않음. Publication 유지.",
+      "provenance": "USER_MANUAL_CURATION_DECISION"
+    }
+  ],
+  "safety": {
+    "NEW_BULK_EXTERNAL_LOOKUP": 0,
+    "REVIEW_SCRAPING": 0,
+    "GLOBAL_RATING_THRESHOLD_CREATED": 0,
+    "SOURCE_UNIVERSE_CHANGE": 0,
+    "COMMON_CHANGE": 0,
+    "BUSAN_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "SECRET_LEAK": 0
+  }
+}
