@@ -413,7 +413,8 @@
     "errNetwork": "ネットワークエラーです — 接続を確認してもう一度お試しください。",
     "errLoadFailed": "旅程を読み込めませんでした: {message}",
     "errGenerateFailed": "旅程を作成できませんでした: {message}",
-    "errLoadSavedFailed": "保存された旅程を読み込めませんでした: {message}"
+    "errLoadSavedFailed": "保存された旅程を読み込めませんでした: {message}",
+    "checkinAt": "チェックイン {time}"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

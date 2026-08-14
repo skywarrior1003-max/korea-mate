@@ -66,14 +66,32 @@ function isUsable(s: TripStay): boolean {
 export function buildSingleStay(
   city: string, areaValue: string | null | undefined,
   startDate: string, endDate: string,
+  /**
+   * 지도에서 확인된 정확한 숙소. 있으면 지역 중심 대신 이 좌표를 쓴다.
+   *
+   * 지역은 구의 무게중심이라 실제로 자는 건물과 수 km 떨어질 수 있다. 확인된
+   * 좌표가 있는데도 중심을 쓰면 아침 출발지가 틀린 채로 하루가 짜인다.
+   *
+   * 여기서 좌표를 만들지는 않는다 — 넘어온 것만 쓰고, 없으면 예전 그대로다.
+   */
+  exactCoordinate?: { lat: number; lng: number } | null,
 ): TripStay[] {
   const area = findStayArea(city, areaValue);
-  if (!area) return [];
+  const usableExact =
+    exactCoordinate != null &&
+    typeof exactCoordinate.lat === "number" && Number.isFinite(exactCoordinate.lat) &&
+    typeof exactCoordinate.lng === "number" && Number.isFinite(exactCoordinate.lng) &&
+    !(exactCoordinate.lat === 0 && exactCoordinate.lng === 0);
+
+  // 정확한 좌표만 있고 지역을 안 골랐어도 숙박은 성립한다.
+  if (!area && !usableExact) return [];
+
   const stay: TripStay = {
-    coordinate:   { lat: area.lat, lng: area.lng },
+    coordinate:   usableExact ? { lat: exactCoordinate!.lat, lng: exactCoordinate!.lng }
+                              : { lat: area!.lat, lng: area!.lng },
     checkInDate:  startDate,
     checkOutDate: endDate,
-    displayName:  area.label,
+    ...(area ? { displayName: area.label } : {}),
   };
   return isUsable(stay) ? [stay] : [];
 }

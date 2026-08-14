@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useTranslations, useLocale } from "next-intl";
-import { useState, useEffect, useCallback, useRef, Suspense } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, Suspense } from "react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
 import { PLANNER_EVENT } from "@/lib/plannerStore";
@@ -32,6 +32,13 @@ import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey, isUserSpotSource } from "@/lib/place-identity";
 import { planDayAnchors, mergeDayHints } from "@/lib/trip-fixed/anchor-build";
 import { buildDepartureDestination, isDepartureDestination } from "@/lib/trip-fixed/departure-destination";
+import {
+  ACCOMMODATION_CHECKIN_EVENT_ID, CHECKIN_DURATION_MINUTES,
+  checkinFixedEvent, exactStayCoordinate, exactStayName,
+  isAccommodationCheckin, planCheckin,
+  type PlacedStop,
+} from "@/lib/trip-stay/checkin-core";
+import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
@@ -82,6 +89,13 @@ interface Place {
   title?:    string;
   address?:  string;
   note?:     string;
+  /**
+   * 이 항목이 숙소인가.
+   *
+   * optional 이라 이 필드가 없던 기존 저장 일정도 그대로 열린다. 숙소라는
+   * 사실 자체는 감출 것이 아니다 — 감추는 것은 몇 시에 들어갔는가다.
+   */
+  isAccommodation?: true;
 }
 
 interface Day {
@@ -214,6 +228,8 @@ interface ApiScheduledItem {
   start_time:   string;
   end_time:     string;
   stay_minutes: number;
+  /** 사용자가 정한 약속인가. 엔진이 이미 내려주던 값이라 읽기만 더한다. */
+  is_fixed?:    boolean;
 }
 
 interface ApiTripPlanResponse {
@@ -367,7 +383,15 @@ async function generateWithNewApi(
   departureCoord?: { lat: number; lng: number },
   /** 숙박 지역. 없으면 예전 그대로 전날 마지막 장소에서 이어진다. */
   stays?: TripStay[],
-): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean }> {
+  /**
+   * 지도에서 확인된 숙소. 첫날 체크인을 넣는 데만 쓴다.
+   *
+   * 좌표는 이 함수 안에서 이동 계산에만 쓰이고 결과에 남지 않는다. 이름은
+   * 결과에 남는다 — 호텔 이름은 식당 이름과 같은 종류의 공개 가능한 장소
+   * 정보이고, 공유받은 사람이 어디에 묵었는지 알 수 있어야 한다.
+   */
+  exactStay?: { coordinate: { lat: number; lng: number }; name: string | null } | null,
+): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
 
@@ -496,6 +520,16 @@ async function generateWithNewApi(
   });
 
 
+  /**
+   * 사용자가 실제로 숙소에 들어가는 시각.
+   *
+   * 저장되는 일정(`days`)에 넣지 않는다. 그 JSON 은 공유 링크로 그대로
+   * 나가고, 어디서 자는지에 더해 몇 시에 거기 있는지까지 알려 주는 것은
+   * 장소 이름을 알려 주는 것과 다른 이야기다. 이름은 남기고 시각은 내
+   * 기기에만 둔다.
+   */
+  let checkinTime: string | null = null;
+
   for (let i = 0; i < dates.length; i++) {
     const trip_date  = dates[i]!;
     const start_time = i === 0 ? (arrTime ?? "09:00") : "09:00";
@@ -590,33 +624,37 @@ async function generateWithNewApi(
       continue;
     }
 
+    // 두 번 부를 수 있으므로 요청 본문을 한 번만 만든다. 두 호출이 조금이라도
+    // 달라지면 비교가 의미를 잃는다 — 달라지는 것은 fixed_events 하나뿐이다.
+    const basePlanBody = {
+      coordinate:       nearMeSearchCoordinate,
+      start_coordinate: { lat: dayStartCoordinate.lat, lng: dayStartCoordinate.lng },
+      timestamp,
+      trip_date,
+      start_time,
+      end_time,
+      pace,
+      event_coords:       evtCoords.length         > 0 ? evtCoords         : undefined,
+      cart_coord_hints:   todayCartHints.length    > 0 ? todayCartHints    : undefined,
+      anchors:            todayAnchors.length      > 0 ? todayAnchors      : undefined,
+      // 출발 목적지. 기존 fixed_events 채널 그대로다 — 엔진이 이미 P2 에서
+      // 놓고, HC-8 이 "마지막 장소 → 여기" 이동시간을 잰다.
+      fixed_events:       departureDestination ? [departureDestination.event] : undefined,
+      exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
+      city,
+      locale,
+      // Saved 취향 — 스코어러의 liked 카테고리 신호로만 쓰인다(강제 배치 아님)
+      liked_place_ids: likedSignals.liked_place_ids.length > 0
+        ? likedSignals.liked_place_ids : undefined,
+      // 같은 프로필을 모든 날짜에 그대로 넘긴다. 여기서 AI 를 부르지 않는다.
+      personalization_profile: personalizationProfile ?? undefined,
+    };
+
     try {
       const res = await fetch("/api/trip/plan", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({
-          coordinate:       nearMeSearchCoordinate,
-          start_coordinate: { lat: dayStartCoordinate.lat, lng: dayStartCoordinate.lng },
-          timestamp,
-          trip_date,
-          start_time,
-          end_time,
-          pace,
-          event_coords:       evtCoords.length         > 0 ? evtCoords         : undefined,
-          cart_coord_hints:   todayCartHints.length    > 0 ? todayCartHints    : undefined,
-          anchors:            todayAnchors.length      > 0 ? todayAnchors      : undefined,
-          // 출발 목적지. 기존 fixed_events 채널 그대로다 — 엔진이 이미 P2 에서
-          // 놓고, HC-8 이 "마지막 장소 → 여기" 이동시간을 잰다.
-          fixed_events:       departureDestination ? [departureDestination.event] : undefined,
-          exclude_place_ids:  usedPlaceIds.length      > 0 ? usedPlaceIds      : undefined,
-          city,
-          locale,
-          // Saved 취향 — 스코어러의 liked 카테고리 신호로만 쓰인다(강제 배치 아님)
-          liked_place_ids: likedSignals.liked_place_ids.length > 0
-            ? likedSignals.liked_place_ids : undefined,
-          // 같은 프로필을 모든 날짜에 그대로 넘긴다. 여기서 AI 를 부르지 않는다.
-          personalization_profile: personalizationProfile ?? undefined,
-        }),
+        body:    JSON.stringify(basePlanBody),
       });
 
       if (res.status === 409) {
@@ -635,7 +673,70 @@ async function generateWithNewApi(
         continue;
       }
 
-      const dayResult = await res.json() as ApiTripPlanResult;
+      let dayResult = await res.json() as ApiTripPlanResult;
+
+      // ── 체크인 2 차 계산 ────────────────────────────────────────────────
+      //
+      // 첫날에만, 그리고 지도에서 확인된 숙소가 있을 때만 한다. 마지막 날은
+      // 출발지가 최종 목적지이고, 짐을 들고 떠나는 날에 체크인을 또 넣으면
+      // 이중 제약이 된다.
+      //
+      // 17~18 시를 먼저 박고 일정을 맞추지 않는다. 위에서 만든 하루를 읽어
+      // **실제로 숙소에 닿을 수 있는 시각** 을 고르고, 그 자리에 넣어 다시
+      // 돌린다. 두 번째 호출이 실패하면 첫 번째 결과를 그대로 쓴다 — 체크인을
+      // 넣으려다 하루를 통째로 잃지 않는다.
+      if (i === 0 && !isLastDay && exactStay && (dayResult?.data?.kind === "scheduled" || dayResult?.data?.kind === "personalized")) {
+        const stops: PlacedStop[] = (dayResult.data.plan?.items ?? [])
+          .filter((it: ApiScheduledItem) => it.item_type !== "affiliate")
+          .map((it: ApiScheduledItem) => {
+            const key = it.place_id ?? it.event_id ?? "";
+            const pm  = dayResult.place_map?.[key];
+            const cc  = cartCoordByKey[key];
+            const lat = cc?.lat ?? pm?.lat, lng = cc?.lng ?? pm?.lng;
+            return {
+              start_time: it.start_time,
+              end_time:   it.end_time,
+              coordinate: (lat != null && lng != null) ? { lat, lng } : null,
+              is_fixed:   Boolean(it.is_fixed),
+            };
+          });
+
+        const plan = planCheckin(stops, exactStay.coordinate, end_time, CHECKIN_DURATION_MINUTES);
+        if (plan) {
+          checkinTime = plan.startTime;
+          try {
+            const res2 = await fetch("/api/trip/plan", {
+              method:  "POST",
+              headers: { "Content-Type": "application/json" },
+              body:    JSON.stringify({
+                ...basePlanBody,
+                fixed_events: [
+                  ...(departureDestination ? [departureDestination.event] : []),
+                  checkinFixedEvent(plan, exactStay.coordinate),
+                ],
+              }),
+            });
+            if (res2.ok) {
+              const second = await res2.json() as ApiTripPlanResult;
+              // 2 차가 장소를 잃으면 1 차를 쓴다. 체크인 하나 넣자고 오후를
+              // 깎지 않는다.
+              const count = (r: ApiTripPlanResult) =>
+                (r?.data?.plan?.items ?? []).filter((it: ApiScheduledItem) => it.place_id).length;
+              if ((second?.data?.kind === "scheduled" || second?.data?.kind === "personalized") &&
+                  count(second) >= count(dayResult)) {
+                dayResult = second;
+              } else {
+                checkinTime = null;
+              }
+            } else {
+              checkinTime = null;
+            }
+          } catch {
+            checkinTime = null;              // 두 번째 호출 실패는 조용히 넘긴다
+          }
+        }
+      }
+
       rawResults.push(dayResult);
 
       // Accumulate only actually-placed place_ids so future days exclude them
@@ -694,7 +795,7 @@ async function generateWithNewApi(
       // 출발 목적지는 스케줄러 제약이지 일정 카드가 아니다. 여기를 빼지 않으면
       // 화면에 이름 없는 관광지처럼 한 줄 생긴다.
       .filter(item => !isDepartureDestination(item))
-      .map(item => {
+      .map((item, itemIdx, arr) => {
         const key      = item.place_id ?? item.event_id ?? "";
         const cartFull = cartItemByKey[key];
         const display: PlaceDisplay = placeMap[key] ?? (cartFull ? {
@@ -714,6 +815,33 @@ async function generateWithNewApi(
           typeof item.place_id === "string" &&
           !item.place_id.startsWith("mock-") &&
           placeMap[item.place_id] !== undefined;
+        // ── 숙소 체크인 ──────────────────────────────────────────────
+        //
+        // 남기는 것: 숙소 이름과 "여기서 묵었다" 는 사실. 호텔 이름은 식당
+        //   이름과 같은 종류의 정보이고, 좋은 곳에 묵은 것은 여행에서 보여
+        //   주고 싶은 부분이다. 공유받은 사람이 어디였는지 알 수 있어야 한다.
+        //
+        // 남기지 않는 것: 시각과 좌표와 주소와 링크. 이 객체는 그대로 DB 에
+        //   저장되고 공유 링크로 나간다. 어디서 자는지에 더해 몇 시에 거기
+        //   있는지까지는 다른 이야기다. 시각은 내 기기에만 둔다.
+        if (isAccommodationCheckin(item)) {
+          // 순서를 지키려면 시각이 있어야 한다 — `sanitizeDays` 가 이 값으로
+          // 정렬하고 Day 1 필터를 건다. 그래서 **바로 앞 항목의 시각** 을 그대로
+          // 쓴다. 이미 저장돼 공개되는 값이라 새로 알려 주는 것이 없고, 정렬은
+          // 안정 정렬이라 그 항목 바로 뒤에 남는다.
+          const prevTime = arr[itemIdx - 1]?.start_time ?? item.start_time;
+          return {
+            name:          exactStay?.name?.trim() || "",
+            category:      "accommodation",
+            location:      city,
+            time:          prevTime,
+            duration:      `${item.stay_minutes}m`,
+            tips:          "",
+            googleMapsUrl: "",
+            slot:          assignSlot(prevTime),
+            isAccommodation: true as const,
+          };
+        }
         return {
           name:              display.name,
           category:          display.category,
@@ -761,7 +889,7 @@ async function generateWithNewApi(
   const wait    = Math.max(0, MIN_MS - elapsed);
   if (wait > 0) await new Promise<void>(r => setTimeout(r, wait));
 
-  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid };
+  return { days, isFallback, conflictDayNumbers, affiliateMap, skippedCartNames, fixedOutOfWindowNames, unplacedPicks, hadDeferredCartHints, usedCartHintCentroid, checkinTime };
 }
 
 function getCategoryColor(category: string): string {
@@ -1005,6 +1133,22 @@ function ItineraryResult() {
   // 좌표는 여기서 프리셋 표로 되찾으므로 lat/lng 를 다시 직렬화하지 않는다.
   const paramStayArea      = searchParams.get("stayArea")      || "";
 
+  // ── 지도에서 확인된 숙소 ──────────────────────────────────────────────────
+  //
+  // 주소에 싣지 않는다. 사용자가 자는 곳의 좌표를 브라우저 기록과 공유 링크에
+  // 남기지 않기 위해서다. 대신 이 기기의 draft 에서 읽는다.
+  //
+  // 그리고 **이 일정이 그 draft 의 여행일 때만** 쓴다. draft 는 "준비 중인 여행
+  // 하나" 라서, 지난달 서울 일정을 다시 열면 다음 달 부산 숙소가 들어 있을 수
+  // 있다. 그 좌표로 서울 일정을 다시 짜면 가 본 적 없는 곳이 기준이 된다.
+  const exactStay = useMemo(() => {
+    const draft = readTripDraft();
+    const trip  = { city: paramCity, startDate: paramStartDate, endDate: paramEndDate };
+    const coordinate = exactStayCoordinate(draft, trip);
+    if (!coordinate) return null;
+    return { coordinate, name: exactStayName(draft, trip) };
+  }, [paramCity, paramStartDate, paramEndDate]);
+
   // ── 표시용 메타 (공유 링크 로드 시 Supabase 값으로 덮어씀) ─
   const [city,        setCity]        = useState(paramCity);
   const [startDate,   setStartDate]   = useState(paramStartDate);
@@ -1046,6 +1190,17 @@ function ItineraryResult() {
   const tPicks = useTranslations("picks");
   const locale = useLocale();
   const [itinId,      setItinId]      = useState<string | null>(null);
+
+  /**
+   * 이 일정의 숙소 체크인 시각. **이 기기에만** 둔다.
+   *
+   * `days` 에 넣으면 그 JSON 이 공유 링크로 그대로 나간다. 어디서 잤는지는
+   * 보여 줘도 되는 정보지만, 몇 시에 거기 있었는지는 다른 이야기다.
+   *
+   * 일정별 로컬 키는 이 저장소가 이미 쓰는 방식이다 — 사진(`koreamate_moments_`)
+   * 과 방문 체크(`koreamate_daydone_`) 가 같은 자리에 있다.
+   */
+  const [checkinTime, setCheckinTime] = useState<string | null>(null);
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [syncFading,  setSyncFading]  = useState(false);
   const [copied,          setCopied]          = useState(false);
@@ -1298,6 +1453,14 @@ function ItineraryResult() {
     }
     setItinId(id);
 
+    // 체크인 시각은 이 기기에서만 산다. 새로 만들 때 쓰고, 저장된 일정을 다시
+    // 열 때 되살린다. 없으면 숙소 카드에 시각 없이 이름만 남는다 — 공유받은
+    // 사람이 보는 것과 같은 모습이다.
+    try {
+      const saved = localStorage.getItem(`koreamate_checkin_${id}`);
+      if (saved) setCheckinTime(saved);
+    } catch { /* ignore */ }
+
     // ── API 우선 로드 + Layer 2: 내용 검증
     apiFetchItinerary(id, getDeviceId()).then(record => {
       // v2 포맷 파싱 헬퍼 — { __v:2, scheduled, unscheduled } 또는 구버전 Day[]
@@ -1336,9 +1499,10 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate))
-            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay)
+            .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
               setDays(sanitizeDays(days));
+              setCheckinTime(ct);
               if (isFallback) setIsFallback(true);
               if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
               if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
@@ -1382,9 +1546,10 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate))
-        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed }) => {
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay)
+        .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
           setDays(sanitizeDays(days));
+              setCheckinTime(ct);
           if (isFallback) setIsFallback(true);
           if (conflictDayNumbers.length > 0) setConflictDays(new Set(conflictDayNumbers));
           if (Object.keys(aMap).length > 0) setAffiliateMap(aMap);
@@ -1441,6 +1606,11 @@ function ItineraryResult() {
 
     return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); };
   }, [days, itinId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!itinId || !checkinTime) return;
+    try { localStorage.setItem(`koreamate_checkin_${itinId}`, checkinTime); } catch { /* ignore */ }
+  }, [itinId, checkinTime]);
 
   // ── TASK-022: itinId 확정 시 moments 로드 ──────────────────
   useEffect(() => {
@@ -2599,7 +2769,16 @@ function ItineraryResult() {
                                           style={{ backgroundColor: getCategoryColor(place.category) }}
                                         >{place.category}</span>
                                         {/* 정확한 방문 시각은 표시하지 않는다 — 시간대 흐름 라벨이
-                                            그 자리를 대신한다. place.time 자체는 슬롯 판정에 계속 쓴다. */}
+                                            그 자리를 대신한다. place.time 자체는 슬롯 판정에 계속 쓴다.
+
+                                            숙소 체크인만 예외다. 몇 시부터 들어갈 수 있는지가 그
+                                            자체로 쓸모 있는 정보이기 때문이다. 그 시각은 저장된
+                                            일정이 아니라 이 기기에서 온다 — 공유 링크에는 없다. */}
+                                        {place.isAccommodation && checkinTime && (
+                                          <span className="text-xs font-bold text-sub">
+                                            {t("checkinAt", { time: checkinTime })}
+                                          </span>
+                                        )}
                                         <span className="text-xs font-bold text-sub">📍 {place.location}</span>
                                         {/* S2: 방문 체크 (로컬 전용 — DB·저장 형식 무변경) */}
                                         <button

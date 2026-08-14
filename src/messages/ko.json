@@ -413,7 +413,8 @@
     "errNetwork": "네트워크 오류입니다 — 연결을 확인하고 다시 시도해 주세요.",
     "errLoadFailed": "일정을 불러오지 못했습니다: {message}",
     "errGenerateFailed": "일정을 만들지 못했습니다: {message}",
-    "errLoadSavedFailed": "저장된 일정을 불러오지 못했습니다: {message}"
+    "errLoadSavedFailed": "저장된 일정을 불러오지 못했습니다: {message}",
+    "checkinAt": "체크인 {time}"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

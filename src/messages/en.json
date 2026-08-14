@@ -413,7 +413,8 @@
     "errNetwork": "Network error — please check your connection and try again.",
     "errLoadFailed": "Failed to load itinerary: {message}",
     "errGenerateFailed": "Failed to generate itinerary: {message}",
-    "errLoadSavedFailed": "Failed to load saved itinerary: {message}"
+    "errLoadSavedFailed": "Failed to load saved itinerary: {message}",
+    "checkinAt": "Check-in {time}"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",

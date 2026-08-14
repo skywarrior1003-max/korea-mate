@@ -413,7 +413,8 @@
     "errNetwork": "网络错误 — 请检查网络连接后重试。",
     "errLoadFailed": "加载行程失败：{message}",
     "errGenerateFailed": "生成行程失败：{message}",
-    "errLoadSavedFailed": "加载已保存的行程失败：{message}"
+    "errLoadSavedFailed": "加载已保存的行程失败：{message}",
+    "checkinAt": "入住 {time}"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",
