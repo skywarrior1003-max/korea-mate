@@ -18,8 +18,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
-import { getPlannerMeta } from "@/lib/plannerStore";
-import { tripDates } from "@/lib/trip-fixed/fixed-core";
+import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
@@ -116,8 +115,11 @@ function PicksContent() {
   /** 시간 입력이 펼쳐진 카드. 한 번에 하나만 연다. */
   const [openTimeKey, setOpenTimeKey] = useState<string | null>(null);
   useEffect(() => {
-    const meta = getPlannerMeta();
-    setTripDays(meta ? tripDates(meta.startDate, meta.numDays) : []);
+    // 여행 날짜는 이제 TripDraft 에서 온다. 예전 PlannerSnapshot 은 저장하는
+    // 코드가 하나도 없어 언제나 비어 있었고, 그래서 아래 고정 일정 입력이
+    // 화면에 나타난 적이 없다. draft 가 없으면 여전히 빈 배열이고 그때는
+    // "날짜를 먼저 정하세요" 안내가 나간다 — 없는 날짜를 만들지 않는다.
+    setTripDays(tripDraftDates(readTripDraft()));
   }, []);
   useEffect(() => {
     const sync = () => setSelected(getCart());

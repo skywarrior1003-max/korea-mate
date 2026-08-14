@@ -24,6 +24,7 @@ import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
+import { writeTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -554,6 +555,18 @@ export default function HomeClient() {
   useEffect(() => {
     setStartLocation(CITY_ARRIVAL_DEFAULTS[city] ?? city);
   }, [city]);
+
+  // ── 이번 여행의 도시·날짜를 This Trip 도 볼 수 있게 남긴다 ────────────────
+  //
+  // This Trip 은 여기 state 를 볼 수 없어서 지금까지 여행 날짜를 몰랐고, 그래서
+  // 고정 일정 입력이 화면에 나타난 적이 없다.
+  //
+  // 세 값이 모두 유효할 때만 쓴다. 날짜를 하나만 고른 순간에 저장하면 This Trip
+  // 이 하루짜리 여행을 보게 된다. 값이 실제로 바뀔 때만 도는 effect 라 매 렌더
+  // 마다 쓰지 않는다.
+  useEffect(() => {
+    writeTripDraft({ city, startDate, endDate });
+  }, [city, startDate, endDate]);
 
 
   useEffect(() => {

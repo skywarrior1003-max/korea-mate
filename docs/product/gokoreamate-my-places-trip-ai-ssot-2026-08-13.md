@@ -19,6 +19,7 @@
 > **rev.8 (2026-08-13, TASK-SCHEDULER-EXPLICIT-SCHEDULE-WINDOW-FIX-AND-REAL-AI-CANARY-R2)** — 자동 추천 창과 사용자 지정 일정을 분리했다(§3-7 Invariant 4). 기본 21:00 때문에 19시 공연이 아침으로 밀리던 결함을 고쳤다(§17-16).
 > **rev.9 (2026-08-13, TASK-SCHEDULER-DEPARTURE-HARD-DESTINATION-01)** — §3-7 에 Invariant 5(출발 목적지)를 추가했다. 출발지는 검색 중심점이 아니라 마감시각까지 실제로 닿아야 하는 지점이며, process buffer 를 이동시간으로 이중 계산하지 않는다(§17-17).
 > **rev.10 (2026-08-13, TASK-TRIP-ACCOMMODATION-DAY-START-01)** — §3-7 에 Invariant 6(숙박 지역)을 추가했다. 선택 입력이며 다음 날 **시작점만** 정한다. 하루의 끝(숙소 복귀)은 별도 계약이 필요해 구현하지 않았다(§17-18).
+> **rev.11 (2026-08-14, TASK-TRIP-DRAFT-CONTEXT-AND-FIXED-INPUT-UNBLOCK-01)** — 여행 조건 SSOT 로 `TripDraft`(city·startDate·endDate)를 만들고 죽은 `PlannerSnapshot` 의존을 끊었다. This Trip 의 고정 일정 입력이 **처음으로** 사용자에게 열린다(§17-19).
 
 ---
 
@@ -1095,6 +1096,36 @@ live-AI canary 감사에서 재현된 결함이다.
 `stays[]` 를 서버로 보내지 않는다. 화면이 날짜별 최종 좌표 하나만 계산해 기존 `start_coordinate` 계약을 그대로 쓴다.
 
 회귀 테스트 16개: `src/lib/trip-stay/stay-core.test.ts`
+
+### 17-19. TripDraft · 고정 일정 입력 개통 (2026-08-14, `TASK-TRIP-DRAFT-CONTEXT-AND-FIXED-INPUT-UNBLOCK-01`)
+
+**여행 조건 SSOT 는 `TripDraft` 다.** 지금 담는 것은 `city` · `startDate` · `endDate` 뿐이다. 도착·출발·숙박·동행·취향은 아직 각자의 자리에 있고, 쓸 곳이 생길 때 옮긴다.
+
+> **This Trip 의 일반 장소는 사용자 우선 장소이고, 사용자가 Date/Start/End 를 지정한 경우에만 fixed hard constraint 가 된다.** 담았다는 이유로 시각이 생기지 않는다.
+
+`PlannerSnapshot` 은 되살리지 않는다 — 저장하는 코드가 하나도 없었고, itinerary 페이지가 그 키를 구버전 캐시로 지우며, `city`·`endDate` 가 없어 V2 와 모양이 맞지 않는다. 두 저장소를 양방향 동기화하지 않는다.
+
+무엇이 막혀 있었나:
+
+```text
+FixedScheduleFields 는 tripDays.length === 0 이면 안내 문구 한 줄만 그린다.
+tripDays ← getPlannerMeta() ← readPlannerSnapshot() ← koreamate_planner_v1
+                                                       writer 0건 · itinerary 가 매 로드 삭제
+→ 어떤 사용자도 Date/Start/End 를 볼 수 없었다.
+```
+
+아래는 이미 다 연결돼 있었다: `CartItem.fixed` → `cartHints.fixed` → `planDayAnchors` → `anchors[]` → P1/P2.5 → HC-8 · HC-9. **완성된 파이프라인이 UI 한 곳 때문에 통째로 도달 불가였다.**
+
+| 항목 | 내용 |
+|---|---|
+| 저장 | `koreamate_trip_draft_v1` (localStorage). DB·migration 없음 |
+| write | `HomeClient` — `[city, startDate, endDate]` 변경 시. 세 값이 모두 유효할 때만 |
+| read | `PicksClient` 마운트 시 `tripDraftDates(readTripDraft())` |
+| 날짜 | 기존 `tripDates` 재사용. 새 날짜 유틸을 만들지 않았다 |
+| fallback | draft 없음·깨진 JSON·잘못된 날짜·역순 구간 → 모두 `[]`. 가짜 여행을 만들지 않는다 |
+| 미변경 | scheduler engine · `/api/trip/plan` · NearMe · stay-core · departure destination · AI provider |
+
+회귀 테스트 20개: `src/lib/trip-draft/trip-draft-core.test.ts` (계약 + 실제 `planDayAnchors`·`runScheduler` E2E)
 
 ### 17-12. 다음 구현 TASK 후보 (이번 TASK 범위 밖 — 코드 미변경)
 
