@@ -1,0 +1,110 @@
+{
+  "task_id": "TASK-JEJU-FOOD-MISSING-CONTACT-TARGETED-VERIFICATION-V1",
+  "ssot_commit": "f9af625",
+  "verification_date": "2026-08-14",
+  "summary": {
+    "TOTAL_PUBLICATION_READY": 261,
+    "DIRECT_CONTACT_PRESENT": 258,
+    "DIRECT_CONTACT_MISSING": 3,
+    "VERIFICATION_TARGETS": 5,
+    "ACTIVE_CONTACT_VERIFIED": 1,
+    "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED": 2,
+    "UNRESOLVED": 2,
+    "ACTIVE_NO_PUBLIC_CONTACT": 0,
+    "CLOSED_CONFIRMED": 0,
+    "LIKELY_STALE_OR_CLOSED": 0
+  },
+  "safety": {
+    "PUBLICATION_STATUS_CHANGED": false,
+    "AI_AUTO_STATUS_CHANGED": false,
+    "SOURCE_UNIVERSE_DELETED": false,
+    "CONSUMER_REVIEW_SCRAPED": false,
+    "BULK_EXTERNAL_LOOKUP": false,
+    "GOOGLE_MAPS_USED": false,
+    "KAKAO_MAPS_USED": false,
+    "NAVER_TARGETED_SEARCH": true,
+    "VISITJEJU_API_CALLS": 0
+  },
+  "open_items": [
+    {
+      "entity": "베테랑회센터",
+      "contentsid": "CNTS_300000000014742",
+      "issue": "UNRESOLVED - no phone, no coord. Targeted search failed to find entity.",
+      "recommendation": "Manual Naver Place or local phone directory lookup by operator."
+    },
+    {
+      "entity": "방모루",
+      "contentsid": "CNTS_000000000022498",
+      "issue": "UNRESOLVED - mobile phone 010-2691-5862 currency unconfirmed.",
+      "recommendation": "Manual Naver Place lookup to confirm 방모루 구좌 is still operating."
+    }
+  ],
+  "qa_records": [
+    {
+      "contentsid": "CNTS_000000000018942",
+      "title": "우도해녀식당",
+      "region": "섬 속의 섬/우도",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "phone": "010-9090-3509",
+      "contact_type": "MOBILE",
+      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "priority": "P2",
+      "status": "ACTIVE_CONTACT_VERIFIED",
+      "source": "VISITJEJU_OFFICIAL + DININGCODE + TRIPLE_GUIDE + YEOGIYU",
+      "note": "010-9090-3509 확인. VisitJeju 공식 페이지(contentsid=CNTS_000000000018942)에서 동일 전화번호 + 주소(우도면 우도해안길 440) + 영업시간(08:30~17:30) 확인. 다이닝코드, triple.guide, 여기유 등 복수 소스에서 동일 번호 일치. 우도 소규모 개인 운영 식당 특성상 모바일 번호 사용은 정상적. ACTIVE_CONTACT_VERIFIED."
+    },
+    {
+      "contentsid": "CNTS_000000000022498",
+      "title": "방모루",
+      "region": "제주시/구좌",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "phone": "010-2691-5862",
+      "contact_type": "MOBILE",
+      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "priority": "P2",
+      "status": "UNRESOLVED",
+      "source": "WEB_SEARCH_TARGETED_NAVER",
+      "note": "010-2691-5862 존재하나 current status 불명. 2회 targeted web search 수행: (1) \"방모루 구좌 제주 해산물 전화번호\" (2) \"방모루 제주 구좌 해산물 restaurant Jeju\". \"방모루\" 상호로 검색 결과 미발견. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음. 구좌 소규모 해산물 전문점은 온라인 노출이 제한적일 수 있음. UNRESOLVED."
+    },
+    {
+      "contentsid": "CNTS_200000000012612",
+      "title": "야시장맛통령",
+      "region": "제주시/제주시내",
+      "publication_status": "PUBLIC_SPECIAL_PURPOSE",
+      "phone": null,
+      "contact_type": null,
+      "entity_type": "COLLECTIVE_MARKET_STALL",
+      "priority": "P0",
+      "status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "source": null,
+      "note": "동문시장 야시장 내 개별 노점. 야시장 운영 중 포장마차 형태로 개인 전화번호 미게시가 일반적. 야시장 자체 번호(동문시장 대표번호)를 개별 식당 번호로 등재 금지 정책 적용."
+    },
+    {
+      "contentsid": "CNTS_300000000013979",
+      "title": "청춘이오란다 동문시장본점 탑동",
+      "region": "제주시/제주시내",
+      "publication_status": "PUBLIC_SPECIAL_PURPOSE",
+      "phone": null,
+      "contact_type": null,
+      "entity_type": "COLLECTIVE_MARKET_STALL",
+      "priority": "P0",
+      "status": "COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED",
+      "source": null,
+      "note": "동문시장 내 전통과자(오란다/과즐) 판매점. 시장 내 개별 판매점으로 공개 전화번호 미게시. Instagram(@chungchunoranda) 존재 확인(연산자 채널)이나 전화번호 직접 확인 불가. 시장/집합 엔티티로 COLLECTIVE_ENTITY_CONTACT_NOT_REQUIRED 적용."
+    },
+    {
+      "contentsid": "CNTS_300000000014742",
+      "title": "베테랑회센터",
+      "region": "제주시/제주시내",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "phone": null,
+      "contact_type": null,
+      "entity_type": "INDIVIDUAL_RESTAURANT",
+      "priority": "P1",
+      "status": "UNRESOLVED",
+      "source": "WEB_SEARCH_TARGETED_NAVER",
+      "note": "제주 노형동 공항 근처 횟집. 2회 targeted web search 수행: (1) \"베테랑회센터 제주 전화번호 위치\" (2) \"베테랑회센터 제주 노형동 횟집 공항맛집\". 검색 결과에서 해당 상호 발견 불가. GOOGLE_MAPS_VERIFICATION=FORBIDDEN으로 Google Maps 검증 차단. 폐업 증거 없음 → CLOSED 판정 금지. 현재 정보로는 UNRESOLVED. 좌표(MISSING_COORD)와 전화번호 모두 미보유로 추후 수동 확인 권장."
+    }
+  ],
+  "manifest_checksum": "11a97522061c286edf23e7ae"
+}
