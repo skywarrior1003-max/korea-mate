@@ -17,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
-import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, updateCartPlace, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
+import { getCityCart, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
@@ -114,7 +114,12 @@ function PicksContent() {
   const [tab, setTab] = useState<Tab>(() => tabFromParam(searchParams.get("tab")));
 
   // ── Selected (cart) ─────────────────────────────────────────────────────────
+  // This Trip 은 지금 준비 중인 도시 여행의 목록이다. 부산 여행을 만들다 서울로
+  // 옮기면 부산에서 고른 장소는 지워지지 않고 부산 목록에 그대로 남는다.
+  const [tripCity, setTripCity] = useState<string | null>(null);
   const [selected, setSelected] = useState<CartItem[]>([]);
+  /** 어느 여행 것인지 아직 모르는 예전 선택. 지우지 않고 사용자에게 물어본다. */
+  const [unresolved, setUnresolved] = useState<CartItem[]>([]);
 
   // 고정 일정은 여행 날짜 안에서만 고를 수 있다. 날짜가 아직 없으면 입력을 열지 않는다.
   const [tripDays, setTripDays] = useState<string[]>([]);
@@ -136,14 +141,19 @@ function PicksContent() {
     // 코드가 하나도 없어 언제나 비어 있었고, 그래서 아래 고정 일정 입력이
     // 화면에 나타난 적이 없다. draft 가 없으면 여전히 빈 배열이고 그때는
     // "날짜를 먼저 정하세요" 안내가 나간다 — 없는 날짜를 만들지 않는다.
-    setTripDays(tripDraftDates(readTripDraft()));
+    const draft = readTripDraft();
+    setTripDays(tripDraftDates(draft));
+    setTripCity(draft?.city ?? null);
   }, []);
   useEffect(() => {
-    const sync = () => setSelected(getCart());
+    const sync = () => {
+      setSelected(getCityCart(tripCity));
+      setUnresolved(getUnresolvedCart());
+    };
     sync();
     window.addEventListener(CART_EVENT, sync);
     return () => window.removeEventListener(CART_EVENT, sync);
-  }, []);
+  }, [tripCity]);
 
   // ── Saved (favorites) ───────────────────────────────────────────────────────
   const [saved, setSaved] = useState<EventItem[]>([]);
@@ -384,7 +394,7 @@ function PicksContent() {
         setMine(prev => prev.filter(s => s.id !== id));
         // 지운 장소가 This Trip 에 남아 있으면 일정에까지 들어간다.
         // **서버 삭제가 성공했을 때만** 뺀다 — 실패하면 아무것도 건드리지 않는다.
-        removeFromCart(userSpotSourceKey(id));
+        removeFromAllCities(userSpotSourceKey(id));
       }
     } catch { /* 실패 시 목록 유지 — 조용한 손실을 만들지 않는다 */ }
     finally { setDeletingId(null); setConfirmId(null); }
@@ -392,11 +402,13 @@ function PicksContent() {
 
   // ── 공통 동작 ───────────────────────────────────────────────────────────────
   function addToSelected(item: EventItem, from: "saved" | "mine") {
-    addToCart(item);
+    // 어느 여행에 담는 것인지 모르면 담지 않는다. 아무 도시나 정해 주지 않는다.
+    if (!tripCity) { setBuildNotice(true); return; }
+    addToCart(item, tripCity);
     trackEvent("place_add_to_itinerary", {
       city: item.city || "", category: item.type || "",
       source_type: from === "saved" ? "saved" : "user_spot",
-      cta_position: `picks-${from}`, picked_count: getCart().length,
+      cta_position: `picks-${from}`, picked_count: getCityCart(tripCity).length,
     });
   }
 
@@ -550,6 +562,42 @@ function PicksContent() {
 
         {/* ── Selected ── */}
         <div role="tabpanel" id={panelId("selected")} aria-labelledby={tabId("selected")} hidden={tab !== "selected"}>
+          {/* 어느 여행에 담은 것인지 모르는 예전 선택.
+              조용히 숨기지 않는다 — 사용자가 이 여행 것인지 정해 준다.
+              일정에는 자동으로 들어가지 않는다. */}
+          {tab === "selected" && unresolved.length > 0 && (
+            <section className="mt-6 rounded-control border border-line bg-surface-dim/40 p-4">
+              <p className="text-sm font-bold text-ink">{t("legacyTitle")}</p>
+              <p className="text-xs text-sub mt-0.5">{t("legacyHint")}</p>
+              <ul className="flex flex-col gap-2 mt-3">
+                {unresolved.map(item => {
+                  const key = getItemSourceKey(item);
+                  return (
+                    <li key={key} className="flex items-center gap-2">
+                      <span className="flex-1 min-w-0 truncate text-sm text-ink">
+                        {item.shortName || item.name}
+                      </span>
+                      {tripCity && (
+                        <Button
+                          variant="text"
+                          onClick={() => attachCartItemToCity(key, tripCity)}
+                        >
+                          {t("legacyUse")}
+                        </Button>
+                      )}
+                      <Button
+                        variant="text"
+                        aria-label={`${t("legacyDrop")}: ${item.name}`}
+                        onClick={() => removeFromCart(key)}
+                      >
+                        {t("legacyDrop")}
+                      </Button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
           {tab === "selected" && (selected.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-3xl mb-3" aria-hidden>🗺️</p>
@@ -613,7 +661,7 @@ function PicksContent() {
                             className={coach === "time" && isFirstCard ? COACH_PULSE : undefined}
                             onClick={() => setOpenTimeKey(openTimeKey === key ? null : key)}
                           >🕘</Button>
-                          <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key)}>✕</Button>
+                          <Button variant="icon" aria-label={`${t("remove")}: ${item.name}`} onClick={() => removeFromCart(key, tripCity ?? undefined)}>✕</Button>
                         </div>
                         <div className="px-4 pb-4">
                           {coach === "time" && isFirstCard && (
@@ -630,7 +678,7 @@ function PicksContent() {
                             open={openTimeKey === key}
                             onOpen={() => setOpenTimeKey(key)}
                             onClose={() => setOpenTimeKey(null)}
-                            onChange={(next: CartFixed | null) => setCartFixed(key, next)}
+                            onChange={(next: CartFixed | null) => setCartFixed(key, next, tripCity ?? undefined)}
                           />
                         </div>
                       </Card>
@@ -642,6 +690,7 @@ function PicksContent() {
               <Link href="/explore/busan/" className="gkm-focus mt-4 flex items-center justify-center min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold">
                 + {t("findMore")}
               </Link>
+
 
               <div className="sticky bottom-20 md:bottom-6 mt-6">
                 {coach === "plan" && (

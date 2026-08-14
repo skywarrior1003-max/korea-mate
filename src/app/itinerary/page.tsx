@@ -12,7 +12,7 @@ import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPub
 import { getDeviceId } from "@/lib/deviceId";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
-import { getCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
+import { getCityCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
@@ -372,7 +372,9 @@ async function generateWithNewApi(
   const t0     = Date.now();
 
   const dates  = buildDateRange(sd, ed);
-  const cart   = getCart();
+  // 이번 여행 도시에서 고른 장소만 일정에 넣는다. 다른 도시 선택은 여기까지
+  // 오지 않는다 — 거리 필터가 나중에 떨어뜨리기를 기대하지 않는다.
+  const cart   = getCityCart(city);
   // TASK-053: cart item lookup map — used for display fallback when place_map misses "local-*" IDs
   // TASK-053 의 "local-*" 매칭을 source-aware 키로 교체한다.
   const cartItemByKey = Object.fromEntries(cart.map(c => [getPlannerHintKey(c), c]));
@@ -1031,7 +1033,7 @@ function ItineraryResult() {
   // ── 보관함 (cart 아이템 — Unscheduled 패널용) ─────────────────
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
-    try { return getCart(); } catch { return []; }
+    try { return getCityCart(paramCity); } catch { return []; }
   });
   // ── 로딩 페이즈 (Task 1: 강제 드웰 타임 + 제휴 노출) ─────────
   const [loadPhase, setLoadPhase] = useState(0);
@@ -1092,7 +1094,7 @@ function ItineraryResult() {
   const [prefTags] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const cart = getCart();
+      const cart = getCityCart(paramCity);
       const tagSet = new Set<string>();
       cart.forEach(item => (item.tags ?? []).forEach((t: string) => tagSet.add(t)));
       const tags = Array.from(tagSet).slice(0, 6);
@@ -1421,7 +1423,7 @@ function ItineraryResult() {
     const snapTravelStyle = travelStyle;
     const snapDays        = days;
     // 보관함(Unscheduled)도 함께 Supabase에 영구 저장 — Single Source of Truth 구현
-    const snapUnscheduled = getCart();
+    const snapUnscheduled = getCityCart(paramCity);
 
     syncTimerRef.current = setTimeout(async () => {
       const ok = await apiSaveItinerary({
@@ -1669,7 +1671,7 @@ function ItineraryResult() {
 
   // ── cart 변경 감지 → Unscheduled 갱신 ─────────────────
   useEffect(() => {
-    const refreshCart = () => { try { setCartItems(getCart()); } catch { /* ignore */ } };
+    const refreshCart = () => { try { setCartItems(getCityCart(paramCity)); } catch { /* ignore */ } };
     window.addEventListener(CART_EVENT, refreshCart);
     return () => window.removeEventListener(CART_EVENT, refreshCart);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

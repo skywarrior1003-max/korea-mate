@@ -224,7 +224,7 @@ test("12: 삭제가 실패하면 This Trip 은 그대로다 — 성공했을 때
   const picks = readFileSync(
     path.join(process.cwd(), "src", "app", "picks", "PicksClient.tsx"), "utf8");
   assert.match(picks,
-    /const ok = await apiDeleteUserSpot\(id\);\s*\n\s*if \(ok\) \{[\s\S]*?removeFromCart\(userSpotSourceKey\(id\)\)/,
+    /const ok = await apiDeleteUserSpot\(id\);\s*\n\s*if \(ok\) \{[\s\S]*?removeFromAllCities\(userSpotSourceKey\(id\)\)/,
     "삭제 성공 확인 밖에서 cart 를 건드린다");
 });
 

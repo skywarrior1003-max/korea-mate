@@ -232,7 +232,7 @@ test("HomeClient: 도시·날짜가 모두 바뀔 때만 draft 를 쓴다", () =
 });
 
 test("PicksClient: 죽은 PlannerSnapshot 대신 TripDraft 를 읽는다", () => {
-  assert.match(picksSrc, /setTripDays\(tripDraftDates\(readTripDraft\(\)\)\)/);
+  assert.match(picksSrc, /setTripDays\(tripDraftDates\(draft\)\)/);
   assert.doesNotMatch(picksSrc, /getPlannerMeta/, "죽은 스냅샷을 아직 읽는다");
   assert.doesNotMatch(picksSrc, /plannerStore/, "죽은 모듈 import 가 남았다");
 });
@@ -240,7 +240,7 @@ test("PicksClient: 죽은 PlannerSnapshot 대신 TripDraft 를 읽는다", () =>
 test("PicksClient: tripDays 가 기존 고정 일정 입력에 그대로 전달된다", () => {
   assert.match(picksSrc, /<FixedScheduleFields/);
   assert.match(picksSrc, /tripDays=\{tripDays\}/);
-  assert.match(picksSrc, /onChange=\{\(next: CartFixed \| null\) => setCartFixed\(key, next\)\}/);
+  assert.match(picksSrc, /onChange=\{\(next: CartFixed \| null\) => setCartFixed\(key, next, tripCity \?\? undefined\)\}/);
 });
 
 test("TripDraft 는 아직 도시와 날짜만 가진다", () => {

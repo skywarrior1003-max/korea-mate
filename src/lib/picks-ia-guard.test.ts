@@ -150,7 +150,7 @@ test("★세 자산의 저장소가 분리돼 있다 — 합치지 않는다", (
   assert.match(PICKS, /getFavorites|FAVORITES_EVENT/);       // Saved
   assert.match(PICKS, /apiGetUserSpots/);                    // My Places
   // 서로 다른 state 세 개로 유지되는지
-  for (const s of [/setSelected\(getCart\(\)\)/, /setSaved\(/, /setMine\(/]) {
+  for (const s of [/setSelected\(getCityCart\(tripCity\)\)/, /setSaved\(/, /setMine\(/]) {
     assert.match(PICKS, s, String(s));
   }
 });
@@ -178,7 +178,7 @@ test("★My Places 는 user_spots 서버 API 만 쓴다 — 새 DB 구조를 만
 test("★Saved·My Places 에서 Selected 로 담는 기존 경로가 살아 있다", () => {
   assert.match(PICKS, /addToSelected\(e, "saved"\)/);
   assert.match(PICKS, /addToSelected\(ev, "mine"\)/);
-  assert.match(PICKS, /addToCart\(item\)/);
+  assert.match(PICKS, /addToCart\(item, tripCity\)/);
 });
 
 // ── 주 CTA 는 Selected 하나뿐 ────────────────────────────────────────────────

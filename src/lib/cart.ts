@@ -1,5 +1,9 @@
 import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
 import { getItemSourceKey, IDENTITY_STORAGE_KEYS } from "@/lib/place-identity";
+import {
+  effectiveTripCity, forCity, isForCity, isUnresolvedCity, normalizeTripCity,
+  unresolved as unresolvedItems,
+} from "@/lib/cart-city/city-scope-core";
 // ─────────────────────────────────────────────
 //  KoreaMate · Cart (localStorage)
 //  사용자가 [Add to My Itinerary]를 눌렀을 때
@@ -110,9 +114,34 @@ export interface CartItem extends EventItem {
   sortOrder: number; // 타임라인에서의 순서 (드래그앤드롭용)
   /** 없으면 평범한 장소다. 있으면 그 날짜·시각이 hard constraint 가 된다. */
   fixed?: CartFixed | null;
+  /**
+   * 이 선택이 **어느 도시 여행**의 것인가.
+   *
+   * 장소가 어느 도시에 있는가와 다른 값이다 — 장소 원본의 city 는 건드리지
+   * 않는다. 이 필드가 없던 시절 항목은 city-scope-core 가 장소의 실제 도시로
+   * 읽어 주고, 그것으로도 알 수 없으면 사용자에게 물어본다.
+   */
+  tripCity?: string;
 }
 
 // ── 내부 헬퍼 ──────────────────────────────────
+
+/**
+ * 순서를 **도시별로** 0 부터 다시 매긴다.
+ *
+ * 예전에는 목록 전체가 하나였다. 이제 부산 목록과 서울 목록이 따로 있으므로
+ * 한쪽에서 하나를 빼도 다른 쪽 순서가 밀리면 안 된다. 어느 여행 것인지 아직
+ * 모르는 항목들도 저희끼리 순서를 지킨다.
+ */
+function reindexByCity(items: CartItem[]): CartItem[] {
+  const seen = new Map<string, number>();
+  return items.map((item) => {
+    const bucket = effectiveTripCity(item) ?? "";
+    const n = seen.get(bucket) ?? 0;
+    seen.set(bucket, n + 1);
+    return { ...item, sortOrder: n };
+  });
+}
 
 /** SSR(서버)에서는 localStorage가 없으므로 항상 빈 배열로 안전하게 처리 */
 // Trip-Flow Commerce (§14-1-A) — 과거 브라우저에 저장된 항목에는 commerce 가
@@ -155,23 +184,83 @@ export function getCart(): CartItem[] {
   return readStorage().sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
+/** 지금 준비 중인 도시 여행에서 고른 장소만. 도시를 모르면 빈 목록이다. */
+export function getCityCart(tripCity: string | null | undefined): CartItem[] {
+  return forCity(getCart(), tripCity);
+}
+
+/**
+ * 어느 여행 것인지 아직 모르는 예전 선택.
+ *
+ * 지우지 않는다. 화면이 따로 보여 주고 사용자가 어느 여행 것인지 정해 준다.
+ */
+export function getUnresolvedCart(): CartItem[] {
+  return unresolvedItems(getCart());
+}
+
+/**
+ * 예전 선택 하나를 이 도시 여행에 연결한다.
+ *
+ * 새 항목을 만들지 않는다 — 담은 시각도, 순서도, 잡아 둔 약속도 그대로 두고
+ * 어느 여행 것인지만 적는다. 이미 그 도시에 같은 장소가 있으면 이 항목은
+ * 조용히 뺀다(중복을 만들지 않는다).
+ */
+export function attachCartItemToCity(sourceKey: string, tripCity: string): void {
+  const want = normalizeTripCity(tripCity);
+  if (!want) return;
+  const items = readStorage();
+
+  const target = items.find(i => getItemSourceKey(i) === sourceKey && isUnresolvedCity(i));
+  if (!target) return;
+
+  const clash = items.some(i =>
+    i !== target && getItemSourceKey(i) === sourceKey && isForCity(i, want));
+  const next = clash
+    ? items.filter(i => i !== target)
+    : items.map(i => (i === target ? { ...i, tripCity: want } : i));
+  writeStorage(reindexByCity(next));
+}
+
+/** 장소 원본이 사라졌을 때 — 어느 도시 여행에 담겨 있든 전부 뺀다. */
+export function removeFromAllCities(sourceKey: string): void {
+  removeFromCart(sourceKey);
+}
+
 /**
  * 이벤트를 장바구니에 추가
  * 이미 담긴 항목이면 조용히 무시한다 (중복 방지).
  */
-export function addToCart(event: EventItem): void {
+export function addToCart(event: EventItem, tripCity?: string): void {
   const items = readStorage();
   // id 가 아니라 sourceKey 로 비교한다. 서로 다른 소스의 두 장소가 같은
   // `local-<n>` id 를 갖는 경우가 실측 118/158 카드라, id 비교는 다른 장소를
   // 중복으로 오판해 추가 자체를 막는다.
-  const key = getItemSourceKey(event);
-  const alreadyExists = items.some((item) => getItemSourceKey(item) === key);
-  if (alreadyExists) return;
+  const key  = getItemSourceKey(event);
+  const want = normalizeTripCity(tripCity);
+
+  // 어느 목록에 들어가는가. 여행 도시를 받았으면 그 도시, 아니면 장소 자체의
+  // 도시, 그것도 없으면 "아직 모름" 목록이다.
+  const bucket = want ?? effectiveTripCity(event as { city?: string });
+
+  // 같은 목록에 같은 장소를 두 번 담지 않는다. 다른 도시 여행에서 같은 장소를
+  // 고르는 것은 중복이 아니다 — 여행이 다르면 선택도 다르다.
+  const sameCity = items.filter(i => effectiveTripCity(i) === bucket);
+  if (sameCity.some(i => getItemSourceKey(i) === key)) return;
+
+  // 어느 여행 것인지 모르는 채로 남아 있던 같은 장소가 있으면 그것을 이 여행에
+  // 연결한다. 새 항목을 하나 더 만들면 사용자가 예전에 정해 둔 순서와 시간이
+  // 버려진 채 목록만 늘어난다.
+  const orphan = items.find(i => getItemSourceKey(i) === key && isUnresolvedCity(i));
+  if (orphan && want) {
+    writeStorage(items.map(i => (i === orphan ? { ...i, tripCity: want } : i)));
+    return;
+  }
 
   const newItem: CartItem = {
     ...event,
     addedAt: Date.now(),
-    sortOrder: items.length, // 맨 마지막에 추가
+    sortOrder: sameCity.length,   // 그 도시 목록의 맨 뒤
+    ...(want ? { tripCity: want } : {}),
   };
 
   writeStorage([...items, newItem]);
@@ -180,16 +269,23 @@ export function addToCart(event: EventItem): void {
 /**
  * 특정 이벤트를 장바구니에서 제거
  */
-/** 인자는 **sourceKey** 다. id 로 지우면 같은 id 의 다른 장소까지 사라진다. */
-export function removeFromCart(sourceKey: string): void {
+/**
+ * 인자는 **sourceKey** 다. id 로 지우면 같은 id 의 다른 장소까지 사라진다.
+ *
+ * `tripCity` 를 주면 그 도시 여행의 선택만 뺀다. 같은 장소를 서울 여행에도
+ * 담아 두었다면 그쪽은 그대로 남는다.
+ *
+ * 주지 않으면 예전처럼 그 장소의 선택을 전부 뺀다 — 장소 원본이 사라졌을 때
+ * 쓰는 길이다.
+ */
+export function removeFromCart(sourceKey: string, tripCity?: string): void {
   const items = readStorage();
-  const filtered = items.filter((item) => getItemSourceKey(item) !== sourceKey);
-  // 제거 후 sortOrder를 0부터 다시 정렬해 빈 번호가 없도록 한다
-  const reIndexed = filtered.map((item, index) => ({
-    ...item,
-    sortOrder: index,
-  }));
-  writeStorage(reIndexed);
+  const want  = normalizeTripCity(tripCity);
+  const filtered = items.filter((item) => {
+    if (getItemSourceKey(item) !== sourceKey) return true;
+    return want !== null && !isForCity(item, want);
+  });
+  writeStorage(reindexByCity(filtered));
 }
 
 /**
@@ -216,11 +312,15 @@ export function isInCart(sourceKey: string): boolean {
  * 인자는 sourceKey 다. 값 검증은 호출부에서 끝낸 뒤 넘긴다 — 저장소는
  * 사용자가 정한 것을 그대로 보관할 뿐 시간을 만들어내지 않는다.
  */
-export function setCartFixed(sourceKey: string, fixed: CartFixed | null): void {
+export function setCartFixed(sourceKey: string, fixed: CartFixed | null, tripCity?: string): void {
   const items = readStorage();
+  const want  = normalizeTripCity(tripCity);
   let changed = false;
   const next = items.map((item) => {
     if (getItemSourceKey(item) !== sourceKey) return item;
+    // 약속은 그 여행의 것이다. 부산 여행에 잡아 둔 14시가 서울 여행 선택까지
+    // 덮어쓰면 안 된다.
+    if (want !== null && !isForCity(item, want)) return item;
     changed = true;
     if (fixed === null) {
       const { fixed: _drop, ...rest } = item;
@@ -262,7 +362,10 @@ export function updateCartPlace(sourceKey: string, place: EventItem): void {
       addedAt:   item.addedAt,
       sortOrder: item.sortOrder,
     };
-    if (item.fixed) merged.fixed = item.fixed;
+    if (item.fixed)    merged.fixed    = item.fixed;
+    // 어느 여행의 선택인지도 장소 정보가 아니다. 이름이 바뀌었다고 이 선택이
+    // 어느 도시 것인지 잊어버리면 안 된다.
+    if (item.tripCity) merged.tripCity = item.tripCity;
     return merged;
   });
   if (changed) writeStorage(next);
