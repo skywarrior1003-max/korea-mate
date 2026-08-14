@@ -985,5 +985,31 @@
     "readMore": "더 보기 →",
     "footerData": "데이터 제공: 한국관광공사",
     "footerAi": "AI 가 돕는 일정"
+  },
+  "stay": {
+    "question": "어디에서 주무세요?",
+    "modeNone": "아직 안 정했어요",
+    "modeArea": "지역만 정했어요",
+    "modeExact": "숙소를 정했어요",
+    "areaLabel": "숙박 지역",
+    "exactHint": "아시는 것만 적으셔도 됩니다. 빈칸으로 두셔도 괜찮아요.",
+    "nameLabel": "숙소 이름",
+    "namePlaceholder": "예: 파라다이스호텔 부산",
+    "addressLabel": "주소",
+    "addressPlaceholder": "알고 계신 주소",
+    "linkLabel": "장소 · 지도 링크",
+    "linkPlaceholder": "저장해 두신 링크를 붙여넣으세요",
+    "checkLocation": "지도에서 위치 확인",
+    "changeLocation": "위치 다시 확인",
+    "locationConfirmed": "지도에서 위치를 확인했어요.",
+    "locationNotConfirmed": "저장됐어요. 이동시간에 쓰려면 지도에서 확인해 주세요.",
+    "locationOptional": "나중에 추가하셔도 돼요.",
+    "pickerTitle": "숙소가 어디인가요?",
+    "pickerHint": "지도를 움직여 주무실 곳을 눌러 주세요.",
+    "pickerTapToPick": "지도를 눌러 위치를 고르세요.",
+    "pickerPicked": "확인을 누르면 이 위치로 저장돼요.",
+    "pickerLoading": "지도를 불러오는 중…",
+    "pickerConfirm": "이 위치로 확인",
+    "pickerCancel": "취소"
   }
 }

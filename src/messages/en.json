@@ -985,5 +985,31 @@
     "readMore": "Read More →",
     "footerData": "Data by Korea Tourism Organization",
     "footerAi": "AI-assisted planning"
+  },
+  "stay": {
+    "question": "Where are you staying?",
+    "modeNone": "Not decided yet",
+    "modeArea": "I know the area",
+    "modeExact": "I have a place booked",
+    "areaLabel": "Stay area",
+    "exactHint": "Tell us what you know. Anything you leave blank is fine.",
+    "nameLabel": "Accommodation name",
+    "namePlaceholder": "e.g. Paradise Hotel Busan",
+    "addressLabel": "Address",
+    "addressPlaceholder": "The address you have",
+    "linkLabel": "Place or map link",
+    "linkPlaceholder": "Paste a link you saved",
+    "checkLocation": "Check location on map",
+    "changeLocation": "Change location",
+    "locationConfirmed": "Location confirmed on the map.",
+    "locationNotConfirmed": "Saved. Check it on the map to use it for travel times.",
+    "locationOptional": "You can add this later.",
+    "pickerTitle": "Where is your accommodation?",
+    "pickerHint": "Move the map and tap where you are staying.",
+    "pickerTapToPick": "Tap the map to choose the location.",
+    "pickerPicked": "Tap Confirm to save this location.",
+    "pickerLoading": "Loading the map…",
+    "pickerConfirm": "Confirm this location",
+    "pickerCancel": "Cancel"
   }
 }

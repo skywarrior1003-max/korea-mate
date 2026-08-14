@@ -985,5 +985,31 @@
     "readMore": "もっと見る →",
     "footerData": "データ提供: 韓国観光公社",
     "footerAi": "AI がつくる旅程"
+  },
+  "stay": {
+    "question": "どこに泊まりますか？",
+    "modeNone": "まだ決めていません",
+    "modeArea": "エリアだけ決めています",
+    "modeExact": "宿泊先が決まっています",
+    "areaLabel": "宿泊エリア",
+    "exactHint": "わかる範囲で大丈夫です。空欄のままでも構いません。",
+    "nameLabel": "宿泊先の名前",
+    "namePlaceholder": "例：パラダイスホテル釜山",
+    "addressLabel": "住所",
+    "addressPlaceholder": "ご存知の住所",
+    "linkLabel": "場所・地図のリンク",
+    "linkPlaceholder": "保存したリンクを貼り付け",
+    "checkLocation": "地図で位置を確認",
+    "changeLocation": "位置を変更",
+    "locationConfirmed": "地図で位置を確認しました。",
+    "locationNotConfirmed": "保存しました。移動時間に使うには地図で確認してください。",
+    "locationOptional": "あとから追加できます。",
+    "pickerTitle": "宿泊先はどこですか？",
+    "pickerHint": "地図を動かして泊まる場所をタップしてください。",
+    "pickerTapToPick": "地図をタップして位置を選んでください。",
+    "pickerPicked": "確定を押すとこの位置で保存されます。",
+    "pickerLoading": "地図を読み込み中…",
+    "pickerConfirm": "この位置で確定",
+    "pickerCancel": "キャンセル"
   }
 }

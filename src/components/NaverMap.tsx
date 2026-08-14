@@ -21,7 +21,9 @@ declare global {
         Marker:     new (opts: Record<string, unknown>) => NaverMarkerObj;
         InfoWindow: new (opts: Record<string, unknown>) => NaverInfoWindowObj;
         Event:      {
-          addListener:    (t: unknown, ev: string, fn: () => void) => NaverListener;
+          // 인자를 받는 handler 도 있다 — 지도 클릭은 찍은 지점을 `coord` 로 준다.
+          // 인자를 쓰지 않는 기존 handler 들은 그대로 통과한다.
+          addListener:    (t: unknown, ev: string, fn: (e: NaverMapEvent) => void) => NaverListener;
           removeListener: (l: NaverListener) => void;
         };
         Point:      new (x: number, y: number) => { x: number; y: number };
@@ -35,10 +37,12 @@ declare global {
 // 주의: relayout()은 Kakao Maps API — Naver v3에는 없다. 크기 갱신은 setSize()가 정식 API.
 interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; getZoom: () => number; setSize: (s: unknown) => void; getCenter: () => NaverLatLng; fitBounds: (b: NaverBoundsObj, opts?: Record<string, unknown>) => void; }
 type NaverListener = unknown;
+/** 지도 이벤트. 클릭·탭은 찍은 지점을 `coord` 로 준다. */
+export interface NaverMapEvent { coord?: NaverLatLng }
 interface NaverShapeObj    { setMap: (m: NaverMapObj | null) => void; }
 interface NaverBoundsObj   { extend: (l: NaverLatLng) => void; }
 interface NaverLatLng      { lat: () => number; lng: () => number; }
-interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; setIcon?: (icon: Record<string, unknown>) => void; setZIndex?: (z: number) => void; }
+interface NaverMarkerObj   { setMap: (m: NaverMapObj | null) => void; setIcon?: (icon: Record<string, unknown>) => void; setZIndex?: (z: number) => void; setPosition?: (l: NaverLatLng) => void; }
 interface NaverInfoWindowObj { open: (m: NaverMapObj, mk: NaverMarkerObj) => void; close: () => void; }
 
 export interface MapSpot {

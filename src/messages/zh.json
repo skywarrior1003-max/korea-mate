@@ -985,5 +985,31 @@
     "readMore": "了解更多 →",
     "footerData": "数据来源：韩国观光公社",
     "footerAi": "AI 协助规划"
+  },
+  "stay": {
+    "question": "你住在哪里？",
+    "modeNone": "还没决定",
+    "modeArea": "只定了区域",
+    "modeExact": "已经订好住处",
+    "areaLabel": "住宿区域",
+    "exactHint": "知道多少就写多少，留空也没关系。",
+    "nameLabel": "住宿名称",
+    "namePlaceholder": "例：釜山天堂酒店",
+    "addressLabel": "地址",
+    "addressPlaceholder": "你知道的地址",
+    "linkLabel": "地点或地图链接",
+    "linkPlaceholder": "粘贴你保存的链接",
+    "checkLocation": "在地图上确认位置",
+    "changeLocation": "重新确认位置",
+    "locationConfirmed": "已在地图上确认位置。",
+    "locationNotConfirmed": "已保存。要用于计算路程，请在地图上确认。",
+    "locationOptional": "也可以稍后再填。",
+    "pickerTitle": "你的住处在哪里？",
+    "pickerHint": "移动地图，点选你住的地方。",
+    "pickerTapToPick": "点击地图选择位置。",
+    "pickerPicked": "点击确认即可保存这个位置。",
+    "pickerLoading": "地图加载中…",
+    "pickerConfirm": "确认这个位置",
+    "pickerCancel": "取消"
   }
 }

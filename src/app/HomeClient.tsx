@@ -24,7 +24,13 @@ import AdaptiveHomeCard from "@/components/AdaptiveHomeCard";
 import HomeExperience from "@/components/home/HomeExperience";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
-import { readTripDraft, writeTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import StayFieldsSection from "@/components/StayFields";
+import {
+  EMPTY_STAY_FIELDS, stayFieldsFrom, stayModeFrom,
+  type StayFields, type StayMode,
+} from "@/lib/trip-stay/stay-input-core";
+import { readTripDraft, writeTripDraft, type TripStayDetail }
+  from "@/lib/trip-draft/trip-draft-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
@@ -666,6 +672,20 @@ export default function HomeClient() {
   // 숙박 지역 — 선택 입력. 정확한 숙소가 아니라 공개 지역 프리셋 하나다.
   const [stayArea,        setStayArea]        = useState("");
   const [showStaySection, setShowStaySection] = useState(false);
+  // 사용자가 고른 숙박 수준. 아직 안 정했거나 / 동네만 / 숙소를 정했거나.
+  const [stayMode,        setStayMode]        = useState<StayMode>("none");
+  // 정확한 숙소. 글자는 사용자의 메모고, 좌표는 지도에서 짚었을 때만 생긴다.
+  const [stayFields,      setStayFields]      = useState<StayFields>(EMPTY_STAY_FIELDS);
+  const [stayDetail,      setStayDetail]      = useState<TripStayDetail | null>(null);
+
+  /**
+   * 숙박 수준을 바꾼다.
+   *
+   * 적어 둔 글자를 지우지 않는다. `Not decided yet` 을 잘못 눌렀다가 되돌리는
+   * 사람이 이름과 주소를 다시 타이핑하게 만들지 않는다 — 저장되는 내용은 아래
+   * 저장 effect 가 고른 수준에 맞춰 정한다.
+   */
+  function changeStayMode(next: StayMode) { setStayMode(next); }
   const deptSectionRef = useRef<HTMLDivElement>(null);
 
   // ── 이번 여행의 조건을 This Trip 도 볼 수 있게 남긴다 ─────────────────────
@@ -689,10 +709,12 @@ export default function HomeClient() {
       if (d.departurePlace) setDeparturePlace(d.departurePlace);
       if (d.departureTime)  setDepartureTime(d.departureTime);
       if (d.stayArea)       setStayArea(d.stayArea);
+      if (d.stay) { setStayDetail(d.stay); setStayFields(stayFieldsFrom(d.stay)); }
+      setStayMode(stayModeFrom(d.stayArea, d.stay));
       // 되살린 값이 접힌 칸 안에 숨어 있으면 사용자는 자기가 입력한 것을 보지
       // 못한 채 일정이 생성되는 것을 본다.
       if (d.departurePlace || d.departureTime) setShowDeptSection(true);
-      if (d.stayArea)                          setShowStaySection(true);
+      if (d.stayArea || d.stay)                setShowStaySection(true);
     }
     setRestored(true);
   }, []);
@@ -708,6 +730,14 @@ export default function HomeClient() {
     const options = CITY_ARRIVAL_OPTIONS[city] ?? [];
     setDeparturePlace(p => (p && !options.some(o => o.value === p) ? "" : p));
     setStayArea(s => (s && !stayAreaOptions(city).some(o => o.value === s) ? "" : s));
+    // 적어 둔 숙소 이름·주소·링크는 그대로 둔다 — 사용자가 쓴 글을 우리가
+    // 지우지 않는다. 다만 지도에서 확인한 좌표는 버린다. 부산에서 짚은 지점이
+    // 서울 여행에 그대로 남으면 다음 작업에서 엉뚱한 곳을 기준으로 잡는다.
+    setStayDetail(prev => {
+      if (!prev?.coordinate) return prev;
+      const { coordinate: _dropped, ...rest } = prev;
+      return Object.keys(rest).length > 0 ? rest : null;
+    });
   }, [city, restored]);
 
   // 값이 실제로 바뀔 때만 도는 effect 라 매 렌더마다 쓰지 않는다.
@@ -717,10 +747,18 @@ export default function HomeClient() {
     if (!restored) return;
     writeTripDraft({
       city, startDate, endDate,
-      travelers, startLocation, arrivalTime, departurePlace, departureTime, stayArea,
+      travelers, startLocation, arrivalTime, departurePlace, departureTime,
+      // 고른 수준이 저장되는 내용을 정한다.
+      //
+      // 지역은 `Not decided yet` 일 때만 지운다. 숙소를 정한 사람의 지역 선택은
+      // 남겨 둔다 — 지도 확인 전까지 그 사람에 대해 우리가 아는 유일한 위치이고,
+      // 하루 시작점이 이미 그것을 쓰고 있다.
+      stayArea: stayMode === "none"  ? "" : stayArea,
+      stay:     stayMode === "exact" ? stayDetail : null,
     });
   }, [restored, city, startDate, endDate,
-      travelers, startLocation, arrivalTime, departurePlace, departureTime, stayArea]);
+      travelers, startLocation, arrivalTime, departurePlace, departureTime,
+      stayArea, stayMode, stayDetail]);
 
   // ── AI 일정 생성 ──────────────────────────────
   function doNavigate(overrideStyle?: string) {
@@ -1319,35 +1357,32 @@ export default function HomeClient() {
                     </p>
                     <button
                       type="button"
-                      onClick={() => { setShowStaySection(false); setStayArea(""); }}
+                      onClick={() => { setShowStaySection(false); setStayArea(""); setStayMode("none"); }}
                       className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
                     >
                       {tf("stayAreaRemove")}
                     </button>
                   </div>
-                  <p className="text-[11px] text-gray-500 -mt-1">
-                    {tf("stayAreaHint")}
-                  </p>
+                  {/* 이 안내는 지역을 고를 때의 말이다. 정확한 숙소를 적는
+                      사람에게 "묵는 지역을 골라 주세요" 라고 하면 자기가 무엇을
+                      하는 중인지 헷갈린다. */}
+                  {stayMode === "area" && (
+                    <p className="text-[11px] text-gray-500 -mt-1">
+                      {tf("stayAreaHint")}
+                    </p>
+                  )}
 
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-gray-600">{tf("stayAreaLabel")}</label>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {stayAreaOptions(city).map((area) => (
-                        <button
-                          key={area.value}
-                          type="button"
-                          onClick={() => setStayArea(area.value)}
-                          className={`px-3 py-2 rounded-lg text-xs font-bold text-left transition-all border ${
-                            stayArea === area.value
-                              ? "border-orange-400 bg-orange-100 text-orange-700"
-                              : "border-gray-200 bg-white text-gray-600 hover:border-orange-300"
-                          }`}
-                        >
-                          {area.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  {/* 입력 한 벌은 공용 컴포넌트다 — This Trip 도 같은 것을 건다. */}
+                  <StayFieldsSection
+                    city={city}
+                    mode={stayMode}
+                    stayArea={stayArea}
+                    fields={stayFields}
+                    stay={stayDetail}
+                    onModeChange={changeStayMode}
+                    onAreaChange={setStayArea}
+                    onFieldChange={(f, next) => { setStayFields(f); setStayDetail(next); }}
+                  />
                 </div>
               )}
             </div>
