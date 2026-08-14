@@ -232,6 +232,43 @@ export function setCartFixed(sourceKey: string, fixed: CartFixed | null): void {
 }
 
 /**
+ * 담아 둔 장소의 **장소 정보만** 최신으로 바꾼다.
+ *
+ * 왜 필요한가
+ *   My Places 에서 이름이나 좌표를 고쳐도 This Trip 에는 담을 때의 값이 그대로
+ *   남았다. 같은 화면 두 탭이 같은 장소를 다른 이름으로 보여줬다.
+ *
+ * 무엇을 지키는가
+ *   `addedAt`·`sortOrder`·`fixed` 는 장소의 속성이 아니라 **이번 여행에서 그
+ *   장소를 쓰는 방식**이다. 이름이 바뀌었다고 사용자가 정한 순서와 약속 시각이
+ *   흔들리면 안 된다.
+ *
+ * 왜 지웠다 다시 넣지 않는가
+ *   remove 후 add 를 하면 맨 뒤로 밀려 순서가 바뀌고, 그 사이에 저장이 끊기면
+ *   장소가 사라진다. 자리를 지킨 채 내용만 갈아 끼운다.
+ *
+ * 담겨 있지 않으면 아무것도 하지 않는다 — 이 함수는 새로 담지 않는다.
+ */
+export function updateCartPlace(sourceKey: string, place: EventItem): void {
+  const items = readStorage();
+  let changed = false;
+  const next = items.map((item) => {
+    if (getItemSourceKey(item) !== sourceKey) return item;
+    changed = true;
+    // place 를 통째로 얹는다. merge 가 아니라 교체다 — 좌표가 지워진 경우
+    // 예전 lat/lng 가 살아남으면 안 된다.
+    const merged: CartItem = {
+      ...place,
+      addedAt:   item.addedAt,
+      sortOrder: item.sortOrder,
+    };
+    if (item.fixed) merged.fixed = item.fixed;
+    return merged;
+  });
+  if (changed) writeStorage(next);
+}
+
+/**
  * 장바구니를 완전히 비운다
  */
 export function clearCart(): void {

@@ -16,8 +16,8 @@ import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
-import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
-import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
+import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
+import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, updateCartPlace, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
@@ -182,12 +182,30 @@ function PicksContent() {
   // 로딩 플래그는 여기서 세우지 않는다 — 최초 마운트에서 effect 가 동기 setState
   // 를 호출하면 렌더가 한 번 더 돈다. 초기값이 이미 true 이고, 재시도는 클릭
   // 핸들러가 직접 세운다.
-  const loadMine = useCallback(() => {
+  /**
+   * `syncCartFor` 를 주면 그 장소 하나를 This Trip 에도 최신으로 맞춘다.
+   *
+   * 서버가 돌려준 값으로 맞춘다 — 방금 보낸 폼 값이 아니라 실제로 저장된 값이
+   * 기준이다. 그 장소가 응답에 없으면 아무것도 하지 않는다.
+   *
+   * 마운트할 때는 맞추지 않는다. 목록이 일시적으로 비어 돌아오는 경우에까지
+   * 담아 둔 장소를 지우게 되기 때문이다. 고친 그 순간에만 맞춘다.
+   */
+  const loadMine = useCallback((syncCartFor?: string) => {
     apiGetUserSpots()
-      .then(rows => { setMine(rows); setMineError(false); })
+      .then(rows => {
+        setMine(rows); setMineError(false);
+        if (!syncCartFor) return;
+        const fresh = rows.find(r => r.id === syncCartFor);
+        if (!fresh) return;
+        updateCartPlace(
+          userSpotSourceKey(fresh.id),
+          userSpotToEvent(fresh, userSpotDisplayName(fresh, t("displayFallback"))),
+        );
+      })
       .catch(() => setMineError(true))
       .finally(() => setMineLoading(false));
-  }, []);
+  }, [t]);
   useEffect(() => { loadMine(); }, [loadMine]);
 
   function retryMine() {
@@ -338,16 +356,18 @@ function PicksContent() {
         try {
           const blob = await compressPhotoBlob(photoFile);
           const up   = await apiUploadUserSpotPhoto(spot.id, blob);
-          if (!up.ok) { setPhotoNotice(t("photoFailed")); loadMine(); return; }
+          if (!up.ok) { setPhotoNotice(t("photoFailed")); loadMine(spot.id); return; }
         } catch {
-          setPhotoNotice(t("photoUnreadable")); loadMine(); return;
+          setPhotoNotice(t("photoUnreadable")); loadMine(spot.id); return;
         } finally {
           setPhotoBusy(false);
         }
       }
 
       closeForm();
-      loadMine();
+      // 고친 장소가 This Trip 에 담겨 있으면 거기도 최신으로 맞춘다.
+      // 순서와 약속 시각은 건드리지 않는다.
+      loadMine(spot.id);
     } catch {
       setFormError(t("saveFailed"));
     } finally {
@@ -360,7 +380,12 @@ function PicksContent() {
     setDeletingId(id);
     try {
       const ok = await apiDeleteUserSpot(id);
-      if (ok) setMine(prev => prev.filter(s => s.id !== id));
+      if (ok) {
+        setMine(prev => prev.filter(s => s.id !== id));
+        // 지운 장소가 This Trip 에 남아 있으면 일정에까지 들어간다.
+        // **서버 삭제가 성공했을 때만** 뺀다 — 실패하면 아무것도 건드리지 않는다.
+        removeFromCart(userSpotSourceKey(id));
+      }
     } catch { /* 실패 시 목록 유지 — 조용한 손실을 만들지 않는다 */ }
     finally { setDeletingId(null); setConfirmId(null); }
   }
