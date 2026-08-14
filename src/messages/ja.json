@@ -360,6 +360,8 @@
     "openPlan": "旅程を開く"
   },
   "itin": {
+    "skippedTitle": "This Trip のいくつかの場所は日程に入れられませんでした。",
+    "skippedNote": "This Trip には残っているので、手動で追加できます。",
     "dayMap": "日別マップ",
     "addToThisDay": "Day {n}に追加",
     "added": "Day {n}に追加しました",

@@ -29,13 +29,13 @@ import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 import { firstPublicText } from "@/lib/place-detail/place-detail-core";
 // planner 로 보내는 키는 반드시 이 helper 하나만 쓴다 — cart_hints·조회 맵이
 // 서로 다른 규칙을 쓰면 같은 장소가 다시 어긋난다.
-import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey } from "@/lib/place-identity";
+import { getPlannerHintKey, getItemSourceKey, userSpotSourceKey, citySpotSourceKey, isUserSpotSource } from "@/lib/place-identity";
 import { planDayAnchors, mergeDayHints } from "@/lib/trip-fixed/anchor-build";
 import { buildDepartureDestination, isDepartureDestination } from "@/lib/trip-fixed/departure-destination";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
-import { haversineKm } from "@/lib/geo";
+import { haversineKm, isValidCoordinate } from "@/lib/geo";
 import { CITY_DAY1_PROHIBITED, CITY_DAY1_MAX_DISTANCE_KM, CITY_AIRPORT_ARRIVAL_BANNERS } from "@/data/city-presets";
 import UserSpotsPanel from "@/components/UserSpotsPanel";
 import { userSpotDisplayName } from "@/lib/user-spots-api";
@@ -378,8 +378,12 @@ async function generateWithNewApi(
   const cartItemByKey = Object.fromEntries(cart.map(c => [getPlannerHintKey(c), c]));
 
   // Collect names of cart items without coordinates so we can show a UI warning.
+  // 일정에 넣지 못한 This Trip 장소. 조용히 사라지게 두지 않는다.
+  //
+  // truthy 검사가 아니라 좌표 유효성으로 판정한다 — `!item.lat` 는 위도 0 을
+  // 좌표 없음으로 보고, NaN·문자열·범위 밖 값은 그대로 통과시킨다.
   const skippedCartNames = cart
-    .filter(item => !item.lat || !item.lng)
+    .filter(item => !isValidCoordinate(item.lat, item.lng))
     .map(item => item.shortName || item.name);
 
   // 하루 시간 창 밖으로 지정된 고정 일정. 조용히 무시하지 않고 이름을 알린다.
@@ -387,10 +391,7 @@ async function generateWithNewApi(
 
   // P0-1 Phase 2: Cart 아이템 → 스케줄러 합성 후보 힌트 변환
   const cartHints = cart
-    .filter(item => {
-      if (!item.lat || !item.lng) return false;
-      return true;
-    })
+    .filter(item => isValidCoordinate(item.lat, item.lng))
     .map(item => ({
       // city_spot 은 바레 숫자로 보낸다 — plan.ts 가 DB 후보와 대조해 중복을
       // 제거하고 place_map 이 표시정보를 채운다(기존 BUG-01 동작 보존).
@@ -461,6 +462,16 @@ async function generateWithNewApi(
     city,
   );
 
+  // 외부 개인화에 보낼 수 있는 것만 추린다.
+  //
+  // 개인 장소는 이름부터 사적이다 — `display_title` 은 그 사람에게 그곳이
+  // 무엇이었는지를 적은 값이다. 좌표를 살리면서 이 장소들이 `cartHints` 에
+  // 들어오게 됐는데, 그렇다고 provider 로 나가는 양이 늘어서는 안 된다.
+  //
+  // 스케줄러는 `cartHints` 를 그대로 쓴다. 이동 계산은 우리 코드 안에서 끝난다.
+  // 밖으로 나가는 것만 여기서 줄인다.
+  const personalizableHints = cartHints.filter(h => !isUserSpotSource(h.source_key));
+
   // ── whole-trip 개인화 프로필 — 여행당 정확히 1회 ──
   // 날짜 루프 "밖"이다. 안에서 부르면 14일 여행에 14번 나간다.
   // 실패하면 null 이고, 그러면 아래 루프는 기존과 완전히 같은 규칙 기반으로 돈다.
@@ -471,11 +482,11 @@ async function generateWithNewApi(
     travel_style: tstyle,
     travelers:    trav,
     pace,
-    selected_place_ids: cartHints.map(h => String(h.place_id)),
+    selected_place_ids: personalizableHints.map(h => String(h.place_id)),
     // Saved(하트)는 취향 신호다. cart 로 승격하지 않는다 — 일정에 강제로 넣지 않는다.
     liked_place_ids:    likedSignals.liked_place_ids,
     liked_places:       likedSignals.liked_places,
-    selected_places:    cartHints.map(h => ({
+    selected_places:    personalizableHints.map(h => ({
       place_id: String(h.place_id),
       name:     h.name,
       category: (cartItemByKey[String(h.place_id)]?.type ?? undefined),
@@ -1943,7 +1954,7 @@ function ItineraryResult() {
       {skippedCartNames.length > 0 && (
         <div className="mb-6 px-5 py-4 rounded-2xl bg-orange-50 border border-orange-200">
           <p className="text-sm font-bold text-orange-700 mb-1">
-            Some selected places could not be scheduled because location data is missing.
+            {t("skippedTitle")}
           </p>
           <ul className="mt-1.5 space-y-0.5">
             {skippedCartNames.map(name => (
@@ -1951,7 +1962,7 @@ function ItineraryResult() {
             ))}
           </ul>
           <p className="mt-2 text-xs text-orange-500">
-            These places are still saved in your cart and can be added manually.
+            {t("skippedNote")}
           </p>
         </div>
       )}

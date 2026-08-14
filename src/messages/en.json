@@ -360,6 +360,8 @@
     "openPlan": "Open my plan"
   },
   "itin": {
+    "skippedTitle": "Some places in This Trip couldn't be added to the schedule.",
+    "skippedNote": "They're still in This Trip, so you can add them by hand.",
     "dayMap": "Day map",
     "addToThisDay": "Add to Day {n}",
     "added": "Added to Day {n}",

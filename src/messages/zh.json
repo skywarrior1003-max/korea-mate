@@ -360,6 +360,8 @@
     "openPlan": "打开行程"
   },
   "itin": {
+    "skippedTitle": "This Trip 中的部分地点未能加入行程。",
+    "skippedNote": "它们仍在 This Trip 中，你可以手动添加。",
     "dayMap": "每日地图",
     "addToThisDay": "添加到第{n}天",
     "added": "已添加到第{n}天",

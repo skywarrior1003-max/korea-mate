@@ -19,6 +19,7 @@ import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
+import { isValidCoordinate } from "@/lib/geo";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
 import { readCoachStep, writeCoachStep, nextCoachStep, type CoachStep } from "@/lib/onboarding";
@@ -53,9 +54,21 @@ const CATEGORY_EMOJI: Record<string, string> = {
   attraction: "🏛️", restaurant: "🍽️", nature: "🌿", event: "🎉", accommodation: "🏨",
 };
 
-/** user_spots 행을 Cart 항목으로 — 좌표가 없으므로 일정 배치는 보관함을 거친다. */
+/**
+ * user_spots 행을 Cart 항목으로.
+ *
+ * 좌표를 그대로 옮긴다. 예전에는 여기서 lat/lng 를 빠뜨렸고, 그래서 사용자가
+ * 직접 등록한 장소를 This Trip 에 담아도 일정 단계에서 "위치 없음" 으로 걸러져
+ * 통째로 빠졌다. 원본에는 좌표가 있는데도 그랬다.
+ *
+ * 없는 좌표를 만들어 주지는 않는다. 도시 중심도, 앞 장소도, (0,0) 도 넣지
+ * 않는다 — 모르는 위치를 지어내면 엉뚱한 곳에 일정이 잡힌다. 유효하지 않으면
+ * 좌표 없는 항목으로 남고, 화면이 그 사실을 알린다.
+ */
 function userSpotToEvent(s: UserSpot, displayName: string): EventItem {
+  const hasCoord = isValidCoordinate(s.lat, s.lng);
   return {
+    ...(hasCoord ? { lat: s.lat, lng: s.lng } : {}),
     id: `user_spot-${s.id}`,
     sourceKey: `user_spot:${s.id}`,
     type: s.category || "attraction",

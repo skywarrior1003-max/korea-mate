@@ -135,6 +135,17 @@ export function isCitySpotSource(sourceKey: string | null | undefined): boolean 
   return parseCitySpotId(sourceKey) !== null;
 }
 
+/**
+ * 사용자가 직접 등록한 개인 장소인가.
+ *
+ * 개인 장소는 이름 자체가 사적이다 — `display_title` 은 그 사람에게 그곳이
+ * 무엇이었는지를 적은 값이지 장소의 factual name 이 아니다. 그래서 외부로
+ * 무언가를 보내기 전에 이 판정이 필요하다.
+ */
+export function isUserSpotSource(sourceKey: string | null | undefined): boolean {
+  return typeof sourceKey === "string" && sourceKey.startsWith("user_spot:");
+}
+
 // ── Cart·Saved 판정 ──────────────────────────────────────────────────────────
 
 /** sourceKey 를 갖는 최소 형태 — CartItem·EventItem·저장 스냅샷 모두 만족한다 */
