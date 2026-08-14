@@ -572,6 +572,7 @@
     "selectedCount": "この旅行に{count}件",
     "remove": "削除",
     "build": "旅程をつくる",
+    "buildNeedTrip": "都市と旅行日程を先に決めると、AI が旅程をつくれます。",
     "findMore": "他の場所を探す",
     "explore": "場所を探す",
     "selectedEmpty": "この旅行にはまだ何もありません",

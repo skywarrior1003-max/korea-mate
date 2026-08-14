@@ -25,6 +25,7 @@ import HomeExperience from "@/components/home/HomeExperience";
 import { useLocale, useTranslations } from "next-intl";
 import { stayAreaOptions } from "@/lib/trip-stay/stay-core";
 import { writeTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
 // ═══════════════════════════════════════════════
@@ -681,24 +682,22 @@ export default function HomeClient() {
 
   // ── AI 일정 생성 ──────────────────────────────
   function doNavigate(overrideStyle?: string) {
-    setIsNavigating(true);
     const effectiveStyle = overrideStyle ?? style;
-    const cityOptions = CITY_ARRIVAL_OPTIONS[city] ?? [];
-    const params = new URLSearchParams({ city, startDate, endDate, travelers, travelStyle: effectiveStyle, startLocation, arrivalTime });
-    if (departurePlace) params.set("departurePlace", departurePlace);
-    if (departureTime)  params.set("departureTime",  departureTime);
-    // 좌표가 아니라 프리셋 value 만 남긴다 — itinerary 가 같은 표에서 좌표를 되찾는다.
-    if (stayArea)       params.set("stayArea",       stayArea);
-    // Pass arrival/departure coordinates so the scheduler can use per-day base_coordinate
-    const arrivalOpt   = cityOptions.find(o => o.value === startLocation);
-    const departureOpt = cityOptions.find(o => o.value === departurePlace);
-    if (arrivalOpt)   { params.set("arrivalLat",   String(arrivalOpt.lat));   params.set("arrivalLng",   String(arrivalOpt.lng));   params.set("arrivalType",   arrivalOpt.type);   }
-    if (departureOpt) { params.set("departureLat",  String(departureOpt.lat)); params.set("departureLng",  String(departureOpt.lng)); params.set("departureType", departureOpt.type); }
-    const days = startDate && endDate
-      ? Math.round((new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000) + 1
-      : 0;
-    trackEvent("generate_itinerary", { city, travelers, travel_style: effectiveStyle, days });
-    router.push(`/itinerary?${params.toString()}`);
+    // 주소 조립은 공용 builder 한 곳에서 한다. This Trip 도 같은 것을 쓴다 —
+    // 두 화면이 각자 조립하면 파라미터 하나가 어긋나도 한쪽에서만 티가 난다.
+    const url = buildItineraryGenerationUrl({
+      city, startDate, endDate, travelers,
+      travelStyle:    effectiveStyle,
+      startLocation,  arrivalTime,
+      departurePlace, departureTime, stayArea,
+    });
+    if (!url) return;                       // 도시·날짜가 없으면 이동하지 않는다
+    setIsNavigating(true);
+    trackEvent("generate_itinerary", {
+      city, travelers, travel_style: effectiveStyle,
+      days: itineraryDayCount(startDate, endDate),
+    });
+    router.push(url);
   }
 
   function handleGenerate() {

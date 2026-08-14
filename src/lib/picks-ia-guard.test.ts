@@ -182,11 +182,15 @@ test("★Saved·My Places 에서 Selected 로 담는 기존 경로가 살아 있
 });
 
 // ── 주 CTA 는 Selected 하나뿐 ────────────────────────────────────────────────
-test("★Build CTA 는 Selected 탭에만 있고 planner 계약을 그대로 쓴다", () => {
-  assert.match(PICKS, /router\.push\("\/#planner"\)/);
-  // /#planner 로 가는 경로가 하나뿐이어야 primary action 이 중복되지 않는다
-  assert.equal((PICKS.match(/#planner/g) ?? []).length, 1);
+test("★Build CTA 는 Selected 탭에만 있고 여기서 바로 일정으로 간다", () => {
+  // 예전에는 Home 플래너("/#planner")를 거쳐야 했다. 이제 This Trip 이 일정
+  // 생성의 시작점이라 그 우회가 없다 — 지키는 것은 그때와 같다. **주 CTA 가
+  // 하나이고, 새 route 로 새지 않는다.**
+  assert.doesNotMatch(PICKS, /#planner/, "Home 플래너 우회가 남았다");
   assert.equal((PICKS.match(/handleBuild\(\)/g) ?? []).length, 1);
+  // 주소는 공용 builder 하나로만 만든다
+  assert.equal((PICKS.match(/buildItineraryGenerationUrl\(/g) ?? []).length, 1);
+  assert.doesNotMatch(strip(PICKS), /router\.push\(`\/itinerary\?/, "주소를 따로 조립한다");
   // 신규 route 로 새지 않는다
   assert.doesNotMatch(strip(PICKS), /router\.push\("\/trip/);
 });

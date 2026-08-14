@@ -572,6 +572,7 @@
     "selectedCount": "{count} in this trip",
     "remove": "Remove",
     "build": "Plan My Trip",
+    "buildNeedTrip": "Pick your city and travel dates first, then AI can build the trip.",
     "findMore": "Find more places",
     "explore": "Explore places",
     "selectedEmpty": "Nothing in this trip yet",

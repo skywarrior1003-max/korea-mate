@@ -201,7 +201,13 @@ test("page.tsx: URL 에 숙소 좌표를 직렬화하지 않는다 — 프리셋
   assert.match(pageSrc, /searchParams\.get\("stayArea"\)/);
   assert.doesNotMatch(pageSrc, /searchParams\.get\("stayLat"\)/);
   assert.doesNotMatch(pageSrc, /searchParams\.get\("stayLng"\)/);
-  assert.match(homeSrc, /params\.set\("stayArea",\s*stayArea\)/);
+  // 주소 조립은 공용 builder 로 옮겼다. 지키는 것은 그대로다 — 프리셋 value 만
+  // 싣고 좌표는 싣지 않는다.
+  const urlCore = readFileSync(
+    path.join(process.cwd(), "src", "lib", "trip-generation", "itinerary-url.ts"), "utf8");
+  assert.match(urlCore, /put\("stayArea",\s*ctx\.stayArea\)/);
+  assert.doesNotMatch(urlCore, /"stayLat"|"stayLng"/);
+  assert.match(homeSrc, /stayArea,?\s*$/m, "Home 이 숙박 지역을 더 이상 넘기지 않는다");
   assert.doesNotMatch(homeSrc, /params\.set\("stayLat"/);
 });
 

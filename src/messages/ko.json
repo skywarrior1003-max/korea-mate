@@ -572,6 +572,7 @@
     "selectedCount": "이번 여행 {count}곳",
     "remove": "삭제",
     "build": "일정 만들기",
+    "buildNeedTrip": "도시와 여행 날짜를 먼저 정하면 AI가 일정을 만들어요.",
     "findMore": "장소 더 찾기",
     "explore": "장소 둘러보기",
     "selectedEmpty": "이번 여행에 담은 곳이 없어요",

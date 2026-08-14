@@ -19,6 +19,7 @@ import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId } from "@/lib/place-identity";
 import { getCart, removeFromCart, clearCart, addToCart, setCartFixed, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
 import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
+import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
 import FixedScheduleFields from "@/components/FixedScheduleFields";
 import Coachmark, { COACH_PULSE } from "@/components/Coachmark";
@@ -127,6 +128,9 @@ function PicksContent() {
 
   /** 시간 입력이 펼쳐진 카드. 한 번에 하나만 연다. */
   const [openTimeKey, setOpenTimeKey] = useState<string | null>(null);
+
+  /** 도시·날짜가 없어 일정을 만들 수 없을 때만 켠다. */
+  const [buildNotice, setBuildNotice] = useState(false);
   useEffect(() => {
     // 여행 날짜는 이제 TripDraft 에서 온다. 예전 PlannerSnapshot 은 저장하는
     // 코드가 하나도 없어 언제나 비어 있었고, 그래서 아래 고정 일정 입력이
@@ -377,8 +381,27 @@ function PicksContent() {
       picked_count: selected.length,
       cta_position: "picks-selected",
     });
-    // 기존 진입 흐름 그대로 — 신규 route·payload 를 만들지 않는다.
-    router.push("/#planner");
+    // 여기서 바로 일정을 만든다. 예전에는 Home 플래너로 보냈다 — 장소를 다
+    // 골라 놓은 사람을 다른 화면으로 튕겨 내고 날짜를 다시 확인시키는 흐름이었다.
+    //
+    // 고른 장소·좌표·고정 시각은 주소에 싣지 않는다. 이미 cart 에 있고 일정
+    // 화면이 거기서 읽는다. 개인 좌표와 개인 제목을 브라우저 기록에 남기지 않는다.
+    const draft = readTripDraft();
+    const url = draft && buildItineraryGenerationUrl({
+      city: draft.city, startDate: draft.startDate, endDate: draft.endDate,
+    });
+    if (!draft || !url) {
+      // 도시·날짜가 없으면 만들지 않는다. 지어내지도, Home 으로 되돌리지도
+      // 않는다 — 무엇이 있어야 하는지만 알린다.
+      setBuildNotice(true);
+      return;
+    }
+    setBuildNotice(false);
+    trackEvent("generate_itinerary", {
+      city: draft.city, travelers: "", travel_style: "",
+      days: itineraryDayCount(draft.startDate, draft.endDate),
+    });
+    router.push(url);
   }
 
   const selectedKeys = new Set(selected.map(getItemSourceKey));
@@ -612,6 +635,12 @@ function PicksContent() {
                 >
                   ✨ {t("build")}
                 </button>
+                {/* 도시·날짜가 없을 때만. 버튼을 막지 않고 무엇이 필요한지만 말한다. */}
+                {buildNotice && (
+                  <p role="status" className="mt-2 text-xs text-sub text-center">
+                    {t("buildNeedTrip")}
+                  </p>
+                )}
               </div>
             </>
           ))}
