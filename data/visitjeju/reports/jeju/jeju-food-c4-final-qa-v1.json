@@ -1,0 +1,253 @@
+{
+  "task_id": "TASK-JEJU-FOOD-FINAL-QA-V1-R1",
+  "qa_date": "2026-08-14",
+  "qa_verdict": "PASS_WITH_WARN",
+  "inputs": {
+    "trusted_curation_commit": "f9af625",
+    "contact_verification_commit": "45f2555",
+    "edge_correction_commit": "b4e595d",
+    "common_policy_commit": "dc6f9be563983d369f400e4e8b0eea139f82da7c",
+    "source_universe_count": 1870
+  },
+  "reconciliation": {
+    "SOURCE_UNIVERSE": 1870,
+    "TOTAL_RECONCILED": 1870,
+    "UNACCOUNTED": 0,
+    "DUPLICATE_CONTENTSID": 0,
+    "pub_status_distribution": {
+      "HOLD_WEAK_EVIDENCE": 631,
+      "PUBLIC_STRONG": 78,
+      "PUBLIC_GOOD_CHOICE": 150,
+      "PUBLIC_SPECIAL_PURPOSE": 32,
+      "REFERENCE_ONLY": 904,
+      "REVIEW_REQUIRED": 75
+    }
+  },
+  "publication": {
+    "FINAL_PUBLICATION_READY_COUNT": 260,
+    "PUBLIC_STRONG": 78,
+    "PUBLIC_GOOD_CHOICE": 150,
+    "PUBLIC_SPECIAL_PURPOSE": 32,
+    "WHY_RECOMMEND_MISSING": 0,
+    "PUBLIC_MENU_ONLY_FALSE_POSITIVE": 0,
+    "PUBLIC_GENERIC_FALSE_POSITIVE": 0,
+    "why_recommend_distribution": {
+      "GUIDE_OR_STRONG_RECOGNITION": 79,
+      "LOCAL_SIGNATURE": 222,
+      "LOCAL_REPUTATION_EVIDENCE": 35,
+      "KOREAN_FOOD_EXPERIENCE": 14,
+      "TRAVELER_UTILITY": 14,
+      "SPECIAL_FOOD_EXPERIENCE": 32
+    }
+  },
+  "manual_decisions": {
+    "MANUAL_DECISIONS_5_OF_5_MATCH": true,
+    "ok": 5,
+    "fail": 0
+  },
+  "contact": {
+    "contact_type_distribution": {
+      "LANDLINE_VERIFIED": 145,
+      "VOIP_VERIFIED": 81,
+      "MOBILE_VERIFIED": 1,
+      "COLLECTIVE": 33
+    },
+    "INDIVIDUAL_PUBLIC_WITH_UNVERIFIED_CONTACT": 0,
+    "LANDLINE_ONLY_REQUIRED": false,
+    "MOBILE_VERIFIED_ACCEPTED": true,
+    "VOIP_050_ACCEPTED": true
+  },
+  "navigation": {
+    "PUBLIC_WITH_VALID_NAVIGATION": 255,
+    "PUBLIC_MISSING_NAVIGATION": 5,
+    "missing_entities": [
+      {
+        "contentsid": "CNTS_300000000013554",
+        "title": "신세계제과",
+        "entity_type": "INDIVIDUAL"
+      },
+      {
+        "contentsid": "CNTS_300000000014466",
+        "title": "고집돌우럭 (함덕점)",
+        "entity_type": "INDIVIDUAL"
+      },
+      {
+        "contentsid": "CNTS_300000000014535",
+        "title": "와인창고 동문시장점",
+        "entity_type": "COLLECTIVE"
+      },
+      {
+        "contentsid": "CNTS_300000000014653",
+        "title": "남매네왕갈치",
+        "entity_type": "COLLECTIVE"
+      },
+      {
+        "contentsid": "CNTS_300000000014742",
+        "title": "베테랑회센터",
+        "entity_type": "COLLECTIVE"
+      }
+    ]
+  },
+  "ai_auto": {
+    "OLD_AI_AUTO": 223,
+    "FINAL_AI_AUTO_FOOD_READY": 225,
+    "AI_AUTO_DELTA": 2,
+    "gate_policy": {
+      "COLLECTIVE": "ALWAYS_NO (SPECIAL_MANUAL_CURATION_REQUIRED)",
+      "INDIVIDUAL": "contact_ready AND nav_ready"
+    },
+    "reason_distribution": {
+      "AI_AUTO_READY": 225,
+      "COLLECTIVE_SPECIAL_MANUAL_CURATION_REQUIRED": 33,
+      "NAV_NOT_READY_MISSING_COORD": 2
+    },
+    "DELTA_BREAKDOWN": {
+      "우도해녀식당 (+1)": "MOBILE_VERIFIED_DIRECT_CONTACT",
+      "방모루 (+1)": "MANUAL_VERIFIED_LANDLINE=064-784-1312",
+      "야시장맛통령 (0)": "already AI_AUTO=NO before edge correction"
+    }
+  },
+  "collective": {
+    "PUBLIC_COLLECTIVE_COUNT": 33,
+    "AI_AUTO_COLLECTIVE_COUNT": 0,
+    "policy": "COLLECTIVE_SPECIAL_MANUAL_CURATION_REQUIRED → AI_AUTO=NO always"
+  },
+  "zone_coverage": {
+    "제주시/구좌": {
+      "pub": 15,
+      "ai": 15,
+      "hold": 44
+    },
+    "서귀포시/중문": {
+      "pub": 7,
+      "ai": 6,
+      "hold": 27
+    },
+    "제주시/애월": {
+      "pub": 10,
+      "ai": 10,
+      "hold": 54
+    },
+    "서귀포시/서귀포시내": {
+      "pub": 37,
+      "ai": 24,
+      "hold": 93
+    },
+    "서귀포시/표선": {
+      "pub": 5,
+      "ai": 5,
+      "hold": 16
+    },
+    "서귀포시/대정": {
+      "pub": 6,
+      "ai": 4,
+      "hold": 17
+    },
+    "제주시/조천": {
+      "pub": 12,
+      "ai": 11,
+      "hold": 36
+    },
+    "섬 속의 섬/마라도": {
+      "pub": 0,
+      "ai": 0,
+      "hold": 4
+    },
+    "제주시/한림": {
+      "pub": 16,
+      "ai": 16,
+      "hold": 40
+    },
+    "제주시/한경": {
+      "pub": 4,
+      "ai": 4,
+      "hold": 17
+    },
+    "서귀포시/남원": {
+      "pub": 1,
+      "ai": 1,
+      "hold": 5
+    },
+    "서귀포시/성산": {
+      "pub": 27,
+      "ai": 27,
+      "hold": 39
+    },
+    "섬 속의 섬/우도": {
+      "pub": 6,
+      "ai": 6,
+      "hold": 25
+    },
+    "서귀포시/안덕": {
+      "pub": 19,
+      "ai": 18,
+      "hold": 30
+    },
+    "섬 속의 섬/추차도": {
+      "pub": 0,
+      "ai": 0,
+      "hold": 4
+    },
+    "제주시/제주시내": {
+      "pub": 95,
+      "ai": 78,
+      "hold": 180
+    }
+  },
+  "experience_coverage": {
+    "GUIDE_OR_CERTIFICATION": 79,
+    "제주_SIGNATURE_FOOD": 222,
+    "LOCAL_REPUTATION": 35,
+    "KOREAN_FOOD_EXPERIENCE": 14,
+    "TRAVELER_UTILITY": 14,
+    "MARKET_COLLECTIVE_SPECIAL": 32
+  },
+  "baeknyeon": {
+    "BAEKNYEON_TOTAL": 8,
+    "BAEKNYEON_PUBLIC": 8,
+    "BAEKNYEON_AUTO_FINAL_INCLUDE": 0
+  },
+  "product_trust": {
+    "Q1_publication_count_appropriate": true,
+    "Q2_all_public_have_why_recommend": true,
+    "Q3_no_menu_only_false_positive": true,
+    "Q4_sufficient_zone_coverage": true,
+    "Q5_source_vs_catalog_separation": true,
+    "Q6_safe_recommend_description": "공식·공공·여행가치 근거가 강한 추천 후보"
+  },
+  "safety": {
+    "NEW_EXTERNAL_LOOKUPS": 0,
+    "REVIEW_SCRAPING": 0,
+    "SOURCE_UNIVERSE_CHANGE": 0,
+    "COMMON_CHANGE": 0,
+    "BUSAN_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "AI_AUTO_RECORDS_CHANGED": 2
+  },
+  "common_promotion": {
+    "READY_TO_PROMOTE_FOOD_CURATION_POLICY_TO_COMMON": true,
+    "JEJU_FOOD_COMPLETE": true,
+    "JEJU_FOOD_FINAL_QA": "PASS_WITH_WARN",
+    "general_rules_count": 12,
+    "jeju_specific_excluded": [
+      "Jeju signature food taxonomy",
+      "VisitJeju c4 field names",
+      "Jeju zone names",
+      "260 publication count",
+      "Individual entity decisions (5 manual corrections)"
+    ]
+  },
+  "warn_items": [
+    "베테랑회센터: COLLECTIVE_FOOD_CENTER(USER_MANUAL), source intro 충돌. AI_AUTO=NO (COLLECTIVE_SPECIAL_MANUAL_CURATION_REQUIRED)",
+    "신세계제과: MISSING_COORD → AI_AUTO=NO (좌표 미보강 유지)",
+    "고집돌우럭(함덕점): MISSING_COORD → AI_AUTO=NO (좌표 미보강 유지)",
+    "서귀포시/남원 pub=1, 섬속의섬/마라도·추차도 pub=0 → 자체 수집 한계, 강제 include 없음",
+    "EXTERNAL_REPUTATION_POLICY: Naver/Google rating 기반 검증 정책 미수립 (D코드 evidence 향후 설계 필요)"
+  ],
+  "checksums": {
+    "pub_manifest": "1200f6a18ad1e931cbfcf876",
+    "ai_manifest": "1846a8b272d633e8be4d1153"
+  }
+}

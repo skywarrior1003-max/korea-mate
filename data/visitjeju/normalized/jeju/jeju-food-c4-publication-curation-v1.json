@@ -20,7 +20,7 @@
     "REVIEW_REQUIRED": 75
   },
   "BAEKNYEON_AUTO_FINAL_INCLUDE": 0,
-  "AI_AUTO_FOOD_READY": 223,
+  "AI_AUTO_FOOD_READY": 225,
   "publication_checksum": "5f68d1eb0a4f11471a189873",
   "records": [
     {
@@ -3660,8 +3660,8 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": false,
-      "ai_auto_reason": "PHONE_NOT_LANDLINE",
+      "ai_auto_food_ready": true,
+      "ai_auto_reason": "AI_AUTO_READY",
       "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
       "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
       "manual_correction_date": "2026-08-14",
@@ -12582,8 +12582,8 @@
       "provenance": "visitjeju_raw_page",
       "source_commit": "b5802ba",
       "task_commit": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1:pending",
-      "ai_auto_food_ready": false,
-      "ai_auto_reason": "PHONE_NOT_LANDLINE",
+      "ai_auto_food_ready": true,
+      "ai_auto_reason": "AI_AUTO_READY",
       "manual_correction_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
       "manual_correction_decision": "USER_MANUAL_CURATION_DECISION",
       "manual_correction_date": "2026-08-14",
@@ -75074,5 +75074,10 @@
   "manual_corrections_task": "TASK-JEJU-FOOD-CONTACT-EDGE-CASE-CORRECTION-V1",
   "manual_corrections_date": "2026-08-14",
   "PUBLICATION_READY_BEFORE_MANUAL_CORRECTION": 261,
-  "PUBLICATION_READY_AFTER_MANUAL_CORRECTION": 260
+  "PUBLICATION_READY_AFTER_MANUAL_CORRECTION": 260,
+  "OLD_AI_AUTO_FOOD_READY": 223,
+  "AI_AUTO_FOOD_READY_DEFERRED_TO_FINAL_QA": false,
+  "FINAL_QA_COMMIT": "b4e595d",
+  "FINAL_QA_DATE": "2026-08-14",
+  "FINAL_QA_TASK": "TASK-JEJU-FOOD-FINAL-QA-V1-R1"
 }
