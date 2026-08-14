@@ -1,0 +1,4282 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-TRUSTED-RECURATION-V1",
+  "task_date": "2026-08-14",
+  "total_hold_reference": 609,
+  "by_status": {
+    "HOLD_WEAK_EVIDENCE": 573,
+    "REFERENCE_ONLY": 34,
+    "HOLD_SUSPECTED_DUPLICATE_WITHIN_PIPELINE": 2
+  },
+  "by_reason": {
+    "DIRECTORY_ONLY_NO_GUIDE_MATCH": 573,
+    "DUPLICATE_CONFIRMED": 30,
+    "SUSPECTED_DUPLICATE_WITHIN_PIPELINE": 2,
+    "FOOD_SCOPE_EXCLUDED": 4
+  },
+  "note": "HOLD_WEAK_EVIDENCE: 추후 공식 가이드 신규 선정, 허용된 reputation 확보 시 재검토 가능. REFERENCE_ONLY: Source Universe 보존 목적. RULE 12: HOLD/REFERENCE 삭제 금지.",
+  "records": [
+    {
+      "candidate_id": "busan-F-00001",
+      "name_ko": "만드리곤드레밥",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00003",
+      "name_ko": "민물가든",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00004",
+      "name_ko": "부흥식당",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00005",
+      "name_ko": "사미헌",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00006",
+      "name_ko": "원조할매집",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00007",
+      "name_ko": "가야할매밀면",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00008",
+      "name_ko": "국제밀면본점",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00009",
+      "name_ko": "할매가야밀면",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00010",
+      "name_ko": "거인통닭",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00011",
+      "name_ko": "김해식당",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00012",
+      "name_ko": "물꽁식당",
+      "district": "중구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00013",
+      "name_ko": "부산명물횟집",
+      "district": "중구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00014",
+      "name_ko": "부산꼼장어맛집 성일집",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00016",
+      "name_ko": "모모스커피",
+      "district": "금정구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00017",
+      "name_ko": "배비장보쌈구서본점",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00018",
+      "name_ko": "장수장 꼬리곰탕",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00021",
+      "name_ko": "다온 한정식",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00022",
+      "name_ko": "동백섬횟집",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00023",
+      "name_ko": "르꽁비브",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00024",
+      "name_ko": "파니니브런치본점",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00025",
+      "name_ko": "문스시",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00026",
+      "name_ko": "할매재첩국집",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00027",
+      "name_ko": "예이제",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00028",
+      "name_ko": "합천일류돼지국밥",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00029",
+      "name_ko": "원조석대추어탕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00030",
+      "name_ko": "웨이브온커피",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00035",
+      "name_ko": "신창국밥 본점",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00036",
+      "name_ko": "옛날오막집",
+      "district": "서구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00037",
+      "name_ko": "평안도족발",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00038",
+      "name_ko": "한우숯불양곱창",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00040",
+      "name_ko": "국이네낙지볶음",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00041",
+      "name_ko": "베지나랑",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00042",
+      "name_ko": "광안리신라횟집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00043",
+      "name_ko": "이층집 564-9",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00044",
+      "name_ko": "초원복국",
+      "district": "남구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00045",
+      "name_ko": "석화한정식",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00046",
+      "name_ko": "내당",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00048",
+      "name_ko": "신발원",
+      "district": "동구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00049",
+      "name_ko": "초량1941",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00050",
+      "name_ko": "60년 전통 할매국밥",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00051",
+      "name_ko": "함경면옥",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00055",
+      "name_ko": "영변횟집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00057",
+      "name_ko": "구포촌국수",
+      "district": "금정구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00058",
+      "name_ko": "얼크니손칼국수",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00059",
+      "name_ko": "탐복",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00060",
+      "name_ko": "곤국",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00061",
+      "name_ko": "다이닝센 부산본점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00062",
+      "name_ko": "오륙도 가원",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00063",
+      "name_ko": "해남식당 부산용호동W스퀘어점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00065",
+      "name_ko": "금강만두",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00066",
+      "name_ko": "석화정",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00067",
+      "name_ko": "에테르",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00069",
+      "name_ko": "북경",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00070",
+      "name_ko": "연산낙지해물탕",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00071",
+      "name_ko": "옻바다전복삼계탕",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00072",
+      "name_ko": "팔미초밥",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00073",
+      "name_ko": "다리집 본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00074",
+      "name_ko": "남촌",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00075",
+      "name_ko": "북경의자전거",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00076",
+      "name_ko": "광안리 언양불고기 부산집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00077",
+      "name_ko": "식당 3선 덕천점",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00078",
+      "name_ko": "함경면옥 덕천점",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00079",
+      "name_ko": "홍옥당",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00080",
+      "name_ko": "디에이블 송도점",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00081",
+      "name_ko": "몽실종가돼지국밥 감천문화마을 본점",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00082",
+      "name_ko": "식당 토성동",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00083",
+      "name_ko": "청죽",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00085",
+      "name_ko": "동원장수촌",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00086",
+      "name_ko": "포항가자미물회국수말이전문점",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00087",
+      "name_ko": "괘법쭈꾸미전문점",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00088",
+      "name_ko": "삼진어묵 본점",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00089",
+      "name_ko": "광명집",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00090",
+      "name_ko": "명지첫집 국제신도시본점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00091",
+      "name_ko": "명품외식 육면정",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00092",
+      "name_ko": "호포갈비 문현점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00093",
+      "name_ko": "평산옥",
+      "district": "동구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00094",
+      "name_ko": "공감식당",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00095",
+      "name_ko": "다옴 서면 삼정타워점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00096",
+      "name_ko": "당감밀면",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00097",
+      "name_ko": "버거샵 서면",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00099",
+      "name_ko": "양평칼국수 본점",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00101",
+      "name_ko": "신흥반점",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00102",
+      "name_ko": "동원숯불갈비",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00104",
+      "name_ko": "영도우",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00105",
+      "name_ko": "함흥보쌈사계절냉면",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00106",
+      "name_ko": "원산면옥",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00107",
+      "name_ko": "개미집신도시점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00108",
+      "name_ko": "오리한상 명지본점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00109",
+      "name_ko": "만포밀면옥",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00110",
+      "name_ko": "맛사랑채",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00111",
+      "name_ko": "우정까망촌돼지",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00112",
+      "name_ko": "금랑횟집 광안리본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00113",
+      "name_ko": "난파센",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00114",
+      "name_ko": "화국반점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00115",
+      "name_ko": "로얄경양식&스테이크 광안점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00117",
+      "name_ko": "무궁화",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00118",
+      "name_ko": "어가초밥",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00119",
+      "name_ko": "배꼽시계",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00120",
+      "name_ko": "사랑도횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00121",
+      "name_ko": "삼송초밥 부산남포본점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00122",
+      "name_ko": "솔리보",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00123",
+      "name_ko": "부산족발",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00124",
+      "name_ko": "포에버얌 부산기장점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00125",
+      "name_ko": "물레방아 즉석구이",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00126",
+      "name_ko": "양귀빈 식당 3호점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00128",
+      "name_ko": "명송초밥",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00129",
+      "name_ko": "다께",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00130",
+      "name_ko": "남포삼계탕",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00131",
+      "name_ko": "지에이비148",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00132",
+      "name_ko": "대수정",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00133",
+      "name_ko": "목장원",
+      "district": "영도구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00134",
+      "name_ko": "톤쇼우 광안점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00136",
+      "name_ko": "동촌황정순수육전골",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00137",
+      "name_ko": "소우닭계",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00138",
+      "name_ko": "양지추어탕",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00139",
+      "name_ko": "초량통닭",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00140",
+      "name_ko": "홍성방 본점",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00141",
+      "name_ko": "먹음직 온천천점",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00142",
+      "name_ko": "미미루",
+      "district": "동래구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00143",
+      "name_ko": "밀보스79",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00144",
+      "name_ko": "세연정",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00145",
+      "name_ko": "조방낙지마당",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00146",
+      "name_ko": "초록담미역국",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00148",
+      "name_ko": "경찰서옆초밥집",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00149",
+      "name_ko": "동백아가씨1961 서면점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00150",
+      "name_ko": "장어촌",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00151",
+      "name_ko": "전통음식점 원양",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00152",
+      "name_ko": "구공탄",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00153",
+      "name_ko": "금용만두",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00154",
+      "name_ko": "웅천집",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00156",
+      "name_ko": "대왕불맛",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00157",
+      "name_ko": "전골그집 주례본점",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00158",
+      "name_ko": "함양본가어탕국수",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00159",
+      "name_ko": "오공떵번",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00160",
+      "name_ko": "우연횟집",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00162",
+      "name_ko": "청해수산",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00163",
+      "name_ko": "궁중해물탕 조씨집 대연본점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00164",
+      "name_ko": "까치횟집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00165",
+      "name_ko": "미청식당",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00167",
+      "name_ko": "큐제",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00168",
+      "name_ko": "커피스가모 인 서면",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00171",
+      "name_ko": "원조 바다집",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00173",
+      "name_ko": "소문난원조조방낙지본점",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00174",
+      "name_ko": "오대양횟집",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00175",
+      "name_ko": "오륙도낙지 범일본점",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00176",
+      "name_ko": "일미아구찜",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00178",
+      "name_ko": "1966정원 천성항점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00179",
+      "name_ko": "용호동할매팥빙수단팥죽 본점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00180",
+      "name_ko": "올드머그",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00181",
+      "name_ko": "아데초이",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00182",
+      "name_ko": "빌라빌레쿨라",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00183",
+      "name_ko": "브리타니",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00184",
+      "name_ko": "브레이크인커피",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00185",
+      "name_ko": "bread365",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00186",
+      "name_ko": "보리종파티세리 본점",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00187",
+      "name_ko": "바우노바",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00189",
+      "name_ko": "명란브랜드연구소",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00191",
+      "name_ko": "어밤부",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00192",
+      "name_ko": "우토피아",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00193",
+      "name_ko": "우봉",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00195",
+      "name_ko": "버거인뉴욕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00196",
+      "name_ko": "반핀 서면전포점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00197",
+      "name_ko": "복성반점",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00198",
+      "name_ko": "쉐프리",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00199",
+      "name_ko": "부우사안",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00200",
+      "name_ko": "스톤스트리트",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00201",
+      "name_ko": "산동완탕교자관",
+      "district": "동구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00202",
+      "name_ko": "삼형제오리 부산1호점",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00204",
+      "name_ko": "음주양식당 오스테리아 어부",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00205",
+      "name_ko": "칸웨이",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00207",
+      "name_ko": "글라스앤보틀",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00208",
+      "name_ko": "앙탄",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00209",
+      "name_ko": "교토돈부리 본점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00211",
+      "name_ko": "노는바다",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00212",
+      "name_ko": "동경밥상",
+      "district": "수영구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00213",
+      "name_ko": "슌",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00214",
+      "name_ko": "스시미르네 본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00215",
+      "name_ko": "스시심 타카이",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00216",
+      "name_ko": "야스마루 쇼쿠도",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00217",
+      "name_ko": "중앙모밀",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00218",
+      "name_ko": "킹콩스시",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00219",
+      "name_ko": "타이가 텐푸라",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00220",
+      "name_ko": "톤쇼우 부산대점",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00223",
+      "name_ko": "면채움",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00224",
+      "name_ko": "대연밀면",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00225",
+      "name_ko": "합천국밥집",
+      "district": "남구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00226",
+      "name_ko": "정짓간 돼지국밥 & 막국수",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00227",
+      "name_ko": "우리돼지국밥",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00228",
+      "name_ko": "수복돼지국밥",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00229",
+      "name_ko": "부광돼지국밥전문점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00230",
+      "name_ko": "행복을 짓는 수향촌밥상",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00232",
+      "name_ko": "할매재첩국부산본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00233",
+      "name_ko": "동래할매파전",
+      "district": "동래구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00234",
+      "name_ko": "박해윤통영해물밥상",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00237",
+      "name_ko": "하기연진주냉면",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00238",
+      "name_ko": "장안집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00239",
+      "name_ko": "이가네칼국수",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00240",
+      "name_ko": "이가네떡볶이",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00241",
+      "name_ko": "우성삼계탕",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00242",
+      "name_ko": "몽뜰",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00244",
+      "name_ko": "할매집회국수",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00245",
+      "name_ko": "나탄약선요리",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00246",
+      "name_ko": "부다면옥",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00247",
+      "name_ko": "본 고갈비",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00248",
+      "name_ko": "88돼지갈비",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00249",
+      "name_ko": "돌솥밥집",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00250",
+      "name_ko": "맹여사육전육회",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00251",
+      "name_ko": "은하갈비",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00253",
+      "name_ko": "기장손칼국수",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00254",
+      "name_ko": "쌍둥이돼지국밥",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00255",
+      "name_ko": "삼오불고기",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00256",
+      "name_ko": "언양불고기부산집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00257",
+      "name_ko": "은해갈치",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00259",
+      "name_ko": "새총횟집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00260",
+      "name_ko": "초필살돼지구이",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00261",
+      "name_ko": "거대숯불구이",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00263",
+      "name_ko": "아저씨대구탕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00264",
+      "name_ko": "영남돼지",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00265",
+      "name_ko": "무진장횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00266",
+      "name_ko": "탐복",
+      "district": "기장군",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00268",
+      "name_ko": "부우사안",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00269",
+      "name_ko": "산동완탕교자관",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00270",
+      "name_ko": "동경밥상",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00271",
+      "name_ko": "모즈",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00274",
+      "name_ko": "스시이루카",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00275",
+      "name_ko": "야키토리해공",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00277",
+      "name_ko": "떼떼오네",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00278",
+      "name_ko": "라꽁띠",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00279",
+      "name_ko": "리오네",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00281",
+      "name_ko": "음주양식당오스테리아어부",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00282",
+      "name_ko": "이재모피자",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00283",
+      "name_ko": "레땅",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00284",
+      "name_ko": "라이옥",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00286",
+      "name_ko": "알로이타이레스토랑",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00287",
+      "name_ko": "카파도키아",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00288",
+      "name_ko": "거북선횟집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00289",
+      "name_ko": "고스락",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00290",
+      "name_ko": "규우정",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00291",
+      "name_ko": "금랑횟집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00292",
+      "name_ko": "뉼리",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00293",
+      "name_ko": "맥퀸즈라운지",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00294",
+      "name_ko": "목장원",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00295",
+      "name_ko": "오륙도가원",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00296",
+      "name_ko": "이레옥",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00297",
+      "name_ko": "칠성횟집",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00298",
+      "name_ko": "남풍",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00299",
+      "name_ko": "랩24바이쿠무다",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00301",
+      "name_ko": "마이클어반팜테이블",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00303",
+      "name_ko": "무궁화",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00304",
+      "name_ko": "사까에",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00305",
+      "name_ko": "셔블",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00306",
+      "name_ko": "아쁘앙",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00307",
+      "name_ko": "아오모리",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00310",
+      "name_ko": "팔레드신",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00311",
+      "name_ko": "팔레트",
+      "district": "해운대구",
+      "publication_status": "HOLD_SUSPECTED_DUPLICATE_WITHIN_PIPELINE",
+      "why_recommend_reason": "SUSPECTED_DUPLICATE_WITHIN_PIPELINE"
+    },
+    {
+      "candidate_id": "busan-F-00314",
+      "name_ko": "개금밀면",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00315",
+      "name_ko": "구포촌국수",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00316",
+      "name_ko": "금수복국",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00317",
+      "name_ko": "금용",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00318",
+      "name_ko": "기장곰장어",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00321",
+      "name_ko": "박옥희할매집원조복국",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00323",
+      "name_ko": "백구당",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00324",
+      "name_ko": "부산명물횟집",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00325",
+      "name_ko": "비엔씨",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00326",
+      "name_ko": "새진주식당",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00327",
+      "name_ko": "서울깍두기",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00328",
+      "name_ko": "송정3대국밥",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00330",
+      "name_ko": "신창국밥",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00331",
+      "name_ko": "신흥관",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00334",
+      "name_ko": "초원복국",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00337",
+      "name_ko": "해운대소문난암소갈비집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00338",
+      "name_ko": "레망파티쓰리",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00339",
+      "name_ko": "머그디저트랩",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00340",
+      "name_ko": "무슈뱅상",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00341",
+      "name_ko": "보느파티쓰 리",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00342",
+      "name_ko": "브레드365",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00343",
+      "name_ko": "브리앙",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00344",
+      "name_ko": "옵스",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00345",
+      "name_ko": "모모스커피",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00346",
+      "name_ko": "베르크로스터스",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00347",
+      "name_ko": "블랙업커피",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00348",
+      "name_ko": "히떼로스터리",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00352",
+      "name_ko": "카페호밀",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00353",
+      "name_ko": "고향연화",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00354",
+      "name_ko": "대성칼치찌개구이",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00356",
+      "name_ko": "올바릇식당 본점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00359",
+      "name_ko": "팔레트",
+      "district": "해운대구",
+      "publication_status": "HOLD_SUSPECTED_DUPLICATE_WITHIN_PIPELINE",
+      "why_recommend_reason": "SUSPECTED_DUPLICATE_WITHIN_PIPELINE"
+    },
+    {
+      "candidate_id": "busan-F-00360",
+      "name_ko": "공담 파스타",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00361",
+      "name_ko": "배종관동래삼계탕",
+      "district": "동래구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00362",
+      "name_ko": "신가네 호떡 김밥 떡볶이",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00363",
+      "name_ko": "칙투칙",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00364",
+      "name_ko": "프랑스 과자점  브리앙",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00365",
+      "name_ko": "기장손칼국수",
+      "district": "부산진구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00366",
+      "name_ko": "두번째 늘해랑",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00367",
+      "name_ko": "베르크로스터스",
+      "district": "부산진구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00371",
+      "name_ko": "골목포차",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00372",
+      "name_ko": "뉼리 광안리점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00373",
+      "name_ko": "다이도코로 광안리본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00374",
+      "name_ko": "더스모코",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00376",
+      "name_ko": "무슈뱅상",
+      "district": "수영구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00377",
+      "name_ko": "샤브남바완",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00379",
+      "name_ko": "제로베이스",
+      "district": "수영구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00380",
+      "name_ko": "고등어다찌  연산본점",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00382",
+      "name_ko": "그리다부부",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00383",
+      "name_ko": "동화반점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00384",
+      "name_ko": "연경재",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00385",
+      "name_ko": "김정연분식 면옥향천",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00387",
+      "name_ko": "르도헤",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00388",
+      "name_ko": "모리",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00391",
+      "name_ko": "쇼진",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00393",
+      "name_ko": "초필살돼지구이 해운대 본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00394",
+      "name_ko": "하레마",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00395",
+      "name_ko": "백가백반",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00396",
+      "name_ko": "밀양갈비",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00397",
+      "name_ko": "가야포차선지국밥 본점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00398",
+      "name_ko": "30년전통가마솥석쇠돼지갈비",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00399",
+      "name_ko": "달타이",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00406",
+      "name_ko": "수블",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00407",
+      "name_ko": "스시시안",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "DUPLICATE_CONFIRMED"
+    },
+    {
+      "candidate_id": "busan-F-00408",
+      "name_ko": "쥬가",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00411",
+      "name_ko": "1969부원동칼국수 부산본점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00412",
+      "name_ko": "고등어연구소 본점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00414",
+      "name_ko": "유원",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00415",
+      "name_ko": "야스마루 닌니쿠",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00417",
+      "name_ko": "순사이쿠보",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00421",
+      "name_ko": "닭발의 지존",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00424",
+      "name_ko": "아펙트",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00425",
+      "name_ko": "야키토리 백탄",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00427",
+      "name_ko": "우리포차",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00430",
+      "name_ko": "조이풀조이풀(골드핀치by조이풀조이풀)",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00431",
+      "name_ko": "청산1954",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00433",
+      "name_ko": "연화제과",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00436",
+      "name_ko": "우봉샤브",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-F-00437",
+      "name_ko": "히떼로스터리 전포점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00068",
+      "name_ko": "18번완당집",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00070",
+      "name_ko": "대궐안집",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00072",
+      "name_ko": "원조소문난산곰장어",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00073",
+      "name_ko": "금문",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00074",
+      "name_ko": "산성청송가든",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00075",
+      "name_ko": "구덕민속촌",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00102",
+      "name_ko": "토비코",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00106",
+      "name_ko": "남성관",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00109",
+      "name_ko": "아미산",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00114",
+      "name_ko": "클라우드32",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00117",
+      "name_ko": "급행장",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00118",
+      "name_ko": "꺼먹동네횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00119",
+      "name_ko": "다원",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00120",
+      "name_ko": "명수정",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00121",
+      "name_ko": "조방본가낙지",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00122",
+      "name_ko": "오사카",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00123",
+      "name_ko": "외식1번가",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00124",
+      "name_ko": "용궁해물야채쟁반짜장",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00125",
+      "name_ko": "원조 범일동 매떡",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00126",
+      "name_ko": "장성향",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00127",
+      "name_ko": "정림전통한정식",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00128",
+      "name_ko": "상국이네",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00129",
+      "name_ko": "신센",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00130",
+      "name_ko": "문화쌈밥",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00131",
+      "name_ko": "일품한우",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00150",
+      "name_ko": "초원농원",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00169",
+      "name_ko": "일번지자갈치산곰장어",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00170",
+      "name_ko": "해동횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00171",
+      "name_ko": "수민이네",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00172",
+      "name_ko": "속시원한 대구탕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00173",
+      "name_ko": "아델라7",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00175",
+      "name_ko": "부전돼지국밥",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00227",
+      "name_ko": "오막집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00239",
+      "name_ko": "[백년가게]옥미아구찜",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00251",
+      "name_ko": "일송면옥",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00252",
+      "name_ko": "죽도횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00253",
+      "name_ko": "77돌곱창",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00261",
+      "name_ko": "금정산성 창녕집",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00262",
+      "name_ko": "풍년오리박사",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00267",
+      "name_ko": "그랜드애플",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00268",
+      "name_ko": "카페 385",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00273",
+      "name_ko": "옥탑방",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00281",
+      "name_ko": "수변최고돼지국밥 민락본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00283",
+      "name_ko": "동래원조산곰장어",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00284",
+      "name_ko": "스시몬",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00285",
+      "name_ko": "청와정",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00327",
+      "name_ko": "대저할매국수",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00329",
+      "name_ko": "브라운피크닉",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00330",
+      "name_ko": "어느멋진날",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00334",
+      "name_ko": "포레스트3002",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00341",
+      "name_ko": "전산가든",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00343",
+      "name_ko": "해풍가마솥",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00346",
+      "name_ko": "해운대기와집대구탕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00354",
+      "name_ko": "칠암일번지횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00362",
+      "name_ko": "가야포차선지국",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00363",
+      "name_ko": "동래밀면",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00365",
+      "name_ko": "서울깍두기",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00366",
+      "name_ko": "앙로고택",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00367",
+      "name_ko": "덕미",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00369",
+      "name_ko": "그린노마드",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00370",
+      "name_ko": "르쎄",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00380",
+      "name_ko": "꽃피는 4월 밀익는 5월",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00382",
+      "name_ko": "러브얼스",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00386",
+      "name_ko": "용암할매횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00393",
+      "name_ko": "클래식캠퍼",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00394",
+      "name_ko": "수월경화",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00397",
+      "name_ko": "다솥맛집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00399",
+      "name_ko": "사천게장집",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00403",
+      "name_ko": "초량밀면",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00404",
+      "name_ko": "송정집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00405",
+      "name_ko": "장씨해녀집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00406",
+      "name_ko": "다온나루",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00407",
+      "name_ko": "양산왕돼지국밥",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00408",
+      "name_ko": "해목",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00409",
+      "name_ko": "해운대 가야밀면",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00410",
+      "name_ko": "사비아",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00412",
+      "name_ko": "하녹",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00413",
+      "name_ko": "반송187",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00420",
+      "name_ko": "깃발집 국수전골",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00424",
+      "name_ko": "속씨원한대구탕미포본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00425",
+      "name_ko": "칠성식당 본점",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00430",
+      "name_ko": "대복성",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00431",
+      "name_ko": "카페썬번",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00432",
+      "name_ko": "송정해녀집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00434",
+      "name_ko": "만서리 이가네 막국수",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00438",
+      "name_ko": "남천녹차팥빙수",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00443",
+      "name_ko": "대보름",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00448",
+      "name_ko": "코랄라니",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00449",
+      "name_ko": "풍원장시골밥상집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00450",
+      "name_ko": "피크스퀘어",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00451",
+      "name_ko": "헤이든",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00453",
+      "name_ko": "구디너프",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00454",
+      "name_ko": "록산",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00455",
+      "name_ko": "어라우즈로스터리",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00456",
+      "name_ko": "이프리오",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00458",
+      "name_ko": "그릿비 일광",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00460",
+      "name_ko": "신기숲",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00462",
+      "name_ko": "오구카페",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00463",
+      "name_ko": "노티스",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00466",
+      "name_ko": "이엘 16.52 (EL16.52)",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00467",
+      "name_ko": "엄용백 돼지국밥",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00469",
+      "name_ko": "연어바치",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00470",
+      "name_ko": "주문진 막국수",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00472",
+      "name_ko": "더스타뷔페",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00473",
+      "name_ko": "툇마루",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00475",
+      "name_ko": "비상(VSANT)",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00476",
+      "name_ko": "오소리순대",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00477",
+      "name_ko": "녹산용가든",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00478",
+      "name_ko": "로다로지",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00480",
+      "name_ko": "벨렘351",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00482",
+      "name_ko": "월남면반",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00483",
+      "name_ko": "이지요 더파크",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00484",
+      "name_ko": "한그루양과점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00485",
+      "name_ko": "더팜471",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00486",
+      "name_ko": "리디앤폴(LIDI&PAUL)",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00488",
+      "name_ko": "공극샌드커피",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00489",
+      "name_ko": "메르데쿠르",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00490",
+      "name_ko": "향유정 속초이모네찜",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00491",
+      "name_ko": "오프오",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00492",
+      "name_ko": "어보",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00493",
+      "name_ko": "진품물회",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00494",
+      "name_ko": "일광당",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00495",
+      "name_ko": "장군멸치회촌",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00496",
+      "name_ko": "제주항통갈치",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00497",
+      "name_ko": "팜카페",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00499",
+      "name_ko": "가마솥생복집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00500",
+      "name_ko": "이화장횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00501",
+      "name_ko": "더바베큐051",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00502",
+      "name_ko": "마레레스토랑",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00503",
+      "name_ko": "마리솔",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00504",
+      "name_ko": "본가딸부자전복죽집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00506",
+      "name_ko": "일광 카페 숲",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00507",
+      "name_ko": "메이크씨",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00508",
+      "name_ko": "메밀447",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00510",
+      "name_ko": "황금새우기장본점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00511",
+      "name_ko": "하바나",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00512",
+      "name_ko": "튼튼장어 무한리필",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00513",
+      "name_ko": "칠암만장",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00514",
+      "name_ko": "일광정",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00515",
+      "name_ko": "웨스턴챔버",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00516",
+      "name_ko": "유정1995 기장 본점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00517",
+      "name_ko": "철마대가한우직판장",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00518",
+      "name_ko": "철마한우수목원",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00519",
+      "name_ko": "초오록",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00520",
+      "name_ko": "하늘아래 첫 집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00521",
+      "name_ko": "해운대해물칼국수",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00522",
+      "name_ko": "형제가든",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00523",
+      "name_ko": "덕산명가 참소국밥",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00524",
+      "name_ko": "이티135",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00525",
+      "name_ko": "카페 만디",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00527",
+      "name_ko": "태백관",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00528",
+      "name_ko": "코모도테이블",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00530",
+      "name_ko": "수안커피컴퍼니 커피하우스",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00531",
+      "name_ko": "낭만송백",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00532",
+      "name_ko": "황토마루",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00533",
+      "name_ko": "카페 도토리 로스터스",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00534",
+      "name_ko": "만선해물탕",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00535",
+      "name_ko": "파나카F",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00536",
+      "name_ko": "부산조개창고",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00539",
+      "name_ko": "아라진",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00540",
+      "name_ko": "우송가든",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00541",
+      "name_ko": "조방제일한우",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00542",
+      "name_ko": "303일상",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00543",
+      "name_ko": "리버사이드",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00544",
+      "name_ko": "온든해",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00547",
+      "name_ko": "해운대하얀오징어집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00548",
+      "name_ko": "하진이네",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00550",
+      "name_ko": "구덕포끝집고기",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00552",
+      "name_ko": "흑송 우동소바 송정본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00553",
+      "name_ko": "키친동백",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00554",
+      "name_ko": "영남식육식당",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00555",
+      "name_ko": "오반장",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00556",
+      "name_ko": "샤브막심 송정본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00557",
+      "name_ko": "샤브야 본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00558",
+      "name_ko": "솔내음한정식",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00559",
+      "name_ko": "송정물총칼국수",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00560",
+      "name_ko": "스노잉클라우드",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00561",
+      "name_ko": "싱싱뽈락회 해운대본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00564",
+      "name_ko": "사마정",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00565",
+      "name_ko": "부센동",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00566",
+      "name_ko": "몽작",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00567",
+      "name_ko": "희와제과",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00568",
+      "name_ko": "아시오",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00569",
+      "name_ko": "초함",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00570",
+      "name_ko": "해신킹크랩",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00571",
+      "name_ko": "밤나무집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00572",
+      "name_ko": "스페이스앤무드",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00574",
+      "name_ko": "거창맷돌순두부",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00575",
+      "name_ko": "양정기사식당",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00577",
+      "name_ko": "서대시장족발",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00581",
+      "name_ko": "대동냉면밀면",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00582",
+      "name_ko": "만석미역 본점",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00583",
+      "name_ko": "한우뭉치",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00584",
+      "name_ko": "늘해랑",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00585",
+      "name_ko": "불끈낙지",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00587",
+      "name_ko": "타타에스프레소바",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00588",
+      "name_ko": "남천다옴",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00590",
+      "name_ko": "바로해장",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00592",
+      "name_ko": "비스포레",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00593",
+      "name_ko": "송원일식",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00594",
+      "name_ko": "엘올리브",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00595",
+      "name_ko": "요이쿠마 본점",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00597",
+      "name_ko": "로아누",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00599",
+      "name_ko": "감포참가자미",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00600",
+      "name_ko": "디원카페",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00602",
+      "name_ko": "토로",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00604",
+      "name_ko": "공원집",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00605",
+      "name_ko": "푸디1354",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00608",
+      "name_ko": "홍순덕 전포양곱창",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00609",
+      "name_ko": "영동밀면&돼지국밥",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00610",
+      "name_ko": "신라농원",
+      "district": "북구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00613",
+      "name_ko": "수영 돼지국밥",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00616",
+      "name_ko": "화복반점",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00617",
+      "name_ko": "엣지993",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00619",
+      "name_ko": "공원칼국수",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00620",
+      "name_ko": "스완양분식",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00622",
+      "name_ko": "1950 태성당",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00624",
+      "name_ko": "초량845",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00625",
+      "name_ko": "클레이디뷔페 돌잔치",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00626",
+      "name_ko": "303화덕 동래온천장점",
+      "district": "동래구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00627",
+      "name_ko": "우디브룩",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00629",
+      "name_ko": "보리에 브레드 팩토리",
+      "district": "사하구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00631",
+      "name_ko": "채플린",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00632",
+      "name_ko": "해녀천지할매집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00633",
+      "name_ko": "엠아이알오",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00634",
+      "name_ko": "미동암소정",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00635",
+      "name_ko": "마포면옥",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00636",
+      "name_ko": "기장끝집 죽성본점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00637",
+      "name_ko": "장룡수산 본점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00638",
+      "name_ko": "자갈치왕짬뽕",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00639",
+      "name_ko": "시즌 조개구이",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00640",
+      "name_ko": "선창갈미조개",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00641",
+      "name_ko": "박가네순두부",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00642",
+      "name_ko": "우남정",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00643",
+      "name_ko": "광복경양식",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00644",
+      "name_ko": "월화횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00646",
+      "name_ko": "강호중마라도물회",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00647",
+      "name_ko": "일광수산횟집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00650",
+      "name_ko": "구로마쯔",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00651",
+      "name_ko": "철마원조추어탕",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00652",
+      "name_ko": "카페공지",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00653",
+      "name_ko": "해녀할매집",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00654",
+      "name_ko": "엄마손대구탕",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00658",
+      "name_ko": "하가원 해운대점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00663",
+      "name_ko": "듀스포레",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00665",
+      "name_ko": "류센소 본점",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00666",
+      "name_ko": "맘보식당",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00667",
+      "name_ko": "맛소문오리불고기",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00668",
+      "name_ko": "문토스트",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00669",
+      "name_ko": "프루터리포레스트",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00671",
+      "name_ko": "낙동강오리알 본점",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00673",
+      "name_ko": "할매집",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00681",
+      "name_ko": "카페제노아",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00697",
+      "name_ko": "금정산성 유가네누룩",
+      "district": "금정구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00713",
+      "name_ko": "아트모이지",
+      "district": "수영구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00725",
+      "name_ko": "세븐아일랜드",
+      "district": "강서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00726",
+      "name_ko": "암남길 벗과벗",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00728",
+      "name_ko": "만달리",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00734",
+      "name_ko": "솥이랑 서면점",
+      "district": "부산진구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00735",
+      "name_ko": "원시학",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-K-00738",
+      "name_ko": "부산 카페 라운지",
+      "district": "연제구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1133",
+      "name_ko": "도날드즉석떡볶이",
+      "district": "영도구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1137",
+      "name_ko": "원산면옥 1953",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1248",
+      "name_ko": "GAB148 Steak & Pasta",
+      "district": null,
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1262",
+      "name_ko": "홍성방",
+      "district": "동구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1489",
+      "name_ko": "석기시대",
+      "district": "중구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1508",
+      "name_ko": "부산약콩밀면",
+      "district": "남구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1721",
+      "name_ko": "코리아쿠킹클래스 밥상 인 부산",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "FOOD_SCOPE_EXCLUDED"
+    },
+    {
+      "candidate_id": "busan-VB-1808",
+      "name_ko": "올바릇 본점",
+      "district": "기장군",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-1853",
+      "name_ko": "감성 캠핑소품샵이 있는 캠핑 컨셉 카페, 클래식 캠퍼",
+      "district": "사상구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-2401",
+      "name_ko": "부산 오키친 쿠킹하우스",
+      "district": "해운대구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "FOOD_SCOPE_EXCLUDED"
+    },
+    {
+      "candidate_id": "busan-VB-2579",
+      "name_ko": "달콤한 부산의 매력,",
+      "district": "해운대구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    },
+    {
+      "candidate_id": "busan-VB-2704",
+      "name_ko": "부산에서 만나는 특별한 한식 쿠킹클래스, 배로모디",
+      "district": "중구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "FOOD_SCOPE_EXCLUDED"
+    },
+    {
+      "candidate_id": "busan-VB-518",
+      "name_ko": "부산 로컬푸드 쿠킹클래스",
+      "district": "서구",
+      "publication_status": "REFERENCE_ONLY",
+      "why_recommend_reason": "FOOD_SCOPE_EXCLUDED"
+    },
+    {
+      "candidate_id": "busan-VB-960",
+      "name_ko": "디에이블 부산송도점",
+      "district": "서구",
+      "publication_status": "HOLD_WEAK_EVIDENCE",
+      "why_recommend_reason": "DIRECTORY_ONLY_NO_GUIDE_MATCH"
+    }
+  ]
+}

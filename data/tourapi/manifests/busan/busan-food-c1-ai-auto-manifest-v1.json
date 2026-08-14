@@ -1,0 +1,1448 @@
+{
+  "manifest_type": "AI_AUTO",
+  "task_id": "TASK-BUSAN-FOOD-TRUSTED-RECURATION-V1",
+  "task_date": "2026-08-14",
+  "BUSAN_AI_AUTO_FOOD_READY_COUNT": 109,
+  "AI_AUTO_CHECKSUM": "e774a2d5df8efe6c9ca9d416",
+  "records": [
+    {
+      "candidate_id": "busan-F-00002",
+      "name_ko": "만호갈미샤브샤브",
+      "district": "강서구",
+      "zone": "Gangseo-Airport",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-271-4389",
+      "lat": 35.101425,
+      "lng": 128.92914
+    },
+    {
+      "candidate_id": "busan-F-00015",
+      "name_ko": "이재모피자 본점",
+      "district": "중구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-255-9494",
+      "lat": 35.102104,
+      "lng": 129.0306
+    },
+    {
+      "candidate_id": "busan-F-00019",
+      "name_ko": "거대갈비",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-746-0037",
+      "lat": 35.16155,
+      "lng": 129.16693
+    },
+    {
+      "candidate_id": "busan-F-00020",
+      "name_ko": "금수복국 해운대본점",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-742-3600",
+      "lat": 35.16243,
+      "lng": 129.1645
+    },
+    {
+      "candidate_id": "busan-F-00031",
+      "name_ko": "대티물꽁",
+      "district": "사하구",
+      "zone": "Saha",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-203-4425",
+      "lat": 35.10239,
+      "lng": 129.00041
+    },
+    {
+      "candidate_id": "busan-F-00032",
+      "name_ko": "원조18번완당",
+      "district": "서구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-256-3391",
+      "lat": 35.105713,
+      "lng": 129.02045
+    },
+    {
+      "candidate_id": "busan-F-00033",
+      "name_ko": "할매복국",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-742-2790",
+      "lat": 35.160915,
+      "lng": 129.17152
+    },
+    {
+      "candidate_id": "busan-F-00034",
+      "name_ko": "젠스시",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-746-7456",
+      "lat": 35.170803,
+      "lng": 129.17145
+    },
+    {
+      "candidate_id": "busan-F-00039",
+      "name_ko": "쌍둥이돼지국밥 본점",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-628-7021",
+      "lat": 35.13177,
+      "lng": 129.0923
+    },
+    {
+      "candidate_id": "busan-F-00047",
+      "name_ko": "봉식당",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-556-9911",
+      "lat": 35.221752,
+      "lng": 129.08357
+    },
+    {
+      "candidate_id": "busan-F-00052",
+      "name_ko": "김유순대구뽈찜",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-627-4319",
+      "lat": 35.136368,
+      "lng": 129.09152
+    },
+    {
+      "candidate_id": "busan-F-00053",
+      "name_ko": "백산키친",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-635-8219",
+      "lat": 35.13873,
+      "lng": 129.06345
+    },
+    {
+      "candidate_id": "busan-F-00054",
+      "name_ko": "왔다식당",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-412-2676",
+      "lat": 35.094036,
+      "lng": 129.05635
+    },
+    {
+      "candidate_id": "busan-F-00056",
+      "name_ko": "방코",
+      "district": "강서구",
+      "zone": "Gangseo-Airport",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-271-2068",
+      "lat": 35.11546,
+      "lng": 128.92226
+    },
+    {
+      "candidate_id": "busan-F-00064",
+      "name_ko": "범일빈대떡",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-646-0081",
+      "lat": 35.139576,
+      "lng": 129.05621
+    },
+    {
+      "candidate_id": "busan-F-00068",
+      "name_ko": "디저트시네마",
+      "district": "연제구",
+      "zone": "Yeonje",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-867-5757",
+      "lat": 35.176273,
+      "lng": 129.09052
+    },
+    {
+      "candidate_id": "busan-F-00084",
+      "name_ko": "편의방",
+      "district": "서구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-256-2121",
+      "lat": 35.11915,
+      "lng": 129.01625
+    },
+    {
+      "candidate_id": "busan-F-00098",
+      "name_ko": "소수인",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-808-4036",
+      "lat": 35.156677,
+      "lng": 129.05383
+    },
+    {
+      "candidate_id": "busan-F-00100",
+      "name_ko": "영진돼지국밥 본점",
+      "district": "사하구",
+      "zone": "Saha",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-206-3820",
+      "lat": 35.09664,
+      "lng": 128.95784
+    },
+    {
+      "candidate_id": "busan-F-00103",
+      "name_ko": "도날드",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-413-9990",
+      "lat": 35.085815,
+      "lng": 129.04295
+    },
+    {
+      "candidate_id": "busan-F-00116",
+      "name_ko": "본참치",
+      "district": "중구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-463-3737",
+      "lat": 35.10548,
+      "lng": 129.03526
+    },
+    {
+      "candidate_id": "busan-F-00127",
+      "name_ko": "고민끝에여기",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1314-1592",
+      "lat": 35.112698,
+      "lng": 129.03706
+    },
+    {
+      "candidate_id": "busan-F-00135",
+      "name_ko": "그라치에",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1392-6860",
+      "lat": 35.089043,
+      "lng": 129.06154
+    },
+    {
+      "candidate_id": "busan-F-00147",
+      "name_ko": "타이빈",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-558-8885",
+      "lat": 35.216263,
+      "lng": 129.0773
+    },
+    {
+      "candidate_id": "busan-F-00155",
+      "name_ko": "평양집",
+      "district": "북구",
+      "zone": "Buk-gu",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1475-5455",
+      "lat": 35.212116,
+      "lng": 129.00589
+    },
+    {
+      "candidate_id": "busan-F-00161",
+      "name_ko": "마파람해물찜해물탕 구서본점",
+      "district": "금정구",
+      "zone": "Geumjeong",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-557-5577",
+      "lat": 35.244667,
+      "lng": 129.08856
+    },
+    {
+      "candidate_id": "busan-F-00166",
+      "name_ko": "피아크 카페&베이커리",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-404-9204",
+      "lat": 35.08665,
+      "lng": 129.077
+    },
+    {
+      "candidate_id": "busan-F-00169",
+      "name_ko": "칠암사계",
+      "district": "기장군",
+      "zone": "Gijang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1318-4900",
+      "lat": 35.299957,
+      "lng": 129.25919
+    },
+    {
+      "candidate_id": "busan-F-00170",
+      "name_ko": "초량온당",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1318-1271",
+      "lat": 35.123413,
+      "lng": 129.04155
+    },
+    {
+      "candidate_id": "busan-F-00172",
+      "name_ko": "이흥용과자점 부산대직영점",
+      "district": "금정구",
+      "zone": "Geumjeong",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-711-4454",
+      "lat": 35.23029,
+      "lng": 129.08397
+    },
+    {
+      "candidate_id": "busan-F-00177",
+      "name_ko": "제주복국",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-405-5050",
+      "lat": 35.07098,
+      "lng": 129.06885
+    },
+    {
+      "candidate_id": "busan-F-00188",
+      "name_ko": "부산대 포맨티코 본점",
+      "district": "금정구",
+      "zone": "Geumjeong",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-583-2682",
+      "lat": 35.22843,
+      "lng": 129.08781
+    },
+    {
+      "candidate_id": "busan-F-00190",
+      "name_ko": "육화목",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-743-5747",
+      "lat": 35.16929,
+      "lng": 129.17072
+    },
+    {
+      "candidate_id": "busan-F-00194",
+      "name_ko": "굿모닝홍콩",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1334-3724",
+      "lat": 35.158752,
+      "lng": 129.06444
+    },
+    {
+      "candidate_id": "busan-F-00203",
+      "name_ko": "동광동 석기시대 본점",
+      "district": "중구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "010-2334-0358",
+      "lat": 35.106155,
+      "lng": 129.03487
+    },
+    {
+      "candidate_id": "busan-F-00206",
+      "name_ko": "고옥",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1360-1638",
+      "lat": 35.143585,
+      "lng": 129.10974
+    },
+    {
+      "candidate_id": "busan-F-00210",
+      "name_ko": "나가하마만게츠",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-731-0886",
+      "lat": 35.16669,
+      "lng": 129.15746
+    },
+    {
+      "candidate_id": "busan-F-00221",
+      "name_ko": "삼성밀면",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-806-1256",
+      "lat": 35.181423,
+      "lng": 129.05115
+    },
+    {
+      "candidate_id": "busan-F-00222",
+      "name_ko": "부산약콩밀면 이기대본점",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-611-1231",
+      "lat": 35.123108,
+      "lng": 129.11333
+    },
+    {
+      "candidate_id": "busan-F-00231",
+      "name_ko": "해물왕창칼국수",
+      "district": "사상구",
+      "zone": "Sasang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "0507-1357-2579",
+      "lat": 35.1727,
+      "lng": 128.98376
+    },
+    {
+      "candidate_id": "busan-F-00235",
+      "name_ko": "원조꼬리곰집",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1379-1134",
+      "lat": 35.216038,
+      "lng": 129.08095
+    },
+    {
+      "candidate_id": "busan-F-00236",
+      "name_ko": "하동재첩국",
+      "district": "사상구",
+      "zone": "Sasang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-301-7200",
+      "lat": 35.19344,
+      "lng": 128.98584
+    },
+    {
+      "candidate_id": "busan-F-00243",
+      "name_ko": "조광심민속왕순대",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-527-3927",
+      "lat": 35.20074,
+      "lng": 129.09787
+    },
+    {
+      "candidate_id": "busan-F-00252",
+      "name_ko": "합천국밥집",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-628-4898",
+      "lat": 35.111244,
+      "lng": 129.11125
+    },
+    {
+      "candidate_id": "busan-F-00258",
+      "name_ko": "동백섬횟집",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-741-3888",
+      "lat": 35.160408,
+      "lng": 129.15466
+    },
+    {
+      "candidate_id": "busan-F-00262",
+      "name_ko": "부다면옥",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-746-8872",
+      "lat": 35.162384,
+      "lng": 129.16298
+    },
+    {
+      "candidate_id": "busan-F-00267",
+      "name_ko": "미미루",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-555-6609",
+      "lat": 35.219494,
+      "lng": 129.08295
+    },
+    {
+      "candidate_id": "busan-F-00272",
+      "name_ko": "쇼진",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1354-8060",
+      "lat": 35.163307,
+      "lng": 129.1596
+    },
+    {
+      "candidate_id": "busan-F-00273",
+      "name_ko": "스시시안",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-611-2684",
+      "lat": 35.167847,
+      "lng": 129.13097
+    },
+    {
+      "candidate_id": "busan-F-00276",
+      "name_ko": "제로베이스",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "070-8803-0318",
+      "lat": 35.15741,
+      "lng": 129.12096
+    },
+    {
+      "candidate_id": "busan-F-00280",
+      "name_ko": "쉐프리",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-757-6127",
+      "lat": 35.159615,
+      "lng": 129.15382
+    },
+    {
+      "candidate_id": "busan-F-00285",
+      "name_ko": "달타이",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1403-1127",
+      "lat": 35.158127,
+      "lng": 129.18245
+    },
+    {
+      "candidate_id": "busan-F-00300",
+      "name_ko": "르도헤",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-747-8522",
+      "lat": 35.15545,
+      "lng": 129.1466
+    },
+    {
+      "candidate_id": "busan-F-00302",
+      "name_ko": "모리",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-731-9889",
+      "lat": 35.160202,
+      "lng": 129.16658
+    },
+    {
+      "candidate_id": "busan-F-00308",
+      "name_ko": "율링",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-741-3323",
+      "lat": 35.158867,
+      "lng": 129.1706
+    },
+    {
+      "candidate_id": "busan-F-00309",
+      "name_ko": "차오란",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-922-1250",
+      "lat": 35.16133,
+      "lng": 129.16801
+    },
+    {
+      "candidate_id": "busan-F-00312",
+      "name_ko": "하레마",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1354-6558",
+      "lat": 35.157204,
+      "lng": 129.14482
+    },
+    {
+      "candidate_id": "busan-F-00313",
+      "name_ko": "60년전통할매국밥",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-646-6295",
+      "lat": 35.141018,
+      "lng": 129.05618
+    },
+    {
+      "candidate_id": "busan-F-00319",
+      "name_ko": "동래할매파전",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-552-0792",
+      "lat": 35.204605,
+      "lng": 129.08386
+    },
+    {
+      "candidate_id": "busan-F-00320",
+      "name_ko": "물꽁식당",
+      "district": "중구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-257-3230",
+      "lat": 35.104496,
+      "lng": 129.02438
+    },
+    {
+      "candidate_id": "busan-F-00322",
+      "name_ko": "배종관동래삼계탕",
+      "district": "동래구",
+      "zone": "Dongrae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-555-2464",
+      "lat": 35.20526,
+      "lng": 129.08475
+    },
+    {
+      "candidate_id": "busan-F-00329",
+      "name_ko": "신발원",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-467-0177",
+      "lat": 35.11481,
+      "lng": 129.03871
+    },
+    {
+      "candidate_id": "busan-F-00332",
+      "name_ko": "옛날오막집",
+      "district": "서구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-243-6973",
+      "lat": 35.10883,
+      "lng": 129.0197
+    },
+    {
+      "candidate_id": "busan-F-00333",
+      "name_ko": "원조할매낙지",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-643-5037",
+      "lat": 35.14214,
+      "lng": 129.06015
+    },
+    {
+      "candidate_id": "busan-F-00335",
+      "name_ko": "평산옥",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-468-6255",
+      "lat": 35.11429,
+      "lng": 129.0371
+    },
+    {
+      "candidate_id": "busan-F-00336",
+      "name_ko": "할매재첩국",
+      "district": "사상구",
+      "zone": "Sasang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-301-5321",
+      "lat": 35.193363,
+      "lng": 128.98607
+    },
+    {
+      "candidate_id": "busan-F-00349",
+      "name_ko": "쥬가정효",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-741-3515",
+      "lat": 35.165035,
+      "lng": 129.15915
+    },
+    {
+      "candidate_id": "busan-F-00350",
+      "name_ko": "톤쇼우",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-752-7978",
+      "lat": 35.15644,
+      "lng": 129.12479
+    },
+    {
+      "candidate_id": "busan-F-00351",
+      "name_ko": "토북베이커리",
+      "district": "강서구",
+      "zone": "Gangseo-Airport",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1371-0250",
+      "lat": 35.11187,
+      "lng": 128.87785
+    },
+    {
+      "candidate_id": "busan-F-00355",
+      "name_ko": "무진장횟집 기장점",
+      "district": "기장군",
+      "zone": "Gijang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-721-2956",
+      "lat": 35.216946,
+      "lng": 129.22612
+    },
+    {
+      "candidate_id": "busan-F-00357",
+      "name_ko": "알천순대곱창전골전문점",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-612-5952",
+      "lat": 35.138542,
+      "lng": 129.1047
+    },
+    {
+      "candidate_id": "busan-F-00358",
+      "name_ko": "태화반점",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-611-6799",
+      "lat": 35.13219,
+      "lng": 129.11273
+    },
+    {
+      "candidate_id": "busan-F-00368",
+      "name_ko": "코르 파스타 바",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1474-4570",
+      "lat": 35.15265,
+      "lng": 129.06767
+    },
+    {
+      "candidate_id": "busan-F-00369",
+      "name_ko": "곰보식당",
+      "district": "사상구",
+      "zone": "Sasang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-304-7733",
+      "lat": 35.196556,
+      "lng": 128.98784
+    },
+    {
+      "candidate_id": "busan-F-00370",
+      "name_ko": "611WoodFire",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "010-6549-0611",
+      "lat": 35.147713,
+      "lng": 129.10889
+    },
+    {
+      "candidate_id": "busan-F-00375",
+      "name_ko": "램지",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "010-9406-3135",
+      "lat": 35.153328,
+      "lng": 129.12515
+    },
+    {
+      "candidate_id": "busan-F-00378",
+      "name_ko": "아웃트로 바이 비토",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-758-7123",
+      "lat": 35.15835,
+      "lng": 129.12785
+    },
+    {
+      "candidate_id": "busan-F-00381",
+      "name_ko": "재기돼지국밥",
+      "district": "영도구",
+      "zone": "Yeongdo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-418-0526",
+      "lat": 35.08963,
+      "lng": 129.03987
+    },
+    {
+      "candidate_id": "busan-F-00386",
+      "name_ko": "랩24 바이 쿠무다",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-701-1301",
+      "lat": 35.177433,
+      "lng": 129.19717
+    },
+    {
+      "candidate_id": "busan-F-00389",
+      "name_ko": "비비비당",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-746-0705",
+      "lat": 35.16249,
+      "lng": 129.18504
+    },
+    {
+      "candidate_id": "busan-F-00390",
+      "name_ko": "소공간",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "010-5191-9002",
+      "lat": 35.16169,
+      "lng": 129.16737
+    },
+    {
+      "candidate_id": "busan-F-00392",
+      "name_ko": "우봉 샤브 청사포점",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1349-9256",
+      "lat": 35.160713,
+      "lng": 129.19269
+    },
+    {
+      "candidate_id": "busan-F-00400",
+      "name_ko": "란아한",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1412-9983",
+      "lat": 35.15837,
+      "lng": 129.06421
+    },
+    {
+      "candidate_id": "busan-F-00401",
+      "name_ko": "바오하우스",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1324-1031",
+      "lat": 35.154896,
+      "lng": 129.06335
+    },
+    {
+      "candidate_id": "busan-F-00402",
+      "name_ko": "롯데호텔 부산 블루헤이븐",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-810-6300",
+      "lat": 35.15663,
+      "lng": 129.05563
+    },
+    {
+      "candidate_id": "busan-F-00403",
+      "name_ko": "못난이식당 해운대점",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1418-2528",
+      "lat": 35.154926,
+      "lng": 129.1445
+    },
+    {
+      "candidate_id": "busan-F-00404",
+      "name_ko": "손내향미",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-715-4648",
+      "lat": 35.153034,
+      "lng": 129.06851
+    },
+    {
+      "candidate_id": "busan-F-00405",
+      "name_ko": "선창횟집",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-747-7470",
+      "lat": 35.156857,
+      "lng": 129.17383
+    },
+    {
+      "candidate_id": "busan-F-00409",
+      "name_ko": "쿠지라멘",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "070-4795-7214",
+      "lat": 35.166203,
+      "lng": 129.16014
+    },
+    {
+      "candidate_id": "busan-F-00410",
+      "name_ko": "팔레트",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-626-2364",
+      "lat": 35.156513,
+      "lng": 129.17834
+    },
+    {
+      "candidate_id": "busan-F-00413",
+      "name_ko": "동삼정",
+      "district": "중구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-912-8343",
+      "lat": 35.10059,
+      "lng": 129.03143
+    },
+    {
+      "candidate_id": "busan-F-00416",
+      "name_ko": "지즈",
+      "district": "부산진구",
+      "zone": "Seomyeon-Jeonpo",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1485-1331",
+      "lat": 35.15622,
+      "lng": 129.06595
+    },
+    {
+      "candidate_id": "busan-F-00418",
+      "name_ko": "델리봉",
+      "district": "연제구",
+      "zone": "Yeonje",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-868-6848",
+      "lat": 35.19158,
+      "lng": 129.09442
+    },
+    {
+      "candidate_id": "busan-F-00419",
+      "name_ko": "보느파티쓰리",
+      "district": "연제구",
+      "zone": "Yeonje",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-502-2451",
+      "lat": 35.19527,
+      "lng": 129.07895
+    },
+    {
+      "candidate_id": "busan-F-00420",
+      "name_ko": "남천면가",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "0507-1349-1631",
+      "lat": 35.139626,
+      "lng": 129.10675
+    },
+    {
+      "candidate_id": "busan-F-00422",
+      "name_ko": "데일리럭키",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1330-1707",
+      "lat": 35.153927,
+      "lng": 129.11264
+    },
+    {
+      "candidate_id": "busan-F-00423",
+      "name_ko": "백일평냉",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_STRONG",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-625-5515",
+      "lat": 35.148556,
+      "lng": 129.11166
+    },
+    {
+      "candidate_id": "busan-F-00426",
+      "name_ko": "야키토리 해공",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-758-8333",
+      "lat": 35.158234,
+      "lng": 129.1271
+    },
+    {
+      "candidate_id": "busan-F-00428",
+      "name_ko": "으뜸이로리바타",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1460-4790",
+      "lat": 35.141987,
+      "lng": 129.10915
+    },
+    {
+      "candidate_id": "busan-F-00429",
+      "name_ko": "자매국밥",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-752-1912",
+      "lat": 35.158283,
+      "lng": 129.12569
+    },
+    {
+      "candidate_id": "busan-F-00432",
+      "name_ko": "해운대암소갈비집",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-746-3333",
+      "lat": 35.163258,
+      "lng": 129.16626
+    },
+    {
+      "candidate_id": "busan-F-00434",
+      "name_ko": "대성갈치찌개구이",
+      "district": "기장군",
+      "zone": "Gijang",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-721-2289",
+      "lat": 35.2239,
+      "lng": 129.23161
+    },
+    {
+      "candidate_id": "busan-F-00435",
+      "name_ko": "고기형",
+      "district": "수영구",
+      "zone": "Gwangalli-Millak",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1445-9312",
+      "lat": 35.166687,
+      "lng": 129.11377
+    },
+    {
+      "candidate_id": "busan-K-00474",
+      "name_ko": "고관함박",
+      "district": "동구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "051-911-8484",
+      "lat": 35.1270313878,
+      "lng": 129.0462742511
+    },
+    {
+      "candidate_id": "busan-K-00573",
+      "name_ko": "양산국밥",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "0507-1358-3544",
+      "lat": 35.1678735982,
+      "lng": 129.1727315789
+    },
+    {
+      "candidate_id": "busan-K-00578",
+      "name_ko": "영남냉면밀면",
+      "district": "서구",
+      "zone": "Nampo-Busan-Station",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-243-9963",
+      "lat": 35.1131685724,
+      "lng": 129.0203018886
+    },
+    {
+      "candidate_id": "busan-K-00672",
+      "name_ko": "거대곰탕",
+      "district": "해운대구",
+      "zone": "Haeundae",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL"
+      ],
+      "phone": "051-731-0157",
+      "lat": 35.1584047875,
+      "lng": 129.1497310611
+    },
+    {
+      "candidate_id": "busan-K-00736",
+      "name_ko": "나막집",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "GUIDE_OR_STRONG_RECOGNITION"
+      ],
+      "phone": "0507-1383-4882",
+      "lat": 35.1342484706,
+      "lng": 129.1125849531
+    },
+    {
+      "candidate_id": "busan-VB-218",
+      "name_ko": "초원복국 대연본점",
+      "district": "남구",
+      "zone": "Nam-gu",
+      "publication_status": "PUBLIC_GOOD_CHOICE",
+      "why_recommend": [
+        "OFFICIAL_EDITORIAL",
+        "LOCAL_SIGNATURE"
+      ],
+      "phone": "051-628-3935",
+      "lat": 35.137794,
+      "lng": 129.10591
+    }
+  ]
+}

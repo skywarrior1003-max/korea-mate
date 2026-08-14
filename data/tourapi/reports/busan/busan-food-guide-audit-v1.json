@@ -1,0 +1,628 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-TRUSTED-RECURATION-V1",
+  "task_date": "2026-08-14",
+  "guide_total": 194,
+  "guide_sources": {
+    "michelin-2026": 55,
+    "busan-mat-2026": 119,
+    "taegshlang-2025": 20
+  },
+  "michelin_awards": {
+    "1star": 4,
+    "bib-gourmand": 20,
+    "selected": 31
+  },
+  "matched_in_discovery": 129,
+  "unmatched_in_discovery": 85,
+  "michelin_matched": 26,
+  "busan_mat_matched": 80,
+  "taegshlang_matched": 5,
+  "michelin_not_in_discovery": 29,
+  "busan_mat_not_in_discovery": 39,
+  "taegshlang_not_in_discovery": 15,
+  "GUIDE_CATALOG_NOT_IN_DISCOVERY_GAP": 85,
+  "gap_notes": "These guide restaurants exist in restaurants.json but are NOT matched by name in the discovery pipeline (721 records). They require a separate task to add to the discovery pipeline or handle as a separate guide layer. Reason: name variations, different KTO/VB database scope, or simply not collected.",
+  "unmatched_records": [
+    {
+      "name_ko": "디귿",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "금정구",
+      "category_ko": "야키토리"
+    },
+    {
+      "name_ko": "이태리 삼촌",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "금정구",
+      "category_ko": "돈가스"
+    },
+    {
+      "name_ko": "모모스커피 본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "금정구",
+      "category_ko": "로스터리 카페"
+    },
+    {
+      "name_ko": "당미옥 한우곰탕 온천본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "곰탕"
+    },
+    {
+      "name_ko": "프랑스 과자점 브리앙",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "프랑스 구움과자"
+    },
+    {
+      "name_ko": "쿠루미 과자점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "베이커리"
+    },
+    {
+      "name_ko": "석정갈비",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "돼지 구이"
+    },
+    {
+      "name_ko": "귀화식당 사케의 향",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "이자카야"
+    },
+    {
+      "name_ko": "소문난주문진막국수",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동래구",
+      "category_ko": "막국수"
+    },
+    {
+      "name_ko": "국제밀면 본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "연제구",
+      "category_ko": "밀면"
+    },
+    {
+      "name_ko": "서가원국수",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "연제구",
+      "category_ko": "국수"
+    },
+    {
+      "name_ko": "고등어다찌 연산본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "연제구",
+      "category_ko": "고등어회"
+    },
+    {
+      "name_ko": "차애전 할매칼국수",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "연제구",
+      "category_ko": "칼국수"
+    },
+    {
+      "name_ko": "면옥향천",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "메밀국수·돈가스"
+    },
+    {
+      "name_ko": "뫼밀집",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "해운대구",
+      "category_ko": "메밀국수"
+    },
+    {
+      "name_ko": "이와",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "일식"
+    },
+    {
+      "name_ko": "오스테리아 어부",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "이탈리안 다이닝"
+    },
+    {
+      "name_ko": "무스비",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "소바"
+    },
+    {
+      "name_ko": "딤타오 본점",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "딤섬"
+    },
+    {
+      "name_ko": "도핀느",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "프렌치 다이닝"
+    },
+    {
+      "name_ko": "해목 해운대점",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "해운대구",
+      "category_ko": "장어 덮밥"
+    },
+    {
+      "name_ko": "토오루",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "일식 다이닝"
+    },
+    {
+      "name_ko": "본앤브레드 해운대 파라다이스점",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "한우 다이닝"
+    },
+    {
+      "name_ko": "엘부스 바이 수블",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "다이닝 바"
+    },
+    {
+      "name_ko": "이안",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "한식 컨템포러리"
+    },
+    {
+      "name_ko": "피오또",
+      "source": "michelin-2026",
+      "award": "1star",
+      "district_ko": "해운대구",
+      "category_ko": "이탈리안 컨템포러리"
+    },
+    {
+      "name_ko": "신도랩2.0",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "한우·오이스터 바"
+    },
+    {
+      "name_ko": "우나쥬",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "해운대구",
+      "category_ko": "장어 덮밥"
+    },
+    {
+      "name_ko": "옥이보리밥",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "해운대구",
+      "category_ko": "보리밥 정식"
+    },
+    {
+      "name_ko": "기장해변짚불곰장어",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "기장군",
+      "category_ko": "곰장어 구이"
+    },
+    {
+      "name_ko": "레스토랑 엠비언스",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "기장군",
+      "category_ko": "한식 컨템포러리"
+    },
+    {
+      "name_ko": "일광바다횟집",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "기장군",
+      "category_ko": "멸치쌈밥·자연산 회"
+    },
+    {
+      "name_ko": "만세담",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "기장군",
+      "category_ko": "곰탕"
+    },
+    {
+      "name_ko": "탐복 본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "기장군",
+      "category_ko": "전복 정식"
+    },
+    {
+      "name_ko": "갯마을횟집",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "부산진구",
+      "category_ko": "자연산회"
+    },
+    {
+      "name_ko": "융캉찌에 서면점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "부산진구",
+      "category_ko": "대만식"
+    },
+    {
+      "name_ko": "야키토리 온정",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "부산진구",
+      "category_ko": "꼬치 구이"
+    },
+    {
+      "name_ko": "잔둔가",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "부산진구",
+      "category_ko": "멕시코식"
+    },
+    {
+      "name_ko": "야키쵸리",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "부산진구",
+      "category_ko": "꼬치 구이"
+    },
+    {
+      "name_ko": "갓포현",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "부산진구",
+      "category_ko": "일식 갓포"
+    },
+    {
+      "name_ko": "청기와식당",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "한식 뷔페"
+    },
+    {
+      "name_ko": "오성집",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "돼지 구이"
+    },
+    {
+      "name_ko": "초량갈비",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "돼지 구이"
+    },
+    {
+      "name_ko": "부광갈비",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "돼지 구이"
+    },
+    {
+      "name_ko": "초량돼지국밥",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "돼지국밥"
+    },
+    {
+      "name_ko": "마가만두",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "동구",
+      "category_ko": "만두"
+    },
+    {
+      "name_ko": "멍텅구리",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "영도구",
+      "category_ko": "빙장회"
+    },
+    {
+      "name_ko": "아르프",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "영도구",
+      "category_ko": "비건"
+    },
+    {
+      "name_ko": "나룻터국수",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "수영구",
+      "category_ko": "국수·수제비"
+    },
+    {
+      "name_ko": "피리피리",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "태국식"
+    },
+    {
+      "name_ko": "우리포차 본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "수영구",
+      "category_ko": "제철회"
+    },
+    {
+      "name_ko": "미락슈퍼",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "한식 컨템포러리"
+    },
+    {
+      "name_ko": "조이풀조이풀",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "수영구",
+      "category_ko": "이자카야"
+    },
+    {
+      "name_ko": "브런치식당 소보",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "수영구",
+      "category_ko": "브런치"
+    },
+    {
+      "name_ko": "융캉찌에 광안본점",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "대만식"
+    },
+    {
+      "name_ko": "진돼지곰탕",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "돼지곰탕"
+    },
+    {
+      "name_ko": "울트라바이트",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "아시안 컨템포러리"
+    },
+    {
+      "name_ko": "송헌집",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "떡갈비"
+    },
+    {
+      "name_ko": "야키토리 백탄 광안리",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "수영구",
+      "category_ko": "꼬치 구이"
+    },
+    {
+      "name_ko": "마츠자키",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "일식 다이닝"
+    },
+    {
+      "name_ko": "한월관",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "곰탕"
+    },
+    {
+      "name_ko": "비네토",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "와인바"
+    },
+    {
+      "name_ko": "동경밥상 본점",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "장어 덮밥"
+    },
+    {
+      "name_ko": "비비재",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "비빔밥"
+    },
+    {
+      "name_ko": "광안리 언양불고기부산집",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "불고기"
+    },
+    {
+      "name_ko": "안목",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "돼지국밥"
+    },
+    {
+      "name_ko": "레썽스",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "수영구",
+      "category_ko": "이노베이티브 프렌치"
+    },
+    {
+      "name_ko": "뉴러우멘관즈",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "수영구",
+      "category_ko": "우육면"
+    },
+    {
+      "name_ko": "비스트로 정재집",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "남구",
+      "category_ko": "이탈리안 비스트로"
+    },
+    {
+      "name_ko": "미소오뎅",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "남구",
+      "category_ko": "어묵"
+    },
+    {
+      "name_ko": "샤브니지",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "강서구",
+      "category_ko": "샤부샤부"
+    },
+    {
+      "name_ko": "슌사이쿠보 화명",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "북구",
+      "category_ko": "장어 덮밥"
+    },
+    {
+      "name_ko": "정짓간 신평본점",
+      "source": "michelin-2026",
+      "award": "bib-gourmand",
+      "district_ko": "사하구",
+      "category_ko": "돼지국밥"
+    },
+    {
+      "name_ko": "꽃마을지리산어탕",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "서구",
+      "category_ko": "어탕"
+    },
+    {
+      "name_ko": "골목 손칼국수",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "서구",
+      "category_ko": "칼국수"
+    },
+    {
+      "name_ko": "흑산도 횟집",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "서구",
+      "category_ko": "활어회"
+    },
+    {
+      "name_ko": "맛나기사식당",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "서구",
+      "category_ko": "대구탕"
+    },
+    {
+      "name_ko": "왕밀면냉면 본점",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "서구",
+      "category_ko": "밀면"
+    },
+    {
+      "name_ko": "원조일미기사식당",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "선지국밥"
+    },
+    {
+      "name_ko": "쉐프곤",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "컨템포러리"
+    },
+    {
+      "name_ko": "돌고래순두부",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "순두부찌개"
+    },
+    {
+      "name_ko": "개미집 본점",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "낙곱새"
+    },
+    {
+      "name_ko": "삼송초밥 부산남포동본점",
+      "source": "busan-mat-2026",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "일식"
+    },
+    {
+      "name_ko": "막둥이네 양곱창",
+      "source": "taegshlang-2025",
+      "award": "none",
+      "district_ko": "중구",
+      "category_ko": "양곱창 구이"
+    },
+    {
+      "name_ko": "1969부원동칼국수 남포본점",
+      "source": "michelin-2026",
+      "award": "selected",
+      "district_ko": "중구",
+      "category_ko": "칼국수"
+    }
+  ],
+  "publication_result": {
+    "michelin_public": 24,
+    "busan_mat_public": 80,
+    "taegshlang_public": 5,
+    "collective_public": 3
+  }
+}

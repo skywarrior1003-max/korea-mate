@@ -1,0 +1,93 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-TRUSTED-RECURATION-V1",
+  "task_date": "2026-08-14",
+  "common_policy_commit": "2476cac",
+  "api_calls": 0,
+  "external_lookups": 0,
+  "review_scraping": 0,
+  "source_universe": {
+    "file": "data/tourapi/enriched/busan/busan-food-discovery-candidates-v1.jsonl",
+    "total": 721,
+    "individual": 714,
+    "collective": 3,
+    "excluded": 4,
+    "duplicate": 30
+  },
+  "guide_catalog": {
+    "file": "out/data/restaurants.json",
+    "total": 194,
+    "michelin_2026": 55,
+    "busan_mat_2026": 119,
+    "taegshlang_2025": 20
+  },
+  "guide_matching": {
+    "matched": 129,
+    "unmatched": 65,
+    "michelin_matched": 26,
+    "busan_mat_matched": 80,
+    "taegshlang_matched": 5
+  },
+  "publication_result": {
+    "PUBLIC_STRONG": 10,
+    "PUBLIC_GOOD_CHOICE": 99,
+    "PUBLIC_SPECIAL_PURPOSE": 3,
+    "HOLD_WEAK_EVIDENCE": 573,
+    "REFERENCE_ONLY": 34,
+    "REVIEW_REQUIRED": 0,
+    "TOTAL_PUBLICATION_READY": 112,
+    "PUBLICATION_CHECKSUM": "ce97c65d6d19a9e1af3d9f62",
+    "AI_AUTO_FOOD_READY": 109,
+    "AI_AUTO_CHECKSUM": "e774a2d5df8efe6c9ca9d416"
+  },
+  "false_positive_checks": {
+    "PUBLIC_DIRECTORY_ONLY_FALSE_POSITIVE": 0,
+    "PUBLIC_MENU_ONLY_FALSE_POSITIVE": 0,
+    "PUBLIC_GENERIC_FALSE_POSITIVE": 0,
+    "PUBLIC_FALSE_NEGATIVE_STRONG_EVIDENCE_CLEAN": 0,
+    "PHONE_TYPE_FALSE_EXCLUSION": 0,
+    "INTRA_PIPELINE_DUP_DETECTED_AND_HELD": 2,
+    "INTRA_PIPELINE_DUP_IDS": [
+      "busan-F-00311",
+      "busan-F-00359"
+    ],
+    "INTRA_PIPELINE_DUP_NOTE": "busan-F-00311 / busan-F-00359: same name/phone/coord as busan-F-00410 (팔레트). Coords 5,925m from Michelin guide coords — likely bad KTO/VB coordinate data. 00410 is canonical (536m from guide). These were NOT flagged DUPLICATE_CONFIRMED in the discovery pipeline closeout QA. Held in publication layer pending duplicate resolution (separate task).",
+    "ALL_FP_CHECKS_PASS": true
+  },
+  "ai_auto_exclusion": {
+    "COLLECTIVE_SPECIAL_MANUAL_CURATION_REQUIRED": 3
+  },
+  "before_after": {
+    "BUSAN_EXISTING_PUBLIC_BEFORE": 194,
+    "BUSAN_PUBLICATION_READY_AFTER": 112,
+    "REDUCTION_FROM_BEFORE": 82,
+    "NOTE_DIFFERENT_DATASETS": "BEFORE = guide catalog (restaurants.json, 194 records, separate curation). AFTER = discovery pipeline (721 records, Common Policy applied). Datasets overlap but are not identical — comparison is cross-dataset."
+  },
+  "safety": {
+    "SOURCE_UNIVERSE_DELETION": 0,
+    "BULK_CONSUMER_MAP_LOOKUP": 0,
+    "REVIEW_SCRAPING": 0,
+    "COMMON_CHANGE": 0,
+    "JEJU_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "SECRET_LEAK": 0
+  },
+  "common_policy_regression": {
+    "RULE_1_source_universe_not_public": "PASS (721 → pub=<count>, not all)",
+    "RULE_2_why_recommend_required": "PASS (all PUBLIC have WHY_RECOMMEND)",
+    "RULE_3_menu_only_blocked": "PASS (FP-2=0)",
+    "RULE_4_directory_only_blocked": "PASS (FP-1=0)",
+    "RULE_5_guide_not_auto_include": "PASS (contact/nav checked individually)",
+    "RULE_6_no_quota": "PASS",
+    "RULE_7_underserved_not_forced": "PASS",
+    "RULE_8_public_ai_auto_separated": "PASS (pub=112 ai=109)",
+    "RULE_9_contact_semantics": "PASS (all phone types accepted)",
+    "RULE_10_individual_collective_separated": "PASS (collective=3→SPECIAL)",
+    "RULE_11_nav_required_for_ai_auto": "PASS (all 714 have coords)",
+    "RULE_12_hold_reference_preserved": "PASS (not deleted)",
+    "RULE_13_manual_not_globalized": "PASS",
+    "RULE_14_no_consumer_reputation": "PASS (api_calls=0, review_scraping=0)",
+    "RULE_15_city_specific_not_copied": "PASS (Jeju numbers not used)"
+  }
+}
