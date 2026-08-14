@@ -1,0 +1,135 @@
+{
+  "task": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1",
+  "generated_at": "2026-08-14",
+  "food_research_commit": "b5802ba",
+  "official_curation_commit": "d69f16e",
+  "common_policy_commit": "dc6f9be",
+  "SOURCE_UNIVERSE": 1870,
+  "ORIGINAL_POSITIVE_POOL": 891,
+  "ORIGINAL_TIER_A": 638,
+  "PUBLICATION_READY_UNIQUE_COUNT": 261,
+  "PUBLICATION_RANGE_ASSESSMENT": "APPROPRIATE",
+  "BAEKNYEON_AUTO_FINAL_INCLUDE": 0,
+  "FINAL_300_FIXED": "NO",
+  "DIRECTORY_ONLY_PUBLIC_FALSE_POSITIVE": 0,
+  "pub_status_distribution": {
+    "HOLD_WEAK_EVIDENCE": 630,
+    "PUBLIC_STRONG": 78,
+    "PUBLIC_GOOD_CHOICE": 150,
+    "PUBLIC_SPECIAL_PURPOSE": 33,
+    "REFERENCE_ONLY": 904,
+    "REVIEW_REQUIRED": 75
+  },
+  "tier_a_recheck": {
+    "TIER_A_ORIGINAL": 638,
+    "SIGNATURE_STRONG": 55,
+    "SIGNATURE_SUPPORTING_REASON_ONLY": 163,
+    "SIGNATURE_MENU_ONLY": 406,
+    "SIGNATURE_WEAK_OR_AMBIGUOUS": 14
+  },
+  "why_recommend_stats": {
+    "LOCAL_SIGNATURE": {
+      "total": 725,
+      "PUBLIC": 223,
+      "HOLD": 502,
+      "STRONG": 36,
+      "MODERATE": 92,
+      "WEAK": 121
+    },
+    "GUIDE_OR_STRONG_RECOGNITION": {
+      "total": 79,
+      "PUBLIC": 79,
+      "HOLD": 0,
+      "STRONG": 38,
+      "MODERATE": 41,
+      "WEAK": 0
+    },
+    "LOCAL_REPUTATION_EVIDENCE": {
+      "total": 35,
+      "PUBLIC": 35,
+      "HOLD": 0,
+      "STRONG": 0,
+      "MODERATE": 35,
+      "WEAK": 0
+    },
+    "KOREAN_FOOD_EXPERIENCE": {
+      "total": 28,
+      "PUBLIC": 14,
+      "HOLD": 14,
+      "STRONG": 0,
+      "MODERATE": 5,
+      "WEAK": 23
+    },
+    "TRAVELER_UTILITY": {
+      "total": 14,
+      "PUBLIC": 14,
+      "HOLD": 0,
+      "STRONG": 0,
+      "MODERATE": 14,
+      "WEAK": 0
+    },
+    "SPECIAL_FOOD_EXPERIENCE": {
+      "total": 60,
+      "PUBLIC": 33,
+      "HOLD": 27,
+      "STRONG": 0,
+      "MODERATE": 28,
+      "WEAK": 19
+    }
+  },
+  "false_positive_guard": {
+    "PUBLIC_FALSE_POSITIVE_GENERIC": 0,
+    "PUBLIC_FALSE_POSITIVE_MENU_ONLY": 0,
+    "PUBLIC_FALSE_NEGATIVE_STRONG_EVIDENCE": 0,
+    "TITLE_ONLY_CLASSIFICATION": 0,
+    "TAG_ONLY_MENU_ASSERTION": 0,
+    "REGION_QUOTA_FORCED_INCLUDE": 0
+  },
+  "baeknyeon_8_results": [
+    {
+      "title": "옹포별장가든",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "신설오름",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "도라지식당",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "향원복집",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "성안식당",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "신세계제과",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "해원횟집",
+      "publication_status": "PUBLIC_STRONG"
+    },
+    {
+      "title": "제주뚝배기",
+      "publication_status": "PUBLIC_STRONG"
+    }
+  ],
+  "safety": {
+    "NEW_EXTERNAL_LOOKUPS": 0,
+    "CONSUMER_MAP_SCRAPING": 0,
+    "REVIEW_SCRAPING": 0,
+    "SOURCE_UNIVERSE_DELETION": 0,
+    "BUSAN_CHANGE": 0,
+    "SEOUL_CHANGE": 0,
+    "COMMON_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "SECRET_LEAK": 0
+  },
+  "publication_checksum": "bb473bb0a467f53d0357f1ed"
+}

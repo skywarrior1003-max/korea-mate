@@ -1,0 +1,202 @@
+{
+  "task": "TASK-JEJU-FOOD-TRUSTED-EDITORIAL-CURATION-V1",
+  "generated_at": "2026-08-14",
+  "zone_coverage": {
+    "제주시내": {
+      "total": 653,
+      "PUBLIC_STRONG": 34,
+      "PUBLIC_GOOD_CHOICE": 45,
+      "PUBLIC_SPECIAL_PURPOSE": 17,
+      "HOLD": 204,
+      "REFERENCE": 353,
+      "pub_total": 96,
+      "coverage_status": "HEALTHY"
+    },
+    "서귀포시내": {
+      "total": 234,
+      "PUBLIC_STRONG": 9,
+      "PUBLIC_GOOD_CHOICE": 15,
+      "PUBLIC_SPECIAL_PURPOSE": 13,
+      "HOLD": 99,
+      "REFERENCE": 98,
+      "pub_total": 37,
+      "coverage_status": "HEALTHY"
+    },
+    "성산": {
+      "total": 102,
+      "PUBLIC_STRONG": 7,
+      "PUBLIC_GOOD_CHOICE": 20,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 42,
+      "REFERENCE": 33,
+      "pub_total": 27,
+      "coverage_status": "HEALTHY"
+    },
+    "안덕": {
+      "total": 98,
+      "PUBLIC_STRONG": 7,
+      "PUBLIC_GOOD_CHOICE": 11,
+      "PUBLIC_SPECIAL_PURPOSE": 1,
+      "HOLD": 35,
+      "REFERENCE": 44,
+      "pub_total": 19,
+      "coverage_status": "HEALTHY"
+    },
+    "한림": {
+      "total": 107,
+      "PUBLIC_STRONG": 6,
+      "PUBLIC_GOOD_CHOICE": 10,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 47,
+      "REFERENCE": 44,
+      "pub_total": 16,
+      "coverage_status": "HEALTHY"
+    },
+    "구좌": {
+      "total": 130,
+      "PUBLIC_STRONG": 2,
+      "PUBLIC_GOOD_CHOICE": 13,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 51,
+      "REFERENCE": 64,
+      "pub_total": 15,
+      "coverage_status": "HEALTHY"
+    },
+    "조천": {
+      "total": 105,
+      "PUBLIC_STRONG": 3,
+      "PUBLIC_GOOD_CHOICE": 9,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 40,
+      "REFERENCE": 53,
+      "pub_total": 12,
+      "coverage_status": "ADEQUATE"
+    },
+    "애월": {
+      "total": 151,
+      "PUBLIC_STRONG": 1,
+      "PUBLIC_GOOD_CHOICE": 9,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 58,
+      "REFERENCE": 83,
+      "pub_total": 10,
+      "coverage_status": "ADEQUATE"
+    },
+    "중문": {
+      "total": 47,
+      "PUBLIC_STRONG": 2,
+      "PUBLIC_GOOD_CHOICE": 4,
+      "PUBLIC_SPECIAL_PURPOSE": 1,
+      "HOLD": 28,
+      "REFERENCE": 12,
+      "pub_total": 7,
+      "coverage_status": "THIN"
+    },
+    "대정": {
+      "total": 53,
+      "PUBLIC_STRONG": 2,
+      "PUBLIC_GOOD_CHOICE": 3,
+      "PUBLIC_SPECIAL_PURPOSE": 1,
+      "HOLD": 18,
+      "REFERENCE": 29,
+      "pub_total": 6,
+      "coverage_status": "THIN"
+    },
+    "우도": {
+      "total": 47,
+      "PUBLIC_STRONG": 1,
+      "PUBLIC_GOOD_CHOICE": 5,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 26,
+      "REFERENCE": 15,
+      "pub_total": 6,
+      "coverage_status": "THIN"
+    },
+    "표선": {
+      "total": 40,
+      "PUBLIC_STRONG": 2,
+      "PUBLIC_GOOD_CHOICE": 3,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 17,
+      "REFERENCE": 18,
+      "pub_total": 5,
+      "coverage_status": "THIN"
+    },
+    "한경": {
+      "total": 41,
+      "PUBLIC_STRONG": 1,
+      "PUBLIC_GOOD_CHOICE": 3,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 19,
+      "REFERENCE": 18,
+      "pub_total": 4,
+      "coverage_status": "THIN"
+    },
+    "남원": {
+      "total": 36,
+      "PUBLIC_STRONG": 1,
+      "PUBLIC_GOOD_CHOICE": 0,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 7,
+      "REFERENCE": 28,
+      "pub_total": 1,
+      "coverage_status": "UNDERSERVED"
+    },
+    "마라도": {
+      "total": 6,
+      "PUBLIC_STRONG": 0,
+      "PUBLIC_GOOD_CHOICE": 0,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 4,
+      "REFERENCE": 2,
+      "pub_total": 0,
+      "coverage_status": "UNDERSERVED"
+    },
+    "추차도": {
+      "total": 17,
+      "PUBLIC_STRONG": 0,
+      "PUBLIC_GOOD_CHOICE": 0,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 9,
+      "REFERENCE": 8,
+      "pub_total": 0,
+      "coverage_status": "UNDERSERVED"
+    },
+    "가파도": {
+      "total": 1,
+      "PUBLIC_STRONG": 0,
+      "PUBLIC_GOOD_CHOICE": 0,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 0,
+      "REFERENCE": 1,
+      "pub_total": 0,
+      "coverage_status": "UNDERSERVED"
+    },
+    "비양도": {
+      "total": 2,
+      "PUBLIC_STRONG": 0,
+      "PUBLIC_GOOD_CHOICE": 0,
+      "PUBLIC_SPECIAL_PURPOSE": 0,
+      "HOLD": 1,
+      "REFERENCE": 1,
+      "pub_total": 0,
+      "coverage_status": "UNDERSERVED"
+    }
+  },
+  "top2_zone_concentration": 0.51,
+  "underserved_zones": [
+    "남원",
+    "마라도",
+    "추차도",
+    "가파도",
+    "비양도"
+  ],
+  "thin_zones": [
+    "표선",
+    "중문",
+    "대정",
+    "우도",
+    "한경"
+  ],
+  "REGION_QUOTA_FORCED_INCLUDE": 0
+}
