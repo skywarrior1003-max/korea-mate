@@ -701,8 +701,22 @@ export default function HomeClient() {
   useEffect(() => {
     const d = readTripDraft();
     if (d) {
-      // 도시·날짜는 다른 곳(?city=, 날짜 선택)에서도 정해진다. 여기서 되돌리는
-      // 것은 이 컴포넌트 말고는 아무도 갖고 있지 않던 값들이다.
+      // 날짜도 되돌린다.
+      //
+      // 처음에는 "도시·날짜는 다른 곳에서 정해진다" 고 두고 건드리지 않았다.
+      // 그런데 되돌리는 곳이 아무 데도 없었다. 날짜를 고르고 장소를 담으러
+      // Explore·Picks 로 갔다가 돌아오면 달력이 비어 있고, 일정 만들기를 눌러도
+      // 아무 일이 일어나지 않는다 — 날짜가 없어 조용히 멈춘다. 장소를 담는 것
+      // 자체가 Home 을 떠나야 하는 일이라 이 경로가 오히려 정상 경로였다.
+      //
+      // 두 가지를 지킨다. 이미 값이 있으면 덮지 않는다(복사 링크의 ?from=·?to=
+      // 가 먼저 들어온다). 그리고 draft 의 도시가 지금 고른 도시와 같을 때만
+      // 쓴다 — 서울 여행의 날짜를 부산 화면에 올려 두면 그다음 저장이 도시를
+      // 조용히 바꿔 버린다.
+      if (d.startDate && d.endDate && d.city.trim().toLowerCase() === city.trim().toLowerCase()) {
+        setStartDate(prev => prev || d.startDate);
+        setEndDate(prev   => prev || d.endDate);
+      }
       if (d.travelers)      setTravelers(d.travelers);
       if (d.startLocation)  setStartLocation(d.startLocation);
       if (d.arrivalTime)    setArrivalTime(d.arrivalTime);

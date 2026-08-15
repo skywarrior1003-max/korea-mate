@@ -173,6 +173,19 @@ test("★★Home 은 읽기 전에 저장하지 않는다", () => {
     "복원이 저장보다 뒤에 선언돼 있다");
 });
 
+test("★★Home 은 날짜도 되돌린다", () => {
+  // 장소를 담으려면 Home 을 떠나야 한다. 돌아왔을 때 달력이 비어 있으면
+  // 일정 만들기가 조용히 멈춘다 — 운영에서 실제로 그랬다.
+  assert.match(HOME, /setStartDate\(prev => prev \|\| d\.startDate\)/,
+    "★Home 이 날짜를 되돌리지 않는다");
+  assert.match(HOME, /setEndDate\(prev\s+=> prev \|\| d\.endDate\)/);
+  // 이미 들어온 값(복사 링크의 ?from=·?to=)을 덮지 않는다.
+  assert.doesNotMatch(HOME, /setStartDate\(d\.startDate\)/, "★기존 값을 덮어쓴다");
+  // 다른 도시의 날짜를 올려 두지 않는다.
+  assert.match(HOME, /d\.city\.trim\(\)\.toLowerCase\(\) === city\.trim\(\)\.toLowerCase\(\)/,
+    "★도시가 달라도 날짜를 되돌린다");
+});
+
 test("★Home 은 아홉 값을 모두 저장한다", () => {
   const call = HOME.slice(HOME.indexOf("writeTripDraft({"));
   const body = call.slice(0, call.indexOf("});"));
