@@ -1011,6 +1011,7 @@
     "pickerPicked": "확인을 누르면 이 위치로 저장돼요.",
     "pickerLoading": "지도를 불러오는 중…",
     "pickerConfirm": "이 위치로 확인",
-    "pickerCancel": "취소"
+    "pickerCancel": "취소",
+    "placeFallback": "숙소"
   }
 }

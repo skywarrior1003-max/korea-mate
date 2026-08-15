@@ -1011,6 +1011,7 @@
     "pickerPicked": "確定を押すとこの位置で保存されます。",
     "pickerLoading": "地図を読み込み中…",
     "pickerConfirm": "この位置で確定",
-    "pickerCancel": "キャンセル"
+    "pickerCancel": "キャンセル",
+    "placeFallback": "宿泊先"
   }
 }

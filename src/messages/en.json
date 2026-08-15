@@ -1011,6 +1011,7 @@
     "pickerPicked": "Tap Confirm to save this location.",
     "pickerLoading": "Loading the map…",
     "pickerConfirm": "Confirm this location",
-    "pickerCancel": "Cancel"
+    "pickerCancel": "Cancel",
+    "placeFallback": "Stay"
   }
 }

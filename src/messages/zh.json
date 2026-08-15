@@ -1011,6 +1011,7 @@
     "pickerPicked": "点击确认即可保存这个位置。",
     "pickerLoading": "地图加载中…",
     "pickerConfirm": "确认这个位置",
-    "pickerCancel": "取消"
+    "pickerCancel": "取消",
+    "placeFallback": "住宿"
   }
 }

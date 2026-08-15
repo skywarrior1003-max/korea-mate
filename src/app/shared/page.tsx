@@ -19,6 +19,9 @@ import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
+import {
+  googlePlaceSearchUrl, isSafeMapUrl, naverPlaceSearchUrl,
+} from "@/lib/maps/place-navigation";
 import { getDeviceId } from "@/lib/deviceId";
 import TripCover from "@/components/TripCover";
 import { resolveTheme } from "@/lib/trip-cover/cover-core";
@@ -34,6 +37,22 @@ interface Place {
   tips:         string;
   googleMapsUrl:string;
   slot?:        string;
+  /** 숙소인가. 이 필드가 없던 시절 일정도 그대로 열린다. */
+  isAccommodation?: boolean;
+}
+
+/**
+ * 지도에서 무엇을 찾을 것인가.
+ *
+ * 공개된 장소 이름 하나다. 좌표도, 사용자가 적어 넣은 주소도, 붙여넣은 링크도
+ * 쓰지 않는다 — 그것들은 이 화면에 오지도 않는다.
+ *
+ * 이름이 비어 있으면 null 이고, 그때는 지도 버튼을 걸지 않는다. 빈 검색어로
+ * 지도를 열면 엉뚱한 곳이 뜬다.
+ */
+function mapTargetName(place: Place): string | null {
+  const n = (place.name ?? "").trim();
+  return n.length > 0 ? n : null;
 }
 
 interface Day {
@@ -127,6 +146,7 @@ function placeEmoji(category: string): string {
 type Status = "loading" | "found" | "not_found" | "error";
 
 export default function SharedTripPage() {
+  const tStay = useTranslations("stay");
   const [status,        setStatus]        = useState<Status>("loading");
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
@@ -417,7 +437,10 @@ export default function SharedTripPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm font-black text-[#191C21] truncate">{place.name}</p>
+                        <p className="text-sm font-black text-[#191C21] truncate">
+                          {place.name?.trim()
+                            || (place.isAccommodation ? tStay("placeFallback") : "")}
+                        </p>
                         {/* 방문 시각을 표시하지 않는다 — 저장된 값만으로는 사용자가
                             정한 시각인지 앱이 채운 값인지 구분할 수 없다. 공개 일정과
                             복사 일정도 같은 규칙을 따른다. 값 자체는 정렬용으로 남는다. */}
@@ -431,18 +454,41 @@ export default function SharedTripPage() {
                     </div>
                   </div>
 
-                  {/* 지도 링크 */}
-                  {place.googleMapsUrl && (
-                    <a
-                      href={place.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
-                    >
-                      <span>📍</span>
-                      <span>Google Maps</span>
-                      <span className="text-[#FF4A2D]">→</span>
-                    </a>
+                  {/* ── 지도 링크 ────────────────────────────────────────
+                      공유받은 사람이 여기서 멈추면 이 일정은 읽을거리로 끝난다.
+                      이름을 본 다음에 지도로 이어져야 실제로 따라갈 수 있다.
+
+                      직접 적어 넣은 숙소에는 저장된 지도 주소가 없다. 그렇다고
+                      좌표를 공유물에 실어 만들지 않는다 — 공개된 이름과 도시로
+                      검색해 연다. 우리 장소 데이터에 없는 곳도 열리고, 어디서
+                      자는지 정확한 지점은 링크에 남지 않는다. */}
+                  {mapTargetName(place) && (
+                    <div className="mt-3 flex items-center gap-3 flex-wrap">
+                      <a
+                        href={naverPlaceSearchUrl(mapTargetName(place)!, trip.city)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
+                      >
+                        <span>🗺️</span>
+                        <span>Naver Map</span>
+                        <span className="text-[#FF4A2D]">→</span>
+                      </a>
+                      <a
+                        href={
+                          place.googleMapsUrl && isSafeMapUrl(place.googleMapsUrl)
+                            ? place.googleMapsUrl
+                            : googlePlaceSearchUrl(mapTargetName(place)!, trip.city)
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
+                      >
+                        <span>📍</span>
+                        <span>Google Maps</span>
+                        <span className="text-[#FF4A2D]">→</span>
+                      </a>
+                    </div>
                   )}
                 </div>
               ))}

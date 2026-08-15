@@ -39,6 +39,7 @@ import {
   type PlacedStop,
 } from "@/lib/trip-stay/checkin-core";
 import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { googlePlaceSearchUrl, naverPlaceSearchUrl } from "@/lib/maps/place-navigation";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
@@ -129,38 +130,6 @@ const TIME_SLOTS = [
   { key: "evening",   label: "Evening",   emoji: "🌙", range: "5–9PM"    },
 ] as const;
 
-// ── 영문명 → 네이버 한국어 키워드 매핑 ──────────────────────
-const NAVER_KEYWORD_MAP: Record<string, string> = {
-  "haeundae beach":          "해운대해수욕장",
-  "gamcheon culture village":"감천문화마을",
-  "jagalchi fish market":    "자갈치시장",
-  "jagalchi market":         "자갈치시장",
-  "gwangalli beach":         "광안리해수욕장",
-  "hwangnyeongsan":          "황령산전망대",
-  "hwangnyeongsan night view trail": "황령산전망대",
-  "jangsan mountain trail":  "장산등산로입구",
-  "jangsan mountain":        "장산등산로입구",
-  "igidae coastal walk":     "이기대해안산책로",
-  "igidae":                  "이기대해안산책로",
-  "haedong yonggungsa":      "해동용궁사",
-  "oryukdo skywalk":         "오륙도스카이워크",
-  "taejongdae":              "태종대",
-  "busan tower":             "부산타워",
-  "seomyeon":                "서면",
-  "nampo-dong":              "남포동",
-  "gyeongbokgung":           "경복궁",
-  "namsan tower":            "남산타워",
-  "n seoul tower":           "남산타워",
-  "myeongdong":              "명동",
-  "bukchon hanok village":   "북촌한옥마을",
-  "dongdaemun":              "동대문",
-  "hongdae":                 "홍대",
-  "itaewon":                 "이태원",
-  "insadong":                "인사동",
-  "changdeokgung":           "창덕궁",
-  "gwangjang market":        "광장시장",
-  "noryangjin fish market":  "노량진수산시장",
-};
 
 // ── time 문자열 → 슬롯 자동 배정 ─────────────────────────────
 function assignSlot(time: string): string {
@@ -180,18 +149,6 @@ function toPreferredTimeSlot(s: string): "morning" | "afternoon" | "evening" | u
   return undefined;
 }
 
-// ── Naver Maps URL ────────────────────────────────────────────
-function buildNaverUrl(placeName: string, city: string): string {
-  const norm = placeName.toLowerCase().trim();
-  for (const [eng, kor] of Object.entries(NAVER_KEYWORD_MAP)) {
-    if (norm.includes(eng) || eng.includes(norm)) {
-      return `https://map.naver.com/v5/search/${encodeURIComponent(kor)}`;
-    }
-  }
-  const korean = (placeName.match(/[가-힯ᄀ-ᇿ]+/g) ?? []).join("").trim();
-  if (korean.length >= 2) return `https://map.naver.com/v5/search/${encodeURIComponent(korean)}`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${placeName} ${city} Korea`)}`;
-}
 
 // ── 일정 생성 대기 단계 ──────────────────────────────────────
 //
@@ -918,8 +875,8 @@ function PlaceModal({ place, city, citySpots, onClose }: ModalProps) {
   const t          = useTranslations("itin");
   const matched    = matchCitySpot(place.name, citySpots);
   const snap       = place.cartSnapshot;
-  const naverUrl   = snap?.naverMapUrl ?? buildNaverUrl(place.name, city);
-  const googleUrl  = place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
+  const naverUrl   = snap?.naverMapUrl ?? naverPlaceSearchUrl(place.name, city);
+  const googleUrl  = place.googleMapsUrl || googlePlaceSearchUrl(place.name, city);
   const imageUrl   = resolveSpotImageSrc(snap?.image);
   const badgeColor = getCategoryColor(place.category);
   const tags       = snap?.tags ?? [];
@@ -1184,6 +1141,7 @@ function ItineraryResult() {
 
   // ── Supabase 동기화 상태 ──────────────────────────────────
   const t = useTranslations("itin");
+  const tStay = useTranslations("stay");
   const tMemo = useTranslations("memo");
   const tPlanner = useTranslations("planner");
   // My Place 표시 이름 fallback 에 쓴다 (picks 네임스페이스 공용).
@@ -2714,10 +2672,10 @@ function ItineraryResult() {
                     return rows.map((row) => {
                             const place = row.item;
                             const idx   = row.index;
-                              const naverUrl = buildNaverUrl(place.name, city);
+                              const naverUrl = naverPlaceSearchUrl(place.name, city);
                               const googleUrl =
                                 place.googleMapsUrl ||
-                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${city} Korea`)}`;
+                                googlePlaceSearchUrl(place.name, city);
                               const naverIsGoogle = naverUrl.includes("google.com");
 
                               return (
@@ -2813,7 +2771,8 @@ function ItineraryResult() {
                                                 onClick={(e) => e.stopPropagation()}
                                                 className="hover:text-accent-coral hover:underline underline-offset-4 decoration-2 transition-colors"
                                               >
-                                                {place.name}
+                                                {place.name?.trim()
+                                                  || (place.isAccommodation ? tStay("placeFallback") : "")}
                                               </Link>
                                             ) : place.name}
                                           </h3>
