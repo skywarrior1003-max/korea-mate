@@ -838,9 +838,9 @@ export default function HomeClient() {
       setShowDeptWarning(true);
       return;
     }
-    const effectiveStyle = style || "Solo";
-    if (!style) setStyle(effectiveStyle);
-    doNavigate(effectiveStyle);
+    // 고르지 않았으면 비워 둔다. 예전에는 "Solo" 를 넣었는데, 그러면 넷이 가는
+    // 여행에도 "Solo Trip" 이라고 적혔다. 없는 것은 없는 대로 넘긴다.
+    doNavigate(style);
   }
 
   // ── JSON 로드 ─────────────────────────────────
@@ -1190,10 +1190,11 @@ export default function HomeClient() {
                   {tf("exploreOnMap", { city: tf(`city_${city}`) })}
                 </Link>
               </div>
+              {/* 누구와 가는지(Solo·Couple·Family·Group)는 더 이상 묻지 않는다.
+                  여행 계획에 필요한 것은 몇 명인가(Travelers)와 어떤 속도로
+                  다니는가(Trip Pace) 두 가지이고, 그 둘은 각자 따로 있다.
+                  예전 값은 저장된 여행을 다시 열기 위해 남겨 둔다. */}
               <div id="travel-style-section" className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
-                  {tf("styleLabel")}
-                </label>
                 <button
                   type="button"
                   onClick={() => document.getElementById("search-filters-bar")?.scrollIntoView({ behavior: "smooth" })}
@@ -1202,20 +1203,6 @@ export default function HomeClient() {
                 >
                   {tf("pickVibe")}
                 </button>
-                <select
-                  value={style}
-                  onChange={(e) => setStyle(e.target.value)}
-                  // 이 select 는 눈에 보이는 <label> 이 없다. 화면을 못 보는 사용자에겐
-                  // 이름 없는 콤보박스로만 읽혀 무엇을 고르는 칸인지 알 수 없었다.
-                  aria-label={tf("styleAria")}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors"
-                >
-                  <option value="" disabled>{tf("stylePlaceholder")}</option>
-                  <option value="Solo">{tf("style_Solo")}</option>
-                  <option value="Couple">{tf("style_Couple")}</option>
-                  <option value="Family">{tf("style_Family")}</option>
-                  <option value="Group">{tf("style_Group")}</option>
-                </select>
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("startDate")}</label>
@@ -1527,9 +1514,7 @@ export default function HomeClient() {
                   // 취향을 안 골랐으면 "Solo" 로 균형 잡힌 일정을 만든다.
                   // 출발 정보가 있거나 경고가 필요 없는 빈 Cart 사용자는
                   // handleGenerate 의 기존 Vibe 흐름을 그대로 탄다.
-                  const effectiveStyle = style || "Solo";
-                  if (!style) setStyle(effectiveStyle);
-                  doNavigate(effectiveStyle);
+                  doNavigate(style);
                 }}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
               >

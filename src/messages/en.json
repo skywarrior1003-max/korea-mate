@@ -414,7 +414,8 @@
     "errLoadFailed": "Failed to load itinerary: {message}",
     "errGenerateFailed": "Failed to generate itinerary: {message}",
     "errLoadSavedFailed": "Failed to load saved itinerary: {message}",
-    "checkinAt": "Check-in {time}"
+    "checkinAt": "Check-in {time}",
+    "tripTitleFallback": "My Trip"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -1022,5 +1023,22 @@
     "balancedDesc": "An even mix of sights, meals and moving around",
     "active": "Active",
     "activeDesc": "More walking and time outdoors"
+  },
+  "tripSetup": {
+    "edit": "Edit",
+    "notSet": "Not set",
+    "startDate": "Start",
+    "endDate": "End",
+    "travelers": "Travelers",
+    "travelersCount": "{count} travelers",
+    "arrival": "Arrival",
+    "arrivalTime": "Arrival time",
+    "departure": "Departure",
+    "departureTime": "Departure time",
+    "stay": "Stay",
+    "stayExact": "Booked",
+    "scheduled": "Scheduled plans",
+    "places": "Places to visit",
+    "placesHint": "Your picks come first. We fill the rest."
   }
 }

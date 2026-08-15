@@ -18,7 +18,9 @@ import { useTranslations, useLocale } from "next-intl";
 import { TopNav, Card, Badge, Button } from "@/components/ui";
 import { getItemSourceKey, parseCitySpotId, userSpotSourceKey } from "@/lib/place-identity";
 import { getCityCart, getUnresolvedCart, removeFromCart, removeFromAllCities, clearCart, addToCart, setCartFixed, updateCartPlace, attachCartItemToCity, CART_EVENT, type CartItem, type EventItem, type CartFixed } from "@/lib/cart";
-import { readTripDraft, tripDraftDates } from "@/lib/trip-draft/trip-draft-core";
+import { readTripDraft, tripDraftDates, writeTripDraft, type TripDraft }
+  from "@/lib/trip-draft/trip-draft-core";
+import TripSetupPanel, { type TripSetupPatch } from "@/components/TripSetupPanel";
 import { buildItineraryGenerationUrl, itineraryDayCount, tripDraftGenerationContext } from "@/lib/trip-generation/itinerary-url";
 import { isValidCoordinate } from "@/lib/geo";
 import { addPlaceToThisTrip, isInThisTrip, removePlaceFromThisTrip } from "@/lib/place-actions/place-actions-core";
@@ -107,6 +109,7 @@ function PicksContent() {
   const locale = useLocale();
   const tS  = useTranslations("shell");
   const tP  = useTranslations("place");
+  const tSetup = useTranslations("tripSetup");
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -132,19 +135,49 @@ function PicksContent() {
     setCoach(prev => { const n = nextCoachStep(prev); writeCoachStep(n); return n; });
   }
 
+  // 시간을 정해 둔 것과 아직 아닌 것을 나눠 보여준다. 약속은 반드시 그 시각에
+  // 지켜야 하는 것이고, 나머지는 "이번에 가고 싶은 곳" 이다. 같은 목록에 섞여
+  // 있으면 무엇이 확정인지 알 수 없다.
+  const scheduledItems = selected.filter(i => i.fixed);
+  const freeItems      = selected.filter(i => !i.fixed);
+  const ordered        = [...scheduledItems, ...freeItems];
+
   /** 시간 입력이 펼쳐진 카드. 한 번에 하나만 연다. */
   const [openTimeKey, setOpenTimeKey] = useState<string | null>(null);
 
   /** 도시·날짜가 없어 일정을 만들 수 없을 때만 켠다. */
   const [buildNotice, setBuildNotice] = useState(false);
+
+  /**
+   * 이번 여행의 조건. 새 저장소가 아니라 `TripDraft` 를 그대로 읽어 둔 것이다.
+   * 고치면 같은 helper 로 다시 쓰고, Home 이 보는 값과 언제나 같다.
+   */
+  const [draft, setDraft] = useState<TripDraft | null>(null);
+  const patchDraft = useCallback((patch: TripSetupPatch) => {
+    setDraft(prev => {
+      if (!prev) return prev;
+      const next = writeTripDraft({
+        city: prev.city, startDate: prev.startDate, endDate: prev.endDate,
+        travelers: prev.travelers, startLocation: prev.startLocation,
+        arrivalTime: prev.arrivalTime, departurePlace: prev.departurePlace,
+        departureTime: prev.departureTime, stayArea: prev.stayArea,
+        stay: prev.stay ?? null, tripPace: prev.tripPace,
+        ...patch,
+      });
+      if (next) { setTripDays(tripDraftDates(next)); setTripCity(next.city); }
+      return next ?? prev;
+    });
+  }, []);
+
   useEffect(() => {
     // 여행 날짜는 이제 TripDraft 에서 온다. 예전 PlannerSnapshot 은 저장하는
     // 코드가 하나도 없어 언제나 비어 있었고, 그래서 아래 고정 일정 입력이
     // 화면에 나타난 적이 없다. draft 가 없으면 여전히 빈 배열이고 그때는
     // "날짜를 먼저 정하세요" 안내가 나간다 — 없는 날짜를 만들지 않는다.
-    const draft = readTripDraft();
-    setTripDays(tripDraftDates(draft));
-    setTripCity(draft?.city ?? null);
+    const d = readTripDraft();
+    setDraft(d);
+    setTripDays(tripDraftDates(d));
+    setTripCity(d?.city ?? null);
   }, []);
   useEffect(() => {
     const sync = () => {
@@ -567,38 +600,17 @@ function PicksContent() {
           {/* 어느 여행에 담은 것인지 모르는 예전 선택.
               조용히 숨기지 않는다 — 사용자가 이 여행 것인지 정해 준다.
               일정에는 자동으로 들어가지 않는다. */}
-          {tab === "selected" && unresolved.length > 0 && (
-            <section className="mt-6 rounded-control border border-line bg-surface-dim/40 p-4">
-              <p className="text-sm font-bold text-ink">{t("legacyTitle")}</p>
-              <p className="text-xs text-sub mt-0.5">{t("legacyHint")}</p>
-              <ul className="flex flex-col gap-2 mt-3">
-                {unresolved.map(item => {
-                  const key = getItemSourceKey(item);
-                  return (
-                    <li key={key} className="flex items-center gap-2">
-                      <span className="flex-1 min-w-0 truncate text-sm text-ink">
-                        {item.shortName || item.name}
-                      </span>
-                      {tripCity && (
-                        <Button
-                          variant="text"
-                          onClick={() => attachCartItemToCity(key, tripCity)}
-                        >
-                          {t("legacyUse")}
-                        </Button>
-                      )}
-                      <Button
-                        variant="text"
-                        aria-label={`${t("legacyDrop")}: ${item.name}`}
-                        onClick={() => removeFromCart(key)}
-                      >
-                        {t("legacyDrop")}
-                      </Button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
+          {/* 이번 여행의 조건. 저장소는 TripDraft 하나이고 이 화면은 그것을
+              읽고 고칠 뿐이다 — Home 에서 바꿔도 같은 값이 보인다. */}
+          {tab === "selected" && draft && (
+            <div className="mt-6">
+              <TripSetupPanel draft={draft} onChange={patchDraft} />
+            </div>
+          )}
+          {tab === "selected" && !draft && (
+            <Card className="mt-6 p-5 text-center">
+              <p className="text-sm text-sub">{t("buildNeedTrip")}</p>
+            </Card>
           )}
           {tab === "selected" && (selected.length === 0 ? (
             <Card className="p-8 text-center">
@@ -629,14 +641,22 @@ function PicksContent() {
               </div>
 
               <ul className="flex flex-col gap-3">
-                {selected.map((item, cardIndex) => {
+                {ordered.map((item, cardIndex) => {
                   const key = getItemSourceKey(item);
                   const placeId = parseCitySpotId(key);
                   // 두 번째 안내는 첫 카드 하나만 가리킨다. 모든 카드가 동시에
                   // 뛰면 안내가 아니라 화면 전체가 흔들린다.
                   const isFirstCard = cardIndex === 0;
+                  // 구간이 시작되는 자리에서만 제목을 놓는다.
+                  const heading =
+                    cardIndex === 0 && scheduledItems.length > 0 ? tSetup("scheduled")
+                    : cardIndex === scheduledItems.length ? tSetup("places")
+                    : null;
                   return (
                     <li key={key}>
+                      {heading && (
+                        <p className="text-sm font-black text-ink mt-2 mb-2">{heading}</p>
+                      )}
                       <Card className="overflow-hidden p-0">
                         <PlaceCardMedia image={item.image} type={item.type} />
                         <div className="flex items-start gap-3 p-4">
@@ -694,6 +714,41 @@ function PicksContent() {
               </Link>
 
 
+            </>
+          ))}
+          {tab === "selected" && unresolved.length > 0 && (
+            <section className="mt-6 rounded-control border border-line bg-surface-dim/40 p-4">
+              <p className="text-sm font-bold text-ink">{t("legacyTitle")}</p>
+              <p className="text-xs text-sub mt-0.5">{t("legacyHint")}</p>
+              <ul className="flex flex-col gap-2 mt-3">
+                {unresolved.map(item => {
+                  const key = getItemSourceKey(item);
+                  return (
+                    <li key={key} className="flex items-center gap-2">
+                      <span className="flex-1 min-w-0 truncate text-sm text-ink">
+                        {item.shortName || item.name}
+                      </span>
+                      {tripCity && (
+                        <Button
+                          variant="text"
+                          onClick={() => attachCartItemToCity(key, tripCity)}
+                        >
+                          {t("legacyUse")}
+                        </Button>
+                      )}
+                      <Button
+                        variant="text"
+                        aria-label={`${t("legacyDrop")}: ${item.name}`}
+                        onClick={() => removeFromCart(key)}
+                      >
+                        {t("legacyDrop")}
+                      </Button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
               <div className="sticky bottom-20 md:bottom-6 mt-6">
                 {coach === "plan" && (
                   <Coachmark
@@ -718,8 +773,6 @@ function PicksContent() {
                   </p>
                 )}
               </div>
-            </>
-          ))}
         </div>
 
         {/* ── Saved ── */}

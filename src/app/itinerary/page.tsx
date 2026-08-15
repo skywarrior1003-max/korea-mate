@@ -1087,7 +1087,10 @@ function ItineraryResult() {
   const paramStartDate   = searchParams.get("startDate")     || "";
   const paramEndDate     = searchParams.get("endDate")       || "";
   const paramTravelers   = searchParams.get("travelers")     || "1";
-  const paramTravelStyle = searchParams.get("travelStyle")   || "Solo";
+  // 예전에는 없으면 "Solo" 로 채웠다. 이제 동행을 묻지 않으므로 비어 있는 것이
+  // 정상이고, 비어 있으면 제목에 붙이지 않는다. 저장된 예전 여행은 자기 값을
+  // 그대로 갖고 있어 지금까지처럼 보인다.
+  const paramTravelStyle = searchParams.get("travelStyle")   || "";
   const paramStartLoc       = searchParams.get("startLocation")  || "";
   const paramArrivalTime    = searchParams.get("arrivalTime")    || "";
   const paramDeparturePlace = searchParams.get("departurePlace") || "";
@@ -2209,7 +2212,7 @@ function ItineraryResult() {
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs font-black bg-surface-dim text-sub px-3 py-1 rounded-md uppercase tracking-wider">
-              {travelStyle} Trip
+              {travelStyle ? `${travelStyle} Trip` : t("tripTitleFallback")}
             </span>
             {plannerMeta && (
               <span className="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-md flex items-center gap-1">

@@ -352,8 +352,11 @@ test("★Trip Pace 는 TripDraft 가 갖고, 체류 배수는 갖지 않는다",
   assert.match(CORE, /tripPace\?:\s+TripPaceChoice;/, "draft 에 tripPace 가 없다");
   assert.doesNotMatch(CORE, /packed|PACE_MULTIPLIER|0\.8|1\.3/,
     "★draft 가 체류 배수를 알고 있다 — 그 매핑은 pace-core 의 몫이다");
-  // Picks 는 이번에도 손대지 않았다.
-  assert.doesNotMatch(PICKS, /tripPace/, "Picks 에 Trip Pace 가 들어왔다");
+  // Picks 도 이제 같은 draft 를 고친다. 다만 **자기 저장소를 갖지 않는다** —
+  // 새 localStorage key 를 만들면 Home 과 값이 갈라진다.
+  assert.match(PICKS, /writeTripDraft\(\{/, "Picks 가 draft 를 고치지 않는다");
+  assert.doesNotMatch(PICKS, /localStorage\.\w+\(\s*["'`]koreamate_(trip_pace|planning|setup)/,
+    "★Picks 가 별도 planning 저장소를 만들었다");
 });
 
 test("★This Trip 통합 화면과 숙소 입력 UI 를 만들지 않았다", () => {

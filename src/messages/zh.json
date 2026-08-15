@@ -414,7 +414,8 @@
     "errLoadFailed": "加载行程失败：{message}",
     "errGenerateFailed": "生成行程失败：{message}",
     "errLoadSavedFailed": "加载已保存的行程失败：{message}",
-    "checkinAt": "入住 {time}"
+    "checkinAt": "入住 {time}",
+    "tripTitleFallback": "我的行程"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",
@@ -1022,5 +1023,22 @@
     "balancedDesc": "观光、用餐与移动均衡安排",
     "active": "活力",
     "activeDesc": "更多步行与户外时间"
+  },
+  "tripSetup": {
+    "edit": "编辑",
+    "notSet": "未设置",
+    "startDate": "出发日",
+    "endDate": "返回日",
+    "travelers": "人数",
+    "travelersCount": "{count}人",
+    "arrival": "抵达",
+    "arrivalTime": "抵达时间",
+    "departure": "出发",
+    "departureTime": "出发时间",
+    "stay": "住宿",
+    "stayExact": "已订",
+    "scheduled": "已定时间的安排",
+    "places": "想去的地方",
+    "placesHint": "你选的优先，其余由我们补齐。"
   }
 }

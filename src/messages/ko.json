@@ -414,7 +414,8 @@
     "errLoadFailed": "일정을 불러오지 못했습니다: {message}",
     "errGenerateFailed": "일정을 만들지 못했습니다: {message}",
     "errLoadSavedFailed": "저장된 일정을 불러오지 못했습니다: {message}",
-    "checkinAt": "체크인 {time}"
+    "checkinAt": "체크인 {time}",
+    "tripTitleFallback": "내 여행"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -1022,5 +1023,22 @@
     "balancedDesc": "관광·식사·이동을 고르게",
     "active": "활동적으로",
     "activeDesc": "걷기와 야외 활동을 더 많이"
+  },
+  "tripSetup": {
+    "edit": "수정",
+    "notSet": "아직 없음",
+    "startDate": "출발일",
+    "endDate": "도착일",
+    "travelers": "인원",
+    "travelersCount": "{count}명",
+    "arrival": "도착",
+    "arrivalTime": "도착 시간",
+    "departure": "출발",
+    "departureTime": "출발 시간",
+    "stay": "숙박",
+    "stayExact": "숙소 정함",
+    "scheduled": "시간이 정해진 일정",
+    "places": "갈 곳",
+    "placesHint": "고르신 곳이 먼저예요. 나머지는 저희가 채웁니다."
   }
 }

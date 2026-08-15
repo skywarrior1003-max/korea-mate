@@ -234,7 +234,9 @@ test("HomeClient: 여행 조건이 실제로 바뀔 때만 draft 를 쓴다", ()
 });
 
 test("PicksClient: 죽은 PlannerSnapshot 대신 TripDraft 를 읽는다", () => {
-  assert.match(picksSrc, /setTripDays\(tripDraftDates\(draft\)\)/);
+  // 변수 이름이 draft → d 로 바뀌었다(같은 파일에 draft state 가 생겼다).
+  // 보는 것은 이름이 아니라 "TripDraft 의 날짜를 쓴다" 는 사실이다.
+  assert.match(picksSrc, /setTripDays\(tripDraftDates\(\w+\)\)/);
   assert.doesNotMatch(picksSrc, /getPlannerMeta/, "죽은 스냅샷을 아직 읽는다");
   assert.doesNotMatch(picksSrc, /plannerStore/, "죽은 모듈 import 가 남았다");
 });

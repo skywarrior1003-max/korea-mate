@@ -414,7 +414,8 @@
     "errLoadFailed": "旅程を読み込めませんでした: {message}",
     "errGenerateFailed": "旅程を作成できませんでした: {message}",
     "errLoadSavedFailed": "保存された旅程を読み込めませんでした: {message}",
-    "checkinAt": "チェックイン {time}"
+    "checkinAt": "チェックイン {time}",
+    "tripTitleFallback": "マイトリップ"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -1022,5 +1023,22 @@
     "balancedDesc": "観光・食事・移動をバランスよく",
     "active": "アクティブ",
     "activeDesc": "歩きと屋外の時間を多めに"
+  },
+  "tripSetup": {
+    "edit": "編集",
+    "notSet": "未設定",
+    "startDate": "出発日",
+    "endDate": "到着日",
+    "travelers": "人数",
+    "travelersCount": "{count}名",
+    "arrival": "到着",
+    "arrivalTime": "到着時間",
+    "departure": "出発",
+    "departureTime": "出発時間",
+    "stay": "宿泊",
+    "stayExact": "予約済み",
+    "scheduled": "時間が決まった予定",
+    "places": "行きたい場所",
+    "placesHint": "選んだ場所が優先です。残りはこちらで埋めます。"
   }
 }
