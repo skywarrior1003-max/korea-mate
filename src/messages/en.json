@@ -1013,5 +1013,14 @@
     "pickerConfirm": "Confirm this location",
     "pickerCancel": "Cancel",
     "placeFallback": "Stay"
+  },
+  "pace": {
+    "title": "Trip pace",
+    "relaxed": "Relaxed",
+    "relaxedDesc": "Fewer stops, more time at each",
+    "balanced": "Balanced",
+    "balancedDesc": "An even mix of sights, meals and moving around",
+    "active": "Active",
+    "activeDesc": "More walking and time outdoors"
   }
 }

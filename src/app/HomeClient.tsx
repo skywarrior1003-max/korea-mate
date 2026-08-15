@@ -31,6 +31,8 @@ import {
 } from "@/lib/trip-stay/stay-input-core";
 import { readTripDraft, writeTripDraft, type TripStayDetail }
   from "@/lib/trip-draft/trip-draft-core";
+import { DEFAULT_TRIP_PACE, TRIP_PACE_CHOICES, normalizeTripPace, type TripPaceChoice }
+  from "@/lib/trip-pace/pace-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
 
@@ -490,6 +492,7 @@ export default function HomeClient() {
   // 제휴 링크는 화면이 소유하지 않는다 — 상품 키만 넘기고 resolver 가 정한다.
   const locale = useLocale();
   const tf = useTranslations("tripForm");
+  const tPace = useTranslations("pace");
   const th = useTranslations("homeUi");
   const tn = useTranslations("nav");
   // 카테고리 문구는 /all-spots 와 공유한다
@@ -514,6 +517,8 @@ export default function HomeClient() {
   const [startDate,     setStartDate]     = useState("");
   const [endDate,       setEndDate]       = useState("");
   const [travelers,     setTravelers]     = useState("1");
+  // 어떤 속도로 다닐 것인가. 동행 선택에서 유추하지 않는다 — 다른 질문이다.
+  const [tripPace,      setTripPace]      = useState<TripPaceChoice>(DEFAULT_TRIP_PACE);
   const [style,         setStyle]         = useState<string>(() => {
     if (typeof window === "undefined") return "";
     try { return sessionStorage.getItem("km_travel_style") || ""; } catch { return ""; }
@@ -718,6 +723,7 @@ export default function HomeClient() {
         setEndDate(prev   => prev || d.endDate);
       }
       if (d.travelers)      setTravelers(d.travelers);
+      if (d.tripPace)       setTripPace(d.tripPace);
       if (d.startLocation)  setStartLocation(d.startLocation);
       if (d.arrivalTime)    setArrivalTime(d.arrivalTime);
       if (d.departurePlace) setDeparturePlace(d.departurePlace);
@@ -769,10 +775,11 @@ export default function HomeClient() {
       // 하루 시작점이 이미 그것을 쓰고 있다.
       stayArea: stayMode === "none"  ? "" : stayArea,
       stay:     stayMode === "exact" ? stayDetail : null,
+      tripPace,
     });
   }, [restored, city, startDate, endDate,
       travelers, startLocation, arrivalTime, departurePlace, departureTime,
-      stayArea, stayMode, stayDetail]);
+      stayArea, stayMode, stayDetail, tripPace]);
 
   // ── AI 일정 생성 ──────────────────────────────
   function doNavigate(overrideStyle?: string) {
@@ -782,6 +789,7 @@ export default function HomeClient() {
     const url = buildItineraryGenerationUrl({
       city, startDate, endDate, travelers,
       travelStyle:    effectiveStyle,
+      tripPace,
       startLocation,  arrivalTime,
       departurePlace, departureTime, stayArea,
     });
@@ -1349,6 +1357,32 @@ export default function HomeClient() {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* -- Trip Pace --
+                누구와 가는지(위 여행 스타일)와 얼마나 느긋하게 다닐지는 다른
+                질문이다. 예전에는 커플·가족을 고르면 체류가 조용히 1.3 배가
+                됐다. 이제 직접 고른다. -- */}
+            <div className="mt-3 flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-gray-600">{tPace("title")}</label>
+              <div className="grid grid-cols-3 gap-1.5" role="group" aria-label={tPace("title")}>
+                {TRIP_PACE_CHOICES.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setTripPace(p)}
+                    aria-pressed={tripPace === p}
+                    className={`px-2 py-2 rounded-lg text-[11px] font-bold leading-tight transition-all border ${
+                      tripPace === p
+                        ? "border-orange-400 bg-orange-100 text-orange-700"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-orange-300"
+                    }`}
+                  >
+                    {tPace(p)}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] text-gray-500">{tPace(`${tripPace}Desc`)}</p>
             </div>
 
             {/* -- Optional: Stay Area -- */}

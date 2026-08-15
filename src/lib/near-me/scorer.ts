@@ -7,6 +7,7 @@
 
 import type { Coordinate, PlaceCategory } from "../scheduler/types";
 import { haversineDistance } from "../scheduler/utils";
+import { normalizeTripPace, paceBonus } from "../trip-pace/pace-core";
 
 // F7 좌표 풀 크기 상한 — O(N×M) 비용 제어 (TASK-016)
 const MAX_F7_EVENT_COORDS = 5;
@@ -109,6 +110,11 @@ export function computeTotalScore(
     + preferenceScore(candidate, likedCategories)               // F5
     + itineraryProximityScore(candidate, input.itinerary_coords ?? [])  // F6
     + eventBonusScore(candidate, input.event_coords ?? [])      // F7 (TASK-016)
+    // F8: 여행 속도. `active` 일 때만, 걷고 움직이는 후보에만 붙는다.
+    //
+    // 체류시간은 건드리지 않는다 — Active 는 "같은 시간에 무엇을 고르는가" 이지
+    // "얼마나 많이 넣는가" 가 아니다. 그 구분이 이 한 줄의 전부다.
+    + paceBonus(normalizeTripPace(input.pace), candidate.category)
   );
 }
 

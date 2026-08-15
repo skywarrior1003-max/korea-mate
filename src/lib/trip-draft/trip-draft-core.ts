@@ -16,6 +16,7 @@
 //   쓸 곳이 없는 필드를 미리 만들어 두지 않는다.
 
 import { tripDates } from "../trip-fixed/fixed-core.ts";
+import { isTripPaceChoice, type TripPaceChoice } from "../trip-pace/pace-core.ts";
 
 export const TRIP_DRAFT_KEY = "koreamate_trip_draft_v1";
 
@@ -70,6 +71,12 @@ export interface TripDraft {
   stayArea?:       string;
   /** 사용자가 정확한 숙소를 알려 준 경우. */
   stay?:           TripStayDetail;
+  /**
+   * 어떤 속도로 다닐 것인가. 없으면 `balanced` 로 읽는다.
+   *
+   * 동행(Solo·Couple·Family·Group)에서 유추하지 않는다 — 그건 다른 질문이다.
+   */
+  tripPace?:       TripPaceChoice;
 }
 
 /**
@@ -201,6 +208,7 @@ export function readTripDraft(): TripDraft | null {
     const departureTime  = optText(p.departureTime);
     const stayArea       = optText(p.stayArea);
     const stay           = readStayDetail(p.stay);
+    const tripPace       = isTripPaceChoice(p.tripPace) ? p.tripPace : undefined;
     if (travelers)      draft.travelers      = travelers;
     if (startLocation)  draft.startLocation  = startLocation;
     if (arrivalTime)    draft.arrivalTime    = arrivalTime;
@@ -208,6 +216,7 @@ export function readTripDraft(): TripDraft | null {
     if (departureTime)  draft.departureTime  = departureTime;
     if (stayArea)       draft.stayArea       = stayArea;
     if (stay)           draft.stay           = stay;
+    if (tripPace)       draft.tripPace       = tripPace;
     return draft;
   } catch {
     return null;                       // 깨진 JSON 때문에 화면이 죽지 않는다
@@ -238,6 +247,7 @@ export function writeTripDraft(input: {
   departureTime?:  string | null;
   stayArea?:       string | null;
   stay?:           TripStayDetail | null;
+  tripPace?:       TripPaceChoice | null;
 }): TripDraft | null {
   if (typeof window === "undefined") return null;
   const city = String(input.city ?? "").trim();
@@ -268,6 +278,10 @@ export function writeTripDraft(input: {
 
   const stay = input.stay === undefined ? prev?.stay : readStayDetail(input.stay);
   if (stay) draft.stay = stay;
+
+  const pace = input.tripPace === undefined ? prev?.tripPace
+             : (isTripPaceChoice(input.tripPace) ? input.tripPace : undefined);
+  if (pace) draft.tripPace = pace;
 
   try {
     window.localStorage.setItem(TRIP_DRAFT_KEY, JSON.stringify(draft));

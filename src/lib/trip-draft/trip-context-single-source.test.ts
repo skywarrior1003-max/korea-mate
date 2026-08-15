@@ -345,12 +345,15 @@ test("★travelStyle 을 건드리지 않았다", () => {
   assert.match(HOME, /travelStyle:\s*effectiveStyle/, "travelStyle 이 생성에서 빠졌다");
 });
 
-test("★Trip Pace 를 만들지 않았다", () => {
-  for (const [label, src] of [["Home", HOME], ["Picks", PICKS], ["core", CORE]] as const) {
-    assert.doesNotMatch(src, /tripPace|Relaxed\s*\/|"Balanced"|'Balanced'/i,
-      `${label} 에 Trip Pace 가 들어왔다`);
-  }
-  assert.doesNotMatch(CORE, /packed/, "pace mapping 이 들어왔다");
+test("★Trip Pace 는 TripDraft 가 갖고, 체류 배수는 갖지 않는다", () => {
+  // 예전에는 "아직 만들지 않았다" 를 고정하던 자리다. 이제 만들었으므로 막는
+  // 대상만 바꾼다 — draft 는 사용자가 고른 값만 갖고, 그것을 체류 배수로
+  // 바꾸는 일은 여기서 하지 않는다.
+  assert.match(CORE, /tripPace\?:\s+TripPaceChoice;/, "draft 에 tripPace 가 없다");
+  assert.doesNotMatch(CORE, /packed|PACE_MULTIPLIER|0\.8|1\.3/,
+    "★draft 가 체류 배수를 알고 있다 — 그 매핑은 pace-core 의 몫이다");
+  // Picks 는 이번에도 손대지 않았다.
+  assert.doesNotMatch(PICKS, /tripPace/, "Picks 에 Trip Pace 가 들어왔다");
 });
 
 test("★This Trip 통합 화면과 숙소 입력 UI 를 만들지 않았다", () => {

@@ -20,6 +20,7 @@ import { runScheduler } from "../../../src/lib/scheduler/engine";
 import { haversineDistance } from "../../../src/lib/scheduler/utils";
 import { boundingBoxDelta, assignZoneId, rowsToZonedPlaces, expandZones } from "../../../src/lib/near-me/zone-classifier";
 import { computeTotalScore, buildLikedCategorySet } from "../../../src/lib/near-me/scorer";
+import type { TripPaceChoice } from "../../../src/lib/trip-pace/pace-core";
 import { diversifyByCategory } from "../../../src/lib/near-me/candidate-diversity";
 import { mergePreferenceIds } from "../../../src/lib/planner/saved-signals";
 import { MOCK_NEAR_ME_PLACES } from "../../../src/lib/near-me/mock/mock-places";
@@ -119,6 +120,8 @@ async function runNearMeDirect(
     limit:             number;
     /** 이전 날짜에 이미 배치된 place_id. limit 을 적용하기 **전에** 뺀다. */
     exclude_place_ids?: string[];
+    /** 사용자가 고른 여행 속도. `active` 만 후보 점수를 바꾼다. */
+    trip_pace?:        TripPaceChoice;
   },
   env: Record<string, string | undefined>,
 ): Promise<{ results: any[]; nearMeCount: number }> {
@@ -215,6 +218,8 @@ async function runNearMeDirect(
       liked_place_ids:  input.liked_place_ids,
       itinerary_coords: input.itinerary_coords as any,
       event_coords:     input.event_coords as any,
+      // 여행 속도 — `active` 만 걷는 후보에 가산점을 만든다.
+      pace:             input.trip_pace,
     }, likedCategories),
   }));
 
@@ -339,6 +344,8 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
   if (toMin(body.end_time as string) <= toMin(body.start_time as string))
     return jsonResp({ error: "end_time must be after start_time" }, 400);
   if (!isPace(body.pace)) return jsonResp({ error: "pace must be one of: relaxed, normal, packed" }, 400);
+  // 사용자가 고른 속도. 엔진 pace 와 다른 값이라 따로 읽는다.
+  const tripPace = typeof body.trip_pace === "string" ? body.trip_pace : undefined;
 
   // 3. Extract typed fields
   const coordinate: Coord = { lat: coord.lat as number, lng: coord.lng as number };
@@ -422,6 +429,7 @@ export async function onRequestPost(ctx: PagesFunctionCtx): Promise<Response> {
     event_coords,
     limit: near_me_limit,
     exclude_place_ids,
+    trip_pace: tripPace as TripPaceChoice | undefined,
   }, ctx.env);
 
   // 7. Adapt Near Me results to scheduler candidates

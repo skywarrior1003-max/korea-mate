@@ -1013,5 +1013,14 @@
     "pickerConfirm": "この位置で確定",
     "pickerCancel": "キャンセル",
     "placeFallback": "宿泊先"
+  },
+  "pace": {
+    "title": "旅のペース",
+    "relaxed": "ゆったり",
+    "relaxedDesc": "一か所にゆっくり滞在",
+    "balanced": "バランス",
+    "balancedDesc": "観光・食事・移動をバランスよく",
+    "active": "アクティブ",
+    "activeDesc": "歩きと屋外の時間を多めに"
   }
 }

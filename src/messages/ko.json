@@ -1013,5 +1013,14 @@
     "pickerConfirm": "이 위치로 확인",
     "pickerCancel": "취소",
     "placeFallback": "숙소"
+  },
+  "pace": {
+    "title": "여행 속도",
+    "relaxed": "여유롭게",
+    "relaxedDesc": "한 곳에 더 오래 머물러요",
+    "balanced": "균형 있게",
+    "balancedDesc": "관광·식사·이동을 고르게",
+    "active": "활동적으로",
+    "activeDesc": "걷기와 야외 활동을 더 많이"
   }
 }

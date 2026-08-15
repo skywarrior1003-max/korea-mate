@@ -13,6 +13,7 @@ export type {
 // ─── Near Me Input ────────────────────────────────────────────────────────────
 
 import type { Coordinate, ZoneId, PlaceCategory } from "../scheduler/types.ts";
+import type { TripPaceChoice } from "../trip-pace/pace-core";
 
 export interface NearMeInput {
   coordinate:        Coordinate;         // GPS current location
@@ -22,6 +23,13 @@ export interface NearMeInput {
   itinerary_coords?: Coordinate[];       // F6 itinerary proximity (Add to Itinerary coords)
   event_coords?:     Coordinate[];       // F7 event bonus — geo event venue 좌표 (TASK-016)
   limit?:            number;             // max results returned (default: 20)
+  /**
+   * 여행 속도. F8 이 이 값만 본다.
+   *
+   * `relaxed`·`balanced` 는 후보 점수를 바꾸지 않는다 — 속도가 후보 선택을
+   * 흔드는 것은 `active` 하나뿐이다. 나머지 둘은 체류시간에서만 갈린다.
+   */
+  pace?:             TripPaceChoice;
 }
 
 // ─── Raw DB Row (from Supabase places table) ──────────────────────────────────

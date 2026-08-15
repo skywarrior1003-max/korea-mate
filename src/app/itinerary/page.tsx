@@ -39,6 +39,7 @@ import {
   type PlacedStop,
 } from "@/lib/trip-stay/checkin-core";
 import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
+import { normalizeTripPace, toSchedulerPace, type TripPaceChoice } from "@/lib/trip-pace/pace-core";
 import { googlePlaceSearchUrl, naverPlaceSearchUrl } from "@/lib/maps/place-navigation";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
@@ -259,12 +260,16 @@ function resolveCoordinate(city: string, cart: CartItem[]): { lat: number; lng: 
   return CITY_CENTER_COORDS[city.toLowerCase()] ?? DEFAULT_COORD;
 }
 
-// ── TASK-018: travelStyle → TripPace ────────────────────────────────────────────
-function toPace(travelStyle: string): "relaxed" | "normal" | "packed" {
-  const s = travelStyle.toLowerCase();
-  if (s.includes("adventure"))                                               return "packed";
-  if (s.includes("couple") || s.includes("family") || s.includes("senior")) return "relaxed";
-  return "normal";
+// ── 여행 속도 ───────────────────────────────────────────────────────────────
+//
+// 예전에는 동행(Solo·Couple·Family·Group)에서 속도를 유추했다. 커플과 가족이면
+// 체류가 1.3 배가 됐는데, 사용자는 그런 것을 고른 적이 없다. 누구와 가는지와
+// 얼마나 느긋하게 다닐지는 다른 질문이라 이제 사용자에게 직접 묻는다.
+//
+// 주소에 `pace` 가 없으면 `balanced` 다 — 예전 주소로 열어도 `normal` 이라
+// 지금까지의 일정과 같은 체류시간이 나온다.
+function toPace(paceParam: string): "relaxed" | "normal" | "packed" {
+  return toSchedulerPace(normalizeTripPace(paceParam));
 }
 
 // ── TASK-018: F7 이벤트 venue 좌표 수집 (ISO 비교, new Date() 금지) ──────────────
@@ -348,6 +353,8 @@ async function generateWithNewApi(
    * 정보이고, 공유받은 사람이 어디에 묵었는지 알 수 있어야 한다.
    */
   exactStay?: { coordinate: { lat: number; lng: number }; name: string | null } | null,
+  /** 사용자가 고른 여행 속도. 없으면 balanced 로 읽는다. */
+  tripPace?: TripPaceChoice,
 ): Promise<{ days: Day[]; isFallback: boolean; conflictDayNumbers: number[]; affiliateMap: AffiliateDisplayMap; skippedCartNames: string[]; fixedOutOfWindowNames: string[]; unplacedPicks: { key: string; name: string; hasFixed: boolean }[]; hadDeferredCartHints: boolean; usedCartHintCentroid: boolean; checkinTime: string | null }> {
   const MIN_MS = 2500 + Math.random() * 1000;
   const t0     = Date.now();
@@ -413,7 +420,8 @@ async function generateWithNewApi(
   // GPS는 별도 "Use my current location" 버튼에서만 요청해야 함
   const fallbackCoord = resolveCoordinate(city, cart);
 
-  const pace       = toPace(tstyle);
+  const paceChoice = normalizeTripPace(tripPace);
+  const pace       = toSchedulerPace(paceChoice);
   const evtCoords  = getEventCoords(cart, sd, ed);
   const timestamp  = arrTime ?? "14:00";
 
@@ -1096,6 +1104,8 @@ function ItineraryResult() {
   // 숙박 지역. 정확한 숙소가 아니라 공개 지역 프리셋의 value 만 URL 에 남는다.
   // 좌표는 여기서 프리셋 표로 되찾으므로 lat/lng 를 다시 직렬화하지 않는다.
   const paramStayArea      = searchParams.get("stayArea")      || "";
+  // 여행 속도. 없으면 balanced — 예전 주소도 지금까지와 같은 결과가 나온다.
+  const paramTripPace      = normalizeTripPace(searchParams.get("pace"));
 
   // ── 지도에서 확인된 숙소 ──────────────────────────────────────────────────
   //
@@ -1464,7 +1474,7 @@ function ItineraryResult() {
           setItinId(freshId);
           setLoading(true);
           setError(null);
-          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay)
+          generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
               setDays(sanitizeDays(days));
               setCheckinTime(ct);
@@ -1511,7 +1521,7 @@ function ItineraryResult() {
       setItinId(freshId);
       setLoading(true);
       setError(null);
-      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay)
+      generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
           setDays(sanitizeDays(days));
               setCheckinTime(ct);

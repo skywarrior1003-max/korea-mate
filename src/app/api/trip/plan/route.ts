@@ -226,6 +226,8 @@ function validateInput(
     affiliate_context: typeof b.affiliate_context === "object" && b.affiliate_context !== null
       ? (b.affiliate_context as TripPlanInput["affiliate_context"])
       : undefined,
+    // 여행 속도. 모르는 값은 아래 core 가 기본값으로 떨어뜨린다.
+    trip_pace: typeof b.trip_pace === "string" ? (b.trip_pace as TripPlanInput["trip_pace"]) : undefined,
     with_ai: typeof b.with_ai === "boolean" ? b.with_ai : false,
   };
 

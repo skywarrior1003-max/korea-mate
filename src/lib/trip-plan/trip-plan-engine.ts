@@ -25,6 +25,9 @@ export async function runTripPlan(input: TripPlanInput): Promise<TripPlanRespons
   const nearMeInput: NearMeInput = {
     coordinate:       input.coordinate,
     timestamp:        input.timestamp,
+    // 후보 점수에 여행 속도를 알린다. `active` 만 F8 가산점을 만들고
+    // 나머지 둘은 점수를 바꾸지 않는다.
+    pace:             input.trip_pace,
     categories:       input.categories,
     liked_place_ids:  input.liked_place_ids,
     itinerary_coords: input.itinerary_coords,

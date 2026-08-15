@@ -15,6 +15,7 @@ import type {
 } from "../scheduler/types";
 import type { PlaceCategory } from "../near-me/types";
 import type { PersonalizedScheduledDay } from "../scheduler/ai/personalization-types";
+import type { TripPaceChoice } from "../trip-pace/pace-core";
 
 export type {
   Coordinate,
@@ -41,6 +42,13 @@ export interface CartCoordHint {
 // ─── Trip Plan Input ──────────────────────────────────────────────────────────
 
 export interface TripPlanInput {
+  /**
+   * 사용자가 고른 여행 속도. 엔진의 `pace`(체류 배수)와 다른 값이다.
+   *
+   * `pace` 는 relaxed|normal|packed 로 체류시간을 정하고, 이 값은 후보 선택에만
+   * 쓴다. 둘을 한 필드로 합치면 `active` 가 체류 축소로 새는 길이 생긴다.
+   */
+  trip_pace?: TripPaceChoice;
   // ── Near Me 입력 (후보 생성 레이어) ──────────────────────────────────────
   coordinate:        Coordinate;       // GPS 현재 위치 (필수)
   timestamp:         string;           // "HH:MM" — F3 시간 점수용

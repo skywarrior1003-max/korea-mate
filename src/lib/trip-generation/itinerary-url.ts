@@ -18,6 +18,7 @@
 
 import { CITY_ARRIVAL_OPTIONS } from "../../data/city-presets.ts";
 import type { TripDraft } from "../trip-draft/trip-draft-core.ts";
+import type { TripPaceChoice } from "../trip-pace/pace-core.ts";
 
 /**
  * 일정 생성에 넘기는 여행 조건.
@@ -38,6 +39,8 @@ export interface ItineraryGenerationContext {
   departureTime?:  string;
   /** 숙박 지역 프리셋의 value. */
   stayArea?:       string;
+  /** 여행 속도. 없으면 일정 화면이 기본값(balanced)으로 읽는다. */
+  tripPace?:       TripPaceChoice;
 }
 
 /**
@@ -66,6 +69,7 @@ export function tripDraftGenerationContext(
   if (draft.departurePlace)  ctx.departurePlace = draft.departurePlace;
   if (draft.departureTime)   ctx.departureTime  = draft.departureTime;
   if (draft.stayArea)        ctx.stayArea       = draft.stayArea;
+  if (draft.tripPace)        ctx.tripPace       = draft.tripPace;
   return ctx;
 }
 
@@ -116,6 +120,7 @@ export function buildItineraryGenerationUrl(
   put("departurePlace", ctx.departurePlace);
   put("departureTime",  ctx.departureTime);
   put("stayArea",       ctx.stayArea);
+  put("pace",           ctx.tripPace);
 
   // 좌표는 사용자가 고른 프리셋에서 되찾는다. 고르지 않았으면 넣지 않는다 —
   // 도시 중심 같은 값을 대신 채우면 일정이 엉뚱한 데서 시작한다.

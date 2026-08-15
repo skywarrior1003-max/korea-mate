@@ -1013,5 +1013,14 @@
     "pickerConfirm": "确认这个位置",
     "pickerCancel": "取消",
     "placeFallback": "住宿"
+  },
+  "pace": {
+    "title": "旅行节奏",
+    "relaxed": "悠闲",
+    "relaxedDesc": "每处停留更久",
+    "balanced": "均衡",
+    "balancedDesc": "观光、用餐与移动均衡安排",
+    "active": "活力",
+    "activeDesc": "更多步行与户外时间"
   }
 }
