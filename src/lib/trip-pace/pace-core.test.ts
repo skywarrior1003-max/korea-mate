@@ -233,6 +233,15 @@ test("★★legacy travelStyle 을 지우지 않았다", () => {
   assert.match(ITIN, /travel_style: tstyle/, "저장 payload 에서 빠졌다");
 });
 
+test("★★일정 화면이 trip_pace 를 실제로 보낸다", () => {
+  // 운영 QA 에서 이 한 줄이 빠져 F8 이 한 번도 발동하지 않았다.
+  // 체류시간용 `pace` 와 후보 선택용 `trip_pace` 는 둘 다 실려야 한다.
+  const body = ITIN.slice(ITIN.indexOf("const basePlanBody = {"));
+  const head = body.slice(0, body.indexOf("};"));
+  assert.match(head, /trip_pace: paceChoice,/, "★trip_pace 가 요청에 실리지 않는다");
+  assert.match(head, /[\s\S]\s{6}pace,/, "체류시간용 pace 가 빠졌다");
+});
+
 test("★예전 주소로 열어도 지금까지와 같다", () => {
   // pace 파라미터가 없으면 balanced → normal.
   assert.equal(toSchedulerPace(normalizeTripPace(null)), "normal");

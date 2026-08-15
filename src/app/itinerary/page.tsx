@@ -613,6 +613,9 @@ async function generateWithNewApi(
         ? likedSignals.liked_place_ids : undefined,
       // 같은 프로필을 모든 날짜에 그대로 넘긴다. 여기서 AI 를 부르지 않는다.
       personalization_profile: personalizationProfile ?? undefined,
+      // 후보 선택에만 쓰는 값. 체류시간은 위 `pace` 가 정한다 —
+      // 두 값을 한 필드로 합치면 active 가 체류 축소로 새는 길이 생긴다.
+      trip_pace: paceChoice,
     };
 
     try {
