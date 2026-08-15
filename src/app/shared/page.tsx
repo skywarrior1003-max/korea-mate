@@ -147,6 +147,7 @@ type Status = "loading" | "found" | "not_found" | "error";
 
 export default function SharedTripPage() {
   const tStay = useTranslations("stay");
+  const tItin = useTranslations("itin");
   const [status,        setStatus]        = useState<Status>("loading");
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
@@ -423,7 +424,23 @@ export default function SharedTripPage() {
 
             {/* 장소 카드 목록 */}
             <div className="space-y-3 mb-6">
-              {(day.places ?? []).map((place, placeIdx) => (
+              {(day.places ?? []).map((place, placeIdx) => {
+                // 어디로 보내는가를 먼저 정하고, 라벨은 그 결과를 따라간다.
+                //
+                // `naverPlaceSearchUrl` 은 한국어 이름을 찾지 못하면 Google 검색으로
+                // 내려간다. 그때도 "Naver Map" 이라고 적어 두면 눌러 본 사람은
+                // 우리가 거짓말을 했다고 느낀다. 일정 화면은 이미 같은 값으로
+                // 판정해 라벨을 바꾸고 있었다 — 그 판정을 그대로 쓴다.
+                const target = mapTargetName(place);
+                const naverUrl = target ? naverPlaceSearchUrl(target, trip.city) : null;
+                const naverIsGoogle = naverUrl !== null && naverUrl.includes("google.com");
+                const googleUrl = place.googleMapsUrl && isSafeMapUrl(place.googleMapsUrl)
+                  ? place.googleMapsUrl
+                  : (target ? googlePlaceSearchUrl(target, trip.city) : null);
+                // 같은 곳으로 가는 버튼을 두 개 두지 않는다. 직접 적어 넣은 숙소는
+                // 저장된 지도 주소가 없어 두 주소가 정확히 같아진다.
+                const showFallback = naverUrl !== null && (!naverIsGoogle || naverUrl !== googleUrl);
+                return (
                 <div
                   key={placeIdx}
                   className="bg-white rounded-2xl p-4 border border-[#E5E7EA] shadow-sm"
@@ -462,24 +479,21 @@ export default function SharedTripPage() {
                       좌표를 공유물에 실어 만들지 않는다 — 공개된 이름과 도시로
                       검색해 연다. 우리 장소 데이터에 없는 곳도 열리고, 어디서
                       자는지 정확한 지점은 링크에 남지 않는다. */}
-                  {mapTargetName(place) && (
+                  {googleUrl && (
                     <div className="mt-3 flex items-center gap-3 flex-wrap">
+                      {showFallback && (
+                        <a
+                          href={naverUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
+                        >
+                          <span>{naverIsGoogle ? tItin("moreSearch") : "🗺️ Naver Map"}</span>
+                          <span className="text-[#FF4A2D]">→</span>
+                        </a>
+                      )}
                       <a
-                        href={naverPlaceSearchUrl(mapTargetName(place)!, trip.city)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
-                      >
-                        <span>🗺️</span>
-                        <span>Naver Map</span>
-                        <span className="text-[#FF4A2D]">→</span>
-                      </a>
-                      <a
-                        href={
-                          place.googleMapsUrl && isSafeMapUrl(place.googleMapsUrl)
-                            ? place.googleMapsUrl
-                            : googlePlaceSearchUrl(mapTargetName(place)!, trip.city)
-                        }
+                        href={googleUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 text-[10px] font-bold text-[#565D66] hover:text-[#FF4A2D] transition-colors"
@@ -491,7 +505,8 @@ export default function SharedTripPage() {
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* 제휴 인젝터 — Day 2마다 삽입 */}

@@ -84,7 +84,7 @@ test("★★공유 화면은 숙소의 좌표·주소·링크를 만지지 않�
 });
 
 test("★★지도 버튼에 체크인 시각이 실리지 않는다", () => {
-  const block = SHARED.slice(SHARED.indexOf("mapTargetName(place) && ("));
+  const block = SHARED.slice(SHARED.indexOf("{googleUrl && ("));
   const body  = block.slice(0, block.indexOf("</div>"));
   assert.doesNotMatch(body, /place\.time|checkin|Check-in/i,
     "★지도 링크·라벨에 시각이 들어갔다");
@@ -114,16 +114,65 @@ test("★★숙소 이름을 일반 라벨로 바꾸지 않는다", () => {
 });
 
 test("★★네이버와 구글 둘 다 있고, 숙소만 다르게 생기지 않았다", () => {
-  const block = SHARED.slice(SHARED.indexOf("mapTargetName(place) && ("));
+  const block = SHARED.slice(SHARED.indexOf("{googleUrl && ("));
   const body  = block.slice(0, block.indexOf("</div>"));
-  assert.match(body, /naverPlaceSearchUrl\(mapTargetName\(place\)!, trip\.city\)/, "네이버 액션이 없다");
-  assert.match(body, /googlePlaceSearchUrl\(mapTargetName\(place\)!, trip\.city\)/, "구글 fallback 이 없다");
+  assert.match(body, /href=\{naverUrl!\}/, "네이버/대체 액션이 없다");
+  assert.match(body, /href=\{googleUrl\}/, "구글 액션이 없다");
+  assert.match(SHARED, /naverPlaceSearchUrl\(target, trip\.city\)/, "네이버 주소를 만들지 않는다");
+  assert.match(SHARED, /googlePlaceSearchUrl\(target, trip\.city\)/, "구글 fallback 을 만들지 않는다");
   // 숙소 전용 분기가 아니라 모든 장소가 같은 UI 를 쓴다.
   assert.doesNotMatch(body, /isAccommodation/, "★숙소만 다른 지도 UI 를 만들었다");
 });
 
+// ── C2. 라벨이 실제 목적지와 일치하는가 ─────────────────────────────────────
+
+test("★★A. 진짜 네이버로 갈 때만 Naver Map 이라고 적는다", () => {
+  const n = naverPlaceSearchUrl("해운대해수욕장", "Busan");
+  assert.ok(n.startsWith("https://map.naver.com/"), "네이버 주소가 아니다");
+  assert.match(SHARED, /naverIsGoogle \? tItin\("moreSearch"\) : "🗺️ Naver Map"/,
+    "★목적지와 무관하게 Naver Map 이라고 적는다");
+});
+
+test("★★B·D. Google 로 내려갈 때는 Naver 라고 적지 않는다", () => {
+  // 영문 이름 숙소가 정확히 이 경우다 — 운영에서 실제로 이렇게 나왔다.
+  const n = naverPlaceSearchUrl("QA Test Hotel Haeundae", "Busan");
+  assert.ok(n.includes("google.com"), "이 이름은 네이버로 못 찾는다는 전제가 깨졌다");
+  // 판정은 일정 화면과 같은 값으로 한다 — 새 규칙을 만들지 않았다.
+  assert.match(SHARED, /const naverIsGoogle = naverUrl !== null && naverUrl\.includes\("google\.com"\)/);
+  assert.match(ITIN, /const naverIsGoogle = naverUrl\.includes\("google\.com"\)/,
+    "일정 화면의 기존 판정이 사라졌다");
+});
+
+test("★★같은 곳으로 가는 버튼을 두 개 두지 않는다", () => {
+  // 직접 적어 넣은 숙소는 저장된 지도 주소가 없어 fallback 과 Google 이 같아진다.
+  const name = "QA Test Hotel Haeundae", city = "Busan";
+  assert.equal(naverPlaceSearchUrl(name, city), googlePlaceSearchUrl(name, city),
+    "이 조건에서 두 주소가 같다는 전제가 깨졌다");
+  assert.match(SHARED, /const showFallback = naverUrl !== null && \(!naverIsGoogle \|\| naverUrl !== googleUrl\)/,
+    "★같은 주소로 가는 버튼이 중복으로 남는다");
+});
+
+test("★C. Google 버튼은 그대로 Google 이다", () => {
+  const block = SHARED.slice(SHARED.indexOf("{googleUrl && ("));
+  const body  = block.slice(0, block.indexOf("</div>"));
+  assert.match(body, /href=\{googleUrl\}/);
+  assert.match(body, /<span>Google Maps<\/span>/);
+});
+
+test("★F. 저장된 지도 주소가 있는 장소는 그것을 먼저 쓴다", () => {
+  assert.match(SHARED, /place\.googleMapsUrl && isSafeMapUrl\(place\.googleMapsUrl\)[\s\S]{0,40}\? place\.googleMapsUrl/,
+    "기존 장소의 지도 주소 우선순위가 바뀌었다");
+});
+
+test("★E. 라벨 판정에 사적인 값이 끼어들지 않는다", () => {
+  const block = SHARED.slice(SHARED.indexOf("const target = mapTargetName(place)"));
+  const body  = block.slice(0, block.indexOf("return ("));
+  assert.doesNotMatch(body, /coordinate|address|\.link|place\.time|checkin/i,
+    "★목적지 판정이 좌표·주소·링크·체크인 시각을 본다");
+});
+
 test("★외부 링크 안전 속성을 유지한다", () => {
-  const block = SHARED.slice(SHARED.indexOf("mapTargetName(place) && ("));
+  const block = SHARED.slice(SHARED.indexOf("{googleUrl && ("));
   const body  = block.slice(0, block.indexOf("</div>"));
   assert.equal((body.match(/target="_blank"/g) ?? []).length, 2);
   assert.equal((body.match(/rel="noopener noreferrer"/g) ?? []).length, 2);
@@ -132,12 +181,13 @@ test("★외부 링크 안전 속성을 유지한다", () => {
 test("★이름이 없으면 지도 버튼을 걸지 않는다", () => {
   assert.match(SHARED, /function mapTargetName\(place: Place\): string \| null/);
   assert.match(SHARED, /return n\.length > 0 \? n : null;/);
+  assert.match(SHARED, /const target = mapTargetName\(place\);/, "target 판정이 없다");
 });
 
 // ── D. 기존 장소 동작은 그대로 ───────────────────────────────────────────────
 
 test("★★일반 장소는 저장된 지도 주소를 먼저 쓴다", () => {
-  assert.match(SHARED, /\? place\.googleMapsUrl\s*\n\s*: googlePlaceSearchUrl/,
+  assert.match(SHARED, /\? place\.googleMapsUrl[\s\S]{0,40}: \(target \? googlePlaceSearchUrl/,
     "저장된 주소보다 검색을 먼저 쓴다 — 기존 장소 동작이 바뀐다");
 });
 
@@ -155,7 +205,7 @@ test("★복사 버튼과 공유 구조를 건드리지 않았다", () => {
 
 test("★★공유 화면이 새 데이터를 요구하지 않는다", () => {
   // 저장된 일정에 이미 있는 것만 쓴다. 새 API·새 필드를 만들지 않았다.
-  const block = SHARED.slice(SHARED.indexOf("mapTargetName(place) && ("));
+  const block = SHARED.slice(SHARED.indexOf("{googleUrl && ("));
   const body  = block.slice(0, block.indexOf("</div>"));
   assert.doesNotMatch(body, /fetch\(|await /, "지도 버튼이 네트워크를 부른다");
 });
