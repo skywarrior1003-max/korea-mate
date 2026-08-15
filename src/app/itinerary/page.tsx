@@ -675,12 +675,19 @@ async function generateWithNewApi(
             });
             if (res2.ok) {
               const second = await res2.json() as ApiTripPlanResult;
-              // 2 차가 장소를 잃으면 1 차를 쓴다. 체크인 하나 넣자고 오후를
-              // 깎지 않는다.
+              // 2 차가 오후를 많이 깎으면 1 차를 쓴다.
+              //
+              // 처음에는 "한 곳도 잃지 않을 때만" 으로 두었다. 실제 운영 데이터에서
+              // 그 조건이 거의 지켜지지 않았다 — 숙소에 들르는 데 이동 + 15 분이
+              // 걸리니 그 시간만큼 한 곳이 밀려난다. 그래서 체크인이 만들어지고도
+              // 매번 되돌려졌고, 사용자는 숙소가 없는 일정을 받았다.
+              //
+              // 한 곳은 체크인이 실제로 쓰는 시간의 값이다. 두 곳부터는 끼워 넣은
+              // 자리가 나쁘다는 뜻이므로 그때는 1 차로 돌아간다.
               const count = (r: ApiTripPlanResult) =>
                 (r?.data?.plan?.items ?? []).filter((it: ApiScheduledItem) => it.place_id).length;
               if ((second?.data?.kind === "scheduled" || second?.data?.kind === "personalized") &&
-                  count(second) >= count(dayResult)) {
+                  count(second) >= count(dayResult) - 1) {
                 dayResult = second;
               } else {
                 checkinTime = null;

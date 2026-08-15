@@ -319,9 +319,14 @@ test("★날짜별 숙박이 아니다", () => {
   assert.doesNotMatch(ITIN, /perNight|nightlyHotel/i);
 });
 
-test("★2 차가 나빠지면 1 차를 쓴다", () => {
-  assert.match(ITIN, /count\(second\) >= count\(dayResult\)/,
-    "★2 차 결과가 나빠져도 그대로 쓴다");
+test("★★체크인이 쓰는 시간만큼은 허용하고, 그보다 나빠지면 1 차를 쓴다", () => {
+  // 운영에서 확인된 것: 숙소에 들르면 이동 + 15 분이 들어 한 곳이 밀려난다.
+  // "한 곳도 잃지 않을 때만" 으로 두면 체크인이 만들어지고도 매번 되돌려져
+  // 사용자는 숙소가 없는 일정을 받는다. 두 곳부터가 나쁜 신호다.
+  assert.match(ITIN, /count\(second\) >= count\(dayResult\) - 1/,
+    "★체크인이 쓰는 시간조차 허용하지 않아 항상 되돌려진다");
+  assert.doesNotMatch(ITIN, /count\(second\) >= count\(dayResult\)\s*\)/,
+    "★손실을 전혀 허용하지 않는 조건이 남아 있다");
   assert.match(ITIN, /catch \{\s*\n\s*checkinTime = null;/,
     "두 번째 호출이 실패하면 하루를 잃는다");
 });
