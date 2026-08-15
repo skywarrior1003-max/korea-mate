@@ -1447,11 +1447,13 @@ function ItineraryResult() {
       // v2 포맷 파싱 헬퍼 — { __v:2, scheduled, unscheduled } 또는 구버전 Day[]
       const raw = record?.days as Record<string, unknown> | Day[] | undefined;
       let loadedDays: Day[];
-      let loadedUnscheduled: CartItem[] = [];
       if (raw && !Array.isArray(raw) && (raw as Record<string, unknown>).__v === 2) {
+        // v2 는 { scheduled, unscheduled } 두 필드를 갖는다. 여기서 읽는 것은
+        // scheduled 뿐이다 — unscheduled 는 "미배치 장소" 가 아니라 저장 당시
+        // This Trip 전체 snapshot 이라 현재 계획을 되살릴 권한이 없다.
+        // shape 은 기존 레코드 호환을 위해 그대로 둔다.
         const v2 = raw as { scheduled: Day[]; unscheduled: CartItem[] };
-        loadedDays        = v2.scheduled    ?? [];
-        loadedUnscheduled = v2.unscheduled  ?? [];
+        loadedDays = v2.scheduled ?? [];
       } else {
         loadedDays = (raw as Day[]) ?? [];
       }
@@ -1503,20 +1505,17 @@ function ItineraryResult() {
             .catch(() => { setError({ key: "errNetwork" }); setLoading(false); });
           return;
         }
-        // 정상 레코드 → sanitize 후 사용 + Supabase 보관함 복원
+        // 정상 레코드 → sanitize 후 저장된 일정만 쓴다.
+        //
+        // 예전에는 여기서 legacy unscheduled 로 koreamate_cart 를 통째 덮어썼다.
+        // 저장된 일정은 이미 완성된 결과이지 지금 짜고 있는 This Trip 의 주인이
+        // 아니다. 같은 도시든 다른 도시든, 과거 snapshot 으로 현재 고른 곳을
+        // 되돌리지 않는다 — 방금 담은 장소가 조용히 사라지던 자리다.
         setDays(sanitizeDays(loadedDays));
         if (record.trip_title) setTripTitle(record.trip_title);
         if (record.is_public !== undefined) setIsPublic(record.is_public);
         if (record.cover_kind) setCoverKind(record.cover_kind);
         setCoverMomentId(record.cover_moment_id ?? null);
-        if (loadedUnscheduled.length > 0) {
-          try {
-            localStorage.setItem("koreamate_cart", JSON.stringify(
-              loadedUnscheduled.map((item, i) => ({ ...item, addedAt: item.addedAt || Date.now(), sortOrder: i }))
-            ));
-            window.dispatchEvent(new CustomEvent(CART_EVENT));
-          } catch { /* ignore */ }
-        }
         setSyncStatus("saved");
         setLoading(false);
         return;
