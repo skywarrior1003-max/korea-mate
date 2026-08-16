@@ -7,7 +7,7 @@
     "supersedes": "busan-food-c1-publication-curation-v1.json (721 records, PUBLIC=112)",
     "supersession_note": "Old SSOT is HISTORICAL/REFERENCE/AUDIT ARTIFACT only. This 194-canonical is the Busan Food 2026 service SSOT.",
     "canonical_entity_count": 194,
-    "catalog_checksum": "11617fcf04ad",
+    "catalog_checksum": "a2d8cb4e4dc7",
     "ai_auto_checksum": "92875017f119",
     "ai_auto_count": 5,
     "match_status_summary": {
@@ -71,7 +71,19 @@
       "coord_district_unclear": 0,
       "navigation_ready": 5,
       "note": "district/bbox 일치만으로 NAVIGATION_READY=YES 처리 없음 (R1 기준)"
-    }
+    },
+    "task_api_recovery_v1": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+    "api_recovery_date": "2026-08-16",
+    "api_recovery_as_of": "2026-08-16T08:29:37Z",
+    "current_api_total_count": 437,
+    "current_api_checksum": "f8fae7fc112e",
+    "api_194_matched_uc_seq": 135,
+    "api_newly_recovered_image": 0,
+    "api_newly_verified_coord": 0,
+    "web_visible_but_api_image_gap": 6,
+    "current_foodservice_entity_not_found": 68,
+    "recommended_service_direct_use": 0,
+    "api_recovery_v1_checksum": "84a19cd9d365"
   },
   "records": [
     {
@@ -119,7 +131,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1436
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00002",
@@ -169,7 +189,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00003",
@@ -216,7 +242,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1452
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00004",
@@ -269,7 +303,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_found_no_image"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1639
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1639,
+          "lat": 35.15644,
+          "lng": 129.12479,
+          "api_addr": "부산 수영구 광안해변로279번길 13 (민락동)",
+          "api_name": "톤쇼우",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00005",
@@ -316,7 +367,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1474
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00006",
@@ -366,7 +425,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00007",
@@ -415,7 +480,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          127,
+          1634
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00008",
@@ -466,7 +540,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00009",
@@ -515,7 +595,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1632
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00010",
@@ -562,7 +650,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          239
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00011",
@@ -610,7 +706,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1265,
+          1555
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00012",
@@ -657,7 +762,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1271
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00013",
@@ -704,7 +817,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1522
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00014",
@@ -755,7 +876,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00015",
@@ -805,7 +932,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00016",
@@ -855,7 +988,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00017",
@@ -896,7 +1035,16 @@
       "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
-      "pixabay_fallback_requires_user_approval": true
+      "pixabay_fallback_requires_user_approval": true,
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1520,
+          1607
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00018",
@@ -943,7 +1091,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1813,
+          1813
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00019",
@@ -989,7 +1146,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1530
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00020",
@@ -1036,7 +1201,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00021",
@@ -1083,7 +1253,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "연제구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          95
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00022",
@@ -1129,7 +1307,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2354
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00023",
@@ -1180,7 +1366,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00024",
@@ -1227,7 +1419,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "연제구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1836
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00025",
@@ -1275,7 +1475,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          926
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00026",
@@ -1327,7 +1535,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00027",
@@ -1375,7 +1589,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1561,
+          2340
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00028",
@@ -1422,7 +1645,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1841
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00029",
@@ -1468,7 +1699,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2334
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00030",
@@ -1516,7 +1755,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1851,
+          1851
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00031",
@@ -1566,7 +1814,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1843,
+          1843
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00032",
@@ -1618,7 +1875,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00033",
@@ -1665,7 +1928,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00034",
@@ -1717,7 +1985,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00035",
@@ -1765,7 +2039,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1484,
+          1568
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00036",
@@ -1813,7 +2096,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          154,
+          1546
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00037",
@@ -1862,7 +2154,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1490
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00038",
@@ -1912,7 +2212,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00039",
@@ -1963,7 +2269,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00040",
@@ -2014,7 +2326,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00041",
@@ -2063,7 +2381,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1496
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00042",
@@ -2110,7 +2436,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2342
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00043",
@@ -2158,7 +2492,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_found_no_image"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1638
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1638,
+          "lat": 35.165035,
+          "lng": 129.15915,
+          "api_addr": "부산 해운대구 해운대로 620 (우동) 해운대 라뮤에뜨 3층",
+          "api_name": "쥬가정효",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00044",
@@ -2206,7 +2557,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1847,
+          1847
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00045",
@@ -2256,7 +2616,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00046",
@@ -2308,7 +2673,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00047",
@@ -2357,7 +2728,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2364
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00048",
@@ -2407,7 +2786,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1844,
+          1844
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00049",
@@ -2457,7 +2845,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1534,
+          1550
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00050",
@@ -2505,7 +2902,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          146
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00051",
@@ -2554,7 +2959,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2370
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00052",
@@ -2595,7 +3008,15 @@
       "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
-      "pixabay_fallback_requires_user_approval": true
+      "pixabay_fallback_requires_user_approval": true,
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          141
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00053",
@@ -2644,7 +3065,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1846
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00054",
@@ -2696,7 +3125,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00055",
@@ -2750,7 +3185,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_found_no_image"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1597
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1597,
+          "lat": 35.16133,
+          "lng": 129.16801,
+          "api_addr": "부산 해운대구 달맞이길 30 (중동)",
+          "api_name": "차오란",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00056",
@@ -2799,7 +3251,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1596
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00057",
@@ -2845,7 +3305,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2339
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00058",
@@ -2892,7 +3360,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2337
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00059",
@@ -2944,7 +3420,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00060",
@@ -2995,7 +3477,17 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1811,
+          1811,
+          2344
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00061",
@@ -3043,7 +3535,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1573,
+          2328
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00062",
@@ -3096,7 +3597,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00063",
@@ -3147,7 +3654,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00064",
@@ -3193,7 +3706,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1845
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00065",
@@ -3245,7 +3766,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00066",
@@ -3295,7 +3822,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00067",
@@ -3341,7 +3874,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1849
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00068",
@@ -3388,7 +3929,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00069",
@@ -3435,7 +3981,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1476
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00070",
@@ -3482,7 +4036,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          193
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00071",
@@ -3529,7 +4091,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1842
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00072",
@@ -3580,7 +4150,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00073",
@@ -3631,7 +4207,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00074",
@@ -3678,7 +4260,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1806
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00075",
@@ -3724,7 +4314,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2379
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00076",
@@ -3775,7 +4373,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00077",
@@ -3826,7 +4430,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00078",
@@ -3873,7 +4483,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          884,
+          1554
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00079",
@@ -3921,7 +4540,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1448
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00080",
@@ -3968,7 +4595,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1507
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00081",
@@ -4015,7 +4650,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1111
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00082",
@@ -4061,7 +4704,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2332
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00083",
@@ -4112,7 +4763,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00084",
@@ -4163,7 +4820,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00085",
@@ -4215,7 +4878,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00086",
@@ -4263,7 +4932,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1480
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00087",
@@ -4310,7 +4987,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2329
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00088",
@@ -4362,7 +5047,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00089",
@@ -4412,7 +5103,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00090",
@@ -4458,7 +5155,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2350
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00091",
@@ -4507,7 +5212,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2330
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00092",
@@ -4556,7 +5269,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1820
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00093",
@@ -4602,7 +5323,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2336
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00094",
@@ -4653,7 +5382,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00095",
@@ -4706,7 +5441,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_found_no_image"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1621
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1621,
+          "lat": 35.14214,
+          "lng": 129.06015,
+          "api_addr": "부산 부산진구 골드테마길 10 (범천동)",
+          "api_name": "원조할매낙지",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00096",
@@ -4753,7 +5505,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1601
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00097",
@@ -4799,7 +5559,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          899
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00098",
@@ -4846,7 +5614,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          566
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00099",
@@ -4892,7 +5668,12 @@
       "coord_address_consistent": false,
       "coord_address_district": "동구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00100",
@@ -4943,7 +5724,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00101",
@@ -4990,7 +5777,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "동구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1450
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00102",
@@ -5040,7 +5835,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00103",
@@ -5090,7 +5891,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00104",
@@ -5140,7 +5947,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00105",
@@ -5191,7 +6004,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00106",
@@ -5239,7 +6058,16 @@
       "coord_address_consistent": false,
       "coord_address_district": "동구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1104,
+          1623
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00107",
@@ -5289,7 +6117,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00108",
@@ -5337,7 +6171,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "동구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          242,
+          1617
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00109",
@@ -5388,7 +6231,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00110",
@@ -5435,7 +6284,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1133
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00111",
@@ -5482,7 +6339,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1837
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00112",
@@ -5533,7 +6398,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00113",
@@ -5579,7 +6450,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          576
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00114",
@@ -5626,7 +6505,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1252
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00115",
@@ -5668,7 +6555,15 @@
       "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
-      "pixabay_fallback_requires_user_approval": true
+      "pixabay_fallback_requires_user_approval": true,
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1445
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00116",
@@ -5715,7 +6610,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1244
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00117",
@@ -5762,7 +6665,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1457
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00118",
@@ -5813,7 +6724,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00119",
@@ -5860,7 +6777,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2381
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00120",
@@ -5912,7 +6837,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00121",
@@ -5959,7 +6890,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2363
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00122",
@@ -6011,7 +6950,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00123",
@@ -6058,7 +7003,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2365
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00124",
@@ -6106,7 +7059,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2362
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00125",
@@ -6155,7 +7116,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1834
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00126",
@@ -6201,7 +7170,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2366
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00127",
@@ -6251,7 +7228,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00128",
@@ -6303,7 +7286,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00129",
@@ -6355,7 +7344,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00130",
@@ -6404,7 +7399,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1829
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00131",
@@ -6455,7 +7458,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00132",
@@ -6504,7 +7513,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2353
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00133",
@@ -6554,7 +7571,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1835,
+          1835
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00134",
@@ -6606,7 +7632,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00135",
@@ -6654,7 +7686,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2361
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00136",
@@ -6706,7 +7746,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00137",
@@ -6754,7 +7800,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2358
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00138",
@@ -6806,7 +7860,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00139",
@@ -6857,7 +7917,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00140",
@@ -6904,7 +7970,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1824
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00141",
@@ -6953,7 +8027,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2359
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00142",
@@ -7003,7 +8085,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1498,
+          1558
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00143",
@@ -7054,7 +8145,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00144",
@@ -7109,7 +8206,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1544
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1544,
+          "lat": 35.14793,
+          "lng": 129.11354,
+          "api_addr": "부산 수영구 남천바다로 32 (남천동)",
+          "api_name": "언양불고기부산집",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00145",
@@ -7162,7 +8276,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00146",
@@ -7215,7 +8335,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00147",
@@ -7262,7 +8388,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1492
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00148",
@@ -7314,7 +8448,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00149",
@@ -7361,7 +8501,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2356
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00150",
@@ -7407,7 +8555,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1809
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00151",
@@ -7458,7 +8614,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00152",
@@ -7504,7 +8666,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          218
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00153",
@@ -7552,7 +8722,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00154",
@@ -7599,7 +8774,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1810
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00155",
@@ -7646,7 +8829,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1508
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00156",
@@ -7695,7 +8886,16 @@
       "coord_address_consistent": false,
       "coord_address_district": "남구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1511,
+          1540
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00157",
@@ -7741,7 +8941,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          564
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00158",
@@ -7792,7 +9000,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00159",
@@ -7839,7 +9053,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "남구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          204
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00160",
@@ -7889,7 +9111,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00161",
@@ -7937,7 +9165,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "서구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1802
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00162",
@@ -7983,7 +9219,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "서구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          865
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00163",
@@ -8029,7 +9273,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "서구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          72
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00164",
@@ -8086,7 +9338,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00165",
@@ -8127,7 +9385,15 @@
       "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
-      "pixabay_fallback_requires_user_approval": true
+      "pixabay_fallback_requires_user_approval": true,
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1281
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00166",
@@ -8174,7 +9440,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1822
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00167",
@@ -8220,7 +9494,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1523
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00168",
@@ -8273,7 +9555,24 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_found_no_image"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1625
+        ],
+        "image_gap_reason": "WEB_VISIBLE_BUT_API_IMAGE_GAP",
+        "api_coord_official": {
+          "uc_seq": 1625,
+          "lat": 35.193363,
+          "lng": 128.98607,
+          "api_addr": "부산 사상구 낙동대로1530번길 20-15 (삼락동)",
+          "api_name": "할매재첩국",
+          "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
+          "navigation_ready": false
+        }
+      }
     },
     {
       "canonical_id": "busan-G-00169",
@@ -8321,7 +9620,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1518
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00170",
@@ -8368,7 +9675,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "사하구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1118
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00171",
@@ -8420,7 +9735,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00172",
@@ -8466,7 +9787,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "사하구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          177
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00173",
@@ -8517,7 +9846,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00174",
@@ -8568,7 +9903,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00175",
@@ -8615,7 +9956,12 @@
       "coord_address_consistent": true,
       "coord_address_district": "서구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": []
+      }
     },
     {
       "canonical_id": "busan-G-00176",
@@ -8666,7 +10012,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00177",
@@ -8714,7 +10066,16 @@
       "coord_address_consistent": false,
       "coord_address_district": "서구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          200,
+          1620
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00178",
@@ -8764,7 +10125,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00179",
@@ -8810,7 +10177,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "서구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          184
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00180",
@@ -8861,7 +10236,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00181",
@@ -8909,7 +10290,16 @@
       "coord_address_consistent": true,
       "coord_address_district": "중구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          109,
+          1608
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00182",
@@ -8955,7 +10345,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "중구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2347
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00183",
@@ -9006,7 +10404,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00184",
@@ -9056,7 +10460,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00185",
@@ -9106,7 +10516,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00186",
@@ -9153,7 +10569,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "중구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          124
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00187",
@@ -9203,7 +10627,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00188",
@@ -9250,7 +10680,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "중구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1237
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00189",
@@ -9300,7 +10738,13 @@
         "legacy_phone_not_found",
         "curated_name_not_found",
         "img_gap_name_not_found"
-      ]
+      ],
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [],
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+      }
     },
     {
       "canonical_id": "busan-G-00190",
@@ -9349,7 +10793,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "중구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          2345
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00191",
@@ -9396,7 +10848,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "중구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1229
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00192",
@@ -9442,7 +10902,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "중구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          965
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00193",
@@ -9488,7 +10956,15 @@
       "coord_address_consistent": false,
       "coord_address_district": "중구",
       "coord_status_r1": "COORD_UNRESOLVED",
-      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION"
+      "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          1489
+        ],
+        "api_image_available": true
+      }
     },
     {
       "canonical_id": "busan-G-00194",
@@ -9534,7 +11010,15 @@
       "coord_address_consistent": true,
       "coord_address_district": "중구",
       "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
-      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT"
+      "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
+      "api_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+        "as_of": "2026-08-16T08:29:37Z",
+        "matched_uc_seqs": [
+          190
+        ],
+        "api_image_available": true
+      }
     }
   ]
 }

@@ -1,0 +1,123 @@
+{
+  "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
+  "date": "2026-08-16",
+  "verdict": "PASS_WITH_WARN",
+  "git": {
+    "branch": "data/busan-food-discovery-v1",
+    "head_before": "8aaca98"
+  },
+  "current_foodservice_api": {
+    "endpoint": "https://apis.data.go.kr/6260000/FoodService/getFoodKr",
+    "api_call_status": "SUCCESS",
+    "current_api_total_count": 437,
+    "items_checksum": "f8fae7fc112e",
+    "as_of": "2026-08-16T08:29:37Z",
+    "uc_seq_range": {
+      "min": 70,
+      "max": 2386
+    }
+  },
+  "recommended_service": {
+    "endpoint": "https://apis.data.go.kr/6260000/RecommendedService/getRecommendedKr",
+    "api_call_status": "SUCCESS",
+    "total_count": 232,
+    "direct_entity_found": 0,
+    "supplementary_editorial_evidence": 0,
+    "theme_coord_image_transfer": 0,
+    "note": "6 WEB_VISIBLE_BUT_API_IMAGE_GAP targets: NOT FOUND in RecommendedService"
+  },
+  "crosswalk": {
+    "canonical_total": 194,
+    "exact_uc_seq_matched": 135,
+    "canonical_without_api_match": 75,
+    "api_only_not_in_194": 302
+  },
+  "image": {
+    "before": 120,
+    "current_foodservice_image_found": 0,
+    "newly_recovered": 0,
+    "official_image_total": 120,
+    "current_foodservice_image_empty": 6,
+    "web_visible_but_api_image_gap": 6,
+    "current_foodservice_entity_not_found": 68,
+    "official_supplement_found": 0,
+    "official_supplement_not_found": 68,
+    "coverage": "120/194",
+    "needs_visitbusan_web_cms_recovery": true
+  },
+  "coordinate": {
+    "current_foodservice_coord_found": 135,
+    "close_500m": 0,
+    "marginal_500_2km": 66,
+    "distant_2km_plus": 48,
+    "api_coord_empty": 6,
+    "no_api_match": 75,
+    "source_verified_new": 0,
+    "navigation_ready_new": 0,
+    "navigation_ready_total": 5,
+    "conflict_note": "All coord discrepancies: MARGINAL or DISTANT → no SOURCE_VERIFIED upgrade. Possible branch/주소 conflict.",
+    "web_gap_6_api_coord": {
+      "톤쇼우": {
+        "uc_seq": 1639,
+        "lat": 35.15644,
+        "lng": 129.12479,
+        "dist_from_guide_m": 10295
+      },
+      "쥬가정효": {
+        "uc_seq": 1638,
+        "lat": 35.165035,
+        "lng": 129.15915
+      },
+      "차오란": {
+        "uc_seq": 1597,
+        "lat": 35.16133,
+        "lng": 129.16801
+      },
+      "원조할매낙지": {
+        "uc_seq": 1621,
+        "lat": 35.14214,
+        "lng": 129.06015
+      },
+      "언양불고기부산집": {
+        "uc_seq": 1544,
+        "lat": 35.14793,
+        "lng": 129.11354
+      },
+      "할매재첩국": {
+        "uc_seq": 1625,
+        "lat": 35.193363,
+        "lng": 128.98607
+      }
+    }
+  },
+  "safety": {
+    "PIXABAY_USED": 0,
+    "GENERIC_FALLBACK_USED": 0,
+    "GENERATED_FALLBACK_USED": 0,
+    "INVENTED_COORDINATE": 0,
+    "SOURCE_UNIVERSE_DELETION": 0,
+    "COMMON_CHANGE": 0,
+    "OTHER_CITY_CHANGE": 0,
+    "MASTER_CHANGE": 0,
+    "PRODUCTION_CHANGE": 0,
+    "SECRET_LEAK": 0
+  },
+  "final": {
+    "verdict": "PASS_WITH_WARN",
+    "official_image_coverage": "120/194",
+    "navigation_ready": "5/194",
+    "ai_auto_ready": 5,
+    "warn_reasons": [
+      "NEWLY_RECOVERED_IMAGE = 0 (FoodService API images all match existing or empty)",
+      "WEB_VISIBLE_BUT_API_IMAGE_GAP = 6 (API record exists but no image; VB CMS may have image)",
+      "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND = 68 (guide-only entities not in FoodService API)",
+      "COORD_UPGRADE = 0 (all coord discrepancies MARGINAL or DISTANT; possible branch conflicts)"
+    ],
+    "needs_visitbusan_web_cms_recovery": "YES"
+  },
+  "checksums": {
+    "catalog_checksum": "a2d8cb4e4dc7",
+    "api_recovery_v1_checksum": "84a19cd9d365",
+    "raw_items_checksum": "f8fae7fc112e"
+  }
+}
