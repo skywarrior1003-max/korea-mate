@@ -17,7 +17,7 @@
   "michelin_matched": 26,
   "busan_mat_matched": 80,
   "taegshlang_matched": 5,
-  "michelin_not_in_discovery": 29,
+  "michelin_not_in_discovery": 31,
   "busan_mat_not_in_discovery": 39,
   "taegshlang_not_in_discovery": 15,
   "GUIDE_CATALOG_NOT_IN_DISCOVERY_GAP": 85,
@@ -624,5 +624,22 @@
     "busan_mat_public": 80,
     "taegshlang_public": 5,
     "collective_public": 3
+  },
+  "michelin_not_in_discovery_correction_note": "Was 29 (V1 per-source subtraction: 55-26=29). 팔레트 has 3 discovery records for 1 Michelin entity → V1 overcounted michelin_matched by 2. Correct = 31 unique Michelin entities NOT in discovery.",
+  "matched_unique_entity_count": 109,
+  "unmatched_unique_entity_count": 85,
+  "matched_discovery_record_count": 129,
+  "counting_unit_note": "\"matched_in_discovery\"=129 was on DISCOVERY RECORD basis (not guide unique entity count). \"matched_unique_entity_count\"=109 is the correct guide entity basis. \"GUIDE_CATALOG_NOT_IN_DISCOVERY_GAP\"=85 already correct. 109+85=194 CHECK OK.",
+  "per_source_correct_unique_entity": {
+    "michelin_matched": 24,
+    "michelin_not": 31,
+    "busan_mat_matched": 80,
+    "busan_mat_not": 39,
+    "taegshlang_matched": 5,
+    "taegshlang_not": 15
+  },
+  "correction_applied": {
+    "correction_task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+    "correction_date": "2026-08-16"
   }
 }

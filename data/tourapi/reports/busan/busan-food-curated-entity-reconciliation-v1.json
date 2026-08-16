@@ -1,0 +1,13 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "CURATED_BASE_UNIQUE_COUNT": 194,
+  "IN_PIPELINE_UNIQUE": 109,
+  "NOT_IN_PIPELINE_UNIQUE": 85,
+  "CURATED_UNACCOUNTED": 0,
+  "breakdown": {
+    "IN_PIPELINE_PUBLIC": 109,
+    "NOT_IN_PIPELINE": 85
+  },
+  "check_194_eq_109_plus_85": true
+}

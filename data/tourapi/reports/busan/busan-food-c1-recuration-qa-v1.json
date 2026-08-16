@@ -22,10 +22,20 @@
   },
   "guide_matching": {
     "matched": 129,
-    "unmatched": 65,
+    "unmatched": 85,
     "michelin_matched": 26,
     "busan_mat_matched": 80,
-    "taegshlang_matched": 5
+    "taegshlang_matched": 5,
+    "matched_discovery_record_count": 129,
+    "matched_unique_entity_count": 109,
+    "counting_unit_note": "\"matched\" (=129) counts discovery RECORDS; \"unmatched\" (=85) counts unique guide entities NOT in discovery. \"matched_unique_entity_count\" (=109) is the entity-level match count. 109+85=194 CHECK OK.",
+    "unmatched_correction_applied": "65→85 (cross-base error fixed by TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1)",
+    "michelin_matched_discovery_records": 26,
+    "busan_mat_matched_discovery_records": 80,
+    "taegshlang_matched_discovery_records": 5,
+    "michelin_matched_unique_entities": 24,
+    "busan_mat_matched_unique_entities": 80,
+    "taegshlang_matched_unique_entities": 5
   },
   "publication_result": {
     "PUBLIC_STRONG": 10,
@@ -89,5 +99,9 @@
     "RULE_13_manual_not_globalized": "PASS",
     "RULE_14_no_consumer_reputation": "PASS (api_calls=0, review_scraping=0)",
     "RULE_15_city_specific_not_copied": "PASS (Jeju numbers not used)"
+  },
+  "correction_note": {
+    "correction_task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+    "correction_date": "2026-08-16"
   }
 }

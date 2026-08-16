@@ -1,0 +1,30 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "repair_summary": {
+    "OLD_65_origin": "SSOT used 194-129 (guide_entity_count - discovery_record_count). Cross-base subtraction.",
+    "OLD_83_origin": "Per-source subtraction: (55-26)+(119-80)+(20-5). 팔레트 3 discovery records for 1 Michelin entity → michelin_not undercounted by 2.",
+    "CORRECT_VALUE": 85,
+    "METHOD": "unique guide entity names NOT in discovery names (Method A/C)"
+  },
+  "GUIDE_CATALOG_RECORD_COUNT": 194,
+  "GUIDE_UNIQUE_ENTITY_COUNT": 194,
+  "DISCOVERY_RECORD_COUNT": 721,
+  "GUIDE_MATCHED_DISCOVERY_RECORD_COUNT": 129,
+  "GUIDE_MATCHED_UNIQUE_ENTITY_COUNT": 109,
+  "GUIDE_UNMATCHED_UNIQUE_ENTITY_COUNT": 85,
+  "per_source_CORRECT_unique_entity": {
+    "michelin_matched": 24,
+    "michelin_unmatched": 31,
+    "busan_mat_matched": 80,
+    "busan_mat_unmatched": 39,
+    "taegshlang_matched": 5,
+    "taegshlang_unmatched": 15
+  },
+  "artifacts_corrected": [
+    "data/tourapi/normalized/busan/busan-food-c1-publication-curation-v1.json: guide_not_in_discovery 65→85",
+    "data/tourapi/reports/busan/busan-food-c1-recuration-qa-v1.json: guide_matching.unmatched 65→85",
+    "docs/data-collection/busan-food-c1-trusted-recuration-handoff-v1.md: 83→85"
+  ],
+  "NOT_corrected_in_this_task": "busan-food-guide-audit-v1.json already has GUIDE_CATALOG_NOT_IN_DISCOVERY_GAP=85 (was correct)"
+}

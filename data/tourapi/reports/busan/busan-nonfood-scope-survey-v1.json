@@ -1,0 +1,15 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "source_manifest": "korea-mate/data/tourapi/reports/busan/busan-final-place-event-release-manifest.json",
+  "source_branch": "data/busan-enrichment-v1",
+  "BUSAN_NONFOOD_ATTRACTION": 717,
+  "BUSAN_NONFOOD_NATURE": 50,
+  "BUSAN_NONFOOD_ACCOMMODATION": 82,
+  "BUSAN_NONFOOD_RELEASE_TOTAL": 849,
+  "BUSAN_NONFOOD_COORD_COVERAGE_PCT": 100,
+  "BUSAN_NONFOOD_MISSING_COORD": 0,
+  "NAVIGATION_READINESS_AUDIT_STATUS": "DEFERRED",
+  "DEFERRED_TO": "TASK-BUSAN-NON-FOOD-NAVIGATION-READINESS-AUDIT-V1",
+  "NOTE": "Non-food pipeline is in data/busan-enrichment-v1 branch. Restaurant items in legacy enrichment (680) are from KTO type39, SEPARATE from food curation pipeline (data/busan-food-discovery-v1, PUBLIC=112). All 1,533 release items have coordinates. Detailed navigation readiness (map_ready, nav_ready flags) requires TASK-BUSAN-NON-FOOD-NAVIGATION-READINESS-AUDIT-V1."
+}

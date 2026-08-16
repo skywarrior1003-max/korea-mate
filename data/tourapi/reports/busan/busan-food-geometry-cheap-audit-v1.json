@@ -1,0 +1,196 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "TOTAL": 721,
+  "COORD_PRESENT_PLAUSIBLE": 683,
+  "MISSING_COORD": 0,
+  "INVALID_COORD": 0,
+  "OUT_OF_BUSAN_OR_IMPLAUSIBLE": 1,
+  "SUSPECT_DUPLICATE_COORD": 0,
+  "ADDRESS_COORD_CONFLICT_SUSPECT": 34,
+  "COLLECTIVE_SPECIAL": 3,
+  "UNKNOWN": 0,
+  "note": "Cheap geometry audit: based on stored values only. No external geocoding. District bounding ranges approximate.",
+  "records": [
+    {
+      "candidate_id": "busan-F-00001",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.177387,
+      "lon": 128.95245,
+      "district": "강서구",
+      "name_ko": "만드리곤드레밥",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00002",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.101425,
+      "lon": 128.92914,
+      "district": "강서구",
+      "name_ko": "만호갈미샤브샤브",
+      "pub_status": "PUBLIC_GOOD_CHOICE"
+    },
+    {
+      "candidate_id": "busan-F-00003",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.16055,
+      "lon": 128.89468,
+      "district": "강서구",
+      "name_ko": "민물가든",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00004",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.085815,
+      "lon": 129.04071,
+      "district": "영도구",
+      "name_ko": "부흥식당",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00005",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.159008,
+      "lon": 129.05666,
+      "district": "부산진구",
+      "name_ko": "사미헌",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00006",
+      "status": "ADDRESS_COORD_CONFLICT_SUSPECT",
+      "lat": 35.142147,
+      "lon": 129.06017,
+      "district": "부산진구",
+      "name_ko": "원조할매집",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00007",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.185196,
+      "lon": 129.07988,
+      "district": "연제구",
+      "name_ko": "가야할매밀면",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00008",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.19689,
+      "lon": 129.07785,
+      "district": "연제구",
+      "name_ko": "국제밀면본점",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00009",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.098934,
+      "lon": 129.03122,
+      "district": "중구",
+      "name_ko": "할매가야밀면",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00010",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.102345,
+      "lon": 129.02612,
+      "district": "중구",
+      "name_ko": "거인통닭",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00011",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.09748,
+      "lon": 129.02994,
+      "district": "중구",
+      "name_ko": "김해식당",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00012",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.104504,
+      "lon": 129.0244,
+      "district": "중구",
+      "name_ko": "물꽁식당",
+      "pub_status": "REFERENCE_ONLY"
+    },
+    {
+      "candidate_id": "busan-F-00013",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.09714,
+      "lon": 129.0312,
+      "district": "중구",
+      "name_ko": "부산명물횟집",
+      "pub_status": "REFERENCE_ONLY"
+    },
+    {
+      "candidate_id": "busan-F-00014",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.099426,
+      "lon": 129.03749,
+      "district": "중구",
+      "name_ko": "부산꼼장어맛집 성일집",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00015",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.102104,
+      "lon": 129.0306,
+      "district": "중구",
+      "name_ko": "이재모피자 본점",
+      "pub_status": "PUBLIC_GOOD_CHOICE"
+    },
+    {
+      "candidate_id": "busan-F-00016",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.21928,
+      "lon": 129.08643,
+      "district": "금정구",
+      "name_ko": "모모스커피",
+      "pub_status": "REFERENCE_ONLY"
+    },
+    {
+      "candidate_id": "busan-F-00017",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.245174,
+      "lon": 129.09143,
+      "district": "금정구",
+      "name_ko": "배비장보쌈구서본점",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00018",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.19576,
+      "lon": 128.99043,
+      "district": "북구",
+      "name_ko": "장수장 꼬리곰탕",
+      "pub_status": "HOLD_WEAK_EVIDENCE"
+    },
+    {
+      "candidate_id": "busan-F-00019",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.16155,
+      "lon": 129.16693,
+      "district": "해운대구",
+      "name_ko": "거대갈비",
+      "pub_status": "PUBLIC_GOOD_CHOICE"
+    },
+    {
+      "candidate_id": "busan-F-00020",
+      "status": "COORD_PRESENT_PLAUSIBLE",
+      "lat": 35.16243,
+      "lon": 129.1645,
+      "district": "해운대구",
+      "name_ko": "금수복국 해운대본점",
+      "pub_status": "PUBLIC_GOOD_CHOICE"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "CURRENT_PUBLIC_COUNT": 112,
+  "NORMAL_WEAK_EVIDENCE_EXCLUSION": 573,
+  "EVIDENCE_JOIN_FAILURE": 0,
+  "POLICY_OVER_FILTER_SUSPECT": 0,
+  "CURRENT_PIPELINE_STRONG_GUIDE_FALSE_NEGATIVE": 0,
+  "PUBLIC_112_INTERPRETATION": "NORMAL_CURRENT_PIPELINE_RESULT",
+  "interpretation_detail": "109 unique guide entities matched in discovery. All clean non-dup guide-matched entities → PUBLIC. HOLD/REFERENCE_ONLY = only DUPLICATE_CONFIRMED(18 records) + intra-dup(2 records 팔레트). 573 HOLD_WEAK_EVIDENCE = directory-only (RULE 3/4 correctly applied). PUBLIC 112 = current pipeline + evidence quality result. NOT under-selected."
+}

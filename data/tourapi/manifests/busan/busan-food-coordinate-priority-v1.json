@@ -1,0 +1,22 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1",
+  "task_date": "2026-08-16",
+  "COORD_PRIORITY_1_COUNT": 112,
+  "COORD_PRIORITY_1_NEED_ENRICHMENT": 2,
+  "COORD_PRIORITY_2_COUNT": 52,
+  "COORD_PRIORITY_3_COUNT": 3,
+  "COORD_LOW_PRIORITY_DEFERRED_COUNT": 609,
+  "BUSAN_FOOD_COORDINATE_TARGETED_ENRICHMENT_REQUIRED": "YES",
+  "priority_1_records_needing_enrichment": [
+    {
+      "cid": "busan-F-00047",
+      "name": "봉식당",
+      "coord_status": "ADDRESS_COORD_CONFLICT_SUSPECT"
+    },
+    {
+      "cid": "busan-F-00333",
+      "name": "원조할매낙지",
+      "coord_status": "ADDRESS_COORD_CONFLICT_SUSPECT"
+    }
+  ]
+}

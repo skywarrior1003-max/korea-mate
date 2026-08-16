@@ -15,7 +15,7 @@
     "taegshlang-2025": 20
   },
   "guide_matched_in_discovery": 129,
-  "guide_not_in_discovery": 65,
+  "guide_not_in_discovery": 85,
   "BUSAN_FOOD_SOURCE_UNIVERSE": 721,
   "BUSAN_EXISTING_PUBLIC_BEFORE": 194,
   "BUSAN_PUBLICATION_READY_COUNT": 112,
@@ -26,6 +26,17 @@
   "api_calls": 0,
   "external_lookups": 0,
   "review_scraping": 0,
+  "guide_matched_in_discovery_unit": "discovery_records",
+  "guide_matched_unique_entity_count": 109,
+  "guide_not_in_discovery_unit": "unique_guide_entities",
+  "guide_not_in_discovery_correction_applied": "V1 had 65 (cross-base: 194 guide_entities - 129 discovery_records). Correct = 85 unique guide entity names NOT in discovery (Method A/C). Fixed by TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1.",
+  "COUNTING_UNIT_NOTE": "guide_matched_in_discovery=129 is discovery RECORDS (NOT unique entities). guide_matched_unique_entity_count=109 is unique guide entities matched. guide_not_in_discovery=85 is unique guide entities NOT in discovery. 109+85=194=GUIDE_UNIQUE_ENTITY_COUNT. CHECK OK.",
+  "guide_gap_per_source_unique_entity": {
+    "michelin_not_in_discovery": 31,
+    "busan_mat_not_in_discovery": 39,
+    "taegshlang_not_in_discovery": 15,
+    "total": 85
+  },
   "records": [
     {
       "publication_status": "HOLD_WEAK_EVIDENCE",

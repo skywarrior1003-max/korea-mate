@@ -251,7 +251,7 @@ Common Food Trusted Curation Policy (RULE 1–15, commit 2476cac)를 부산 Food
 
 ## §13 후속 과제
 
-1. **GUIDE_NOT_IN_DISCOVERY_GAP = 83** — 83개 가이드 레코드가 discovery pipeline에 미수집
+1. **GUIDE_NOT_IN_DISCOVERY_GAP = 85** — 85개 가이드 레코드가 discovery pipeline에 미수집
    - 피오또(Michelin 1star), busan-mat 39건, taegshlang 15건 포함
    - 별도 수집 task 필요: data/busan-food-discovery-v1 pipeline에 추가
 2. **팔레트 intra-pipeline dup** — source universe QA 보완 (busan-F-00311, 00359 → DUPLICATE_CONFIRMED 추가 권장)
@@ -270,10 +270,30 @@ COMMON_POLICY_APPLIED = YES (RULE 1–15, commit 2476cac)
 FP_ALL_ZERO = YES
 FN_CLEAN_ZERO = YES
 INTRA_DUP_HANDLED = YES (2건 held)
-GUIDE_GAP_NOTED = YES (83건, 별도 task 필요)
+GUIDE_GAP_NOTED = YES (85건, 별도 task 필요)
 PUBLICATION_READY = 112
 AI_AUTO_FOOD_READY = 109
 PUBLICATION_CHECKSUM = ce97c65d6d19a9e1af3d9f62
 AI_AUTO_CHECKSUM = e774a2d5df8efe6c9ca9d416
 SAFE_TO_START_BUSAN_FOOD_FINAL_QA = YES
 ```
+
+
+---
+
+## Correction Notice
+
+**Corrected by**: `TASK-BUSAN-FOOD-GUIDE-COUNT-REPAIR-AND-ROOT-CAUSE-AUDIT-V1` (2026-08-16)
+
+| Field | Old Value | Correct Value | Root Cause |
+|-------|-----------|---------------|------------|
+| `GUIDE_NOT_IN_DISCOVERY_GAP` | 83 | **85** | Per-source subtraction used discovery RECORDS (팔레트 3 records = 1 guide entity overcounted by 2) |
+| `guide_not_in_discovery` (SSOT) | 65 | **85** | Cross-base subtraction: 194 guide entities − 129 discovery records (different units) |
+| `michelin_not_in_discovery` | 29 | **31** | Same root cause as 83 (팔레트 overcounting) |
+
+**Correct counting**:
+- `GUIDE_UNIQUE_ENTITY_COUNT` = 194 (all distinct names in restaurants.json)
+- `GUIDE_MATCHED_UNIQUE_ENTITY_COUNT` = 109 (unique guide names found in discovery)
+- `GUIDE_UNMATCHED_UNIQUE_ENTITY_COUNT` = **85** (unique guide names NOT in discovery)
+- Verification: 109 + 85 = 194 ✓
+- Publication/AI_AUTO checksums unchanged: `ce97c65d6d19a9e1af3d9f62` / `e774a2d5df8efe6c9ca9d416`
