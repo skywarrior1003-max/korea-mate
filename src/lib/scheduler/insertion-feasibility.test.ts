@@ -122,27 +122,31 @@ test("C 식사 이연으로 생긴 구멍 — 운영 기본값(09:00 시작)에�
 // ── D. cart fallback + This Trip ─────────────────────────────────────────────
 
 test("D This Trip 이어도 불가능한 중간 자리에는 배치하지 않는다", () => {
-  // preferred_time_slot 이 맞지 않아 첫 pass 에서 밀린 999 점 항목은
-  // cart fallback pass 에서 "남은 아무 gap" 을 노린다. 그 gap 이 구멍이면
+  // 999 점 항목도 "남은 아무 gap" 을 노릴 수 있다. 그 gap 이 구멍이면
   // 우선순위와 무관하게 물리 계약이 먼저다.
+  //
+  // 구멍을 고정 일정으로 만든다. 예전에는 식사 이연과 pass 순서에 기대어
+  // 구멍을 만들었는데, 그러면 greedy pass 순서가 바뀔 때마다 이 테스트가
+  // 재배치를 결함으로 신고한다. 고정 일정은 P2 에서 먼저 앉으므로 어떤
+  // 순서에서도 같은 구멍이 남는다 — 지키려는 것은 순서가 아니라 물리다.
   const r = run({
     start_time: "10:15", end_time: "13:00",
-    candidates: [
-      cand("lunch", "food", 200, 350, 60),
-      cand("picked", "event", 3, 999, 20),
-    ],
+    candidates: [cand("picked", "event", 3, 999, 20)],
+    fixed_events: [{
+      event_id: "FX", coordinate: at(200),
+      start_time: "11:00", end_time: "12:00", zone_id: 3,
+    }],
     preferred_items: [{ place_id: "picked", preferred_time_slot: "evening" }],
   });
   assert.ok(r.ok);
 
-  const picked = r.id("picked"), lunch = r.id("lunch");
-  assert.ok(lunch);
+  // 10:15–11:00 구멍에 넣으면 18km 떨어진 고정 일정에 11:00 까지 못 간다.
+  const picked = r.id("picked");
   if (picked) {
-    const gapEnd = toMin(lunch!.start_time);
-    assert.ok(!(toMin(picked.end_time) <= gapEnd && toMin(picked.start_time) >= toMin("10:15")),
+    assert.ok(!(toMin(picked.end_time) <= toMin("11:00") && toMin(picked.start_time) >= toMin("10:15")),
       `This Trip 항목을 도달 불가능한 구멍에 넣었다 — ${picked.start_time}–${picked.end_time}`);
   }
-  assertPhysicallyPossible(r.items, { lunch: 200, picked: 3 });
+  assertPhysicallyPossible(r.items, { picked: 3, FX: 200 });
 });
 
 // ── E. supplemental 후보 ─────────────────────────────────────────────────────

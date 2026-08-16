@@ -373,21 +373,33 @@ export function runScheduler(input: SchedulerInput): SchedulerResult {
   // Safety: capped at 20 iterations and exits immediately when placed.length
   // does not increase, preventing infinite loops on unsatisfiable constraints.
   const MAX_GREEDY_ITERATIONS = 20;
-  let prevCount  = -1;
-  let iterations = 0;
-  while (
-    placed.length !== prevCount &&
-    !pq.isEmpty() &&
-    iterations < MAX_GREEDY_ITERATIONS
-  ) {
-    prevCount = placed.length;
-    greedyLoop();
-    iterations++;
-  }
+  const runUntilStable = (pass: () => void) => {
+    let prevCount  = -1;
+    let iterations = 0;
+    while (
+      placed.length !== prevCount &&
+      !pq.isEmpty() &&
+      iterations < MAX_GREEDY_ITERATIONS
+    ) {
+      prevCount = placed.length;
+      pass();
+      iterations++;
+    }
+  };
 
-  // Cart-fallback pass: cart items (score=999) that could not be placed in their
-  // preferred time slot get one final attempt in any remaining gap.
-  greedyLoop(true);
+  // 시간대 선호를 푼 pass 가 먼저다.
+  //
+  // 예전에는 이 pass 가 맨 뒤에 있었다. 시간대를 정해 둔 This Trip 은 앞 pass 의
+  // 슬롯 검사에서 계속 밀려나고, 그동안 추천이 하루치 자리와 HC-7(20개) 예산을
+  // 다 써 버려서, 정작 슬롯을 풀어 주는 이 차례가 왔을 때는 넣을 자리가 없었다.
+  // 실측: 저녁 선호 3곳 + 추천 30곳 → This Trip 0곳. 자리가 넉넉해도(추천 5곳)
+  // 1곳만 들어갔다.
+  //
+  // 그래서 순서를 바꾼다. `preferred_time_slot` 은 지키면 좋은 값이지 지키려고
+  // 장소를 버릴 값이 아니다 — 시간을 반드시 지켜야 하는 장소는 Date/Start/End
+  // 로 고정하면 P2 가 hard constraint 로 다룬다.
+  runUntilStable(() => greedyLoop(true));
+  runUntilStable(() => greedyLoop());
 
   // ── P4: Affiliate Injection ────────────────────────────────────────────────
 
