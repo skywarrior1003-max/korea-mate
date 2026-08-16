@@ -9,7 +9,7 @@
     "canonical_entity_count": 194,
     "catalog_checksum": "a2d8cb4e4dc7",
     "ai_auto_checksum": "92875017f119",
-    "ai_auto_count": 87,
+    "ai_auto_count": 106,
     "match_status_summary": {
       "MATCHED": 109,
       "UNMATCHED_STRONG_GUIDE": 52,
@@ -46,7 +46,7 @@
     "remediation_date": "2026-08-16",
     "official_image_resolved": 120,
     "official_image_unresolved": 74,
-    "navigation_ready_count": 105,
+    "navigation_ready_count": 106,
     "remediation_outcome": "PASS_WITH_WARN",
     "identity_r1": {
       "reviewed": 5,
@@ -69,12 +69,13 @@
       "guide_coord_address_consistent_pending": 162,
       "coord_unresolved": 27,
       "coord_district_unclear": 0,
-      "navigation_ready": 105,
+      "navigation_ready": 106,
       "note": "district/bbox 일치만으로 NAVIGATION_READY=YES 처리 없음 (R1 기준)",
       "official_coord_confirmed": 100,
       "guide_coord_conflict": 10,
       "guide_coord_semantics_audit": "APPROXIMATE_OR_WRONG: guide coords off by 500-3000m for same-address entities",
-      "note_r2": "R2 upgrade: 100 entities source-verified via address match (FoodService official). Guide coords found APPROXIMATE_OR_WRONG for many entities. NAVIGATION_READY=105/194."
+      "note_r2": "R2 upgrade: 100 entities source-verified via address match (FoodService official). Guide coords found APPROXIMATE_OR_WRONG for many entities. NAVIGATION_READY=105/194.",
+      "note_r3": "R3 fix: G-00057 coord_authority reverted (addr mismatch 49≠19). 미미루/달타이 MULTI_UCSEQ resolved (SAME_ENTITY). ai_auto image gate removed (not in common policy PRINCIPLE 13). Stale NAVIGATION_READY_NO blocks cleaned. NAV_READY=106/194. AI_AUTO=106/194."
     },
     "task_api_recovery_v1": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
     "api_recovery_date": "2026-08-16",
@@ -95,7 +96,12 @@
     "api_194_matched_uc_seq_note": "api_194_matched_uc_seq=135 was API-side record count. Actual unique matched canonicals=119 (16 multi-UC_SEQ canonicals caused overcounting). MATCHED_UNIQUE=119 + UNMATCHED_UNIQUE=75 = 194 ✓",
     "coord_authority_v1_nav_upgraded": 100,
     "coord_authority_v1_conflict_marked": 10,
-    "coord_authority_v1_checksum": "bad3b7ef0910"
+    "coord_authority_v1_checksum": "bad3b7ef0910",
+    "task_ai_gate_coord_fix_v1": "TASK-BUSAN-FOOD-194-AI-GATE-AND-QUICK-COORD-FIX-V1",
+    "ai_gate_coord_fix_v1_date": "2026-08-16",
+    "ai_gate_coord_fix_v1_base_commit": "b9c4f6c",
+    "ai_gate_fix_v1_note": "Image removed from ai_auto gate per common policy PRINCIPLE 13 (no image requirement). Stale block 'NAVIGATION_READY_NO' removed from 15 entities. G-00057 ai_auto reverted (coord_authority bug). ai_auto: 87 → 106 (+19 net). ai_gate_and_coord_fix_v1_checksum: 0569c5b67a2d",
+    "multi_ucseq_resolution_v1_note": "미미루(busan-G-00011): UC=1265/1555 SAME_ENTITY_MULTI_RECORD, UC=1555 selected. 달타이(busan-G-00061): UC=1573/2328 SAME_ENTITY_MULTI_RECORD, UC=2328 selected. Both now navigation_ready=True."
   },
   "records": [
     {
@@ -797,15 +803,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -816,9 +820,19 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "MULTI_UCSEQ_CONFLICT"
+          "task": "TASK-BUSAN-FOOD-194-AI-GATE-AND-QUICK-COORD-FIX-V1",
+          "as_of": "2026-08-16T09:56:47Z",
+          "result": "SAME_ENTITY_MULTI_RECORD_RESOLVED",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1555,
+          "api_lat": 35.219494,
+          "api_lng": 129.08295,
+          "api_addr": "부산 동래구 온천장로 91-1 (온천동)",
+          "addr_match_level": "SAME",
+          "phone_match": false,
+          "navigation_ready": true,
+          "multi_ucseq_evidence": "UC=1265 and UC=1555 share identical address (온천장로 91-1 온천동) and phone (051-555-6609); coordinate diff <1m. SAME_ENTITY_MULTI_RECORD. UC=1555 selected: fuller address format matches canonical 부산 동래구 온천장로 91-1.",
+          "note": "MULTI_UCSEQ_CONFLICT resolved: SAME_ENTITY confirmed, UC=1555 selected as representative."
         }
       }
     },
@@ -1401,10 +1415,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -1595,10 +1607,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -3591,7 +3601,7 @@
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
+      "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
@@ -3744,13 +3754,15 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": true,
-      "ai_auto_block_reasons": null,
-      "navigation_ready": true,
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "NAVIGATION_NOT_READY"
+      ],
+      "navigation_ready": false,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
+      "coord_status_r1": "OFFICIAL_COORD_ADDR_MISMATCH_REVERTED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3762,7 +3774,7 @@
         "coord_authority_v1": {
           "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
           "as_of": "2026-08-16T08:53:46Z",
-          "result": "SOURCE_VERIFIED_NAV_READY",
+          "result": "ADDR_MISMATCH_REVERTED",
           "authority_source": "FOODSERVICE_OFFICIAL",
           "uc_seq": 2339,
           "api_lat": 35.159527,
@@ -3771,8 +3783,11 @@
           "addr_match_level": "SAME",
           "guide_dist_m": 1232,
           "phone_match": true,
-          "navigation_ready": true,
-          "note": "address identical, FoodService coord authoritative"
+          "navigation_ready": false,
+          "note": "address identical, FoodService coord authoritative",
+          "revert_task": "TASK-BUSAN-FOOD-194-AI-GATE-AND-QUICK-COORD-FIX-V1",
+          "revert_as_of": "2026-08-16T09:56:47Z",
+          "revert_reason": "canonical address '부산 해운대구 달맞이길62번길 49, 3층' has building 49; api_addr '해운대구 달맞이길 62번길 19, 2층' has building 19 — different locations. SOURCE_VERIFIED_NAV_READY was incorrect; navigation_ready reverted to False."
         }
       }
     },
@@ -4013,15 +4028,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4032,9 +4045,19 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "MULTI_UCSEQ_CONFLICT"
+          "task": "TASK-BUSAN-FOOD-194-AI-GATE-AND-QUICK-COORD-FIX-V1",
+          "as_of": "2026-08-16T09:56:47Z",
+          "result": "SAME_ENTITY_MULTI_RECORD_RESOLVED",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2328,
+          "api_lat": 35.158108,
+          "api_lng": 129.18246,
+          "api_addr": "해운대구 달맞이길 193 1층",
+          "addr_match_level": "SAME",
+          "phone_match": true,
+          "navigation_ready": true,
+          "multi_ucseq_evidence": "UC=1573 and UC=2328 share identical address (달맞이길 193) and coordinate diff <2m; phone difference is VoIP vs landline of same restaurant. SAME_ENTITY_MULTI_RECORD. UC=2328 selected: phone matches canonical 051-741-1122.",
+          "note": "MULTI_UCSEQ_CONFLICT resolved: SAME_ENTITY confirmed, UC=2328 selected as representative."
         }
       }
     },
@@ -6148,10 +6171,8 @@
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -6839,10 +6860,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -7787,10 +7806,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -8121,10 +8138,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -9266,7 +9281,7 @@
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
+      "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
@@ -9468,10 +9483,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -10046,10 +10059,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -10366,10 +10377,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -10435,10 +10444,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -10504,10 +10511,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -10820,7 +10825,7 @@
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
+      "ai_auto": true,
       "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
@@ -11390,10 +11395,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -11944,10 +11947,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -12196,10 +12197,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
@@ -12394,10 +12393,8 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
