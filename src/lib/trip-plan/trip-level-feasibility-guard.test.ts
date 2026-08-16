@@ -38,7 +38,9 @@ test("★두 생성 경로 모두에서 판정한다 — 한쪽만 막으면 우
 
 test("★남은 곳이 있으면 일정을 화면에 올리지 않는다", () => {
   // setDays 앞에서 return 한다. days 가 바뀌지 않으면 저장 effect 도 안 돈다.
-  const gate = /const reduce = reduciblePicks\(unplaced, outOfWindow\);\s*\n\s*if \(reduce\.length > 0\) \{[\s\S]{0,320}?setNeedsReduction\(reduce\);\s*\n\s*setLoading\(false\);\s*\n\s*return;\s*\n\s*\}\s*\n\s*setDays\(sanitizeDays\(days\)\)/g;
+  // 게이트와 setDays 사이에 다른 줄이 들어올 수 있다(예: 생성 경로 표식).
+  // 지키는 것은 붙어 있는 모양이 아니라 **게이트가 setDays 앞에 있다** 는 사실이다.
+  const gate = /const reduce = reduciblePicks\(unplaced, outOfWindow\);\s*\n\s*if \(reduce\.length > 0\) \{[\s\S]{0,320}?setNeedsReduction\(reduce\);\s*\n\s*setLoading\(false\);\s*\n\s*return;\s*\n\s*\}[\s\S]{0,160}?setDays\(sanitizeDays\(days\)\)/g;
   assert.equal((CODE.match(gate) ?? []).length, 2, "게이트가 setDays 앞에 있지 않다");
 });
 

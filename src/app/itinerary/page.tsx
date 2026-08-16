@@ -12,7 +12,7 @@ import { apiSaveItinerary, apiFetchItinerary, apiUpdateItineraryTitle, apiSetPub
 import { getDeviceId } from "@/lib/deviceId";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
-import { getCityCart, removeFromCart, CART_EVENT, type CartItem } from "@/lib/cart";
+import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
 import { isEmailSaved } from "@/lib/userEmail";
 import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
@@ -1189,6 +1189,15 @@ function ItineraryResult() {
   const [emailModalOpen,  setEmailModalOpen]  = useState(false);
   const [emailSaved,      setEmailSaved]      = useState(() => isEmailSaved());
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /**
+   * 이 화면이 방금 만든 일정인가 — 저장에 성공하면 This Trip 을 비울 자격.
+   *
+   * 저장 effect 는 새로 만들 때도, 저장된 일정을 다시 열 때도, 편집할 때도
+   * 똑같이 깨어난다. "이번 마운트의 첫 성공" 을 신호로 쓰면 저장된 일정을
+   * 열어 보기만 해도 This Trip 이 비워진다. 그래서 생성 경로에서만 세우고
+   * 한 번 쓰고 내린다.
+   */
+  const clearOnFirstSaveRef = useRef(false);
 
   // ── 플래너 뱃지 ────────────────────────────────────────────
   const [plannerMeta,  setPlannerMeta]  = useState<{ numDays: number; startDate: string } | null>(null);
@@ -1504,6 +1513,8 @@ function ItineraryResult() {
                 setLoading(false);
                 return;
               }
+              // 여기부터가 "새로 만든 일정" 이다. 저장에 성공하면 This Trip 을 비운다.
+              clearOnFirstSaveRef.current = true;
               setDays(sanitizeDays(days));
               setCheckinTime(ct);
               if (isFallback) setIsFallback(true);
@@ -1556,6 +1567,7 @@ function ItineraryResult() {
             setLoading(false);
             return;
           }
+          clearOnFirstSaveRef.current = true;
           setDays(sanitizeDays(days));
               setCheckinTime(ct);
           if (isFallback) setIsFallback(true);
@@ -1606,6 +1618,15 @@ function ItineraryResult() {
         days: { __v: 2, scheduled: snapDays, unscheduled: snapUnscheduled },
       }, getDeviceId());
       setSyncStatus(ok ? "saved" : "error");
+      // 방금 만든 일정이 실제로 저장된 그 순간에만, 그 도시의 This Trip 을 비운다.
+      // 실패하면 그대로 둔다 — 저장 안 된 일정 때문에 고른 곳을 잃게 하지 않는다.
+      // 플래그를 먼저 내려 다음 autosave 가 다시 비우지 않게 한다.
+      if (ok && clearOnFirstSaveRef.current) {
+        clearOnFirstSaveRef.current = false;
+        // 바로 위 `snapUnscheduled` 와 같은 열쇠로 비운다 — 읽은 것과 지우는 것이
+        // 달라지면 다른 도시가 지워진다.
+        try { clearCityCart(paramCity); } catch { /* ignore */ }
+      }
       if (ok) {
         setTimeout(() => setSyncFading(true), 2500);
         setTimeout(() => { setSyncStatus("idle"); setSyncFading(false); }, 3000);

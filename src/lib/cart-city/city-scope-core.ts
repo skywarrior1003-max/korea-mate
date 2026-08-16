@@ -64,3 +64,21 @@ export function forCity<T extends CityScopedItem>(items: readonly T[], city: str
 export function unresolved<T extends CityScopedItem>(items: readonly T[]): T[] {
   return items.filter(isUnresolvedCity);
 }
+
+/**
+ * 이 도시 여행의 선택만 덜어낸다. `forCity` 의 반대다.
+ *
+ * 도시를 모르면 아무것도 지우지 않는다 — "모른다" 를 "전부" 로 읽으면 다른
+ * 여행에 담아 둔 것까지 날아간다.
+ *
+ * 어느 여행 것인지 모르는 예전 선택도 남긴다. 이 도시 것이라는 근거가 없는데
+ * 지우면 사용자는 자기가 담은 곳이 왜 사라졌는지 알 수 없다.
+ */
+export function dropCity<T extends CityScopedItem>(
+  items: readonly T[],
+  city:  string | null | undefined,
+): T[] {
+  const want = normalizeTripCity(city);
+  if (want === null) return [...items];
+  return items.filter(i => effectiveTripCity(i) !== want);
+}

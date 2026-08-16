@@ -1,7 +1,7 @@
 import { stripTripCommerceKeys, findTripCommerceKeys } from "@/config/commerce-surfaces";
 import { getItemSourceKey, IDENTITY_STORAGE_KEYS } from "@/lib/place-identity";
 import {
-  effectiveTripCity, forCity, isForCity, isUnresolvedCity, normalizeTripCity,
+  dropCity, effectiveTripCity, forCity, isForCity, isUnresolvedCity, normalizeTripCity,
   unresolved as unresolvedItems,
 } from "@/lib/cart-city/city-scope-core";
 // ─────────────────────────────────────────────
@@ -376,6 +376,23 @@ export function updateCartPlace(sourceKey: string, place: EventItem): void {
  */
 export function clearCart(): void {
   writeStorage([]);
+}
+
+/**
+ * 이 도시 여행의 선택만 비운다.
+ *
+ * My Trip 이 정상 저장되면 그 도시의 This Trip 은 할 일을 다 했다. 그렇다고
+ * `clearCart()` 를 부르면 아직 짜지 않은 다른 도시 여행까지 사라진다 —
+ * 서울 일정을 만들었는데 담아 두었던 부산 목록이 없어지는 식이다.
+ *
+ * 도시를 모르면 아무것도 지우지 않는다. 어느 여행 것인지 모르는 예전 선택도
+ * 남긴다 — 그것이 이 도시 것이라는 근거가 없다.
+ */
+export function clearCityCart(tripCity: string | null | undefined): void {
+  const items = readStorage();
+  const kept  = dropCity(items, tripCity);
+  if (kept.length === items.length) return;
+  writeStorage(reindexByCity(kept));
 }
 
 /**
