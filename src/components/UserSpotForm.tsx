@@ -11,7 +11,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { canCreate, canEdit } from "@/lib/user-spots/anchor-core";
+import { canEdit, hasCompleteGps } from "@/lib/user-spots/anchor-core";
 import {
   chooseSeed, isShortMapLink, parseMapLinkCoordinate,
   type SeedCoordinate, type SeedSource,
@@ -211,9 +211,17 @@ export default function UserSpotForm({
   const shownCanonical = !shownPhoto ? canonicalImageUrl : null;
 
   // 저장할 수 있는가 — 이름은 여기에 영향을 주지 않는다.
+  //
+  // 새로 만들 때는 지도에서 확인한 좌표 하나만 본다. 예전에는 `canCreate` 를
+  // 그대로 써서 "좌표 또는 사진" 이었고, 사진만 붙이면 지도를 한 번도 열지
+  // 않고 좌표 없는 장소가 만들어졌다. 그 장소는 일정에 넣을 수 없다 —
+  // 사진은 무엇을 봤는지 알려 주지만 어디였는지는 알려 주지 않는다.
+  //
+  // 고칠 때는 규칙이 다르다. 이름만으로 만들어진 예전 행이 남아 있고 그
+  // 메모를 고치려는 사람을 막을 이유가 없다 — `canEdit` 를 그대로 둔다.
   const anchorInput = { lat: form.lat, lng: form.lng, hasPhoto: photoFile !== null };
   const canSubmit = mode === "create"
-    ? canCreate(anchorInput)
+    ? hasCompleteGps({ lat: form.lat, lng: form.lng })
     : canEdit({ ...anchorInput, name: form.name, hasExistingPhoto });
 
   return (
@@ -470,9 +478,10 @@ export default function UserSpotForm({
         <p role="alert" className="text-xs text-red-500 font-medium">{formError}</p>
       )}
 
-      {/* 저장할 수 없는 이유를 버튼이 비활성인 채로 두지 않고 말해 준다. */}
+      {/* 저장할 수 없는 이유를 버튼이 비활성인 채로 두지 않고 말해 준다.
+          만들 때와 고칠 때 막히는 이유가 다르므로 다른 말을 한다. */}
       {!canSubmit && !formError && (
-        <p className="text-[11px] text-[#565D66]/80">{t("needAnchor")}</p>
+        <p className="text-[11px] text-[#565D66]/80">{t(mode === "create" ? "needLocation" : "needAnchor")}</p>
       )}
 
       <div className="flex gap-2 pt-1">
@@ -494,7 +503,7 @@ export default function UserSpotForm({
         </button>
       </div>
       {!canSubmit && (
-        <span id="gkm-anchor-hint" className="sr-only">{t("needAnchor")}</span>
+        <span id="gkm-anchor-hint" className="sr-only">{t(mode === "create" ? "needLocation" : "needAnchor")}</span>
       )}
     </form>
   );

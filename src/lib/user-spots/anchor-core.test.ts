@@ -175,7 +175,11 @@ test("JSON create 는 좌표를 요구하고 안정적인 code 를 준다", () =
 
 test("폼은 저장 조건을 anchor-core 에서 가져다 쓴다", () => {
   assert.ok(FORM.includes('from "@/lib/user-spots/anchor-core"'), "단일 출처 사용");
-  assert.match(FORM, /mode === "create"[\s\S]{0,60}canCreate/, "만들기는 canCreate");
+  // 만들기는 지도에서 확인한 좌표만 본다. 예전에는 `canCreate`(좌표 또는 사진)
+  // 였고, 사진만 붙이면 지도를 열지 않고 좌표 없는 장소가 만들어졌다.
+  // `canCreate` 자체는 서버·legacy 계약으로 남아 있고 폼이 쓰지 않을 뿐이다.
+  assert.match(FORM, /mode === "create"[\s\S]{0,80}hasCompleteGps/, "만들기는 확인된 좌표");
+  assert.ok(!FORM.includes("canCreate("), "만들기 버튼에 사진 대안을 다시 연결하지 않는다");
   assert.match(FORM, /canEdit\(/, "고치기는 canEdit");
   assert.ok(!FORM.includes("hasMinimumIdentity"), "이름 기반 옛 조건 제거");
 });

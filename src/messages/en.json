@@ -669,6 +669,7 @@
     "photoRetry": "Try the photo again",
     "savedPhotoFailed": "The place is saved. Only the photo did not upload.",
     "needAnchor": "Add a photo, or use your current location.",
+    "needLocation": "Confirm the spot on the map before saving.",
     "photoOnlyAnchor": "This photo is the only thing we know about this place. Add your current location first, or delete the place.",
     "photoDeleted": "Photo removed.",
     "canonicalPhotoAlt": "Photo of this place",

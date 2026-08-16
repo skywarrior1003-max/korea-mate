@@ -669,6 +669,7 @@
     "photoRetry": "写真をもう一度アップロード",
     "savedPhotoFailed": "場所は保存しました。写真だけアップロードできませんでした。",
     "needAnchor": "写真を追加するか、現在地を使ってください。",
+    "needLocation": "保存する前に地図で位置を確認してください。",
     "photoOnlyAnchor": "この写真がこの場所について分かるすべてです。先に現在地を追加するか、場所ごと削除してください。",
     "photoDeleted": "写真を削除しました。",
     "canonicalPhotoAlt": "この場所の写真",

@@ -669,6 +669,7 @@
     "photoRetry": "重新上传照片",
     "savedPhotoFailed": "地点已保存，只有照片未能上传。",
     "needAnchor": "请添加照片，或使用当前位置。",
+    "needLocation": "保存前请在地图上确认位置。",
     "photoOnlyAnchor": "这张照片是我们对这个地点了解的全部。请先添加当前位置，或删除整个地点。",
     "photoDeleted": "已删除照片。",
     "canonicalPhotoAlt": "这个地点的照片",

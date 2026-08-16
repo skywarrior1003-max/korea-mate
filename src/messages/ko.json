@@ -669,6 +669,7 @@
     "photoRetry": "사진 다시 올리기",
     "savedPhotoFailed": "장소는 저장했어요. 사진만 올리지 못했습니다.",
     "needAnchor": "사진을 추가하거나, 현재 위치를 사용해 주세요.",
+    "needLocation": "저장하기 전에 지도에서 위치를 확인해 주세요.",
     "photoOnlyAnchor": "이 사진이 이 장소에 대해 아는 전부입니다. 현재 위치를 먼저 추가하거나, 장소를 삭제해 주세요.",
     "photoDeleted": "사진을 삭제했습니다.",
     "canonicalPhotoAlt": "이 장소의 사진",

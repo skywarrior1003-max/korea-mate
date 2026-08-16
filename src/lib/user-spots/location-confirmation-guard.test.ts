@@ -118,10 +118,35 @@ test("★상단 안내와 하단 저장 CTA 가 있다", () => {
   assert.match(PICKER, /aria-label=\{t\("locConfirmClose"\)\}/);
 });
 
-// ── 저장 규칙은 건드리지 않았다 ──────────────────────────────────────────────
-test("★anchor 규칙을 새로 겹치지 않는다 — 기존 canCreate/canEdit 그대로", () => {
-  assert.match(FORM, /import \{ canCreate, canEdit \} from "@\/lib\/user-spots\/anchor-core"/);
-  assert.match(strip(FORM), /mode === "create"\s*\?\s*canCreate\(anchorInput\)/);
+// ── 사진은 위치를 대신하지 않는다 ────────────────────────────────────────────
+test("★새로 만들 때는 확인된 좌표가 있어야만 저장된다 — 사진으로 우회할 수 없다", () => {
+  const s = strip(FORM);
+  assert.match(s, /mode === "create"\s*\n?\s*\?\s*hasCompleteGps\(\{ lat: form\.lat, lng: form\.lng \}\)/);
+  // `좌표 또는 사진` 규칙을 create 버튼에 다시 연결하지 않는다
+  assert.doesNotMatch(s, /canCreate\(/);
+  assert.doesNotMatch(FORM, /import \{ canCreate/);
+});
+
+test("★고칠 때 규칙은 그대로다 — 예전 행의 메모를 막지 않는다", () => {
+  assert.match(strip(FORM), /:\s*canEdit\(\{ \.\.\.anchorInput, name: form\.name, hasExistingPhoto \}\)/);
+});
+
+test("★anchor-core 의 legacy 규칙 자체는 손대지 않았다", () => {
+  const core = read("src", "lib", "user-spots", "anchor-core.ts");
+  assert.match(core, /export function canCreate\(v: AnchorInput\): boolean \{\s*\n\s*return hasCompleteGps\(v\) \|\| v\.hasPhoto;/);
+  assert.match(core, /export function hasCompleteGps/);
+});
+
+test("★막힌 이유를 만들 때와 고칠 때 다르게 말한다", () => {
+  const s = strip(FORM);
+  assert.match(s, /t\(mode === "create" \? "needLocation" : "needAnchor"\)/);
+  for (const locale of ["en", "ko", "ja", "zh"]) {
+    const picks = JSON.parse(read("src", "messages", `${locale}.json`)).picks;
+    assert.equal(typeof picks?.needLocation, "string", `${locale}.picks.needLocation`);
+    assert.ok(picks.needLocation.trim().length > 0, `${locale}.picks.needLocation 가 비었다`);
+    // 만들 때 문구가 사진을 대안으로 제시하면 안 된다
+    assert.doesNotMatch(picks.needLocation, /photo|사진|写真|照片/i, `${locale} needLocation`);
+  }
 });
 
 // ── 4개 로케일 ───────────────────────────────────────────────────────────────
