@@ -35,6 +35,10 @@ import { DEFAULT_TRIP_PACE, TRIP_PACE_CHOICES, normalizeTripPace, type TripPaceC
   from "@/lib/trip-pace/pace-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
+import { CITY_CONFIGS } from "@/data/cities";
+import { citySwitchAction, savedToReleaseForCity, hasPlanningState } from "@/lib/city-switch/city-switch-core";
+import { getSavedSpotsData, removeFavorite } from "@/lib/favorites";
+import { getCityCart, clearCityCart } from "@/lib/cart";
 
 // ═══════════════════════════════════════════════
 //  TYPES
@@ -562,6 +566,59 @@ export default function HomeClient() {
     if (!style) return;
     try { sessionStorage.setItem("km_travel_style", style); } catch { /* ignore */ }
   }, [style]);
+
+  // ── 지역 변경 ────────────────────────────────────────────────────────────
+  //
+  // 한 번에 한 지역만 계획한다. 지역을 바꾸면 이전 지역에서 모아 둔 임시 상태
+  // (Saved · This Trip)는 정리하고 새 지역에서 다시 시작한다. 돌아왔을 때
+  // 되살려 주는 도시별 바구니는 만들지 않는다 — 있으면 사용자는 자기가 지금
+  // 무엇을 보고 있는지 알 수 없다.
+  //
+  // 어느 도시가 열렸는지는 세지 않는다. `CityConfig.planningReady` 하나만 본다.
+  const [pendingCity, setPendingCity] = useState<string | null>(null);
+
+  /** 이름이든 slug 든 그 도시의 선언을 찾는다. 화면은 이름을, 설정은 slug 를 쓴다. */
+  function cityConfigOf(v: string) {
+    const k = v.trim().toLowerCase();
+    return CITY_CONFIGS[k]
+      ?? Object.values(CITY_CONFIGS).find(c => c.name.toLowerCase() === k)
+      ?? null;
+  }
+
+  /** 이전 지역의 임시 상태를 정리하고 새 지역에서 다시 시작한다. */
+  function applyCitySwitch(next: string) {
+    try {
+      // 이 도시 것이 확실한 Saved 만 내린다. 도시를 모르는 예전 항목은 남는다.
+      for (const r of savedToReleaseForCity(getSavedSpotsData(), city)) {
+        removeFavorite(r.id, r.sourceKey);
+      }
+      clearCityCart(city);
+    } catch { /* ignore */ }
+
+    // 날짜·도착·출발·숙박은 그 지역에서만 뜻이 있는 값이라 비운다.
+    // 인원과 여행 속도는 지역이 바뀌어도 그대로다 — 같은 사람이 같은 방식으로 다닌다.
+    setStartDate(""); setEndDate("");
+    setArrivalTime("");
+    setDeparturePlace(""); setDepartureTime("");
+    setStayArea(""); setStayMode("none"); setStayDetail(null);
+
+    setPendingCity(null);
+    setCity(next);
+  }
+
+  /** 도시 버튼이 부른다. 바꿔도 되는지 먼저 보고, 지울 것이 있으면 묻는다. */
+  function requestCitySwitch(next: string) {
+    const action = citySwitchAction({
+      from: city, to: next, toCity: cityConfigOf(next),
+      hasPlanningState: hasPlanningState({
+        savedForCity: savedToReleaseForCity(getSavedSpotsData(), city).length,
+        cartForCity:  getCityCart(city).length,
+      }),
+    });
+    if (action === "blocked" || action === "noop") return;
+    if (action === "confirm") { setPendingCity(next); return; }
+    applyCitySwitch(next);
+  }
 
   // ── 도시 변경 시 도착지 기본값 자동 전환 ─────────────────────────────────
   useEffect(() => {
@@ -1152,7 +1209,7 @@ export default function HomeClient() {
                   {/* Busan — 활성 */}
                   <button
                     type="button"
-                    onClick={() => setCity("Busan")}
+                    onClick={() => requestCitySwitch("Busan")}
                     className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
                       city === "Busan"
                         ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
@@ -1170,7 +1227,7 @@ export default function HomeClient() {
                     <button
                       key={c.value}
                       type="button"
-                      onClick={() => setCity(c.value)}
+                      onClick={() => requestCitySwitch(c.value)}
                       className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
                         city === c.value
                           ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
@@ -1475,6 +1532,42 @@ export default function HomeClient() {
       )}
 
       {/* ── Departure Info 안내 모달 ── */}
+      {/* 지역을 바꾸면 이 지역에서 모아 둔 것이 사라진다. 개수도, Saved 와
+          This Trip 의 차이도 말하지 않는다 — 사용자가 알아야 할 것은 하나뿐이다. */}
+      {pendingCity && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          role="dialog" aria-modal="true" aria-label={tf("citySwitchTitle")}
+          onClick={(e) => { if (e.target === e.currentTarget) setPendingCity(null); }}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            <h3 className="text-lg font-black text-gray-900 mb-2 text-center">
+              {tf("citySwitchTitle")}
+            </h3>
+            <p className="text-sm text-gray-500 text-center mb-5 leading-relaxed">
+              {tf("citySwitchBody", { city: tf(`city_${pendingCity}`) })}
+            </p>
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => applyCitySwitch(pendingCity)}
+                className="gkm-focus w-full min-h-11 py-3 rounded-xl text-sm font-black text-white transition-opacity hover:opacity-90 cursor-pointer"
+                style={{ backgroundColor: "#FF4A2D" }}
+              >
+                {tf("citySwitchGo", { city: tf(`city_${pendingCity}`) })}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPendingCity(null)}
+                className="gkm-focus w-full min-h-11 py-3 rounded-xl text-sm font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                {tf("citySwitchCancel")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showDeptWarning && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"

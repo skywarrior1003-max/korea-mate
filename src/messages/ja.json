@@ -967,7 +967,11 @@
     "stayAreaRemove": "✕ 削除",
     "stayAreaHint": "泊まるエリアを選んでください。2日目以降の朝はそこから始まります。",
     "stayAreaLabel": "🛏️ どのエリアに泊まりますか？",
-    "errNoDates": "開始日と終了日の両方を選んでください。"
+    "errNoDates": "開始日と終了日の両方を選んでください。",
+    "citySwitchTitle": "この地域で保存した場所が削除されます",
+    "citySwitchBody": "この地域で保存した場所が削除されます。{city}に移動しますか？",
+    "citySwitchGo": "{city}に移動",
+    "citySwitchCancel": "キャンセル"
   },
   "homeUi": {
     "searchPlaces": "場所を検索",

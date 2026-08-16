@@ -57,4 +57,15 @@ export interface CityConfig {
   defaultCenter: { lat: number; lng: number };
   staticSpots: CitySpot[];
   seoDescription: string;
+  /**
+   * 이 도시로 여행 계획을 시작할 수 있는가.
+   *
+   * 장소가 몇 개 있는지로 판단하지 않는다. 수집이 잠깐 비었다고 계획 도시가
+   * 아니게 되는 것도, 몇 개 들어왔다고 계획 도시가 되는 것도 아니다 — 그것은
+   * 사람이 정하는 값이라 여기에 적어 둔다. 화면 세 곳(Home 플래너·
+   * CityQuickLinks·CityEntry)이 각자 목록을 들고 있었는데, 이제 이 하나를 본다.
+   *
+   * 나중에 도시가 열리면 이 값만 바꾸면 된다. 그때 코드는 손대지 않는다.
+   */
+  planningReady: boolean;
 }

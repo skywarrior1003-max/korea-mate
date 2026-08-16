@@ -967,7 +967,11 @@
     "stayAreaRemove": "✕ Remove",
     "stayAreaHint": "Pick the area you're staying in. Every morning after the first will start from there.",
     "stayAreaLabel": "🛏️ Which area are you staying in?",
-    "errNoDates": "Please select both start and end travel dates."
+    "errNoDates": "Please select both start and end travel dates.",
+    "citySwitchTitle": "Places you saved here will be removed",
+    "citySwitchBody": "Saved places for this region will be cleared. Move to {city}?",
+    "citySwitchGo": "Move to {city}",
+    "citySwitchCancel": "Cancel"
   },
   "homeUi": {
     "searchPlaces": "Search places",

@@ -967,7 +967,11 @@
     "stayAreaRemove": "✕ 删除",
     "stayAreaHint": "选择你住宿的区域。从第二天起，每天早上都从那里开始。",
     "stayAreaLabel": "🛏️ 你住在哪个区域？",
-    "errNoDates": "请选择出发日期和返回日期。"
+    "errNoDates": "请选择出发日期和返回日期。",
+    "citySwitchTitle": "当前地区保存的地点将被删除",
+    "citySwitchBody": "当前地区保存的地点将被删除。要前往{city}吗？",
+    "citySwitchGo": "前往{city}",
+    "citySwitchCancel": "取消"
   },
   "homeUi": {
     "searchPlaces": "搜索地点",
