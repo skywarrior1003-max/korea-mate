@@ -93,8 +93,11 @@ export default function RootLayout({
       {(() => {
         const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
         return (
+          // geocoder 는 주소를 지도 중심으로 바꾸는 데만 쓴다 — My Place 위치 확인
+          // 화면이 사용자가 적은 주소 근처에서 열리게 하는 용도다. submodule 을
+          // 빼면 `naver.maps.Service` 자체가 없어서 조용히 도시 중심으로 떨어진다.
           <Script
-            src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverClientId}`}
+            src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverClientId}&submodules=geocoder`}
             strategy="afterInteractive"
           />
         );

@@ -12,6 +12,13 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { canCreate, canEdit } from "@/lib/user-spots/anchor-core";
+import {
+  chooseSeed, isShortMapLink, parseMapLinkCoordinate,
+  type SeedCoordinate, type SeedSource,
+} from "@/lib/user-spots/location-seed";
+import { geocodeAddress } from "@/lib/maps/naver-geocode";
+import { CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
+import SpotLocationPicker from "./SpotLocationPicker";
 
 // 값(value)은 저장되는 데이터라 그대로 두고, 화면에 찍는 라벨만 키로 바꾼다.
 export const USER_SPOT_CATEGORIES = [
@@ -51,7 +58,7 @@ export interface UserSpotFormState {
   category: UserSpotCategory;
   address:  string;
   note:     string;
-  /** 현재 위치 버튼으로만 채워진다. 좌표는 언제나 짝으로 움직인다. */
+  /** 위치 확인 지도에서 사용자가 맞춘 중심. 좌표는 언제나 짝으로 움직인다. */
   lat:      number | null;
   lng:      number | null;
 }
@@ -73,6 +80,11 @@ interface Props {
   // ── 사진 ────────────────────────────────────────────────────────────────────
   /** 새로 만드는 중인지 고치는 중인지. 저장 가능 조건이 다르다. */
   mode:             "create" | "edit";
+  /**
+   * 지금 보고 있는 도시. 주소도 링크도 현재 위치도 없을 때 지도를 열 자리다.
+   * 없으면 지도는 그대로 열리고 사용자가 찾아간다 — 없다고 막지 않는다.
+   */
+  city?:            string | null;
   /** 이번에 고른 파일. 폼은 파일 자체만 들고 있고 바이트를 복제하지 않는다. */
   photoFile:        File | null;
   onPickPhoto:      (file: File | null) => void;
@@ -104,13 +116,20 @@ type GpsState = "idle" | "loading" | "denied" | "failed";
 
 export default function UserSpotForm({
   form, setForm, formError, submitting, submitLabel, onSubmit, onCancel,
-  mode, photoFile, onPickPhoto,
+  mode, city = null, photoFile, onPickPhoto,
   existingPhotoUrl = null, hasExistingPhoto = false,
   onRemoveExistingPhoto, photoBusy = false, photoNotice = null,
   canonicalImageUrl = null, canonicalSourceUrl = null,
 }: Props) {
   const t = useTranslations("picks");
   const [gps, setGps] = useState<GpsState>("idle");
+
+  // 위치 확인 화면. 지도를 열기 전에 어디서 열지부터 정한다.
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [seeking,    setSeeking]    = useState(false);
+  const [seed, setSeed] = useState<
+    { coordinate: SeedCoordinate | null; source: SeedSource; short: boolean; hadAlready: boolean } | null
+  >(null);
 
   // 고른 파일의 미리보기. Object URL 은 만든 쪽이 반드시 되돌려줘야 한다 —
   // 안 하면 탭을 닫을 때까지 그 이미지가 메모리에 남는다.
@@ -122,19 +141,61 @@ export default function UserSpotForm({
     return () => URL.revokeObjectURL(url);
   }, [photoFile]);
 
-  // 버튼을 눌렀을 때만 권한을 묻는다. 폼을 열자마자 위치를 요구하면
-  // 사진만 올리고 싶은 사람에게도 권한 팝업이 뜬다.
-  function requestLocation() {
-    if (!navigator.geolocation) { setGps("failed"); return; }
+  /** 지도를 여는 순간에만 권한을 묻는다. 거절해도 지도는 열린다. */
+  function currentPosition(): Promise<SeedCoordinate | null> {
+    if (!navigator.geolocation) { setGps("failed"); return Promise.resolve(null); }
     setGps("loading");
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        setForm(p => ({ ...p, lat: pos.coords.latitude, lng: pos.coords.longitude }));
-        setGps("idle");
-      },
-      err => setGps(err.code === err.PERMISSION_DENIED ? "denied" : "failed"),
-      { timeout: 8_000, maximumAge: 60_000, enableHighAccuracy: false },
-    );
+    return new Promise(resolve => {
+      navigator.geolocation.getCurrentPosition(
+        pos => { setGps("idle"); resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }); },
+        err => { setGps(err.code === err.PERMISSION_DENIED ? "denied" : "failed"); resolve(null); },
+        { timeout: 8_000, maximumAge: 60_000, enableHighAccuracy: false },
+      );
+    });
+  }
+
+  /** 이 도시의 첫 프리셋 지점. 새 좌표표를 만들지 않고 화면이 이미 쓰는 값을 쓴다. */
+  function cityCenter(): SeedCoordinate | null {
+    const first = CITY_ARRIVAL_OPTIONS[(city ?? "").trim()]?.[0];
+    return first ? { lat: first.lat, lng: first.lng } : null;
+  }
+
+  /**
+   * 지도를 어디서 열지 정하고 연다.
+   *
+   * 주소 칸 하나가 두 가지를 받는다 — 사람이 읽는 주소, 그리고 지도 링크.
+   * 링크에 좌표가 박혀 있으면 그게 가장 정확하고, 아니면 주소를 찾아본다.
+   * 둘 다 안 되면 지금 서 있는 자리, 그것도 안 되면 도시 중심이다.
+   * 어디서 열든 최종 좌표는 사용자가 확인한 지도 중심이다.
+   */
+  async function openPicker() {
+    setSeeking(true);
+    const raw   = form.address.trim();
+    const short = isShortMapLink(raw);
+    const link  = short ? null : parseMapLinkCoordinate(raw);
+
+    // 링크로 이미 찾았으면 주소를 다시 묻지 않는다. 링크처럼 생긴 문자열을
+    // geocoder 에 넘기면 엉뚱한 곳이 나온다.
+    const looksLikeUrl = /^https?:\/\//i.test(raw) || short;
+    const address = !link && raw && !looksLikeUrl ? await geocodeAddress(raw) : null;
+
+    // 이미 확인해 둔 좌표가 있으면 그 자리에서 다시 연다.
+    const already = form.lat !== null && form.lng !== null
+      ? { lat: form.lat, lng: form.lng }
+      : null;
+
+    let picked = already
+      ? { coordinate: already, source: "link" as SeedSource }
+      : chooseSeed({ link, address });
+
+    if (!picked.coordinate) {
+      const gps = await currentPosition();
+      picked = chooseSeed({ gps, city: cityCenter() });
+    }
+
+    setSeed({ ...picked, short, hadAlready: already !== null });
+    setSeeking(false);
+    setPickerOpen(true);
   }
 
   function clearLocation() {
@@ -246,8 +307,10 @@ export default function UserSpotForm({
         )}
       </div>
 
-      {/* Location — 지도 선택기는 아직 없다. 지금 안전하게 줄 수 있는 것은
-          "지금 내가 서 있는 곳" 하나뿐이라 그것만 준다. */}
+      {/* Location — 지도에서 이 장소의 자리를 짚는다.
+          예전에는 "지금 내가 서 있는 곳" 만 줄 수 있었다. 그건 이 장소의 위치가
+          아니라 내 위치다 — 집에서 카페를 등록하면 집 좌표가 저장됐다.
+          이제 그 값은 지도를 열 자리로만 쓰고, 저장되는 것은 사용자가 확인한 중심이다. */}
       <div>
         <label className={LABEL}>
           {t("fieldLocation")}{" "}
@@ -257,8 +320,11 @@ export default function UserSpotForm({
           {hasLocation ? (
             <>
               <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#F6F7F8] text-sm font-bold text-[#191C21]">
-                ✓ {t("locationSet")}
+                ✓ {t("locConfirmed")}
               </span>
+              <button type="button" onClick={() => void openPicker()} disabled={seeking} className={CHIP_BTN}>
+                {t("locRecheck")}
+              </button>
               <button type="button" onClick={clearLocation} className={CHIP_BTN}>
                 {t("locationClear")}
               </button>
@@ -266,16 +332,17 @@ export default function UserSpotForm({
           ) : (
             <button
               type="button"
-              onClick={requestLocation}
-              disabled={gps === "loading"}
-              className="gkm-focus px-3 min-h-11 py-2 rounded-xl text-sm font-bold border border-[#E5E7EA] text-[#565D66] hover:bg-[#F6F7F8] transition-colors disabled:opacity-60 cursor-pointer"
+              onClick={() => void openPicker()}
+              disabled={seeking}
+              className="gkm-focus px-4 min-h-11 py-2 rounded-xl text-sm font-black text-white transition-opacity disabled:opacity-60 cursor-pointer"
+              style={{ backgroundColor: "#0057ff" }}
             >
-              {gps === "loading" ? t("locating") : `📍 ${t("useMyLocation")}`}
+              {seeking ? t("locSeeking") : t("locConfirmOpen")}
             </button>
           )}
         </div>
         {!hasLocation && gps === "idle" && (
-          <p className="mt-1 text-[11px] text-[#565D66]/70">{t("locationHint")}</p>
+          <p className="mt-1 text-[11px] text-[#565D66]/70">{t("locConfirmWhy")}</p>
         )}
         {gps === "denied" && (
           <p className="mt-1 text-[11px] text-[#565D66]">{t("locationDenied")}</p>
@@ -284,6 +351,27 @@ export default function UserSpotForm({
           <p className="mt-1 text-[11px] text-[#565D66]">{t("locationFailed")}</p>
         )}
       </div>
+
+      {pickerOpen && (
+        <SpotLocationPicker
+          center={seed?.coordinate ?? null}
+          zoomedIn={seed?.hadAlready ?? false}
+          placeName={form.name}
+          seedNote={
+            seed?.short              ? t("locSeedShortLink")
+            : seed?.source === "link"    ? (seed.hadAlready ? null : t("locSeedLink"))
+            : seed?.source === "address" ? t("locSeedAddress")
+            : seed?.source === "gps"     ? t("locSeedGps")
+            : seed?.source === "city"    ? t("locSeedCity")
+            : t("locSeedNone")
+          }
+          onCancel={() => setPickerOpen(false)}
+          onConfirm={(lat, lng) => {
+            setForm(p => ({ ...p, lat, lng }));
+            setPickerOpen(false);
+          }}
+        />
+      )}
 
       {/* Name — 손으로 적는 것은 선택이다. 저장 여부에는 영향을 주지 않는다. */}
       <div>

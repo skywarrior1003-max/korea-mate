@@ -30,9 +30,25 @@ declare global {
         Size:       new (w: number, h: number) => unknown;
         Polyline:   new (opts: Record<string, unknown>) => NaverShapeObj;
         LatLngBounds: new (sw: NaverLatLng, ne: NaverLatLng) => NaverBoundsObj;
+        // geocoder submodule 을 실었을 때만 존재한다. 없을 수 있다는 사실을
+        // 타입에 남겨 둔다 — 호출부가 있는 척하고 부르면 런타임에서 터진다.
+        Service?:   {
+          Status:  { OK: number; ERROR: number };
+          geocode: (
+            opts: { query: string },
+            cb: (status: number, response?: NaverGeocodeResponse) => void,
+          ) => void;
+        };
       };
     };
   }
+}
+/** geocoder 응답에서 우리가 읽는 부분만 적는다. 나머지는 쓰지 않으므로 적지 않는다. */
+export interface NaverGeocodeResponse {
+  v2?: {
+    meta?:      { totalCount?: number };
+    addresses?: { x?: string; y?: string }[];
+  };
 }
 // 주의: relayout()은 Kakao Maps API — Naver v3에는 없다. 크기 갱신은 setSize()가 정식 API.
 interface NaverMapObj      { setCenter: (l: NaverLatLng) => void; setZoom: (z: number) => void; getZoom: () => number; setSize: (s: unknown) => void; getCenter: () => NaverLatLng; fitBounds: (b: NaverBoundsObj, opts?: Record<string, unknown>) => void; }

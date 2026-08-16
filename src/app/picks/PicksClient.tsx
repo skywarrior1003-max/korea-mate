@@ -912,7 +912,7 @@ function PicksContent() {
                     form={form} setForm={setForm} formError={formError}
                     submitting={submitting} submitLabel={t("save")}
                     onSubmit={handleCreate} onCancel={closeForm}
-                    mode="create"
+                    mode="create" city={tripCity}
                     photoFile={photoFile} onPickPhoto={setPhotoFile}
                     photoBusy={photoBusy} photoNotice={photoNotice}
                   />
@@ -960,7 +960,7 @@ function PicksContent() {
                                 form={form} setForm={setForm} formError={formError}
                                 submitting={submitting} submitLabel={t("save")}
                                 onSubmit={(e) => handleEdit(e, s)} onCancel={closeForm}
-                                mode="edit"
+                                mode="edit" city={s.city ?? tripCity}
                                 photoFile={photoFile} onPickPhoto={setPhotoFile}
                                 existingPhotoUrl={photoUrl}
                                 hasExistingPhoto={editingHasPhoto}
