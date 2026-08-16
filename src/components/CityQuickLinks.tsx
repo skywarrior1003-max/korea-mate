@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { CITY_CONFIGS, CITY_SLUGS } from "@/data/cities";
+import { CITY_CONFIGS, CITY_SLUGS, cityLabelKey } from "@/data/cities";
 
 // 도시 이름은 고유명사라 그대로 둔다. 한 줄 소개는 "이 도시에 뭐가 있는지"를
 // 설명하는 일반 UI 문구다 — 편집 의도로 영어를 고정한 문구(AI PRECISION ·
@@ -16,6 +16,8 @@ const CITIES = CITY_SLUGS.map(slug => CITY_CONFIGS[slug]!);
 
 export default function CityQuickLinks() {
   const t = useTranslations("cityLinks");
+  // 도시 이름 번역은 이미 `tripForm.city_*` 에 있다. 여기서 다시 만들지 않는다.
+  const tCity = useTranslations("tripForm");
 
   return (
     <section className="py-14 px-4" style={{ backgroundColor: "#FAF7F2" }}>
@@ -36,7 +38,7 @@ export default function CityQuickLinks() {
               <span className="text-3xl">{city.emoji}</span>
               <div>
                 <p className="text-base font-black text-[#2C2520] group-hover:text-[#D4AF37] transition-colors">
-                  {city.name}
+                  {tCity(cityLabelKey(city))}
                 </p>
                 <p className="text-xs text-[#8C6239] mt-0.5 leading-relaxed">{t(`desc${city.name}`)}</p>
               </div>

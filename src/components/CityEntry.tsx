@@ -17,7 +17,7 @@ import KoreaReadySection from "@/components/KoreaReadySection";
 import CityHeroArt from "@/components/home/CityHeroArt";
 import { cityVisual } from "@/lib/city-visual";
 import { DESIGN_PRIMARY, DESIGN_INK, FONT_SERIF } from "@/components/home/home-visual";
-import { CITY_CONFIGS, CITY_SLUGS, type CityConfig } from "@/data/cities";
+import { CITY_CONFIGS, CITY_SLUGS, cityLabelKey, type CityConfig } from "@/data/cities";
 import type { CityEntryContent } from "@/data/cities/entry-content";
 
 interface Props {
@@ -39,6 +39,8 @@ export default function CityEntry({ city, content }: Props) {
   const t  = useTranslations("cityEntry");
   const tE = useTranslations("explore");
   const tD = useTranslations("discovery");
+  // 도시 이름 번역은 이미 `tripForm.city_*` 에 있다. 여기서 다시 만들지 않는다.
+  const tCity = useTranslations("tripForm");
   const hero = cityVisual(city.slug);
 
   const exploreHref = `/explore/${city.slug}/`;
@@ -247,7 +249,7 @@ export default function CityEntry({ city, content }: Props) {
               href={`/${slug}/`}
               className="gkm-focus min-h-11 px-4 inline-flex items-center rounded-full border border-line bg-surface text-sm font-semibold text-sub hover:text-ink transition-colors"
             >
-              {CITY_CONFIGS[slug]!.name}
+              {tCity(cityLabelKey(CITY_CONFIGS[slug]!))}
             </Link>
           ))}
         </div>

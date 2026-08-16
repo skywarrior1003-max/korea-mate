@@ -27,14 +27,14 @@ const SLUGS = ["busan", "seoul", "jeju", "gyeongju", "jeonju"];
 
 // ── 목록은 하나뿐 ────────────────────────────────────────────────────────────
 test("★홈 도시 카드가 CITY_CONFIGS 를 쓴다", () => {
-  assert.match(QUICK, /import \{ CITY_CONFIGS, CITY_SLUGS \} from "@\/data\/cities"/);
+  assert.match(QUICK, /import \{ CITY_CONFIGS, CITY_SLUGS, cityLabelKey \} from "@\/data\/cities"/);
   assert.match(QUICK, /const CITIES = CITY_SLUGS\.map\(slug => CITY_CONFIGS\[slug\]!\);/);
 });
 
 test("★City Entry 의 다른 도시 목록도 CITY_CONFIGS 를 쓴다", () => {
-  assert.match(ENTRY, /import \{ CITY_CONFIGS, CITY_SLUGS, type CityConfig \} from "@\/data\/cities"/);
+  assert.match(ENTRY, /import \{ CITY_CONFIGS, CITY_SLUGS, cityLabelKey, type CityConfig \} from "@\/data\/cities"/);
   assert.match(ENTRY, /CITY_SLUGS\.filter\(s => s !== city\.slug\)/);
-  assert.match(ENTRY, /\{CITY_CONFIGS\[slug\]!\.name\}/);
+  assert.match(ENTRY, /\{tCity\(cityLabelKey\(CITY_CONFIGS\[slug\]!\)\)\}/);
 });
 
 test("★두 화면 어디에도 자체 도시 배열이 남아 있지 않다", () => {
@@ -55,7 +55,7 @@ test("★그림도 설정에서 온다 — 화면마다 다른 그림을 들지 
     assert.match(readFileSync(join(dir, f), "utf8"), /emoji:\s*"[^"]+",/, f);
   }
   // 플래너도 같은 값을 본다
-  assert.match(strip(HOME), /const c\s*=\s*\{ value, emoji: conf\?\.emoji \?\? "" \}/);
+  assert.match(strip(HOME), /const c\s*=\s*\{ value: conf\.name, emoji: conf\.emoji \}/);
   assert.doesNotMatch(strip(HOME), /emoji:\s*"🌊"/, "플래너가 그림을 따로 들고 있다");
   assert.doesNotMatch(strip(QUICK), /emoji:\s*"/, "카드가 그림을 따로 들고 있다");
 });
@@ -88,9 +88,39 @@ test("★준비 중이라고 도시 링크를 감추거나 막지 않는다", ()
 });
 
 test("★일정 계획 가능 여부는 플래너에서만 쓴다", () => {
-  assert.match(strip(HOME), /conf\?\.planningReady === true/);
+  assert.match(strip(HOME), /const ready\s*=\s*conf\.planningReady;/);
   assert.match(strip(HOME), /aria-disabled=\{!ready\}/);
   assert.match(strip(HOME), /\{tf\("cityComingSoon"\)\}/);
+});
+
+test("★플래너 목록도 CITY_CONFIGS 에서 온다", () => {
+  const h = strip(HOME);
+  assert.match(h, /CITY_SLUGS\.map\(\(slug\) => \{/);
+  assert.match(h, /const conf\s*=\s*CITY_CONFIGS\[slug\]!;/);
+  // 도시 이름을 늘어놓은 배열이 남아 있으면 도시를 더할 때 여기도 고쳐야 한다
+  assert.doesNotMatch(h, /\["Busan", "Seoul", "Jeju", "Gyeongju"\]/);
+});
+
+test("★도시 이름은 세 화면 모두 같은 번역 키를 쓴다", () => {
+  assert.match(read("src", "data", "cities", "index.ts"), /export function cityLabelKey/);
+  for (const [name, src] of [["Planner", HOME], ["QuickLinks", QUICK], ["CityEntry", ENTRY]] as const) {
+    assert.match(strip(src), /cityLabelKey\(/, `${name}: 이름을 따로 찍는다`);
+  }
+  // 영문 이름을 그대로 화면에 찍지 않는다.
+  // `desc${city.name}` 처럼 **번역 키를 만드는** 쓰임은 화면 표기가 아니므로
+  // 제외한다 — JSX 자식으로 홀로 놓인 경우만 잡는다.
+  assert.doesNotMatch(strip(QUICK), /^\s*\{city\.name\}\s*$/m);
+  assert.doesNotMatch(strip(ENTRY), /^\s*\{CITY_CONFIGS\[slug\]!\.name\}\s*$/m);
+});
+
+test("★다섯 도시 이름이 4개 언어에 모두 있다", () => {
+  for (const locale of ["en", "ko", "ja", "zh"]) {
+    const tf = JSON.parse(read("src", "messages", `${locale}.json`)).tripForm;
+    for (const n of ["Busan", "Seoul", "Jeju", "Gyeongju", "Jeonju"]) {
+      assert.equal(typeof tf?.[`city_${n}`], "string", `${locale}.tripForm.city_${n}`);
+      assert.ok(tf[`city_${n}`].trim().length > 0, `${locale} city_${n} 가 비었다`);
+    }
+  }
 });
 
 test("★도시 이름으로 조건을 걸지 않는다", () => {

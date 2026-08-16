@@ -35,7 +35,7 @@ import { DEFAULT_TRIP_PACE, TRIP_PACE_CHOICES, normalizeTripPace, type TripPaceC
   from "@/lib/trip-pace/pace-core";
 import { buildItineraryGenerationUrl, itineraryDayCount } from "@/lib/trip-generation/itinerary-url";
 import { CITY_ARRIVAL_DEFAULTS, CITY_ARRIVAL_OPTIONS } from "@/data/city-presets";
-import { CITY_CONFIGS } from "@/data/cities";
+import { CITY_CONFIGS, CITY_SLUGS, cityLabelKey } from "@/data/cities";
 import { citySwitchAction, savedToReleaseForCity, hasPlanningState } from "@/lib/city-switch/city-switch-core";
 import { getSavedSpotsData, removeFavorite } from "@/lib/favorites";
 import { getCityCart, clearCityCart } from "@/lib/cart";
@@ -1219,10 +1219,10 @@ export default function HomeClient() {
                       예전에는 Busan 만 따로 떼어 "활성" 이라고 적어 두었는데, 그
                       구분이 이제 선언 값으로 옮겨졌으므로 한 목록으로 둔다 —
                       도시가 열리면 값만 바꾸면 되고 이 파일은 손대지 않는다. */}
-                  {["Busan", "Seoul", "Jeju", "Gyeongju"].map((value) => {
-                    const conf  = cityConfigOf(value);
-                    const c     = { value, emoji: conf?.emoji ?? "" };
-                    const ready = conf?.planningReady === true;
+                  {CITY_SLUGS.map((slug) => {
+                    const conf  = CITY_CONFIGS[slug]!;
+                    const c     = { value: conf.name, emoji: conf.emoji };
+                    const ready = conf.planningReady;
                     return (
                     <button
                       key={c.value}
@@ -1237,7 +1237,7 @@ export default function HomeClient() {
                             : "text-gray-900 hover:bg-gray-100 cursor-pointer"
                       }`}
                     >
-                      <span>{c.emoji} {tf(`city_${c.value}`)}</span>
+                      <span>{c.emoji} {tf(cityLabelKey(conf))}</span>
                       {/* 눌러도 아무 일이 없으면 고장 난 버튼으로 읽힌다. 왜 안 되는지 말해 준다. */}
                       {!ready && <span className="text-[11px] font-bold text-gray-400">{tf("cityComingSoon")}</span>}
                       {ready && city === c.value && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}

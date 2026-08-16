@@ -30,13 +30,14 @@ const cityBlock = (() => {
 test("★준비 중 여부는 planningReady 하나로 정한다", () => {
   assert.ok(cityBlock.length > 0, "도시 목록 블록을 못 찾았다");
   // 설정을 한 번 읽어 그림과 준비 여부를 같은 곳에서 가져온다.
-  assert.match(cityBlock, /const conf\s*=\s*cityConfigOf\(value\);/);
-  assert.match(cityBlock, /const ready\s*=\s*conf\?\.planningReady === true;/);
+  assert.match(cityBlock, /const conf\s*=\s*CITY_CONFIGS\[slug\]!;/);
+  assert.match(cityBlock, /const ready\s*=\s*conf\.planningReady;/);
 });
 
 test("★도시가 하나의 목록으로 돈다 — 특정 도시만 따로 두지 않는다", () => {
   // Busan 만 떼어 둔 별도 버튼이 남아 있으면 값 하나로 열고 닫을 수 없다
   assert.doesNotMatch(cityBlock, /requestCitySwitch\("Busan"\)/);
+  assert.match(cityBlock, /CITY_SLUGS\.map/, "목록이 SSOT 에서 오지 않는다");
   assert.equal((cityBlock.match(/<button/g) ?? []).length, 1, "도시 버튼이 하나의 map 이 아니다");
   assert.equal((cityBlock.match(/requestCitySwitch\(/g) ?? []).length, 1);
 });
