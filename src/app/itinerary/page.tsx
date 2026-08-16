@@ -41,6 +41,7 @@ import {
 import { readTripDraft } from "@/lib/trip-draft/trip-draft-core";
 import { normalizeTripPace, toSchedulerPace, type TripPaceChoice } from "@/lib/trip-pace/pace-core";
 import { googlePlaceSearchUrl, naverPlaceSearchUrl } from "@/lib/maps/place-navigation";
+import { reduciblePicks } from "@/lib/trip-plan/trip-feasibility";
 import { buildSingleStay, stayStartFor, type TripStay } from "@/lib/trip-stay/stay-core";
 import { assignZoneId } from "@/lib/near-me/zone-classifier";
 import type { CitySpot } from "@/data/cities/types";
@@ -1212,6 +1213,14 @@ function ItineraryResult() {
   const [conflictDays,  setConflictDays]  = useState<Set<number>>(new Set());
   // ── TASK-049: Cart 아이템 좌표 없음 경고 표시용 ────────────────────────────────
   const [skippedCartNames, setSkippedCartNames] = useState<string[]>([]);
+  /**
+   * 여행 전체를 다 만들고 났는데도 This Trip 에 남은 곳.
+   *
+   * 비어 있지 않으면 이 일정은 완성이 아니다. 몇 곳을 빼고 만든 결과를
+   * My Trip 이라고 부르며 저장하지 않는다 — 사용자는 자기가 고른 곳이
+   * 빠진 줄 모른 채 그 일정을 들고 여행을 간다.
+   */
+  const [needsReduction, setNeedsReduction] = useState<{ key: string; name: string }[]>([]);
   const [fixedOutOfWindow, setFixedOutOfWindow] = useState<string[]>([]);
   const [unplacedPicks, setUnplacedPicks] = useState<{ key: string; name: string; hasFixed: boolean }[]>([]);
   // ── TASK-057-B3: My Pick scheduling explanation notes ─────────────────────────
@@ -1484,6 +1493,17 @@ function ItineraryResult() {
           setError(null);
           generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
             .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
+              // 여행 전체가 끝난 뒤 한 번만 판정한다. 남은 곳이 있으면 이 결과를
+              // 일정으로 확정하지 않는다 — setDays 를 하지 않으면 저장 effect 도
+              // 시작되지 않는다.
+              const reduce = reduciblePicks(unplaced, outOfWindow);
+              if (reduce.length > 0) {
+                if (skipped.length > 0) setSkippedCartNames(skipped);
+                setUnplacedPicks(unplaced);
+                setNeedsReduction(reduce);
+                setLoading(false);
+                return;
+              }
               setDays(sanitizeDays(days));
               setCheckinTime(ct);
               if (isFallback) setIsFallback(true);
@@ -1528,6 +1548,14 @@ function ItineraryResult() {
       setError(null);
       generateWithNewApi(paramCity, paramStartDate, paramEndDate, paramTravelers, paramTravelStyle, paramArrivalTime || undefined, paramDepartureTime || undefined, paramDepartureType || undefined, paramArrivalCoord, paramDepartureCoord, buildSingleStay(paramCity, paramStayArea, paramStartDate, paramEndDate, exactStay?.coordinate), exactStay, paramTripPace)
         .then(({ days, isFallback, conflictDayNumbers, affiliateMap: aMap, skippedCartNames: skipped, fixedOutOfWindowNames: outOfWindow, unplacedPicks: unplaced, hadDeferredCartHints: deferred, usedCartHintCentroid: centroidUsed, checkinTime: ct }) => {
+          const reduce = reduciblePicks(unplaced, outOfWindow);
+          if (reduce.length > 0) {
+            if (skipped.length > 0) setSkippedCartNames(skipped);
+            setUnplacedPicks(unplaced);
+            setNeedsReduction(reduce);
+            setLoading(false);
+            return;
+          }
           setDays(sanitizeDays(days));
               setCheckinTime(ct);
           if (isFallback) setIsFallback(true);
@@ -2050,6 +2078,36 @@ function ItineraryResult() {
             to   { opacity: 1; transform: translateY(0); }
           }
         `}</style>
+      </div>
+    );
+  }
+
+  // ── 고른 곳이 다 들어가지 않았다 ────────────────────────
+  //
+  // 반쯤 만들어진 일정을 보여 주지 않는다. 화면에 띄우는 순간 사용자는 그것을
+  // 완성본으로 읽고, 자기가 고른 곳이 빠졌다는 사실을 여행지에서 알게 된다.
+  //
+  // 어느 곳을 뺄지는 정해 주지 않는다. 짧은 곳 여럿을 빼도 되고 반나절짜리
+  // 하나를 빼도 된다 — 무엇을 포기할지는 그 여행을 가는 사람이 안다.
+  if (needsReduction.length > 0) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
+        <h2 className="text-2xl font-black text-ink mb-3">{tPicks("reduceTitle")}</h2>
+        <p className="text-sm text-sub max-w-sm mb-6 font-medium leading-relaxed">
+          {tPicks("reduceBody")}
+        </p>
+        <ul className="mb-8 space-y-1">
+          {needsReduction.map(u => (
+            <li key={u.key} className="text-xs text-faint font-medium">· {u.name}</li>
+          ))}
+        </ul>
+        <Link
+          href="/picks/?tab=selected"
+          className="gkm-focus inline-flex items-center justify-center min-h-11 px-6 py-3.5 text-sm font-black text-white rounded-xl transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "var(--gkm-accent-coral)" }}
+        >
+          {tPicks("reduceAction")}
+        </Link>
       </div>
     );
   }
