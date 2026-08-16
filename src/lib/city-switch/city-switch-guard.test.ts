@@ -47,7 +47,9 @@ test("★판단은 선언된 값으로만 한다 — 개수도 이름도 보지 
 // ── 화면 배선 ────────────────────────────────────────────────────────────────
 test("★도시 버튼은 setCity 를 직접 부르지 않는다", () => {
   assert.doesNotMatch(CODE, /onClick=\{\(\) => setCity\(/, "확인 없이 도시가 바뀐다");
-  assert.equal((CODE.match(/requestCitySwitch\(/g) ?? []).length, 3);  // 정의 1 + 버튼 2
+  // 도시 버튼은 하나의 map 이라 호출 지점도 하나다 — 정의 1 + 버튼 1.
+  // 도시를 따로 떼어 버튼을 늘리면 여기서 걸린다.
+  assert.equal((CODE.match(/requestCitySwitch\(/g) ?? []).length, 2);
 });
 
 test("★열리지 않은 도시를 고르면 아무 상태도 바뀌지 않는다", () => {

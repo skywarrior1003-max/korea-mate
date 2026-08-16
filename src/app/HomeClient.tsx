@@ -1215,38 +1215,38 @@ export default function HomeClient() {
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500">{tf("cityLabel")}</label>
                 <div className="w-full bg-gray-50 border border-gray-200 rounded-xl overflow-hidden divide-y divide-gray-100">
-                  {/* Busan — 활성 */}
-                  <button
-                    type="button"
-                    onClick={() => requestCitySwitch("Busan")}
-                    className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
-                      city === "Busan"
-                        ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
-                        : "text-gray-900 hover:bg-gray-100"
-                    }`}
-                  >
-                    <span>🌊 {tf("city_Busan")}</span>
-                    {city === "Busan" && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}
-                  </button>
+                  {/* 어느 도시가 열렸는지는 `planningReady` 하나가 정한다.
+                      예전에는 Busan 만 따로 떼어 "활성" 이라고 적어 두었는데, 그
+                      구분이 이제 선언 값으로 옮겨졌으므로 한 목록으로 둔다 —
+                      도시가 열리면 값만 바꾸면 되고 이 파일은 손대지 않는다. */}
                   {[
+                    { value: "Busan",    emoji: "🌊" },
                     { value: "Seoul",    emoji: "🏙️" },
                     { value: "Jeju",     emoji: "🏝️" },
                     { value: "Gyeongju", emoji: "🏯" },
-                  ].map((c) => (
+                  ].map((c) => {
+                    const ready = cityConfigOf(c.value)?.planningReady === true;
+                    return (
                     <button
                       key={c.value}
                       type="button"
-                      onClick={() => requestCitySwitch(c.value)}
-                      className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors cursor-pointer ${
-                        city === c.value
-                          ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500"
-                          : "text-gray-900 hover:bg-gray-100"
+                      aria-disabled={!ready}
+                      onClick={() => { if (ready) requestCitySwitch(c.value); }}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-base font-semibold transition-colors ${
+                        !ready
+                          ? "text-gray-400 cursor-not-allowed"
+                          : city === c.value
+                            ? "bg-orange-50 text-orange-700 border-l-4 border-orange-500 cursor-pointer"
+                            : "text-gray-900 hover:bg-gray-100 cursor-pointer"
                       }`}
                     >
                       <span>{c.emoji} {tf(`city_${c.value}`)}</span>
-                      {city === c.value && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}
+                      {/* 눌러도 아무 일이 없으면 고장 난 버튼으로 읽힌다. 왜 안 되는지 말해 준다. */}
+                      {!ready && <span className="text-[11px] font-bold text-gray-400">{tf("cityComingSoon")}</span>}
+                      {ready && city === c.value && <span className="text-xs font-black text-orange-500">{tf("cityChosen")}</span>}
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
                 <Link
                   href={`/explore/${city.toLowerCase()}`}
