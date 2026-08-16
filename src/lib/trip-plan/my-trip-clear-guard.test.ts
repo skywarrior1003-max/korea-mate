@@ -56,7 +56,9 @@ test("★저장된 일정을 다시 여는 경로에서는 세우지 않는다",
 });
 
 test("★저장에 성공한 그 순간에만, 한 번만 비운다", () => {
-  const gate = /if \(ok && clearOnFirstSaveRef\.current\) \{\s*\n\s*clearOnFirstSaveRef\.current = false;[\s\S]{0,240}?clearCityCart\(paramCity\)/;
+  // 자격을 먼저 내리고, 그 블록 안에서 도시 범위로 비운다. 사이에 Saved 정리가
+  // 들어오므로 거리는 보지 않는다 — 보는 것은 순서와 조건이다.
+  const gate = /if \(ok && clearOnFirstSaveRef\.current\) \{\s*\n\s*clearOnFirstSaveRef\.current = false;[\s\S]{0,900}?clearCityCart\(paramCity\)/;
   assert.match(CODE, gate, "성공 조건·1회 소비·도시 범위 중 하나가 빠졌다");
   // 실패(ok === false)에서는 비우지 않는다
   assert.doesNotMatch(CODE, /if \(!ok\)[^\n]*clearCityCart/);
@@ -69,12 +71,29 @@ test("★feasibility 로 막힌 생성은 자격을 얻지 못한다", () => {
   for (const b of blocks) assert.doesNotMatch(b, /clearOnFirstSaveRef/);
 });
 
-test("★Saved·My Places 는 건드리지 않는다", () => {
+test("★My Places 원본은 건드리지 않는다", () => {
   const save = CODE.slice(CODE.indexOf("const ok = await apiSaveItinerary("));
-  const head = save.slice(0, 900);
-  for (const bad of [/koreamate_favorites/, /apiDeleteUserSpot/, /uncacheSavedSpot/, /toggleFavorite/]) {
+  const head = save.slice(0, 1400);
+  for (const bad of [/apiDeleteUserSpot/, /uncacheSavedSpot/, /toggleFavorite/, /koreamate_favorites/]) {
     assert.doesNotMatch(head, bad, String(bad));
   }
+});
+
+test("★확정된 Saved 는 비우기 전에 읽어서 내린다", () => {
+  // 비운 뒤에 읽으면 무엇을 골랐는지 알 수 없다 — 순서가 계약이다.
+  const order = /savedSelectionsToRelease\([\s\S]{0,320}?removeFavorite\(r\.id, r\.sourceKey\)[\s\S]{0,300}?clearCityCart\(paramCity\)/;
+  assert.match(CODE, order, "Saved 정리가 clearCityCart 뒤에 있다");
+  // 선택 목록은 cart 에서 읽고 identity 는 SSOT 를 쓴다
+  assert.match(CODE, /getCityCart\(paramCity\)\.map\(item => \(\{ id: item\.id, sourceKey: getItemSourceKey\(item\) \}\)\)/);
+  assert.match(CODE, /getFavoriteSourceKeys\(\),\s*\n\s*getFavorites\(\),/);
+});
+
+test("★Saved 정리도 같은 성공 게이트 안에서만 일어난다", () => {
+  const gate = CODE.indexOf("if (ok && clearOnFirstSaveRef.current) {");
+  assert.ok(gate > 0);
+  assert.ok(CODE.indexOf("savedSelectionsToRelease(") > gate, "게이트 밖에서 Saved 를 지운다");
+  // 화면 전체에서 favorites 를 지우는 지점은 이 한 곳뿐이다
+  assert.equal((CODE.match(/removeFavorite\(/g) ?? []).length, 1);
 });
 
 test("★clearCityCart 는 도시를 모르면 아무것도 지우지 않는다", () => {

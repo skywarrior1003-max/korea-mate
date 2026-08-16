@@ -62,7 +62,8 @@ import DayCompleteToast from "@/components/DayCompleteToast";
 import type { UserSpot } from "@/lib/user-spots-api";
 import { resolveSpotImageSrc, hasRealSpotImage, swapToPlaceholderOnError } from "@/lib/place-image";
 import { collectLikedSignals } from "@/lib/planner/saved-signals";
-import { getSavedSpotsData } from "@/lib/favorites";
+import { getSavedSpotsData, getFavorites, getFavoriteSourceKeys, removeFavorite } from "@/lib/favorites";
+import { savedSelectionsToRelease } from "@/lib/trip-plan/saved-promotion";
 
 // ── 데이터 타입 ───────────────────────────────────────────────
 interface Place {
@@ -1623,6 +1624,19 @@ function ItineraryResult() {
       // 플래그를 먼저 내려 다음 autosave 가 다시 비우지 않게 한다.
       if (ok && clearOnFirstSaveRef.current) {
         clearOnFirstSaveRef.current = false;
+        try {
+          // 비우기 **전에** 읽는다. 비우고 나면 무엇을 골랐는지 알 수 없다.
+          //
+          // Saved 에서 올라와 일정에 확정된 곳은 더 이상 후보가 아니다. 목록에
+          // 남겨 두면 다음 여행에서 이미 다녀오기로 한 곳을 다시 고민하게 된다.
+          // 고르지 않은 Saved 와 My Places 원본은 그대로 둔다.
+          const release = savedSelectionsToRelease(
+            getCityCart(paramCity).map(item => ({ id: item.id, sourceKey: getItemSourceKey(item) })),
+            getFavoriteSourceKeys(),
+            getFavorites(),
+          );
+          for (const r of release) removeFavorite(r.id, r.sourceKey);
+        } catch { /* ignore */ }
         // 바로 위 `snapUnscheduled` 와 같은 열쇠로 비운다 — 읽은 것과 지우는 것이
         // 달라지면 다른 도시가 지워진다.
         try { clearCityCart(paramCity); } catch { /* ignore */ }
