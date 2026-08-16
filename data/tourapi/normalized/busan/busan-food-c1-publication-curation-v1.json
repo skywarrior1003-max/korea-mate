@@ -17702,5 +17702,9 @@
       "common_policy_commit": "2476cac",
       "data_source_type": "VB_WEB"
     }
-  ]
+  ],
+  "ssot_status": "HISTORICAL_SUPERSEDED",
+  "superseded_by": "busan-food-194-canonical-v1.json",
+  "supersession_date": "2026-08-16",
+  "supersession_note": "This 721-record SSOT (PUBLIC=112) is HISTORICAL/REFERENCE/AUDIT ARTIFACT only. Busan Food 2026 service SSOT = busan-food-194-canonical-v1.json (194 canonical guide entities). Source universe (721 records) is preserved for audit/reconciliation. DO NOT delete."
 }

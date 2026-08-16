@@ -1,0 +1,2644 @@
+{
+  "header": {
+    "task": "TASK-BUSAN-FOOD-194-CANONICAL-ENRICHMENT-V1-R1",
+    "created": "2026-08-16",
+    "description": "AI_AUTO gate results for all 194 canonical entities",
+    "ai_auto_criteria": [
+      "CURRENT_STATE = ACTIVE",
+      "match_status NOT MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "coord_status = CROSS_SOURCE_VERIFIED (< 500m)",
+      "NOT collective entity"
+    ],
+    "ai_auto_yes_count": 5,
+    "ai_auto_no_count": 189,
+    "ai_auto_checksum": "92875017f119",
+    "note_on_low_ai_auto": "AI_AUTO=5/194 reflects stricter cross-source coordinate verification vs. old pipeline. Old pipeline: 109/721 AI_AUTO (discovery pipeline coords, no cross-source check). Coordinate targeted verification for 73 COORD_NEEDS_VERIFICATION entities can restore AI_AUTO for most of those if within-500m confirmed."
+  },
+  "entities": [
+    {
+      "canonical_id": "busan-G-00001",
+      "name_ko": "마파람해물찜해물탕 구서본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00002",
+      "name_ko": "디귿",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00003",
+      "name_ko": "이흥용과자점 부산대직영점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00004",
+      "name_ko": "톤쇼우",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT",
+        "COLLECTIVE_ENTITY_NO_SINGLE_RESTAURANT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00005",
+      "name_ko": "부산대 포맨티코 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00006",
+      "name_ko": "이태리 삼촌",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00007",
+      "name_ko": "모모스커피 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00008",
+      "name_ko": "당미옥 한우곰탕 온천본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00009",
+      "name_ko": "프랑스 과자점 브리앙",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "NEEDS_HUMAN_IDENTITY_REVIEW",
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00010",
+      "name_ko": "봉식당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00011",
+      "name_ko": "미미루",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00012",
+      "name_ko": "타이빈",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00013",
+      "name_ko": "원조꼬리곰집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00014",
+      "name_ko": "쿠루미 과자점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00015",
+      "name_ko": "석정갈비",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00016",
+      "name_ko": "귀화식당 사케의 향",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00017",
+      "name_ko": "동래할매파전",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "current_state": "ACTIVE",
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "match_status": "MATCHED",
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00018",
+      "name_ko": "배종관동래삼계탕",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00019",
+      "name_ko": "조광심민속왕순대",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00020",
+      "name_ko": "소문난주문진막국수",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00021",
+      "name_ko": "국제밀면 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00022",
+      "name_ko": "보느파티쓰리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00023",
+      "name_ko": "서가원국수",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00024",
+      "name_ko": "고등어다찌 연산본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00025",
+      "name_ko": "디저트시네마",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00026",
+      "name_ko": "차애전 할매칼국수",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00027",
+      "name_ko": "스시시안",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00028",
+      "name_ko": "면옥향천",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00029",
+      "name_ko": "못난이식당 해운대점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00030",
+      "name_ko": "하레마",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00031",
+      "name_ko": "르도헤",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00032",
+      "name_ko": "뫼밀집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00033",
+      "name_ko": "거대곰탕",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00034",
+      "name_ko": "이와",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00035",
+      "name_ko": "쉐프리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00036",
+      "name_ko": "동백섬횟집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00037",
+      "name_ko": "오스테리아 어부",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "NEEDS_HUMAN_IDENTITY_REVIEW",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00038",
+      "name_ko": "무스비",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00039",
+      "name_ko": "딤타오 본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00040",
+      "name_ko": "도핀느",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00041",
+      "name_ko": "나가하마만게츠",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00042",
+      "name_ko": "쿠지라멘",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00043",
+      "name_ko": "쥬가정효",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "current_state": "ACTIVE",
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "match_status": "MATCHED",
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00044",
+      "name_ko": "쇼진",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00045",
+      "name_ko": "해목 해운대점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "NEEDS_HUMAN_IDENTITY_REVIEW",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00046",
+      "name_ko": "토오루",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00047",
+      "name_ko": "으뜸이로리바타",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00048",
+      "name_ko": "모리",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00049",
+      "name_ko": "부다면옥",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00050",
+      "name_ko": "금수복국 해운대본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00051",
+      "name_ko": "해운대암소갈비집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00052",
+      "name_ko": "거대갈비",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "current_state": "ACTIVE",
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "match_status": "MATCHED",
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00053",
+      "name_ko": "소공간",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00054",
+      "name_ko": "본앤브레드 해운대 파라다이스점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00055",
+      "name_ko": "차오란",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00056",
+      "name_ko": "율링",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00057",
+      "name_ko": "엘부스 바이 수블",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00058",
+      "name_ko": "선창횟집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00059",
+      "name_ko": "이안",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00060",
+      "name_ko": "팔레트",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00061",
+      "name_ko": "달타이",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00062",
+      "name_ko": "피오또",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00063",
+      "name_ko": "신도랩2.0",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00064",
+      "name_ko": "비비비당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00065",
+      "name_ko": "우나쥬",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00066",
+      "name_ko": "옥이보리밥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00067",
+      "name_ko": "우봉 샤브 청사포점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00068",
+      "name_ko": "양산국밥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00069",
+      "name_ko": "육화목",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00070",
+      "name_ko": "젠스시",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00071",
+      "name_ko": "랩24 바이 쿠무다",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00072",
+      "name_ko": "기장해변짚불곰장어",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00073",
+      "name_ko": "레스토랑 엠비언스",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00074",
+      "name_ko": "무진장횟집 기장점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00075",
+      "name_ko": "대성갈치찌개구이",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00076",
+      "name_ko": "일광바다횟집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00077",
+      "name_ko": "만세담",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00078",
+      "name_ko": "탐복 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00079",
+      "name_ko": "칠암사계",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00080",
+      "name_ko": "삼성밀면",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00081",
+      "name_ko": "소수인",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00082",
+      "name_ko": "롯데호텔 부산 블루헤이븐",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00083",
+      "name_ko": "갯마을횟집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00084",
+      "name_ko": "융캉찌에 서면점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00085",
+      "name_ko": "야키토리 온정",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00086",
+      "name_ko": "굿모닝홍콩",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00087",
+      "name_ko": "란아한",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00088",
+      "name_ko": "잔둔가",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00089",
+      "name_ko": "야키쵸리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00090",
+      "name_ko": "지즈",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00091",
+      "name_ko": "바오하우스",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00092",
+      "name_ko": "코르 파스타 바",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00093",
+      "name_ko": "손내향미",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00094",
+      "name_ko": "갓포현",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00095",
+      "name_ko": "원조할매낙지",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00096",
+      "name_ko": "60년전통할매국밥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00097",
+      "name_ko": "범일빈대떡",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00098",
+      "name_ko": "백산키친",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00099",
+      "name_ko": "고관함박",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00100",
+      "name_ko": "청기와식당",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00101",
+      "name_ko": "초량온당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00102",
+      "name_ko": "오성집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00103",
+      "name_ko": "초량갈비",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00104",
+      "name_ko": "부광갈비",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00105",
+      "name_ko": "초량돼지국밥",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00106",
+      "name_ko": "평산옥",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00107",
+      "name_ko": "마가만두",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00108",
+      "name_ko": "신발원",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00109",
+      "name_ko": "멍텅구리",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00110",
+      "name_ko": "도날드",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00111",
+      "name_ko": "재기돼지국밥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00112",
+      "name_ko": "아르프",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00113",
+      "name_ko": "왔다식당",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00114",
+      "name_ko": "그라치에",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00115",
+      "name_ko": "피아크 카페&베이커리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "current_state": "ACTIVE",
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "match_status": "MATCHED",
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00116",
+      "name_ko": "고민끝에여기",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00117",
+      "name_ko": "제주복국",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00118",
+      "name_ko": "나룻터국수",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00119",
+      "name_ko": "고기형",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00120",
+      "name_ko": "피리피리",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00121",
+      "name_ko": "우리포차 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00122",
+      "name_ko": "미락슈퍼",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00123",
+      "name_ko": "자매국밥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00124",
+      "name_ko": "야키토리 해공",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00125",
+      "name_ko": "아웃트로 바이 비토",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00126",
+      "name_ko": "조이풀조이풀",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00127",
+      "name_ko": "브런치식당 소보",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00128",
+      "name_ko": "융캉찌에 광안본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00129",
+      "name_ko": "진돼지곰탕",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00130",
+      "name_ko": "램지",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00131",
+      "name_ko": "울트라바이트",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00132",
+      "name_ko": "델리봉",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00133",
+      "name_ko": "제로베이스",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00134",
+      "name_ko": "송헌집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00135",
+      "name_ko": "야키토리 백탄 광안리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "NEEDS_HUMAN_IDENTITY_REVIEW",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00136",
+      "name_ko": "마츠자키",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00137",
+      "name_ko": "데일리럭키",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00138",
+      "name_ko": "한월관",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00139",
+      "name_ko": "비네토",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00140",
+      "name_ko": "611WoodFire",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00141",
+      "name_ko": "백일평냉",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED",
+        "COLLECTIVE_ENTITY_NO_SINGLE_RESTAURANT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00142",
+      "name_ko": "동경밥상 본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00143",
+      "name_ko": "비비재",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00144",
+      "name_ko": "광안리 언양불고기부산집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCH_FAILURE_HIGH_CONFIDENCE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00145",
+      "name_ko": "안목",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00146",
+      "name_ko": "레썽스",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00147",
+      "name_ko": "고옥",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00148",
+      "name_ko": "뉴러우멘관즈",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00149",
+      "name_ko": "남천면가",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00150",
+      "name_ko": "알천순대곱창전골전문점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00151",
+      "name_ko": "비스트로 정재집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00152",
+      "name_ko": "초원복국 대연본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00153",
+      "name_ko": "나막집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00154",
+      "name_ko": "태화반점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00155",
+      "name_ko": "부산약콩밀면 이기대본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00156",
+      "name_ko": "합천국밥집",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00157",
+      "name_ko": "김유순대구뽈찜",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00158",
+      "name_ko": "미소오뎅",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00159",
+      "name_ko": "쌍둥이돼지국밥 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00160",
+      "name_ko": "샤브니지",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00161",
+      "name_ko": "토북베이커리",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00162",
+      "name_ko": "방코",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00163",
+      "name_ko": "만호갈미샤브샤브",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00164",
+      "name_ko": "슌사이쿠보 화명",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "NEEDS_HUMAN_IDENTITY_REVIEW",
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCH_FAILURE_NEEDS_HUMAN_REVIEW",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00165",
+      "name_ko": "평양집",
+      "guide_source": "michelin-2026",
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "current_state": "ACTIVE",
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "match_status": "MATCHED",
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00166",
+      "name_ko": "곰보식당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00167",
+      "name_ko": "하동재첩국",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00168",
+      "name_ko": "할매재첩국",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00169",
+      "name_ko": "해물왕창칼국수",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00170",
+      "name_ko": "영진돼지국밥 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00171",
+      "name_ko": "정짓간 신평본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00172",
+      "name_ko": "대티물꽁",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00173",
+      "name_ko": "꽃마을지리산어탕",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00174",
+      "name_ko": "골목 손칼국수",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00175",
+      "name_ko": "영남냉면밀면",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00176",
+      "name_ko": "흑산도 횟집",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00177",
+      "name_ko": "옛날오막집",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00178",
+      "name_ko": "맛나기사식당",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00179",
+      "name_ko": "원조18번완당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00180",
+      "name_ko": "왕밀면냉면 본점",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00181",
+      "name_ko": "물꽁식당",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00182",
+      "name_ko": "동삼정",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00183",
+      "name_ko": "원조일미기사식당",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00184",
+      "name_ko": "쉐프곤",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_STRONG_GUIDE",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00185",
+      "name_ko": "돌고래순두부",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00186",
+      "name_ko": "이재모피자 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00187",
+      "name_ko": "개미집 본점",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00188",
+      "name_ko": "삼송초밥 부산남포동본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00189",
+      "name_ko": "막둥이네 양곱창",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "CURRENT_STATE_TEMPORARILY_UNVERIFIED",
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "TEMPORARILY_UNVERIFIED",
+      "coord_status": "GUIDE_COORD_ONLY",
+      "match_status": "UNMATCHED_TAEGSHLANG",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00190",
+      "name_ko": "1969부원동칼국수 남포본점",
+      "guide_source": "michelin-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "PHONE_MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00191",
+      "name_ko": "본참치",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00192",
+      "name_ko": "편의방",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00193",
+      "name_ko": "동광동 석기시대 본점",
+      "guide_source": "busan-mat-2026",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "COORD_NOT_CROSS_SOURCE_VERIFIED"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "match_status": "MATCHED",
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00194",
+      "name_ko": "할매복국",
+      "guide_source": "taegshlang-2025",
+      "ai_auto": false,
+      "ai_auto_block_reasons": [
+        "ADDRESS_COORD_CONFLICT"
+      ],
+      "current_state": "ACTIVE",
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "match_status": "MATCHED",
+      "navigation_ready": false
+    }
+  ],
+  "ai_auto_yes_list": [
+    {
+      "canonical_id": "busan-G-00017",
+      "name_ko": "동래할매파전",
+      "guide_source": "busan-mat-2026"
+    },
+    {
+      "canonical_id": "busan-G-00043",
+      "name_ko": "쥬가정효",
+      "guide_source": "busan-mat-2026"
+    },
+    {
+      "canonical_id": "busan-G-00052",
+      "name_ko": "거대갈비",
+      "guide_source": "busan-mat-2026"
+    },
+    {
+      "canonical_id": "busan-G-00115",
+      "name_ko": "피아크 카페&베이커리",
+      "guide_source": "busan-mat-2026"
+    },
+    {
+      "canonical_id": "busan-G-00165",
+      "name_ko": "평양집",
+      "guide_source": "michelin-2026"
+    }
+  ],
+  "block_reason_summary": {
+    "COORD_NOT_CROSS_SOURCE_VERIFIED": 140,
+    "CURRENT_STATE_TEMPORARILY_UNVERIFIED": 72,
+    "ADDRESS_COORD_CONFLICT": 49,
+    "COLLECTIVE_ENTITY_NO_SINGLE_RESTAURANT": 2,
+    "NEEDS_HUMAN_IDENTITY_REVIEW": 5
+  }
+}

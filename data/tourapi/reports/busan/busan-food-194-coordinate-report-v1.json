@@ -1,0 +1,2786 @@
+{
+  "header": {
+    "task": "TASK-BUSAN-FOOD-194-CANONICAL-ENRICHMENT-V1-R1",
+    "created": "2026-08-16",
+    "description": "Coordinate verification status for all 194 canonical entities",
+    "verification_method": "Haversine cross-check: guide coord vs. discovery pipeline coord (best distance per entity)",
+    "thresholds": {
+      "CROSS_SOURCE_VERIFIED": "<500m",
+      "COORD_PRESENT_NEEDS_VERIFICATION": "500m-2000m",
+      "ADDRESS_COORD_CONFLICT": ">2000m",
+      "GUIDE_COORD_ONLY": "no discovery coord to compare"
+    },
+    "note_on_conflict_count": "49 ADDRESS_COORD_CONFLICT entities likely reflect branch disambiguation (guide entry vs. different branch in discovery pipeline) or TourAPI coordinate imprecision. Targeted verification required before NAVIGATION_READY=YES.",
+    "note_on_coord_present": "73 COORD_PRESENT_NEEDS_VERIFICATION: 500m-2km range. May be TourAPI administrative coords vs. precise GPS. Targeted Naver Maps / official source verification recommended."
+  },
+  "status_summary": {
+    "COORD_PRESENT_NEEDS_VERIFICATION": 73,
+    "GUIDE_COORD_ONLY": 67,
+    "ADDRESS_COORD_CONFLICT": 49,
+    "CROSS_SOURCE_VERIFIED": 5
+  },
+  "entities": [
+    {
+      "canonical_id": "busan-G-00001",
+      "name_ko": "마파람해물찜해물탕 구서본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.237,
+      "guide_lon": 129.106,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1799,
+      "discovery_ref": {
+        "lat": 35.244667,
+        "lon": 129.08856
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00002",
+      "name_ko": "디귿",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2451,
+      "guide_lon": 129.0925,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00003",
+      "name_ko": "이흥용과자점 부산대직영점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.225,
+      "guide_lon": 129.0824,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 605,
+      "discovery_ref": {
+        "lat": 35.23029,
+        "lon": 129.08397
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00004",
+      "name_ko": "톤쇼우",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2465,
+      "guide_lon": 129.0985,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 10295,
+      "discovery_ref": {
+        "lat": 35.15644,
+        "lon": 129.12479
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00005",
+      "name_ko": "부산대 포맨티코 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2349,
+      "guide_lon": 129.1044,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1670,
+      "discovery_ref": {
+        "lat": 35.22843,
+        "lon": 129.08781
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00006",
+      "name_ko": "이태리 삼촌",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2306,
+      "guide_lon": 129.0868,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00007",
+      "name_ko": "모모스커피 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2486,
+      "guide_lon": 129.0854,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3262,
+      "discovery_ref": {
+        "lat": 35.21928,
+        "lon": 129.08643
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00008",
+      "name_ko": "당미옥 한우곰탕 온천본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1883,
+      "guide_lon": 129.0944,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00009",
+      "name_ko": "프랑스 과자점 브리앙",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2031,
+      "guide_lon": 129.0911,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2185,
+      "discovery_ref": {
+        "lat": 35.221756,
+        "lon": 129.08356
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00010",
+      "name_ko": "봉식당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2036,
+      "guide_lon": 129.074,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2198,
+      "discovery_ref": {
+        "lat": 35.221752,
+        "lon": 129.08357
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00011",
+      "name_ko": "미미루",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1881,
+      "guide_lon": 129.0817,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3492,
+      "discovery_ref": {
+        "lat": 35.219486,
+        "lon": 129.08296
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00012",
+      "name_ko": "타이빈",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2105,
+      "guide_lon": 129.0969,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1892,
+      "discovery_ref": {
+        "lat": 35.216263,
+        "lon": 129.0773
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00013",
+      "name_ko": "원조꼬리곰집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.193,
+      "guide_lon": 129.0852,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2591,
+      "discovery_ref": {
+        "lat": 35.216038,
+        "lon": 129.08095
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00014",
+      "name_ko": "쿠루미 과자점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1964,
+      "guide_lon": 129.0731,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00015",
+      "name_ko": "석정갈비",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2088,
+      "guide_lon": 129.0878,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00016",
+      "name_ko": "귀화식당 사케의 향",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1871,
+      "guide_lon": 129.0962,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00017",
+      "name_ko": "동래할매파전",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2067,
+      "guide_lon": 129.0793,
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "coord_distance_m": 475,
+      "discovery_ref": {
+        "lat": 35.204605,
+        "lon": 129.08386
+      },
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00018",
+      "name_ko": "배종관동래삼계탕",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1995,
+      "guide_lon": 129.0753,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1071,
+      "discovery_ref": {
+        "lat": 35.20526,
+        "lon": 129.08475
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00019",
+      "name_ko": "조광심민속왕순대",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1905,
+      "guide_lon": 129.0932,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1215,
+      "discovery_ref": {
+        "lat": 35.20074,
+        "lon": 129.09787
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00020",
+      "name_ko": "소문난주문진막국수",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.211,
+      "guide_lon": 129.0926,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3432,
+      "discovery_ref": {
+        "lat": 35.1960405705,
+        "lon": 129.0595628726
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00021",
+      "name_ko": "국제밀면 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1708,
+      "guide_lon": 129.0718,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2953,
+      "discovery_ref": {
+        "lat": 35.19689,
+        "lon": 129.07785
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00022",
+      "name_ko": "보느파티쓰리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1816,
+      "guide_lon": 129.077,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1530,
+      "discovery_ref": {
+        "lat": 35.19527,
+        "lon": 129.07895
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00023",
+      "name_ko": "서가원국수",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1868,
+      "guide_lon": 129.0935,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00024",
+      "name_ko": "고등어다찌 연산본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1683,
+      "guide_lon": 129.084,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2158,
+      "discovery_ref": {
+        "lat": 35.187637,
+        "lon": 129.08607
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00025",
+      "name_ko": "디저트시네마",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1904,
+      "guide_lon": 129.07,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2438,
+      "discovery_ref": {
+        "lat": 35.176273,
+        "lon": 129.09052
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00026",
+      "name_ko": "차애전 할매칼국수",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1763,
+      "guide_lon": 129.0831,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00027",
+      "name_ko": "스시시안",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.158,
+      "guide_lon": 129.1747,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4112,
+      "discovery_ref": {
+        "lat": 35.167683,
+        "lon": 129.13104
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00028",
+      "name_ko": "면옥향천",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1741,
+      "guide_lon": 129.1589,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1828,
+      "discovery_ref": {
+        "lat": 35.170124,
+        "lon": 129.13939
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00029",
+      "name_ko": "못난이식당 해운대점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1517,
+      "guide_lon": 129.1523,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 795,
+      "discovery_ref": {
+        "lat": 35.154926,
+        "lon": 129.1445
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00030",
+      "name_ko": "하레마",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1686,
+      "guide_lon": 129.1698,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2600,
+      "discovery_ref": {
+        "lat": 35.157204,
+        "lon": 129.14482
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00031",
+      "name_ko": "르도헤",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.166,
+      "guide_lon": 129.1719,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2582,
+      "discovery_ref": {
+        "lat": 35.15545,
+        "lon": 129.1466
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00032",
+      "name_ko": "뫼밀집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1529,
+      "guide_lon": 129.1539,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00033",
+      "name_ko": "거대곰탕",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1748,
+      "guide_lon": 129.1564,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1921,
+      "discovery_ref": {
+        "lat": 35.1584047875,
+        "lon": 129.1497310611
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00034",
+      "name_ko": "이와",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1556,
+      "guide_lon": 129.1738,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00035",
+      "name_ko": "쉐프리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.162,
+      "guide_lon": 129.1668,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1209,
+      "discovery_ref": {
+        "lat": 35.159615,
+        "lon": 129.15382
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00036",
+      "name_ko": "동백섬횟집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1718,
+      "guide_lon": 129.1512,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1304,
+      "discovery_ref": {
+        "lat": 35.160427,
+        "lon": 129.15468
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00037",
+      "name_ko": "오스테리아 어부",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.151,
+      "guide_lon": 129.1623,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1187,
+      "discovery_ref": {
+        "lat": 35.160614,
+        "lon": 129.15663
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00038",
+      "name_ko": "무스비",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1719,
+      "guide_lon": 129.175,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00039",
+      "name_ko": "딤타오 본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1619,
+      "guide_lon": 129.1606,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00040",
+      "name_ko": "도핀느",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1558,
+      "guide_lon": 129.1516,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00041",
+      "name_ko": "나가하마만게츠",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1748,
+      "guide_lon": 129.1683,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1336,
+      "discovery_ref": {
+        "lat": 35.16669,
+        "lon": 129.15746
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00042",
+      "name_ko": "쿠지라멘",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1528,
+      "guide_lon": 129.173,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1894,
+      "discovery_ref": {
+        "lat": 35.166203,
+        "lon": 129.16014
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00043",
+      "name_ko": "쥬가정효",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1662,
+      "guide_lon": 129.1551,
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "coord_distance_m": 390,
+      "discovery_ref": {
+        "lat": 35.165035,
+        "lon": 129.15915
+      },
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00044",
+      "name_ko": "쇼진",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1685,
+      "guide_lon": 129.155,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 713,
+      "discovery_ref": {
+        "lat": 35.163307,
+        "lon": 129.1596
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00045",
+      "name_ko": "해목 해운대점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1518,
+      "guide_lon": 129.1729,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1642,
+      "discovery_ref": {
+        "lat": 35.1618601408,
+        "lon": 129.1596828783
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00046",
+      "name_ko": "토오루",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1741,
+      "guide_lon": 129.1684,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00047",
+      "name_ko": "으뜸이로리바타",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1578,
+      "guide_lon": 129.1517,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4249,
+      "discovery_ref": {
+        "lat": 35.141987,
+        "lon": 129.10915
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00048",
+      "name_ko": "모리",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1595,
+      "guide_lon": 129.1605,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 558,
+      "discovery_ref": {
+        "lat": 35.160202,
+        "lon": 129.16658
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00049",
+      "name_ko": "부다면옥",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1733,
+      "guide_lon": 129.175,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1633,
+      "discovery_ref": {
+        "lat": 35.162384,
+        "lon": 129.16298
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00050",
+      "name_ko": "금수복국 해운대본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1513,
+      "guide_lon": 129.1624,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1252,
+      "discovery_ref": {
+        "lat": 35.16243,
+        "lon": 129.1645
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00051",
+      "name_ko": "해운대암소갈비집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.17,
+      "guide_lon": 129.1512,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1561,
+      "discovery_ref": {
+        "lat": 35.163258,
+        "lon": 129.16626
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00052",
+      "name_ko": "거대갈비",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1645,
+      "guide_lon": 129.1666,
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "coord_distance_m": 329,
+      "discovery_ref": {
+        "lat": 35.16155,
+        "lon": 129.16693
+      },
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00053",
+      "name_ko": "소공간",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1539,
+      "guide_lon": 129.1739,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1050,
+      "discovery_ref": {
+        "lat": 35.16169,
+        "lon": 129.16737
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00054",
+      "name_ko": "본앤브레드 해운대 파라다이스점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.175,
+      "guide_lon": 129.1566,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00055",
+      "name_ko": "차오란",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1544,
+      "guide_lon": 129.1538,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1504,
+      "discovery_ref": {
+        "lat": 35.16133,
+        "lon": 129.16801
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00056",
+      "name_ko": "율링",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1636,
+      "guide_lon": 129.1718,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 537,
+      "discovery_ref": {
+        "lat": 35.158867,
+        "lon": 129.1706
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00057",
+      "name_ko": "엘부스 바이 수블",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1706,
+      "guide_lon": 129.17,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1232,
+      "discovery_ref": {
+        "lat": 35.159527,
+        "lon": 129.17055
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00058",
+      "name_ko": "선창횟집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1511,
+      "guide_lon": 129.1524,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2051,
+      "discovery_ref": {
+        "lat": 35.156857,
+        "lon": 129.17383
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00059",
+      "name_ko": "이안",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1729,
+      "guide_lon": 129.1588,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00060",
+      "name_ko": "팔레트",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1603,
+      "guide_lon": 129.1747,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 536,
+      "discovery_ref": {
+        "lat": 35.156513,
+        "lon": 129.17834
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00061",
+      "name_ko": "달타이",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1571,
+      "guide_lon": 129.1642,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1663,
+      "discovery_ref": {
+        "lat": 35.158127,
+        "lon": 129.18245
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00062",
+      "name_ko": "피오또",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1744,
+      "guide_lon": 129.151,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00063",
+      "name_ko": "신도랩2.0",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1521,
+      "guide_lon": 129.1649,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00064",
+      "name_ko": "비비비당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1677,
+      "guide_lon": 129.1745,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1120,
+      "discovery_ref": {
+        "lat": 35.16249,
+        "lon": 129.18504
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00065",
+      "name_ko": "우나쥬",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.167,
+      "guide_lon": 129.1582,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00066",
+      "name_ko": "옥이보리밥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1524,
+      "guide_lon": 129.1527,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00067",
+      "name_ko": "우봉 샤브 청사포점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1746,
+      "guide_lon": 129.1705,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2540,
+      "discovery_ref": {
+        "lat": 35.160713,
+        "lon": 129.19269
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00068",
+      "name_ko": "양산국밥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1564,
+      "guide_lon": 129.1713,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1282,
+      "discovery_ref": {
+        "lat": 35.1678735982,
+        "lon": 129.1727315789
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00069",
+      "name_ko": "육화목",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1611,
+      "guide_lon": 129.1534,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1819,
+      "discovery_ref": {
+        "lat": 35.16929,
+        "lon": 129.17072
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00070",
+      "name_ko": "젠스시",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1724,
+      "guide_lon": 129.1571,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1316,
+      "discovery_ref": {
+        "lat": 35.170803,
+        "lon": 129.17145
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00071",
+      "name_ko": "랩24 바이 쿠무다",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.151,
+      "guide_lon": 129.1741,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3611,
+      "discovery_ref": {
+        "lat": 35.177433,
+        "lon": 129.19717
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00072",
+      "name_ko": "기장해변짚불곰장어",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2522,
+      "guide_lon": 129.216,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00073",
+      "name_ko": "레스토랑 엠비언스",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2439,
+      "guide_lon": 129.2011,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00074",
+      "name_ko": "무진장횟집 기장점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.236,
+      "guide_lon": 129.2131,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2426,
+      "discovery_ref": {
+        "lat": 35.216946,
+        "lon": 129.22612
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00075",
+      "name_ko": "대성갈치찌개구이",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2559,
+      "guide_lon": 129.2249,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3610,
+      "discovery_ref": {
+        "lat": 35.2239,
+        "lon": 129.23161
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00076",
+      "name_ko": "일광바다횟집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2344,
+      "guide_lon": 129.2099,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00077",
+      "name_ko": "만세담",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2462,
+      "guide_lon": 129.2019,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00078",
+      "name_ko": "탐복 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2503,
+      "guide_lon": 129.219,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 5034,
+      "discovery_ref": {
+        "lat": 35.28275,
+        "lon": 129.25766
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00079",
+      "name_ko": "칠암사계",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2325,
+      "guide_lon": 129.2225,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 8207,
+      "discovery_ref": {
+        "lat": 35.299957,
+        "lon": 129.25919
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00080",
+      "name_ko": "삼성밀면",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1737,
+      "guide_lon": 129.0435,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1105,
+      "discovery_ref": {
+        "lat": 35.181423,
+        "lon": 129.05115
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00081",
+      "name_ko": "소수인",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1587,
+      "guide_lon": 129.0446,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 869,
+      "discovery_ref": {
+        "lat": 35.156677,
+        "lon": 129.05383
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00082",
+      "name_ko": "롯데호텔 부산 블루헤이븐",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1586,
+      "guide_lon": 129.0624,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 653,
+      "discovery_ref": {
+        "lat": 35.15663,
+        "lon": 129.05563
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00083",
+      "name_ko": "갯마을횟집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1738,
+      "guide_lon": 129.0567,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00084",
+      "name_ko": "융캉찌에 서면점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1515,
+      "guide_lon": 129.0404,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00085",
+      "name_ko": "야키토리 온정",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1691,
+      "guide_lon": 129.0503,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00086",
+      "name_ko": "굿모닝홍콩",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1654,
+      "guide_lon": 129.064,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 740,
+      "discovery_ref": {
+        "lat": 35.158752,
+        "lon": 129.06444
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00087",
+      "name_ko": "란아한",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1533,
+      "guide_lon": 129.0506,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1360,
+      "discovery_ref": {
+        "lat": 35.15837,
+        "lon": 129.06421
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00088",
+      "name_ko": "잔둔가",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1749,
+      "guide_lon": 129.0404,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00089",
+      "name_ko": "야키쵸리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1551,
+      "guide_lon": 129.0564,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00090",
+      "name_ko": "지즈",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1627,
+      "guide_lon": 129.0625,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 786,
+      "discovery_ref": {
+        "lat": 35.15622,
+        "lon": 129.06595
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00091",
+      "name_ko": "바오하우스",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1714,
+      "guide_lon": 129.0449,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2486,
+      "discovery_ref": {
+        "lat": 35.154896,
+        "lon": 129.06335
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00092",
+      "name_ko": "코르 파스타 바",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.151,
+      "guide_lon": 129.0433,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2223,
+      "discovery_ref": {
+        "lat": 35.15265,
+        "lon": 129.06767
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00093",
+      "name_ko": "손내향미",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1723,
+      "guide_lon": 129.0613,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2240,
+      "discovery_ref": {
+        "lat": 35.153034,
+        "lon": 129.06851
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00094",
+      "name_ko": "갓포현",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1612,
+      "guide_lon": 129.0583,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00095",
+      "name_ko": "원조할매낙지",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1563,
+      "guide_lon": 129.041,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2347,
+      "discovery_ref": {
+        "lat": 35.14214,
+        "lon": 129.06015
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00096",
+      "name_ko": "60년전통할매국밥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1327,
+      "guide_lon": 129.0395,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1777,
+      "discovery_ref": {
+        "lat": 35.141018,
+        "lon": 129.05618
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00097",
+      "name_ko": "범일빈대떡",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1105,
+      "guide_lon": 129.0548,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3236,
+      "discovery_ref": {
+        "lat": 35.139576,
+        "lon": 129.05621
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00098",
+      "name_ko": "백산키친",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1248,
+      "guide_lon": 129.0434,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2392,
+      "discovery_ref": {
+        "lat": 35.13873,
+        "lon": 129.06345
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00099",
+      "name_ko": "고관함박",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1259,
+      "guide_lon": 129.0311,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1386,
+      "discovery_ref": {
+        "lat": 35.1270313878,
+        "lon": 129.0462742511
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00100",
+      "name_ko": "청기와식당",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.11,
+      "guide_lon": 129.0457,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00101",
+      "name_ko": "초량온당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1323,
+      "guide_lon": 129.0543,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1523,
+      "discovery_ref": {
+        "lat": 35.123413,
+        "lon": 129.04155
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00102",
+      "name_ko": "오성집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1153,
+      "guide_lon": 129.0374,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00103",
+      "name_ko": "초량갈비",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1181,
+      "guide_lon": 129.0332,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00104",
+      "name_ko": "부광갈비",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.131,
+      "guide_lon": 129.0511,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00105",
+      "name_ko": "초량돼지국밥",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1091,
+      "guide_lon": 129.0507,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00106",
+      "name_ko": "평산옥",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1285,
+      "guide_lon": 129.0329,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1625,
+      "discovery_ref": {
+        "lat": 35.114292,
+        "lon": 129.0371
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00107",
+      "name_ko": "마가만두",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1218,
+      "guide_lon": 129.0379,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00108",
+      "name_ko": "신발원",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1123,
+      "guide_lon": 129.0544,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1453,
+      "discovery_ref": {
+        "lat": 35.114815,
+        "lon": 129.03873
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00109",
+      "name_ko": "멍텅구리",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.103,
+      "guide_lon": 129.0702,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00110",
+      "name_ko": "도날드",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.082,
+      "guide_lon": 129.056,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1261,
+      "discovery_ref": {
+        "lat": 35.085815,
+        "lon": 129.04295
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00111",
+      "name_ko": "재기돼지국밥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0923,
+      "guide_lon": 129.0689,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2658,
+      "discovery_ref": {
+        "lat": 35.08963,
+        "lon": 129.03987
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00112",
+      "name_ko": "아르프",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.0981,
+      "guide_lon": 129.0798,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00113",
+      "name_ko": "왔다식당",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0792,
+      "guide_lon": 129.0641,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1794,
+      "discovery_ref": {
+        "lat": 35.094036,
+        "lon": 129.05635
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00114",
+      "name_ko": "그라치에",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1012,
+      "guide_lon": 129.0573,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1406,
+      "discovery_ref": {
+        "lat": 35.089043,
+        "lon": 129.06154
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00115",
+      "name_ko": "피아크 카페&베이커리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0877,
+      "guide_lon": 129.0747,
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "coord_distance_m": 240,
+      "discovery_ref": {
+        "lat": 35.08665,
+        "lon": 129.077
+      },
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00116",
+      "name_ko": "고민끝에여기",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0857,
+      "guide_lon": 129.077,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4713,
+      "discovery_ref": {
+        "lat": 35.112698,
+        "lon": 129.03706
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00117",
+      "name_ko": "제주복국",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1022,
+      "guide_lon": 129.059,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3585,
+      "discovery_ref": {
+        "lat": 35.07098,
+        "lon": 129.06885
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00118",
+      "name_ko": "나룻터국수",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1368,
+      "guide_lon": 129.1063,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00119",
+      "name_ko": "고기형",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1533,
+      "guide_lon": 129.1237,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1741,
+      "discovery_ref": {
+        "lat": 35.166687,
+        "lon": 129.11377
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00120",
+      "name_ko": "피리피리",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1514,
+      "guide_lon": 129.1169,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00121",
+      "name_ko": "우리포차 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1377,
+      "guide_lon": 129.1012,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2832,
+      "discovery_ref": {
+        "lat": 35.161915,
+        "lon": 129.11087
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00122",
+      "name_ko": "미락슈퍼",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1598,
+      "guide_lon": 129.1121,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00123",
+      "name_ko": "자매국밥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1409,
+      "guide_lon": 129.125,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1934,
+      "discovery_ref": {
+        "lat": 35.158283,
+        "lon": 129.12569
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00124",
+      "name_ko": "야키토리 해공",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1467,
+      "guide_lon": 129.1108,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1960,
+      "discovery_ref": {
+        "lat": 35.158234,
+        "lon": 129.1271
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00125",
+      "name_ko": "아웃트로 바이 비토",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.157,
+      "guide_lon": 129.1016,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2391,
+      "discovery_ref": {
+        "lat": 35.15835,
+        "lon": 129.12785
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00126",
+      "name_ko": "조이풀조이풀",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.136,
+      "guide_lon": 129.1181,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2547,
+      "discovery_ref": {
+        "lat": 35.157604,
+        "lon": 129.1274
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00127",
+      "name_ko": "브런치식당 소보",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1567,
+      "guide_lon": 129.1231,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00128",
+      "name_ko": "융캉찌에 광안본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1472,
+      "guide_lon": 129.1053,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00129",
+      "name_ko": "진돼지곰탕",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1405,
+      "guide_lon": 129.1049,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00130",
+      "name_ko": "램지",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1599,
+      "guide_lon": 129.1228,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 761,
+      "discovery_ref": {
+        "lat": 35.153328,
+        "lon": 129.12515
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00131",
+      "name_ko": "울트라바이트",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.138,
+      "guide_lon": 129.1186,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00132",
+      "name_ko": "델리봉",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1509,
+      "guide_lon": 129.1017,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4572,
+      "discovery_ref": {
+        "lat": 35.19158,
+        "lon": 129.09442
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00133",
+      "name_ko": "제로베이스",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1538,
+      "guide_lon": 129.1103,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1049,
+      "discovery_ref": {
+        "lat": 35.15741,
+        "lon": 129.12096
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00134",
+      "name_ko": "송헌집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1366,
+      "guide_lon": 129.1249,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00135",
+      "name_ko": "야키토리 백탄 광안리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.159,
+      "guide_lon": 129.1126,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 869,
+      "discovery_ref": {
+        "lat": 35.15614,
+        "lon": 129.1215
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00136",
+      "name_ko": "마츠자키",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1432,
+      "guide_lon": 129.1012,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00137",
+      "name_ko": "데일리럭키",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1442,
+      "guide_lon": 129.1165,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1137,
+      "discovery_ref": {
+        "lat": 35.153927,
+        "lon": 129.11264
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00138",
+      "name_ko": "한월관",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1585,
+      "guide_lon": 129.1239,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00139",
+      "name_ko": "비네토",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1363,
+      "guide_lon": 129.1067,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00140",
+      "name_ko": "611WoodFire",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1547,
+      "guide_lon": 129.1037,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 909,
+      "discovery_ref": {
+        "lat": 35.147713,
+        "lon": 129.10889
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00141",
+      "name_ko": "백일평냉",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1498,
+      "guide_lon": 129.1217,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 923,
+      "discovery_ref": {
+        "lat": 35.148556,
+        "lon": 129.11166
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00142",
+      "name_ko": "동경밥상 본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1387,
+      "guide_lon": 129.1201,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1219,
+      "discovery_ref": {
+        "lat": 35.148396,
+        "lon": 129.11385
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00143",
+      "name_ko": "비비재",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.16,
+      "guide_lon": 129.1025,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00144",
+      "name_ko": "광안리 언양불고기부산집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1397,
+      "guide_lon": 129.1086,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1019,
+      "discovery_ref": {
+        "lat": 35.14793,
+        "lon": 129.11354
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00145",
+      "name_ko": "안목",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1483,
+      "guide_lon": 129.1246,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00146",
+      "name_ko": "레썽스",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1559,
+      "guide_lon": 129.1144,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00147",
+      "name_ko": "고옥",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1361,
+      "guide_lon": 129.101,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1151,
+      "discovery_ref": {
+        "lat": 35.143585,
+        "lon": 129.10974
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00148",
+      "name_ko": "뉴러우멘관즈",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1577,
+      "guide_lon": 129.1147,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00149",
+      "name_ko": "남천면가",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1456,
+      "guide_lon": 129.1246,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1754,
+      "discovery_ref": {
+        "lat": 35.139626,
+        "lon": 129.10675
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00150",
+      "name_ko": "알천순대곱창전골전문점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1298,
+      "guide_lon": 129.0873,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1857,
+      "discovery_ref": {
+        "lat": 35.138542,
+        "lon": 129.1047
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00151",
+      "name_ko": "비스트로 정재집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1475,
+      "guide_lon": 129.0817,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00152",
+      "name_ko": "초원복국 대연본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1252,
+      "guide_lon": 129.0994,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1520,
+      "discovery_ref": {
+        "lat": 35.137794,
+        "lon": 129.10591
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00153",
+      "name_ko": "나막집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1404,
+      "guide_lon": 129.1005,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1294,
+      "discovery_ref": {
+        "lat": 35.1342484706,
+        "lon": 129.1125849531
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00154",
+      "name_ko": "태화반점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1403,
+      "guide_lon": 129.0825,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2893,
+      "discovery_ref": {
+        "lat": 35.13219,
+        "lon": 129.11273
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00155",
+      "name_ko": "부산약콩밀면 이기대본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1253,
+      "guide_lon": 129.086,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2498,
+      "discovery_ref": {
+        "lat": 35.123108,
+        "lon": 129.11333
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00156",
+      "name_ko": "합천국밥집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1475,
+      "guide_lon": 129.1031,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4099,
+      "discovery_ref": {
+        "lat": 35.111244,
+        "lon": 129.11125
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00157",
+      "name_ko": "김유순대구뽈찜",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1297,
+      "guide_lon": 129.0951,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 810,
+      "discovery_ref": {
+        "lat": 35.136368,
+        "lon": 129.09152
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00158",
+      "name_ko": "미소오뎅",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1337,
+      "guide_lon": 129.0801,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00159",
+      "name_ko": "쌍둥이돼지국밥 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1456,
+      "guide_lon": 129.0919,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1538,
+      "discovery_ref": {
+        "lat": 35.13177,
+        "lon": 129.0923
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00160",
+      "name_ko": "샤브니지",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2091,
+      "guide_lon": 128.8839,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00161",
+      "name_ko": "토북베이커리",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.229,
+      "guide_lon": 128.869,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 13049,
+      "discovery_ref": {
+        "lat": 35.11187,
+        "lon": 128.87785
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00162",
+      "name_ko": "방코",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2212,
+      "guide_lon": 128.8609,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 13014,
+      "discovery_ref": {
+        "lat": 35.11546,
+        "lon": 128.92226
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00163",
+      "name_ko": "만호갈미샤브샤브",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.2128,
+      "guide_lon": 128.8779,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 13231,
+      "discovery_ref": {
+        "lat": 35.101425,
+        "lon": 128.92914
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00164",
+      "name_ko": "슌사이쿠보 화명",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.236,
+      "guide_lon": 129.0226,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 17748,
+      "discovery_ref": {
+        "lat": 35.25241,
+        "lon": 129.217
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00165",
+      "name_ko": "평양집",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.2146,
+      "guide_lon": 129.0047,
+      "coord_status": "CROSS_SOURCE_VERIFIED",
+      "coord_distance_m": 297,
+      "discovery_ref": {
+        "lat": 35.212116,
+        "lon": 129.00589
+      },
+      "navigation_ready": true
+    },
+    {
+      "canonical_id": "busan-G-00166",
+      "name_ko": "곰보식당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1589,
+      "guide_lon": 128.9845,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 4198,
+      "discovery_ref": {
+        "lat": 35.196556,
+        "lon": 128.98784
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00167",
+      "name_ko": "하동재첩국",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1636,
+      "guide_lon": 129.0023,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 3640,
+      "discovery_ref": {
+        "lat": 35.19344,
+        "lon": 128.98584
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00168",
+      "name_ko": "할매재첩국",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1454,
+      "guide_lon": 128.9968,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 5422,
+      "discovery_ref": {
+        "lat": 35.193363,
+        "lon": 128.98607
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00169",
+      "name_ko": "해물왕창칼국수",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1676,
+      "guide_lon": 128.9805,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 640,
+      "discovery_ref": {
+        "lat": 35.1727,
+        "lon": 128.98376
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00170",
+      "name_ko": "영진돼지국밥 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0871,
+      "guide_lon": 128.9721,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1676,
+      "discovery_ref": {
+        "lat": 35.09664,
+        "lon": 128.95784
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00171",
+      "name_ko": "정짓간 신평본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.0862,
+      "guide_lon": 128.986,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00172",
+      "name_ko": "대티물꽁",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1019,
+      "guide_lon": 128.9728,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2512,
+      "discovery_ref": {
+        "lat": 35.10239,
+        "lon": 129.00041
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00173",
+      "name_ko": "꽃마을지리산어탕",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0856,
+      "guide_lon": 129.0093,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00174",
+      "name_ko": "골목 손칼국수",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1029,
+      "guide_lon": 129.0252,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00175",
+      "name_ko": "영남냉면밀면",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0998,
+      "guide_lon": 129.0316,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1807,
+      "discovery_ref": {
+        "lat": 35.1131685724,
+        "lon": 129.0203018886
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00176",
+      "name_ko": "흑산도 횟집",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0871,
+      "guide_lon": 129.014,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00177",
+      "name_ko": "옛날오막집",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1089,
+      "guide_lon": 129.0122,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 682,
+      "discovery_ref": {
+        "lat": 35.10883,
+        "lon": 129.0197
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00178",
+      "name_ko": "맛나기사식당",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0894,
+      "guide_lon": 129.0302,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00179",
+      "name_ko": "원조18번완당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0963,
+      "guide_lon": 129.0274,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1223,
+      "discovery_ref": {
+        "lat": 35.105713,
+        "lon": 129.02045
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00180",
+      "name_ko": "왕밀면냉면 본점",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1056,
+      "guide_lon": 129.0101,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00181",
+      "name_ko": "물꽁식당",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.091,
+      "guide_lon": 129.0344,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1756,
+      "discovery_ref": {
+        "lat": 35.104504,
+        "lon": 129.0244
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00182",
+      "name_ko": "동삼정",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1121,
+      "guide_lon": 129.0498,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2105,
+      "discovery_ref": {
+        "lat": 35.10059,
+        "lon": 129.03143
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00183",
+      "name_ko": "원조일미기사식당",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1016,
+      "guide_lon": 129.0386,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00184",
+      "name_ko": "쉐프곤",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.096,
+      "guide_lon": 129.026,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00185",
+      "name_ko": "돌고래순두부",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1147,
+      "guide_lon": 129.0405,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00186",
+      "name_ko": "이재모피자 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0927,
+      "guide_lon": 129.0493,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1997,
+      "discovery_ref": {
+        "lat": 35.102104,
+        "lon": 129.0306
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00187",
+      "name_ko": "개미집 본점",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.1065,
+      "guide_lon": 129.0326,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00188",
+      "name_ko": "삼송초밥 부산남포동본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1082,
+      "guide_lon": 129.0281,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 961,
+      "discovery_ref": {
+        "lat": 35.099678,
+        "lon": 129.02986
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00189",
+      "name_ko": "막둥이네 양곱창",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0919,
+      "guide_lon": 129.046,
+      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_distance_m": null,
+      "discovery_ref": null,
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00190",
+      "name_ko": "1969부원동칼국수 남포본점",
+      "guide_source": "michelin-2026",
+      "guide_lat": 35.1142,
+      "guide_lon": 129.0459,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2149,
+      "discovery_ref": {
+        "lat": 35.097927,
+        "lon": 129.03316
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00191",
+      "name_ko": "본참치",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0976,
+      "guide_lon": 129.028,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1097,
+      "discovery_ref": {
+        "lat": 35.10548,
+        "lon": 129.03526
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00192",
+      "name_ko": "편의방",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.0998,
+      "guide_lon": 129.0327,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 2621,
+      "discovery_ref": {
+        "lat": 35.11915,
+        "lon": 129.01625
+      },
+      "navigation_ready": false
+    },
+    {
+      "canonical_id": "busan-G-00193",
+      "name_ko": "동광동 석기시대 본점",
+      "guide_source": "busan-mat-2026",
+      "guide_lat": 35.1132,
+      "guide_lon": 129.0494,
+      "coord_status": "COORD_PRESENT_NEEDS_VERIFICATION",
+      "coord_distance_m": 1536,
+      "discovery_ref": {
+        "lat": 35.106155,
+        "lon": 129.03487
+      },
+      "navigation_ready": null
+    },
+    {
+      "canonical_id": "busan-G-00194",
+      "name_ko": "할매복국",
+      "guide_source": "taegshlang-2025",
+      "guide_lat": 35.0912,
+      "guide_lon": 129.0403,
+      "coord_status": "ADDRESS_COORD_CONFLICT",
+      "coord_distance_m": 14231,
+      "discovery_ref": {
+        "lat": 35.160915,
+        "lon": 129.17152
+      },
+      "navigation_ready": false
+    }
+  ],
+  "priority_verification_list": [
+    {
+      "canonical_id": "busan-G-00164",
+      "name_ko": "슌사이쿠보 화명",
+      "dist_m": 17748
+    },
+    {
+      "canonical_id": "busan-G-00194",
+      "name_ko": "할매복국",
+      "dist_m": 14231
+    },
+    {
+      "canonical_id": "busan-G-00163",
+      "name_ko": "만호갈미샤브샤브",
+      "dist_m": 13231
+    },
+    {
+      "canonical_id": "busan-G-00161",
+      "name_ko": "토북베이커리",
+      "dist_m": 13049
+    },
+    {
+      "canonical_id": "busan-G-00162",
+      "name_ko": "방코",
+      "dist_m": 13014
+    },
+    {
+      "canonical_id": "busan-G-00004",
+      "name_ko": "톤쇼우",
+      "dist_m": 10295
+    },
+    {
+      "canonical_id": "busan-G-00079",
+      "name_ko": "칠암사계",
+      "dist_m": 8207
+    },
+    {
+      "canonical_id": "busan-G-00168",
+      "name_ko": "할매재첩국",
+      "dist_m": 5422
+    },
+    {
+      "canonical_id": "busan-G-00078",
+      "name_ko": "탐복 본점",
+      "dist_m": 5034
+    },
+    {
+      "canonical_id": "busan-G-00116",
+      "name_ko": "고민끝에여기",
+      "dist_m": 4713
+    },
+    {
+      "canonical_id": "busan-G-00132",
+      "name_ko": "델리봉",
+      "dist_m": 4572
+    },
+    {
+      "canonical_id": "busan-G-00047",
+      "name_ko": "으뜸이로리바타",
+      "dist_m": 4249
+    },
+    {
+      "canonical_id": "busan-G-00166",
+      "name_ko": "곰보식당",
+      "dist_m": 4198
+    },
+    {
+      "canonical_id": "busan-G-00027",
+      "name_ko": "스시시안",
+      "dist_m": 4112
+    },
+    {
+      "canonical_id": "busan-G-00156",
+      "name_ko": "합천국밥집",
+      "dist_m": 4099
+    },
+    {
+      "canonical_id": "busan-G-00167",
+      "name_ko": "하동재첩국",
+      "dist_m": 3640
+    },
+    {
+      "canonical_id": "busan-G-00071",
+      "name_ko": "랩24 바이 쿠무다",
+      "dist_m": 3611
+    },
+    {
+      "canonical_id": "busan-G-00075",
+      "name_ko": "대성갈치찌개구이",
+      "dist_m": 3610
+    },
+    {
+      "canonical_id": "busan-G-00117",
+      "name_ko": "제주복국",
+      "dist_m": 3585
+    },
+    {
+      "canonical_id": "busan-G-00011",
+      "name_ko": "미미루",
+      "dist_m": 3492
+    },
+    {
+      "canonical_id": "busan-G-00020",
+      "name_ko": "소문난주문진막국수",
+      "dist_m": 3432
+    },
+    {
+      "canonical_id": "busan-G-00007",
+      "name_ko": "모모스커피 본점",
+      "dist_m": 3262
+    },
+    {
+      "canonical_id": "busan-G-00097",
+      "name_ko": "범일빈대떡",
+      "dist_m": 3236
+    },
+    {
+      "canonical_id": "busan-G-00021",
+      "name_ko": "국제밀면 본점",
+      "dist_m": 2953
+    },
+    {
+      "canonical_id": "busan-G-00154",
+      "name_ko": "태화반점",
+      "dist_m": 2893
+    },
+    {
+      "canonical_id": "busan-G-00121",
+      "name_ko": "우리포차 본점",
+      "dist_m": 2832
+    },
+    {
+      "canonical_id": "busan-G-00111",
+      "name_ko": "재기돼지국밥",
+      "dist_m": 2658
+    },
+    {
+      "canonical_id": "busan-G-00192",
+      "name_ko": "편의방",
+      "dist_m": 2621
+    },
+    {
+      "canonical_id": "busan-G-00030",
+      "name_ko": "하레마",
+      "dist_m": 2600
+    },
+    {
+      "canonical_id": "busan-G-00013",
+      "name_ko": "원조꼬리곰집",
+      "dist_m": 2591
+    },
+    {
+      "canonical_id": "busan-G-00031",
+      "name_ko": "르도헤",
+      "dist_m": 2582
+    },
+    {
+      "canonical_id": "busan-G-00126",
+      "name_ko": "조이풀조이풀",
+      "dist_m": 2547
+    },
+    {
+      "canonical_id": "busan-G-00067",
+      "name_ko": "우봉 샤브 청사포점",
+      "dist_m": 2540
+    },
+    {
+      "canonical_id": "busan-G-00172",
+      "name_ko": "대티물꽁",
+      "dist_m": 2512
+    },
+    {
+      "canonical_id": "busan-G-00155",
+      "name_ko": "부산약콩밀면 이기대본점",
+      "dist_m": 2498
+    },
+    {
+      "canonical_id": "busan-G-00091",
+      "name_ko": "바오하우스",
+      "dist_m": 2486
+    },
+    {
+      "canonical_id": "busan-G-00025",
+      "name_ko": "디저트시네마",
+      "dist_m": 2438
+    },
+    {
+      "canonical_id": "busan-G-00074",
+      "name_ko": "무진장횟집 기장점",
+      "dist_m": 2426
+    },
+    {
+      "canonical_id": "busan-G-00098",
+      "name_ko": "백산키친",
+      "dist_m": 2392
+    },
+    {
+      "canonical_id": "busan-G-00125",
+      "name_ko": "아웃트로 바이 비토",
+      "dist_m": 2391
+    },
+    {
+      "canonical_id": "busan-G-00095",
+      "name_ko": "원조할매낙지",
+      "dist_m": 2347
+    },
+    {
+      "canonical_id": "busan-G-00093",
+      "name_ko": "손내향미",
+      "dist_m": 2240
+    },
+    {
+      "canonical_id": "busan-G-00092",
+      "name_ko": "코르 파스타 바",
+      "dist_m": 2223
+    },
+    {
+      "canonical_id": "busan-G-00010",
+      "name_ko": "봉식당",
+      "dist_m": 2198
+    },
+    {
+      "canonical_id": "busan-G-00009",
+      "name_ko": "프랑스 과자점 브리앙",
+      "dist_m": 2185
+    },
+    {
+      "canonical_id": "busan-G-00024",
+      "name_ko": "고등어다찌 연산본점",
+      "dist_m": 2158
+    },
+    {
+      "canonical_id": "busan-G-00190",
+      "name_ko": "1969부원동칼국수 남포본점",
+      "dist_m": 2149
+    },
+    {
+      "canonical_id": "busan-G-00182",
+      "name_ko": "동삼정",
+      "dist_m": 2105
+    },
+    {
+      "canonical_id": "busan-G-00058",
+      "name_ko": "선창횟집",
+      "dist_m": 2051
+    }
+  ]
+}
