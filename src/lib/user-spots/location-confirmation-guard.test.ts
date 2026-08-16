@@ -103,7 +103,11 @@ test("★저장 좌표는 확인하는 순간의 지도 중심이다", () => {
 test("★전체 화면 지도다 — 폼 안의 작은 상자가 아니다", () => {
   const s = strip(PICKER);
   assert.match(s, /fixed inset-0/);
-  assert.match(s, /ref=\{boxRef\} className="absolute inset-0/);
+  // 지도 컨테이너는 자기 크기를 스스로 갖는다. `absolute inset-0` 하나에
+  // 기대면 SDK 가 덮어쓰는 인라인 position 때문에 높이가 0 으로 접힌다 —
+  // 화면에 핀만 남고 타일이 사라진다.
+  assert.match(s, /<div className="absolute inset-0">\s*<div ref=\{boxRef\} className="w-full h-full/);
+  assert.doesNotMatch(s, /ref=\{boxRef\} className="absolute inset-0/);
 });
 
 test("★상단 안내와 하단 저장 CTA 가 있다", () => {

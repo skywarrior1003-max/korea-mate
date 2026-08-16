@@ -172,8 +172,14 @@ export default function SpotLocationPicker({
       className="fixed inset-0 z-50 bg-white"
       role="dialog" aria-modal="true" aria-label={title}
     >
-      {/* 지도 — 화면 전체다 */}
-      <div ref={boxRef} className="absolute inset-0 bg-[#F6F7F8]" />
+      {/* 지도 — 화면 전체다.
+          자리를 잡는 바깥 상자와 지도가 들어갈 안쪽 상자를 나눈다. SDK 는
+          지도를 만들 때 컨테이너에 인라인 `position: relative` 를 덮어쓴다.
+          한 상자에 `absolute inset-0` 만 주면 그 순간 inset 이 무효가 되고
+          높이가 0 으로 접혀 타일이 하나도 그려지지 않는다. */}
+      <div className="absolute inset-0">
+        <div ref={boxRef} className="w-full h-full bg-[#F6F7F8]" />
+      </div>
 
       {/* 안내 — 지도를 가리지 않을 만큼만 */}
       <div className="absolute top-4 right-4 left-4 sm:left-auto z-20 sm:max-w-[260px] rounded-2xl border border-black/5 bg-white/92 backdrop-blur-sm p-4 shadow-sm">
