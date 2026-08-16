@@ -1219,13 +1219,10 @@ export default function HomeClient() {
                       예전에는 Busan 만 따로 떼어 "활성" 이라고 적어 두었는데, 그
                       구분이 이제 선언 값으로 옮겨졌으므로 한 목록으로 둔다 —
                       도시가 열리면 값만 바꾸면 되고 이 파일은 손대지 않는다. */}
-                  {[
-                    { value: "Busan",    emoji: "🌊" },
-                    { value: "Seoul",    emoji: "🏙️" },
-                    { value: "Jeju",     emoji: "🏝️" },
-                    { value: "Gyeongju", emoji: "🏯" },
-                  ].map((c) => {
-                    const ready = cityConfigOf(c.value)?.planningReady === true;
+                  {["Busan", "Seoul", "Jeju", "Gyeongju"].map((value) => {
+                    const conf  = cityConfigOf(value);
+                    const c     = { value, emoji: conf?.emoji ?? "" };
+                    const ready = conf?.planningReady === true;
                     return (
                     <button
                       key={c.value}

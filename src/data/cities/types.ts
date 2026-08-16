@@ -58,6 +58,13 @@ export interface CityConfig {
   staticSpots: CitySpot[];
   seoDescription: string;
   /**
+   * 목록에서 이 도시를 가리키는 그림 하나.
+   *
+   * 화면마다 다른 그림을 들고 있었다 — 플래너는 제주를 🏝️, 홈 카드는 🌋 로
+   * 그렸다. 같은 도시가 자리마다 달라 보이면 사용자는 다른 곳으로 읽는다.
+   */
+  emoji: string;
+  /**
    * 이 도시로 여행 계획을 시작할 수 있는가.
    *
    * 장소가 몇 개 있는지로 판단하지 않는다. 수집이 잠깐 비었다고 계획 도시가

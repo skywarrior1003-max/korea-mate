@@ -17,7 +17,7 @@ import KoreaReadySection from "@/components/KoreaReadySection";
 import CityHeroArt from "@/components/home/CityHeroArt";
 import { cityVisual } from "@/lib/city-visual";
 import { DESIGN_PRIMARY, DESIGN_INK, FONT_SERIF } from "@/components/home/home-visual";
-import type { CityConfig } from "@/data/cities";
+import { CITY_CONFIGS, CITY_SLUGS, type CityConfig } from "@/data/cities";
 import type { CityEntryContent } from "@/data/cities/entry-content";
 
 interface Props {
@@ -241,13 +241,13 @@ export default function CityEntry({ city, content }: Props) {
       <nav aria-label={t("otherCities")} className="max-w-5xl mx-auto px-4 pb-10">
         <p className="text-xs font-black uppercase tracking-wide text-faint mb-3">{t("otherCities")}</p>
         <div className="flex flex-wrap gap-2">
-          {OTHER_CITIES.filter(s => s !== city.slug).map(slug => (
+          {CITY_SLUGS.filter(s => s !== city.slug).map(slug => (
             <Link
               key={slug}
               href={`/${slug}/`}
               className="gkm-focus min-h-11 px-4 inline-flex items-center rounded-full border border-line bg-surface text-sm font-semibold text-sub hover:text-ink transition-colors"
             >
-              {CITY_LABEL[slug]}
+              {CITY_CONFIGS[slug]!.name}
             </Link>
           ))}
         </div>
@@ -261,8 +261,6 @@ export default function CityEntry({ city, content }: Props) {
 
 // 도시 목록은 한 곳에서만 관리한다 — 페이지마다 링크를 하드코딩하면 도시를
 // 추가할 때 네 곳을 고쳐야 하고, 실제로 jeonju 가 빠져 있었다.
-const OTHER_CITIES = ["busan", "seoul", "jeju", "gyeongju", "jeonju"] as const;
-
-const CITY_LABEL: Record<string, string> = {
-  busan: "Busan", seoul: "Seoul", jeju: "Jeju", gyeongju: "Gyeongju", jeonju: "Jeonju",
-};
+//
+// 그 "한 곳" 이 이제 `CITY_CONFIGS` 다. 여기에 목록과 이름을 다시 적어 두면
+// 설정과 화면이 조용히 갈라진다.
