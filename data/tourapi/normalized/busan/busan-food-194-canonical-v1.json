@@ -184,8 +184,8 @@
       "address_ko": "부산 금정구 부산대학로50번길 43",
       "description_ko": "매일의 신선함에 진심을 더해 구워낸 야키토리 초성 'ㄷ'에 닭을 향한 진심을 담은 야키토리 전문점입니다. 매일 새벽 직배송받은 신선한 닭을 섬세하게 손질해 고급 비장탄으로 구워냅니다. 대학가의 젊은 에너지 속에서 섬세하고 깊은 맛의 숙련도를 느껴보세요.",
       "description_en": "Yakitori specialist in Busan National University area, grilling fresh free-range chicken daily over premium binchotan charcoal.",
-      "latitude": 35.2451,
-      "longitude": 129.0925,
+      "latitude": 35.2332982,
+      "longitude": 129.0863391,
       "phone": "0507-1338-4691",
       "tags": [
         "taste-of-busan"
@@ -205,14 +205,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -225,7 +224,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 금정구 부산대학로50번길 43",
+          "vworld_lat": 35.23329821883955,
+          "vworld_lng": 129.0863391187603,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -308,8 +318,8 @@
       "address_ko": "부산 금정구 금강로 247-10",
       "description_ko": "전국에서 유명한 부산 대표 돈카츠 저온, 고온, 레스팅, 숯불구이 네 단계의 조리 공정과 엄선한 재료는 톤쇼우의 명성을 유지하는 확고한 원칙입니다.",
       "description_en": "Busan's famous tonkatsu destination offering four-stage cooking: low heat, high heat, resting, and charcoal finishing.",
-      "latitude": 35.2465,
-      "longitude": 129.0985,
+      "latitude": 35.2304469,
+      "longitude": 129.0842701,
       "phone": "010-5685-5482",
       "tags": [
         "taste-of-busan"
@@ -331,15 +341,13 @@
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -365,14 +373,15 @@
           "navigation_ready": false
         },
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
-          "uc_seq": 1639,
-          "api_addr": "부산 수영구 광안해변로279번길 13 (민락동)",
-          "canon_addr": "부산 금정구 금강로 247-10",
-          "match_level": "DIFFERENT",
-          "guide_dist_m": 10295
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 금정구 금강로 247-10",
+          "vworld_lat": 35.230446943838416,
+          "vworld_lng": 129.0842700588925,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -456,8 +465,8 @@
       "address_ko": "부산 금정구 동부곡로5번길 83",
       "description_ko": "비법 숙성으로 완성한 겉바속촉 돈가스의 정석 엄선된 국내산 돈육에 비밀스러운 숙성 과정을 더해 풍부한 육즙과 부드러운 식감을 선사합니다.",
       "description_en": "Korean-style tonkatsu featuring secret slow-aging process, delivering juicy flavors and crispy texture with a signature spicy sauce.",
-      "latitude": 35.2306,
-      "longitude": 129.0868,
+      "latitude": 35.2295017,
+      "longitude": 129.0928289,
       "phone": "070-8259-8403",
       "tags": [
         "taste-of-busan"
@@ -477,14 +486,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -497,7 +505,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 금정구 동부곡로5번길 83",
+          "vworld_lat": 35.22950169925849,
+          "vworld_lng": 129.09282887785628,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -583,8 +602,8 @@
       "address_ko": "부산 동래구 온천장로119번길 28",
       "description_ko": "대를 이어 지켜낸 곰탕 한 그릇 1986년부터 2대째 가업을 이어오며 변함없는 맛을 위한 원칙을 고수합니다. 순수한 한우 뼈만을 사용해 32시간 고아냅니다.",
       "description_en": "Second-generation beef bone soup restaurant cooking pure Korean beef bones for 32 hours, open since 1986.",
-      "latitude": 35.1883,
-      "longitude": 129.0944,
+      "latitude": 35.2217326,
+      "longitude": 129.083375,
       "phone": "0507-1407-6768",
       "tags": [
         "taste-of-busan",
@@ -605,14 +624,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -625,7 +643,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동래구 온천장로119번길 28",
+          "vworld_lat": 35.221732606569205,
+          "vworld_lng": 129.08337502783834,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -984,8 +1013,8 @@
       "address_ko": "부산 동래구 온천천로 71-1",
       "description_ko": "좋은 재료가 선사하는 부산 대표 빵지순례 직접 키운 천연 발효종과 희소성 있는 밀가루를 블렌딩하여 빵을 만듭니다. 밀가루 없이 100% 국산 찹쌀로 만든 쿠루미 모찌가 인기입니다.",
       "description_en": "Artisan bakery famous for breads made with house-cultured natural starters and rare heritage wheat — known for mochi rolls.",
-      "latitude": 35.1964,
-      "longitude": 129.0731,
+      "latitude": 35.2127566,
+      "longitude": 129.0804655,
       "phone": "051-553-8725",
       "tags": [
         "taste-of-busan",
@@ -1006,14 +1035,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -1026,7 +1054,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동래구 온천천로 71-1",
+          "vworld_lat": 35.21275657686216,
+          "vworld_lng": 129.08046554430342,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1041,8 +1080,8 @@
       "address_ko": "부산 동래구 중앙대로1367번길 72",
       "description_ko": "좋은 재료와 전문성이 만나 완성한 줄 서는 돼지 생갈비 청정 남해에서 마늘을 먹여 키운 프리미엄 돼지 생갈비를 선보입니다. 300시간 저온 숙성이 부드러운 풍미를 선사합니다.",
       "description_en": "Premium pork galbi specialist raising pigs on garlic from South Sea, aged 300 hours for unparalleled tenderness.",
-      "latitude": 35.2088,
-      "longitude": 129.0878,
+      "latitude": 35.2104804,
+      "longitude": 129.0742086,
       "phone": "051-555-7021",
       "tags": [
         "taste-of-busan"
@@ -1062,14 +1101,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -1082,7 +1120,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동래구 중앙대로1367번길 72",
+          "vworld_lat": 35.210480360196364,
+          "vworld_lng": 129.07420863055592,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1097,8 +1146,8 @@
       "address_ko": "부산 동래구 중앙대로1367번길 18",
       "description_ko": "제철의 신선함과 일본 현지의 맛이 머무는 공간 제철 재료를 활용한 캐주얼 이자카야로, 다채로운 숙성 사시미와 섬세한 요리가 이곳의 매력입니다.",
       "description_en": "Casual izakaya with a curated sake list, seasonal sashimi, and refined Japanese small plates in Dongrae.",
-      "latitude": 35.1871,
-      "longitude": 129.0962,
+      "latitude": 35.2096076,
+      "longitude": 129.0770349,
       "phone": "0507-1351-0470",
       "tags": [
         "taste-of-busan"
@@ -1118,14 +1167,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -1138,7 +1186,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동래구 중앙대로1367번길 18",
+          "vworld_lat": 35.20960764001603,
+          "vworld_lng": 129.07703491607862,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1339,8 +1398,8 @@
       "address_ko": "부산 동래구 사직로58번길 8",
       "description_ko": "야구의 열기 속에 즐기는 막국수와 수육의 조화 프로야구의 성지 사직야구장 근처에 있는 부산의 대표적인 막국수 전문점입니다.",
       "description_en": "Popular buckwheat noodle restaurant near Sajik Baseball Stadium, pairing chewy noodles with thick braised pork slices.",
-      "latitude": 35.211,
-      "longitude": 129.0926,
+      "latitude": 35.1959875,
+      "longitude": 129.0596333,
       "phone": "051-501-7856",
       "tags": [
         "taste-of-busan",
@@ -1363,20 +1422,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동래구 사직로58번길 8",
+          "vworld_lat": 35.19598754294836,
+          "vworld_lng": 129.059633337175,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1526,8 +1594,8 @@
       "address_ko": "부산 연제구 반송로 68",
       "description_ko": "좋은 재료로 담아낸 남다른 국수 파주 장단콩과 신안 천일염으로 맛을 낸 콩국수가 크림처럼 부드럽고 짙은 고소함을 선사합니다.",
       "description_en": "Refined Korean noodle restaurant serving creamy soybean cold noodles and anchovy broth noodles with premium local ingredients.",
-      "latitude": 35.1868,
-      "longitude": 129.0935,
+      "latitude": 35.189955,
+      "longitude": 129.0871429,
       "phone": "051-851-3313",
       "tags": [
         "taste-of-busan",
@@ -1548,14 +1616,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -1568,7 +1635,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 연제구 반송로 68",
+          "vworld_lat": 35.18995496963528,
+          "vworld_lng": 129.08714289298075,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1720,8 +1798,8 @@
       "address_ko": "부산 연제구 과정로191번가길 70",
       "description_ko": "자꾸 생각나는 인생 칼국수 1982년 문을 연 칼국수 전문점입니다. 맑고 깔끔한 국물에 이곳만의 매콤한 양파 양념장이 변함없는 맛을 전합니다.",
       "description_en": "Michelin Selected kalguksu with clear broth and house-fermented spicy onion sauce, open since 1982 in Yeonje-gu.",
-      "latitude": 35.1763,
-      "longitude": 129.0831,
+      "latitude": 35.1871681,
+      "longitude": 129.1024848,
       "phone": "051-751-9639",
       "tags": [
         "michelin",
@@ -1743,14 +1821,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -1763,7 +1840,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 연제구 과정로191번가길 70",
+          "vworld_lat": 35.187168095760626,
+          "vworld_lng": 129.10248480411894,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -1778,8 +1866,8 @@
       "address_ko": "부산 해운대구 센텀1로 9 E동상가, 2층",
       "description_ko": "붉은 식초가 깨우는 오마카세의 감칠맛 오랜 시간 발효해 깊은 풍미를 머금은 붉은 식초로 샤리를 빚습니다. 예약제로만 운영되는 고요한 공간에서 오마카세의 품격을 합리적으로 누리세요.",
       "description_en": "Red-vinegar omakase sushi in Centum City, offering intimate reservation-only counter dining with refined edomae techniques.",
-      "latitude": 35.158,
-      "longitude": 129.1747,
+      "latitude": 35.1678379,
+      "longitude": 129.1309612,
       "phone": "051-611-2684",
       "tags": [
         "taste-of-busan",
@@ -1803,15 +1891,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1822,14 +1908,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SAME_DISTRICT_NAME_MATCH",
-          "uc_seq": 1561,
-          "api_addr": "부산 해운대구 센텀1로 9 (우동)",
-          "canon_addr": "부산 해운대구 센텀1로 9 E동상가, 2층",
-          "match_level": "SAME_DISTRICT",
-          "guide_dist_m": 4123
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 센텀1로 9 E동상가",
+          "vworld_lat": 35.16783793848171,
+          "vworld_lng": 129.13096121141848,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -2122,8 +2209,8 @@
       "address_ko": "부산 해운대구 마린시티3로 23, 2층",
       "description_ko": "정성으로 일궈낸 순수한 메밀의 시간 국산 메밀 100%로 직접 뽑아낸 면에 재료 본연의 담백함과 쫄깃함을 함께 담았습니다.",
       "description_en": "Michelin Bib Gourmand soba specialist using 100% domestic buckwheat for pure chewy noodles paired with perilla oil.",
-      "latitude": 35.1529,
-      "longitude": 129.1539,
+      "latitude": 35.1566269,
+      "longitude": 129.1469218,
       "phone": "051-744-9944",
       "tags": [
         "michelin",
@@ -2145,14 +2232,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -2165,7 +2251,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 마린시티3로 23",
+          "vworld_lat": 35.15662691474743,
+          "vworld_lng": 129.14692179918495,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2180,8 +2277,8 @@
       "address_ko": "부산 해운대구 해운대해변로 163",
       "description_ko": "오랜 정성이 농축된 곰탕 한 그릇 엄선한 한우 사골을 전통 방식으로 오랜 시간 고아내어 깊고 부드러운 진국을 담아냅니다.",
       "description_en": "Haeundae beachfront gomtang restaurant committed to serving the world with traditional Korean beef bone broth.",
-      "latitude": 35.1748,
-      "longitude": 129.1564,
+      "latitude": 35.1592253,
+      "longitude": 129.1500694,
       "phone": "051-731-0157",
       "tags": [
         "taste-of-busan",
@@ -2204,20 +2301,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 해운대해변로 163",
+          "vworld_lat": 35.159225319276786,
+          "vworld_lng": 129.1500694294809,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2232,8 +2338,8 @@
       "address_ko": "부산 해운대구 해운대해변로209번길 13, 2층",
       "description_ko": "기다림 끝에 얻어낸 숙성 일식의 풍미 생선 숙성 특허를 보유한 셰프의 정교한 관리 아래 모든 재료는 4일 이상의 숙성을 거쳐 최상의 컨디션으로 거듭납니다.",
       "description_en": "Michelin Selected Japanese restaurant where every ingredient undergoes 4+ days of expert aging for optimal umami depth.",
-      "latitude": 35.1556,
-      "longitude": 129.1738,
+      "latitude": 35.1596216,
+      "longitude": 129.1538286,
       "phone": "0507-1408-3418",
       "tags": [
         "michelin",
@@ -2255,14 +2361,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -2275,7 +2380,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 해운대해변로209번길 13",
+          "vworld_lat": 35.15962160607961,
+          "vworld_lng": 129.15382860917327,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2500,8 +2616,8 @@
       "address_ko": "부산 해운대구 우동1로 19",
       "description_ko": "정교함 위에 펼쳐지는 현대적 소바 직접 제면한 일본식 메밀면을 바탕으로 감각적인 소바요리를 선보입니다.",
       "description_en": "Contemporary soba restaurant serving hand-pulled Japanese buckwheat noodles with clean, refined seasonal fish accompaniments.",
-      "latitude": 35.1719,
-      "longitude": 129.175,
+      "latitude": 35.1634773,
+      "longitude": 129.1561657,
       "phone": "0507-1371-5788",
       "tags": [
         "taste-of-busan"
@@ -2521,14 +2637,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -2541,7 +2656,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 우동1로 19",
+          "vworld_lat": 35.163477317831244,
+          "vworld_lng": 129.1561657424033,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2556,8 +2682,8 @@
       "address_ko": "부산 해운대구 우동1로 25",
       "description_ko": "'마음에 점을 찍다'는 딤섬의 의미를 담다 육즙 가득한 샤오롱바오와 탄력 있는 새우 교자 등 정통의 맛을 선보입니다.",
       "description_en": "Michelin Selected dim sum restaurant in Haeri-dan-gil serving juicy xiaolongbao and delicate shrimp dumplings.",
-      "latitude": 35.1619,
-      "longitude": 129.1606,
+      "latitude": 35.163938,
+      "longitude": 129.1564565,
       "phone": "051-741-3638",
       "tags": [
         "michelin",
@@ -2578,14 +2704,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -2598,7 +2723,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 우동1로 25",
+          "vworld_lat": 35.16393795403622,
+          "vworld_lng": 129.15645652853408,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2613,8 +2749,8 @@
       "address_ko": "부산 해운대구 우동1로50번길 5",
       "description_ko": "파리의 시간을 정교하게 담아낸 샤퀴테리 파리 현지의 전문점에서 쌓은 자격과 경험을 바탕으로 모든 제품을 직접 만드는 요리형 샤퀴테리 전문점입니다.",
       "description_en": "French charcuterie dining where the chef personally creates all products based on Paris-trained skills and recipes.",
-      "latitude": 35.1558,
-      "longitude": 129.1516,
+      "latitude": 35.1661613,
+      "longitude": 129.1578271,
       "phone": "0507-1475-1682",
       "tags": [
         "taste-of-busan",
@@ -2635,14 +2771,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -2655,7 +2790,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 우동1로50번길 5",
+          "vworld_lat": 35.166161342823415,
+          "vworld_lng": 129.15782710727757,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2873,8 +3019,8 @@
       "address_ko": "부산 해운대구 구남로 9, 2층",
       "description_ko": "계절이 머무는 프라이빗한 고급 코스 요리 독립된 공간에서 펼쳐지는 가이세키 요리로 품격 있는 미식 경험을 선사합니다.",
       "description_en": "Private kaiseki dining featuring seasonal ingredients in individual rooms, offering an intimate and distraction-free experience.",
-      "latitude": 35.1685,
-      "longitude": 129.155,
+      "latitude": 35.1632979,
+      "longitude": 129.1596094,
       "phone": "0507-1354-8060",
       "tags": [
         "taste-of-busan",
@@ -2898,15 +3044,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2917,14 +3061,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SAME_DISTRICT_NAME_MATCH",
-          "uc_seq": 1847,
-          "api_addr": "해운대구 구남로 9, 라마다앙코르호텔 214호",
-          "canon_addr": "부산 해운대구 구남로 9, 2층",
-          "match_level": "SAME_DISTRICT",
-          "guide_dist_m": 713
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 구남로 9",
+          "vworld_lat": 35.163297873648396,
+          "vworld_lng": 129.1596093715625,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -2940,8 +3085,8 @@
       "address_ko": "부산 해운대구 구남로24번길 8",
       "description_ko": "일본 가옥의 감성을 담은 장어 덮밥 파란 담장과 다다미 좌석이 자아내는 일본 정취 속에서 고슬고슬한 밥과 비법소스를 머금은 히츠마부시를 선보입니다.",
       "description_en": "Michelin Bib Gourmand hitsumabu eel rice in a Japanese-style wooden house setting in Haeundae's back streets.",
-      "latitude": 35.1518,
-      "longitude": 129.1729,
+      "latitude": 35.1618194,
+      "longitude": 129.1596548,
       "phone": "051-746-3730",
       "tags": [
         "michelin",
@@ -2965,22 +3110,31 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "identity_verdict": "IDENTITY_CONFIRMED_SAME",
       "identity_evidence": "주소 동일: 해운대구 구남로24번길 8",
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 구남로24번길 8",
+          "vworld_lat": 35.16181944835611,
+          "vworld_lng": 129.1596548317997,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -2995,8 +3149,8 @@
       "address_ko": "부산 해운대구 구남로 21, 상가동 2층",
       "description_ko": "제철 식재료로 만나는 일식 소요리 오마카세 당일 공수한 제철 해산물로 본연의 담백한 맛을 살린 소요리 오마카세를 선보입니다.",
       "description_en": "Michelin Selected small-plate Japanese omakase with seasonal Busan seafood, known for exquisite stone pot rice.",
-      "latitude": 35.1741,
-      "longitude": 129.1684,
+      "latitude": 35.1628575,
+      "longitude": 129.1602053,
       "phone": "0507-1386-6012",
       "tags": [
         "michelin",
@@ -3018,14 +3172,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -3038,7 +3191,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 구남로 21",
+          "vworld_lat": 35.162857531068795,
+          "vworld_lng": 129.16020530599482,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -3053,8 +3217,8 @@
       "address_ko": "부산 해운대구 구남로 21, 상가동 2층",
       "description_ko": "일본식 화로 구이로 만나는 일식 코스 일본식 화로 '이로리'에서 제철 생선이 익어가는 이국적인 풍경이 미식의 기대를 높입니다.",
       "description_en": "Michelin Selected irori-style Japanese charcoal course with seasonal grilled fish as centrepiece, in Haeundae.",
-      "latitude": 35.1578,
-      "longitude": 129.1517,
+      "latitude": 35.1628575,
+      "longitude": 129.1602053,
       "phone": "051-743-1020",
       "tags": [
         "michelin",
@@ -3079,15 +3243,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3097,14 +3259,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
-          "uc_seq": 2364,
-          "api_addr": "수영구 수영로408번길 20, 1층",
-          "canon_addr": "부산 해운대구 구남로 21, 상가동 2층",
-          "match_level": "DIFFERENT",
-          "guide_dist_m": 4249
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 구남로 21",
+          "vworld_lat": 35.162857531068795,
+          "vworld_lng": 129.16020530599482,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -3120,8 +3283,8 @@
       "address_ko": "부산 해운대구 구남로 21, 상가동 3층",
       "description_ko": "부부의 진심이 담긴 정갈한 정통 일식 코스 일본에서 수학한 셰프와 그의 일본인 아내가 함께 운영하며 매일 수산시장에서 직접 공수한 신선한 제철 식재료로 가이세키 요리를 준비합니다.",
       "description_en": "Michelin 1-star traditional Japanese kaiseki operated by a chef and his Japanese wife, sourcing daily from the fish market.",
-      "latitude": 35.1595,
-      "longitude": 129.1605,
+      "latitude": 35.1628575,
+      "longitude": 129.1602053,
       "phone": "0507-1349-9891",
       "tags": [
         "michelin",
@@ -3147,15 +3310,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3166,14 +3327,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
-          "uc_seq": 1844,
-          "api_addr": "해운대구 해운대해변로 298번길 24 \n팔레드시즈 2층2-4호",
-          "canon_addr": "부산 해운대구 구남로 21, 상가동 3층",
-          "match_level": "DIFFERENT",
-          "guide_dist_m": 558
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 구남로 21",
+          "vworld_lat": 35.162857531068795,
+          "vworld_lng": 129.16020530599482,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -3519,8 +3681,8 @@
       "address_ko": "부산 해운대구 해운대해변로 296, 지하 1층",
       "description_ko": "최상급으로 즐기는 다양한 한우의 맛 서울 마장동의 전설적인 한우 명가를 해운대에서도 만날 수 있습니다.",
       "description_en": "Michelin Selected beef omakase from the legendary Majangdong butcher family, offering aged prime Korean beef cuts daily.",
-      "latitude": 35.175,
-      "longitude": 129.1566,
+      "latitude": 35.160033,
+      "longitude": 129.1641158,
       "phone": "051-749-2400",
       "tags": [
         "michelin",
@@ -3542,14 +3704,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -3562,7 +3723,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 해운대해변로 296",
+          "vworld_lat": 35.16003304222889,
+          "vworld_lng": 129.1641158226623,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -3731,8 +3903,8 @@
       "address_ko": "부산 해운대구 달맞이길62번길 49, 3층",
       "description_ko": "셰프의 취향이 가득 담긴 세련된 다이닝 바 셰프가 먹고 싶은 메뉴와 술을 제안하는 이곳은 수려한 풍경과 수준 높은 요리가 어우러진 다이닝 바입니다.",
       "description_en": "Stylish dining bar with curated cocktails and sophisticated small-plate cuisine by a talented young chef in Dalmaji-gil.",
-      "latitude": 35.1706,
-      "longitude": 129.17,
+      "latitude": 35.1577621,
+      "longitude": 129.1731571,
       "phone": "0507-1411-0178",
       "tags": [
         "taste-of-busan"
@@ -3754,15 +3926,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": false,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "OFFICIAL_COORD_ADDR_MISMATCH_REVERTED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3772,22 +3942,17 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "ADDR_MISMATCH_REVERTED",
-          "authority_source": "FOODSERVICE_OFFICIAL",
-          "uc_seq": 2339,
-          "api_lat": 35.159527,
-          "api_lng": 129.17055,
-          "api_addr": "해운대구 달맞이길 62번길 19, 2층",
-          "addr_match_level": "SAME",
-          "guide_dist_m": 1232,
-          "phone_match": true,
-          "navigation_ready": false,
-          "note": "address identical, FoodService coord authoritative",
-          "revert_task": "TASK-BUSAN-FOOD-194-AI-GATE-AND-QUICK-COORD-FIX-V1",
-          "revert_as_of": "2026-08-16T09:56:47Z",
-          "revert_reason": "canonical address '부산 해운대구 달맞이길62번길 49, 3층' has building 49; api_addr '해운대구 달맞이길 62번길 19, 2층' has building 19 — different locations. SOURCE_VERIFIED_NAV_READY was incorrect; navigation_ready reverted to False."
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 달맞이길62번길 49",
+          "vworld_lat": 35.15776208289362,
+          "vworld_lng": 129.17315706064738,
+          "vworld_addr_type": "road",
+          "navigation_ready": true,
+          "resolved_from": "ADDR_MISMATCH_REVERTED",
+          "revert_note": "VWorld geocoded canonical address 달맞이길62번길 49 directly. API entity was at building 19; canonical at 49. VWorld confirms building 49 exists at these coordinates."
         }
       }
     },
@@ -3871,8 +4036,8 @@
       "address_ko": "부산 해운대구 달맞이길65번길 88",
       "description_ko": "앞으로의 한식이 기대되는 젊은 셰프의 프렌치 감각 프렌치와 한식으로 재해석한 과감한 컨템포러리 요리로 젊은 셰프의 시선이 돋보입니다.",
       "description_en": "Michelin Selected contemporary Korean dining where a young French-trained chef interprets Busan's coastal ingredients.",
-      "latitude": 35.1729,
-      "longitude": 129.1588,
+      "latitude": 35.1587295,
+      "longitude": 129.1758563,
       "phone": "0507-1480-1465",
       "tags": [
         "michelin",
@@ -3894,14 +4059,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -3914,7 +4078,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 달맞이길65번길 88",
+          "vworld_lat": 35.158729543372544,
+          "vworld_lng": 129.17585630418455,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4073,8 +4248,8 @@
       "address_ko": "부산 해운대구 달맞이길117번가길 219, 2층",
       "description_ko": "부부 셰프가 일궈낸 이탈리안 팜투테이블 농장에서 수확한 채소와 생면, 생햄 등 대부분의 식재료를 직접 만들어 자연스러운 본질의 맛을 드러냅니다.",
       "description_en": "Michelin 1-star Italian farm-to-table restaurant where a husband-and-wife team grow their own vegetables and cure meats.",
-      "latitude": 35.1744,
-      "longitude": 129.151,
+      "latitude": 35.1612524,
+      "longitude": 129.1832641,
       "phone": "0507-1349-1045",
       "tags": [
         "michelin",
@@ -4097,14 +4272,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4117,7 +4291,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 달맞이길117번가길 219",
+          "vworld_lat": 35.161252445182,
+          "vworld_lng": 129.1832640959453,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4132,8 +4317,8 @@
       "address_ko": "부산 해운대구 달맞이길 239-16",
       "description_ko": "부산에서 가장 핫한 정육점의 두 번째 실험실 고품격 한우와 굴을 활용한 창의적인 바 요리를 선보입니다.",
       "description_en": "Trendy Korean beef and oyster bar concept reimagining the legacy of Shindo Livestock, a 1975 Busan institution.",
-      "latitude": 35.1521,
-      "longitude": 129.1649,
+      "latitude": 35.1624717,
+      "longitude": 129.1850368,
       "phone": "0507-1303-5664",
       "tags": [
         "taste-of-busan",
@@ -4154,14 +4339,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4174,7 +4358,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 달맞이길 239-16",
+          "vworld_lat": 35.16247165696465,
+          "vworld_lng": 129.18503682022526,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4256,8 +4451,8 @@
       "address_ko": "부산 해운대구 청사포로67번길 39",
       "description_ko": "청사포에서 즐기는 나고야 향토 요리 히츠마부시 1948년 나고야 '시라카와'의 전통을 잇는 히츠마부시 전문점입니다.",
       "description_en": "Michelin Selected hitsumabu eel restaurant in Chungsa-po tracing the 1948 Nagoya tradition with double-grilled eel.",
-      "latitude": 35.167,
-      "longitude": 129.1582,
+      "latitude": 35.1631491,
+      "longitude": 129.1893563,
       "phone": "051-702-6250",
       "tags": [
         "michelin",
@@ -4279,14 +4474,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4299,7 +4493,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 청사포로67번길 39",
+          "vworld_lat": 35.16314911310156,
+          "vworld_lng": 129.18935627221157,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4314,8 +4519,8 @@
       "address_ko": "부산 해운대구 청사포로67번길 62",
       "description_ko": "지극정성으로 담아낸 보리밥 한 상 차림 매일 아침 정성껏 준비한 열 가지 나물과 반찬으로 보리밥 한 상을 차려냅니다.",
       "description_en": "Set-meal barley rice restaurant serving 10+ seasonal namul dishes in Chungsa-po, prepared fresh every morning.",
-      "latitude": 35.1524,
-      "longitude": 129.1527,
+      "latitude": 35.162926,
+      "longitude": 129.1906363,
       "phone": "0507-1381-3886",
       "tags": [
         "taste-of-busan"
@@ -4335,14 +4540,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4355,7 +4559,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 청사포로67번길 62",
+          "vworld_lat": 35.162926038378046,
+          "vworld_lng": 129.19063629087094,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4437,8 +4652,8 @@
       "address_ko": "부산 해운대구 좌동로10번길 75",
       "description_ko": "3대 역사가 우러난 맑은 돼지국밥 해운대에서 3대째 이어온 부산식 맑은 돼지국밥으로 토렴 방식이 유명합니다.",
       "description_en": "Third-generation clear pork rice soup restaurant in Haeundae using toryeom (pour-over) style for clean rich broth.",
-      "latitude": 35.1564,
-      "longitude": 129.1713,
+      "latitude": 35.1678455,
+      "longitude": 129.1726953,
       "phone": "0507-1358-3544",
       "tags": [
         "taste-of-busan",
@@ -4461,20 +4676,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 해운대구 좌동로10번길 75",
+          "vworld_lat": 35.167845497771324,
+          "vworld_lng": 129.17269529969207,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4693,8 +4917,8 @@
       "address_ko": "부산 기장군 기장읍 공수2길 11",
       "description_ko": "짚불 향 머금은 부산의 별미, 곰장어 매일 들여오는 곰장어를 짚불에 구워내는 송정해수욕장 맛집입니다.",
       "description_en": "Straw-fire grilled conger eel in Songjeong, smoked over fragrant rice straw with house-made kimchi on the side.",
-      "latitude": 35.2522,
-      "longitude": 129.216,
+      "latitude": 35.1853619,
+      "longitude": 129.2116096,
       "phone": "051-721-4539",
       "tags": [
         "taste-of-busan",
@@ -4715,14 +4939,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4735,7 +4958,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 기장군 기장읍 공수2길 11",
+          "vworld_lat": 35.18536190853289,
+          "vworld_lng": 129.21160955175247,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4750,8 +4984,8 @@
       "address_ko": "부산 기장군 기장읍 내리1길 10",
       "description_ko": "기장에서 만나는 현대적인 부산의 맛 다시마, 미역 등 지역의 신선한 재료를 현대적으로 재해석한 한식 컨템포러리 다이닝입니다.",
       "description_en": "Contemporary Korean restaurant in Gijang using local seaweed, kelp, and seasonal ingredients in creative set menus.",
-      "latitude": 35.2439,
-      "longitude": 129.2011,
+      "latitude": 35.2083626,
+      "longitude": 129.2073472,
       "phone": "0507-1370-3441",
       "tags": [
         "taste-of-busan",
@@ -4772,14 +5006,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4792,7 +5025,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 기장군 기장읍 내리1길 10",
+          "vworld_lat": 35.208362577156535,
+          "vworld_lng": 129.2073472408236,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4942,8 +5186,8 @@
       "address_ko": "부산 기장군 일광읍 기장해안로 1312",
       "description_ko": "학리항 자연산 회와 기장 대표 멸치쌈밥 일광읍 최대 어항인 학리항에서 공수한 제철 수산물로 가득한 이곳입니다.",
       "description_en": "Anchovy ssambap (leaf-wrap rice) and seasonal wild-catch sashimi from Hakri port, a Gijang must-visit.",
-      "latitude": 35.2344,
-      "longitude": 129.2099,
+      "latitude": 35.2609109,
+      "longitude": 129.2335258,
       "phone": "051-724-7188",
       "tags": [
         "taste-of-busan",
@@ -4964,14 +5208,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -4984,7 +5227,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 기장군 일광읍 기장해안로 1312",
+          "vworld_lat": 35.26091090270026,
+          "vworld_lng": 129.233525809759,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -4999,8 +5253,8 @@
       "address_ko": "부산 기장군 일광읍 산수곡길 8-3",
       "description_ko": "명인이 직접 끓인 곰탕 한 솥 한식 명인 박경례 셰프가 직접 가마솥에 끓인 소머리곰탕, 도가니탕이 일품입니다.",
       "description_en": "Culinary master Park Gyeong-rye's famous cauldron-cooked ox head soup and ox knee stew in Ilgwang.",
-      "latitude": 35.2462,
-      "longitude": 129.2019,
+      "latitude": 35.2872408,
+      "longitude": 129.2125185,
       "phone": "051-758-6349",
       "tags": [
         "taste-of-busan",
@@ -5021,14 +5275,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5041,7 +5294,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 기장군 일광읍 산수곡길 8-3",
+          "vworld_lat": 35.28724075307613,
+          "vworld_lng": 129.212518491205,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -5262,8 +5526,8 @@
       "address_ko": "부산 부산진구 부전로 75-5",
       "description_ko": "예약이 가장 치열한 일식 주점 일식을 모티브로 원재료의 맛을 살린 창의적인 요리를 선보입니다.",
       "description_en": "High-demand Japanese-style pub offering creative small plates with premium ingredients — reserve weeks in advance.",
-      "latitude": 35.1587,
-      "longitude": 129.0446,
+      "latitude": 35.1565985,
+      "longitude": 129.0542935,
       "phone": "051-808-4036",
       "tags": [
         "taste-of-busan",
@@ -5286,15 +5550,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5304,14 +5566,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SAME_DISTRICT_NAME_MATCH",
-          "uc_seq": 1111,
-          "api_addr": "부산진구 가야대로750번길 17",
-          "canon_addr": "부산 부산진구 부전로 75-5",
-          "match_level": "SAME_DISTRICT",
-          "guide_dist_m": 869
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 부전로 75-5",
+          "vworld_lat": 35.156598506525626,
+          "vworld_lng": 129.05429349835833,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -5394,8 +5657,8 @@
       "address_ko": "부산 부산진구 동천로107번길 24, 2층",
       "description_ko": "자연산 도다리와 감성돔 두 가지로 지켜온 명성 1976년부터 2대째 이어온 노포입니다.",
       "description_en": "Second-generation wild-caught sashimi restaurant serving only natural flounder in spring-summer and black sea bream in fall-winter.",
-      "latitude": 35.1738,
-      "longitude": 129.0567,
+      "latitude": 35.1583723,
+      "longitude": 129.0609589,
       "phone": "051-808-4162",
       "tags": [
         "taste-of-busan",
@@ -5416,14 +5679,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5436,7 +5698,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 동천로107번길 24",
+          "vworld_lat": 35.1583723010431,
+          "vworld_lng": 129.06095894728918,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -5451,8 +5724,8 @@
       "address_ko": "부산 부산진구 서전로9번길 60",
       "description_ko": "부산에서 맛보는 진한 대만 감성 대만의 유명 거리 '융캉제'를 모티브로 현지 분위기를 고스란히 담아낸 공간입니다.",
       "description_en": "Taiwanese-style restaurant inspired by Yongkang Street in Taipei, serving rich beef noodles and savory tantan noodles.",
-      "latitude": 35.1515,
-      "longitude": 129.0404,
+      "latitude": 35.1601592,
+      "longitude": 129.0620227,
       "phone": "0507-1334-6094",
       "tags": [
         "taste-of-busan",
@@ -5473,14 +5746,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5493,7 +5765,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 서전로9번길 60",
+          "vworld_lat": 35.160159190429304,
+          "vworld_lng": 129.06202267038535,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -5508,8 +5791,8 @@
       "address_ko": "부산 부산진구 동천로108번길 9-7",
       "description_ko": "토종닭 본연의 꼬치구이 코스 매일 아침 국내산 토종닭을 직접 발골하고 해체해 신선함을 극대화했습니다.",
       "description_en": "Michelin Bib Gourmand yakitori course using freshly deboned free-range Korean chicken grilled over premium binchotan charcoal.",
-      "latitude": 35.1691,
-      "longitude": 129.0503,
+      "latitude": 35.1586671,
+      "longitude": 129.0628323,
       "phone": "010-9649-9293",
       "tags": [
         "michelin",
@@ -5531,14 +5814,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5551,7 +5833,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 동천로108번길 9-7",
+          "vworld_lat": 35.158667087026515,
+          "vworld_lng": 129.06283225740765,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -5703,8 +5996,8 @@
       "address_ko": "부산 부산진구 동천로108번길 41",
       "description_ko": "고기·토르티야·살사, 멕시코의 완벽한 밸런스 조용한 골목에 위치한 멕시코 요리 전문점으로 젊은 셰프의 깊은 애정이 담긴 공간입니다.",
       "description_en": "Michelin Selected Mexican restaurant in Jeonpo offering fresh hand-pressed tortillas and scratch-made salsa daily.",
-      "latitude": 35.1749,
-      "longitude": 129.0404,
+      "latitude": 35.1583939,
+      "longitude": 129.0646465,
       "phone": "0507-1399-9208",
       "tags": [
         "michelin",
@@ -5726,14 +6019,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5746,7 +6038,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 동천로108번길 41",
+          "vworld_lat": 35.1583939499642,
+          "vworld_lng": 129.06464651705733,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -5761,8 +6064,8 @@
       "address_ko": "부산 부산진구 전포대로223번길 14-2",
       "description_ko": "예약제로 맛보는 닭꼬치구이 전포동 골목에서 일본 현지 이자카야의 정취를 전합니다.",
       "description_en": "Reservation-only yakitori restaurant in Jeonpo with Japanese izakaya atmosphere and same-day fresh chicken ingredients.",
-      "latitude": 35.1551,
-      "longitude": 129.0564,
+      "latitude": 35.1569588,
+      "longitude": 129.0644825,
       "phone": "010-4463-4363",
       "tags": [
         "taste-of-busan"
@@ -5782,14 +6085,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -5802,7 +6104,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 전포대로223번길 14-2",
+          "vworld_lat": 35.156958752269304,
+          "vworld_lng": 129.0644825315422,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6091,8 +6404,8 @@
       "address_ko": "부산 부산진구 신천대로62번길 46",
       "description_ko": "제철 재료로 빚어낸 정통 일본식 갓포 요리 숙련된 솜씨로 제철 식재료 본연의 풍미를 극대화하며 오마카세와 자연산 모리아와세를 선보입니다.",
       "description_en": "Sophisticated Japanese kappo restaurant serving seasonal omakase and natural assorted sashimi with masterful knife skills.",
-      "latitude": 35.1612,
-      "longitude": 129.0583,
+      "latitude": 35.1528207,
+      "longitude": 129.0585807,
       "phone": "051-804-7757",
       "tags": [
         "taste-of-busan",
@@ -6113,14 +6426,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6133,7 +6445,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 부산진구 신천대로62번길 46",
+          "vworld_lat": 35.15282072410105,
+          "vworld_lng": 129.05858073693975,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6434,8 +6757,8 @@
       "address_ko": "부산 동구 중앙대로349번길 14",
       "description_ko": "뚝배기부터 돈가스까지, 풍성한 수제 함박 100% 국내산 돼지고기를 사용하여 육즙과 풍미가 가득한 수제 함박스테이크 전문점입니다.",
       "description_en": "Yeongdo-based hamburger steak restaurant using 100% domestic pork, popular for juicy handmade patties and diverse sides.",
-      "latitude": 35.1259,
-      "longitude": 129.0311,
+      "latitude": 35.1269959,
+      "longitude": 129.0462454,
       "phone": "051-911-8484",
       "tags": [
         "taxchelin"
@@ -6457,20 +6780,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
-      "navigation_ready": false,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "동구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 중앙대로349번길 14",
+          "vworld_lat": 35.12699586256583,
+          "vworld_lng": 129.04624535371633,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6485,8 +6817,8 @@
       "address_ko": "부산 동구 중앙대로320번길 7-2",
       "description_ko": "일상을 채워주는 다정한 한 끼 매일 새롭게 바뀌는 풍성한 메뉴와 합리적인 가격으로 인근 직장인들에게 사랑받는 곳입니다.",
       "description_en": "Affordable Korean buffet near Busan Station, beloved by local office workers for changing daily home-style dishes.",
-      "latitude": 35.11,
-      "longitude": 129.0457,
+      "latitude": 35.1247164,
+      "longitude": 129.0462808,
       "phone": "070-7311-7541",
       "tags": [
         "taxchelin",
@@ -6507,14 +6839,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6527,7 +6858,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 중앙대로320번길 7-2",
+          "vworld_lat": 35.12471636053927,
+          "vworld_lng": 129.04628084247105,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6610,8 +6952,8 @@
       "address_ko": "부산 동구 초량중로 81",
       "description_ko": "주민들이 아끼는 부산역 제주 고기 맛집 제주산 생고기를 직원이 직접 구워주는 돼지구이 전문점입니다.",
       "description_en": "Jeju-origin pork BBQ restaurant near Busan Station with staff-grilled table service and signature spicy bean sprout stew.",
-      "latitude": 35.1153,
-      "longitude": 129.0374,
+      "latitude": 35.1190383,
+      "longitude": 129.0392414,
       "phone": "0507-1408-4931",
       "tags": [
         "taste-of-busan"
@@ -6631,14 +6973,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "동구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6651,7 +6992,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 초량중로 81",
+          "vworld_lat": 35.11903832576462,
+          "vworld_lng": 129.0392414400581,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6666,8 +7018,8 @@
       "address_ko": "부산 동구 초량로 17-7",
       "description_ko": "한결같은 맛을 고수하는 초량 숯불갈비 1970년부터 가업을 이어 초량 갈비 골목의 명맥을 지켜온 곳입니다.",
       "description_en": "Charcoal galbi restaurant preserving the Choryang galbi alley tradition since 1970 with secret-marinated fresh pork ribs.",
-      "latitude": 35.1181,
-      "longitude": 129.0332,
+      "latitude": 35.1191525,
+      "longitude": 129.0397012,
       "phone": "051-467-9276",
       "tags": [
         "taxchelin"
@@ -6687,14 +7039,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "동구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6707,7 +7058,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 초량로 17-7",
+          "vworld_lat": 35.11915246424853,
+          "vworld_lng": 129.03970118039842,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6722,8 +7084,8 @@
       "address_ko": "부산 동구 초량중로 88",
       "description_ko": "50여 년을 구워낸 진한 숯불 돼지갈비 반세기 역사를 간직한 초량 갈비 골목의 산증인입니다.",
       "description_en": "50-year-old charcoal pork galbi institution in Choryang galley, deeply marinated with a rich proprietary sauce.",
-      "latitude": 35.131,
-      "longitude": 129.0511,
+      "latitude": 35.1193724,
+      "longitude": 129.0397069,
       "phone": "0507-1300-7389",
       "tags": [
         "taxchelin"
@@ -6743,14 +7105,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6763,7 +7124,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 초량중로 88",
+          "vworld_lat": 35.11937244559415,
+          "vworld_lng": 129.03970687859788,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6778,8 +7150,8 @@
       "address_ko": "부산 동구 중앙대로214번길 3-12",
       "description_ko": "현지인이 인정하는 부산역 맑은 돼지국밥 매일 새벽 사골과 돼지고기를 정성껏 고아낸 맑은 육수가 이곳의 자부심입니다.",
       "description_en": "Local favorite clear pork soup rice near Busan Station, simmered fresh every dawn for a clean clean rich broth.",
-      "latitude": 35.1091,
-      "longitude": 129.0507,
+      "latitude": 35.1168373,
+      "longitude": 129.0415306,
       "phone": "051-442-0032",
       "tags": [
         "taxchelin",
@@ -6800,14 +7172,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6820,7 +7191,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 중앙대로214번길 3-12",
+          "vworld_lat": 35.11683726009208,
+          "vworld_lng": 129.04153059521047,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -6905,8 +7287,8 @@
       "address_ko": "부산 동구 대영로243번길 56",
       "description_ko": "부산 차이나타운의 양대 만두 전문점 한 입 베어 물면 육즙이 터져 나오는 것이 특징입니다.",
       "description_en": "Busan Chinatown dumpling bar with burst-of-juice potstickers, steamed buns, and boiled dumplings alongside cold beer.",
-      "latitude": 35.1218,
-      "longitude": 129.0379,
+      "latitude": 35.1144998,
+      "longitude": 129.0385327,
       "phone": "0507-1354-4059",
       "tags": [
         "taxchelin"
@@ -6926,14 +7308,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "동구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -6946,7 +7327,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 동구 대영로243번길 56",
+          "vworld_lat": 35.114499834639275,
+          "vworld_lng": 129.03853265307416,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -7031,8 +7423,8 @@
       "address_ko": "부산 영도구 절영로93번길 11",
       "description_ko": "이모카세로 맛보는 영도 얼음 빙장회 얼음에 회를 재워 숙성하는 빙장회를 선보입니다. 냉장고가 없던 시절의 방식을 간직한 이곳의 빙장회를 직접 경험해 보세요.",
       "description_en": "Yeongdo izakaya serving unique ice-aged sashimi (bingjanghoe) in a charming neighborhood atmosphere.",
-      "latitude": 35.103,
-      "longitude": 129.0702,
+      "latitude": 35.0870444,
+      "longitude": 129.0400426,
       "phone": "051-415-2421",
       "tags": [
         "taxchelin",
@@ -7053,14 +7445,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -7073,7 +7464,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 영도구 절영로93번길 11",
+          "vworld_lat": 35.08704443649496,
+          "vworld_lng": 129.04004264939658,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -7224,8 +7626,8 @@
       "address_ko": "부산 영도구 태종로99번길 35",
       "description_ko": "로컬 채소가 주인공인 비건 비스트로 100% 비건 음식만 선보이는 로컬 채소 요리 전문점입니다.",
       "description_en": "Michelin Bib Gourmand vegan bistro using 100% local vegetables — jirisan fern pasta and house-brewed rice wine pairing.",
-      "latitude": 35.0981,
-      "longitude": 129.0798,
+      "latitude": 35.0929324,
+      "longitude": 129.0425645,
       "phone": "070-1307-1368",
       "tags": [
         "michelin",
@@ -7246,14 +7648,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -7266,7 +7667,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 영도구 태종로99번길 35",
+          "vworld_lat": 35.092932446578615,
+          "vworld_lng": 129.04256450588576,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -7466,8 +7878,8 @@
       "address_ko": "부산 영도구 중리북로29번길 12",
       "description_ko": "고민 끝에 찾아낸 영도만의 브리또와 타코 한국인의 입맛에 맞춰 재해석한 멕시코 요리를 선보입니다.",
       "description_en": "Yeongdo Mexican restaurant serving fresh corn tortillas and jumbo prawn burritos made with Korean-adapted recipes.",
-      "latitude": 35.0857,
-      "longitude": 129.077,
+      "latitude": 35.0717901,
+      "longitude": 129.0671374,
       "phone": "0507-1314-1592",
       "tags": [
         "taste-of-busan",
@@ -7490,15 +7902,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7508,14 +7918,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "ADDR_UNKNOWN_PENDING",
-          "uc_seq": 1244,
-          "api_addr": "대영로239번길 12, 1층",
-          "canon_addr": "부산 영도구 중리북로29번길 12",
-          "match_level": "UNKNOWN",
-          "guide_dist_m": 4713
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 영도구 중리북로29번길 12",
+          "vworld_lat": 35.07179006805879,
+          "vworld_lng": 129.06713744818552,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -7599,8 +8010,8 @@
       "address_ko": "부산 수영구 수영로741번길 25",
       "description_ko": "피로를 씻어내는 국수와 수제비 한 그릇 디포리와 멸치로 정성껏 우려낸 육수에 손수 빚은 쫄깃한 수제비가 일품입니다.",
       "description_en": "Noodle and sujebi restaurant carrying on a Suyeong River tradition — hand-torn dumplings in anchovy-dried fish broth.",
-      "latitude": 35.1368,
-      "longitude": 129.1063,
+      "latitude": 35.1691648,
+      "longitude": 129.1207099,
       "phone": "051-754-2619",
       "tags": [
         "taste-of-busan",
@@ -7621,14 +8032,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -7641,7 +8051,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 수영로741번길 25",
+          "vworld_lat": 35.169164750363535,
+          "vworld_lng": 129.12070988468997,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -7724,8 +8145,8 @@
       "address_ko": "부산 수영구 무학로33번길 54",
       "description_ko": "익숙한 듯 낯선 태국의 맛 현지의 맛을 세련되게 재해석해 누구나 부담 없이 즐길 수 있는 태국 요리 전문점입니다.",
       "description_en": "Michelin Bib Gourmand Thai restaurant with creative fusion dishes including khao kha mu pork rice and pu phat phong curry.",
-      "latitude": 35.1514,
-      "longitude": 129.1169,
+      "latitude": 35.163798,
+      "longitude": 129.118061,
       "phone": "0507-1364-4143",
       "tags": [
         "michelin",
@@ -7747,14 +8168,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -7767,7 +8187,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 무학로33번길 54",
+          "vworld_lat": 35.16379801679939,
+          "vworld_lng": 129.1180609733973,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -7850,8 +8281,8 @@
       "address_ko": "부산 수영구 민락본동로31번길 46",
       "description_ko": "양식의 감각과 한식의 정서가 만난 제철 창작 요리 오래된 간판 아래 셰프의 독창성이 흐르는 제철 창작 요리 전문점입니다.",
       "description_en": "Michelin Selected contemporary Korean restaurant under a vintage sign — seasonal creative courses sourced from across Korea.",
-      "latitude": 35.1598,
-      "longitude": 129.1121,
+      "latitude": 35.1589224,
+      "longitude": 129.1259625,
       "phone": "0507-1371-3318",
       "tags": [
         "michelin",
@@ -7873,14 +8304,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -7893,7 +8323,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 민락본동로31번길 46",
+          "vworld_lat": 35.15892243699132,
+          "vworld_lng": 129.12596253007695,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8182,8 +8623,8 @@
       "address_ko": "부산 수영구 민락로6번길 46-4",
       "description_ko": "계절 채소에 담긴 정성과 건강한 위로 시골 부모님이 직접 수확한 15가지 이상의 신선한 채소를 정성껏 굽고, 찌고, 삶아 냅니다.",
       "description_en": "Seasonal vegetable brunch restaurant sourcing 15+ varieties from family farms, serving salads, sandwiches, and soups.",
-      "latitude": 35.1567,
-      "longitude": 129.1231,
+      "latitude": 35.1570359,
+      "longitude": 129.1247722,
       "phone": "051-900-4045",
       "tags": [
         "taste-of-busan"
@@ -8203,14 +8644,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8223,7 +8663,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 민락로6번길 46-4",
+          "vworld_lat": 35.157035865061204,
+          "vworld_lng": 129.12477221934563,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8238,8 +8689,8 @@
       "address_ko": "부산 수영구 광안해변로277번길 10",
       "description_ko": "부산에서 맛보는 진한 대만 감성 대만의 유명 거리 '융캉제'를 모티브로 현지 분위기를 고스란히 담아낸 공간입니다.",
       "description_en": "Michelin Selected Taiwanese restaurant in Gwangalli with rich beef noodle soup and sesame noodles in a vibrant space.",
-      "latitude": 35.1472,
-      "longitude": 129.1053,
+      "latitude": 35.1563654,
+      "longitude": 129.1242284,
       "phone": "0507-1441-6011",
       "tags": [
         "michelin",
@@ -8261,14 +8712,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8281,7 +8731,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 광안해변로277번길 10",
+          "vworld_lat": 35.15636543549573,
+          "vworld_lng": 129.12422844701072,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8296,8 +8757,8 @@
       "address_ko": "부산 수영구 광안해변로284번길 4, 2층",
       "description_ko": "지리산 버크셔K로 맑게 끓여낸 세련된 돼지곰탕 아담한 U자형 바 카운터에서 즐기는 돼지곰탕은 부산 젊은 세대의 새로운 미식 트렌드입니다.",
       "description_en": "Michelin Selected modern pork bone soup with Jirisan Berkshire K pigs — clean broth served at a U-shaped counter bar.",
-      "latitude": 35.1405,
-      "longitude": 129.1049,
+      "latitude": 35.1557483,
+      "longitude": 129.1247336,
       "phone": "0507-1468-1634",
       "tags": [
         "michelin",
@@ -8319,14 +8780,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8339,7 +8799,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 광안해변로284번길 4",
+          "vworld_lat": 35.155748265496875,
+          "vworld_lng": 129.1247335527275,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8424,8 +8895,8 @@
       "address_ko": "부산 수영구 민락로14번길 28",
       "description_ko": "아시아 요리에 프렌치 터치로 그려낸 재기 발랄한 미식 호주와 서울에서 실력을 쌓은 젊은 셰프들이 아시아의 다채로운 식재료를 프렌치 테크닉으로 재해석합니다.",
       "description_en": "Michelin Selected contemporary Asian dining by young chefs trained in Australia and Seoul, pairing Asian flavors with French techniques.",
-      "latitude": 35.138,
-      "longitude": 129.1186,
+      "latitude": 35.1577175,
+      "longitude": 129.1228551,
       "phone": "0507-1358-2745",
       "tags": [
         "michelin",
@@ -8446,14 +8917,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8466,7 +8936,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 민락로14번길 28",
+          "vworld_lat": 35.157717496110976,
+          "vworld_lng": 129.1228551195635,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8481,8 +8962,8 @@
       "address_ko": "부산 수영구 민락로27번길 4, 3층",
       "description_ko": "직접 만든 샤퀴테리로 완성한 독창적인 프렌치 요리 간판 없는 입구 뒤로 셰프의 정성이 가득한 프랑스 코스 요리가 펼쳐집니다.",
       "description_en": "Michelin Selected contemporary French restaurant — signature house-made charcuterie at the heart of each course.",
-      "latitude": 35.1509,
-      "longitude": 129.1017,
+      "latitude": 35.1575824,
+      "longitude": 129.1215357,
       "phone": "",
       "tags": [
         "michelin",
@@ -8507,15 +8988,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8525,14 +9004,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
-          "uc_seq": 2353,
-          "api_addr": "연제구 신금로 25, 노블레스스퀘어 110호",
-          "canon_addr": "부산 수영구 민락로27번길 4, 3층",
-          "match_level": "DIFFERENT",
-          "guide_dist_m": 4572
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 민락로27번길 4",
+          "vworld_lat": 35.15758236318493,
+          "vworld_lng": 129.1215357351946,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -8620,8 +9100,8 @@
       "address_ko": "부산 수영구 민락로19번길 18",
       "description_ko": "옛 방식 그대로 시간의 맛을 이어가는 떡갈비 한 상 그윽한 숯 향과 육즙을 머금은 두툼한 떡갈비와 조화롭게 어우러지는 반찬, 구수한 된장찌개가 깊은 손맛을 전합니다.",
       "description_en": "Michelin Bib Gourmand traditional Korean tteokgalbi set — thick charcoal-grilled minced beef with seasonal side dishes.",
-      "latitude": 35.1366,
-      "longitude": 129.1249,
+      "latitude": 35.156551,
+      "longitude": 129.1214372,
       "phone": "051-711-4648",
       "tags": [
         "michelin",
@@ -8643,14 +9123,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8663,7 +9142,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 민락로19번길 18",
+          "vworld_lat": 35.15655098885493,
+          "vworld_lng": 129.12143718918918,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8747,8 +9237,8 @@
       "address_ko": "부산 수영구 수영로582번길 10",
       "description_ko": "술의 깊이를 더하는 정통 가이세키 전문점 계절의 미학을 담은 핫슨부터 정갈한 나베까지, 사케와 조화를 이루는 섬세한 흐름을 선보입니다.",
       "description_en": "Michelin Selected traditional kaiseki restaurant in Suyeong, pairing delicate seasonal dishes with fine sake.",
-      "latitude": 35.1432,
-      "longitude": 129.1012,
+      "latitude": 35.1574224,
+      "longitude": 129.1135781,
       "phone": "010-9433-4065",
       "tags": [
         "michelin",
@@ -8770,14 +9260,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8790,7 +9279,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 수영로582번길 10",
+          "vworld_lat": 35.15742244430765,
+          "vworld_lng": 129.1135780582726,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8874,8 +9374,8 @@
       "address_ko": "부산 수영구 광안로62번길 10",
       "description_ko": "깊은 육향에 취향을 더해 완성하는 정갈한 곰탕 한 그릇 식용을 목적으로 세심하게 기른 미경산 한우 암소만을 고집하여 국물 속에 깊은 육향이 배어 있습니다.",
       "description_en": "Michelin Bib Gourmand beef bone gomtang using exclusively non-calving Korean beef cows for a subtly deep beef flavor.",
-      "latitude": 35.1585,
-      "longitude": 129.1239,
+      "latitude": 35.1544224,
+      "longitude": 129.1182927,
       "phone": "051-711-7025",
       "tags": [
         "michelin",
@@ -8897,14 +9397,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8917,7 +9416,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 광안로62번길 10",
+          "vworld_lat": 35.154422448409655,
+          "vworld_lng": 129.1182926833016,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -8932,8 +9442,8 @@
       "address_ko": "부산 수영구 수영로522번길 55",
       "description_ko": "다채로운 와인 셀렉션과 부부 셰프의 감각이 흐르는 공간 엄선한 글라스 와인과 다양한 디제스티프를 고루 갖춘 이탈리안 와인바입니다.",
       "description_en": "Michelin Selected Italian wine bar by husband-and-wife chefs, trained at ALMA, pairing natural wine with classic Italian dishes.",
-      "latitude": 35.1363,
-      "longitude": 129.1067,
+      "latitude": 35.1518032,
+      "longitude": 129.1147293,
       "phone": "010-2981-8078",
       "tags": [
         "michelin",
@@ -8954,14 +9464,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -8974,7 +9483,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 수영로522번길 55",
+          "vworld_lat": 35.151803232577144,
+          "vworld_lng": 129.11472926784802,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9199,8 +9719,8 @@
       "address_ko": "부산 수영구 남천바다로10번길 45",
       "description_ko": "평범한 비빔밥의 흥미로운 도전 비빔밥이라는 익숙한 틀 위에 다채로운 식재료의 조합으로 색다른 맛을 선사합니다.",
       "description_en": "Michelin Bib Gourmand modern bibimbap restaurant with creative ingredient combinations and optional stone pot upgrade.",
-      "latitude": 35.16,
-      "longitude": 129.1025,
+      "latitude": 35.1479275,
+      "longitude": 129.1114293,
       "phone": "070-8287-1035",
       "tags": [
         "michelin",
@@ -9221,14 +9741,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -9241,7 +9760,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 남천바다로10번길 45",
+          "vworld_lat": 35.147927483771134,
+          "vworld_lng": 129.11142929944197,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9341,8 +9871,8 @@
       "address_ko": "부산 수영구 광남로22번길 3",
       "description_ko": "국밥의 경계를 넓힌 돼지국밥 돼지국밥 특유의 풍미를 유지하면서 현대적이고 감각적인 진화를 이뤄낸 새로운 형태의 돼지국밥 전문점입니다.",
       "description_en": "Michelin Bib Gourmand contemporary pork soup rice shop redefining the classic Busan dish with modern sensibility.",
-      "latitude": 35.1483,
-      "longitude": 129.1246,
+      "latitude": 35.1449275,
+      "longitude": 129.1107522,
       "phone": "0507-1461-0523",
       "tags": [
         "michelin",
@@ -9365,14 +9895,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -9385,7 +9914,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 광남로22번길 3",
+          "vworld_lat": 35.144927488816904,
+          "vworld_lng": 129.11075217312947,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9400,8 +9940,8 @@
       "address_ko": "부산 수영구 광남로22번길 17, 3층",
       "description_ko": "한국의 재료로 풀어낸 도전적인 프렌치 코스 장아찌와 발효액이 반겨주는 프렌치 레스토랑입니다.",
       "description_en": "Michelin Selected innovative French restaurant pairing Korean fermented sauces and seasonal local produce with French technique.",
-      "latitude": 35.1559,
-      "longitude": 129.1144,
+      "latitude": 35.1446104,
+      "longitude": 129.1113562,
       "phone": "0507-1325-7050",
       "tags": [
         "michelin",
@@ -9424,14 +9964,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -9444,7 +9983,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 광남로22번길 17",
+          "vworld_lat": 35.14461044360016,
+          "vworld_lng": 129.1113562395173,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9527,8 +10077,8 @@
       "address_ko": "부산 수영구 수영로388번길 25-4",
       "description_ko": "부산의 골목에서 마주하는 대만 우육면 대만 현지의 맛을 정직하게 구현한 우육면 전문점입니다.",
       "description_en": "Michelin Bib Gourmand authentic Taiwanese beef noodle restaurant serving Hóng Shāo Niú Ròu Miàn in Busan.",
-      "latitude": 35.1577,
-      "longitude": 129.1147,
+      "latitude": 35.1402985,
+      "longitude": 129.1084023,
       "phone": "051-623-0251",
       "tags": [
         "michelin",
@@ -9550,14 +10100,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -9570,7 +10119,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 수영구 수영로388번길 25-4",
+          "vworld_lat": 35.1402984738867,
+          "vworld_lng": 129.10840229848878,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9720,8 +10280,8 @@
       "address_ko": "부산 남구 용소로21번길 109",
       "description_ko": "쫀득하고 부드러운 뇨끼가 일품인 이탈리안 비스트로 버섯 크림 소스와 쫄깃한 식감이 조화로운 뇨끼가 시그니처입니다.",
       "description_en": "Cozy Italian bistro in Namgu famous for chewy mushroom cream bacon gnocchi and warm European atmosphere.",
-      "latitude": 35.1475,
-      "longitude": 129.0817,
+      "latitude": 35.1375592,
+      "longitude": 129.1054408,
       "phone": "0507-1316-1866",
       "tags": [
         "taste-of-busan",
@@ -9742,14 +10302,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -9762,7 +10321,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 남구 용소로21번길 109",
+          "vworld_lat": 35.13755917833157,
+          "vworld_lng": 129.10544076378284,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -9844,8 +10414,8 @@
       "address_ko": "부산 남구 분포로 145, W 스퀘어 A동 1068호",
       "description_ko": "국밥의 풍미를 현대적으로 담아낸 돼지곰탕 전통적인 돼지국밥을 맑게 재해석한 돼지곰탕 전문점입니다.",
       "description_en": "Michelin Selected modern pork bone soup restaurant (nakmak house) serving a refined clean take on the classic dish.",
-      "latitude": 35.1404,
-      "longitude": 129.1005,
+      "latitude": 35.1326125,
+      "longitude": 129.1133703,
       "phone": "051-746-4882",
       "tags": [
         "michelin",
@@ -9869,20 +10439,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 남구 분포로 145",
+          "vworld_lat": 35.13261248437445,
+          "vworld_lng": 129.11337026659822,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -10171,8 +10750,8 @@
       "address_ko": "부산 남구 유엔평화로10번길 9",
       "description_ko": "해가 지면 언제나 북적이는 정겨운 오뎅바 낯선 이와도 스스럼없이 대화를 나눌 수 있는 아담하고 소박한 오뎅바입니다.",
       "description_en": "Neighborhood fish cake (oden) bar in Nam-gu, featuring chewy beef tendon (suji) skewers alongside classic oden soup.",
-      "latitude": 35.1337,
-      "longitude": 129.0801,
+      "latitude": 35.1339538,
+      "longitude": 129.0913196,
       "phone": "051-902-2710",
       "tags": [
         "taste-of-busan",
@@ -10193,14 +10772,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -10213,7 +10791,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 남구 유엔평화로10번길 9",
+          "vworld_lat": 35.1339537572633,
+          "vworld_lng": 129.0913196407656,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -10296,8 +10885,8 @@
       "address_ko": "부산 강서구 공항로1347번길 36",
       "description_ko": "오래된 일본가옥에서 만나는 샤부샤부 100년에 가까운 적산가옥을 일본 료칸 무드로 재해석한 샤부샤부 전문점입니다.",
       "description_en": "Premium shabu-shabu in a century-old Japanese colonial house converted to a ryokan-style restaurant in Gangseo-gu.",
-      "latitude": 35.2091,
-      "longitude": 128.8839,
+      "latitude": 35.2180842,
+      "longitude": 128.988247,
       "phone": "0507-1310-2671",
       "tags": [
         "taste-of-busan"
@@ -10317,14 +10906,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "서구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -10337,7 +10925,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 강서구 공항로1347번길 36",
+          "vworld_lat": 35.21808416004188,
+          "vworld_lng": 128.9882469702818,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -10555,8 +11154,8 @@
       "address_ko": "부산 북구 양달로4번길 17",
       "description_ko": "장인정신이 깃든 나고야식 장어 덮밥 일본에서 수련한 셰프가 선보이는 히츠마부시는 최고급 생물 풍천장어에 특제 소스를 정성껏 발라가며 구워내는 전통 방식입니다.",
       "description_en": "Michelin Bib Gourmand hitsumabu hitsumabushi eel rice in Hwamyeong using premium live풍천 eel cooked in traditional style.",
-      "latitude": 35.236,
-      "longitude": 129.0226,
+      "latitude": 35.2408708,
+      "longitude": 129.0147074,
       "phone": "051-365-2959",
       "tags": [
         "michelin",
@@ -10580,17 +11179,16 @@
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
         "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "DIFFERENT_ENTITY_RELATION_REMOVED",
-        "NAVIGATION_NOT_READY"
+        "DIFFERENT_ENTITY_RELATION_REMOVED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "identity_verdict": "DIFFERENT_ENTITY",
       "identity_evidence": "북구 양달로4번길 17 vs 기장군 기장읍 차성동로 163 — 완전히 다른 위치(17.7km), 전화 불일치",
       "identity_removed_cids": [],
       "coord_address_consistent": true,
       "coord_address_district": "북구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -10603,7 +11201,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 북구 양달로4번길 17",
+          "vworld_lat": 35.24087077368902,
+          "vworld_lng": 129.0147073881634,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11022,8 +11631,8 @@
       "address_ko": "부산 사하구 비봉로 6",
       "description_ko": "언제든 마주하는 부엌의 온기, 24시 돼지국밥 경상도 방언으로 '부엌'을 뜻하는 이곳은 매일 정성껏 끓여낸 뽀얀 국물이 일품이며 24시간 운영합니다.",
       "description_en": "Michelin Bib Gourmand 24-hour pork soup restaurant in Sinpyeong with clear creamy broth and cold buckwheat noodles on the side.",
-      "latitude": 35.0862,
-      "longitude": 128.986,
+      "latitude": 35.0957742,
+      "longitude": 128.9624698,
       "phone": "051-293-2900",
       "tags": [
         "michelin",
@@ -11045,14 +11654,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사하구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11065,7 +11673,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 사하구 비봉로 6",
+          "vworld_lat": 35.09577419098749,
+          "vworld_lng": 128.96246977734162,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11147,8 +11766,8 @@
       "address_ko": "부산 서구 엄광산로 29",
       "description_ko": "기운을 가득 채우는 든든한 어탕국수 지리산 1급수 민물고기로 끓여낸 어탕은 국수와 수제비, 밥 중 원하는 구성을 선택해 즐길 수 있습니다.",
       "description_en": "Mountain freshwater fish soup restaurant in Seo-gu using first-grade water fish from the Jiri Mountains.",
-      "latitude": 35.0856,
-      "longitude": 129.0093,
+      "latitude": 35.1286949,
+      "longitude": 129.0084012,
       "phone": "0507-1382-0992",
       "tags": [
         "taxchelin",
@@ -11169,14 +11788,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11189,7 +11807,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 엄광산로 29",
+          "vworld_lat": 35.12869486735843,
+          "vworld_lng": 129.00840119209892,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11204,8 +11833,8 @@
       "address_ko": "부산 서구 대영로45번길 98",
       "description_ko": "세월을 담은 정겨운 칼국수 한 그릇 오랜 시간 주민들의 사랑을 받아온 대신동의 칼국수 전문점입니다.",
       "description_en": "Traditional kalguksu restaurant in Daeshin-dong, Seo-gu — chewy noodles in rich broth with optional chili seasoning.",
-      "latitude": 35.1029,
-      "longitude": 129.0252,
+      "latitude": 35.1136458,
+      "longitude": 129.0143635,
       "phone": "051-242-0306",
       "tags": [
         "taxchelin",
@@ -11226,14 +11855,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11246,7 +11874,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 대영로45번길 98",
+          "vworld_lat": 35.113645762812524,
+          "vworld_lng": 129.0143634667479,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11261,8 +11900,8 @@
       "address_ko": "부산 서구 보수대로201번길 7",
       "description_ko": "세월이 증명하는 부산 밀면의 명성 30년 넘게 자리를 지켜온 부산의 대표 밀면·냉면 전문점입니다.",
       "description_en": "30-year busan wheat noodles and cold noodles restaurant in Bupyeong, Seo-gu — slim chewy noodles unique in style.",
-      "latitude": 35.0998,
-      "longitude": 129.0316,
+      "latitude": 35.113074,
+      "longitude": 129.0204103,
       "phone": "051-243-9963",
       "tags": [
         "taxchelin",
@@ -11285,20 +11924,29 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
-        "matched_uc_seqs": []
+        "matched_uc_seqs": [],
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 보수대로201번길 7",
+          "vworld_lat": 35.11307399258597,
+          "vworld_lng": 129.0204102596676,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11313,8 +11961,8 @@
       "address_ko": "부산 서구 대영로85번길 20",
       "description_ko": "실속 있게 큼직한 로컬 횟집의 정석 싱싱한 활어를 두툼하게 썰어내 씹는 맛이 남다르며, 산초와 방아잎을 넣어 끓인 부산식 매운탕도 별미입니다.",
       "description_en": "Local live fish sashimi restaurant in Seo-gu serving thick-cut fresh catches with Busan-style spicy fish stew.",
-      "latitude": 35.0871,
-      "longitude": 129.014,
+      "latitude": 35.1119486,
+      "longitude": 129.0201244,
       "phone": "0507-1306-4916",
       "tags": [
         "taxchelin",
@@ -11335,14 +11983,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11355,7 +12002,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 대영로85번길 20",
+          "vworld_lat": 35.11194856962121,
+          "vworld_lng": 129.02012441552895,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11440,8 +12098,8 @@
       "address_ko": "부산 서구 대영로74번길 58",
       "description_ko": "택시 기사들이 30년간 아껴온 대구탕 택시 기사들의 발길이 끊이지 않는 기사식당으로 진한 국물과 푸짐한 속살의 대구탕이 속을 시원하게 풀어줍니다.",
       "description_en": "Taxi driver beloved restaurant in Seo-gu for 30+ years — 1-pot codfish soup per person with optional fish cake add-on.",
-      "latitude": 35.0894,
-      "longitude": 129.0302,
+      "latitude": 35.1080649,
+      "longitude": 129.0204579,
       "phone": "051-244-2518",
       "tags": [
         "taxchelin"
@@ -11461,14 +12119,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11481,7 +12138,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 대영로74번길 58",
+          "vworld_lat": 35.108064854176675,
+          "vworld_lng": 129.0204579401168,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11563,8 +12231,8 @@
       "address_ko": "부산 서구 충무대로 122-1 프레스코, 2층",
       "description_ko": "30년간 증명해 온 밀면과 수제 돈가스의 완벽한 조화 쫄깃한 면발과 깊은 육수의 밀면, 그리고 바삭한 수제 돈가스의 조합이 일품입니다.",
       "description_en": "30-year wheat noodles and handmade tonkatsu restaurant near Songdo beach in Seo-gu.",
-      "latitude": 35.1056,
-      "longitude": 129.0101,
+      "latitude": 35.0812802,
+      "longitude": 129.0251363,
       "phone": "051-245-3087",
       "tags": [
         "taxchelin",
@@ -11585,14 +12253,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11605,7 +12272,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 서구 충무대로 122-1 프레스코",
+          "vworld_lat": 35.08128023666565,
+          "vworld_lng": 129.02513625570623,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11690,8 +12368,8 @@
       "address_ko": "부산 중구 흑교로46번길 3-1",
       "description_ko": "제철 식재료로 채운 이탈리안 브런치·다이닝 이탈리아 현지에서 익힌 정통 요리에 한국의 제철 식재료를 더한 독창적인 요리를 선보입니다.",
       "description_en": "Former traditional Korean pub revamped into an Italian brunch and dinner spot using local Junggu seasonal ingredients.",
-      "latitude": 35.1121,
-      "longitude": 129.0498,
+      "latitude": 35.1036533,
+      "longitude": 129.025437,
       "phone": "051-710-8343",
       "tags": [
         "taste-of-busan"
@@ -11713,15 +12391,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_READY_NO"
-      ],
-      "navigation_ready": false,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -11731,14 +12407,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SAME_DISTRICT_NAME_MATCH",
-          "uc_seq": 2347,
-          "api_addr": "중구 광복중앙로 14-62 1층",
-          "canon_addr": "부산 중구 흑교로46번길 3-1",
-          "match_level": "SAME_DISTRICT",
-          "guide_dist_m": 2105
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 흑교로46번길 3-1",
+          "vworld_lat": 35.103653302483565,
+          "vworld_lng": 129.02543701626357,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -11754,8 +12431,8 @@
       "address_ko": "부산 중구 흑교로 16-1",
       "description_ko": "24시간 착하고 든든한 선지국밥 한 그릇 속을 시원하게 풀어주는 선지국밥과 정갈한 비빔밥 등 합리적인 가격의 정성 가득한 요리를 선보입니다.",
       "description_en": "24-hour blood soup restaurant in Junggu, sourcing daily ingredients from traditional markets at fair prices.",
-      "latitude": 35.1016,
-      "longitude": 129.0386,
+      "latitude": 35.1008621,
+      "longitude": 129.025311,
       "phone": "0507-1384-4442",
       "tags": [
         "taxchelin",
@@ -11776,14 +12453,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11796,7 +12472,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 흑교로 16-1",
+          "vworld_lat": 35.1008621433659,
+          "vworld_lng": 129.02531102051537,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11811,8 +12498,8 @@
       "address_ko": "부산 중구 중구로23번길 12, 1층",
       "description_ko": "자갈치의 사계절과 정교함이 만나는 컨템포러리 100% 예약제로 운영되며, 매일 아침 자갈치 시장에서 직접 공수한 식재료로 특별한 경험을 선사합니다.",
       "description_en": "Junggu contemporary restaurant by a hotel-trained chef using daily Jagalchi market ingredients, 100% reservation only.",
-      "latitude": 35.096,
-      "longitude": 129.026,
+      "latitude": 35.1000989,
+      "longitude": 129.0272831,
       "phone": "0507-1371-6607",
       "tags": [
         "taste-of-busan"
@@ -11832,14 +12519,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11852,7 +12538,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 중구로23번길 12",
+          "vworld_lat": 35.10009892474417,
+          "vworld_lng": 129.02728307352658,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11867,8 +12564,8 @@
       "address_ko": "부산 중구 중구로40번길 15",
       "description_ko": "남포동의 아이콘, 추억의 순두부찌개 1982년부터 지켜온 투박한 손맛을 느낄 수 있는 노포입니다.",
       "description_en": "Iconic Nampo-dong soft tofu stew restaurant since 1982 — spicy savory broth with house-made fresh kimchi daily.",
-      "latitude": 35.1147,
-      "longitude": 129.0405,
+      "latitude": 35.1015615,
+      "longitude": 129.0295887,
       "phone": "051-246-1825",
       "tags": [
         "taxchelin"
@@ -11888,14 +12585,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_READY_NO"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -11908,7 +12604,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 중구로40번길 15",
+          "vworld_lat": 35.101561535846386,
+          "vworld_lng": 129.02958869458814,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -11991,8 +12698,8 @@
       "address_ko": "부산 중구 중구로30번길 21-1",
       "description_ko": "국제시장에서 시작된 부산 낙곱새 1972년 문을 연 부산의 대표 메뉴 낙곱새의 원조입니다.",
       "description_en": "Origin of Busan's nakgopsae (spicy squid and beef tripe) since 1972 — the dish's first inventor, now run by second generation.",
-      "latitude": 35.1065,
-      "longitude": 129.0326,
+      "latitude": 35.1007617,
+      "longitude": 129.0301203,
       "phone": "051-246-3186",
       "tags": [
         "taxchelin"
@@ -12012,14 +12719,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -12032,7 +12738,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 중구로30번길 21-1",
+          "vworld_lat": 35.100761715526794,
+          "vworld_lng": 129.03012031565527,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -12115,8 +12832,8 @@
       "address_ko": "부산 중구 자갈치로59번길 5-20, 1층",
       "description_ko": "양곱창에서 느껴지는 남포동 곱창의 자부심 신선한 원육을 숙련된 솜씨로 구워내 겉은 바삭하고 속은 쫄깃한 식감이 일품입니다.",
       "description_en": "Nampo-dong lamb tripe BBQ specialist with fresh skillfully grilled crispy-outside chewy-inside tripe and fried rice finale.",
-      "latitude": 35.0919,
-      "longitude": 129.046,
+      "latitude": 35.0978796,
+      "longitude": 129.0301689,
       "phone": "0507-1376-6006",
       "tags": [
         "taxchelin"
@@ -12136,14 +12853,13 @@
       "ai_auto": false,
       "ai_auto_block_reasons": [
         "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED",
-        "NAVIGATION_NOT_READY"
+        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
       ],
-      "navigation_ready": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "GUIDE_COORD_ONLY",
       "image_fail_reason": "DETAIL_PAGE_NOT_MATCHED",
       "image_search_log": [
@@ -12156,7 +12872,18 @@
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
         "as_of": "2026-08-16T08:29:37Z",
         "matched_uc_seqs": [],
-        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND"
+        "image_gap_reason": "CURRENT_FOODSERVICE_ENTITY_NOT_FOUND",
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 자갈치로59번길 5-20",
+          "vworld_lat": 35.097879601438876,
+          "vworld_lng": 129.0301688784946,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
+        }
       }
     },
     {
@@ -12241,8 +12968,8 @@
       "address_ko": "부산 중구 중앙대로81번길 9, 1층",
       "description_ko": "명인의 까다로운 기준, 이정태 본참치 조리 명인 이정태 오너셰프가 운영하는 참치 전문점입니다.",
       "description_en": "Junggu tuna sashimi restaurant by certified culinary master Lee Jeong-tae, selling only prime daily-auctioned tuna.",
-      "latitude": 35.0976,
-      "longitude": 129.028,
+      "latitude": 35.104743,
+      "longitude": 129.0349889,
       "phone": "051-463-3737",
       "tags": [
         "taste-of-busan",
@@ -12265,15 +12992,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -12283,14 +13008,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SAME_DISTRICT_NAME_MATCH",
-          "uc_seq": 1229,
-          "api_addr": "중구 해관로73",
-          "canon_addr": "부산 중구 중앙대로81번길 9, 1층",
-          "match_level": "SAME_DISTRICT",
-          "guide_dist_m": 1097
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 중앙대로81번길 9",
+          "vworld_lat": 35.10474295387853,
+          "vworld_lng": 129.03498885369055,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -12306,8 +13032,8 @@
       "address_ko": "부산 중구 해관로 64-1, 1층",
       "description_ko": "3대째 이어온 비법 만두 서구 대신동에서 명성을 쌓아온 중국식 만두 전문점이 중구 중앙동으로 이전해 그 맛을 이어갑니다.",
       "description_en": "3rd-generation Junggu Chinese dumpling restaurant relocated from Seo-gu, offering handmade tri-color dumplings (40 portions/day).",
-      "latitude": 35.0998,
-      "longitude": 129.0327,
+      "latitude": 35.1046177,
+      "longitude": 129.0357095,
       "phone": "051-256-2121",
       "tags": [
         "taste-of-busan"
@@ -12329,15 +13055,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -12347,14 +13071,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
-          "uc_seq": 965,
-          "api_addr": "서구 대신공원로 13-5\n",
-          "canon_addr": "부산 중구 해관로 64-1, 1층",
-          "match_level": "DIFFERENT",
-          "guide_dist_m": 2621
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 해관로 64-1",
+          "vworld_lat": 35.10461767295347,
+          "vworld_lng": 129.03570947788631,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     },
@@ -12437,8 +13162,8 @@
       "address_ko": "부산 중구 대영로 225-1",
       "description_ko": "오랜 시간 한 자리를 지켜온 복국 전문점 숙련된 복어 전문가의 손길로 끓여낸 진한 국물과 쫀득한 살코기가 일품입니다.",
       "description_en": "Classic pufferfish soup restaurant in Junggu operating for decades, rich milky broth with chrysanthemum greens and enoki.",
-      "latitude": 35.0912,
-      "longitude": 129.0403,
+      "latitude": 35.1123066,
+      "longitude": 129.035411,
       "phone": "051-462-6312",
       "tags": [
         "taxchelin"
@@ -12460,15 +13185,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -12478,14 +13201,15 @@
         ],
         "api_image_available": true,
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "ADDR_UNKNOWN_PENDING",
-          "uc_seq": 190,
-          "api_addr": "달맞이길62번길 1\n",
-          "canon_addr": "부산 중구 대영로 225-1",
-          "match_level": "UNKNOWN",
-          "guide_dist_m": 14231
+          "task": "TASK-BUSAN-FOOD-194-COORD-RECOVERY-V1",
+          "as_of": "2026-08-16",
+          "result": "VWORLD_GEOCODE_NAV_READY",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 중구 대영로 225-1",
+          "vworld_lat": 35.11230657513069,
+          "vworld_lng": 129.03541103035752,
+          "vworld_addr_type": "road",
+          "navigation_ready": true
         }
       }
     }
