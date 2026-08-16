@@ -9,7 +9,7 @@
     "canonical_entity_count": 194,
     "catalog_checksum": "a2d8cb4e4dc7",
     "ai_auto_checksum": "92875017f119",
-    "ai_auto_count": 5,
+    "ai_auto_count": 87,
     "match_status_summary": {
       "MATCHED": 109,
       "UNMATCHED_STRONG_GUIDE": 52,
@@ -46,7 +46,7 @@
     "remediation_date": "2026-08-16",
     "official_image_resolved": 120,
     "official_image_unresolved": 74,
-    "navigation_ready_count": 5,
+    "navigation_ready_count": 105,
     "remediation_outcome": "PASS_WITH_WARN",
     "identity_r1": {
       "reviewed": 5,
@@ -69,8 +69,12 @@
       "guide_coord_address_consistent_pending": 162,
       "coord_unresolved": 27,
       "coord_district_unclear": 0,
-      "navigation_ready": 5,
-      "note": "district/bbox 일치만으로 NAVIGATION_READY=YES 처리 없음 (R1 기준)"
+      "navigation_ready": 105,
+      "note": "district/bbox 일치만으로 NAVIGATION_READY=YES 처리 없음 (R1 기준)",
+      "official_coord_confirmed": 100,
+      "guide_coord_conflict": 10,
+      "guide_coord_semantics_audit": "APPROXIMATE_OR_WRONG: guide coords off by 500-3000m for same-address entities",
+      "note_r2": "R2 upgrade: 100 entities source-verified via address match (FoodService official). Guide coords found APPROXIMATE_OR_WRONG for many entities. NAVIGATION_READY=105/194."
     },
     "task_api_recovery_v1": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
     "api_recovery_date": "2026-08-16",
@@ -83,7 +87,15 @@
     "web_visible_but_api_image_gap": 6,
     "current_foodservice_entity_not_found": 68,
     "recommended_service_direct_use": 0,
-    "api_recovery_v1_checksum": "84a19cd9d365"
+    "api_recovery_v1_checksum": "84a19cd9d365",
+    "task_coord_authority_v1": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+    "coord_authority_v1_date": "2026-08-16",
+    "matched_unique_canonical": 119,
+    "unmatched_unique_canonical": 75,
+    "api_194_matched_uc_seq_note": "api_194_matched_uc_seq=135 was API-side record count. Actual unique matched canonicals=119 (16 multi-UC_SEQ canonicals caused overcounting). MATCHED_UNIQUE=119 + UNMATCHED_UNIQUE=75 = 194 ✓",
+    "coord_authority_v1_nav_upgraded": 100,
+    "coord_authority_v1_conflict_marked": 10,
+    "coord_authority_v1_checksum": "bad3b7ef0910"
   },
   "records": [
     {
@@ -122,15 +134,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -138,7 +148,22 @@
         "matched_uc_seqs": [
           1436
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1436,
+          "api_lat": 35.244667,
+          "api_lng": 129.08856,
+          "api_addr": "금정구 금강로 418 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1799,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -233,15 +258,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -249,7 +272,22 @@
         "matched_uc_seqs": [
           1452
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1452,
+          "api_lat": 35.23029,
+          "api_lng": 129.08397,
+          "api_addr": "금정구 부산대학로 63번길 30",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 605,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -295,7 +333,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -319,6 +357,16 @@
           "api_name": "톤쇼우",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
+          "uc_seq": 1639,
+          "api_addr": "부산 수영구 광안해변로279번길 13 (민락동)",
+          "canon_addr": "부산 금정구 금강로 247-10",
+          "match_level": "DIFFERENT",
+          "guide_dist_m": 10295
         }
       }
     },
@@ -358,15 +406,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -374,7 +420,22 @@
         "matched_uc_seqs": [
           1474
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1474,
+          "api_lat": 35.22843,
+          "api_lng": 129.08781,
+          "api_addr": "금정구 장전로 12번길 16",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1670,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -471,15 +532,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "금정구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -488,7 +547,22 @@
           127,
           1634
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 127,
+          "api_lat": 35.21928,
+          "api_lng": 129.08643,
+          "api_addr": "금정구 오시게로 20",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3262,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -584,17 +658,15 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "identity_verdict": "IDENTITY_CONFIRMED_SAME",
       "identity_evidence": "주소 동일: 동래구 온천장로119번길 26",
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -602,7 +674,22 @@
         "matched_uc_seqs": [
           1632
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1632,
+          "api_lat": 35.221756,
+          "api_lng": 129.08356,
+          "api_addr": "부산 동래구 온천장로119번길 26 (온천동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2185,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -641,15 +728,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -657,7 +742,22 @@
         "matched_uc_seqs": [
           239
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 239,
+          "api_lat": 35.221752,
+          "api_lng": 129.08357,
+          "api_addr": "부산 동래구 온천장로119번길 26",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2198,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -714,7 +814,12 @@
           1265,
           1555
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "MULTI_UCSEQ_CONFLICT"
+        }
       }
     },
     {
@@ -753,15 +858,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -769,7 +872,22 @@
         "matched_uc_seqs": [
           1271
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1271,
+          "api_lat": 35.216263,
+          "api_lng": 129.0773,
+          "api_addr": "동래구 금강로73번길 12",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1892,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -808,15 +926,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -824,7 +940,22 @@
         "matched_uc_seqs": [
           1522
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1522,
+          "api_lat": 35.216038,
+          "api_lng": 129.08095,
+          "api_addr": "동래구 온천장로 52",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2591,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1082,15 +1213,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1099,7 +1228,22 @@
           1813,
           1813
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1813,
+          "api_lat": 35.20526,
+          "api_lng": 129.08475,
+          "api_addr": "동래구 동래로 116번길 39",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1071,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1137,15 +1281,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동래구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1153,7 +1295,22 @@
         "matched_uc_seqs": [
           1530
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1530,
+          "api_lat": 35.20074,
+          "api_lng": 129.09787,
+          "api_addr": "동래구 반송로 223",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1215,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1248,11 +1405,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "연제구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1260,7 +1417,22 @@
         "matched_uc_seqs": [
           95
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 95,
+          "api_lat": 35.19689,
+          "api_lng": 129.07785,
+          "api_addr": "연제구 중앙대로1235번길 23-6 ",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2953,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1298,15 +1470,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1314,7 +1484,22 @@
         "matched_uc_seqs": [
           2354
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2354,
+          "api_lat": 35.19527,
+          "api_lng": 129.07895,
+          "api_addr": "연제구 교대로 7, 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1530,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1414,11 +1599,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "연제구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1426,7 +1611,22 @@
         "matched_uc_seqs": [
           1836
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1836,
+          "api_lat": 35.187637,
+          "api_lng": 129.08607,
+          "api_addr": "연제구 고분로31번길 42",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2158,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1466,15 +1666,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "연제구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1482,7 +1680,22 @@
         "matched_uc_seqs": [
           926
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 926,
+          "api_lat": 35.176273,
+          "api_lng": 129.09052,
+          "api_addr": "부산 연제구 쌍미천로 32-1\n",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2438,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1588,7 +1801,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1597,7 +1810,17 @@
           1561,
           2340
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SAME_DISTRICT_NAME_MATCH",
+          "uc_seq": 1561,
+          "api_addr": "부산 해운대구 센텀1로 9 (우동)",
+          "canon_addr": "부산 해운대구 센텀1로 9 E동상가, 2층",
+          "match_level": "SAME_DISTRICT",
+          "guide_dist_m": 4123
+        }
       }
     },
     {
@@ -1636,15 +1859,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1652,7 +1873,22 @@
         "matched_uc_seqs": [
           1841
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1841,
+          "api_lat": 35.170124,
+          "api_lng": 129.13939,
+          "api_addr": "해운대구 해운대로 383번길 26",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1828,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1690,15 +1926,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1706,7 +1940,22 @@
         "matched_uc_seqs": [
           2334
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2334,
+          "api_lat": 35.154926,
+          "api_lng": 129.1445,
+          "api_addr": "해운대구 마린시티1로 91, 101동 201호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 795,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1746,15 +1995,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1763,7 +2010,22 @@
           1851,
           1851
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1851,
+          "api_lat": 35.157204,
+          "api_lng": 129.14482,
+          "api_addr": "해운대구 마린시티2로 33 두산 위브더제니스 지하 1층 106호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2600,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -1805,15 +2067,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -1822,7 +2082,22 @@
           1843,
           1843
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1843,
+          "api_lat": 35.15545,
+          "api_lng": 129.1466,
+          "api_addr": "해운대구 마린시티3로 37 213,214호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2582,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2030,15 +2305,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2047,7 +2320,22 @@
           1484,
           1568
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1484,
+          "api_lat": 35.159615,
+          "api_lng": 129.15382,
+          "api_addr": "해운대구 해운대해변로209번길 13 바게트호텔 3층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1209,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2087,15 +2375,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2104,7 +2390,22 @@
           154,
           1546
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 154,
+          "api_lat": 35.160427,
+          "api_lng": 129.15468,
+          "api_addr": "해운대구 해운대해변로209번나길 17\n",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1304,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2143,17 +2444,15 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "identity_verdict": "IDENTITY_CONFIRMED_SAME",
       "identity_evidence": "주소 동일: 해운대구 해운대로570번길 23, 3층",
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2161,7 +2460,22 @@
         "matched_uc_seqs": [
           1490
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1490,
+          "api_lat": 35.160614,
+          "api_lng": 129.15663,
+          "api_addr": "부산 해운대구 해운대로570번길 23 더세일링타워 3층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1187,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2372,15 +2686,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2388,7 +2700,22 @@
         "matched_uc_seqs": [
           1496
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1496,
+          "api_lat": 35.16669,
+          "api_lng": 129.15746,
+          "api_addr": "해운대구 우동1로 57 대영빌딩1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1336,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2427,15 +2754,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2443,7 +2768,22 @@
         "matched_uc_seqs": [
           2342
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2342,
+          "api_lat": 35.166203,
+          "api_lng": 129.16014,
+          "api_addr": "해운대구 우동2로 17",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1894,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2556,7 +2896,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2565,7 +2905,17 @@
           1847,
           1847
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SAME_DISTRICT_NAME_MATCH",
+          "uc_seq": 1847,
+          "api_addr": "해운대구 구남로 9, 라마다앙코르호텔 214호",
+          "canon_addr": "부산 해운대구 구남로 9, 2층",
+          "match_level": "SAME_DISTRICT",
+          "guide_dist_m": 713
+        }
       }
     },
     {
@@ -2727,7 +3077,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2735,7 +3085,17 @@
         "matched_uc_seqs": [
           2364
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
+          "uc_seq": 2364,
+          "api_addr": "수영구 수영로408번길 20, 1층",
+          "canon_addr": "부산 해운대구 구남로 21, 상가동 2층",
+          "match_level": "DIFFERENT",
+          "guide_dist_m": 4249
+        }
       }
     },
     {
@@ -2785,7 +3145,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2794,7 +3154,17 @@
           1844,
           1844
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
+          "uc_seq": 1844,
+          "api_addr": "해운대구 해운대해변로 298번길 24 \n팔레드시즈 2층2-4호",
+          "canon_addr": "부산 해운대구 구남로 21, 상가동 3층",
+          "match_level": "DIFFERENT",
+          "guide_dist_m": 558
+        }
       }
     },
     {
@@ -2836,15 +3206,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2853,7 +3221,22 @@
           1534,
           1550
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1534,
+          "api_lat": 35.162384,
+          "api_lng": 129.16298,
+          "api_addr": "해운대구 중동1로 36 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1633,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2893,15 +3276,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2909,7 +3290,22 @@
         "matched_uc_seqs": [
           146
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 146,
+          "api_lat": 35.16243,
+          "api_lng": 129.1645,
+          "api_addr": "해운대구 중동1로 43번길23",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1252,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -2950,15 +3346,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -2966,7 +3360,22 @@
         "matched_uc_seqs": [
           2370
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2370,
+          "api_lat": 35.163258,
+          "api_lng": 129.16626,
+          "api_addr": "해운대구 해운대해변로333",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1561,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3056,15 +3465,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3072,7 +3479,22 @@
         "matched_uc_seqs": [
           1846
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1846,
+          "api_lat": 35.16169,
+          "api_lng": 129.16737,
+          "api_addr": "해운대구 해운대해변로 298번길 47, 4층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1050,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3170,14 +3592,12 @@
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -3201,6 +3621,21 @@
           "api_name": "차오란",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1597,
+          "api_lat": 35.16133,
+          "api_lng": 129.16801,
+          "api_addr": "부산 해운대구 달맞이길 30 (중동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1504,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
         }
       }
     },
@@ -3242,15 +3677,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3258,7 +3691,22 @@
         "matched_uc_seqs": [
           1596
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1596,
+          "api_lat": 35.158867,
+          "api_lng": 129.1706,
+          "api_addr": "부산 해운대구 달맞이길62번길 28 (중동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 537,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3296,15 +3744,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3312,7 +3758,22 @@
         "matched_uc_seqs": [
           2339
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2339,
+          "api_lat": 35.159527,
+          "api_lng": 129.17055,
+          "api_addr": "해운대구 달맞이길 62번길 19, 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1232,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3351,15 +3812,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3367,7 +3826,22 @@
         "matched_uc_seqs": [
           2337
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2337,
+          "api_lat": 35.156857,
+          "api_lng": 129.17383,
+          "api_addr": "해운대구 달맞이길62번길 67",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2051,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3468,15 +3942,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3486,7 +3958,22 @@
           1811,
           2344
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1811,
+          "api_lat": 35.131638,
+          "api_lng": 129.11977,
+          "api_addr": "부산 해운대구 달맞이길65번길 154 3층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 5925,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3543,7 +4030,12 @@
           1573,
           2328
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "MULTI_UCSEQ_CONFLICT"
+        }
       }
     },
     {
@@ -3697,15 +4189,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3713,7 +4203,22 @@
         "matched_uc_seqs": [
           1845
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1845,
+          "api_lat": 35.16249,
+          "api_lng": 129.18504,
+          "api_addr": "해운대구 달맞이길 239-16, 4층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1120,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3865,15 +4370,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3881,7 +4384,22 @@
         "matched_uc_seqs": [
           1849
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1849,
+          "api_lat": 35.160713,
+          "api_lng": 129.19269,
+          "api_addr": "해운대구 청사포로 127",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2540,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -3972,15 +4490,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -3988,7 +4504,22 @@
         "matched_uc_seqs": [
           1476
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1476,
+          "api_lat": 35.16929,
+          "api_lng": 129.17072,
+          "api_addr": "해운대구 좌동순환로8번길 78",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1819,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4027,15 +4558,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4043,7 +4572,22 @@
         "matched_uc_seqs": [
           193
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 193,
+          "api_lat": 35.170803,
+          "api_lng": 129.17145,
+          "api_addr": "해운대구 대천로42번길28-5",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1316,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4082,15 +4626,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "해운대구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4098,7 +4640,22 @@
         "matched_uc_seqs": [
           1842
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1842,
+          "api_lat": 35.177433,
+          "api_lng": 129.19717,
+          "api_addr": "해운대구 송정 광어골로 41 4층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3611,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4251,15 +4808,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4267,7 +4822,22 @@
         "matched_uc_seqs": [
           1806
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1806,
+          "api_lat": 35.216946,
+          "api_lng": 129.22612,
+          "api_addr": "기장군 기장읍 연화1길 137",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2426,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4305,15 +4875,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4321,7 +4889,22 @@
         "matched_uc_seqs": [
           2379
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2379,
+          "api_lat": 35.2239,
+          "api_lng": 129.23161,
+          "api_addr": "기장군 기장읍 대변2길 9",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3610,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4474,15 +5057,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4491,7 +5072,22 @@
           884,
           1554
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 884,
+          "api_lat": 35.282757,
+          "api_lng": 129.25768,
+          "api_addr": "부산 기장군 일광읍 문오성길 31",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 5036,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4531,15 +5127,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "기장군",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4547,7 +5141,22 @@
         "matched_uc_seqs": [
           1448
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1448,
+          "api_lat": 35.299957,
+          "api_lng": 129.25919,
+          "api_addr": "기장군 일광읍 칠암1길 7-10",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 8207,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4586,15 +5195,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4602,7 +5209,22 @@
         "matched_uc_seqs": [
           1507
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1507,
+          "api_lat": 35.181423,
+          "api_lng": 129.05115,
+          "api_addr": "부산진구 월드컵대로449번길 47",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1105,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4649,7 +5271,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4657,7 +5279,17 @@
         "matched_uc_seqs": [
           1111
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SAME_DISTRICT_NAME_MATCH",
+          "uc_seq": 1111,
+          "api_addr": "부산진구 가야대로750번길 17",
+          "canon_addr": "부산 부산진구 부전로 75-5",
+          "match_level": "SAME_DISTRICT",
+          "guide_dist_m": 869
+        }
       }
     },
     {
@@ -4695,15 +5327,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4711,7 +5341,22 @@
         "matched_uc_seqs": [
           2332
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2332,
+          "api_lat": 35.15663,
+          "api_lng": 129.05563,
+          "api_addr": "부산진구 가야대로 772 롯데호텔 부산 7층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 653,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4923,15 +5568,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4939,7 +5582,22 @@
         "matched_uc_seqs": [
           1480
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1480,
+          "api_lat": 35.158752,
+          "api_lng": 129.06444,
+          "api_addr": "부산진구 서전로 47번길 19 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 740,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -4978,15 +5636,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -4994,7 +5650,22 @@
         "matched_uc_seqs": [
           2329
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2329,
+          "api_lat": 35.15837,
+          "api_lng": 129.06421,
+          "api_addr": "부산진구 서전로37번길 14-1",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1360,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5146,15 +5817,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5162,7 +5831,22 @@
         "matched_uc_seqs": [
           2350
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2350,
+          "api_lat": 35.15622,
+          "api_lng": 129.06595,
+          "api_addr": "부산진구 서전로 58번길 34-1, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 786,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5203,15 +5887,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5219,7 +5901,22 @@
         "matched_uc_seqs": [
           2330
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2330,
+          "api_lat": 35.154896,
+          "api_lng": 129.06335,
+          "api_addr": "부산진구 서전로 38번길 62-9",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2486,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5260,15 +5957,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5276,7 +5971,22 @@
         "matched_uc_seqs": [
           1820
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1820,
+          "api_lat": 35.15265,
+          "api_lng": 129.06767,
+          "api_addr": "부산진구 동성로 25번길13 2F",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2223,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5314,15 +6024,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5330,7 +6038,22 @@
         "matched_uc_seqs": [
           2336
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2336,
+          "api_lat": 35.153034,
+          "api_lng": 129.06851,
+          "api_addr": "부산진구 동성로 30번길 4",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2240,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5429,11 +6152,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "부산진구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -5457,6 +6180,21 @@
           "api_name": "원조할매낙지",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1621,
+          "api_lat": 35.14214,
+          "api_lng": 129.06015,
+          "api_addr": "부산 부산진구 골드테마길 10 (범천동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2347,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
         }
       }
     },
@@ -5496,15 +6234,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5512,7 +6248,22 @@
         "matched_uc_seqs": [
           1601
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1601,
+          "api_lat": 35.141018,
+          "api_lng": 129.05618,
+          "api_addr": "부산 동구 중앙대로533번길 4 (범일동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1777,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5550,15 +6301,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5566,7 +6315,22 @@
         "matched_uc_seqs": [
           899
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 899,
+          "api_lat": 35.139576,
+          "api_lng": 129.05621,
+          "api_addr": "동구 중앙대로 519",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3236,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5605,15 +6369,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5621,7 +6383,22 @@
         "matched_uc_seqs": [
           566
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 566,
+          "api_lat": 35.13873,
+          "api_lng": 129.06345,
+          "api_addr": "동구 조방로14 동일타워",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2392,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -5768,15 +6545,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -5784,7 +6559,22 @@
         "matched_uc_seqs": [
           1450
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1450,
+          "api_lat": 35.123413,
+          "api_lng": 129.04155,
+          "api_addr": "동구 초량중로 135, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1523,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6053,11 +6843,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "동구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6066,7 +6856,22 @@
           1104,
           1623
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1104,
+          "api_lat": 35.114292,
+          "api_lng": 129.0371,
+          "api_addr": "동구 초량중로 26",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1625,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6162,15 +6967,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "동구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6179,7 +6982,22 @@
           242,
           1617
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 242,
+          "api_lat": 35.114815,
+          "api_lng": 129.03873,
+          "api_addr": "부산 동구 대영로243번길62",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1453,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6275,15 +7093,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6291,7 +7107,22 @@
         "matched_uc_seqs": [
           1133
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1133,
+          "api_lat": 35.085815,
+          "api_lng": 129.04295,
+          "api_addr": "영도구 꿈나무길 267(1층)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1261,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6330,15 +7161,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6346,7 +7175,22 @@
         "matched_uc_seqs": [
           1837
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1837,
+          "api_lat": 35.08963,
+          "api_lng": 129.03987,
+          "api_addr": "영도구 절영로 49번길 25",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2658,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6441,15 +7285,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6457,7 +7299,22 @@
         "matched_uc_seqs": [
           576
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 576,
+          "api_lat": 35.094036,
+          "api_lng": 129.05635,
+          "api_addr": "영도구 하나길 811",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1794,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6496,15 +7353,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6512,7 +7367,22 @@
         "matched_uc_seqs": [
           1252
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1252,
+          "api_lat": 35.089043,
+          "api_lng": 129.06154,
+          "api_addr": "영도구 청학동로 12",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1406,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6617,7 +7487,17 @@
         "matched_uc_seqs": [
           1244
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "ADDR_UNKNOWN_PENDING",
+          "uc_seq": 1244,
+          "api_addr": "대영로239번길 12, 1층",
+          "canon_addr": "부산 영도구 중리북로29번길 12",
+          "match_level": "UNKNOWN",
+          "guide_dist_m": 4713
+        }
       }
     },
     {
@@ -6656,15 +7536,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "영도구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6672,7 +7550,22 @@
         "matched_uc_seqs": [
           1457
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1457,
+          "api_lat": 35.07098,
+          "api_lng": 129.06885,
+          "api_addr": "영도구 절영로 481",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3585,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6768,15 +7661,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6784,7 +7675,22 @@
         "matched_uc_seqs": [
           2381
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2381,
+          "api_lat": 35.166687,
+          "api_lng": 129.11377,
+          "api_addr": "수영구 수영로679번길 22",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1741,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6885,11 +7791,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -6897,7 +7803,22 @@
         "matched_uc_seqs": [
           2363
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2363,
+          "api_lat": 35.161915,
+          "api_lng": 129.11087,
+          "api_addr": "수영구 광일로29번길 9, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2832,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -6994,15 +7915,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7010,7 +7929,22 @@
         "matched_uc_seqs": [
           2365
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2365,
+          "api_lat": 35.158283,
+          "api_lng": 129.12569,
+          "api_addr": "수영구 민락본동로27번길 56",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1934,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7050,15 +7984,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7066,7 +7998,22 @@
         "matched_uc_seqs": [
           2362
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2362,
+          "api_lat": 35.158234,
+          "api_lng": 129.1271,
+          "api_addr": "수영구 민락본동로 19번길 30-5, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1960,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7107,15 +8054,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7123,7 +8068,22 @@
         "matched_uc_seqs": [
           1834
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1834,
+          "api_lat": 35.15835,
+          "api_lng": 129.12785,
+          "api_addr": "수영구 민락본동로 19번길 18 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2391,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7165,11 +8125,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7177,7 +8137,22 @@
         "matched_uc_seqs": [
           2366
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2366,
+          "api_lat": 35.157604,
+          "api_lng": 129.1274,
+          "api_addr": "수영구 민락본동로11번길 21, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2547,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7390,15 +8365,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7406,7 +8379,22 @@
         "matched_uc_seqs": [
           1829
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1829,
+          "api_lat": 35.153328,
+          "api_lng": 129.12515,
+          "api_addr": "수영구 광안해변로284번길 38 해링턴타워광안 304호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 761,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7512,7 +8500,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7520,7 +8508,17 @@
         "matched_uc_seqs": [
           2353
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
+          "uc_seq": 2353,
+          "api_addr": "연제구 신금로 25, 노블레스스퀘어 110호",
+          "canon_addr": "부산 수영구 민락로27번길 4, 3층",
+          "match_level": "DIFFERENT",
+          "guide_dist_m": 4572
+        }
       }
     },
     {
@@ -7562,15 +8560,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7579,7 +8575,22 @@
           1835,
           1835
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1835,
+          "api_lat": 35.15741,
+          "api_lng": 129.12096,
+          "api_addr": "수영구 민락로33번길 17 202호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1049,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7675,17 +8686,15 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "identity_verdict": "IDENTITY_CONFIRMED_SAME",
       "identity_evidence": "주소 동일: 수영구 민락로13번길 21, 2층",
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7693,7 +8702,22 @@
         "matched_uc_seqs": [
           2361
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2361,
+          "api_lat": 35.15614,
+          "api_lng": 129.1215,
+          "api_addr": "수영구 민락로13번길 21, 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 869,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7791,15 +8815,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7807,7 +8829,22 @@
         "matched_uc_seqs": [
           2358
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2358,
+          "api_lat": 35.153927,
+          "api_lng": 129.11264,
+          "api_addr": "수영구 수영로 540번길 7",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1137,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -7961,15 +8998,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -7977,7 +9012,22 @@
         "matched_uc_seqs": [
           1824
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1824,
+          "api_lat": 35.147713,
+          "api_lng": 129.10889,
+          "api_addr": "수영구 황령산로14-1 2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 909,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8018,15 +9068,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8034,7 +9082,22 @@
         "matched_uc_seqs": [
           2359
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2359,
+          "api_lat": 35.148556,
+          "api_lng": 129.11166,
+          "api_addr": "수영구 남천바다로10번길 29, 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 923,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8076,15 +9139,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8093,7 +9154,22 @@
           1498,
           1558
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1498,
+          "api_lat": 35.148396,
+          "api_lng": 129.11385,
+          "api_addr": "수영구 남천바다로 34-6",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1219,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8191,14 +9267,12 @@
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -8222,6 +9296,21 @@
           "api_name": "언양불고기부산집",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1544,
+          "api_lat": 35.14793,
+          "api_lng": 129.11354,
+          "api_addr": "부산 수영구 남천바다로 32 (남천동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1019,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
         }
       }
     },
@@ -8383,11 +9472,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "수영구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8395,7 +9484,22 @@
         "matched_uc_seqs": [
           1492
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1492,
+          "api_lat": 35.143585,
+          "api_lng": 129.10974,
+          "api_addr": "수영구 광남로 6 ",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1151,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8492,15 +9596,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "수영구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8508,7 +9610,22 @@
         "matched_uc_seqs": [
           2356
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2356,
+          "api_lat": 35.139626,
+          "api_lng": 129.10675,
+          "api_addr": "수영구 황령대로473번길 14-2",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1754,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8546,15 +9663,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8562,7 +9677,22 @@
         "matched_uc_seqs": [
           1809
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1809,
+          "api_lat": 35.138542,
+          "api_lng": 129.1047,
+          "api_addr": "남구 용소로 7번길 88",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1857,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8657,15 +9787,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8673,7 +9801,22 @@
         "matched_uc_seqs": [
           218
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 218,
+          "api_lat": 35.137794,
+          "api_lng": 129.10591,
+          "api_addr": "남구 황령대로492번길 30 ",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1520,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8765,15 +9908,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8781,7 +9922,22 @@
         "matched_uc_seqs": [
           1810
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1810,
+          "api_lat": 35.13219,
+          "api_lng": 129.11273,
+          "api_addr": "남구 분포로 115 힐탑탑플레이스 B동 109호",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2893,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8820,15 +9976,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8836,7 +9990,22 @@
         "matched_uc_seqs": [
           1508
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1508,
+          "api_lat": 35.123108,
+          "api_lng": 129.11333,
+          "api_addr": "남구 동명로145번길 80 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2498,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8881,11 +10050,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "남구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8894,7 +10063,22 @@
           1511,
           1540
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1511,
+          "api_lat": 35.111244,
+          "api_lng": 129.11125,
+          "api_addr": "남구 용호로 235",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 4099,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -8932,15 +10116,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -8948,7 +10130,22 @@
         "matched_uc_seqs": [
           564
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 564,
+          "api_lat": 35.136368,
+          "api_lng": 129.09152,
+          "api_addr": "남구 진남로15",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 810,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9044,15 +10241,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "남구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9060,7 +10255,22 @@
         "matched_uc_seqs": [
           204
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 204,
+          "api_lat": 35.13177,
+          "api_lng": 129.0923,
+          "api_addr": "남구 유엔평화로 35-1",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1538,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9160,11 +10370,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "서구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9172,7 +10382,22 @@
         "matched_uc_seqs": [
           1802
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1802,
+          "api_lat": 35.11187,
+          "api_lng": 128.87785,
+          "api_addr": "강서구 낙동남로 526-1 토북베이커리카페",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 13049,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9214,11 +10439,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "서구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9226,7 +10451,22 @@
         "matched_uc_seqs": [
           865
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 865,
+          "api_lat": 35.11546,
+          "api_lng": 128.92226,
+          "api_addr": "강서구 새진목길 51, 1,2층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 13014,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9268,11 +10508,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "서구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9280,7 +10520,22 @@
         "matched_uc_seqs": [
           72
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 72,
+          "api_lat": 35.101425,
+          "api_lng": 128.92914,
+          "api_addr": "강서구 르노삼성대로 602",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 13231,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9431,15 +10686,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9447,7 +10700,22 @@
         "matched_uc_seqs": [
           1822
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1822,
+          "api_lat": 35.196556,
+          "api_lng": 128.98784,
+          "api_addr": "사상구 낙동대로 1564",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 4198,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9485,15 +10753,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9501,7 +10767,22 @@
         "matched_uc_seqs": [
           1523
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1523,
+          "api_lat": 35.19344,
+          "api_lng": 128.98584,
+          "api_addr": "사상구 낙동대로1518번길 33",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 3640,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9540,14 +10821,12 @@
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -9571,6 +10850,21 @@
           "api_name": "할매재첩국",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1625,
+          "api_lat": 35.193363,
+          "api_lng": 128.98607,
+          "api_addr": "부산 사상구 낙동대로1530번길 20-15 (삼락동)",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 5422,
+          "phone_match": false,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
         }
       }
     },
@@ -9611,15 +10905,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9627,7 +10919,22 @@
         "matched_uc_seqs": [
           1518
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1518,
+          "api_lat": 35.1727,
+          "api_lng": 128.98376,
+          "api_addr": "사상구 사상로 316",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 640,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9666,15 +10973,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사하구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9682,7 +10987,22 @@
         "matched_uc_seqs": [
           1118
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1118,
+          "api_lat": 35.09664,
+          "api_lng": 128.95784,
+          "api_addr": "사하구 하신번영로157번길 39",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1676,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -9778,15 +11098,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사하구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -9794,7 +11112,22 @@
         "matched_uc_seqs": [
           177
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 177,
+          "api_lat": 35.10239,
+          "api_lng": 129.00041,
+          "api_addr": "사하구 낙동대로 135번안길15",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2512,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10061,11 +11394,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "서구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10074,7 +11407,22 @@
           200,
           1620
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 200,
+          "api_lat": 35.108913,
+          "api_lng": 129.0199,
+          "api_addr": "서구 구덕로274번길 14",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 700,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10168,15 +11516,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "서구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10184,7 +11530,22 @@
         "matched_uc_seqs": [
           184
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 184,
+          "api_lat": 35.105713,
+          "api_lng": 129.02045,
+          "api_addr": "서구 구덕로 238번길 6",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1223,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10281,15 +11642,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10298,7 +11657,22 @@
           109,
           1608
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 109,
+          "api_lat": 35.104504,
+          "api_lng": 129.0244,
+          "api_addr": "중구 흑교로59번길 3",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1756,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10344,7 +11718,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10352,7 +11726,17 @@
         "matched_uc_seqs": [
           2347
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SAME_DISTRICT_NAME_MATCH",
+          "uc_seq": 2347,
+          "api_addr": "중구 광복중앙로 14-62 1층",
+          "canon_addr": "부산 중구 흑교로46번길 3-1",
+          "match_level": "SAME_DISTRICT",
+          "guide_dist_m": 2105
+        }
       }
     },
     {
@@ -10564,11 +11948,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10576,7 +11960,22 @@
         "matched_uc_seqs": [
           124
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 124,
+          "api_lat": 35.102104,
+          "api_lng": 129.0306,
+          "api_addr": "중구 광복중앙로 31",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1997,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10671,15 +12070,13 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "NAVIGATION_NOT_READY"
-      ],
-      "navigation_ready": null,
+      "ai_auto": true,
+      "ai_auto_block_reasons": null,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10687,7 +12084,22 @@
         "matched_uc_seqs": [
           1237
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1237,
+          "api_lat": 35.099678,
+          "api_lng": 129.02986,
+          "api_addr": "중구 광복로55번길 13",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 961,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10788,11 +12200,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10800,7 +12212,22 @@
         "matched_uc_seqs": [
           2345
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 2345,
+          "api_lat": 35.097927,
+          "api_lng": 129.03316,
+          "api_addr": "중구 구덕로22번길3 1층",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 2149,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -10847,7 +12274,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10855,7 +12282,17 @@
         "matched_uc_seqs": [
           1229
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SAME_DISTRICT_NAME_MATCH",
+          "uc_seq": 1229,
+          "api_addr": "중구 해관로73",
+          "canon_addr": "부산 중구 중앙대로81번길 9, 1층",
+          "match_level": "SAME_DISTRICT",
+          "guide_dist_m": 1097
+        }
       }
     },
     {
@@ -10901,7 +12338,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "중구",
-      "coord_status_r1": "GUIDE_COORD_ADDRESS_CONSISTENT",
+      "coord_status_r1": "GUIDE_COORD_CONFLICT_WITH_CURRENT_OFFICIAL_SOURCE",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10909,7 +12346,17 @@
         "matched_uc_seqs": [
           965
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "GUIDE_COORD_CONFLICT_DIFFERENT_LOCATION",
+          "uc_seq": 965,
+          "api_addr": "서구 대신공원로 13-5\n",
+          "canon_addr": "부산 중구 해관로 64-1, 1층",
+          "match_level": "DIFFERENT",
+          "guide_dist_m": 2621
+        }
       }
     },
     {
@@ -10951,11 +12398,11 @@
       "ai_auto_block_reasons": [
         "NAVIGATION_READY_NO"
       ],
-      "navigation_ready": false,
+      "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": false,
       "coord_address_district": "중구",
-      "coord_status_r1": "COORD_UNRESOLVED",
+      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
       "coord_status_c244e29": "COORD_PRESENT_NEEDS_VERIFICATION",
       "api_recovery_v1": {
         "task": "TASK-BUSAN-FOOD-194-OFFICIAL-API-RECOVERY-V1",
@@ -10963,7 +12410,22 @@
         "matched_uc_seqs": [
           1489
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "SOURCE_VERIFIED_NAV_READY",
+          "authority_source": "FOODSERVICE_OFFICIAL",
+          "uc_seq": 1489,
+          "api_lat": 35.106155,
+          "api_lng": 129.03487,
+          "api_addr": "중구 동광길 75-1",
+          "addr_match_level": "SAME",
+          "guide_dist_m": 1536,
+          "phone_match": true,
+          "navigation_ready": true,
+          "note": "address identical, FoodService coord authoritative"
+        }
       }
     },
     {
@@ -11017,7 +12479,17 @@
         "matched_uc_seqs": [
           190
         ],
-        "api_image_available": true
+        "api_image_available": true,
+        "coord_authority_v1": {
+          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
+          "as_of": "2026-08-16T08:53:46Z",
+          "result": "ADDR_UNKNOWN_PENDING",
+          "uc_seq": 190,
+          "api_addr": "달맞이길62번길 1\n",
+          "canon_addr": "부산 중구 대영로 225-1",
+          "match_level": "UNKNOWN",
+          "guide_dist_m": 14231
+        }
       }
     }
   ]
