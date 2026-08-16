@@ -29,7 +29,7 @@ import {
   EMPTY_STAY_FIELDS, stayFieldsFrom, stayModeFrom,
   type StayFields, type StayMode,
 } from "@/lib/trip-stay/stay-input-core";
-import { readTripDraft, writeTripDraft, type TripStayDetail }
+import { readTripDraft, writeTripDraft, clearTripDraft, type TripStayDetail }
   from "@/lib/trip-draft/trip-draft-core";
 import { DEFAULT_TRIP_PACE, TRIP_PACE_CHOICES, normalizeTripPace, type TripPaceChoice }
   from "@/lib/trip-pace/pace-core";
@@ -595,8 +595,17 @@ export default function HomeClient() {
       clearCityCart(city);
     } catch { /* ignore */ }
 
+    // 저장된 draft 를 먼저 지운다.
+    //
+    // `writeTripDraft` 는 날짜가 유효할 때만 쓴다. 날짜를 비운 채로 두면 그
+    // 저장은 조용히 실패하고 **이전 도시가 그대로 남는다** — 화면은 경주인데
+    // 저장된 여행은 부산인 상태가 된다. 지우고 시작하면 새 지역에서 날짜를
+    // 고르는 순간 그때의 인원·속도와 함께 새로 쓰인다.
+    clearTripDraft();
+
     // 날짜·도착·출발·숙박은 그 지역에서만 뜻이 있는 값이라 비운다.
-    // 인원과 여행 속도는 지역이 바뀌어도 그대로다 — 같은 사람이 같은 방식으로 다닌다.
+    // 인원과 여행 속도는 지역이 바뀌어도 그대로다 — 같은 사람이 같은 방식으로
+    // 다닌다. 두 값은 React state 로 남아 다음 draft 에 그대로 실린다.
     setStartDate(""); setEndDate("");
     setArrivalTime("");
     setDeparturePlace(""); setDepartureTime("");

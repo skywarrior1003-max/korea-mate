@@ -91,6 +91,14 @@ test("★날짜·도착·출발·숙박은 비우고 인원·속도는 남긴다
   assert.doesNotMatch(fn, /setTripPace\(/, "여행 속도를 지운다");
 });
 
+test("★저장된 draft 를 지워야 새 도시가 실제로 남는다", () => {
+  // writeTripDraft 는 날짜가 유효할 때만 쓴다. 날짜를 비운 채 두면 그 저장이
+  // 조용히 실패해 이전 도시가 그대로 남는다 — 화면과 저장이 어긋난다.
+  const fn = CODE.slice(CODE.indexOf("function applyCitySwitch"), CODE.indexOf("function requestCitySwitch"));
+  assert.match(fn, /clearTripDraft\(\);[\s\S]{0,400}setStartDate\(""\)/);
+  assert.match(HOME, /import \{ readTripDraft, writeTripDraft, clearTripDraft,/);
+});
+
 test("★돌아왔을 때 되살려 주는 도시별 바구니를 만들지 않았다", () => {
   for (const bad of [/savedByCity/, /cartByCity/, /restoreCity/, /koreamate_city_/]) {
     assert.doesNotMatch(CODE, bad, String(bad));
