@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Plus_Jakarta_Sans, Noto_Serif, Inter } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 import "./globals.css";
@@ -38,6 +38,25 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-display-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+// Public Memory Story 전용 서체. 디자이너 최종 화면이 Noto Serif + Inter 를
+// 쓴다(code.html 의 fontFamily 토큰). 여기서도 next/font 로 빌드 때 받아 우리
+// 도메인에서 서빙한다 — 공개 페이지가 런타임에 Google 을 부르지 않는다.
+// 전역 서체는 그대로 두고 Story 컴포넌트만 이 변수를 읽는다.
+const storySerif = Noto_Serif({
+  variable: "--font-story-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+const storySans = Inter({
+  variable: "--font-story-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -88,7 +107,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jakarta.variable} ${storySerif.variable} ${storySans.variable} h-full antialiased`}
     >
       {(() => {
         const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
