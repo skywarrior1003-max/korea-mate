@@ -1,25 +1,27 @@
 # 부산 Food 최종 Handoff — busan-food-final-handoff-v1
 
-**작성일**: 2026-08-17  
-**수렴 태스크**: TASK-BUSAN-FOOD-194-FINAL-IMAGE-RECOVERY-AND-QA-V1  
+**최초 작성**: 2026-08-17 (FINAL-IMAGE-RECOVERY-AND-QA-V1)  
+**최종 업데이트**: 2026-08-17 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2, commit `781190d`)  
 **브랜치**: `data/busan-food-discovery-v1`  
-**CANONICAL SHA**: `75ac94f503d5ca61fd925f9cf5e64259b275bb5ee8734221bbea0d20370b0e03`
+**CANONICAL SHA**: `8f418ccd0c6b795cfee3adf9d9afd1c6376e81e1973c3cd1feb99ec3b6f043eb`
 
 ---
 
-## 최종 지표
+## 최종 지표 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 기준)
 
 | 항목 | 값 | 비고 |
 |------|-----|------|
 | CANONICAL | 194 | 부산 Gourmet Guide 전체 |
 | NAV_READY | **194/194** | 100% |
-| IMAGE | **140/194** | 72.2% |
-| AI_AUTO | **189/194** | 97.4% |
-| ACTIVE | 190/194 | TEMP_UNVERIFIED 4건 제외 |
+| IMAGE | **140/194** | 72.2% (변동 없음 — 구조적 한계) |
+| VISUAL_ACCESS_READY | **170/194** | 87.6% (이미지 140 + 링크만 30) |
+| AI_AUTO | **194/194** | 100% ✅ |
+| AI_SCHEDULER_DECISION | **194/194** | ALL AI_AUTO_ALLOWED ✅ |
+| ACTIVE | **194/194** | 100% ✅ |
 | CLOSED | 0 | |
 | MOVED | 0 | |
-| TEMPORARILY_UNVERIFIED | 4 | 귀화식당 사케의 향, 이안, 신도랩2.0, 미락슈퍼 |
-| DIFFERENT_ENTITY | 1 | 슌사이쿠보 화명 (ACTIVE, ai_auto blocked) |
+| TEMPORARILY_UNVERIFIED | **0** | ✅ 완전 해소 |
+| DIFFERENT_ENTITY (AI blocked) | **0** | ✅ 슌사이쿠보 화명 해제 |
 
 ---
 
@@ -31,6 +33,7 @@
 | `df5c772` | IMAGE-R1-OVERNIGHT-V2 | IMAGE 120→122, 할매재첩국 coord 정정 |
 | `53f0654` | CLOSURE-SPRINT-V1 | IMAGE 122→125 (VBC 3건), 72+68건 종료분류 |
 | `5348ebe` | NAVER-UNBLOCK-V1 | IMAGE 125→140 (+15 Instagram), AI_AUTO 126→189 (+63) |
+| `781190d` | VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 | AI_AUTO 189→194/194, 수동4건+슌사이쿠보, VISUAL_ACCESS_READY 170/194 |
 
 ---
 
@@ -72,26 +75,38 @@
 
 ---
 
-## 잔여 blockers 상세
+## 잔여 blockers 상세 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 기준)
 
-### IMAGE_UNRESOLVED 54건
+### ✅ AI_AUTO_BLOCKED: 0건 (완전 해소)
 
-#### BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED 30건
+이전 5건 → 모두 ACTIVE + AI_AUTO_ALLOWED로 전환됨:
+- 귀화식당 사케의 향: 사용자 직접 확인 → ACTIVE (운영명: 귀화식당 동래 온천장점)
+- 이안: 사용자 직접 확인 → ACTIVE (Michelin Busan 2026, coord 갱신)
+- 신도랩2.0: 사용자 직접 확인 → ACTIVE (운영명: 모먼트 로컬)
+- 미락슈퍼: 사용자 직접 확인 → ACTIVE (Michelin Busan 2026, coord 갱신)
+- 슌사이쿠보 화명: Naver score=0.85 근거로 DIFFERENT_ENTITY 차단 해제 → ai_auto=True
 
-**근본 원인**: 18건이 CatchTable SPA (JavaScript 렌더링 필수, og:image 없음). 나머지 Naver 블로그(3건), YouTube(1건), Michelin 정책(1건), Lotte generic(1건), rate-limited(2건), 기타(4건).
+### IMAGE_UNRESOLVED 54건 (구조적 한계 — 동일 재시도 불가)
+
+#### BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED 30건 (visual_reference_url 확보)
+
+**상태**: 30건 모두 `api_recovery_v1.closure_sprint_v1.visual_reference_url` 설정 완료  
+**이미지 구조적 차단**: 18건이 CatchTable SPA (JS 렌더링 필수, static og:image 없음), 기타 12건 정책/기술 제한
 
 | 유형 | 건수 | 대표 예시 |
 |------|------|-----------|
-| CatchTable SPA | ~18 | 디귿, 석정갈비, 이와, 피오또, 기장해변짚불곰장어, 레스토랑 엠비언스, 융캉찌에, 야키토리 온정, 잔둔가, 야키쵸리, 아르프, 미락슈퍼, 융캉찌에 광안본점, 마츠자키, 비네토, 안목, 샤브니지, 쉐프곤 |
+| CatchTable SPA | ~20 | 디귿, 이안, 석정갈비, 이와, 피오또, 기장해변짚불곰장어, 레스토랑 엠비언스, 융캉찌에, 야키토리 온정, 잔둔가, 야키쵸리, 아르프, 미락슈퍼, 융캉찌에 광안본점, 마츠자키, 비네토, 안목, 샤브니지, 쉐프곤, 귀화식당(신규) |
 | Naver 블로그 | 3 | 서가원국수, 초량갈비, 레썽스 |
 | Michelin 금지 | 1 | 피리피리 |
 | Lotte Hotel generic | 1 | 차오란 |
 | YouTube | 1 | 막둥이네 양곱창 |
-| 기타 | 6 | 당미옥, 차애전 할매칼국수, 송헌집, 한월관, 정짓간 신평본점, menu.busan.go.kr session-gated |
+| 기타 | 4 | 당미옥, 차애전 할매칼국수, 송헌집, 한월관 |
 
-**해소 조건**: CatchTable이 SSR(서버사이드 렌더링) og:image를 제공하거나, 대상 식당이 별도 Instagram/공식 사이트를 개설하는 경우.
+**해소 조건**: CatchTable이 SSR og:image를 제공하거나, Playwright/headless browser 환경 구축.
 
-#### NO_BUSINESS_IMAGE_FOUND 24건
+#### NO_BUSINESS_IMAGE_FOUND + NO_ONLINE_PRESENCE 24건
+
+**상태**: Naver 전화번호 전수 검색 실패 — 온라인 미존재 확정. 자동화 재시도 불가.
 
 | canonical_id | 상호 |
 |---|---|
@@ -120,17 +135,24 @@
 | busan-G-00185 | 돌고래순두부 |
 | busan-G-00187 | 개미집 본점 |
 
-**근본 원인**: Naver Local Search 미수록 또는 공개 Instagram/공식 사이트 없음. 주로 전통 한식당, 기사식당, 서민 식당 계열로 온라인 존재감 낮음.
+**근본 원인**: Naver Local Search 미수록, 공개 Instagram/공식 사이트 없음. 주로 전통 한식당, 기사식당, 서민 식당 계열로 온라인 존재감 없음. 전화번호 직접 검색으로도 미발견.
 
-### AI_AUTO_BLOCKED 5건
+### VISUAL_ACCESS_READY 상세
 
-| canonical_id | 상호 | 차단 이유 |
-|---|---|---|
-| busan-G-00016 | 귀화식당 사케의 향 | TEMPORARILY_UNVERIFIED (Naver score=0.0, 모든 대체 쿼리 미매칭) |
-| busan-G-00059 | 이안 | TEMPORARILY_UNVERIFIED (Naver score=0.58, 임계값 미달) |
-| busan-G-00063 | 신도랩2.0 | TEMPORARILY_UNVERIFIED (Naver score=0.0) |
-| busan-G-00122 | 미락슈퍼 | TEMPORARILY_UNVERIFIED (Naver score=0.65, 임계값 미달) |
-| busan-G-00164 | 슌사이쿠보 화명 | DIFFERENT_ENTITY_RELATION_REMOVED (ACTIVE, 보수적 hold) |
+| 상태 | 건수 | 비고 |
+|------|------|------|
+| 이미지 직접 연결 | 140 | image_url 보유 |
+| 식당 링크만 확보 | 30 | visual_reference_url (CatchTable 등) |
+| **합계 VISUAL_ACCESS_READY** | **170/194** | 87.6% |
+| NO_ONLINE_PRESENCE (링크도 없음) | 24 | 완전 오프라인 식당 — 수동만 가능 |
+
+### UI 통합 요구사항 (main branch 작업)
+
+**필드**: `api_recovery_v1.closure_sprint_v1.visual_reference_url`  
+**의미**: 이미지 없는 엔티티의 "보조 비주얼 링크" (CatchTable 식당 상세 페이지 등)  
+**활용**: UI에서 image_url이 null인 경우 이 링크를 "식당 상세 보기" 버튼으로 표시  
+**타입**: `string | null`  
+**완전한 필드 경로**: `record.api_recovery_v1.closure_sprint_v1.visual_reference_url`
 
 ---
 
@@ -180,15 +202,20 @@
 
 ---
 
-## 부산 Food 트랙 마감 선언
+## 부산 Food 트랙 마감 선언 (최종)
 
 ```
-FURTHER_BROAD_RECOVERY_REQUIRED = NO
-SAFE_TO_CLOSE_BUSAN_FOOD_TRACK  = YES
-BUSAN_FOOD_DATA_STATUS          = COMPLETE_WITH_KNOWN_GAPS
-BUSAN_FOOD_RELEASE_READY        = YES
+FURTHER_BROAD_RECOVERY_REQUIRED    = NO
+SAFE_TO_CLOSE_BUSAN_FOOD_TRACK     = YES
+BUSAN_FOOD_DATA_STATUS             = COMPLETE
+BUSAN_FOOD_RELEASE_READY           = YES
+AI_AUTO                            = 194/194  ← 100%
+AI_SCHEDULER_DECISION              = 194/194  ← ALL AI_AUTO_ALLOWED
+TEMP_UNVERIFIED                    = 0
+VISUAL_ACCESS_READY                = 170/194  ← 구조적 한계 24건 제외
 ```
 
-부산 Food 데이터는 이 시점에서 최선의 자동화 수집을 완료했다.  
-54건 IMAGE_UNRESOLVED 및 5건 AI_AUTO_BLOCKED의 잔여 항목은 구조적 기술 한계(CatchTable SPA, 온라인 존재감 없는 전통 식당)로 인한 것이며 동일한 자동화 재시도로는 해소 불가능하다.  
-이후 보강은 **단건 수동 발굴** 또는 **headless browser 환경 구축** 후 CatchTable 이미지 추출로만 가능하다.
+부산 Food 데이터는 가능한 모든 자동화 + 사용자 직접 확인을 완료했다.  
+**AI 스케줄러 기준**: 194건 전체 AI_AUTO_ALLOWED — 즉시 서비스 가능.  
+54건 IMAGE_UNRESOLVED의 잔여 항목은 구조적 기술 한계(CatchTable SPA, 온라인 존재감 없는 전통 식당)로 인한 것이며 동일한 자동화 재시도로는 해소 불가능하다.  
+이후 이미지 보강은 **단건 수동 발굴** 또는 **headless browser 환경 구축** 후 CatchTable 이미지 추출로만 가능하다.
