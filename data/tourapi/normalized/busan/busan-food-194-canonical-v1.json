@@ -335,10 +335,10 @@
         "lat": 35.15644,
         "lon": 129.12479
       },
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
-      "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240416105423031_ttiel",
+      "image_rights": "usable",
+      "image_source": "www.visitbusan.net",
+      "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": true,
@@ -383,6 +383,18 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
+      },
+      "image_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-IMAGE-R1-AND-OVERNIGHT-QUALITY-AUDIT-V2",
+        "as_of": "2026-08-17",
+        "phase": "A",
+        "disc_id": "busan-F-00220",
+        "uc_seq_cms": 1506,
+        "result": "VBC_LOCAL_CONFIRMED",
+        "identity_note": "톤쇼우 부산대점(금정구 금강로 247-10) VBC↔canonical 거리=0m; uc_seq=1506 LOCAL_VBC_CONFIRMED",
+        "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240416105423031_ttiel",
+        "image_source": "www.visitbusan.net",
+        "image_rights": "usable"
       }
     },
     {
@@ -9805,10 +9817,10 @@
         "lat": 35.14793,
         "lon": 129.11354
       },
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
-      "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240418102343022_ttiel",
+      "image_rights": "usable",
+      "image_source": "www.visitbusan.net",
+      "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": true,
@@ -9857,6 +9869,18 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
+      },
+      "image_recovery_v1": {
+        "task": "TASK-BUSAN-FOOD-IMAGE-R1-AND-OVERNIGHT-QUALITY-AUDIT-V2",
+        "as_of": "2026-08-17",
+        "phase": "A",
+        "disc_id": "busan-F-00076",
+        "uc_seq_cms": 950,
+        "result": "VBC_LOCAL_CONFIRMED",
+        "identity_note": "광안리 언양불고기 부산집(수영구 남천바다로 32) 이름=canonical, API addr=VBC addr; coord gap 1018m(guide addr precision diff)",
+        "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240418102343022_ttiel",
+        "image_source": "www.visitbusan.net",
+        "image_rights": "usable"
       }
     },
     {
@@ -11411,8 +11435,8 @@
       "address_ko": "부산 사상구 낙동대로1530번길 20-15",
       "description_ko": "낙동강 물길 따라 이어온 재첩의 시간 낙동강변 재첩국 전문점들 사이에서 30여 년을 운영해 온 내공 깊은 곳입니다.",
       "description_en": "30-year Nakdong riverside freshwater clam restaurant, also famous for doenjang bibimbap with clams and clear clam soup.",
-      "latitude": 35.1454,
-      "longitude": 128.9968,
+      "latitude": 35.1932711,
+      "longitude": 128.9861994,
       "phone": "051-301-7069",
       "tags": [
         "taste-of-busan"
@@ -11440,7 +11464,7 @@
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
       "coord_address_district": "사상구",
-      "coord_status_r1": "OFFICIAL_COORD_CONFIRMED",
+      "coord_status_r1": "VWORLD_GEOCODE_CONFIRMED",
       "coord_status_c244e29": "ADDRESS_COORD_CONFLICT",
       "image_fail_reason": "IMAGE_EXTRACTION_FAILED",
       "image_search_log": [
@@ -11466,19 +11490,18 @@
           "navigation_ready": false
         },
         "coord_authority_v1": {
-          "task": "TASK-BUSAN-FOOD-194-COUNT-AND-OFFICIAL-COORD-AUTHORITY-AUDIT-V1",
-          "as_of": "2026-08-16T08:53:46Z",
-          "result": "SOURCE_VERIFIED_NAV_READY",
-          "authority_source": "FOODSERVICE_OFFICIAL",
-          "uc_seq": 1625,
-          "api_lat": 35.193363,
-          "api_lng": 128.98607,
-          "api_addr": "부산 사상구 낙동대로1530번길 20-15 (삼락동)",
-          "addr_match_level": "SAME",
-          "guide_dist_m": 5422,
-          "phone_match": false,
+          "task": "TASK-BUSAN-FOOD-IMAGE-R1-AND-OVERNIGHT-QUALITY-AUDIT-V2",
+          "as_of": "2026-08-17",
+          "result": "VWORLD_GEOCODE_CORRECTION",
+          "authority_source": "VWORLD_OFFICIAL_ADDRESS_GEOCODE",
+          "geocoded_address": "부산광역시 사상구 낙동대로1530번길 20-15",
+          "vworld_lat": 35.1932711,
+          "vworld_lng": 128.9861994,
+          "vworld_addr_type": "road",
           "navigation_ready": true,
-          "note": "address identical, FoodService coord authoritative"
+          "correction_note": "Previous coord(lat=35.1454,lng=128.9968) was 5422m from address. Corrected via VWorld geocode of address_ko field.",
+          "old_lat": 35.1454,
+          "old_lng": 128.9968
         }
       }
     },
