@@ -211,6 +211,44 @@ test("★공개 payload 에 사진 관계가 딸려 나가지 않는다", () => 
   }
 });
 
+/**
+ * FK 컬럼 타입은 **운영에 적용된** migration 에서 근거를 찾는다.
+ *
+ * 처음에 `moment_id UUID` 로 적었다가 SQL Editor 에서 42804 로 거부됐다.
+ * 운영 `trip_moments.moment_id` 는 text 인데, 005(운영 테이블과 다른 옛 설계도)를
+ * 보고 타입을 가져왔기 때문이다. 정작 근거는 저장소 안에 있었다 — 031 이
+ * `cover_moment_id text` 로 같은 부모에 FK 를 걸었고 그건 운영에서 성공했다.
+ *
+ * 그래서 이 테스트는 "052 가 text 라고 적었는가" 가 아니라 **"031 이 쓴 타입과
+ * 같은가"** 를 본다. 근거 파일이 바뀌면 이 검사도 따라 움직인다.
+ */
+test("★FK 컬럼 타입이 운영에서 증명된 부모 타입과 같다", () => {
+  // 주석을 먼저 떼고 본다 — 설명 문장에 같은 이름이 나오면 엉뚱한 낱말을 집는다
+  const m031 = read("supabase", "migrations", "031_add_itinerary_trip_cover.sql")
+    .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
+  // 031 은 이 컬럼으로 trip_moments(moment_id) 에 FK 를 걸었고 운영에 적용됐다
+  assert.match(m031, /REFERENCES public\.trip_moments\(moment_id\)/,
+    "031 이 더 이상 부모 타입의 근거가 아니다 — 다른 근거를 찾아야 한다");
+  const parentType = m031.match(/cover_moment_id\s+(\w+)/)?.[1]?.toLowerCase();
+  assert.equal(parentType, "text", "031 의 선언이 바뀌었다");
+
+  const sql = read("supabase", "migrations", "052_trip_moment_photos.sql")
+    .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
+  const childType = sql.match(/moment_id\s+(\w+)\s+NOT NULL REFERENCES/)?.[1]?.toLowerCase();
+  assert.equal(childType, parentType,
+    `자식 moment_id(${childType}) 가 부모(${parentType}) 와 다르다 — FK 가 42804 로 거부된다`);
+
+  // FK 가 없는 두 컬럼도 부모 타입을 모르므로 uuid 로 못 박지 않는다
+  for (const col of ["itinerary_id", "device_id"]) {
+    const t = sql.match(new RegExp(`${col}\\s+(\\w+)`))?.[1]?.toLowerCase();
+    assert.equal(t, "text", `${col} 을 ${t} 로 선언했다 — 부모 타입을 모르는 채 맞힌 것이다`);
+  }
+
+  // 005 는 운영 테이블이 아니다. 여기서 타입을 가져오면 같은 실수를 반복한다.
+  assert.match(read("supabase", "migrations", "005_trip_moments_schema.sql"),
+    /moment_id\s+UUID/i, "005 가 바뀌었다 — 이 주의가 아직 유효한지 확인할 것");
+});
+
 test("★migration 은 기존 것을 건드리지 않는다", () => {
   const sql = read("supabase", "migrations", "052_trip_moment_photos.sql")
     .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
