@@ -5,7 +5,7 @@
 // 도시를 만들 수 있는가" 는 서로 다른 질문이고, 한 값으로 묶으면 안 된다.
 //
 //   유효성      → CITY_ENTRY_CONTENT 의 키 (도시 진입 화면이 존재하는 도시)
-//   플래너 지원 → CITY_ENTRY_CONTENT[slug].plannerReady
+//   플래너 지원 → CITY_CONFIGS[slug].planningReady (열림 여부의 단일 출처)
 //   플래너 도시 → CITY_ARRIVAL_OPTIONS 의 키 (플래너가 실제로 아는 이름)
 //
 // 셋 다 기존 계약에서 파생한다. HomeClient 안에 도시 목록을 다시 적지 않는다.
@@ -20,6 +20,7 @@
 // 테스트할 수 있다.
 
 import { CITY_ENTRY_CONTENT } from "../data/cities/entry-content.ts";
+import { CITY_CONFIGS } from "../data/cities/index.ts";
 import { CITY_ARRIVAL_OPTIONS } from "../data/city-presets.ts";
 
 export type CityParamResult =
@@ -57,9 +58,11 @@ export function resolveCityParam(raw: string | null | undefined): CityParamResul
   const entry = CITY_ENTRY_CONTENT[slug];
   if (!entry) return { kind: "ignore" };
 
-  if (!entry.plannerReady) return { kind: "redirect", href: `/${slug}/` };
+  // 열림 여부는 CityConfig.planningReady 하나가 정한다. 버튼과 주소가 서로 다른
+  // 값을 보면 "준비 중" 이라고 적힌 도시에 주소로는 들어가진다.
+  if (!CITY_CONFIGS[slug]?.planningReady) return { kind: "redirect", href: `/${slug}/` };
 
-  // plannerReady 인데 플래너가 그 도시를 모르면 계약이 어긋난 것이다.
+  // 열어 둔 도시인데 플래너가 그 이름을 모르면 계약이 어긋난 것이다.
   // Busan 도착지로 폴백시키느니 무시한다.
   const name = toPlannerName(slug);
   return CITY_ARRIVAL_OPTIONS[name] ? { kind: "planner", city: name } : { kind: "ignore" };

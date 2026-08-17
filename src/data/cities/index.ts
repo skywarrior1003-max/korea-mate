@@ -1,9 +1,9 @@
-import type { CityConfig } from "./types";
-import busanConfig from "./busan";
-import seoulConfig from "./seoul";
-import jejuConfig from "./jeju";
-import gyeongjuConfig from "./gyeongju";
-import jeonjuConfig from "./jeonju";
+import type { CityConfig } from "./types.ts";
+import busanConfig from "./busan.ts";
+import seoulConfig from "./seoul.ts";
+import jejuConfig from "./jeju.ts";
+import gyeongjuConfig from "./gyeongju.ts";
+import jeonjuConfig from "./jeonju.ts";
 
 export const CITY_CONFIGS: Record<string, CityConfig> = {
   busan:    busanConfig,
@@ -27,4 +27,4 @@ export function cityLabelKey(city: { name: string }): string {
   return `city_${city.name}`;
 }
 
-export type { CityConfig, CitySpot } from "./types";
+export type { CityConfig, CitySpot } from "./types.ts";

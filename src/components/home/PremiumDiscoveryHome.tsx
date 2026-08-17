@@ -63,7 +63,7 @@ export default function PremiumDiscoveryHome({ active }: { active: boolean }) {
   const cities = CITY_SLUGS.map(slug => ({
     slug,
     label: CITY_LABEL[slug] ?? slug,
-    plannerReady: CITY_ENTRY_CONTENT[slug]?.plannerReady ?? false,
+    plannerReady: CITY_CONFIGS[slug]?.planningReady ?? false,
     tagline: CITY_ENTRY_CONTENT[slug]?.tagline || CITY_CONFIGS[slug]?.seoDescription || "",
     image: cityVisual(slug),
   }));

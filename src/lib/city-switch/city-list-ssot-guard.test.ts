@@ -82,9 +82,24 @@ test("★다섯 도시 모두 소개 문구가 4개 언어에 있다", () => {
 
 // ── planningReady 는 링크 노출과 다른 물음이다 ───────────────────────────────
 test("★준비 중이라고 도시 링크를 감추거나 막지 않는다", () => {
-  for (const [name, src] of [["CityQuickLinks", QUICK], ["CityEntry", ENTRY]] as const) {
-    assert.doesNotMatch(strip(src), /planningReady/, `${name}: 링크가 planningReady 를 본다`);
-  }
+  // 홈 카드는 순수 링크라 readiness 를 볼 이유가 없다.
+  assert.doesNotMatch(strip(QUICK), /planningReady/, "CityQuickLinks: 링크가 readiness 를 본다");
+
+  // City Entry 는 **플래너 CTA 에만** readiness 를 본다. 페이지 자체와 "다른 도시"
+  // 링크는 준비 중인 도시에도 열려 있어야 한다 — 감추면 그 도시가 없는 줄 안다.
+  const e = strip(ENTRY);
+  assert.equal((e.match(/planningReady/g) ?? []).length, 1, "CityEntry: readiness 를 여러 곳에서 본다");
+  assert.match(e, /const plannerOpen = CITY_CONFIGS\[city\.slug\]\?\.planningReady === true;/);
+  const nav = e.slice(e.indexOf('aria-label={t("otherCities")}'));
+  assert.doesNotMatch(nav, /plannerOpen|planningReady/, "다른 도시 링크가 readiness 로 막힌다");
+});
+
+test("★플래너 CTA 만 readiness 를 본다", () => {
+  const e = strip(ENTRY);
+  assert.equal((e.match(/plannerOpen/g) ?? []).length, 4);   // 정의 1 + CTA 3
+  // 진입 화면이 자체 플래그를 다시 들지 않는다
+  assert.doesNotMatch(e, /content\.plannerReady/);
+  assert.doesNotMatch(read("src", "data", "cities", "entry-content.ts"), /plannerReady/);
 });
 
 test("★일정 계획 가능 여부는 플래너에서만 쓴다", () => {

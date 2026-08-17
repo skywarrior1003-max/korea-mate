@@ -41,8 +41,6 @@ export interface CityEntryContent {
   practical:  CityPractical[];
   /** Editorial 제휴 카드를 붙일 수 있는 도시인지. KoreaReadySection 지원 도시만 true. */
   koreaReady: boolean;
-  /** AI 플래너가 실제로 지원하는 도시인지. 아니면 CTA 를 Coming Soon 으로 둔다. */
-  plannerReady: boolean;
 }
 
 export const BUSAN_ENTRY: CityEntryContent = {
@@ -60,7 +58,6 @@ export const BUSAN_ENTRY: CityEntryContent = {
   plannerTitle: "Ready to Plan Your Busan Itinerary?",
   plannerDesc:  "Tell the AI your travel dates and style — solo, couple, family, or group. Get a full day-by-day Busan itinerary in 30 seconds. Free, no sign-up needed.",
   koreaReady:   true,
-  plannerReady: true,
   highlights: [
   {
     emoji: "🏖️",
@@ -125,7 +122,6 @@ export const SEOUL_ENTRY: CityEntryContent = {
   plannerTitle: "Ready to Plan Your Seoul Itinerary?",
   plannerDesc:  "Tell the AI your travel dates and style — solo, couple, family, or group. Get a full day-by-day Seoul itinerary in 30 seconds. Free, no sign-up needed.",
   koreaReady:   true,
-  plannerReady: true,
   highlights: [
   {
     emoji: "🏯",
@@ -189,7 +185,6 @@ export const JEJU_ENTRY: CityEntryContent = {
   plannerTitle: "Ready to Plan Your Jeju Itinerary?",
   plannerDesc:  "Tell the AI your travel dates and style — solo, couple, family, or group. Get a full day-by-day Jeju island itinerary in 30 seconds. Free, no sign-up needed.",
   koreaReady:   true,
-  plannerReady: true,
   highlights: [
   {
     emoji: "🌋",
@@ -254,7 +249,6 @@ export const GYEONGJU_ENTRY: CityEntryContent = {
   plannerTitle: "Ready to Plan Your Gyeongju Itinerary?",
   plannerDesc:  "Tell the AI your travel dates and style — solo, couple, family, or group. Get a full day-by-day Gyeongju itinerary in 30 seconds. Free, no sign-up needed.",
   koreaReady:   true,
-  plannerReady: true,
   highlights: [
   {
     emoji: "🏛️",
@@ -322,7 +316,6 @@ export const JEONJU_ENTRY: CityEntryContent = {
   plannerTitle: "",
   plannerDesc:  "",
   koreaReady:   false,
-  plannerReady: false,
   highlights: [],
   practical:  [],
 };

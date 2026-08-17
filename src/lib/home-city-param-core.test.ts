@@ -14,12 +14,18 @@ test("busan query keeps the Busan planner context", () => {
   assert.deepEqual(resolveCityParam("busan"), { kind: "planner", city: "Busan" });
 });
 
-test("seoul query keeps the Seoul planner context", () => {
-  assert.deepEqual(resolveCityParam("seoul"), { kind: "planner", city: "Seoul" });
+// 아직 열지 않은 도시는 주소로도 플래너에 들어가지 않는다.
+//
+// 예전에는 진입 화면이 들고 있던 `plannerReady` 가 판단했고, 그 값이
+// `CityConfig.planningReady` 와 어긋나 있었다. 버튼에는 "준비 중" 이라고
+// 적혀 있는데 `?city=seoul` 로는 들어가졌다 — 그 도시에는 장소가 한 곳도
+// 없어서 빈 일정이 나온다.
+test("seoul query goes to its city entry — 아직 열지 않았다", () => {
+  assert.deepEqual(resolveCityParam("seoul"), { kind: "redirect", href: "/seoul/" });
 });
 
-test("jeju query keeps the Jeju planner context", () => {
-  assert.deepEqual(resolveCityParam("jeju"), { kind: "planner", city: "Jeju" });
+test("jeju query goes to its city entry — 아직 열지 않았다", () => {
+  assert.deepEqual(resolveCityParam("jeju"), { kind: "redirect", href: "/jeju/" });
 });
 
 test("gyeongju query keeps the Gyeongju planner context", () => {
@@ -30,7 +36,8 @@ test("gyeongju query keeps the Gyeongju planner context", () => {
 test("capitalised city names from clone links still resolve", () => {
   assert.deepEqual(resolveCityParam("Busan"),    { kind: "planner", city: "Busan" });
   assert.deepEqual(resolveCityParam("Gyeongju"), { kind: "planner", city: "Gyeongju" });
-  assert.deepEqual(resolveCityParam("  jEjU  "), { kind: "planner", city: "Jeju" });
+  // 대소문자·공백 처리는 그대로다. 열려 있지 않은 도시는 진입 화면으로 간다.
+  assert.deepEqual(resolveCityParam("  jEjU  "), { kind: "redirect", href: "/jeju/" });
 });
 
 // ── 미지원 도시 — 진입 화면으로 ─────────────────────────────────────────────

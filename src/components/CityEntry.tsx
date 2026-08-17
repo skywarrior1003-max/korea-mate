@@ -41,6 +41,8 @@ export default function CityEntry({ city, content }: Props) {
   const tD = useTranslations("discovery");
   // 도시 이름 번역은 이미 `tripForm.city_*` 에 있다. 여기서 다시 만들지 않는다.
   const tCity = useTranslations("tripForm");
+  // 플래너를 열어도 되는지는 CityConfig 하나가 정한다 — 진입 화면이 따로 알지 않는다.
+  const plannerOpen = CITY_CONFIGS[city.slug]?.planningReady === true;
   const hero = cityVisual(city.slug);
 
   const exploreHref = `/explore/${city.slug}/`;
@@ -85,7 +87,7 @@ export default function CityEntry({ city, content }: Props) {
 
         <div className="relative mx-auto max-w-3xl px-6 pt-10 pb-9 flex flex-col justify-end" style={{ minHeight: "clamp(420px, 62vh, 560px)" }}>
           <div className="flex flex-wrap items-center gap-2 mb-5">
-            {content.plannerReady ? (
+            {plannerOpen ? (
               <>
                 <span
                   className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-black tracking-[0.12em] text-white"
@@ -134,7 +136,7 @@ export default function CityEntry({ city, content }: Props) {
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5" /></svg>
             </Link>
 
-            {content.plannerReady ? (
+            {plannerOpen ? (
               <Link
                 href={`/?city=${city.slug}#planner`}
                 className="gkm-focus inline-flex items-center justify-center min-h-13 h-13 px-7 rounded-full text-white text-[15px] font-bold transition-colors"
@@ -220,7 +222,7 @@ export default function CityEntry({ city, content }: Props) {
       )}
 
       {/* ── Planner CTA ─────────────────────────────────────────────────── */}
-      {content.plannerReady && (
+      {plannerOpen && (
         <section className="max-w-3xl mx-auto px-4 py-14 text-center">
           <div className="rounded-frame p-8 sm:p-10" style={{ backgroundColor: DESIGN_INK }}>
             {/* 브랜드 표기는 항상 소문자 gokoreamate 다. uppercase 를 걸면
