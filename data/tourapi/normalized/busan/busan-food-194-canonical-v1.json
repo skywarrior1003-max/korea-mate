@@ -235,6 +235,16 @@
           "vworld_lng": 129.0863391187603,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -528,6 +538,16 @@
           "vworld_lng": 129.09282887785628,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -666,6 +686,16 @@
           "vworld_lng": 129.08337502783834,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -1077,6 +1107,16 @@
           "vworld_lng": 129.08046554430342,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -1143,6 +1183,16 @@
           "vworld_lng": 129.07420863055592,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -1209,6 +1259,16 @@
           "vworld_lng": 129.07703491607862,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -1658,6 +1718,16 @@
           "vworld_lng": 129.08714289298075,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -1863,6 +1933,16 @@
           "vworld_lng": 129.10248480411894,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -2274,6 +2354,16 @@
           "vworld_lng": 129.14692179918495,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -2403,6 +2493,16 @@
           "vworld_lng": 129.15382860917327,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -2679,6 +2779,16 @@
           "vworld_lng": 129.1561657424033,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -2746,6 +2856,16 @@
           "vworld_lng": 129.15645652853408,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -2813,6 +2933,16 @@
           "vworld_lng": 129.15782710727757,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -3016,6 +3146,13 @@
           "api_name": "쥬가정효",
           "note": "coord_not_verified_distant_from_guide_may_be_different_branch",
           "navigation_ready": false
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_WEB_UNMAPPED",
+          "image_closure_reason": "VisitBusan food detail menuCd 미확인; uc_seq=1638로 CMS 상세 페이지 접근 불가; USER_BROWSER_SAMPLE_REQUIRED",
+          "remaining_action": "USER_BROWSER: VisitBusan 쥬가정효 상세 페이지 이미지 URL 확인 (food detail menuCd 발견 시 차오란 동시 적용 가능)"
         }
       }
     },
@@ -3214,6 +3351,16 @@
           "vworld_lng": 129.16020530599482,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -3746,6 +3893,16 @@
           "vworld_lng": 129.1641158226623,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -3830,6 +3987,13 @@
           "phone_match": true,
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_WEB_UNMAPPED",
+          "image_closure_reason": "VisitBusan food detail menuCd 미확인; uc_seq=1597로 CMS 상세 페이지 접근 불가; 쥬가정효 USER_BROWSER_SAMPLE 후 동시 적용 가능",
+          "remaining_action": "DEPENDS_ON_JUGATJEONGYO_SAMPLE"
         }
       }
     },
@@ -4101,6 +4265,16 @@
           "vworld_lng": 129.17585630418455,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -4314,6 +4488,16 @@
           "vworld_lng": 129.1832640959453,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -4381,6 +4565,16 @@
           "vworld_lng": 129.18503682022526,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -4516,6 +4710,16 @@
           "vworld_lng": 129.18935627221157,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -4582,6 +4786,16 @@
           "vworld_lng": 129.19063629087094,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -4981,6 +5195,16 @@
           "vworld_lng": 129.21160955175247,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5048,6 +5272,16 @@
           "vworld_lng": 129.2073472408236,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5250,6 +5484,16 @@
           "vworld_lng": 129.233525809759,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5317,6 +5561,16 @@
           "vworld_lng": 129.212518491205,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5721,6 +5975,16 @@
           "vworld_lng": 129.06095894728918,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5788,6 +6052,16 @@
           "vworld_lng": 129.06202267038535,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -5856,6 +6130,16 @@
           "vworld_lng": 129.06283225740765,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -6061,6 +6345,16 @@
           "vworld_lng": 129.06464651705733,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -6127,6 +6421,16 @@
           "vworld_lng": 129.0644825315422,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -6468,6 +6772,16 @@
           "vworld_lng": 129.05858073693975,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -6500,10 +6814,10 @@
         "lat": 35.14214,
         "lon": 129.06015
       },
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
-      "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240417143908074_ttiel",
+      "image_rights": "usable",
+      "image_source": "www.visitbusan.net",
+      "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": true,
@@ -6551,6 +6865,28 @@
           "phone_match": true,
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
+        },
+        "image_recovery_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "result": "OFFICIAL_IMAGE_RESOLVED",
+          "source_type": "VBC_LOCAL_DISCOVERY",
+          "vbc_source_key": "VisitBusanContent:food:92:ko",
+          "vbc_uc_seq": 92,
+          "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240417143908074_ttiel",
+          "image_rights": "usable",
+          "image_source": "www.visitbusan.net",
+          "identity_note": "원조할매집(VBC uc_seq=92) = 원조할매낙지(canonical); 주소 부산진구 골드테마길 10 완전 일치; VBC coord 불일치(2348m)는 VBC 내부 오류, canonical VWorld coord 유지"
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_IMAGE_RESOLVED",
+          "image_closure_reason": "VBC_LOCAL_DISCOVERY; identity confirmed by address/coord",
+          "image_remaining_action": "NONE",
+          "operational_closure_status": "VERIFIED_ACTIVE",
+          "operational_closure_reason": "current_state=ACTIVE in canonical",
+          "operational_remaining_action": "NONE"
         }
       }
     },
@@ -6881,6 +7217,16 @@
           "vworld_lng": 129.04628084247105,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7015,6 +7361,16 @@
           "vworld_lng": 129.0392414400581,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7081,6 +7437,16 @@
           "vworld_lng": 129.03970118039842,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7147,6 +7513,16 @@
           "vworld_lng": 129.03970687859788,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7214,6 +7590,16 @@
           "vworld_lng": 129.04153059521047,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7350,6 +7736,16 @@
           "vworld_lng": 129.03853265307416,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7487,6 +7883,16 @@
           "vworld_lng": 129.04004264939658,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -7690,6 +8096,16 @@
           "vworld_lng": 129.04256450588576,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8074,6 +8490,16 @@
           "vworld_lng": 129.12070988468997,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8210,6 +8636,16 @@
           "vworld_lng": 129.1180609733973,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8346,6 +8782,16 @@
           "vworld_lng": 129.12596253007695,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8686,6 +9132,16 @@
           "vworld_lng": 129.12477221934563,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8754,6 +9210,16 @@
           "vworld_lng": 129.12422844701072,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8822,6 +9288,16 @@
           "vworld_lng": 129.1247335527275,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -8959,6 +9435,16 @@
           "vworld_lng": 129.1228551195635,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9165,6 +9651,16 @@
           "vworld_lng": 129.12143718918918,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9302,6 +9798,16 @@
           "vworld_lng": 129.1135780582726,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9439,6 +9945,16 @@
           "vworld_lng": 129.1182926833016,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9506,6 +10022,16 @@
           "vworld_lng": 129.11472926784802,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9783,6 +10309,16 @@
           "vworld_lng": 129.11142929944197,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -9949,6 +10485,16 @@
           "vworld_lng": 129.11075217312947,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -10018,6 +10564,16 @@
           "vworld_lng": 129.1113562395173,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -10154,6 +10710,16 @@
           "vworld_lng": 129.10840229848878,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -10356,6 +10922,16 @@
           "vworld_lng": 129.10544076378284,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -10826,6 +11402,16 @@
           "vworld_lng": 129.0913196407656,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -10960,6 +11546,16 @@
           "vworld_lng": 128.9882469702818,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -11193,10 +11789,10 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
-      "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250408115525042_ttiel",
+      "image_rights": "usable",
+      "image_source": "www.visitbusan.net",
+      "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "TEMPORARILY_UNVERIFIED",
       "current_state_reason": "DIFFERENT_ENTITY: discovery busan-F-00213(슌, 기장군)과 동일 식당이 아님. Guide=북구 화명, disc=기장군 기장읍. 잘못된 relation 제거.",
       "ai_auto": false,
@@ -11236,6 +11832,28 @@
           "vworld_lng": 129.0147073881634,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "image_recovery_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "result": "OFFICIAL_IMAGE_RESOLVED",
+          "source_type": "VBC_LOCAL_DISCOVERY",
+          "vbc_source_key": "VisitBusanContent:food:2351:ko",
+          "vbc_uc_seq": 2351,
+          "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20250408115525042_ttiel",
+          "image_rights": "usable",
+          "image_source": "www.visitbusan.net",
+          "identity_note": "순사이쿠보(VBC uc_seq=2351) = 슌사이쿠보 화명(canonical); 주소 북구 양달로4번길 17 완전 일치, coord 거리 7m; 슌/순 = 일본어 표기 변형"
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_IMAGE_RESOLVED",
+          "image_closure_reason": "VBC_LOCAL_DISCOVERY applied above",
+          "image_remaining_action": "NONE",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -11452,10 +12070,10 @@
         "lat": 35.193363,
         "lon": 128.98607
       },
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
-      "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
+      "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20230608100341246_ttiel",
+      "image_rights": "usable",
+      "image_source": "www.visitbusan.net",
+      "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
       "ai_auto": true,
@@ -11502,6 +12120,28 @@
           "correction_note": "Previous coord(lat=35.1454,lng=128.9968) was 5422m from address. Corrected via VWorld geocode of address_ko field.",
           "old_lat": 35.1454,
           "old_lng": 128.9968
+        },
+        "image_recovery_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "result": "OFFICIAL_IMAGE_RESOLVED",
+          "source_type": "VBC_LOCAL_DISCOVERY",
+          "vbc_source_key": "VisitBusanContent:food:164:ko",
+          "vbc_uc_seq": 164,
+          "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20230608100341246_ttiel",
+          "image_rights": "usable",
+          "image_source": "www.visitbusan.net",
+          "identity_note": "할매재첩국집(VBC uc_seq=164) = 할매재첩국(canonical); 주소 사상구 낙동대로1530번길 20-15 완전 일치, coord 거리 16m"
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_IMAGE_RESOLVED",
+          "image_closure_reason": "VBC_LOCAL_DISCOVERY; identity confirmed by address/coord",
+          "image_remaining_action": "NONE",
+          "operational_closure_status": "VERIFIED_ACTIVE",
+          "operational_closure_reason": "current_state=ACTIVE in canonical",
+          "operational_remaining_action": "NONE"
         }
       }
     },
@@ -11707,6 +12347,16 @@
           "vworld_lng": 128.96246977734162,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -11841,6 +12491,16 @@
           "vworld_lng": 129.00840119209892,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -11908,6 +12568,16 @@
           "vworld_lng": 129.0143634667479,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12036,6 +12706,16 @@
           "vworld_lng": 129.02012441552895,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12172,6 +12852,16 @@
           "vworld_lng": 129.0204579401168,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12306,6 +12996,16 @@
           "vworld_lng": 129.02513625570623,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12506,6 +13206,16 @@
           "vworld_lng": 129.02531102051537,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12572,6 +13282,16 @@
           "vworld_lng": 129.02728307352658,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12638,6 +13358,16 @@
           "vworld_lng": 129.02958869458814,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12772,6 +13502,16 @@
           "vworld_lng": 129.03012031565527,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
@@ -12906,6 +13646,16 @@
           "vworld_lng": 129.0301688784946,
           "vworld_addr_type": "road",
           "navigation_ready": true
+        },
+        "closure_sprint_v1": {
+          "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
+          "as_of": "2026-08-17",
+          "image_closure_status": "OFFICIAL_SOURCE_NOT_FOUND",
+          "image_closure_reason": "FoodService API: entity not found (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated bulk access; VBC JSONL search: no matching entry found; KTO API: not applicable (no contentId)",
+          "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
+          "operational_closure_status": "OFFICIAL_EVIDENCE_INSUFFICIENT",
+          "operational_closure_reason": "FoodService API 현행 미수록 (CURRENT_FOODSERVICE_ENTITY_NOT_FOUND); VisitBusan WAF blocks automated access; local VBC discovery: no match; current operation 확인 불가",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         }
       }
     },
