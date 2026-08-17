@@ -197,9 +197,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sqqrdR7KVbNiKBJ60OLJD3w/222f54a3cdd743fa8dfd3a4cd178ec5c",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/yakitori_diguet",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -237,14 +237,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/yakitori_diguet",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/yakitori_diguet",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -265,7 +266,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/yakitori_diguet",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00003",
@@ -700,9 +704,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260801_18%2F1785569681461mAf9H_JPEG%2FChatGPT_Image_2026%25B3%25E2_7%25BF%25F9_18%25C0%25CF_%25BF%25C0%25C8%25C4_08_52_32.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/당미옥",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -740,14 +744,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://smartstore.naver.com/gomtang86",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://smartstore.naver.com/gomtang86",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG_VERIFIED"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -768,7 +773,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1070002174/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00009",
@@ -1250,9 +1258,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sEvOQJQGLE_fWh7aWZhqQVA/22aa2bf28ff14fb3a8130a4bc8ae450c",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/sukjunggalbi",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -1290,14 +1298,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://catchtable.co.kr/sukjunggalbi",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=8.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://catchtable.co.kr/sukjunggalbi",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -1318,7 +1327,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/sukjunggalbi",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00016",
@@ -1344,9 +1356,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/s7FWhwa4FPOYlcaHS03NF8A/m/37ac37bd08504f51a082ac3a45e7a9d9",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/sakescent",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
@@ -1384,13 +1396,14 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
           "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 현재 운영명: 귀화식당 동래 온천장점. 주소: 부산 동래구 중앙대로1367번길 18 1층. ACTIVE 확인.",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
-          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/sakescent"
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/sakescent",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "manual_user_verified_2026_08_17": {
           "verified_by": "user_direct_naver_place_check",
@@ -1408,7 +1421,10 @@
       },
       "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
       "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 현재 운영명: 귀화식당 동래 온천장점. 주소: 부산 동래구 중앙대로1367번길 18 1층. ACTIVE 확인.",
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/sakescent",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00017",
@@ -1823,9 +1839,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220219_95%2F1645215808144yWu2U_JPEG%2FScreenshot_20220217-053707_NAVER.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/서가원국수",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -1863,14 +1879,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://blog.naver.com/flashone71",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=68.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://blog.naver.com/flashone71",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -1891,7 +1908,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1029591324/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00024",
@@ -2058,9 +2078,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://halme.co.kr/wp-content/uploads/2026/06/%ED%99%88%ED%94%BC%EB%A9%94%EC%9D%B8-2-%EB%B3%B5%EC%82%AC.png",
+      "image_rights": "official",
+      "image_source": "official_website_dom/halme_co_kr",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -2098,14 +2118,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://halme.co.kr/",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://halme.co.kr/",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "OFFICIAL_SITE_DOM"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -2126,7 +2147,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://halme.co.kr/",
+      "takedown_ready": true,
+      "image_provider": "official_website"
     },
     {
       "canonical_id": "busan-G-00027",
@@ -2672,9 +2696,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sxUd_rLTMVumCv4w0o5-21g/m/46235c215c944443b2ab8ca8e1382c18",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/iwa",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -2712,14 +2736,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/iwa",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/iwa",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -2740,7 +2765,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/iwa",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00035",
@@ -4339,9 +4367,9 @@
         "lat": 35.16133,
         "lon": 129.16801
       },
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fnaverbooking-phinf.pstatic.net%2F20260419_74%2F1776575939693ARg2O_PNG%2Fimage.png",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/차오란",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": null,
@@ -4394,12 +4422,16 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "차오란 — og:image가 Lotte Hotel 일반 SNS 이미지(snsRepresentImage.png), 식당 특정 이미지 아님",
-          "remaining_action": "DEPENDS_ON_JUGATJEONGYO_SAMPLE"
+          "remaining_action": "DEPENDS_ON_JUGATJEONGYO_SAMPLE",
+          "image_resolution_method": "NAVER_PLACE_OG_VERIFIED"
         }
       },
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1188303683/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00056",
@@ -4633,9 +4665,9 @@
       "coord_status": "VWORLD_GEOCODED_V2_2026_08_17",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/b3bd16f0a65648dfa54a7e29d1b26606",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/iaan.busan",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
@@ -4673,13 +4705,14 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/iaan.busan",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
           "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 이안 ACTIVE. 주소: 부산 해운대구 달맞이길117번나길 200 4층. Michelin Busan 2026 선정. 월요일 휴무.",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
-          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/iaan.busan"
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/iaan.busan",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "manual_user_verified_2026_08_17": {
           "verified_by": "user_direct_naver_place_check",
@@ -4697,7 +4730,10 @@
       },
       "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
       "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 이안 ACTIVE. 주소: 부산 해운대구 달맞이길117번나길 200 4층. Michelin Busan 2026 선정. 월요일 휴무.",
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/iaan.busan",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00060",
@@ -4872,9 +4908,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/92a10f48df514c32bf9d549253014ec3",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/fiotto",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -4912,14 +4948,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: http://catchtable.co.kr/fiotto",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=0.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "http://catchtable.co.kr/fiotto",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -4940,7 +4977,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/fiotto",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00063",
@@ -4967,9 +5007,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/73d03ebd2e5e4fe682fbf5f4cd62d9de",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/shindolab",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
@@ -5007,13 +5047,14 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
           "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 신도랩2.0 → 모먼트 로컬 상호 변경. 주소: 부산 해운대구 달맞이길 239-16 1층. ACTIVE. 월요일 휴무.",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
-          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/shindolab"
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/shindolab",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "manual_user_verified_2026_08_17": {
           "verified_by": "user_direct_naver_place_check",
@@ -5031,7 +5072,10 @@
       },
       "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
       "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 신도랩2.0 → 모먼트 로컬 상호 변경. 주소: 부산 해운대구 달맞이길 239-16 1층. ACTIVE. 월요일 휴무.",
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/shindolab",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00064",
@@ -5233,9 +5277,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20251204_115%2F1764857189215KnLTN_JPEG%2FIMG_8516.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/옥이보리밥",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -5273,14 +5317,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG_VERIFIED"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5301,7 +5346,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/37683511/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00067",
@@ -5665,9 +5713,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/svY5UaVFmvSQ6ntdqGGNCEQ/d47da73c721b48d3b49715c468753352",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/strawfireggom",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -5705,14 +5753,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/strawfireggom",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=12.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/strawfireggom",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5733,7 +5782,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/strawfireggom",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00073",
@@ -5760,9 +5812,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/cb65c6d9b5514c29a447a68e191d76c2",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/bistro_hotelambi",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -5800,14 +5852,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: http://app.catchtable.co.kr/ct/shop/bistro_hotelambi",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=19.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/bistro_hotelambi",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5828,7 +5881,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/bistro_hotelambi",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00074",
@@ -6099,9 +6155,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20211029_156%2F16355005206797Tyk1_JPEG%2FI1juZIscV-Ck04dogSXbnMgs.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/만세담",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -6139,14 +6195,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6167,7 +6224,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1818326079/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00078",
@@ -6536,9 +6596,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260713_147%2F1783923783947U8hPr_JPEG%2F3A092388-3A33-437C-803B-D3516B688E10.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/갯마을횟집",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -6576,14 +6636,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG_VERIFIED"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6604,7 +6665,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1472195424/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00084",
@@ -6631,9 +6695,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/624d66e80af0498dbd8b33153559d471",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/Z6VULjCGXBn4JjHJWATHTQ",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -6671,14 +6735,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/Z6VULjCGXBn4JjHJWATHTQ",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/Z6VULjCGXBn4JjHJWATHTQ",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6699,7 +6764,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/Z6VULjCGXBn4JjHJWATHTQ",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00085",
@@ -6727,9 +6795,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sj-kIZ1Z9ASo1UxxRrYZnMw/119022627e6d48778ff7e5b3a0a2fd52",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/onjeong",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -6767,14 +6835,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: http://app.catchtable.co.kr/ct/shop/onjeong",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/onjeong",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6795,7 +6864,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/onjeong",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00086",
@@ -6962,9 +7034,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/95a52d050db24e8dbf17c16c1a166b27",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/zandunga",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -7002,14 +7074,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/zandunga?from=share&typ",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=25.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/zandunga?from=share&typ",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -7030,7 +7103,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/zandunga",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00089",
@@ -7056,9 +7132,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sByTQXPHTFSQHP61YcPXueg/m/cf4308b6cbe74b3b8f6ddafd345f8497",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/yaki_chori",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -7096,14 +7172,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/yaki_chori?from=share&t",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=5.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/yaki_chori?from=share&t",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -7124,7 +7201,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/yaki_chori",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00090",
@@ -7909,9 +7989,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260812_259%2F1786520391650SjU0d_JPEG%2F%25C3%25BB%25B1%25E2%25BF%25CD%25BD%25C4%25B4%25E7_%25C4%25AB%25B5%25E5.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/청기와식당",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -7949,14 +8029,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=16.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -7977,7 +8058,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/19663430/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00101",
@@ -8072,9 +8156,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260722_49%2F1784712619499LvEUe_JPEG%2F1000018186.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/오성집",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -8112,14 +8196,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8140,7 +8225,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/37749649/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00103",
@@ -8166,9 +8254,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20251230_52%2F1767021342550fcUee_JPEG%2F1000029878.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/초량갈비",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -8206,14 +8294,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://blog.naver.com/jene0616",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://blog.naver.com/jene0616",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8234,7 +8323,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1103662100/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00104",
@@ -8260,9 +8352,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260202_79%2F1769996209389eco8Y_PNG%2F%25BA%25CE%25B1%25A4%25B0%25A5%25BA%25F1_%25B7%25CE%25B0%25ED.png",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/부광갈비",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -8300,14 +8392,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8328,7 +8421,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/16942995/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00105",
@@ -8355,9 +8451,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20251013_185%2F1760285969642g0p8x_JPEG%2F1000006320.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/초량돼지국밥",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -8395,14 +8491,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=7.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8423,7 +8520,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/38763154/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00106",
@@ -8520,9 +8620,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200723_173%2F1595468172570CnsWS_JPEG%2FylEzJoW2VXTVl6ViIaKDSBcB.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/마가만두",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -8560,14 +8660,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8588,7 +8689,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/36422178/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00108",
@@ -8686,9 +8790,6 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -8919,9 +9020,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sCLWk2x7vCBxWCnuvWSYaXw/m/d706f03145ce4bb8aa11acf2ad56c84e",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/arpkitchen",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -8959,14 +9060,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/arpkitchen?from=share&t",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/arpkitchen?from=share&t",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8987,7 +9089,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/arpkitchen",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00113",
@@ -9336,9 +9441,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230119_9%2F16741281865758Uj2T_JPEG%2F20221215_144235.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/나룻터국수",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -9376,14 +9481,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -9404,7 +9510,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/12056533/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00119",
@@ -9501,9 +9610,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231208_89%2F1702038264914KgQBI_JPEG%2FIMG_1773.jpeg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/피리피리",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -9541,12 +9650,13 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "피리피리 — Michelin 사진 금지 정책 (guide.michelin.com source)",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -9567,7 +9677,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1282461490/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00121",
@@ -9664,9 +9777,9 @@
       "coord_status": "VWORLD_GEOCODED_V2_2026_08_17",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sdJ9ufEmAUd8QyJXW170z9Q/463b7c09eba64248a9b23fb70da46886",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/meerocksuper",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
@@ -9704,13 +9817,14 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/meerocksuper?from=share",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
           "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 미락슈퍼 ACTIVE. 주소: 부산 수영구 민락로 24-8 1층. Michelin Busan 2026 선정. 영업종료 22:00.",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
-          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/meerocksuper?from=share&type=VISIT_RESERVATION"
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/meerocksuper?from=share&type=VISIT_RESERVATION",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "manual_user_verified_2026_08_17": {
           "verified_by": "user_direct_naver_place_check",
@@ -9728,7 +9842,10 @@
       },
       "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
       "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 미락슈퍼 ACTIVE. 주소: 부산 수영구 민락로 24-8 1층. Michelin Busan 2026 선정. 영업종료 22:00.",
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/meerocksuper",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00123",
@@ -10140,9 +10257,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/e29f601afad0412ca3230c5cfdebbd26",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/yongkang_zzie",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -10180,14 +10297,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://catchtable.co.kr/yongkang_zzie",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://catchtable.co.kr/yongkang_zzie",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10208,7 +10326,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/yongkang_zzie",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00129",
@@ -10662,9 +10783,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250702_128%2F1751458903473kOdy0_JPEG%2F%25B6%25B1%25B0%25A5%25BA%25F1%25281%2529.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/송헌집",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -10702,14 +10823,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://www.instagram.com/songheon___",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=0.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://www.instagram.com/songheon___",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10730,7 +10852,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/2003906672/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00135",
@@ -10828,9 +10953,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/abc38cf039854ef980d8002625bfe111",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/mathuzaki",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -10868,14 +10993,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/mathuzaki",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/mathuzaki",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10896,7 +11022,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/mathuzaki",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00137",
@@ -10994,9 +11123,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230821_43%2F1692606905389k4AdN_JPEG%2F25D62E39-5B47-40E9-8126-6550EAFA9534.jpeg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/한월관",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11034,14 +11163,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://smartstore.naver.com/hanwolgwan",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=34.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://smartstore.naver.com/hanwolgwan",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG_VERIFIED"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11062,7 +11192,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1122228826/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00139",
@@ -11089,9 +11222,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/snNSZDYlEDBhW4FwqRIiKwA/57b51dc0a45440d4bbf1d370e7504cbe",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/vigneto",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11129,14 +11262,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: http://app.catchtable.co.kr/ct/shop/vigneto",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/vigneto",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11157,7 +11291,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/vigneto",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00140",
@@ -11397,9 +11534,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230104_89%2F1672827724442PYFH3_JPEG%2F%25BA%25D2%25B0%25ED%25B1%25E2%25B3%25D7%25C0%25CC%25B9%25F6.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/비비재",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11437,14 +11574,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11465,7 +11603,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1156147371/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00144",
@@ -11592,9 +11733,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/swieM_i-QV5N5kMuKqv-I0g/e5a2c9153630476ba57f92f08a26297c",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/anmok_busan",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11632,14 +11773,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/anmok_busan?from=share&",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=9.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/anmok_busan?from=share&",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11660,7 +11802,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/anmok_busan",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00146",
@@ -11689,9 +11834,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260727_177%2F178514342192703Yxl_JPEG%2FIMG_2841.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/레썽스",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11729,14 +11874,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://blog.naver.com/lessence_official",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://blog.naver.com/lessence_official",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11757,7 +11903,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1020232691/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00147",
@@ -11854,9 +12003,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260409_195%2F1775722716124uMG63_PNG%2F%25C1%25A6%25B8%25F1%25C0%25BB_%25C0%25D4%25B7%25C2%25C7%25D8%25C1%25D6%25BC%25BC%25BF%25E4._%252842%2529.png",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/뉴러우멘관즈",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -11894,14 +12043,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=18.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11922,7 +12072,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1394729619/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00149",
@@ -12765,9 +12918,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/shop/manager/images/04760635616a49e5886084be3e088d84",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/shabuniji",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -12805,14 +12958,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/shabuniji",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=27.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/shabuniji",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG_IMAGE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -12833,7 +12987,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/shabuniji",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00161",
@@ -13608,9 +13765,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://menu.busan.go.kr/uploadFiles/mbr/20250612123450251.JPG",
+      "image_rights": "official",
+      "image_source": "busan_menu_official/jeongjitgan",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -13648,7 +13805,7 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://menu.busan.go.kr/shop/info/CD_SHP_002355",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
@@ -13676,7 +13833,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://menu.busan.go.kr/shop/info/CD_SHP_002355",
+      "takedown_ready": true,
+      "image_provider": "official_website"
     },
     {
       "canonical_id": "busan-G-00172",
@@ -13771,9 +13931,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fnaverbooking-phinf.pstatic.net%2F20260729_199%2F1785309400052ubfeC_JPEG%2Fimage.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/꽃마을지리산어탕",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -13811,14 +13971,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13839,7 +14000,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/16449496/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00174",
@@ -13866,9 +14030,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20190126_178%2F1548474075355vcdRN_JPEG%2FcZh3yKt7yJ73r4p1b2iBE2Px.jpeg.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/골목 손칼국수",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -13906,14 +14070,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13934,7 +14099,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/16924232/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00175",
@@ -14023,9 +14191,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260716_64%2F1784127928242r8FPT_JPEG%2Ffile_0000000066207207b89a6b852c6db18e.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/흑산도 횟집",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14063,14 +14231,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14091,7 +14260,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1305329472/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00177",
@@ -14188,9 +14360,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_270%2F144099880490266xEI_JPEG%2F146059503072726_2.jpeg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/맛나기사식당",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14228,14 +14400,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14256,7 +14429,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/31510279/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00179",
@@ -14351,9 +14527,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240708_275%2F1720400424934wqkbu_JPEG%2FIMG_6006.jpeg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/왕밀면냉면 본점",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14391,14 +14567,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14419,7 +14596,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1666029546/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00181",
@@ -14581,9 +14761,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260105_93%2F1767543407071LHG9B_JPEG%2F1767543390428.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/원조일미기사식당",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14621,14 +14801,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14649,7 +14830,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1744989510/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00184",
@@ -14675,9 +14859,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sB1WxWT1zp0_9lIWaR_9g_A/m/148ed514202e4ef89ec760aa7d306e02",
+      "image_rights": "business_provided",
+      "image_source": "catchtable_playwright_og/chef_gon",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
@@ -14715,14 +14899,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://catchtable.co.kr/chef_gon",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://catchtable.co.kr/chef_gon",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "CATCHTABLE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14743,7 +14928,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://app.catchtable.co.kr/ct/shop/chef_gon",
+      "takedown_ready": true,
+      "image_provider": "CatchTable"
     },
     {
       "canonical_id": "busan-G-00185",
@@ -14769,9 +14957,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_134%2F14410157439745lImQ_JPEG%2F11672265_0.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/돌고래순두부",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14809,14 +14997,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14837,7 +15026,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/11672265/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00186",
@@ -14932,9 +15124,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20251231_175%2F1767157664275p6AT2_JPEG%2F1000007417.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/개미집 본점",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -14972,14 +15164,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": null,
-          "visual_access_type": "NO_ONLINE_PRESENCE"
+          "visual_access_type": "NO_ONLINE_PRESENCE",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -15000,7 +15193,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/11722112/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00188",
@@ -15095,9 +15291,9 @@
       "coord_status": "GUIDE_COORD_ONLY",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
-      "image_url": null,
-      "image_rights": null,
-      "image_source": null,
+      "image_url": "https://search.pstatic.net/common/?autoRotate=true&quality=100&type=f640_380&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260811_230%2F17864226396030owjk_JPEG%2F%25B4%25EB%25C3%25A2%25B6%25F3%25B8%25E9_%25C6%25F7%25BD%25BA%25C5%25CD.jpg",
+      "image_rights": "business_provided",
+      "image_source": "naver_place_og/막둥이네 양곱창",
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "taegshlang-2025 source_certainty=LOW, no discovery pipeline confirmation",
@@ -15135,14 +15331,15 @@
         "closure_sprint_v1": {
           "task": "TASK-BUSAN-FOOD-194-CLOSURE-SPRINT-V1",
           "as_of": "2026-08-17",
-          "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
+          "image_closure_status": "IMAGE_RESOLVED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://www.youtube.com/live/_9WAmG28YdE?si=VMWAA58fvNB_jAhw",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
           "visual_reference_url": "https://www.youtube.com/live/_9WAmG28YdE?si=VMWAA58fvNB_jAhw",
-          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK",
+          "image_resolution_method": "NAVER_PLACE_OG"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -15163,7 +15360,10 @@
         }
       },
       "nav_ready_block_reasons": [],
-      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED",
+      "image_source_url": "https://m.place.naver.com/restaurant/1706265049/home",
+      "takedown_ready": true,
+      "image_provider": "NaverPlace"
     },
     {
       "canonical_id": "busan-G-00190",
