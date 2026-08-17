@@ -75,14 +75,30 @@ export async function fetchItinerary(id: string, deviceId?: string): Promise<Iti
   return data;
 }
 
-// TASK-SEC-02: 공유 페이지 전용 안전 조회 — SECURITY DEFINER RPC 경유
-// device_id / email / created_at 미반환. 직접 REST 테이블 접근 대체.
+// 공유 페이지 전용 조회 — 서버가 정제한 것만 받는다.
+//
+// 예전에는 여기서 `get_shared_itinerary` RPC 를 직접 불렀다. RPC 는 device_id·
+// email 을 빼 주지만 `days` 는 통째로 돌려준다. 그 안에 화면이 쓰지도 않는
+// 좌표·지도 링크·내부 식별자가 있었고, My Place 를 담은 일정이라면 그 장소의
+// 비공개 메모까지 브라우저로 나갔다.
+//
+// 이제 Pages Function 이 service_role 로 읽고 whitelist 로 정제한 뒤 돌려준다
+// (`functions/api/shared/[id]/story.ts`). 브라우저는 애초에 원본을 받지 않는다.
 export async function fetchSharedItinerary(id: string): Promise<ItineraryRow | null> {
-  const { data, error } = await supabase
-    .rpc("get_shared_itinerary", { p_id: id });
-  if (error) { console.error("[Supabase] shared fetch:", error.message); return null; }
-  const rows = data as ItineraryRow[] | null;
-  return rows?.[0] ?? null;
+  let res: Response;
+  try {
+    res = await fetch(`/api/shared/${encodeURIComponent(id)}/story`);
+  } catch {
+    console.error("[shared] fetch failed");
+    return null;
+  }
+  if (!res.ok) {
+    // 비공개·미존재는 둘 다 404 다 — 존재 여부를 구분해 주지 않는다
+    if (res.status !== 404) console.error("[shared] fetch status:", res.status);
+    return null;
+  }
+  try { return (await res.json()) as ItineraryRow; }
+  catch { return null; }
 }
 
 export async function updateItineraryTitle(id: string, title: string, deviceId?: string): Promise<boolean> {

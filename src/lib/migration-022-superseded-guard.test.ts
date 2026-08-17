@@ -165,9 +165,15 @@ test("★get_shared_itinerary EXECUTE 를 회수하는 migration 이 없다", ()
   }
 });
 
-test("★공유 RPC 호출 구조를 바꾸지 않았다", () => {
+test("★브라우저는 공유 RPC 를 직접 부르지 않는다 — 서버가 정제한 것만 받는다", () => {
   const supa = readFileSync(join(ROOT, "src", "lib", "supabase.ts"), "utf8");
-  assert.match(supa, /\.rpc\("get_shared_itinerary", \{ p_id: id \}\)/);
+  // 예전에는 여기서 RPC 를 직접 불렀다. RPC 는 device_id·email 을 빼 주지만
+  // `days` 는 통째로 돌려주므로 좌표·지도 링크·My Place 의 비공개 메모가 함께
+  // 브라우저로 나갔다. 이제 Pages Function 이 whitelist 로 정제한 뒤 돌려준다.
+  assert.doesNotMatch(supa, /\.rpc\("get_shared_itinerary"/,
+    "브라우저가 다시 RPC 를 직접 부른다");
+  assert.match(supa, /fetch\(`\/api\/shared\/\$\{encodeURIComponent\(id\)\}\/story`\)/);
+  // 권한 자체는 아직 열려 있다. 회수는 이 경로가 운영에서 확인된 뒤 별도 작업이다.
 });
 
 test("★022 경고문이 실행 지시로 읽히지 않는다", () => {

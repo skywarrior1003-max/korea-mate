@@ -6,6 +6,7 @@ interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   NEXT_PUBLIC_SUPABASE_URL: string;
   NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
+  SUPABASE_SERVICE_ROLE_KEY: string;
 }
 
 interface ItineraryRow {
@@ -118,23 +119,31 @@ export const onRequest: (context: {
   let description = "Plan, capture & share your Korea trip story with AI. Free · No sign-up required.";
 
   try {
-    // TASK-SEC-02: 직접 테이블 REST 호출 → SECURITY DEFINER RPC 교체
-    // get_shared_itinerary: device_id / email 미반환, search_path 고정
+    // 예전에는 anon 키로 `get_shared_itinerary` RPC 를 불렀다. 그 RPC 의 anon
+    // 권한은 곧 회수되므로(다음 작업) 여기부터 service_role 읽기로 옮긴다.
+    // 공개 여부는 RPC 가 대신 강제해 주던 것이라 이제 조건을 직접 건다 —
+    // `is_public=eq.true` 가 빠지면 비공개 일정 제목이 OG 로 새 나간다.
+    //
+    // 읽는 컬럼은 OG 문구에 쓰는 것뿐이다. `days` 는 일수를 세는 데만 쓰고
+    // 응답 HTML 에 담기지 않는다. device_id·email 은 아예 가져오지 않는다.
     const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_RE.test(shareId)) throw new Error("invalid_uuid");
 
-    const endpoint = `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/get_shared_itinerary`;
+    const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!serviceKey) throw new Error("not_configured");
+
+    const endpoint =
+      `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/itineraries` +
+      `?id=eq.${shareId}&is_public=eq.true&limit=1` +
+      `&select=city,start_date,end_date,travel_style,days,updated_at`;
 
     // 3초 타임아웃 — 초과 시 catch로 넘어가 기본값 OG 반환
     const res = await Promise.race<Response>([
       fetch(endpoint, {
-        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          apikey:         env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-          Authorization:  `Bearer ${env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          apikey:        serviceKey,
+          Authorization: `Bearer ${serviceKey}`,
         },
-        body: JSON.stringify({ p_id: shareId }),
       }),
       new Promise<Response>((_, reject) =>
         setTimeout(() => reject(new Error("supabase_timeout")), 3000)

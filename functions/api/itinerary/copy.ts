@@ -18,6 +18,7 @@ import {
   str,
   optStr,
 } from "../../../src/lib/itinerary-validate";
+import { buildCopiedItinerary } from "../../../src/lib/share/copied-itinerary";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -85,7 +86,10 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     end_date:     source.end_date,
     travelers:    source.travelers,
     travel_style: source.travel_style,
-    days:         source.days,
+    // 원본을 그대로 옮기지 않는다. 원작성자가 자기 My Place 에 적어 둔 메모와
+    // `user_spot:<원작성자 uuid>` 열쇠는 빼고, 지도와 스케줄러가 쓰는 좌표는
+    // 남긴다 — 받은 사람은 이 일정을 실제로 다녀야 한다.
+    days:         buildCopiedItinerary(source.days),
     copy_of:      shareId,
     copied_at:    now,
     updated_at:   now,

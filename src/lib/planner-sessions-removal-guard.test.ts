@@ -145,8 +145,12 @@ test("★itinerary 계열 helper 와 supabase client 가 그대로 남아 있다
   assert.match(raw, /import \{ createClient \} from "@supabase\/supabase-js"/);
 });
 
-test("★공유 RPC 호출 구조를 바꾸지 않았다", () => {
-  assert.match(readFileSync(SUPA, "utf8"), /\.rpc\("get_shared_itinerary", \{ p_id: id \}\)/);
+test("★브라우저는 공유 RPC 를 직접 부르지 않는다 — 서버가 정제한 것만 받는다", () => {
+  // planner_sessions 정리와는 무관한 변경이지만, 이 파일이 supabase.ts 의
+  // 공유 조회 모양을 함께 잠그고 있어 같이 갱신한다.
+  const supa = readFileSync(SUPA, "utf8");
+  assert.doesNotMatch(supa, /\.rpc\("get_shared_itinerary"/);
+  assert.match(supa, /fetch\(`\/api\/shared\/\$\{encodeURIComponent\(id\)\}\/story`\)/);
 });
 
 test("★일정 저장·조회는 itineraries 서버 API 쪽에 그대로 있다", () => {
