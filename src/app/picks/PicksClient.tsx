@@ -32,7 +32,7 @@ import {
   apiGetUserSpots, apiCreateUserSpot, apiUpdateUserSpot, apiDeleteUserSpot,
   apiCreateUserSpotWithPhoto, apiUploadUserSpotPhoto,
   apiGetUserSpotPhotoUrl, apiDeleteUserSpotPhoto, apiGetUserSpotCanonicalImage,
-  apiEnrichUserSpot,
+  apiEnrichUserSpot, apiCreateUserSpotFromCanonical,
   type UserSpot,
   userSpotDisplayName,
 } from "@/lib/user-spots-api";
@@ -203,6 +203,16 @@ function PicksContent() {
 
   // ── My Places (server user_spots) ───────────────────────────────────────────
   const [mine,        setMine]        = useState<UserSpot[]>([]);
+  /**
+   * Saved 에서 "내 장소로 남기기" 를 누른 결과.
+   *
+   * Saved 는 이 지역을 도는 동안의 임시 후보고 My Places 는 오래 두는 개인
+   * 장소다. 옮기는 것이 아니라 남기는 것이라, 눌러도 Saved 도 This Trip 도
+   * 건드리지 않는다 — 지우고 싶으면 사용자가 따로 지운다.
+   */
+  const [keeping,  setKeeping]  = useState<string | null>(null);
+  const [keptKeys, setKeptKeys] = useState<Set<string>>(new Set());
+  const [keepErr,  setKeepErr]  = useState<string | null>(null);
   const [mineLoading, setMineLoading] = useState(true);
   const [mineError,   setMineError]   = useState(false);
   const [showCreate,  setShowCreate]  = useState(false);
@@ -251,6 +261,35 @@ function PicksContent() {
       .finally(() => setMineLoading(false));
   }, [t]);
   useEffect(() => { loadMine(); }, [loadMine]);
+
+  /**
+   * Saved 의 공식 장소를 My Places 에도 남긴다.
+   *
+   * 보내는 것은 어느 장소인가 하나뿐이다. 이름·좌표·도시·분류는 서버가
+   * city_spots 에서 직접 읽는다 — 화면에 들고 있던 값을 믿지 않는다.
+   * 그래서 여기서 좌표를 만들거나 넘길 일이 없다.
+   *
+   * 같은 장소를 두 번 눌러 두 개가 생기는 것은 막지 않는다(장소 상세도 같다).
+   * 연타로 한 번에 두 개가 생기는 것만 막는다.
+   */
+  async function keepSavedAsMyPlace(sourceKey: string) {
+    const id = parseCitySpotId(sourceKey);
+    if (!id || keeping) return;
+    setKeeping(sourceKey); setKeepErr(null);
+    try {
+      const r = await apiCreateUserSpotFromCanonical(Number(id));
+      if (r.ok) {
+        setKeptKeys(prev => new Set(prev).add(sourceKey));
+        loadMine();          // My Places 탭으로 넘어갔을 때 방금 남긴 것이 보이게
+      } else {
+        setKeepErr(sourceKey);
+      }
+    } catch {
+      setKeepErr(sourceKey);
+    } finally {
+      setKeeping(null);
+    }
+  }
 
   function retryMine() {
     setMineLoading(true);
@@ -874,7 +913,7 @@ function PicksContent() {
                         {/* 아래 두 동작은 글자만 있어 16px 높이였다. min-h-11 로 누를 수
                             있는 높이를 확보하고, 버튼이 스스로 갖게 된 위아래 여백만큼
                             바깥 margin 을 줄여 카드 여백 리듬은 그대로 둔다. */}
-                        <div className="flex items-center gap-3 mt-1 -mb-2">
+                        <div className="flex items-center gap-3 mt-1 -mb-2 flex-wrap">
                           {/* savedVisible 이 이미 This Trip 에 담긴 것을 걸러내므로
                               여기 보이는 항목은 항상 미담김이다. 담기면 카드가
                               This Trip 탭으로 넘어가는 것처럼 보인다. */}
@@ -885,6 +924,18 @@ function PicksContent() {
                           >
                             + {t("addToSelected")}
                           </button>
+                          {/* 공식 장소일 때만 둔다. 서버가 city_spots 에서 사실을
+                              읽어 만들기 때문에, 그 원본이 없는 항목은 만들 방법이
+                              없다. 없는 자리에 눌리지 않는 버튼을 두지 않는다. */}
+                          {placeId && (
+                            <button
+                              onClick={() => void keepSavedAsMyPlace(key)}
+                              disabled={savedManaging || keeping === key}
+                              className="gkm-focus inline-flex items-center min-h-11 gap-1 text-xs font-bold text-sub hover:text-ink disabled:text-faint disabled:cursor-default"
+                            >
+                              {keptKeys.has(key) ? tP("keptAsMyPlace") : tP("keepAsMyPlace")}
+                            </button>
+                          )}
                           <span className="flex-1" />
                           {placeId && (
                             <Link href={`/place/${placeId}/`} className="gkm-focus inline-flex items-center min-h-11 text-xs font-bold text-sub hover:text-ink">
@@ -892,6 +943,9 @@ function PicksContent() {
                             </Link>
                           )}
                         </div>
+                        {keepErr === key && (
+                          <p role="alert" className="mt-1 text-xs text-red-500 font-medium">{tP("keepFailed")}</p>
+                        )}
                       </div>
                     </Card>
                   </li>

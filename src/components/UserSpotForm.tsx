@@ -127,6 +127,12 @@ export default function UserSpotForm({
   // 위치 확인 화면. 지도를 열기 전에 어디서 열지부터 정한다.
   const [pickerOpen, setPickerOpen] = useState(false);
   const [seeking,    setSeeking]    = useState(false);
+  /**
+   * 붙여넣은 지도 링크. 폼 상태(`form`)에 넣지 않는다 — 넣으면 부모가 저장
+   * payload 에 실어 보내고, 링크가 장소의 영구 데이터가 되어 버린다. 이 값은
+   * 지도를 어디서 열지 정하는 데만 쓰고 저장하지 않는다.
+   */
+  const [mapLink, setMapLink] = useState("");
   const [seed, setSeed] = useState<
     { coordinate: SeedCoordinate | null; source: SeedSource; short: boolean; hadAlready: boolean } | null
   >(null);
@@ -171,8 +177,15 @@ export default function UserSpotForm({
   async function openPicker() {
     setSeeking(true);
     const raw   = form.address.trim();
-    const short = isShortMapLink(raw);
-    const link  = short ? null : parseMapLinkCoordinate(raw);
+    // 붙여넣은 링크가 먼저다. 사람이 방금 준 지시라서, 예전에 확인해 둔 자리보다
+    // 이쪽을 믿는다 — 링크를 새로 넣고 "다시 확인" 을 누르는 사람은 그 자리로
+    // 옮기려는 것이다. 주소 칸도 예전처럼 링크를 받아 준다(그쪽은 저장된다).
+    const pasted     = mapLink.trim();
+    const pastedShort = isShortMapLink(pasted);
+    const pastedLink  = pasted && !pastedShort ? parseMapLinkCoordinate(pasted) : null;
+
+    const short = pastedShort || (!pasted && isShortMapLink(raw));
+    const link  = pastedLink ?? (short ? null : parseMapLinkCoordinate(raw));
 
     // 링크로 이미 찾았으면 주소를 다시 묻지 않는다. 링크처럼 생긴 문자열을
     // geocoder 에 넘기면 엉뚱한 곳이 나온다.
@@ -184,24 +197,20 @@ export default function UserSpotForm({
       ? { lat: form.lat, lng: form.lng }
       : null;
 
-    let picked = already
-      ? { coordinate: already, source: "link" as SeedSource }
-      : chooseSeed({ link, address });
+    let picked = pastedLink
+      ? { coordinate: pastedLink, source: "link" as SeedSource }
+      : already
+        ? { coordinate: already, source: "link" as SeedSource }
+        : chooseSeed({ link, address });
 
     if (!picked.coordinate) {
       const gps = await currentPosition();
       picked = chooseSeed({ gps, city: cityCenter() });
     }
 
-    setSeed({ ...picked, short, hadAlready: already !== null });
+    setSeed({ ...picked, short, hadAlready: already !== null && !pastedLink });
     setSeeking(false);
     setPickerOpen(true);
-  }
-
-  function clearLocation() {
-    // 한쪽만 지우는 상태를 만들지 않는다.
-    setForm(p => ({ ...p, lat: null, lng: null }));
-    setGps("idle");
   }
 
   const hasLocation = form.lat !== null && form.lng !== null;
@@ -319,10 +328,30 @@ export default function UserSpotForm({
           예전에는 "지금 내가 서 있는 곳" 만 줄 수 있었다. 그건 이 장소의 위치가
           아니라 내 위치다 — 집에서 카페를 등록하면 집 좌표가 저장됐다.
           이제 그 값은 지도를 열 자리로만 쓰고, 저장되는 것은 사용자가 확인한 중심이다. */}
+      {/* 장소 링크 — 지도를 어디서 열지 정하는 보조 입력이다. 저장하지 않는다.
+          이 기능은 원래도 있었지만 주소 칸에 숨어 있어서, 링크를 넣어도 된다는
+          것을 화면만 보고는 알 수 없었다. 자리를 따로 내주었다. */}
+      <div>
+        <label className={LABEL}>
+          {t("fieldPlaceLink")}{" "}
+          <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
+        </label>
+        <input
+          type="url"
+          inputMode="url"
+          value={mapLink}
+          onChange={e => setMapLink(e.target.value)}
+          maxLength={500}
+          placeholder={t("phPlaceLink")}
+          className={INPUT}
+        />
+        <p className="mt-1 text-[11px] text-[#565D66]/70">{t("placeLinkHint")}</p>
+      </div>
+
       <div>
         <label className={LABEL}>
           {t("fieldLocation")}{" "}
-          <span className="font-normal normal-case text-[#565D66]/60">{t("optionalSuffix")}</span>
+          <span className="font-normal normal-case text-[#565D66]/60">{t("requiredSuffix")}</span>
         </label>
         <div className="mt-1 flex items-center gap-2 flex-wrap">
           {hasLocation ? (
@@ -330,11 +359,10 @@ export default function UserSpotForm({
               <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#F6F7F8] text-sm font-bold text-[#191C21]">
                 ✓ {t("locConfirmed")}
               </span>
+              {/* 지우기는 두지 않는다. 자리를 잘못 짚었으면 다시 확인으로 옮기면
+                  되고, 지워 두면 저장할 수 없는 상태로 되돌아갈 뿐이다. */}
               <button type="button" onClick={() => void openPicker()} disabled={seeking} className={CHIP_BTN}>
                 {t("locRecheck")}
-              </button>
-              <button type="button" onClick={clearLocation} className={CHIP_BTN}>
-                {t("locationClear")}
               </button>
             </>
           ) : (
