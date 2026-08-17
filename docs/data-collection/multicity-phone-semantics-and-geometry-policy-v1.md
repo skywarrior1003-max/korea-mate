@@ -306,6 +306,100 @@ USER_PICK_ABILITY ≥ AI_AUTO_SCHEDULING_ABILITY
 
 ---
 
+---
+
+## PART 11 — 좌표 회수 우선순위 및 Validation (RULE-H~M)
+
+**추가일**: 2026-08-17  
+**근거 TASK**: TASK-BUSAN-NONFOOD-FINAL-CURATION-AND-COMMON-POLICY-CLOSURE-V2  
+**실증 근거**: 부산 Non-Food 853건 전수 좌표 심사 (반송공원 COORD_GENUINE_EXCEPTION × 1)
+
+---
+
+### RULE-H: Area/Line 장소도 좌표 예외 금지
+
+```
+RULE-D에서 AREA·LINEAR_ROUTE entity를 geometry 분류로 구별하더라도
+nav coord (대표 anchor point) 확보 의무는 모든 entity에 동등하게 적용된다.
+```
+
+- 구역형 (해변, 공원, 산): 입구 또는 공식 대표 anchor 좌표
+- 선형 (둘레길, 산책로, 강변로): 시작점 또는 공식 대표 anchor 좌표
+- "AREA이므로 좌표 없어도 됨"은 Anti-Pattern — **RULE-E 위반과 동등하게 처리**
+
+---
+
+### RULE-I: 좌표 확보 우선순위 (7단계)
+
+entity의 좌표가 결여되거나 invalid인 경우 다음 순서로 복구를 시도한다.
+
+| 단계 | 소스 | 비고 |
+|---|---|---|
+| 1 | KTO TourAPI source coordinate | 원본이 유효하면 사용 |
+| 2 | VWorld road geocode (`type=road`) | 도로명 주소 기반 |
+| 3 | VWorld jibun geocode (`type=jibun`) | 지번 주소 기반 |
+| 4 | VWorld POI search | `service=search&type=place` |
+| 5 | 공식 대표 anchor (운영기관 제공) | AREA/ROUTE 전용 |
+| 6 | AREA 중심점 (geometry 확인된 경우만) | 임의 추정 아님, 공식 shape 필요 |
+| 7 | COORD_GENUINE_EXCEPTION 선언 | 7단계 모두 실패 + 증거 기록 필수 |
+
+**GENUINE_EXCEPTION 선언 조건**: 최소 3단계 이상 시도 + VWorld에서 NOT_FOUND 확인 + 주소 유효성 및 bbox 이탈 여부 문서화.
+
+---
+
+### RULE-K: Coordinate Validation 기준
+
+수집된 좌표에 대해 다음 검사를 적용한다. 하나라도 실패하면 `coord_valid=False`.
+
+| 검사 | 조건 | 처리 |
+|---|---|---|
+| Bbox check | 도시별 bbox 내에 있는가 | 이탈 → `COORD_OUTSIDE_BBOX` |
+| Lat=Lng check | lat == lng | `COORD_LAT_EQ_LNG` |
+| Zero check | lat==0 or lng==0 | `INVALID_SOURCE_ZERO` |
+| Precision check | 소수점 4자리 미만 | 경고 (자동 제외 아님) |
+| Swap check | lat와 lng가 뒤바뀐 의심 | 수동 검토 |
+
+---
+
+### RULE-L: 주소 없는 경우 처리 순서
+
+```
+좌표 missing + 주소 missing 동시 → 좌표 복구 전에 주소 먼저 확보
+```
+
+1. 운영기관 공식 홈페이지 주소 확인
+2. KTO TourAPI `addr1/addr2` 필드 재확인
+3. Naver Place 사업자 주소 확인
+4. 주소 확보 후 VWorld geocode 진행
+
+---
+
+### RULE-M: 도시별 Bbox 기준
+
+| 도시 | lat_min | lat_max | lng_min | lng_max |
+|---|---|---|---|---|
+| 부산 | 34.8 | 35.5 | 128.7 | 129.4 |
+| 경주 | 35.7 | 36.1 | 129.0 | 129.5 |
+| 서울 (인천 포함) | 37.4 | 37.7 | 126.7 | 127.2 |
+| 제주 | 33.1 | 33.6 | 126.1 | 126.9 |
+| 전주 | 35.7 | 35.9 | 127.0 | 127.2 |
+
+bbox 이탈 = KTO source 오류의 주된 증상. 부산 실증: 반송공원 lat=19.69 (China region).
+
+---
+
+### PART 11 Anti-Patterns (AP_H~M)
+
+| Pattern | 잘못된 처리 | 올바른 처리 | 위반 Rule |
+|---|---|---|---|
+| AP_H_01 | AREA entity → 좌표 없어도 완료 처리 | AREA entity → 입구/anchor 좌표 의무 확보 | RULE-H |
+| AP_I_01 | VWorld 1회 실패 → COORD_GENUINE_EXCEPTION | 7단계 순서대로 시도 후 선언 | RULE-I |
+| AP_I_02 | 임의 추정 centroid 사용 | 단계 7까지 실패 → EXCEPTION, 발명 금지 | RULE-E + RULE-I |
+| AP_K_01 | bbox 이탈 좌표 → coord_valid=True 처리 | bbox validation 필수, 이탈 = coord_valid=False | RULE-K |
+| AP_L_01 | 좌표 없음 + 주소 없음 → VWorld 바로 시도 | 주소 먼저 확보 후 geocode | RULE-L |
+
+---
+
 ## QA 체크리스트
 
 - [x] RULE-A: SOURCE_PLACEHOLDER / SOURCE_MALFORMED / PRESENT / SOURCE_EMPTY 4종 분류 정의됨
@@ -315,8 +409,14 @@ USER_PICK_ABILITY ≥ AI_AUTO_SCHEDULING_ABILITY
 - [x] RULE-E: 좌표 자체 생성/추정 금지 + 허용 source 목록 명시
 - [x] RULE-F: navigation 불가 → 관광 가치/SEARCHABLE 독립 명문화
 - [x] RULE-G: AI=REVIEW_REQUIRED ≠ AI=NO 영구, User Pick ≥ AI Auto 명문화
-- [x] Anti-patterns 8종 정의됨
+- [x] RULE-H: Area/Line 장소도 좌표 예외 금지 명문화
+- [x] RULE-I: 좌표 확보 우선순위 7단계 정의됨
+- [x] RULE-K: Coordinate validation 4종 기준 정의됨
+- [x] RULE-L: 주소 먼저 → 좌표 순서 명문화
+- [x] RULE-M: 5개 도시 bbox 기준 정의됨
+- [x] Anti-patterns 8+5종 정의됨
 - [x] 제주 실증 근거 모든 규칙에 연결됨
+- [x] 부산 실증 근거 (RULE-H~M) 추가됨
 - [x] 도시별 API 관행 테이블 포함
 - [x] DB/schema/src/functions 변경 = 0
 - [x] master/city branch 변경 = 0
