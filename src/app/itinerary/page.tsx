@@ -1609,8 +1609,18 @@ function ItineraryResult() {
     const snapTravelers   = travelers;
     const snapTravelStyle = travelStyle;
     const snapDays        = days;
-    // 보관함(Unscheduled)도 함께 Supabase에 영구 저장 — Single Source of Truth 구현
-    const snapUnscheduled = getCityCart(paramCity);
+    // `unscheduled` 에는 아무것도 담지 않는다.
+    //
+    // 예전에는 저장할 때마다 This Trip 을 통째로 여기 넣었다. 그런데 이 일정을
+    // 공개하면 `get_shared_itinerary` 가 `days` 전체를 돌려주므로, 그 목록이
+    // 링크를 아는 누구에게나 함께 나간다. My Place 를 This Trip 에 담았다면
+    // 그 장소의 **비공개 메모까지** 공개 응답에 실렸다 — 공개 미리보기가
+    // "메모는 비공개로 유지됩니다" 라고 약속하는 바로 그 값이다.
+    //
+    // 이 필드를 읽는 곳은 없다. reopen 이 이것으로 cart 를 덮어쓰던 경로를
+    // 없앤 뒤로 소비자가 하나도 남지 않았고, 저장 형식(__v:2 · scheduled ·
+    // unscheduled)은 그대로라 기존 레코드 호환도 깨지 않는다.
+    const snapUnscheduled: CartItem[] = [];
 
     syncTimerRef.current = setTimeout(async () => {
       const ok = await apiSaveItinerary({

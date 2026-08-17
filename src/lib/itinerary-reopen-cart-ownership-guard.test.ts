@@ -59,8 +59,12 @@ test("★v2 레코드는 계속 읽는다 — shape 을 지우지 않았다", ()
 
 test("★저장 payload 와 __v 는 그대로다 — migration 을 만들지 않는다", () => {
   assert.match(CODE, /days:\s*\{\s*__v:\s*2,\s*scheduled:\s*snapDays,\s*unscheduled:\s*snapUnscheduled\s*\}/);
-  assert.match(CODE, /const snapUnscheduled = getCityCart\(paramCity\)/);
   assert.doesNotMatch(CODE, /__v:\s*3/);
+  // 그 필드에 This Trip 을 담던 줄은 사라졌다. 공개하면 `days` 전체가 나가서
+  // My Place 의 비공개 메모까지 함께 실렸다 — share-payload-privacy-guard 참조.
+  // 형식은 그대로이므로 기존 레코드 호환은 유지된다.
+  assert.doesNotMatch(CODE, /snapUnscheduled = getCityCart\(/);
+  assert.match(CODE, /const snapUnscheduled: CartItem\[\] = \[\];/);
 });
 
 test("★legacy v1(Day[]) reopen 경로가 살아 있다", () => {
