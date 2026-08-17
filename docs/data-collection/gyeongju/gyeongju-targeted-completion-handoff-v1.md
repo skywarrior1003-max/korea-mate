@@ -2,29 +2,65 @@
 
 > Branch: `data/gyeongju-targeted-completion-v1`
 > Base: `data/multicity-common` HEAD `f9e3543`
-> Data commit: `32a83ea`
+> Data commit: `32a83ea` (Completion-V1) → Close-V2 커밋 참조
 > 작성일: 2026-08-17
 
 ---
 
-## 1. 최종 경주 데이터 지표
+## 1. 최종 경주 데이터 지표 (FINAL — Close-V2 완료 후)
 
 | 항목 | 값 | 비고 |
 |---|---|---|
-| SERVICE_UNIVERSE | **302** | attraction=200, restaurant=102 |
-| EXCLUDED | 0 | 제외 없음 (accommodation 0건) |
-| NAV_READY | **302/302 = 100%** | VWorld 107건 복구 포함 |
-| IMAGE | **301/302 = 99.7%** | 경주생활체육공원 진정한 예외 |
-| IMAGE_DISPLAY | **299/302 = 99.0%** | KTO_TYPE_UNKNOWN 2건 display=False(설계) |
-| AI_AUTO | **301/302 = 99.7%** | IMAGE_MISSING=1 |
-| PHONE | 172/302 | 레스토랑 100/102 + 관광지 72/200 |
-| FINAL_QA | **PASS** | 12개 체크 전체 통과 |
+| TOTAL_RECORDS | **302** | canonical 총 레코드 |
+| SERVICE_UNIVERSE | **299** | attraction=197, restaurant=102 |
+| EXCLUDED | **3** | EXCLUDED_LOW_TRAVEL_VALUE=1, EXCLUDED_DUPLICATE=2 |
+| NAV_READY | **299/299 = 100%** | |
+| IMAGE | **299/299 = 100%** | |
+| IMAGE_DISPLAY | **299/299 = 100%** | KTO_TYPE_UNKNOWN 0건 — 모두 해소 |
+| AI_AUTO | **299/299 = 100%** | |
+| PHONE | 171/299 | |
+| FINAL_QA | **PASS** | Close-V2 9개 체크 전체 통과 |
 | SAFE_TO_CLOSE | **YES** | |
 | NEXT_CITY | SEOUL | |
 
 ---
 
-## 2. Phase별 작업 요약
+## 2. TASK-GYEONGJU-FINAL-CURATION-CLOSE-V2 (최신)
+
+Close-V2는 Completion-V1 직후 실행된 큐레이션 확정 작업이다.
+
+### 처리 결정
+
+| candidate_id | 이름 | 결정 | 사유 |
+|---|---|---|---|
+| gyeongju-GJ01-0092 | 경주생활체육공원 | **EXCLUDED_LOW_TRAVEL_VALUE** | 손곡동 지역 생활체육공원. 관광 콘텐츠 가치 없음. 이미지 미확보. |
+| gyeongju-KTO12-590997 | 경주월드 캘리포니아비치 | **EXCLUDED_DUPLICATE** | GJ01-0116 캘리포니아비치(동일 entity, 보문로 544)의 KTO 중복 레코드. GJ01-0116 유지. |
+| gyeongju-KTO12-987844 | 경주 낭산 일원 | **EXCLUDED_DUPLICATE** | GJ01-0011 낭산(동일 entity, 보문동)의 KTO 중복 레코드. GJ01-0011 유지. |
+
+### 중복 보존 레코드 (ACTIVE 유지)
+
+| candidate_id | 이름 | image_rights_status | image_url 상태 |
+|---|---|---|---|
+| gyeongju-GJ01-0116 | 캘리포니아비치 | VG_OFFICIAL_PUBLIC | gyeongju.go.kr (공공저작물) |
+| gyeongju-GJ01-0011 | 낭산 | VG_OFFICIAL_PUBLIC | gyeongju.go.kr (공공저작물) |
+
+### Close-V2 QA 결과
+
+| 체크 | 결과 |
+|---|---|
+| QA-A GYEONGJU_SPORTS_PARK_IN_SERVICE=0 | PASS |
+| QA-B KTO_TYPE_UNKNOWN_IN_ACTIVE=0 | PASS |
+| QA-C DISPLAY_FALSE_AS_UNRESOLVED=0 | PASS |
+| QA-D NAV_MISSING=0 | PASS |
+| QA-E AI_DECISION_UNKNOWN=0 | PASS |
+| QA-F AI_AUTO_ALL_ACTIVE=True | PASS |
+| QA-G SECRET_LEAK=0 | PASS |
+| QA-H SERVICE_STATUS_ALL_SET | PASS |
+| QA-I DUPLICATE_OF_RECORDS_ACTIVE | PASS |
+
+---
+
+## 3. Phase별 작업 요약 (Completion-V1)
 
 ### Phase 1-2: 서비스 유니버스 확정 + Accommodation 정책
 
@@ -72,23 +108,17 @@
 - 132건 gyeongju.go.kr 이미지 URL 적용
 - image_rights_status=VG_OFFICIAL_PUBLIC, image_source=gyeongju.go.kr
 
-**최종 IMAGE: 301/302**
-
-| 잔여 미확보 | 사유 |
-|---|---|
-| 경주생활체육공원 (GJ01-0092) | heritage patch 미수록, IMAGE_SOURCE_EXHAUSTED |
-
-**KTO_TYPE_UNKNOWN 2건** (경주월드 캘리포니아비치, 경주 낭산 일원):
-- image_url 보유하나 image_display_eligible=False (권리 미확인 — 설계 의도)
+**최종 IMAGE (Completion-V1): 301/302** → Close-V2 제외 후 299/299=100%
 
 ### Phase 8: AI 적격성
 
 | 기준 | 건수 |
 |---|---|
-| AI_AUTO=True | 301 |
+| AI_AUTO=True (Completion-V1) | 301 |
 | AI_AUTO=False (IMAGE_MISSING) | 1 (경주생활체육공원) |
+| **AI_AUTO=True (Close-V2 최종)** | **299/299** |
 
-### Phase 9: Final QA
+### Phase 9: Final QA (Completion-V1)
 
 | 체크 | 결과 |
 |---|---|
@@ -107,20 +137,20 @@
 
 ---
 
-## 3. Canonical 파일 정보
+## 4. Canonical 파일 정보
 
 | 항목 | 값 |
 |---|---|
 | 파일 | `data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl` |
-| 레코드 수 | 302 |
-| SHA256 | `a0c0c4a579b68284eb0c3dc2c0d66336f3c6c910cbf203144dfef6cc3ba06fd8` |
+| 총 레코드 수 | 302 (ACTIVE=299, EXCLUDED=3) |
+| SHA256 (Close-V2) | `fdbff0f90e94cf7c50536ddcf9b22e05dfb7cd834ac374ec6a1a2b315477aeef` |
 | schema_version | `gyeongju-canonical-places-v2` |
 | branch | `data/gyeongju-targeted-completion-v1` |
-| commit | `32a83ea` |
+| 이전 SHA256 (Completion-V1) | `a0c0c4a579b68284eb0c3dc2c0d66336f3c6c910cbf203144dfef6cc3ba06fd8` |
 
 ---
 
-## 4. 공통 정책 연결
+## 5. 공통 정책 연결
 
 | 정책 | 파일 | 적용 내용 |
 |---|---|---|
@@ -132,17 +162,17 @@ COMMON_POLICY_COMMIT = `f9e3543` (data/multicity-common)
 
 ---
 
-## 5. 진정한 예외 목록
+## 6. 제외 레코드 (EXCLUDED=3)
 
-| candidate_id | 이름 | 예외 유형 | 사유 |
-|---|---|---|---|
-| gyeongju-GJ01-0092 | 경주생활체육공원 | IMAGE_SOURCE_EXHAUSTED | gyeongju.go.kr 미수록, 권리 확인 이미지 없음 |
-| gyeongju-KTO12-590997 | 경주월드 캘리포니아비치 | KTO_TYPE_UNKNOWN_IMAGE | 이미지 존재하나 KTO 권리 유형 미확인 |
-| gyeongju-KTO12-987844 | 경주 낭산 일원 | KTO_TYPE_UNKNOWN_IMAGE | 이미지 존재하나 KTO 권리 유형 미확인 |
+| candidate_id | 이름 | exclusion_reason |
+|---|---|---|
+| gyeongju-GJ01-0092 | 경주생활체육공원 | EXCLUDED_LOW_TRAVEL_VALUE |
+| gyeongju-KTO12-590997 | 경주월드 캘리포니아비치 | EXCLUDED_DUPLICATE (→ GJ01-0116) |
+| gyeongju-KTO12-987844 | 경주 낭산 일원 | EXCLUDED_DUPLICATE (→ GJ01-0011) |
 
 ---
 
-## 6. 이미지 출처 요약
+## 7. 이미지 출처 요약 (ACTIVE 299건 기준)
 
 | 출처 | 건수 | 권리 유형 |
 |---|---|---|
@@ -151,27 +181,29 @@ COMMON_POLICY_COMMIT = `f9e3543` (data/multicity-common)
 | KTO TourAPI Type3 | 36 | Type3 |
 | KTO TourAPI Type1 | 27 | Type1 |
 | IMAGE_RIGHTS_CLEARED | 2 | 확인 완료 |
-| KTO_TYPE_UNKNOWN | 2 | 권리 미확인 (display=False) |
-| IMAGE_SOURCE_EXHAUSTED | 1 | 이미지 없음 |
-| **합계** | **302** | |
+| **합계** | **299** | |
 
 ---
 
-## 7. 경주 전체 지표 (GYEONGJU_DATA_STATUS)
+## 8. 경주 전체 지표 (GYEONGJU_DATA_STATUS — FINAL)
 
 ```
 GYEONGJU_DATA_STATUS = {
-    "SERVICE_UNIVERSE": 302,
-    "category": {"attraction": 200, "restaurant": 102},
-    "NAV_READY": "302/302 = 100%",
-    "IMAGE": "301/302 = 99.7%",
-    "IMAGE_DISPLAY": "299/302 = 99.0%",
-    "AI_AUTO": "301/302 = 99.7%",
+    "SERVICE_UNIVERSE": 299,
+    "category": {"attraction": 197, "restaurant": 102},
+    "EXCLUDED": 3,
+    "exclusion_reasons": {
+        "EXCLUDED_LOW_TRAVEL_VALUE": 1,
+        "EXCLUDED_DUPLICATE": 2
+    },
+    "NAV_READY": "299/299 = 100%",
+    "IMAGE": "299/299 = 100%",
+    "IMAGE_DISPLAY": "299/299 = 100%",
+    "AI_AUTO": "299/299 = 100%",
     "ACCOMMODATION_EXCLUDED": 0,
     "FINAL_QA": "PASS",
     "SAFE_TO_CLOSE": "YES",
-    "CANONICAL_SHA256": "a0c0c4a579b68284eb0c3dc2c0d66336f3c6c910cbf203144dfef6cc3ba06fd8",
-    "CANONICAL_COMMIT": "32a83ea",
+    "CANONICAL_SHA256": "fdbff0f90e94cf7c50536ddcf9b22e05dfb7cd834ac374ec6a1a2b315477aeef",
     "BRANCH": "data/gyeongju-targeted-completion-v1",
     "COMMON_POLICY_COMMIT": "f9e3543"
 }
@@ -179,7 +211,7 @@ GYEONGJU_DATA_STATUS = {
 
 ---
 
-## 8. 다음 단계
+## 9. 다음 단계
 
 **NEXT_CITY = SEOUL**
 
@@ -189,6 +221,6 @@ TASK-MULTICITY-ELIGIBILITY-POLICY-V1 (2ca9e09) 에서 AI_ITINERARY_MAIN_CHANGE_R
 **DB 주의사항**:
 - food proposals 190건 (경주) → place 승격 미완; DB insert 금지
 - course stops MANUAL_REVIEW_FINAL 14건 → place 생성 금지
-- KTO_TYPE_UNKNOWN 2건 → display 전에 권리 확인 필요
+- KTO_TYPE_UNKNOWN: 제외 처리로 완전 해소. 남은 미결 없음.
 
 작업을 완료했습니다.
