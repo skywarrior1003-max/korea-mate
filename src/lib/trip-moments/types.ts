@@ -30,4 +30,14 @@ export interface TripMoment {
    * 사진 없는 텍스트 Memory 에는 의미가 없다(undefined 유지).
    */
   has_photo?:   boolean;
+  /**
+   * 두 번째 이후 사진들 (migration 052).
+   *
+   * 첫 장은 위 `photo_data` 에 그대로 둔다 — 예전에 남긴 Memory 는 이 필드가
+   * 없고, 없어도 그대로 열려야 한다. 서버에서도 첫 장은
+   * `trip_moments.storage_path`, 나머지는 `trip_moment_photos` 로 같은 모양이다.
+   *
+   * 올라간 사진은 이 목록에서 빠진다. 남아 있다는 것은 아직 못 올렸다는 뜻이다.
+   */
+  photo_data_extra?: string[];
 }

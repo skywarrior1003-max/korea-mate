@@ -517,7 +517,10 @@
     "tourismCoverRestored": "観光写真の表紙に戻しました",
     "coverUpdateFailed": "表紙を変更できませんでした。もう一度お試しください。",
     "dayUnassigned": "その他の記録",
-    "addMemoryToDay": "Day {n} に記録を追加"
+    "addMemoryToDay": "Day {n} に記録を追加",
+    "photoCount": "写真 {n} 枚",
+    "photoFailed": "{n} 枚は読み込めませんでした。",
+    "removePhoto": "写真を外す"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

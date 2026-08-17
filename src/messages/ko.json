@@ -517,7 +517,10 @@
     "tourismCoverRestored": "관광 사진 표지로 되돌렸습니다",
     "coverUpdateFailed": "표지를 변경하지 못했습니다. 다시 시도해 주세요.",
     "dayUnassigned": "그 밖의 기록",
-    "addMemoryToDay": "Day {n}에 기록 추가"
+    "addMemoryToDay": "Day {n}에 기록 추가",
+    "photoCount": "사진 {n}장",
+    "photoFailed": "{n}장은 불러오지 못했어요.",
+    "removePhoto": "사진 빼기"
   },
   "dayDone": {
     "title": "Day {n} 완주!",

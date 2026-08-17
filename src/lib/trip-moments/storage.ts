@@ -61,7 +61,11 @@ function mergeMoments(serverMoments: TripMoment[], localMoments: TripMoment[]): 
     const local = localMap.get(sm.moment_id);
     // 서버 has_photo=true 를 우선 보존한다 (재업로드 방지의 근거)
     const base = { ...sm, has_photo: sm.has_photo === true || local?.has_photo === true };
-    return local?.photo_data ? { ...base, photo_data: local.photo_data } : base;
+    // 사진은 로컬에만 있다 — 서버 응답에는 없으므로 덮어쓰지 않고 얹는다.
+    const withFirst = local?.photo_data ? { ...base, photo_data: local.photo_data } : base;
+    return local?.photo_data_extra?.length
+      ? { ...withFirst, photo_data_extra: local.photo_data_extra }
+      : withFirst;
   });
 
   // 서버에 없는 로컬 moments (pending · photo-only) 보존
@@ -134,6 +138,34 @@ export async function uploadMomentPhoto(
     return res.ok;
   } catch {
     // 오프라인·네트워크 오류 — 로컬 photo_data 는 유지되므로 다음 큐에서 재시도된다
+    return false;
+  }
+}
+
+/**
+ * 두 번째 이후 사진 한 장을 올린다 (migration 052).
+ *
+ * 첫 장과 자리가 다르다 — 첫 장은 `POST .../photo` 가 `trip_moments.storage_path`
+ * 에 넣고, 여기는 `POST .../photos` 가 자식 행을 만든다. 서버가 첫 장이 비어
+ * 있으면 알아서 첫 장 자리에 넣으므로 클라이언트가 순서를 따질 필요는 없다.
+ */
+export async function uploadMomentExtraPhoto(
+  momentId:  string,
+  photoData: string,
+  deviceId:  string,
+): Promise<boolean> {
+  const blob = jpegDataUrlToBlob(photoData);
+  if (!blob) return false;
+  try {
+    const fd = new FormData();
+    fd.append("photo", blob, `${momentId}.jpg`);
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/photos`, {
+      method:  "POST",
+      headers: { "x-device-id": deviceId },
+      body:    fd,
+    });
+    return res.ok;
+  } catch {
     return false;
   }
 }
@@ -269,6 +301,18 @@ export async function resyncPendingMoments(
 
       const ok = await uploadMomentPhoto(cur.moment_id, cur.photo_data, deviceId);
       if (ok) { patchLocal(itinId, cur.moment_id, { has_photo: true }); out.photoSynced++; }
+      if (!ok) continue;                         // 첫 장이 안 올라갔으면 나머지도 미룬다
+
+      // 추가 사진 — 한 장씩 올리고 성공한 것만 목록에서 뺀다. 중간에 끊겨도
+      // 올라간 사진이 다시 올라가지 않고, 못 올린 사진은 다음 큐에 남는다.
+      for (const extra of cur.photo_data_extra ?? []) {
+        const done = await uploadMomentExtraPhoto(cur.moment_id, extra, deviceId);
+        if (!done) break;
+        const now  = loadMoments(itinId).find(m => m.moment_id === cur.moment_id);
+        const rest = (now?.photo_data_extra ?? []).filter(x => x !== extra);
+        patchLocal(itinId, cur.moment_id, { photo_data_extra: rest });
+        out.photoSynced++;
+      }
     }
   } finally {
     resyncInFlight.delete(itinId);

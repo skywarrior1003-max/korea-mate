@@ -517,7 +517,10 @@
     "tourismCoverRestored": "已恢复观光照片封面",
     "coverUpdateFailed": "未能更新封面。请重试。",
     "dayUnassigned": "其他记录",
-    "addMemoryToDay": "为第 {n} 天添加记录"
+    "addMemoryToDay": "为第 {n} 天添加记录",
+    "photoCount": "照片 {n} 张",
+    "photoFailed": "有 {n} 张无法添加。",
+    "removePhoto": "移除照片"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",

@@ -221,20 +221,41 @@ export default function TripMomentTimeline({
               </div>
             )}
 
-            {/* 사진 */}
+            {/* 사진 — 여러 장이면 옆으로 넘겨 본다.
+                메모·장소·날짜는 Memory 에 한 번이지 사진마다 붙지 않는다. */}
             {m.photo_data && (
               <div
                 className="relative w-full overflow-hidden cursor-pointer"
                 style={{ maxHeight: isOpen ? 400 : 200 }}
                 onClick={() => setExpanded(isOpen ? null : m.moment_id)}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={m.photo_data}
-                  alt={m.memo || cat.label}
-                  className="w-full object-cover transition-all duration-500"
-                  style={{ maxHeight: isOpen ? 400 : 200 }}
-                />
+                {(m.photo_data_extra?.length ?? 0) > 0 ? (
+                  <div className="flex overflow-x-auto snap-x snap-mandatory">
+                    {[m.photo_data, ...(m.photo_data_extra ?? [])].map((src, i) => (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        key={`${i}-${src.slice(-16)}`}
+                        src={src}
+                        alt={i === 0 ? (m.memo || cat.label) : ""}
+                        className="w-full shrink-0 snap-center object-cover transition-all duration-500"
+                        style={{ maxHeight: isOpen ? 400 : 200 }}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={m.photo_data}
+                    alt={m.memo || cat.label}
+                    className="w-full object-cover transition-all duration-500"
+                    style={{ maxHeight: isOpen ? 400 : 200 }}
+                  />
+                )}
+                {(m.photo_data_extra?.length ?? 0) > 0 && (
+                  <span className="absolute top-3 right-3 text-[11px] font-black px-2 py-1 rounded-lg bg-black/60 text-white backdrop-blur-sm">
+                    {t("photoCount", { n: 1 + (m.photo_data_extra?.length ?? 0) })}
+                  </span>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
                   <span

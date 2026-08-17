@@ -517,7 +517,10 @@
     "tourismCoverRestored": "Tourism cover restored",
     "coverUpdateFailed": "Couldn't update your cover. Please try again.",
     "dayUnassigned": "Other memories",
-    "addMemoryToDay": "Add memory to Day {n}"
+    "addMemoryToDay": "Add memory to Day {n}",
+    "photoCount": "{n} photos",
+    "photoFailed": "{n} photo(s) could not be added.",
+    "removePhoto": "Remove photo"
   },
   "dayDone": {
     "title": "Day {n} complete!",

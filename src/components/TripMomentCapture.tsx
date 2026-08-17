@@ -25,6 +25,13 @@ interface Props {
 export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   const [photoData,    setPhotoData]    = useState<string | null>(null);
+  /**
+   * 두 번째 이후 사진들. 첫 장을 따로 두는 것은 서버 구조가 그렇기 때문이다 —
+   * 첫 장은 `trip_moments.storage_path`, 나머지는 `trip_moment_photos` 다.
+   */
+  const [extraPhotos,  setExtraPhotos]  = useState<string[]>([]);
+  /** 압축에 실패해 빠진 장 수. 조용히 사라지면 몇 장을 골랐는지와 어긋난다. */
+  const [failedCount,  setFailedCount]  = useState(0);
   const [memo,         setMemo]         = useState("");
   const [category,     setCategory]     = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
@@ -67,24 +74,48 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
   }, [onClose]);
 
   const handleFile = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files ?? []);
+    if (files.length === 0) return;
     setCompressing(true);
     setErrorKey(null);
-    try {
-      const data = await compressPhoto(file);
-      setPhotoData(data);
-    } catch {
-      // 무검증 원본을 올리지 않는다. 사진·모달을 유지해 재시도할 수 있게 한다.
-      // 진단 로그에 파일명·내용 등 민감정보를 남기지 않는다.
-      console.warn("[TripMomentCapture] photo compression failed");
-      setErrorKey("compressFailed");
-    } finally {
-      setCompressing(false);
-      // 파일 input 을 비워 같은 사진 재선택도 change 이벤트가 발생하게 한다
-      if (fileInputRef.current) fileInputRef.current.value = "";
+    setFailedCount(0);
+
+    // 한 장씩 처리한다. 한 장이 실패해도 나머지는 살린다 — 여러 장을 고른 사람이
+    // 한 장 때문에 전부 다시 고르게 하지 않는다.
+    const done: string[] = [];
+    let failed = 0;
+    for (const file of files) {
+      try {
+        done.push(await compressPhoto(file));
+      } catch {
+        // 무검증 원본을 올리지 않는다. 진단 로그에 파일명·내용을 남기지 않는다.
+        console.warn("[TripMomentCapture] photo compression failed");
+        failed++;
+      }
     }
+
+    if (done.length > 0) {
+      setPhotoData(prev => prev ?? done[0]!);
+      setExtraPhotos(prev => [...prev, ...(photoDataRef.current ? done : done.slice(1))]);
+    }
+    if (failed > 0) {
+      setFailedCount(failed);
+      if (done.length === 0) setErrorKey("compressFailed");
+    }
+    setCompressing(false);
+    // 파일 input 을 비워 같은 사진 재선택도 change 이벤트가 발생하게 한다
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }, []);
+
+  /** setState 는 이 콜백 안에서 즉시 반영되지 않는다 — 첫 장 여부는 ref 로 본다 */
+  const photoDataRef = useRef<string | null>(null);
+  useEffect(() => { photoDataRef.current = photoData; }, [photoData]);
+
+  const totalPhotos = (photoData ? 1 : 0) + extraPhotos.length;
+
+  function removeExtra(idx: number) {
+    setExtraPhotos(prev => prev.filter((_, i) => i !== idx));
+  }
 
   const handleSave = useCallback(async () => {
     if (saving) return;
@@ -102,6 +133,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       captured_at:    new Date().toISOString(),
       day_number:     dayNumber,
       synced:         false,
+      ...(extraPhotos.length > 0 ? { photo_data_extra: extraPhotos } : {}),
     };
     setErrorKey(null);
     try {
@@ -115,7 +147,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       // 성공·실패 어느 쪽이든 loading 을 반드시 해제한다
       setSaving(false);
     }
-  }, [saving, itineraryId, deviceId, photoData, memo, category, lat, lng, dayNumber, onSave]);
+  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, category, lat, lng, dayNumber, onSave]);
 
   // 내부 enum(key)과 API 값은 영어 그대로 유지하고 표시명만 번역한다
   const catLabel = (k: MomentCategory) =>
@@ -188,11 +220,43 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            capture="environment"
+            /* capture 를 두면 브라우저가 카메라만 열고 multiple 을 무시한다.
+               빼면 OS 선택창이 카메라와 사진첩을 함께 보여 준다 — 두 흐름을
+               모두 살리면서 여러 장을 고를 수 있는 자리는 여기뿐이다. */
+            multiple
             className="hidden"
             onChange={handleFile}
           />
         </div>
+
+        {/* 고른 사진들. 여러 장이면 가로로 흐르게 둔다 — 격자로 쌓으면 메모가
+            화면 밖으로 밀린다. 순서는 고른 순서 그대로다. */}
+        {totalPhotos > 1 && (
+          <div className="px-5 pt-3">
+            <p className="text-xs font-bold text-white/60">{t("photoCount", { n: totalPhotos })}</p>
+            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+              {extraPhotos.map((src, i) => (
+                <div key={`${i}-${src.slice(-16)}`} className="relative shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="" className="w-16 h-16 object-cover rounded-xl" />
+                  <button
+                    type="button"
+                    onClick={() => removeExtra(i)}
+                    aria-label={t("removePhoto")}
+                    className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-black/80 text-white text-xs font-black flex items-center justify-center"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {failedCount > 0 && (
+          <p role="alert" className="px-5 pt-2 text-xs text-[#FF4A2D]">
+            {t("photoFailed", { n: failedCount })}
+          </p>
+        )}
 
         <div className="px-5 py-5 space-y-5">
           {/* GPS 상태 */}

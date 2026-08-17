@@ -14,7 +14,8 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE, readBodyWithLimit } from "../../../src/lib/itinerary-validate";
-import { removeMomentStorage } from "../../../src/lib/photo-delete";
+import { removeItineraryStorage } from "../../../src/lib/photo-delete";
+import { photoPathsToRemove, type ChildPhotoRow } from "../../../src/lib/trip-moments/photo-set";
 import { buildResetPatch } from "../../../src/lib/trip-cover/cover-state-core";
 import { patchMomentMemo, type MomentAdminLike } from "../../../src/lib/trip-moments/memo-patch-core";
 
@@ -76,9 +77,18 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
 
   if (!itinerary) return json({ error: "Not found" }, 404);
 
-  // 3단계: Storage-first 삭제 (사진이 있을 때만)
-  if (moment.storage_path) {
-    const storageErr = await removeMomentStorage(admin.storage, moment.storage_path);
+  // 3단계: Storage-first 삭제 — 첫 장과 추가 사진(052)을 함께 치운다.
+  //
+  // 자식 행은 FK ON DELETE CASCADE 라 4단계에서 저절로 사라진다. 그래서 파일을
+  // 먼저 지우지 않으면 아무도 가리키지 않는 파일이 Storage 에 남는다.
+  const { data: extraRows } = await admin
+    .from("trip_moment_photos")
+    .select("photo_id, storage_path, sort_index, created_at")
+    .eq("moment_id", momentId);
+
+  const paths = photoPathsToRemove(moment.storage_path, (extraRows ?? []) as ChildPhotoRow[]);
+  if (paths.length > 0) {
+    const storageErr = await removeItineraryStorage(admin.storage, paths);
     if (storageErr) {
       console.error("[trip-moments/:id DELETE] storage remove failed:", storageErr);
       return json({ error: "Failed to remove photo" }, 500);

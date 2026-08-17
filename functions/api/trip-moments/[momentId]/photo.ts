@@ -27,6 +27,7 @@ import {
   hasJpegSoi,
   makeStoragePath,
 } from "../../../../src/lib/photo-validate";
+import { totalPhotoCount } from "../../../../src/lib/trip-moments/photo-set";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -140,24 +141,27 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
 
   // ── 10. 신규 사진 수량 제한 (교체는 제외) ───────────────────────────────────
   // best-effort limit: COUNT → upload 사이 window에서 동시 요청 시 한도를 일시 초과할 수 있음
+  //
+  // 세는 것은 **실제 사진 개수**다. 예전에는 `storage_path` 가 있는 moment 행
+  // 수만 셌고, 사진이 moment 당 한 장이던 시절에는 그게 곧 사진 수였다.
+  // 052 부터 한 Memory 가 사진을 여럿 가질 수 있으므로 자식 사진도 함께 센다 —
+  // 그러지 않으면 한 Memory 에 스무 장을 넣어도 카운터가 1 로 남는다.
   if (!isReplacement) {
-    const { count: deviceCount } = await admin
-      .from("trip_moments")
-      .select("moment_id", { count: "exact", head: true })
-      .eq("device_id", deviceId)
-      .not("storage_path", "is", null);
+    const [devLegacy, devChild, itinLegacy, itinChild] = await Promise.all([
+      admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
+        .eq("device_id", deviceId).not("storage_path", "is", null),
+      admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
+        .eq("device_id", deviceId),
+      admin.from("trip_moments").select("moment_id", { count: "exact", head: true })
+        .eq("itinerary_id", moment.itinerary_id).not("storage_path", "is", null),
+      admin.from("trip_moment_photos").select("photo_id", { count: "exact", head: true })
+        .eq("itinerary_id", moment.itinerary_id),
+    ]);
 
-    if ((deviceCount ?? 0) >= DEVICE_PHOTO_LIMIT) {
+    if (totalPhotoCount(devLegacy.count ?? 0, devChild.count ?? 0) >= DEVICE_PHOTO_LIMIT) {
       return json({ error: `Device photo limit reached (${DEVICE_PHOTO_LIMIT})` }, 400);
     }
-
-    const { count: itinCount } = await admin
-      .from("trip_moments")
-      .select("moment_id", { count: "exact", head: true })
-      .eq("itinerary_id", moment.itinerary_id)
-      .not("storage_path", "is", null);
-
-    if ((itinCount ?? 0) >= ITINERARY_PHOTO_LIMIT) {
+    if (totalPhotoCount(itinLegacy.count ?? 0, itinChild.count ?? 0) >= ITINERARY_PHOTO_LIMIT) {
       return json({ error: `Itinerary photo limit reached (${ITINERARY_PHOTO_LIMIT})` }, 400);
     }
   }
