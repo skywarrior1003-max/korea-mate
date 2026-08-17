@@ -18,7 +18,7 @@
 
 ---
 
-## 1. 최종 서울 데이터 지표 (FINAL)
+## 1. 최종 서울 데이터 지표 (FINAL — TV Gate 적용 후)
 
 | 항목 | 값 | 비고 |
 |---|---|---|
@@ -28,11 +28,13 @@
 | NAV_READY | **1,833/1,833 = 100%** | |
 | IMAGE | **1,832/1,833 = 99.95%** | |
 | IMAGE_DISPLAY | **1,832/1,833 = 99.95%** | |
-| AI_AUTO | **1,803/1,833 = 98.4%** | AI_BLOCKED=30 |
+| AI_AUTO | **767/1,833 = 41.8%** | DESTINATION_RESTAURANT 223건. AI_BLOCKED=1,066 |
 | PHONE | 1,768/1,833 = 96.4% | |
-| FINAL_QA | **PASS** | 14개 체크 전체 통과 |
+| FINAL_QA | **PASS** | 21개 체크 전체 통과 (TV Gate 7개 포함) |
 | SAFE_TO_CLOSE | **YES** | |
 | NEXT_CITY | JEJU | |
+
+> ⚠️ **V1→V3 AI_AUTO 변경**: V1(TARGETED-COMPLETION, commit 0fcbcc5)에서 1,803/1,833(98.4%)이었던 AI_AUTO가 TV Gate 적용 후 767/1,833(41.8%)으로 조정됨. DESTINATION_RESTAURANT(미쉐린·오래가게·백년가게 등 공식 큐레이션 보유) 223건만 AI_AUTO=True. SPECIALTY(199) + UTILITY(837) = 1,036건 ai_auto=False. 이는 restaurant 전건을 AI_AUTO=True로 설정했던 V1 canonical의 수정이며, multicity eligibility 정책 준수 결과임.
 
 ---
 
@@ -59,14 +61,20 @@ KOPc3g5o6: 3개 장소 복수 주소(남산공원팔각광장/여의도한강공
 
 KOPgdf9ry: special2 레코드로 PLACE_AI_OR_EXPLORE_ELIGIBLE 분류. 이미지 미확보(IMAGE_SOURCE_PENDING). 좌표 정상(lat=37.568). 시간적 상태(행사 종료 여부) 미확인 — 다음 주기에서 재확인 권장.
 
-### 2.3 AI 차단 ACTIVE 30건
+### 2.3 AI 차단 ACTIVE 1,066건 (TV Gate 적용 후)
 
-| 차단 사유 | 건수 |
-|---|---|
-| NOT_AI_ITINERARY_ELIGIBLE (기존 eligibility=NO) | 27 |
-| INCHEON_AIRPORT_INFORMATION_CENTER | 3 |
+| 차단 사유 | 건수 | 카테고리 |
+|---|---|---|
+| NOT_AI_ITINERARY_ELIGIBLE_UTILITY | 837 | restaurant (UTILITY_RESTAURANT) |
+| SPECIALTY_INTENT_REQUIRED | 199 | restaurant (SPECIALTY_INTEREST_RESTAURANT) |
+| NOT_AI_ITINERARY_ELIGIBLE | 27 | non-restaurant (기존 eligibility=NO) |
+| INCHEON_AIRPORT_INFORMATION_CENTER | 3 | attraction |
+| **합계** | **1,066** | |
 
-27건은 기존 비food 573건 eligibility audit(AI_ITINERARY_ELIGIBLE=NO)에서 확정된 값. 쇼핑몰, 백화점, 면세점, 특정 자연·문화시설이 포함됨. SEARCHABLE=YES, USER_CAN_SELECT=YES 유지.
+- UTILITY 837건: VisitSeoul 공식 태그/evidence 기반 TV Gate — 공식 수상·큐레이션·전문 식이 증거 없음. SEARCHABLE=YES, USER_CAN_SELECT=YES 유지.
+- SPECIALTY 199건: 할랄·비건·살람서울 등 전문 식이 수요 대응. AI_ITINERARY_ELIGIBLE=CONDITIONAL, ai_blocked_reason=SPECIALTY_INTENT_REQUIRED.
+- 비food 27건: 기존 비food 573건 eligibility audit(AI_ITINERARY_ELIGIBLE=NO)에서 확정. 쇼핑몰, 백화점, 면세점, 특정 자연·문화시설 포함.
+- 인천공항 3건: AI_ITINERARY=NO override 적용. SEARCHABLE=YES 유지.
 
 ---
 
@@ -137,35 +145,70 @@ KOPgdf9ry: special2 레코드로 PLACE_AI_OR_EXPLORE_ELIGIBLE 분류. 이미지 
 
 1건 ADDRESS_MISSING: source review_flag에서 알려진 예외. NAV (lat/lng) 보유로 NAV_READY 유지.
 
-### Phase 6: AI Eligibility
+### Phase 6: AI Eligibility (TV Gate 적용 후)
 
 | 구분 | 건수 |
 |---|---|
-| AI_AUTO=True | 1,803 |
-| AI_AUTO=False (NOT_AI_ITINERARY_ELIGIBLE) | 27 |
+| AI_AUTO=True (DESTINATION_RESTAURANT) | 223 |
+| AI_AUTO=True (non-restaurant eligible) | 544 |
+| **AI_AUTO=True 합계** | **767** |
+| AI_AUTO=False (UTILITY_RESTAURANT) | 837 |
+| AI_AUTO=False (SPECIALTY_INTEREST_RESTAURANT) | 199 |
+| AI_AUTO=False (NOT_AI_ITINERARY_ELIGIBLE, non-rest) | 27 |
 | AI_AUTO=False (INCHEON_AIRPORT_INFORMATION_CENTER) | 3 |
-| 합계 | 1,833 |
+| **AI_AUTO=False 합계** | **1,066** |
+| **전체** | **1,833** |
 
-*이미지 부재(KOPgdf9ry)는 AI_AUTO 차단 사유 아님. 태스크 정책 "이미지가 없다는 이유만으로 AI_AUTO=false 금지" 준수.*
+*이미지 부재(KOPgdf9ry)는 AI_AUTO 차단 사유 아님. 태스크 정책 준수.*
 
-### Phase 7: Final QA (14개 체크)
+### Phase 6-TV: Travel Value Gate (TV Gate v1.0)
+
+**정책 근거**: `seoul-restaurant-travel-value-live-validation-v1.md` + `seoul-integrated-travel-value-policy-v1.md` (commit 7f9fae5)
+
+**신호 체계 (결정론적, AI 추론 금지)**:
+- DESTINATION: `source_tags.tags`에 미쉐린가이드/수요미식회/오래가게/백년가게/블루리본서베이/3대천왕/무한도전/맛있는녀석들/식신로드 중 1개 이상
+- SPECIALTY: `facts.halal_evidence` / `salam_evidence` / `dietary_evidence` / `muslim_evidence` True, 또는 태그에 살람서울/할랄/비건/채식/베지테리안/vegetarian/vegan/무슬림/salam 포함
+- UTILITY: 위 두 조건 없음 (default)
+
+| TV Class | 건수 | AI_ITINERARY_ELIGIBLE | ai_auto |
+|---|---|---|---|
+| DESTINATION_RESTAURANT | 223 | YES | True |
+| SPECIALTY_INTEREST_RESTAURANT | 199 | CONDITIONAL | False |
+| UTILITY_RESTAURANT | 837 | NO | False |
+| **합계** | **1,259** | | |
+
+```
+COUNT_TARGET             = NOT_DEFINED_BY_DESIGN
+NUMERIC_PRUNING_POLICY   = FORBIDDEN
+TV_GATE_UNRESOLVED       = 0
+NUMERIC_TARGET_FORCED    = NO
+```
+
+### Phase 7: Final QA (21개 체크)
 
 | 체크 | 결과 |
 |---|---|
-| QA-1 SERVICE_UNIVERSE_STABLE | PASS (1834/1833) |
-| QA-2 STANDARD_ACCOMMODATION=0 | PASS |
-| QA-3 UNRESOLVED_CURATION=0 | PASS |
-| QA-4 NAV_MISSING=0 | PASS |
-| QA-5 INVENTED_COORD=0 | PASS |
-| QA-6 COORD_IN_KOREA | PASS |
-| QA-7 AI_DECISION_UNKNOWN=0 | PASS |
-| QA-8 DUPLICATE_CID=0 | PASS |
-| QA-9 SECRET_LEAK=0 | PASS |
-| QA-10 SCHEMA_VERSION | PASS |
+| QA-01 SERVICE_UNIVERSE(1834/1833/1) | PASS |
+| QA-02 STANDARD_ACCOMMODATION=0 | PASS |
+| QA-03 UNRESOLVED_CURATION=0 | PASS |
+| QA-04 NAV_MISSING=0 | PASS |
+| QA-05 INVENTED_COORD=0 | PASS |
+| QA-06 COORD_IN_KOREA | PASS |
+| QA-07 AI_DECISION_UNKNOWN=0 | PASS |
+| QA-08 DUPLICATE_CID_ACTIVE=0 | PASS |
+| QA-09 SECRET_LEAK=0 | PASS |
+| QA-10 SCHEMA_VERSION_CONSISTENT | PASS |
 | QA-11 IMAGE_RIGHTS_VALID | PASS |
 | QA-12 INCHEON_AIRPORT_AI_BLOCKED | PASS |
 | QA-13 MULTI_LOCATION_EXCLUDED | PASS |
 | QA-14 GYEONGJU_NOT_MODIFIED | PASS |
+| QA-15 TV_GATE_COVERAGE=1259 | PASS |
+| QA-16 TV_CLASS_SUM_CONSISTENT | PASS (D=223 SP=199 U=837) |
+| QA-17 DESTINATION_AI_AUTO_TRUE | PASS |
+| QA-18 SPECIALTY_CORRECT_BLOCK | PASS |
+| QA-19 UTILITY_CORRECT_BLOCK | PASS |
+| QA-20 TV_GATE_VERSION_V1_0 | PASS |
+| QA-21 FOOD_SOURCE_TV_GATE_CLASSIFIED | PASS |
 
 ---
 
@@ -175,7 +218,8 @@ KOPgdf9ry: special2 레코드로 PLACE_AI_OR_EXPLORE_ELIGIBLE 분류. 이미지 
 |---|---|
 | 파일 | `data/seoul-final-release/seoul-canonical-places-v1.jsonl` |
 | 총 레코드 수 | 1,834 (ACTIVE=1,833, EXCLUDED=1) |
-| SHA256 | `f4072d6fdf85820f6f86788b33b64d6314806ebd16905b9ac5779107b03e4ff8` |
+| SHA256 | `981fc9b68ffa60c41425bb316746f1cd65caeed2c97e32c8e709ee67315b15ed` |
+| SHA256 (V1 before TV Gate) | `f4072d6fdf85820f6f86788b33b64d6314806ebd16905b9ac5779107b03e4ff8` |
 | schema_version | `seoul-canonical-places-v1` |
 | branch | `data/seoul-targeted-completion-v1` |
 
@@ -192,18 +236,24 @@ KOPgdf9ry: special2 레코드로 PLACE_AI_OR_EXPLORE_ELIGIBLE 분류. 이미지 
 
 ---
 
-## 6. EVENT_TRACK 4건 처리 기록
+## 6. EVENT_TRACK 4건 처리 기록 (FINAL — EXCLUDE_INVALID)
 
-| CID | 제목 | 기간 | 처리 |
+| CID | 제목 | API 결과 | 처리 |
 |---|---|---|---|
-| KOPd5mmfg | 2026 서울시 태권도 공연 | ~2026-10-18 | EVENT_TRACK_DETAIL_PENDING |
-| KOP47mbp7 | 2026 서울국제정원박람회 | ~2026-10-27 | EVENT_TRACK_DETAIL_PENDING |
-| KOPw5jg9e | 2026 남산골 전통체험 | ~2026-10-25 | EVENT_TRACK_DETAIL_PENDING |
-| KOPvro3vg | 2026 서울야외도서관 | ~2026-11-01 | EVENT_TRACK_DETAIL_PENDING |
+| KOPd5mmfg | 2026 서울시 태권도 공연 | HTTP 404 | EXCLUDE_INVALID |
+| KOP47mbp7 | 2026 서울국제정원박람회 | HTTP 404 | EXCLUDE_INVALID |
+| KOPw5jg9e | 2026 남산골 전통체험 | HTTP 404 | EXCLUDE_INVALID |
+| KOPvro3vg | 2026 서울야외도서관 | HTTP 404 | EXCLUDE_INVALID |
 
-해당 행사들은 VisitSeoul detail 미수집 상태(`existing_detail_available=False`). 좌표/이미지 없음.
-행사 장소(남산골한옥마을, 서울숲, DDP 등)는 canonical non-food에 이미 포함됨.
-7일 주기 event refresh cycle에서 VisitSeoul detail API 호출 후 canonical 보완 권장.
+```
+EVENT_API_ENDPOINT:  https://api-call.visitseoul.net/api/v1/contents/detail
+EVENT_API_RESULT:    HTTP 404 for all 4 CIDs (checked 2026-08-17)
+EVENT_DECISION:      EXCLUDE_INVALID — CID가 VisitSeoul 공식 API에 더 이상 존재하지 않음
+EVENT_TRACK_DETAIL_PENDING: 0
+CANONICAL_ADDED: NO (공식 소스 미존재 → canonical 미추가, 이미 canonical에 없음)
+```
+
+행사 장소(남산골한옥마을, 서울숲, DDP 등)는 canonical non-food에 이미 포함됨. 추가 조치 불필요.
 
 ---
 
@@ -215,12 +265,13 @@ KOPgdf9ry: special2 레코드로 PLACE_AI_OR_EXPLORE_ELIGIBLE 분류. 이미지 
 | Accommodation 정책 | `multicity-place-accommodation-policy-v1.md` | STANDARD_ACCOMMODATION_IS_NOT_CITY_SPOT |
 | Eligibility 정책 | `multicity-place-eligibility-policy-v1.md` | 5축 판단, AI_ITINERARY vs SEARCHABLE 분리 |
 | Food 수집 정책 | `multicity-food-discovery-collection-policy-v1.md` | Phone Gate V2 |
+| TV Gate (서울 식당) | `seoul-restaurant-travel-value-live-validation-v1.md` + `seoul-integrated-travel-value-policy-v1.md` | DESTINATION/SPECIALTY/UTILITY 분류 |
 
 COMMON_POLICY_COMMIT = `f9e3543`
 
 ---
 
-## 8. SEOUL_DATA_STATUS (FINAL)
+## 8. SEOUL_DATA_STATUS (FINAL — TV Gate 적용 후)
 
 ```
 SEOUL_DATA_STATUS = {
@@ -236,12 +287,26 @@ SEOUL_DATA_STATUS = {
     "NAV_READY": "1833/1833 = 100%",
     "IMAGE": "1832/1833 = 99.95%",
     "IMAGE_DISPLAY": "1832/1833 = 99.95%",
-    "AI_AUTO": "1803/1833 = 98.4%",
-    "AI_BLOCKED": 30,
+    "AI_AUTO": "767/1833 = 41.8%",
+    "AI_BLOCKED": 1066,
+    "AI_BLOCKED_BREAKDOWN": {
+        "NOT_AI_ITINERARY_ELIGIBLE_UTILITY": 837,
+        "SPECIALTY_INTENT_REQUIRED": 199,
+        "NOT_AI_ITINERARY_ELIGIBLE": 27,
+        "INCHEON_AIRPORT_INFORMATION_CENTER": 3
+    },
+    "TV_GATE": {
+        "DESTINATION_RESTAURANT": 223,
+        "SPECIALTY_INTEREST_RESTAURANT": 199,
+        "UTILITY_RESTAURANT": 837,
+        "TV_GATE_VERSION": "v1.0",
+        "TV_GATE_AS_OF": "2026-08-17"
+    },
+    "EVENT_TRACK_DETAIL_PENDING": 0,
     "PHONE": "1768/1833 = 96.4%",
-    "FINAL_QA": "PASS",
+    "FINAL_QA": "PASS (21 checks)",
     "SAFE_TO_CLOSE": "YES",
-    "CANONICAL_SHA256": "f4072d6fdf85820f6f86788b33b64d6314806ebd16905b9ac5779107b03e4ff8",
+    "CANONICAL_SHA256": "981fc9b68ffa60c41425bb316746f1cd65caeed2c97e32c8e709ee67315b15ed",
     "BRANCH": "data/seoul-targeted-completion-v1",
     "COMMON_POLICY_COMMIT": "f9e3543"
 }
@@ -252,11 +317,13 @@ SEOUL_DATA_STATUS = {
 ## 9. Final Decision
 
 ```
-SEOUL_FINAL_QA                         = PASS
+SEOUL_FINAL_QA                         = PASS (21 checks)
 SEOUL_DATA_STATUS                      = COMPLETE_WITH_IMAGE_EXCEPTIONS
 SEOUL_NAVIGATION_COMPLETE              = YES
 SEOUL_IMAGE_TRACK_COMPLETE             = YES (1건 진정한 예외 — KOPgdf9ry)
 SEOUL_AI_DECISION_COMPLETE             = YES (AI_DECISION_UNKNOWN=0)
+SEOUL_TV_GATE_COMPLETE                 = YES (1259/1259 TV_GATE_CLASSIFIED)
+SEOUL_EVENT_TRACK_PENDING              = 0 (4건 EXCLUDE_INVALID — VisitSeoul API 404)
 SAFE_TO_CLOSE_SEOUL_DATA               = YES
 FURTHER_SEOUL_BROAD_RECOVERY_REQUIRED  = NO
 NEXT_CITY                              = JEJU
@@ -276,7 +343,17 @@ NEXT=Naver전화6건+FOOD.
 - canonical import 여부는 Main 팀 결정 (SECTION 11 기존 handoff 참조)
 - PLACE_SEARCHABLE_USER_PICK 14건: SEARCHABLE=YES, EXPLORE·AI=NO 유지
 - 인천공항 3건: AI_ITINERARY=NO 반영됨
-- EVENT_TRACK 4건: event refresh cycle에서 별도 처리
+- EVENT_TRACK 4건: 2026-08-17 API 확인 결과 모두 HTTP 404 → EXCLUDE_INVALID (canonical 미포함)
+- TV Gate: ai_auto=True는 DESTINATION_RESTAURANT(공식 큐레이션 보유) 223건만. SPECIALTY 199건은 CONDITIONAL, UTILITY 837건은 NO.
+
+---
+
+## 11. 작업 이력
+
+| 태스크 | 커밋 | 내용 |
+|---|---|---|
+| TASK-SEOUL-ALL-DATA-TARGETED-COMPLETION-V1 | `0fcbcc5` | 최초 canonical 빌드 (1834건, AI_AUTO=1803) |
+| TASK-SEOUL-FOOD-TV-GATE-AND-EVENT-FINAL-CLOSE-V3 | 이번 커밋 | TV Gate 적용 (1259건 분류), Event 4건 EXCLUDE_INVALID, AI_AUTO=767 |
 
 TASK-SEOUL-ALL-DATA-TARGETED-COMPLETION-V1 완료보고서
 작업을 완료했습니다.
