@@ -76,14 +76,29 @@ test("★아직 열지 않은 도시는 프리셋이 없어도 정상이다", ()
 
 // ── 잘못 켜면 걸린다 ─────────────────────────────────────────────────────────
 test("★프리셋 없는 도시를 열면 무엇이 없는지 알려 준다", () => {
-  const bare = SLUGS.filter(s => (CITY_ARRIVAL_OPTIONS[configOf(s).name] ?? []).length === 0);
-  assert.ok(bare.length > 0, "프리셋이 빈 도시가 하나도 없어 이 검사가 의미 없다");
-  for (const slug of bare) {
-    const gaps = missingForPlanning({ ...inputFor(slug), planningReady: true });
-    assert.ok(gaps.includes("arrival_options"), `${slug}: ${gaps.join(",")}`);
-    assert.ok(gaps.includes("stay_area"),       `${slug}: ${gaps.join(",")}`);
-    assert.equal(canActivate(inputFor(slug)), false, slug);
-  }
+  // 저장소 데이터에 기대지 않는다. 예전에는 "빈 도시가 실재한다" 를 전제로 했는데,
+  // 전주 프리셋이 채워지자 검사할 대상이 사라져 이 테스트가 스스로 무너졌다.
+  // 새 도시가 막 등록된 순간의 모습을 직접 만든다.
+  const fresh: CityReadinessInput = {
+    name: "Newtown", planningReady: true,
+    arrivalOptions: [], arrivalDefault: undefined,
+    label:       Object.fromEntries(REQUIRED_LOCALES.map(l => [l, "N"])),
+    description: Object.fromEntries(REQUIRED_LOCALES.map(l => [l, "d"])),
+    hasCenterCoord: false,
+  };
+  const gaps = missingForPlanning(fresh);
+  assert.ok(gaps.includes("arrival_options"), gaps.join(","));
+  assert.ok(gaps.includes("stay_area"),       gaps.join(","));
+  assert.ok(gaps.includes("arrival_default"), gaps.join(","));
+  assert.ok(gaps.includes("center_coord"),    gaps.join(","));
+  assert.equal(canActivate(fresh), false);
+});
+
+test("★등록만 하고 프리셋을 넣지 않은 도시가 남아 있는지 알려 준다", () => {
+  // 실패가 아니다 — 아직 열지 않은 도시는 비어 있어도 정상이다.
+  // 다만 지금 어느 도시가 열 준비가 됐는지는 기록해 둔다.
+  const notYet = SLUGS.filter(s => !canActivate(inputFor(s)));
+  assert.deepEqual(notYet, [], `프리셋이 아직 없는 도시: ${notYet.join(", ")}`);
 });
 
 // ── 규칙 자체 ────────────────────────────────────────────────────────────────

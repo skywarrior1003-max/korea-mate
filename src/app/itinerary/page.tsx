@@ -231,6 +231,7 @@ const CITY_CENTER_COORDS: Record<string, { lat: number; lng: number }> = {
   seoul:    { lat: 37.5665, lng: 126.9780 },
   gyeongju: { lat: 35.8562, lng: 129.2247 },
   jeju:     { lat: 33.4996, lng: 126.5312 },
+  jeonju:   { lat: 35.8245, lng: 127.1478 },
 };
 const DEFAULT_COORD = { lat: 35.1796, lng: 129.0756 };
 

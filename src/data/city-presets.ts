@@ -28,6 +28,7 @@ export const CITY_ARRIVAL_DEFAULTS: Record<string, string> = {
   Seoul:    "Incheon International Airport (인천공항)",
   Jeju:     "Jeju International Airport (제주공항)",
   Gyeongju: "Gyeongju KTX Station (신경주역)",
+  Jeonju:   "Jeonju Station (전주역)",
 };
 
 // Arrival / departure location options per city.
@@ -69,6 +70,15 @@ export const CITY_ARRIVAL_OPTIONS: Record<string, CityPresetOption[]> = {
     { value: "Gyeongju Train Station (경주역)",                      label: "🚉 Gyeongju Station",          lat: 35.8450, lng: 129.2213, type: "train_station"  },
     { value: "Gyeongju Intercity Bus Terminal (경주시외버스터미널)", label: "🚌 Gyeongju Intercity Bus",    lat: 35.8398, lng: 129.2025, type: "bus_terminal"  },
     { value: "Gyeongju Express Bus Terminal (경주고속버스터미널)",   label: "🚌 Gyeongju Express Bus",      lat: 35.8404, lng: 129.2028, type: "bus_terminal"  },
+  ],
+  // 전주 — 공항도 항만도 없다. 없는 것을 채우지 않는다.
+  // 좌표는 VWorld 주소검색으로 확인한 값이다(도로명 기준, 전주 시역 안).
+  // 시외버스터미널은 조회되지 않아 넣지 않았다 — 추측하지 않는다.
+  Jeonju: [
+    { value: "Jeonju Station (전주역)",                        label: "🚄 Jeonju Station",    lat: 35.8514, lng: 127.1621, type: "train_station" },
+    { value: "Jeonju Express Bus Terminal (전주고속버스터미널)", label: "🚌 Jeonju Express Bus", lat: 35.8426, lng: 127.1374, type: "bus_terminal"  },
+    { value: "Jeonju Hanok Village (전주한옥마을)",             label: "🏘️ Hanok Village",     lat: 35.8150, lng: 127.1492, type: "tourist_area"  },
+    { value: "Jeonju Old Town · Gaeksa (전주 구도심·객사)",      label: "🏙️ Jeonju Old Town",   lat: 35.8184, lng: 127.1453, type: "downtown"      },
   ],
 };
 
