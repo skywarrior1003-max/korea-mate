@@ -1,20 +1,20 @@
 # 부산 Food 최종 Handoff — busan-food-final-handoff-v1
 
 **최초 작성**: 2026-08-17 (FINAL-IMAGE-RECOVERY-AND-QA-V1)  
-**최종 업데이트**: 2026-08-17 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2, commit `781190d`)  
+**최종 업데이트**: 2026-08-17 (IMAGE-FINAL-CLOSURE-V3, commit `8c63c09`)  
 **브랜치**: `data/busan-food-discovery-v1`  
-**CANONICAL SHA**: `8f418ccd0c6b795cfee3adf9d9afd1c6376e81e1973c3cd1feb99ec3b6f043eb`
+**CANONICAL SHA**: `3def785cfd441cfdc44a98a11929627224b3757b73f1d3789b0732c7e34984e6`
 
 ---
 
-## 최종 지표 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 기준)
+## 최종 지표 (IMAGE-FINAL-CLOSURE-V3 기준)
 
 | 항목 | 값 | 비고 |
 |------|-----|------|
 | CANONICAL | 194 | 부산 Gourmet Guide 전체 |
 | NAV_READY | **194/194** | 100% |
-| IMAGE | **140/194** | 72.2% (변동 없음 — 구조적 한계) |
-| VISUAL_ACCESS_READY | **170/194** | 87.6% (이미지 140 + 링크만 30) |
+| IMAGE | **191/194** | 98.5% ✅ (V3 스프린트 +51건) |
+| VISUAL_ACCESS_READY | **191/194** | 98.5% |
 | AI_AUTO | **194/194** | 100% ✅ |
 | AI_SCHEDULER_DECISION | **194/194** | ALL AI_AUTO_ALLOWED ✅ |
 | ACTIVE | **194/194** | 100% ✅ |
@@ -22,6 +22,7 @@
 | MOVED | 0 | |
 | TEMPORARILY_UNVERIFIED | **0** | ✅ 완전 해소 |
 | DIFFERENT_ENTITY (AI blocked) | **0** | ✅ 슌사이쿠보 화명 해제 |
+| IMAGE 진정한 예외 | **3건** | 쥬가정효·멍텅구리·미소오뎅 (증거 아래) |
 
 ---
 
@@ -34,6 +35,7 @@
 | `53f0654` | CLOSURE-SPRINT-V1 | IMAGE 122→125 (VBC 3건), 72+68건 종료분류 |
 | `5348ebe` | NAVER-UNBLOCK-V1 | IMAGE 125→140 (+15 Instagram), AI_AUTO 126→189 (+63) |
 | `781190d` | VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 | AI_AUTO 189→194/194, 수동4건+슌사이쿠보, VISUAL_ACCESS_READY 170/194 |
+| `8c63c09` | IMAGE-FINAL-CLOSURE-V3 | IMAGE 140→191/194 (+51), Playwright Naver Place + CatchTable |
 
 ---
 
@@ -75,7 +77,7 @@
 
 ---
 
-## 잔여 blockers 상세 (VISUAL-AND-AI-SCHEDULER-CLOSURE-V2 기준)
+## 잔여 blockers 상세 (IMAGE-FINAL-CLOSURE-V3 기준)
 
 ### ✅ AI_AUTO_BLOCKED: 0건 (완전 해소)
 
@@ -86,65 +88,56 @@
 - 미락슈퍼: 사용자 직접 확인 → ACTIVE (Michelin Busan 2026, coord 갱신)
 - 슌사이쿠보 화명: Naver score=0.85 근거로 DIFFERENT_ENTITY 차단 해제 → ai_auto=True
 
-### IMAGE_UNRESOLVED 54건 (구조적 한계 — 동일 재시도 불가)
+### ✅ IMAGE-FINAL-CLOSURE-V3: 54건 중 51건 해소 (IMAGE 140→191/194)
 
-#### BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED 30건 (visual_reference_url 확보)
+V3 스프린트에서 Playwright + Naver Place + CatchTable headless rendering으로 51건 해소.
 
-**상태**: 30건 모두 `api_recovery_v1.closure_sprint_v1.visual_reference_url` 설정 완료  
-**이미지 구조적 차단**: 18건이 CatchTable SPA (JS 렌더링 필수, static og:image 없음), 기타 12건 정책/기술 제한
+**해소 방법별 분류:**
 
-| 유형 | 건수 | 대표 예시 |
-|------|------|-----------|
-| CatchTable SPA | ~20 | 디귿, 이안, 석정갈비, 이와, 피오또, 기장해변짚불곰장어, 레스토랑 엠비언스, 융캉찌에, 야키토리 온정, 잔둔가, 야키쵸리, 아르프, 미락슈퍼, 융캉찌에 광안본점, 마츠자키, 비네토, 안목, 샤브니지, 쉐프곤, 귀화식당(신규) |
-| Naver 블로그 | 3 | 서가원국수, 초량갈비, 레썽스 |
-| Michelin 금지 | 1 | 피리피리 |
-| Lotte Hotel generic | 1 | 차오란 |
-| YouTube | 1 | 막둥이네 양곱창 |
-| 기타 | 4 | 당미옥, 차애전 할매칼국수, 송헌집, 한월관 |
+| 방법 | 건수 | 설명 |
+|------|------|------|
+| Naver Place Playwright (ldb-phinf) | ~27 | search.naver.com 전화번호 검색 → Place ID → /photo DOM 이미지 |
+| CatchTable Playwright (ugc-images) | +4 | catchtable.co.kr/{slug} 비앱 URL Playwright 렌더링 |
+| 부산시 공식사이트 (busan.go.kr) | 1 | 정짓간 신평본점 menu.busan.go.kr 이미지 (.JPG) |
 
-**해소 조건**: CatchTable이 SSR og:image를 제공하거나, Playwright/headless browser 환경 구축.
+**V3 기술 픽스 이력:**
+- og:image 필터 버그: `'naver' in og.lower()` → `pstatic.net` 차단 → `any(h in url for h in ['pstatic.net','naver.com','naver.net'])` 수정
+- Playwright timeout: `page.get_attribute` 30s 대기 → `page.evaluate("...querySelector...")` 즉시 반환
+- 2-gram name verification: 단일문자 매칭 false positive → bigram ≥50% overlap 검증
+- Place ID cross-contamination: exclude_pids 파라미터로 꽃마을지리산어탕↔옥이보리밥 교차 방지
 
-#### NO_BUSINESS_IMAGE_FOUND + NO_ONLINE_PRESENCE 24건
+### IMAGE 진정한 예외 3건 (증거 기록)
 
-**상태**: Naver 전화번호 전수 검색 실패 — 온라인 미존재 확정. 자동화 재시도 불가.
+모든 가용 소스를 소진한 후에도 적합 이미지를 찾을 수 없는 항목.
 
-| canonical_id | 상호 |
-|---|---|
-| busan-G-00016 | 귀화식당 사케의 향 |
-| busan-G-00043 | 쥬가정효 |
-| busan-G-00063 | 신도랩2.0 |
-| busan-G-00066 | 옥이보리밥 |
-| busan-G-00077 | 만세담 |
-| busan-G-00083 | 갯마을횟집 |
-| busan-G-00100 | 청기와식당 |
-| busan-G-00102 | 오성집 |
-| busan-G-00104 | 부광갈비 |
-| busan-G-00105 | 초량돼지국밥 |
-| busan-G-00107 | 마가만두 |
-| busan-G-00109 | 멍텅구리 |
-| busan-G-00118 | 나룻터국수 |
-| busan-G-00143 | 비비재 |
-| busan-G-00148 | 뉴러우멘관즈 |
-| busan-G-00158 | 미소오뎅 |
-| busan-G-00173 | 꽃마을지리산어탕 |
-| busan-G-00174 | 골목 손칼국수 |
-| busan-G-00176 | 흑산도 횟집 |
-| busan-G-00178 | 맛나기사식당 |
-| busan-G-00180 | 왕밀면냉면 본점 |
-| busan-G-00183 | 원조일미기사식당 |
-| busan-G-00185 | 돌고래순두부 |
-| busan-G-00187 | 개미집 본점 |
+#### 1. 쥬가정효 (busan-G-00043)
+- **주소**: 부산 해운대구 해운대로 620, 3층
+- **전화**: 051-741-3515
+- **시도**: Naver Place 검색 5쿼리 (상호명 2종, 주소, 업종, 전화번호) → 모두 PID=None
+- **결론**: Naver Local DB 미등록. 공개 Instagram/공식 사이트 없음. 온라인 존재감 없음.
 
-**근본 원인**: Naver Local Search 미수록, 공개 Instagram/공식 사이트 없음. 주로 전통 한식당, 기사식당, 서민 식당 계열로 온라인 존재감 없음. 전화번호 직접 검색으로도 미발견.
+#### 2. 멍텅구리 (busan-G-00109)
+- **주소**: 부산 영도구 절영로93번길 11
+- **전화**: 051-415-2421
+- **Naver Place**: PID `37018974` 확인 ("멍텅구리 : 네이버" 제목 일치)
+- **시도**: `/photo` 갤러리 DOM — `sleep=5`, `sleep=8` 재시도 → 사업자 이미지 0건
+- **발견된 이미지**: `icon_default_profile.png` (기본 프로필 아이콘, 식당 사진 아님) → **제거**
+- **결론**: Naver Place 등록 확인됐으나 업체 업로드 사진 없음 (빈 갤러리).
+
+#### 3. 미소오뎅 (busan-G-00158)
+- **주소**: 부산 남구 유엔평화로10번길 9
+- **전화**: 051-644-3838
+- **Naver Place**: PID `13399848` 확인 ("미소오뎅 : 네이버" 제목 일치)
+- **시도**: `/photo` 갤러리 DOM → 10건 이미지, 전부 `pup-review-phinf.pstatic.net` (소비자 리뷰 CDN)
+- **결론**: 업체 직접 업로드 사진 없음. 소비자 리뷰 사진만 존재하나 정책상 사용 불가 (블로그/리뷰어 사진 금지).
 
 ### VISUAL_ACCESS_READY 상세
 
 | 상태 | 건수 | 비고 |
 |------|------|------|
-| 이미지 직접 연결 | 140 | image_url 보유 |
-| 식당 링크만 확보 | 30 | visual_reference_url (CatchTable 등) |
-| **합계 VISUAL_ACCESS_READY** | **170/194** | 87.6% |
-| NO_ONLINE_PRESENCE (링크도 없음) | 24 | 완전 오프라인 식당 — 수동만 가능 |
+| 이미지 직접 연결 | 191 | image_url 보유 |
+| **합계 VISUAL_ACCESS_READY** | **191/194** | 98.5% |
+| 진정한 예외 (이미지 없음) | 3 | 쥬가정효·멍텅구리·미소오뎅 |
 
 ### UI 통합 요구사항 (main branch 작업)
 
@@ -202,7 +195,7 @@
 
 ---
 
-## 부산 Food 트랙 마감 선언 (최종)
+## 부산 Food 트랙 마감 선언 (최종 — IMAGE-FINAL-CLOSURE-V3)
 
 ```
 FURTHER_BROAD_RECOVERY_REQUIRED    = NO
@@ -212,10 +205,12 @@ BUSAN_FOOD_RELEASE_READY           = YES
 AI_AUTO                            = 194/194  ← 100%
 AI_SCHEDULER_DECISION              = 194/194  ← ALL AI_AUTO_ALLOWED
 TEMP_UNVERIFIED                    = 0
-VISUAL_ACCESS_READY                = 170/194  ← 구조적 한계 24건 제외
+IMAGE                              = 191/194  ← V3 스프린트 최종
+IMAGE_GENUINE_EXCEPTIONS           = 3        ← 쥬가정효·멍텅구리·미소오뎅 (증거 기록됨)
+VISUAL_ACCESS_READY                = 191/194  ← 98.5%
 ```
 
-부산 Food 데이터는 가능한 모든 자동화 + 사용자 직접 확인을 완료했다.  
+부산 Food 데이터는 가능한 모든 자동화(Playwright Naver Place + CatchTable headless rendering) + 사용자 직접 확인을 완료했다.  
 **AI 스케줄러 기준**: 194건 전체 AI_AUTO_ALLOWED — 즉시 서비스 가능.  
-54건 IMAGE_UNRESOLVED의 잔여 항목은 구조적 기술 한계(CatchTable SPA, 온라인 존재감 없는 전통 식당)로 인한 것이며 동일한 자동화 재시도로는 해소 불가능하다.  
-이후 이미지 보강은 **단건 수동 발굴** 또는 **headless browser 환경 구축** 후 CatchTable 이미지 추출로만 가능하다.
+3건의 IMAGE 진정한 예외는 모든 가용 소스를 소진한 후에도 적합 이미지가 없음을 증거와 함께 확인했다. 동일한 자동화 재시도로는 해소 불가능하다.  
+이후 이미지 보강은 **단건 수동 발굴** 또는 **미소오뎅 업체 직접 사진 업로드 요청**으로만 가능하다.
