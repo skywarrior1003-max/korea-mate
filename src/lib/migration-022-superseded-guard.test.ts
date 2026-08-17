@@ -150,19 +150,36 @@ test("★038·039·040 실행 본문이 바뀌지 않았다", () => {
 });
 
 // ── 20~23. 범위 밖 변경 금지 ─────────────────────────────────────────────────
-test("★get_shared_itinerary EXECUTE 를 회수하는 migration 이 없다", () => {
-  // 원래 "040 이 마지막" 으로 적었는데 그건 그 시점의 상태였지 불변식이 아니다.
-  // 이후 다른 작업이 정당하게 041 을 추가하면 이 테스트가 엉뚱하게 깨진다.
-  // 실제로 지켜야 할 것은 "공유 RPC 의 EXECUTE 를 건드리는 migration 이 생기지
-  // 않는다" 이다 — anon/authenticated EXECUTE WARN 2건은 수용하기로 한 상태다.
-  assert.ok(!existsSync(MIG("041_restrict_get_shared_itinerary_execute.sql")));
+test("★공유 RPC 의 공개 EXECUTE 를 회수하는 migration 은 051 하나뿐이다", () => {
+  // 016 가드와 같은 이유로 뒤집었다 — 브라우저가 이 RPC 를 더 이상 부르지 않으므로
+  // anon·authenticated EXECUTE 를 남겨 둘 이유가 사라졌다. 회수는 051 한 곳에서만.
+  const LOCKDOWN = "051_revoke_shared_itinerary_public_execute.sql";
+  assert.ok(existsSync(MIG(LOCKDOWN)), "잠금 migration 이 사라졌다");
+
+  const REVOKE_PUBLIC_ROLE =
+    /REVOKE[^\n]*get_shared_itinerary[^\n]*FROM[^\n]*\b(anon|authenticated)\b/i;
+  const REVOKE_SERVICE =
+    /REVOKE[^\n]*get_shared_itinerary[^\n]*FROM[^\n]*\bservice_role\b/i;
+
   for (const f of readdirSync(join(ROOT, "supabase", "migrations")).filter(x => x.endsWith(".sql"))) {
     const sql = readFileSync(MIG(f), "utf8")
       .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
-    // PUBLIC 회수는 016·022·030 이 이미 하는 정상 동작이다. 막아야 할 것은
-    // anon·authenticated 회수뿐이다.
-    assert.doesNotMatch(sql, /REVOKE[^\n]*get_shared_itinerary[^\n]*FROM[^\n]*\b(anon|authenticated)\b/i, f);
+    if (f !== LOCKDOWN) {
+      assert.doesNotMatch(sql, REVOKE_PUBLIC_ROLE, `${f} 가 공유 RPC 권한을 함께 건드린다`);
+    }
+    assert.doesNotMatch(sql, REVOKE_SERVICE, f);
   }
+
+  const lock = readFileSync(MIG(LOCKDOWN), "utf8")
+    .split("\n").filter(l => !l.trimStart().startsWith("--")).join("\n");
+  for (const bad of [/CREATE\s+(OR\s+REPLACE\s+)?FUNCTION/i, /DROP\s+FUNCTION/i,
+                     /ALTER\s+FUNCTION/i, /ALTER\s+TABLE/i, /POLICY/i,
+                     /\bUPDATE\b/i, /\bDELETE\b/i, /\bINSERT\b/i]) {
+    assert.doesNotMatch(lock, bad, String(bad));
+  }
+  assert.match(lock, /REVOKE EXECUTE ON FUNCTION public\.get_shared_itinerary\(uuid\) FROM PUBLIC;/);
+  assert.match(lock, /FROM anon;/);
+  assert.match(lock, /FROM authenticated;/);
 });
 
 test("★브라우저는 공유 RPC 를 직접 부르지 않는다 — 서버가 정제한 것만 받는다", () => {
