@@ -170,7 +170,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00002",
@@ -241,7 +242,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/yakitori_diguet",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -261,7 +264,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00003",
@@ -329,7 +333,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00004",
@@ -420,7 +425,8 @@
         "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240416105423031_ttiel",
         "image_source": "www.visitbusan.net",
         "image_rights": "usable"
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00005",
@@ -488,7 +494,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00006",
@@ -593,7 +600,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00007",
@@ -664,7 +672,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00008",
@@ -736,7 +745,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://smartstore.naver.com/gomtang86",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -756,7 +767,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00009",
@@ -826,7 +838,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00010",
@@ -894,7 +907,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00011",
@@ -964,7 +978,8 @@
           "multi_ucseq_evidence": "UC=1265 and UC=1555 share identical address (온천장로 91-1 온천동) and phone (051-555-6609); coordinate diff <1m. SAME_ENTITY_MULTI_RECORD. UC=1555 selected: fuller address format matches canonical 부산 동래구 온천장로 91-1.",
           "note": "MULTI_UCSEQ_CONFLICT resolved: SAME_ENTITY confirmed, UC=1555 selected as representative."
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00012",
@@ -1032,7 +1047,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00013",
@@ -1100,7 +1116,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00014",
@@ -1206,7 +1223,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00015",
@@ -1277,7 +1295,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=8.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://catchtable.co.kr/sukjunggalbi",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -1297,7 +1317,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00016",
@@ -1308,7 +1329,7 @@
       "name_en": "Gwihwa Restaurant Sake",
       "category_ko": "이자카야",
       "district_ko": "동래구",
-      "address_ko": "부산 동래구 중앙대로1367번길 18",
+      "address_ko": "부산 동래구 중앙대로1367번길 18 1층",
       "description_ko": "제철의 신선함과 일본 현지의 맛이 머무는 공간 제철 재료를 활용한 캐주얼 이자카야로, 다채로운 숙성 사시미와 섬세한 요리가 이곳의 매력입니다.",
       "description_en": "Casual izakaya with a curated sake list, seasonal sashimi, and refined Japanese small plates in Dongrae.",
       "latitude": 35.2096076,
@@ -1327,13 +1348,10 @@
       "image_rights": null,
       "image_source": null,
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
-      "current_state": "TEMPORARILY_UNVERIFIED",
-      "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
-      ],
+      "current_state": "ACTIVE",
+      "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
@@ -1369,11 +1387,28 @@
           "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
-          "operational_closure_status": "CURRENT_STATUS_UNRESOLVED",
-          "operational_closure_reason": "Naver Local Search: no exact match (score=0.0)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
+          "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 현재 운영명: 귀화식당 동래 온천장점. 주소: 부산 동래구 중앙대로1367번길 18 1층. ACTIVE 확인.",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/sakescent"
+        },
+        "manual_user_verified_2026_08_17": {
+          "verified_by": "user_direct_naver_place_check",
+          "verified_date": "2026-08-17",
+          "current_name": "귀화식당 동래 온천장점",
+          "confirmed_address": "부산 동래구 중앙대로1367번길 18 1층",
+          "catchtable_slug": "sakescent",
+          "catchtable_url": "https://app.catchtable.co.kr/ct/shop/sakescent",
+          "day_off": null,
+          "michelin_busan_2026": false,
+          "close_time": null,
+          "addr_changed_from_guide": false,
+          "prev_canonical_address": "부산 동래구 중앙대로1367번길 18"
         }
-      }
+      },
+      "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
+      "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 현재 운영명: 귀화식당 동래 온천장점. 주소: 부산 동래구 중앙대로1367번길 18 1층. ACTIVE 확인.",
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00017",
@@ -1423,7 +1458,8 @@
           1607
         ],
         "api_image_available": true
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00018",
@@ -1492,7 +1528,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00019",
@@ -1559,7 +1596,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00020",
@@ -1620,7 +1658,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00021",
@@ -1688,7 +1727,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00022",
@@ -1755,7 +1795,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00023",
@@ -1827,7 +1868,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=68.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://blog.naver.com/flashone71",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -1847,7 +1890,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00024",
@@ -1915,7 +1959,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00025",
@@ -1984,7 +2029,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00026",
@@ -2057,7 +2103,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://halme.co.kr/",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -2077,7 +2125,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00027",
@@ -2143,7 +2192,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00028",
@@ -2211,7 +2261,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00029",
@@ -2278,7 +2329,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00030",
@@ -2348,7 +2400,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00031",
@@ -2420,7 +2473,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00032",
@@ -2527,7 +2581,8 @@
           "note": "business og:image"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00033",
@@ -2588,7 +2643,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00034",
@@ -2661,7 +2717,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/iwa",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -2681,7 +2739,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00035",
@@ -2751,7 +2810,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00036",
@@ -2821,7 +2881,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00037",
@@ -2891,7 +2952,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00038",
@@ -2996,7 +3058,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00039",
@@ -3102,7 +3165,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00040",
@@ -3208,7 +3272,8 @@
           "note": "business og:image"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00041",
@@ -3278,7 +3343,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00042",
@@ -3346,7 +3412,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00043",
@@ -3416,9 +3483,12 @@
           "as_of": "2026-08-17",
           "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
           "image_closure_reason": "Naver no match or no usable link",
-          "remaining_action": "USER_BROWSER: VisitBusan 쥬가정효 상세 페이지 이미지 URL 확인 (food detail menuCd 발견 시 차오란 동시 적용 가능)"
+          "remaining_action": "USER_BROWSER: VisitBusan 쥬가정효 상세 페이지 이미지 URL 확인 (food detail menuCd 발견 시 차오란 동시 적용 가능)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00044",
@@ -3484,7 +3554,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00045",
@@ -3548,7 +3619,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00046",
@@ -3655,7 +3727,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00047",
@@ -3721,7 +3794,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00048",
@@ -3789,7 +3863,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00049",
@@ -3861,7 +3936,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00050",
@@ -3930,7 +4006,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00051",
@@ -4000,7 +4077,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00052",
@@ -4049,7 +4127,8 @@
           141
         ],
         "api_image_available": true
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00053",
@@ -4119,7 +4198,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00054",
@@ -4226,7 +4306,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00055",
@@ -4317,7 +4398,8 @@
           "image_closure_reason": "차오란 — og:image가 Lotte Hotel 일반 SNS 이미지(snsRepresentImage.png), 식당 특정 이미지 아님",
           "remaining_action": "DEPENDS_ON_JUGATJEONGYO_SAMPLE"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00056",
@@ -4387,7 +4469,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00057",
@@ -4452,7 +4535,8 @@
           "resolved_from": "ADDR_MISMATCH_REVERTED",
           "revert_note": "VWorld geocoded canonical address 달맞이길62번길 49 directly. API entity was at building 19; canonical at 49. VWorld confirms building 49 exists at these coordinates."
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00058",
@@ -4520,7 +4604,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00059",
@@ -4531,11 +4616,11 @@
       "name_en": "Ian",
       "category_ko": "한식 컨템포러리",
       "district_ko": "해운대구",
-      "address_ko": "부산 해운대구 달맞이길65번길 88",
+      "address_ko": "부산 해운대구 달맞이길117번나길 200 4층",
       "description_ko": "앞으로의 한식이 기대되는 젊은 셰프의 프렌치 감각 프렌치와 한식으로 재해석한 과감한 컨템포러리 요리로 젊은 셰프의 시선이 돋보입니다.",
       "description_en": "Michelin Selected contemporary Korean dining where a young French-trained chef interprets Busan's coastal ingredients.",
-      "latitude": 35.1587295,
-      "longitude": 129.1758563,
+      "latitude": 35.16460453004201,
+      "longitude": 129.183815435415,
       "phone": "0507-1480-1465",
       "tags": [
         "michelin",
@@ -4545,20 +4630,17 @@
       "match_status": "UNMATCHED_STRONG_GUIDE",
       "discovery_candidate_ids": [],
       "canonical_discovery_id": null,
-      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_status": "VWORLD_GEOCODED_V2_2026_08_17",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
       "image_url": null,
       "image_rights": null,
       "image_source": null,
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
-      "current_state": "TEMPORARILY_UNVERIFIED",
-      "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
-      ],
+      "current_state": "ACTIVE",
+      "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
@@ -4594,11 +4676,28 @@
           "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/iaan.busan",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
-          "operational_closure_status": "CURRENT_STATUS_UNRESOLVED",
-          "operational_closure_reason": "Naver Local Search: no exact match (score=0.58)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
+          "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 이안 ACTIVE. 주소: 부산 해운대구 달맞이길117번나길 200 4층. Michelin Busan 2026 선정. 월요일 휴무.",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/iaan.busan"
+        },
+        "manual_user_verified_2026_08_17": {
+          "verified_by": "user_direct_naver_place_check",
+          "verified_date": "2026-08-17",
+          "current_name": "이안",
+          "confirmed_address": "부산 해운대구 달맞이길117번나길 200 4층",
+          "catchtable_slug": "iaan.busan",
+          "catchtable_url": "https://app.catchtable.co.kr/ct/shop/iaan.busan",
+          "day_off": "월요일",
+          "michelin_busan_2026": true,
+          "close_time": null,
+          "addr_changed_from_guide": true,
+          "prev_canonical_address": "부산 해운대구 달맞이길65번길 88"
         }
-      }
+      },
+      "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
+      "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 이안 ACTIVE. 주소: 부산 해운대구 달맞이길117번나길 200 4층. Michelin Busan 2026 선정. 월요일 휴무.",
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00060",
@@ -4672,7 +4771,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00061",
@@ -4742,7 +4842,8 @@
           "multi_ucseq_evidence": "UC=1573 and UC=2328 share identical address (달맞이길 193) and coordinate diff <2m; phone difference is VoIP vs landline of same restaurant. SAME_ENTITY_MULTI_RECORD. UC=2328 selected: phone matches canonical 051-741-1122.",
           "note": "MULTI_UCSEQ_CONFLICT resolved: SAME_ENTITY confirmed, UC=2328 selected as representative."
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00062",
@@ -4816,7 +4917,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=0.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "http://catchtable.co.kr/fiotto",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -4836,7 +4939,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00063",
@@ -4847,7 +4951,7 @@
       "name_en": "Shindo Lab 2.0",
       "category_ko": "한우·오이스터 바",
       "district_ko": "해운대구",
-      "address_ko": "부산 해운대구 달맞이길 239-16",
+      "address_ko": "부산 해운대구 달맞이길 239-16 1층",
       "description_ko": "부산에서 가장 핫한 정육점의 두 번째 실험실 고품격 한우와 굴을 활용한 창의적인 바 요리를 선보입니다.",
       "description_en": "Trendy Korean beef and oyster bar concept reimagining the legacy of Shindo Livestock, a 1975 Busan institution.",
       "latitude": 35.1624717,
@@ -4867,13 +4971,10 @@
       "image_rights": null,
       "image_source": null,
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
-      "current_state": "TEMPORARILY_UNVERIFIED",
-      "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
-      ],
+      "current_state": "ACTIVE",
+      "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
@@ -4909,11 +5010,28 @@
           "image_closure_status": "NO_BUSINESS_IMAGE_FOUND",
           "image_closure_reason": "Naver no match or no usable link",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
-          "operational_closure_status": "CURRENT_STATUS_UNRESOLVED",
-          "operational_closure_reason": "Naver Local Search: no exact match (score=0.0)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
+          "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 신도랩2.0 → 모먼트 로컬 상호 변경. 주소: 부산 해운대구 달맞이길 239-16 1층. ACTIVE. 월요일 휴무.",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/shindolab"
+        },
+        "manual_user_verified_2026_08_17": {
+          "verified_by": "user_direct_naver_place_check",
+          "verified_date": "2026-08-17",
+          "current_name": "모먼트 로컬",
+          "confirmed_address": "부산 해운대구 달맞이길 239-16 1층",
+          "catchtable_slug": "shindolab",
+          "catchtable_url": "https://app.catchtable.co.kr/ct/shop/shindolab",
+          "day_off": "월요일",
+          "michelin_busan_2026": false,
+          "close_time": null,
+          "addr_changed_from_guide": false,
+          "prev_canonical_address": "부산 해운대구 달맞이길 239-16"
         }
-      }
+      },
+      "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
+      "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 신도랩2.0 → 모먼트 로컬 상호 변경. 주소: 부산 해운대구 달맞이길 239-16 1층. ACTIVE. 월요일 휴무.",
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00064",
@@ -4980,7 +5098,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00065",
@@ -5087,7 +5206,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00066",
@@ -5158,7 +5278,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5178,7 +5300,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00067",
@@ -5245,7 +5368,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00068",
@@ -5306,7 +5430,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00069",
@@ -5374,7 +5499,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00070",
@@ -5442,7 +5568,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00071",
@@ -5510,7 +5637,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00072",
@@ -5582,7 +5710,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=12.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/strawfireggom",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5602,7 +5732,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00073",
@@ -5674,7 +5805,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=19.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/bistro_hotelambi",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -5694,7 +5827,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00074",
@@ -5762,7 +5896,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00075",
@@ -5829,7 +5964,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00076",
@@ -5935,7 +6071,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00077",
@@ -6007,7 +6144,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6027,7 +6166,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00078",
@@ -6096,7 +6236,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00079",
@@ -6165,7 +6306,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00080",
@@ -6233,7 +6375,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00081",
@@ -6297,7 +6440,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00082",
@@ -6364,7 +6508,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00083",
@@ -6436,7 +6581,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6456,7 +6603,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00084",
@@ -6528,7 +6676,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/Z6VULjCGXBn4JjHJWATHTQ",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6548,7 +6698,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00085",
@@ -6621,7 +6772,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/onjeong",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6641,7 +6794,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00086",
@@ -6710,7 +6864,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00087",
@@ -6778,7 +6933,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00088",
@@ -6851,7 +7007,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=25.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/zandunga?from=share&typ",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6871,7 +7029,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00089",
@@ -6942,7 +7101,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=5.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/yaki_chori?from=share&t",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -6962,7 +7123,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00090",
@@ -7029,7 +7191,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00091",
@@ -7099,7 +7262,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00092",
@@ -7169,7 +7333,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00093",
@@ -7236,7 +7401,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00094",
@@ -7342,7 +7508,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00095",
@@ -7447,7 +7614,8 @@
           "operational_closure_reason": "current_state=ACTIVE in canonical",
           "operational_remaining_action": "NONE"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00096",
@@ -7515,7 +7683,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00097",
@@ -7582,7 +7751,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00098",
@@ -7650,7 +7820,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00099",
@@ -7710,7 +7881,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00100",
@@ -7782,7 +7954,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=16.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -7802,7 +7976,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00101",
@@ -7870,7 +8045,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00102",
@@ -7941,7 +8117,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -7961,7 +8139,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00103",
@@ -8032,7 +8211,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://blog.naver.com/jene0616",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8052,7 +8233,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00104",
@@ -8123,7 +8305,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8143,7 +8327,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00105",
@@ -8215,7 +8400,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=7.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8235,7 +8422,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00106",
@@ -8305,7 +8493,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00107",
@@ -8376,7 +8565,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8396,7 +8587,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00108",
@@ -8466,7 +8658,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00109",
@@ -8538,7 +8731,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8558,7 +8753,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00110",
@@ -8626,7 +8822,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00111",
@@ -8694,7 +8891,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00112",
@@ -8766,7 +8964,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/arpkitchen?from=share&t",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -8786,7 +8986,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00113",
@@ -8853,7 +9054,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00114",
@@ -8921,7 +9123,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00115",
@@ -8971,7 +9174,8 @@
           1445
         ],
         "api_image_available": true
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00116",
@@ -9035,7 +9239,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00117",
@@ -9103,7 +9308,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00118",
@@ -9175,7 +9381,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -9195,7 +9403,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00119",
@@ -9263,7 +9472,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00120",
@@ -9356,7 +9566,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00121",
@@ -9424,7 +9635,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00122",
@@ -9435,11 +9647,11 @@
       "name_en": "Mirak Super",
       "category_ko": "한식 컨템포러리",
       "district_ko": "수영구",
-      "address_ko": "부산 수영구 민락본동로31번길 46",
+      "address_ko": "부산 수영구 민락로 24-8 1층",
       "description_ko": "양식의 감각과 한식의 정서가 만난 제철 창작 요리 오래된 간판 아래 셰프의 독창성이 흐르는 제철 창작 요리 전문점입니다.",
       "description_en": "Michelin Selected contemporary Korean restaurant under a vintage sign — seasonal creative courses sourced from across Korea.",
-      "latitude": 35.1589224,
-      "longitude": 129.1259625,
+      "latitude": 35.15745637574586,
+      "longitude": 129.12240824485804,
       "phone": "0507-1371-3318",
       "tags": [
         "michelin",
@@ -9449,20 +9661,17 @@
       "match_status": "UNMATCHED_STRONG_GUIDE",
       "discovery_candidate_ids": [],
       "canonical_discovery_id": null,
-      "coord_status": "GUIDE_COORD_ONLY",
+      "coord_status": "VWORLD_GEOCODED_V2_2026_08_17",
       "coord_distance_m": null,
       "coord_discovery_ref": null,
       "image_url": null,
       "image_rights": null,
       "image_source": null,
       "image_status": "OFFICIAL_IMAGE_UNRESOLVED",
-      "current_state": "TEMPORARILY_UNVERIFIED",
-      "current_state_reason": "match_status=UNMATCHED_STRONG_GUIDE, requires verification",
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "CURRENT_STATE_NOT_ACTIVE",
-        "ENTITY_UNMATCHED_TEMPORARILY_UNVERIFIED"
-      ],
+      "current_state": "ACTIVE",
+      "current_state_reason": "MANUAL_USER_VERIFIED_2026-08-17",
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
       "coord_address_consistent": true,
@@ -9498,11 +9707,28 @@
           "image_closure_status": "BUSINESS_IMAGE_FOUND_BUT_MAPPING_BLOCKED",
           "image_closure_reason": "Naver link found but og:image not extractable: https://app.catchtable.co.kr/ct/shop/meerocksuper?from=share",
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
-          "operational_closure_status": "CURRENT_STATUS_UNRESOLVED",
-          "operational_closure_reason": "Naver Local Search: no exact match (score=0.65)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_closure_status": "VERIFIED_ACTIVE_MANUAL",
+          "operational_closure_reason": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 미락슈퍼 ACTIVE. 주소: 부산 수영구 민락로 24-8 1층. Michelin Busan 2026 선정. 영업종료 22:00.",
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/meerocksuper?from=share&type=VISIT_RESERVATION"
+        },
+        "manual_user_verified_2026_08_17": {
+          "verified_by": "user_direct_naver_place_check",
+          "verified_date": "2026-08-17",
+          "current_name": "미락슈퍼",
+          "confirmed_address": "부산 수영구 민락로 24-8 1층",
+          "catchtable_slug": "meerocksuper",
+          "catchtable_url": "https://app.catchtable.co.kr/ct/shop/meerocksuper",
+          "day_off": null,
+          "michelin_busan_2026": true,
+          "close_time": "22:00",
+          "addr_changed_from_guide": true,
+          "prev_canonical_address": "부산 수영구 민락본동로31번길 46"
         }
-      }
+      },
+      "identity_verdict": "VERIFIED_MANUAL_USER_2026_08_17",
+      "identity_evidence": "MANUAL_USER_VERIFIED_2026-08-17: 사용자 직접 Naver Place 확인. 미락슈퍼 ACTIVE. 주소: 부산 수영구 민락로 24-8 1층. Michelin Busan 2026 선정. 영업종료 22:00.",
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00123",
@@ -9570,7 +9796,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00124",
@@ -9639,7 +9866,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00125",
@@ -9709,7 +9937,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00126",
@@ -9776,7 +10005,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00127",
@@ -9881,7 +10111,8 @@
           "note": "business og:image"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00128",
@@ -9954,7 +10185,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://catchtable.co.kr/yongkang_zzie",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -9974,7 +10207,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00129",
@@ -10081,7 +10315,8 @@
           "note": "business og:image"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00130",
@@ -10151,7 +10386,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00131",
@@ -10257,7 +10493,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00132",
@@ -10323,7 +10560,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00133",
@@ -10395,7 +10633,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00134",
@@ -10468,7 +10707,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=0.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://www.instagram.com/songheon___",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10488,7 +10729,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00135",
@@ -10557,7 +10799,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00136",
@@ -10630,7 +10873,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/mathuzaki",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10650,7 +10895,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00137",
@@ -10719,7 +10965,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00138",
@@ -10792,7 +11039,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=34.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://smartstore.naver.com/hanwolgwan",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10812,7 +11061,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00139",
@@ -10884,7 +11134,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "http://app.catchtable.co.kr/ct/shop/vigneto",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -10904,7 +11156,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00140",
@@ -10972,7 +11225,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00141",
@@ -11042,7 +11296,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00142",
@@ -11114,7 +11369,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00143",
@@ -11186,7 +11442,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11206,7 +11464,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00144",
@@ -11303,7 +11562,8 @@
         "image_url": "https://www.visitbusan.net/uploadImgs/files/cntnts/20240418102343022_ttiel",
         "image_source": "www.visitbusan.net",
         "image_rights": "usable"
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00145",
@@ -11377,7 +11637,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=9.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/anmok_busan?from=share&",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11397,7 +11659,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00146",
@@ -11471,7 +11734,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://blog.naver.com/lessence_official",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11491,7 +11756,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00147",
@@ -11559,7 +11825,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00148",
@@ -11632,7 +11899,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=18.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -11652,7 +11921,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00149",
@@ -11720,7 +11990,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00150",
@@ -11787,7 +12058,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00151",
@@ -11893,7 +12165,8 @@
           "note": "Instagram profile og:image — 사업자 공식 계정 프로필 이미지"
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00152",
@@ -11960,7 +12233,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00153",
@@ -12022,7 +12296,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00154",
@@ -12090,7 +12365,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00155",
@@ -12158,7 +12434,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00156",
@@ -12229,7 +12506,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00157",
@@ -12296,7 +12574,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00158",
@@ -12368,7 +12647,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -12388,7 +12669,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00159",
@@ -12456,7 +12738,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00160",
@@ -12527,7 +12810,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=27.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://app.catchtable.co.kr/ct/shop/shabuniji",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -12547,7 +12832,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00161",
@@ -12616,7 +12902,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00162",
@@ -12683,7 +12970,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00163",
@@ -12750,7 +13038,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00164",
@@ -12785,14 +13074,12 @@
       "image_status": "OFFICIAL_IMAGE_RESOLVED",
       "current_state": "ACTIVE",
       "current_state_reason": "DIFFERENT_ENTITY: discovery busan-F-00213(슌, 기장군)과 동일 식당이 아님. Guide=북구 화명, disc=기장군 기장읍. 잘못된 relation 제거.",
-      "ai_auto": false,
-      "ai_auto_block_reasons": [
-        "DIFFERENT_ENTITY_RELATION_REMOVED"
-      ],
+      "ai_auto": true,
+      "ai_auto_block_reasons": [],
       "navigation_ready": true,
       "pixabay_fallback_requires_user_approval": true,
-      "identity_verdict": "DIFFERENT_ENTITY",
-      "identity_evidence": "북구 양달로4번길 17 vs 기장군 기장읍 차성동로 163 — 완전히 다른 위치(17.7km), 전화 불일치",
+      "identity_verdict": "VERIFIED_NAVER_CONFIRMED_2026_08_17",
+      "identity_evidence": "NAVER_LOCAL_SEARCH_CONFIRMED: 슌사이쿠보 화명 at 부산 북구 양달로4번길 17 (score=0.85, dist=2.6m). DIFFERENT_ENTITY_RELATION_REMOVED는 기장군 기장읍 차성동로 163 위치의 잘못된 TourAPI 관계가 이미 제거된 것을 의미함. 현재 canonical entity(양달로4번길 17)는 Naver 확인된 정확한 entity. 차단 해제 근거: task sec.5 \"correct relation이 확인되면 ACTIVE + AI_AUTO\".",
       "identity_removed_cids": [],
       "coord_address_consistent": true,
       "coord_address_district": "북구",
@@ -12839,8 +13126,8 @@
           "image_closure_status": "OFFICIAL_IMAGE_RESOLVED",
           "image_closure_reason": "VBC_LOCAL_DISCOVERY applied above",
           "image_remaining_action": "NONE",
-          "operational_closure_status": "VERIFIED_ACTIVE",
-          "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
+          "operational_closure_status": "VERIFIED_ACTIVE_NAVER",
+          "operational_closure_reason": "Naver Local Search confirmed score=0.85, dist=2.6m. DIFFERENT_ENTITY_RELATION_REMOVED cleared.",
           "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
         },
         "naver_verification_v1": {
@@ -12861,7 +13148,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00165",
@@ -12910,7 +13198,8 @@
           1281
         ],
         "api_image_available": true
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00166",
@@ -12978,7 +13267,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00167",
@@ -13045,7 +13335,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00168",
@@ -13149,7 +13440,8 @@
           "operational_closure_reason": "current_state=ACTIVE in canonical",
           "operational_remaining_action": "NONE"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00169",
@@ -13218,7 +13510,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00170",
@@ -13286,7 +13579,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00171",
@@ -13359,7 +13653,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=7.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://menu.busan.go.kr/shop/info/CD_SHP_002355",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13379,7 +13675,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00172",
@@ -13446,7 +13743,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00173",
@@ -13518,7 +13816,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13538,7 +13838,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00174",
@@ -13610,7 +13911,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13630,7 +13933,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00175",
@@ -13691,7 +13995,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00176",
@@ -13763,7 +14068,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13783,7 +14090,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00177",
@@ -13853,7 +14161,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00178",
@@ -13924,7 +14233,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=2.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -13944,7 +14255,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00179",
@@ -14011,7 +14323,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00180",
@@ -14083,7 +14396,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14103,7 +14418,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00181",
@@ -14173,7 +14489,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00182",
@@ -14236,7 +14553,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00183",
@@ -14308,7 +14626,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=6.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14328,7 +14648,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00184",
@@ -14399,7 +14720,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://catchtable.co.kr/chef_gon",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14419,7 +14742,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00185",
@@ -14490,7 +14814,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=1.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14510,7 +14836,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00186",
@@ -14578,7 +14905,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00187",
@@ -14649,7 +14977,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=3.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": null,
+          "visual_access_type": "NO_ONLINE_PRESENCE"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14669,7 +14999,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00188",
@@ -14737,7 +15068,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00189",
@@ -14808,7 +15140,9 @@
           "image_remaining_action": "NONE (자동 복구 불가; FINAL_QA에서 NO_OFFICIAL_IMAGE_AVAILABLE 최종화)",
           "operational_closure_status": "VERIFIED_ACTIVE",
           "operational_closure_reason": "Naver Local Search exact match (score=0.85, dist=4.0m)",
-          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)"
+          "operational_remaining_action": "NONE (현재 자동화 범위 초과; 사용자 현장 확인 또는 FoodService 재등록 대기)",
+          "visual_reference_url": "https://www.youtube.com/live/_9WAmG28YdE?si=VMWAA58fvNB_jAhw",
+          "visual_access_type": "CATCHTABLE_OR_NAVER_LINK"
         },
         "naver_verification_v1": {
           "task": "TASK-BUSAN-FOOD-194-NAVER-UNBLOCK-AND-LAUNCH-CLOSURE-V1",
@@ -14828,7 +15162,8 @@
           ]
         }
       },
-      "nav_ready_block_reasons": []
+      "nav_ready_block_reasons": [],
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00190",
@@ -14898,7 +15233,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00191",
@@ -14962,7 +15298,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00192",
@@ -15025,7 +15362,8 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00193",
@@ -15092,7 +15430,8 @@
           "navigation_ready": true,
           "note": "address identical, FoodService coord authoritative"
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     },
     {
       "canonical_id": "busan-G-00194",
@@ -15155,7 +15494,17 @@
           "vworld_addr_type": "road",
           "navigation_ready": true
         }
-      }
+      },
+      "ai_scheduler_decision": "AI_AUTO_ALLOWED"
     }
-  ]
+  ],
+  "metadata": {
+    "last_updated": "2026-08-17",
+    "last_task": "TASK-BUSAN-FOOD-194-VISUAL-AND-AI-SCHEDULER-CLOSURE-V2",
+    "image_count": 140,
+    "ai_auto_count": 194,
+    "visual_access_ready_count": 170,
+    "ai_scheduler_decision_count": 194,
+    "ai_auto_allowed_count": 194
+  }
 }
