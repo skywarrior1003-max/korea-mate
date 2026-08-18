@@ -218,16 +218,11 @@
     "evidence": "exact_name + same_address + coord_distance_26m"
   },
   "gap_analysis": {
-    "nav_gap": 1,
+    "nav_gap": 0,
     "phone_gap_food_activity": 70,
     "image_gap": 30,
     "event_date_gap": 0,
-    "nav_gap_entities": [
-      {
-        "candidate_id": "OFF-13619",
-        "display_name": "건지산"
-      }
-    ],
+    "nav_gap_entities": [],
     "image_gap_entities": [
       {
         "candidate_id": "KTO-2932446",
@@ -271,16 +266,18 @@
       }
     ],
     "gap_classification": {
-      "REQUIRED_BEFORE_PUBLIC": "NAV_GAP=1 (건지산 - 좌표 없음)",
-      "REQUIRED_BEFORE_AI": "EVENT_DATE_GAP=0 (모든 이벤트 EXPIRED - AI 자동 생성 불필요)",
-      "NICE_TO_HAVE": "PHONE_GAP(F/A)=70, IMAGE_GAP=30"
+      "REQUIRED_BEFORE_PUBLIC": "NAV_GAP=0 — 건지산 VERIFIED_NAV_ANCHOR 적용 완료",
+      "REQUIRED_BEFORE_AI": "EVENT_DATE_GAP=0 (모든 이벤트 EXPIRED)",
+      "NICE_TO_HAVE": "PHONE_GAP=70, IMAGE_GAP=30",
+      "PUBLIC_BLOCKER_COUNT": 0,
+      "AI_UNSAFE_UNGATED_COUNT": 0
     },
     "eligibility_summary": {
       "searchable": 236,
-      "explore": 235,
+      "explore": 236,
       "ai_itinerary": 236,
-      "user_select": 235,
-      "user_save": 235,
+      "user_select": 236,
+      "user_save": 236,
       "ai_auto": 159,
       "ai_conditional": 77,
       "ai_not_auto": 0
@@ -9514,10 +9511,10 @@
       "name_status": "A",
       "name_source": "source_url_detail_fetch",
       "raw_title": "통합검색",
-      "has_coord": false,
-      "coord_source": "NONE",
-      "lat": "",
-      "lng": "",
+      "has_coord": true,
+      "coord_source": "vworld_jibun_geocoding",
+      "lat": 35.858634813523175,
+      "lng": 127.1319756787604,
       "has_image": true,
       "phone": "063-222-1000",
       "source_url": "https://tour.jeonju.go.kr/board/view.jeonju?boardId=BBS_0000003&menuCd=DOM_000000101006002000&dataSid=13619",
@@ -9527,16 +9524,18 @@
       "kto_lng": "",
       "kto_image": "",
       "contenttypeid": "",
-      "info_gate": "LOCATION_INSUFFICIENT",
+      "info_gate": "NAV_READY",
       "travel_value": "CORE_DESTINATION",
       "elig_searchable": true,
-      "elig_explore": false,
+      "elig_explore": true,
       "elig_ai_itinerary": true,
-      "elig_user_select": false,
-      "elig_user_save": false,
+      "elig_user_select": true,
+      "elig_user_save": true,
       "elig_ai_mode": "AI_AUTO",
-      "gaps": "NAV_GAP",
-      "final_status": "ACTIVE_SERVICE"
+      "gaps": "",
+      "final_status": "ACTIVE_SERVICE",
+      "coord_provenance": "VWorld Address API / 전북특별자치도 전주시 덕진구 송천동1가 산1-1 / 공식 지적 참조점",
+      "official_address_confirmed": "전북특별자치도 전주시 덕진구 송천동1가 산1-1"
     },
     {
       "candidate_id": "OFF-13620",
