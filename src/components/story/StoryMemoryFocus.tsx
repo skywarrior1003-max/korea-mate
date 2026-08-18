@@ -17,7 +17,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { StoryMemory } from "./story-types";
 import {
   MARGIN_MOBILE, STACK_LG, STACK_MD, BASE,
-  DISPLAY_MEMORY, TITLE_MD, BODY_SM, LABEL_CAPS,
+  DISPLAY_MEMORY, TITLE_MD, BODY_SM, LABEL_CAPS_WIDE,
 } from "./story-tokens";
 
 interface Props {
@@ -86,7 +86,11 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
+        {/* Cover 와 같은 이유로 값을 직접 적는다 (oklab 보간 회피) */}
+        <div
+          className="absolute inset-0"
+          style={{ backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}
+        />
 
         {/* 위 — progress + 도구 줄 */}
         <div
@@ -113,7 +117,7 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
-            <span className="text-white/80 tracking-widest" style={LABEL_CAPS}>
+            <span className="text-white/80" style={LABEL_CAPS_WIDE}>
               {i + 1} / {total}
             </span>
             {/* 시안의 ⋯ 자리. 붙일 동작이 아직 없어 자리만 비워 둔다. */}
@@ -156,14 +160,15 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
             {/* 긴 글도 자르지 않는다. 넘치면 이 칸 안에서 스크롤한다. */}
             <h1
               className="text-white leading-tight overflow-y-auto"
-              style={{ ...DISPLAY_MEMORY, maxHeight: "45vh" }}
+              /* 줄간격 1.25 — 시안이 leading-tight 를 얹어 48px×1.25 = 60px 로 렌더한다 */
+              style={{ ...DISPLAY_MEMORY, lineHeight: 1.25, maxHeight: "45vh" }}
             >
               {memory.memo}
             </h1>
           </div>
           <div className="flex justify-center items-center gap-2 opacity-50" style={{ marginTop: STACK_LG }}>
             <span aria-hidden>‹</span>
-            <span className="uppercase tracking-widest" style={LABEL_CAPS}>Swipe</span>
+            <span className="uppercase" style={LABEL_CAPS_WIDE}>Swipe</span>
             <span aria-hidden>›</span>
           </div>
         </div>

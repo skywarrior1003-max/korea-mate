@@ -10,7 +10,7 @@
 import type { StoryCoverData } from "./story-types";
 import {
   MARGIN_MOBILE, STACK_LG, STACK_MD, BASE,
-  DISPLAY_MEMORY, TITLE_MD, LABEL_CAPS,
+  DISPLAY_MEMORY, TITLE_MD, LABEL_CAPS, LABEL_CAPS_WIDE,
 } from "./story-tokens";
 
 interface Props {
@@ -32,13 +32,19 @@ export default function StoryCover({ data, scrollHint }: Props) {
         role="img"
         aria-label={data.title}
       />
-      {/* 아래로 갈수록 검어진다 — 글자가 사진 위에서 읽히게 하는 유일한 장치다 */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      {/* 아래로 갈수록 검어진다 — 글자가 사진 위에서 읽히게 하는 유일한 장치다.
+          Tailwind 유틸 대신 값을 직접 적는다. 이 저장소의 Tailwind 는 gradient 를
+          oklab 으로 섞어서, 같은 정지색을 줘도 시안(sRGB)과 중간 톤이 달라진다.
+          390px reference 실측값 그대로다. */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{ backgroundImage: "linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0))" }}
+      />
 
       <div className="relative z-10 text-white" style={{ paddingBottom: STACK_LG }}>
         <p
           className="uppercase text-white/80"
-          style={{ ...LABEL_CAPS, letterSpacing: "0.1em", marginBottom: BASE }}
+          style={{ ...LABEL_CAPS_WIDE, marginBottom: BASE }}
         >
           {data.eyebrow}
         </p>

@@ -114,8 +114,10 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
 
       <div className="flex justify-between items-start" style={{ marginTop: 24, paddingLeft: 16, paddingRight: 16 }}>
         {/* 사용자가 적은 문구 그대로. 다듬거나 만들어 내지 않는다. */}
-        <p className="italic flex-1 pr-4 leading-relaxed"
-           style={{ ...HEADLINE_LG_MOBILE, color: ON_SURFACE }}>
+        {/* 줄간격은 1.625 다 — 시안이 leading-relaxed 를 얹어 26px×1.625 = 42.25px 로
+            렌더한다. 토큰의 1.3 을 그대로 두면 33.8px 이 되어 시안보다 촘촘해진다. */}
+        <p className="italic flex-1 pr-4"
+           style={{ ...HEADLINE_LG_MOBILE, lineHeight: 1.625, color: ON_SURFACE }}>
           {`“${memory.memo}”`}
         </p>
         {onSave && (
@@ -126,7 +128,7 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
             className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-full transition-colors gkm-focus"
             style={{ ...TITLE_MD, color: ON_SURFACE_VARIANT, border: `1px solid ${SURFACE_VARIANT}` }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden
                  fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"
                  style={{ color: PRIMARY }}>
               <path d="M12 21s-7-4.35-9.33-8.5A5.5 5.5 0 0112 5.5a5.5 5.5 0 019.33 7c-2.33 4.15-9.33 8.5-9.33 8.5z" />

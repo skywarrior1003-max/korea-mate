@@ -37,8 +37,14 @@ export const OUTLINE_VARIANT = "#dfc0b5";
 /** 칩 바탕. `primary-container` 를 20% 로 쓴다. */
 export const PRIMARY_CONTAINER = "#ff7e47";
 
-/** 칩 글자. `on-primary-container`. */
-export const ON_PRIMARY_CONTAINER = "#370e00";
+/**
+ * Journey Complete 칩 글자색.
+ *
+ * code.html 의 팔레트에는 비슷한 갈색이 여럿 있는데, 실제로 렌더된 값은
+ * rgb(105,34,0) 이다(390px reference 실측). 팔레트 목록에서 눈으로 고르면
+ * #370e00 을 집기 쉬워 한 번 틀렸다 — 화면에서 잰 값을 쓴다.
+ */
+export const ON_PRIMARY_CONTAINER = "#692200";
 
 // ── 여백 ─────────────────────────────────────────────────────────────────────
 export const MARGIN_MOBILE  = 20; // px — Specs 의 24px 이 아니다
@@ -90,6 +96,12 @@ export const LABEL_CAPS = {
   fontFamily: FONT_SANS, fontSize: "12px", lineHeight: 1,
   letterSpacing: "0.05em", fontWeight: 700,
 } as const;
+
+/**
+ * 시안이 label-caps 위에 `tracking-widest` 를 얹는 자리들 — Cover eyebrow,
+ * Focus 의 `n / total` 과 SWIPE. 실측 1.2px(=0.1em)이다.
+ */
+export const LABEL_CAPS_WIDE = { ...LABEL_CAPS, letterSpacing: "0.1em" } as const;
 
 // ── 모양 ─────────────────────────────────────────────────────────────────────
 /** 사진·카드 모서리. `rounded-xl` = 0.75rem. Specs 의 16px 이 아니다 — 화면 우선. */

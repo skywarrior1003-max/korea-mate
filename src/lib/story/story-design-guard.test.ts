@@ -32,6 +32,32 @@ const FOCUS   = read("src", "components", "story", "StoryMemoryFocus.tsx");
 const SUMMARY = read("src", "components", "story", "StorySummary.tsx");
 
 // ── 토큰 ─────────────────────────────────────────────────────────────────────
+// ── 390px reference 실측으로 잡아낸 값들 ────────────────────────────────────
+// 아래 다섯은 눈으로는 "비슷"했지만 재 보니 달랐던 것들이다. 숫자로 박아 둔다.
+test("★독립 QA 에서 잡은 실측값이 되돌아가지 않는다", () => {
+  // ① 인용 줄간격 42.25px (26 × 1.625). 토큰의 1.3 을 그대로 쓰면 33.8px 이었다.
+  assert.match(JOURNAL, /lineHeight: 1\.625/);
+  // ② Journey Complete 칩 글자색. 팔레트에서 눈으로 고르면 #370e00 을 집는다.
+  assert.equal(T.ON_PRIMARY_CONTAINER, "#692200");
+  // ③ Focus 인용 줄간격 60px (48 × 1.25). 1.2 면 57.6px 이었다.
+  assert.match(FOCUS, /lineHeight: 1\.25/);
+  // ④ Focus 의 n/total·SWIPE, Cover eyebrow 자간 1.2px(0.1em)
+  assert.equal(T.LABEL_CAPS_WIDE.letterSpacing, "0.1em");
+  for (const src of [FOCUS, COVER]) assert.match(src, /LABEL_CAPS_WIDE/);
+  // ⑤ Save 하트 24px — 18px 이면 버튼 폭이 시안보다 6px 좁았다
+  const saveBlock = JOURNAL.slice(JOURNAL.indexOf("{onSave && ("));
+  assert.match(saveBlock, /width="24" height="24"/);
+});
+
+test("★gradient 는 값으로 고정한다 — 유틸을 쓰면 oklab 으로 섞인다", () => {
+  // 이 저장소의 Tailwind 는 gradient 를 oklab 에서 보간해, 같은 정지색을 줘도
+  // 시안(sRGB)과 중간 톤이 달라진다. reference 실측 문자열 그대로 적는다.
+  assert.match(COVER, /linear-gradient\(to top, rgba\(0, 0, 0, 0\.8\), rgba\(0, 0, 0, 0\.3\), rgba\(0, 0, 0, 0\)\)/);
+  assert.match(FOCUS, /linear-gradient\(to bottom, rgba\(0, 0, 0, 0\.4\), rgba\(0, 0, 0, 0\), rgba\(0, 0, 0, 0\.8\)\)/);
+  assert.doesNotMatch(COVER, /bg-gradient-to-t/);
+  assert.doesNotMatch(FOCUS, /bg-gradient-to-b/);
+});
+
 test("★색은 최종 화면 값이다 — Specs 문서 값이 아니다", () => {
   assert.equal(T.PRIMARY,             "#a53c05");
   assert.notEqual(T.PRIMARY.toLowerCase(), "#c04808");
@@ -70,7 +96,7 @@ test("★서체는 Noto Serif + Inter 다", () => {
 // ── Cover ────────────────────────────────────────────────────────────────────
 test("★Cover 는 사진과 gradient 와 제목뿐이다", () => {
   assert.match(COVER, /h-screen/);
-  assert.match(COVER, /bg-gradient-to-t from-black\/80 via-black\/30 to-transparent/);
+  assert.match(COVER, /linear-gradient\(to top, rgba/);
   assert.match(COVER, /Scroll to explore/);
   // 여기에 두면 첫 감정이 흐려진다
   const c = strip(COVER);
