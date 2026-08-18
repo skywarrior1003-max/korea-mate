@@ -75,6 +75,112 @@ CREATE INDEX IF NOT EXISTS idx_itineraries_moderation_hidden
   ON public.itineraries (moderation_hidden_at)
   WHERE moderation_hidden_at IS NOT NULL;
 
+
+-- ── 4. 자기검증 — "성공했는데 안 바뀐" 상태를 허용하지 않는다 ───────────────
+--
+-- 왜 필요한가
+--   위의 DROP CONSTRAINT IF EXISTS 는 **이름으로** 지운다. 042 가 선언한 이름과
+--   운영 catalog 의 실제 이름이 다르면 그 문장은 조용히 아무것도 하지 않고,
+--   새 CHECK 만 하나 더 붙는다. 그러면 옛 CHECK 가 그대로 shared_story 를
+--   거부하는데 migration 은 성공했다고 말한다. 신고는 영원히 저장되지 않고
+--   아무도 이유를 모른다. 052 의 uuid/text 와 같은 종류의 실패다.
+--
+--   그래서 이름을 믿지 않고 **실제 catalog 상태**를 본다. 여기서 어긋나면
+--   EXCEPTION 을 던진다 — 이 블록은 위 BEGIN 과 같은 트랜잭션 안이라
+--   앞의 schema 변경까지 전부 되돌아간다. 반쯤 적용된 상태가 남지 않는다.
+--
+-- 왜 test row 를 넣어 보지 않나
+--   INSERT 로 확인하면 확실하지만 그것은 쓰기다. identity 시퀀스가 소비되고
+--   운영 테이블에 흔적이 남을 여지가 생긴다. catalog 만 읽어도 충분하다.
+--
+-- 이름을 모르는 제약을 함부로 지우지 않는다
+--   여기서 하는 일은 **탐지와 중단**뿐이다. 이 검사에 걸리면 사람이 실제 이름을
+--   확인해 위 DROP 대상에 넣어야 한다. 짐작으로 DROP 하지 않는다.
+DO $v054$
+DECLARE
+  stale   text;
+  missing text;
+  coltype text;
+BEGIN
+  -- (1) shared_story 를 막는 target_type CHECK 가 하나라도 남아 있으면 중단.
+  --     CHECK 는 전부 AND 로 걸리므로, 하나만 거부해도 INSERT 는 실패한다.
+  SELECT string_agg(c.conname, ', ' ORDER BY c.conname) INTO stale
+    FROM pg_constraint c
+   WHERE c.conrelid = 'public.place_reports'::regclass
+     AND c.contype  = 'c'
+     AND pg_get_constraintdef(c.oid) LIKE '%target_type%'
+     AND pg_get_constraintdef(c.oid) NOT LIKE '%''shared_story''%';
+  IF stale IS NOT NULL THEN
+    RAISE EXCEPTION
+      '[054] shared_story 를 막는 target_type CHECK 가 남아 있다: % — 042 가 만든 제약의 실제 이름이 place_reports_target_type_chk 가 아니다. 그 이름을 확인해 DROP 대상에 넣은 뒤 다시 실행할 것.',
+      stale;
+  END IF;
+
+  -- (2) 반대로, shared_story 를 허용하는 CHECK 가 실제로 하나는 있어야 한다.
+  --     (1) 만으로는 "target_type CHECK 가 아예 없는" 상태도 통과해 버린다.
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint c
+     WHERE c.conrelid = 'public.place_reports'::regclass
+       AND c.contype  = 'c'
+       AND pg_get_constraintdef(c.oid) LIKE '%''shared_story''%'
+  ) THEN
+    RAISE EXCEPTION '[054] shared_story 를 허용하는 place_reports CHECK 가 존재하지 않는다';
+  END IF;
+
+  -- (3) 사유 19개가 전부 허용돼야 한다. 042 의 15개를 하나라도 잃으면
+  --     기존 장소 신고가 그때부터 막힌다 — 새 값 4개만 보지 않는 이유다.
+  --     따옴표까지 포함해 찾는다(값이 다른 값의 일부로 잘못 맞지 않게).
+  SELECT string_agg(v, ', ' ORDER BY v) INTO missing
+    FROM unnest(ARRAY[
+      'hours_or_holiday','price_or_fee','location','closed_or_unavailable',
+      'construction_or_access','facility_info','accessibility',
+      'maintenance','cleanliness','facility_broken','staff_service',
+      'overcharge_suspected','safety','service_mismatch','other',
+      'inappropriate_content','privacy_concern','rights_concern','spam_or_misleading'
+    ]) AS v
+   WHERE NOT EXISTS (
+     SELECT 1 FROM pg_constraint c
+      WHERE c.conrelid = 'public.place_reports'::regclass
+        AND c.contype  = 'c'
+        AND pg_get_constraintdef(c.oid) LIKE '%category%'
+        AND pg_get_constraintdef(c.oid) LIKE '%''' || v || '''%'
+   );
+  IF missing IS NOT NULL THEN
+    RAISE EXCEPTION '[054] category CHECK 가 허용하지 않는 사유가 있다: %', missing;
+  END IF;
+
+  -- (4) 새 사유를 막는 옛 category CHECK 가 남아 있으면 중단. (1) 과 같은 이유다.
+  SELECT string_agg(c.conname, ', ' ORDER BY c.conname) INTO stale
+    FROM pg_constraint c
+   WHERE c.conrelid = 'public.place_reports'::regclass
+     AND c.contype  = 'c'
+     AND pg_get_constraintdef(c.oid) LIKE '%category%'
+     AND pg_get_constraintdef(c.oid) NOT LIKE '%''inappropriate_content''%';
+  IF stale IS NOT NULL THEN
+    RAISE EXCEPTION
+      '[054] 새 사유를 막는 category CHECK 가 남아 있다: % — 실제 이름을 확인해 DROP 대상에 넣은 뒤 다시 실행할 것.',
+      stale;
+  END IF;
+
+  -- (5) moderation 컬럼의 타입까지 본다.
+  --     ADD COLUMN IF NOT EXISTS 는 같은 이름의 컬럼이 **다른 타입으로** 이미
+  --     있어도 조용히 지나간다. 그러면 서버가 시각을 쓰는 순간 깨진다.
+  SELECT udt_name INTO coltype
+    FROM information_schema.columns
+   WHERE table_schema = 'public'
+     AND table_name   = 'itineraries'
+     AND column_name  = 'moderation_hidden_at';
+  IF coltype IS NULL THEN
+    RAISE EXCEPTION '[054] itineraries.moderation_hidden_at 이 만들어지지 않았다';
+  END IF;
+  IF coltype <> 'timestamptz' THEN
+    RAISE EXCEPTION
+      '[054] itineraries.moderation_hidden_at 의 타입이 timestamptz 가 아니다(%). 같은 이름의 다른 컬럼이 이미 있다.',
+      coltype;
+  END IF;
+END
+$v054$;
+
 COMMIT;
 
 -- 적용 후 확인 (읽기 전용)
