@@ -232,9 +232,11 @@ test("D3 patch 는 core 가 만든 것만 쓴다 — 함수 안에서 컬럼을 
 });
 
 test("D4 응답에 device_id·저장 경로·좌표를 담지 않는다", () => {
+  // 예전에는 요청값을 그대로 돌려줬다. 지금은 실제로 저장된 값을 되받아
+  // 돌려준다 — 그래도 나가는 것은 두 값뿐이어야 한다.
   const ret = adminFn.slice(adminFn.lastIndexOf("return json("));
-  assert.match(ret, /return json\(\{ hidden: body\.hidden \}\)/);
-  assert.ok(!/device_id|storage_path|lat|lng/.test(ret));
+  assert.match(ret, /return json\(\{ hidden: state\.moderationHidden, isPublic: state\.isPublic \}\)/);
+  assert.ok(!/device_id|storage_path|lat|lng|trip_title/.test(ret));
 });
 
 // ── E: 공개 경로 차단 ────────────────────────────────────────────────────────

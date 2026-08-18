@@ -23,6 +23,7 @@
 
 import { json, checkAdminAuth } from "../../_lib/admin-auth";
 import { buildModerationPatch } from "../../../src/lib/moderation/story-moderation-core";
+import { buildStoryStates } from "../../../src/lib/moderation/story-target-state";
 import { UUID_RE, readBodyWithLimit, MAX_SMALL_BODY_BYTES } from "../../../src/lib/itinerary-validate";
 
 interface Env {
@@ -54,15 +55,25 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
 
   const patch = buildModerationPatch(body.hidden, new Date().toISOString());
 
+  // 바뀐 행을 되받아 온다.
+  //
+  // 왜 요청값을 그대로 돌려주면 안 되나
+  //   PostgREST 의 PATCH 는 **한 행도 맞지 않아도 성공**으로 끝난다. 요청값만
+  //   echo 하면 이미 지워진 여행에도 "차단했습니다" 가 뜬다. 관리자는 막았다고
+  //   믿는데 아무 일도 일어나지 않은 상태다.
+  //
+  //   그래서 `return=representation` 으로 실제 저장된 값을 받아 판단한다.
+  //   확인을 위해 두 번째 쓰기를 만들지 않는다 — 같은 요청 하나로 끝난다.
   const res = await fetch(
-    `${url}/rest/v1/itineraries?id=eq.${encodeURIComponent(id)}`,
+    `${url}/rest/v1/itineraries?id=eq.${encodeURIComponent(id)}` +
+    `&select=id,is_public,moderation_hidden_at`,
     {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         apikey:         key,
         Authorization:  `Bearer ${key}`,
-        Prefer:         "return=minimal",
+        Prefer:         "return=representation",
       },
       body: JSON.stringify(patch),
     },
@@ -73,5 +84,16 @@ export async function onRequestPost(ctx: Ctx): Promise<Response> {
     return json({ error: "Failed to update" }, 500);
   }
 
-  return json({ hidden: body.hidden });
+  let rows: unknown = null;
+  try { rows = await res.json(); } catch { /* 본문 없음 */ }
+  const updated = Array.isArray(rows) ? rows[0] as Record<string, unknown> | undefined : undefined;
+
+  // 대상이 없으면 성공이라고 말하지 않는다.
+  if (!updated) return json({ error: "Story not found" }, 404);
+
+  const state = buildStoryStates([updated]).get(id);
+  if (!state) return json({ error: "Story not found" }, 404);
+
+  // 저장된 값만 돌려준다. 여행 제목·소유자 같은 것은 담지 않는다.
+  return json({ hidden: state.moderationHidden, isPublic: state.isPublic });
 }

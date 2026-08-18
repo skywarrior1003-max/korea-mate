@@ -25,6 +25,9 @@ import { Suspense, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
+  type StoryTargetState, isContradictory, canModerate,
+} from "@/lib/moderation/story-target-state";
+import {
   ALLOWED_TRANSITIONS, RESOLUTION_NOTE_MAX_CHARS,
 } from "@/lib/reports/report-moderation-core";
 import type { ReportStatus } from "@/lib/reports/place-report-core";
@@ -34,6 +37,8 @@ const SESSION_KEY = "km_admin_key";   // 기존 관리자 화면과 같은 키. 
 interface ReportRow {
   id: number;
   target_type: string;
+  /** Story 신고에만 붙는다. 서버가 저장해 둔 실제 상태다 — 클릭 기억이 아니다. */
+  story_state?: StoryTargetState;
   target_key: string;
   category: string;
   note: string | null;
@@ -119,10 +124,31 @@ function PlaceReportsInner() {
         headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
         body:    JSON.stringify({ itinerary_id: itineraryId, hidden }),
       });
+      // 서버가 실제로 저장한 값만 믿는다. 요청이 성공했다는 것만으로
+      // 색을 바꾸면, 대상이 이미 지워진 경우에도 차단된 것처럼 보인다.
+      const saved = res.ok
+        ? (await res.json().catch(() => null)) as { hidden?: boolean; isPublic?: boolean } | null
+        : null;
+
+      if (saved && typeof saved.hidden === "boolean") {
+        setData(prev => prev && {
+          ...prev,
+          reports: prev.reports.map(r =>
+            r.target_type === "shared_story" && r.target_key === itineraryId
+              ? { ...r, story_state: {
+                    targetExists: true,
+                    isPublic: saved.isPublic === true,
+                    moderationHidden: saved.hidden === true,
+                  } }
+              : r),
+        });
+      }
+
       setModerateMsg({
         key: itineraryId,
-        text: res.ok
-          ? (hidden ? "공개를 차단했습니다." : "차단을 해제했습니다. 재공개는 사용자가 정합니다.")
+        text: saved && typeof saved.hidden === "boolean"
+          ? (saved.hidden ? "공개를 차단했습니다." : "차단을 해제했습니다. 재공개는 사용자가 정합니다.")
+          : res.status === 404 ? "대상 Story 가 없습니다."
           : "바꾸지 못했습니다.",
       });
     } catch {
@@ -340,27 +366,56 @@ function PlaceReportsInner() {
 
                 {/* 공개 차단 — Story 신고에서만. 확인을 한 번 받는다.
                     가려도 사용자의 My Trip·Memory·사진·메모는 지워지지 않는다. */}
-                {r.target_type === "shared_story" && adminKey && (
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <button
-                      onClick={() => void moderate(r.target_key, true)}
-                      disabled={moderating === r.target_key}
-                      className="text-xs font-bold px-3 py-2 rounded-lg bg-red-900/40 border border-red-800 text-red-200 disabled:opacity-50"
-                    >
-                      공개 차단
-                    </button>
-                    <button
-                      onClick={() => void moderate(r.target_key, false)}
-                      disabled={moderating === r.target_key}
-                      className="text-xs font-bold px-3 py-2 rounded-lg border border-gray-700 text-gray-300 disabled:opacity-50"
-                    >
-                      차단 해제
-                    </button>
-                    {moderateMsg?.key === r.target_key && (
-                      <span className="text-xs text-gray-400">{moderateMsg.text}</span>
-                    )}
-                  </div>
-                )}
+                {r.target_type === "shared_story" && adminKey && (() => {
+                  const st      = r.story_state;
+                  const hidden  = st?.moderationHidden === true;
+                  const usable  = canModerate(st);
+                  const busy    = moderating === r.target_key;
+                  return (
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {/* 지금 가려져 있으면 눈에 띄게 다르다. hover 색과 겹치지 않도록
+                          채운 배경 + 굵은 테두리로 구분하고, 상태를 글자로도 적는다.
+                          이 값은 서버가 저장해 둔 것이라 F5 해도 그대로다. */}
+                      <button
+                        onClick={() => void moderate(r.target_key, true)}
+                        disabled={busy || !usable}
+                        aria-pressed={hidden}
+                        className={
+                          "text-xs font-bold px-3 py-2 rounded-lg disabled:opacity-40 " +
+                          (hidden
+                            ? "bg-red-600 border-2 border-red-300 text-white"
+                            : "bg-red-900/40 border border-red-800 text-red-200")
+                        }
+                      >
+                        {hidden ? "차단 중" : "공개 차단"}
+                      </button>
+                      <button
+                        onClick={() => void moderate(r.target_key, false)}
+                        disabled={busy || !usable}
+                        className="text-xs font-bold px-3 py-2 rounded-lg border border-gray-700 text-gray-300 disabled:opacity-40"
+                      >
+                        차단 해제
+                      </button>
+
+                      {/* 여행이 이미 지워진 신고(#6·#7 유형). 눌러도 아무 일이 없으므로
+                          버튼을 열어 두지 않는다. 신고 자체의 status 처리는 그대로 된다. */}
+                      {st && !st.targetExists && (
+                        <span className="text-xs text-gray-500">대상 없음 (이미 삭제됨)</span>
+                      )}
+
+                      {/* 있으면 안 되는 조합. 여기서 고치지 않는다 — 사람이 보고 정한다. */}
+                      {isContradictory(st) && (
+                        <span className="text-xs font-bold text-amber-300">
+                          ⚠ 차단 상태와 공개 상태가 어긋납니다
+                        </span>
+                      )}
+
+                      {moderateMsg?.key === r.target_key && (
+                        <span className="text-xs text-gray-400">{moderateMsg.text}</span>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 {/* 사용자가 쓴 글. 일반 텍스트로만 그린다. */}
                 {r.note && (

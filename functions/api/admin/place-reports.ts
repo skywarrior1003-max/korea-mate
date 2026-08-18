@@ -22,6 +22,9 @@
 import { json, checkAdminAuth, getServiceRoleHeaders } from "../../_lib/admin-auth";
 import { closeIncidentIfResolved } from "../../_lib/admin-notify";
 import {
+  storyTargetKeys, buildStoryStates, attachStoryStates,
+} from "../../../src/lib/moderation/story-target-state";
+import {
   parseModerationListQuery, buildModerationQuery, toModerationRow,
   aggregateReports, validateModerationPatch, isAllowedTransition, buildStatusUpdate,
   MODERATION_FILTER_OPTIONS, MODERATION_PAGE_MAX,
@@ -101,9 +104,37 @@ export const onRequestGet: (ctx: Ctx) => Promise<Response> = async ({ request, e
     aggregate = aggregateReports(aggRes.data as AggregateRow[]);
   }
 
+  // 신고가 가리키는 Story 가 지금 가려져 있는지 함께 내려 준다.
+  //
+  // 왜 여기서 붙이나
+  //   관리자 화면이 "내가 눌렀던가" 로 판단하고 있었다. 새로고침하면 그 기억이
+  //   사라진다. 서버에 저장된 상태를 정본으로 삼으려면 목록과 함께 와야 한다.
+  //
+  // 한 번만 묻는다
+  //   신고마다 따로 물으면 목록 100건에 조회가 100번 붙는다. 대상 id 를 모아
+  //   한 번의 `id=in.(...)` 로 끝낸다. Story 신고가 없으면 아예 묻지 않는다.
+  //
+  //   가려진 시각은 내보내지 않는다 — 화면이 쓰지 않고, 값이 나가면 언젠가
+  //   다른 데 쓰이기 시작한다. 필요한 것은 "가려졌는가" 하나다.
+  const storyKeys = storyTargetKeys(reports as { target_type?: unknown; target_key?: unknown }[]);
+  let withState: Array<Record<string, unknown>> = reports;
+  if (storyKeys.length > 0) {
+    const idList = storyKeys.map(k => encodeURIComponent(k)).join(",");
+    const itinRes = await rest(base, headers, "GET",
+      `itineraries?id=in.(${idList})&select=id,is_public,moderation_hidden_at&limit=${storyKeys.length}`);
+    if (!itinRes.ok || !Array.isArray(itinRes.data)) {
+      log({ status: "story_state_failed", httpStatus: itinRes.status });
+      return fail("server_error", 502);
+    }
+    withState = attachStoryStates(
+      reports,
+      buildStoryStates(itinRes.data as Record<string, unknown>[]),
+    );
+  }
+
   log({ status: "ok", op: "list", returned: reports.length });
   return json({
-    reports,
+    reports: withState,
     page: { limit: q.limit, offset: q.offset, sort: q.sort, max_limit: MODERATION_PAGE_MAX },
     aggregate,
     options: MODERATION_FILTER_OPTIONS,
