@@ -396,7 +396,10 @@ export default function SharedTripPage() {
           /* 지도는 아직 없다. 자리를 비워 두지 않고 통째로 감춘다 —
              빈 상자를 진짜 지도로 오인하게 두지 않는다. */
           hideMapSlot
-          copyLabel={isCopying ? "Copying Trip…" : "📋 Copy This Trip"}
+          /* StorySummary 가 이미 클립보드 아이콘을 그린다. 여기서 이모지까지 붙이면
+             아이콘이 둘로 보인다. 아래 기존 공유 화면은 SVG 가 없어 이모지가 곧
+             아이콘이므로 그대로 둔다. */
+          copyLabel={isCopying ? "Copying Trip…" : "Copy This Trip"}
           copyBusy={isCopying}
           onCopy={() => void handleCopyTrip()}
           shareLabel="Share"

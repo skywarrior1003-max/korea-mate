@@ -84,8 +84,12 @@ export default function StoryReport({ shareId, deviceId }: Props) {
         <button
           type="button"
           onClick={() => { setOpen(true); setFailed(false); }}
-          className="gkm-focus underline underline-offset-4"
-          style={{ ...BODY_SM, color: `${ON_SURFACE_VARIANT}99` }}
+          /* 보이는 것은 그대로 조용한 글자 하나다. 손가락이 닿는 영역만 넓힌다 —
+             글자 높이가 22px 라 그대로 두면 누르기 어렵고 옆을 잘못 누르기 쉽다.
+             글자 크기·색·밑줄은 건드리지 않고, 가운데 정렬한 채 높이만 44px 로
+             잡는다. 밑줄은 글자에 붙어 있어 같이 늘어나지 않는다. */
+          className="gkm-focus underline underline-offset-4 inline-flex items-center justify-center"
+          style={{ ...BODY_SM, color: `${ON_SURFACE_VARIANT}99`, minHeight: 44 }}
         >
           {t("reportStory")}
         </button>
