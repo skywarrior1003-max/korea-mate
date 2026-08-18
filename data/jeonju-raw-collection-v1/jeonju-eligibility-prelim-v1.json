@@ -1,0 +1,59 @@
+{
+  "task": "TASK-JEONJU-OFFICIAL-SOURCE-FOUNDATION-AND-RAW-COLLECTION-V2",
+  "phase": "PHASE_9_PRELIMINARY_ELIGIBILITY",
+  "as_of": "2026-08-18",
+  "source": "KTO KorService2 areaCode=37 sigunguCode=12",
+  "total_collected": 229,
+  "eligibility_distribution": {
+    "CORE_DESTINATION_CANDIDATE": 63,
+    "CONDITIONAL_OR_SEASONAL_CANDIDATE": 10,
+    "EVENT_CANDIDATE": 9,
+    "STANDARD_ACCOMMODATION": 60,
+    "ACTIVITY_OR_OPERATOR_REVIEW": 20,
+    "SPECIALTY_INTEREST_CANDIDATE": 1,
+    "FOOD_CANDIDATE": 66
+  },
+  "place_subtypes": {
+    "HERITAGE_CULTURAL": 41,
+    "CULTURAL_FACILITY": 11,
+    "KTO_TOURIST_SPOT": 11,
+    "MARKET_COMMERCIAL": 0,
+    "NATURE": 10,
+    "LEISURE_SPORTS": 0,
+    "SHOPPING": 1
+  },
+  "accommodation": {
+    "STANDARD_ACCOMMODATION_EXCLUDED": 60,
+    "POSSIBLE_EXPERIENTIAL_LODGING_FOR_REVIEW": 20,
+    "note": "한옥 키워드 포함 20건은 개별 심사 필요. KEEP_EXPERIENTIAL_LODGING 판정 기준: KTO 등재 + 공식 체험 프로그램 존재"
+  },
+  "coverage": {
+    "all_non_accom": 169,
+    "coordinate_coverage": "169/169 (100%)",
+    "image_coverage": "130/169 (77%)",
+    "phone_coverage": "9/169 (5%)",
+    "bbox_valid": "229/229"
+  },
+  "food": {
+    "total": 66,
+    "coord": 66,
+    "image": 44,
+    "phone": 0,
+    "note": "KTO 음식점 데이터는 전화번호 미제공. 전화번호는 공식 소스(tour.jeonju.go.kr) 보완 필요."
+  },
+  "event": {
+    "total": 9,
+    "freshness_check_required": true,
+    "note": "KTO event raw 9건. 날짜/진행 여부 freshness 검증 필요 (event freshness policy 적용)."
+  },
+  "qa": {
+    "KTO_SCOPE_VALID": "YES",
+    "KTO_NON_JEONJU_SCOPE_LEAK": 0,
+    "BBOX_FAIL": 0,
+    "FAKE_COORD": 0,
+    "STANDARD_ACCOMMODATION_AUTO_PROMOTION": 0,
+    "ACTIVITY_BLANKET_EXCLUSION": 0,
+    "VISITJEONJU_BYPASS_ATTEMPT": 0,
+    "SECRET_LEAK": 0
+  }
+}

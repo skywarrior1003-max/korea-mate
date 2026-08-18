@@ -1,0 +1,117 @@
+{
+  "task": "TASK-JEONJU-OFFICIAL-SOURCE-FOUNDATION-AND-RAW-COLLECTION-V2",
+  "as_of": "2026-08-18",
+  "common_policy_commit": "bc8d5d4",
+  "jeonju_bbox": {
+    "lat_min": 35.7,
+    "lat_max": 35.9,
+    "lng_min": 127.0,
+    "lng_max": 127.2
+  },
+  "sources": {
+    "PLACE": {
+      "primary": {
+        "name": "tour.jeonju.go.kr (비짓전주)",
+        "url": "https://tour.jeonju.go.kr",
+        "status": "ACCESSIBLE_SPA",
+        "languages": [
+          "KO",
+          "EN",
+          "JA"
+        ],
+        "data_access": "HTML_ONLY_JS_SPA",
+        "note": "SPA(rfc3 CMS)로 JSON API 패턴 미확인. EN(/eng) + JA(/jpn) 언어 버전 확인됨. 현재 수집: 탐색만"
+      },
+      "secondary": {
+        "name": "tour.jb.go.kr (투어전북)",
+        "url": "https://tour.jb.go.kr",
+        "status": "ACCESSIBLE_KO_ONLY",
+        "languages": [
+          "KO"
+        ],
+        "data_access": "HTML_ONLY",
+        "note": "KO 하위경로(spot/food/festival) 200. EN/JA/ZH는 soft 404. Jeonju 지역 필터 URL 파라미터 미지원. KO HTML만 접근 가능."
+      },
+      "supplement": {
+        "name": "KTO KorService2",
+        "status": "COLLECTED",
+        "area_code": 37,
+        "sigungu_code": 12,
+        "scope": "전주시",
+        "total": 229,
+        "KTO_SCOPE_VALID": "YES",
+        "KTO_NON_JEONJU_SCOPE_LEAK": 0
+      },
+      "BLOCKED": {
+        "visitjeonju.com": "DOMAIN_HIJACKED_GAMBLING_SITE — Dolar138 (Indonesian gambling). 39 gambling refs confirmed. ABSOLUTE_EXCLUDE.",
+        "openapi.jeonju.go.kr": "HTTP_500 — API key required. Hanok accommodation API only (getHouseList/getHouseProgramList). 관광지/음식/행사 API 없음."
+      }
+    },
+    "FOOD": {
+      "primary": "tour.jeonju.go.kr 공식 맛집 (SPA — 현재 수집 미완)",
+      "supplement": "KTO KorService2 contentTypeId=39 → 66건 수집 완료",
+      "KTO_food_coverage": {
+        "total": 66,
+        "coord": 66,
+        "image": 44,
+        "phone": 0
+      }
+    },
+    "EVENT": {
+      "primary": "전주시/전북 공식 행사 포털 (Phase 2 추가 확인 필요)",
+      "supplement": "KTO KorService2 contentTypeId=15 → 9건",
+      "freshness_policy": "multicity-event-freshness-policy-v1: ONGOING + date-confirmed UPCOMING only"
+    },
+    "PROMOTION": {
+      "status": "FUTURE_WORK",
+      "note": "이번 V2 수집 범위에서 공식 프로모션 source 접근 확인 안 됨. tour.jeonju.go.kr 및 tour.jb.go.kr 내 프로모션 콘텐츠는 SPA/HTML 탐색 필요."
+    },
+    "TOURISM_NEWS": {
+      "status": "FUTURE_WORK",
+      "note": "공식 관광 공지/뉴스는 전주시 공식 웹사이트(jeonju.go.kr) 및 tour.jeonju.go.kr 내 공지사항 탐색 필요."
+    },
+    "MULTILINGUAL": {
+      "KO": {
+        "status": "FULL",
+        "sources": [
+          "tour.jeonju.go.kr",
+          "tour.jb.go.kr",
+          "KTO KorService2"
+        ]
+      },
+      "EN": {
+        "status": "PARTIAL",
+        "sources": [
+          "tour.jeonju.go.kr/eng (확인됨, SPA 수집 미완)"
+        ],
+        "KTO_EngService2": 0
+      },
+      "JA": {
+        "status": "PARTIAL",
+        "sources": [
+          "tour.jeonju.go.kr/jpn (확인됨, SPA 수집 미완)"
+        ]
+      },
+      "ZH": {
+        "status": "GAP",
+        "sources": [],
+        "note": "tour.jeonju.go.kr/chn=404, tour.jb.go.kr ZH=soft404"
+      },
+      "EN_OFFICIAL_COVERAGE_GAP": "PARTIAL — URL 존재하나 데이터 미수집",
+      "ALTERNATIVE_OFFICIAL_EN_SOURCE": "tour.jeonju.go.kr/eng (비짓전주 영문 포털)"
+    },
+    "VISITJEONJU_COM": {
+      "status": "DOMAIN_HIJACKED",
+      "verdict": "GAMBLING_DOMAIN_HIJACK",
+      "title_observed": "Dolar138 > Rezeki Mengetuk Pintu, Destinasi Utama Para Pencari JP",
+      "gambling_refs": 39,
+      "action": "ABSOLUTE_EXCLUDE — visitjeonju.com에서 어떤 데이터도 사용 금지"
+    }
+  },
+  "v1_findings_applied": {
+    "IMPROVE_1": "KTO KorService2 + areaCode=37 + sigunguCode=12 — APPLIED",
+    "IMPROVE_2": "openapi.jeonju.go.kr 역할 제한(한옥 전용, HTTP 500) — APPLIED",
+    "IMPROVE_3": "visitjeonju.com 접근 차단 — APPLIED. 실제 도메인 탈취 확인(도박사이트)",
+    "IMPROVE_4": "KTO EngService2 EN=0 확인 — APPLIED. 대체 source: tour.jeonju.go.kr/eng"
+  }
+}
