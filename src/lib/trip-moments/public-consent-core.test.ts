@@ -133,15 +133,19 @@ test("★Memory 생성은 공개 상태를 받지 않는다", () => {
   assert.match(idx, /from\("city_spots"\)\.select\("id"\)/);
 });
 
-test("★공개 경로는 아직 Memory 를 내보내지 않는다", () => {
-  const pub  = strip(read("src", "lib", "share", "public-story.ts"));
-  const story = strip(read("functions", "api", "shared", "[id]", "story.ts"));
-  for (const src of [pub, story]) {
-    assert.doesNotMatch(src, /trip_moment/);
-    assert.doesNotMatch(src, /place_name|public_consent/);
-  }
-  // 좌표 문자열은 어느 쪽에도 없다
+test("★공개 경로는 고른 것 + 동의 판본이 맞는 것만 내보낸다", () => {
+  // 일정 정제기는 여전히 Memory 를 모른다 — 두 계약을 섞지 않는다.
+  const pub = strip(read("src", "lib", "share", "public-story.ts"));
+  assert.doesNotMatch(pub, /trip_moment|place_name|public_consent/);
   assert.doesNotMatch(pub, /location_label/);
+
+  // 공개 endpoint 는 Memory 를 내보내되 두 조건을 모두 건다.
+  const story = strip(read("functions", "api", "shared", "[id]", "story.ts"));
+  assert.match(story, /\.eq\("is_public", true\)/);                        // 골랐는가
+  assert.match(story, /isMemoryPublic\(r, MEMORY_PUBLIC_CONSENT_VERSION\)/); // 판본이 맞는가
+  assert.match(story, /serializePublicMemories\(/);                        // 정제를 거친다
+  // 좌표는 어느 쪽으로도 나가지 않는다
+  assert.doesNotMatch(story, /location_label|"lat"|"lng"/);
 });
 
 test("★migration 은 더하기만 한다", () => {

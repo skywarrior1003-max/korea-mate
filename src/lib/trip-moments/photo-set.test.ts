@@ -203,12 +203,16 @@ test("★Copy 는 Memory 도 사진 테이블도 건드리지 않는다", () => 
   assert.doesNotMatch(src, /trip_moment_photos/);
 });
 
-test("★공개 payload 에 사진 관계가 딸려 나가지 않는다", () => {
-  for (const f of [["src", "lib", "share", "public-story.ts"],
-                   ["functions", "api", "shared", "[id]", "story.ts"]]) {
-    const src = strip(read(...f));
-    assert.doesNotMatch(src, /trip_moment/, `${f.join("/")}: 사진 관계를 읽는다`);
-  }
+test("★일정 정제기는 여전히 사진 관계를 모른다", () => {
+  // 공개 Memory 는 이제 나간다 — 단 **일정 정제기가 아니라** 전용 정제기를
+  // 통해서다. days 를 다루는 쪽에 Memory 가 섞이면 두 계약이 엉킨다.
+  const pub = strip(read("src", "lib", "share", "public-story.ts"));
+  assert.doesNotMatch(pub, /trip_moment/, "일정 정제기가 사진 관계를 읽는다");
+
+  // 공개 endpoint 는 사진 관계를 읽되, 내부 식별자를 그대로 내보내지 않는다.
+  const story = strip(read("functions", "api", "shared", "[id]", "story.ts"));
+  assert.match(story, /serializePublicMemories\(/, "정제를 거치지 않고 내보낸다");
+  assert.doesNotMatch(story, /photo_id:|storage_path:/, "내부 식별자를 응답에 싣는다");
 });
 
 /**
