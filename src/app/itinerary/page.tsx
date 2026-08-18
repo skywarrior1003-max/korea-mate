@@ -13,8 +13,6 @@ import { getDeviceId } from "@/lib/deviceId";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog from "@/components/CoverConsentDialog";
 import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem } from "@/lib/cart";
-import { isEmailSaved } from "@/lib/userEmail";
-import EmailCaptureModal from "@/components/EmailCaptureModal";
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
@@ -1188,8 +1186,6 @@ function ItineraryResult() {
   const [syncStatus,  setSyncStatus]  = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [syncFading,  setSyncFading]  = useState(false);
   const [copied,          setCopied]          = useState(false);
-  const [emailModalOpen,  setEmailModalOpen]  = useState(false);
-  const [emailSaved,      setEmailSaved]      = useState(() => isEmailSaved());
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   /**
    * 이 화면이 방금 만든 일정인가 — 저장에 성공하면 This Trip 을 비울 자격.
@@ -2387,24 +2383,6 @@ function ItineraryResult() {
             </button>
           )}
 
-          {/* 이메일 저장 버튼 */}
-          {emailSaved ? (
-            <button
-              onClick={() => setEmailModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
-              style={{ backgroundColor: "#22c55e" }}
-            >
-              ✅ Trip Saved to Email
-            </button>
-          ) : (
-            <button
-              onClick={() => setEmailModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-ink bg-white border-2 border-line hover:border-faint rounded-xl transition-all active:scale-95"
-            >
-              📧 Save to Email
-            </button>
-          )}
-
           {/* TASK-022: 기억 기록 버튼 */}
           <button
             onClick={() => setCaptureOpen(true)}
@@ -3143,13 +3121,6 @@ function ItineraryResult() {
           onClose={() => setStoryExportOpen(false)}
         />
       )}
-
-      <EmailCaptureModal
-        isOpen={emailModalOpen}
-        onClose={() => setEmailModalOpen(false)}
-        context="save-trip"
-        onSuccess={() => setEmailSaved(true)}
-      />
 
       {/* S3: 공개 전 Publish Preview — 명시적 확인 후에만 is_public 전환 */}
       {publishPreviewOpen && (

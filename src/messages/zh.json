@@ -151,9 +151,6 @@
   "trips": {
     "subtitle": "管理你的行程，重温在韩国留下的记忆。",
     "statTrips": "{n} 个行程",
-    "emailSaved": "已保存到 <b>{email}</b> — 任何设备都能查看",
-    "emailPrompt": "绑定邮箱后，在任何设备上都能查看行程",
-    "emailConnect": "绑定",
     "loading": "正在加载行程…",
     "emptyTitle": "还没有行程",
     "emptyBody1": "用 AI 生成行程后会自动保存在这里。",

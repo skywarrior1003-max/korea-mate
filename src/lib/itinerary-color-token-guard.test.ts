@@ -67,7 +67,6 @@ const ALLOW: Record<string, { n: number; kind: string; why: string }> = {
   "#DB2777": { n: 1, kind: "map/data",            why: "shopping 카테고리 색" },
   "#9333EA": { n: 1, kind: "map/data",            why: "k-pop 카테고리 색" },
   "#6D28D9": { n: 1, kind: "gradient pair",       why: "보라 그라디언트의 짝" },
-  "#22C55E": { n: 1, kind: "ui",                  why: "상태 점. --gkm-status-ok(#1D9A6C)와 값이 다르다" },
   "#131B2E": { n: 1, kind: "ui",                  why: "짙은 제목 글자. --gkm-ink(#191C21)와 값이 다르다" },
 };
 

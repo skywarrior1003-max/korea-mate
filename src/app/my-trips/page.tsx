@@ -14,10 +14,8 @@ import {
 } from "@/lib/itinerary-api";
 import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
-import { getSavedEmail } from "@/lib/userEmail";
 import { visitedStorageKey } from "@/lib/visited";
 import { cityVisual } from "@/lib/city-visual";
-import EmailCaptureModal from "@/components/EmailCaptureModal";
 
 // ── 도시 대표 이미지 ───────────────────────────────────────────────────────────
 // 이 화면은 자기 맵을 들지 않는다. 예전에 여기 있던 원격 사진 매핑은 원본이
@@ -114,11 +112,8 @@ export default function MyTripsPage() {
   const [deleting,       setDeleting]       = useState<string | null>(null);
   const [confirmDel,     setConfirmDel]     = useState<string | null>(null);
   const [copied,         setCopied]         = useState<string | null>(null);
-  const [savedEmail,     setSavedEmail]     = useState<string | null>(null);
-  const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [togglingPublic, setTogglingPublic] = useState<Set<string>>(new Set());
 
-  useEffect(() => { setSavedEmail(getSavedEmail()); }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -273,30 +268,6 @@ export default function MyTripsPage() {
                 <span>{chip!.label}</span>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* ── 이메일 연동 배너 ── */}
-        {savedEmail ? (
-          <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-emerald-200 bg-emerald-50">
-            <span className="text-lg">☁️</span>
-            <p className="text-sm font-bold text-emerald-800 flex-1">
-              {t.rich("emailSaved", { email: savedEmail ?? "", b: (c) => <strong>{c}</strong> })}
-            </p>
-          </div>
-        ) : (
-          <div className="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[#E5E7EA] bg-white shadow-sm">
-            <span className="text-lg">📧</span>
-            <p className="text-sm font-bold text-[#565D66] flex-1">
-              {t("emailPrompt")}
-            </p>
-            <button
-              onClick={() => setEmailModalOpen(true)}
-              className="shrink-0 px-4 py-2 rounded-xl text-xs font-black text-white transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ backgroundColor: "#FF4A2D" }}
-            >
-              {t("emailConnect")}
-            </button>
           </div>
         )}
 
@@ -563,13 +534,6 @@ export default function MyTripsPage() {
       <footer className="mt-auto border-t border-[#E5E7EA] py-8 text-center text-sm text-[#565D66] px-4" style={{ backgroundColor: "#F6F7F8" }}>
         <p>© {new Date().getFullYear()} gokoreamate · Trip data stored on your device</p>
       </footer>
-
-      <EmailCaptureModal
-        isOpen={emailModalOpen}
-        onClose={() => setEmailModalOpen(false)}
-        context="my-trips"
-        onSuccess={(email) => { setSavedEmail(email); setEmailModalOpen(false); }}
-      />
 
       <style>{`
         @keyframes fadeInUp {

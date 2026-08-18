@@ -151,9 +151,6 @@
   "trips": {
     "subtitle": "Manage your journey and revisit the memories you’ve made across Korea.",
     "statTrips": "{n} trips",
-    "emailSaved": "Saved to cloud as <b>{email}</b> — access from any device",
-    "emailPrompt": "Connect your email to access trips on any device",
-    "emailConnect": "Connect",
     "loading": "Loading your trips…",
     "emptyTitle": "No trips yet",
     "emptyBody1": "Trips are saved here automatically after AI generation.",

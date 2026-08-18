@@ -151,9 +151,6 @@
   "trips": {
     "subtitle": "여행을 정리하고, 한국에서 남긴 기억을 다시 꺼내 보세요.",
     "statTrips": "여행 {n}개",
-    "emailSaved": "<b>{email}</b> 로 저장돼 있어 어느 기기에서나 볼 수 있습니다",
-    "emailPrompt": "이메일을 연결하면 어느 기기에서나 여행을 볼 수 있습니다",
-    "emailConnect": "연결하기",
     "loading": "여행을 불러오는 중…",
     "emptyTitle": "아직 여행이 없어요",
     "emptyBody1": "AI 로 일정을 만들면 여기에 자동으로 저장됩니다.",
