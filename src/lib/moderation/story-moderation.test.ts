@@ -279,9 +279,20 @@ test("E3 숨김 사유를 바깥에 설명하지 않는다 — 없는 것처럼 
 });
 
 test("E4 만든 사람의 공개 전환에 숨김 검사가 붙어 있다", () => {
-  const patch = code(read("functions/api/itinerary/[id].ts"));
-  assert.match(patch, /publishVerdict\(/);
-  assert.match(patch, /\.select\("moderation_hidden_at"\)/);
+  // 이 검사는 한때 파일 전체에서 `publishVerdict(` 를 찾기만 했다. PUT 에 있으면
+  // 통과하므로, 사람이 실제로 쓰는 PATCH 가 무방비인 것을 놓쳤다.
+  // 이제 핸들러 본문을 하나씩 잘라 본다. 세부 동작은 publish-gate.test.ts 가 본다.
+  const src = code(read("functions/api/itinerary/[id].ts"));
+  const body = (name: string) => {
+    const start = src.indexOf(`export async function ${name}`);
+    assert.ok(start >= 0, `핸들러가 없다: ${name}`);
+    const next = src.slice(start + 1).search(/\nexport (async )?function /);
+    return next < 0 ? src.slice(start) : src.slice(start, start + 1 + next);
+  };
+  for (const h of ["onRequestPatch", "onRequestPut"]) {
+    assert.match(body(h), /publishGate\(/, `${h} 에 공개 판정이 없다`);
+  }
+  assert.match(src, /\.select\("moderation_hidden_at"\)/);
 });
 
 // ── M: 사용자 것은 남는다 ────────────────────────────────────────────────────

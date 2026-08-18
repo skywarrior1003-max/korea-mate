@@ -20,8 +20,27 @@ import {
   isValidDays,
   optStr,
 } from "../../../src/lib/itinerary-validate";
-import { collectStoragePaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
-import { publishVerdict } from "../../../src/lib/moderation/story-moderation-core";
+import { collectItineraryPhotoPaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
+import { publishGate } from "../../../src/lib/moderation/publish-gate";
+
+/**
+ * 가려졌는지 읽어 오는 함수. PUT·PATCH 가 같은 것을 쓴다.
+ *
+ * 소유자 조건을 함께 건다 — 남의 여행 상태를 알려 주는 통로가 되면 안 된다.
+ * `error` 는 조회 자체가 실패한 것이라 판정 불가로 넘긴다(공개를 켜 주지 않는다).
+ */
+function moderationReader(admin: ReturnType<typeof adminClient>) {
+  return async (id: string, deviceId: string) => {
+    const { data, error } = await admin
+      .from("itineraries")
+      .select("moderation_hidden_at")
+      .eq("id", id)
+      .eq("device_id", deviceId)
+      .maybeSingle();
+    if (error) return { ok: false, row: null };
+    return { ok: true, row: (data ?? null) as { moderation_hidden_at: string | null } | null };
+  };
+}
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -115,20 +134,9 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   // 이 검사가 없으면 가려진 사람이 공개를 다시 켜서 그대로 되돌릴 수 있고,
   // 그러면 가린 의미가 없어진다. **끄는 것은 언제나 허용한다** — 공개를 줄이는
   // 방향이다. 제목 수정도 막지 않는다.
-  if (row.is_public === true) {
-    const { data: mod } = await admin
-      .from("itineraries")
-      .select("moderation_hidden_at")
-      .eq("id", id)
-      .eq("device_id", deviceId)
-      .maybeSingle();
-    const verdict = publishVerdict(
-      (mod ?? { moderation_hidden_at: null }) as { moderation_hidden_at: string | null },
-      true,
-    );
-    // 왜 막혔는지는 알려 주되 누가 신고했는지·관리자 메모는 알려 주지 않는다
-    if (!verdict.allowed) return json({ error: verdict.error }, verdict.status);
-  }
+  // 왜 막혔는지는 알려 주되 누가 신고했는지·관리자 메모는 알려 주지 않는다
+  const putGate = await publishGate(moderationReader(admin), id, deviceId, row.is_public);
+  if (!putGate.allowed) return json({ error: putGate.error }, putGate.status);
 
   const { data, error } = await admin
     .from("itineraries")
@@ -172,6 +180,11 @@ export async function onRequestPatch(ctx: PagesCtx): Promise<Response> {
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
 
+  // 사람이 실제로 쓰는 공개 토글이 이 경로다. 규칙을 PUT 에만 적어 두면
+  // 여기로 그대로 우회할 수 있다 — 같은 판정을 건다.
+  const gate = await publishGate(moderationReader(admin), id, deviceId, row.is_public);
+  if (!gate.allowed) return json({ error: gate.error }, gate.status);
+
   const { data, error } = await admin
     .from("itineraries")
     .update(row)
@@ -210,14 +223,38 @@ export async function onRequestDelete(ctx: PagesCtx): Promise<Response> {
 
   if (!itinerary) return json({ error: "Not found or permission denied" }, 404);
 
-  // 2단계: 연결 Storage 파일 경로 수집
-  const { data: momentRows } = await admin
-    .from("trip_moments")
-    .select("storage_path")
-    .eq("itinerary_id", id)
-    .not("storage_path", "is", null);
+  // 2단계: 연결 Storage 파일 경로 수집 — 첫 장 slot 과 자식 사진을 모두 모은다.
+  //
+  // 자식 행(`trip_moment_photos`)은 4단계에서 FK CASCADE 로 함께 사라진다.
+  // 여기서 경로를 미리 챙기지 않으면 그 파일들은 아무도 가리키지 않는 채
+  // Storage 에 남고, 가리키던 행이 없으니 나중에 찾아낼 방법도 없다.
+  //
+  // 둘 중 하나라도 못 읽으면 목록이 불완전하다. 그 상태로 지우면 "지운 줄 알았는데
+  // 남은" 파일이 생기므로, 조용히 넘기지 않고 여기서 멈춘다.
+  const collected = await collectItineraryPhotoPaths({
+    legacy: async () => {
+      const { data, error } = await admin
+        .from("trip_moments")
+        .select("storage_path")
+        .eq("itinerary_id", id)
+        .not("storage_path", "is", null);
+      return { ok: !error, rows: (data ?? []) as { storage_path: string | null }[] };
+    },
+    child: async () => {
+      const { data, error } = await admin
+        .from("trip_moment_photos")
+        .select("storage_path")
+        .eq("itinerary_id", id);
+      return { ok: !error, rows: (data ?? []) as { storage_path: string | null }[] };
+    },
+  }, id);
 
-  const storagePaths = collectStoragePaths(momentRows ?? []);
+  if (!collected.ok) {
+    // 경로는 로그에도 남기지 않는다. 어느 쪽 조회가 실패했는지만 적는다.
+    console.error("[itinerary DELETE] photo path collect failed:", collected.stage);
+    return json({ error: "Failed to remove photos" }, 500);
+  }
+  const storagePaths = collected.paths;
 
   // 3단계: Storage-first 삭제 (Storage 실패 시 DB 미삭제)
   if (storagePaths.length > 0) {
