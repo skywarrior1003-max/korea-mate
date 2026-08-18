@@ -21,6 +21,7 @@ import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
 import StoryCover from "@/components/story/StoryCover";
 import StoryNavHide from "@/components/story/StoryNavHide";
+import StoryReport from "@/components/story/StoryReport";
 import StoryJournal from "@/components/story/StoryJournal";
 import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
 import StorySummary from "@/components/story/StorySummary";
@@ -400,6 +401,10 @@ export default function SharedTripPage() {
           onCopy={() => void handleCopyTrip()}
           shareLabel="Share"
         />
+
+        {/* 맨 아래 조용한 신고 자리. 보낸다고 아무것도 가려지지 않는다 —
+            사람이 보고 정한다. */}
+        <StoryReport shareId={trip.id} deviceId={getDeviceId()} />
 
         {storyFocus && (
           <StoryMemoryFocus

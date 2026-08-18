@@ -469,7 +469,21 @@
     "copyTrip": "复制此行程",
     "copied": "浏览 {n}",
     "helpful": "有帮助",
-    "copiedCount": "已复制"
+    "copiedCount": "已复制",
+    "reportStory": "举报这个故事",
+    "reportTitle": "举报这个故事",
+    "reportSubtitle": "每一条举报都由人工查看，不会自动隐藏。",
+    "reportInappropriate": "不当内容",
+    "reportPrivacy": "涉及隐私",
+    "reportRights": "版权或权利问题",
+    "reportSpam": "垃圾信息或误导",
+    "reportOther": "其他原因",
+    "reportDetail": "想补充的内容（可选）",
+    "reportSubmit": "发送举报",
+    "reportSending": "发送中…",
+    "reportCancel": "取消",
+    "reportThanks": "感谢告知，我们会查看。",
+    "reportFailed": "无法发送举报，请重试。"
   },
   "memo": {
     "edit": "编辑",

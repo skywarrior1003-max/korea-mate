@@ -34,6 +34,7 @@ import {
   isMemoryPublic, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
+import { isModerationHidden } from "../../../../src/lib/moderation/story-moderation-core";
 import { mergePhotoSet, type ChildPhotoRow } from "../../../../src/lib/trip-moments/photo-set";
 
 interface Env {
@@ -74,7 +75,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   const { data, error } = await admin
     .from("itineraries")
-    .select(PUBLIC_SELECT_COLUMNS)
+    .select(`${PUBLIC_SELECT_COLUMNS}, moderation_hidden_at`)
     .eq("id", id)
     .eq("is_public", true)
     .maybeSingle();
@@ -84,6 +85,12 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to load itinerary" }, 500);
   }
   if (!data) return json({ error: "Not found" }, 404);
+
+  // 관리자가 가렸으면 없는 것처럼 답한다. 왜 막혔는지 구분해 주지 않는다 —
+  // 비공개와 미존재와 가려짐을 나눠 알려 주면 그것도 정보가 된다.
+  if (isModerationHidden(data as { moderation_hidden_at: string | null })) {
+    return json({ error: "Not found" }, 404);
+  }
 
   const itinerary = serializePublicItinerary(data);
 

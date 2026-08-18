@@ -469,7 +469,21 @@
     "copyTrip": "この旅行をコピー",
     "copied": "閲覧 {n}",
     "helpful": "役に立った",
-    "copiedCount": "コピー"
+    "copiedCount": "コピー",
+    "reportStory": "このストーリーを報告",
+    "reportTitle": "このストーリーを報告します",
+    "reportSubtitle": "すべての報告は人が確認します。自動で非表示にはなりません。",
+    "reportInappropriate": "不適切な内容",
+    "reportPrivacy": "プライバシーの問題",
+    "reportRights": "著作権・権利の問題",
+    "reportSpam": "スパムまたは誤解を招く内容",
+    "reportOther": "その他",
+    "reportDetail": "補足があれば（任意）",
+    "reportSubmit": "報告を送る",
+    "reportSending": "送信中…",
+    "reportCancel": "キャンセル",
+    "reportThanks": "お知らせありがとうございます。確認します。",
+    "reportFailed": "報告を送れませんでした。もう一度お試しください。"
   },
   "memo": {
     "edit": "編集",

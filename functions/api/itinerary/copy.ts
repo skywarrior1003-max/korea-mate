@@ -19,6 +19,7 @@ import {
   optStr,
 } from "../../../src/lib/itinerary-validate";
 import { buildCopiedItinerary } from "../../../src/lib/share/copied-itinerary";
+import { isModerationHidden } from "../../../src/lib/moderation/story-moderation-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -64,7 +65,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   // 원본 일정 조회 (service_role — device_id 포함 전체 행 접근)
   const { data: source, error: fetchErr } = await admin
     .from("itineraries")
-    .select("city, start_date, end_date, travelers, travel_style, days, trip_title")
+    .select("city, start_date, end_date, travelers, travel_style, days, trip_title, moderation_hidden_at")
     .eq("id", shareId)
     .eq("is_public", true)
     .maybeSingle();
@@ -74,6 +75,11 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     return json({ error: "Failed to fetch source itinerary" }, 500);
   }
   if (!source) return json({ error: "Source itinerary not found" }, 404);
+  // 관리자가 가린 여행은 복사 대상이 아니다. 복사되면 가린 내용이 다른 계정으로
+  // 퍼져 나가고, 그 복사본을 다시 공개할 수도 있다.
+  if (isModerationHidden(source as { moderation_hidden_at: string | null })) {
+    return json({ error: "Source itinerary not found" }, 404);
+  }
 
   const newId = crypto.randomUUID();
 

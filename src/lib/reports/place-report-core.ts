@@ -138,13 +138,22 @@ export function isValidDeviceId(v: unknown): boolean {
  * 새 비밀키를 만들지 않는다. 링크 불가만으로 충분한 용도다.
  */
 export function reporterKeyInput(
-  deviceId: string, targetType: ReportTargetType, targetKey: string,
+  deviceId: string, targetType: string, targetKey: string,
 ): string {
   return `${deviceId.trim().toLowerCase()}|${targetType}:${targetKey.trim()}`;
 }
 
 export async function reporterKey(
-  deviceId: string, targetType: ReportTargetType, targetKey: string,
+  deviceId: string,
+  /**
+   * 대상 종류. 여기서는 해시 입력의 일부일 뿐이라 문자열이면 된다.
+   *
+   * `ReportTargetType` 으로 좁히지 않는 이유 — 그 타입을 넓히면 장소 신고의
+   * 대상 검증(`isValidTargetType`)까지 함께 넓어진다. 공개 Story 신고는
+   * 대상 확인 방법이 달라(공개된 여행인가) 그쪽 검증에 섞이면 안 된다.
+   */
+  targetType: string,
+  targetKey: string,
 ): Promise<string> {
   const data = new TextEncoder().encode(reporterKeyInput(deviceId, targetType, targetKey));
   const digest = await crypto.subtle.digest("SHA-256", data);

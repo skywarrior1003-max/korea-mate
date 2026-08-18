@@ -54,6 +54,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
     .from("itineraries")
     .select("id, city, start_date, end_date, travel_style, view_count, helpful_count, copy_count, trip_title")
     .eq("is_public", true)
+    // 가려진 여행은 목록에도 오르지 않는다
+    .is("moderation_hidden_at", null)
     .gte("view_count", 2);
 
   if (cityFilter)  query = query.eq("city",         cityFilter);

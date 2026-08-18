@@ -265,9 +265,8 @@ export type EffectiveCover =
   | { status: 200; kind: "personal"; itin: ItineraryCoverRow; storagePath: string; days: unknown }
   | { status: 200; kind: "tourism";  itin: ItineraryCoverRow; days: unknown };
 
-const COVER_COLS =
-  "id, device_id, is_public, updated_at, days, cover_kind, cover_asset_id, cover_moment_id, cover_consent_at, cover_consent_version";
-const BASE_COLS = "id, device_id, is_public, updated_at, days";
+const COVER_COLS = "id, device_id, is_public, updated_at, days, cover_kind, cover_asset_id, cover_moment_id, cover_consent_at, cover_consent_version, moderation_hidden_at";
+const BASE_COLS = "id, device_id, is_public, updated_at, days, moderation_hidden_at";
 
 export async function resolveEffectiveCover(
   itineraryId: string,
@@ -288,6 +287,11 @@ export async function resolveEffectiveCover(
     row = first.data;
   }
   if (!row) return { status: 404 };
+  // 관리자가 가린 여행은 커버도 나가지 않는다. 공개 여부와 같은 층에서 막는다 —
+  // 여기서 안 막으면 SNS 미리보기 이미지로 가린 사진이 계속 나간다.
+  // (`moderation_hidden_at` 이 없던 시절 저장된 행은 undefined 라 그대로 통과한다)
+  const hiddenAt = row["moderation_hidden_at"];
+  if (typeof hiddenAt === "string" && hiddenAt.trim() !== "") return { status: 404 };
 
   const itin: ItineraryCoverRow = {
     id:                    String(row.id),

@@ -134,7 +134,7 @@ export const onRequest: (context: {
 
     const endpoint =
       `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/itineraries` +
-      `?id=eq.${shareId}&is_public=eq.true&limit=1` +
+      `?id=eq.${shareId}&is_public=eq.true&moderation_hidden_at=is.null&limit=1` +
       `&select=city,start_date,end_date,travel_style,days,updated_at`;
 
     // 3초 타임아웃 — 초과 시 catch로 넘어가 기본값 OG 반환

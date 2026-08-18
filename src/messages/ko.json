@@ -469,7 +469,21 @@
     "copyTrip": "이 여행 복사하기",
     "copied": "조회 {n}",
     "helpful": "도움됨",
-    "copiedCount": "복사됨"
+    "copiedCount": "복사됨",
+    "reportStory": "이 스토리 신고",
+    "reportTitle": "이 스토리를 신고합니다",
+    "reportSubtitle": "모든 신고는 사람이 직접 확인합니다. 자동으로 가려지지 않습니다.",
+    "reportInappropriate": "부적절한 내용",
+    "reportPrivacy": "사생활 침해",
+    "reportRights": "저작권·권리 문제",
+    "reportSpam": "스팸이거나 사실과 다름",
+    "reportOther": "그 밖의 이유",
+    "reportDetail": "더 알려 주실 내용 (선택)",
+    "reportSubmit": "신고 보내기",
+    "reportSending": "보내는 중…",
+    "reportCancel": "취소",
+    "reportThanks": "알려 주셔서 고맙습니다. 확인하겠습니다.",
+    "reportFailed": "신고를 보내지 못했습니다. 다시 시도해 주세요."
   },
   "memo": {
     "edit": "수정",

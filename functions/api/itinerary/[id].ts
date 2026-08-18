@@ -21,6 +21,7 @@ import {
   optStr,
 } from "../../../src/lib/itinerary-validate";
 import { collectStoragePaths, removeItineraryStorage } from "../../../src/lib/photo-delete";
+import { publishVerdict } from "../../../src/lib/moderation/story-moderation-core";
 
 interface Env {
   NEXT_PUBLIC_SUPABASE_URL:  string;
@@ -108,6 +109,26 @@ export async function onRequestPut(ctx: PagesCtx): Promise<Response> {
   let admin;
   try { admin = adminClient(ctx.env); }
   catch { return json({ error: "Server configuration error" }, 503); }
+
+  // 관리자가 가린 여행은 다시 공개할 수 없다.
+  //
+  // 이 검사가 없으면 가려진 사람이 공개를 다시 켜서 그대로 되돌릴 수 있고,
+  // 그러면 가린 의미가 없어진다. **끄는 것은 언제나 허용한다** — 공개를 줄이는
+  // 방향이다. 제목 수정도 막지 않는다.
+  if (row.is_public === true) {
+    const { data: mod } = await admin
+      .from("itineraries")
+      .select("moderation_hidden_at")
+      .eq("id", id)
+      .eq("device_id", deviceId)
+      .maybeSingle();
+    const verdict = publishVerdict(
+      (mod ?? { moderation_hidden_at: null }) as { moderation_hidden_at: string | null },
+      true,
+    );
+    // 왜 막혔는지는 알려 주되 누가 신고했는지·관리자 메모는 알려 주지 않는다
+    if (!verdict.allowed) return json({ error: verdict.error }, verdict.status);
+  }
 
   const { data, error } = await admin
     .from("itineraries")

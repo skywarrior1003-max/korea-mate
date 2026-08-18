@@ -469,7 +469,21 @@
     "copyTrip": "Copy this trip",
     "copied": "{n} views",
     "helpful": "helpful",
-    "copiedCount": "copied"
+    "copiedCount": "copied",
+    "reportStory": "Report this story",
+    "reportTitle": "Report this story",
+    "reportSubtitle": "A person reviews every report. Nothing is hidden automatically.",
+    "reportInappropriate": "Inappropriate content",
+    "reportPrivacy": "Privacy concern",
+    "reportRights": "Copyright or rights concern",
+    "reportSpam": "Spam or misleading",
+    "reportOther": "Something else",
+    "reportDetail": "Anything you want to add (optional)",
+    "reportSubmit": "Send report",
+    "reportSending": "Sending…",
+    "reportCancel": "Cancel",
+    "reportThanks": "Thank you. We will look into it.",
+    "reportFailed": "Could not send the report. Please try again."
   },
   "memo": {
     "edit": "Edit",

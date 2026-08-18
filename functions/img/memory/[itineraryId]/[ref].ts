@@ -33,6 +33,7 @@ import {
   PUBLIC_MEMORY_SELECT_COLUMNS, type InternalMemoryRow, type InternalPhotoRow,
 } from "../../../../src/lib/share/public-memory";
 import { MEMORY_PUBLIC_CONSENT_VERSION } from "../../../../src/lib/trip-moments/public-consent-core";
+import { isModerationHidden } from "../../../../src/lib/moderation/story-moderation-core";
 import { mergePhotoSet, type ChildPhotoRow } from "../../../../src/lib/trip-moments/photo-set";
 
 /** 커버 프록시와 같은 짧은 공개 캐시 — 공개를 끄면 곧 반영된다 */
@@ -76,8 +77,10 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
 
   // ① 여행이 공개인가
   const { data: itin } = await admin
-    .from("itineraries").select("id").eq("id", itineraryId).eq("is_public", true).maybeSingle();
-  if (!itin) return notFound();
+    .from("itineraries").select("id, moderation_hidden_at")
+    .eq("id", itineraryId).eq("is_public", true).maybeSingle();
+  // 관리자가 가렸으면 사진도 나가지 않는다. 공개 여부와 같은 층에서 막는다.
+  if (!itin || isModerationHidden(itin as { moderation_hidden_at: string | null })) return notFound();
 
   // ② 그 여행에서 공개로 고른 Memory 들
   const { data: momentRows } = await admin

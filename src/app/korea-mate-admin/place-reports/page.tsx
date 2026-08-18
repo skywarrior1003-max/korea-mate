@@ -96,6 +96,42 @@ function PlaceReportsInner() {
   const [busyId, setBusyId]   = useState<number | null>(null);
   const [draft, setDraft]     = useState<Record<number, string>>({});
 
+  const [moderating,   setModerating]   = useState<string | null>(null);
+  const [moderateMsg,  setModerateMsg]  = useState<{ key: string; text: string } | null>(null);
+
+  /**
+   * Story 공개 차단 / 해제.
+   *
+   * 차단하면 공개도 함께 내려가 Story·사진·Copy·미리보기가 한꺼번에 닫힌다.
+   * **해제해도 다시 공개되지 않는다** — 다시 공개할지는 만든 사람이 정한다.
+   * 어느 쪽도 사용자의 My Trip·Memory·사진·메모를 지우지 않는다.
+   */
+  async function moderate(itineraryId: string, hidden: boolean) {
+    if (!adminKey || moderating) return;
+    if (hidden && !window.confirm(
+      `이 Story 의 외부 공개를 차단합니다.
+사용자의 My Trip 과 Memory 원본은 삭제되지 않습니다.`
+    )) return;
+    setModerating(itineraryId); setModerateMsg(null);
+    try {
+      const res = await fetch("/api/admin/story-moderation", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json", "x-admin-key": adminKey },
+        body:    JSON.stringify({ itinerary_id: itineraryId, hidden }),
+      });
+      setModerateMsg({
+        key: itineraryId,
+        text: res.ok
+          ? (hidden ? "공개를 차단했습니다." : "차단을 해제했습니다. 재공개는 사용자가 정합니다.")
+          : "바꾸지 못했습니다.",
+      });
+    } catch {
+      setModerateMsg({ key: itineraryId, text: "바꾸지 못했습니다." });
+    } finally {
+      setModerating(null);
+    }
+  }
+
   const load = useCallback(async (key: string) => {
     setLoading(true);
     setError(null);
@@ -288,14 +324,43 @@ function PlaceReportsInner() {
                       <span className="text-gray-500 font-normal"> · {r.category}</span>
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      #{r.id} · {r.target_type} /{" "}
-                      <Link href={`/place/${r.target_key}`} target="_blank"
+                      #{r.id} · {r.target_type === "shared_story" ? "공개 Story" : r.target_type} /{" "}
+                      {/* Story 는 공개 링크로 연다 — 관리자가 실제 공개물을 그대로 본다.
+                          내부 식별자를 따로 펼치지 않는다. */}
+                      <Link href={r.target_type === "shared_story"
+                                    ? `/shared/${r.target_key}`
+                                    : `/place/${r.target_key}`}
+                            target="_blank"
                             className="underline hover:text-white">{r.target_key}</Link>
                       {" · "}접수 {fmt(r.created_at)}
                       {r.resolved_at && <> · 처리 {fmt(r.resolved_at)}</>}
                     </p>
                   </div>
                 </div>
+
+                {/* 공개 차단 — Story 신고에서만. 확인을 한 번 받는다.
+                    가려도 사용자의 My Trip·Memory·사진·메모는 지워지지 않는다. */}
+                {r.target_type === "shared_story" && adminKey && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => void moderate(r.target_key, true)}
+                      disabled={moderating === r.target_key}
+                      className="text-xs font-bold px-3 py-2 rounded-lg bg-red-900/40 border border-red-800 text-red-200 disabled:opacity-50"
+                    >
+                      공개 차단
+                    </button>
+                    <button
+                      onClick={() => void moderate(r.target_key, false)}
+                      disabled={moderating === r.target_key}
+                      className="text-xs font-bold px-3 py-2 rounded-lg border border-gray-700 text-gray-300 disabled:opacity-50"
+                    >
+                      차단 해제
+                    </button>
+                    {moderateMsg?.key === r.target_key && (
+                      <span className="text-xs text-gray-400">{moderateMsg.text}</span>
+                    )}
+                  </div>
+                )}
 
                 {/* 사용자가 쓴 글. 일반 텍스트로만 그린다. */}
                 {r.note && (
