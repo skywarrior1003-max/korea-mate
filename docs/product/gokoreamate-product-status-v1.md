@@ -262,13 +262,17 @@ Constitution §10이 요구하는 항목의 현재 구현 수준이다.
 | 공개 철회 (일정·커버) | `IMPLEMENTED` |
 | 관리자 검토 후 카탈로그 반영 | `IMPLEMENTED` |
 | 관리자 문의 접수 경로 | `IMPLEMENTED` |
-| **개인정보 침해 신고 전용 경로** | `PLANNED` |
-| **저작권·초상권 신고 경로** | `PLANNED` |
-| **스팸·중복·위험 위치 검토 절차** | `PLANNED` |
-| **신고 기반 숨김·삭제 운영 흐름** | `PLANNED` |
+| **개인정보 침해 신고 전용 경로** | `IMPLEMENTED` — 공개 Story 신고의 `privacy_concern` 사유 |
+| **저작권·초상권 신고 경로** | `IMPLEMENTED` — 같은 경로의 `rights_concern` 사유 |
+| **스팸·중복·위험 위치 검토 절차** | `IMPLEMENTED` — `spam_or_misleading` 사유 + 관리자 검토 화면 |
+| **신고 기반 숨김·삭제 운영 흐름** | `IMPLEMENTED` — 관리자 차단/해제. 신고만으로 자동 숨김되지 않고, 해제해도 자동 재공개되지 않는다 |
 | 출처·작성 주체 표시 | `PARTIAL` — 공유 화면에 관광 사진 출처 표기는 있음. 사용자 콘텐츠 주체 표시는 미정 |
 
-**공개 발견 지도(Constitution §7 3단계)를 열기 전에 위 `PLANNED` 항목이 필요하다.**
+위 네 항목은 **Public Memory Story 트랙에서 구현·운영 검증됐다.** 근거와 검증 강도는
+`public-memory-story-launch-close-v1.md` 에 있다.
+저장소 사실 검증 대상 commit = `87a8c91` (이 문서 머리말의 `verified_commit` 은 다른 항목 기준이라 그대로 둔다).
+
+**공개 발견 지도(Constitution §7 3단계)를 열기 전에 남은 것은 `출처·작성 주체 표시` 다.**
 
 ---
 
@@ -290,6 +294,7 @@ Constitution §10이 요구하는 항목의 현재 구현 수준이다.
 ## 11. 참조
 
 - `gokoreamate-product-constitution-v1.md` — **Product Constitution v1.0 (`ACTIVE`, 제품 최상위 SSOT)**
+- `public-memory-story-launch-close-v1.md` — Public Memory Story launch-close 기록 (§9 네 항목의 근거)
 - `../architecture/gokoreamate-data-contract-v1.md` — Data Contract v1.2 (`ACTIVE`, 데이터·DB 최상위 SSOT)
 
 ---
