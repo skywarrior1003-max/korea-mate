@@ -33,6 +33,11 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
   /** 압축에 실패해 빠진 장 수. 조용히 사라지면 몇 장을 골랐는지와 어긋난다. */
   const [failedCount,  setFailedCount]  = useState(0);
   const [memo,         setMemo]         = useState("");
+  /**
+   * 장소 이름. 선택 사항이다 — 여행 중 사진을 남기는 흐름을 막지 않는다.
+   * 좌표(`location_label`)와 다른 값이다. 비워 두면 저장하지 않는다.
+   */
+  const [placeName,    setPlaceName]    = useState("");
   const [category,     setCategory]     = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
   const [lng,          setLng]          = useState<number | null>(null);
@@ -133,6 +138,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       captured_at:    new Date().toISOString(),
       day_number:     dayNumber,
       synced:         false,
+      ...(placeName.trim() ? { place_name: placeName.trim() } : {}),
       ...(extraPhotos.length > 0 ? { photo_data_extra: extraPhotos } : {}),
     };
     setErrorKey(null);
@@ -147,7 +153,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       // 성공·실패 어느 쪽이든 loading 을 반드시 해제한다
       setSaving(false);
     }
-  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, category, lat, lng, dayNumber, onSave]);
+  }, [saving, itineraryId, deviceId, photoData, extraPhotos, memo, placeName, category, lat, lng, dayNumber, onSave]);
 
   // 내부 enum(key)과 API 값은 영어 그대로 유지하고 표시명만 번역한다
   const catLabel = (k: MomentCategory) =>
@@ -301,6 +307,20 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
           </div>
 
           {/* 메모 */}
+          <div className="mb-4">
+            <label className="block text-xs font-bold text-white/50 mb-1.5">
+              {t("fieldPlace")} <span className="font-normal text-white/30">{t("placeOptional")}</span>
+            </label>
+            <input
+              type="text"
+              value={placeName}
+              onChange={e => setPlaceName(e.target.value)}
+              maxLength={200}
+              placeholder={t("phPlace")}
+              className="w-full bg-white/8 border border-white/15 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#FF4A2D]/60"
+            />
+            <p className="mt-1.5 text-[11px] text-white/30">{t("placeHint")}</p>
+          </div>
           <div>
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             <textarea

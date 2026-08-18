@@ -21,6 +21,22 @@ export interface TripMoment {
   lat:          number | null;
   lng:          number | null;
   location_label: string;    // GPS → 인간 가독 힌트 ("35.1°N 129.0°E")
+  /**
+   * 사람이 읽는 장소 이름. 선택 사항이다 — 적지 않은 Memory 가 더 흔하다.
+   *
+   * `location_label` 과 헷갈리면 안 된다. 그쪽은 좌표 문자열이고 비공개다.
+   * 이 값은 사용자가 적거나 고른 이름이고, 일정을 고쳐도 따라 바뀌지 않는다.
+   */
+  place_name?:   string | null;
+  /** 공식 장소일 때만. 표시명의 정본이 아니라 나중에 Saved 로 옮길 때 쓰는 열쇠. */
+  city_spot_id?: number | null;
+  /**
+   * 공개 Story 에 포함하기로 골랐는가. 기본 false.
+   *
+   * 이것만으로 공개되지 않는다 — 실제로 나가려면 이 값과
+   * `itinerary.is_public` 이 **둘 다** 참이어야 하고, 그 공개 경로는 아직 없다.
+   */
+  is_public?:    boolean;
   captured_at:  string;      // ISO datetime
   day_number:   number | null;
   synced:       boolean;     // Supabase 메타데이터 sync 완료 여부

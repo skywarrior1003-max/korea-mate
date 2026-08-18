@@ -23,6 +23,8 @@ import {
 } from "../../../src/lib/itinerary-validate";
 import { normalizeMemo } from "../../../src/lib/trip-moments/memo-patch-core";
 
+import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-moments/public-consent-core";
+
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
 const VALID_CATEGORIES = ["food", "scenery", "people", "culture", "random"] as const;
@@ -86,7 +88,7 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   // storage_path 는 내부 판정에만 쓰고 응답에는 넣지 않는다
   const { data, error } = await admin
     .from("trip_moments")
-    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path")
+    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public")
     .eq("itinerary_id", itineraryId)
     .eq("device_id", deviceId)
     .order("captured_at", { ascending: false });
@@ -136,6 +138,20 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   const owned = await verifyItineraryOwner(admin, itineraryId, deviceId);
   if (!owned) return json({ error: "Not found" }, 404);
 
+  // 장소 표시명 — 선택 사항이다. 없어도 저장을 막지 않는다.
+  const placeRes = normalizePlaceName(body.place_name ?? null);
+  if (!placeRes.ok) return json({ error: placeRes.error }, 400);
+  const spotRes = normalizeCitySpotId(body.city_spot_id ?? null);
+  if (!spotRes.ok) return json({ error: spotRes.error }, 400);
+
+  // 공식 장소 id 는 클라이언트 말을 믿지 않는다 — 실제로 있는 장소인지 본다.
+  // 없다고 Memory 저장을 막지는 않는다(대부분의 Memory 는 공식 장소가 아니다).
+  if (spotRes.citySpotId !== null) {
+    const { data: spot } = await admin
+      .from("city_spots").select("id").eq("id", spotRes.citySpotId).maybeSingle();
+    if (!spot) return json({ error: "Invalid city_spot_id" }, 400);
+  }
+
   const row: Record<string, unknown> = {
     moment_id:      momentId,
     itinerary_id:   itineraryId,
@@ -144,6 +160,10 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     category,
     location_label: str(body.location_label, 200),
     captured_at:    str(body.captured_at, 30) || new Date().toISOString(),
+    // is_public 은 여기서 받지 않는다 — 기본값 false 로 들어가고, 공개 선택은
+    // 동의를 함께 확인하는 전용 경로(`PUT .../public`)에서만 바뀐다.
+    ...(placeRes.placeName !== null ? { place_name:   placeRes.placeName }   : {}),
+    ...(spotRes.citySpotId  !== null ? { city_spot_id: spotRes.citySpotId } : {}),
     // photo_data: 수신·저장 금지
   };
 

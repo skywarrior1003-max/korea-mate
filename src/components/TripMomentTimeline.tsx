@@ -29,6 +29,12 @@ interface Props {
   onUseAsCover?:    (momentId: string) => void;
   /** 개인 커버 해제 → 관광 커버. 공개를 줄이는 작업이라 추가 동의를 요구하지 않는다 */
   onClearCover?:    () => void;
+  /**
+   * 이 Memory 를 공개 Story 에 포함/제외. **주지 않으면 그 버튼을 그리지 않는다** —
+   * 눌러도 아무 일 없는 control 을 두지 않기 위해서다.
+   * 켜는 요청은 동의 확인을 통과한 뒤에만 온다(이 컴포넌트가 확인 창을 띄운다).
+   */
+  onSetPublic?:  (momentId: string, next: boolean) => Promise<boolean>;
   /** 커버 변경 진행 중 — 버튼 중복 클릭 방지 */
   coverBusy?:       boolean;
 }
@@ -73,10 +79,39 @@ function groupByDay(moments: TripMoment[]): { day: number | null; items: TripMom
 export default function TripMomentTimeline({
   moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [],
   isPublic = false, currentCoverMomentId = null,
-  onUseAsCover, onClearCover, coverBusy = false,
+  onUseAsCover, onClearCover, coverBusy = false, onSetPublic,
 }: Props) {
   const t = useTranslations("memo");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  /** 공개 확인 창을 띄운 Memory. 켜기 요청에만 뜬다 — 끄기는 묻지 않는다. */
+  const [consentFor,  setConsentFor]  = useState<TripMoment | null>(null);
+  const [consentOk1,  setConsentOk1]  = useState(false);
+  const [consentOk2,  setConsentOk2]  = useState(false);
+  const [publicBusy,  setPublicBusy]  = useState<string | null>(null);
+  const [publicErr,   setPublicErr]   = useState<string | null>(null);
+
+  function openConsent(m: TripMoment) {
+    setConsentOk1(false); setConsentOk2(false); setPublicErr(null); setConsentFor(m);
+  }
+
+  async function applyPublic(m: TripMoment, next: boolean) {
+    if (!onSetPublic || publicBusy) return;
+    setPublicBusy(m.moment_id); setPublicErr(null);
+    const ok = await onSetPublic(m.moment_id, next);
+    setPublicBusy(null);
+    if (ok) setConsentFor(null);
+    else    setPublicErr(m.moment_id);
+  }
+
+  /** 확인 창이 무엇을 공개한다고 말할지 — 실제 상태 그대로 (거짓 문구 금지) */
+  function consentLine(m: TripMoment): { key: string; n: number } {
+    const n = (m.photo_data ? 1 : 0) + (m.photo_data_extra?.length ?? 0);
+    const hasMemo = m.memo.trim().length > 0;
+    if (n > 0 && hasMemo) return { key: "consentPhotosAndMemo", n };
+    if (n > 0)            return { key: "consentPhotosOnly",    n };
+    if (hasMemo)          return { key: "consentMemoOnly",      n };
+    return { key: "consentNothingYet", n };
+  }
   const [expanded,      setExpanded]      = useState<string | null>(null);
   const [editingId,     setEditingId]     = useState<string | null>(null);
   const [draft,         setDraft]         = useState("");
@@ -347,9 +382,11 @@ export default function TripMomentTimeline({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-xs text-[#565D66]/60">
                   <span>🕐 {dateStr}</span>
-                  {m.lat !== null && (
-                    <span>📍 {m.location_label}</span>
-                  )}
+                  {/* 사람이 적은 장소 이름이 있으면 그것을 보여 준다. 없을 때만
+                      좌표 힌트로 떨어진다 — 좌표는 이름이 아니다. */}
+                  {m.place_name
+                    ? <span>{m.place_name}</span>
+                    : m.lat !== null && <span>📍 {m.location_label}</span>}
                   {m.synced && (
                     <span className="text-emerald-500">☁️</span>
                   )}
@@ -388,6 +425,21 @@ export default function TripMomentTimeline({
                     </button>
                   )}
 
+                  {/* 공개 스토리 포함 여부. 콜백이 없으면 그리지 않는다. */}
+                  {onSetPublic && (
+                    <button
+                      onClick={() => m.is_public ? void applyPublic(m, false) : openConsent(m)}
+                      disabled={publicBusy === m.moment_id}
+                      aria-pressed={m.is_public === true}
+                      className={`gkm-focus text-xs font-bold px-3 py-1.5 rounded-lg transition-all disabled:opacity-50 cursor-pointer ${
+                        m.is_public
+                          ? "text-[#191C21] bg-[#F6F7F8]"
+                          : "text-[#565D66]/60 hover:text-[#191C21] hover:bg-[#F6F7F8]"
+                      }`}
+                    >
+                      {m.is_public ? t("publicOn") : t("makePublic")}
+                    </button>
+                  )}
                   {onEditMemo && editingId !== m.moment_id && (
                     <button
                       onClick={() => startEdit(m)}
@@ -428,6 +480,51 @@ export default function TripMomentTimeline({
         </div>
       );
       })}
+
+      {/* 공개 확인 — 커버 동의와 같은 방식이다. 다만 범위가 다르므로 문구도 다르다:
+          이건 커버 한 장이 아니라 이 Memory 의 사진 전부와 메모다. */}
+      {consentFor && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0"
+             role="dialog" aria-modal="true" aria-label={t("consentTitle")}>
+          <div className="w-full max-w-sm bg-white rounded-3xl p-5 shadow-xl">
+            <h3 className="text-base font-black text-[#191C21]">{t("consentTitle")}</h3>
+            <p className="mt-2 text-sm text-[#565D66]">
+              {t(consentLine(consentFor).key, { n: consentLine(consentFor).n })}
+            </p>
+            <ul className="mt-3 space-y-1.5 text-xs text-[#565D66]/80">
+              <li>· {t("consentScopeAnyone")}</li>
+              <li>· {t("consentScopeTripPublic")}</li>
+            </ul>
+            <label className="mt-4 flex items-start gap-2 text-xs text-[#191C21]">
+              <input type="checkbox" checked={consentOk1} onChange={e => setConsentOk1(e.target.checked)}
+                     className="mt-0.5 shrink-0" />
+              <span>{t("consentCheckRights")}</span>
+            </label>
+            <label className="mt-2 flex items-start gap-2 text-xs text-[#191C21]">
+              <input type="checkbox" checked={consentOk2} onChange={e => setConsentOk2(e.target.checked)}
+                     className="mt-0.5 shrink-0" />
+              <span>{t("consentCheckUnderstand")}</span>
+            </label>
+            {publicErr === consentFor.moment_id && (
+              <p role="alert" className="mt-3 text-xs font-medium text-red-500">{t("publicFailed")}</p>
+            )}
+            <div className="mt-5 flex gap-2">
+              <button onClick={() => setConsentFor(null)}
+                      className="gkm-focus flex-1 min-h-11 rounded-xl border border-[#E5E7EA] text-sm font-bold text-[#565D66]">
+                {t("consentCancel")}
+              </button>
+              <button
+                onClick={() => void applyPublic(consentFor, true)}
+                disabled={!consentOk1 || !consentOk2 || publicBusy === consentFor.moment_id}
+                className="gkm-focus flex-1 min-h-11 rounded-xl text-sm font-black text-white disabled:opacity-50"
+                style={{ backgroundColor: "#191C21" }}
+              >
+                {publicBusy === consentFor.moment_id ? t("consentApplying") : t("consentApply")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes fadeInUp {

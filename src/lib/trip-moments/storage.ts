@@ -170,6 +170,52 @@ export async function uploadMomentExtraPhoto(
   }
 }
 
+/**
+ * 장소 표시명을 고친다. 비우면 null 이 된다.
+ *
+ * 서버가 좌표 문자열을 거절하므로("35.1°N 129.0°E" 같은 값) 사용자가 실수로
+ * 그런 값을 넣어도 저장되지 않는다.
+ */
+export async function updateMomentPlace(
+  momentId: string,
+  placeName: string | null,
+  deviceId:  string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}`, {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      body:    JSON.stringify({ place_name: placeName }),
+    });
+    return res.ok;
+  } catch { return false; }
+}
+
+/**
+ * 이 Memory 를 공개 Story 에 포함할지 정한다.
+ *
+ * 켤 때는 동의가 필요하다 — 서버가 판본을 확인하고 시각을 적는다. 끌 때는
+ * 묻지 않는다. 이 값만으로 공개되지 않는다(일정도 공개여야 하고, 공개 경로는
+ * 아직 없다).
+ */
+export async function setMomentPublic(
+  momentId: string,
+  isPublic:  boolean,
+  deviceId:  string,
+  consentVersion?: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/trip-moments/${encodeURIComponent(momentId)}/public`, {
+      method:  "PUT",
+      headers: { "Content-Type": "application/json", "x-device-id": deviceId },
+      body:    JSON.stringify(isPublic
+        ? { is_public: true, consent: true, consentVersion }
+        : { is_public: false }),
+    });
+    return res.ok;
+  } catch { return false; }
+}
+
 /** 로컬 목록에서 한 moment 의 필드를 갱신하고 저장한다 */
 function patchLocal(itinId: string, momentId: string, patch: Partial<TripMoment>): TripMoment[] {
   const next = loadMoments(itinId).map(m =>
@@ -198,6 +244,9 @@ async function postMomentMeta(m: TripMoment, deviceId: string): Promise<boolean>
         itinerary_id:   m.itinerary_id,
         memo:           m.memo,
         category:       m.category,
+        // 장소 표시명 — 없으면 보내지 않는다(서버가 null 로 둔다)
+        ...(m.place_name   ? { place_name:   m.place_name }   : {}),
+        ...(m.city_spot_id ? { city_spot_id: m.city_spot_id } : {}),
         lat:            m.lat,
         lng:            m.lng,
         location_label: m.location_label,
