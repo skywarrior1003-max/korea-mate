@@ -28,6 +28,18 @@ export interface ItineraryRow {
   is_public?:    boolean;
   copy_of?:      string | null;
   copy_count?:   number;
+  /**
+   * 공개된 Memory. 서버가 정제한 것만 온다 — 여행이 공개이고, 그 Memory 를
+   * 골랐고, 동의 판본이 맞는 것만. 사진은 주소 대신 되돌릴 수 없는 값이다.
+   * 공개된 Memory 가 하나도 없으면 빈 배열이다(오류가 아니다).
+   */
+  memories?: {
+    dayNumber: number | null;
+    memo:      string | null;
+    placeName: string | null;
+    placeId:   string | null;
+    photos:    { ref: string }[];
+  }[];
   /** 현재 표지 종류. 소유자 GET 에서만 내려온다 */
   cover_kind?:      "auto" | "asset" | "moment";
   /** cover_kind="moment" 일 때 표지로 쓰는 Memory. 경로가 아니라 ID 다 */

@@ -26,6 +26,14 @@ interface Props {
   data: StorySummaryData;
   /** 기존 My Trip 완료 지도가 들어올 자리. 없으면 시안의 빈 상자. */
   mapSlot?: ReactNode;
+  /**
+   * 지도 자리를 통째로 감춘다.
+   *
+   * 아직 붙일 지도가 없을 때 쓴다. 빈 상자를 그대로 두면 보는 사람이 "지도가
+   * 로딩 중이거나 고장났다" 고 읽는다 — 없는 것은 없는 대로 두는 편이 낫다.
+   * 지도가 생기면 이 값을 빼고 `mapSlot` 을 주면 된다.
+   */
+  hideMapSlot?: boolean;
   /** 붙이지 않으면 버튼을 그리지 않는다 — 눌러도 안 되는 CTA 를 두지 않는다. */
   onCopy?: () => void;
   copyLabel: string;
@@ -35,7 +43,7 @@ interface Props {
 }
 
 export default function StorySummary({
-  data, mapSlot, onCopy, copyLabel, copyBusy, onShare, shareLabel,
+  data, mapSlot, hideMapSlot, onCopy, copyLabel, copyBusy, onShare, shareLabel,
 }: Props) {
   return (
     <section
@@ -71,6 +79,7 @@ export default function StorySummary({
         </p>
 
         {/* 지도 자리 — 실제 지도는 후속 작업에서 이 안에 들어온다 */}
+        {!hideMapSlot && (
         <div
           className="w-full h-64 overflow-hidden relative flex items-center justify-center"
           style={{
@@ -87,6 +96,7 @@ export default function StorySummary({
             </svg>
           )}
         </div>
+        )}
 
         <div className="flex flex-col gap-4 w-full sm:w-auto" style={{ minWidth: 200 }}>
           {onCopy && (

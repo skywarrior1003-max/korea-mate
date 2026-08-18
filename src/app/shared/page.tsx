@@ -19,6 +19,17 @@ import AffiliateInlineSection from "@/components/AffiliateInlineSection";
 import KoreaReadySection from "@/components/KoreaReadySection";
 import TripStoryExport from "@/components/TripStoryExport";
 import { apiCopyItinerary } from "@/lib/itinerary-api";
+import StoryCover from "@/components/story/StoryCover";
+import StoryNavHide from "@/components/story/StoryNavHide";
+import StoryJournal from "@/components/story/StoryJournal";
+import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
+import StorySummary from "@/components/story/StorySummary";
+import { PAGE_BG } from "@/components/story/story-tokens";
+import type { StoryMemory } from "@/components/story/story-types";
+import {
+  toStoryDays, coverPhotoUrl, coverEyebrow, storyStats, hasPublicMemories,
+  type ApiStory,
+} from "@/lib/share/story-adapter";
 import {
   googlePlaceSearchUrl, isSafeMapUrl, naverPlaceSearchUrl,
 } from "@/lib/maps/place-navigation";
@@ -158,6 +169,8 @@ export default function SharedTripPage() {
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   const [isCopying,       setIsCopying]       = useState(false);
   const [copyError,       setCopyError]       = useState<string | null>(null);
+  /** Story 에서 사진을 눌러 연 큰 화면. 같은 Memory 의 사진만 들어간다. */
+  const [storyFocus, setStoryFocus] = useState<{ m: StoryMemory; i: number } | null>(null);
   const [coverSkip,       setCoverSkip]       = useState(0);   // 이미지 실패 → 다음 자산
   // 실제 표시 커버 종류. 판정 전(unknown)에는 KTO 출처를 붙이지 않는다.
   const [coverKind, setCoverKind] = useState<"unknown" | "personal" | "tourism">("unknown");
@@ -332,6 +345,73 @@ export default function SharedTripPage() {
   const highlights = Array.from(
     new Set(coverPlaces.map((p) => (p.name ?? "").trim()).filter(Boolean)),
   ).slice(0, 4);
+
+  // ── 공개한 Memory 가 있으면 Story 로 보여 준다 ─────────────────────────────
+  //
+  // 없으면 아래 기존 공유 화면 그대로다. 공개한 기억이 없는 여행에 빈 Journal 을
+  // 억지로 띄우지 않는다 — 그건 이 사람이 만든 것이 아니다.
+  //
+  // 여기 들어오는 값은 전부 서버가 정제한 것이다. 좌표도, 저장 경로도, 내부
+  // id 도 응답에 오지 않으므로 화면이 볼 수 없다.
+  const apiStory = trip as unknown as ApiStory;
+  if (hasPublicMemories(apiStory)) {
+    const storyDays = toStoryDays(apiStory);
+    const cover     = coverPhotoUrl(apiStory);
+    const stats     = storyStats(apiStory);
+    const title     = trip.trip_title?.trim() || `${days.length}-Day ${cityCap} Itinerary`;
+
+    return (
+      <div style={{ backgroundColor: PAGE_BG }}>
+        {/* 이 화면이 켜져 있는 동안에는 앱 하단 네비게이션을 감춘다.
+            바깥 사람이 보는 독립된 화면이라 앱 메뉴가 낄 자리가 아니다.
+            Story 가 아닌 공유 화면은 그대로 둔다. */}
+        <StoryNavHide />
+
+        {cover && (
+          <StoryCover
+            scrollHint="story-journal"
+            data={{
+              imageUrl: cover,
+              eyebrow:  coverEyebrow(apiStory),
+              title,
+              // 작성자 표시값이 서비스에 없다. 없는 이름을 지어내지 않고 줄을 숨긴다.
+            }}
+          />
+        )}
+
+        <StoryJournal
+          id="story-journal"
+          days={storyDays}
+          onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
+          /* Save 는 아직 붙일 곳이 없다 — 넘기지 않으면 버튼이 그려지지 않는다 */
+        />
+
+        <StorySummary
+          data={{
+            title,
+            stats: `${stats.dayCount} Days · ${stats.placeCount} Places`,
+            description: "",
+          }}
+          /* 지도는 아직 없다. 자리를 비워 두지 않고 통째로 감춘다 —
+             빈 상자를 진짜 지도로 오인하게 두지 않는다. */
+          hideMapSlot
+          copyLabel={isCopying ? "Copying Trip…" : "📋 Copy This Trip"}
+          copyBusy={isCopying}
+          onCopy={() => void handleCopyTrip()}
+          shareLabel="Share"
+        />
+
+        {storyFocus && (
+          <StoryMemoryFocus
+            memory={storyFocus.m}
+            startIndex={storyFocus.i}
+            onClose={() => setStoryFocus(null)}
+          />
+        )}
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F6F7F8" }}>
