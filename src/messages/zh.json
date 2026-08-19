@@ -491,7 +491,9 @@
     "reportCancel": "取消",
     "reportThanks": "感谢告知，我们会查看。",
     "reportFailed": "无法发送举报，请重试。",
-    "photoLoadFailed": "无法加载此卡片的照片。请重试。"
+    "photoLoadFailed": "无法加载此卡片的照片。请重试。",
+    "share": "分享",
+    "copying": "正在复制行程…"
   },
   "memo": {
     "edit": "编辑",

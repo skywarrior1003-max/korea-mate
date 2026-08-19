@@ -83,7 +83,8 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
   saved?: boolean;
 }) {
   const photos = memory.photos;
-  const alt    = memory.placeName ?? memory.memo.slice(0, 40);
+  const hasMemo = memory.memo.trim() !== "";
+  const alt    = memory.placeName ?? (hasMemo ? memory.memo.slice(0, 40) : "");
   const open   = (i: number) => onOpenPhoto ? () => onOpenPhoto(memory, i) : undefined;
 
   // 두 번째 줄에 놓을 보조 사진 두 칸. 넘치는 만큼은 +N 으로 접는다.
@@ -112,14 +113,21 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
         </div>
       )}
 
+      {/* 적은 글이 없으면 이 줄 자체를 그리지 않는다.
+          예전에는 빈 인용부호(“”)만 남아, 사진만 올린 Memory 마다 아무것도
+          들어 있지 않은 따옴표 한 쌍이 떠 있었다. 없는 것은 없는 대로 둔다.
+          Save 가 붙는 날에는 글이 없어도 그 버튼 때문에 줄이 필요하다. */}
+      {(hasMemo || onSave) && (
       <div className="flex justify-between items-start" style={{ marginTop: 24, paddingLeft: 16, paddingRight: 16 }}>
         {/* 사용자가 적은 문구 그대로. 다듬거나 만들어 내지 않는다. */}
         {/* 줄간격은 1.625 다 — 시안이 leading-relaxed 를 얹어 26px×1.625 = 42.25px 로
             렌더한다. 토큰의 1.3 을 그대로 두면 33.8px 이 되어 시안보다 촘촘해진다. */}
+        {hasMemo ? (
         <p className="italic flex-1 pr-4"
            style={{ ...HEADLINE_LG_MOBILE, lineHeight: 1.625, color: ON_SURFACE }}>
           {`“${memory.memo}”`}
         </p>
+        ) : <span className="flex-1" />}
         {onSave && (
           <button
             type="button"
@@ -137,6 +145,7 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
           </button>
         )}
       </div>
+      )}
     </div>
   );
 }

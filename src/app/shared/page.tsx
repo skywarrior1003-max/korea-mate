@@ -161,6 +161,9 @@ type Status = "loading" | "found" | "not_found" | "error";
 export default function SharedTripPage() {
   const tStay = useTranslations("stay");
   const tItin = useTranslations("itin");
+  // 공개 Story 는 바깥 사람이 보는 화면이다 — 한 화면에 영어와 한국어가
+  // 섞여 있으면 그 사람은 무엇이 자기 언어인지 알 수 없다.
+  const tStory = useTranslations("story");
   const [status,        setStatus]        = useState<Status>("loading");
   const [trip,          setTrip]          = useState<ItineraryRow | null>(null);
   const [days,          setDays]          = useState<Day[]>([]);
@@ -400,10 +403,10 @@ export default function SharedTripPage() {
           /* StorySummary 가 이미 클립보드 아이콘을 그린다. 여기서 이모지까지 붙이면
              아이콘이 둘로 보인다. 아래 기존 공유 화면은 SVG 가 없어 이모지가 곧
              아이콘이므로 그대로 둔다. */
-          copyLabel={isCopying ? "Copying Trip…" : "Copy This Trip"}
+          copyLabel={isCopying ? tStory("copying") : tStory("copyTrip")}
           copyBusy={isCopying}
           onCopy={() => void handleCopyTrip()}
-          shareLabel="Share"
+          shareLabel={tStory("share")}
           /* 기존 Share 자리를 실제 9:16 카드에 연결한다. 새 버튼을 만들지 않는다 —
              `StorySummary` 는 `onShare` 가 있을 때만 이 버튼을 그린다. */
           onShare={() => setStoryExportOpen(true)}

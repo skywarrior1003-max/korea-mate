@@ -491,7 +491,9 @@
     "reportCancel": "キャンセル",
     "reportThanks": "お知らせありがとうございます。確認します。",
     "reportFailed": "報告を送れませんでした。もう一度お試しください。",
-    "photoLoadFailed": "このカードの写真を読み込めませんでした。もう一度お試しください。"
+    "photoLoadFailed": "このカードの写真を読み込めませんでした。もう一度お試しください。",
+    "share": "シェア",
+    "copying": "旅行をコピー中…"
   },
   "memo": {
     "edit": "編集",

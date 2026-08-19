@@ -66,7 +66,7 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
       className="fixed inset-0 z-50 bg-black text-white overflow-hidden"
       role="dialog"
       aria-modal="true"
-      aria-label={memory.placeName ?? memory.memo.slice(0, 40)}
+      aria-label={memory.placeName ?? (memory.memo.trim() !== "" ? memory.memo.slice(0, 40) : undefined)}
       onTouchStart={e => { touchX.current = e.touches[0]?.clientX ?? null; }}
       onTouchEnd={e => {
         const start = touchX.current; touchX.current = null;
@@ -158,6 +158,8 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
               </h2>
             )}
             {/* 긴 글도 자르지 않는다. 넘치면 이 칸 안에서 스크롤한다. */}
+            {/* 적은 글이 없으면 빈 제목 칸을 만들지 않는다 — Journal 과 같은 규칙 */}
+            {memory.memo.trim() !== "" && (
             <h1
               className="text-white leading-tight overflow-y-auto"
               /* 줄간격 1.25 — 시안이 leading-tight 를 얹어 48px×1.25 = 60px 로 렌더한다 */
@@ -165,6 +167,7 @@ export default function StoryMemoryFocus({ memory, startIndex = 0, regionLabel, 
             >
               {memory.memo}
             </h1>
+            )}
           </div>
           <div className="flex justify-center items-center gap-2 opacity-50" style={{ marginTop: STACK_LG }}>
             <span aria-hidden>‹</span>

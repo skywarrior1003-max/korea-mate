@@ -491,7 +491,9 @@
     "reportCancel": "Cancel",
     "reportThanks": "Thank you. We will look into it.",
     "reportFailed": "Could not send the report. Please try again.",
-    "photoLoadFailed": "Could not load the photos for this card. Please try again."
+    "photoLoadFailed": "Could not load the photos for this card. Please try again.",
+    "share": "Share",
+    "copying": "Copying trip…"
   },
   "memo": {
     "edit": "Edit",

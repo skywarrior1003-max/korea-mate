@@ -491,7 +491,9 @@
     "reportCancel": "취소",
     "reportThanks": "알려 주셔서 고맙습니다. 확인하겠습니다.",
     "reportFailed": "신고를 보내지 못했습니다. 다시 시도해 주세요.",
-    "photoLoadFailed": "이 카드에 쓸 사진을 불러오지 못했습니다. 다시 시도해 주세요."
+    "photoLoadFailed": "이 카드에 쓸 사진을 불러오지 못했습니다. 다시 시도해 주세요.",
+    "share": "공유하기",
+    "copying": "여행을 복사하는 중…"
   },
   "memo": {
     "edit": "수정",
