@@ -1,0 +1,340 @@
+{
+  "schema": "multicity-final-artifact-manifest-v1",
+  "generated_at": "2026-08-19",
+  "generated_by": "TASK-MULTICITY-MAIN-LAPTOP-HANDOFF-CONTEXT-PACKAGE-V2",
+  "source_computer": "auxiliary",
+  "handoff_branch": "data/multicity-main-handoff-v1",
+  "handoff_branch_base": "data/multicity-common",
+  "handoff_branch_base_sha": "bc8d5d4aaa904ffa710e3f1203e58787de3fa44e",
+  "cities_included": ["busan_food", "busan_nonfood", "gyeongju", "seoul", "jeju", "jeonju"],
+  "common_policy_sha": "bc8d5d4aaa904ffa710e3f1203e58787de3fa44e",
+  "artifacts": {
+    "busan_food": {
+      "city": "busan",
+      "category": "food",
+      "ssot_type": "BUSAN_FOOD_GUIDE_CANONICAL",
+      "branch": "data/busan-food-discovery-v1",
+      "branch_sha": "40ecc06498a786ede426d0dcd6ec7ddbb66f1136",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/tourapi/normalized/busan/busan-food-194-canonical-v1.json",
+      "close_doc": "docs/data-collection/busan/busan-food-final-handoff-v1.md",
+      "record_counts": {
+        "service_universe": 194,
+        "total_provenance": 194,
+        "excluded": 0
+      },
+      "completeness": {
+        "nav_ready": 194,
+        "nav_total": 194,
+        "nav_rate": "100%",
+        "image_ready": 191,
+        "image_total": 194,
+        "image_rate": "98.5%",
+        "image_genuine_exceptions": 3,
+        "image_genuine_exception_ids": ["쥬가정효", "멍텅구리", "미소오뎅"],
+        "ai_auto": 194,
+        "ai_blocked": 0,
+        "ai_conditional": 0
+      },
+      "sources": {
+        "primary": ["미쉐린가이드2026:55", "태그슐랑2025:20", "부산맛집2026:119"],
+        "images": ["VisitBusan", "VBC_JSONL", "Instagram_og_image", "homepage_og_image"],
+        "geocoding": "VWorld"
+      },
+      "key_facts": [
+        "부산 Food 194는 부산 Non-Food 764와 독립 dataset이다",
+        "두 dataset을 합산하면 부산 서비스 유니버스 958건이 된다",
+        "단일 통합 파일(busan-958)은 설계상 존재하지 않는다"
+      ]
+    },
+    "busan_nonfood": {
+      "city": "busan",
+      "category": "nonfood",
+      "ssot_type": "BUSAN_NONFOOD_CANONICAL",
+      "branch": "data/busan-nonfood-complete-v1",
+      "branch_sha": "26fb3affceca253d805dc264e3fcaab7647672ef",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/tourapi/normalized/busan/busan-nonfood-canonical-v1.json",
+      "close_doc": "docs/data-collection/busan/busan-nonfood-final-handoff-v1.md",
+      "record_counts": {
+        "service_universe": 764,
+        "total_provenance": 853,
+        "excluded": 89,
+        "excluded_breakdown": {
+          "standard_accommodation": 82,
+          "false_positive_confirmed": 6,
+          "other": 1
+        }
+      },
+      "completeness": {
+        "nav_ready": 852,
+        "nav_total": 853,
+        "nav_rate": "99.9%",
+        "nav_genuine_exceptions": 1,
+        "nav_genuine_exception_ids": ["반송공원"],
+        "image_ai_auto_complete": true,
+        "ai_auto": 756,
+        "ai_blocked": 97,
+        "ai_blocked_breakdown": {
+          "standard_accommodation": 82,
+          "false_positive": 14,
+          "coord_genuine_exception": 1
+        }
+      },
+      "sources": {
+        "base": "data/busan-enrichment-v1@710403f",
+        "api": "KTO_TourAPI",
+        "images": "KTO_detailImage2"
+      },
+      "composition": {
+        "attraction": 717,
+        "accommodation_provenance": 82,
+        "nature": 50,
+        "event": 4
+      },
+      "key_facts": [
+        "853은 provenance 수. 실제 서비스 대상은 764",
+        "accommodation 82건은 excluded되나 provenance로 남아 있음",
+        "반송공원은 COORD_GENUINE_EXCEPTION: KTO 좌표 오류(lat=19.69 lng=117.99), VWorld 미확인"
+      ]
+    },
+    "gyeongju": {
+      "city": "gyeongju",
+      "category": "all",
+      "ssot_type": "GYEONGJU_CANONICAL",
+      "branch": "data/gyeongju-targeted-completion-v1",
+      "branch_sha": "0d9ab8afe5acd398481c0826b793e50cfac48fa1",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl",
+      "artifact_sha256": "fdbff0f90e94cf7c50536ddcf9b22e05dfb7cd834ac374ec6a1a2b315477aeef",
+      "close_doc": "docs/data-collection/gyeongju/gyeongju-targeted-completion-handoff-v1.md",
+      "record_counts": {
+        "service_universe": 299,
+        "total_provenance": 302,
+        "excluded": 3,
+        "excluded_breakdown": {
+          "LOW_TRAVEL_VALUE": 1,
+          "DUPLICATE": 2
+        }
+      },
+      "completeness": {
+        "nav_ready": 299,
+        "nav_total": 299,
+        "nav_rate": "100%",
+        "image_ready": 299,
+        "image_total": 299,
+        "image_rate": "100%",
+        "ai_auto": 299,
+        "ai_blocked": 0
+      },
+      "composition": {
+        "attraction": 197,
+        "restaurant": 102
+      },
+      "sources": {
+        "primary": "gyeongju.go.kr (공공저작물)",
+        "supplemental": "KTO_TourAPI",
+        "geocoding": "VWorld (116건 중 107건 복구)"
+      },
+      "common_policy_at_close": "f9e3543",
+      "key_facts": [
+        "감포읍·양남면 해안 장소 11건: OUTSIDE_STRICT_BBOX_GENUINE_COASTAL_GYEONGJU",
+        "KTO_TYPE_UNKNOWN = 0 (모두 해소됨)"
+      ]
+    },
+    "seoul": {
+      "city": "seoul",
+      "category": "all",
+      "ssot_type": "SEOUL_CANONICAL",
+      "branch": "data/seoul-targeted-completion-v1",
+      "branch_sha": "a57e01c29296ce243e223a0ab70b9c0fd9cd3fd8",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/seoul-final-release/seoul-canonical-places-v1.jsonl",
+      "close_doc": "docs/data-collection/seoul/seoul-targeted-completion-handoff-v1.md",
+      "record_counts": {
+        "service_universe": 1837,
+        "total_provenance": 1838,
+        "excluded": 1,
+        "excluded_breakdown": {
+          "MULTI_LOCATION_NON_PLACE": 1
+        }
+      },
+      "completeness": {
+        "nav_ready": 1837,
+        "nav_total": 1837,
+        "nav_rate": "100%",
+        "image_ready": 1836,
+        "image_total": 1837,
+        "image_rate": "99.9%",
+        "image_genuine_exceptions": 1
+      },
+      "ai_taxonomy": {
+        "ai_auto_default": 771,
+        "ai_conditional": 199,
+        "ai_not_auto_recommended": 837,
+        "ai_hard_blocked": 30,
+        "ai_conditional_note": "SPECIALTY_INTEREST_RESTAURANT (할랄·비건 등), user context triggers inclusion",
+        "ai_hard_blocked_note": "non-rest 27 + Incheon airport info centers 3"
+      },
+      "composition": {
+        "non_food_visitseoul": 573,
+        "food": 1259,
+        "special2": 2,
+        "event": 4
+      },
+      "sources": {
+        "primary": "visitseoul.net (PRIMARY_AND_SUFFICIENT)",
+        "food": "seoul-food-discovery-candidates-r1.jsonl"
+      },
+      "tv_gate_applied": true,
+      "tv_gate_note": "V1 AI_AUTO 1803/1833(98.4%) → TV Gate V3 적용 후 771(42%). 교정 완료. SPECIALTY 199건은 AI_BLOCKED 아닌 AI_CONDITIONAL.",
+      "key_facts": [
+        "771/199/837/30 분류는 오류가 아닌 multicity eligibility 정책 준수 결과",
+        "인천공항 3건: AI_ITINERARY=NO override, SEARCHABLE/coords 불변",
+        "EVENT 4건: V4에서 canonical 추가 (기존 handoff existing_detail_available=False 이벤트)"
+      ]
+    },
+    "jeju": {
+      "city": "jeju",
+      "category": "all",
+      "ssot_type": "JEJU_CANONICAL",
+      "branch": "data/jeju-targeted-completion-v1",
+      "branch_sha": "b6539a96908a972705836067430223645473951f",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/jeju-final-release/jeju-canonical-places-v1.jsonl",
+      "close_doc": "docs/data-collection/jeju/jeju-v7-final-close-state-v1.md",
+      "record_counts": {
+        "total": 1607,
+        "service_universe": 1496,
+        "active": 1496,
+        "inactive": 111
+      },
+      "active_composition": {
+        "place": 1230,
+        "food": 256,
+        "event": 10
+      },
+      "completeness": {
+        "nav_ready": 1496,
+        "nav_total": 1496,
+        "nav_rate": "100%",
+        "food_image_ready": 254,
+        "food_image_total": 256,
+        "food_image_rate": "99.2%",
+        "ai_auto": 895
+      },
+      "sources": {
+        "primary": "visitjeju.net",
+        "geocoding": "VWorld (NAV-3: 3건)"
+      },
+      "rule_m_fix": {
+        "applied": true,
+        "old_bbox": {"lat": "33.1-33.6", "lng": "126.1-126.9"},
+        "new_bbox": {"lat": "33.0-34.0", "lng": "126.0-127.0"},
+        "outliers_resolved": 119,
+        "outliers_after": 0,
+        "common_commit": "bc8d5d4aaa904ffa710e3f1203e58787de3fa44e",
+        "valid_coord_changed_for_bbox_only": 0
+      },
+      "key_facts": [
+        "추자도·우도 포함 위해 bbox 확장 (RULE-M)",
+        "RULE-M fix가 data/multicity-common@bc8d5d4에 반영됨",
+        "AI_AUTO V7: 878→895 (+17, CORE_DEST 수정 + 체험관 4건)"
+      ]
+    },
+    "jeonju": {
+      "city": "jeonju",
+      "category": "all",
+      "ssot_type": "JEONJU_CANONICAL",
+      "branch": "data/jeonju-targeted-completion-v1",
+      "branch_sha": "b3645d711143234b79407529f1a9b15babe934c0",
+      "remote_verified": true,
+      "remote_verified_at": "2026-08-19",
+      "artifact_path": "data/jeonju-raw-collection-v1/jeonju-final-service-catalog-v1.json",
+      "close_doc": "docs/data-collection/jeonju/jeonju-final-close-state-v1.md",
+      "record_counts": {
+        "final_unique": 423,
+        "service_universe": 236,
+        "event_expired": 9,
+        "excluded": 96,
+        "relation_context": 82
+      },
+      "completeness": {
+        "searchable": 236,
+        "explore": 236,
+        "ai_itinerary": 236,
+        "user_can_select": 236,
+        "user_can_save": 236,
+        "ai_auto": 159,
+        "ai_conditional": 77,
+        "public_blocker_count": 0,
+        "nav_gap": 0,
+        "image_gap_nice_to_have": 30,
+        "phone_gap_nice_to_have": 70
+      },
+      "sources": {
+        "primary": "tour.jeonju.go.kr",
+        "geocoding": "VWorld (건지산: 전주시 덕진구 송천동1가 산1-1)"
+      },
+      "key_facts": [
+        "423은 수집 파이프라인 전체 수. 서비스 대상은 236",
+        "건지산: VWorld jibun geocoding → lat=35.858634813523175 lng=127.1319756787604 (CASE_A VERIFIED_NAV_ANCHOR)",
+        "image_gap 30건 및 phone_gap 70건은 NICE_TO_HAVE (서비스 미차단)"
+      ]
+    }
+  },
+  "common_policy": {
+    "branch": "data/multicity-common",
+    "sha": "bc8d5d4aaa904ffa710e3f1203e58787de3fa44e",
+    "remote_verified": true,
+    "files": [
+      "docs/data-collection/multicity-place-eligibility-policy-v1.md",
+      "docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md",
+      "docs/data-collection/multicity-place-accommodation-policy-v1.md",
+      "docs/data-collection/multicity-event-freshness-policy-v1.md",
+      "docs/data-collection/multicity-food-discovery-collection-policy-v1.md",
+      "docs/data-collection/multicity-food-trusted-curation-policy-v1.md",
+      "docs/data-collection/multicity-data-quality-guardrail-v1.md",
+      "docs/data-collection/multicity-common-baseline-policy-v1.md"
+    ],
+    "key_rules": {
+      "RULE_M_bbox_jeju": "33.0-34.0 / 126.0-127.0 (추자도·우도 포함)",
+      "STANDARD_ACCOMMODATION": "EXCLUDE from city_spots service",
+      "SEARCHABLE_PLACE_REQUIRES_NAV_COORD": "YES (RULE-H)",
+      "DATA_PRESENCE_NE_AI_RECOMMENDATION": "RULE 1 (eligibility policy)",
+      "PHONE_PLACEHOLDER": "SOURCE_PLACEHOLDER, not null (RULE-A)"
+    }
+  },
+  "busan_two_artifact_contract": {
+    "description": "Busan Food 194 and Non-Food 764 are two separate completed datasets. Both are required. Neither contains the other. Together they form Busan service total 958.",
+    "food_count": 194,
+    "nonfood_service_count": 764,
+    "total": 958,
+    "single_combined_file_exists": false,
+    "single_combined_file_missing_is_expected": true,
+    "integration_instruction": "Consume both artifacts separately to constitute Busan 958"
+  },
+  "total_service_universe_by_city": {
+    "busan_food": 194,
+    "busan_nonfood": 764,
+    "busan_total": 958,
+    "gyeongju": 299,
+    "seoul": 1837,
+    "jeju": 1496,
+    "jeonju": 236,
+    "grand_total": 4826
+  },
+  "superseded_docs": {
+    "docs/data-collection/multicity-geometry-navigation-policy-v1.md": {
+      "location": "data/busan-nonfood-complete-v1 ONLY",
+      "verdict": "SUPERSEDED_BY_COMMON",
+      "superseded_by": "docs/data-collection/multicity-phone-semantics-and-geometry-policy-v1.md on data/multicity-common",
+      "note": "Contains RULE-H~M. Original draft, now absorbed into common. History reference only."
+    }
+  }
+}
