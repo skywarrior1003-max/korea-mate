@@ -514,12 +514,16 @@
     "shareTextStats": "{days}일 일정 · 장소 {places}곳",
     "shareTextMemories": "기억 {n}개",
     "planOwnTitle": "{city} 여행, 직접 짜 보세요",
-    "planOwnLine1": "AI 가 이런 일정을 30초 만에 만들어 줍니다.",
-    "planOwnLine2": "무료 · 가입 없이 · 한 번에 공유",
+    "planOwnLine1": "AI 가 이런 여행 일정을 만드는 데 도움을 줍니다.",
+    "planOwnLine2": "무료 · 가입 없이 · 간편하게 공유",
     "copyHint": "내 여행에 고칠 수 있는 복사본으로 저장됩니다.",
     "planSimilar": "비슷한 여행 짜기",
     "startScratch": "처음부터 만들기",
-    "generatedBy": "이 일정은 gokoreamate AI 플래너가 만들었습니다."
+    "generatedBy": "이 일정은 gokoreamate AI 플래너가 만들었습니다.",
+    "loadingTrip": "일정을 불러오는 중…",
+    "notFoundTitle": "일정을 찾을 수 없습니다",
+    "notFoundBody": "이 링크는 만료되었거나 없는 주소입니다.",
+    "planMyTrip": "내 여행 짜기"
   },
   "memo": {
     "edit": "수정",

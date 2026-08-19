@@ -167,3 +167,63 @@ test("R4 네 언어가 새 문구를 모두 갖는다 — 영어를 복사해 �
 test("R5 Copy CTA 는 여전히 하나다 — i18n 정리로 버튼이 늘지 않았다", () => {
   assert.equal((PAGE.match(/onClick=\{handleCopyTrip\}/g) ?? []).length, 1);
 });
+
+// ── E: 출시 마감 ────────────────────────────────────────────────────────────
+
+test("E1 로딩·못 찾음 화면도 locale 을 쓴다", () => {
+  for (const gone of ["Loading itinerary", "Itinerary not found",
+                      "This link has expired", "Plan My Trip"]) {
+    assert.ok(!PAGE.includes(gone), `영어가 남아 있다: ${gone}`);
+  }
+  for (const k of ["loadingTrip", "notFoundTitle", "notFoundBody", "planMyTrip"]) {
+    assert.ok(PAGE.includes(`tStory("${k}")`), `locale key 미사용: ${k}`);
+  }
+});
+
+test("E2 지키지 못하는 약속을 하지 않는다", () => {
+  // 30초를 보장하는 측정도 계약도 없다. '한 번에 공유' 도 실제로는 세 번 누른다.
+  const banned = ["30 seconds", "30초", "30秒", "one tap", "ワンタップ", "一键", "한 번에 공유",
+                  "instant", "guaranteed", "Instagram", "TikTok"];
+  for (const L of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    for (const [k, v] of Object.entries(m.story)) {
+      for (const b of banned) {
+        assert.ok(!String(v).includes(b), `${L}.story.${k} 가 과장한다: ${b}`);
+      }
+    }
+  }
+});
+
+test("E3 무료·가입 없음 은 사실이므로 남긴다", () => {
+  const en = JSON.parse(readFileSync("src/messages/en.json", "utf8")) as { story: Record<string, string> };
+  const ko = JSON.parse(readFileSync("src/messages/ko.json", "utf8")) as { story: Record<string, string> };
+  assert.match(en.story.planOwnLine2!, /Free/);
+  assert.match(en.story.planOwnLine2!, /No sign-up/);
+  assert.match(ko.story.planOwnLine2!, /무료/);
+  assert.match(ko.story.planOwnLine2!, /가입 없이/);
+});
+
+test("E4 네 언어가 새 문구를 갖고, 영어를 복사해 두지 않았다", () => {
+  const need = ["loadingTrip", "notFoundTitle", "notFoundBody", "planMyTrip", "planOwnLine1", "planOwnLine2"];
+  const en = JSON.parse(readFileSync("src/messages/en.json", "utf8")) as { story: Record<string, string> };
+  for (const L of ["ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    for (const k of need) {
+      assert.ok(typeof m.story[k] === "string" && m.story[k].trim() !== "", `${L}.story.${k}`);
+      assert.notEqual(m.story[k], en.story[k], `${L}.story.${k} 가 영어 그대로다`);
+    }
+  }
+});
+
+test("E5 주석이 실제 구현과 맞는다", () => {
+  const raw = readFileSync("src/app/shared/page.tsx", "utf8");
+  assert.ok(!raw.includes("SECURITY DEFINER RPC"), "브라우저는 RPC 를 부르지 않는다");
+  assert.match(raw, /`\/api\/shared\/\{id\}\/story` 를 부른다/);
+});
+
+test("E6 이번 정리로 동작이 바뀌지 않았다", () => {
+  assert.equal((PAGE.match(/onClick=\{handleCopyTrip\}/g) ?? []).length, 1);
+  assert.match(PAGE, /onShare=\{\(\) => setStoryExportOpen\(true\)\}/);
+  assert.match(PAGE, /if \(hasPublicMemories\(apiStory\)\)/);
+  assert.equal((PAGE.match(/publicStoryUrl\(window\.location\.origin, trip\.id\)/g) ?? []).length, 2);
+});

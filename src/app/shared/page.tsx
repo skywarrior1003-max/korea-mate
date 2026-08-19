@@ -190,8 +190,9 @@ export default function SharedTripPage() {
     const shareId = extractShareId();
     if (!shareId) { setStatus("not_found"); return; }
 
-    // ── Supabase 조회 파이프라인 ───────────────────────────────────────────────
-    // TASK-SEC-02: fetchSharedItinerary = SECURITY DEFINER RPC 경유 (device_id/email 미반환)
+    // ── 공개 조회 ─────────────────────────────────────────────────────────────
+    // `fetchSharedItinerary` 는 `/api/shared/{id}/story` 를 부른다. 브라우저가
+    // DB 를 직접 보지 않고, 서버가 정제한 것만 받는다.
     fetchSharedItinerary(shareId).then(async (record) => {
       if (!record) { setStatus("not_found"); return; }
 
@@ -297,7 +298,7 @@ export default function SharedTripPage() {
             className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
             style={{ borderColor: "#FF4A2D", borderTopColor: "transparent" }}
           />
-          <p className="text-sm font-bold text-[#565D66]">Loading itinerary…</p>
+          <p className="text-sm font-bold text-[#565D66]">{tStory("loadingTrip")}</p>
           <Link href="/" className="text-xs text-[#8A919B] hover:text-[#565D66] transition-colors">
             gokoreamate.com
           </Link>
@@ -312,16 +313,16 @@ export default function SharedTripPage() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ backgroundColor: "#F6F7F8" }}>
         <div className="text-center max-w-sm">
           <div className="text-6xl mb-4">🗺️</div>
-          <h1 className="text-2xl font-black text-[#191C21] mb-3">Itinerary not found</h1>
+          <h1 className="text-2xl font-black text-[#191C21] mb-3">{tStory("notFoundTitle")}</h1>
           <p className="text-sm text-[#565D66] leading-relaxed mb-6">
-            This link has expired or doesn&apos;t exist.
+            {tStory("notFoundBody")}
           </p>
           <Link
             href="/"
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-sm font-black text-white transition-all hover:opacity-90"
             style={{ backgroundColor: "#FF4A2D" }}
           >
-            ✨ Plan My Trip
+            ✨ {tStory("planMyTrip")}
           </Link>
           <p className="text-xs text-[#8A919B] mt-4">gokoreamate.com</p>
         </div>
