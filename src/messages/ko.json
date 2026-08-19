@@ -506,8 +506,13 @@
     "linkCopied": "복사됨",
     "regenerate": "다시 만들기",
     "savedAndCopied": "이미지를 저장했습니다. 링크도 복사했어요 — SNS에 붙여 넣으세요.",
-    "formatHint": "9:16 · 인스타그램 스토리 · 틱톡 · X",
-    "copyPrompt": "이 링크를 복사하세요:"
+    "formatHint": "9:16 스토리 공유 이미지",
+    "copyPrompt": "이 링크를 복사하세요:",
+    "cardHeadline": "{city}에서 보낸 {n}일",
+    "cardPlaces": "장소 {n}곳",
+    "shareTextTitle": "{city} 여행 🇰🇷",
+    "shareTextStats": "{days}일 일정 · 장소 {places}곳",
+    "shareTextMemories": "기억 {n}개"
   },
   "memo": {
     "edit": "수정",

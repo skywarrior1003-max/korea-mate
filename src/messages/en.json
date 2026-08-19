@@ -506,8 +506,13 @@
     "linkCopied": "Copied",
     "regenerate": "Make it again",
     "savedAndCopied": "Image saved. Link copied — paste it on social media.",
-    "formatHint": "9:16 · Instagram Stories · TikTok · X",
-    "copyPrompt": "Copy this link:"
+    "formatHint": "9:16 story share image",
+    "copyPrompt": "Copy this link:",
+    "cardHeadline": "{n} Days in {city}",
+    "cardPlaces": "{n} places",
+    "shareTextTitle": "My {city} trip 🇰🇷",
+    "shareTextStats": "{days}-day itinerary · {places} spots",
+    "shareTextMemories": "{n} memories"
   },
   "memo": {
     "edit": "Edit",

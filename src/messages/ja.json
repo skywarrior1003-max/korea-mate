@@ -506,8 +506,13 @@
     "linkCopied": "コピー済み",
     "regenerate": "作り直す",
     "savedAndCopied": "画像を保存しました。リンクもコピー済みです — SNSに貼り付けてください。",
-    "formatHint": "9:16 · インスタのストーリー · TikTok · X",
-    "copyPrompt": "このリンクをコピー:"
+    "formatHint": "9:16 ストーリー用シェア画像",
+    "copyPrompt": "このリンクをコピー:",
+    "cardHeadline": "{city}で過ごした{n}日間",
+    "cardPlaces": "{n}か所",
+    "shareTextTitle": "{city}の旅 🇰🇷",
+    "shareTextStats": "{days}日間の旅程 · {places}か所",
+    "shareTextMemories": "思い出{n}件"
   },
   "memo": {
     "edit": "編集",

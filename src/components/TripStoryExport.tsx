@@ -60,13 +60,25 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
-  const words = text.split(" ");
   const lines: string[] = [];
   let line = "";
-  for (const w of words) {
+  /** 한 낱말이 혼자서도 폭을 넘으면 글자 단위로 끊는다 */
+  const pushBroken = (word: string) => {
+    let cur = "";
+    for (const ch of word) {
+      if (cur && ctx.measureText(cur + ch).width > maxWidth) { lines.push(cur); cur = ch; }
+      else cur += ch;
+    }
+    line = cur;
+  };
+  for (const w of text.split(" ")) {
     const test = line ? `${line} ${w}` : w;
-    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
-    else line = test;
+    if (ctx.measureText(test).width <= maxWidth) { line = test; continue; }
+    if (line) { lines.push(line); line = ""; }
+    // 일본어·중국어는 띄어쓰기가 없어 낱말 하나가 문장 전체다. 공백만 보고
+    // 끊으면 줄바꿈이 일어나지 않아 제목이 카드 밖으로 잘려 나간다.
+    if (ctx.measureText(w).width > maxWidth) pushBroken(w);
+    else line = w;
   }
   if (line) lines.push(line);
   return lines;
@@ -82,20 +94,14 @@ function dataUrlToFile(dataUrl: string, filename: string): File {
   return new File([buf], filename, { type: mime });
 }
 
-// ── TASK-024: 바이럴 텍스트 동적 파싱 파이프라인 ─────────────────────────────
+// 공유 텍스트. 문장은 locale 이 만들고 이 함수는 줄만 잇는다 — 예전에는
+// 여기서 영어 문장을 조립해, KO/JA/ZH 사용자가 공유해도 영어가 나갔다.
 function buildShareText(params: {
-  city:        string;
-  dayCount:    number;
-  placeCount:  number;
-  momentCount: number;
-  shareUrl:    string;
+  title:    string;
+  stats:    string;
+  shareUrl: string;
 }): string {
-  const cityCap   = params.city.charAt(0).toUpperCase() + params.city.slice(1);
-  const memoPart  = params.momentCount > 0 ? ` · ${params.momentCount} memories` : "";
-  return [
-    `My ${cityCap} Trip 🇰🇷`,
-    `AI-built ${params.dayCount}-day itinerary · ${params.placeCount} spots${memoPart}`,
-  ].join("\n");
+  return [params.title, params.stats, params.shareUrl].join("\n");
 }
 
 // ── TASK-024: Web Share API canShare 안전 탐침 ───────────────────────────────
@@ -319,7 +325,10 @@ export default function TripStoryExport({
     const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
     const titleFs = px(46);
     ctx.font = `700 ${titleFs}px ${serif}`;
-    const titleLines = wrapText(ctx, `${dayCount} Days in ${cityCap}`, W - PAD * 2).slice(0, 3);
+    // 카드에 그려지는 문장도 locale 이 만든다. 도시 이름은 데이터 값 그대로다 —
+    // 없는 번역 표를 지어내면 실제 장소와 다른 이름이 카드에 찍힌다.
+    const headline = t("cardHeadline", { n: dayCount, city: cityCap });
+    const titleLines = wrapText(ctx, headline, W - PAD * 2).slice(0, 3);
     const titleLh = Math.round(titleFs * 1.2);
     // `y` 는 마지막 줄의 baseline 이다. 여러 줄이면 첫 줄은 그만큼 위에서 시작한다.
     const titleTop = y - (titleLines.length - 1) * titleLh;
@@ -328,12 +337,15 @@ export default function TripStoryExport({
     for (const line of titleLines) { ctx.fillText(line, PAD, ty); ty += titleLh; }
     // eyebrow 는 **첫 줄 글자 위**로 올린다. 예전에는 마지막 baseline 기준으로
     // 조금만 올려서, 두 줄짜리 제목이면 글자 위에 겹쳐 그려졌다.
-    y = titleTop - Math.round(titleFs * 0.85);
+    // 0.85 는 라틴 대문자 높이 기준이라 CJK 글자에서는 eyebrow 와 거의 붙는다.
+    // 한자·가나는 글자 상자를 가득 채우므로 여유를 조금 더 둔다.
+    y = titleTop - Math.round(titleFs * 0.98);
 
     // eyebrow — 날짜와 장소 수. 셀 수 있는 값만 적는다.
     ctx.font = `700 ${px(13)}px ${sans}`;
     ctx.fillStyle = "rgba(255,255,255,0.8)";
-    const eyebrow = [`${startDate} – ${endDate}`, `${placeCount} PLACES`].join("  ·  ").toUpperCase();
+    const eyebrow = [`${startDate} – ${endDate}`, t("cardPlaces", { n: placeCount })]
+      .join("  ·  ").toUpperCase();
     // letterSpacing 은 canvas 2D 표준 속성이다(미지원 브라우저에서는 무시된다)
     ctx.letterSpacing = `${px(1.2)}px`;
     ctx.fillText(eyebrow, PAD, y);
@@ -341,7 +353,7 @@ export default function TripStoryExport({
 
     setRendering(false);
     setRendered(true);
-  }, [moments, city, startDate, endDate, dayCount, placeCount]);
+  }, [moments, city, startDate, endDate, dayCount, placeCount, t]);
 
   // ── PNG 파일명 ────────────────────────────────────────────────────────────
   const pngFilename = `gokoreamate-${city.toLowerCase()}-${startDate}.png`;
@@ -372,14 +384,14 @@ export default function TripStoryExport({
 
     setSharing(true);
     const dataUrl   = canvas.toDataURL("image/png");
-    const shareText = buildShareText({
-      city,
-      dayCount,
-      placeCount,
-      momentCount: moments.length,
+    const cityCap    = city.charAt(0).toUpperCase() + city.slice(1);
+    const memoPart   = moments.length > 0 ? ` · ${t("shareTextMemories", { n: moments.length })}` : "";
+    const shareText  = buildShareText({
+      title: t("shareTextTitle", { city: cityCap }),
+      stats: `${t("shareTextStats", { days: dayCount, places: placeCount })}${memoPart}`,
       shareUrl,
     });
-    const shareTitle = `My ${city.charAt(0).toUpperCase() + city.slice(1)} Trip — gokoreamate.com`;
+    const shareTitle = `${t("shareTextTitle", { city: cityCap })} — gokoreamate.com`;
 
     // [Guard 1] Web Share API 미지원 환경 → 경로 C
     if (typeof navigator === "undefined" || typeof navigator.share !== "function") {
@@ -416,7 +428,7 @@ export default function TripStoryExport({
     // [경로 C] 모든 share 시도 실패 → PNG 다운로드 + 링크 복사 + 배너
     await runFallback();
     setSharing(false);
-  }, [rendered, sharing, city, dayCount, placeCount, moments, shareUrl, pngFilename, runFallback]);
+  }, [rendered, sharing, city, dayCount, placeCount, moments, shareUrl, pngFilename, runFallback, t]);
 
   // ── PNG 직접 다운로드 (Secondary 버튼) ────────────────────────────────────
   const handleDownload = useCallback(() => {

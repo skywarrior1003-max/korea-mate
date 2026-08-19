@@ -227,3 +227,53 @@ test("P9 장소 이름은 공개 payload 에서만 온다", () => {
   assert.match(adapter, /placeName = typeof m\.placeName === "string"/);
   assert.match(CARD, /m\.placeName/);
 });
+
+// ── L: Canvas 안의 말 ────────────────────────────────────────────────────────
+//
+// wrapper 버튼만 번역해 놓고 카드 안은 영어로 그리고 있었다. 카드는 그대로
+// SNS 로 나가는 결과물이라, 거기 찍힌 언어가 사용자가 보는 마지막 언어다.
+
+test("L1 카드에 그리는 문장을 코드에서 만들지 않는다", () => {
+  assert.ok(!/`\$\{dayCount\} Days in/.test(RENDER), "제목이 영어로 박혀 있다");
+  assert.ok(!/\$\{placeCount\} PLACES/.test(RENDER), "장소 수 문구가 영어로 박혀 있다");
+  assert.match(RENDER, /t\("cardHeadline", \{ n: dayCount, city: cityCap \}\)/);
+  assert.match(RENDER, /t\("cardPlaces", \{ n: placeCount \}\)/);
+});
+
+test("L2 공유 텍스트도 locale 이 만든다", () => {
+  const bst = CARD.slice(CARD.indexOf("function buildShareText"), CARD.indexOf("function canShareFiles"));
+  assert.ok(!/My \$\{|AI-built|memories|spots/.test(bst), "공유 문구를 여기서 조립한다");
+  for (const k of ["shareTextTitle", "shareTextStats", "shareTextMemories"]) {
+    assert.ok(CARD.includes(`t("${k}"`), `locale key 미사용: ${k}`);
+  }
+});
+
+test("L3 특정 SNS 지원을 과장하지 않는다", () => {
+  for (const L of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    const hint = m.story.formatHint ?? "";
+    assert.ok(hint.includes("9:16"), `${L}: 형식 표기가 없다`);
+    for (const brand of ["Instagram", "인스타", "インスタ", "TikTok", "틱톡", "抖音", " X", "快拍"]) {
+      assert.ok(!hint.includes(brand), `${L}.formatHint 가 특정 SNS 를 내세운다: ${brand}`);
+    }
+  }
+});
+
+test("L4 네 언어가 카드 문장 키를 모두 갖는다", () => {
+  const need = ["cardHeadline", "cardPlaces", "shareTextTitle", "shareTextStats", "shareTextMemories", "formatHint"];
+  for (const L of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    for (const k of need) assert.ok(typeof m.story[k] === "string" && m.story[k].trim() !== "", `${L}.story.${k}`);
+  }
+  // 제목 문구에는 두 자리가 다 있어야 한다
+  for (const L of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    assert.ok(m.story.cardHeadline!.includes("{n}") && m.story.cardHeadline!.includes("{city}"), `${L}.cardHeadline`);
+  }
+});
+
+test("L5 띄어쓰기 없는 글도 줄바꿈한다 — 일본어·중국어 제목이 잘리지 않게", () => {
+  assert.match(CARD, /pushBroken/);
+  const wrap = CARD.slice(CARD.indexOf("function wrapText"), CARD.indexOf("function dataUrlToFile"));
+  assert.match(wrap, /for \(const ch of word\)/);
+});

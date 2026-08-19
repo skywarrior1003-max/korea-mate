@@ -506,8 +506,13 @@
     "linkCopied": "已复制",
     "regenerate": "重新制作",
     "savedAndCopied": "图片已保存，链接已复制 — 粘贴到社交媒体即可。",
-    "formatHint": "9:16 · Instagram 快拍 · TikTok · X",
-    "copyPrompt": "复制此链接："
+    "formatHint": "9:16 故事分享图片",
+    "copyPrompt": "复制此链接：",
+    "cardHeadline": "在{city}的{n}天",
+    "cardPlaces": "{n}个地点",
+    "shareTextTitle": "{city}之旅 🇰🇷",
+    "shareTextStats": "{days}天行程 · {places}个地点",
+    "shareTextMemories": "{n}条回忆"
   },
   "memo": {
     "edit": "编辑",
