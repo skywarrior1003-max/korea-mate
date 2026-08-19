@@ -350,6 +350,14 @@ export default function PublishPreviewModal({
                     {tConsent("useMyPhoto")}
                   </button>
                 )}
+                {/* 예전 세로 이미지 만들기.
+                    위 `onOpenStoryCard` 가 있으면 이 화면에는 이미 정본 9:16
+                    카드(TripStoryExport) 버튼이 있다. 둘을 같이 두면 "공유 카드"
+                    와 "공유 이미지" 라는 거의 같은 이름의 버튼이 나란히 서서
+                    무엇을 눌러야 하는지 알 수 없다. 그래서 정본이 있는 화면에서는
+                    이쪽을 내린다 — 코드는 지우지 않는다. 정본을 주지 않는 호출부가
+                    생기면 예전 동작이 그대로 남아야 한다. */}
+                {!onOpenStoryCard && (
                 <button
                   onClick={() => void createCard()}
                   disabled={cardState === "working"}
@@ -360,6 +368,7 @@ export default function PublishPreviewModal({
                     : cardState === "failed" ? t("imageFailed")
                     : t("createShareImage")}
                 </button>
+                )}
               </div>
             )}
 

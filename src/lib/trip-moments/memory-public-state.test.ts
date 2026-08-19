@@ -105,3 +105,38 @@ test("O5 실패는 '아직 비공개' 와 '카드 실패' 를 구분한다", () 
   const card = MODAL.slice(MODAL.indexOf("handleOpenStoryCard"), MODAL.indexOf("handleOpenStoryCard") + 320);
   assert.ok(!/setPhase\("preview"\)/.test(card), "카드 실패로 공개 상태를 되돌리면 안 된다");
 });
+
+// ── 공유 CTA 중복 ────────────────────────────────────────────────────────────
+//
+// 같은 화면에 "공유 카드 만들기"(정본 TripStoryExport)와 "공유 이미지
+// 만들기"(예전 renderShareCard)가 나란히 서 있었다. 이름이 한 단어만 다르고
+// 결과물도 똑같이 세로 이미지라 무엇을 눌러야 하는지 알 수 없었다.
+
+test("C1 정본 카드가 있는 화면에서는 예전 이미지 버튼을 그리지 않는다", () => {
+  const legacy = MODAL.indexOf("void createCard()");
+  assert.ok(legacy > 0, "예전 버튼을 찾지 못했다 — 테스트가 낡았다");
+  const before = MODAL.slice(Math.max(0, legacy - 300), legacy);
+  assert.match(before, /\{!onOpenStoryCard && \(/);
+});
+
+test("C2 정본을 주지 않는 호출부에서는 예전 버튼이 그대로 남는다", () => {
+  // 조건이 `!onOpenStoryCard` 이므로 미제공 화면에서는 계속 그려진다.
+  // 코드를 지우거나 renderShareCard 를 건드리지 않았음을 함께 확인한다.
+  assert.match(MODAL, /createCard\(\)/);
+  assert.match(MODAL, /renderShareCard\(/);
+});
+
+test("C3 두 CTA 가 동시에 보일 수 있는 조건이 없다", () => {
+  const canonical = MODAL.indexOf('t("openStoryCard")');
+  const legacy    = MODAL.indexOf("void createCard()");
+  const cGuard = MODAL.slice(Math.max(0, canonical - 700), canonical);
+  const lGuard = MODAL.slice(Math.max(0, legacy - 300), legacy);
+  assert.match(cGuard, /\{onOpenStoryCard && \(/);
+  assert.match(lGuard, /\{!onOpenStoryCard && \(/);
+});
+
+test("C4 세 번째 렌더러를 만들지 않았다", () => {
+  const renderers = (MODAL.match(/renderShareCard|TripStoryExport/g) ?? []);
+  assert.ok(!/canvas\.width\s*=/.test(MODAL), "이 화면이 직접 캔버스를 그리기 시작했다");
+  assert.ok(renderers.length > 0);
+});
