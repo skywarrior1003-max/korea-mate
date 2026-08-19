@@ -493,7 +493,21 @@
     "reportFailed": "신고를 보내지 못했습니다. 다시 시도해 주세요.",
     "photoLoadFailed": "이 카드에 쓸 사진을 불러오지 못했습니다. 다시 시도해 주세요.",
     "share": "공유하기",
-    "copying": "여행을 복사하는 중…"
+    "copying": "여행을 복사하는 중…",
+    "cardTitle": "여행 스토리 카드",
+    "createCard": "카드 만들기",
+    "creating": "만드는 중…",
+    "tryAgain": "다시 시도",
+    "shareNow": "바로 공유",
+    "shareCard": "공유하기",
+    "sharing": "공유하는 중…",
+    "saveImage": "이미지 저장",
+    "copyLink": "링크 복사",
+    "linkCopied": "복사됨",
+    "regenerate": "다시 만들기",
+    "savedAndCopied": "이미지를 저장했습니다. 링크도 복사했어요 — SNS에 붙여 넣으세요.",
+    "formatHint": "9:16 · 인스타그램 스토리 · 틱톡 · X",
+    "copyPrompt": "이 링크를 복사하세요:"
   },
   "memo": {
     "edit": "수정",

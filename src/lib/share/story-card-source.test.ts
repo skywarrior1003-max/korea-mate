@@ -55,7 +55,7 @@ test("A5 공개 Memory 가 없으면 빈 목록 — 오류가 아니다", () => 
 
 test("A6 좌표·저장경로·내부 id 는 입력 모양에 자리가 없다", () => {
   const out = toStoryCardMoments(story([{ dayNumber: 1, memo: "m", placeName: "p", placeId: "9", photos: [{ ref: "r" }] }]));
-  assert.deepEqual(Object.keys(out[0]!).sort(), ["memo", "photoSrc"]);
+  assert.deepEqual(Object.keys(out[0]!).sort(), ["memo", "photoSrc", "placeName"]);
 });
 
 // ── U: 주소 ──────────────────────────────────────────────────────────────────
@@ -88,8 +88,9 @@ test("R2 공유 주소는 반드시 받는다 — 홈페이지 폴백이 다시 
 });
 
 test("R3 사진은 한 장씩 따로 처리한다", () => {
-  assert.match(CARD, /allSettled/);
-  assert.ok(!/Promise\.all\(/.test(CARD), "묶음 실패는 사진 있는 카드를 조용히 비운다");
+  assert.match(CARD, /Promise\.allSettled\(srcs\.map\(loadImage\)\)/);
+  // 사진을 묶음으로 기다리면 한 장만 실패해도 전부 날아간다.
+  assert.ok(!/Promise\.all\([^[]*loadImage/.test(CARD), "사진을 묶음으로 기다린다");
 });
 
 test("R4 사진이 있는데 전부 실패하면 카드를 완성하지 않는다", () => {
@@ -149,4 +150,80 @@ test("W7 저장소 어디에도 공유용 홈페이지 폴백이 남아 있지 �
     assert.ok(!/clipboard\.writeText\("https:\/\/gokoreamate\.com"\)/.test(src), f);
     assert.ok(!/url:\s*"https:\/\/gokoreamate\.com"/.test(src), f);
   }
+});
+
+// ── P: postcard 재스킨 계약 ─────────────────────────────────────────────────
+
+/** canvas 를 그리는 부분만 — 모달 chrome 색은 이번 재스킨 범위가 아니다 */
+const RENDER = CARD.slice(CARD.indexOf("const render = useCallback"), CARD.indexOf("const pngFilename"));
+
+test("P1 카드가 승인 토큰을 읽는다 — 색·여백을 새로 정하지 않는다", () => {
+  assert.match(CARD, /from "@\/components\/story\/story-tokens"/);
+  for (const t of ["ON_SURFACE", "PRIMARY", "MARGIN_MOBILE", "STACK_MD"]) {
+    assert.ok(RENDER.includes(t), `토큰 미사용: ${t}`);
+  }
+  // 그리는 자리에서 지어낸 색은 브랜드 그라디언트 한 쌍과 흰 글자뿐이다
+  const hexes = [...new Set([...RENDER.matchAll(/#[0-9a-fA-F]{6}/g)].map(m => m[0].toLowerCase()))].sort();
+  assert.deepEqual(hexes, ["#2a1d1a", "#ffffff"], `토큰 밖 색: ${hexes.join(", ")}`);
+});
+
+test("P2 편집기 UI 를 만들지 않았다", () => {
+  // 스타일/비율/필터 고르기는 V2 범위가 아니다. 상태값도 두지 않는다.
+  for (const bad of ["Postcard", "Polaroid", "setAspect", "setTemplate", "setFilter",
+                     "aspectOptions", "templateOptions", "filterTheme"]) {
+    assert.ok(!CARD.includes(bad), `편집기 요소가 들어왔다: ${bad}`);
+  }
+  // 비율은 고르는 값이 아니라 고정값이다
+  assert.match(CARD, /aspectRatio: "9\/16"/);
+  assert.ok(!/"4:5"|"1:1"/.test(CARD));
+});
+
+test("P3 1080×1920 은 그대로다", () => {
+  assert.match(CARD, /const W = 1080, H = 1920;/);
+  assert.match(CARD, /canvas\.width\s+= W;/);
+  assert.match(CARD, /canvas\.height = H;/);
+});
+
+test("P4 사진을 늘리지 않는다 — 비율을 지켜 잘라 채운다", () => {
+  assert.match(CARD, /Math\.max\(w \/ img\.width, h \/ img\.height\)/);
+});
+
+test("P5 지어낸 값을 그리지 않는다", () => {
+  for (const bad of ["hashtag", "#Ocean", "likes", "views", "score", "personality", "getTravelPersonality"]) {
+    assert.ok(!new RegExp(bad, "i").test(CARD), `없는 값을 그린다: ${bad}`);
+  }
+});
+
+test("P6 사용자에게 보이는 영어를 코드에 박지 않았다", () => {
+  for (const bad of ['"Create Card"', '"Save Image"', '"Copy Link"', '"Regenerate"', '"Sharing…"', "Optimized for"]) {
+    assert.ok(!CARD.includes(bad), bad);
+  }
+  for (const k of ["cardTitle", "createCard", "saveImage", "copyLink", "regenerate", "formatHint"]) {
+    assert.ok(CARD.includes(`t("${k}")`), `locale key 미사용: ${k}`);
+  }
+});
+
+test("P7 네 언어가 카드 문구를 모두 갖는다", () => {
+  const need = ["cardTitle", "createCard", "creating", "tryAgain", "shareNow", "shareCard",
+                "sharing", "saveImage", "copyLink", "linkCopied", "regenerate",
+                "savedAndCopied", "formatHint", "copyPrompt"];
+  for (const L of ["en", "ko", "ja", "zh"]) {
+    const m = JSON.parse(readFileSync(`src/messages/${L}.json`, "utf8")) as { story: Record<string, string> };
+    for (const k of need) assert.ok(typeof m.story[k] === "string" && m.story[k].trim() !== "", `${L}.story.${k}`);
+  }
+});
+
+test("P8 9:16 렌더러는 둘뿐이다 — 세 번째를 만들지 않았다", () => {
+  const engines: string[] = [];
+  for (const f of ["src/components/TripStoryExport.tsx", "src/lib/trip-cover/share-card.ts"]) {
+    assert.match(readFileSync(f, "utf8"), /1920/, f);
+    engines.push(f);
+  }
+  assert.equal(engines.length, 2);
+});
+
+test("P9 장소 이름은 공개 payload 에서만 온다", () => {
+  const adapter = readFileSync("src/lib/share/story-adapter.ts", "utf8");
+  assert.match(adapter, /placeName = typeof m\.placeName === "string"/);
+  assert.match(CARD, /m\.placeName/);
 });

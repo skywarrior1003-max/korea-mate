@@ -162,12 +162,13 @@ export function toStoryCardMoments(api: ApiStory): StoryCardMoment[] {
   const out: StoryCardMoment[] = [];
   for (const m of api.memories ?? []) {
     const memo = typeof m.memo === "string" ? m.memo : "";
+    const placeName = typeof m.placeName === "string" && m.placeName.trim() !== "" ? m.placeName : null;
     if (m.photos.length === 0) {
       // 사진 없는 Memory 도 메모는 카드에 인용될 수 있다
-      if (memo.trim() !== "") out.push({ photoSrc: null, memo });
+      if (memo.trim() !== "") out.push({ photoSrc: null, memo, placeName });
       continue;
     }
-    for (const p of m.photos) out.push({ photoSrc: memoryPhotoUrl(api.id, p.ref), memo });
+    for (const p of m.photos) out.push({ photoSrc: memoryPhotoUrl(api.id, p.ref), memo, placeName });
   }
   return out;
 }

@@ -493,7 +493,21 @@
     "reportFailed": "无法发送举报，请重试。",
     "photoLoadFailed": "无法加载此卡片的照片。请重试。",
     "share": "分享",
-    "copying": "正在复制行程…"
+    "copying": "正在复制行程…",
+    "cardTitle": "旅行故事卡片",
+    "createCard": "制作卡片",
+    "creating": "制作中…",
+    "tryAgain": "重试",
+    "shareNow": "立即分享",
+    "shareCard": "分享",
+    "sharing": "分享中…",
+    "saveImage": "保存图片",
+    "copyLink": "复制链接",
+    "linkCopied": "已复制",
+    "regenerate": "重新制作",
+    "savedAndCopied": "图片已保存，链接已复制 — 粘贴到社交媒体即可。",
+    "formatHint": "9:16 · Instagram 快拍 · TikTok · X",
+    "copyPrompt": "复制此链接："
   },
   "memo": {
     "edit": "编辑",

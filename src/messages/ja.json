@@ -493,7 +493,21 @@
     "reportFailed": "報告を送れませんでした。もう一度お試しください。",
     "photoLoadFailed": "このカードの写真を読み込めませんでした。もう一度お試しください。",
     "share": "シェア",
-    "copying": "旅行をコピー中…"
+    "copying": "旅行をコピー中…",
+    "cardTitle": "旅のストーリーカード",
+    "createCard": "カードを作る",
+    "creating": "作成中…",
+    "tryAgain": "もう一度",
+    "shareNow": "すぐシェア",
+    "shareCard": "シェア",
+    "sharing": "シェア中…",
+    "saveImage": "画像を保存",
+    "copyLink": "リンクをコピー",
+    "linkCopied": "コピー済み",
+    "regenerate": "作り直す",
+    "savedAndCopied": "画像を保存しました。リンクもコピー済みです — SNSに貼り付けてください。",
+    "formatHint": "9:16 · インスタのストーリー · TikTok · X",
+    "copyPrompt": "このリンクをコピー:"
   },
   "memo": {
     "edit": "編集",

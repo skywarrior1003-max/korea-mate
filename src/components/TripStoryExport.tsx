@@ -6,6 +6,12 @@
 
 import { useRef, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
+// 카드의 색·서체는 새로 정하지 않는다. 2026-08-17~18 에 디자이너 최종 화면을
+// 390px 로 실측해 확정한 값(story-tokens)을 그대로 확대해 쓴다.
+import {
+  PRIMARY, ON_SURFACE, ON_PRIMARY_CONTAINER,
+  MARGIN_MOBILE, STACK_MD, BASE,
+} from "@/components/story/story-tokens";
 
 /**
  * 이 카드가 그리는 것 전부.
@@ -21,6 +27,8 @@ import { useTranslations } from "next-intl";
 export interface StoryCardMoment {
   photoSrc: string | null;
   memo:     string;
+  /** 사람이 읽는 장소 이름. 공개 payload 에 있는 값만 온다. 없으면 없는 대로 둔다. */
+  placeName?: string | null;
   /** 공개 payload 에는 없다. 없으면 없는 대로 둔다 — 지어내지 않는다. */
   category?: string | null;
 }
@@ -40,26 +48,6 @@ interface Props {
    */
   shareUrl:    string;
   onClose:     () => void;
-}
-
-// ── 여행 퍼스낼리티 분류 ──────────────────────────────────────────────────────
-function getTravelPersonality(moments: StoryCardMoment[], travelStyle: string): { emoji: string; title: string; desc: string } {
-  // category 는 공개 payload 에 없다. 없는 것은 세지 않는다 — 하나도 없으면
-  // travelStyle 만 보고, 그것도 없으면 아래 기본값으로 떨어진다.
-  const counts: Record<string, number> = {};
-  for (const m of moments) {
-    const c = typeof m.category === "string" ? m.category.trim() : "";
-    if (c) counts[c] = (counts[c] ?? 0) + 1;
-  }
-  const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
-  const s   = travelStyle.toLowerCase();
-  if (top === "food"    || s.includes("food"))      return { emoji: "🍜", title: "Busan Foodie",       desc: "Every alley hides a masterpiece" };
-  if (top === "scenery" || s.includes("nature"))    return { emoji: "🌿", title: "Nature Wanderer",    desc: "Found beauty in unexpected places" };
-  if (top === "people"  || s.includes("social"))    return { emoji: "👥", title: "Story Collector",    desc: "Every stranger has a story" };
-  if (top === "culture" || s.includes("culture"))   return { emoji: "🏛️", title: "Cultural Nomad",     desc: "Living history one step at a time" };
-  if (s.includes("adventure") || s.includes("solo")) return { emoji: "⚡", title: "Solo Adventurer",  desc: "No plan, all experience" };
-  if (s.includes("couple"))                          return { emoji: "💫", title: "Romantic Explorer", desc: "Korea written in two hearts" };
-  return                                             { emoji: "✨", title: "Korea Moment Hunter",       desc: "Turning the unexpected into unforgettable" };
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -100,7 +88,6 @@ function buildShareText(params: {
   dayCount:    number;
   placeCount:  number;
   momentCount: number;
-  personality: string;
   shareUrl:    string;
 }): string {
   const cityCap   = params.city.charAt(0).toUpperCase() + params.city.slice(1);
@@ -108,8 +95,6 @@ function buildShareText(params: {
   return [
     `My ${cityCap} Trip 🇰🇷`,
     `AI-built ${params.dayCount}-day itinerary · ${params.placeCount} spots${memoPart}`,
-    params.personality,
-    "gokoreamate.com",
   ].join("\n");
 }
 
@@ -138,7 +123,6 @@ export default function TripStoryExport({
   // 공개 사진이 있는데 전부 못 받아 온 상태 — 공유를 막는다
   const [photoError, setPhotoError] = useState(false);
 
-  const personality = getTravelPersonality(moments, travelStyle);
 
   // ── PNG 렌더링 ────────────────────────────────────────────────────────────
   const render = useCallback(async () => {
@@ -146,24 +130,34 @@ export default function TripStoryExport({
     if (!canvas) return;
     setRendering(true);
 
+    // 시안은 390px 폭으로 그려졌다. 카드는 1080 이므로 토큰의 px 을 이 배율로
+    // 키운다 — 여백·글자 크기를 카드용으로 따로 정하지 않기 위해서다.
     const W = 1080, H = 1920;
+    const S = W / 390;
+    const px = (n: number) => Math.round(n * S);
+    const PAD = px(MARGIN_MOBILE);
+
     canvas.width  = W;
     canvas.height = H;
     const ctx = canvas.getContext("2d")!;
 
-    const bg = ctx.createLinearGradient(0, 0, 0, H);
-    bg.addColorStop(0,   "#1a1a2e");
-    bg.addColorStop(0.5, "#16213e");
-    bg.addColorStop(1,   "#0f3460");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
+    // next/font 가 만든 실제 family 이름을 CSS 변수에서 꺼낸다. canvas 는 CSS
+    // 변수를 모르므로 문자열로 풀어 넣어야 하고, 그리기 전에 로드도 기다린다.
+    const cssVar = (n: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const serif = `${cssVar("--font-story-serif") || "Georgia"}, Georgia, serif`;
+    const sans  = `${cssVar("--font-story-sans") || "system-ui"}, system-ui, sans-serif`;
+    try {
+      await Promise.all([
+        document.fonts.load(`700 ${px(48)}px ${serif}`),
+        document.fonts.load(`700 ${px(12)}px ${sans}`),
+        document.fonts.ready,
+      ]);
+    } catch { /* 폰트를 못 받아도 fallback 으로 그린다 */ }
 
-    // 사진은 한 장씩 따로 성공/실패한다.
-    //
-    // 예전에는 `Promise.all` 이라 한 장만 실패해도 묶음 전체가 예외로 빠지고,
-    // 그 예외를 조용히 삼켜 **사진이 있는데도 사진 없는 카드**가 만들어졌다.
-    // 로컬 data URL 일 때는 실패하지 않았지만 공개 Story 사진은 네트워크로
-    // 받아 오므로 실제로 실패한다. 그래서 각각을 독립으로 처리한다.
+    // ── 사진 ────────────────────────────────────────────────────────────────
+    // 한 장씩 따로 성공/실패한다. 묶음으로 처리하면 한 장만 실패해도 사진 있는
+    // 여행이 사진 없는 카드가 되고, 그것을 사용자가 알 수 없다.
     const srcs = moments
       .map(m => m.photoSrc)
       .filter((v): v is string => typeof v === "string" && v.trim() !== "")
@@ -173,8 +167,6 @@ export default function TripStoryExport({
     if (srcs.length > 0) {
       const settled = await Promise.allSettled(srcs.map(loadImage));
       imgs = settled.flatMap(r => (r.status === "fulfilled" ? [r.value] : []));
-      // 공개된 사진이 있는데 한 장도 못 받아 왔다 — 기술 오류다. 사진 없는
-      // 카드를 만들어 내보내면 사용자는 사진을 뺀 줄 알게 된다. 여기서 멈춘다.
       if (imgs.length === 0) {
         setPhotoError(true);
         setRendered(false);
@@ -184,92 +176,172 @@ export default function TripStoryExport({
     }
     setPhotoError(false);
 
-    if (imgs.length > 0) {
-      const PHOTO_H = Math.round(H * 0.58);
-      const PAD = 8;
-      {
-        if (imgs.length === 1) {
-          ctx.save(); ctx.beginPath();
-          ctx.roundRect(PAD, PAD, W - PAD * 2, PHOTO_H - PAD, 28); ctx.clip();
-          ctx.drawImage(imgs[0], PAD, PAD, W - PAD * 2, PHOTO_H - PAD); ctx.restore();
-        } else if (imgs.length === 2) {
-          const half = (W - PAD * 3) / 2;
-          for (let i = 0; i < 2; i++) {
-            ctx.save(); ctx.beginPath();
-            ctx.roundRect(PAD + i * (half + PAD), PAD, half, PHOTO_H - PAD, 24); ctx.clip();
-            ctx.drawImage(imgs[i], PAD + i * (half + PAD), PAD, half, PHOTO_H - PAD); ctx.restore();
-          }
-        } else {
-          const main = (W - PAD * 3) * 0.62, side = W - PAD * 3 - main;
-          ctx.save(); ctx.beginPath();
-          ctx.roundRect(PAD, PAD, main, PHOTO_H - PAD, 24); ctx.clip();
-          ctx.drawImage(imgs[0], PAD, PAD, main, PHOTO_H - PAD); ctx.restore();
-          const halfH = (PHOTO_H - PAD * 3) / 2;
-          for (let i = 0; i < 2; i++) {
-            ctx.save(); ctx.beginPath();
-            ctx.roundRect(PAD * 2 + main, PAD + i * (halfH + PAD), side, halfH, 20); ctx.clip();
-            ctx.drawImage(imgs[i + 1], PAD * 2 + main, PAD + i * (halfH + PAD), side, halfH); ctx.restore();
-          }
-        }
+    // 바탕. 사진이 없으면 이 색이 그대로 카드가 된다.
+    ctx.fillStyle = ON_SURFACE;
+    ctx.fillRect(0, 0, W, H);
+
+    /** 비율을 지켜 채운다. 늘리지 않고 넘치는 쪽을 잘라낸다. */
+    const drawCover = (img: HTMLImageElement, x: number, y: number, w: number, h: number) => {
+      const r = Math.max(w / img.width, h / img.height);
+      const dw = img.width * r, dh = img.height * r;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+      ctx.clip();
+      ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+      ctx.restore();
+    };
+
+    if (imgs.length === 1) {
+      drawCover(imgs[0]!, 0, 0, W, H);
+    } else if (imgs.length === 2) {
+      const top = Math.round(H * 0.62);
+      drawCover(imgs[0]!, 0, 0, W, top);
+      drawCover(imgs[1]!, 0, top, W, H - top);
+    } else if (imgs.length >= 3) {
+      const top = Math.round(H * 0.56);
+      const half = Math.round(W / 2);
+      drawCover(imgs[0]!, 0, 0, W, top);
+      drawCover(imgs[1]!, 0, top, half, H - top);
+      drawCover(imgs[2]!, half, top, W - half, H - top);
+    } else {
+      // 사진 없는 공개 Story — 시안의 사진 자리를 브랜드 색 그라디언트로 둔다
+      const g = ctx.createLinearGradient(0, 0, W, H);
+      g.addColorStop(0, "#2A1D1A");
+      g.addColorStop(1, PRIMARY);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    // 글자가 사진 위에서 읽히게 하는 유일한 장치. StoryCover 와 같은 정지색이다.
+    const scrim = ctx.createLinearGradient(0, H, 0, 0);
+    scrim.addColorStop(0,    "rgba(0,0,0,0.8)");
+    scrim.addColorStop(0.42, "rgba(0,0,0,0.3)");
+    scrim.addColorStop(1,    "rgba(0,0,0,0)");
+    ctx.fillStyle = scrim;
+    ctx.fillRect(0, 0, W, H);
+
+    /** 유리 알약. canvas 에는 backdrop blur 가 없어 반투명 흰색으로 근사한다. */
+    const glassPill = (text: string, x: number, y: number, maxW: number) => {
+      ctx.font = `500 ${px(14)}px ${sans}`;
+      const padX = px(16), padY = px(8), icon = px(14), gap = px(8);
+      // 칩이 오른쪽 연도 자리를 넘지 않게 글자를 먼저 줄인다. 길이(글자 수)로
+      // 자르면 폭이 글꼴에 따라 달라져 어떤 이름은 여전히 넘친다.
+      const room = maxW - (padX * 2 + icon + gap);
+      let label = text;
+      while (label.length > 1 && ctx.measureText(`${label}…`).width > room) {
+        label = label.slice(0, -1);
       }
-
-      const photoOverlay = ctx.createLinearGradient(0, PHOTO_H * 0.6, 0, PHOTO_H);
-      photoOverlay.addColorStop(0, "rgba(26,26,46,0)");
-      photoOverlay.addColorStop(1, "rgba(26,26,46,0.92)");
-      ctx.fillStyle = photoOverlay;
-      ctx.fillRect(0, 0, W, PHOTO_H + PAD);
-    }
-
-    const lineY = Math.round(H * 0.60);
-    ctx.strokeStyle = "#FF4A2D"; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.5;
-    ctx.beginPath(); ctx.moveTo(60, lineY); ctx.lineTo(W - 60, lineY); ctx.stroke();
-    ctx.globalAlpha = 1;
-
-    let y = lineY + 60;
-    ctx.fillStyle = "#FF4A2D"; ctx.font = "bold 38px system-ui, sans-serif"; ctx.textAlign = "center";
-    ctx.fillText(`${personality.emoji}  ${personality.title}`, W / 2, y); y += 52;
-    ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.font = "400 30px system-ui, sans-serif";
-    for (const line of wrapText(ctx, personality.desc, W - 120)) { ctx.fillText(line, W / 2, y); y += 40; }
-    y += 30;
-
-    const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
-    ctx.fillStyle = "#ffffff"; ctx.font = "black 90px system-ui, sans-serif";
-    ctx.fillText(`My ${cityCap} Trip`, W / 2, y); y += 100;
-    ctx.fillStyle = "rgba(255,255,255,0.65)"; ctx.font = "500 34px system-ui, sans-serif";
-    ctx.fillText(`${startDate}  →  ${endDate}`, W / 2, y); y += 70;
-
-    const stats = [`${dayCount} Days`, `${placeCount} Spots`, moments.length > 0 ? `${moments.length} Memories` : null].filter(Boolean) as string[];
-    const chipW = 220, chipGap = 18, totalW = stats.length * chipW + (stats.length - 1) * chipGap;
-    let chipX = (W - totalW) / 2;
-    for (const stat of stats) {
-      ctx.fillStyle = "rgba(255,255,255,0.10)"; ctx.beginPath();
-      ctx.roundRect(chipX, y - 40, chipW, 60, 18); ctx.fill();
-      ctx.fillStyle = "#FF4A2D"; ctx.font = "bold 30px system-ui, sans-serif";
-      ctx.fillText(stat, chipX + chipW / 2, y); chipX += chipW + chipGap;
-    }
-    y += 60;
-
-    const firstMemo = moments.find(m => m.memo && m.memo.trim())?.memo;
-    if (firstMemo) {
-      y += 40;
-      ctx.fillStyle = "rgba(255,255,255,0.18)"; ctx.beginPath();
-      ctx.roundRect(60, y, W - 120, 140, 20); ctx.fill();
-      ctx.fillStyle = "rgba(255,255,255,0.85)"; ctx.font = "400 italic 28px system-ui, sans-serif";
+      if (label !== text) label = `${label}…`;
+      text = label;
+      const tw = ctx.measureText(text).width;
+      const w = padX * 2 + icon + gap + tw;
+      const h = px(14) * 1.6 + padY * 2;
+      ctx.fillStyle = "rgba(255,255,255,0.16)";
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, h / 2);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.28)";
+      ctx.lineWidth = Math.max(1, px(1));
+      ctx.stroke();
+      // 장소 핀 — StoryJournal 의 PlaceChip 과 같은 path 다
+      ctx.save();
+      ctx.translate(x + padX, y + h / 2 - icon / 2);
+      ctx.scale(icon / 24, icon / 24);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill(new Path2D("M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"));
+      ctx.restore();
+      ctx.fillStyle = "#ffffff";
       ctx.textAlign = "left";
-      const memoLines = wrapText(ctx, `"${firstMemo.slice(0, 80)}${firstMemo.length > 80 ? "…" : ""}"`, W - 160);
-      let my = y + 46;
-      for (const line of memoLines.slice(0, 3)) { ctx.fillText(line, 80, my); my += 38; }
-      ctx.textAlign = "center"; y += 160;
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, x + padX + icon + gap, y + h / 2);
+      ctx.textBaseline = "alphabetic";
+      return h;
+    };
+
+    // ── 위: 장소 칩 + 연도 ──────────────────────────────────────────────────
+    const year = (startDate.match(/^(\d{4})/) ?? [])[1];
+
+    // 연도가 차지할 폭을 먼저 재고, 칩은 그 앞까지만 쓴다
+    ctx.font = `italic 700 ${px(30)}px ${serif}`;
+    const yearW = year ? ctx.measureText(year).width + px(16) : 0;
+    const place = moments.find(m => m.placeName && m.placeName.trim() !== "")?.placeName?.trim();
+    if (place) glassPill(place, PAD, PAD, W - PAD * 2 - yearW);
+
+    if (year) {
+      ctx.font = `italic 700 ${px(30)}px ${serif}`;
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.textAlign = "right";
+      ctx.fillText(year, W - PAD, PAD + px(34));
     }
 
-    ctx.fillStyle = "rgba(212,175,55,0.8)"; ctx.font = "bold 32px system-ui, sans-serif";
-    ctx.fillText("gokoreamate.com", W / 2, H - 70);
-    ctx.fillStyle = "rgba(255,255,255,0.25)"; ctx.font = "400 26px system-ui, sans-serif";
-    ctx.fillText("Plan your Korea trip →", W / 2, H - 30);
+    // ── 아래: 제목 블록 ─────────────────────────────────────────────────────
+    // 아래에서 위로 쌓는다 — 메모 길이에 따라 제목이 밀려 잘리지 않게 하기 위해서다.
+    ctx.textAlign = "left";
+    let y = H - PAD - px(BASE);
+
+    // 워드마크는 소문자다(브랜드 규칙)
+    ctx.font = `700 ${px(13)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.fillText("gokoreamate", PAD, y);
+    y -= px(STACK_MD) + px(6);
+
+    // 메모 — 시안의 유리 카드 안 손글씨 자리. 서체는 승인된 serif 를 쓴다.
+    const memo = moments.find(m => m.memo && m.memo.trim() !== "")?.memo?.trim();
+    if (memo) {
+      const fs = px(24);
+      ctx.font = `italic 400 ${fs}px ${serif}`;
+      const inner = W - PAD * 2 - px(24) * 2;
+      const all = wrapText(ctx, `“${memo}”`, inner);
+      const MAX_LINES = 4;
+      const lines = all.slice(0, MAX_LINES);
+      // 줄 수 때문에 잘렸으면 마지막 줄에 말줄임을 남긴다 — 문장이 그냥
+      // 끊긴 것처럼 보이면 사용자는 글이 지워진 줄 안다.
+      if (all.length > MAX_LINES && lines.length > 0) {
+        let last = lines[lines.length - 1]!.replace(/[”"]?$/, "");
+        while (last.length > 1 && ctx.measureText(`${last}…”`).width > inner) last = last.slice(0, -1);
+        lines[lines.length - 1] = `${last}…”`;
+      }
+      const lh = Math.round(fs * 1.5);
+      const boxH = lines.length * lh + px(24) * 2;
+      const boxY = y - boxH;
+      ctx.fillStyle = "rgba(255,255,255,0.14)";
+      ctx.beginPath();
+      ctx.roundRect(PAD, boxY, W - PAD * 2, boxH, px(12));
+      ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      let my = boxY + px(24) + fs;
+      for (const line of lines) { ctx.fillText(line, PAD + px(24), my); my += lh; }
+      y = boxY - px(STACK_MD);
+    }
+
+    // 제목 — "{N} Days in {City}". 시안의 큰 serif 제목 자리다.
+    const cityCap = city.charAt(0).toUpperCase() + city.slice(1);
+    const titleFs = px(46);
+    ctx.font = `700 ${titleFs}px ${serif}`;
+    const titleLines = wrapText(ctx, `${dayCount} Days in ${cityCap}`, W - PAD * 2).slice(0, 3);
+    const titleLh = Math.round(titleFs * 1.2);
+    // `y` 는 마지막 줄의 baseline 이다. 여러 줄이면 첫 줄은 그만큼 위에서 시작한다.
+    const titleTop = y - (titleLines.length - 1) * titleLh;
+    ctx.fillStyle = "#ffffff";
+    let ty = titleTop;
+    for (const line of titleLines) { ctx.fillText(line, PAD, ty); ty += titleLh; }
+    // eyebrow 는 **첫 줄 글자 위**로 올린다. 예전에는 마지막 baseline 기준으로
+    // 조금만 올려서, 두 줄짜리 제목이면 글자 위에 겹쳐 그려졌다.
+    y = titleTop - Math.round(titleFs * 0.85);
+
+    // eyebrow — 날짜와 장소 수. 셀 수 있는 값만 적는다.
+    ctx.font = `700 ${px(13)}px ${sans}`;
+    ctx.fillStyle = "rgba(255,255,255,0.8)";
+    const eyebrow = [`${startDate} – ${endDate}`, `${placeCount} PLACES`].join("  ·  ").toUpperCase();
+    // letterSpacing 은 canvas 2D 표준 속성이다(미지원 브라우저에서는 무시된다)
+    ctx.letterSpacing = `${px(1.2)}px`;
+    ctx.fillText(eyebrow, PAD, y);
+    ctx.letterSpacing = "0px";
 
     setRendering(false);
     setRendered(true);
-  }, [moments, city, startDate, endDate, dayCount, placeCount, travelStyle, personality]);
+  }, [moments, city, startDate, endDate, dayCount, placeCount]);
 
   // ── PNG 파일명 ────────────────────────────────────────────────────────────
   const pngFilename = `gokoreamate-${city.toLowerCase()}-${startDate}.png`;
@@ -287,9 +359,9 @@ export default function TripStoryExport({
     // 2. 링크 클립보드 복사
     try { await navigator.clipboard.writeText(shareUrl); } catch { /* 무시 */ }
     // 3. 배너 노출 (3초 후 자동 소멸)
-    setFallbackMsg("📥 Image saved. Link copied — paste on social media");
+    setFallbackMsg(`📥 ${t("savedAndCopied")}`);
     setTimeout(() => setFallbackMsg(null), 3500);
-  }, [pngFilename]);
+  }, [pngFilename, t]);
 
   // ── TASK-024: 핵심 공유 핸들러 (Web Share API 3-tier fallback) ───────────
   // 반드시 유저 제스처(click) 컨텍스트 내에서 호출되어야 함 (브라우저 보안 정책)
@@ -305,7 +377,6 @@ export default function TripStoryExport({
       dayCount,
       placeCount,
       momentCount: moments.length,
-      personality: `${personality.emoji} ${personality.title}`,
       shareUrl,
     });
     const shareTitle = `My ${city.charAt(0).toUpperCase() + city.slice(1)} Trip — gokoreamate.com`;
@@ -345,7 +416,7 @@ export default function TripStoryExport({
     // [경로 C] 모든 share 시도 실패 → PNG 다운로드 + 링크 복사 + 배너
     await runFallback();
     setSharing(false);
-  }, [rendered, sharing, city, dayCount, placeCount, moments, personality, pngFilename, runFallback]);
+  }, [rendered, sharing, city, dayCount, placeCount, moments, shareUrl, pngFilename, runFallback]);
 
   // ── PNG 직접 다운로드 (Secondary 버튼) ────────────────────────────────────
   const handleDownload = useCallback(() => {
@@ -364,7 +435,7 @@ export default function TripStoryExport({
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      window.prompt("Copy this link:", shareUrl);
+      window.prompt(t("copyPrompt"), shareUrl);
     }
   }, []);
 
@@ -378,7 +449,7 @@ export default function TripStoryExport({
       <div className="bg-[#1a1a2e] rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl">
         {/* 헤더 */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-          <h2 className="text-base font-black text-white">🎴 Trip Story Card</h2>
+          <h2 className="text-base font-black text-white">🎴 {t("cardTitle")}</h2>
           <button onClick={onClose} className="text-white/40 hover:text-white text-xl cursor-pointer">✕</button>
         </div>
 
@@ -418,7 +489,7 @@ export default function TripStoryExport({
               className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all disabled:opacity-50 cursor-pointer"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              {rendering ? "Generating…" : photoError ? "↻ Try again" : "✨ Create Card"}
+              {rendering ? t("creating") : photoError ? `↻ ${t("tryAgain")}` : `✨ ${t("createCard")}`}
             </button>
           ) : (
             <>
@@ -430,10 +501,10 @@ export default function TripStoryExport({
                 style={{ backgroundColor: "#FF4A2D" }}
               >
                 {sharing
-                  ? "Sharing…"
+                  ? t("sharing")
                   : nativeShareSupported
-                  ? "📤 Share Now (1-tap)"
-                  : "📤 Share"}
+                  ? `📤 ${t("shareNow")}`
+                  : `📤 ${t("shareCard")}`}
               </button>
 
               {/* Secondary row: 이미지 저장 + 링크 복사 */}
@@ -442,7 +513,7 @@ export default function TripStoryExport({
                   onClick={handleDownload}
                   className="flex-1 py-2.5 rounded-xl text-xs font-black text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                 >
-                  ⬇️ Save Image
+                  ⬇️ {t("saveImage")}
                 </button>
                 <button
                   onClick={handleCopyLink}
@@ -451,7 +522,7 @@ export default function TripStoryExport({
                     ? { backgroundColor: "#065f46", borderColor: "#10b981", color: "#6ee7b7" }
                     : { backgroundColor: "transparent", borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.7)" }}
                 >
-                  {copied ? "✅ Copied" : "🔗 Copy Link"}
+                  {copied ? `✅ ${t("linkCopied")}` : `🔗 ${t("copyLink")}`}
                 </button>
               </div>
 
@@ -460,13 +531,13 @@ export default function TripStoryExport({
                 onClick={render}
                 className="w-full py-2 rounded-xl text-xs font-bold text-white/30 hover:text-white/60 transition-colors cursor-pointer"
               >
-                Regenerate
+                {t("regenerate")}
               </button>
             </>
           )}
 
           <p className="text-center text-[10px] text-white/20">
-            9:16 · Optimized for Instagram Stories · TikTok · X
+            {t("formatHint")}
           </p>
         </div>
       </div>

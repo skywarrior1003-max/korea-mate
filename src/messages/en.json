@@ -493,7 +493,21 @@
     "reportFailed": "Could not send the report. Please try again.",
     "photoLoadFailed": "Could not load the photos for this card. Please try again.",
     "share": "Share",
-    "copying": "Copying trip…"
+    "copying": "Copying trip…",
+    "cardTitle": "Trip Story Card",
+    "createCard": "Create card",
+    "creating": "Creating…",
+    "tryAgain": "Try again",
+    "shareNow": "Share now",
+    "shareCard": "Share",
+    "sharing": "Sharing…",
+    "saveImage": "Save image",
+    "copyLink": "Copy link",
+    "linkCopied": "Copied",
+    "regenerate": "Make it again",
+    "savedAndCopied": "Image saved. Link copied — paste it on social media.",
+    "formatHint": "9:16 · Instagram Stories · TikTok · X",
+    "copyPrompt": "Copy this link:"
   },
   "memo": {
     "edit": "Edit",
