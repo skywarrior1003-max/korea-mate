@@ -15,6 +15,16 @@ import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog, { type ConsentPhoto } from "@/components/CoverConsentDialog";
 import { getDeviceId } from "@/lib/deviceId";
+// 최신 승인 디자인(Public Memory Story)의 시각 토큰을 그대로 쓴다. 이 화면은
+// 공개 Story 를 만드는 자리이므로 같은 언어를 써야 한다 — 일반 관리 폼처럼
+// 보이면 사용자는 자기 여행 기록을 다루고 있다고 느끼지 못한다. 숫자를 새로
+// 정하지 않고 story-tokens 의 값을 읽는다.
+import {
+  PAGE_BG, PRIMARY, ON_SURFACE, ON_SURFACE_VARIANT, SURFACE_VARIANT,
+  PRIMARY_CONTAINER, ON_PRIMARY_CONTAINER, OUTLINE_VARIANT,
+  MARGIN_MOBILE, STACK_MD, RADIUS_PHOTO, AMBIENT_SHADOW,
+  HEADLINE_LG_MOBILE, TITLE_MD, BODY_SM, LABEL_CAPS_WIDE,
+} from "@/components/story/story-tokens";
 import { summarizeSelection } from "@/lib/trip-moments/publish-reconcile-core";
 import type { PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
 
@@ -124,6 +134,12 @@ export default function PublishPreviewModal({
   }, [onClose, phase]);
 
   const totalPlaces = days.reduce((s, d) => s + d.places.length, 0);
+  /** 시안의 카드 — 흰 바탕 · rounded-xl · ambient shadow. 테두리를 쓰지 않는다. */
+  const CARD_STYLE = { backgroundColor: "#fff", borderRadius: RADIUS_PHOTO, boxShadow: AMBIENT_SHADOW } as const;
+  /** 비공개로 남는 사진 수. 목록이 없으면 예전 계약(momentCount)을 그대로 쓴다. */
+  const photoTotal = memories.length > 0
+    ? memories.reduce((n, m) => n + (m.photoCount > 0 ? m.photoCount : 0), 0)
+    : momentCount;
 
   // 이 모달에서 개인 커버를 적용하면 서버 응답을 다시 기다리지 않고 personal 로 확정한다
   const displayKind: CoverDisplayKind = personalOn ? "personal" : coverKind;
@@ -266,7 +282,8 @@ export default function PublishPreviewModal({
       aria-label={t("title")}
     >
       <div
-        className="bg-surface w-full sm:max-w-md max-h-[90vh] overflow-y-auto rounded-t-frame sm:rounded-frame shadow-modal"
+        className="w-full sm:max-w-md max-h-[92vh] flex flex-col overflow-hidden rounded-t-frame sm:rounded-frame shadow-modal"
+        style={{ backgroundColor: PAGE_BG }}
         onClick={e => e.stopPropagation()}
       >
         {consentOpen && (
@@ -280,18 +297,21 @@ export default function PublishPreviewModal({
 
         {/* ══ 공개 성공 화면 — 별도 화면 이동 없이 링크 획득까지 완료 ══ */}
         {phase === "published" ? (
-          <div className="p-6">
-            <p className="text-xs font-bold text-faint uppercase tracking-wider mb-1">{t("eyebrow")}</p>
-            <h2 className="text-xl font-extrabold text-ink mb-1">✓ {t("successTitle")}</h2>
-            <p className="text-sm text-sub mb-4">{t("successHint")}</p>
+          <div className="overflow-y-auto" style={{ padding: MARGIN_MOBILE }}>
+            <p style={{ ...LABEL_CAPS_WIDE, color: ON_SURFACE_VARIANT, textTransform: "uppercase" }}>{t("eyebrow")}</p>
+            <h2 className="mt-1.5" style={{ ...HEADLINE_LG_MOBILE, color: ON_SURFACE }}>✓ {t("successTitle")}</h2>
+            <p className="mt-1.5 mb-4" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>{t("successHint")}</p>
 
             {/* 자동 복사 결과 — 성공/실패 상태를 명확히 구분 */}
             <div
-              className={`rounded-control px-4 py-3 mb-4 text-sm font-semibold ${
-                copyState === "copied"
-                  ? "bg-ok-tint text-ok"
-                  : "bg-surface-dim text-sub"
-              }`}
+              className="px-4 py-3 mb-4"
+              style={{
+                ...BODY_SM,
+                borderRadius: RADIUS_PHOTO,
+                color: copyState === "copied" ? ON_PRIMARY_CONTAINER : ON_SURFACE_VARIANT,
+                backgroundColor: copyState === "copied" ? `${PRIMARY_CONTAINER}20` : "#fff",
+                boxShadow: AMBIENT_SHADOW,
+              }}
             >
               {copyState === "copied" ? `✓ ${t("linkCopied")}` : t("copyManual")}
             </div>
@@ -303,12 +323,13 @@ export default function PublishPreviewModal({
               <div className="mb-4">
                 <button
                   onClick={() => void handleOpenStoryCard()}
-                  className="gkm-focus w-full min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+                  className="gkm-focus w-full min-h-12 rounded-full text-white"
+                  style={{ ...TITLE_MD, backgroundColor: PRIMARY }}
                 >
                   {t("openStoryCard")}
                 </button>
                 {failKind === "card" && (
-                  <p role="alert" className="mt-2 text-xs text-error font-semibold leading-relaxed">
+                  <p role="alert" className="mt-2" style={{ ...BODY_SM, fontSize: "13px", color: "#8c1d18" }}>
                     {t("cardFailed")}
                   </p>
                 )}
@@ -374,99 +395,112 @@ export default function PublishPreviewModal({
 
             {/* 공유 URL — 자동 복사 실패 시에도 항상 수동 복사 가능 */}
             {shareUrl && (
-              <p className="rounded-control bg-surface-dim border border-line px-3 py-2.5 mb-4 text-xs text-sub break-all select-all">
+              <p
+                className="px-4 py-3 mb-4 break-all select-all"
+                style={{ ...BODY_SM, fontSize: "13px", color: ON_SURFACE_VARIANT, backgroundColor: "#fff", borderRadius: RADIUS_PHOTO, border: `1px solid ${SURFACE_VARIANT}` }}
+              >
                 {shareUrl}
               </p>
             )}
 
+            {/* 이 화면의 primary 는 위의 공유 카드다. 링크 복사·공유는 보조,
+                닫기는 그 아래 조용한 자리에 둔다 — 닫기를 가장 눈에 띄게 만들면
+                방금 만든 것을 보지 않고 나가게 된다. */}
             <div className="flex gap-2">
               <button
                 onClick={() => void copyLink()}
-                className="gkm-focus flex-1 min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+                className="gkm-focus flex-1 min-h-12 rounded-full"
+                style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE, backgroundColor: "#fff", border: `1px solid ${SURFACE_VARIANT}` }}
               >
                 {copyState === "copied" ? `✓ ${t("copiedShort")}` : t("copyLink")}
               </button>
-              {canShare ? (
+              {canShare && (
                 <button
                   onClick={() => void handleShare()}
-                  className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta"
+                  className="gkm-focus flex-1 min-h-12 rounded-full"
+                  style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE, backgroundColor: "#fff", border: `1px solid ${SURFACE_VARIANT}` }}
                 >
                   {t("share")}
                 </button>
-              ) : (
-                <button
-                  onClick={onClose}
-                  className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta"
-                >
-                  {t("done")}
-                </button>
               )}
             </div>
-            {canShare && (
-              <button
-                onClick={onClose}
-                className="gkm-focus w-full min-h-11 mt-2 text-sm font-semibold text-sub hover:text-ink"
-              >
-                {t("done")}
-              </button>
-            )}
+            <button
+              onClick={onClose}
+              className="gkm-focus w-full min-h-12 mt-2"
+              style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE_VARIANT }}
+            >
+              {t("done")}
+            </button>
           </div>
         ) : (
-        <div className="p-6">
-          <p className="text-xs font-bold text-faint uppercase tracking-wider mb-1">{t("eyebrow")}</p>
-          <h2 className="text-xl font-extrabold text-ink mb-4">{t("title")}</h2>
+        <>
+        {/* 안쪽만 스크롤한다 — 아래 CTA 는 항상 화면에 남는다.
+            예전에는 시트 전체가 스크롤이라 모바일에서 Publish 버튼이 접힌
+            아래로 밀려 보이지 않았다. */}
+        <div className="flex-1 min-h-0 overflow-y-auto" style={{ padding: MARGIN_MOBILE }}>
+          <p style={{ ...LABEL_CAPS_WIDE, color: ON_SURFACE_VARIANT, textTransform: "uppercase" }}>{t("eyebrow")}</p>
+          <h2 className="mt-1.5" style={{ ...HEADLINE_LG_MOBILE, color: ON_SURFACE }}>{t("title")}</h2>
 
-          {/* ── 공개될 내용 미리보기 (Story에 보이는 그대로) ── */}
-          <div className="rounded-card border border-line overflow-hidden mb-4">
-            <div className="bg-surface-dim px-4 py-3 border-b border-line">
-              <p className="font-bold text-ink text-[15px]">{title}</p>
-              <p className="text-xs text-faint mt-0.5">{city} · {startDate} – {endDate}</p>
+          {/* 공개될 내용 미리보기 (Story 에 보이는 그대로) */}
+          <div className="overflow-hidden" style={{ ...CARD_STYLE, marginTop: STACK_MD }}>
+            <div className="px-5 pt-4 pb-3">
+              <p style={{ ...TITLE_MD, color: ON_SURFACE }}>{title}</p>
+              <p className="mt-0.5" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>
+                {city} · {startDate} – {endDate}
+              </p>
             </div>
-            <ul className="px-4 py-3 flex flex-col gap-1.5">
+            <ul className="px-5 pb-1 flex flex-col gap-2">
               {days.map(d => (
-                <li key={d.dayNumber} className="text-sm text-sub flex justify-between gap-3">
-                  <span className="font-semibold text-ink shrink-0">Day {d.dayNumber}</span>
-                  <span className="truncate text-right">
+                <li key={d.dayNumber} className="flex gap-3" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>
+                  <span className="shrink-0 font-semibold" style={{ color: ON_SURFACE }}>Day {d.dayNumber}</span>
+                  <span className="truncate">
                     {d.places.slice(0, 2).map(p => p.name).join(", ")}
                     {d.places.length > 2 ? ` +${d.places.length - 2}` : ""}
                   </span>
                 </li>
               ))}
             </ul>
-            <p className="px-4 pb-3 text-xs text-faint">{t("placesTotal", { n: totalPlaces })}</p>
+            <p className="px-5 pt-2 pb-4" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT, opacity: 0.75 }}>
+              {t("placesTotal", { n: totalPlaces })}
+            </p>
           </div>
 
-          {/* ── 공개 Story 에 넣을 Memory 고르기 ──
-                기본값은 서버의 지금 상태다. 자동 전체선택을 하지 않는다 —
-                공개는 사용자가 켜는 것이지 기본으로 켜져 있는 것이 아니다. */}
+          {/* 공개 Story 에 넣을 Memory 고르기.
+              기본값은 서버의 지금 상태다. 자동 전체선택을 하지 않는다 —
+              공개는 사용자가 켜는 것이지 기본으로 켜져 있는 것이 아니다. */}
           {pickable.length > 0 && (
-            <div className="rounded-control border border-line mb-5">
-              <div className="px-4 pt-3 pb-2">
-                <p className="text-sm font-bold text-ink">{t("memoriesTitle")}</p>
-                <p className="text-xs text-sub mt-0.5 leading-relaxed">{t("memoriesHint")}</p>
+            <div className="overflow-hidden" style={{ ...CARD_STYLE, marginTop: STACK_MD }}>
+              <div className="px-5 pt-4 pb-3">
+                <p style={{ ...TITLE_MD, color: ON_SURFACE }}>{t("memoriesTitle")}</p>
+                <p className="mt-1" style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>{t("memoriesHint")}</p>
               </div>
-              <ul className="divide-y divide-line">
-                {pickable.map(m => {
+              <ul>
+                {pickable.map((m, i) => {
                   const on = selected.has(m.momentId);
                   return (
-                    <li key={m.momentId}>
-                      <label className="flex items-start gap-3 px-4 py-3 cursor-pointer">
+                    <li key={m.momentId} style={i === 0 ? undefined : { borderTop: `1px solid ${SURFACE_VARIANT}` }}>
+                      <label
+                        className="flex items-center gap-3.5 px-5 cursor-pointer"
+                        style={{ minHeight: 56, backgroundColor: on ? `${PRIMARY_CONTAINER}14` : undefined }}
+                      >
                         <input
                           type="checkbox"
-                          className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
+                          className="gkm-focus h-5 w-5 shrink-0"
+                          style={{ accentColor: PRIMARY }}
                           checked={on}
                           onChange={() => toggle(m.momentId)}
                           disabled={phase === "publishing"}
                         />
-                        <span className="min-w-0">
-                          <span className="block text-sm font-semibold text-ink truncate">
+                        <span className="min-w-0 py-2.5">
+                          <span className="block truncate" style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE }}>
                             {m.placeName?.trim()
                               || (m.dayNumber === null ? tMemo("dayUnassigned") : `Day ${m.dayNumber}`)}
                           </span>
-                          <span className="block text-xs text-faint">
+                          <span className="block" style={{ ...BODY_SM, fontSize: "13px", color: ON_SURFACE_VARIANT }}>
                             {[
+                              m.dayNumber !== null && m.placeName?.trim() ? `Day ${m.dayNumber}` : null,
                               m.photoCount > 0 ? tMemo("photoCount", { n: m.photoCount }) : null,
-                              m.hasMemo ? "✎" : null,
+                              m.hasMemo ? t("memoryHasNote") : null,
                             ].filter(Boolean).join(" · ")}
                           </span>
                         </span>
@@ -476,7 +510,15 @@ export default function PublishPreviewModal({
                 })}
               </ul>
               {/* 고른 것이 실제로 무엇을 공개하는지 — 한 건짜리 동의 화면과 같은 규칙 */}
-              <p className="px-4 py-3 text-xs text-sub leading-relaxed border-t border-line">
+              <p
+                className="px-5 py-3.5"
+                style={{
+                  ...BODY_SM,
+                  color: chosen.length > 0 ? ON_PRIMARY_CONTAINER : ON_SURFACE_VARIANT,
+                  backgroundColor: chosen.length > 0 ? `${PRIMARY_CONTAINER}20` : undefined,
+                  borderTop: `1px solid ${SURFACE_VARIANT}`,
+                }}
+              >
                 {summary.scope === "photos_and_memo" ? t("summaryPhotosAndMemos", { p: summary.photos, m: summary.memos })
                   : summary.scope === "photos_only"  ? t("summaryPhotosOnly",     { p: summary.photos })
                   : summary.scope === "memo_only"    ? t("summaryMemosOnly",      { m: summary.memos })
@@ -485,59 +527,85 @@ export default function PublishPreviewModal({
             </div>
           )}
 
-          {/* ── 고른 것이 있을 때만 동의 — 기존 Memory 동의 문구를 그대로 쓴다 ── */}
+          {/* 고른 것이 있을 때만 동의 — 기존 Memory 동의 문구를 그대로 쓴다 */}
           {consentNeeded && (
-            <div className="rounded-control border border-line px-4 py-3 mb-5 flex flex-col gap-2">
-              <p className="text-xs text-sub leading-relaxed">{tMemo("consentScopeAnyone")}</p>
-              <label className="flex items-start gap-2 text-xs text-ink cursor-pointer">
-                <input type="checkbox" className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
-                  checked={okRights} onChange={e => setOkRights(e.target.checked)}
-                  disabled={phase === "publishing"} />
-                <span>{tMemo("consentCheckRights")}</span>
+            <div className="px-5 py-4 flex flex-col gap-3" style={{ ...CARD_STYLE, marginTop: STACK_MD }}>
+              <p style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>{tMemo("consentScopeAnyone")}</p>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="gkm-focus mt-0.5 h-5 w-5 shrink-0"
+                  style={{ accentColor: PRIMARY }}
+                  checked={okRights}
+                  onChange={e => setOkRights(e.target.checked)}
+                  disabled={phase === "publishing"}
+                />
+                <span style={{ ...BODY_SM, color: ON_SURFACE }}>{tMemo("consentCheckRights")}</span>
               </label>
-              <label className="flex items-start gap-2 text-xs text-ink cursor-pointer">
-                <input type="checkbox" className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
-                  checked={okUnderstand} onChange={e => setOkUnderstand(e.target.checked)}
-                  disabled={phase === "publishing"} />
-                <span>{tMemo("consentCheckUnderstand")}</span>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="gkm-focus mt-0.5 h-5 w-5 shrink-0"
+                  style={{ accentColor: PRIMARY }}
+                  checked={okUnderstand}
+                  onChange={e => setOkUnderstand(e.target.checked)}
+                  disabled={phase === "publishing"}
+                />
+                <span style={{ ...BODY_SM, color: ON_SURFACE }}>{tMemo("consentCheckUnderstand")}</span>
               </label>
             </div>
           )}
 
-          {/* ── 공개되지 않는 것 — 사실 그대로 명시 ── */}
-          <div className="rounded-control bg-ok-tint border border-ok/20 px-4 py-3 mb-5 flex flex-col gap-1.5">
-            <p className="text-sm font-bold text-ok">🔒 {t("privateTitle")}</p>
-            <p className="text-xs text-sub leading-relaxed">
-              {momentCount > 0 ? t("photosStayPrivate", { n: momentCount }) : t("noPhotos")}
+          {/* 공개되지 않는 것 — 사실 그대로 명시 */}
+          <div
+            className="px-5 py-4 flex flex-col gap-1.5"
+            style={{ borderRadius: RADIUS_PHOTO, border: `1px solid ${OUTLINE_VARIANT}`, marginTop: STACK_MD }}
+          >
+            <p style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE }}>🔒 {t("privateTitle")}</p>
+            <p style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>
+              {/* 문구가 "사진 n장" 이라고 말하므로 n 은 사진 수여야 한다. 예전에는
+                  Memory 개수를 넘겨서, 사진 없는 Memory 가 섞이면 없는 사진을
+                  세어 말했다. 목록을 받지 못한 호출부에서는 예전 값을 쓴다. */}
+              {photoTotal > 0 ? t("photosStayPrivate", { n: photoTotal }) : t("noPhotos")}
             </p>
-            <p className="text-xs text-sub leading-relaxed">{t("noDeviceInfo")}</p>
+            <p style={{ ...BODY_SM, color: ON_SURFACE_VARIANT }}>{t("noDeviceInfo")}</p>
           </div>
 
           {/* 공개 실패 시에만 표시 — 재시도 가능 */}
           {error && (
-            <p role="alert" className="rounded-control bg-error-tint text-error text-sm font-semibold px-4 py-3 mb-4">
+            <p
+              role="alert"
+              className="px-5 py-3.5"
+              style={{ ...BODY_SM, color: "#8c1d18", backgroundColor: "#f9dedc", borderRadius: RADIUS_PHOTO, marginTop: STACK_MD }}
+            >
               {failKind === "notPublished" ? t("failNotPublished") : t("failed")}
             </p>
           )}
-
-          {/* ── 액션: coral primary 1개 ── */}
-          <div className="flex gap-2">
-            <button
-              onClick={onClose}
-              disabled={phase === "publishing"}
-              className="gkm-focus flex-1 min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold disabled:opacity-50"
-            >
-              {t("cancel")}
-            </button>
-            <button
-              onClick={() => void handlePublish()}
-              disabled={phase === "publishing" || !consentDone}
-              className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta disabled:opacity-60"
-            >
-              {phase === "publishing" ? t("publishing") : t("publish")}
-            </button>
-          </div>
         </div>
+
+        {/* 액션 — 스크롤과 무관하게 항상 보인다 */}
+        <div
+          className="flex items-center gap-3 shrink-0"
+          style={{ padding: MARGIN_MOBILE, borderTop: `1px solid ${SURFACE_VARIANT}`, backgroundColor: PAGE_BG }}
+        >
+          <button
+            onClick={onClose}
+            disabled={phase === "publishing"}
+            className="gkm-focus min-h-12 px-4 disabled:opacity-50"
+            style={{ ...TITLE_MD, fontSize: "15px", color: ON_SURFACE_VARIANT }}
+          >
+            {t("cancel")}
+          </button>
+          <button
+            onClick={() => void handlePublish()}
+            disabled={phase === "publishing" || !consentDone}
+            className="gkm-focus flex-1 min-h-12 rounded-full text-white disabled:opacity-40"
+            style={{ ...TITLE_MD, backgroundColor: PRIMARY }}
+          >
+            {phase === "publishing" ? t("publishing") : t("publish")}
+          </button>
+        </div>
+        </>
         )}
       </div>
     </div>

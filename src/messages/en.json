@@ -469,7 +469,8 @@
     "summaryNone": "No memories selected. Only your itinerary will be public.",
     "failNotPublished": "Could not publish. Your story is still private. Please try again.",
     "openStoryCard": "Create share card",
-    "cardFailed": "Your story is public. We could not prepare the share card. Please try again."
+    "cardFailed": "Your story is public. We could not prepare the share card. Please try again.",
+    "memoryHasNote": "Note"
   },
   "story": {
     "copyTrip": "Copy this trip",

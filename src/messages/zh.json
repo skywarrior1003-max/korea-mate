@@ -469,7 +469,8 @@
     "summaryNone": "未选择任何回忆。仅公开您的行程。",
     "failNotPublished": "无法公开。您的故事仍为私密。请重试。",
     "openStoryCard": "创建分享卡片",
-    "cardFailed": "您的故事已公开。但无法准备分享卡片。请重试。"
+    "cardFailed": "您的故事已公开。但无法准备分享卡片。请重试。",
+    "memoryHasNote": "笔记"
   },
   "story": {
     "copyTrip": "复制此行程",

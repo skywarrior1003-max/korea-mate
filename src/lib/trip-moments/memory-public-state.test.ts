@@ -140,3 +140,67 @@ test("C4 세 번째 렌더러를 만들지 않았다", () => {
   assert.ok(!/canvas\.width\s*=/.test(MODAL), "이 화면이 직접 캔버스를 그리기 시작했다");
   assert.ok(renderers.length > 0);
 });
+
+// ── 공개 선택 화면의 표시 계약 ───────────────────────────────────────────────
+
+test("P1 서버가 준 장소 이름을 버리지 않는다", async () => {
+  installStorage();
+  installFetch([{ ...row("p1", false), place_name: "Gamcheon Culture Village", city_spot_id: 42 }]);
+  const { loadMomentsFromServer } = await import("./storage.ts");
+  const out = await loadMomentsFromServer(ITIN, DEV);
+  assert.equal(out[0]!.place_name, "Gamcheon Culture Village");
+  assert.equal(out[0]!.city_spot_id, 42);
+});
+
+test("P2 빈 장소 이름은 없는 것으로 둔다 — 공백 줄을 그리지 않는다", async () => {
+  installStorage();
+  installFetch([{ ...row("p2", false), place_name: "   " }]);
+  const { loadMomentsFromServer } = await import("./storage.ts");
+  const out = await loadMomentsFromServer(ITIN, DEV);
+  assert.equal(out[0]!.place_name, null);
+});
+
+test("D1 화면이 최신 승인 디자인 토큰을 쓴다 — 자체 색·간격을 새로 정하지 않는다", () => {
+  assert.match(MODAL, /from "@\/components\/story\/story-tokens"/);
+  // 이 화면이 직접 색을 정하지 않는지 본다. 허용되는 예외는 셋뿐이다.
+  //   #8c1d18·#f9dedc — 오류 표시. story-tokens 에 오류색이 없다.
+  //   #191C21·#FF4A2D — **이 작업 이전부터 있던 Trip Cover 미리보기 블록**의 값.
+  //     커버는 별도 컴포넌트 언어이고 이번 범위(§19)가 아니라 손대지 않았다.
+  const ALLOWED = new Set(["#8c1d18", "#f9dedc", "#191c21", "#ff4a2d"]);
+  const hexes = [...MODAL.matchAll(/#[0-9a-fA-F]{6}/g)].map(m => m[0].toLowerCase())
+    .filter(h => !ALLOWED.has(h));
+  assert.deepEqual([...new Set(hexes)], [], `토큰 밖 색이 있다: ${hexes.join(", ")}`);
+  // 커버 예외가 실제로 커버 블록 안에만 있는지 — 다른 데로 번지면 잡는다.
+  // 블록은 `{cover && (` 부터 그 아래 공유 URL 영역 직전까지다.
+  const from = MODAL.indexOf("{cover && (");
+  const to   = MODAL.indexOf("{shareUrl && (");
+  assert.ok(from > 0 && to > from, "커버 블록 경계를 찾지 못했다 — 테스트가 낡았다");
+  for (const h of ["#191C21", "#FF4A2D"]) {
+    const at = MODAL.indexOf(h);
+    assert.ok(at > from && at < to, `${h} 가 커버 블록 밖에 있다`);
+  }
+});
+
+test("D2 CTA 가 스크롤에 묻히지 않는다", () => {
+  // 안쪽만 스크롤하고 액션 줄은 shrink-0 로 남는다
+  assert.match(MODAL, /flex-1 min-h-0 overflow-y-auto/);
+  assert.match(MODAL, /className="flex items-center gap-3 shrink-0"/);
+});
+
+test("D3 공개 성공 화면의 primary 는 카드다 — 닫기가 아니다", () => {
+  const card = MODAL.slice(MODAL.indexOf('t("openStoryCard")') - 400, MODAL.indexOf('t("openStoryCard")'));
+  assert.match(card, /backgroundColor: PRIMARY/);
+  const done = MODAL.slice(MODAL.indexOf('{t("done")}') - 320, MODAL.indexOf('{t("done")}'));
+  assert.ok(!/backgroundColor: PRIMARY/.test(done), "닫기를 primary 로 만들면 방금 만든 것을 안 보고 나간다");
+});
+
+test("D4 비공개 안내의 숫자는 사진 수다 — Memory 개수가 아니다", () => {
+  assert.match(MODAL, /photoTotal > 0 \? t\("photosStayPrivate", \{ n: photoTotal \}\)/);
+  assert.match(MODAL, /memories\.reduce\(\(n, m\) => n \+ \(m\.photoCount > 0 \? m\.photoCount : 0\), 0\)/);
+});
+
+test("D5 새 하드코딩 영어를 넣지 않았다", () => {
+  // 메모 표시는 locale key 다. `Day {n}` 은 기존 타임라인과 같은 관용이다.
+  assert.match(MODAL, /t\("memoryHasNote"\)/);
+  assert.ok(!/"Note"|"Photos"|"Publish story"/.test(MODAL));
+});
