@@ -80,3 +80,37 @@ test("Z1 공개 Memory 0 건 분기는 그대로다", () => {
   assert.match(PAGE, /moments=\{\[\]\}/);
   assert.match(PAGE, /if \(hasPublicMemories\(apiStory\)\)/);
 });
+
+// ── Y: 예전 분기의 Copy 버튼 ─────────────────────────────────────────────────
+//
+// 같은 동작(`handleCopyTrip`)을 부르는 버튼이 한 화면에 둘 있었다. 하나는
+// 흐름 안의 주황 CTA, 하나는 아래 고정 바(파랑)였다. 390px 에서 둘 다 동시에
+// 보였고 문구도 "Copy This Trip" / "Copy this trip" 으로 거의 같았다.
+
+test("Y1 Copy 를 부르는 버튼이 화면에 하나뿐이다", () => {
+  const handlers = (PAGE.match(/onClick=\{handleCopyTrip\}/g) ?? []).length;
+  assert.equal(handlers, 1, `handleCopyTrip 버튼이 ${handlers}개다`);
+  // Story 분기는 StorySummary 의 onCopy 한 곳으로 따로 간다
+  assert.match(PAGE, /onCopy=\{\(\) => void handleCopyTrip\(\)\}/);
+});
+
+test("Y2 고정 Copy 바를 남겨 두지 않았다", () => {
+  assert.ok(!/fixed left-0 right-0 z-50[\s\S]{0,400}handleCopyTrip/.test(PAGE),
+    "아래 고정 바가 아직 Copy 를 그린다");
+  assert.ok(!/Copy this trip"/.test(PAGE));
+});
+
+test("Y3 남긴 CTA 는 locale 을 쓴다", () => {
+  assert.match(PAGE, /isCopying \? tStory\("copying"\) : `📋 \$\{tStory\("copyTrip"\)\}`/);
+  assert.ok(!/"📋 Copy This Trip"|"Copying Trip…"/.test(PAGE));
+});
+
+test("Y4 BottomNav 여백은 남는다 — 빼면 푸터가 메뉴에 가린다", () => {
+  assert.match(PAGE, /<div className="h-16 md:hidden" \/>/);
+});
+
+test("Y5 Copy 동작 자체는 그대로다", () => {
+  // 소유권·공개 검사는 서버(copy.ts)가 한다. 화면은 share id 만 넘긴다.
+  assert.match(PAGE, /apiCopyItinerary\(shareId, getDeviceId\(\)\)/);
+  assert.ok(!PAGE.includes("photo_data"), "복사 경로가 비공개 사진을 만지면 안 된다");
+});
