@@ -1,0 +1,56 @@
+{
+  "schema": "seoul-multilingual-coverage-qa-v1",
+  "generated_at": "2026-08-19T11:55:10.788899+00:00",
+  "source_service_count": 1838,
+  "new_places_created": 0,
+  "seoul_canonical_changed": 0,
+  "coord_changed": 0,
+  "nav_ai_changed": 0,
+  "translation_used": false,
+  "zh_tw_collected": false,
+  "policy_commit": "1fb26351d4e195cdc6218d3b4417309e1f1838f3",
+  "locales": {
+    "en": {
+      "locale": "en",
+      "pointer_count": 1797,
+      "no_pointer": 41,
+      "fetch_attempted": 1797,
+      "fetch_success": 1795,
+      "title_present": 1795,
+      "short_description_present": 1793,
+      "required_core_ready": 1793,
+      "api_not_found": 0,
+      "parse_failed": 2,
+      "empty_response": 0,
+      "other_error": 0
+    },
+    "ja": {
+      "locale": "ja",
+      "pointer_count": 1638,
+      "no_pointer": 200,
+      "fetch_attempted": 1638,
+      "fetch_success": 1638,
+      "title_present": 1638,
+      "short_description_present": 1638,
+      "required_core_ready": 1638,
+      "api_not_found": 0,
+      "parse_failed": 0,
+      "empty_response": 0,
+      "other_error": 0
+    },
+    "zh-CN": {
+      "locale": "zh-CN",
+      "pointer_count": 1633,
+      "no_pointer": 205,
+      "fetch_attempted": 1633,
+      "fetch_success": 1631,
+      "title_present": 1631,
+      "short_description_present": 1630,
+      "required_core_ready": 1630,
+      "api_not_found": 0,
+      "parse_failed": 2,
+      "empty_response": 0,
+      "other_error": 0
+    }
+  }
+}
