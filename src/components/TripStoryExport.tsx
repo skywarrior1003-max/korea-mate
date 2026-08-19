@@ -5,7 +5,25 @@
 // TASK-024: Web Share API 1-tap 공유 + 3-tier fallback topology
 
 import { useRef, useCallback, useState } from "react";
-import type { TripMoment } from "@/lib/trip-moments/types";
+import { useTranslations } from "next-intl";
+
+/**
+ * 이 카드가 그리는 것 전부.
+ *
+ * 예전에는 소유자 화면의 `TripMoment[]` 를 그대로 받았다. 그 타입에는 좌표·
+ * 기기 식별자·비공개 메모·아직 아무도 못 본 로컬 사진이 함께 들어 있고,
+ * 카드가 그 중 무엇을 쓰는지 타입만 봐서는 알 수 없었다. 실제로 쓰는 세 개만
+ * 받으면 바깥으로 나갈 수 없는 값은 애초에 이 컴포넌트에 도달하지 않는다.
+ *
+ * `photoSrc` 는 주소다 — data URL 이든 공개 프록시 경로든 상관없다. 다만 공개
+ * Story 경로에서는 항상 같은 출처의 `/img/memory/...` 가 들어온다.
+ */
+export interface StoryCardMoment {
+  photoSrc: string | null;
+  memo:     string;
+  /** 공개 payload 에는 없다. 없으면 없는 대로 둔다 — 지어내지 않는다. */
+  category?: string | null;
+}
 
 interface Props {
   city:        string;
@@ -13,15 +31,26 @@ interface Props {
   endDate:     string;
   dayCount:    number;
   placeCount:  number;
-  moments:     TripMoment[];
+  moments:     StoryCardMoment[];
   travelStyle: string;
+  /**
+   * 공유될 정확한 주소. **필수다** — 예전에는 없으면 홈페이지로 떨어졌고,
+   * 그래서 카드를 받은 사람이 그 여행을 볼 수 없었다. 값을 반드시 받게 해
+   * 그 폴백이 다시 생기지 못하게 한다.
+   */
+  shareUrl:    string;
   onClose:     () => void;
 }
 
 // ── 여행 퍼스낼리티 분류 ──────────────────────────────────────────────────────
-function getTravelPersonality(moments: TripMoment[], travelStyle: string): { emoji: string; title: string; desc: string } {
+function getTravelPersonality(moments: StoryCardMoment[], travelStyle: string): { emoji: string; title: string; desc: string } {
+  // category 는 공개 payload 에 없다. 없는 것은 세지 않는다 — 하나도 없으면
+  // travelStyle 만 보고, 그것도 없으면 아래 기본값으로 떨어진다.
   const counts: Record<string, number> = {};
-  for (const m of moments) counts[m.category] = (counts[m.category] ?? 0) + 1;
+  for (const m of moments) {
+    const c = typeof m.category === "string" ? m.category.trim() : "";
+    if (c) counts[c] = (counts[c] ?? 0) + 1;
+  }
   const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
   const s   = travelStyle.toLowerCase();
   if (top === "food"    || s.includes("food"))      return { emoji: "🍜", title: "Busan Foodie",       desc: "Every alley hides a masterpiece" };
@@ -72,6 +101,7 @@ function buildShareText(params: {
   placeCount:  number;
   momentCount: number;
   personality: string;
+  shareUrl:    string;
 }): string {
   const cityCap   = params.city.charAt(0).toUpperCase() + params.city.slice(1);
   const memoPart  = params.momentCount > 0 ? ` · ${params.momentCount} memories` : "";
@@ -95,8 +125,9 @@ function canShareFiles(file: File): boolean {
 // ══════════════════════════════════════════════════════════════════════════════
 
 export default function TripStoryExport({
-  city, startDate, endDate, dayCount, placeCount, moments, travelStyle, onClose,
+  city, startDate, endDate, dayCount, placeCount, moments, travelStyle, shareUrl, onClose,
 }: Props) {
+  const t = useTranslations("story");
   const canvasRef               = useRef<HTMLCanvasElement>(null);
   const [rendering,  setRendering]  = useState(false);
   const [rendered,   setRendered]   = useState(false);
@@ -104,6 +135,8 @@ export default function TripStoryExport({
   const [copied,     setCopied]     = useState(false);
   // 경로 C 폴백 배너 메시지
   const [fallbackMsg, setFallbackMsg] = useState<string | null>(null);
+  // 공개 사진이 있는데 전부 못 받아 온 상태 — 공유를 막는다
+  const [photoError, setPhotoError] = useState(false);
 
   const personality = getTravelPersonality(moments, travelStyle);
 
@@ -125,12 +158,36 @@ export default function TripStoryExport({
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
-    const photoMoments = moments.filter(m => m.photo_data).slice(0, 3);
-    if (photoMoments.length > 0) {
+    // 사진은 한 장씩 따로 성공/실패한다.
+    //
+    // 예전에는 `Promise.all` 이라 한 장만 실패해도 묶음 전체가 예외로 빠지고,
+    // 그 예외를 조용히 삼켜 **사진이 있는데도 사진 없는 카드**가 만들어졌다.
+    // 로컬 data URL 일 때는 실패하지 않았지만 공개 Story 사진은 네트워크로
+    // 받아 오므로 실제로 실패한다. 그래서 각각을 독립으로 처리한다.
+    const srcs = moments
+      .map(m => m.photoSrc)
+      .filter((v): v is string => typeof v === "string" && v.trim() !== "")
+      .slice(0, 3);
+
+    let imgs: HTMLImageElement[] = [];
+    if (srcs.length > 0) {
+      const settled = await Promise.allSettled(srcs.map(loadImage));
+      imgs = settled.flatMap(r => (r.status === "fulfilled" ? [r.value] : []));
+      // 공개된 사진이 있는데 한 장도 못 받아 왔다 — 기술 오류다. 사진 없는
+      // 카드를 만들어 내보내면 사용자는 사진을 뺀 줄 알게 된다. 여기서 멈춘다.
+      if (imgs.length === 0) {
+        setPhotoError(true);
+        setRendered(false);
+        setRendering(false);
+        return;
+      }
+    }
+    setPhotoError(false);
+
+    if (imgs.length > 0) {
       const PHOTO_H = Math.round(H * 0.58);
       const PAD = 8;
-      try {
-        const imgs = await Promise.all(photoMoments.map(m => loadImage(m.photo_data!)));
+      {
         if (imgs.length === 1) {
           ctx.save(); ctx.beginPath();
           ctx.roundRect(PAD, PAD, W - PAD * 2, PHOTO_H - PAD, 28); ctx.clip();
@@ -154,7 +211,7 @@ export default function TripStoryExport({
             ctx.drawImage(imgs[i + 1], PAD * 2 + main, PAD + i * (halfH + PAD), side, halfH); ctx.restore();
           }
         }
-      } catch { /* 이미지 로드 실패 무시 */ }
+      }
 
       const photoOverlay = ctx.createLinearGradient(0, PHOTO_H * 0.6, 0, PHOTO_H);
       photoOverlay.addColorStop(0, "rgba(26,26,46,0)");
@@ -192,7 +249,7 @@ export default function TripStoryExport({
     }
     y += 60;
 
-    const firstMemo = moments.find(m => m.memo)?.memo;
+    const firstMemo = moments.find(m => m.memo && m.memo.trim())?.memo;
     if (firstMemo) {
       y += 40;
       ctx.fillStyle = "rgba(255,255,255,0.18)"; ctx.beginPath();
@@ -228,7 +285,7 @@ export default function TripStoryExport({
       link.click();
     }
     // 2. 링크 클립보드 복사
-    try { await navigator.clipboard.writeText("https://gokoreamate.com"); } catch { /* 무시 */ }
+    try { await navigator.clipboard.writeText(shareUrl); } catch { /* 무시 */ }
     // 3. 배너 노출 (3초 후 자동 소멸)
     setFallbackMsg("📥 Image saved. Link copied — paste on social media");
     setTimeout(() => setFallbackMsg(null), 3500);
@@ -249,8 +306,8 @@ export default function TripStoryExport({
       placeCount,
       momentCount: moments.length,
       personality: `${personality.emoji} ${personality.title}`,
+      shareUrl,
     });
-    const shareUrl  = "https://gokoreamate.com";
     const shareTitle = `My ${city.charAt(0).toUpperCase() + city.slice(1)} Trip — gokoreamate.com`;
 
     // [Guard 1] Web Share API 미지원 환경 → 경로 C
@@ -303,11 +360,11 @@ export default function TripStoryExport({
   // ── 링크 복사 버튼 ────────────────────────────────────────────────────────
   const handleCopyLink = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText("https://gokoreamate.com");
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      window.prompt("Copy this link:", "https://gokoreamate.com");
+      window.prompt("Copy this link:", shareUrl);
     }
   }, []);
 
@@ -334,6 +391,16 @@ export default function TripStoryExport({
           />
         </div>
 
+        {/* 공개 사진을 한 장도 받아 오지 못함 — 공유를 막고 다시 시도하게 한다 */}
+        {photoError && (
+          <div
+            role="alert"
+            className="mx-5 mb-3 px-4 py-3 rounded-xl bg-red-900/50 border border-red-500/40 text-xs font-bold text-red-200 text-center"
+          >
+            {t("photoLoadFailed")}
+          </div>
+        )}
+
         {/* 경로 C 폴백 배너 */}
         {fallbackMsg && (
           <div className="mx-5 mb-3 px-4 py-3 rounded-xl bg-emerald-900/60 border border-emerald-500/40 text-xs font-bold text-emerald-300 text-center">
@@ -351,7 +418,7 @@ export default function TripStoryExport({
               className="w-full py-3.5 rounded-xl text-sm font-black text-white transition-all disabled:opacity-50 cursor-pointer"
               style={{ backgroundColor: "#FF4A2D" }}
             >
-              {rendering ? "Generating…" : "✨ Create Card"}
+              {rendering ? "Generating…" : photoError ? "↻ Try again" : "✨ Create Card"}
             </button>
           ) : (
             <>

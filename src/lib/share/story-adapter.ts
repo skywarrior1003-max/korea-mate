@@ -16,6 +16,7 @@
 //   사진이 없으면 없는 채로 둔다. 시안의 sample 값으로 채우지 않는다.
 
 import type { StoryDay, StoryMemory, StoryPhoto } from "@/components/story/story-types";
+import type { StoryCardMoment } from "@/components/TripStoryExport";
 
 /** `/api/shared/{id}/story` 가 주는 Memory 한 개 */
 export interface ApiMemory {
@@ -140,4 +141,38 @@ export function storyStats(api: ApiStory): { dayCount: number; placeCount: numbe
 /** 공개된 Memory 가 하나라도 있는가 — Story 화면을 쓸지 정하는 기준이다. */
 export function hasPublicMemories(api: ApiStory): boolean {
   return (api.memories ?? []).length > 0;
+}
+
+/**
+ * 공개 Story → 9:16 카드가 받는 최소 입력.
+ *
+ * 카드는 사진을 최대 3장만 쓰지만 그 상한은 렌더러의 사정이다. 여기서는
+ * 공개된 사진을 순서대로 펼쳐 주기만 한다 — 무엇을 고를지는 렌더러가 정한다.
+ *
+ * 왜 소유자 화면의 Memory 를 쓰지 않나
+ *   그 목록에는 공개하지 않기로 한 것과 아직 아무도 못 본 로컬 사진이 함께
+ *   들어 있다. 서버가 이미 **공개 여부·동의 판본·관리자 차단**을 다 보고
+ *   걸러 준 것이 이 payload 다. 카드가 그것만 먹으면 화면 쪽에서 공개 판정을
+ *   한 번 더 할 이유가 없고, 두 판정이 어긋날 일도 없다.
+ *
+ * `category` 는 공개 payload 에 없다. 없는 채로 둔다 — 지어내면 카드가
+ * 사용자의 여행을 잘못 설명한다.
+ */
+export function toStoryCardMoments(api: ApiStory): StoryCardMoment[] {
+  const out: StoryCardMoment[] = [];
+  for (const m of api.memories ?? []) {
+    const memo = typeof m.memo === "string" ? m.memo : "";
+    if (m.photos.length === 0) {
+      // 사진 없는 Memory 도 메모는 카드에 인용될 수 있다
+      if (memo.trim() !== "") out.push({ photoSrc: null, memo });
+      continue;
+    }
+    for (const p of m.photos) out.push({ photoSrc: memoryPhotoUrl(api.id, p.ref), memo });
+  }
+  return out;
+}
+
+/** 이 여행의 공개 Story 주소. 공유되는 링크는 전부 이 값 하나를 쓴다. */
+export function publicStoryUrl(origin: string, itineraryId: string): string {
+  return `${origin.replace(/\/+$/, "")}/shared/${encodeURIComponent(itineraryId)}`;
 }

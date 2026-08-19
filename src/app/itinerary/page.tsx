@@ -16,7 +16,12 @@ import { getCityCart, removeFromCart, clearCityCart, CART_EVENT, type CartItem }
 import TripMomentCapture from "@/components/TripMomentCapture";
 import TripMomentTimeline from "@/components/TripMomentTimeline";
 import TripStoryExport from "@/components/TripStoryExport";
-import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo } from "@/lib/trip-moments";
+import { loadMoments, loadMomentsFromServer, addMomentDetailed, resyncPendingMoments, deleteMoment, updateMomentMemo, setMomentPublic } from "@/lib/trip-moments";
+import { runFirstPublish } from "@/lib/trip-moments/publish-reconcile-core";
+import type { MemoryPublicState, PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
+import { MEMORY_PUBLIC_CONSENT_VERSION } from "@/lib/trip-moments/public-consent-core";
+import { toStoryCardMoments, publicStoryUrl, type ApiStory } from "@/lib/share/story-adapter";
+import type { StoryCardMoment } from "@/components/TripStoryExport";
 import type { TripMoment } from "@/lib/trip-moments";
 import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
 // 공개 문구 판정은 Place Detail 과 같은 SSOT 를 쓴다. 내부 메모 정규식을 이
@@ -1239,6 +1244,10 @@ function ItineraryResult() {
   const [captureOpen,     setCaptureOpen]     = useState(false);
   const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
   const [storyExportOpen, setStoryExportOpen] = useState(false);
+  // 카드가 그리는 것은 **공개 Story 가 내보낸 것**뿐이다. 소유자 목록(`moments`)을
+  // 그대로 넘기면 공개하지 않기로 한 사진·메모가 카드에 들어간다.
+  const [storyCardMoments, setStoryCardMoments] = useState<StoryCardMoment[]>([]);
+  const [storyCardBusy, setStoryCardBusy] = useState(false);
   // ── SSOT: city_spots — PlaceModal 제휴 정보 통합 ─────────────────────────────
   const [citySpots, setCitySpots] = useState<CitySpot[]>([]);
 
@@ -1854,6 +1863,68 @@ function ItineraryResult() {
     if (!ok) setIsPublic(!next);
     return ok;
   }
+  // ── 최초 공개 ──────────────────────────────────────────────────────────
+  // 순서가 이 함수의 전부다: Memory 를 원하는 모양으로 맞춘 **다음에만** 여행을
+  // 공개한다. 반대로 하면 정리하는 동안 이미 바깥에서 보인다.
+  async function runPublish(selectedMomentIds: string[]): Promise<PublishOutcome["status"]> {
+    if (!itinId) return "tripFailed";
+    const deviceId = getDeviceId();
+    const out = await runFirstPublish({
+      // 매번 서버의 지금 상태를 다시 읽는다 — 지난 시도의 잔재를 이 값으로만 안다
+      readServerState: async () => {
+        try {
+          const res = await fetch(
+            `/api/trip-moments?itinerary_id=${encodeURIComponent(itinId)}`,
+            { headers: { "x-device-id": deviceId } },
+          );
+          if (!res.ok) return { ok: false, rows: [] };
+          const rows = (await res.json()) as Array<Record<string, unknown>>;
+          return {
+            ok: true,
+            rows: rows.map((r): MemoryPublicState => ({
+              moment_id: String(r.moment_id ?? ""),
+              is_public: r.is_public === true,
+            })),
+          };
+        } catch { return { ok: false, rows: [] }; }
+      },
+      setMomentPublic: (momentId, next) =>
+        setMomentPublic(momentId, next, deviceId, next ? MEMORY_PUBLIC_CONSENT_VERSION : undefined),
+      setTripPublic:   () => apiSetPublic(itinId, true, deviceId),
+    }, selectedMomentIds);
+
+    if (out.status === "published") {
+      setIsPublic(true);
+      // 화면의 Memory 공개 표시를 서버 값으로 다시 맞춘다
+      setMoments(await loadMomentsFromServer(itinId, deviceId));
+    }
+    return out.status;
+  }
+
+  /** 공개 Story 가 내보낸 것만으로 카드 입력을 만든다. 실패하면 열지 않는다. */
+  async function openStoryCard(): Promise<boolean> {
+    if (!itinId || storyCardBusy) return false;
+    setStoryCardBusy(true);
+    try {
+      const res = await fetch(`/api/shared/${encodeURIComponent(itinId)}/story`);
+      if (!res.ok) return false;
+      const api = (await res.json()) as ApiStory;
+      setStoryCardMoments(toStoryCardMoments(api));
+      setStoryExportOpen(true);
+      return true;
+    } catch { return false; }
+    finally { setStoryCardBusy(false); }
+  }
+
+  /** Memory 한 건의 공개/해제 — 최초 공개가 끝난 뒤의 개별 수정용 */
+  async function handleSetMomentPublic(momentId: string, next: boolean): Promise<boolean> {
+    if (!itinId) return false;
+    const deviceId = getDeviceId();
+    const ok = await setMomentPublic(momentId, next, deviceId, next ? MEMORY_PUBLIC_CONSENT_VERSION : undefined);
+    if (ok) setMoments(await loadMomentsFromServer(itinId, deviceId));
+    return ok;
+  }
+
   function handleTogglePublic() {
     if (!itinId) return;
     if (isPublic) { void applyPublic(false); return; }
@@ -2392,11 +2463,15 @@ function ItineraryResult() {
             📸 {tMemo("captureTitle")} {moments.length > 0 && <span className="bg-accent-coral text-white text-xs font-black px-1.5 py-0.5 rounded-full">{moments.length}</span>}
           </button>
 
-          {/* TASK-022: 공유 카드 버튼 */}
-          {moments.length > 0 && (
+          {/* 공유 카드 — 공개 Story 의 시각적 표현이다.
+              비공개 여행에는 공개 Story 가 없으므로 카드를 만들지 않고 공개
+              절차(Publish)로 보낸다. 소유자의 비공개 Memory 를 그대로 카드에
+              담던 예전 경로는 없앴다 — 공개하지 않기로 한 것이 나갔다. */}
+          {(!shareId || isOwner) && itinId && (
             <button
-              onClick={() => setStoryExportOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2"
+              onClick={() => { if (isPublic) void openStoryCard(); else setPublishPreviewOpen(true); }}
+              disabled={storyCardBusy}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2 disabled:opacity-50"
               style={{ borderColor: "var(--gkm-accent-coral)", color: "var(--gkm-accent-coral)", backgroundColor: "transparent" }}
             >
               🎴 Create Story Card
@@ -3030,6 +3105,7 @@ function ItineraryResult() {
           coverBusy={coverBusy}
           onUseAsCover={(!shareId || isOwner) ? (mid) => setCoverPickId(mid) : undefined}
           onClearCover={(!shareId || isOwner) ? () => void applyCover({ kind: "auto" }) : undefined}
+          onSetPublic={(!shareId || isOwner) ? handleSetMomentPublic : undefined}
         />
       </div>
 
@@ -3116,8 +3192,9 @@ function ItineraryResult() {
           endDate={endDate}
           dayCount={days.length}
           placeCount={days.reduce((s, d) => s + d.places.length, 0)}
-          moments={moments}
+          moments={storyCardMoments}
           travelStyle={travelStyle}
+          shareUrl={publicStoryUrl(window.location.origin, itinId ?? "")}
           onClose={() => setStoryExportOpen(false)}
         />
       )}
@@ -3144,7 +3221,18 @@ function ItineraryResult() {
           // 미리보기 문구용 커버 종류. cover_moment_id 가 비면 사진이 지워져
           // FK 가 NULL 로 만든 상태이므로 개인 커버로 보지 않는다.
           coverKind={coverKind === "moment" && coverMomentId ? "personal" : "tourism"}
-          onConfirm={() => applyPublic(true)}
+          onConfirm={runPublish}
+          memories={moments.map(m => ({
+            momentId:   m.moment_id,
+            dayNumber:  m.day_number,
+            placeName:  m.place_name ?? null,
+            photoCount: (m.photo_data ? 1 : 0) + (m.photo_data_extra?.length ?? 0),
+            hasMemo:    m.memo.trim().length > 0,
+            isPublic:   m.is_public === true,
+            // 아직 서버에 없는 Memory 는 공개 요청이 404 다 — 고를 수 없게 둔다
+            selectable: m.synced === true,
+          }))}
+          onOpenStoryCard={openStoryCard}
           onClose={() => setPublishPreviewOpen(false)}
         />
       )}

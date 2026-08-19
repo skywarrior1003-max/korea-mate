@@ -15,10 +15,31 @@ import { renderShareCard, shareOrDownload } from "@/lib/trip-cover/share-card";
 import { CONSENT_VERSION } from "@/lib/trip-cover/cover-state-core";
 import CoverConsentDialog, { type ConsentPhoto } from "@/components/CoverConsentDialog";
 import { getDeviceId } from "@/lib/deviceId";
+import { summarizeSelection } from "@/lib/trip-moments/publish-reconcile-core";
+import type { PublishOutcome } from "@/lib/trip-moments/publish-reconcile-core";
 
 interface PreviewDay {
   dayNumber: number;
   places: { name: string; category?: string; location?: string }[];
+}
+
+/**
+ * 공개 후보 Memory 한 건. 화면이 그리는 데 필요한 것만 담는다 —
+ * 좌표·기기 식별자·사진 원본은 여기 오지 않는다.
+ */
+export interface PublishMemoryItem {
+  momentId:   string;
+  dayNumber:  number | null;
+  placeName:  string | null;
+  photoCount: number;
+  hasMemo:    boolean;
+  /** 서버가 알려준 지금 공개 상태. 처음 선택 상태의 근거다. */
+  isPublic:   boolean;
+  /**
+   * 고를 수 있는가. 아직 서버에 올라가지 않은 Memory 는 공개 요청을 보내도
+   * 404 다 — 눌러도 안 되는 것을 열어 주지 않는다.
+   */
+  selectable: boolean;
 }
 
 interface Props {
@@ -28,8 +49,16 @@ interface Props {
   endDate: string;
   days: PreviewDay[];
   momentCount: number;
-  /** 공개 API 실행 — 성공 여부를 반환해야 성공 화면으로 전환된다. */
-  onConfirm: () => Promise<boolean>;
+  /**
+   * 최초 공개 실행. 고른 Memory 목록을 넘기고 **한 개의 결과**를 돌려받는다.
+   * 개별 요청의 성공 개수는 화면이 알 필요가 없다 — 사용자는 Publish 를 한 번
+   * 눌렀고, 그 한 번에 대한 답도 하나여야 한다.
+   */
+  onConfirm: (selectedMomentIds: string[]) => Promise<PublishOutcome["status"]>;
+  /** 공개 후보 Memory. 비우면 선택 영역을 그리지 않는다. */
+  memories?: PublishMemoryItem[];
+  /** 공개 성공 후 Story Card 를 열 수 있으면 준다. 없으면 버튼을 그리지 않는다. */
+  onOpenStoryCard?: () => Promise<boolean>;
   /** 공개 성공 후 안내할 공유 URL (기존 /shared/{id} 규칙 재사용). null이면 수동 복사 영역 미표시. */
   shareUrl: string | null;
   /** Trip Cover 결정론적 선택 키. 없으면 커버 영역을 렌더하지 않는다. */
@@ -53,7 +82,7 @@ type Phase = "preview" | "publishing" | "published";
 type CopyState = "idle" | "copied" | "failed";
 
 export default function PublishPreviewModal({
-  title, city, startDate, endDate, days, momentCount, onConfirm, shareUrl,
+  title, city, startDate, endDate, days, momentCount, onConfirm, memories = [], onOpenStoryCard, shareUrl,
   itineraryId = null, copyCount = 0, helpfulCount = 0, coverPhotos = [],
   coverPendingCount = 0, coverKind = "unknown", onClose,
 }: Props) {
@@ -66,6 +95,15 @@ export default function PublishPreviewModal({
   const [canShare, setCanShare]   = useState(false);
   const [cardState, setCardState] = useState<"idle" | "working" | "done" | "failed">("idle");
   const [consentOpen, setConsentOpen] = useState(false);
+  // 공개하기로 고른 Memory. 처음 값은 **서버가 알려준 지금 상태**다 —
+  // 지난 시도에서 켜진 채 남은 것이 있으면 사용자가 그것을 보고 정할 수 있어야 한다.
+  const [selected, setSelected] = useState<Set<string>>(
+    () => new Set(memories.filter(m => m.selectable && m.isPublic).map(m => m.momentId)),
+  );
+  const [okRights,     setOkRights]     = useState(false);
+  const [okUnderstand, setOkUnderstand] = useState(false);
+  // 실패의 종류. "공개 못 함" 과 "공개는 됐는데 카드 실패" 는 다른 사실이다.
+  const [failKind, setFailKind] = useState<"notPublished" | "card" | null>(null);
   const [coverBusy,   setCoverBusy]   = useState(false);
   const [personalOn,  setPersonalOn]  = useState(false);   // 개인 커버 적용됨
   const [coverBust,   setCoverBust]   = useState(0);       // 미리보기 갱신용
@@ -165,14 +203,48 @@ export default function PublishPreviewModal({
 
   // 공개 실행 → 성공 시에만 공유 URL 안내 + 자동 복사 1회 시도.
   // phase 가드로 중복 공개 요청을 차단한다.
+  const pickable   = memories.filter(m => m.selectable);
+  const chosen     = pickable.filter(m => selected.has(m.momentId));
+  const summary    = summarizeSelection(
+    chosen.map(m => ({ photoCount: m.photoCount, hasMemo: m.hasMemo })),
+  );
+  // 공개할 것을 골랐을 때만 동의를 요구한다. 하나도 고르지 않으면 이 Publish 는
+  // 일정만 공개하는 것이고, 그것은 기존 계약 그대로다.
+  const consentNeeded = chosen.length > 0;
+  const consentDone   = !consentNeeded || (okRights && okUnderstand);
+
+  function toggle(momentId: string) {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(momentId)) next.delete(momentId); else next.add(momentId);
+      return next;
+    });
+  }
+
   async function handlePublish() {
-    if (phase !== "preview") return;
+    if (phase !== "preview" || !consentDone) return;
     setPhase("publishing");
     setError(false);
-    const ok = await onConfirm();
-    if (!ok) { setPhase("preview"); setError(true); return; }
+    setFailKind(null);
+    // 고른 Memory 를 서버 상태와 맞춘 **뒤에** 여행을 공개한다. 그 순서와
+    // 실패 판정은 호출부(reconciliation)가 책임진다. 여기서는 결과 하나만 본다.
+    const status = await onConfirm([...selected]);
+    if (status !== "published") {
+      setPhase("preview");
+      setError(true);
+      setFailKind("notPublished");
+      return;
+    }
     setPhase("published");
     void copyLink(); // 실패해도 공개 성공 상태는 유지
+  }
+
+  /** 공개는 이미 끝났다. 여기서 실패하는 것은 카드뿐이다 — 되돌리지 않는다. */
+  async function handleOpenStoryCard() {
+    if (!onOpenStoryCard) return;
+    setFailKind(null);
+    const ok = await onOpenStoryCard();
+    if (!ok) setFailKind("card");
   }
 
   async function handleShare() {
@@ -223,6 +295,25 @@ export default function PublishPreviewModal({
             >
               {copyState === "copied" ? `✓ ${t("linkCopied")}` : t("copyManual")}
             </div>
+
+            {/* ── SNS 9:16 공유 카드 ──
+                공개는 이미 끝났다. 여기서 실패해도 "아직 비공개" 라고 말하지
+                않는다 — 사실이 아니고, 사용자가 다시 Publish 를 누르게 만든다. */}
+            {onOpenStoryCard && (
+              <div className="mb-4">
+                <button
+                  onClick={() => void handleOpenStoryCard()}
+                  className="gkm-focus w-full min-h-11 rounded-control border border-line bg-surface text-ink text-sm font-semibold"
+                >
+                  {t("openStoryCard")}
+                </button>
+                {failKind === "card" && (
+                  <p role="alert" className="mt-2 text-xs text-error font-semibold leading-relaxed">
+                    {t("cardFailed")}
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* ── Trip Cover 미리보기 + 세로 공유 이미지 (V1A) ─────────────────
                 자산은 theme_only 이므로 사진 아래에 장소명을 붙이지 않는다.
@@ -336,6 +427,74 @@ export default function PublishPreviewModal({
             <p className="px-4 pb-3 text-xs text-faint">{t("placesTotal", { n: totalPlaces })}</p>
           </div>
 
+          {/* ── 공개 Story 에 넣을 Memory 고르기 ──
+                기본값은 서버의 지금 상태다. 자동 전체선택을 하지 않는다 —
+                공개는 사용자가 켜는 것이지 기본으로 켜져 있는 것이 아니다. */}
+          {pickable.length > 0 && (
+            <div className="rounded-control border border-line mb-5">
+              <div className="px-4 pt-3 pb-2">
+                <p className="text-sm font-bold text-ink">{t("memoriesTitle")}</p>
+                <p className="text-xs text-sub mt-0.5 leading-relaxed">{t("memoriesHint")}</p>
+              </div>
+              <ul className="divide-y divide-line">
+                {pickable.map(m => {
+                  const on = selected.has(m.momentId);
+                  return (
+                    <li key={m.momentId}>
+                      <label className="flex items-start gap-3 px-4 py-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
+                          checked={on}
+                          onChange={() => toggle(m.momentId)}
+                          disabled={phase === "publishing"}
+                        />
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-ink truncate">
+                            {m.placeName?.trim()
+                              || (m.dayNumber === null ? tMemo("dayUnassigned") : `Day ${m.dayNumber}`)}
+                          </span>
+                          <span className="block text-xs text-faint">
+                            {[
+                              m.photoCount > 0 ? tMemo("photoCount", { n: m.photoCount }) : null,
+                              m.hasMemo ? "✎" : null,
+                            ].filter(Boolean).join(" · ")}
+                          </span>
+                        </span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+              {/* 고른 것이 실제로 무엇을 공개하는지 — 한 건짜리 동의 화면과 같은 규칙 */}
+              <p className="px-4 py-3 text-xs text-sub leading-relaxed border-t border-line">
+                {summary.scope === "photos_and_memo" ? t("summaryPhotosAndMemos", { p: summary.photos, m: summary.memos })
+                  : summary.scope === "photos_only"  ? t("summaryPhotosOnly",     { p: summary.photos })
+                  : summary.scope === "memo_only"    ? t("summaryMemosOnly",      { m: summary.memos })
+                  :                                    t("summaryNone")}
+              </p>
+            </div>
+          )}
+
+          {/* ── 고른 것이 있을 때만 동의 — 기존 Memory 동의 문구를 그대로 쓴다 ── */}
+          {consentNeeded && (
+            <div className="rounded-control border border-line px-4 py-3 mb-5 flex flex-col gap-2">
+              <p className="text-xs text-sub leading-relaxed">{tMemo("consentScopeAnyone")}</p>
+              <label className="flex items-start gap-2 text-xs text-ink cursor-pointer">
+                <input type="checkbox" className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
+                  checked={okRights} onChange={e => setOkRights(e.target.checked)}
+                  disabled={phase === "publishing"} />
+                <span>{tMemo("consentCheckRights")}</span>
+              </label>
+              <label className="flex items-start gap-2 text-xs text-ink cursor-pointer">
+                <input type="checkbox" className="gkm-focus mt-0.5 h-4 w-4 shrink-0"
+                  checked={okUnderstand} onChange={e => setOkUnderstand(e.target.checked)}
+                  disabled={phase === "publishing"} />
+                <span>{tMemo("consentCheckUnderstand")}</span>
+              </label>
+            </div>
+          )}
+
           {/* ── 공개되지 않는 것 — 사실 그대로 명시 ── */}
           <div className="rounded-control bg-ok-tint border border-ok/20 px-4 py-3 mb-5 flex flex-col gap-1.5">
             <p className="text-sm font-bold text-ok">🔒 {t("privateTitle")}</p>
@@ -347,8 +506,8 @@ export default function PublishPreviewModal({
 
           {/* 공개 실패 시에만 표시 — 재시도 가능 */}
           {error && (
-            <p className="rounded-control bg-error-tint text-error text-sm font-semibold px-4 py-3 mb-4">
-              {t("failed")}
+            <p role="alert" className="rounded-control bg-error-tint text-error text-sm font-semibold px-4 py-3 mb-4">
+              {failKind === "notPublished" ? t("failNotPublished") : t("failed")}
             </p>
           )}
 
@@ -363,7 +522,7 @@ export default function PublishPreviewModal({
             </button>
             <button
               onClick={() => void handlePublish()}
-              disabled={phase === "publishing"}
+              disabled={phase === "publishing" || !consentDone}
               className="gkm-focus flex-1 min-h-11 rounded-control bg-action text-white text-sm font-bold hover:bg-action-hover shadow-cta disabled:opacity-60"
             >
               {phase === "publishing" ? t("publishing") : t("publish")}

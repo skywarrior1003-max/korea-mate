@@ -460,7 +460,16 @@
     "createShareImage": "Create share image",
     "creatingImage": "Creating image…",
     "imageReady": "Image ready",
-    "imageFailed": "Couldn't create image — try again"
+    "imageFailed": "Couldn't create image — try again",
+    "memoriesTitle": "Choose memories for your public story",
+    "memoriesHint": "Nothing here is public until you pick it. You can change this later.",
+    "summaryPhotosAndMemos": "{p} photo(s) and {m} note(s) will be visible.",
+    "summaryPhotosOnly": "{p} photo(s) will be visible.",
+    "summaryMemosOnly": "{m} note(s) will be visible.",
+    "summaryNone": "No memories selected. Only your itinerary will be public.",
+    "failNotPublished": "Could not publish. Your story is still private. Please try again.",
+    "openStoryCard": "Create share card",
+    "cardFailed": "Your story is public. We could not prepare the share card. Please try again."
   },
   "story": {
     "copyTrip": "Copy this trip",
@@ -480,7 +489,8 @@
     "reportSending": "Sending…",
     "reportCancel": "Cancel",
     "reportThanks": "Thank you. We will look into it.",
-    "reportFailed": "Could not send the report. Please try again."
+    "reportFailed": "Could not send the report. Please try again.",
+    "photoLoadFailed": "Could not load the photos for this card. Please try again."
   },
   "memo": {
     "edit": "Edit",

@@ -29,6 +29,7 @@ import { PAGE_BG } from "@/components/story/story-tokens";
 import type { StoryMemory } from "@/components/story/story-types";
 import {
   toStoryDays, coverPhotoUrl, coverEyebrow, storyStats, hasPublicMemories,
+  toStoryCardMoments, publicStoryUrl,
   type ApiStory,
 } from "@/lib/share/story-adapter";
 import {
@@ -403,11 +404,29 @@ export default function SharedTripPage() {
           copyBusy={isCopying}
           onCopy={() => void handleCopyTrip()}
           shareLabel="Share"
+          /* 기존 Share 자리를 실제 9:16 카드에 연결한다. 새 버튼을 만들지 않는다 —
+             `StorySummary` 는 `onShare` 가 있을 때만 이 버튼을 그린다. */
+          onShare={() => setStoryExportOpen(true)}
         />
 
         {/* 맨 아래 조용한 신고 자리. 보낸다고 아무것도 가려지지 않는다 —
             사람이 보고 정한다. */}
         <StoryReport shareId={trip.id} deviceId={getDeviceId()} />
+
+        {storyExportOpen && (
+          <TripStoryExport
+            city={trip.city}
+            startDate={trip.start_date}
+            endDate={trip.end_date}
+            dayCount={stats.dayCount}
+            placeCount={stats.placeCount}
+            /* 서버가 공개 여부·동의 판본·차단을 이미 다 보고 걸러 준 것만 들어간다 */
+            moments={toStoryCardMoments(apiStory)}
+            travelStyle={trip.travel_style ?? ""}
+            shareUrl={publicStoryUrl(window.location.origin, trip.id)}
+            onClose={() => setStoryExportOpen(false)}
+          />
+        )}
 
         {storyFocus && (
           <StoryMemoryFocus
@@ -722,8 +741,10 @@ export default function SharedTripPage() {
           endDate={trip.end_date}
           dayCount={days.length}
           placeCount={totalSpots}
+          /* 이 분기는 공개 Memory 가 0건일 때만 도달한다 — 넣을 것이 없다 */
           moments={[]}
           travelStyle={trip.travel_style}
+          shareUrl={publicStoryUrl(window.location.origin, trip.id)}
           onClose={() => setStoryExportOpen(false)}
         />
       )}

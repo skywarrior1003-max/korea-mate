@@ -460,7 +460,16 @@
     "createShareImage": "生成分享图片",
     "creatingImage": "正在生成图片…",
     "imageReady": "图片已就绪",
-    "imageFailed": "图片生成失败 — 请重试"
+    "imageFailed": "图片生成失败 — 请重试",
+    "memoriesTitle": "选择要加入公开故事的回忆",
+    "memoriesHint": "在您选择之前不会公开任何内容。之后可以随时更改。",
+    "summaryPhotosAndMemos": "将公开{p}张照片和{m}条笔记。",
+    "summaryPhotosOnly": "将公开{p}张照片。",
+    "summaryMemosOnly": "将公开{m}条笔记。",
+    "summaryNone": "未选择任何回忆。仅公开您的行程。",
+    "failNotPublished": "无法公开。您的故事仍为私密。请重试。",
+    "openStoryCard": "创建分享卡片",
+    "cardFailed": "您的故事已公开。但无法准备分享卡片。请重试。"
   },
   "story": {
     "copyTrip": "复制此行程",
@@ -480,7 +489,8 @@
     "reportSending": "发送中…",
     "reportCancel": "取消",
     "reportThanks": "感谢告知，我们会查看。",
-    "reportFailed": "无法发送举报，请重试。"
+    "reportFailed": "无法发送举报，请重试。",
+    "photoLoadFailed": "无法加载此卡片的照片。请重试。"
   },
   "memo": {
     "edit": "编辑",

@@ -48,6 +48,10 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     synced:         true,
     // 서버는 storage_path 원문 대신 has_photo boolean 만 준다
     has_photo:      r.has_photo === true,
+    // 공개 여부의 정본은 서버다. 이 값을 버리면 화면이 "지금 무엇이 공개인가"
+    // 를 알 수 없어, 이미 공개인 Memory 에도 계속 "공개하기" 를 그리고
+    // 재공개 정리(reconciliation)도 지난 상태를 볼 수 없게 된다.
+    is_public:      r.is_public === true,
   };
 }
 

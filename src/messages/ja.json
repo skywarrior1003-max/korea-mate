@@ -460,7 +460,16 @@
     "createShareImage": "シェア画像を作成",
     "creatingImage": "画像を作成中…",
     "imageReady": "画像の準備完了",
-    "imageFailed": "画像を作成できませんでした — 再試行"
+    "imageFailed": "画像を作成できませんでした — 再試行",
+    "memoriesTitle": "公開ストーリーに入れる思い出を選ぶ",
+    "memoriesHint": "選ぶまで何も公開されません。あとから変更できます。",
+    "summaryPhotosAndMemos": "写真{p}枚とメモ{m}件が公開されます。",
+    "summaryPhotosOnly": "写真{p}枚が公開されます。",
+    "summaryMemosOnly": "メモ{m}件が公開されます。",
+    "summaryNone": "選んだ思い出はありません。旅程のみが公開されます。",
+    "failNotPublished": "公開できませんでした。ストーリーはまだ非公開です。もう一度お試しください。",
+    "openStoryCard": "シェアカードを作成",
+    "cardFailed": "ストーリーは公開されました。シェアカードを準備できませんでした。もう一度お試しください。"
   },
   "story": {
     "copyTrip": "この旅行をコピー",
@@ -480,7 +489,8 @@
     "reportSending": "送信中…",
     "reportCancel": "キャンセル",
     "reportThanks": "お知らせありがとうございます。確認します。",
-    "reportFailed": "報告を送れませんでした。もう一度お試しください。"
+    "reportFailed": "報告を送れませんでした。もう一度お試しください。",
+    "photoLoadFailed": "このカードの写真を読み込めませんでした。もう一度お試しください。"
   },
   "memo": {
     "edit": "編集",
