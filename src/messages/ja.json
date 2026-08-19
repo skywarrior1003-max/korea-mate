@@ -512,7 +512,14 @@
     "cardPlaces": "{n}か所",
     "shareTextTitle": "{city}の旅 🇰🇷",
     "shareTextStats": "{days}日間の旅程 · {places}か所",
-    "shareTextMemories": "思い出{n}件"
+    "shareTextMemories": "思い出{n}件",
+    "planOwnTitle": "{city}の旅を自分で作る",
+    "planOwnLine1": "AI がこんな旅程を30秒で作ります。",
+    "planOwnLine2": "無料 · 登録なし · ワンタップでシェア",
+    "copyHint": "編集できるコピーが「マイトリップ」に保存されます。",
+    "planSimilar": "似た旅程を作る",
+    "startScratch": "最初から作る",
+    "generatedBy": "この旅程は gokoreamate の AI プランナーが作成しました。"
   },
   "memo": {
     "edit": "編集",

@@ -512,7 +512,14 @@
     "cardPlaces": "{n} places",
     "shareTextTitle": "My {city} trip 🇰🇷",
     "shareTextStats": "{days}-day itinerary · {places} spots",
-    "shareTextMemories": "{n} memories"
+    "shareTextMemories": "{n} memories",
+    "planOwnTitle": "Plan your own {city} trip",
+    "planOwnLine1": "AI builds an itinerary like this in 30 seconds.",
+    "planOwnLine2": "Free · No sign-up · Share in one tap",
+    "copyHint": "Saves an editable copy to My Trips.",
+    "planSimilar": "Plan a similar trip",
+    "startScratch": "Start from scratch",
+    "generatedBy": "This itinerary was built by the gokoreamate AI planner."
   },
   "memo": {
     "edit": "Edit",

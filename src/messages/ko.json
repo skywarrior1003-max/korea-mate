@@ -512,7 +512,14 @@
     "cardPlaces": "장소 {n}곳",
     "shareTextTitle": "{city} 여행 🇰🇷",
     "shareTextStats": "{days}일 일정 · 장소 {places}곳",
-    "shareTextMemories": "기억 {n}개"
+    "shareTextMemories": "기억 {n}개",
+    "planOwnTitle": "{city} 여행, 직접 짜 보세요",
+    "planOwnLine1": "AI 가 이런 일정을 30초 만에 만들어 줍니다.",
+    "planOwnLine2": "무료 · 가입 없이 · 한 번에 공유",
+    "copyHint": "내 여행에 고칠 수 있는 복사본으로 저장됩니다.",
+    "planSimilar": "비슷한 여행 짜기",
+    "startScratch": "처음부터 만들기",
+    "generatedBy": "이 일정은 gokoreamate AI 플래너가 만들었습니다."
   },
   "memo": {
     "edit": "수정",

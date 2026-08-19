@@ -1175,6 +1175,8 @@ function ItineraryResult() {
   const tPlanner = useTranslations("planner");
   // My Place 표시 이름 fallback 에 쓴다 (picks 네임스페이스 공용).
   const tPicks = useTranslations("picks");
+  // 공유 카드 CTA 는 Publish 성공 화면과 같은 말을 써야 한다 — 같은 곳으로 간다.
+  const tPublish = useTranslations("publish");
   const locale = useLocale();
   const [itinId,      setItinId]      = useState<string | null>(null);
 
@@ -2474,7 +2476,7 @@ function ItineraryResult() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black rounded-xl transition-all active:scale-95 border-2 disabled:opacity-50"
               style={{ borderColor: "var(--gkm-accent-coral)", color: "var(--gkm-accent-coral)", backgroundColor: "transparent" }}
             >
-              🎴 Create Story Card
+              🎴 {tPublish("openStoryCard")}
             </button>
           )}
 

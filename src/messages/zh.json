@@ -512,7 +512,14 @@
     "cardPlaces": "{n}个地点",
     "shareTextTitle": "{city}之旅 🇰🇷",
     "shareTextStats": "{days}天行程 · {places}个地点",
-    "shareTextMemories": "{n}条回忆"
+    "shareTextMemories": "{n}条回忆",
+    "planOwnTitle": "自己规划{city}之旅",
+    "planOwnLine1": "AI 只需30秒就能生成这样的行程。",
+    "planOwnLine2": "免费 · 无需注册 · 一键分享",
+    "copyHint": "将可编辑的副本保存到「我的行程」。",
+    "planSimilar": "规划类似行程",
+    "startScratch": "从零开始",
+    "generatedBy": "此行程由 gokoreamate AI 规划师生成。"
   },
   "memo": {
     "edit": "编辑",
