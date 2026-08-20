@@ -52,5 +52,46 @@
       "empty_response": 0,
       "other_error": 0
     }
-  }
+  },
+  "en": {
+    "service_universe": 1837,
+    "required_core_ready": 1793,
+    "coverage_rate_pct": 97.6,
+    "gap_summary": {
+      "EXCLUDED_NON_SERVICE": 1,
+      "SOURCE_NO_LOCALE": 40,
+      "FETCH_TRANSIENT": 2,
+      "SOURCE_EMPTY_REQUIRED_TEXT": 2
+    },
+    "gap_total_records": 45
+  },
+  "ja": {
+    "service_universe": 1837,
+    "required_core_ready": 1638,
+    "coverage_rate_pct": 89.2,
+    "gap_summary": {
+      "EXCLUDED_NON_SERVICE": 1,
+      "SOURCE_NO_LOCALE": 199,
+      "FETCH_TRANSIENT": 0,
+      "SOURCE_EMPTY_REQUIRED_TEXT": 0
+    },
+    "gap_total_records": 200
+  },
+  "zh-CN": {
+    "service_universe": 1837,
+    "required_core_ready": 1630,
+    "coverage_rate_pct": 88.7,
+    "gap_summary": {
+      "EXCLUDED_NON_SERVICE": 1,
+      "SOURCE_NO_LOCALE": 204,
+      "FETCH_TRANSIENT": 2,
+      "SOURCE_EMPTY_REQUIRED_TEXT": 1
+    },
+    "gap_total_records": 208
+  },
+  "gap_closure_completed_at": "2026-08-20T00:16:11.594140+00:00",
+  "gap_closure_task": "TASK-SEOUL-MULTILINGUAL-GAP-CLOSURE-V1",
+  "service_universe": 1837,
+  "excluded_non_service": 1,
+  "excluded_id": "KOPc3g5o6"
 }
