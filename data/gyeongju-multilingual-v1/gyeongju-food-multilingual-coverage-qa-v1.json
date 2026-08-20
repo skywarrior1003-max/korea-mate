@@ -1,8 +1,8 @@
 {
-  "task": "TASK-GYEONGJU-FOOD-KO-EXACT-TITLE-CROSSWALK-V1",
+  "task": "TASK-GYEONGJU-FOOD-KTO-EN-AND-VG-RIGHTS-V1",
   "generated_at": "2026-08-20",
   "food_universe": 102,
-  "sha_before": "b6df168ff8374f8788acabe3f5308b22f8f8e415",
+  "sha_before": "ed8788272a32bee6748392cb30711c8b0600e93d",
   "crosswalk": {
     "vg_ko_records": 105,
     "gj08_records": 102,
@@ -17,18 +17,47 @@
     "address_cross_confirmed_new": 0
   },
   "matched": {
-    "prev_phone_confirmed": 7,
+    "vg_phone_confirmed": 7,
     "new_from_title": 0,
+    "new_from_kto_en": 0,
     "total_matched_confirmed": 7,
     "total_matched_pct": "6.9%",
     "gj08_no_match": 95
   },
-  "vg_gj08_true_overlap_appears_low": "YES",
-  "description_rights": {
-    "title": "METADATA_ONLY_ALLOWED",
-    "description_reuse_allowed_count": 0,
-    "required_core_ready_policy": "NO — description rights not cleared"
+  "kto_en_food": {
+    "query": {
+      "api": "EngService2/areaBasedList2",
+      "areaCode": 35,
+      "sigunguCode": 2,
+      "contentTypeId": 39,
+      "verified_at": "2026-08-20"
+    },
+    "kto_en_food_records": 0,
+    "kto_en_with_phone": 0,
+    "kto_en_with_coord": 0,
+    "kto_en_with_description": 0,
+    "kto_gj08_matched_confirmed": 0,
+    "new_kto_matches": 0,
+    "overlap_with_existing_vg_7": 0,
+    "ambiguous": 0,
+    "no_match": 0,
+    "false_match": 0,
+    "total_official_en_linked": 7,
+    "total_official_en_linked_pct": "6.9%",
+    "finding": "KTO EngService2 contentTypeId=39 경주(areaCode=35, sigunguCode=2) 음식점 EN 레코드 없음. KTO 경로 GJ08 매칭 불가."
   },
+  "rights": {
+    "vg_description_rights_status": "RIGHTS_REVIEW_REQUIRED",
+    "vg_rights_evidence": "visitgyeongju-source-contract-v1.json: '© 2025 VISIT GYEONGJU. All rights reserved.' 공공누리 표시 없음. description_verdict=RIGHTS_REVIEW_REQUIRED. 기관 문의 없이 승인 불가.",
+    "vg_title_rights_status": "METADATA_ONLY_ALLOWED",
+    "kto_description_rights_status": "NOT_APPLICABLE (records=0)",
+    "kto_rights_evidence": "공공데이터포털 KTO API: 이용허락범위 제한없음(공공누리 1유형) — source-priority-matrix-v1.json 'KTO overview 사용. 이용허락범위 제한 없음' 명시. 단 경주 음식점 EN records=0이므로 실질 미사용.",
+    "description_reuse_allowed_count": 0,
+    "required_core_ready_en": 0,
+    "required_core_ready_en_pct": "0.0%",
+    "required_core_ready_policy": "VG description 권리 미승인(All rights reserved) → REQUIRED_CORE_READY=False 유지"
+  },
+  "vg_gj08_true_overlap_appears_low": "YES",
   "invariants": {
     "false_match": 0,
     "canonical_changed": 0,
@@ -36,7 +65,8 @@
     "translation_used": "NO",
     "google_translate_used": "NO",
     "attraction_197_modified": "NO",
-    "kto_source_used": "NO"
+    "kto_403_bypass": "NO",
+    "captcha_bypass": "NO"
   },
   "per_locale": {
     "en": {
