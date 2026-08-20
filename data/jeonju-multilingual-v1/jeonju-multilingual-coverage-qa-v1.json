@@ -1,0 +1,87 @@
+{
+  "task": "TASK-JEONJU-MULTILINGUAL-VISITJEONJU-MAPPING-V1",
+  "generated_at": "2026-08-20",
+  "service_universe": 236,
+  "common_policy_commit": "1fb26351d4e195cdc6218d3b4417309e1f1838f3",
+  "jeonju_final_sha": "b3645d711143234b79407529f1a9b15babe934c0",
+  "primary_match_method": "UNIQUE_NORMALIZED_PHONE",
+  "secondary_match_method": "ADDRESS_BUILDING_NUMBER",
+  "generic_phone_excluded": [
+    "0632201000",
+    "0632221000",
+    "0632230000",
+    "0632281000"
+  ],
+  "kto_only_records": 133,
+  "official_records": 103,
+  "per_locale": {
+    "en": {
+      "official_records_in_visitjeonju": 92,
+      "matched_confirmed": 62,
+      "required_core_ready": 62,
+      "service_universe": 236,
+      "coverage_pct": "26.3%",
+      "match_stats": {
+        "unique_match": 61,
+        "collision_resolved": 1,
+        "collision_unresolved": 7,
+        "generic_phone": 1,
+        "no_phone_in_source": 19,
+        "no_catalog_match": 3,
+        "fetch_transient": 0
+      },
+      "source_empty_required_text": 0,
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 34,
+        "AMBIGUOUS_MAPPING": 7
+      }
+    },
+    "ja": {
+      "official_records_in_visitjeonju": 92,
+      "matched_confirmed": 61,
+      "required_core_ready": 61,
+      "service_universe": 236,
+      "coverage_pct": "25.8%",
+      "match_stats": {
+        "unique_match": 61,
+        "collision_resolved": 0,
+        "collision_unresolved": 8,
+        "generic_phone": 1,
+        "no_phone_in_source": 19,
+        "no_catalog_match": 3,
+        "fetch_transient": 0
+      },
+      "source_empty_required_text": 0,
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 34,
+        "AMBIGUOUS_MAPPING": 8
+      }
+    },
+    "zh-CN": {
+      "official_records_in_visitjeonju": 92,
+      "matched_confirmed": 62,
+      "required_core_ready": 62,
+      "service_universe": 236,
+      "coverage_pct": "26.3%",
+      "match_stats": {
+        "unique_match": 62,
+        "collision_resolved": 0,
+        "collision_unresolved": 8,
+        "generic_phone": 1,
+        "no_phone_in_source": 20,
+        "no_catalog_match": 1,
+        "fetch_transient": 0
+      },
+      "source_empty_required_text": 0,
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 33,
+        "AMBIGUOUS_MAPPING": 8
+      }
+    }
+  },
+  "owner_request_for_main_handoff": "YES",
+  "handoff_recommendation": "EN/JA/zh-CN 모두 matched_confirmed records를 먼저 사용. required_core_ready=True인 record만 handoff 대상. KTO-only 133건은 SOURCE_NO_LOCALE — KTO JA/ZH API 승인 후 재수집 필요."
+}
