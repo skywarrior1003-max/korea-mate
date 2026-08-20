@@ -1,0 +1,124 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-CLOSEOUT-AND-ATTRACTION-MULTILINGUAL-V1",
+  "generated_at": "2026-08-21",
+  "sha_before": "fdf1acae1feaca21b0919f4ca516a0a98d6f8375",
+  "kto_en_type_mapping": {
+    "note": "EngService2 contenttypeid different from KorService2",
+    "attraction": "76 (관광지), 78 (문화시설), 75 (관광단지)",
+    "food": "82 (식당/특산품), 79 (시장)",
+    "accommodation": "80",
+    "event": "85"
+  },
+  "false_matches_removed": [
+    {
+      "kto_contentid": "268141",
+      "wrong_cid": "gyeongju-KTO12-231930",
+      "reason": "entity mismatch: 국립경주박물관 != 성덕대왕신종 (유물). GJ01-0009 exists but dist=124m > threshold."
+    },
+    {
+      "kto_contentid": "264260",
+      "wrong_cid": "gyeongju-GJ01-0131",
+      "reason": "entity mismatch: Seokguram Grotto != 토함산(Tohamsan Mountain). GJ01-0127 석굴암 exists but dist=596m > threshold."
+    },
+    {
+      "kto_contentid": "3494028",
+      "wrong_cid": "gyeongju-GJ01-0070",
+      "reason": "entity mismatch: Padosori Trail (파도소리길) != 경주 주상절리 전망대. No catalog entry for 파도소리길."
+    }
+  ],
+  "food": {
+    "food_universe": 102,
+    "pipeline_complete": true,
+    "source_audit_complete": true,
+    "deterministic_linked": 7,
+    "vg_phone_confirmed": 7,
+    "kto_en_food_records": 0,
+    "rights_limited_gaps": 95,
+    "source_no_match_gap": 95,
+    "required_core_ready": 0,
+    "vg_description_rights_status": "RIGHTS_REVIEW_REQUIRED",
+    "optional_future_rights_outreach": "hjjoe06@hico.or.kr (HICO)",
+    "safe_to_close_gyeongju_food": "YES",
+    "per_locale": {
+      "en": {
+        "matched": 7,
+        "required_core_ready": 0,
+        "coverage": "6.9%"
+      },
+      "ja": {
+        "matched": 4,
+        "required_core_ready": 0,
+        "coverage": "3.9%"
+      },
+      "zh-CN": {
+        "matched": 6,
+        "required_core_ready": 0,
+        "coverage": "5.9%"
+      }
+    }
+  },
+  "attraction": {
+    "attraction_universe": 197,
+    "source_audit": {
+      "kto_en": "EngService2 52 records (type 76+78+75), all with coord, 0 phone",
+      "kto_ja": "JpnService2 — HTTP_403 (confirmed two tasks)",
+      "kto_zh": "ChsService2 — HTTP_403 (confirmed two tasks)",
+      "vg": "NOT_AVAILABLE (visitgyeongju.or.kr covers 식당·기념품 only per source contract)",
+      "gyeongju_go_kr": "GOOGLE_TRANSLATE_ONLY — excluded per policy"
+    },
+    "en": {
+      "kto_en_attraction_records": 52,
+      "kto_en_with_coord": 52,
+      "kto_en_with_phone": 0,
+      "matched_initial": 16,
+      "false_match_removed": 3,
+      "matched_confirmed": 13,
+      "ambiguous_mapping": 0,
+      "no_match": 39,
+      "false_match": 0,
+      "title_present": 13,
+      "description_present": 0,
+      "description_reuse_allowed": 13,
+      "rights_source": "공공데이터포털 KTO API 이용허락범위 제한없음",
+      "required_core_ready": 0,
+      "required_core_ready_note": "13 titles available but no EN descriptions from KTO detailCommon2",
+      "required_core_ready_pct": "0.0%",
+      "coverage_pct": "6.6%",
+      "gap_no_kto_match": 184
+    },
+    "ja": {
+      "matched_confirmed": 0,
+      "gap_type": "ACCESS_BLOCKED_KTO_403",
+      "required_core_ready": 0,
+      "coverage_pct": "0.0%"
+    },
+    "zh-CN": {
+      "matched_confirmed": 0,
+      "gap_type": "ACCESS_BLOCKED_KTO_403",
+      "required_core_ready": 0,
+      "coverage_pct": "0.0%"
+    }
+  },
+  "overall": {
+    "google_translate_used": "NO",
+    "translation_used": "NO",
+    "false_match": 0,
+    "gyeongju_canonical_changed": 0,
+    "new_places_created": 0,
+    "kto_403_bypass": "NO",
+    "captcha_bypass": "NO",
+    "safe_to_close_gyeongju_multilingual": "YES",
+    "residual_gaps": {
+      "food_en": "95/102 (VG rights/no-match)",
+      "attraction_en": "184/197 (no KTO EN coord match within 80m)",
+      "attraction_ja": "197/197 (KTO 403)",
+      "attraction_zh": "197/197 (KTO 403)"
+    },
+    "next_opportunities": [
+      "VG rights inquiry for food description (hjjoe06@hico.or.kr)",
+      "KTO JA/ZH API authorization",
+      "UNESCO/cultural heritage official EN expanded coverage",
+      "Increase coord threshold or use alternate identifier linkage for the 3 false-match entities"
+    ]
+  }
+}
