@@ -1,84 +1,87 @@
 {
-  "task": "TASK-GYEONGJU-FOOD-MULTILINGUAL-LINKAGE-R2",
+  "task": "TASK-GYEONGJU-FOOD-KO-EXACT-TITLE-CROSSWALK-V1",
   "generated_at": "2026-08-20",
   "food_universe": 102,
-  "sha_before": "c1574d838ede",
-  "vg_hexids_in_raw": 105,
-  "matched_before": 7,
-  "matched_after": 7,
-  "additional_recovered": 0,
-  "ambiguous": 0,
-  "gj08_unmatched": 95,
-  "stable_match_counts": {
-    "unique_phone_match": 7,
-    "full_normalized_addr_match": 5,
-    "phone_and_addr_both": 5,
-    "coord_confirmed": 0
+  "sha_before": "b6df168ff8374f8788acabe3f5308b22f8f8e415",
+  "crosswalk": {
+    "vg_ko_records": 105,
+    "gj08_records": 102,
+    "raw_exact_title_match": 2,
+    "normalized_exact_title_match": 0,
+    "unique_exact_title_match": 2,
+    "duplicate_title_collision": 0,
+    "new_matches_from_title": 0,
+    "title_match_needs_review": 1,
+    "ambiguous_mapping": 0,
+    "phone_cross_confirmed_new": 0,
+    "address_cross_confirmed_new": 0
   },
-  "en_native_verification": {
-    "en_native_count": 104,
-    "en_fallback_ko": 1,
-    "en_empty": 0,
-    "native_confirmed": "YES"
+  "matched": {
+    "prev_phone_confirmed": 7,
+    "new_from_title": 0,
+    "total_matched_confirmed": 7,
+    "total_matched_pct": "6.9%",
+    "gj08_no_match": 95
   },
+  "vg_gj08_true_overlap_appears_low": "YES",
   "description_rights": {
     "title": "METADATA_ONLY_ALLOWED",
-    "short_description": "RIGHTS_REVIEW_REQUIRED",
     "description_reuse_allowed_count": 0,
     "required_core_ready_policy": "NO — description rights not cleared"
   },
-  "kto_mixed_into_vg_metrics": false,
+  "invariants": {
+    "false_match": 0,
+    "canonical_changed": 0,
+    "new_places_created": 0,
+    "translation_used": "NO",
+    "google_translate_used": "NO",
+    "attraction_197_modified": "NO",
+    "kto_source_used": "NO"
+  },
   "per_locale": {
     "en": {
-      "vg_official_source_records": 7,
+      "official_source_records": 7,
       "native_multilingual_confirmed": "YES",
       "matched_confirmed": 7,
       "source_title_present": 7,
-      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
-      "description_reuse_allowed_count": 0,
+      "source_description_present": "NOT_COLLECTED",
+      "description_reuse_allowed": 0,
       "required_core_ready": 0,
       "service_coverage_pct": "6.9%",
       "gap_summary": {
-        "NO_VG_MATCH": 95
+        "NO_VG_MATCH": 94,
+        "TITLE_MATCH_NEEDS_REVIEW": 1
       }
     },
     "ja": {
-      "vg_official_source_records": 4,
+      "official_source_records": 4,
       "native_multilingual_confirmed": "YES",
       "matched_confirmed": 4,
       "source_title_present": 4,
-      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
-      "description_reuse_allowed_count": 0,
+      "source_description_present": "NOT_COLLECTED",
+      "description_reuse_allowed": 0,
       "required_core_ready": 0,
       "service_coverage_pct": "3.9%",
       "gap_summary": {
-        "NO_VG_MATCH": 95,
-        "VG_LOCALE_NOT_NATIVE": 3
+        "NO_VG_MATCH": 94,
+        "VG_LOCALE_NOT_NATIVE": 3,
+        "TITLE_MATCH_NEEDS_REVIEW": 1
       }
     },
     "zh-CN": {
-      "vg_official_source_records": 6,
+      "official_source_records": 6,
       "native_multilingual_confirmed": "YES",
       "matched_confirmed": 6,
       "source_title_present": 6,
-      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
-      "description_reuse_allowed_count": 0,
+      "source_description_present": "NOT_COLLECTED",
+      "description_reuse_allowed": 0,
       "required_core_ready": 0,
       "service_coverage_pct": "5.9%",
       "gap_summary": {
-        "NO_VG_MATCH": 95,
-        "VG_LOCALE_NOT_NATIVE": 1
+        "NO_VG_MATCH": 94,
+        "VG_LOCALE_NOT_NATIVE": 1,
+        "TITLE_MATCH_NEEDS_REVIEW": 1
       }
     }
-  },
-  "invariants": {
-    "false_match": 0,
-    "translation_used": "NO",
-    "google_translate_used": "NO",
-    "gyeongju_canonical_changed": 0,
-    "new_places_created": 0,
-    "git_add_all_used": "NO",
-    "force_push": "NO",
-    "attraction_197_modified": "NO"
   }
 }
