@@ -83,5 +83,73 @@
     }
   },
   "owner_request_for_main_handoff": "YES",
-  "handoff_recommendation": "EN/JA/zh-CN 모두 matched_confirmed records를 먼저 사용. required_core_ready=True인 record만 handoff 대상. KTO-only 133건은 SOURCE_NO_LOCALE — KTO JA/ZH API 승인 후 재수집 필요."
+  "handoff_recommendation": "EN/JA/zh-CN 모두 matched_confirmed records를 먼저 사용. required_core_ready=True인 record만 handoff 대상. KTO-only 133건은 SOURCE_NO_LOCALE — KTO JA/ZH API 승인 후 재수집 필요.",
+  "task_v2": "TASK-JEONJU-MULTILINGUAL-GAP-EVIDENCE-REVIEW-V2",
+  "per_locale_v2": {
+    "en": {
+      "matched_confirmed_unique_canonicals": 89,
+      "enrichment_records_total": 92,
+      "required_core_ready": 85,
+      "service_universe": 236,
+      "coverage_pct": "36.0%",
+      "method_breakdown": {
+        "AUTO_PHONE": 62,
+        "OWNER_CONFIRMED_ENTITY_MAPPING": 7,
+        "MANUAL_CONFIRMED_OFFICIAL_EVIDENCE": 23
+      },
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 14
+      }
+    },
+    "ja": {
+      "matched_confirmed_unique_canonicals": 69,
+      "enrichment_records_total": 72,
+      "required_core_ready": 69,
+      "service_universe": 236,
+      "coverage_pct": "29.2%",
+      "method_breakdown": {
+        "AUTO_PHONE": 61,
+        "MANUAL_CONFIRMED_OFFICIAL_EVIDENCE": 3,
+        "OWNER_CONFIRMED_ENTITY_MAPPING": 8
+      },
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 34
+      }
+    },
+    "zh-CN": {
+      "matched_confirmed_unique_canonicals": 69,
+      "enrichment_records_total": 72,
+      "required_core_ready": 69,
+      "service_universe": 236,
+      "coverage_pct": "29.2%",
+      "method_breakdown": {
+        "AUTO_PHONE": 62,
+        "MANUAL_CONFIRMED_OFFICIAL_EVIDENCE": 2,
+        "OWNER_CONFIRMED_ENTITY_MAPPING": 8
+      },
+      "gap_summary": {
+        "NO_VISITJEONJU_LOCALE_RECORD": 133,
+        "MAPPING_GAP": 34
+      }
+    }
+  },
+  "recovery_summary": {
+    "en_before": 62,
+    "ja_before": 61,
+    "zh_before": 62,
+    "en_after_unique": 89,
+    "ja_after_unique": 69,
+    "zh_after_unique": 69,
+    "en_new_owner_confirmed": 7,
+    "en_new_manual_confirmed": 23,
+    "ja_new_confirmed": 11,
+    "zh_new_confirmed": 10,
+    "FALSE_MATCH": 0,
+    "TRANSLATION_USED": "NO",
+    "JEONJU_CANONICAL_CHANGED": 0,
+    "NEW_PLACES_CREATED": 0,
+    "OWNER_REQUEST_FOR_MAIN_HANDOFF": "YES"
+  }
 }
