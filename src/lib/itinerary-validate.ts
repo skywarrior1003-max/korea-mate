@@ -25,6 +25,7 @@ export interface ItineraryPlace {
   tips?:         string;
   slot?:         string;
   googleMapsUrl?: string;
+  image?:        string;  // 장소 대표 이미지 (city_spots.image_url) — 사용자 사진 아님
 }
 
 // Reads body as text, checks actual UTF-8 byte size, then parses JSON.

@@ -71,6 +71,8 @@ interface PlaceDisplay {
   google_maps_url: string;
   lat?:            number;
   lng?:            number;
+  /** city_spots.image_url — 표시용 장소 대표 이미지. 없는 장소가 정상 상태다 */
+  image?:          string;
 }
 
 // ── Validation helpers ────────────────────────────────────────────────────────
@@ -279,7 +281,7 @@ async function buildPlaceMap(
         const numericIds = realIds.map(Number).filter(n => !isNaN(n));
         const { data, error } = await client
           .from("city_spots")
-          .select("id, name, subcategory, category, description, district, lat, lng")
+          .select("id, name, subcategory, category, description, district, lat, lng, image_url")
           .in("id", numericIds);
 
         if (!error && Array.isArray(data)) {
@@ -295,6 +297,10 @@ async function buildPlaceMap(
               google_maps_url: gmUrl,
               lat:             typeof row.lat === "number" ? row.lat : undefined,
               lng:             typeof row.lng === "number" ? row.lng : undefined,
+              // image_url = NULL 이 정상 상태다 — 빈 값이면 필드 자체를 내보내지 않는다
+              image:           typeof row.image_url === "string" && row.image_url.trim() !== ""
+                                 ? row.image_url
+                                 : undefined,
             };
           }
         }

@@ -97,6 +97,12 @@ interface Place {
   address?:  string;
   note?:     string;
   /**
+   * 장소 대표 이미지 (city_spots.image_url). optional 이라 이 필드가 없던
+   * 기존 저장 일정도 그대로 열린다. 사용자 Memory 사진과는 무관한 관광
+   * 장소 공개 이미지다. 렌더는 후속 TASK — 여기서는 데이터만 보존한다.
+   */
+  image?:    string;
+  /**
    * 이 항목이 숙소인가.
    *
    * optional 이라 이 필드가 없던 기존 저장 일정도 그대로 열린다. 숙소라는
@@ -181,6 +187,8 @@ interface PlaceDisplay {
   google_maps_url: string;
   lat?:            number;
   lng?:            number;
+  /** city_spots.image_url — 표시용 장소 대표 이미지. 없는 장소가 정상 상태다 */
+  image?:          string;
 }
 type PlaceDisplayMap = Record<string, PlaceDisplay>;
 
@@ -837,6 +845,8 @@ async function generateWithNewApi(
           bookingUrl:        cartHint?.booking_url,
           lat:               display.lat ?? cartFull?.lat,
           lng:               display.lng ?? cartFull?.lng,
+          // 장소 대표 이미지 보존 — undefined 는 JSON 직렬화에서 사라지므로 저장 payload 를 더럽히지 않는다
+          image:             display.image,
           ...(isCitySpot ? { place_id: item.place_id, source: "city_spot" as const } : {}),
           // 원천 정보를 여기서 버리면 저장·재진입·공유·복사에서 복원할 수 없다.
           ...(cartFull?.sourceKey ? { sourceKey: cartFull.sourceKey } : {}),
@@ -2054,6 +2064,8 @@ function ItineraryResult() {
       lat:           spot.lat,
       lng:           spot.lng,
       address:       spot.address,
+      // 장소 대표 이미지 — planner 생성 경로와 같은 계약으로 보존한다
+      image:         spot.image,
     };
     setDays(prev => prev.map((day, di) =>
       di === dayIdx ? { ...day, places: [...day.places, newPlace] } : day
