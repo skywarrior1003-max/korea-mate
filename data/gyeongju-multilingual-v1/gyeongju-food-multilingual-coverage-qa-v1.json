@@ -1,66 +1,84 @@
 {
-  "task": "TASK-GYEONGJU-FOOD-MULTILINGUAL-HEXID-LINKAGE-V1",
+  "task": "TASK-GYEONGJU-FOOD-MULTILINGUAL-LINKAGE-R2",
   "generated_at": "2026-08-20",
   "food_universe": 102,
-  "vg_hexids_collected": 105,
-  "vg_matched_to_gj08": 7,
-  "vg_ambiguous": 0,
-  "vg_no_match_to_gj08": 98,
-  "gj08_unmatched_count": 95,
-  "native_multilingual_confirmed": {
-    "en": "YES",
-    "ja": "YES",
-    "zh_CN": "YES"
+  "sha_before": "c1574d838ede",
+  "vg_hexids_in_raw": 105,
+  "matched_before": 7,
+  "matched_after": 7,
+  "additional_recovered": 0,
+  "ambiguous": 0,
+  "gj08_unmatched": 95,
+  "stable_match_counts": {
+    "unique_phone_match": 7,
+    "full_normalized_addr_match": 5,
+    "phone_and_addr_both": 5,
+    "coord_confirmed": 0
   },
-  "underlying_api_found": "NO",
-  "stable_id_found": "YES (vg_id hex34)",
-  "hexid_linkage_method": "ADDRESS_EXACT + PHONE_CROSS_CONFIRM",
-  "translation_used": "NO",
-  "google_translate_used": "NO",
-  "gyeongju_canonical_changed": 0,
-  "new_places_created": 0,
-  "description_rights": "RIGHTS_REVIEW_REQUIRED — title_only collected",
+  "en_native_verification": {
+    "en_native_count": 104,
+    "en_fallback_ko": 1,
+    "en_empty": 0,
+    "native_confirmed": "YES"
+  },
+  "description_rights": {
+    "title": "METADATA_ONLY_ALLOWED",
+    "short_description": "RIGHTS_REVIEW_REQUIRED",
+    "description_reuse_allowed_count": 0,
+    "required_core_ready_policy": "NO — description rights not cleared"
+  },
+  "kto_mixed_into_vg_metrics": false,
   "per_locale": {
     "en": {
-      "official_source_records": 7,
+      "vg_official_source_records": 7,
+      "native_multilingual_confirmed": "YES",
       "matched_confirmed": 7,
-      "required_core_ready": 7,
-      "coverage_pct": "6.9%",
-      "title_present": 7,
-      "short_description_present": 0,
+      "source_title_present": 7,
+      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
+      "description_reuse_allowed_count": 0,
+      "required_core_ready": 0,
+      "service_coverage_pct": "6.9%",
       "gap_summary": {
         "NO_VG_MATCH": 95
       }
     },
     "ja": {
-      "official_source_records": 4,
+      "vg_official_source_records": 4,
+      "native_multilingual_confirmed": "YES",
       "matched_confirmed": 4,
-      "required_core_ready": 4,
-      "coverage_pct": "3.9%",
-      "title_present": 4,
-      "short_description_present": 0,
+      "source_title_present": 4,
+      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
+      "description_reuse_allowed_count": 0,
+      "required_core_ready": 0,
+      "service_coverage_pct": "3.9%",
       "gap_summary": {
         "NO_VG_MATCH": 95,
-        "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING": 3
+        "VG_LOCALE_NOT_NATIVE": 3
       }
     },
     "zh-CN": {
-      "official_source_records": 6,
+      "vg_official_source_records": 6,
+      "native_multilingual_confirmed": "YES",
       "matched_confirmed": 6,
-      "required_core_ready": 6,
-      "coverage_pct": "5.9%",
-      "title_present": 6,
-      "short_description_present": 0,
+      "source_title_present": 6,
+      "source_description_present": "NOT_COLLECTED (RIGHTS_REVIEW_REQUIRED)",
+      "description_reuse_allowed_count": 0,
+      "required_core_ready": 0,
+      "service_coverage_pct": "5.9%",
       "gap_summary": {
         "NO_VG_MATCH": 95,
-        "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING": 1
+        "VG_LOCALE_NOT_NATIVE": 1
       }
     }
   },
-  "stability": {
+  "invariants": {
     "false_match": 0,
-    "phone_match_count": 7,
-    "address_match_count": 0,
-    "coord_confirmed_count": 0
+    "translation_used": "NO",
+    "google_translate_used": "NO",
+    "gyeongju_canonical_changed": 0,
+    "new_places_created": 0,
+    "git_add_all_used": "NO",
+    "force_push": "NO",
+    "attraction_197_modified": "NO"
   }
 }

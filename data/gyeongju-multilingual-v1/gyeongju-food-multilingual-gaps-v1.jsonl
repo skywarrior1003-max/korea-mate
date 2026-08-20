@@ -55,8 +55,8 @@
 {"candidate_id": "gyeongju-GJ08-404", "locale": "en", "title_ko": "소사이어티나귀", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-404", "locale": "ja", "title_ko": "소사이어티나귀", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-404", "locale": "zh-CN", "title_ko": "소사이어티나귀", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
-{"candidate_id": "gyeongju-GJ08-405", "locale": "ja", "title_ko": "스틸룸", "gap_type": "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING", "food_universe": 102, "noted_at": "2026-08-20"}
-{"candidate_id": "gyeongju-GJ08-405", "locale": "zh-CN", "title_ko": "스틸룸", "gap_type": "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING", "food_universe": 102, "noted_at": "2026-08-20"}
+{"candidate_id": "gyeongju-GJ08-405", "locale": "ja", "title_ko": "스틸룸", "gap_type": "VG_LOCALE_NOT_NATIVE", "food_universe": 102, "noted_at": "2026-08-20"}
+{"candidate_id": "gyeongju-GJ08-405", "locale": "zh-CN", "title_ko": "스틸룸", "gap_type": "VG_LOCALE_NOT_NATIVE", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-409", "locale": "en", "title_ko": "계림김밥", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-409", "locale": "ja", "title_ko": "계림김밥", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-409", "locale": "zh-CN", "title_ko": "계림김밥", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
@@ -219,7 +219,7 @@
 {"candidate_id": "gyeongju-GJ08-73", "locale": "en", "title_ko": "카리카츠", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-73", "locale": "ja", "title_ko": "카리카츠", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-73", "locale": "zh-CN", "title_ko": "카리카츠", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
-{"candidate_id": "gyeongju-GJ08-732", "locale": "ja", "title_ko": "아리랑", "gap_type": "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING", "food_universe": 102, "noted_at": "2026-08-20"}
+{"candidate_id": "gyeongju-GJ08-732", "locale": "ja", "title_ko": "아리랑", "gap_type": "VG_LOCALE_NOT_NATIVE", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7425", "locale": "en", "title_ko": "거송갈비찜 황남점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7425", "locale": "ja", "title_ko": "거송갈비찜 황남점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7425", "locale": "zh-CN", "title_ko": "거송갈비찜 황남점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
@@ -235,7 +235,7 @@
 {"candidate_id": "gyeongju-GJ08-7498", "locale": "en", "title_ko": "오륙돈", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7498", "locale": "ja", "title_ko": "오륙돈", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7498", "locale": "zh-CN", "title_ko": "오륙돈", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
-{"candidate_id": "gyeongju-GJ08-7510", "locale": "ja", "title_ko": "요석궁1779", "gap_type": "SOURCE_RIGHTS_RESTRICTED_OR_LOCALE_MISSING", "food_universe": 102, "noted_at": "2026-08-20"}
+{"candidate_id": "gyeongju-GJ08-7510", "locale": "ja", "title_ko": "요석궁1779", "gap_type": "VG_LOCALE_NOT_NATIVE", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7563", "locale": "en", "title_ko": "궁림바지락칼국수 경주본점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7563", "locale": "ja", "title_ko": "궁림바지락칼국수 경주본점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
 {"candidate_id": "gyeongju-GJ08-7563", "locale": "zh-CN", "title_ko": "궁림바지락칼국수 경주본점", "gap_type": "NO_VG_MATCH", "food_universe": 102, "noted_at": "2026-08-20"}
