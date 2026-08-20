@@ -1,0 +1,107 @@
+{
+  "task": "TASK-JEJU-MULTILINGUAL-CONTENT-COLLECTION-V1",
+  "common_multilingual_policy_commit": "1fb26351d4e195cdc6218d3b4417309e1f1838f3",
+  "start_jeju_sha": "b6539a96908a972705836067430223645473951f",
+  "service_universe": 1496,
+  "c1_count": 1230,
+  "c4_count": 256,
+  "kto_count": 10,
+  "c4_multilingual_capability": "YES",
+  "collected_at": "2026-08-20T00:48:07.650672+00:00",
+  "en": {
+    "source_pointer_or_capability": 1482,
+    "c1_pointer": 1226,
+    "c4_attempted": 256,
+    "fetch_attempted": 1482,
+    "fetch_success": 1482,
+    "title_present": 1482,
+    "short_description_present": 1482,
+    "required_core_ready": 1482,
+    "service_coverage_pct": 99.1,
+    "gap_summary": {
+      "SOURCE_NO_LOCALE": 14
+    }
+  },
+  "ja": {
+    "source_pointer_or_capability": 1483,
+    "c1_pointer": 1227,
+    "c4_attempted": 256,
+    "fetch_attempted": 1483,
+    "fetch_success": 1483,
+    "title_present": 1483,
+    "short_description_present": 1481,
+    "required_core_ready": 1481,
+    "service_coverage_pct": 99.0,
+    "gap_summary": {
+      "SOURCE_EMPTY_REQUIRED_TEXT": 2,
+      "SOURCE_NO_LOCALE": 13
+    }
+  },
+  "zh-CN": {
+    "source_pointer_or_capability": 1482,
+    "c1_pointer": 1226,
+    "c4_attempted": 256,
+    "fetch_attempted": 1482,
+    "fetch_success": 1482,
+    "title_present": 1482,
+    "short_description_present": 1482,
+    "required_core_ready": 1482,
+    "service_coverage_pct": 99.1,
+    "gap_summary": {
+      "SOURCE_NO_LOCALE": 14
+    }
+  },
+  "source_coverage": {
+    "VISITJEJU_C1/en": {
+      "ready": 1226,
+      "total": 1230,
+      "pct": 99.7
+    },
+    "VISITJEJU_C1/ja": {
+      "ready": 1225,
+      "total": 1230,
+      "pct": 99.6
+    },
+    "VISITJEJU_C1/zh-CN": {
+      "ready": 1226,
+      "total": 1230,
+      "pct": 99.7
+    },
+    "VISITJEJU_C4/en": {
+      "ready": 256,
+      "total": 256,
+      "pct": 100.0
+    },
+    "VISITJEJU_C4/ja": {
+      "ready": 256,
+      "total": 256,
+      "pct": 100.0
+    },
+    "VISITJEJU_C4/zh-CN": {
+      "ready": 256,
+      "total": 256,
+      "pct": 100.0
+    },
+    "KTO_TOURAPI/en": {
+      "ready": 0,
+      "total": 10,
+      "pct": 0.0
+    },
+    "KTO_TOURAPI/ja": {
+      "ready": 0,
+      "total": 10,
+      "pct": 0.0
+    },
+    "KTO_TOURAPI/zh-CN": {
+      "ready": 0,
+      "total": 10,
+      "pct": 0.0
+    }
+  },
+  "jeju_canonical_changed": 0,
+  "new_places_created": 0,
+  "coord_changed": 0,
+  "nav_ai_changed": 0,
+  "translation_used": "NO",
+  "zh_tw_collected": "NO"
+}
