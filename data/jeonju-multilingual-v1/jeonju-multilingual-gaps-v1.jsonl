@@ -138,13 +138,13 @@
 {"candidate_id": "OFF-11927", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-11928", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
 {"candidate_id": "OFF-13042", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
-{"candidate_id": "OFF-16104", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16104", "locale": "en", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9756", "owner_normalization_group": "JEONJU_NATIONAL_MUSEUM", "owner_note": "어린이박물관: sub-facility of 국립전주박물관; content accessible via parent canonical"}
 {"candidate_id": "OFF-16133", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16310", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16357", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
-{"candidate_id": "OFF-16676", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16676", "locale": "en", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9784", "owner_normalization_group": "JEONJU_ZOO", "owner_note": "전주드림랜드: sub-facility of 전주동물원; content accessible via parent canonical"}
 {"candidate_id": "OFF-17463", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
-{"candidate_id": "OFF-9774", "locale": "en", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
+{"candidate_id": "OFF-9774", "locale": "en", "gap_type": "OWNER_CONFIRMED_AREA_CONTEXT", "source": "OFFICIAL", "has_kto_cid": false, "owner_parent_cid": "OFF-9742", "owner_normalization_group": "OMOKDAE", "owner_note": "전주천: area-context for 오목대·이목대; stream content mapped to parent per owner decision"}
 {"candidate_id": "KTO-1014394", "locale": "ja", "gap_type": "NO_VISITJEONJU_LOCALE_RECORD", "source": "KTO", "has_kto_cid": true}
 {"candidate_id": "KTO-126621", "locale": "ja", "gap_type": "NO_VISITJEONJU_LOCALE_RECORD", "source": "KTO", "has_kto_cid": true}
 {"candidate_id": "KTO-126626", "locale": "ja", "gap_type": "NO_VISITJEONJU_LOCALE_RECORD", "source": "KTO", "has_kto_cid": true}
@@ -296,7 +296,7 @@
 {"candidate_id": "OFF-16022", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16086", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16087", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
-{"candidate_id": "OFF-16104", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16104", "locale": "ja", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9756", "owner_normalization_group": "JEONJU_NATIONAL_MUSEUM", "owner_note": "어린이박물관: sub-facility of 국립전주박물관; content accessible via parent canonical"}
 {"candidate_id": "OFF-16133", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16310", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16357", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
@@ -304,13 +304,13 @@
 {"candidate_id": "OFF-16672", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
 {"candidate_id": "OFF-16673", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16674", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
-{"candidate_id": "OFF-16676", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16676", "locale": "ja", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9784", "owner_normalization_group": "JEONJU_ZOO", "owner_note": "전주드림랜드: sub-facility of 전주동물원; content accessible via parent canonical"}
 {"candidate_id": "OFF-16679", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-17128", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-17463", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-9758", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-9759", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
-{"candidate_id": "OFF-9774", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
+{"candidate_id": "OFF-9774", "locale": "ja", "gap_type": "OWNER_CONFIRMED_AREA_CONTEXT", "source": "OFFICIAL", "has_kto_cid": false, "owner_parent_cid": "OFF-9742", "owner_normalization_group": "OMOKDAE", "owner_note": "전주천: area-context for 오목대·이목대; stream content mapped to parent per owner decision"}
 {"candidate_id": "OFF-9781", "locale": "ja", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "KTO-1014394", "locale": "zh-CN", "gap_type": "NO_VISITJEONJU_LOCALE_RECORD", "source": "KTO", "has_kto_cid": true}
 {"candidate_id": "KTO-126621", "locale": "zh-CN", "gap_type": "NO_VISITJEONJU_LOCALE_RECORD", "source": "KTO", "has_kto_cid": true}
@@ -463,7 +463,7 @@
 {"candidate_id": "OFF-16022", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16086", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16087", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
-{"candidate_id": "OFF-16104", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16104", "locale": "zh-CN", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9756", "owner_normalization_group": "JEONJU_NATIONAL_MUSEUM", "owner_note": "어린이박물관: sub-facility of 국립전주박물관; content accessible via parent canonical"}
 {"candidate_id": "OFF-16109", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16133", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16310", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
@@ -472,10 +472,10 @@
 {"candidate_id": "OFF-16672", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
 {"candidate_id": "OFF-16673", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-16674", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
-{"candidate_id": "OFF-16676", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
+{"candidate_id": "OFF-16676", "locale": "zh-CN", "gap_type": "OWNER_CONFIRMED_SUBFACILITY", "source": "OFFICIAL", "has_kto_cid": true, "owner_parent_cid": "OFF-9784", "owner_normalization_group": "JEONJU_ZOO", "owner_note": "전주드림랜드: sub-facility of 전주동물원; content accessible via parent canonical"}
 {"candidate_id": "OFF-16679", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-17128", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-17463", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-9758", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
 {"candidate_id": "OFF-9759", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": true}
-{"candidate_id": "OFF-9774", "locale": "zh-CN", "gap_type": "MAPPING_GAP", "source": "OFFICIAL", "has_kto_cid": false}
+{"candidate_id": "OFF-9774", "locale": "zh-CN", "gap_type": "OWNER_CONFIRMED_AREA_CONTEXT", "source": "OFFICIAL", "has_kto_cid": false, "owner_parent_cid": "OFF-9742", "owner_normalization_group": "OMOKDAE", "owner_note": "전주천: area-context for 오목대·이목대; stream content mapped to parent per owner decision"}

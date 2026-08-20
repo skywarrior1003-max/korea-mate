@@ -87,11 +87,14 @@
   "task_v2": "TASK-JEONJU-MULTILINGUAL-GAP-EVIDENCE-REVIEW-V2",
   "per_locale_v2": {
     "en": {
-      "matched_confirmed_unique_canonicals": 89,
-      "enrichment_records_total": 92,
-      "required_core_ready": 85,
-      "service_universe": 236,
+      "official_localized_content_records": 92,
+      "multilingual_ready_canonical_places": 89,
+      "required_core_ready_places": 85,
       "coverage_pct": "36.0%",
+      "service_universe": 236,
+      "owner_confirmed_content_records": 7,
+      "subfacility_content_records": 2,
+      "area_context_content_records": 1,
       "method_breakdown": {
         "AUTO_PHONE": 62,
         "OWNER_CONFIRMED_ENTITY_MAPPING": 7,
@@ -99,15 +102,20 @@
       },
       "gap_summary": {
         "NO_VISITJEONJU_LOCALE_RECORD": 133,
-        "MAPPING_GAP": 14
+        "MAPPING_GAP": 11,
+        "OWNER_CONFIRMED_SUBFACILITY": 2,
+        "OWNER_CONFIRMED_AREA_CONTEXT": 1
       }
     },
     "ja": {
-      "matched_confirmed_unique_canonicals": 69,
-      "enrichment_records_total": 72,
-      "required_core_ready": 69,
-      "service_universe": 236,
+      "official_localized_content_records": 72,
+      "multilingual_ready_canonical_places": 69,
+      "required_core_ready_places": 69,
       "coverage_pct": "29.2%",
+      "service_universe": 236,
+      "owner_confirmed_content_records": 8,
+      "subfacility_content_records": 2,
+      "area_context_content_records": 1,
       "method_breakdown": {
         "AUTO_PHONE": 61,
         "MANUAL_CONFIRMED_OFFICIAL_EVIDENCE": 3,
@@ -115,15 +123,20 @@
       },
       "gap_summary": {
         "NO_VISITJEONJU_LOCALE_RECORD": 133,
-        "MAPPING_GAP": 34
+        "MAPPING_GAP": 31,
+        "OWNER_CONFIRMED_SUBFACILITY": 2,
+        "OWNER_CONFIRMED_AREA_CONTEXT": 1
       }
     },
     "zh-CN": {
-      "matched_confirmed_unique_canonicals": 69,
-      "enrichment_records_total": 72,
-      "required_core_ready": 69,
-      "service_universe": 236,
+      "official_localized_content_records": 72,
+      "multilingual_ready_canonical_places": 69,
+      "required_core_ready_places": 69,
       "coverage_pct": "29.2%",
+      "service_universe": 236,
+      "owner_confirmed_content_records": 8,
+      "subfacility_content_records": 2,
+      "area_context_content_records": 1,
       "method_breakdown": {
         "AUTO_PHONE": 62,
         "MANUAL_CONFIRMED_OFFICIAL_EVIDENCE": 2,
@@ -131,25 +144,66 @@
       },
       "gap_summary": {
         "NO_VISITJEONJU_LOCALE_RECORD": 133,
-        "MAPPING_GAP": 34
+        "MAPPING_GAP": 31,
+        "OWNER_CONFIRMED_SUBFACILITY": 2,
+        "OWNER_CONFIRMED_AREA_CONTEXT": 1
       }
     }
   },
   "recovery_summary": {
-    "en_before": 62,
-    "ja_before": 61,
-    "zh_before": 62,
-    "en_after_unique": 89,
-    "ja_after_unique": 69,
-    "zh_after_unique": 69,
-    "en_new_owner_confirmed": 7,
-    "en_new_manual_confirmed": 23,
-    "ja_new_confirmed": 11,
-    "zh_new_confirmed": 10,
-    "FALSE_MATCH": 0,
-    "TRANSLATION_USED": "NO",
+    "sha_before_normalization": "6770dc8c596f1acfe93095aaa1bfbe32713559e6",
+    "en_official_localized_content_records": 92,
+    "en_multilingual_ready_canonical_places": 89,
+    "ja_official_localized_content_records": 72,
+    "ja_multilingual_ready_canonical_places": 69,
+    "zh_official_localized_content_records": 72,
+    "zh_multilingual_ready_canonical_places": 69,
+    "OWNER_NORMALIZATION_GROUPS": 4,
+    "DREAMLAND_MAPPING_GAP": "NO",
+    "CHILDRENS_MUSEUM_MAPPING_GAP": "NO",
+    "JEONJUCHEON_MAPPING_GAP": "NO",
+    "NAMBU_MARKET_FUTURE_NORMALIZATION_REQUIRED": "YES",
     "JEONJU_CANONICAL_CHANGED": 0,
-    "NEW_PLACES_CREATED": 0,
+    "TRANSLATION_USED": "NO",
+    "FALSE_MATCH": 0,
+    "OWNER_ENTITY_NORMALIZATION_FOR_MAIN_HANDOFF": "YES",
     "OWNER_REQUEST_FOR_MAIN_HANDOFF": "YES"
+  },
+  "task_normalization": "TASK-JEONJU-MULTILINGUAL-OWNER-ENTITY-NORMALIZATION-CORRECTION-V1",
+  "owner_normalization_groups": {
+    "JEONJU_ZOO": {
+      "canonical": "OFF-9784 (전주동물원)",
+      "sub_facilities": [
+        "OFF-16676 (전주드림랜드)"
+      ],
+      "localized_pages": "Zoo: 3 locales | Dreamland: 3 locales",
+      "status": "RESOLVED"
+    },
+    "JEONJU_NATIONAL_MUSEUM": {
+      "canonical": "OFF-9756 (국립전주박물관)",
+      "sub_facilities": [
+        "OFF-16104 (어린이박물관)"
+      ],
+      "localized_pages": "NatMus: 3 locales | ChildMus: 3 locales",
+      "status": "RESOLVED"
+    },
+    "NAMBU_MARKET": {
+      "canonical": "PENDING (남부시장 concept)",
+      "current_rows": [
+        "OFF-16084 (남부시장·청년몰)",
+        "OFF-16085 (남부시장 야시장)"
+      ],
+      "localized_pages": "YouthMall: 3 locales | NightMarket: 3 locales",
+      "status": "FUTURE_MERGE_REQUIRED",
+      "action": "MAIN_HANDOFF_NORMALIZATION"
+    },
+    "OMOKDAE": {
+      "canonical": "OFF-9742 (오목대·이목대)",
+      "area_context": [
+        "OFF-9774 (전주천)"
+      ],
+      "localized_pages": "Omokdae: 3 locales | Stream(→Omokdae context): 3 locales",
+      "status": "RESOLVED"
+    }
   }
 }
