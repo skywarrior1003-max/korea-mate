@@ -2,6 +2,13 @@
 // TASK-027: SNS 크롤러 봇 감지 → Supabase REST 직접 조회 → 동적 OG 태그 주입
 // 일반 유저 요청은 정적 쉘(out/shared/index.html)로 passthrough (TASK-026 보존)
 
+// TASK-SHARE-OG-PREVIEW-FIX-01: 관광 커버일 때 og:image:width/height 를 내보내기
+// 위해 커버 자산 결정을 프록시와 같은 순수 함수로 계산한다. manifest 의 실측
+// 치수만 사용한다 — 개인 사진 커버는 치수를 알 수 없어 (업로드 시 비율 보존
+// 리사이즈, 고정 규격 없음) 추측하지 않고 생략한다.
+import { COVER_ASSETS } from "../../src/lib/trip-cover/assets.data";
+import { resolveTourismCoverAsset } from "../../src/lib/trip-cover/cover-core";
+
 interface Env {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   NEXT_PUBLIC_SUPABASE_URL: string;
@@ -17,6 +24,9 @@ interface ItineraryRow {
   days:         unknown[];
   // TASK-TRIP-COVER-V1B: OG 캐시 버전용. RPC 는 이미 반환하지만 타입에 없었다.
   updated_at?:  string;
+  // TASK-SHARE-OG-PREVIEW-FIX-01: og:image 치수 결정용 (migration 031 컬럼)
+  cover_kind?:     string | null;
+  cover_asset_id?: string | null;
 }
 
 // ── v2 days 파싱 — { __v:2, scheduled: unknown[] } 또는 legacy 배열 모두 지원 ─
@@ -68,7 +78,16 @@ function buildBotHtml(meta: {
   description: string;
   ogImage:     string;
   url:         string;
+  // manifest 실측 치수를 알 때만 전달된다 — 추측값 금지
+  ogImageWidth?:  number;
+  ogImageHeight?: number;
 }): string {
+  const ogImageDims =
+    meta.ogImageWidth && meta.ogImageHeight
+      ? `
+  <meta property="og:image:width"  content="${meta.ogImageWidth}" />
+  <meta property="og:image:height" content="${meta.ogImageHeight}" />`
+      : "";
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +96,7 @@ function buildBotHtml(meta: {
   <meta property="og:type"         content="website" />
   <meta property="og:title"        content="${esc(meta.title)}" />
   <meta property="og:description"  content="${esc(meta.description)}" />
-  <meta property="og:image"        content="${esc(meta.ogImage)}" />
+  <meta property="og:image"        content="${esc(meta.ogImage)}" />${ogImageDims}
   <meta property="og:url"          content="${esc(meta.url)}" />
   <meta property="og:site_name"    content="gokoreamate.com" />
   <meta name="twitter:card"        content="summary_large_image" />
@@ -135,7 +154,7 @@ export const onRequest: (context: {
     const endpoint =
       `${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/itineraries` +
       `?id=eq.${shareId}&is_public=eq.true&moderation_hidden_at=is.null&limit=1` +
-      `&select=city,start_date,end_date,travel_style,days,updated_at`;
+      `&select=city,start_date,end_date,travel_style,days,updated_at,cover_kind,cover_asset_id`;
 
     // 3초 타임아웃 — 초과 시 catch로 넘어가 기본값 OG 반환
     const res = await Promise.race<Response>([
@@ -168,8 +187,9 @@ export const onRequest: (context: {
   }
 
   // TASK-TRIP-COVER-V1B: og:image 를 커버 프록시로 연결한다.
-  // 개인 커버 유효 → 개인 사진 / 무효·auto·asset → 관광 커버로 내부 302 /
+  // 개인 커버 유효 → 개인 사진 bytes / 무효·auto·asset → 관광 자산 bytes /
   // 비공개·미존재 → 브랜드 fallback. 판정은 전부 프록시가 하므로 RPC 변경이 없다.
+  // (TASK-SHARE-OG-PREVIEW-FIX-01: 프록시가 302 없이 모든 분기를 직접 200 으로 반환)
   // v 는 updated_at 고정값. Date.now() 를 쓰면 매 요청 URL 이 바뀌어 캐시가 죽는다.
   const coverVersion = trip?.updated_at && String(trip.updated_at).trim()
     ? String(trip.updated_at).trim()
@@ -181,8 +201,28 @@ export const onRequest: (context: {
     ? `https://gokoreamate.com/img/trip-cover/${shareId}?v=${encodeURIComponent(coverVersion)}`
     : FALLBACK_OG;
 
+  // TASK-SHARE-OG-PREVIEW-FIX-01: og:image:width/height — manifest 실측 치수만.
+  // 관광 커버(auto/asset)는 프록시와 같은 순수 함수로 자산이 확정되므로 치수를
+  // 그대로 내보낸다. cover_kind==="personal" 은 사진 치수를 저장하지 않아
+  // (비율 보존 리사이즈 — 고정 규격 없음) 값을 알 수 없으니 생략한다. 잘못된
+  // 치수는 크롤러 미리보기를 다시 깨뜨리므로 생략이 더 안전하다.
+  let ogImageWidth: number | undefined;
+  let ogImageHeight: number | undefined;
+  if (trip && trip.cover_kind !== "personal") {
+    const asset = resolveTourismCoverAsset(COVER_ASSETS, {
+      itineraryId:  shareId,
+      coverKind:    trip.cover_kind ?? null,
+      coverAssetId: trip.cover_asset_id ?? null,
+      days:         trip.days,
+    });
+    if (asset) {
+      ogImageWidth  = asset.width;
+      ogImageHeight = asset.height;
+    }
+  }
+
   return new Response(
-    buildBotHtml({ title, description, ogImage, url: CANONICAL }),
+    buildBotHtml({ title, description, ogImage, url: CANONICAL, ogImageWidth, ogImageHeight }),
     {
       headers: {
         "content-type":  "text/html;charset=UTF-8",

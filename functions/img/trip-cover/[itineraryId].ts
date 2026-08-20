@@ -2,21 +2,28 @@
 //
 // 공개 일정의 커버 이미지를 결정해 돌려준다.
 //   유효한 개인 Memory 사진  → private moments 버킷 JPEG bytes
-//   auto / asset / 개인 무효 → 302 (같은 도메인) /img/cover/:assetId
+//   auto / asset / 개인 무효 → 관광 자산 bytes 직접 200 (V1A 프록시와 동일 검증)
 //   비공개 · 미존재 · 오류    → 브랜드 SVG 200
+//
+// TASK-SHARE-OG-PREVIEW-FIX-01: 예전에는 관광 커버를 302 → /img/cover/:assetId
+// 로 넘겼지만, 일부 메신저 크롤러가 og:image 의 redirect 를 따라가지 않아
+// 미리보기가 빈 회색으로 나왔다. 이제 모든 분기가 이미지 bytes 를 직접 200 으로
+// 반환한다 — 이 함수는 redirect 를 전혀 내보내지 않는다.
 //
 // SECURITY CONTRACT:
 // - 입력은 itineraryId 하나뿐. URL·경로·파일명을 클라이언트가 지정할 수 없다
 // - 개인 사진은 매 요청 is_public·cover_kind·동의·일정 일치·기기 일치를 재검증
 // - signed URL·storage_path 를 응답 본문·헤더·오류에 노출하지 않는다
-// - 302 Location 은 같은 도메인 상대 경로만. 외부 URL redirect 금지
+// - 관광 자산 원본은 asset-proxy 코어가 V1A 와 같은 허용 목록·MIME·크기로 검증
 // - trip_moments.is_public 은 읽지 않는다
-// - 재귀 없음: 이 함수는 자기 자신으로 redirect 하지 않는다
+// - redirect 없음: 외부 URL 은 물론 같은 도메인으로도 redirect 하지 않는다
 
 import { createClient } from "@supabase/supabase-js";
 import { UUID_RE } from "../../../src/lib/itinerary-validate";
-import { COVER_ASSETS, assetById, pickAsset } from "../../../src/lib/trip-cover/assets.data";
-import { resolveTheme } from "../../../src/lib/trip-cover/cover-core";
+import { COVER_ASSETS } from "../../../src/lib/trip-cover/assets.data";
+import { resolveTourismCoverAsset } from "../../../src/lib/trip-cover/cover-core";
+import type { CoverAsset } from "../../../src/lib/trip-cover/cover-core";
+import { fetchApprovedAssetBytes } from "../../../src/lib/trip-cover/asset-proxy";
 import { coverETag, etagMatches, resolveEffectiveCover } from "../../../src/lib/trip-cover/cover-state-core";
 import type { ItineraryCoverRow, CoverAdminLike } from "../../../src/lib/trip-cover/cover-state-core";
 
@@ -54,38 +61,32 @@ function brandFallback(): Response {
   });
 }
 
-/** 같은 도메인 상대 경로로만 이동한다. 최종 이미지는 V1A 의 immutable 캐시를 탄다. */
-function toTourismCover(assetId: string): Response {
-  return new Response(null, {
-    status: 302,
+/**
+ * 관광 자산 bytes 를 직접 200 으로 서빙한다 (예전 302 → /img/cover 대체).
+ * 커버 상태가 바뀌면 응답이 달라져야 하므로 예전 redirect 와 같은 재검증 캐시
+ * 계약을 유지한다 — 장기/immutable 캐시 금지. edge 60초는 크롤러 burst 흡수용.
+ */
+async function serveTourismAsset(asset: CoverAsset): Promise<Response> {
+  const r = await fetchApprovedAssetBytes(asset.image_url);
+  if (!r.ok) return brandFallback();
+  return new Response(r.buf, {
+    status: 200,
     headers: {
-      Location:       `/img/cover/${encodeURIComponent(assetId)}`,
-      // redirect 자체는 커버 상태가 바뀌면 달라져야 하므로 장기 캐시하지 않는다
-      "Cache-Control": "public, max-age=0, must-revalidate",
+      "Content-Type":           r.contentType,
       "X-Content-Type-Options": "nosniff",
+      "Cache-Control":          "public, max-age=0, s-maxage=60, must-revalidate",
     },
   });
 }
 
-/** auto/asset → 표시할 관광 자산 결정 (V1A 로직 재사용) */
-function resolveTourismAsset(itin: ItineraryCoverRow, days: unknown): string | null {
-  if (itin.cover_kind === "asset" && itin.cover_asset_id) {
-    if (assetById(itin.cover_asset_id)) return itin.cover_asset_id;
-    // manifest 에서 사라진 자산이면 auto 로 떨어진다
-  }
-  const list = Array.isArray(days)
-    ? days
-    : ((days as { scheduled?: unknown[] } | null)?.scheduled ?? []);
-  const places = (list as Array<{ places?: Array<Record<string, unknown>> }>)
-    .flatMap((d) => d?.places ?? [])
-    .map((p) => ({
-      name:     typeof p.name === "string" ? p.name : null,
-      category: typeof p.category === "string" ? p.category : null,
-      location: typeof p.location === "string" ? p.location : null,
-    }));
-
-  const theme = resolveTheme({ places }).theme;
-  return pickAsset(itin.id, theme)?.asset_id ?? COVER_ASSETS[0]?.asset_id ?? null;
+/** auto/asset → 표시할 관광 자산 결정 (cover-core 공용 순수 함수 — OG 메타와 동일 결정) */
+function resolveTourismAsset(itin: ItineraryCoverRow, days: unknown): CoverAsset | undefined {
+  return resolveTourismCoverAsset(COVER_ASSETS, {
+    itineraryId:  itin.id,
+    coverKind:    itin.cover_kind,
+    coverAssetId: itin.cover_asset_id,
+    days,
+  });
 }
 
 export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
@@ -103,8 +104,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   if (result.status === 404) return brandFallback();   // 비공개·미존재
 
   if (result.kind === "tourism") {
-    const assetId = resolveTourismAsset(result.itin, result.days);
-    return assetId ? toTourismCover(assetId) : brandFallback();
+    const asset = resolveTourismAsset(result.itin, result.days);
+    return asset ? serveTourismAsset(asset) : brandFallback();
   }
 
   const itin: ItineraryCoverRow = result.itin;
@@ -127,8 +128,8 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   if (dlErr || !blob) {
     // 파일이 사라졌으면 관광 커버로 — 내부 경로는 로그에도 남기지 않는다
     console.error("[trip-cover] storage download failed for itinerary", itin.id);
-    const assetId = resolveTourismAsset(itin, result.days);
-    return assetId ? toTourismCover(assetId) : brandFallback();
+    const asset = resolveTourismAsset(itin, result.days);
+    return asset ? serveTourismAsset(asset) : brandFallback();
   }
 
   const buf = await blob.arrayBuffer();

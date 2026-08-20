@@ -275,3 +275,51 @@ export function pickFrom(
   const idx = (fnv1a32(`${itineraryId}:${theme}`) + skip) % pool.length;
   return pool[idx];
 }
+
+// ── TASK-SHARE-OG-PREVIEW-FIX-01: 관광 커버 자산 결정 (순수 함수) ─────────────
+//
+// /img/trip-cover 프록시와 /shared OG 메타가 **같은 자산**을 가리키게 하는
+// 단일 결정 함수다. 프록시는 이 자산의 bytes 를 서빙하고, OG 메타는 이 자산의
+// manifest 실측 width/height 를 내보낸다. 두 곳이 각자 계산하면 어긋난다.
+//
+// 입력은 itineraryId·cover_kind·cover_asset_id·days 뿐 — 시간·랜덤 없음.
+
+export interface TourismCoverInput {
+  itineraryId:  string;
+  coverKind:    string | null;
+  coverAssetId: string | null;
+  days:         unknown;
+}
+
+/** v2({__v:2, scheduled}) 와 legacy 배열 days 에서 theme 판정용 place 를 뽑는다 */
+export function extractThemePlaces(days: unknown): ThemeInputPlace[] {
+  const list = Array.isArray(days)
+    ? days
+    : ((days as { scheduled?: unknown[] } | null)?.scheduled ?? []);
+  return (list as Array<{ places?: Array<Record<string, unknown>> }>)
+    .flatMap((d) => d?.places ?? [])
+    .map((p) => ({
+      name:     typeof p.name === "string" ? p.name : null,
+      category: typeof p.category === "string" ? p.category : null,
+      location: typeof p.location === "string" ? p.location : null,
+    }));
+}
+
+/**
+ * auto/asset 커버가 표시할 관광 자산을 결정한다.
+ * - cover_kind==="asset" 이고 manifest 에 존재하면 그 자산
+ * - 그 외에는 theme 판정 → itineraryId 고정 선택 → pool 첫 자산 fallback
+ * pool 이 비어 있을 때만 undefined (호출부는 브랜드 fallback 으로 처리).
+ */
+export function resolveTourismCoverAsset(
+  pool: readonly CoverAsset[],
+  input: TourismCoverInput,
+): CoverAsset | undefined {
+  if (input.coverKind === "asset" && input.coverAssetId) {
+    const chosen = findById(pool, input.coverAssetId);
+    if (chosen) return chosen;
+    // manifest 에서 사라진 자산이면 auto 로 떨어진다
+  }
+  const theme = resolveTheme({ places: extractThemePlaces(input.days) }).theme;
+  return pickFrom(pool, input.itineraryId, theme) ?? pool[0];
+}
