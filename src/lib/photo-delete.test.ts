@@ -136,6 +136,101 @@ test("Storage 일부 실패 시 DB 유지 — partial 오류 문자열", async (
   assert.match(result!, /partial/);
 });
 
+// ── 재시도 안전성 ────────────────────────────────────────────────────────────
+//
+// Storage 를 먼저 지우고 DB 를 지우는데, 그 사이에 DB 삭제가 실패하면 파일은
+// 사라졌는데 행은 남는다. 사용자가 다시 지우려 하면 같은 경로를 다시 넘기게
+// 되고, 그 파일들은 이미 없다. "요청 수보다 적게 지워졌다" 를 그대로 실패로
+// 보면 그 여행은 **영원히 지울 수 없다.**
+//
+// 그렇다고 개수 부족을 전부 성공으로 넘기면 정말 남아 있는 파일도 지운 셈이
+// 되어 버린다. 그래서 부족할 때만 실제로 남아 있는지 확인한다.
+
+/** remove 는 지운 것만 돌려주고, exists 로 실제 잔존을 답한다 */
+function mockStorage(opts: {
+  removed: (paths: string[]) => string[];
+  present?: ReadonlySet<string>;
+  existsThrows?: boolean;
+  noExists?: boolean;
+}) {
+  const calls = { exists: [] as string[] };
+  const bucket: Record<string, unknown> = {
+    remove: async (ps: string[]) => ({ data: opts.removed(ps).map(p => ({ name: p })), error: null }),
+  };
+  if (!opts.noExists) {
+    bucket.exists = async (path: string) => {
+      calls.exists.push(path);
+      // 실제 SDK: 400/404 는 { data:false } 로 돌아오고, 그 밖의 오류는 throw 한다
+      if (opts.existsThrows) throw new Error("network down");
+      return opts.present?.has(path)
+        ? { data: true,  error: null }
+        : { data: false, error: { message: "Object not found" } };
+    };
+  }
+  return { storage: { from: (_b: string) => bucket }, calls };
+}
+
+test("D1 이미 없는 파일이면 재시도가 통과한다 — 삭제를 끝낼 수 있다", async () => {
+  const paths = ["a/b/1.jpg", "a/b/2.jpg"];
+  // 재시도: remove 가 아무것도 못 지웠다고 답하지만 실제로도 남아 있지 않다
+  const { storage, calls } = mockStorage({ removed: () => [], present: new Set() });
+  assert.strictEqual(await removeItineraryStorage(storage, paths), null);
+  assert.deepEqual(calls.exists.sort(), paths.slice().sort(), "부족한 경로만 확인한다");
+});
+
+test("D2 실제로 남아 있으면 여전히 실패한다 — 개수 무시가 아니다", async () => {
+  const paths = ["a/b/1.jpg", "a/b/2.jpg"];
+  const { storage } = mockStorage({ removed: ps => [ps[0]!], present: new Set(["a/b/2.jpg"]) });
+  const r = await removeItineraryStorage(storage, paths);
+  assert.match(r!, /partial/);
+});
+
+test("D3 섞인 경우: 하나는 지워지고 하나는 원래 없었다 → 통과", async () => {
+  const paths = ["a/b/1.jpg", "a/b/2.jpg"];
+  const { storage, calls } = mockStorage({ removed: ps => [ps[0]!], present: new Set() });
+  assert.strictEqual(await removeItineraryStorage(storage, paths), null);
+  assert.deepEqual(calls.exists, ["a/b/2.jpg"], "이미 지운 것은 다시 묻지 않는다");
+});
+
+test("D4 존재 확인 자체가 실패하면 성공으로 넘기지 않는다", async () => {
+  const paths = ["a/b/1.jpg"];
+  const { storage } = mockStorage({ removed: () => [], existsThrows: true });
+  const r = await removeItineraryStorage(storage, paths);
+  assert.match(r!, /verify|확인/i);
+});
+
+test("D5 exists 를 줄 수 없는 곳에서는 예전처럼 실패한다 — 조용히 넘기지 않는다", async () => {
+  const paths = ["a/b/1.jpg"];
+  const { storage } = mockStorage({ removed: () => [], noExists: true });
+  assert.match((await removeItineraryStorage(storage, paths))!, /partial/);
+});
+
+test("D6 전부 지워졌으면 존재 확인을 하지 않는다 — 평소 경로에 왕복을 더하지 않는다", async () => {
+  const paths = ["a/b/1.jpg", "a/b/2.jpg"];
+  const { storage, calls } = mockStorage({ removed: ps => ps, present: new Set() });
+  assert.strictEqual(await removeItineraryStorage(storage, paths), null);
+  assert.deepEqual(calls.exists, []);
+});
+
+test("D7 단건 삭제(Memory)도 같은 계약이다", async () => {
+  const { storage } = mockStorage({ removed: () => [], present: new Set() });
+  assert.strictEqual(await removeMomentStorage(storage, "a/b/1.jpg"), null);
+  const still = mockStorage({ removed: () => [], present: new Set(["a/b/1.jpg"]) });
+  assert.match((await removeMomentStorage(still.storage, "a/b/1.jpg"))!, /partial/);
+});
+
+test("D8 진짜 Storage 오류는 그대로 실패다 — 존재 확인으로 넘어가지 않는다", async () => {
+  const calls: string[] = [];
+  const storage = {
+    from: (_b: string) => ({
+      remove: async (_ps: string[]) => ({ data: null, error: { message: "permission denied" } }),
+      exists: async (p: string) => { calls.push(p); return { data: false, error: null }; },
+    }),
+  };
+  assert.strictEqual(await removeItineraryStorage(storage, ["a/b/1.jpg"]), "permission denied");
+  assert.deepEqual(calls, [], "오류 상태에서 존재 확인을 부르면 안 된다");
+});
+
 // ── 여행 통째 삭제: 첫 장 + 자식 사진을 모두 모으는가 ────────────────────────
 //
 // 자식 행은 FK CASCADE 로 사라지므로, 지우기 전에 경로를 챙기지 못하면
