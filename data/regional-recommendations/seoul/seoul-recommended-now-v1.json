@@ -35,8 +35,9 @@
       "valid_to": "2026-12-27",
       "review_by": "2026-12-27",
       "venue": "Space K Seoul",
-      "venue_note": "Space K Seoul 위치: 경기도 과천시 광명로 313 (서울 근교 — 방문 전 이동 경로 확인 권장)",
+      "venue_note": "Space K Seoul은 코오롱그룹이 운영하는 서울 소재 아트 갤러리. 이전 venue_note의 '경기도 과천시 광명로 313'은 Space K 과천 주소로 오기입이었음 — 수정 완료(TASK-SEOUL-REGIONAL-SPACE-K-LOCATION-FIX-V1). VisitSeoul API canonical 미포함(private corporate gallery). RN-001은 Space K Seoul 갤러리에서 열리는 KAWS 전시 이벤트를 추천하는 것임.",
       "existing_canonical_id": null,
+      "id_note": "Space K Seoul은 서울 소재이나 VisitSeoul API canonical 미수록(사기업 갤러리). RN-001 분류=EVENT_OR_TEMPORARY_CONTENT(KAWS 전시 이벤트 추천).",
       "new_place_candidate": false,
       "source": {
         "provider": "VisitSeoul / 서울관광재단",
