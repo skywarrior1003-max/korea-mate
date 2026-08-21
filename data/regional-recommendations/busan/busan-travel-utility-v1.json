@@ -1,0 +1,152 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-BUSAN-V1",
+  "section": "travel_utility",
+  "generated_at": "2026-08-21",
+  "city": "busan",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "공식 source에 실제 존재하는 정보만 수록. 확인되지 않은 항목(환전, 짐보관, Muslim/accessibility 등)은 억지로 채우지 않음.",
+
+  "utility_items": [
+    {
+      "utility_id": "busan-U-001",
+      "category": "도시철도",
+      "title": "부산 도시철도 (Busan Metro)",
+      "traveler_summary": "1~4호선 + 부산김해경전철(BGL) + 동해선 운행. 오전 5시~자정. 1회용 QR 승차권(자동발매기), 모바일 앱(부산도시철도), 정기권(1·3·30일) 이용 가능. 해운대·광안리·남포·서면 등 주요 관광지 연결.",
+      "locale_availability": ["ko", "en"],
+      "key_info": {
+        "operating_hours": "05:00~23:59 (역마다 첫·막차 상이)",
+        "ticket_types": ["1회용 QR", "모바일 승차권 (부산도시철도 앱)", "정기승차권(1/3/30일)", "Hanaro Card 교통카드"],
+        "transfer_discount": "30분 이내 환승 할인 (최대 2회)",
+        "mobile_app": "부산도시철도 앱 (Google Play / App Store)"
+      },
+      "source": {
+        "provider": "부산교통공사 (Busan Transportation Corporation)",
+        "source_url": "http://www.humetro.busan.kr/homepage/cyberstation/mapeng.do",
+        "visit_busan_ref": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-002",
+      "category": "시내버스",
+      "title": "부산 시내버스",
+      "traveler_summary": "노선번호 구간: 일반 1~500번, 급행 1000번대~2000번대. 짐 규정: 20kg 이하, 최대 50×40×20cm. 23:40 이후 야간 할증 적용. T-money 및 Hanaro Card 사용 가능.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "luggage_limit": "20kg 이하, 50×40×20cm 이하",
+        "night_surcharge": "23:40 이후",
+        "transit_card": "T-money, Hanaro Card"
+      },
+      "source": {
+        "provider": "부산광역시 교통정보",
+        "source_url": "https://its.busan.go.kr/",
+        "visit_busan_ref": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-003",
+      "category": "공항리무진",
+      "title": "김해국제공항 ↔ 해운대 리무진버스",
+      "traveler_summary": "김해국제공항에서 해운대 신시가지를 연결. 동서고가로·황령산 터널 경유. 소요 약 1시간. 공항 공식 사이트에서 시간표·노선 확인.",
+      "locale_availability": ["ko", "en"],
+      "key_info": {
+        "route": "김해국제공항 → 해운대 신시가지",
+        "duration": "약 60분",
+        "via": "동서고가로, 황령산 터널"
+      },
+      "source": {
+        "provider": "한국공항공사 김해공항",
+        "source_url": "https://www.airport.co.kr/gimhaeeng/cms/frCon/index.do?MENU_ID=110",
+        "visit_busan_ref": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-004",
+      "category": "교통카드",
+      "title": "Hanaro Card (하나로카드) / T-money",
+      "traveler_summary": "부산 도시철도·버스 통합 이용 교통카드. 역내 자동발매기, 편의점, 부산은행 지점에서 구매. 30분 이내 환승 할인. T-money도 사용 가능.",
+      "locale_availability": ["ko", "en"],
+      "key_info": {
+        "purchase_locations": ["도시철도 자동발매기", "편의점", "부산은행 지점"],
+        "transfer_discount": "30분 이내 환승 할인 2회",
+        "foreign_visitor_note": "외국 방문자는 Hanaro Card 충전식 구매 가능. 동백패스(선불형)는 외국인등록증 필요."
+      },
+      "source": {
+        "provider": "부산광역시",
+        "source_url": "https://www.busan.go.kr/depart/ahcard01",
+        "eng_page": "https://www.busan.go.kr/eng/bscard",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-005",
+      "category": "동백패스",
+      "title": "동백패스 (Dongbaek Pass) — 대중교통 통합 할인제",
+      "traveler_summary": "부산 대중교통 통합 정기권. 단, 선불형은 외국인등록증 보유자만 신청 가능 (동백전 앱 또는 부산은행 지점). 외국인 단기 방문자는 Hanaro Card 또는 T-money 이용 권장.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "eligibility_foreign": "외국인등록증 소지자, 본인 명의 스마트폰",
+        "purchase": "동백전 앱 또는 부산은행 영업점",
+        "short_visit_note": "단기 방문 외국인은 Hanaro Card 또는 T-money 권장"
+      },
+      "source": {
+        "provider": "부산광역시",
+        "source_url": "https://www.busan.go.kr/depart/dongbaegpass001",
+        "prepaid_url": "https://www.busan.go.kr/depart/dongbaegpass004",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-006",
+      "category": "택시",
+      "title": "부산 택시",
+      "traveler_summary": "일반·모범·대형 3종류. 모범·대형은 일반 대비 50% 요금 추가. 앱 택시(카카오T 등) 이용 가능.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "types": ["일반 (regular)", "모범 (deluxe, +50%)", "대형 (large, +50%)"]
+      },
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "busan-U-007",
+      "category": "여행 안내 핫라인",
+      "title": "부산 관광 안내 전화",
+      "traveler_summary": "다국어 관광 안내: 1330 (한국관광공사 전국 통합). 부산시 민원: 051-120 (평일 08:30~18:30). 현장 관광안내소 정보는 visitbusan.net 여행 준비 섹션 참조.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "key_info": {
+        "tourism_hotline": "1330",
+        "city_hotline": "051-120",
+        "city_hotline_hours": "평일 08:30~18:30"
+      },
+      "source": {
+        "provider": "한국관광공사 / 부산광역시",
+        "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000303012002000",
+        "as_of": "2026-08-21",
+        "review_by": "2027-06-01"
+      }
+    }
+  ],
+
+  "categories_collected": [
+    "도시철도", "시내버스", "공항리무진", "교통카드", "동백패스", "택시", "여행 안내 핫라인"
+  ],
+  "categories_not_found_in_official_source": [
+    "환전/통화 (공식 가이드에 명시 없음)",
+    "짐보관/짐캐리 서비스 (공식 포털 미제공)",
+    "로밍/SIM 카드 안내 (공식 포털 미제공)",
+    "Muslim-friendly 가이드 (visitbusan.net 별도 페이지 확인 필요)",
+    "accessibility guide (별도 접근 필요 — 큰글씨 지도 외 상세 접근성 정보 미확인)"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-BUSAN-V1",
+  "section": "recommended_now",
+  "generated_at": "2026-08-21",
+  "city": "busan",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "현재성 기준일: 2026-08-21. 공식 소스에서 현재 강조하는 항목만 포함. evergreen 장소는 명시적 시즌 근거 없이 recommended_now 처리하지 않음.",
+  "expired_excluded": [
+    {
+      "name": "포켓몬 메가페스타 2026 in 부산",
+      "dates": "2026-07-10 ~ 2026-08-09",
+      "reason": "기준일(2026-08-21) 이전 종료"
+    },
+    {
+      "name": "2026 북항 오션 SUP FESTA",
+      "dates": "2026-07-31 ~ 2026-08-09",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "렛츠런파크 SUN 더 워터페스티벌",
+      "dates": "2026-07-04 ~ 2026-08-17",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 부산항 축제",
+      "dates": "2026-06-19 ~ 2026-06-20",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 더 레드 모먼트 부산",
+      "dates": "2026-06-11 ~ 2026-06-13",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 부산모빌리티쇼",
+      "dates": "2026-06-27 ~ 2026-07-05",
+      "reason": "기준일 이전 종료"
+    },
+    {
+      "name": "2026 별바다부산 나이트마켓",
+      "dates": "2026-06-10 ~ 2026-06-14",
+      "reason": "기준일 이전 종료"
+    }
+  ],
+
+  "final_recommended_now": [
+    {
+      "item_id": "busan-RN-001",
+      "status": "FINAL",
+      "name_ko": "2026 별바다부산 나이트페스타",
+      "name_en": "2026 Starry Night in Busan Night Festa",
+      "category": "야간관광 축제",
+      "why_now": "2026년 8월 1일부터 12월 31일까지 진행 중인 공식 야간관광 행사 시리즈. 현재 운영 중이며 visitbusan.net에서 2026 메인 야간 콘텐츠로 집중 홍보 중.",
+      "official_evidence": "visitbusan.net 축제·행사 페이지에 공식 등재. 별바다부산 나이트페스타, 나이트런 등 연계 프로그램 다수.",
+      "valid_from": "2026-08-01",
+      "valid_to": "2026-12-31",
+      "review_by": "2026-12-31",
+      "organizer": "부산광역시",
+      "existing_city_spots_id": null,
+      "new_place_candidate": false,
+      "note": "야간관광 series 전체. 화명생태공원·광안리 등 부산 각지에서 순차 진행.",
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/v/7ABD",
+        "sub_events_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000204012000000",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "busan-RN-002",
+      "status": "FINAL",
+      "name_ko": "해운대·광안리 여름 해수욕장 시즌",
+      "name_en": "Haeundae & Gwangalli Beach — Summer Peak Season",
+      "category": "계절 명소 (해수욕장)",
+      "why_now": "7월~8월은 부산 해수욕장 공식 개장 시즌. visitbusan.net 홈페이지에서 해운대해수욕장(busan-A-00070)이 현재 featured attraction으로 표출되고 있으며, 여름 시즌 특화 추천 장소임.",
+      "official_evidence": "visitbusan.net 홈페이지 현재 featured 목록. 해운대해수욕장은 공식 관광지 중 관광객 수 최상위. 8월은 부산 해수욕장 최성수기.",
+      "valid_from": "2026-07-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "key_spots": [
+        {"name_ko": "해운대해수욕장", "name_en": "Haeundae Beach", "existing_city_spots_id": "busan-A-00070"},
+        {"name_ko": "광안리해수욕장", "name_en": "Gwangalli Beach", "existing_city_spots_id": "busan-A-00185"}
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/en/index.do",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "reserve_recommended_now": [
+    {
+      "item_id": "busan-RN-R01",
+      "status": "RESERVE",
+      "name_ko": "감천문화마을",
+      "name_en": "Gamcheon Culture Village",
+      "category": "문화관광지",
+      "why_now": "visitbusan.net 홈페이지에서 현재 featured attraction으로 표출 중. 다만 연중 운영 evergreen 관광지이므로 시즌 특화 현재성은 낮음.",
+      "reserve_reason": "홈페이지 featured 근거 있으나 시즌 근거 없는 evergreen. recommended_now로 강제 편입하지 않고 reserve 처리.",
+      "existing_city_spots_id": "busan-A-00212",
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/en/index.do?menuCd=DOM_000000401001000000",
+        "as_of": "2026-08-21"
+      }
+    }
+  ]
+}

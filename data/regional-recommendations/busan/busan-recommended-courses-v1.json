@@ -1,0 +1,163 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-BUSAN-V1",
+  "section": "recommended_courses",
+  "generated_at": "2026-08-21",
+  "city": "busan",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "코스는 AI scheduler 고정 규칙이 아니라 recommendation signal/content. 각 stop의 existing_city_spots_id는 data/busan-nonfood-complete-v1 기준 canonical_id (busan-A-* / busan-N-* prefix).",
+
+  "final_courses": [
+    {
+      "course_id": "busan-C-001",
+      "status": "FINAL",
+      "official_course_name": "2박 3일에 완성하는 부산 완전정복",
+      "official_course_name_en": "Complete Busan in 2 Nights, 3 Days",
+      "theme": "종합 — 사찰·역사·해안·도시 명소 전반",
+      "traveler_fit": ["가족", "커플", "친구", "솔로"],
+      "recommended_reason": "부산 전역을 동서로 아우르는 표준 코스. 범어사·해동용궁사 등 사찰부터 태종대·해운대 해안, 감천문화마을·용두산공원까지 부산의 핵심 스팟을 최소 이동으로 커버.",
+      "duration": "2박 3일",
+      "seasonality": "연중",
+      "stops": {
+        "day1": [
+          {"order": 1, "name_ko": "범어사", "name_en": "Beomeosa Temple", "existing_city_spots_id": "busan-A-00202"},
+          {"order": 2, "name_ko": "동래읍성", "name_en": "Dongnae Eupseong Fortress", "existing_city_spots_id": null},
+          {"order": 3, "name_ko": "복천동고분박물관", "name_en": "Bokcheon Museum", "existing_city_spots_id": null},
+          {"order": 4, "name_ko": "해동용궁사", "name_en": "Haedong Yonggungsa Temple", "existing_city_spots_id": "busan-A-00007"},
+          {"order": 5, "name_ko": "송정해수욕장", "name_en": "Songjeong Beach", "existing_city_spots_id": null}
+        ],
+        "day2": [
+          {"order": 1, "name_ko": "해운대해수욕장", "name_en": "Haeundae Beach", "existing_city_spots_id": "busan-A-00070"},
+          {"order": 2, "name_ko": "오륙도스카이워크", "name_en": "Oryukdo Skypark", "existing_city_spots_id": "busan-A-00022"},
+          {"order": 3, "name_ko": "태종대", "name_en": "Taejongdae Park", "existing_city_spots_id": "busan-A-00004"},
+          {"order": 4, "name_ko": "영도대교", "name_en": "Yeongdo Bridge", "existing_city_spots_id": "busan-A-00191"},
+          {"order": 5, "name_ko": "용두산공원", "name_en": "Yongdusan Park", "existing_city_spots_id": "busan-A-00065"}
+        ],
+        "day3": [
+          {"order": 1, "name_ko": "감천문화마을", "name_en": "Gamcheon Culture Village", "existing_city_spots_id": "busan-A-00212"},
+          {"order": 2, "name_ko": "송도해수욕장·케이블카", "name_en": "Songdo Beach & Cable Car", "existing_city_spots_id": "busan-A-00027"},
+          {"order": 3, "name_ko": "다대포해수욕장", "name_en": "Dadaepo Beach", "existing_city_spots_id": "busan-A-00177"},
+          {"order": 4, "name_ko": "장림포구", "name_en": "Jangnim Port", "existing_city_spots_id": null},
+          {"order": 5, "name_ko": "을숙도·낙동강하구", "name_en": "Eulseukdo Island / Nakdong River Estuary", "existing_city_spots_id": null}
+        ]
+      },
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=392&lang_cd=ko",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "course_id": "busan-C-002",
+      "status": "FINAL",
+      "official_course_name": "1박 2일에 완성하는 부산 해안선 완전정복",
+      "official_course_name_en": "Complete Busan Coastline in 1 Night, 2 Days",
+      "theme": "해안선 집중 — 절벽·포구·해안산책로·해수욕장",
+      "traveler_fit": ["일반관광객", "가족", "커플", "사진여행"],
+      "recommended_reason": "영도-태종대-해운대-광안리 해안을 연결하는 해양 특화 코스. 흰여울문화마을 절벽 뷰, 오륙도스카이워크, 이기대 산책로 등 부산의 바다를 집중적으로 체험.",
+      "duration": "1박 2일",
+      "seasonality": "연중 (봄·여름 성수기)",
+      "stops": {
+        "day1": [
+          {"order": 1, "name_ko": "영도대교", "name_en": "Yeongdo Bridge", "existing_city_spots_id": "busan-A-00191"},
+          {"order": 2, "name_ko": "흰여울문화마을", "name_en": "Huinnyeoul Culture Village", "existing_city_spots_id": "busan-A-00001"},
+          {"order": 3, "name_ko": "절영해안산책로", "name_en": "Jeoryeong Coastal Walking Path", "existing_city_spots_id": null},
+          {"order": 4, "name_ko": "태종대", "name_en": "Taejongdae Park", "existing_city_spots_id": "busan-A-00004"},
+          {"order": 5, "name_ko": "국제시장", "name_en": "Gukje (International) Market", "existing_city_spots_id": null},
+          {"order": 6, "name_ko": "부평깡통시장", "name_en": "Bupyeong Kkangtong Market", "existing_city_spots_id": "busan-A-00204"},
+          {"order": 7, "name_ko": "용두산공원", "name_en": "Yongdusan Park", "existing_city_spots_id": "busan-A-00065"}
+        ],
+        "day2": [
+          {"order": 1, "name_ko": "해운대해수욕장", "name_en": "Haeundae Beach", "existing_city_spots_id": "busan-A-00070"},
+          {"order": 2, "name_ko": "부산아쿠아리움", "name_en": "Busan Aquarium", "existing_city_spots_id": null},
+          {"order": 3, "name_ko": "동백해안산책로·누리마루APEC하우스", "name_en": "Dongbaek Coastal Path & Nurimaru APEC House", "existing_city_spots_id": null},
+          {"order": 4, "name_ko": "오륙도스카이워크", "name_en": "Oryukdo Skypark", "existing_city_spots_id": "busan-A-00022"},
+          {"order": 5, "name_ko": "이기대해안산책로", "name_en": "Igidae Coastal Walking Path", "existing_city_spots_id": null},
+          {"order": 6, "name_ko": "광안리해수욕장·광안대교", "name_en": "Gwangalli Beach & Gwangandaegyo Bridge", "existing_city_spots_id": "busan-A-00185"}
+        ]
+      },
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=320&lang_cd=ko",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "course_id": "busan-C-003",
+      "status": "FINAL",
+      "official_course_name": "친구들과 함께하는 2박 3일 부산 뚜벅이 여행 코스",
+      "official_course_name_en": "2-Night 3-Day Busan Friends & Transit Travel Course",
+      "theme": "친구 여행 · 대중교통 — 카페거리·해리단길·해안뷰·서부 해안",
+      "traveler_fit": ["친구그룹", "20-30대", "대중교통 선호"],
+      "recommended_reason": "버스·지하철만으로 이동 가능하도록 설계. 전포카페거리·해리단길 등 MZ세대 핫스팟 + 청사포다릿돌전망대 포토존 + 서부 다대포 일몰까지.",
+      "duration": "2박 3일",
+      "seasonality": "봄·여름",
+      "stops": {
+        "day1": [
+          {"order": 1, "name_ko": "부산역", "name_en": "Busan Station", "existing_city_spots_id": null},
+          {"order": 2, "name_ko": "삼정타워", "name_en": "Samjeong Tower", "existing_city_spots_id": null},
+          {"order": 3, "name_ko": "전포카페거리", "name_en": "Jeonpo Café Street", "existing_city_spots_id": null},
+          {"order": 4, "name_ko": "호천마을", "name_en": "Hocheon Village", "existing_city_spots_id": null}
+        ],
+        "day2": [
+          {"order": 1, "name_ko": "해리단길", "name_en": "Haeridan-gil", "existing_city_spots_id": null},
+          {"order": 2, "name_ko": "해운대해변열차·스카이캡슐", "name_en": "Haeundae Beach Train / Sky Capsule", "existing_city_spots_id": null},
+          {"order": 3, "name_ko": "청사포다릿돌전망대", "name_en": "Cheongsapo Darittol Observation Deck", "existing_city_spots_id": null},
+          {"order": 4, "name_ko": "광안리해수욕장·민락수변공원", "name_en": "Gwangalli Beach & Millak Waterfront Park", "existing_city_spots_id": "busan-A-00185"}
+        ],
+        "day3": [
+          {"order": 1, "name_ko": "장림포구", "name_en": "Jangnim Port", "existing_city_spots_id": null},
+          {"order": 2, "name_ko": "몰운대해안데크길", "name_en": "Molundae Coastal Deck Trail", "existing_city_spots_id": null},
+          {"order": 3, "name_ko": "다대포해수욕장·고우니생태길", "name_en": "Dadaepo Beach & Gouni Ecological Trail", "existing_city_spots_id": "busan-A-00177"}
+        ]
+      },
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=1211&lang_cd=ko",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "reserve_courses": [
+    {
+      "course_id": "busan-C-R01",
+      "status": "RESERVE",
+      "official_course_name": "반짝임이 가득한 겨울의 부산",
+      "official_course_name_en": "Sparkling Winter in Busan",
+      "theme": "겨울·야간관광 — 일루미네이션·전망대·크리스마스",
+      "traveler_fit": ["커플", "가족"],
+      "reserve_reason": "계절 한정(12월~1월). 현재 시점(8월) 비해당이나 야간관광 content로서 보존.",
+      "duration": "당일 또는 1박",
+      "seasonality": "겨울 (12월–1월)",
+      "stops": [
+        {"order": 1, "name_ko": "밀락더마켓", "name_en": "Millak Luche Festa (Millak Waterfront Park illumination)", "existing_city_spots_id": null},
+        {"order": 2, "name_ko": "X the SKY 전망대", "name_en": "X the SKY Observatory (LCT Landmark Tower 98-100F)", "existing_city_spots_id": null},
+        {"order": 3, "name_ko": "부산 자유도매시장", "name_en": "Busan Jayou Wholesale Market", "existing_city_spots_id": null},
+        {"order": 4, "name_ko": "광안리해수욕장 (광안리 디셈버)", "name_en": "Gwangalli Beach — Gwangalli December", "existing_city_spots_id": "busan-A-00185"}
+      ],
+      "source": {
+        "provider": "부산광역시 공식 관광포털 Visit Busan",
+        "source_url": "https://www.visitbusan.net/index.do?menuCd=DOM_000000202002001000&uc_seq=2619&lang_cd=ko",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "id_linkage_summary": {
+    "stops_total": 30,
+    "linked_to_existing_city_spots": 12,
+    "not_linked": 18,
+    "linked_ids": [
+      "busan-A-00202", "busan-A-00007", "busan-A-00070", "busan-A-00022",
+      "busan-A-00004", "busan-A-00191", "busan-A-00065", "busan-A-00212",
+      "busan-A-00027", "busan-A-00177", "busan-A-00001", "busan-A-00185"
+    ],
+    "new_place_candidates": [
+      "전포카페거리", "해리단길", "청사포다릿돌전망대", "해운대해변열차·스카이캡슐",
+      "민락수변공원", "몰운대해안데크길", "절영해안산책로", "송정해수욕장",
+      "장림포구", "을숙도", "호천마을", "동래읍성", "복천동고분박물관",
+      "부산아쿠아리움", "누리마루APEC하우스", "이기대해안산책로",
+      "X the SKY 전망대", "부산 자유도매시장"
+    ]
+  }
+}
