@@ -228,5 +228,100 @@
   },
   "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES",
   "FINAL_STATUS": "COMPLETE",
-  "TASK_ID": "TASK-BUSAN-FOOD-MULTILINGUAL-FINAL-CLOSEOUT-V1"
+  "TASK_ID": "TASK-BUSAN-FOOD-MULTILINGUAL-FINAL-CLOSEOUT-V1",
+  "tob_description_production": {
+    "task": "TASK-BUSAN-FOOD-TOB-DESCRIPTION-PRODUCTION-ENABLE-V1",
+    "rights_status_change": {
+      "from": "RIGHTS_REVIEW_REQUIRED",
+      "to": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN"
+    },
+    "owner_policy": "공공기관·지자체·공식 관광기관의 상세 설명/정보/이미지는 사용. source/provider/as_of provenance 기록.",
+    "provider": "Busan Metropolitan City",
+    "source_name": "Taste of Busan 2026",
+    "as_of": "2025-12",
+    "tob_desc_extraction": {
+      "total_canonical_matched": 135,
+      "desc_available": 134,
+      "desc_unavailable": 1,
+      "unavailable_cid": "busan-G-00028",
+      "unavailable_reason": "PDF_NAME_MISMATCH_NO_PAGE_FOUND",
+      "ja_excluded": [
+        "busan-G-00094"
+      ],
+      "ja_excluded_reason": "WRONG_CID_ASSIGNMENT_CONFIRMED"
+    },
+    "tob_desc_by_locale": {
+      "en": {
+        "desc_found": 134,
+        "pdf_source": "TasteOfBusan2026_KO+EN_PDF"
+      },
+      "zh-CN": {
+        "desc_found": 134,
+        "pdf_source": "TasteOfBusan2026_ZH+JA_PDF"
+      },
+      "ja": {
+        "desc_found": 133,
+        "pdf_source": "TasteOfBusan2026_ZH+JA_PDF"
+      }
+    },
+    "new_core_ready_from_tob": {
+      "en": 30,
+      "zh-CN": 40,
+      "ja": 29
+    },
+    "translation_used": false,
+    "google_translate_used": false,
+    "canonical_changed": 0,
+    "new_places_created": 0
+  },
+  "required_core_ready_updated": {
+    "en": {
+      "count": 148,
+      "total": 194,
+      "pct": 76.3
+    },
+    "ja": {
+      "count": 147,
+      "total": 194,
+      "pct": 75.8
+    },
+    "zh-CN": {
+      "count": 147,
+      "total": 194,
+      "pct": 75.8
+    },
+    "source_breakdown": {
+      "6260000": {
+        "en": 118,
+        "ja": 118,
+        "zh-CN": 107
+      },
+      "tob_new": {
+        "en": 30,
+        "ja": 29,
+        "zh-CN": 40
+      }
+    }
+  },
+  "gap_arithmetic_updated": {
+    "en": {
+      "required_core_ready": 148,
+      "title_only_no_desc": 1,
+      "neither": 46,
+      "ambiguous": 1,
+      "note": "Approximation - title_only_no_desc includes TOB-only with no EN desc"
+    },
+    "zh-CN": {
+      "required_core_ready": 147,
+      "source_no_locale": 1,
+      "neither": 46,
+      "ambiguous": 1
+    },
+    "ja": {
+      "required_core_ready": 147,
+      "excluded_wrong_cid": 1,
+      "neither": 46,
+      "ambiguous": 1
+    }
+  }
 }
