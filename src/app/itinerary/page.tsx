@@ -8,6 +8,7 @@ import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
 import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
+import { staySourceKey } from "@/lib/place-identity";
 import {
   withResolvedPhotos, needsPhotoResolution, isResolvedFresh, fetchMomentPhotoUrls,
   type ResolvedPhotoMap,
@@ -840,6 +841,9 @@ async function generateWithNewApi(
             googleMapsUrl: "",
             slot:          assignSlot(prevTime),
             isAccommodation: true as const,
+            // 이 숙소 stop 의 안정 열쇠. 사용자가 여기서 남긴 순간이 reload·순서 변경
+            // 뒤에도 같은 숙소 항목을 개인화하게 한다. 이름·좌표로 만들지 않는다.
+            sourceKey:     staySourceKey(crypto.randomUUID()),
           };
         }
         return {

@@ -22,8 +22,12 @@ export interface StopIdentityInput {
   sourceKey?: string | null;
 }
 
-/** 서버·클라이언트가 같이 쓰는 열쇠 문법. 접두사 고정, 본문은 안전한 문자만. */
-export const STOP_KEY_RE = /^(city_spot|user_spot|event|local_info):[A-Za-z0-9][A-Za-z0-9_.:-]{0,150}$/;
+/**
+ * 서버·클라이언트가 같이 쓰는 열쇠 문법. 접두사 고정, 본문은 안전한 문자만.
+ * `stay:<uuid>` 는 사용자의 실제 숙소 체크인 stop — 카탈로그 id 가 없어 일정에
+ * 넣을 때 만든 uuid 를 stop 객체에 보관한다(place-identity.staySourceKey).
+ */
+export const STOP_KEY_RE = /^(city_spot|user_spot|event|local_info|stay):[A-Za-z0-9][A-Za-z0-9_.:-]{0,150}$/;
 export const STOP_KEY_MAX = 160;
 
 /** city_spots 정본 id. 공식 장소가 아니거나 숫자 id 가 아니면 null. */

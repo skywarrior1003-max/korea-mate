@@ -17,6 +17,7 @@
 --     user_spot:<uuid>
 --     event:<city>:<id>
 --     local_info:<city>:<id>
+--     stay:<uuid>          — 사용자의 실제 숙소 체크인 stop(일정에 넣을 때 만든 uuid)
 --   서버(functions/api/trip-moments)가 형식을 검사하고, 잘못된 값은 400 이다.
 --   같은 장소를 여러 날 가는 경우는 기존 `day_number` 와 함께 구별한다.
 --
@@ -55,6 +56,6 @@ ALTER TABLE public.trip_moments
   ADD COLUMN IF NOT EXISTS stop_key TEXT;
 
 COMMENT ON COLUMN public.trip_moments.stop_key IS
-  '일정 장소 출처 열쇠(sourceKey 문법: city_spot:<id> | user_spot:<uuid> | event:<city>:<id> | local_info:<city>:<id>). day_number 와 함께 Story 결합에 쓴다. 자유 순간은 NULL.';
+  '일정 장소 출처 열쇠(sourceKey 문법: city_spot:<id> | user_spot:<uuid> | event:<city>:<id> | local_info:<city>:<id> | stay:<uuid>). day_number 와 함께 Story 결합에 쓴다. 자유 순간은 NULL.';
 
 COMMIT;

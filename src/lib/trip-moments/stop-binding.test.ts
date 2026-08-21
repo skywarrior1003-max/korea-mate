@@ -192,3 +192,27 @@ test("K7: 열쇠가 다른 Day 의 같은 장소에는 붙지 않는다 (stop_ke
   assert.equal(out[0]!.memories[0]!.id, "d1");
   assert.equal(out[1]!.memories[0]!.id, "stop-2-0");
 });
+
+// ── 사용자의 실제 숙소 (TASK-MY-TRIP-USER-PLACE-STORY-CLOSEOUT-V1) ─────────────
+test("S1: 숙소 체크인 stop 은 stay:<uuid> 열쇠를 갖고 결합된다 — 이름·좌표로 만들지 않는다", () => {
+  const key = "stay:9a8b7c6d-0000-4000-8000-000000000001";
+  assert.equal(stopKeyOf({ sourceKey: key }), key);
+  assert.equal(normalizeStopKey(key).ok, true);
+  assert.equal(stopKeyOf({ source: null, place_id: null }), null, "열쇠 없는 옛 숙소 stop 은 결합 불가 그대로");
+  const days = [{ dayNumber: 1, date: "2026-08-19", places: [
+    { name: "Haeundae Beach", time: "10:00", place_id: "1", source: "city_spot", image: null },
+    { name: "Nine Tree Premier", time: "21:00", sourceKey: key, image: null },
+    { name: "Nine Tree Premier", time: "21:30", image: null }, // 열쇠 없는 옛 숙소 stop (같은 이름)
+  ]}];
+  const moments = [{ moment_id: "st1", day_number: 1, stop_key: key, memo: "체크인, 창밖이 바다", photo_data: null }];
+  const out = buildPrivateStoryDays(days, moments, CLOCK);
+  assert.deepEqual(out[0]!.memories.map(m => m.id), ["stop-1-0", "st1", "stop-1-2"], "열쇠가 같은 숙소만 개인화, 같은 이름의 옛 stop 은 baseline");
+  assert.equal(out[0]!.memories[1]!.placeName, "Nine Tree Premier");
+});
+
+test("S2: 일정 생성 시 숙소 체크인 stop 에 stay 열쇠를 저장한다 (page 가드)", () => {
+  const page = read("src/app/itinerary/page.tsx");
+  assert.match(page, /isAccommodation: true as const,[\s\S]{0,400}sourceKey:\s+staySourceKey\(crypto\.randomUUID\(\)\)/);
+  const pi = read("src/lib/place-identity.ts");
+  assert.match(pi, /export function staySourceKey\(uuid: string\): string \{\s*return `stay:\$\{uuid\}`;/);
+});

@@ -66,6 +66,16 @@ export function eventSourceKey(city: string, eventId: string): string {
   return `event:${normalizeCityKey(city)}:${eventId}`;
 }
 
+/**
+ * 사용자의 실제 숙소 체크인 stop. 카탈로그 id 가 없어 일정에 넣는 순간 한 번 만든
+ * uuid 를 stop 객체에 저장한다(`stay:<uuid>`). 이후 reload·순서 변경·시간 수정에도
+ * 그 값이 그대로 남아 순간(Moment)이 이 숙소를 정확히 가리킬 수 있다.
+ * 이름·좌표·시각으로 만들지 않는다 — 그것들은 바뀌고, 같은 호텔이 두 여행에 나올 수 있다.
+ */
+export function staySourceKey(uuid: string): string {
+  return `stay:${uuid}`;
+}
+
 export function userSpotSourceKey(uuid: string): string {
   return `user_spot:${uuid}`;
 }
