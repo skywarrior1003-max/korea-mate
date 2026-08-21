@@ -80,3 +80,24 @@ test("G3: 서버 POST 는 city_spot_id 를 그대로 보낸다 (기존 경로)",
   const st = read("src/lib/trip-moments/storage.ts");
   assert.match(st, /\.\.\.\(m\.city_spot_id \? \{ city_spot_id: m\.city_spot_id \} : \{\}\)/);
 });
+
+// ── R1: 표시 장소명과 city_spot_id 가 어긋날 수 없다 ──────────────────────────
+test("R1: 결합된 Capture 는 장소 입력을 그리지 않고 stop 이름을 읽기 전용으로 보여 준다", () => {
+  const src = read("src/components/TripMomentCapture.tsx");
+  assert.match(src, /const isBound\s*=\s*typeof citySpotId === "number"/);
+  assert.match(src, /isBound \? \(/, "결합 시 읽기 전용 분기");
+  assert.match(src, /data-bound-place="true"/);
+  // 저장 시에도 입력값이 아니라 stop 이름을 쓴다 — 관계와 이름이 한 쌍으로 움직인다
+  assert.match(src, /place_name: isBound \? boundPlaceName : placeName\.trim\(\)/);
+  assert.match(src, /\.\.\.\(isBound \? \{ city_spot_id: citySpotId as number \} : \{\}\)/);
+});
+
+test("R2: 자유 순간(citySpotId 없음)은 장소 입력이 그대로 편집 가능하다", () => {
+  const src = read("src/components/TripMomentCapture.tsx");
+  assert.match(src, /onChange=\{e => setPlaceName\(e\.target\.value\)\}/);
+  assert.match(src, /t\("placeBound"\)/);
+  for (const l of ["en", "ko", "ja", "zh"]) {
+    const d = JSON.parse(read(`src/messages/${l}.json`)) as { memo: Record<string, string> };
+    assert.ok(d.memo.placeBound && d.memo.placeBound.trim() !== "", `${l}.memo.placeBound`);
+  }
+});

@@ -46,6 +46,10 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
    * 좌표(`location_label`)와 다른 값이다. 비워 두면 저장하지 않는다.
    */
   const [placeName,    setPlaceName]    = useState(() => (initialPlaceName ?? "").trim());
+  // 일정 장소 결합 여부. 결합돼 있으면 장소명은 그 stop 의 이름으로 고정이다 —
+  // 보이는 이름과 city_spot_id 가 서로 다른 장소를 가리키는 상태를 만들지 않는다.
+  const isBound        = typeof citySpotId === "number";
+  const boundPlaceName = (initialPlaceName ?? "").trim();
   const [category,     setCategory]     = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
   const [lng,          setLng]          = useState<number | null>(null);
@@ -146,9 +150,10 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
       captured_at:    new Date().toISOString(),
       day_number:     dayNumber,
       synced:         false,
-      ...(placeName.trim() ? { place_name: placeName.trim() } : {}),
+      // 결합된 순간은 stop 의 이름을 그대로 쓴다 — 입력값이 관계를 덮지 못한다
+      ...((isBound ? boundPlaceName : placeName.trim()) ? { place_name: isBound ? boundPlaceName : placeName.trim() } : {}),
       // 일정 장소와의 안정 관계 — 사진 수와 무관하게 Moment 당 하나
-      ...(typeof citySpotId === "number" ? { city_spot_id: citySpotId } : {}),
+      ...(isBound ? { city_spot_id: citySpotId as number } : {}),
       ...(extraPhotos.length > 0 ? { photo_data_extra: extraPhotos } : {}),
     };
     setErrorKey(null);
@@ -317,6 +322,16 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
           </div>
 
           {/* 메모 */}
+          {isBound ? (
+            /* 일정 장소에서 시작한 순간 — 장소는 이미 정해져 있다. 이름을 고치게 두면
+               보이는 이름과 숨은 관계(city_spot_id)가 서로 다른 장소를 가리킬 수 있어
+               읽기 전용으로 보여 준다. 장소를 바꾸고 싶으면 자유 순간으로 남기면 된다. */
+            <div className="mb-4" data-bound-place="true">
+              <p className="block text-xs font-bold text-white/50 mb-1.5">{t("fieldPlace")}</p>
+              <p className="w-full bg-white/8 border border-white/10 rounded-2xl px-4 py-3.5 text-sm text-white">{boundPlaceName}</p>
+              <p className="mt-1.5 text-[11px] text-white/30">{t("placeBound")}</p>
+            </div>
+          ) : (
           <div className="mb-4">
             <label className="block text-xs font-bold text-white/50 mb-1.5">
               {t("fieldPlace")} <span className="font-normal text-white/30">{t("placeOptional")}</span>
@@ -331,6 +346,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
             />
             <p className="mt-1.5 text-[11px] text-white/30">{t("placeHint")}</p>
           </div>
+          )}
           <div>
             <p className="text-xs font-black text-white/50 uppercase tracking-widest mb-3">{t("memoLabel")}</p>
             <textarea

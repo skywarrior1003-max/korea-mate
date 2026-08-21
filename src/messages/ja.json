@@ -605,7 +605,8 @@
     "consentApply": "ストーリーに入れる",
     "consentApplying": "保存中…",
     "consentCancel": "キャンセル",
-    "publicFailed": "変更できませんでした。もう一度お試しください。"
+    "publicFailed": "変更できませんでした。もう一度お試しください。",
+    "placeBound": "この旅程の場所に記録されます。別の場所は自由な瞬間として残してください。"
   },
   "dayDone": {
     "title": "Day {n} 完走！",

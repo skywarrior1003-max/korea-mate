@@ -605,7 +605,8 @@
     "consentApply": "加入故事",
     "consentApplying": "保存中…",
     "consentCancel": "取消",
-    "publicFailed": "无法更改，请重试。"
+    "publicFailed": "无法更改，请重试。",
+    "placeBound": "将记录到这个行程地点。其他地点请以自由瞬间记录。"
   },
   "dayDone": {
     "title": "第{n}天全部完成！",

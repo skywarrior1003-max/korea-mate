@@ -605,7 +605,8 @@
     "consentApply": "스토리에 넣기",
     "consentApplying": "저장 중…",
     "consentCancel": "취소",
-    "publicFailed": "바꾸지 못했습니다. 다시 시도해 주세요."
+    "publicFailed": "바꾸지 못했습니다. 다시 시도해 주세요.",
+    "placeBound": "이 일정 장소에 기록됩니다. 다른 곳은 자유 순간으로 남겨 주세요."
   },
   "dayDone": {
     "title": "Day {n} 완주!",

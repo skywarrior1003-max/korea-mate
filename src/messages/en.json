@@ -605,7 +605,8 @@
     "consentApply": "Add to story",
     "consentApplying": "Saving…",
     "consentCancel": "Cancel",
-    "publicFailed": "Could not change this. Please try again."
+    "publicFailed": "Could not change this. Please try again.",
+    "placeBound": "Saved to this itinerary stop. To record somewhere else, add a free moment."
   },
   "dayDone": {
     "title": "Day {n} complete!",
