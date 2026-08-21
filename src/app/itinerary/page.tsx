@@ -3102,8 +3102,12 @@ function ItineraryResult() {
                                           {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ " : "○ "}{t("visited")}
                                         </button>
                                         {/* 이 장소에서 순간 남기기 — 장소명과 공식 장소 id 를 들고 Capture 를 연다.
-                                            그래야 Story 가 이 장소 항목을 정확히 개인화한다 (장소명 추측 결합 없음). */}
-                                        {(!shareId || isOwner) && itinId && (
+                                            그래야 Story 가 이 장소 항목을 정확히 개인화한다 (장소명 추측 결합 없음).
+                                            공식 장소(city_spot)에만 둔다 — 내 장소·숙소·직접 추가한 항목은 trip_moments 에
+                                            그 정체를 저장할 컬럼이 아직 없어(stop_key 미도입) 결합이 불가능하고, 여기서
+                                            열어 주면 같은 장소가 Story 에 기본 항목 + 자유 순간으로 두 번 보인다.
+                                            그 장소들의 기록은 헤더·Story 의 자유 순간으로 남긴다. */}
+                                        {(!shareId || isOwner) && itinId && stopCitySpotId(place) !== null && (
                                           <button
                                             type="button"
                                             onClick={(e) => {

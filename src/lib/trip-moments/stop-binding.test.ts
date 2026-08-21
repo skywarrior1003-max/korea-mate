@@ -101,3 +101,16 @@ test("R2: 자유 순간(citySpotId 없음)은 장소 입력이 그대로 편집 
     assert.ok(d.memo.placeBound && d.memo.placeBound.trim() !== "", `${l}.memo.placeBound`);
   }
 });
+
+// ── CLOSEOUT: 결합 불가 stop 에는 per-stop 진입을 열지 않는다 ─────────────────
+test("C1: per-stop 순간 남기기는 공식 장소(city_spot)에만 — 내 장소·숙소는 자유 순간 경로로", () => {
+  const page = read("src/app/itinerary/page.tsx");
+  assert.match(page, /\(!shareId \|\| isOwner\) && itinId && stopCitySpotId\(place\) !== null && \(/);
+});
+
+test("C2: trip_moments 에는 city_spot_id 외의 stop 정체 컬럼이 없다 (migration 전 결합 불가 사실 고정)", () => {
+  const idx = read("functions/api/trip-moments/index.ts");
+  const selectLine = idx.match(/\.select\("(moment_id, itinerary_id[^"]+)"\)/)?.[1] ?? "";
+  assert.ok(selectLine.includes("city_spot_id"));
+  assert.ok(!/stop_key|source_key|user_spot_id/.test(selectLine), "stop_key 류 컬럼이 생기면 이 가드와 결합 규칙을 함께 갱신한다");
+});
