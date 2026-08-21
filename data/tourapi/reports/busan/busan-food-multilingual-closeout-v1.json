@@ -1,98 +1,30 @@
 {
-  "task_id": "TASK-BUSAN-FOOD-MULTILINGUAL-RECONCILIATION-V2",
+  "task": "TASK-BUSAN-FOOD-TASTE-OF-BUSAN-2026-MULTILINGUAL-CROSSWALK-V1",
   "generated_at": "2026-08-21",
-  "sha_before": "f161426b0b397deb9e3957022479a3cb176c1ab2",
-  "food_universe": 194,
-  "v1_matched_before": 84,
-  "unresolved_before": 110,
-  "reconciliation": {
-    "new_matches_confirmed": 33,
-    "address_exact_new": 16,
-    "title_address_new": 10,
-    "duplicate_phone_resolved": 7
-  },
-  "matching_final": {
-    "MATCHED_AFTER": 117,
-    "MATCHED_AFTER_PCT": 60.3,
-    "AMBIGUOUS_AFTER": 1,
-    "SOURCE_NO_MATCH_AFTER": 76,
-    "CANONICAL_UNRESOLVED": 77
-  },
-  "locale_coverage": {
-    "en": {
-      "CANONICAL_TO_KR_MATCHED": 117,
-      "KR_TO_LOCALE_UC_SEQ_DIRECT": 117,
-      "EN_OFFICIAL_LINKED": 117,
-      "SOURCE_NO_LOCALE": 0,
-      "REQUIRED_CORE_READY": 117,
-      "REQUIRED_CORE_READY_PCT": 60.3
-    },
-    "ja": {
-      "CANONICAL_TO_KR_MATCHED": 117,
-      "KR_TO_LOCALE_UC_SEQ_DIRECT": 117,
-      "JA_OFFICIAL_LINKED": 117,
-      "SOURCE_NO_LOCALE": 0,
-      "REQUIRED_CORE_READY": 117,
-      "REQUIRED_CORE_READY_PCT": 60.3
-    },
-    "zh-CN": {
-      "CANONICAL_TO_KR_MATCHED": 117,
-      "KR_TO_LOCALE_UC_SEQ_DIRECT": 106,
-      "ZH_CN_OFFICIAL_LINKED": 106,
-      "SOURCE_NO_LOCALE": 11,
-      "REQUIRED_CORE_READY": 106,
-      "REQUIRED_CORE_READY_PCT": 54.6
-    }
-  },
-  "gap_arithmetic_valid": true,
-  "gap_note": "MATCHED + SOURCE_NO_LOCALE + CANONICAL_UNRESOLVED = 194 per locale",
-  "source_api": {
-    "base": "https://apis.data.go.kr/6260000/FoodService",
-    "endpoints": {
-      "kr": "getFoodKr",
-      "en": "getFoodEn",
-      "ja": "getFoodJa",
-      "zh-CN": "getFoodZhs"
-    },
-    "stable_id": "UC_SEQ",
-    "uc_seq_locale_stable": "YES"
-  },
-  "safety": {
-    "canonical_changed": 0,
-    "new_places_created": 0,
-    "false_match": 0,
-    "ai_translation_used": false,
-    "google_translate_used": false,
-    "translation_used": false,
-    "existing_ai_en_preserved": true
-  },
-  "description_reuse_allowed": "YES",
-  "task_result": "PASS",
-  "safe_to_close_busan_food_multilingual": "YES",
-  "next_recommended_task": "TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1",
-  "task": "TASK-BUSAN-FOOD-HISTORICAL-LINEAGE-RECONCILIATION-V3",
-  "v3_completed_at": "2026-08-21",
-  "sha_before_v3": "f161426b0b397deb9e3957022479a3cb176c1ab2",
-  "v3_historical_lineage": {
-    "traces_checked": 6,
-    "traces_rejected_coord_threshold_500m": 6,
-    "title_coord_matched": 1,
-    "method": "EXACT_TITLE+COORD_296m",
-    "new_match": "busan-G-00165 (평양집) UC_SEQ=1281"
-  },
-  "matched": 118,
-  "matched_en": 118,
-  "matched_ja": 118,
-  "matched_zh_cn": 107,
+  "sha_before_crosswalk": "5d35908",
+  "canonical_total": 194,
+  "matched_en": 142,
+  "matched_ja": 137,
+  "matched_zh_cn": 144,
+  "coverage_en": "142/194 (73.2%)",
+  "coverage_ja": "137/194 (70.6%)",
+  "coverage_zh_cn": "144/194 (74.2%)",
+  "source_6260000_en": 118,
+  "source_6260000_ja": 118,
+  "source_6260000_zh_cn": 107,
+  "tob_pdf_new_en": 24,
+  "tob_pdf_new_ja": 19,
+  "tob_pdf_new_zh": 37,
+  "tob_pdf_matched": 135,
   "ambiguous": 1,
   "no_match": 75,
-  "source_no_locale_zh": 11,
-  "coverage_en": "118/194 (60.8%)",
-  "coverage_ja": "118/194 (60.8%)",
-  "coverage_zh_cn": "107/194 (55.2%)",
-  "required_core_ready_en": 118,
-  "required_core_ready_ja": 118,
-  "required_core_ready_zh_cn": 107,
   "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES",
-  "SAFE_TO_CLOSE_REASON": "V3 historical lineage complete. 6 historical traces checked, all rejected coord>500m. 1 EXACT_TITLE+COORD match (평양집 296m). 75 NO_MATCH are genuinely not in 6260000 FoodService. NEXT=TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1"
+  "notes": [
+    "EN/ZH/JA title: REUSE_ALLOWED from official TasteOfBusan2026 PDF",
+    "Description: RIGHTS_REVIEW_REQUIRED (not included)",
+    "ZH: TOC sequential list page 12 ZH+JA PDF (146 entries, aligned with KO 146)",
+    "JA: page-header extraction; sequential JA page 13 skips Gangseo-gu (4-entry offset)",
+    "JA excluded: busan-G-00094 (갓포현) confirmed mis-assignment",
+    "75 NO_MATCH confirmed not in 6260000 FoodService"
+  ]
 }

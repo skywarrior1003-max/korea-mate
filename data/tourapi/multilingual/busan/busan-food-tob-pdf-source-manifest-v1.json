@@ -1,0 +1,47 @@
+{
+  "manifest_id": "busan-food-tob-pdf-source-v1",
+  "source_name": "Taste of Busan 2026 / 부산의맛 2026",
+  "publisher": "부산광역시 (Busan Metropolitan City)",
+  "publication_year": 2026,
+  "pdf_files": [
+    {
+      "filename": "2026_부산의맛_국영_0511_저화질.pdf",
+      "locales": [
+        "ko",
+        "en"
+      ]
+    },
+    {
+      "filename": "2026_부산의맛_중일_최종_0511_저화질.pdf",
+      "locales": [
+        "zh-CN",
+        "ja"
+      ]
+    }
+  ],
+  "rights_gate": {
+    "title": "REUSE_ALLOWED (Korean Copyright Law art.7)",
+    "description_text": "RIGHTS_REVIEW_REQUIRED"
+  },
+  "crosswalk_stats": {
+    "sha_before": "5d35908",
+    "pdf_total_restaurants": 147,
+    "canonical_matched": 135,
+    "new_en_titles": 24,
+    "new_zh_titles": 37,
+    "new_ja_titles": 19,
+    "overlap_with_6260000": 105
+  },
+  "collected_at": "2026-08-21",
+  "extraction_method": {
+    "en": "KO+EN_PDF_page_header",
+    "zh": "ZH+JA_PDF_page12_sequential_TOC_146_entries",
+    "ja": "ZH+JA_PDF_page_header_original_extraction"
+  },
+  "notes": [
+    "ZH: sequential TOC page 12 (146 entries, aligned with KO list 146 entries)",
+    "JA: original page-header extraction; page 13 sequential list skips Gangseo-gu (4-entry offset)",
+    "JA excluded: busan-G-00094 (KesMaeul Sashimi = 갯마을횟집 mis-assigned to 갓포현)",
+    "Descriptions not included: RIGHTS_REVIEW_REQUIRED"
+  ]
+}
