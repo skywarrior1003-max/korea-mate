@@ -8,6 +8,10 @@ import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
 import { stopCitySpotId } from "@/lib/trip-moments/stop-binding";
+import {
+  withResolvedPhotos, needsPhotoResolution, isResolvedFresh, fetchMomentPhotoUrls,
+  type ResolvedPhotoMap,
+} from "@/lib/trip-moments/photo-resolve";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useTranslations, useLocale } from "next-intl";
@@ -1282,6 +1286,39 @@ function ItineraryResult() {
   useEffect(() => {
     if (isPastTrip && viewMode === "compact") setViewMode("full");
   }, [isPastTrip, viewMode]);
+  // ── TASK-STORY-CROSS-DEVICE-PHOTOS-V1: 다른 기기에서도 내 사진 ──────────────
+  // 로컬 미리보기(data URL)는 올린 기기에만 있다. 서버에 사진이 있는데 로컬이
+  // 비어 있으면 소유자 전용 서명 주소를 받아 **메모리에만** 둔다 — localStorage 에
+  // 넣으면 만료된 주소가 영구 저장된다. 만료가 가까우면 다시 받는다.
+  const [resolvedPhotoUrls, setResolvedPhotoUrls] = useState<ResolvedPhotoMap>({});
+  const [photoRefreshTick, setPhotoRefreshTick]   = useState(0);
+  useEffect(() => {
+    if (!itinId || !(!shareId || isOwner)) return;
+    const now = Date.now();
+    const pending = moments.filter(m => needsPhotoResolution(m) && !isResolvedFresh(resolvedPhotoUrls[m.moment_id], now));
+    if (pending.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      const deviceId = getDeviceId();
+      for (const m of pending) {
+        const r = await fetchMomentPhotoUrls(m.moment_id, deviceId);
+        if (cancelled) return;
+        // 실패한 순간은 사진 없음으로 남는다 — 다른 순간의 사진은 그대로 그린다
+        if (r) setResolvedPhotoUrls(prev => ({ ...prev, [m.moment_id]: r }));
+      }
+    })();
+    return () => { cancelled = true; };
+    // resolvedPhotoUrls 는 의도적으로 제외 — 해석 결과가 들어올 때마다 다시 돌지 않게.
+    // 만료 재확인은 아래 tick 이 맡는다.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moments, itinId, shareId, isOwner, photoRefreshTick]);
+  useEffect(() => {
+    const id = setInterval(() => setPhotoRefreshTick(t => t + 1), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  // 화면용 복사본 — Timeline 과 Story 가 같은 것을 본다. 원본 `moments` 는 그대로다.
+  const displayMoments = withResolvedPhotos(moments, resolvedPhotoUrls);
+
   // Story 의 뼈대는 일정이다. 사진이 없어도 지난 장소가 Story 를 이룬다.
   // 오늘 Day 안에서는 지금 시각(현지)을 지난 장소만 들어간다.
   const storyDays = (() => {
@@ -1296,7 +1333,7 @@ function ItineraryResult() {
           name: p.name, time: p.time, place_id: p.place_id, source: p.source, image: p.image,
         })),
       })),
-      moments,
+      displayMoments,
       { todayISO, nowHHMM, isPast: isPastTrip },
     );
   })();
@@ -3234,7 +3271,7 @@ function ItineraryResult() {
           </button>
         </div>
         <TripMomentTimeline
-          moments={moments}
+          moments={displayMoments}
           onDelete={handleMomentDelete}
           onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
           onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}
