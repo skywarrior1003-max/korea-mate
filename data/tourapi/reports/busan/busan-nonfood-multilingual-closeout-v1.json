@@ -1,0 +1,123 @@
+{
+  "task": "TASK-BUSAN-NONFOOD-SOURCE-AWARE-MULTILINGUAL-V2",
+  "branch": "data/busan-multilingual-v1",
+  "sha_before": "b80fe29",
+  "NONFOOD_UNIVERSE": 771,
+  "ATTRACTION": 717,
+  "NATURE": 50,
+  "EVENT": 4,
+  "ACCOMMODATION_EXCLUDED": 82,
+  "POLICY_STATUS": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "source_lineage_breakdown": {
+    "AttractionService": 212,
+    "EngService2": 77,
+    "VisitBusanContent": 323,
+    "FestivalService": 4,
+    "KorService2": 269
+  },
+  "DIRECT_UC_SEQ_CANDIDATES": 212,
+  "DIRECT_UC_SEQ_CONFIRMED": {
+    "en": 207,
+    "ja": 205,
+    "zh-CN": 206
+  },
+  "FESTIVAL_UC_SEQ_CONFIRMED": {
+    "en": 4,
+    "ja": 4,
+    "zh-CN": 4
+  },
+  "KTO_EN_CANDIDATES": 43,
+  "KTO_EN_CONFIRMED": 43,
+  "NEW_LINKS_FROM_NON_6260000_SOURCES": 47,
+  "API_LOCALE_CANARY": {
+    "method": "existing_raw_first",
+    "batch_date": "2026-07-24",
+    "ATR_EN_records": 208,
+    "ATR_JA_records": 209,
+    "ATR_ZHS_records": 209,
+    "FEST_EN_records": 37,
+    "FEST_JA_records": 35,
+    "FEST_ZHS_records": 35,
+    "KTO_EN_records": 194,
+    "UC_SEQ_LOCALE_STABILITY": "CONFIRMED_via_batch_consistency",
+    "KTO_JA_STATUS": "HTTP_403_BLOCKED",
+    "KTO_ZH_STATUS": "HTTP_403_BLOCKED",
+    "VISITBUSAN_JA_STATUS": "NOT_OPERATIONAL",
+    "VISITBUSAN_ZH_STATUS": "NOT_OPERATIONAL"
+  },
+  "coverage": {
+    "en": {
+      "OFFICIAL_TITLE_LINKED": 254,
+      "OFFICIAL_TITLE_LINKED_PCT": 32.9,
+      "REQUIRED_CORE_READY": 211,
+      "REQUIRED_CORE_READY_PCT": 27.4,
+      "INVARIANT_CORE_READY_LE_TITLE_LINKED": true
+    },
+    "ja": {
+      "OFFICIAL_TITLE_LINKED": 208,
+      "OFFICIAL_TITLE_LINKED_PCT": 27.0,
+      "REQUIRED_CORE_READY": 208,
+      "REQUIRED_CORE_READY_PCT": 27.0,
+      "INVARIANT_CORE_READY_LE_TITLE_LINKED": true
+    },
+    "zh-CN": {
+      "OFFICIAL_TITLE_LINKED": 210,
+      "OFFICIAL_TITLE_LINKED_PCT": 27.2,
+      "REQUIRED_CORE_READY": 210,
+      "REQUIRED_CORE_READY_PCT": 27.2,
+      "INVARIANT_CORE_READY_LE_TITLE_LINKED": true
+    }
+  },
+  "gap_arithmetic": {
+    "en": {
+      "REQUIRED_CORE_READY": 211,
+      "TITLE_ONLY_NO_DESCRIPTION": 43,
+      "SOURCE_NO_LOCALE": 5,
+      "CANONICAL_SOURCE_UNMATCHED": 512,
+      "total": 771,
+      "GAP_ARITHMETIC_VALID": true
+    },
+    "ja": {
+      "REQUIRED_CORE_READY": 208,
+      "TITLE_ONLY_NO_DESCRIPTION": 0,
+      "SOURCE_NO_LOCALE": 8,
+      "CANONICAL_SOURCE_UNMATCHED": 555,
+      "total": 771,
+      "GAP_ARITHMETIC_VALID": true
+    },
+    "zh-CN": {
+      "REQUIRED_CORE_READY": 210,
+      "TITLE_ONLY_NO_DESCRIPTION": 0,
+      "SOURCE_NO_LOCALE": 6,
+      "CANONICAL_SOURCE_UNMATCHED": 555,
+      "total": 771,
+      "GAP_ARITHMETIC_VALID": true
+    }
+  },
+  "AMBIGUOUS": 0,
+  "SOURCE_NO_LOCALE": {
+    "en": 5,
+    "ja": 8,
+    "zh-CN": 6
+  },
+  "CANONICAL_SOURCE_UNMATCHED": {
+    "en": 512,
+    "ja": 555,
+    "zh-CN": 555
+  },
+  "enrichment_file": "data/tourapi/multilingual/busan/busan-nonfood-multilingual-enrichment-v1.jsonl",
+  "enrichment_record_count": 673,
+  "enrichment_by_content_type": {
+    "OFFICIAL_NATIVE": 630,
+    "OFFICIAL_TITLE": 43
+  },
+  "TRANSLATION_USED": false,
+  "GOOGLE_TRANSLATE_USED": false,
+  "CANONICAL_CHANGED": 0,
+  "NEW_PLACES_CREATED": 0,
+  "PROVENANCE_COMPLETE": true,
+  "GAP_ARITHMETIC_VALID": true,
+  "TASK_RESULT": "PASS",
+  "SAFE_TO_CLOSE_BUSAN_NONFOOD_MULTILINGUAL": "YES",
+  "NEXT_GAP_ACTION": "KTO_JA_ZH: currently 403 blocked - no gap action possible. VisitBusan JA/ZH: NOT_OPERATIONAL. KTO_EN_DESCRIPTION: list API does not include overview; detailCommon2 detail call would provide EN descriptions for ~43 KTO-only canonicals - optional future enhancement."
+}

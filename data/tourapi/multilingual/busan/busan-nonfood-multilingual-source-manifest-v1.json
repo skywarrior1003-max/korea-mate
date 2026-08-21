@@ -1,0 +1,42 @@
+{
+  "task": "TASK-BUSAN-NONFOOD-SOURCE-AWARE-MULTILINGUAL-V2",
+  "nonfood_universe": 771,
+  "accommodation_excluded": 82,
+  "source_lineage_breakdown": {
+    "AttractionService": 212,
+    "EngService2": 77,
+    "VisitBusanContent": 323,
+    "FestivalService": 4,
+    "KorService2": 269
+  },
+  "source_lineage_total_union": 771,
+  "raw_as_of": "2026-07-24",
+  "batch_files_used": [
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-attraction-en-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-attraction-ja-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-attraction-zhs-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-en-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-ja-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/busan-festival-zhs-p*.json",
+    "data/tourapi/raw/busan/2026-07-24/batch/kto-en-p*.json"
+  ],
+  "direct_uc_seq_candidates": 212,
+  "direct_uc_seq_confirmed": {
+    "en": 207,
+    "ja": 205,
+    "zh-CN": 206
+  },
+  "festival_confirmed": {
+    "en": 4,
+    "ja": 4,
+    "zh-CN": 4
+  },
+  "kto_en_candidates": 43,
+  "kto_en_confirmed": 43,
+  "kto_ja_status": "HTTP_403_BLOCKED",
+  "kto_zh_status": "HTTP_403_BLOCKED",
+  "visitbusan_ja_status": "NOT_OPERATIONAL",
+  "visitbusan_zh_status": "NOT_OPERATIONAL",
+  "visitbusan_en_status": "COVERED_VIA_6260000_ATTRACTIONSERVICE",
+  "new_links_from_non_6260000_sources": 47
+}
