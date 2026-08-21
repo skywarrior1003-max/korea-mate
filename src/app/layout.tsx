@@ -112,13 +112,22 @@ export default function RootLayout({
       {(() => {
         const naverClientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || "um01w41srz";
         return (
-          // geocoder 는 주소를 지도 중심으로 바꾸는 데만 쓴다 — My Place 위치 확인
-          // 화면이 사용자가 적은 주소 근처에서 열리게 하는 용도다. submodule 을
-          // 빼면 `naver.maps.Service` 자체가 없어서 조용히 도시 중심으로 떨어진다.
-          <Script
-            src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverClientId}&submodules=geocoder`}
-            strategy="afterInteractive"
-          />
+          <>
+            {/* Naver SDK 는 인증 실패(허용되지 않은 origin 의 401)를 로드 직후 전역
+                `navermap_authFailure` 로 알린다 — 지도 컴포넌트가 마운트되기 전이다.
+                여기서 먼저 받아 표시만 남기고 이벤트를 쏜다. NaverMap 이 구독해
+                지도 칸만 비운다(화면 전체 error boundary 방지). TASK-MY-TRIPS-FINAL-UI-V1-R1 */}
+            <Script id="gkm-navermap-auth-hook" strategy="beforeInteractive">
+              {`window.navermap_authFailure = function () { window.__gkmNaverMapAuthFailed = true; try { window.dispatchEvent(new Event("gkm:navermap-auth-failure")); } catch (e) {} };`}
+            </Script>
+            {/* geocoder 는 주소를 지도 중심으로 바꾸는 데만 쓴다 — My Place 위치 확인
+                화면이 사용자가 적은 주소 근처에서 열리게 하는 용도다. submodule 을
+                빼면 `naver.maps.Service` 자체가 없어서 조용히 도시 중심으로 떨어진다. */}
+            <Script
+              src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverClientId}&submodules=geocoder`}
+              strategy="afterInteractive"
+            />
+          </>
         );
       })()}
       {(() => {

@@ -8,6 +8,7 @@ import { buildFocusSequence, findSlideIndex } from "@/lib/share/story-focus-core
 import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
+import { seoulClock } from "@/lib/trips/seoul-clock";
 import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
 import { staySourceKey } from "@/lib/place-identity";
 import {
@@ -1279,8 +1280,10 @@ function ItineraryResult() {
   );
   const [tripViewDefaulted, setTripViewDefaulted] = useState(false);
   const [storyFocus, setStoryFocus] = useState<{ m: StoryMemory; i: number } | null>(null);
-  // 오늘 — /my-trips 의 archive 판정과 같은 식으로 센다.
-  const todayISO   = new Date().toISOString().slice(0, 10);
+  // 오늘 — /my-trips 의 lifecycle 판정과 같은 기준(Asia/Seoul 달력)으로 센다.
+  // UTC 날짜를 쓰면 한국 아침에 하루 늦어, Trips 는 Story 인데 여기는 일정이 되는
+  // 식으로 두 화면이 엇갈린다. (TASK-MY-TRIPS-FINAL-UI-V1-R1)
+  const todayISO   = seoulClock().todayISO;
   const isPastTrip = Boolean(itinId) && isPastTripByDate(endDate, todayISO);
   useEffect(() => {
     if (tripViewDefaulted || !itinId || !endDate) return;
@@ -1334,11 +1337,10 @@ function ItineraryResult() {
   const displayMoments = withResolvedPhotos(moments, resolvedPhotoUrls);
 
   // Story 의 뼈대는 일정이다. 사진이 없어도 지난 장소가 Story 를 이룬다.
-  // 오늘 Day 안에서는 지금 시각(현지)을 지난 장소만 들어간다.
+  // 오늘 Day 안에서는 지금 시각(한국 시각 — 장소 time 과 같은 기준)을 지난 장소만 들어간다.
   const storyDays = (() => {
     if (tripView !== "story") return [];
-    const now = new Date();
-    const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+    const { nowHHMM } = seoulClock();
     return buildPrivateStoryDays(
       days.map(d => ({
         dayNumber: d.dayNumber,

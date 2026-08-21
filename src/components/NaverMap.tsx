@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
+
+/** layout.tsx 의 inline script 가 인증 실패를 알릴 때 쏘는 이벤트 이름 (같은 문자열을 양쪽이 쓴다) */
+export const NAVER_AUTH_FAILURE_EVENT = "gkm:navermap-auth-failure";
 import {
   planDisplay, spotKey, labelText, escapeHtml, zoomAfterClusterClick,
   LABEL_MAX_WIDTH_PX,
@@ -205,7 +209,23 @@ export default function NaverMap({
   const dayMarkersRef = useRef<NaverMarkerObj[]>([]);
   const dayLineRef    = useRef<NaverShapeObj | null>(null);
   const [ready,      setReady]      = useState(false);
+  // SDK 가 인증에 실패했거나(허용되지 않은 origin 의 401) 지도를 만들다 터졌다.
+  // 이때 지도 칸만 비우고 나머지 화면은 살린다 — 예전엔 SDK 정리 코드가 null 을
+  // 밟아 React error boundary 로 My Trip 전체가 내려갔다. (TASK-MY-TRIPS-FINAL-UI-V1-R1)
+  //
+  // 인증 실패는 SDK 가 로드되자마자 전역 `navermap_authFailure` 로 알린다 — 이
+  // 컴포넌트가 마운트되기 한참 전이다. 그래서 layout.tsx 의 inline script 가 먼저
+  // 받아 `__gkmNaverMapAuthFailed` 에 적어 두고 이벤트를 쏜다. 여기서는 그 값을
+  // 외부 스토어처럼 구독만 한다(서버 렌더에서는 항상 false).
+  const authFailed = useSyncExternalStore(
+    (onChange) => { window.addEventListener(NAVER_AUTH_FAILURE_EVENT, onChange); return () => window.removeEventListener(NAVER_AUTH_FAILURE_EVENT, onChange); },
+    () => Boolean((window as Window & { __gkmNaverMapAuthFailed?: boolean }).__gkmNaverMapAuthFailed),
+    () => false,
+  );
+  const [initFailed, setInitFailed] = useState(false);
+  const failed = authFailed || initFailed;
   const [activeSpot, setActiveSpot] = useState<MapSpot | null>(null);
+  const tMap = useTranslations("shell");
 
   // Poll until naver.maps is available (loaded by layout.tsx Script)
   useEffect(() => {
@@ -220,13 +240,21 @@ export default function NaverMap({
 
   // Initialize map once naver SDK is ready
   useEffect(() => {
-    if (!ready || !mapDivRef.current || mapRef.current) return;
-    mapRef.current = new window.naver!.maps.Map(mapDivRef.current, {
-      center: new window.naver!.maps.LatLng(defaultCenter.lat, defaultCenter.lng),
-      zoom: 13,
-      mapDataControl: false,
-    });
-  }, [ready, defaultCenter.lat, defaultCenter.lng]);
+    if (!ready || failed || !mapDivRef.current || mapRef.current) return;
+    try {
+      mapRef.current = new window.naver!.maps.Map(mapDivRef.current, {
+        center: new window.naver!.maps.LatLng(defaultCenter.lat, defaultCenter.lng),
+        zoom: 13,
+        mapDataControl: false,
+      });
+    } catch {
+      // 지도 하나 못 만든 것으로 화면 전체를 잃지 않는다. 예외 경로에서만 한 번
+      // 상태를 바꾼다 — 연쇄 렌더가 아니라 "실패" 한 번이다.
+      mapRef.current = null;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInitFailed(true);
+    }
+  }, [ready, failed, defaultCenter.lat, defaultCenter.lng]);
 
   // ── 장소 계층 렌더 ────────────────────────────────────────────────────────
   //
@@ -349,7 +377,10 @@ export default function NaverMap({
     const nmap = mapRef.current;
     if (typeof map.Event?.addListener !== "function") return;
     const l = map.Event.addListener(nmap, "zoom_changed", () => renderSpotLayerRef.current());
-    return () => { map.Event.removeListener?.(l); };
+    // 인증에 실패한 SDK 는 리스너 객체가 비어 있어 removeListener 안에서 null 을
+    // 밟는다(실측: "Cannot read properties of null (reading 'isArray')"). 정리
+    // 실패는 화면의 실패가 아니다 — 삼킨다.
+    return () => { try { if (l) map.Event.removeListener?.(l); } catch { /* SDK 미초기화 */ } };
   }, [ready]);
 
   // 선택 마커만 아이콘 교체 — 이전 선택은 기본으로 되돌린다.
@@ -374,10 +405,11 @@ export default function NaverMap({
 
   // 언마운트 정리 — 지도에서 떼지 않으면 SDK 안에 마커가 남는다.
   useEffect(() => () => {
-    markersRef.current.forEach(m => m.setMap(null));
+    // 정리는 최선을 다하되, SDK 가 반쯤만 살아 있어도 여기서 터지지 않는다
+    try { markersRef.current.forEach(m => m.setMap(null)); } catch { /* SDK 미초기화 */ }
     markersRef.current = [];
     markerByKeyRef.current.clear();
-    openInfoRef.current?.close();
+    try { openInfoRef.current?.close(); } catch { /* SDK 미초기화 */ }
     openInfoRef.current = null;
   }, []);
 
@@ -423,10 +455,12 @@ export default function NaverMap({
   // base 마커와 독립 관리(additive). 항상 최상위(zIndex 200), 클러스터 없음.
   useEffect(() => {
     if (!mapRef.current || !window.naver?.maps) return;
-    // 이전 trip 레이어 정리
-    dayMarkersRef.current.forEach(m => m.setMap(null));
+    // 이전 trip 레이어 정리 — SDK 가 반쯤만 살아 있어도 여기서 터지지 않는다
+    try {
+      dayMarkersRef.current.forEach(m => m.setMap(null));
+      dayLineRef.current?.setMap(null);
+    } catch { /* SDK 미초기화 */ }
     dayMarkersRef.current = [];
-    dayLineRef.current?.setMap(null);
     dayLineRef.current = null;
 
     const pts = (dayPlaces ?? []).filter(p => p.lat && p.lng);
@@ -511,7 +545,14 @@ export default function NaverMap({
     >
       <div ref={mapDivRef} className="w-full h-full" />
 
-      {!ready && (
+      {/* SDK 실패 — 지도 칸만 조용히 비운다. 일정·편집 등 나머지는 그대로 쓸 수 있다. */}
+      {failed && (
+        <div role="status" className="absolute inset-0 flex items-center justify-center bg-[#F6F7F8]">
+          <p className="text-xs font-bold text-[#565D66]">{tMap("mapUnavailable")}</p>
+        </div>
+      )}
+
+      {!ready && !failed && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#F6F7F8] gap-3">
           <div
             className="w-8 h-8 rounded-full border-4 animate-spin"

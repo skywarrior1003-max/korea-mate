@@ -35,6 +35,7 @@ import { visitedStorageKey } from "@/lib/visited";
 import { cityVisual } from "@/lib/city-visual";
 import { CITY_CONFIGS, cityLabelKey } from "@/data/cities";
 import { classifyTrips, todayStopLabel, formatTripDates } from "@/lib/trips/trips-lifecycle";
+import { seoulClock } from "@/lib/trips/seoul-clock";
 import {
   TRIPS_COLORS as C, SP, RADIUS_XL,
   HEADLINE_LG_MOBILE, HEADLINE_LG, HEADLINE_MD, BODY_LG, BODY_MD, LABEL_LG,
@@ -135,8 +136,9 @@ export default function MyTripsPage() {
     setDeleting(null);
   }, []);
 
-  // 오늘 — 일정 날짜와 같은 기준(UTC 날짜 문자열). /itinerary 의 isPastTrip 과 같다.
-  const todayISO = new Date().toISOString().slice(0, 10);
+  // 오늘 — 여행 날짜와 같은 한국 달력(Asia/Seoul). /itinerary 의 isPastTrip 과 같은 기준.
+  // UTC 날짜를 쓰면 한국 아침(UTC 전날)에 8/22 시작 여행이 아직 Upcoming 으로 보였다.
+  const todayISO = seoulClock().todayISO;
   const { traveling, upcoming, past } = useMemo(() => classifyTrips(trips, todayISO), [trips, todayISO]);
   const hero = traveling[0] ?? null;
 
@@ -148,8 +150,8 @@ export default function MyTripsPage() {
     let cancelled = false;
     apiFetchItinerary(heroId, getDeviceId()).then(row => {
       if (cancelled) return;
-      const now = new Date();
-      const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      // 장소 time 은 한국 시각이다 — 지금도 같은 시계로 읽는다
+      const { nowHHMM } = seoulClock();
       setTodayStop({ tripId: heroId, label: todayStopLabel(row?.days, todayISO, nowHHMM) });
     }).catch(() => { if (!cancelled) setTodayStop({ tripId: heroId, label: null }); });
     return () => { cancelled = true; };
@@ -201,7 +203,9 @@ export default function MyTripsPage() {
         </Link>
       </header>
 
-      <main className="flex-1 w-full mx-auto px-4 md:px-16 pt-8 md:pt-16" style={{ maxWidth: SP.maxWidth, paddingBottom: SP.xl }}>
+      {/* 한 열짜리 목록이다 — 넓은 화면에서도 모바일 위계를 유지하려고 본문을
+          max-w-2xl(홈·More 가 쓰는 폭)로 가운데 모은다. 바깥 여백만 1280 셸. */}
+      <main className="flex-1 w-full mx-auto max-w-2xl px-4 md:px-6 pt-8 md:pt-16" style={{ paddingBottom: SP.xl }}>
 
         {/* ── 제목 ── */}
         <div style={{ marginBottom: SP.lg }}>

@@ -42,6 +42,21 @@ test("U3: lifecycle 은 날짜 하나로만 가르고, '오늘 · 장소'는 일
   assert.ok(!/geolocation|watchPosition|getCurrentPosition/.test(page + hero + prims), "GPS 를 읽지 않는다");
 });
 
+test("U3b (R1): 오늘·지금은 Asia/Seoul 시계 — UTC 날짜 문자열을 쓰지 않는다 (Trips 와 My Trip 이 같은 기준)", () => {
+  const itin = read("src/app/itinerary/page.tsx");
+  assert.match(page, /const todayISO = seoulClock\(\)\.todayISO/);
+  assert.match(page, /const \{ nowHHMM \} = seoulClock\(\)/);
+  assert.ok(!page.includes("toISOString().slice(0, 10)"), "my-trips 에 UTC 날짜가 남아 있다");
+  assert.match(itin, /const todayISO\s+= seoulClock\(\)\.todayISO/);
+  assert.ok(!itin.includes("toISOString().slice(0, 10)"), "itinerary 에 UTC 날짜가 남아 있다");
+  assert.ok(!/now\.getHours\(\)/.test(page + itin), "브라우저 로컬 시각으로 nowHHMM 을 만들지 않는다");
+});
+
+test("U6 (R1): 데스크톱에서도 한 열 목록 — 기존 max-w-2xl 컨테이너 재사용", () => {
+  assert.match(page, /<main className="[^"]*max-w-2xl[^"]*"/);
+  assert.ok(!page.includes("maxWidth: SP.maxWidth"), "본문을 1280 까지 늘리지 않는다");
+});
+
 test("U4: 폐기된 표현이 돌아오지 않는다", () => {
   for (const bad of ['t("sectionArchive")', 't("newTripPlanHint")', 't("statTrips")', "getPersonality", "✈️", "📍", "📅", "👤", "🗑️", "fadeInUp"]) {
     assert.ok(!page.includes(bad), `page 에 ${bad} 가 남아 있다`);

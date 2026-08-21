@@ -296,7 +296,8 @@
     "explore": "Explore",
     "picks": "Picks",
     "trips": "Trips",
-    "more": "More"
+    "more": "More",
+    "mapUnavailable": "Map unavailable"
   },
   "saved": {
     "title": "Saved",

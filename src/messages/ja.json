@@ -296,7 +296,8 @@
     "explore": "探す",
     "picks": "ピック",
     "trips": "旅行",
-    "more": "その他"
+    "more": "その他",
+    "mapUnavailable": "地図を読み込めません"
   },
   "saved": {
     "title": "保存済み",

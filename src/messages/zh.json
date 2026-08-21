@@ -296,7 +296,8 @@
     "explore": "探索",
     "picks": "精选",
     "trips": "行程",
-    "more": "更多"
+    "more": "更多",
+    "mapUnavailable": "无法加载地图"
   },
   "saved": {
     "title": "已保存",

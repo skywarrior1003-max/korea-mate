@@ -296,7 +296,8 @@
     "explore": "둘러보기",
     "picks": "픽",
     "trips": "내 여행",
-    "more": "더보기"
+    "more": "더보기",
+    "mapUnavailable": "지도를 불러올 수 없어요"
   },
   "saved": {
     "title": "저장됨",
