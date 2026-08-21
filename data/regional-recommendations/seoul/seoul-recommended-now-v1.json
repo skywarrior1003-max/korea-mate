@@ -1,0 +1,125 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-SEOUL-V1",
+  "section": "recommended_now",
+  "generated_at": "2026-08-21",
+  "city": "seoul",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "현재성 기준일: 2026-08-21. english.visitseoul.net/exhibition-events 공식 이벤트 목록 기준. 공식 source에서 현재 강조하거나 실제 운영 중인 항목만 포함. evergreen 장소는 명시적 시즌·이벤트 근거 없이 recommended_now 처리하지 않음.",
+
+  "stale_or_excluded": [
+    {
+      "name": "수미조 40주년 기념 CONTINUUM",
+      "dates": "2026-07-02 ~ 2026-08-22",
+      "reason": "기준일(2026-08-21) 다음 날(8-22) 종료 예정. 사실상 종료 직전 — excluded 처리."
+    },
+    {
+      "name": "봄 시즌 벚꽃·봄꽃 행사류",
+      "reason": "봄 한정 계절 행사. 기준일(2026-08-21) 비해당."
+    },
+    {
+      "name": "겨울 시즌 야간 조명 축제류",
+      "reason": "겨울 한정 행사. 기준일 비해당."
+    }
+  ],
+
+  "final_recommended_now": [
+    {
+      "item_id": "seoul-RN-001",
+      "status": "FINAL",
+      "name_ko": "KAWS: FRIENDS AND NEIGHBORS",
+      "name_en": "KAWS: FRIENDS AND NEIGHBORS",
+      "category": "현대미술 전시",
+      "why_now": "세계적 현대미술 작가 KAWS의 대형 전시. 2026년 7월 23일부터 12월 27일까지 Space K Seoul에서 열리는 장기 전시. 기준일 현재 운영 중. 외국인 방문자에게도 널리 알려진 글로벌 아티스트 작품.",
+      "official_evidence": "english.visitseoul.net/exhibition-events 공식 이벤트 목록 등재.",
+      "valid_from": "2026-07-23",
+      "valid_to": "2026-12-27",
+      "review_by": "2026-12-27",
+      "venue": "Space K Seoul",
+      "venue_note": "Space K Seoul 위치: 경기도 과천시 광명로 313 (서울 근교 — 방문 전 이동 경로 확인 권장)",
+      "existing_canonical_id": null,
+      "new_place_candidate": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "seoul-RN-002",
+      "status": "FINAL",
+      "name_ko": "The Art of Learning: 우리는 서로의 학교",
+      "name_en": "The Art of Learning: Becoming Each Other's School",
+      "category": "현대미술 전시",
+      "why_now": "2026년 8월 7일부터 9월 27일까지 아르코미술관에서 진행 중인 전시. 기준일 현재 운영 중. 대학로·마로니에공원 인근 위치로 접근성 좋음.",
+      "official_evidence": "english.visitseoul.net/exhibition-events 공식 이벤트 목록 등재.",
+      "valid_from": "2026-08-07",
+      "valid_to": "2026-09-27",
+      "review_by": "2026-09-27",
+      "venue": "아르코미술관 (Arko Art Center)",
+      "venue_address": "서울 종로구 동숭길 3 (마로니에공원 내)",
+      "venue_note": "대학로역 1번 출구 인근",
+      "existing_canonical_id": null,
+      "new_place_candidate": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "seoul-RN-003",
+      "status": "FINAL",
+      "name_ko": "서초 한강 아트투어",
+      "name_en": "Seocho Han River Art Tour",
+      "category": "야외 예술 체험·한강",
+      "why_now": "2026년 8월 6일부터 8월 30일까지 서초 한강 일대에서 진행되는 야외 아트 체험 행사. 기준일 현재 운영 중. 한강 + 예술의 조합으로 외국인 여행자에게도 추천.",
+      "official_evidence": "english.visitseoul.net/exhibition-events 공식 이벤트 목록 등재.",
+      "valid_from": "2026-08-06",
+      "valid_to": "2026-08-30",
+      "review_by": "2026-08-30",
+      "venue": "서초 한강공원 일대",
+      "venue_note": "서울 서초구 한강 접안 구역. 지하철 9호선 구반포역·신반포역 인근",
+      "existing_canonical_id": null,
+      "new_place_candidate": false,
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "reserve_recommended_now": [
+    {
+      "item_id": "seoul-RN-R01",
+      "status": "RESERVE",
+      "name_ko": "서울, 세계와 노래하다",
+      "name_en": "Seoul, Singing with the World",
+      "category": "전시",
+      "why_now": "2026-08-21~08-23, 기준일 당일 시작. 단 3일 운영으로 현재 추천에 포함하기엔 유효기간이 너무 짧아 RESERVE 처리.",
+      "valid_from": "2026-08-21",
+      "valid_to": "2026-08-23",
+      "reserve_reason": "3일 단기 전시. 기준일 이후 빠른 종료 예정 — RESERVE.",
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/exhibition-events",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "seoul-RN-R02",
+      "status": "RESERVE",
+      "name_ko": "2026 한강 불빛 공연 : 드론라이트쇼",
+      "name_en": "2026 Han River Light Performance: Drone Light Show",
+      "category": "야간 공연·한강",
+      "why_now": "서울 한강에서 진행되는 드론 라이트쇼 시리즈. 여름 시즌 한강 야간관광 대표 콘텐츠. 구체적 공연 일정이 공식 source에서 확인되지 않아 RESERVE 처리.",
+      "existing_canonical_id": "seoul-KOPij6dx2",
+      "reserve_reason": "공연 일정(날짜·시간) 2026-08-21 기준 공식 재확인 필요. canonical ID 확인(seoul-KOPij6dx2). 일정 확인 시 FINAL 승격 가능.",
+      "source": {
+        "provider": "VisitSeoul (canonical 데이터)",
+        "source_url": "https://english.visitseoul.net/",
+        "as_of": "2026-08-21"
+      }
+    }
+  ]
+}

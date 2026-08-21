@@ -1,0 +1,243 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-SEOUL-V1",
+  "section": "recommended_courses",
+  "generated_at": "2026-08-21",
+  "city": "seoul",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "추천 코스는 AI itinerary scheduler 고정 규칙이 아니라 recommendation signal/content다. 서울 공식 도보관광(STO 운영) 및 VisitSeoul 편집 pick 기반. 개별 코스 상세 정차지는 STO 예약 시스템(02-6925-0777) 및 walkingtours@sto.or.kr에서 확인. 기존 canonical 수정/신규 place 생성 없음.",
+
+  "final_recommended_courses": [
+    {
+      "course_id": "seoul-C-001",
+      "status": "FINAL",
+      "name_ko": "서울 도보관광: 경복궁 코스",
+      "name_en": "Seoul Guided Walking Tour: Gyeongbokgung Palace Course",
+      "theme": "조선왕조 역사·궁궐·광화문",
+      "traveler_fit": "처음 방문 외국인 여행자, 역사/궁궐 관심, 가족, 단체",
+      "recommended_reason": "서울관광재단(STO) 공식 운영 무료 도보관광 프로그램. 조선 최초·최대 궁궐 경복궁을 전문 해설사와 함께 탐방. 외국어(영·일·중) 가이드 제공. 광화문광장 해치마당~국립민속박물관까지 연결되는 역사 축.",
+      "program_type": "STO 공식 도보관광 (무료, 전문가이드, 예약 필요)",
+      "duration": "약 2시간",
+      "days": 0.25,
+      "difficulty": "평지·도보",
+      "seasonality": "연중 (야외 구간 포함, 하절기 모자·물 권장)",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "경복궁 (광화문)",
+          "name_en": "Gyeongbokgung Palace (Gwanghwamun Gate)",
+          "note": "집합 지점 및 출발지. 광화문 정문 앞 집합",
+          "existing_canonical_id": null,
+          "id_note": "경복궁은 문화재청(cha.go.kr) 관리 유적으로 VisitSeoul API 1837 canonical에 미포함"
+        },
+        {
+          "order": 2,
+          "name_ko": "근정전·향원정 일원",
+          "name_en": "Geunjeongjeon & Hyangwonjeong area",
+          "note": "경복궁 내 핵심 구역 해설",
+          "existing_canonical_id": null
+        },
+        {
+          "order": 3,
+          "name_ko": "국립민속박물관",
+          "name_en": "National Folk Museum of Korea",
+          "note": "경복궁 동문 인접. 무료 입장(경복궁 관람객)",
+          "existing_canonical_id": null,
+          "id_note": "국립민속박물관 canonical 미확인 (검색 결과 없음)"
+        },
+        {
+          "order": 4,
+          "name_ko": "광화문광장 해치마당",
+          "name_en": "Gwanghwamun Square — Haechi Madang",
+          "note": "코스 마무리. 세종대왕상·이순신장군상·해치 조형물",
+          "existing_canonical_id": "seoul-KOPj1ro8q"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 4,
+        "linked": 1,
+        "unlinked_canonical_not_found": 3,
+        "new_place_candidates": 0
+      },
+      "booking_info": {
+        "reservation": "필수 (인터넷 사전 예약 또는 당일 현장 접수)",
+        "phone": "02-6925-0777",
+        "email": "walkingtours@sto.or.kr",
+        "fee": "무료",
+        "foreign_language": "영어·일본어·중국어 가이드 운영"
+      },
+      "source": {
+        "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "course_id": "seoul-C-002",
+      "status": "FINAL",
+      "name_ko": "서울 도보관광: 북촌한옥마을 코스",
+      "name_en": "Seoul Guided Walking Tour: Bukchon Hanok Village Course",
+      "theme": "전통 한옥·600년 도시 역사·골목길",
+      "traveler_fit": "처음 방문 외국인, 한국 전통문화 관심, 커플, 사진 여행자",
+      "recommended_reason": "서울관광재단(STO) 공식 운영 무료 도보관광. 600년 서울 역사가 농축된 북촌한옥마을을 전문 가이드와 함께 탐방. 가회동 주요 골목, 한옥 전경, 창덕궁 방면까지 연결. 외국어 가이드 제공.",
+      "program_type": "STO 공식 도보관광 (무료, 전문가이드, 예약 필요)",
+      "duration": "약 2~3시간",
+      "days": 0.5,
+      "difficulty": "경사 구간 포함 (골목길 언덕)",
+      "seasonality": "연중 (봄·가을 단풍·꽃 시즌 특히 인기, 주말 혼잡 주의)",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "안국역 인근 집합",
+          "name_en": "Meeting point near Anguk Station",
+          "note": "지하철 3호선 안국역 2번 출구 인근",
+          "existing_canonical_id": null,
+          "id_note": "지하철역은 canonical place 아님"
+        },
+        {
+          "order": 2,
+          "name_ko": "북촌한옥마을 (가회동 일원)",
+          "name_en": "Bukchon Hanok Village (Gahoe-dong)",
+          "note": "가회동 11번지·31번지 한옥 골목 탐방",
+          "existing_canonical_id": null,
+          "id_note": "북촌한옥마을 canonical 미포함 — 관광안내소(KOP027189)만 존재"
+        },
+        {
+          "order": 3,
+          "name_ko": "창덕궁 방면 (창덕궁길)",
+          "name_en": "Toward Changdeokgung Palace (Changdeokgung-gil)",
+          "note": "창덕궁 외곽 골목길. 창덕궁 관람은 별도 입장 (무료 아님)",
+          "existing_canonical_id": null,
+          "id_note": "창덕궁은 문화재청 관리, canonical 미포함"
+        },
+        {
+          "order": 4,
+          "name_ko": "인사동",
+          "name_en": "Insadong",
+          "note": "전통 공예·갤러리·찻집 거리. 코스 마무리",
+          "existing_canonical_id": null,
+          "id_note": "인사동 지역 canonical 미포함 — 식당·갤러리 개별 장소만 일부 존재"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 4,
+        "linked": 0,
+        "unlinked_canonical_not_found": 4,
+        "new_place_candidates": 0
+      },
+      "booking_info": {
+        "reservation": "필수 (인터넷 사전 예약 또는 당일 현장 접수)",
+        "phone": "02-6925-0777",
+        "email": "walkingtours@sto.or.kr",
+        "fee": "무료",
+        "foreign_language": "영어·일본어·중국어 가이드 운영"
+      },
+      "source": {
+        "provider": "서울관광재단 (Seoul Tourism Organization, STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "course_id": "seoul-C-003",
+      "status": "FINAL",
+      "name_ko": "국립중앙박물관·이촌한강 여름 코스",
+      "name_en": "National Museum & Ichon Han River — Seoul Summer Course",
+      "theme": "여름·자연·문화·한강 피서",
+      "traveler_fit": "여름 방문자, 문화·자연 복합 선호, 가족, 더위를 피하고 싶은 여행자",
+      "recommended_reason": "VisitSeoul 서울리스트 픽스(Seoulites' Picks) 2026 여름 서울 공식 편집. 무료입장 국립중앙박물관 내부(냉방·한국 보물) → 야외 연못 공원 → 이촌한강공원(석양)의 반나절 여름 피서 코스. 한강 공원은 연중 개방, 입장 무료.",
+      "program_type": "VisitSeoul Seoulites' Picks 편집 코스 (가이드 없음, 자유여행)",
+      "duration": "반나절~하루 (4~6시간)",
+      "days": 0.5,
+      "difficulty": "평지·도보 (이촌역~한강공원 1.2km)",
+      "seasonality": "여름(6월~8월) 특화. 박물관은 연중 무료 운영",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "국립중앙박물관 야외 공원·연못",
+          "name_en": "National Museum of Korea — Outdoor Park & Pond",
+          "note": "그늘길·연못 수경. 이른 아침·늦은 오후 권장. 입장 무료",
+          "address": "서울 용산구 서빙고로 137",
+          "existing_canonical_id": null,
+          "id_note": "국립중앙박물관 canonical 미확인 (VisitSeoul API에 별도 포함 여부 미확인)"
+        },
+        {
+          "order": 2,
+          "name_ko": "국립중앙박물관 내부",
+          "name_en": "National Museum of Korea — Interior",
+          "note": "고려청자·신라금관·달항아리 등 한국 대표 유물. 무료입장. 수/토 야간 21:00까지",
+          "opening_hours": "월·화·목·금·일 09:30–17:30 / 수·토 09:30–21:00",
+          "admission": "무료",
+          "existing_canonical_id": null
+        },
+        {
+          "order": 3,
+          "name_ko": "이촌한강공원",
+          "name_en": "Ichon Hangang Park",
+          "note": "한강변 산책로·저녁노을 감상. 이촌역 4번 출구 1.2km. 연중 24시간 개방",
+          "address": "서울 용산구 이촌로72길 62",
+          "subway_access": "지하철 4호선 이촌역 4번 출구",
+          "existing_canonical_id": null,
+          "id_note": "이촌한강공원 별도 canonical 미확인. 한강(nature) canonical seoul-KOP015060 부분 연관"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 3,
+        "linked": 0,
+        "linked_partial": 1,
+        "note": "이촌한강공원은 seoul-KOP015060(한강, nature category) 부분 연관이나 exact match 아님",
+        "unlinked_canonical_not_found": 3,
+        "new_place_candidates": 0
+      },
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단 Seoulites' Picks",
+        "source_url": "https://english.visitseoul.net/editorspicks/2026-SummerInSeoul/ENNn721f2",
+        "as_of": "2026-08-21",
+        "review_by": "2026-11-01",
+        "freshness_note": "여름 시즌 editorial. 박물관 운영시간은 별도 재확인 권장"
+      }
+    }
+  ],
+
+  "reserve_courses": [
+    {
+      "course_id": "seoul-C-R01",
+      "status": "RESERVE",
+      "name_ko": "서울 도보관광 야간: 낙산성곽 한양의 한밤중",
+      "name_en": "Seoul Night Walking Tour: Midnight in Hanyang (Naksan City Wall)",
+      "theme": "성곽·야경·낭만",
+      "traveler_fit": "야간관광 선호, 커플, 사진 여행자, 도시 야경 관심",
+      "recommended_reason": "서울관광재단 STO 공식 야간 도보관광 코스. 낙산성곽 일대를 밤에 탐방. 서울을 '한국의 몽마르뜨르'로 소개하는 코스. 커플 및 사진 여행자에게 인기. 야간 운영 특수.",
+      "program_type": "STO 공식 야간 도보관광 (무료, 가이드, 예약 필요)",
+      "duration": "약 2시간",
+      "seasonality": "봄·가을 특히 인기 (야간 기온 고려)",
+      "reserve_reason": "야간 전용 코스로 특정 여행자에게 특화. FINAL 3개 코스와 시간대 중복 없이 보완적. 야간 운영 일정은 STO 웹사이트 재확인 필요.",
+      "booking_info": {
+        "phone": "02-6925-0777",
+        "email": "walkingtours@sto.or.kr",
+        "fee": "무료"
+      },
+      "source": {
+        "provider": "서울관광재단 (STO)",
+        "source_url": "https://english.visitseoul.net/walking-tour",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    }
+  ],
+
+  "canonical_id_confirmed": {
+    "seoul-KOPj1ro8q": "광화문광장 해치마당 (Haechi Madang) — C-001 stop 4",
+    "seoul-KOP015060": "한강 (nature category) — C-003 부분 연관"
+  },
+
+  "id_linkage_summary_total": {
+    "final_courses_total_stops": 11,
+    "exact_linked": 1,
+    "partial_linked": 1,
+    "unlinked_canonical_not_found": 9,
+    "new_place_candidates": 0,
+    "note": "서울 canonical(1837건)은 VisitSeoul API 기반. 경복궁·창덕궁·종묘 등 문화재청 관리 주요 유적지, 북촌한옥마을·인사동 등 지역 개념은 canonical에 미포함. STO 도보관광 집합지·주요 거점 대부분 null 처리 — 새 place 생성 없음."
+  }
+}

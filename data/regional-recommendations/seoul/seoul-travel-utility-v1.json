@@ -1,0 +1,359 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-SEOUL-V1",
+  "section": "travel_utility",
+  "generated_at": "2026-08-21",
+  "city": "seoul",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "공식 source(english.visitseoul.net/transportation, /airport-to-seoul, /Before-You-Go, /traveler-support)에서 확인된 정보만 수록. 요금·운영시간 등 변동 정보는 freshness 명시. 억지 채우기 없음.",
+
+  "utility_items": [
+    {
+      "utility_id": "seoul-U-001",
+      "category": "지하철",
+      "title": "서울 지하철 — 도심 주요 이동 수단",
+      "traveler_summary": "서울 지하철은 약 5:30~자정 운행하는 대중교통의 핵심. 모든 노선 역명이 한국어·영어·중국어 병기. T-money 카드 또는 1회권 사용. 환승 무료(30분 이내, 10km 이하). 외국인도 별도 등록 없이 T-money 카드 구매 후 즉시 사용 가능.",
+      "key_info": {
+        "operating_hours": "약 05:30 ~ 자정 (노선별 상이)",
+        "fare_adult_card": 1400,
+        "fare_adult_ticket": 1500,
+        "fare_teen_13to18_card": 800,
+        "fare_child_6to12": 500,
+        "unit": "KRW",
+        "transfer_policy": "무료 환승 (30분 이내, 10km 이하)",
+        "single_journey_deposit": "1회권 보증금 500원 (반환 가능)",
+        "multilingual_signs": "한국어·영어·중국어",
+        "fare_as_of": "2023-10-07"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/transportation",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "요금은 2023-10-07 기준 명시. 최신 요금은 서울교통공사(seoulmetro.co.kr) 확인 권장"
+      }
+    },
+    {
+      "utility_id": "seoul-U-002",
+      "category": "시내버스",
+      "title": "서울 시내버스 — 색상 구분 노선 체계",
+      "traveler_summary": "서울 버스는 색상별 역할 구분: 파란색(간선), 초록색(지선), 노란색(순환), 빨간색(광역). T-money 사용 시 100원 할인 및 버스↔지하철 환승 무료(30분 이내). 관광객은 파란색·노란색 버스가 주요 관광지 연결. 요금 550~3,000원 (버스 종류별 상이).",
+      "key_info": {
+        "colors": {
+          "blue": "간선버스 (주요 간선 노선)",
+          "green": "지선버스 (지역 순환)",
+          "yellow": "순환버스 (도심 순환)",
+          "red": "광역버스 (급행, 시외 방면)"
+        },
+        "fare_range_krw": "550~3,000 (버스 종류·거리별)",
+        "t_money_discount": 100,
+        "transfer_policy": "T-money 사용 시 버스↔지하철 무료 환승 (30분 이내 10km 이하)"
+      },
+      "locale_availability": ["ko", "en"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/transportation",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "seoul-U-003",
+      "category": "AREX / 공항→도심",
+      "title": "인천국제공항 → 서울 도심: AREX 공항철도",
+      "traveler_summary": "인천국제공항(ICN)에서 서울역까지 AREX 공항철도 2가지 옵션. ①직통(Express): 비정차, 약 40분, 9,500원 (배차 20~40분). ②일반(All-Stop): 전역 정차, 약 60분, 4,150~4,750원 (배차 5~10분, 05:30~자정). 김포공항(GMP)에서도 AREX 이용 가능.",
+      "key_info": {
+        "arex_express": {
+          "route": "인천공항T1/T2 → 서울역 (비정차)",
+          "duration_min": 40,
+          "fare_krw": 9500,
+          "interval_min": "20~40분",
+          "operating_hours": "공항→서울역 / 서울역→공항 (시간표 확인 권장)"
+        },
+        "arex_all_stop": {
+          "route": "인천공항T1/T2 → (전역 정차) → 서울역",
+          "duration_min": 60,
+          "fare_range_krw": "4,150~4,750",
+          "interval_min": "5~10분",
+          "operating_hours": "05:30 ~ 자정"
+        }
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/airport-to-seoul",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "요금 변동 가능. 최신 요금·시간표: korail.com 또는 arex.or.kr 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-004",
+      "category": "공항 리무진버스",
+      "title": "인천공항 → 서울 시내: 공항 리무진버스",
+      "traveler_summary": "인천공항에서 서울 각 지역(강남·홍대·잠실 등)으로 직접 연결하는 리무진버스. 36개 노선 운영. 소요 60~80분 (교통 상황 따라 편차). 요금 5,000~15,000원. 현금·T-money·신용카드 사용 가능. 가족 할인: 성인 3인 이상 동반 시 1인 무료(36개 노선).",
+      "key_info": {
+        "routes": 36,
+        "duration_min": "60~80 (교통 상황 따라 상이)",
+        "fare_range_krw": "5,000~15,000",
+        "payment": "현금, T-money, 신용카드",
+        "family_discount": "성인 3인 이상 동반 시 1인 무료 (36개 노선 적용)"
+      },
+      "locale_availability": ["ko", "en"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/airport-to-seoul",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "노선·요금 변동 가능. airport.co.kr에서 최신 정보 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-005",
+      "category": "교통카드 — T-money",
+      "title": "T-money 교통카드 — 서울 대중교통 기본 카드",
+      "traveler_summary": "서울 지하철·버스 통합 교통카드. 편의점(GS25·CU·세븐일레븐 등), 지하철역 자동판매기에서 구매. 카드 본체 3,000원 (환급 불가). 충전 후 지하철·버스·택시·편의점 결제 사용. 유효기간 없음. 외국인도 별도 등록 없이 즉시 사용 가능.",
+      "key_info": {
+        "card_cost_krw": 3000,
+        "refundable_card_cost": false,
+        "purchase_locations": ["편의점 (GS25, CU, 세븐일레븐)", "지하철역 자동판매기"],
+        "recharge_locations": ["편의점", "지하철역 자동판매기", "지하철역 충전기"],
+        "usable_on": ["지하철", "시내버스", "택시 일부", "편의점 결제"],
+        "expiry": "없음",
+        "balance_refund": "잔액 500원 이하 편의점 환급 / 그 이상은 수수료 공제 후 환급",
+        "foreign_eligibility": "외국인 등록 불필요"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/transportation",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "seoul-U-006",
+      "category": "교통카드 — T-money Mpass (외국인 관광객 대상)",
+      "title": "T-money Mpass — 외국인 관광객 교통 패스",
+      "traveler_summary": "외국인 방문자를 위한 T-money 기반 교통 정기권. 하루 최대 20회 탑승(지하철·버스). 1개월권 기준 15,000~64,500원 (5pm 이후 할인). 단기 방문자에게 T-money 일반 충전 대비 경제적일 수 있음. 서울역·인천공항 등에서 구매.",
+      "key_info": {
+        "max_daily_trips": 20,
+        "eligible": "외국인 관광객",
+        "duration": "1개월",
+        "price_range_krw": "15,000~64,500",
+        "discount_note": "오후 5시 이후 탑승 시 할인 적용",
+        "purchase_locations": ["서울역", "인천국제공항", "지정 편의점·역사"]
+      },
+      "locale_availability": ["ko", "en"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/transportation",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "요금·혜택 변동 가능. 최신 정보: tmoney.co.kr 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-007",
+      "category": "교통카드 — 기후동행카드 (Climate Card)",
+      "title": "기후동행카드 — 서울 무제한 대중교통 정기권",
+      "traveler_summary": "서울시에서 운영하는 월정액 무제한 교통 통합 정기권. 서울 내 지하철·버스(공항버스 제외) 무제한 탑승. 외국인 관광객도 일부 판매채널에서 구매 가능(여권 제출). 30일 기준 약 65,000원(기본형). 단기 여행보다 장기 체류자에게 경제적.",
+      "key_info": {
+        "coverage": "서울 내 지하철 전 노선 + 서울 시내버스 (공항버스·광역버스 제외)",
+        "duration": "30일 (기간 선택 가능)",
+        "price_approx_krw": 65000,
+        "foreign_eligibility": "외국인 구매 가능 (여권 지참 필요, 판매처 확인)",
+        "purchase": "서울 지하철역 무인발권기, 지정 판매처",
+        "note": "2024년 1월 서울시 도입. 관광 단기 여행자보다 1~4주 이상 체류자에 적합"
+      },
+      "locale_availability": ["ko"],
+      "source": {
+        "provider": "서울특별시 (Seoul Metropolitan Government)",
+        "source_url": "https://www.seoul.go.kr",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "가격·조건 변동 가능. 최신 정보: 서울시 공식 사이트 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-008",
+      "category": "택시",
+      "title": "서울 택시 — 일반·고급·국제관광택시",
+      "traveler_summary": "서울 택시 종류: ①일반택시(주황/흰색/회색, 기본요금 4,800원/1.6km), ②모범택시(검정+금색, 기본요금 7,000원/3km, 고급 서비스), ③국제관광택시(영어·중국어·일본어 기사, 예약제, intltaxi.co.kr), ④점보택시(최대 8인). 야간(23:00~04:00) 20% 할증. 카카오T 앱 이용 가능.",
+      "key_info": {
+        "regular_taxi": {
+          "base_fare_krw": 4800,
+          "base_distance_km": 1.6,
+          "night_surcharge": "23:00~04:00 20%"
+        },
+        "deluxe_taxi": {
+          "base_fare_krw": 7000,
+          "base_distance_km": 3.0,
+          "color": "검정(블랙) + 금색 줄"
+        },
+        "international_taxi": {
+          "languages": ["en", "zh-CN", "ja"],
+          "booking": "예약제",
+          "website": "https://www.intltaxi.co.kr"
+        },
+        "app": "카카오T (iOS/Android)"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/transportation",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "기본요금 변동 가능. 최신 요금: 서울시 택시물가정보시스템 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-009",
+      "category": "관광 패스 — Discover Seoul Pass",
+      "title": "다스서울패스 (Discover Seoul Pass) — 외국인 전용 관광 통합 패스",
+      "traveler_summary": "외국인 방문자 전용 서울 관광 통합 패스. 24/48/72시간 옵션. 주요 관광지 무료 입장(경복궁·창덕궁·덕수궁·국립중앙박물관·남산서울타워 등 30곳 이상) + 대중교통 무제한(지하철·버스). 인천공항·서울역·온라인에서 구매. 외국인(여권 소지자) 전용, 국내 거주자 제외.",
+      "key_info": {
+        "durations": ["24시간", "48시간", "72시간"],
+        "included_attractions_count": "30곳 이상 (내용 변동 가능)",
+        "transit": "구매 기간 내 지하철·버스 무제한",
+        "eligible": "외국 여권 소지자 (국내 거주자 제외)",
+        "purchase_locations": ["인천국제공항 공항관광재단 부스", "서울역", "온라인(공식 사이트)"],
+        "official_site": "https://discoverseoulpass.com",
+        "guide_download_en": "https://english.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1111&fileTy=ATTACH&fileNo=9",
+        "guide_download_ja": "https://japanese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1110&fileTy=ATTACH&fileNo=9",
+        "guide_download_zh": "https://chinese.visitseoul.net/comm/getFile?srvcId=GUIDEBOOK&parentSn=1082&fileTy=ATTACH&fileNo=9"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "서울관광재단 (STO) / discoverseoulpass.com",
+        "source_url": "https://english.visitseoul.net/map-guide-book",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "포함 관광지·요금 변동 가능. 최신 정보: discoverseoulpass.com 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-010",
+      "category": "관광안내소",
+      "title": "서울 관광안내소 — 다국어 방문자 지원",
+      "traveler_summary": "서울시내 주요 관광거점에 관광안내소 운영. KO/EN/JA/ZH-CN 다국어 안내 가능. 지도·가이드 무료 배포. 문의처: 서울관광재단 02-6925-0777 / staff@visitseoul.net (평일 09:00~18:00). 주요 위치: 광화문·인사동·명동·이태원·홍대·강남·공항 등.",
+      "key_info": {
+        "info_center_contact": {
+          "phone": "02-6925-0777",
+          "email": "staff@visitseoul.net",
+          "hours": "평일 09:00~18:00 KST"
+        },
+        "confirmed_centers": [
+          {"name": "광화문 관광안내소", "canonical_id": "seoul-KOP027225"},
+          {"name": "이태원 관광안내소(지하)", "canonical_id": "seoul-KOP027218"},
+          {"name": "북촌마을 관광안내소", "canonical_id": "seoul-KOP027189"}
+        ],
+        "languages": ["ko", "en", "ja", "zh-CN"],
+        "note": "안내소별 운영시간·지원 언어 상이. 방문 전 공식 사이트 확인 권장"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/traveler-support",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "seoul-U-011",
+      "category": "관광 핫라인",
+      "title": "관광 안내 전화 1330",
+      "traveler_summary": "한국관광공사 전국 다국어 관광안내 콜센터. KO/EN/JA/ZH-CN 24시간 운영. 국내 전화: 1330. 해외 발신: +82-2-1330. 교통·숙박·관광지·긴급상황 안내.",
+      "key_info": {
+        "hotline_domestic": "1330",
+        "hotline_international": "+82-2-1330",
+        "languages": ["ko", "en", "ja", "zh-CN"],
+        "operating_hours": "24시간",
+        "operator": "한국관광공사 (KTO)"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "한국관광공사 / VisitSeoul",
+        "source_url": "https://english.visitseoul.net/traveler-support",
+        "as_of": "2026-08-21",
+        "review_by": "2027-06-01"
+      }
+    },
+    {
+      "utility_id": "seoul-U-012",
+      "category": "면세·세금환급 (Tax Refund)",
+      "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+      "traveler_summary": "외국인 관광객은 가맹점에서 30,000원 이상 구매 시 부가가치세(10%) 환급 가능. 즉시환급(Immediate Refund, 가맹점 현장)과 사후환급(공항 출국 시) 두 가지 방식. 출국 3개월 이내 구매 영수증·여권 지참. 인천공항 세금환급 카운터에서 현금·카드 환급.",
+      "key_info": {
+        "minimum_purchase_krw": 30000,
+        "refund_rate": "부가가치세(VAT) 10% (수수료 제외)",
+        "methods": {
+          "immediate_refund": "가맹 매장 현장 즉시 환급 (Tax Free 마크 확인)",
+          "post_refund": "공항 출국장 세금환급 카운터"
+        },
+        "deadline": "구매일로부터 3개월 이내 출국",
+        "documents": "영수증, 여권, 세금환급신청서",
+        "airport_counters": "인천공항 1·2 터미널 출국장 세금환급 카운터"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "VisitSeoul / 서울관광재단",
+        "source_url": "https://english.visitseoul.net/Before-You-Go",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01",
+        "freshness_note": "세율·조건 변동 가능. 최신 정보: globalblue.com 또는 기획재정부 확인"
+      }
+    },
+    {
+      "utility_id": "seoul-U-013",
+      "category": "Visit Seoul 공식 앱",
+      "title": "i-Tour Seoul — 서울 공식 관광 앱",
+      "traveler_summary": "서울관광재단 공식 앱. 명소·음식점·쇼핑·숙박·교통 정보 포함. KO/EN/JA/ZH-CN 지원. iOS·Android 무료 다운로드.",
+      "key_info": {
+        "app_name": "i-Tour Seoul",
+        "app_store": "https://apps.apple.com/kr/app/i-tour-seoul/id327568019",
+        "google_play": "https://play.google.com/store/apps/details?id=kr.co.seoulbest.application",
+        "languages": ["ko", "en", "ja", "zh-CN"],
+        "fee": "무료"
+      },
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "source": {
+        "provider": "서울관광재단 (STO)",
+        "source_url": "https://english.visitseoul.net/",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    }
+  ],
+
+  "categories_collected": [
+    "지하철",
+    "시내버스",
+    "AREX / 공항철도",
+    "공항 리무진버스",
+    "T-money 교통카드",
+    "T-money Mpass (외국인 관광객)",
+    "기후동행카드 (Climate Card)",
+    "택시 (일반·모범·국제관광)",
+    "Discover Seoul Pass",
+    "관광안내소",
+    "관광 핫라인 1330",
+    "면세·세금환급 (Tax Refund)",
+    "Visit Seoul 공식 앱 (i-Tour Seoul)"
+  ],
+
+  "utility_locale_coverage": {
+    "ko": "13/13",
+    "en": "12/13 (기후동행카드 KO 전용)",
+    "ja": "7/13 (지하철·AREX·T-money·택시·국제택시·Discover Seoul Pass·관광안내소·1330)",
+    "zh-CN": "7/13 (동일)"
+  },
+
+  "categories_not_found_or_insufficient_official_source": [
+    "짐보관 서비스 (공식 포털에 구체적 위치·요금 안내 없음 — 코인 로커: 지하철역 내 설치, 스마트로커 등 사설 서비스 이용)",
+    "로밍/SIM 카드 (공식 포털 미제공 — 공항 내 통신사 로밍센터 이용)",
+    "환전 (공식 포털 미제공 — 공항·시내 환전소·은행 이용)",
+    "Muslim-friendly (별도 공식 안내 없음 — 이태원 이슬람 사원 및 할랄 식당 별도 검색 권장)",
+    "공공 Wi-Fi (서울시 공공 Wi-Fi 존재하나 공식 포털 상세 안내 미제공)"
+  ]
+}
