@@ -180,7 +180,11 @@
     "styleRomantic": "ロマンチック",
     "styleFamily": "家族",
     "styleSolo": "ひとり",
-    "styleExplorer": "探検家"
+    "styleExplorer": "探検家",
+    "sectionStories": "ストーリー",
+    "sectionStoriesHint": "終わった旅 — 残した場所と瞬間でつづるストーリー",
+    "storyChip": "ストーリー",
+    "openStory": "ストーリーを見る"
   },
   "blogAffiliate": {
     "card": {
@@ -413,7 +417,13 @@
     "errGenerateFailed": "旅程を作成できませんでした: {message}",
     "errLoadSavedFailed": "保存された旅程を読み込めませんでした: {message}",
     "checkinAt": "チェックイン {time}",
-    "tripTitleFallback": "マイトリップ"
+    "tripTitleFallback": "マイトリップ",
+    "viewSwitchLabel": "表示",
+    "viewItinerary": "旅程",
+    "viewStory": "ストーリー",
+    "storyPastHint": "この旅のストーリー",
+    "storyLiveHint": "ここまでのストーリー — 旅が進むほど育ちます",
+    "storyEmptyLive": "最初の場所に着くとストーリーが始まります。"
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -536,9 +546,9 @@
     "tooLong": "2000文字の上限を{n}文字超えています",
     "saveFailed": "保存できませんでした。元のメモはそのままです。",
     "captureTitle": "瞬間を記録",
-    "memoriesTitle": "わたしの旅の記憶",
+    "memoriesTitle": "ストーリー",
     "memoriesSubtitle": "偶然見つけた場所、出会った人、風景… この旅の本当の物語",
-    "addMemory": "記憶を追加",
+    "addMemory": "瞬間を残す",
     "emptyTitle": "まだ記録された瞬間がありません",
     "emptyLine1": "隠れた名所、風景、出会った人…",
     "emptyLine2": "この旅の本当の物語を残しましょう",

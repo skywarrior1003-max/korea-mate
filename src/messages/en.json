@@ -180,7 +180,11 @@
     "styleRomantic": "Romantic",
     "styleFamily": "Family",
     "styleSolo": "Solo",
-    "styleExplorer": "Explorer"
+    "styleExplorer": "Explorer",
+    "sectionStories": "Stories",
+    "sectionStoriesHint": "Finished trips, told through the places and moments you kept",
+    "storyChip": "Story",
+    "openStory": "Open Story"
   },
   "blogAffiliate": {
     "card": {
@@ -413,7 +417,13 @@
     "errGenerateFailed": "Failed to generate itinerary: {message}",
     "errLoadSavedFailed": "Failed to load saved itinerary: {message}",
     "checkinAt": "Check-in {time}",
-    "tripTitleFallback": "My Trip"
+    "tripTitleFallback": "My Trip",
+    "viewSwitchLabel": "View",
+    "viewItinerary": "Itinerary",
+    "viewStory": "Story",
+    "storyPastHint": "Your Story of this trip",
+    "storyLiveHint": "Your Story so far — it grows as the trip unfolds",
+    "storyEmptyLive": "Your Story begins with your first stop."
   },
   "planner": {
     "dayOfTotal": "Day {n} / {total}",
@@ -536,9 +546,9 @@
     "tooLong": "{n} over the 2000-character limit",
     "saveFailed": "Couldn't save. Your original memo is unchanged.",
     "captureTitle": "Capture Moment",
-    "memoriesTitle": "My Travel Memories",
+    "memoriesTitle": "Story",
     "memoriesSubtitle": "Hidden finds, people you met, scenery… the real story of this trip",
-    "addMemory": "Add a memory",
+    "addMemory": "Add a moment",
     "emptyTitle": "No moments recorded yet",
     "emptyLine1": "Hidden gems, scenery, people you met…",
     "emptyLine2": "Leave the real story of this trip",

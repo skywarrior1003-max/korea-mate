@@ -180,7 +180,11 @@
     "styleRomantic": "浪漫",
     "styleFamily": "家庭",
     "styleSolo": "一个人",
-    "styleExplorer": "探索者"
+    "styleExplorer": "探索者",
+    "sectionStories": "故事",
+    "sectionStoriesHint": "已结束的旅程 — 由你留下的地点与瞬间串成的故事",
+    "storyChip": "故事",
+    "openStory": "查看故事"
   },
   "blogAffiliate": {
     "card": {
@@ -413,7 +417,13 @@
     "errGenerateFailed": "生成行程失败：{message}",
     "errLoadSavedFailed": "加载已保存的行程失败：{message}",
     "checkinAt": "入住 {time}",
-    "tripTitleFallback": "我的行程"
+    "tripTitleFallback": "我的行程",
+    "viewSwitchLabel": "视图",
+    "viewItinerary": "行程",
+    "viewStory": "故事",
+    "storyPastHint": "这趟旅程的故事",
+    "storyLiveHint": "到目前为止的故事 — 随旅程展开而增长",
+    "storyEmptyLive": "到达第一个地点后，故事就开始了。"
   },
   "planner": {
     "dayOfTotal": "第{n}天 / 共{total}天",
@@ -536,9 +546,9 @@
     "tooLong": "超出2000字限制{n}字",
     "saveFailed": "保存失败，原备注未更改。",
     "captureTitle": "记录瞬间",
-    "memoriesTitle": "我的旅行记忆",
+    "memoriesTitle": "故事",
     "memoriesSubtitle": "偶然发现的地方、遇到的人、风景… 这趟旅程真正的故事",
-    "addMemory": "添加记忆",
+    "addMemory": "记录瞬间",
     "emptyTitle": "还没有记录任何瞬间",
     "emptyLine1": "隐藏景点、风景、遇到的人…",
     "emptyLine2": "留下这趟旅程真正的故事",

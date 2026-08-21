@@ -1,6 +1,12 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+// TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
+import StoryJournal from "@/components/story/StoryJournal";
+import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
+import type { StoryMemory } from "@/components/story/story-types";
+import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
+import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useTranslations, useLocale } from "next-intl";
@@ -1253,6 +1259,46 @@ function ItineraryResult() {
   const [affiliateMap,  setAffiliateMap]  = useState<AffiliateDisplayMap>({});
   // ── TASK-022: Trip Moments ────────────────────────────────────────────────────
   const [moments,         setMoments]         = useState<TripMoment[]>([]);
+
+  // ── TASK-STORY-LIVE-BASELINE-V1: 같은 여행의 두 view ──────────────────────
+  // `일정 | Story` 는 route 가 아니라 이 화면 안의 view 다. 끝난 여행은 Story 가
+  // 기본 얼굴이고, 진행 중·예정 여행은 일정이 기본이다. `?view=story` 로 바로
+  // Story 를 열 수 있다(/my-trips 카드의 Story 진입이 이 값을 쓴다).
+  const [tripView, setTripView] = useState<"itinerary" | "story">(
+    () => (searchParams.get("view") === "story" ? "story" : "itinerary"),
+  );
+  const [tripViewDefaulted, setTripViewDefaulted] = useState(false);
+  const [storyFocus, setStoryFocus] = useState<{ m: StoryMemory; i: number } | null>(null);
+  // 오늘 — /my-trips 의 archive 판정과 같은 식으로 센다.
+  const todayISO   = new Date().toISOString().slice(0, 10);
+  const isPastTrip = Boolean(itinId) && isPastTripByDate(endDate, todayISO);
+  useEffect(() => {
+    if (tripViewDefaulted || !itinId || !endDate) return;
+    setTripViewDefaulted(true);
+    if (isPastTrip && searchParams.get("view") !== "itinerary") setTripView("story");
+  }, [tripViewDefaulted, itinId, endDate, isPastTrip, searchParams]);
+  // 끝난 여행의 일정은 읽기 전용 — 편집 캔버스로 들어가지 않는다.
+  useEffect(() => {
+    if (isPastTrip && viewMode === "compact") setViewMode("full");
+  }, [isPastTrip, viewMode]);
+  // Story 의 뼈대는 일정이다. 사진이 없어도 지난 장소가 Story 를 이룬다.
+  // 오늘 Day 안에서는 지금 시각(현지)을 지난 장소만 들어간다.
+  const storyDays = (() => {
+    if (tripView !== "story") return [];
+    const now = new Date();
+    const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+    return buildPrivateStoryDays(
+      days.map(d => ({
+        dayNumber: d.dayNumber,
+        date:      d.date,
+        places:    d.places.map(p => ({
+          name: p.name, time: p.time, place_id: p.place_id, source: p.source, image: p.image,
+        })),
+      })),
+      moments,
+      { todayISO, nowHHMM, isPast: isPastTrip },
+    );
+  })();
   const [captureOpen,     setCaptureOpen]     = useState(false);
   const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
   const [storyExportOpen, setStoryExportOpen] = useState(false);
@@ -2496,8 +2542,8 @@ function ItineraryResult() {
             ← {t("backHome")}
           </Link>
 
-          {/* Compact 편집 캔버스 진입 — 비공유 or 본인 일정 */}
-          {(!shareId || isOwner) && (
+          {/* Compact 편집 캔버스 진입 — 비공유 or 본인 일정. 끝난 여행은 읽기 전용 */}
+          {(!shareId || isOwner) && !isPastTrip && (
             <button
               onClick={() => { setViewMode("compact"); setEditDay(0); }}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-black text-white rounded-xl transition-all active:scale-95"
@@ -2507,7 +2553,8 @@ function ItineraryResult() {
             </button>
           )}
 
-          {/* Compact / Full View 토글 */}
+          {/* Compact / Full View 토글 — 끝난 여행은 읽기 전용이라 숨긴다 */}
+          {!isPastTrip && (
           <div className="flex gap-1.5 p-1 border border-line rounded-xl bg-surface-dim">
             {(["full", "compact"] as const).map((mode) => (
               <button
@@ -2523,9 +2570,65 @@ function ItineraryResult() {
               </button>
             ))}
           </div>
+          )}
         </div>
       </div>
 
+      {/* ── 일정 | Story — 같은 여행의 두 view (TASK-STORY-LIVE-BASELINE-V1) ── */}
+      {(!shareId || isOwner) && itinId && (
+        <div
+          role="tablist"
+          aria-label={t("viewSwitchLabel")}
+          className="flex gap-1.5 p-1 border border-line rounded-xl bg-surface-dim mb-5 max-w-xs mx-auto"
+        >
+          {(["itinerary", "story"] as const).map(v => (
+            <button
+              key={v}
+              type="button"
+              role="tab"
+              aria-selected={tripView === v}
+              onClick={() => setTripView(v)}
+              className={`flex-1 px-4 py-2 rounded-lg text-sm font-black transition-all ${
+                tripView === v ? "bg-ink text-surface-dim shadow-sm" : "text-sub hover:text-ink"
+              }`}
+            >
+              {v === "itinerary" ? t("viewItinerary") : t("viewStory")}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {tripView === "story" && (
+        <section
+          className="mb-12 rounded-3xl overflow-hidden border border-line"
+          style={{ backgroundColor: STORY_PAGE_BG }}
+        >
+          <div className="flex items-center justify-between gap-3 px-5 pt-6">
+            <p className="text-xs font-bold text-sub">
+              {isPastTrip ? t("storyPastHint") : t("storyLiveHint")}
+            </p>
+            {(!shareId || isOwner) && (
+              <button
+                type="button"
+                onClick={() => setCaptureOpen(true)}
+                className="shrink-0 text-xs font-black px-3 py-2 rounded-lg border border-line bg-white text-ink"
+              >
+                + {tMemo("addMemory")}
+              </button>
+            )}
+          </div>
+          {storyDays.length > 0 ? (
+            <StoryJournal days={storyDays} onOpenPhoto={(m, i) => setStoryFocus({ m, i })} />
+          ) : (
+            /* 진행 중인데 아직 지난 장소가 없다. 미래 장소를 미리 넣지 않는다. */
+            <p className="px-6 py-16 text-center text-sm text-sub font-medium">{t("storyEmptyLive")}</p>
+          )}
+        </section>
+      )}
+
+      {/* 일정 본문은 Story 를 볼 때도 언마운트하지 않고 감춘다 — 지도·Day 선택·
+          편집 상태가 그대로 남아 돌아오면 보던 자리부터 이어진다. */}
+      <div className={tripView === "itinerary" ? undefined : "hidden"} aria-hidden={tripView !== "itinerary"}>
       <p className="text-center text-sm text-sub font-bold mb-4 bg-surface-dim/40 rounded-xl py-2.5">
         {t("hintTapCard")}
       </p>
@@ -2737,7 +2840,7 @@ function ItineraryResult() {
           })()}
 
           {/* My Places (user_spots) — PHASE 1 */}
-          {(!shareId || isOwner) && (
+          {(!shareId || isOwner) && !isPastTrip && (
             <UserSpotsPanel
               city={city}
               selectedDayIndex={editDay}
@@ -2795,7 +2898,7 @@ function ItineraryResult() {
               city={city}
               selectedDay={Math.min(mapDay, days.length - 1)}
               onSelectDay={(i) => { setMapDay(i); setPlannerDay(i + 1); }}
-              onAddToDay={(!shareId || isOwner) ? addCitySpotToDay : undefined}
+              onAddToDay={(!shareId || isOwner) && !isPastTrip ? addCitySpotToDay : undefined}
               showDayTabs={false}
             />
           )}
@@ -3122,6 +3225,12 @@ function ItineraryResult() {
           onSetPublic={(!shareId || isOwner) ? handleSetMomentPublic : undefined}
         />
       </div>
+      </div>
+
+      {/* Story 의 사진 확대 — 공개 Story 와 같은 Focus. 상호작용은 바꾸지 않는다 */}
+      {storyFocus && (
+        <StoryMemoryFocus memory={storyFocus.m} startIndex={storyFocus.i} onClose={() => setStoryFocus(null)} />
+      )}
 
       <AdBanner />
 
@@ -3189,7 +3298,7 @@ function ItineraryResult() {
       )}
 
       {/* Day 완주 축하 → Add a memory (완료한 day 를 기본 선택) */}
-      {dayDone !== null && (!shareId || isOwner) && (
+      {dayDone !== null && (!shareId || isOwner) && !isPastTrip && (
         <DayCompleteToast
           dayNumber={dayDone}
           onAddMemory={() => { setCaptureDay(dayDone); closeDayDone(); setCaptureOpen(true); }}

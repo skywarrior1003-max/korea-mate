@@ -210,10 +210,12 @@ export default function MyTripsPage() {
       hint: t("sectionUpcomingHint"),
       trips: trips.filter(t => !t.endDate || t.endDate >= today),
     },
+    // 끝난 여행은 Story 다 — 같은 여행을 다른 목록에 한 번 더 두지 않는다.
+    // 카드를 누르면 같은 /itinerary?id 가 열리고, 거기서 Story 가 기본 얼굴이다.
     {
-      key: "archive",
-      title: t("sectionArchive"),
-      hint: t("sectionArchiveHint"),
+      key: "stories",
+      title: t("sectionStories"),
+      hint: t("sectionStoriesHint"),
       trips: trips.filter(t => t.endDate && t.endDate < today),
     },
   ];
@@ -405,16 +407,16 @@ export default function MyTripsPage() {
                     <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
                       👤 {t("pax", { n: trip.travelers })}
                     </span>
-                    {/* Memory 진입 — 개수는 적지 않는다. 이 기기가 본 로컬 캐시만
-                        세는 값이라 "3 memories"라고 쓰면 다른 기기에서 남긴 기록이
-                        없는 것처럼 읽힌다. Memory 는 같은 Trip 안에 있으므로 별도
-                        화면이 아니라 그 Trip 의 Memory 영역으로 보낸다. */}
+                    {/* Story 진입 — 개수는 적지 않는다. 이 기기가 본 로컬 캐시만
+                        세는 값이라 "3 photos"라고 쓰면 다른 기기에서 남긴 기록이
+                        없는 것처럼 읽힌다. Story 는 같은 Trip 의 한 view 이므로 별도
+                        화면이 아니라 그 Trip 을 Story view 로 연다. */}
                     <Link
-                      href={`/itinerary?id=${trip.id}#memories`}
+                      href={`/itinerary?id=${trip.id}&view=story`}
                       className="text-[10px] font-black px-2.5 py-1 rounded-md text-white transition-opacity hover:opacity-85"
                       style={{ backgroundColor: "#1a1a2e" }}
                     >
-                      📸 {tHome("summaryMemories")}
+                      {t("storyChip")}
                     </Link>
                     {/* 원작자 성과 — 실측 누적값만. 둘 다 0이면 미노출 */}
                     {trip.copyCount > 0 && (
@@ -448,7 +450,7 @@ export default function MyTripsPage() {
                       className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
                       style={{ backgroundColor: "#191C21" }}
                     >
-                      {t("openItinerary")} →
+                      {section.key === "stories" ? t("openStory") : t("openItinerary")} →
                     </Link>
 
                     {/* 공유 버튼이 없는 비공개 일정에서는 휴지통만 남는다 —

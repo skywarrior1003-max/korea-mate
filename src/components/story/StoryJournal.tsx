@@ -101,6 +101,16 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
         />
       )}
 
+      {/* 사진이 없는 장소. 장소 이름은 첫 사진 위 칩에 얹히는데 사진이 없으면
+          그 칩도 없어 항목이 통째로 보이지 않았다. 소유자 Story 는 일정의
+          장소를 사진 없이도 골격으로 보여 주므로 이름 한 줄은 있어야 한다.
+          새 갤러리를 그리지 않고 같은 글꼴 토큰으로 한 줄만 둔다. */}
+      {photos.length === 0 && memory.placeName && (
+        <p style={{ ...TITLE_MD, color: ON_SURFACE, paddingLeft: 16, paddingRight: 16 }}>
+          {memory.placeName}
+        </p>
+      )}
+
       {secondary.length > 0 && (
         <div className="flex" style={{ gap: GUTTER, marginBottom: GUTTER }}>
           {secondary.map((p, i) => (
