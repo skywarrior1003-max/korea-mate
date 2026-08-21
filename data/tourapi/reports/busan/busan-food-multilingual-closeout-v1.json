@@ -1,7 +1,51 @@
 {
-  "task_id": "TASK-BUSAN-FOOD-6260000-MULTILINGUAL-V1",
+  "task_id": "TASK-BUSAN-FOOD-MULTILINGUAL-RECONCILIATION-V2",
   "generated_at": "2026-08-21",
+  "sha_before": "f161426b0b397deb9e3957022479a3cb176c1ab2",
   "food_universe": 194,
+  "v1_matched_before": 84,
+  "unresolved_before": 110,
+  "reconciliation": {
+    "new_matches_confirmed": 33,
+    "address_exact_new": 16,
+    "title_address_new": 10,
+    "duplicate_phone_resolved": 7
+  },
+  "matching_final": {
+    "MATCHED_AFTER": 117,
+    "MATCHED_AFTER_PCT": 60.3,
+    "AMBIGUOUS_AFTER": 1,
+    "SOURCE_NO_MATCH_AFTER": 76,
+    "CANONICAL_UNRESOLVED": 77
+  },
+  "locale_coverage": {
+    "en": {
+      "CANONICAL_TO_KR_MATCHED": 117,
+      "KR_TO_LOCALE_UC_SEQ_DIRECT": 117,
+      "EN_OFFICIAL_LINKED": 117,
+      "SOURCE_NO_LOCALE": 0,
+      "REQUIRED_CORE_READY": 117,
+      "REQUIRED_CORE_READY_PCT": 60.3
+    },
+    "ja": {
+      "CANONICAL_TO_KR_MATCHED": 117,
+      "KR_TO_LOCALE_UC_SEQ_DIRECT": 117,
+      "JA_OFFICIAL_LINKED": 117,
+      "SOURCE_NO_LOCALE": 0,
+      "REQUIRED_CORE_READY": 117,
+      "REQUIRED_CORE_READY_PCT": 60.3
+    },
+    "zh-CN": {
+      "CANONICAL_TO_KR_MATCHED": 117,
+      "KR_TO_LOCALE_UC_SEQ_DIRECT": 106,
+      "ZH_CN_OFFICIAL_LINKED": 106,
+      "SOURCE_NO_LOCALE": 11,
+      "REQUIRED_CORE_READY": 106,
+      "REQUIRED_CORE_READY_PCT": 54.6
+    }
+  },
+  "gap_arithmetic_valid": true,
+  "gap_note": "MATCHED + SOURCE_NO_LOCALE + CANONICAL_UNRESOLVED = 194 per locale",
   "source_api": {
     "base": "https://apis.data.go.kr/6260000/FoodService",
     "endpoints": {
@@ -10,63 +54,8 @@
       "ja": "getFoodJa",
       "zh-CN": "getFoodZhs"
     },
-    "format": "XML (JSON not supported)",
-    "stable_id_field": "UC_SEQ"
-  },
-  "source_record_counts": {
-    "KR": 437,
-    "EN": 436,
-    "JA": 438,
-    "ZHS": 338
-  },
-  "uc_seq_locale_stable": "YES",
-  "uc_seq_canary_verified": "5 records (UC_SEQ=70,77,94,95,102) cross-verified EN/JA",
-  "matching": {
-    "MATCHED_CONFIRMED": 84,
-    "AMBIGUOUS_MAPPING": 21,
-    "NO_MATCH": 89,
-    "match_methods": {
-      "PHONE_exact": 78,
-      "PHONE_DUP_COORD_NAME2": 4,
-      "COORD_NAME2": 2
-    }
-  },
-  "no_match_analysis": {
-    "virtual_0507": 37,
-    "voip_070": 5,
-    "landline_not_in_6260000": 40,
-    "no_phone": 2,
-    "other_mobile": 5
-  },
-  "enrichment": {
-    "en": {
-      "canonical_linked": 84,
-      "title_present": 84,
-      "description_present": 84,
-      "required_core_ready": 84,
-      "coverage_pct": 43.3,
-      "existing_ai_action": "PRESERVE_SEPARATE"
-    },
-    "ja": {
-      "canonical_linked": 84,
-      "title_present": 84,
-      "description_present": 84,
-      "required_core_ready": 84,
-      "coverage_pct": 43.3
-    },
-    "zh-CN": {
-      "canonical_linked": 77,
-      "title_present": 77,
-      "description_present": 77,
-      "required_core_ready": 77,
-      "coverage_pct": 39.7,
-      "note": "338/437 records in ZHS source (77.5%); 7 matched records not in ZHS subset"
-    }
-  },
-  "rights": {
-    "status": "REUSE_ALLOWED",
-    "note": "부산광역시 FoodService 공공데이터포털 표준라이선스 (apis.data.go.kr/6260000)",
-    "recommended_action": "Verify 공공데이터포털 이용약관 before production use"
+    "stable_id": "UC_SEQ",
+    "uc_seq_locale_stable": "YES"
   },
   "safety": {
     "canonical_changed": 0,
@@ -74,8 +63,10 @@
     "false_match": 0,
     "ai_translation_used": false,
     "google_translate_used": false,
+    "translation_used": false,
     "existing_ai_en_preserved": true
   },
+  "description_reuse_allowed": "YES",
   "task_result": "PASS",
   "safe_to_close_busan_food_multilingual": "YES",
   "next_recommended_task": "TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1"
