@@ -69,5 +69,30 @@
   "description_reuse_allowed": "YES",
   "task_result": "PASS",
   "safe_to_close_busan_food_multilingual": "YES",
-  "next_recommended_task": "TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1"
+  "next_recommended_task": "TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1",
+  "task": "TASK-BUSAN-FOOD-HISTORICAL-LINEAGE-RECONCILIATION-V3",
+  "v3_completed_at": "2026-08-21",
+  "sha_before_v3": "f161426b0b397deb9e3957022479a3cb176c1ab2",
+  "v3_historical_lineage": {
+    "traces_checked": 6,
+    "traces_rejected_coord_threshold_500m": 6,
+    "title_coord_matched": 1,
+    "method": "EXACT_TITLE+COORD_296m",
+    "new_match": "busan-G-00165 (평양집) UC_SEQ=1281"
+  },
+  "matched": 118,
+  "matched_en": 118,
+  "matched_ja": 118,
+  "matched_zh_cn": 107,
+  "ambiguous": 1,
+  "no_match": 75,
+  "source_no_locale_zh": 11,
+  "coverage_en": "118/194 (60.8%)",
+  "coverage_ja": "118/194 (60.8%)",
+  "coverage_zh_cn": "107/194 (55.2%)",
+  "required_core_ready_en": 118,
+  "required_core_ready_ja": 118,
+  "required_core_ready_zh_cn": 107,
+  "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES",
+  "SAFE_TO_CLOSE_REASON": "V3 historical lineage complete. 6 historical traces checked, all rejected coord>500m. 1 EXACT_TITLE+COORD match (평양집 296m). 75 NO_MATCH are genuinely not in 6260000 FoodService. NEXT=TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1"
 }
