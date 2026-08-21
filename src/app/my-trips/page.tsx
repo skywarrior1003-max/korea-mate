@@ -1,123 +1,88 @@
 "use client";
 
-// gokoreamate — My Trips Hub
-// TASK-023: premium trip management hub with moments count + personality badge
+// gokoreamate — Trips (My Trips) 목록
+//
+// TASK-MY-TRIPS-FINAL-UI-V1: 화면은 오너 최종 승인 시안
+// `stitch_gokoreamate_trips/my_trips_final` 을 그대로 따른다.
+//
+//   My Trips (headline, serif)
+//   TRAVELING NOW  — 진행 중인 여행 하나를 큰 사진 카드로 (날짜·도시 / 제목 / Today · 장소)
+//   UPCOMING       — 예정 여행을 썸네일 한 줄로 반복
+//   + New trip     — 점선 (기존 플래너 /#planner 로)
+//   Past trips live in Story → — 지난 여행은 목록에 큰 카드로 반복하지 않는다.
+//                   한 줄을 누르면 같은 줄 문법으로 펼쳐지고, 각 줄은 그 여행의 Story
+//                   (`/itinerary?id=…&view=story`) 로 간다 — Story 진입 계약 보존.
+//
+// 바뀌지 않은 것: 데이터(/api/itineraries, device 소유), lifecycle 은 실제 날짜 하나로만
+// 가른다(trips-lifecycle.ts), My Trip 진입(/itinerary?id=), 삭제(서버 삭제 뒤 목록에서
+// 제거 + 이 여행의 로컬 캐시만 정리). 공개/비공개 전환과 공유 링크 복사는 My Trip
+// 화면에 그대로 있다 — 목록 시안에는 없어 여기서는 그리지 않는다.
+//
+// 만들지 않는 것: 가짜 현재 위치(GPS 없음 — "Today · 장소"는 일정 시간으로만), 통계·
+// 배지·emoji, 없는 도시 사진을 다른 도시 사진으로 메우기.
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
-import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import {
   apiFetchItinerariesByDevice,
   apiDeleteItinerary,
-  apiSetPublic,
+  apiFetchItinerary,
 } from "@/lib/itinerary-api";
 import type { ItineraryRow } from "@/lib/supabase";
 import { getDeviceId } from "@/lib/deviceId";
 import { visitedStorageKey } from "@/lib/visited";
 import { cityVisual } from "@/lib/city-visual";
-
-// ── 도시 대표 이미지 ───────────────────────────────────────────────────────────
-// 이 화면은 자기 맵을 들지 않는다. 예전에 여기 있던 원격 사진 매핑은 원본이
-// 바뀌어도 알 길이 없었고, 실제로 부산 카드에 스마트폰 사진이, 서울 카드에
-// 일본 아사쿠사 사진이 나오고 있었다. 도시 사진은 `city-visual.ts` 한 곳에서만
-// 정한다 — 대표 비주얼이 없는 도시에 다른 도시 사진을 끼워 넣지 않는 규칙도
-// 그 resolver 가 이미 갖고 있다.
-
-// ── 여행 퍼스낼리티 배지 ─────────────────────────────────────────────────────
-// travel_style 원본값은 Solo|Couple|Family|Group 넷뿐이다(플래너가 그 넷만
-// 만든다). food·adventure·culture 분기는 어떤 값으로도 닿지 않아 라벨을
-// 번역하지 않고 그대로 둔다 — 살아 있는 넷만 messages 를 탄다.
-function getPersonality(style: string): { emoji: string; labelKey: string; color: string } {
-  const s = style.toLowerCase();
-  if (s.includes("food"))      return { emoji: "🍜", labelKey: "",              color: "#FF4A2D" };
-  if (s.includes("adventure")) return { emoji: "⚡", labelKey: "",              color: "#dc2626" };
-  if (s.includes("couple"))    return { emoji: "💫", labelKey: "styleRomantic", color: "#db2777" };
-  if (s.includes("family"))    return { emoji: "👨‍👩‍👧", labelKey: "styleFamily",   color: "#16a34a" };
-  if (s.includes("culture"))   return { emoji: "🏛️", labelKey: "",              color: "#7c3aed" };
-  if (s.includes("solo"))      return { emoji: "🎒", labelKey: "styleSolo",     color: "#0ea5e9" };
-  return                              { emoji: "✨", labelKey: "styleExplorer", color: "#FF4A2D" };
-}
-
-// ── 날짜 유틸 ─────────────────────────────────────────────────────────────────
-// 문장을 여기서 만들지 않는다. 어순도 단위도 언어마다 다르고, 30일이 넘으면
-// 날짜 표기 자체가 달라진다(en-US 고정이었다). 종류와 값만 돌려주고 문장은
-// 화면이 만든다.
-type Ago =
-  | { kind: "now" }
-  | { kind: "min" | "hour" | "day"; n: number }
-  | { kind: "date"; iso: string };
-function timeAgo(iso: string): Ago {
-  const diff = Date.now() - new Date(iso).getTime();
-  const m = Math.floor(diff / 60000);
-  if (m < 1)  return { kind: "now" };
-  if (m < 60) return { kind: "min", n: m };
-  const h = Math.floor(m / 60);
-  if (h < 24) return { kind: "hour", n: h };
-  const d = Math.floor(h / 24);
-  if (d < 30) return { kind: "day", n: d };
-  return { kind: "date", iso };
-}
-
-function dayCount(start: string, end: string): number {
-  const s = new Date(start), e = new Date(end);
-  return Math.max(1, Math.round((e.getTime() - s.getTime()) / 86400000) + 1);
-}
+import { CITY_CONFIGS, cityLabelKey } from "@/data/cities";
+import { classifyTrips, todayStopLabel, formatTripDates } from "@/lib/trips/trips-lifecycle";
+import {
+  TRIPS_COLORS as C, SP, RADIUS_XL,
+  HEADLINE_LG_MOBILE, HEADLINE_LG, HEADLINE_MD, BODY_LG, BODY_MD, LABEL_LG,
+} from "@/components/trips/trips-tokens";
+import { SectionLabel, TripRow, DashedAction, InlineConfirm } from "@/components/trips/TripsPrimitives";
+import TravelingNowHero from "@/components/trips/TravelingNowHero";
 
 // ── 내부 Trip 모델 ────────────────────────────────────────────────────────────
 interface Trip {
-  id:          string;
-  city:        string;
-  startDate:   string;
-  endDate:     string;
-  travelers:   string;
-  travelStyle: string;
-  tripTitle:   string | null;
-  updatedAt:   string;
-  days:        number;
-  isPublic:    boolean;
-  copyCount:   number;   // 실측 누적값 — 낙관적 증가 없음
-  helpfulCount:number;
+  id:        string;
+  city:      string;
+  startDate: string;
+  endDate:   string;
+  tripTitle: string | null;
+  updatedAt: string;
 }
 
 function rowToTrip(r: ItineraryRow): Trip {
-  const days = r.start_date && r.end_date ? dayCount(r.start_date, r.end_date) : 1;
   return {
-    id:          r.id,
-    city:        r.city || "Korea",
-    startDate:   r.start_date ?? "",
-    endDate:     r.end_date   ?? "",
-    travelers:   r.travelers  ?? "1",
-    travelStyle: r.travel_style ?? "Solo",
-    tripTitle:   r.trip_title ?? null,
-    updatedAt:   r.updated_at ?? "",
-    days,
-    isPublic:    r.is_public ?? false,
-    copyCount:   r.copy_count ?? 0,
-    helpfulCount:r.helpful_count ?? 0,
+    id:        r.id,
+    city:      r.city || "Korea",
+    startDate: r.start_date ?? "",
+    endDate:   r.end_date   ?? "",
+    tripTitle: r.trip_title ?? null,
+    updatedAt: r.updated_at ?? "",
   };
 }
+
+const cityCap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
 
 // ══════════════════════════════════════════════════════════════════════════════
 export default function MyTripsPage() {
   const t      = useTranslations("trips");
-  const tStats = useTranslations("creatorStats");
-  const tHome  = useTranslations("home");
   const tNav   = useTranslations("nav");
   const tPicks = useTranslations("picks");
+  const tForm  = useTranslations("tripForm");
   const locale = useLocale();
-  const [trips,          setTrips]          = useState<Trip[]>([]);
-  const [loading,        setLoading]        = useState(true);
-  const [fetchError,     setFetchError]     = useState(false);
-  const [deleting,       setDeleting]       = useState<string | null>(null);
-  const [confirmDel,     setConfirmDel]     = useState<string | null>(null);
-  const [copied,         setCopied]         = useState<string | null>(null);
-  const [togglingPublic, setTogglingPublic] = useState<Set<string>>(new Set());
-
+  const [trips,      setTrips]      = useState<Trip[]>([]);
+  const [loading,    setLoading]    = useState(true);
+  const [fetchError, setFetchError] = useState(false);
+  const [deleting,   setDeleting]   = useState<string | null>(null);
+  const [confirmDel, setConfirmDel] = useState<string | null>(null);
+  const [pastOpen,   setPastOpen]   = useState(false);
+  // 어느 여행의 것인지 같이 들고 있어야 여행이 바뀌어도 옛 장소가 잠깐 남지 않는다
+  const [todayStop,  setTodayStop]  = useState<{ tripId: string; label: string | null } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
 
     apiFetchItinerariesByDevice(getDeviceId()).then((itins) => {
       if (cancelled) return;
@@ -129,14 +94,6 @@ export default function MyTripsPage() {
     }).catch(() => { if (!cancelled) { setLoading(false); setFetchError(true); } });
 
     return () => { cancelled = true; };
-  }, []);
-
-  const handleCopy = useCallback(async (trip: Trip) => {
-    const url = `${window.location.origin}/itinerary?id=${trip.id}`;
-    try { await navigator.clipboard.writeText(url); }
-    catch { window.prompt("Copy this link:", url); }
-    setCopied(trip.id);
-    setTimeout(() => setCopied(null), 2500);
   }, []);
 
   const handleDelete = useCallback(async (trip: Trip) => {
@@ -178,371 +135,170 @@ export default function MyTripsPage() {
     setDeleting(null);
   }, []);
 
-  const handleTogglePublic = useCallback(async (trip: Trip) => {
-    if (togglingPublic.has(trip.id)) return;
-    const next = !trip.isPublic;
-    setTogglingPublic(prev => { const s = new Set(prev); s.add(trip.id); return s; });
-    setTrips(prev => prev.map(t => t.id === trip.id ? { ...t, isPublic: next } : t));
-    const ok = await apiSetPublic(trip.id, next, getDeviceId());
-    if (!ok) setTrips(prev => prev.map(t => t.id === trip.id ? { ...t, isPublic: !next } : t));
-    setTogglingPublic(prev => { const s = new Set(prev); s.delete(trip.id); return s; });
-  }, [togglingPublic]);
+  // 오늘 — 일정 날짜와 같은 기준(UTC 날짜 문자열). /itinerary 의 isPastTrip 과 같다.
+  const todayISO = new Date().toISOString().slice(0, 10);
+  const { traveling, upcoming, past } = useMemo(() => classifyTrips(trips, todayISO), [trips, todayISO]);
+  const hero = traveling[0] ?? null;
 
-  const cityCap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
+  // "Today · 장소" — 진행 중 여행 하나의 일정만 소유자 GET 으로 받아 오늘 Day 의
+  // 시간으로 고른다. 목록 API 는 days 를 주지 않는다. GPS 를 읽지 않는다.
+  const heroId = hero?.id ?? null;
+  useEffect(() => {
+    if (!heroId) return;
+    let cancelled = false;
+    apiFetchItinerary(heroId, getDeviceId()).then(row => {
+      if (cancelled) return;
+      const now = new Date();
+      const nowHHMM = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      setTodayStop({ tripId: heroId, label: todayStopLabel(row?.days, todayISO, nowHHMM) });
+    }).catch(() => { if (!cancelled) setTodayStop({ tripId: heroId, label: null }); });
+    return () => { cancelled = true; };
+  }, [heroId, todayISO]);
+  const heroChip = hero && todayStop?.tripId === hero.id ? todayStop.label : null;
 
-  // 최종 디자인의 두 단(Current & Upcoming / Memory Archive) 구분.
-  // 기준은 실제 종료일 하나뿐이다 — 진행률·완료 신호 같은 추정값을 쓰지 않는다.
-  // 상대 시각은 종류별로 문장을 고르고, 30일이 넘으면 사용자의 locale 로 날짜를
-  // 적는다. 예전엔 en-US 로 고정돼 있어 어느 언어에서도 "Aug 11" 이었다.
-  const agoLabel = (iso: string) => {
-    const a = timeAgo(iso);
-    if (a.kind === "now")  return t("agoNow");
-    if (a.kind === "date") return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" })
-                                    .format(new Date(a.iso));
-    return t(`ago${a.kind === "min" ? "Min" : a.kind === "hour" ? "Hour" : "Day"}`, { n: a.n });
+  // 도시 이름은 이미 있는 번역(tripForm.city_*)으로. 모르는 도시는 slug 를 대문자로.
+  const cityLabel = (slug: string) => {
+    const conf = CITY_CONFIGS[slug.toLowerCase()];
+    return conf ? tForm(cityLabelKey(conf)) : cityCap(slug);
   };
+  const titleOf = (trip: Trip) => trip.tripTitle || t("titleFallback", { city: cityLabel(trip.city) });
+  const datesOf = (trip: Trip) => formatTripDates(trip.startDate, trip.endDate, locale);
+  const confirmFor = (trip: Trip) => confirmDel === trip.id || deleting === trip.id ? (
+    <InlineConfirm
+      question={t("confirmDelete")}
+      confirmLabel={tPicks("delete")}
+      cancelLabel={tPicks("cancel")}
+      busy={deleting === trip.id}
+      onConfirm={() => handleDelete(trip)}
+      onCancel={() => setConfirmDel(null)}
+    />
+  ) : undefined;
+  const rowOf = (trip: Trip, href: string) => (
+    <TripRow
+      key={trip.id}
+      href={href}
+      title={titleOf(trip)}
+      dates={datesOf(trip)}
+      visual={cityVisual(trip.city)}
+      cityLabel={cityLabel(trip.city)}
+      onMore={() => setConfirmDel(prev => prev === trip.id ? null : trip.id)}
+      moreLabel={t("moreActions")}
+      confirm={confirmFor(trip)}
+    />
+  );
 
-  const today = new Date().toISOString().slice(0, 10);
-  const SECTIONS = [
-    {
-      key: "upcoming",
-      title: t("sectionUpcoming"),
-      hint: t("sectionUpcomingHint"),
-      trips: trips.filter(t => !t.endDate || t.endDate >= today),
-    },
-    // 끝난 여행은 Story 다 — 같은 여행을 다른 목록에 한 번 더 두지 않는다.
-    // 카드를 누르면 같은 /itinerary?id 가 열리고, 거기서 Story 가 기본 얼굴이다.
-    {
-      key: "stories",
-      title: t("sectionStories"),
-      hint: t("sectionStoriesHint"),
-      trips: trips.filter(t => t.endDate && t.endDate < today),
-    },
-  ];
+  const showEmpty = !loading && !fetchError && trips.length === 0;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#F6F7F8" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: C.surface, color: C.onSurface }}>
 
-      {/* ── 헤더 ── */}
-      <header className="sticky top-0 z-40 border-b border-[#E5E7EA] backdrop-blur-md" style={{ backgroundColor: "rgba(250,247,242,0.92)" }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-normal tracking-tight text-[#191C21] flex items-center gap-1.5">
-            <span className="font-black tracking-tight">gokoreamate</span>
-          </Link>
-          <span className="flex items-center gap-1">
-            <LanguageSwitcher variant="icon" className="sm:hidden text-[#565D66]" />
-            <Link
-              href="/"
-              className="gkm-focus inline-flex items-center min-h-11 px-2 -mr-2 text-sm font-bold text-[#565D66] hover:text-[#191C21] transition-colors"
-            >
-              ← {tNav("home")}
-            </Link>
-          </span>
-        </div>
+      {/* 시안의 상단 바는 데스크톱에만 있다(모바일은 바로 제목부터). 메뉴·검색 버튼은
+          이 화면에 연결된 기능이 없어 그리지 않는다 — 브랜드 글자만 홈으로 간다. */}
+      <header className="hidden md:flex items-center justify-center backdrop-blur-md"
+              style={{ padding: `${SP.mobile}px ${SP.desktop}px`, backgroundColor: "rgba(248,249,250,0.8)" }}>
+        <Link href="/" className="gkm-focus tracking-widest" style={{ ...BODY_LG, fontWeight: 300, color: C.primary }}>
+          gokoreamate
+        </Link>
       </header>
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-10">
+      <main className="flex-1 w-full mx-auto px-4 md:px-16 pt-8 md:pt-16" style={{ maxWidth: SP.maxWidth, paddingBottom: SP.xl }}>
 
-        {/* ── 페이지 타이틀 ── */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-black text-[#191C21] mb-2 tracking-tight">{tNav("myTrips")}</h1>
-          <p className="text-[#565D66] font-medium leading-relaxed max-w-md">
-            {t("subtitle")}
-          </p>
+        {/* ── 제목 ── */}
+        <div style={{ marginBottom: SP.lg }}>
+          <h1 className="md:hidden" style={{ ...HEADLINE_LG_MOBILE, color: C.primary }}>{tNav("myTrips")}</h1>
+          <h1 className="hidden md:block" style={{ ...HEADLINE_LG, color: C.primary }}>{tNav("myTrips")}</h1>
         </div>
-
-        {/* ── 통계 요약 칩 ── */}
-        {!loading && trips.length > 0 && (
-          <div className="flex flex-wrap gap-3 mb-8">
-            {[
-              // Memory 개수는 여기에 두지 않는다. Memory SSOT 는 localStorage 1차 +
-              // 서버 동기화라, 이 화면이 아는 값은 이 기기가 본 것뿐이다. 그 부분합을
-              // 전체 개수처럼 적으면 다른 기기에서 남긴 기록이 없는 것처럼 읽힌다.
-              { emoji: "✈️", label: t("statTrips", { n: trips.length }) },
-              { emoji: "📍", label: tHome("days", { n: trips.reduce((sum, x) => sum + x.days, 0) }) },
-            ].filter(Boolean).map((chip) => (
-              <div
-                key={chip!.label}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black border border-[#E5E7EA] bg-white"
-                style={{ color: "#191C21" }}
-              >
-                <span>{chip!.emoji}</span>
-                <span>{chip!.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* ── 로딩 ── */}
         {loading && (
-          <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#FF4A2D]" />
-            <p className="text-sm font-bold text-[#565D66]">{t("loading")}</p>
-          </div>
+          <p role="status" style={{ ...BODY_MD, color: C.onSurfaceVariant }}>{t("loading")}</p>
         )}
 
-        {/* ── 에러 상태 ── */}
+        {/* ── 에러 ── */}
         {!loading && fetchError && (
-          <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
-            <div className="w-24 h-24 rounded-3xl bg-red-50 flex items-center justify-center text-5xl">⚠️</div>
-            <div>
-              <p className="text-2xl font-black text-[#191C21] mb-2">{t("errorTitle")}</p>
-              <p className="text-[#565D66] max-w-sm leading-relaxed">
-                {t("errorBody")}
-              </p>
-            </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: SP.sm }}>
+            <p style={{ ...HEADLINE_MD, color: C.onSurface }}>{t("errorTitle")}</p>
+            <p style={{ ...BODY_MD, color: C.onSurfaceVariant }}>{t("errorBody")}</p>
             <button
-              onClick={() => window.location.reload()}
-              className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
-              style={{ backgroundColor: "#FF4A2D" }}
+              type="button" onClick={() => window.location.reload()}
+              className="gkm-focus self-start cursor-pointer"
+              style={{ ...LABEL_LG, color: C.secondary, padding: `${SP.sm}px 0` }}
             >
               {t("errorRetry")}
             </button>
           </div>
         )}
 
-        {/* ── 빈 상태 ── */}
-        {!loading && !fetchError && trips.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-28 gap-6 text-center">
-            <div className="w-24 h-24 rounded-3xl bg-[#F6F7F8] flex items-center justify-center text-5xl">✈️</div>
-            <div>
-              <p className="text-2xl font-black text-[#191C21] mb-2">{t("emptyTitle")}</p>
-              <p className="text-[#565D66] max-w-sm leading-relaxed">
-                {t("emptyBody1")}<br/>{t("emptyBody2")}
-              </p>
-            </div>
-            {/* 여행을 만들러 가는 버튼이다. Home 최상단이 아니라 플래너로 보낸다 —
-                Picks·Place Detail·Explore·Trending 이 모두 /#planner 로 들어간다. */}
-            <Link
-              href="/#planner"
-              className="px-8 py-4 rounded-2xl text-base font-black text-white transition-all active:scale-95 shadow-lg"
-              style={{ backgroundColor: "#FF4A2D" }}
-            >
-              🗺️ {t("startPlanning")}
-            </Link>
-          </div>
-        )}
-
-        {/* ── 여행 카드 — 최종 디자인의 두 단 구성 ──
-              빈 단은 제목째로 내리지 않는다. 첫 여행 하나를 만든 사람에게
-              "Memory Archive: 비어 있음"을 보여줄 이유가 없다. */}
-        {!loading && SECTIONS.map(section => section.trips.length === 0 ? null : (
-          <section key={section.key} className="mb-10">
-            <div className="mb-4">
-              <h2 className="text-xl font-black text-[#191C21] tracking-tight">{section.title}</h2>
-              <p className="text-xs text-[#565D66] font-medium mt-0.5">{section.hint}</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {section.trips.map((trip, i) => {
-              const personality = getPersonality(trip.travelStyle);
-              const isDeleting  = deleting    === trip.id;
-              const isConfirm   = confirmDel  === trip.id;
-              const isCopied    = copied      === trip.id;
-              const displayTitle = trip.tripTitle || t("titleFallback", { city: cityCap(trip.city) });
-              const hero = cityVisual(trip.city);
-
-              return (
-                <div
-                  key={trip.id}
-                  className="bg-white rounded-3xl border border-[#E5E7EA] shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col group"
-                  style={{ animation: `fadeInUp 0.3s ease-out ${i * 0.07}s both` }}
-                >
-                  {/* ── 도시 히어로 이미지 ── */}
-                  {/* 최종 디자인은 사진이 카드의 주인공이다. 기존 h-44(약 2:1)는
-                      도시 사진이 띠처럼 잘려 표지로 읽히지 않았다. */}
-                  <Link href={`/itinerary?id=${trip.id}`} className="block relative aspect-[4/3] overflow-hidden">
-                    {hero ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={hero.src}
-                        alt={trip.city}
-                        width={hero.w}
-                        height={hero.h}
-                        style={{ objectPosition: hero.objectPosition }}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      /* 대표 비주얼이 없는 도시. 다른 도시 사진으로 메우지 않는다 —
-                         그 자리를 메운 사진은 사용자에게 "이 도시가 이렇게 생겼다"로
-                         읽힌다. 중립 배경에 도시 이름만 둔다. */
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#E9ECEF] to-[#CFD5DB]">
-                        <span className="text-2xl font-black tracking-tight text-[#565D66]/70">
-                          {cityCap(trip.city)}
-                        </span>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-                    {/* 퍼스낼리티 배지 */}
-                    <div className="absolute top-3 left-3">
-                      <span
-                        className="text-xs font-black px-2.5 py-1 rounded-lg text-white"
-                        style={{ backgroundColor: personality.color }}
-                      >
-                        {personality.emoji}{personality.labelKey ? ` ${t(personality.labelKey)}` : ""}
-                      </span>
-                    </div>
-
-                    {/* 업데이트 시간 */}
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[10px] font-bold bg-black/50 text-white px-2 py-1 rounded-lg backdrop-blur-sm">
-                        {agoLabel(trip.updatedAt)}
-                      </span>
-                    </div>
-
-                    {/* 도시명 + 날짜 */}
-                    <div className="absolute bottom-3 left-4 right-4">
-                      <h3 className="text-lg font-black text-white leading-tight">{displayTitle}</h3>
-                      <p className="text-xs text-white/70 font-medium mt-0.5">
-                        {trip.startDate} → {trip.endDate}
-                      </p>
-                    </div>
-                  </Link>
-
-                  {/* ── 메타 칩 ── */}
-                  <div className="px-4 pt-3.5 pb-0 flex flex-wrap gap-1.5">
-                    <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
-                      📅 {t("days", { n: trip.days })}
-                    </span>
-                    <span className="text-[10px] font-black bg-[#F6F7F8] text-[#565D66] px-2.5 py-1 rounded-md">
-                      👤 {t("pax", { n: trip.travelers })}
-                    </span>
-                    {/* Story 진입 — 개수는 적지 않는다. 이 기기가 본 로컬 캐시만
-                        세는 값이라 "3 photos"라고 쓰면 다른 기기에서 남긴 기록이
-                        없는 것처럼 읽힌다. Story 는 같은 Trip 의 한 view 이므로 별도
-                        화면이 아니라 그 Trip 을 Story view 로 연다. */}
-                    <Link
-                      href={`/itinerary?id=${trip.id}&view=story`}
-                      className="text-[10px] font-black px-2.5 py-1 rounded-md text-white transition-opacity hover:opacity-85"
-                      style={{ backgroundColor: "#1a1a2e" }}
-                    >
-                      {t("storyChip")}
-                    </Link>
-                    {/* 원작자 성과 — 실측 누적값만. 둘 다 0이면 미노출 */}
-                    {trip.copyCount > 0 && (
-                      <span className="text-[10px] font-black bg-[#FFF0EC] text-[#FF4A2D] px-2.5 py-1 rounded-md">
-                        📋 {tStats("copied", { n: trip.copyCount })}
-                      </span>
-                    )}
-                    {trip.helpfulCount > 0 && (
-                      <span className="text-[10px] font-black bg-[#E7F5EF] text-[#1D9A6C] px-2.5 py-1 rounded-md">
-                        👍 {tStats("helpful", { n: trip.helpfulCount })}
-                      </span>
-                    )}
-                    <button
-                      onClick={() => handleTogglePublic(trip)}
-                      disabled={togglingPublic.has(trip.id)}
-                      className="text-[10px] font-black px-2.5 py-1 rounded-md border transition-all cursor-pointer disabled:opacity-50"
-                      style={
-                        trip.isPublic
-                          ? { backgroundColor: "#eff6ff", borderColor: "#bfdbfe", color: "#1d4ed8" }
-                          : { backgroundColor: "#F6F7F8", borderColor: "#d1c4b0", color: "#565D66" }
-                      }
-                    >
-                      {togglingPublic.has(trip.id) ? "…" : trip.isPublic ? `🌐 ${t("public")}` : `🔒 ${t("private")}`}
-                    </button>
-                  </div>
-
-                  {/* ── 액션 버튼 ── */}
-                  <div className="px-4 py-4 flex flex-col gap-2 mt-auto">
-                    <Link
-                      href={`/itinerary?id=${trip.id}`}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-black text-white transition-all active:scale-95"
-                      style={{ backgroundColor: "#191C21" }}
-                    >
-                      {section.key === "stories" ? t("openStory") : t("openItinerary")} →
-                    </Link>
-
-                    {/* 공유 버튼이 없는 비공개 일정에서는 휴지통만 남는다 —
-                        왼쪽에 홀로 떠 있지 않게 오른쪽으로 붙인다. */}
-                    <div className="flex gap-2 justify-end">
-                      {/* 공유 링크 복사 — 공개 일정에만 둔다.
-                          링크를 받은 사람은 `/itinerary?id=…` 에서 소유자가 아니므로
-                          `/shared/{id}` 로 넘어가고, 거기서는 is_public 이 강제된다.
-                          비공개 일정의 링크는 상대에게 "Itinerary not found" 만
-                          보여준다 — 열리지 않는 링크를 복사하게 두지 않는다.
-                          공개로 바꾸는 방법은 바로 위 Public/Private 칩이다. */}
-                      {trip.isPublic && (
-                      <button
-                        onClick={() => handleCopy(trip)}
-                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer"
-                        style={
-                          isCopied
-                            ? { backgroundColor: "#f0fdf4", borderColor: "#86efac", color: "#16a34a" }
-                            : { backgroundColor: "#F6F7F8", borderColor: "#E5E7EA", color: "#565D66" }
-                        }
-                      >
-                        {/* 이 버튼은 공유 링크를 클립보드에 담는다. 여행 자체를
-                            복제하지 않는다 — "Copy Link"는 둘 다로 읽혔다. */}
-                        {isCopied ? `✅ ${t("linkCopied")}` : `🔗 ${t("copyShareLink")}`}
-                      </button>
-                      )}
-
-                      {/* 삭제 */}
-                      {isConfirm ? (
-                        <div className="flex gap-1">
-                          <button
-                            onClick={() => handleDelete(trip)}
-                            disabled={isDeleting}
-                            className="px-3 py-2.5 rounded-xl text-xs font-black bg-red-500 text-white hover:bg-red-600 transition-colors disabled:opacity-50 cursor-pointer"
-                          >
-                            {isDeleting ? "…" : tPicks("delete")}
-                          </button>
-                          <button
-                            onClick={() => setConfirmDel(null)}
-                            className="px-3 py-2.5 rounded-xl text-xs font-bold bg-[#F6F7F8] text-[#565D66] hover:bg-[#E5E7EA] transition-colors cursor-pointer"
-                          >
-                            {tPicks("cancel")}
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() => setConfirmDel(trip.id)}
-                          className="px-3 py-2.5 rounded-xl text-xs font-bold border border-[#E5E7EA] text-[#565D66]/50 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-all cursor-pointer"
-                        >
-                          🗑️
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            </div>
+        {/* ── TRAVELING NOW ── */}
+        {!loading && hero && (
+          <section style={{ marginBottom: SP.xl }}>
+            <SectionLabel>{t("sectionTravelingNow")}</SectionLabel>
+            <TravelingNowHero
+              href={`/itinerary?id=${hero.id}`}
+              eyebrow={[datesOf(hero), cityLabel(hero.city)].filter(Boolean).join(" · ")}
+              title={titleOf(hero)}
+              chip={heroChip ? t("todayAt", { place: heroChip }) : null}
+              visual={cityVisual(hero.city)}
+              cityLabel={cityLabel(hero.city)}
+              onMore={() => setConfirmDel(prev => prev === hero.id ? null : hero.id)}
+              moreLabel={t("moreActions")}
+              confirm={confirmFor(hero)}
+            />
+            {/* 같은 기간에 겹치는 진행 중 여행이 더 있으면 같은 줄 문법으로 이어 둔다 */}
+            {traveling.length > 1 && (
+              <div className="grid grid-cols-1" style={{ gap: SP.sm, marginTop: SP.sm }}>
+                {traveling.slice(1).map(trip => rowOf(trip, `/itinerary?id=${trip.id}`))}
+              </div>
+            )}
           </section>
-        ))}
-
-        {/* ── 새 여행 추가 카드 — 두 단 아래에 한 번만 둔다 ── */}
-        {!loading && trips.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <Link
-              href="/#planner"
-              className="rounded-3xl border-2 border-dashed border-[#E5E7EA] flex flex-col items-center justify-center gap-3 py-16 text-center hover:border-[#FF4A2D] transition-colors group"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-[#F6F7F8] flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                ＋
-              </div>
-              <div>
-                <p className="text-sm font-black text-[#191C21]">{t("newTripPlan")}</p>
-                <p className="text-xs text-[#565D66] mt-0.5">{t("newTripPlanHint")}</p>
-              </div>
-            </Link>
-          </div>
         )}
 
+        {/* ── UPCOMING + New trip ── */}
+        {!loading && !fetchError && (
+          <section>
+            {upcoming.length > 0 && <SectionLabel>{t("sectionUpcoming")}</SectionLabel>}
+            {showEmpty && (
+              <div style={{ marginBottom: SP.md }}>
+                <p style={{ ...HEADLINE_MD, color: C.onSurface, marginBottom: SP.xs }}>{t("emptyTitle")}</p>
+                <p style={{ ...BODY_MD, color: C.onSurfaceVariant }}>{t("emptyBody1")} {t("emptyBody2")}</p>
+              </div>
+            )}
+            <div className="grid grid-cols-1" style={{ gap: SP.sm }}>
+              {upcoming.map(trip => rowOf(trip, `/itinerary?id=${trip.id}`))}
+              {/* 여행을 만들러 가는 길 — Home 최상단이 아니라 플래너로 (Picks·Place Detail·
+                  Explore·Trending 이 모두 /#planner 로 들어간다) */}
+              <DashedAction href="/#planner">{t("newTrip")}</DashedAction>
+            </div>
+
+            {/* ── 지난 여행 → Story ── */}
+            {past.length > 0 && (
+              <div style={{ marginTop: SP.lg }}>
+                <div className="text-center">
+                  <button
+                    type="button"
+                    onClick={() => setPastOpen(o => !o)}
+                    aria-expanded={pastOpen}
+                    aria-controls="past-trips"
+                    className="gkm-focus inline-flex items-center cursor-pointer transition-colors"
+                    style={{ ...BODY_MD, color: C.tertiaryContainer, gap: SP.xs, borderRadius: RADIUS_XL }}
+                  >
+                    {t("pastTripsStory")}
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                         style={{ transform: pastOpen ? "rotate(90deg)" : undefined, transition: "transform 200ms" }}>
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </button>
+                </div>
+                {pastOpen && (
+                  <div id="past-trips" className="grid grid-cols-1" style={{ gap: SP.sm, marginTop: SP.md }}>
+                    {past.map(trip => rowOf(trip, `/itinerary?id=${trip.id}&view=story`))}
+                  </div>
+                )}
+              </div>
+            )}
+          </section>
+        )}
       </main>
-
-      {/* ── 푸터 ── */}
-      <footer className="mt-auto border-t border-[#E5E7EA] py-8 text-center text-sm text-[#565D66] px-4" style={{ backgroundColor: "#F6F7F8" }}>
-        <p>© {new Date().getFullYear()} gokoreamate · Trip data stored on your device</p>
-      </footer>
-
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(14px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

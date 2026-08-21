@@ -159,7 +159,7 @@
     "errorTitle": "Could not load trips",
     "errorBody": "Check your connection and try again.",
     "errorRetry": "Try Again",
-    "sectionUpcoming": "Current & Upcoming",
+    "sectionUpcoming": "Upcoming",
     "sectionUpcomingHint": "Trips you are on or about to take",
     "sectionArchive": "Memory Archive",
     "sectionArchiveHint": "Finished trips — itinerary, visits and memories stay together",
@@ -184,7 +184,13 @@
     "sectionStories": "Stories",
     "sectionStoriesHint": "Finished trips, told through the places and moments you kept",
     "storyChip": "Story",
-    "openStory": "Open Story"
+    "openStory": "Open Story",
+    "sectionTravelingNow": "Traveling now",
+    "newTrip": "New trip",
+    "pastTripsStory": "Past trips live in Story",
+    "todayAt": "Today · {place}",
+    "moreActions": "More actions",
+    "confirmDelete": "Delete this trip?"
   },
   "blogAffiliate": {
     "card": {

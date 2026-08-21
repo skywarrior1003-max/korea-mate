@@ -45,12 +45,13 @@ test("V4: Story view 는 승인된 StoryJournal/Focus 를 재사용한다", () =
   assert.match(page, /<StoryMemoryFocus[\s\S]{0,160}slides=\{slides\}/);
 });
 
-test("V5: /my-trips — 끝난 여행 섹션은 Story, 카드는 같은 /itinerary?id", () => {
-  assert.match(trips, /key: "stories"/);
-  assert.match(trips, /t\("sectionStories"\)/);
+test("V5: /my-trips — 끝난 여행은 Story 로, 같은 /itinerary?id 에 &view=story", () => {
+  // TASK-MY-TRIPS-FINAL-UI-V1 이후: 지난 여행은 목록에 큰 카드로 반복하지 않고
+  // "Past trips live in Story" 한 줄 아래 같은 줄 문법으로 펼쳐진다. 진입 계약은 그대로.
+  assert.match(trips, /t\("pastTripsStory"\)/);
   assert.ok(!trips.includes('t("sectionArchive")'), "Memory Archive 명칭이 남으면 안 된다");
-  assert.match(trips, /href=\{`\/itinerary\?id=\$\{trip\.id\}&view=story`\}/);
-  assert.match(trips, /section\.key === "stories" \? t\("openStory"\) : t\("openItinerary"\)/);
+  assert.match(trips, /`\/itinerary\?id=\$\{trip\.id\}&view=story`/);
+  assert.ok(!trips.includes("router.push(`/story"), "별도 Story route 로 보내지 않는다");
 });
 
 test("V6: StoryJournal 은 사진 없는 장소도 이름 한 줄로 남긴다", () => {

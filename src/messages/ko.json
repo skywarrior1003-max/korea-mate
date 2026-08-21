@@ -159,7 +159,7 @@
     "errorTitle": "여행을 불러오지 못했습니다",
     "errorBody": "연결 상태를 확인하고 다시 시도해 주세요.",
     "errorRetry": "다시 시도",
-    "sectionUpcoming": "진행 중·예정",
+    "sectionUpcoming": "예정된 여행",
     "sectionUpcomingHint": "지금 가고 있거나 곧 떠날 여행",
     "sectionArchive": "추억 보관함",
     "sectionArchiveHint": "끝난 여행 — 일정·방문 기록·추억이 함께 남습니다",
@@ -184,7 +184,13 @@
     "sectionStories": "스토리",
     "sectionStoriesHint": "끝난 여행 — 남긴 장소와 순간으로 이어지는 이야기",
     "storyChip": "스토리",
-    "openStory": "스토리 보기"
+    "openStory": "스토리 보기",
+    "sectionTravelingNow": "여행 중",
+    "newTrip": "새 여행",
+    "pastTripsStory": "지난 여행은 스토리에서",
+    "todayAt": "오늘 · {place}",
+    "moreActions": "더보기",
+    "confirmDelete": "이 여행을 삭제할까요?"
   },
   "blogAffiliate": {
     "card": {

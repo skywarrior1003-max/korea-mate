@@ -159,7 +159,7 @@
     "errorTitle": "无法加载行程",
     "errorBody": "请检查网络后重试。",
     "errorRetry": "重试",
-    "sectionUpcoming": "进行中与即将出发",
+    "sectionUpcoming": "即将出发",
     "sectionUpcomingHint": "你正在进行或即将开始的行程",
     "sectionArchive": "回忆存档",
     "sectionArchiveHint": "已结束的行程 — 行程、到访记录和回忆都保留在一起",
@@ -184,7 +184,13 @@
     "sectionStories": "故事",
     "sectionStoriesHint": "已结束的旅程 — 由你留下的地点与瞬间串成的故事",
     "storyChip": "故事",
-    "openStory": "查看故事"
+    "openStory": "查看故事",
+    "sectionTravelingNow": "旅行中",
+    "newTrip": "新行程",
+    "pastTripsStory": "过去的旅行在故事里",
+    "todayAt": "今天 · {place}",
+    "moreActions": "更多",
+    "confirmDelete": "要删除这个行程吗？"
   },
   "blogAffiliate": {
     "card": {

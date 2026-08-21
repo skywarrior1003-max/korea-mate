@@ -159,7 +159,7 @@
     "errorTitle": "旅を読み込めませんでした",
     "errorBody": "接続を確認して、もう一度お試しください。",
     "errorRetry": "再試行",
-    "sectionUpcoming": "進行中・予定",
+    "sectionUpcoming": "予定の旅行",
     "sectionUpcomingHint": "いま行っている、またはこれから行く旅",
     "sectionArchive": "思い出アーカイブ",
     "sectionArchiveHint": "終わった旅 — 旅程・訪問記録・思い出が一緒に残ります",
@@ -184,7 +184,13 @@
     "sectionStories": "ストーリー",
     "sectionStoriesHint": "終わった旅 — 残した場所と瞬間でつづるストーリー",
     "storyChip": "ストーリー",
-    "openStory": "ストーリーを見る"
+    "openStory": "ストーリーを見る",
+    "sectionTravelingNow": "旅行中",
+    "newTrip": "新しい旅行",
+    "pastTripsStory": "過去の旅はストーリーで",
+    "todayAt": "今日 · {place}",
+    "moreActions": "その他",
+    "confirmDelete": "この旅行を削除しますか？"
   },
   "blogAffiliate": {
     "card": {
