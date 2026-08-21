@@ -37,6 +37,11 @@ interface Props {
   onSetPublic?:  (momentId: string, next: boolean) => Promise<boolean>;
   /** 커버 변경 진행 중 — 버튼 중복 클릭 방지 */
   coverBusy?:       boolean;
+  /**
+   * 사진 로드 실패(만료된 서명 주소 등). 상위가 그 순간의 해석을 한 번 다시 받는다.
+   * 미전달이면 아무 일도 없다. (TASK-STORY-CROSS-DEVICE-PHOTOS-V1-R1)
+   */
+  onPhotoError?: (momentId: string) => void;
 }
 
 const CAT_COLORS: Record<string, string> = {
@@ -77,7 +82,7 @@ function groupByDay(moments: TripMoment[]): { day: number | null; items: TripMom
 }
 
 export default function TripMomentTimeline({
-  moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [],
+  moments, onDelete, onAddMemory, onEditMemo, dayNumbers = [], onPhotoError,
   isPublic = false, currentCoverMomentId = null,
   onUseAsCover, onClearCover, coverBusy = false, onSetPublic,
 }: Props) {
@@ -274,6 +279,7 @@ export default function TripMomentTimeline({
                         alt={i === 0 ? (m.memo || cat.label) : ""}
                         className="w-full shrink-0 snap-center object-cover transition-all duration-500"
                         style={{ maxHeight: isOpen ? 400 : 200 }}
+                        onError={() => onPhotoError?.(m.moment_id)}
                       />
                     ))}
                   </div>
@@ -284,6 +290,7 @@ export default function TripMomentTimeline({
                     alt={m.memo || cat.label}
                     className="w-full object-cover transition-all duration-500"
                     style={{ maxHeight: isOpen ? 400 : 200 }}
+                    onError={() => onPhotoError?.(m.moment_id)}
                   />
                 )}
                 {(m.photo_data_extra?.length ?? 0) > 0 && (

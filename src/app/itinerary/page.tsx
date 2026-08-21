@@ -1316,6 +1316,15 @@ function ItineraryResult() {
     const id = setInterval(() => setPhotoRefreshTick(t => t + 1), 60_000);
     return () => clearInterval(id);
   }, []);
+  // 이미지 로드 실패(만료·삭제) → 그 순간의 해석을 버리고 **한 번만** 다시 받는다.
+  // 두 번째도 실패하면 그대로 둔다 — 실패마다 API 를 두드리거나 render 루프를 만들지 않는다.
+  const photoRetriedRef = useRef<Set<string>>(new Set());
+  const handlePhotoError = useCallback((momentId: string) => {
+    if (!resolvedPhotoUrls[momentId] || photoRetriedRef.current.has(momentId)) return;
+    photoRetriedRef.current.add(momentId);
+    setResolvedPhotoUrls(prev => { const next = { ...prev }; delete next[momentId]; return next; });
+    setPhotoRefreshTick(t => t + 1);
+  }, [resolvedPhotoUrls]);
   // 화면용 복사본 — Timeline 과 Story 가 같은 것을 본다. 원본 `moments` 는 그대로다.
   const displayMoments = withResolvedPhotos(moments, resolvedPhotoUrls);
 
@@ -2660,7 +2669,11 @@ function ItineraryResult() {
             )}
           </div>
           {storyDays.length > 0 ? (
-            <StoryJournal days={storyDays} onOpenPhoto={(m, i) => setStoryFocus({ m, i })} />
+            <StoryJournal
+              days={storyDays}
+              onOpenPhoto={(m, i) => setStoryFocus({ m, i })}
+              onPhotoError={(m) => handlePhotoError(m.id)}
+            />
           ) : (
             /* 진행 중인데 아직 지난 장소가 없다. 미래 장소를 미리 넣지 않는다. */
             <p className="px-6 py-16 text-center text-sm text-sub font-medium">{t("storyEmptyLive")}</p>
@@ -3272,6 +3285,7 @@ function ItineraryResult() {
         </div>
         <TripMomentTimeline
           moments={displayMoments}
+          onPhotoError={handlePhotoError}
           onDelete={handleMomentDelete}
           onEditMemo={(!shareId || isOwner) ? handleMemoEdit : undefined}
           onAddMemory={(day) => { setCaptureDay(day ?? null); setCaptureOpen(true); }}

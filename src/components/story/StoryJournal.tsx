@@ -34,6 +34,8 @@ interface Props {
    */
   onSave?: (memory: StoryMemory) => void;
   savedIds?: ReadonlySet<string>;
+  /** 사진 로드 실패 — 소유자 화면이 서명 주소를 한 번 다시 받는 데 쓴다. 공개 화면은 넘기지 않는다. */
+  onPhotoError?: (memory: StoryMemory, index: number) => void;
 }
 
 function PlaceChip({ name }: { name: string }) {
@@ -51,16 +53,16 @@ function PlaceChip({ name }: { name: string }) {
 }
 
 function Photo({
-  photo, alt, className, style, onClick, chip, overlayCount,
+  photo, alt, className, style, onClick, chip, overlayCount, onError,
 }: {
   photo: StoryPhoto; alt: string; className?: string;
   style?: React.CSSProperties; onClick?: () => void;
-  chip?: string; overlayCount?: number;
+  chip?: string; overlayCount?: number; onError?: () => void;
 }) {
   const inner = (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={photo.url} alt={photo.alt ?? alt} className="w-full h-full object-cover" />
+      <img src={photo.url} alt={photo.alt ?? alt} className="w-full h-full object-cover" onError={onError} />
       {chip && <PlaceChip name={chip} />}
       {overlayCount != null && overlayCount > 0 && (
         <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
@@ -76,16 +78,18 @@ function Photo({
     : <div className={box} style={css}>{inner}</div>;
 }
 
-function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
+function MemoryBlock({ memory, onOpenPhoto, onSave, saved, onPhotoError }: {
   memory: StoryMemory;
   onOpenPhoto?: (m: StoryMemory, i: number) => void;
   onSave?: (m: StoryMemory) => void;
   saved?: boolean;
+  onPhotoError?: (m: StoryMemory, i: number) => void;
 }) {
   const photos = memory.photos;
   const hasMemo = memory.memo.trim() !== "";
   const alt    = memory.placeName ?? (hasMemo ? memory.memo.slice(0, 40) : "");
   const open   = (i: number) => onOpenPhoto ? () => onOpenPhoto(memory, i) : undefined;
+  const failed = (i: number) => onPhotoError ? () => onPhotoError(memory, i) : undefined;
 
   // 두 번째 줄에 놓을 보조 사진 두 칸. 넘치는 만큼은 +N 으로 접는다.
   const secondary = photos.slice(1, 3);
@@ -95,7 +99,7 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
     <div style={{ marginBottom: STACK_LG }}>
       {photos.length > 0 && (
         <Photo
-          photo={photos[0]!} alt={alt} onClick={open(0)} chip={memory.placeName}
+          photo={photos[0]!} alt={alt} onClick={open(0)} onError={failed(0)} chip={memory.placeName}
           className={photos.length === 1 ? "w-full aspect-[4/5]" : "w-full aspect-[4/5]"}
           style={{ marginBottom: GUTTER }}
         />
@@ -115,7 +119,7 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
         <div className="flex" style={{ gap: GUTTER, marginBottom: GUTTER }}>
           {secondary.map((p, i) => (
             <Photo
-              key={p.url} photo={p} alt={alt} onClick={open(i + 1)}
+              key={p.url} photo={p} alt={alt} onClick={open(i + 1)} onError={failed(i + 1)}
               className="w-1/2 aspect-square"
               overlayCount={i === secondary.length - 1 ? hidden : 0}
             />
@@ -160,7 +164,7 @@ function MemoryBlock({ memory, onOpenPhoto, onSave, saved }: {
   );
 }
 
-export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds }: Props) {
+export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds, onPhotoError }: Props) {
   return (
     <section
       id={id}
@@ -190,7 +194,7 @@ export default function StoryJournal({ id, days, onOpenPhoto, onSave, savedIds }
           {day.memories.map(m => (
             <MemoryBlock
               key={m.id} memory={m}
-              onOpenPhoto={onOpenPhoto} onSave={onSave}
+              onOpenPhoto={onOpenPhoto} onSave={onSave} onPhotoError={onPhotoError}
               saved={savedIds?.has(m.id)}
             />
           ))}
