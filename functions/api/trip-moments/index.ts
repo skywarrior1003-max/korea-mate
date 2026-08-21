@@ -24,6 +24,7 @@ import {
 import { normalizeMemo } from "../../../src/lib/trip-moments/memo-patch-core";
 
 import { normalizePlaceName, normalizeCitySpotId } from "../../../src/lib/trip-moments/public-consent-core";
+import { normalizeStopKey, isMissingColumnError } from "../../../src/lib/trip-moments/stop-binding";
 
 const MAX_MOMENT_BODY_BYTES = 8 * 1024; // 8 KB — text/GPS only, no photo_data
 
@@ -86,12 +87,18 @@ export async function onRequestGet(ctx: PagesCtx): Promise<Response> {
   if (!owned) return json({ error: "Not found" }, 404);
 
   // storage_path 는 내부 판정에만 쓰고 응답에는 넣지 않는다
-  const { data, error } = await admin
+  // stop_key(055)는 아직 적용되지 않은 환경이 있을 수 있다 — 컬럼 없음 오류면
+  // 그 컬럼 없이 한 번 더 읽는다(cover-state-core 의 031 fallback 과 같은 방식).
+  const MOMENT_COLS      = "moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public";
+  const MOMENT_COLS_055  = `${MOMENT_COLS}, stop_key`;
+  const listMoments = (cols: string) => admin
     .from("trip_moments")
-    .select("moment_id, itinerary_id, memo, category, lat, lng, location_label, captured_at, day_number, storage_path, place_name, city_spot_id, is_public")
+    .select(cols)
     .eq("itinerary_id", itineraryId)
     .eq("device_id", deviceId)
     .order("captured_at", { ascending: false });
+  let { data, error } = await listMoments(MOMENT_COLS_055);
+  if (error && isMissingColumnError(error)) ({ data, error } = await listMoments(MOMENT_COLS));
 
   if (error) {
     console.error("[trip-moments GET] db error:", error.code);
@@ -143,6 +150,10 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
   if (!placeRes.ok) return json({ error: placeRes.error }, 400);
   const spotRes = normalizeCitySpotId(body.city_spot_id ?? null);
   if (!spotRes.ok) return json({ error: spotRes.error }, 400);
+  // 일정 장소의 일반 열쇠(055). 형식만 검사한다 — 어느 일정 항목인지는 소유자의
+  // 일정 JSON 안에서만 의미가 있고, 서버가 그것을 대조할 이유가 없다.
+  const stopRes = normalizeStopKey(body.stop_key ?? null);
+  if (!stopRes.ok) return json({ error: stopRes.error }, 400);
 
   // 공식 장소 id 는 클라이언트 말을 믿지 않는다 — 실제로 있는 장소인지 본다.
   // 없다고 Memory 저장을 막지는 않는다(대부분의 Memory 는 공식 장소가 아니다).
@@ -164,6 +175,7 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     // 동의를 함께 확인하는 전용 경로(`PUT .../public`)에서만 바뀐다.
     ...(placeRes.placeName !== null ? { place_name:   placeRes.placeName }   : {}),
     ...(spotRes.citySpotId  !== null ? { city_spot_id: spotRes.citySpotId } : {}),
+    ...(stopRes.stopKey     !== null ? { stop_key:     stopRes.stopKey }     : {}),
     // photo_data: 수신·저장 금지
   };
 
@@ -185,9 +197,18 @@ export async function onRequestPost(ctx: PagesCtx): Promise<Response> {
     row.day_number = body.day_number;
   }
 
-  const { error } = await admin
+  let { error } = await admin
     .from("trip_moments")
     .upsert(row, { onConflict: "moment_id" });
+
+  // 055 미적용 환경: stop_key 컬럼이 없으면 그 값만 빼고 한 번 더 저장한다.
+  // 순간 자체는 남고, 장소 결합만 빠진다(자유 순간으로 보임). 저장을 막지 않는다.
+  if (error && "stop_key" in row && isMissingColumnError(error)) {
+    console.warn("[trip-moments POST] stop_key column missing — migration 055 not applied; saving without it");
+    const { stop_key: _omit, ...rowWithoutStopKey } = row;
+    void _omit;
+    ({ error } = await admin.from("trip_moments").upsert(rowWithoutStopKey, { onConflict: "moment_id" }));
+  }
 
   if (error) {
     console.error("[trip-moments POST] db error:", error.code);

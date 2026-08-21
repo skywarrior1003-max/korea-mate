@@ -21,6 +21,8 @@ interface Props {
    */
   initialPlaceName?: string | null;
   citySpotId?:       number | null;
+  /** 일정 장소의 일반 열쇠(sourceKey 문법). 있으면 결합 순간이다 — 내 장소·행사도 여기로 묶인다. */
+  stopKey?:          string | null;
   /**
    * 로컬 저장 성공 여부를 반환한다.
    * 오프라인 우선 구조라 서버 동기화 실패는 "저장 실패"가 아니며,
@@ -30,7 +32,7 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, initialPlaceName, citySpotId, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, initialPlaceName, citySpotId, stopKey, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   /**
@@ -48,7 +50,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
   const [placeName,    setPlaceName]    = useState(() => (initialPlaceName ?? "").trim());
   // 일정 장소 결합 여부. 결합돼 있으면 장소명은 그 stop 의 이름으로 고정이다 —
   // 보이는 이름과 city_spot_id 가 서로 다른 장소를 가리키는 상태를 만들지 않는다.
-  const isBound        = typeof citySpotId === "number";
+  const boundStopKey   = typeof stopKey === "string" && stopKey.trim() !== "" ? stopKey.trim() : null;
+  const isBound        = typeof citySpotId === "number" || boundStopKey !== null;
   const boundPlaceName = (initialPlaceName ?? "").trim();
   const [category,     setCategory]     = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
@@ -153,7 +156,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, in
       // 결합된 순간은 stop 의 이름을 그대로 쓴다 — 입력값이 관계를 덮지 못한다
       ...((isBound ? boundPlaceName : placeName.trim()) ? { place_name: isBound ? boundPlaceName : placeName.trim() } : {}),
       // 일정 장소와의 안정 관계 — 사진 수와 무관하게 Moment 당 하나
-      ...(isBound ? { city_spot_id: citySpotId as number } : {}),
+      ...(typeof citySpotId === "number" ? { city_spot_id: citySpotId } : {}),
+      ...(boundStopKey ? { stop_key: boundStopKey } : {}),
       ...(extraPhotos.length > 0 ? { photo_data_extra: extraPhotos } : {}),
     };
     setErrorKey(null);

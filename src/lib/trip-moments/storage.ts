@@ -57,6 +57,7 @@ function rowToMoment(r: Record<string, unknown>, deviceId: string, itinId: strin
     // 과 다른 값이고, 없는 Memory 가 더 흔하므로 없으면 없는 대로 둔다.
     place_name:     typeof r.place_name === "string" && r.place_name.trim() !== "" ? r.place_name : null,
     city_spot_id:   typeof r.city_spot_id === "number" ? r.city_spot_id : null,
+    stop_key:       typeof r.stop_key === "string" && r.stop_key.trim() !== "" ? r.stop_key : null,
   };
 }
 
@@ -256,6 +257,7 @@ async function postMomentMeta(m: TripMoment, deviceId: string): Promise<boolean>
         // 장소 표시명 — 없으면 보내지 않는다(서버가 null 로 둔다)
         ...(m.place_name   ? { place_name:   m.place_name }   : {}),
         ...(m.city_spot_id ? { city_spot_id: m.city_spot_id } : {}),
+        ...(m.stop_key     ? { stop_key:     m.stop_key }     : {}),
         lat:            m.lat,
         lng:            m.lng,
         location_label: m.location_label,

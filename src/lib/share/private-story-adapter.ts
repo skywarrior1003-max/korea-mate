@@ -28,14 +28,17 @@
 
 import type { StoryDay, StoryMemory, StoryPhoto } from "@/components/story/story-types";
 import { resolveDisplayImage } from "../place-detail/place-detail-core.ts";
+import { stopKeyOf } from "../trip-moments/stop-binding.ts";
 
 export interface StoryStopInput {
   name:      string;
   /** "HH:MM". 없을 수 있다 */
   time?:     string | null;
-  /** city_spots id 문자열 (source === "city_spot" 일 때) */
-  place_id?: string | null;
-  source?:   string | null;
+  /** city_spots id 문자열 (source === "city_spot" 일 때) · user_spot 이면 uuid */
+  place_id?:  string | null;
+  source?:    string | null;
+  /** 일정 항목의 출처 열쇠(sourceKey). 없으면 source+place_id 로 만든다 */
+  sourceKey?: string | null;
   /** city_spots.image_url — 카탈로그 대표 이미지. 없을 수 있다 */
   image?:    string | null;
 }
@@ -53,6 +56,8 @@ export interface StoryMomentInput {
   day_number:        number | null;
   place_name?:       string | null;
   city_spot_id?:     number | null;
+  /** 일반 열쇠(055). 있으면 이것이 우선, 없는 옛 행은 city_spot_id 로 결합 */
+  stop_key?:         string | null;
   memo:              string;
   photo_data?:       string | null;
   photo_data_extra?: string[] | null;
@@ -122,10 +127,20 @@ function baselineItem(dayNumber: number, idx: number, stop: StoryStopInput): Sto
 }
 
 /** 안정된 열쇠가 있을 때만 결합한다. 장소명으로 추측하지 않는다. */
-function stableKey(stop: StoryStopInput): string | null {
-  if (stop.source !== "city_spot") return null;
+/**
+ * 이 장소에서 시작한 순간인가 — 안정된 열쇠로만 본다. 장소명으로 추측하지 않는다.
+ *   ① stop_key(055, sourceKey 문법)가 있으면 그것으로. 공식 장소·내 장소·행사 모두 같은 문법.
+ *   ② stop_key 가 없는 옛 행은 공식 장소에 한해 city_spot_id 로(026, 검증된 기존 경로).
+ * 둘 다 같은 Day 안에서만 센다 — 같은 장소를 여러 날 가면 Day 로 가른다.
+ */
+function momentBelongsToStop(m: StoryMomentInput, stop: StoryStopInput): boolean {
+  const key = stopKeyOf(stop);
+  if (key === null) return false;
+  const mk = s(m.stop_key);
+  if (mk !== "") return mk === key;
+  if (stop.source !== "city_spot" || typeof m.city_spot_id !== "number") return false;
   const id = s(stop.place_id);
-  return /^\d+$/.test(id) ? id : null;
+  return /^\d+$/.test(id) && String(m.city_spot_id) === id;
 }
 
 export interface PrivateStoryOptions extends PrivateStoryClock {
@@ -164,10 +179,7 @@ export function buildPrivateStoryDays(
 
     day.places.forEach((stop, idx) => {
       if (!opt.isPast && !stopReached(day.date, stop.time, opt)) return;
-      const key = stableKey(stop);
-      const matched = key === null
-        ? []
-        : dayMoments.filter(m => typeof m.city_spot_id === "number" && String(m.city_spot_id) === key);
+      const matched = dayMoments.filter(m => !used.has(m.moment_id) && momentBelongsToStop(m, stop));
       if (matched.length > 0) {
         for (const m of matched) { used.add(m.moment_id); items.push(momentItem(m, s(stop.name) || undefined)); }
       } else {

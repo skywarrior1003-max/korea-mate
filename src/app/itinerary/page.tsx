@@ -7,7 +7,7 @@ import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
 import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
-import { stopCitySpotId } from "@/lib/trip-moments/stop-binding";
+import { stopCitySpotId, stopKeyOf } from "@/lib/trip-moments/stop-binding";
 import {
   withResolvedPhotos, needsPhotoResolution, isResolvedFresh, fetchMomentPhotoUrls,
   type ResolvedPhotoMap,
@@ -1339,7 +1339,7 @@ function ItineraryResult() {
         dayNumber: d.dayNumber,
         date:      d.date,
         places:    d.places.map(p => ({
-          name: p.name, time: p.time, place_id: p.place_id, source: p.source, image: p.image,
+          name: p.name, time: p.time, place_id: p.place_id, source: p.source, sourceKey: p.sourceKey, image: p.image,
         })),
       })),
       displayMoments,
@@ -1350,7 +1350,7 @@ function ItineraryResult() {
   const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
   // 일정 장소에서 시작한 Capture — 장소명 prefill + 공식 장소면 city_spot_id 관계.
   // 없으면(헤더·Day 완주 토스트 진입) 예전과 같은 자유 순간이다.
-  const [captureStop,     setCaptureStop]     = useState<{ placeName: string; citySpotId: number | null } | null>(null);
+  const [captureStop,     setCaptureStop]     = useState<{ placeName: string; citySpotId: number | null; stopKey: string | null } | null>(null);
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   // 카드가 그리는 것은 **공개 Story 가 내보낸 것**뿐이다. 소유자 목록(`moments`)을
   // 그대로 넘기면 공개하지 않기로 한 사진·메모가 카드에 들어간다.
@@ -3103,17 +3103,16 @@ function ItineraryResult() {
                                         </button>
                                         {/* 이 장소에서 순간 남기기 — 장소명과 공식 장소 id 를 들고 Capture 를 연다.
                                             그래야 Story 가 이 장소 항목을 정확히 개인화한다 (장소명 추측 결합 없음).
-                                            공식 장소(city_spot)에만 둔다 — 내 장소·숙소·직접 추가한 항목은 trip_moments 에
-                                            그 정체를 저장할 컬럼이 아직 없어(stop_key 미도입) 결합이 불가능하고, 여기서
-                                            열어 주면 같은 장소가 Story 에 기본 항목 + 자유 순간으로 두 번 보인다.
-                                            그 장소들의 기록은 헤더·Story 의 자유 순간으로 남긴다. */}
-                                        {(!shareId || isOwner) && itinId && stopCitySpotId(place) !== null && (
+                                            열쇠(stopKeyOf: 공식 장소·내 장소·행사 출처 키)가 있는 항목에만 둔다. 숙소처럼
+                                            출처 id 가 없는 항목은 결합할 수 없으므로 열지 않는다 — 열어 주면 같은 장소가
+                                            Story 에 기본 항목 + 자유 순간으로 두 번 보인다. 그런 기록은 자유 순간으로 남긴다. */}
+                                        {(!shareId || isOwner) && itinId && stopKeyOf(place) !== null && (
                                           <button
                                             type="button"
                                             onClick={(e) => {
                                               e.stopPropagation();
                                               setCaptureDay(day.dayNumber);
-                                              setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place) });
+                                              setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place), stopKey: stopKeyOf(place) });
                                               setCaptureOpen(true);
                                             }}
                                             aria-label={`${tMemo("addMemory")} · ${place.name}`}
@@ -3371,6 +3370,7 @@ function ItineraryResult() {
           dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
           initialPlaceName={captureStop?.placeName ?? null}
           citySpotId={captureStop?.citySpotId ?? null}
+          stopKey={captureStop?.stopKey ?? null}
           onSave={handleMomentSave}
           onClose={() => { setCaptureOpen(false); setCaptureDay(null); setCaptureStop(null); }}
         />

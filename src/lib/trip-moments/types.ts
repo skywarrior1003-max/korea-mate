@@ -31,6 +31,11 @@ export interface TripMoment {
   /** 공식 장소일 때만. 표시명의 정본이 아니라 나중에 Saved 로 옮길 때 쓰는 열쇠. */
   city_spot_id?: number | null;
   /**
+   * 일정 장소의 일반 열쇠(sourceKey 문법, migration 055). 그 장소에서 시작한
+   * 순간만 갖고, 자유 순간은 null. Story 가 day_number 와 함께 결합에 쓴다.
+   */
+  stop_key?:     string | null;
+  /**
    * 공개 Story 에 포함하기로 골랐는가. 기본 false.
    *
    * 이것만으로 공개되지 않는다 — 실제로 나가려면 이 값과
