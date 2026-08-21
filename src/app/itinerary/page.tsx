@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // TASK-STORY-LIVE-BASELINE-V1 — 같은 여행의 Story view (승인된 Story 화면 재사용)
 import StoryJournal from "@/components/story/StoryJournal";
 import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
+import { buildFocusSequence, findSlideIndex } from "@/lib/share/story-focus-core";
 import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
@@ -3309,7 +3310,17 @@ function ItineraryResult() {
 
       {/* Story 의 사진 확대 — 공개 Story 와 같은 Focus. 상호작용은 바꾸지 않는다 */}
       {storyFocus && (
-        <StoryMemoryFocus memory={storyFocus.m} startIndex={storyFocus.i} onClose={() => setStoryFocus(null)} />
+        (() => {
+          // 여행 전체를 한 줄로 — 누른 사진에서 시작해 Day·장소 순서대로 넘긴다
+          const slides = buildFocusSequence(storyDays);
+          return (
+            <StoryMemoryFocus
+              slides={slides}
+              startIndex={findSlideIndex(slides, storyFocus.m, storyFocus.i)}
+              onClose={() => setStoryFocus(null)}
+            />
+          );
+        })()
       )}
 
       <AdBanner />

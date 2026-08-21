@@ -42,7 +42,7 @@ test("V3: 끝난 여행의 일정은 읽기 전용 — 편집·추가·완주 �
 
 test("V4: Story view 는 승인된 StoryJournal/Focus 를 재사용한다", () => {
   assert.match(page, /<StoryJournal\s+days=\{storyDays\}/);
-  assert.match(page, /<StoryMemoryFocus memory=\{storyFocus\.m\}/);
+  assert.match(page, /<StoryMemoryFocus[\s\S]{0,160}slides=\{slides\}/);
 });
 
 test("V5: /my-trips — 끝난 여행 섹션은 Story, 카드는 같은 /itinerary?id", () => {

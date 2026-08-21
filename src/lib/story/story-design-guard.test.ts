@@ -149,8 +149,9 @@ test("★사진이 많으면 시안의 언어 안에서 +N 으로 접는다", ()
 // ── Focus ────────────────────────────────────────────────────────────────────
 test("★Focus 는 선형 progress 와 n / total 을 그대로 갖는다", () => {
   assert.match(FOCUS, /h-1 flex-1 bg-white\/30 rounded-full/);
-  assert.match(FOCUS, /photos\.map\(\(p, n\)/);
-  assert.match(FOCUS, /width: n <= i \? "100%" : "0%"/);
+  // 구간 progress 는 지금 장소의 사진 수만큼 — 여행 전체를 넘겨도 "이 곳에 몇 장" 은 그대로 보인다
+  assert.match(FOCUS, /Array\.from\(\{ length: current\.photoCount \}, \(_, n\)/);
+  assert.match(FOCUS, /width: n <= current\.photoIndex \? "100%" : "0%"/);
   assert.match(FOCUS, /\{i \+ 1\} \/ \{total\}/);
   assert.match(FOCUS, /Swipe/);
 });
@@ -163,7 +164,7 @@ test("★Focus 는 좌우 1/3 탭과 스와이프로 넘긴다", () => {
 });
 
 test("★긴 memo 를 데이터에서 잘라내지 않는다", () => {
-  assert.match(FOCUS, /\{memory\.memo\}/);
+  assert.match(FOCUS, /\{current\.memo\}/);
   assert.match(FOCUS, /overflow-y-auto/);
   assert.doesNotMatch(strip(FOCUS), /memo\.slice\(0,\s*\d+\)\s*\+/);
 });

@@ -27,7 +27,9 @@ test("M1 Journal 은 적은 글이 없으면 인용 줄을 그리지 않는다",
 });
 
 test("M2 Focus 도 같은 규칙이다", () => {
-  assert.match(FOCUS, /\{memory\.memo\.trim\(\) !== "" && \(/);
+  // Focus 는 여행 전체 슬라이드를 받는다(current) — 빈 글이면 인용 칸을 그리지 않는 규칙은 그대로다
+  assert.match(FOCUS, /const hasMemo = current\.memo\.trim\(\) !== ""/);
+  assert.match(FOCUS, /\{hasMemo && \(/);
 });
 
 test("M3 글이 없을 때 alt 로 빈 조각을 넣지 않는다", () => {

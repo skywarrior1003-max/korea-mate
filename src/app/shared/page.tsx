@@ -24,6 +24,7 @@ import StoryNavHide from "@/components/story/StoryNavHide";
 import StoryReport from "@/components/story/StoryReport";
 import StoryJournal from "@/components/story/StoryJournal";
 import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
+import { buildFocusSequence, findSlideIndex } from "@/lib/share/story-focus-core";
 import StorySummary from "@/components/story/StorySummary";
 import { PAGE_BG } from "@/components/story/story-tokens";
 import type { StoryMemory } from "@/components/story/story-types";
@@ -436,8 +437,10 @@ export default function SharedTripPage() {
 
         {storyFocus && (
           <StoryMemoryFocus
-            memory={storyFocus.m}
-            startIndex={storyFocus.i}
+            /* 공개 Story 도 여행 전체를 한 줄로 넘긴다 — 소유자 화면과 같은 감상 경험.
+               들어가는 것은 이미 공개 serializer 를 통과한 storyDays 뿐이다. */
+            slides={buildFocusSequence(storyDays)}
+            startIndex={findSlideIndex(buildFocusSequence(storyDays), storyFocus.m, storyFocus.i)}
             onClose={() => setStoryFocus(null)}
           />
         )}
