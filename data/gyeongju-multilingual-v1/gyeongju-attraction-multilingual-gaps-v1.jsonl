@@ -4,7 +4,6 @@
 {"candidate_id": "gyeongju-GJ01-0002", "locale": "en", "title_ko": "경주 문화원", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0002", "locale": "ja", "title_ko": "경주 문화원", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0002", "locale": "zh-CN", "title_ko": "경주 문화원", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0004", "locale": "en", "title_ko": "경주 월성", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0004", "locale": "ja", "title_ko": "경주 월성", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0004", "locale": "zh-CN", "title_ko": "경주 월성", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0005", "locale": "en", "title_ko": "경주읍성", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -13,12 +12,10 @@
 {"candidate_id": "gyeongju-GJ01-0006", "locale": "en", "title_ko": "경주최부자댁", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0006", "locale": "ja", "title_ko": "경주최부자댁", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0006", "locale": "zh-CN", "title_ko": "경주최부자댁", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0007", "locale": "en", "title_ko": "경주향교", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0007", "locale": "ja", "title_ko": "경주향교", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0007", "locale": "zh-CN", "title_ko": "경주향교", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0008", "locale": "ja", "title_ko": "교촌마을", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0008", "locale": "zh-CN", "title_ko": "교촌마을", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0009", "locale": "en", "title_ko": "국립경주박물관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0009", "locale": "ja", "title_ko": "국립경주박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0009", "locale": "zh-CN", "title_ko": "국립경주박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0010", "locale": "en", "title_ko": "금장대", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -54,7 +51,6 @@
 {"candidate_id": "gyeongju-GJ01-0021", "locale": "en", "title_ko": "봉황대", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0021", "locale": "ja", "title_ko": "봉황대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0021", "locale": "zh-CN", "title_ko": "봉황대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0022", "locale": "en", "title_ko": "분황사", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0022", "locale": "ja", "title_ko": "분황사", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0022", "locale": "zh-CN", "title_ko": "분황사", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0023", "locale": "en", "title_ko": "비단벌레 전기자동차", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -83,13 +79,11 @@
 {"candidate_id": "gyeongju-GJ01-0031", "locale": "en", "title_ko": "어서어서", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0031", "locale": "ja", "title_ko": "어서어서", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0031", "locale": "zh-CN", "title_ko": "어서어서", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0033", "locale": "en", "title_ko": "월정교", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0033", "locale": "ja", "title_ko": "월정교", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0033", "locale": "zh-CN", "title_ko": "월정교", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0034", "locale": "en", "title_ko": "중앙시장 야시장", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0034", "locale": "ja", "title_ko": "중앙시장 야시장", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0034", "locale": "zh-CN", "title_ko": "중앙시장 야시장", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0035", "locale": "en", "title_ko": "천마총", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0035", "locale": "ja", "title_ko": "천마총", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0035", "locale": "zh-CN", "title_ko": "천마총", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0036", "locale": "en", "title_ko": "첨성대", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -107,7 +101,6 @@
 {"candidate_id": "gyeongju-GJ01-0041", "locale": "en", "title_ko": "황룡사지", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0041", "locale": "ja", "title_ko": "황룡사지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0041", "locale": "zh-CN", "title_ko": "황룡사지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0042", "locale": "en", "title_ko": "황리단길", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0042", "locale": "ja", "title_ko": "황리단길", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0042", "locale": "zh-CN", "title_ko": "황리단길", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0044", "locale": "en", "title_ko": "히어로 키즈파크", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -146,7 +139,6 @@
 {"candidate_id": "gyeongju-GJ01-0055", "locale": "en", "title_ko": "서출지", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0055", "locale": "ja", "title_ko": "서출지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0055", "locale": "zh-CN", "title_ko": "서출지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0056", "locale": "en", "title_ko": "오릉", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0056", "locale": "ja", "title_ko": "오릉", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0056", "locale": "zh-CN", "title_ko": "오릉", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0057", "locale": "en", "title_ko": "용산서원", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -161,7 +153,6 @@
 {"candidate_id": "gyeongju-GJ01-0060", "locale": "en", "title_ko": "통일전", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0060", "locale": "ja", "title_ko": "통일전", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0060", "locale": "zh-CN", "title_ko": "통일전", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0061", "locale": "en", "title_ko": "통일전 은행나무길", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0061", "locale": "ja", "title_ko": "통일전 은행나무길", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0061", "locale": "zh-CN", "title_ko": "통일전 은행나무길", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0062", "locale": "en", "title_ko": "포석정", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -184,7 +175,6 @@
 {"candidate_id": "gyeongju-GJ01-0069", "locale": "en", "title_ko": "경주 이견대", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0069", "locale": "ja", "title_ko": "경주 이견대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0069", "locale": "zh-CN", "title_ko": "경주 이견대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0070", "locale": "en", "title_ko": "경주 주상절리 전망대", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0070", "locale": "ja", "title_ko": "경주 주상절리 전망대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0070", "locale": "zh-CN", "title_ko": "경주 주상절리 전망대", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0071", "locale": "en", "title_ko": "골굴사", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -198,13 +188,10 @@
 {"candidate_id": "gyeongju-GJ01-0074", "locale": "en", "title_ko": "나정고운모래해변", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0074", "locale": "ja", "title_ko": "나정고운모래해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0074", "locale": "zh-CN", "title_ko": "나정고운모래해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0075", "locale": "en", "title_ko": "문무대왕릉", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0075", "locale": "ja", "title_ko": "문무대왕릉", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0075", "locale": "zh-CN", "title_ko": "문무대왕릉", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0077", "locale": "en", "title_ko": "봉길대왕암해변", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0077", "locale": "ja", "title_ko": "봉길대왕암해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0077", "locale": "zh-CN", "title_ko": "봉길대왕암해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0079", "locale": "en", "title_ko": "오류고아라해변", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0079", "locale": "ja", "title_ko": "오류고아라해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0079", "locale": "zh-CN", "title_ko": "오류고아라해변", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0080", "locale": "en", "title_ko": "오류캠핑장", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -237,7 +224,6 @@
 {"candidate_id": "gyeongju-GJ01-0093", "locale": "en", "title_ko": "경주세계자동차박물관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0093", "locale": "ja", "title_ko": "경주세계자동차박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0093", "locale": "zh-CN", "title_ko": "경주세계자동차박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0094", "locale": "en", "title_ko": "경주월드", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0094", "locale": "ja", "title_ko": "경주월드", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0094", "locale": "zh-CN", "title_ko": "경주월드", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0095", "locale": "en", "title_ko": "경주타워", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -252,7 +238,6 @@
 {"candidate_id": "gyeongju-GJ01-0099", "locale": "en", "title_ko": "보문 물레방아 광장", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0099", "locale": "ja", "title_ko": "보문 물레방아 광장", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0099", "locale": "zh-CN", "title_ko": "보문 물레방아 광장", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0100", "locale": "en", "title_ko": "보문관광단지", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0100", "locale": "ja", "title_ko": "보문관광단지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0100", "locale": "zh-CN", "title_ko": "보문관광단지", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0101", "locale": "ja", "title_ko": "보문정", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
@@ -266,13 +251,11 @@
 {"candidate_id": "gyeongju-GJ01-0106", "locale": "en", "title_ko": "소노벨 경주 오션플레이", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0106", "locale": "ja", "title_ko": "소노벨 경주 오션플레이", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0106", "locale": "zh-CN", "title_ko": "소노벨 경주 오션플레이", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0107", "locale": "en", "title_ko": "솔거미술관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0107", "locale": "ja", "title_ko": "솔거미술관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0107", "locale": "zh-CN", "title_ko": "솔거미술관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0109", "locale": "en", "title_ko": "애니멀테마파크 주렁주렁", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0109", "locale": "ja", "title_ko": "애니멀테마파크 주렁주렁", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0109", "locale": "zh-CN", "title_ko": "애니멀테마파크 주렁주렁", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0110", "locale": "en", "title_ko": "우양미술관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0110", "locale": "ja", "title_ko": "우양미술관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0110", "locale": "zh-CN", "title_ko": "우양미술관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0114", "locale": "en", "title_ko": "진평왕릉", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -298,13 +281,11 @@
 {"candidate_id": "gyeongju-GJ01-0123", "locale": "zh-CN", "title_ko": "동리목월문학관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0124", "locale": "ja", "title_ko": "민속공예촌", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0124", "locale": "zh-CN", "title_ko": "민속공예촌", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0125", "locale": "en", "title_ko": "불국사", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0125", "locale": "ja", "title_ko": "불국사", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0125", "locale": "zh-CN", "title_ko": "불국사", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0126", "locale": "en", "title_ko": "불국사 박물관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0126", "locale": "ja", "title_ko": "불국사 박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0126", "locale": "zh-CN", "title_ko": "불국사 박물관", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0127", "locale": "en", "title_ko": "석굴암", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0127", "locale": "ja", "title_ko": "석굴암", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0127", "locale": "zh-CN", "title_ko": "석굴암", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0128", "locale": "en", "title_ko": "신라역사과학관", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -327,7 +308,6 @@
 {"candidate_id": "gyeongju-GJ01-0136", "locale": "en", "title_ko": "누군가의책방", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0136", "locale": "ja", "title_ko": "누군가의책방", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0136", "locale": "zh-CN", "title_ko": "누군가의책방", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0137", "locale": "en", "title_ko": "도리마을 은행나무숲", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0137", "locale": "ja", "title_ko": "도리마을 은행나무숲", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0137", "locale": "zh-CN", "title_ko": "도리마을 은행나무숲", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0138", "locale": "en", "title_ko": "독락당", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -370,10 +350,8 @@
 {"candidate_id": "gyeongju-GJ01-0154", "locale": "en", "title_ko": "키즈팜 막내농부", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0154", "locale": "ja", "title_ko": "키즈팜 막내농부", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0154", "locale": "zh-CN", "title_ko": "키즈팜 막내농부", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0155", "locale": "en", "title_ko": "화랑의 언덕(JTBC 캠핑클럽 촬영지)", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0155", "locale": "ja", "title_ko": "화랑의 언덕(JTBC 캠핑클럽 촬영지)", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0155", "locale": "zh-CN", "title_ko": "화랑의 언덕(JTBC 캠핑클럽 촬영지)", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-GJ01-0156", "locale": "en", "title_ko": "황성공원", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0156", "locale": "ja", "title_ko": "황성공원", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0156", "locale": "zh-CN", "title_ko": "황성공원", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-GJ01-0157", "locale": "en", "title_ko": "흥덕왕릉", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
@@ -520,7 +498,6 @@
 {"candidate_id": "gyeongju-KTO12-2599772", "locale": "en", "title_ko": "이상복명과 경주빵 숲머리점", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-KTO12-2599772", "locale": "ja", "title_ko": "이상복명과 경주빵 숲머리점", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-KTO12-2599772", "locale": "zh-CN", "title_ko": "이상복명과 경주빵 숲머리점", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
-{"candidate_id": "gyeongju-KTO12-2609826", "locale": "en", "title_ko": "경주 쌈밥거리", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-KTO12-2609826", "locale": "ja", "title_ko": "경주 쌈밥거리", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-KTO12-2609826", "locale": "zh-CN", "title_ko": "경주 쌈밥거리", "gap_type": "ACCESS_BLOCKED_KTO_403", "universe": 197, "noted_at": "2026-08-21"}
 {"candidate_id": "gyeongju-KTO12-2614474", "locale": "en", "title_ko": "골굴암 타포니 (경북 동해안 국가지질공원)", "gap_type": "NO_KTO_EN_MATCH", "universe": 197, "noted_at": "2026-08-21"}

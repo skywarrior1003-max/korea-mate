@@ -1,124 +1,122 @@
 {
-  "task": "TASK-GYEONGJU-FOOD-CLOSEOUT-AND-ATTRACTION-MULTILINGUAL-V1",
+  "task": "TASK-GYEONGJU-ATTRACTION-EN-ENTITY-RECONCILIATION-V1",
   "generated_at": "2026-08-21",
-  "sha_before": "fdf1acae1feaca21b0919f4ca516a0a98d6f8375",
-  "kto_en_type_mapping": {
-    "note": "EngService2 contenttypeid different from KorService2",
-    "attraction": "76 (관광지), 78 (문화시설), 75 (관광단지)",
-    "food": "82 (식당/특산품), 79 (시장)",
-    "accommodation": "80",
-    "event": "85"
-  },
-  "false_matches_removed": [
-    {
-      "kto_contentid": "268141",
-      "wrong_cid": "gyeongju-KTO12-231930",
-      "reason": "entity mismatch: 국립경주박물관 != 성덕대왕신종 (유물). GJ01-0009 exists but dist=124m > threshold."
-    },
-    {
-      "kto_contentid": "264260",
-      "wrong_cid": "gyeongju-GJ01-0131",
-      "reason": "entity mismatch: Seokguram Grotto != 토함산(Tohamsan Mountain). GJ01-0127 석굴암 exists but dist=596m > threshold."
-    },
-    {
-      "kto_contentid": "3494028",
-      "wrong_cid": "gyeongju-GJ01-0070",
-      "reason": "entity mismatch: Padosori Trail (파도소리길) != 경주 주상절리 전망대. No catalog entry for 파도소리길."
-    }
-  ],
+  "sha_before": "78ff4c34ecc969aa7db36a77c3799c119a04aa82",
   "food": {
     "food_universe": 102,
-    "pipeline_complete": true,
-    "source_audit_complete": true,
-    "deterministic_linked": 7,
+    "kto_en_restaurant_content_type": "type82 (식당/특산품), type79 (시장) — EngService2",
+    "kto_en_food_records_type82": 5,
+    "kto_en_food_records_type79": 2,
+    "kto_en_food_total": 7,
+    "kto_en_food_note": "Previous task used type39 (KorService2 code) which returned 0. Correct EngService2 codes are 82+79 -> 7 records found. Of these 7: Yosukgung1779 (GJ08-7510, 52m) already linked via VG phone matching. Remaining 6 are food zones/markets (Hwangnambbang, Cheonnyeonae, Neungpodawon, Sosomilmil-Seoak, Jungang Market, Seongdong Market) -- no catalog coord match within 80m. Food enrichment unchanged; SAFE_TO_CLOSE_GYEONGJU_FOOD=YES maintained.",
+    "kto_en_food_catalog_matched": 1,
+    "kto_en_food_matched_details": [
+      {
+        "candidate_id": "gyeongju-GJ08-7510",
+        "kto_food_contentid": "2363921",
+        "kto_food_type": "82",
+        "title_en": "Yosukgung 1779 (요석궁1779)",
+        "dist_m": 52
+      }
+    ],
     "vg_phone_confirmed": 7,
-    "kto_en_food_records": 0,
-    "rights_limited_gaps": 95,
-    "source_no_match_gap": 95,
+    "vg_description_rights": "RIGHTS_REVIEW_REQUIRED",
     "required_core_ready": 0,
-    "vg_description_rights_status": "RIGHTS_REVIEW_REQUIRED",
-    "optional_future_rights_outreach": "hjjoe06@hico.or.kr (HICO)",
     "safe_to_close_gyeongju_food": "YES",
     "per_locale": {
       "en": {
         "matched": 7,
-        "required_core_ready": 0,
         "coverage": "6.9%"
       },
       "ja": {
         "matched": 4,
-        "required_core_ready": 0,
         "coverage": "3.9%"
       },
       "zh-CN": {
         "matched": 6,
-        "required_core_ready": 0,
         "coverage": "5.9%"
       }
-    }
+    },
+    "kto_en_food_records_correction": "type39 query gave 0 (wrong code). type82+79 gives 7.",
+    "kto_en_food_yosukgung_note": "Yosukgung 1779 (KTO 2363921) -> GJ08-7510 coord 52m; already VG-linked, no enrichment change needed."
   },
   "attraction": {
     "attraction_universe": 197,
-    "source_audit": {
-      "kto_en": "EngService2 52 records (type 76+78+75), all with coord, 0 phone",
-      "kto_ja": "JpnService2 — HTTP_403 (confirmed two tasks)",
-      "kto_zh": "ChsService2 — HTTP_403 (confirmed two tasks)",
-      "vg": "NOT_AVAILABLE (visitgyeongju.or.kr covers 식당·기념품 only per source contract)",
-      "gyeongju_go_kr": "GOOGLE_TRANSLATE_ONLY — excluded per policy"
-    },
+    "kto_en_attraction_records": 52,
+    "matched_before": 13,
+    "false_match_removed": 3,
+    "new_entity_confirmed": 23,
+    "matched_after": 36,
+    "relation_context_only": 2,
+    "ambiguous": 4,
+    "no_canonical_entity": 9,
     "en": {
-      "kto_en_attraction_records": 52,
-      "kto_en_with_coord": 52,
-      "kto_en_with_phone": 0,
-      "matched_initial": 16,
-      "false_match_removed": 3,
-      "matched_confirmed": 13,
-      "ambiguous_mapping": 0,
-      "no_match": 39,
-      "false_match": 0,
-      "title_present": 13,
+      "title_present": 36,
       "description_present": 0,
-      "description_reuse_allowed": 13,
-      "rights_source": "공공데이터포털 KTO API 이용허락범위 제한없음",
+      "description_reuse_allowed": 36,
       "required_core_ready": 0,
-      "required_core_ready_note": "13 titles available but no EN descriptions from KTO detailCommon2",
-      "required_core_ready_pct": "0.0%",
-      "coverage_pct": "6.6%",
-      "gap_no_kto_match": 184
+      "coverage_pct": "18.3%",
+      "gap": 161
     },
     "ja": {
-      "matched_confirmed": 0,
-      "gap_type": "ACCESS_BLOCKED_KTO_403",
-      "required_core_ready": 0,
-      "coverage_pct": "0.0%"
+      "matched": 0,
+      "gap_type": "ACCESS_BLOCKED_KTO_403"
     },
     "zh-CN": {
-      "matched_confirmed": 0,
-      "gap_type": "ACCESS_BLOCKED_KTO_403",
-      "required_core_ready": 0,
-      "coverage_pct": "0.0%"
-    }
+      "matched": 0,
+      "gap_type": "ACCESS_BLOCKED_KTO_403"
+    },
+    "classification_detail": {
+      "MATCHED_CONFIRMED": 36,
+      "RELATION_CONTEXT_ONLY": {
+        "count": 2,
+        "records": [
+          "806320 Gyeongju Namsan Mountain — mountain area, sub-sites in catalog",
+          "264606 Gyeongju Golgulsa Temple — temple has sub-feature 골굴암 마애여래좌상 in catalog"
+        ]
+      },
+      "AMBIGUOUS": {
+        "count": 4,
+        "records": [
+          "3113183 Gyeongju Hanbokpan — commercial venue within 황리단길, entity unclear",
+          "3493257 Salon Heritage — within 엑스포대공원 complex, no catalog entity",
+          "2818678 Hwang Nyong Won — resort in Bomun area, no catalog entity",
+          "1963014 Gyeongju-si Special Tourist Zone — administrative designation"
+        ]
+      },
+      "NO_CANONICAL_ENTITY": {
+        "count": 9,
+        "records": [
+          "994021 Bomunho Lake",
+          "3493961 Bullidan Street",
+          "3423603 Gyeongbuk Millennium Forest Garden",
+          "3494028 Padosori Trail",
+          "3098009 Songdaemal Lighthouse",
+          "3493818 MCY PARK",
+          "1267886 Gyeongju Arts Center",
+          "985137 Rasunjae",
+          "3098017 Hwarang Institute",
+          "264265 Gyeongju National Park"
+        ]
+      }
+    },
+    "entity_aware_notes": [
+      "Bulguksa Temple (264261): GJ01-0125 at 1379m — entity UNESCO WH CLEAR, catalog coord requires review",
+      "Seokguram Grotto (264260): GJ01-0127 at 596m — entity UNESCO WH CLEAR, coord may reflect elevation/path difference",
+      "Gyeongju National Museum (268141): GJ01-0009 at 124m — entity clear, previously false-matched to 성덕대왕신종",
+      "Woljeonggyo Bridge (2669812): GJ01-0033 — entity clear from addr+name; catalog coord review needed"
+    ]
   },
   "overall": {
     "google_translate_used": "NO",
     "translation_used": "NO",
-    "false_match": 0,
-    "gyeongju_canonical_changed": 0,
-    "new_places_created": 0,
     "kto_403_bypass": "NO",
     "captcha_bypass": "NO",
+    "gyeongju_canonical_changed": 0,
+    "new_places_created": 0,
+    "safe_to_close_gyeongju_attraction_en": "YES",
     "safe_to_close_gyeongju_multilingual": "YES",
-    "residual_gaps": {
-      "food_en": "95/102 (VG rights/no-match)",
-      "attraction_en": "184/197 (no KTO EN coord match within 80m)",
-      "attraction_ja": "197/197 (KTO 403)",
-      "attraction_zh": "197/197 (KTO 403)"
-    },
-    "next_opportunities": [
-      "VG rights inquiry for food description (hjjoe06@hico.or.kr)",
-      "KTO JA/ZH API authorization",
-      "UNESCO/cultural heritage official EN expanded coverage",
-      "Increase coord threshold or use alternate identifier linkage for the 3 false-match entities"
-    ]
+    "task_result": "PASS",
+    "next_recommended_task": "TASK-BUSAN-MULTILINGUAL-COLLECTION-V1"
   }
 }
