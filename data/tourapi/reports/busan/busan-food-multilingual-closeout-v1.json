@@ -1,30 +1,232 @@
 {
-  "task": "TASK-BUSAN-FOOD-TASTE-OF-BUSAN-2026-MULTILINGUAL-CROSSWALK-V1",
-  "generated_at": "2026-08-21",
-  "sha_before_crosswalk": "5d35908",
-  "canonical_total": 194,
-  "matched_en": 142,
-  "matched_ja": 137,
-  "matched_zh_cn": 144,
-  "coverage_en": "142/194 (73.2%)",
-  "coverage_ja": "137/194 (70.6%)",
-  "coverage_zh_cn": "144/194 (74.2%)",
-  "source_6260000_en": 118,
-  "source_6260000_ja": 118,
-  "source_6260000_zh_cn": 107,
-  "tob_pdf_new_en": 24,
-  "tob_pdf_new_ja": 19,
-  "tob_pdf_new_zh": 37,
-  "tob_pdf_matched": 135,
+  "task": "TASK-BUSAN-FOOD-MULTILINGUAL-FINAL-CLOSEOUT-V1",
+  "base_task": "TASK-BUSAN-FOOD-TASTE-OF-BUSAN-2026-MULTILINGUAL-CROSSWALK-V1",
+  "sha_base": "75ef719",
+  "food_universe": 194,
   "ambiguous": 1,
-  "no_match": 75,
+  "branch": "data/busan-multilingual-v1",
+  "terminology": {
+    "OFFICIAL_TITLE_LINKED": "canonical records that have at least one official locale title from any approved source (6260000 FoodService OR TOB PDF). Includes REQUIRED_CORE_READY + TITLE_ONLY_RIGHTS_LIMITED + SOURCE_NO_LOCALE records where title was recovered.",
+    "REQUIRED_CORE_READY": "records with both official title AND production-ready description. Source: Busan6260000_FoodService only (short_description field present). TOB PDF titles are RIGHTS_REVIEW_REQUIRED for descriptions → NOT counted here.",
+    "TITLE_ONLY_RIGHTS_LIMITED": "records with official title from TOB PDF but no production-ready locale description (TOB PDF descriptions are RIGHTS_REVIEW_REQUIRED per 부산광역시 copyright guidance). Includes 10 records that ARE in 6260000 for EN/JA but not in ZhS subset, and received ZH title from TOB PDF.",
+    "SOURCE_NO_LOCALE": "records with 6260000 match confirmed but the locale-specific endpoint returned no data AND no TOB PDF title is available. ZH only (ZhS subset does not include all Food records).",
+    "CANONICAL_UNRESOLVED": "records not covered by any official locale source for this locale. Not in 6260000 FoodService endpoint for this locale, not matched to TOB PDF, and no other approved source.",
+    "AMBIGUOUS": "records with ambiguous 6260000 match; excluded from REQUIRED_CORE_READY and TITLE_ONLY; counted separately."
+  },
+  "official_title_linked": {
+    "en": 142,
+    "en_pct": 73.2,
+    "en_detail": "118 (6260000 FoodService title+desc) + 24 (TOB PDF title-only)",
+    "ja": 137,
+    "ja_pct": 70.6,
+    "ja_detail": "118 (6260000 FoodService title+desc) + 19 (TOB PDF title-only)",
+    "zh_cn": 144,
+    "zh_cn_pct": 74.2,
+    "zh_cn_detail": "107 (6260000 ZhS title+desc) + 37 (TOB ZH title: 27 TOB-only + 10 filled ZhS gap)"
+  },
+  "required_core_ready": {
+    "en": 118,
+    "en_pct": 60.8,
+    "ja": 118,
+    "ja_pct": 60.8,
+    "zh_cn": 107,
+    "zh_cn_pct": 55.2,
+    "source": "Busan6260000_FoodService (getFoodEn / getFoodJa / getFoodZhS endpoints)",
+    "note": "All 343 6260000 enrichment records have short_description field populated (required_core_ready=True). 118 EN + 118 JA + 107 ZH = 343 records."
+  },
+  "gap_arithmetic": {
+    "formula": "REQUIRED_CORE_READY + TITLE_ONLY_RIGHTS_LIMITED + SOURCE_NO_LOCALE + CANONICAL_UNRESOLVED + AMBIGUOUS = UNIVERSE (194)",
+    "en": {
+      "REQUIRED_CORE_READY": 118,
+      "TITLE_ONLY_RIGHTS_LIMITED": 24,
+      "SOURCE_NO_LOCALE": 0,
+      "CANONICAL_UNRESOLVED": 51,
+      "AMBIGUOUS": 1,
+      "TOTAL": 194,
+      "GAP_ARITHMETIC_VALID": true
+    },
+    "ja": {
+      "REQUIRED_CORE_READY": 118,
+      "TITLE_ONLY_RIGHTS_LIMITED": 19,
+      "SOURCE_NO_LOCALE": 0,
+      "CANONICAL_UNRESOLVED": 56,
+      "AMBIGUOUS": 1,
+      "TOTAL": 194,
+      "GAP_ARITHMETIC_VALID": true
+    },
+    "zh_cn": {
+      "REQUIRED_CORE_READY": 107,
+      "TITLE_ONLY_RIGHTS_LIMITED": 37,
+      "SOURCE_NO_LOCALE": 1,
+      "CANONICAL_UNRESOLVED": 48,
+      "AMBIGUOUS": 1,
+      "TOTAL": 194,
+      "GAP_ARITHMETIC_VALID": true,
+      "zh_cn_title_only_detail": {
+        "TOB_only_new": 27,
+        "six260000_no_zhs_filled_by_tob": 10,
+        "total": 37,
+        "source_no_locale_remaining_after_tob": 1
+      }
+    }
+  },
+  "source_provenance": {
+    "note": "Canonical ID-level provenance across all 194 records, locale-agnostic.",
+    "six260000_matched": 118,
+    "tob_pdf_matched": 135,
+    "BOTH": 105,
+    "six260000_ONLY": 13,
+    "TOB_ONLY": 30,
+    "NEITHER": 46,
+    "TOTAL_CHECK": "105+13+30+46=194",
+    "SOURCE_CONFLICT_ALT_EN": 85,
+    "SOURCE_CONFLICT_ALT_NOTE": "85 canonical records have BOTH 6260000 EN title AND TOB PDF EN alt-title. These are stored as TasteOfBusan2026_PDF_ALT content_type for reference only. Production title = 6260000 source."
+  },
+  "tob_pdf_manifest": {
+    "pdf_title": "부산의맛 2026",
+    "publisher": "부산광역시",
+    "total_restaurants_in_pdf": 147,
+    "matched_to_canonical": 135,
+    "unmatched_in_pdf": 12,
+    "rights_titles": "REUSE_ALLOWED (저작권법 제7조 사실정보)",
+    "rights_descriptions": "RIGHTS_REVIEW_REQUIRED",
+    "manifest_file": "data/tourapi/multilingual/busan/busan-food-tob-pdf-source-manifest-v1.json"
+  },
+  "mat2026_subset": {
+    "guide_source_field": "busan-mat-2026",
+    "canonical_count": 119,
+    "pdf_matched": 111,
+    "pdf_matched_pct": 93.3,
+    "pdf_unmatched": 8,
+    "pdf_unmatched_reason_breakdown": {
+      "PDF_MATCH_FAILED_6260000_LINKED": 4,
+      "PDF_MATCH_FAILED_NO_SECONDARY_SOURCE": 4
+    },
+    "unmatched_records": [
+      {
+        "cid": "busan-G-00001",
+        "name_ko": "마파람해물찜해물탕 구서본점",
+        "name_en": "Maparam Haemul Jjim",
+        "current_state": "ACTIVE",
+        "in_6260000": true,
+        "reason": "PDF_MATCH_FAILED_6260000_LINKED",
+        "reason_detail": "Phone/address matching did not align with any PDF entry; branch name (구서본점) may differ from PDF canonical name."
+      },
+      {
+        "cid": "busan-G-00005",
+        "name_ko": "부산대 포맨티코 본점",
+        "name_en": "PNU Fomentiko",
+        "current_state": "ACTIVE",
+        "in_6260000": true,
+        "reason": "PDF_MATCH_FAILED_6260000_LINKED",
+        "reason_detail": "Name/phone matching below threshold in PDF matching pass."
+      },
+      {
+        "cid": "busan-G-00008",
+        "name_ko": "당미옥 한우곰탕 온천본점",
+        "name_en": "Dangmiok Beef Bone Soup",
+        "current_state": "ACTIVE",
+        "in_6260000": false,
+        "reason": "PDF_MATCH_FAILED_NO_SECONDARY_SOURCE",
+        "reason_detail": "Not in 6260000 FoodService; no phone/address anchor for PDF matching."
+      },
+      {
+        "cid": "busan-G-00037",
+        "name_ko": "오스테리아 어부",
+        "name_en": "Osteria Eoboo",
+        "current_state": "ACTIVE",
+        "in_6260000": false,
+        "reason": "PDF_MATCH_FAILED_NO_SECONDARY_SOURCE",
+        "reason_detail": "Not in 6260000 FoodService; phone field absent from canonical record."
+      },
+      {
+        "cid": "busan-G-00063",
+        "name_ko": "신도랩2.0",
+        "name_en": "Shindo Lab 2.0",
+        "current_state": "ACTIVE",
+        "in_6260000": true,
+        "reason": "PDF_MATCH_FAILED_6260000_LINKED",
+        "reason_detail": "Special character '2.0' in name may have caused PDF name normalization mismatch."
+      },
+      {
+        "cid": "busan-G-00068",
+        "name_ko": "양산국밥",
+        "name_en": "Yangsan Gukbap",
+        "current_state": "ACTIVE",
+        "in_6260000": false,
+        "reason": "PDF_MATCH_FAILED_NO_SECONDARY_SOURCE",
+        "reason_detail": "Not in 6260000 FoodService; no secondary source for matching."
+      },
+      {
+        "cid": "busan-G-00151",
+        "name_ko": "비스트로 정재집",
+        "name_en": "Bistro Jeongjae House",
+        "current_state": "ACTIVE",
+        "in_6260000": false,
+        "reason": "PDF_MATCH_FAILED_NO_SECONDARY_SOURCE",
+        "reason_detail": "Not in 6260000 FoodService; no secondary source for matching."
+      },
+      {
+        "cid": "busan-G-00182",
+        "name_ko": "동삼정",
+        "name_en": "Dongsamjeong",
+        "current_state": "ACTIVE",
+        "in_6260000": true,
+        "reason": "PDF_MATCH_FAILED_6260000_LINKED",
+        "reason_detail": "Name/phone matching below threshold in PDF matching pass."
+      }
+    ]
+  },
+  "enrichment_file_stats": {
+    "path": "data/tourapi/multilingual/busan/busan-food-multilingual-enrichment-v1.jsonl",
+    "total_lines": 508,
+    "six260000_official_native": 343,
+    "tob_pdf_official_title": 80,
+    "tob_pdf_alt_title": 85,
+    "locale_breakdown": {
+      "en": {
+        "six260000": 118,
+        "tob_official": 24,
+        "tob_alt": 85
+      },
+      "ja": {
+        "six260000": 118,
+        "tob_official": 19,
+        "tob_alt": 0
+      },
+      "zh_cn": {
+        "six260000": 107,
+        "tob_official": 37,
+        "tob_alt": 0
+      }
+    }
+  },
+  "qa_checklist": {
+    "FOOD_UNIVERSE_CONFIRMED": "194",
+    "AMBIGUOUS_COUNT": "1",
+    "GAP_ARITHMETIC_EN": "118+24+0+51+1=194 PASS",
+    "GAP_ARITHMETIC_JA": "118+19+0+56+1=194 PASS",
+    "GAP_ARITHMETIC_ZH": "107+37+1+48+1=194 PASS",
+    "OFFICIAL_TITLE_LINKED_EN": "142/194 (73.2%)",
+    "OFFICIAL_TITLE_LINKED_JA": "137/194 (70.6%)",
+    "OFFICIAL_TITLE_LINKED_ZH": "144/194 (74.2%)",
+    "REQUIRED_CORE_READY_EN": "118/194 (60.8%)",
+    "REQUIRED_CORE_READY_JA": "118/194 (60.8%)",
+    "REQUIRED_CORE_READY_ZH": "107/194 (55.2%)",
+    "SOURCE_PROVENANCE_SUM": "105+13+30+46=194 PASS",
+    "mat2026_CANONICAL_COUNT": "119",
+    "mat2026_PDF_MATCHED": "111/119 (93.3%)",
+    "mat2026_PDF_UNMATCHED": "8 (classified by reason)",
+    "TOB_PDF_RESTAURANTS": "147 in PDF / 135 matched / 12 unmatched in PDF",
+    "ENRICHMENT_LINES": "508",
+    "NO_AI_MACHINE_TRANSLATION_USED": "CONFIRMED",
+    "NO_FUZZY_MATCHING_USED": "CONFIRMED",
+    "NO_CANONICAL_MODIFIED": "CONFIRMED",
+    "NO_EXISTING_AI_EN_DELETED": "CONFIRMED",
+    "RIGHTS_COMPLIANCE": "6260000=PRODUCTION_READY; TOB_TITLE=REUSE_ALLOWED; TOB_DESC=RIGHTS_REVIEW_REQUIRED",
+    "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES"
+  },
   "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES",
-  "notes": [
-    "EN/ZH/JA title: REUSE_ALLOWED from official TasteOfBusan2026 PDF",
-    "Description: RIGHTS_REVIEW_REQUIRED (not included)",
-    "ZH: TOC sequential list page 12 ZH+JA PDF (146 entries, aligned with KO 146)",
-    "JA: page-header extraction; sequential JA page 13 skips Gangseo-gu (4-entry offset)",
-    "JA excluded: busan-G-00094 (갓포현) confirmed mis-assignment",
-    "75 NO_MATCH confirmed not in 6260000 FoodService"
-  ]
+  "FINAL_STATUS": "COMPLETE",
+  "TASK_ID": "TASK-BUSAN-FOOD-MULTILINGUAL-FINAL-CLOSEOUT-V1"
 }
