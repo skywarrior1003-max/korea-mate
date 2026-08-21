@@ -148,5 +148,26 @@
     "로밍/SIM 카드 안내 (공식 포털 미제공)",
     "Muslim-friendly 가이드 (visitbusan.net 별도 페이지 확인 필요)",
     "accessibility guide (별도 접근 필요 — 큰글씨 지도 외 상세 접근성 정보 미확인)"
-  ]
+  ],
+
+  "ja_zh_utility_coverage": {
+    "task": "TASK-BUSAN-REGIONAL-JA-ZH-GUIDE-UTILITY-GAP-CLOSE-V1",
+    "verified_at": "2026-08-21",
+    "visitbusan_utility_page_ja": {
+      "url_tested": "https://www.visitbusan.net/index.do?menuCd=DOM_000000303012002000&lang_cd=ja",
+      "result": "SOURCE_LOCALE_FALLBACK_TO_EN",
+      "note": "lang_cd=ja 파라미터로 접근 시 EN 콘텐츠 반환. 별도 JA 유틸리티 전용 페이지 없음."
+    },
+    "visitbusan_utility_page_zh": {
+      "url_tested": "https://www.visitbusan.net/index.do?menuCd=DOM_000000303012002000&lang_cd=zh_S",
+      "result": "SOURCE_LOCALE_FALLBACK_TO_EN",
+      "note": "lang_cd=zh_S 파라미터로 접근 시 EN 콘텐츠 반환. 별도 zh-CN 유틸리티 전용 페이지 없음."
+    },
+    "coverage_conclusion": {
+      "ja_utility_coverage": "NO_SEPARATE_JA_PAGE — visitbusan.net 교통/실용정보 페이지는 JA 별도 버전 없음. 정보 자체는 KO/EN 기반으로 확인됨.",
+      "zh_cn_utility_coverage": "NO_SEPARATE_ZH_PAGE — visitbusan.net 교통/실용정보 페이지는 zh-CN 별도 버전 없음. 정보 자체는 KO/EN 기반으로 확인됨.",
+      "exception_hotline": "busan-U-007 (1330 한국관광공사 다국어 핫라인)은 실제 서비스가 KO/EN/JA/zh-CN 다국어 지원. locale_availability=['ko','en','ja','zh-CN'] 유지.",
+      "action_required": "NONE — 현행 locale_availability 필드 변경 불필요. JA/ZH 방문자용 별도 유틸리티 원본 페이지 부재 사실을 이 필드에 기록함."
+    }
+  }
 }
