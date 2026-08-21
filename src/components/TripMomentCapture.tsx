@@ -14,6 +14,14 @@ interface Props {
   deviceId:    string;
   dayNumber:   number | null;
   /**
+   * 일정 장소에서 시작한 순간 (TASK-TRIP-MOMENT-STOP-BINDING-V1).
+   * 장소명은 미리 채워 두고, 공식 장소의 `city_spot_id` 는 화면에 보이지 않는
+   * 관계로 싣는다. 사용자가 문구·사진을 고쳐도 관계는 그대로다. 둘 다 없으면
+   * 예전과 같은 자유 순간이다 — 자유 입력은 그대로 남는다.
+   */
+  initialPlaceName?: string | null;
+  citySpotId?:       number | null;
+  /**
    * 로컬 저장 성공 여부를 반환한다.
    * 오프라인 우선 구조라 서버 동기화 실패는 "저장 실패"가 아니며,
    * 로컬 저장이 된 경우 true 를 돌려 모달을 닫는다.
@@ -22,7 +30,7 @@ interface Props {
   onClose:     () => void;
 }
 
-export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, onSave, onClose }: Props) {
+export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, initialPlaceName, citySpotId, onSave, onClose }: Props) {
   const t = useTranslations("memo");
   const [photoData,    setPhotoData]    = useState<string | null>(null);
   /**
@@ -37,7 +45,7 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
    * 장소 이름. 선택 사항이다 — 여행 중 사진을 남기는 흐름을 막지 않는다.
    * 좌표(`location_label`)와 다른 값이다. 비워 두면 저장하지 않는다.
    */
-  const [placeName,    setPlaceName]    = useState("");
+  const [placeName,    setPlaceName]    = useState(() => (initialPlaceName ?? "").trim());
   const [category,     setCategory]     = useState<MomentCategory>("random");
   const [lat,          setLat]          = useState<number | null>(null);
   const [lng,          setLng]          = useState<number | null>(null);
@@ -139,6 +147,8 @@ export default function TripMomentCapture({ itineraryId, deviceId, dayNumber, on
       day_number:     dayNumber,
       synced:         false,
       ...(placeName.trim() ? { place_name: placeName.trim() } : {}),
+      // 일정 장소와의 안정 관계 — 사진 수와 무관하게 Moment 당 하나
+      ...(typeof citySpotId === "number" ? { city_spot_id: citySpotId } : {}),
       ...(extraPhotos.length > 0 ? { photo_data_extra: extraPhotos } : {}),
     };
     setErrorKey(null);

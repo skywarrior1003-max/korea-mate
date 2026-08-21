@@ -7,6 +7,7 @@ import StoryMemoryFocus from "@/components/story/StoryMemoryFocus";
 import type { StoryMemory } from "@/components/story/story-types";
 import { PAGE_BG as STORY_PAGE_BG } from "@/components/story/story-tokens";
 import { buildPrivateStoryDays, isPastTrip as isPastTripByDate } from "@/lib/share/private-story-adapter";
+import { stopCitySpotId } from "@/lib/trip-moments/stop-binding";
 import { TRIP_FLOW_COMMERCE_ENABLED, POST_PLAN_COMMERCE_ENABLED } from "@/config/commerce-surfaces";
 import { resolveOffer } from "@/lib/affiliate-resolve";
 import { useTranslations, useLocale } from "next-intl";
@@ -1301,6 +1302,9 @@ function ItineraryResult() {
   })();
   const [captureOpen,     setCaptureOpen]     = useState(false);
   const [captureDay,      setCaptureDay]      = useState<number | null>(null); // Capture 기본 선택 day
+  // 일정 장소에서 시작한 Capture — 장소명 prefill + 공식 장소면 city_spot_id 관계.
+  // 없으면(헤더·Day 완주 토스트 진입) 예전과 같은 자유 순간이다.
+  const [captureStop,     setCaptureStop]     = useState<{ placeName: string; citySpotId: number | null } | null>(null);
   const [storyExportOpen, setStoryExportOpen] = useState(false);
   // 카드가 그리는 것은 **공개 Story 가 내보낸 것**뿐이다. 소유자 목록(`moments`)을
   // 그대로 넘기면 공개하지 않기로 한 사진·메모가 카드에 들어간다.
@@ -1884,6 +1888,7 @@ function ItineraryResult() {
       if (!r.localSaved) return false;          // 이때만 모달 유지 + 오류 표시
       setCaptureOpen(false);
       setCaptureDay(null);
+      setCaptureStop(null);
       return true;
     } catch {
       // 서버 원문 오류·Storage 경로는 사용자에게 노출하지 않는다
@@ -3046,6 +3051,23 @@ function ItineraryResult() {
                                         >
                                           {visited.has(visitedPlaceKey(day.dayNumber, place)) ? "✓ " : "○ "}{t("visited")}
                                         </button>
+                                        {/* 이 장소에서 순간 남기기 — 장소명과 공식 장소 id 를 들고 Capture 를 연다.
+                                            그래야 Story 가 이 장소 항목을 정확히 개인화한다 (장소명 추측 결합 없음). */}
+                                        {(!shareId || isOwner) && itinId && (
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setCaptureDay(day.dayNumber);
+                                              setCaptureStop({ placeName: place.name, citySpotId: stopCitySpotId(place) });
+                                              setCaptureOpen(true);
+                                            }}
+                                            aria-label={`${tMemo("addMemory")} · ${place.name}`}
+                                            className="text-xs font-bold px-2.5 py-1 rounded-full border border-line bg-white text-sub/70 hover:border-sub/40 transition-colors cursor-pointer"
+                                          >
+                                            + {tMemo("addMemory")}
+                                          </button>
+                                        )}
                                       </div>
                                       <div className="flex items-start gap-3">
                                         {hasRealSpotImage(place.cartSnapshot?.image) && (
@@ -3292,8 +3314,10 @@ function ItineraryResult() {
           itineraryId={itinId}
           deviceId={getDeviceId()}
           dayNumber={captureDay ?? (days.length > 0 ? 1 : null)}
+          initialPlaceName={captureStop?.placeName ?? null}
+          citySpotId={captureStop?.citySpotId ?? null}
           onSave={handleMomentSave}
-          onClose={() => { setCaptureOpen(false); setCaptureDay(null); }}
+          onClose={() => { setCaptureOpen(false); setCaptureDay(null); setCaptureStop(null); }}
         />
       )}
 
