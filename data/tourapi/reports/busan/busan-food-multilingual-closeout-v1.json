@@ -276,31 +276,19 @@
   },
   "required_core_ready_updated": {
     "en": {
-      "count": 148,
+      "count": 142,
       "total": 194,
-      "pct": 76.3
+      "pct": 73.2
     },
     "ja": {
-      "count": 147,
+      "count": 137,
       "total": 194,
-      "pct": 75.8
+      "pct": 70.6
     },
     "zh-CN": {
-      "count": 147,
+      "count": 144,
       "total": 194,
-      "pct": 75.8
-    },
-    "source_breakdown": {
-      "6260000": {
-        "en": 118,
-        "ja": 118,
-        "zh-CN": 107
-      },
-      "tob_new": {
-        "en": 30,
-        "ja": 29,
-        "zh-CN": 40
-      }
+      "pct": 74.2
     }
   },
   "gap_arithmetic_updated": {
@@ -322,6 +310,76 @@
       "excluded_wrong_cid": 1,
       "neither": 46,
       "ambiguous": 1
+    }
+  },
+  "coverage_invariant_qa": {
+    "task": "TASK-BUSAN-FOOD-MULTILINGUAL-COVERAGE-INVARIANT-QA-V1",
+    "sha_before": "321d6d2",
+    "root_cause": "REQUIRED_CORE_READY was overcounted: the previous write script used tob_desc_cids - six_core_en (description-only check), which included TOB_ONLY canonicals with EN description but NO EN title. Correct computation requires intersection: title_cids & desc_cids per locale.",
+    "recomputed": true,
+    "food_universe": 194,
+    "invariant": "REQUIRED_CORE_READY <= OFFICIAL_TITLE_LINKED (per locale)",
+    "final_en": {
+      "OFFICIAL_TITLE_LINKED": 142,
+      "REQUIRED_CORE_READY": 142,
+      "invariant_ok": true,
+      "pct_title_linked": 73.2,
+      "pct_core_ready": 73.2,
+      "gap": {
+        "core_ready": 142,
+        "title_only_no_desc": 0,
+        "desc_only_no_title": 6,
+        "no_source": 46,
+        "sum": 194,
+        "valid": true
+      }
+    },
+    "final_ja": {
+      "OFFICIAL_TITLE_LINKED": 137,
+      "REQUIRED_CORE_READY": 137,
+      "invariant_ok": true,
+      "pct_title_linked": 70.6,
+      "pct_core_ready": 70.6,
+      "gap": {
+        "core_ready": 137,
+        "title_only_no_desc": 0,
+        "desc_only_no_title": 10,
+        "no_source": 47,
+        "sum": 194,
+        "valid": true
+      }
+    },
+    "final_zh-CN": {
+      "OFFICIAL_TITLE_LINKED": 144,
+      "REQUIRED_CORE_READY": 144,
+      "invariant_ok": true,
+      "pct_title_linked": 74.2,
+      "pct_core_ready": 74.2,
+      "gap": {
+        "core_ready": 144,
+        "title_only_no_desc": 0,
+        "desc_only_no_title": 3,
+        "no_source": 47,
+        "sum": 194,
+        "valid": true
+      }
+    }
+  },
+  "official_title_linked_verified": {
+    "en": {
+      "count": 142,
+      "total": 194,
+      "pct": 73.2
+    },
+    "ja": {
+      "count": 137,
+      "total": 194,
+      "pct": 70.6
+    },
+    "zh-CN": {
+      "count": 144,
+      "total": 194,
+      "pct": 74.2
     }
   }
 }
