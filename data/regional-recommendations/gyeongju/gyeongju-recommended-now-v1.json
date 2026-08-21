@@ -1,0 +1,143 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-GYEONGJU-V1",
+  "section": "recommended_now",
+  "generated_at": "2026-08-21",
+  "city": "gyeongju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "현재성 기준일: 2026-08-21. 공식 source에서 현재 강조하거나 실제 운영 중인 항목만 포함. evergreen 장소는 명시적 시즌 근거 없이 recommended_now 처리하지 않음.",
+
+  "stale_or_excluded": [
+    {
+      "name": "경주 벚꽃축제",
+      "typical_dates": "4월 초",
+      "reason": "봄 한정 계절 행사. 기준일(2026-08-21) 비해당."
+    },
+    {
+      "name": "경주 신라도기축제",
+      "typical_dates": "4월 말",
+      "reason": "봄 한정 계절 행사. 기준일 비해당."
+    },
+    {
+      "name": "신라문화제 (신라문화축전)",
+      "typical_dates": "10월",
+      "reason": "가을 한정. 기준일 비해당."
+    },
+    {
+      "name": "에밀레 신라종소리축제",
+      "typical_dates": "10월",
+      "reason": "가을 한정. 기준일 비해당."
+    },
+    {
+      "name": "경주국제뮤직페스티벌",
+      "typical_dates": "7월 말~8월 초",
+      "reason": "기준일(2026-08-21) 기준 대체로 종료 또는 종료 근접. 정확한 2026년 일정 공식 미확인. 안전하게 excluded 처리."
+    },
+    {
+      "name": "양윤정 <낙원-정원> 전시",
+      "dates": "2026-08-11 ~ 2026-08-23",
+      "reason": "기준일(2026-08-21) 활성 중이나 2일 후 종료(8-23). 단기 개인 전시로 현재 추천에 부적합."
+    }
+  ],
+
+  "final_recommended_now": [
+    {
+      "item_id": "gyeongju-RN-001",
+      "status": "FINAL",
+      "name_ko": "2026 봉황대뮤직스퀘어 (8월 시리즈)",
+      "name_en": "2026 Bonghwangdae Music Square — August Series",
+      "category": "야외 공연·음악회",
+      "why_now": "2026년 5~10월 매주 금요일 야간 상설공연으로 운영되는 경주시 공식 야외 음악 시리즈. 8월 시리즈(8월 14~28일)가 현재 진행 중. 봉황대 특설무대에서 다양한 장르 공연.",
+      "official_evidence": "경주시 공식 관광포털 문화행사 > 공연·전시 페이지(mnu_uid=2716) 등재. 경주시 직접 주관.",
+      "valid_from": "2026-08-14",
+      "valid_to": "2026-08-28",
+      "review_by": "2026-10-31",
+      "organizer": "경주시",
+      "contact": "054-748-7721",
+      "seasonality_note": "5월~10월 금요일 연속 시리즈. 9~10월 공연도 예정.",
+      "existing_canonical_id": null,
+      "new_place_candidate": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "gyeongju-RN-002",
+      "status": "FINAL",
+      "name_ko": "2026 한수원아트페스티벌 특별전 <한국 미술, 조선 후기부터 현대까지>",
+      "name_en": "2026 KHNP Art Festival Special Exhibition: Korean Art from Late Joseon to the Present",
+      "category": "미술 전시",
+      "why_now": "경주 알천미술관(4층 Hae 갤러리)에서 2026년 6월 30일~10월 18일 진행 중인 대형 기획전. 조선 후기~현대까지 한국 미술사를 조망. 기준일 현재 운영 중.",
+      "official_evidence": "경주시 공식 관광포털 문화행사 월별행사(mnu_uid=2393) 등재. 경주예술의전당 알천미술관 Hae 갤러리 공식 프로그램.",
+      "valid_from": "2026-06-30",
+      "valid_to": "2026-10-18",
+      "review_by": "2026-10-18",
+      "organizer": "경주예술의전당 / 한국수력원자력",
+      "venue": "경주예술의전당 알천미술관 Hae 갤러리 4층",
+      "existing_canonical_id": null,
+      "new_place_candidate": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2393&code_uid=300",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "gyeongju-RN-003",
+      "status": "FINAL",
+      "name_ko": "FLYING — 경주 대표 넌버벌 퍼포먼스",
+      "name_en": "FLYING — Gyeongju's Signature Non-verbal Performance",
+      "category": "공연 (비언어극)",
+      "why_now": "체조·리듬스포츠·무술·무용을 결합한 비언어 공연. 4월~연말 상설 운영 중. 외국인 여행자에게 언어 장벽 없이 즐길 수 있는 경주 대표 퍼포먼스로 공식 포털에 연중 상설로 안내됨.",
+      "official_evidence": "경주시 공식 관광포털 공연·전시 페이지 상설공연으로 등재. 경주세계문화엑스포 문화센터 운영.",
+      "valid_from": "2026-04-01",
+      "valid_to": "2026-12-31",
+      "review_by": "2027-01-01",
+      "organizer": "경주세계문화엑스포",
+      "contact": "054-775-0815",
+      "venue": "경주세계문화엑스포 문화센터",
+      "existing_canonical_id": "gyeongju-GJ01-0093",
+      "id_note": "gyeongju-GJ01-0093: 경주세계문화엑스포박물관 계열 canonical. FLYING 전용 ID 불명. 추후 확인 권장.",
+      "new_place_candidate": false,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "reserve_recommended_now": [
+    {
+      "item_id": "gyeongju-RN-R01",
+      "status": "RESERVE",
+      "name_ko": "동궁과 월지 야간 조명",
+      "name_en": "Donggung Palace & Wolji Pond — Night Illumination",
+      "category": "야간관광 (연중 상설)",
+      "why_now": "경주 대표 야경 명소. 동궁과 월지의 수면 반영 야간 조명은 연중 운영. 여름 야간 관광 대표 스팟.",
+      "reserve_reason": "연중 evergreen 야경지. 특별 시즌 프로그램이나 현재 이벤트 근거 없음. recommended_now 강제 편입 불가 — reserve 처리.",
+      "existing_canonical_id": "gyeongju-GJ01-0017",
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2267",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "item_id": "gyeongju-RN-R02",
+      "status": "RESERVE",
+      "name_ko": "교촌마을 신라오기 공연",
+      "name_en": "Gyochon Village Silla Ogi Performance",
+      "category": "전통 공연 (월별 정기)",
+      "why_now": "봄~가을 시즌 월 1회 정기 공연. 최치원 작품 기반 창작 역사 연극. 기준일 기준 시즌 활성이나 월별 정확한 날짜 미확인으로 reserve 처리.",
+      "reserve_reason": "월 1회 공연이라 8월 중 공연일이 기준일 전후일 수 있음. 정확한 2026년 8월 공연일 공식 확인 불가 — reserve 처리.",
+      "existing_canonical_id": null,
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2716",
+        "as_of": "2026-08-21"
+      }
+    }
+  ]
+}

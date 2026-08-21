@@ -1,0 +1,147 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-GYEONGJU-V1",
+  "section": "recommended_courses",
+  "generated_at": "2026-08-21",
+  "city": "gyeongju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "코스는 AI scheduler 고정 규칙이 아니라 recommendation signal/content. 각 stop의 existing_canonical_id는 data/gyeongju-final-release/gyeongju-canonical-places-v1.jsonl 기준. canonical 수정/신규 생성 없음.",
+
+  "final_courses": [
+    {
+      "course_id": "gyeongju-C-001",
+      "status": "FINAL",
+      "official_course_name": "경주 시내권 핵심 바이블",
+      "official_course_name_en": "Core Gyeongju City Center: The Essential",
+      "theme": "신라 역사·문화유산 — 박물관·왕릉·첨성대·야경",
+      "traveler_fit": ["초방문자", "가족", "커플", "솔로"],
+      "recommended_reason": "3km 반경 내에 신라 천년의 핵심을 집약한 표준 코스. 국립경주박물관부터 첨성대·대릉원·동궁과 월지까지 도보·자전거로 커버 가능하며, 월성 발굴현장(활성 발굴)과 황리단길(카페·레스토랑 거리)로 고대와 현대를 연결.",
+      "duration": "1~2일",
+      "transportation": "도보 또는 자전거",
+      "seasonality": "연중 (봄 벚꽃·가을 단풍 성수기)",
+      "stops": {
+        "day1": [
+          {"order": 1, "name_ko": "국립경주박물관", "name_en": "National Gyeongju Museum", "existing_canonical_id": "gyeongju-GJ01-0009"},
+          {"order": 2, "name_ko": "월정교", "name_en": "Woljeong Bridge", "existing_canonical_id": "gyeongju-GJ01-0014"},
+          {"order": 3, "name_ko": "첨성대", "name_en": "Cheomseongdae Observatory", "existing_canonical_id": "gyeongju-GJ01-0036"},
+          {"order": 4, "name_ko": "대릉원", "name_en": "Daereungwon Royal Tomb Complex", "existing_canonical_id": "gyeongju-GJ01-0033"},
+          {"order": 5, "name_ko": "동궁과 월지", "name_en": "Donggung Palace & Wolji Pond", "existing_canonical_id": "gyeongju-GJ01-0017"}
+        ],
+        "day2": [
+          {"order": 1, "name_ko": "월성 발굴현장", "name_en": "Wolseong Excavation Site", "existing_canonical_id": "gyeongju-GJ01-0056"},
+          {"order": 2, "name_ko": "황리단길", "name_en": "Hwangridan-gil Street", "existing_canonical_id": "gyeongju-GJ01-0042"}
+        ]
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2297",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "course_id": "gyeongju-C-002",
+      "status": "FINAL",
+      "official_course_name": "달빛테라피 '경주야경산책'",
+      "official_course_name_en": "Moonlight Therapy: Gyeongju Night Walk",
+      "theme": "야간관광 — 일몰 이후 역사 유적지 야경·야시장",
+      "traveler_fit": ["커플", "친구그룹", "야간관광 선호", "사진여행"],
+      "recommended_reason": "2.7km·도보 약 60분으로 황리단길 루프탑 카페에서 출발해 대릉원·첨성대·계림·월정교·동궁과 월지(야간 조명)·중앙시장 야시장까지 연결. 동궁과 월지 야간 수면 반영 야경은 경주의 시그니처 포토스팟.",
+      "duration": "반나절 (저녁~야간, 약 3시간 이상)",
+      "transportation": "도보 (약 2.7km)",
+      "seasonality": "연중 (봄·여름 야간 최성수기, 동궁과 월지 조명 연중 운영)",
+      "stops": [
+        {"order": 1, "name_ko": "황리단길 루프탑 카페", "name_en": "Hwangridan-gil Rooftop Café (start point)", "existing_canonical_id": "gyeongju-GJ01-0042"},
+        {"order": 2, "name_ko": "대릉원", "name_en": "Daereungwon Royal Tomb Complex", "existing_canonical_id": "gyeongju-GJ01-0033"},
+        {"order": 3, "name_ko": "첨성대", "name_en": "Cheomseongdae Observatory", "existing_canonical_id": "gyeongju-GJ01-0036"},
+        {"order": 4, "name_ko": "계림", "name_en": "Gyerim Forest", "existing_canonical_id": "gyeongju-GJ01-0001"},
+        {"order": 5, "name_ko": "월정교", "name_en": "Woljeong Bridge (night illumination)", "existing_canonical_id": "gyeongju-GJ01-0014"},
+        {"order": 6, "name_ko": "동궁과 월지", "name_en": "Donggung Palace & Wolji Pond (야간 조명)", "existing_canonical_id": "gyeongju-GJ01-0017"},
+        {"order": 7, "name_ko": "중앙시장 야시장", "name_en": "Jungang Market Night Market", "existing_canonical_id": null, "new_place_candidate": true}
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털 — 도보여행 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2299",
+        "as_of": "2026-08-21"
+      }
+    },
+    {
+      "course_id": "gyeongju-C-003",
+      "status": "FINAL",
+      "official_course_name": "삼릉가는 길 — 두바퀴로 누비는 신라 흥망의 길",
+      "official_course_name_en": "Route to Samneung: Cycling the Rise and Fall of Silla",
+      "theme": "자전거·역사 — 신라 발상지·왕릉·석불·솔숲",
+      "traveler_fit": ["자전거 여행자", "역사 관심", "자연·솔숲 선호", "20-40대"],
+      "recommended_reason": "12km 반나절 자전거 코스. 월정교(신라 다리)에서 출발해 오릉(신라 건국 시조 능), 나정(박혁거세 출생지), 포석정지(신라 왕실 연회터), 배동석조여래삼존입상(7세기 석불)을 거쳐 솔숲 속 삼릉까지. 신라의 흥망을 지형 위에서 체험하는 코스.",
+      "duration": "반나절 (약 4시간)",
+      "transportation": "자전거 (일부 구간 하차 도보)",
+      "distance_km": 12,
+      "difficulty": "하 (low)",
+      "seasonality": "봄·가을 (여름은 덥지만 가능, 겨울은 도로 상태 확인 필요)",
+      "stops": [
+        {"order": 1, "name_ko": "월정교", "name_en": "Woljeong Bridge (start)", "existing_canonical_id": "gyeongju-GJ01-0014"},
+        {"order": 2, "name_ko": "오릉", "name_en": "Oryeong (Five Royal Tombs)", "existing_canonical_id": "gyeongju-GJ01-0054"},
+        {"order": 3, "name_ko": "나정", "name_en": "Najeong (Birthplace of Park Hyeokgeose)", "existing_canonical_id": "gyeongju-GJ01-0049"},
+        {"order": 4, "name_ko": "포석정지", "name_en": "Poseokjeong Site", "existing_canonical_id": "gyeongju-GJ01-0062"},
+        {"order": 5, "name_ko": "배동석조여래삼존입상", "name_en": "Baedong Stone Buddha Triad", "existing_canonical_id": "gyeongju-KTO12-128634", "id_note": "KTO source, candidate match by name search"},
+        {"order": 6, "name_ko": "삼릉", "name_en": "Samneung (Three Royal Tombs)", "existing_canonical_id": "gyeongju-GJ01-0127"},
+        {"order": 7, "name_ko": "플레이스씨", "name_en": "Place C (cultural complex)", "existing_canonical_id": null, "new_place_candidate": true}
+      ],
+      "source": {
+        "provider": "경주시 공식 관광포털 — 자전거 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2300",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "reserve_courses": [
+    {
+      "course_id": "gyeongju-C-R01",
+      "status": "RESERVE",
+      "official_course_name": "버스타GO '알짜배기 경주여행' (Route 10)",
+      "official_course_name_en": "Route 10 Bus: Essential Gyeongju Tour",
+      "theme": "대중교통 — 시내버스 1대로 주요 관광지 순환",
+      "traveler_fit": ["자가 이동수단 없는 개인 여행자", "단기 방문자"],
+      "reserve_reason": "공식 노선이지만 배차 간격(20분)·고정 노선으로 인한 유연성 제한. 코스라기보다 교통수단에 가까워 RESERVE 처리. travel_utility 항목으로 별도 수록.",
+      "duration": "자유 (하차 자유)",
+      "transportation": "시내버스 10번",
+      "stops": [
+        {"order": 1, "name_ko": "터미널", "name_en": "Gyeongju Express Bus Terminal"},
+        {"order": 2, "name_ko": "경주역", "name_en": "Gyeongju Station"},
+        {"order": 3, "name_ko": "첨성대", "name_en": "Cheomseongdae Observatory", "existing_canonical_id": "gyeongju-GJ01-0036"},
+        {"order": 4, "name_ko": "분황사", "name_en": "Bunhwangsa Temple", "existing_canonical_id": "gyeongju-GJ01-0022"},
+        {"order": 5, "name_ko": "보문관광단지", "name_en": "Bomun Tourist Complex", "existing_canonical_id": "gyeongju-GJ01-0099"},
+        {"order": 6, "name_ko": "경주월드", "name_en": "Gyeongju World"},
+        {"order": 7, "name_ko": "엑스포공원", "name_en": "Expo Park"},
+        {"order": 8, "name_ko": "불국사", "name_en": "Bulguksa Temple", "existing_canonical_id": null, "note": "RESERVE — 불국사 canonical ID 미확인(좌표 35.79°N, 별도 확인 필요)"},
+        {"order": 9, "name_ko": "국립경주박물관", "name_en": "National Gyeongju Museum", "existing_canonical_id": "gyeongju-GJ01-0009"},
+        {"order": 10, "name_ko": "동궁과 월지", "name_en": "Donggung Palace & Wolji Pond", "existing_canonical_id": "gyeongju-GJ01-0017"}
+      ],
+      "fare": {"adult": 1300, "youth": 1000, "child": 700, "card_discount": 50, "unit": "KRW"},
+      "operating_hours": "첫차 06:00, 막차 21:40, 배차 20분",
+      "operator": "새천년미소 (newsmilebus.com)",
+      "source": {
+        "provider": "경주시 공식 관광포털 — 버스여행 코스",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2301",
+        "as_of": "2026-08-21"
+      }
+    }
+  ],
+
+  "id_linkage_summary": {
+    "total_stops_final_courses": 14,
+    "linked_to_existing_canonical": 11,
+    "not_linked_new_candidates": 2,
+    "unresolved_uncertain": 1,
+    "linked_canonical_ids": [
+      "gyeongju-GJ01-0009", "gyeongju-GJ01-0014", "gyeongju-GJ01-0036",
+      "gyeongju-GJ01-0033", "gyeongju-GJ01-0017", "gyeongju-GJ01-0056",
+      "gyeongju-GJ01-0042", "gyeongju-GJ01-0001", "gyeongju-GJ01-0049",
+      "gyeongju-GJ01-0062", "gyeongju-GJ01-0127"
+    ],
+    "new_place_candidates": [
+      "중앙시장 야시장",
+      "플레이스씨 (Place C — 삼릉 인근 문화복합시설)"
+    ],
+    "notes": "ID 매핑 방법: gyeongju-canonical-places-v1.jsonl 대상 Python UTF-8 문자열 검색 + lat/lng 좌표 교차검증. 불국사 canonical ID는 좌표(35.79°N, 원거리) 불일치로 미확인 처리."
+  }
+}

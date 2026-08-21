@@ -1,0 +1,200 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-GYEONGJU-V1",
+  "section": "travel_utility",
+  "generated_at": "2026-08-21",
+  "city": "gyeongju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "note": "공식 source에서 확인된 정보만 수록. 미확인 항목(렌터카, 공항 리무진 등)은 억지로 채우지 않음. 운임·시간표 등 변동 정보는 freshness 명시.",
+
+  "utility_items": [
+    {
+      "utility_id": "gyeongju-U-001",
+      "category": "경주 도착 교통",
+      "title": "신경주역(KTX) vs 경주역(일반열차) — 외국인 방문자 핵심 정보",
+      "traveler_summary": "경주에는 KTX 정차역(신경주역)과 일반열차 역(경주역) 두 곳이 있다. 신경주역: KTX 경부선 정차. 서울→신경주 약 2시간 10분. 단, 신경주역은 경주 시내에서 약 10~15km 외곽(구미방면)에 위치해 시내까지 시내버스·택시 환승 필요. 경주역: 일반열차(무궁화·새마을) 정차, 경주 시내(성동동) 인접. 도심 접근이 쉬우나 서울에서 약 4시간 이상 소요. 고속버스: 서울→경주 약 3시간 30분, 부산·대구→경주 약 50~70분.",
+      "locale_availability": ["ko", "en"],
+      "key_info": {
+        "ktx_station": "신경주역 (경주 도심 10~15km 외곽)",
+        "regular_train_station": "경주역 (경주 시내 인접)",
+        "seoul_to_singyeongju_ktx": "약 2시간 10분",
+        "daegu_to_gyeongju": "약 20분 (KTX·일반열차)",
+        "busan_to_gyeongju": "약 30분 (KTX·일반열차)",
+        "express_bus_from_seoul": "약 3시간 30분"
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2381",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-002",
+      "category": "시내버스 (관광 특화 노선)",
+      "title": "10번 버스 — 알짜배기 경주여행",
+      "traveler_summary": "경주 관광지를 순환하는 대표 시내버스. 터미널→경주역→첨성대→분황사→보문관광단지→경주월드→엑스포공원→불국사→국립경주박물관→동궁과 월지→경주역/터미널 순환. 1,300원(성인), 카드 50원 할인. 운행 06:00~21:40, 배차 약 20분. 전국스마트버스 앱으로 실시간 위치 확인.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "route": "터미널→경주역→첨성대→분황사→보문→경주월드→엑스포→불국사→박물관→동궁과 월지→복귀",
+        "fare_adult": 1300,
+        "fare_youth": 1000,
+        "fare_child": 700,
+        "card_discount": 50,
+        "first_bus": "06:00",
+        "last_bus": "21:40",
+        "interval_min": 20,
+        "app": "전국스마트버스 (앱스토어/플레이스토어)",
+        "operator": "새천년미소 (newsmilebus.com)",
+        "unit": "KRW"
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2301",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-003",
+      "category": "관광지 입장료",
+      "title": "경주 주요 관광지 입장료",
+      "traveler_summary": "주요 유료 관광지 입장료. 65세 이상·7세 미만 무료. 장애인등록증 소지자 50% 할인. 30인 이상 단체 할인(20~33%). 불국사·석굴암은 조계종 별도 운영(요금 별도 확인 필요).",
+      "locale_availability": ["ko", "en"],
+      "key_info": {
+        "sites": [
+          {"name": "천마총 (Cheonmachong Tomb)", "adult": 3000, "youth": 2000, "child": 1000, "group_discount": "30인 이상 20%"},
+          {"name": "동궁과 월지 (Donggung & Wolji)", "adult": 3000, "youth": 2000, "child": 1000, "group_discount": "30인 이상 20%"},
+          {"name": "황룡사역사문화관 (Hwangryongsa History Center)", "adult": 3000, "youth": 2000, "child": 1500, "group_discount": "33%"},
+          {"name": "양동마을 (Yangdong Folk Village)", "adult": 4000, "youth": 2000, "child": 1500, "group_discount": "15%"},
+          {"name": "신라역사과학관 (Silla Science Museum)", "adult": 5000, "youth": 3500, "child": 3500, "group_discount": "20%"},
+          {"name": "불국사 / 석굴암", "adult": "별도 확인", "note": "조계종 운영, 요금 변동 가능 — 공식 사이트 확인"}
+        ],
+        "free_admission": ["만 7세 미만", "만 65세 이상", "국가유공자 등 (해당 증명 지참)"],
+        "discount": "장애인등록증 소지자 50% 할인"
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2378",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-004",
+      "category": "관광안내소",
+      "title": "경주시 관광안내소 (4개소)",
+      "traveler_summary": "경주 주요 거점 4개 관광안내소. 연중무휴 운영. KO/EN/JA/ZH-CN 다국어 안내. 관광지도 무료 배포. 외국인 대상 전문 안내 가능.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "key_info": {
+        "centers": [
+          {"name": "터미널 관광안내소", "address": "태종로685번길 4 (경주터미널 내)", "phone": "054-772-9289", "hours": "연중무휴"},
+          {"name": "불국사 관광안내소", "address": "진현로2길 61-3 (불국사 주차장)", "phone": "054-746-4747", "hours": "연중무휴"},
+          {"name": "접근성 관광안내소 (장애인 특화)", "address": "대종로767 (신라대종 뒤편)", "phone": "054-777-1330", "hours": "연중무휴"},
+          {"name": "경주역 관광안내소", "address": "경주역으로80 (천북읍, 경주역 내)", "phone": "054-771-1336", "hours": "연중무휴"}
+        ]
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2376",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-005",
+      "category": "짐보관",
+      "title": "경주 짐보관 서비스 (20개소)",
+      "traveler_summary": "경주역 물품보관함(1,000~2,500원/2시간), 황리단길문화센터(1회 무료, 10:00~18:30), 고속버스터미널(2,000~5,000원, 06:00~21:00), 카페 짐보관(1,500~7,000원) 등 20개소. 사이즈별 요금 상이.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "total_locations": 20,
+        "highlight_free": "황리단길문화센터 1회 무료 (10:00~18:30)",
+        "station_lockers": "경주역 1,000~2,500원 / 2시간",
+        "terminal": "고속버스터미널 2,000~5,000원 / 06:00~21:00",
+        "typical_range": "1,000~7,000원 (사이즈·시간별 상이)",
+        "note": "상세 위치·운영시간은 경주시 공식 포털 확인 또는 개별 업체 문의"
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=4030",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-006",
+      "category": "무료 문화관광해설 서비스",
+      "title": "경주 문화관광해설사 (무료 다국어 해설)",
+      "traveler_summary": "경주 17개 유적지에서 무료로 전문 해설사 운영. 외국어(EN/JA/ZH) 해설사 8개 주요 거점(불국사·석굴암·양동마을 포함)에 배치. 단체(10인 이상)는 3~5주 전 예약 필요. 개인 방문 시 현장에서 가이드 가능.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "key_info": {
+        "locations": 17,
+        "foreign_language_sites": 8,
+        "foreign_languages": ["en", "ja", "zh-CN"],
+        "group_booking": "10인 이상, 3~5주 전 신청서 제출",
+        "contact": "070-7718-0333",
+        "fee": "무료"
+      },
+      "source": {
+        "provider": "경주시 공식 관광포털",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2395",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-007",
+      "category": "여행 안내 핫라인",
+      "title": "관광 안내 전화",
+      "traveler_summary": "1330 (한국관광공사 전국 다국어 관광안내 — KO/EN/JA/ZH-CN). 경주시 민원: 054-779-8600 (평일). 현장 관광안내소 전화번호는 경주-U-004 참조.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "key_info": {
+        "national_tourism_hotline": "1330 (KO/EN/JA/zh-CN 다국어)",
+        "gyeongju_city_main": "054-779-8600"
+      },
+      "source": {
+        "provider": "한국관광공사 / 경주시",
+        "source_url": "https://gyeongju.go.kr/tour/index.do",
+        "as_of": "2026-08-21",
+        "review_by": "2027-06-01"
+      }
+    },
+    {
+      "utility_id": "gyeongju-U-008",
+      "category": "공공 Wi-Fi",
+      "title": "경주 관광지 공공 Wi-Fi",
+      "traveler_summary": "경주 주요 관광지에 공공 Wi-Fi 운영. 정확한 거점 목록은 경주시 공식 포털 여행정보 Wi-Fi 섹션 참조.",
+      "locale_availability": ["ko"],
+      "key_info": {
+        "coverage": "주요 관광지·공공시설",
+        "ssid_info": "경주시 공식 포털 확인"
+      },
+      "source": {
+        "provider": "경주시",
+        "source_url": "https://gyeongju.go.kr/tour/page.do?mnu_uid=2380",
+        "as_of": "2026-08-21",
+        "review_by": "2027-01-01"
+      }
+    }
+  ],
+
+  "categories_collected": [
+    "경주 도착 교통 (KTX·일반열차·고속버스)",
+    "시내버스 (관광 특화 10번)",
+    "관광지 입장료",
+    "관광안내소 (4개소)",
+    "짐보관 (20개소)",
+    "문화관광해설 서비스",
+    "관광 안내 핫라인",
+    "공공 Wi-Fi"
+  ],
+  "categories_not_found_in_official_source": [
+    "택시 (요금·앱 정보 공식 포털 미명시 — 카카오T 등 일반 앱 이용 가능하나 공식 source 아님)",
+    "자전거 대여 (경주 대표 이동수단이나 공식 포털 렌탈 정보 별도 수록 없음 — 현지 황리단길 주변 사설 대여소 다수 존재)",
+    "교통카드 (T-money 사용 가능하나 경주 전용 카드 없음. 경주시 공식 안내 없음)",
+    "환전 (공식 포털 미제공)",
+    "로밍/SIM 카드 (공식 포털 미제공)",
+    "Muslim-friendly (공식 포털 별도 가이드 없음)",
+    "신경주역→시내 연결편 상세 (공식 버스 번호·배차 미명시 — 포털 참조 지시만 있음)"
+  ]
+}
