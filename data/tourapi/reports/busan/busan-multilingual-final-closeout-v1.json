@@ -1,0 +1,217 @@
+{
+  "task": "TASK-BUSAN-MULTILINGUAL-FINAL-CLOSEOUT-V1",
+  "generated_at": "2026-08-21T00:00:00Z",
+  "branch": "data/busan-multilingual-v1",
+  "sha_before": "839afb1",
+  "description": "부산 Food+NonFood 전체 multilingual 최종 통합 closeout. Food 194 + NonFood 771 = BUSAN_TOTAL 965.",
+
+  "service_universe": {
+    "FOOD_UNIVERSE": 194,
+    "NONFOOD_UNIVERSE": 771,
+    "NONFOOD_BREAKDOWN": {
+      "attraction": 717,
+      "nature": 50,
+      "event": 4
+    },
+    "ACCOMMODATION_EXCLUDED": 82,
+    "BUSAN_TOTAL": 965,
+    "NOTE": "BUSAN_TOTAL = FOOD + NONFOOD. ACCOMMODATION(82) is in the canonical release but excluded from multilingual scope. Old 958/764 figures predate final release manifest (26fb3af→839afb1 pipeline); SSOT is now 194+771=965."
+  },
+
+  "food_multilingual_summary": {
+    "ref_task": "TASK-BUSAN-FOOD-MULTILINGUAL-FINAL-CLOSEOUT-V1",
+    "ref_commit": "098d088",
+    "tob_commit": "321d6d2",
+    "invariant_qa_commit": "b80fe29",
+    "food_universe": 194,
+    "official_title_linked": {
+      "en": 142,
+      "en_pct": 73.2,
+      "ja": 137,
+      "ja_pct": 70.6,
+      "zh-CN": 144,
+      "zh_cn_pct": 74.2
+    },
+    "required_core_ready": {
+      "en": 142,
+      "en_pct": 73.2,
+      "ja": 137,
+      "ja_pct": 70.6,
+      "zh-CN": 144,
+      "zh_cn_pct": 74.2
+    },
+    "invariant_core_ready_le_title_linked": {
+      "en": true,
+      "ja": true,
+      "zh-CN": true
+    },
+    "gap_arithmetic": {
+      "en": { "core_ready": 142, "title_only_no_desc": 0, "desc_only_no_title": 6, "no_source": 46, "sum": 194, "valid": true },
+      "ja": { "core_ready": 137, "title_only_no_desc": 0, "desc_only_no_title": 10, "no_source": 47, "sum": 194, "valid": true },
+      "zh-CN": { "core_ready": 144, "title_only_no_desc": 0, "desc_only_no_title": 3, "no_source": 47, "sum": 194, "valid": true }
+    },
+    "sources_used": ["Busan6260000_FoodService", "TasteOfBusan2026_PDF"],
+    "enrichment_records": 909,
+    "SAFE_TO_CLOSE_BUSAN_FOOD_MULTILINGUAL": "YES",
+    "ref_closeout_file": "data/tourapi/reports/busan/busan-food-multilingual-closeout-v1.json"
+  },
+
+  "nonfood_multilingual_summary": {
+    "ref_task": "TASK-BUSAN-NONFOOD-SOURCE-AWARE-MULTILINGUAL-V2",
+    "ref_commit": "839afb1",
+    "nonfood_universe": 771,
+    "official_title_linked": {
+      "en": 254,
+      "en_pct": 32.9,
+      "ja": 208,
+      "ja_pct": 27.0,
+      "zh-CN": 210,
+      "zh_cn_pct": 27.2
+    },
+    "required_core_ready": {
+      "en": 211,
+      "en_pct": 27.4,
+      "ja": 208,
+      "ja_pct": 27.0,
+      "zh-CN": 210,
+      "zh_cn_pct": 27.2
+    },
+    "invariant_core_ready_le_title_linked": {
+      "en": true,
+      "ja": true,
+      "zh-CN": true
+    },
+    "gap_arithmetic": {
+      "en":  { "core_ready": 211, "title_only_no_desc": 43, "source_no_locale": 5,  "canonical_unmatched": 512, "sum": 771, "valid": true },
+      "ja":  { "core_ready": 208, "title_only_no_desc": 0,  "source_no_locale": 8,  "canonical_unmatched": 555, "sum": 771, "valid": true },
+      "zh-CN": { "core_ready": 210, "title_only_no_desc": 0,  "source_no_locale": 6,  "canonical_unmatched": 555, "sum": 771, "valid": true }
+    },
+    "source_lineage_breakdown": {
+      "AttractionService_6260000": 212,
+      "FestivalService_6260000": 4,
+      "EngService2_KTO": 77,
+      "VisitBusanContent": 323,
+      "KorService2_KTO_KO": 269
+    },
+    "DIRECT_UC_SEQ_CANDIDATES": 212,
+    "DIRECT_UC_SEQ_CONFIRMED": { "en": 207, "ja": 205, "zh-CN": 206 },
+    "FESTIVAL_UC_SEQ_CONFIRMED": { "en": 4, "ja": 4, "zh-CN": 4 },
+    "NEW_LINKS_FROM_NON_6260000_SOURCES": 47,
+    "source_capability": {
+      "6260000_AttractionService": "EN/JA/ZhS CONFIRMED — title+desc. EXISTING_RAW_FIRST (2026-07-24 batch).",
+      "6260000_FestivalService": "EN/JA/ZhS CONFIRMED — title+desc. 4/4 event canonical matched.",
+      "KTO_EngService2": "EN TITLE ONLY (list API, no overview). JA/ZH: HTTP_403_BLOCKED.",
+      "VisitBusan_JA_ZH": "NOT_OPERATIONAL.",
+      "KorService2": "KO only. No multilingual capability."
+    },
+    "source_gap_reason": {
+      "EN_SOURCE_NO_LOCALE": "5 canonical: UC_SEQ mapped to 6260000 but EN batch returned no record.",
+      "JA_SOURCE_NO_LOCALE": "8 canonical: 7 UC_SEQ no match in JA batch + 1 desc-only (no title) record.",
+      "ZH_SOURCE_NO_LOCALE": "6 canonical: UC_SEQ mapped to 6260000 but ZhS batch returned no record.",
+      "EN_CANONICAL_UNMATCHED": "512: no official EN multilingual source. KTO KO-only + VisitBusan source without multilingual.",
+      "JA_ZH_CANONICAL_UNMATCHED": "555: KTO JA/ZH blocked (403) + VisitBusan JA/ZH NOT_OPERATIONAL."
+    },
+    "enrichment_records": 673,
+    "enrichment_by_content_type": { "OFFICIAL_NATIVE": 630, "OFFICIAL_TITLE": 43 },
+    "SAFE_TO_CLOSE_BUSAN_NONFOOD_MULTILINGUAL": "YES",
+    "ref_closeout_file": "data/tourapi/reports/busan/busan-nonfood-multilingual-closeout-v1.json",
+    "ref_source_manifest": "data/tourapi/multilingual/busan/busan-nonfood-multilingual-source-manifest-v1.json"
+  },
+
+  "busan_total_combined": {
+    "NOTE": "Food (busan-G-*) and NonFood (busan-A-*, N-*, E-*) canonical IDs are disjoint. Simple summation is valid. No deduplication needed.",
+    "BUSAN_TOTAL": 965,
+    "official_title_linked": {
+      "en":   { "food": 142, "nonfood": 254, "total": 396, "pct": 41.0 },
+      "ja":   { "food": 137, "nonfood": 208, "total": 345, "pct": 35.8 },
+      "zh-CN": { "food": 144, "nonfood": 210, "total": 354, "pct": 36.7 }
+    },
+    "required_core_ready": {
+      "en":   { "food": 142, "nonfood": 211, "total": 353, "pct": 36.6 },
+      "ja":   { "food": 137, "nonfood": 208, "total": 345, "pct": 35.8 },
+      "zh-CN": { "food": 144, "nonfood": 210, "total": 354, "pct": 36.7 }
+    },
+    "invariant_core_ready_le_title_linked": {
+      "en": true,
+      "ja": true,
+      "zh-CN": true
+    }
+  },
+
+  "multilingual_policy": {
+    "REQUIRED_LOCALES": ["ko", "en", "ja", "zh-CN"],
+    "content_policy": "공식 native locale text가 있을 때만 사용",
+    "ai_machine_translation": "PROHIBITED",
+    "google_translate": "PROHIBITED",
+    "locale_gap_handling": "공식 locale 부재는 정상 gap — canonical place 제거 금지",
+    "canonical_removal_for_locale_gap": "PROHIBITED",
+    "user_selected_item_removal": "PROHIBITED",
+    "multilingual_ranking_signal": "외국어 AI auto-recommend에서 native official multilingual은 positive ranking signal",
+    "source_policy": "공공기관/지자체/공식 관광기관의 글·설명·이미지는 출처를 남기고 사용",
+    "image_policy": {
+      "private_individual_identifiable": "EXCLUDED",
+      "official_celebrity_promotional": "ALLOWED"
+    },
+    "provenance": "source + provider + as_of 기록 유지",
+    "takedown_readiness": "MAINTAINED",
+    "POLICY_STATUS": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN"
+  },
+
+  "old_number_audit": {
+    "OLD_958_REFERENCES_SEARCHED": "active handoff / multilingual manifest / closeout files",
+    "OLD_958_REFERENCES_FOUND": 0,
+    "OLD_764_REFERENCES_FOUND": 0,
+    "OLD_958_REFERENCES_CORRECTED": 0,
+    "NOTE": "No meaningful 958 or 764 references found in active multilingual files. busan-final-data-handoff-manifest.json is a historical data-collection artifact (branch data/busan-enrichment-v1) and does not contain these figures. Existing food/nonfood closeout files already use correct 194/771."
+  },
+
+  "final_qa": {
+    "FOOD_UNIVERSE": 194,
+    "NONFOOD_UNIVERSE": 771,
+    "ATTRACTION": 717,
+    "NATURE": 50,
+    "EVENT": 4,
+    "ACCOMMODATION_EXCLUDED": 82,
+    "BUSAN_TOTAL": 965,
+    "FOOD_OFFICIAL_TITLE_LINKED_EN": 142,
+    "FOOD_OFFICIAL_TITLE_LINKED_JA": 137,
+    "FOOD_OFFICIAL_TITLE_LINKED_ZH": 144,
+    "FOOD_REQUIRED_CORE_READY_EN": 142,
+    "FOOD_REQUIRED_CORE_READY_JA": 137,
+    "FOOD_REQUIRED_CORE_READY_ZH": 144,
+    "NONFOOD_OFFICIAL_TITLE_LINKED_EN": 254,
+    "NONFOOD_OFFICIAL_TITLE_LINKED_JA": 208,
+    "NONFOOD_OFFICIAL_TITLE_LINKED_ZH": 210,
+    "NONFOOD_REQUIRED_CORE_READY_EN": 211,
+    "NONFOOD_REQUIRED_CORE_READY_JA": 208,
+    "NONFOOD_REQUIRED_CORE_READY_ZH": 210,
+    "BUSAN_TOTAL_OFFICIAL_TITLE_LINKED_EN": 396,
+    "BUSAN_TOTAL_OFFICIAL_TITLE_LINKED_JA": 345,
+    "BUSAN_TOTAL_OFFICIAL_TITLE_LINKED_ZH": 354,
+    "BUSAN_TOTAL_REQUIRED_CORE_READY_EN": 353,
+    "BUSAN_TOTAL_REQUIRED_CORE_READY_JA": 345,
+    "BUSAN_TOTAL_REQUIRED_CORE_READY_ZH": 354,
+    "COVERAGE_PCT_EN_TITLE_LINKED": 41.0,
+    "COVERAGE_PCT_JA_TITLE_LINKED": 35.8,
+    "COVERAGE_PCT_ZH_TITLE_LINKED": 36.7,
+    "COVERAGE_PCT_EN_CORE_READY": 36.6,
+    "COVERAGE_PCT_JA_CORE_READY": 35.8,
+    "COVERAGE_PCT_ZH_CORE_READY": 36.7,
+    "DIRECT_UC_SEQ_CANDIDATES": 212,
+    "DIRECT_UC_SEQ_CONFIRMED_EN": 207,
+    "DIRECT_UC_SEQ_CONFIRMED_JA": 205,
+    "DIRECT_UC_SEQ_CONFIRMED_ZH": 206,
+    "NEW_LINKS_FROM_NON_6260000_SOURCES": 47,
+    "GAP_ARITHMETIC_VALID": true,
+    "PROVENANCE_COMPLETE": true,
+    "TRANSLATION_USED": false,
+    "GOOGLE_TRANSLATE_USED": false,
+    "CANONICAL_CHANGED": 0,
+    "NEW_PLACES_CREATED": 0,
+    "OLD_958_REFERENCES_FOUND": 0,
+    "OLD_958_REFERENCES_CORRECTED": 0,
+    "TASK_RESULT": "PASS",
+    "SAFE_TO_CLOSE_BUSAN_MULTILINGUAL": "YES",
+    "NEXT_RECOMMENDED_TASK": "TASK-GYEONGJU-OFFICIAL-DESCRIPTION-POLICY-CORRECTION-V1"
+  }
+}
