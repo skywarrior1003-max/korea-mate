@@ -1,0 +1,82 @@
+{
+  "task_id": "TASK-BUSAN-FOOD-6260000-MULTILINGUAL-V1",
+  "generated_at": "2026-08-21",
+  "food_universe": 194,
+  "source_api": {
+    "base": "https://apis.data.go.kr/6260000/FoodService",
+    "endpoints": {
+      "kr": "getFoodKr",
+      "en": "getFoodEn",
+      "ja": "getFoodJa",
+      "zh-CN": "getFoodZhs"
+    },
+    "format": "XML (JSON not supported)",
+    "stable_id_field": "UC_SEQ"
+  },
+  "source_record_counts": {
+    "KR": 437,
+    "EN": 436,
+    "JA": 438,
+    "ZHS": 338
+  },
+  "uc_seq_locale_stable": "YES",
+  "uc_seq_canary_verified": "5 records (UC_SEQ=70,77,94,95,102) cross-verified EN/JA",
+  "matching": {
+    "MATCHED_CONFIRMED": 84,
+    "AMBIGUOUS_MAPPING": 21,
+    "NO_MATCH": 89,
+    "match_methods": {
+      "PHONE_exact": 78,
+      "PHONE_DUP_COORD_NAME2": 4,
+      "COORD_NAME2": 2
+    }
+  },
+  "no_match_analysis": {
+    "virtual_0507": 37,
+    "voip_070": 5,
+    "landline_not_in_6260000": 40,
+    "no_phone": 2,
+    "other_mobile": 5
+  },
+  "enrichment": {
+    "en": {
+      "canonical_linked": 84,
+      "title_present": 84,
+      "description_present": 84,
+      "required_core_ready": 84,
+      "coverage_pct": 43.3,
+      "existing_ai_action": "PRESERVE_SEPARATE"
+    },
+    "ja": {
+      "canonical_linked": 84,
+      "title_present": 84,
+      "description_present": 84,
+      "required_core_ready": 84,
+      "coverage_pct": 43.3
+    },
+    "zh-CN": {
+      "canonical_linked": 77,
+      "title_present": 77,
+      "description_present": 77,
+      "required_core_ready": 77,
+      "coverage_pct": 39.7,
+      "note": "338/437 records in ZHS source (77.5%); 7 matched records not in ZHS subset"
+    }
+  },
+  "rights": {
+    "status": "REUSE_ALLOWED",
+    "note": "부산광역시 FoodService 공공데이터포털 표준라이선스 (apis.data.go.kr/6260000)",
+    "recommended_action": "Verify 공공데이터포털 이용약관 before production use"
+  },
+  "safety": {
+    "canonical_changed": 0,
+    "new_places_created": 0,
+    "false_match": 0,
+    "ai_translation_used": false,
+    "google_translate_used": false,
+    "existing_ai_en_preserved": true
+  },
+  "task_result": "PASS",
+  "safe_to_close_busan_food_multilingual": "YES",
+  "next_recommended_task": "TASK-BUSAN-NONFOOD-6260000-MULTILINGUAL-V1"
+}
