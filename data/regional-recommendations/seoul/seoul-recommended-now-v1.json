@@ -58,7 +58,8 @@
       "venue": "아르코미술관 (Arko Art Center)",
       "venue_address": "서울 종로구 동숭길 3 (마로니에공원 내)",
       "venue_note": "대학로역 1번 출구 인근",
-      "existing_canonical_id": null,
+      "existing_canonical_id": "seoul-KOP018992",
+      "id_note": "아르코미술관 canonical 확인: seoul-KOP018992 (category=attraction, service_status=ACTIVE). QA: TASK-SEOUL-REGIONAL-CANONICAL-LINKAGE-QA-V1.",
       "new_place_candidate": false,
       "source": {
         "provider": "VisitSeoul / 서울관광재단",
@@ -80,6 +81,7 @@
       "venue": "서초 한강공원 일대",
       "venue_note": "서울 서초구 한강 접안 구역. 지하철 9호선 구반포역·신반포역 인근",
       "existing_canonical_id": null,
+      "id_note": "서초 한강공원 일대 area 개념. VisitSeoul API canonical 미포함.",
       "new_place_candidate": false,
       "source": {
         "provider": "VisitSeoul / 서울관광재단",
