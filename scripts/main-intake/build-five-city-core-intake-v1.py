@@ -226,8 +226,20 @@ def main() -> None:
                                  "guide": c.get("guide_source"), "coord_status": c.get("coord_status"), "as_of": (api.get("as_of") or "")[:10] or None})
         active.append(r)
         add_source(cid, "busan-food-canonical", cid, primary=True, tier=c.get("guide_source"), as_of=r["provenance"]["as_of"])
+        # city_spot_sources 는 (city_spot_id, source_type) UNIQUE — provider 당 1행. artifact 가 좌표 authority 로 지정한 uc_seq
+        # (api_recovery_v1.coord_authority_v1.uc_seq) 를 그 1행으로 쓰고, 나머지 matched_uc_seqs 는 deferred 로 보존한다(중복 제거).
+        seqs = []
         for seq in api.get("matched_uc_seqs") or []:
-            add_source(cid, "busan6260000-foodservice", seq, tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
+            if seq not in seqs:
+                seqs.append(seq)
+        auth = ((api.get("coord_authority_v1") or {}).get("uc_seq"))
+        if auth in seqs:
+            seqs = [auth] + [q for q in seqs if q != auth]
+        if seqs:
+            add_source(cid, "busan6260000-foodservice", seqs[0], tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
+            if len(seqs) > 1:
+                defer(cid, "source_keys_extra", {"busan6260000-foodservice": seqs[1:]}, "busan-food-194-canonical-v1",
+                      "city_spot_sources 는 provider 당 1행(UNIQUE city_spot_id,source_type) — 추가 uc_seq 는 provenance sidecar 로", "content_meta.source_keys_extra")
         st = c.get("image_status")
         if c.get("image_url") and st in ("OFFICIAL_IMAGE_RESOLVED", "BUSINESS_IMAGE_RESOLVED"):
             rights = "VISITBUSAN_OFFICIAL" if st == "OFFICIAL_IMAGE_RESOLVED" else "BUSINESS_PROVIDED"
@@ -254,10 +266,25 @@ def main() -> None:
                                  "source_keys": prov.get("source_keys"), "as_of": (prov.get("enriched_at") or "")[:10] or None})
         active.append(r)
         add_source(cid, "busan-nonfood-canonical", cid, primary=True, tier=c.get("release_class"), as_of=r["provenance"]["as_of"])
+        # source_keys 예: 'AttractionService:288:ko' · 'VisitBusanContent:attraction:288:en' → provider 당 1행(UNIQUE city_spot_id,source_type):
+        # 번호(uc_seq)만 key 로 쓰고 locale/category 변형은 접는다. 같은 provider 에 번호가 여럿이면 첫 번호가 행, 나머지는 deferred.
+        seen_prov: dict[str, list[str]] = {}
         for sk in prov.get("source_keys") or []:
             parts = str(sk).split(":")
-            if len(parts) >= 2:
-                add_source(cid, f"busan6260000-{parts[0].lower()}", parts[1], tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
+            if len(parts) < 2:
+                continue
+            stype = f"busan6260000-{parts[0].lower()}"
+            num = next((pp for pp in parts[1:] if pp.isdigit()), None)
+            if num is None:
+                continue
+            seen_prov.setdefault(stype, [])
+            if num not in seen_prov[stype]:
+                seen_prov[stype].append(num)
+        for stype, nums in seen_prov.items():
+            add_source(cid, stype, nums[0], tier="OFFICIAL_API", as_of=r["provenance"]["as_of"])
+            if len(nums) > 1:
+                defer(cid, "source_keys_extra", {stype: nums[1:]}, "busan-nonfood-canonical-v1",
+                      "city_spot_sources 는 provider 당 1행 — 추가 번호는 provenance sidecar 로", "content_meta.source_keys_extra")
         if c.get("image_url"):
             ir = c.get("image_rights")
             if ir == "usable":
@@ -334,7 +361,10 @@ def main() -> None:
                      address=c.get("kto_addr"), district=None, lat=c.get("lat"), lng=c.get("lng"), official_url=c.get("source_url"), hours_raw=None, tags=None,
                      provenance={"artifact": "jeonju-final-service-catalog-v1", "source": c.get("source"), "match_type": c.get("match_type"), "as_of": "2026-08-18"})
         active.append(r)
-        if c.get("kto_cid"):
+        # ARTIFACT TRUST: OFF 레코드의 kto_cid 는 좌표 근접 crossmatch 후보이지 provenance 가 아니다(FINAL-ARTIFACT-ALIGNMENT).
+        # artifact 가 identity 를 확정한 match_type 에서만 kto 출처를 붙이고, 그 외는 relation metadata(content_meta.relation)에만 남긴다.
+        kto_confirmed = c.get("source") == "KTO" or c.get("match_type") in ("CONFIRMED_MERGE", "EXACT_MATCH", "STRONG_MATCH", "CONFIRMED_MERGE_PHASE9")
+        if c.get("kto_cid") and kto_confirmed:
             add_source(cid, "kto", c["kto_cid"], tier="KTO_TOURAPI", primary=(c.get("source") == "KTO"), as_of="2026-08-18")
         if c.get("sid"):
             add_source(cid, "visitjeonju", c["sid"], url=c.get("source_url"), tier="OFFICIAL", primary=(c.get("source") != "KTO"), as_of="2026-08-18")

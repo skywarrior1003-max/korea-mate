@@ -1,8 +1,8 @@
 {
- "task": "TASK-FIVE-CITY-CORE-RELEASE-PREREQUISITES-V1-R1",
- "mode": "stage",
- "input_manifest_sha256": "b4b04991bedd7a6a794c0b43a1818df2e326f0dd8945d43a4072410088004503",
- "run_id": "28fe56dcfe1cc00e",
+ "task": "TASK-FIVE-CITY-CORE-STAGE-WRITER-COMPLETION-V1",
+ "mode": "pre-stage-snapshot",
+ "input_manifest_sha256": "ba360b4c09cd9544d8321a62ba1fb4b15052fc75bf68f8b41eccadddbeec3e91",
+ "run_id": "ff9676639a589d90",
  "expected_from_manifest": {
   "active_total": 4826,
   "match_replace": 462,
@@ -44,8 +44,17 @@
    "ARTIFACT_SOURCE_LINEAGE": 568
   }
  },
+ "data_trust_policy": {
+  "final_over_legacy": true,
+  "legacy_numeric_id_preserved": true,
+  "no_source_value": "payload 제외(no-op; legacy 승인 아님)",
+  "intentionally_clear": "null",
+  "legacy_image_fallback": false,
+  "legacy_source_auto_carry": false,
+  "delete": 0
+ },
  "identity": {
-  "new_row_strategy": "city_spots.(source_type, external_id) UNIQUE idx_city_spots_source_external",
+  "new_row_strategy": "lookup-before-insert on city_spots.(source_type, external_id) partial UNIQUE + conflict re-lookup",
   "source_type": "canonical",
   "external_id_format": "<city>:<canonical_id>",
   "package_version_coupled": false
@@ -56,10 +65,25 @@
   "insert_chunks": 21,
   "new_staged_unpublished": 4194,
   "legacy_hidden_in_stage": 0,
-  "plan_sha256": "96b54f0d01f9a1d72b0663a9c4262d614e66098f08dc8da1051689e9417795f7"
+  "plan_sha256": "2a071978eb95a36edff1cb9db4532e38c7f99f9a5ea9d0e5d0c84c56f53fc16d"
+ },
+ "relation_preflight": {
+  "source_planned": 5486,
+  "image_planned": 4394,
+  "source_unresolved": 0,
+  "image_unresolved": 0,
+  "source_conflicts": [],
+  "image_conflicts": [],
+  "rights_violations": [],
+  "source_primary_conflicts": 0,
+  "image_primary_conflicts": 0,
+  "skipped_not_written_rows": 511,
+  "source_conflict_count": 0,
+  "image_conflict_count": 0,
+  "rights_violation_count": 0
  },
  "constraint_blockers": {
-  "current_schema": "uq_city_spots_city_name (013) — migration 057 적용 전까지 아래 충돌은 INSERT/UPDATE blocker",
+  "current_schema": "uq_city_spots_city_name removed by 057 (applied 2026-08-22) — collisions below are informational only",
   "city_name_collision_count": 13,
   "city_name_collisions": [
    {
@@ -179,7 +203,7 @@
   "projected_visible_rows": 4675,
   "projected_hidden_rows": 233,
   "gate_column": "is_published",
-  "migration": "056_city_spots_is_published.sql (created, NOT applied)"
+  "migration": "056 applied 2026-08-22"
  },
  "gate_c_category": {
   "lossy_mapping_count": 0
@@ -235,9 +259,9 @@
   "MANUAL_REVIEW": 0,
   "VISIBILITY_GATE": 4656
  },
- "sources_upserts": 5621,
+ "sources_upserts": 5486,
  "images_upserts": 4394,
- "change_manifest_sha256": "55e26b9813017648a94365f98d37b727c2b2afed9dd254ba5169a2c5a15f31ee",
+ "change_manifest_sha256": "510fa42e9b70a3fab5186118fa6cc03abcaa609f57379c412246f2f5513e85b0",
  "errors": 0,
  "delete_actions": 0,
  "db_write_executed": false

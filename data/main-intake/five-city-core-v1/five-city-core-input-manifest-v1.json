@@ -31,6 +31,7 @@
   "opening_hours",
   "phone",
   "relation",
+  "source_keys_extra",
   "subcategory_raw",
   "subway_access"
  ],
@@ -225,8 +226,8 @@
   },
   "deferred": {
    "path": "five-city-core-deferred-fields-v1.jsonl",
-   "rows": 10760,
-   "sha256": "69476a4c3814fa297f595d59d98696cfa274b5c60904083cc6cb38c2c0c38b8d"
+   "rows": 10776,
+   "sha256": "cf64d0cea051fa4f6f63ccd5bccda7dd9b0c9ebd377c169dbbd6e10d4921a041"
   },
   "heuristic_twin_release": {
    "path": "five-city-core-heuristic-twin-release-v1.jsonl",
@@ -247,8 +248,8 @@
   },
   "sources": {
    "path": "five-city-core-sources-v1.jsonl",
-   "rows": 6129,
-   "sha256": "b34592aeffa8861368acc548e51e57a46ed53903d4521ecb8c63fe6e19ebdda6"
+   "rows": 5827,
+   "sha256": "0cee4f93566ff3a1d4e415fb8adbc5fd0704fc645b6ae2ad7634098be4493a1b"
   },
   "twin_resolution": {
    "path": "five-city-core-twin-resolution-v1.jsonl",
@@ -278,11 +279,11 @@
   "busan6260000-attractionservice": 212,
   "busan6260000-engservice2": 77,
   "busan6260000-festivalservice": 4,
-  "busan6260000-foodservice": 142,
+  "busan6260000-foodservice": 119,
   "busan6260000-korservice2": 262,
-  "busan6260000-visitbusancontent": 524,
+  "busan6260000-visitbusancontent": 323,
   "gyeongju-city": 234,
-  "kto": 290,
+  "kto": 212,
   "visitjeju": 1486,
   "visitjeonju": 103,
   "visitseoul": 1837

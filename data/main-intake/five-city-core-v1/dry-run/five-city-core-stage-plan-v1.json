@@ -1,6 +1,6 @@
 {
- "run_id": "28fe56dcfe1cc00e",
- "manifest_sha256": "b4b04991bedd7a6a794c0b43a1818df2e326f0dd8945d43a4072410088004503",
+ "run_id": "ff9676639a589d90",
+ "manifest_sha256": "ba360b4c09cd9544d8321a62ba1fb4b15052fc75bf68f8b41eccadddbeec3e91",
  "counts": {
   "updates": 462,
   "inserts": 4194,
@@ -167,5 +167,20 @@
    "sha256": "d52872f5b7324a0b8c4333efb3b69705239b2efedf09fae4af5d5b1fc77fa3af"
   }
  ],
- "plan_sha256": "96b54f0d01f9a1d72b0663a9c4262d614e66098f08dc8da1051689e9417795f7"
+ "plan_sha256": "2a071978eb95a36edff1cb9db4532e38c7f99f9a5ea9d0e5d0c84c56f53fc16d",
+ "relation_preflight": {
+  "source_planned": 5486,
+  "image_planned": 4394,
+  "source_unresolved": 0,
+  "image_unresolved": 0,
+  "source_conflicts": [],
+  "image_conflicts": [],
+  "rights_violations": [],
+  "source_primary_conflicts": 0,
+  "image_primary_conflicts": 0,
+  "skipped_not_written_rows": 511,
+  "source_conflict_count": 0,
+  "image_conflict_count": 0,
+  "rights_violation_count": 0
+ }
 }

@@ -43,3 +43,20 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 
 ## 5. Owner Priority
 `City Package architecture = POST-LAUNCH FOUNDATION` · 현재 우선순위: 5도시 Production integration 완료 → GoKoreaMate 오픈용 UI/function/design 복귀. `OWNER_OVERRIDE_IMAGE_REFRESH_BACKLOG`: #7·#28·#29·#42 legacy Unsplash 이미지(숨김 근거 아님).
+
+## 6. STAGE WRITER COMPLETION (TASK-FIVE-CITY-CORE-STAGE-WRITER-COMPLETION-V1 · 2026-08-22) · DECIDED
+
+### 6-0. OWNER DATA TRUST — null/absence policy (Owner 확정)
+- **FINAL VALIDATED ARTIFACT > LEGACY.** Final 값이 있으면 Final 로 UPDATE. `INTENTIONALLY_CLEAR` 로 명시된 경우에만 null. `NO_SOURCE_VALUE`/미소유/deferred 필드는 **UPDATE payload 에서 제외(no-op)** — legacy 값이 검증됐다는 뜻이 아니라 Final package 가 소유하지 않는 필드를 이번 migration 에서 지우지 않는 것. (경주 en description 102건도 이 규칙: Final 값 없음 → 그대로, Final 값 있으면 교체.)
+- **numeric `city_spots.id` 보존 ≠ legacy 콘텐츠 보존.** MATCH 462 는 id·reference 만 보존하고 콘텐츠는 Final 로 동기화.
+- 이미지: Final image plan 이 authoritative. Final 에 없는 legacy image 는 `display_eligible=false`·`is_primary=false` 로 비노출(보존, DELETE 0). Final 이미지 없다고 legacy fallback 안 함(MATCH 132건 중 legacy 이미지 실존 0 — 재검증 불필요). `RIGHTS_UNKNOWN`/`KTO_TYPE_UNKNOWN` 은 DB CHECK 와 동일하게 eligible 금지.
+- 출처: Final source plan 이 authoritative. 같은 identity 의 기존 행은 재사용·Final 값으로 동기화(Case A), 같은 spot/provider 의 다른 key 는 Final 로 갱신(Case C), identity 가 다른 spot 에 붙어 있으면 **자동 remap 금지·실패**(Case B), Final 에 없는 legacy source 는 `is_primary=false`(Case D). DELETE 0.
+
+### 6-1. Final source plan 수정(Main mapping 결함 3건 — 데이터 재검증 아님)
+- 부산 NonFood `VisitBusanContent:<category>:<num>:<locale>` 를 `parts[1]`(category) 로 읽던 parser 결함 → 번호(uc_seq)로 교정, locale 변형 접음.
+- 부산 Food: provider 당 1행(UNIQUE `(city_spot_id, source_type)`) — artifact `coord_authority_v1.uc_seq` 를 행으로, 나머지 `matched_uc_seqs` 는 deferred `content_meta.source_keys_extra`(16건). 동일 키 중복 41건 제거.
+- 전주 OFF 레코드의 `kto_cid` 는 근접 crossmatch 후보(FINAL-ARTIFACT-ALIGNMENT)라 provenance 로 쓰지 않음 — artifact 가 확정한 match_type 에서만 `kto` 출처.
+→ 쓰기 대상 sources **5,621 → 5,486**(−135: 중복 41·다중키 접기 ~12·VB category-key 오류·전주 OFF kto 82). images 4,394 불변. 구조 preflight: identity 공유 0 · provider 중복 0 · primary 충돌 0 · rights 위반 0 · unresolved 0.
+
+### 6-2. 구현
+`stage-relations.ts`(resolveRelationTargets · preflightRelations · syncSourcesChunk · syncImagesChunk) · `stage-safety.ts`(buildPreStageSnapshot · chunkReceipt · readUserTableCounts/userCountsDiff · verifyNewUnpublished) · importer `--stage` Phase A(MATCH PATCH)→B(NEW lookup-before-insert, false)→C(sources, actual id)→D(images, Final source_id)→E(verify: DB count·NEW false 사후검증·사용자 테이블 count pre==post) + `stage-chunk-receipts-v1.jsonl` + `stage-receipt-v1.json` + `pre-stage-match-snapshot-v1.jsonl`(`--pre-stage-snapshot` READ-ONLY 모드). partial unique 는 lookup-first, full unique 는 conflict 재조회. 가드 8종 전부 통과해야 write.
