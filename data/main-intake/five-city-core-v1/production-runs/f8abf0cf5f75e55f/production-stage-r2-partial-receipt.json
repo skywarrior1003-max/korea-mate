@@ -1,0 +1,79 @@
+{
+ "receipt": "production-stage-r2-partial",
+ "run_id": "f8abf0cf5f75e55f",
+ "approved_code_commit": "731209f",
+ "runtime_production_source": "69cc51a",
+ "stage_started_at": "2026-08-22T11:58:02Z",
+ "stage_failed_at": "2026-08-22T11:58:23Z",
+ "recorded_at": "2026-08-22T12:20:00Z",
+ "input_manifest_sha256": "04018103c5669cabdaabfcd356c86648a07deef5039369b203fc68ce1e3fc241",
+ "change_manifest_sha256": "8ec0f6f7cc04907d8f8a43de511d511fb112e43d3a1fadb34cfc24bf0603ebd4",
+ "stage_plan_sha256": "84154f22ed41baafa51a918bf828923dca8ba3fce48504f74dcc7ee0d3fe2db6",
+ "before_phase_a_snapshot": {
+  "path": "production-runs/f8abf0cf5f75e55f/pre-stage-match-snapshot-v1.r2-before-phaseA-2026-08-22T115804Z.jsonl",
+  "rows": 462,
+  "sha256": "10240f4f404c95fae71dc20b6599b14f83bcf3812173bd155d388ec76d6c6207",
+  "captured_at": "2026-08-22T11:58:04.707Z",
+  "immutable": true
+ },
+ "user_table_counts_pre": {
+  "path": "production-runs/f8abf0cf5f75e55f/user-table-counts-pre-v1.json",
+  "itineraries": 68,
+  "trip_moments": 0,
+  "user_spots": 4,
+  "place_reports": 9
+ },
+ "user_table_counts_post_readonly": {
+  "itineraries": 68,
+  "trip_moments": 0,
+  "user_spots": 4,
+  "place_reports": 9,
+  "equal": true
+ },
+ "phase_a_match": {
+  "planned": 462,
+  "completed": 462,
+  "id_changed": 0,
+  "is_published_changed": 0,
+  "source_type_changed": 0,
+  "verified_by": "READ-ONLY SELECT of 462 ids: name/category == change manifest new values (462/462)"
+ },
+ "phase_b_new": {
+  "planned": 4194,
+  "inserted": 0,
+  "reused_existing": 0,
+  "failure": "PHASE_B_NEW_FIRST_CHUNK",
+  "http_status": 400,
+  "error_class": "PGRST102",
+  "root_cause": "heterogeneous JSON object keys within one bulk INSERT request (19 of 21 INSERT chunks carry 2-10 distinct key-sets); PostgREST requires all objects in a bulk insert to share the same keys",
+  "writer_defect": "stageInsertChunkSafe posted planImport rows as-is; error body was not recorded"
+ },
+ "phase_c_sources": {
+  "started": false,
+  "planned": 5502,
+  "written": 0
+ },
+ "phase_d_images": {
+  "started": false,
+  "planned": 4394,
+  "written": 0
+ },
+ "db_after_readonly": {
+  "city_spots_total": 714,
+  "published_true": 714,
+  "published_false": 0,
+  "published_null": 0,
+  "canonical_namespace": 0,
+  "city_spot_sources_physical": 302,
+  "city_spot_images_physical": 169,
+  "busan": 412,
+  "gyeongju": 302
+ },
+ "delete_executed": 0,
+ "rollback_executed": false,
+ "build": false,
+ "publish": false,
+ "deploy": false,
+ "master_changed": false,
+ "resume_contract": "Phase A PATCH is idempotent (same values); Phase B is lookup-before-insert — rerun after writer fix creates no duplicates. Do NOT overwrite the before-Phase-A snapshot; R3 takes a new attempt-specific snapshot."
+}
