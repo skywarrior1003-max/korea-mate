@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 import { applyVisibility, type VisibilityScope } from "@/lib/city-spots-visibility";
+import { collectAllKeyset, chunk, ID_LOOKUP_CHUNK, uniqueNumericIds } from "@/lib/city-spots-paging";
 import type { CitySpot, LocalizedText } from "@/data/cities/types";
 
 // ── 카테고리 타입 가드 ────────────────────────────────────────────────────────
@@ -174,21 +175,42 @@ export function rowToPublicCitySpot(row: PublicCitySpotRow): CitySpot {
 //   "reference"       : itinerary / ItineraryDayMap 처럼 사용자가 **이미 가진 place_id** 를 다시 찾는 경우 →
 //                       숨긴 legacy 라도 과거 일정이 깨지지 않도록 필터하지 않는다
 
+// R1 SCALE: 도시 전량 조회는 keyset(id ASC · id>last) 으로 끝까지 읽는다 — PostgREST 1,000행 상한에 조용히 잘리지 않는다.
+//   이 함수는 FULL COLLECTION 성격(도시 단위)이다. 장기적으로 Explore 는 city+bbox+category 범위 query 로 옮긴다(SCALE_BACKLOG).
 export async function fetchCitySpots(city: string, scope: VisibilityScope = "discovery"): Promise<CitySpot[]> {
-  const { data, error } = await applyVisibility(
-    supabase
-      .from("city_spots")
-      .select(EXPLORE_SELECT)
-      .eq("city", city),
-    scope,
-  ).order("id");
-
-  if (error) {
-    console.error("[city-spots] fetch error:", error.message);
+  try {
+    const rows = await collectAllKeyset<PublicCitySpotRow>(async (afterId, pageSize) => {
+      const { data, error } = await applyVisibility(
+        supabase
+          .from("city_spots")
+          .select(EXPLORE_SELECT)
+          .eq("city", city),
+        scope,
+      ).gt("id", afterId).order("id", { ascending: true }).limit(pageSize);
+      if (error) throw new Error(error.message);
+      return (data ?? []) as unknown as PublicCitySpotRow[];
+    });
+    return rows.map(rowToPublicCitySpot);
+  } catch (e) {
+    console.error("[city-spots] fetch error:", e instanceof Error ? e.message : String(e));
     return [];
   }
+}
 
-  return (data as unknown as PublicCitySpotRow[]).map(rowToPublicCitySpot);
+/**
+ * R1 §7 — reference 조회: 일정이 실제로 참조하는 place_id 만 읽는다(도시 전량 스캔 금지).
+ * 숨긴 legacy 도 그대로 해석되도록 visibility 필터는 없다(reference scope). ID 는 chunk 로 나눠 URL 길이를 제한한다.
+ */
+export async function fetchCitySpotsByIds(ids: ReadonlyArray<string | number | null | undefined>): Promise<CitySpot[]> {
+  const numeric = uniqueNumericIds(ids);
+  if (numeric.length === 0) return [];
+  const out: CitySpot[] = [];
+  for (const part of chunk(numeric, ID_LOOKUP_CHUNK)) {
+    const { data, error } = await supabase.from("city_spots").select(EXPLORE_SELECT).in("id", part).order("id");
+    if (error) { console.error("[city-spots] byIds fetch error:", error.message); continue; }
+    out.push(...((data ?? []) as unknown as PublicCitySpotRow[]).map(rowToPublicCitySpot));
+  }
+  return out;
 }
 
 export async function fetchCitySpotsByCategory(
@@ -196,21 +218,24 @@ export async function fetchCitySpotsByCategory(
   category: string,
   scope: VisibilityScope = "discovery"
 ): Promise<CitySpot[]> {
-  const { data, error } = await applyVisibility(
-    supabase
-      .from("city_spots")
-      .select(EXPLORE_SELECT)
-      .eq("city", city)
-      .eq("category", category),
-    scope,
-  ).order("id");
-
-  if (error) {
-    console.error("[city-spots] category fetch error:", error.message);
+  try {
+    const rows = await collectAllKeyset<PublicCitySpotRow>(async (afterId, pageSize) => {
+      const { data, error } = await applyVisibility(
+        supabase
+          .from("city_spots")
+          .select(EXPLORE_SELECT)
+          .eq("city", city)
+          .eq("category", category),
+        scope,
+      ).gt("id", afterId).order("id", { ascending: true }).limit(pageSize);
+      if (error) throw new Error(error.message);
+      return (data ?? []) as unknown as PublicCitySpotRow[];
+    });
+    return rows.map(rowToPublicCitySpot);
+  } catch (e) {
+    console.error("[city-spots] category fetch error:", e instanceof Error ? e.message : String(e));
     return [];
   }
-
-  return (data as unknown as PublicCitySpotRow[]).map(rowToPublicCitySpot);
 }
 
 // Security-0: 브라우저 anon 클라이언트로 city_spots 에 쓰던 upsertCitySpot /

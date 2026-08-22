@@ -37,7 +37,8 @@ import { MEMORY_PUBLIC_CONSENT_VERSION } from "@/lib/trip-moments/public-consent
 import { toStoryCardMoments, publicStoryUrl, type ApiStory } from "@/lib/share/story-adapter";
 import type { StoryCardMoment } from "@/components/TripStoryExport";
 import type { TripMoment } from "@/lib/trip-moments";
-import { fetchCitySpots, matchCitySpot } from "@/lib/city-spots";
+import { fetchCitySpotsByIds, matchCitySpot } from "@/lib/city-spots";
+import { uniqueNumericIds } from "@/lib/city-spots-paging";
 // 공개 문구 판정은 Place Detail 과 같은 SSOT 를 쓴다. 내부 메모 정규식을 이
 // 파일에 복제하지 않는다 — 규칙이 두 곳에 있으면 한쪽만 갱신되어 뚫린다.
 //
@@ -1826,12 +1827,16 @@ function ItineraryResult() {
     });
   }, [days.length]);
 
-  // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
+  // ── SSOT: 일정이 참조하는 place_id 만 city_spots 에서 로드 (PlaceModal 제휴 정보) ──
+  // Gate B: reference 조회 — 숨긴 legacy 도 과거 일정에서는 그대로 보여야 한다.
+  // R1 SCALE: 도시 전량(fetchCitySpots) 대신 place_id 집합만 읽는다 — 도시 장소가 5만 건이어도 hydration 비용은 일정 크기에만 비례.
+  const hydrationKey = useMemo(() => uniqueNumericIds(days.flatMap(d => d.places.map(p => p.place_id))).join(","), [days]);
   useEffect(() => {
-    if (!city) return;
-    // Gate B: 저장된 place_id 를 되찾는 reference 조회 — 숨긴 legacy 도 과거 일정에서는 그대로 보여야 한다
-    fetchCitySpots(city.toLowerCase(), "reference").then(setCitySpots);
-  }, [city]);
+    let cancelled = false;
+    // 키가 비면 빈 조회(네트워크 0)로 상태를 비운다 — effect 안의 동기 setState 를 피한다
+    fetchCitySpotsByIds(city && hydrationKey ? hydrationKey.split(",") : []).then(rows => { if (!cancelled) setCitySpots(rows); });
+    return () => { cancelled = true; };
+  }, [city, hydrationKey]);
 
   // ── 플래너 메타 뱃지 읽기 (반응형) ────────────────────────
   useEffect(() => {

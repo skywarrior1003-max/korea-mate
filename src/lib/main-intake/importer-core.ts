@@ -24,6 +24,7 @@
 
 import { decideField, isWritePolicy, type FieldDecision, type NullPolicy } from "./null-policy.ts";
 import { isMainCategory, isSemanticRecoverable } from "./category-adapter.ts";
+import { CANONICAL_SOURCE_TYPE, canonicalExternalId } from "./identity.ts";
 
 export interface MainSnapshotRow {
   main_city_spot_id: number;
@@ -264,8 +265,11 @@ export function planImport(input: {
         if (v !== undefined && v !== null && !(typeof v === "string" && v.trim() === "")) r[f] = v;
       }
       if (!r.name) { errors.push(`NEW without name: ${c.canonical_id}`); continue; }
-      r.is_published = true;                                        // Gate B: default false 를 덮는 명시적 공개
+      r.is_published = true;                                        // Gate B: 계획상 최종 상태(STAGE 는 false 로 INSERT, PUBLISH 가 true 로 전환)
       policyCounts.VISIBILITY_GATE += 1;
+      // R1 §18: DB-level 멱등 identity — (source_type, external_id) UNIQUE (012). package 버전과 무관한 stable key.
+      r.source_type = CANONICAL_SOURCE_TYPE;
+      r.external_id = canonicalExternalId(row.city, c.canonical_id);
       inserts.push({ action: "INSERT", placeholder_id: `NEW:${c.canonical_id}`, canonical_id: c.canonical_id, city: c.city, row: r, sources_upsert: srcs.length, images_upsert: imgs.length });
     } else {
       skips.push({ action: "SKIP", canonical_id: c.canonical_id, city: c.city, reason: `decision=${c.decision}` });
@@ -298,6 +302,15 @@ export function planImport(input: {
     const i = inserts.filter(x => x.city === city).length;
     const hidden = visibilityUpdates.filter(v => v.city === city).length;
     per_city[city] = { before, updates: u, inserts: i, projected_after: before + i, visible_after: before + i - hidden, hidden_after: hidden };
+  }
+  // (source_type, external_id) 는 INSERT 집합 안에서 유일해야 한다(재실행 멱등성의 전제)
+  {
+    const seen = new Set<string>();
+    for (const i of inserts) {
+      const k = `${String(i.row.source_type)}|${String(i.row.external_id)}`;
+      if (seen.has(k)) errors.push(`duplicate identity ${k} (${i.canonical_id})`);
+      seen.add(k);
+    }
   }
   const twinSkipped = skips.filter(s => s.reason.startsWith("SKIP_TWIN")).length;
   const reviewRequired = skips.filter(s => s.reason.startsWith("SKIP_REVIEW_REQUIRED")).length;

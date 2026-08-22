@@ -1,8 +1,19 @@
 {
- "task": "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1",
- "mode": "dry-run",
+ "task": "TASK-FIVE-CITY-CORE-RELEASE-PREREQUISITES-V1-R1",
+ "mode": "stage-plan",
  "input_manifest_sha256": "b4b04991bedd7a6a794c0b43a1818df2e326f0dd8945d43a4072410088004503",
  "run_id": "28fe56dcfe1cc00e",
+ "expected_from_manifest": {
+  "active_total": 4826,
+  "match_replace": 462,
+  "new": 4194,
+  "confirmed_twin": 170,
+  "review_required": 0,
+  "excluded": 3,
+  "main_rows": 714,
+  "hide_legacy": 233
+ },
+ "manifest_assertion_diffs": [],
  "counts": {
   "active_input": 4826,
   "match_replace": 462,
@@ -19,12 +30,6 @@
   "delete": 0
  },
  "arithmetic_ok": true,
- "expected_universe": {
-  "active_total": 4826,
-  "active_distinct": 4656,
-  "writes": 4656,
-  "skipped": 173
- },
  "artifact_trust": {
   "SOURCE_ACTIVE_RECORD_COUNT": 4826,
   "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
@@ -37,8 +42,21 @@
    "MAIN_EXPLICIT_DECISION_TABLE": 64,
    "ARTIFACT_SERVICE_STATUS": 4194,
    "ARTIFACT_SOURCE_LINEAGE": 568
-  },
-  "provisional_until_review_gate": false
+  }
+ },
+ "identity": {
+  "new_row_strategy": "city_spots.(source_type, external_id) UNIQUE idx_city_spots_source_external",
+  "source_type": "canonical",
+  "external_id_format": "<city>:<canonical_id>",
+  "package_version_coupled": false
+ },
+ "stage_plan": {
+  "chunks": 26,
+  "update_chunks": 5,
+  "insert_chunks": 21,
+  "new_staged_unpublished": 4194,
+  "legacy_hidden_in_stage": 0,
+  "plan_sha256": "96b54f0d01f9a1d72b0663a9c4262d614e66098f08dc8da1051689e9417795f7"
  },
  "constraint_blockers": {
   "current_schema": "uq_city_spots_city_name (013) — migration 057 적용 전까지 아래 충돌은 INSERT/UPDATE blocker",

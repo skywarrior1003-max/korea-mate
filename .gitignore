@@ -64,3 +64,7 @@ tmp/tourapi-nightly/
 data/tourapi/raw/
 data/tourapi/snapshots/
 data/tourapi/normalized/**/*-batch-normalized.json
+
+# python 캐시 (scripts/main-intake 등 — 생성물, 커밋 금지)
+__pycache__/
+*.pyc

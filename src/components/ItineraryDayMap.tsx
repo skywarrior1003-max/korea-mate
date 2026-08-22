@@ -8,7 +8,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import NaverMap, { type MapSpot, type DayPlace } from "@/components/NaverMap";
-import { fetchCitySpots } from "@/lib/city-spots";
+import { fetchCitySpotsByIds } from "@/lib/city-spots";
+import { uniqueNumericIds } from "@/lib/city-spots-paging";
 import { dedupeByCanonical } from "@/data/city-spot-aliases";
 import type { CitySpot } from "@/data/cities/types";
 
@@ -47,15 +48,16 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
   const [preview, setPreview] = useState<CitySpot | null>(null);
   const [addedFlash, setAddedFlash] = useState<string | null>(null);
 
-  // base 레이어: city_spots (좌표 보유분만)
+  // base 레이어: 일정이 참조하는 place_id 의 city_spots 만 (좌표 보유분만)
+  // Gate B: reference 조회(필터 없음). R1 SCALE: 도시 전량 대신 place_id 집합만 — 도시 장소 수와 무관.
+  const hydrationKey = useMemo(() => uniqueNumericIds(days.flatMap(d => d.places.map(p => p.place_id))).join(","), [days]);
   useEffect(() => {
     let cancelled = false;
-    // Gate B: 일정의 place_id hydration = reference 조회(필터 없음)
-    fetchCitySpots(city.toLowerCase(), "reference")
+    fetchCitySpotsByIds(hydrationKey ? hydrationKey.split(",") : [])
       .then(rows => { if (!cancelled) setCitySpots(dedupeByCanonical(rows)); })
       .catch(() => { /* base 레이어 없이도 trip 레이어는 동작 */ });
     return () => { cancelled = true; };
-  }, [city]);
+  }, [city, hydrationKey]);
 
   const day = days[selectedDay];
 

@@ -173,9 +173,10 @@ test("I2: 실제 package — dry-run 계획이 ARTIFACT TRUST 수치와 일치�
   assert.equal(createHash("sha256").update(changeText).digest("hex"), summary.change_manifest_sha256);
 });
 
-test("I3: importer 스크립트 — apply 는 여전히 비활성이고 DB 쓰기 코드가 없다", () => {
+test("I3: importer 스크립트 — 기본 dry-run · write 모드는 다중 가드(STAGE_REFUSED) 뒤 · DELETE 없음 · 사용자 테이블 없음", () => {
   const src = readFileSync(new URL("scripts/import-five-city-core-v1.ts", ROOT), "utf8");
-  assert.match(src, /APPLY_DISABLED_IN_V1/);
-  assert.match(src, /APPLY_REFUSED/);
-  assert.ok(!/createClient|supabase-js|\.from\(|\.upsert\(|\.insert\(|\.delete\(|rest\/v1/.test(src), "v1 importer 에는 DB client 가 없다");
+  assert.match(src, /APPLY_REFUSED/); assert.match(src, /STAGE_REFUSED/);
+  assert.ok(!/createClient|supabase-js|\.delete\(|method:\s*"DELETE"/.test(src), "DB client/DELETE 없음");
+  assert.ok(!/itineraries|trip_moments|user_spots|place_reports/.test(src), "사용자 테이블 접근 없음");
+  assert.match(src, /FIVE_CITY_CORE_APPLY !== "YES"/);
 });

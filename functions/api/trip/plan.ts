@@ -29,6 +29,7 @@ import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
 import { validateProfile } from "../../../src/lib/scheduler/ai/personalization-profile";
 import { applyVisibility } from "../../../src/lib/city-spots-visibility";
+import { collectAllKeyset } from "../../../src/lib/city-spots-paging";
 
 // ── Inline types ──────────────────────────────────────────────────────────────
 
@@ -148,19 +149,31 @@ async function runNearMeDirect(
 
       // Gate B (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1): 자동 후보 공급은 discovery 조회 —
       // 게이트가 켜지면 is_published=true 만. 아래 place_map(by id) 은 reference 라 필터하지 않는다.
-      const { data, error } = await applyVisibility(
-        client
-          .from("city_spots")
-          .select("id, category, lat, lng, district, tags")
-          .in("category", dbCategories)
-          .not("lat", "is", null)
-          .not("lng", "is", null)
-          .gte("lat", input.coordinate.lat - deltaLat)
-          .lte("lat", input.coordinate.lat + deltaLat)
-          .gte("lng", input.coordinate.lng - deltaLng)
-          .lte("lng", input.coordinate.lng + deltaLng),
-        "discovery",
-      );
+      // R1 SCALE: bbox(7km)+category 범위 query 는 그대로 두고, 그 결과가 1,000 을 넘어도 잘리지 않도록 keyset 으로 끝까지 읽는다.
+      //   (PostgREST 상한을 "의도된 후보 limit" 으로 포장하지 않는다 — 후보 제한은 아래 expandZones/diversify 가 담당)
+      let data: unknown[] | null = null;
+      let error: { message: string } | null = null;
+      try {
+        data = await collectAllKeyset<{ id: number }>(async (afterId, pageSize) => {
+          const res = await applyVisibility(
+            client
+              .from("city_spots")
+              .select("id, category, lat, lng, district, tags")
+              .in("category", dbCategories)
+              .not("lat", "is", null)
+              .not("lng", "is", null)
+              .gte("lat", input.coordinate.lat - deltaLat)
+              .lte("lat", input.coordinate.lat + deltaLat)
+              .gte("lng", input.coordinate.lng - deltaLng)
+              .lte("lng", input.coordinate.lng + deltaLng),
+            "discovery",
+          ).gt("id", afterId).order("id", { ascending: true }).limit(pageSize);
+          if (res.error) throw new Error(res.error.message);
+          return (res.data ?? []) as { id: number }[];
+        });
+      } catch (e) {
+        error = { message: e instanceof Error ? e.message : String(e) };
+      }
 
       if (!error && Array.isArray(data)) {
         rawRows = (data as any[]).map(row => ({

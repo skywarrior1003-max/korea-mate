@@ -24,6 +24,7 @@
 
 import type { CitySpotRow } from "@/lib/city-spots";
 import { visibilityRestFilter, type VisibilityScope } from "@/lib/city-spots-visibility";
+import { collectAllKeyset, keysetRestSuffix } from "@/lib/city-spots-paging";
 
 function supabaseEnv(): { url: string; key: string } | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -32,16 +33,22 @@ function supabaseEnv(): { url: string; key: string } | null {
   return { url, key };
 }
 
-/** 정적 생성·sitemap 이 공유하는 공개 장소 id 목록. scope: reference(전체) / discovery(게이트 ON 이면 published 만) */
+/**
+ * 정적 생성·sitemap 이 공유하는 공개 장소 id 목록. scope: reference(전체) / discovery(게이트 ON 이면 published 만)
+ * R1 SCALE: FULL COLLECTION — keyset 으로 끝까지 읽는다(1,000행 상한 없음). 4,908 이든 50,000 이든 같은 루프.
+ * 실패 정책 유지: env 부재/네트워크 실패 → 빈 배열(페이지·sitemap 이 함께 0건이라 불일치 없음). paging guard 초과는 실패로 취급.
+ */
 export async function fetchPublicSpotIds(scope: VisibilityScope = "reference"): Promise<number[]> {
   const env = supabaseEnv();
   if (!env) return [];
   try {
-    const res = await fetch(`${env.url}/rest/v1/city_spots?select=id&order=id${visibilityRestFilter(scope)}`, {
-      headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
+    const rows = await collectAllKeyset<{ id: number }>(async (afterId, pageSize) => {
+      const res = await fetch(`${env.url}/rest/v1/city_spots?select=id${visibilityRestFilter(scope)}${keysetRestSuffix(afterId, pageSize)}`, {
+        headers: { apikey: env.key, Authorization: `Bearer ${env.key}` },
+      });
+      if (!res.ok) throw new Error(`city_spots id page failed: HTTP ${res.status}`);
+      return (await res.json()) as { id: number }[];
     });
-    if (!res.ok) return [];
-    const rows = (await res.json()) as { id: number }[];
     return rows.map(r => r.id);
   } catch {
     return [];

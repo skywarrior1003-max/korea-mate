@@ -54,9 +54,14 @@ test("V3: 호출부 배선 — discovery 와 reference 가 바뀌지 않았다",
   assert.equal((citySpots.match(/applyVisibility\(/g) ?? []).length, 2);
   // Explore 는 기본(discovery)
   assert.match(read("src/components/ExploreCity.tsx"), /fetchCitySpots\(city\.name\.toLowerCase\(\)\)/);
-  // 일정 hydration 은 reference
-  assert.match(read("src/app/itinerary/page.tsx"), /fetchCitySpots\(city\.toLowerCase\(\), "reference"\)/);
-  assert.match(read("src/components/ItineraryDayMap.tsx"), /fetchCitySpots\(city\.toLowerCase\(\), "reference"\)/);
+  // 일정 hydration 은 reference — R1 SCALE 이후 도시 전량이 아니라 place_id 집합 조회(fetchCitySpotsByIds: 필터 없음)
+  for (const p of ["src/app/itinerary/page.tsx", "src/components/ItineraryDayMap.tsx"]) {
+    assert.match(read(p), /fetchCitySpotsByIds\(/); assert.ok(!/fetchCitySpots\(/.test(read(p)), `${p}: 도시 전량 조회 없음`);
+  }
+  {
+    const byIds = citySpots.slice(citySpots.indexOf("export async function fetchCitySpotsByIds"), citySpots.indexOf("export async function fetchCitySpotsByCategory"));
+    assert.ok(byIds.length > 0 && !/applyVisibility|is_published/.test(byIds), "byIds 는 reference(필터 없음)");
+  }
   // 자동 후보 공급 = discovery (near-me · Functions 플래너)
   assert.match(read("src/lib/near-me/candidate-generator.ts"), /applyVisibility\([\s\S]*?"discovery",\s*\)/);
   const plan = read("functions/api/trip/plan.ts");
