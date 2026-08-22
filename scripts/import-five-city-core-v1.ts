@@ -15,6 +15,8 @@
  *   → 5도시(4,826)든 다음 package(532)든 같은 importer. 선언값과 계획이 다르면 exit 1.
  *
  * 안전 장치
+ *   · NEW 행 identity: lookup-before-insert(source_type=canonical, external_id=<city>:<canonical_id>) + unique 충돌 재조회 복구.
+ *     PostgREST on_conflict 는 partial unique index(idx_city_spots_source_external WHERE external_id IS NOT NULL)를 추론하지 못한다(42P10 실측).
  *   · --stage 는 (1) env FIVE_CITY_CORE_APPLY=YES (2) --confirm-manifest-hash (3) env FIVE_CITY_CORE_TARGET_HOST 가 실제 Supabase
  *     host 와 일치 (4) SUPABASE_SERVICE_ROLE_KEY 존재 (5) --expected-db-count 가 사전 READ 와 일치 (6) is_published 컬럼 존재(056)
  *     — 전부 맞아야 write 한다. 이 TASK(R1) 시점에는 056 미적용이라 구조적으로 거부된다.
@@ -28,7 +30,7 @@ import { planImport, changeManifestRows, HIDE_CLASSES, OWNER_OVERRIDE_CLASS, typ
 import { deriveExpectedCounts, assertPlanMatchesExpected, type CrosswalkSummary, type InputManifest } from "../src/lib/main-intake/manifest-expectations.ts";
 import { buildStagePlan } from "../src/lib/main-intake/stage-plan.ts";
 import { buildPublishCutoverSql } from "../src/lib/main-intake/publish-sql.ts";
-import { stageInsertChunk, stageUpdateRow, type FetchLike } from "../src/lib/main-intake/stage-rest-writer.ts";
+import { stageInsertChunkSafe, stageUpdateRow, type FetchLike } from "../src/lib/main-intake/stage-rest-writer.ts";
 
 function arg(name: string): string | undefined { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : undefined; }
 const flags = new Set(process.argv.slice(2).filter(a => a.startsWith("--")));
@@ -191,8 +193,9 @@ if (mode === "stage") {
     const byExt = new Map(plan.inserts.map(i => [String(i.row.external_id), i]));
     for (const c of stagePlan.chunks.filter(c => c.kind === "INSERT")) {
       const rows = c.keys.map(k => { const i = byExt.get(String(k)); if (!i) throw new Error(`chunk key ${String(k)} not in plan`); return { ...i, row: { ...i.row, is_published: false } }; });
-      const res = await stageInsertChunk(fetchLike, target, rows);   // upsert(merge-duplicates): 재실행 시 중복 INSERT 없음
-      for (const r of res) { const i = byExt.get(r.external_id)!; mapping.push(JSON.stringify({ run_id: runId, canonical_id: i.canonical_id, city: i.city, actual_city_spot_id: r.id, operation: "INSERT", staged_is_published: false, manifest_hash: manifestHash })); inserted += 1; }
+      // lookup-before-insert + unique-conflict recovery (PostgREST on_conflict 는 partial unique index 와 비호환 — stage-rest-writer 주석)
+      const res = await stageInsertChunkSafe(fetchLike, target, rows);
+      for (const r of res) { mapping.push(JSON.stringify({ run_id: runId, canonical_id: r.canonical_id, city: byExt.get(r.external_id)!.city, actual_city_spot_id: r.id, operation: "INSERT", reused_existing: r.reused_existing, staged_is_published: false, manifest_hash: manifestHash })); inserted += 1; }
       writeFileSync(join(runDir, "production-id-mapping-v1.jsonl"), mapping.join("\n") + "\n", "utf8");   // chunk 마다 저장 — resume 자료
     }
     const post = await fetch(`${url}/rest/v1/city_spots?select=id&limit=1`, { headers: h });

@@ -1,6 +1,6 @@
 {
  "task": "TASK-FIVE-CITY-CORE-RELEASE-PREREQUISITES-V1-R1",
- "mode": "stage-plan",
+ "mode": "stage",
  "input_manifest_sha256": "b4b04991bedd7a6a794c0b43a1818df2e326f0dd8945d43a4072410088004503",
  "run_id": "28fe56dcfe1cc00e",
  "expected_from_manifest": {

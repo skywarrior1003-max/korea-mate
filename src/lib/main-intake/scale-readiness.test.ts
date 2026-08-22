@@ -12,7 +12,7 @@ import { deriveExpectedCounts, assertPlanMatchesExpected } from "./manifest-expe
 import { buildStagePlan, remainingInsertChunks, validateStageReceipt, STAGE_INSERT_CHUNK, STAGE_UPDATE_CHUNK } from "./stage-plan.ts";
 import { buildPublishCutoverSql } from "./publish-sql.ts";
 import { CANONICAL_SOURCE_TYPE, canonicalExternalId, parseCanonicalExternalId } from "./identity.ts";
-import { stageInsertChunk, stageUpdateRow, type FetchLike } from "./stage-rest-writer.ts";
+import { stageInsertChunkSafe, stageUpdateRow, type FetchLike } from "./stage-rest-writer.ts";
 
 const ROOT = new URL("../../../", import.meta.url);
 const PKG = "data/main-intake/five-city-core-v1/";
@@ -113,10 +113,11 @@ test("S4: PUBLISH target-set 거부 — 중복 id · new∩hide · keep∩hide �
   assert.throws(() => buildPublishCutoverSql({ run_id: "zz", manifest_sha256: "b".repeat(64), new_ids: [1], hide_ids: [], keep_ids: [] }), /hex/);
 });
 
-test("S5: STAGE REST writer 계약 — upsert on_conflict=source_type,external_id · INSERT 는 false 만 · UPDATE 는 is_published 를 보내지 않음 · DELETE 없음", async () => {
-  const calls: Array<{ url: string; method: string; body?: unknown; prefer?: string }> = [];
+test("S5: STAGE REST writer 계약 — on_conflict 미사용(partial unique index 비호환) · lookup-before-insert · INSERT 는 false 만 · UPDATE 는 is_published 미전송 · DELETE 없음", async () => {
+  const calls: Array<{ url: string; method: string; body?: unknown }> = [];
   const fakeFetch: FetchLike = async (url, init) => {
-    calls.push({ url, method: init.method, body: init.body ? JSON.parse(init.body) : undefined, prefer: init.headers.Prefer });
+    calls.push({ url, method: init.method, body: init.body ? JSON.parse(init.body) : undefined });
+    if (init.method === "GET") return { ok: true, status: 200, text: async () => "[]" };
     if (init.method === "POST") { const rows = JSON.parse(init.body!) as Array<{ external_id: string }>; return { ok: true, status: 201, text: async () => JSON.stringify(rows.map((r, i) => ({ id: 5000 + i, external_id: r.external_id }))) }; }
     return { ok: true, status: 204, text: async () => "" };
   };
@@ -124,10 +125,11 @@ test("S5: STAGE REST writer 계약 — upsert on_conflict=source_type,external_i
   const { intake, crosswalk, main, cls } = synthetic(3, 1);
   const plan: ImportPlan = planImport({ intake, sources: [], images: [], crosswalk, main, mainClassification: cls, expectedActiveTotal: 4 });
   const staged = plan.inserts.map(i => ({ ...i, row: { ...i.row, is_published: false } }));
-  const res = await stageInsertChunk(fakeFetch, t, staged);
+  const res = await stageInsertChunkSafe(fakeFetch, t, staged);
   assert.equal(res.length, 3);
-  assert.match(calls[0]!.url, /on_conflict=source_type,external_id/); assert.match(calls[0]!.prefer!, /merge-duplicates/);
-  await assert.rejects(stageInsertChunk(fakeFetch, t, plan.inserts), /is_published=false/);
+  assert.ok(calls.every(c => !/on_conflict=/.test(c.url)));
+  assert.equal(calls[0]!.method, "GET", "lookup 먼저"); assert.equal(calls[1]!.method, "POST");
+  await assert.rejects(stageInsertChunkSafe(fakeFetch, t, plan.inserts), /is_published=false/);
   await stageUpdateRow(fakeFetch, t, plan.updates[0]!);
   const patch = calls.find(c => c.method === "PATCH")!;
   assert.ok(!("is_published" in (patch.body as Record<string, unknown>)), "STAGE UPDATE 는 visibility 를 바꾸지 않는다");

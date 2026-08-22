@@ -2,6 +2,7 @@
 //
 // 결정: NEW_ROW_IDENTITY_STRATEGY = city_spots.(source_type, external_id)
 //   · migration 012 의 `idx_city_spots_source_external` UNIQUE (WHERE external_id IS NOT NULL) 이 DB 차원에서 중복 INSERT 를 막는다.
+//     (Production 실측: partial unique **index**, 제약 아님 → PostgREST on_conflict 추론 불가. STAGE 는 lookup-before-insert — stage-rest-writer.ts)
 //   · source_type = "canonical" — 기존 관례(manual · tourapi · google · user · busan_enrichment_v1)와 같은 계열의 소문자 토큰.
 //     package run 이름("five-city-core-v1")을 쓰지 않는다: 같은 장소가 package v2/refresh 로 다시 들어와도 같은 키여야 한다
 //     (PACKAGE_VERSION_COUPLED_IDENTITY=NO).
