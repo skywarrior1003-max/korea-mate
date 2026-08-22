@@ -1,0 +1,71 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-FOOD-105-MULTILINGUAL-FULL-CONTENT-V1",
+  "generated_at": "2026-08-22T12:36:04.742398+00:00",
+  "total_vg_records": 105,
+  "total_pages_targeted": 420,
+  "total_pages_fetched": 420,
+  "coverage_by_locale": {
+    "ko": {
+      "fetched": 105,
+      "NATIVE_TEXT_PRESENT": 105,
+      "SOURCE_EMPTY": 0,
+      "PAGE_UNAVAILABLE": 0,
+      "FETCH_ERROR": 0,
+      "STRUCTURE_CHANGED": 0,
+      "desc_coverage": "105/105",
+      "desc_pct": 100.0
+    },
+    "en": {
+      "fetched": 105,
+      "NATIVE_TEXT_PRESENT": 105,
+      "SOURCE_EMPTY": 0,
+      "PAGE_UNAVAILABLE": 0,
+      "FETCH_ERROR": 0,
+      "STRUCTURE_CHANGED": 0,
+      "desc_coverage": "105/105",
+      "desc_pct": 100.0
+    },
+    "ja": {
+      "fetched": 105,
+      "NATIVE_TEXT_PRESENT": 105,
+      "SOURCE_EMPTY": 0,
+      "PAGE_UNAVAILABLE": 0,
+      "FETCH_ERROR": 0,
+      "STRUCTURE_CHANGED": 0,
+      "desc_coverage": "105/105",
+      "desc_pct": 100.0
+    },
+    "zh-CN": {
+      "fetched": 105,
+      "NATIVE_TEXT_PRESENT": 105,
+      "SOURCE_EMPTY": 0,
+      "PAGE_UNAVAILABLE": 0,
+      "FETCH_ERROR": 0,
+      "STRUCTURE_CHANGED": 0,
+      "desc_coverage": "105/105",
+      "desc_pct": 100.0
+    }
+  },
+  "title_coverage": {
+    "ko": "105/105 (from vg-raw + page)",
+    "en": "105/105 (from vg-raw + page)",
+    "ja": "105/105 (from vg-raw + page)",
+    "zh-CN": "105/105 (from vg-raw + page)"
+  },
+  "hwasu_brewery_targeted_check": {
+    "vg_id": "535f4149060609450a4104474351404740",
+    "canonical_id": "gyeongju-GJ08-6917",
+    "canonical_phone": "0507-1391-8015",
+    "canonical_addr": "경주시 보문로 465-67 A동 1층 101호",
+    "vg_page_phone": "010-9182-0060",
+    "vg_page_addr_ko": "경주시 보문로 465-67, 1층",
+    "vg_page_name_ko": "화수브루어리",
+    "vg_page_status_ko": "NATIVE_TEXT_PRESENT"
+  },
+  "assertions": {
+    "total_records_correct": true,
+    "total_handoff_correct": true,
+    "no_locale_zero": true
+  },
+  "qa_result": "PASS"
+}

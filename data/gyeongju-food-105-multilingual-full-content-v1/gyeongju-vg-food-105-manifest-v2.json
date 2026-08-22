@@ -1,0 +1,51 @@
+{
+  "task": "TASK-GYEONGJU-VISITGYEONGJU-FOOD-105-MULTILINGUAL-FULL-CONTENT-V1",
+  "generated_at": "2026-08-22T12:36:04.743396+00:00",
+  "branch": "data/gyeongju-food-105-multilingual-full-content-v1",
+  "base_branch": "data/gyeongju-food-visitgyeongju-primary-v1",
+  "source_file": "data\\gyeongju-multilingual-v1\\gyeongju-food-vg-raw-v1.jsonl",
+  "total_vg_records": 105,
+  "total_locales": 4,
+  "total_pages_targeted": 420,
+  "url_patterns": {
+    "ko": "https://www.visitgyeongju.or.kr/kr/cuisine/view/{vg_id}",
+    "en": "https://www.visitgyeongju.or.kr/cuisine/view/{vg_id}",
+    "ja": "https://www.visitgyeongju.or.kr/jp/cuisine/view/{vg_id}",
+    "zh-CN": "https://www.visitgyeongju.or.kr/zh/cuisine/view/{vg_id}"
+  },
+  "scrape_method": "requests+BeautifulSoup official pages only",
+  "ai_translation_used": false,
+  "unofficial_source_used": false,
+  "desc_coverage": {
+    "ko": "105/105",
+    "en": "105/105",
+    "ja": "105/105",
+    "zh-CN": "105/105"
+  },
+  "artifacts": {
+    "A_raw_content": "data\\gyeongju-food-105-multilingual-full-content-v1\\gyeongju-vg-food-105-raw-content.jsonl",
+    "B_service_v2": "data\\gyeongju-food-105-multilingual-full-content-v1\\gyeongju-vg-food-105-service-v2.jsonl",
+    "C_multilingual_handoff_v2": "data\\gyeongju-food-105-multilingual-full-content-v1\\gyeongju-vg-food-105-multilingual-handoff-v2.jsonl",
+    "D_coverage_qa_v2": "data\\gyeongju-food-105-multilingual-full-content-v1\\gyeongju-vg-food-105-coverage-qa-v2.json",
+    "E_manifest_v2": "data\\gyeongju-food-105-multilingual-full-content-v1\\gyeongju-vg-food-105-manifest-v2.json"
+  },
+  "hwasu_brewery_targeted_check": {
+    "vg_id": "535f4149060609450a4104474351404740",
+    "canonical_id": "gyeongju-GJ08-6917",
+    "canonical_phone": "0507-1391-8015",
+    "canonical_addr": "경주시 보문로 465-67 A동 1층 101호",
+    "vg_page_phone": "010-9182-0060",
+    "vg_page_addr_ko": "경주시 보문로 465-67, 1층",
+    "vg_page_name_ko": "화수브루어리",
+    "vg_page_status_ko": "NATIVE_TEXT_PRESENT"
+  },
+  "qa_result": "PASS",
+  "invariants": {
+    "attraction_changed": 0,
+    "db_changed": 0,
+    "production_changed": 0,
+    "master_changed": 0,
+    "ai_translation_used": false,
+    "canonical_modified": false
+  }
+}
