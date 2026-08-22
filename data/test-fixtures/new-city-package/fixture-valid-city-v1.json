@@ -1,0 +1,189 @@
+{
+  "_comment": "TEST FIXTURE — VALID. 모든 manifest-검증 gate PASS 예상. G-04/G-12는 EXTERNAL_CHECK_REQUIRED(content 검사), G-11은 WARN(regional artifact 없음 시 NA). approved_sha=11b6220e(테스트 환경 branch HEAD). 예상 exit: 0 또는 1.",
+  "_schema": "new-city-final-manifest-v1",
+  "_contract": "docs/data-collection/new-city-package/multicity-new-city-package-contract-v1.md",
+
+  "city": "testcity",
+  "package_version": "v1",
+  "approved_sha": "11b6220e1306e30329d3ec61c96adee387529646",
+  "common_policy_pin": "1fb2635abc123def456abc789def012abc345de",
+  "schema_version": "new-city-final-manifest-v1",
+  "generated_as_of": "2026-08-22T00:00:00Z",
+
+  "canonical_id": {
+    "type": "source-derived",
+    "format_example": "testcity-TC01-00001",
+    "source_id_available": "YES",
+    "deterministic": "YES",
+    "cross_run_stable": "YES",
+    "known_limitations": ""
+  },
+
+  "universe": {
+    "_note": "arithmetic: 200+10+5+3+2=220=canonical",
+    "discovered_count": 350,
+    "canonical_count": 220,
+    "service_active_count": 200,
+    "excluded_count": 10,
+    "relation_context_count": 5,
+    "expired_count": 3,
+    "review_count": 2,
+    "arithmetic_check": "200+10+5+3+2=220",
+    "arithmetic_valid": true
+  },
+
+  "category_counts": {
+    "_note": "service_active=200: 80+60+30+20+10=200",
+    "attraction": 80,
+    "restaurant": 60,
+    "nature": 30,
+    "shopping": 20,
+    "event": 10,
+    "other": 0,
+    "total_check": "80+60+30+20+10+0=200"
+  },
+
+  "identity": {
+    "canonical_id_count": 220,
+    "canonical_id_duplicate_count": 0,
+    "source_key_coverage": 200,
+    "source_key_coverage_pct": 100.0,
+    "source_key_duplicate_count": 0,
+    "missing_strong_identity_count": 0,
+    "primary_match_key": "source_key",
+    "secondary_match_keys": ["name+coord"]
+  },
+
+  "data_readiness": {
+    "coord_valid_count": 195,
+    "coord_missing_count": 5,
+    "nav_ready_count": 195,
+    "nav_missing_count": 5,
+    "image_display_eligible_count": 180,
+    "image_missing_count": 20,
+    "image_provenance_count": 180,
+    "description_ko_count": 190,
+    "description_ko_missing_count": 10
+  },
+
+  "locale": {
+    "ko": {
+      "title_count": 200,
+      "description_count": 190,
+      "gap_count": 10,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 5,
+        "NOT_COLLECTED": 3,
+        "FETCH_GAP": 2,
+        "REVIEW_REQUIRED": 0
+      }
+    },
+    "en": {
+      "title_count": 150,
+      "description_count": 100,
+      "gap_count": 50,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 25,
+        "SOURCE_NO_LOCALE": 5,
+        "FETCH_GAP": 0,
+        "GOOGLE_TRANSLATE_ONLY": 0
+      }
+    },
+    "ja": {
+      "title_count": 140,
+      "description_count": 90,
+      "gap_count": 60,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 35,
+        "SOURCE_NO_LOCALE": 5
+      }
+    },
+    "zh-CN": {
+      "title_count": 140,
+      "description_count": 90,
+      "gap_count": 60,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 35,
+        "SOURCE_NO_LOCALE": 5
+      },
+      "zh_key_mapping_note": "Main DB zh-CN → locale key mapping required at intake"
+    }
+  },
+
+  "crosswalk": {
+    "tier1_eligible_count": 180,
+    "tier2_eligible_count": 15,
+    "tier3_required_count": 5,
+    "new_intake_count": 200,
+    "legacy_only_count": 0,
+    "matching_key_primary": "source_key",
+    "matching_key_secondary": ["name+coord"]
+  },
+
+  "artifacts": [
+    {
+      "_note": "템플릿 경로: G-05 EXTERNAL_CHECK_REQUIRED (파일 존재 수동 확인 필요). 신규 도시 실제 실행 시 {city} 치환.",
+      "id": "core_canonical",
+      "path": "data/{city}-final-release/{city}-canonical-places-v1.jsonl",
+      "type": "JSONL",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 200,
+      "filter_for_service": "service_status=SERVICE_ACTIVE",
+      "branch": "data/{city}-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646",
+      "encoding": "utf-8"
+    },
+    {
+      "id": "multilingual",
+      "path": "data/{city}-multilingual/{city}-multilingual-final-v1.json",
+      "type": "JSON",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 200,
+      "branch": "data/{city}-multilingual-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    },
+    {
+      "id": "release_summary",
+      "path": "data/{city}-final-release/{city}-canonical-release-summary-v1.json",
+      "type": "JSON",
+      "runtime_allowed": false,
+      "layer": "A_META",
+      "branch": "data/{city}-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    }
+  ],
+
+  "release_gate": {
+    "_ref": "§제14조 Release Gate G-01~G-15",
+    "G-01_universe_arithmetic": "PASS",
+    "G-02_canonical_id_unique": "PASS",
+    "G-03_source_key_unique": "PASS",
+    "G-04_service_excluded_separation": "PASS",
+    "G-05_required_artifacts_exist": "PASS",
+    "G-06_manifest_row_count_match": "PASS",
+    "G-07_provenance_coverage": "PASS",
+    "G-08_coord_arithmetic": "PASS",
+    "G-09_ko_title_coverage": "PASS",
+    "G-10_image_count_match": "PASS",
+    "G-11_regional_linkage_arithmetic": "NA",
+    "G-12_no_raw_path_in_core": "PASS",
+    "G-13_sha_match_approved": "PASS",
+    "G-14_local_origin_match": "PASS",
+    "G-15_reproducibility_recorded": "PASS",
+    "FINAL_FREEZE_READY": "YES"
+  },
+
+  "release": {
+    "reproducibility": "fixed_as_of=2026-08-22; sort=source_key_asc; deterministic=YES",
+    "known_issues": [],
+    "targeted_qa_required": false,
+    "targeted_qa_items": [],
+    "safe_for_main_intake": "YES",
+    "main_intake_recommendation": "FINAL_ARTIFACT_INTAKE"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "_comment": "TEST FIXTURE — RAW LEAKAGE. G-12 FAIL: runtime_allowed=true, layer=A 아티팩트 경로에 'raw/' 패턴 포함. G-09 FAIL: KO title=190 < service_active=200. 예상 exit: 2.",
+  "_schema": "new-city-final-manifest-v1",
+  "_contract": "docs/data-collection/new-city-package/multicity-new-city-package-contract-v1.md",
+
+  "city": "testcity-raw-leakage",
+  "package_version": "v1",
+  "approved_sha": "11b6220e1306e30329d3ec61c96adee387529646",
+  "common_policy_pin": "1fb2635abc123def456abc789def012abc345de",
+  "schema_version": "new-city-final-manifest-v1",
+  "generated_as_of": "2026-08-22T00:00:00Z",
+
+  "canonical_id": {
+    "type": "source-derived",
+    "format_example": "testcity-TC01-00001",
+    "source_id_available": "YES",
+    "deterministic": "YES",
+    "cross_run_stable": "YES",
+    "known_limitations": ""
+  },
+
+  "universe": {
+    "discovered_count": 350,
+    "canonical_count": 215,
+    "service_active_count": 200,
+    "excluded_count": 8,
+    "relation_context_count": 4,
+    "expired_count": 2,
+    "review_count": 1,
+    "arithmetic_check": "200+8+4+2+1=215",
+    "arithmetic_valid": true
+  },
+
+  "category_counts": {
+    "attraction": 80,
+    "restaurant": 60,
+    "nature": 35,
+    "shopping": 20,
+    "event": 5,
+    "other": 0,
+    "total_check": "80+60+35+20+5=200"
+  },
+
+  "identity": {
+    "canonical_id_count": 215,
+    "canonical_id_duplicate_count": 0,
+    "source_key_coverage": 200,
+    "source_key_coverage_pct": 100.0,
+    "source_key_duplicate_count": 0,
+    "missing_strong_identity_count": 0,
+    "primary_match_key": "source_key",
+    "secondary_match_keys": []
+  },
+
+  "data_readiness": {
+    "coord_valid_count": 195,
+    "coord_missing_count": 5,
+    "nav_ready_count": 195,
+    "nav_missing_count": 5,
+    "image_display_eligible_count": 180,
+    "image_missing_count": 20,
+    "image_provenance_count": 180,
+    "description_ko_count": 190,
+    "description_ko_missing_count": 10
+  },
+
+  "locale": {
+    "ko": {
+      "title_count": 190,
+      "description_count": 190,
+      "gap_count": 10,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 5,
+        "NOT_COLLECTED": 5,
+        "FETCH_GAP": 0,
+        "REVIEW_REQUIRED": 0
+      }
+    },
+    "en": {
+      "title_count": 140,
+      "description_count": 90,
+      "gap_count": 60,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 35,
+        "SOURCE_NO_LOCALE": 5,
+        "FETCH_GAP": 0,
+        "GOOGLE_TRANSLATE_ONLY": 0
+      }
+    },
+    "ja": {
+      "title_count": 130,
+      "description_count": 80,
+      "gap_count": 70,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 45,
+        "SOURCE_NO_LOCALE": 5
+      }
+    },
+    "zh-CN": {
+      "title_count": 130,
+      "description_count": 80,
+      "gap_count": 70,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 20,
+        "COLLECTION_GAP": 45,
+        "SOURCE_NO_LOCALE": 5
+      },
+      "zh_key_mapping_note": ""
+    }
+  },
+
+  "crosswalk": {
+    "tier1_eligible_count": 185,
+    "tier2_eligible_count": 10,
+    "tier3_required_count": 5,
+    "new_intake_count": 200,
+    "legacy_only_count": 0,
+    "matching_key_primary": "source_key",
+    "matching_key_secondary": []
+  },
+
+  "artifacts": [
+    {
+      "id": "core_canonical",
+      "path": "data/testcity-final-release/testcity-canonical-places-v1.jsonl",
+      "type": "JSONL",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 200,
+      "filter_for_service": "service_status=SERVICE_ACTIVE",
+      "branch": "data/testcity-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    },
+    {
+      "_comment": "INTENTIONAL ERROR: runtime_allowed=true, layer=A 경로에 'raw/' 포함 → G-12 FAIL",
+      "id": "raw_discovery_leaked",
+      "path": "data/testcity-raw/nightly/raw-discovery-output-v1.jsonl",
+      "type": "JSONL",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 350,
+      "branch": "data/testcity-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    },
+    {
+      "id": "release_summary",
+      "path": "data/testcity-final-release/testcity-canonical-release-summary-v1.json",
+      "type": "JSON",
+      "runtime_allowed": false,
+      "layer": "A_META",
+      "branch": "data/testcity-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    }
+  ],
+
+  "release_gate": {
+    "_ref": "§제14조 Release Gate G-01~G-15",
+    "G-09_ko_title_coverage": "FAIL",
+    "G-12_no_raw_path_in_core": "FAIL",
+    "FINAL_FREEZE_READY": "NO"
+  },
+
+  "release": {
+    "reproducibility": "fixed_as_of=2026-08-22; sort=source_key_asc; deterministic=YES",
+    "known_issues": [
+      "raw discovery artifact가 core layer에 잘못 등록됨",
+      "KO title 10건 누락"
+    ],
+    "targeted_qa_required": true,
+    "targeted_qa_items": ["raw artifact 경로 수정", "KO title 누락 10건 보강"],
+    "safe_for_main_intake": "NO",
+    "main_intake_recommendation": "FINAL_ARTIFACT_INTAKE"
+  }
+}

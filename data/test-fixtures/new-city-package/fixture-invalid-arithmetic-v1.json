@@ -1,0 +1,153 @@
+{
+  "_comment": "TEST FIXTURE — INVALID ARITHMETIC. G-01 FAIL (100+10+5+3+2=120 ≠ canonical=200). G-08 FAIL (coord: 90+5=95 ≠ 100). G-10 FAIL (image: 80+10=90 ≠ 100). 예상 exit: 2.",
+  "_schema": "new-city-final-manifest-v1",
+  "_contract": "docs/data-collection/new-city-package/multicity-new-city-package-contract-v1.md",
+
+  "city": "testcity-bad-arithmetic",
+  "package_version": "v1",
+  "approved_sha": "11b6220e1306e30329d3ec61c96adee387529646",
+  "common_policy_pin": "1fb2635abc123def456abc789def012abc345de",
+  "schema_version": "new-city-final-manifest-v1",
+  "generated_as_of": "2026-08-22T00:00:00Z",
+
+  "canonical_id": {
+    "type": "source-derived",
+    "format_example": "testcity-TC01-00001",
+    "source_id_available": "YES",
+    "deterministic": "YES",
+    "cross_run_stable": "YES",
+    "known_limitations": ""
+  },
+
+  "universe": {
+    "_note": "INTENTIONAL ERROR: 100+10+5+3+2=120 ≠ canonical=200. arithmetic_valid=false.",
+    "discovered_count": 350,
+    "canonical_count": 200,
+    "service_active_count": 100,
+    "excluded_count": 10,
+    "relation_context_count": 5,
+    "expired_count": 3,
+    "review_count": 2,
+    "arithmetic_check": "100+10+5+3+2=120 ≠ 200",
+    "arithmetic_valid": false
+  },
+
+  "category_counts": {
+    "attraction": 50,
+    "restaurant": 30,
+    "nature": 15,
+    "shopping": 5,
+    "event": 0,
+    "other": 0,
+    "total_check": "50+30+15+5=100"
+  },
+
+  "identity": {
+    "canonical_id_count": 200,
+    "canonical_id_duplicate_count": 0,
+    "source_key_coverage": 200,
+    "source_key_coverage_pct": 100.0,
+    "source_key_duplicate_count": 0,
+    "missing_strong_identity_count": 0,
+    "primary_match_key": "source_key",
+    "secondary_match_keys": []
+  },
+
+  "data_readiness": {
+    "coord_valid_count": 90,
+    "coord_missing_count": 5,
+    "nav_ready_count": 90,
+    "nav_missing_count": 10,
+    "image_display_eligible_count": 80,
+    "image_missing_count": 10,
+    "image_provenance_count": 80,
+    "description_ko_count": 95,
+    "description_ko_missing_count": 5
+  },
+
+  "locale": {
+    "ko": {
+      "title_count": 100,
+      "description_count": 95,
+      "gap_count": 5,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 3,
+        "NOT_COLLECTED": 2,
+        "FETCH_GAP": 0,
+        "REVIEW_REQUIRED": 0
+      }
+    },
+    "en": {
+      "title_count": 60,
+      "description_count": 40,
+      "gap_count": 40,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 10,
+        "COLLECTION_GAP": 25,
+        "SOURCE_NO_LOCALE": 5,
+        "FETCH_GAP": 0,
+        "GOOGLE_TRANSLATE_ONLY": 0
+      }
+    },
+    "ja": {
+      "title_count": 55,
+      "description_count": 35,
+      "gap_count": 45,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 10,
+        "COLLECTION_GAP": 30,
+        "SOURCE_NO_LOCALE": 5
+      }
+    },
+    "zh-CN": {
+      "title_count": 55,
+      "description_count": 35,
+      "gap_count": 45,
+      "gap_by_reason": {
+        "SOURCE_HAS_NO_VALUE": 10,
+        "COLLECTION_GAP": 30,
+        "SOURCE_NO_LOCALE": 5
+      },
+      "zh_key_mapping_note": ""
+    }
+  },
+
+  "crosswalk": {
+    "tier1_eligible_count": 90,
+    "tier2_eligible_count": 5,
+    "tier3_required_count": 5,
+    "new_intake_count": 100,
+    "legacy_only_count": 0,
+    "matching_key_primary": "source_key",
+    "matching_key_secondary": []
+  },
+
+  "artifacts": [
+    {
+      "id": "core_canonical",
+      "path": "data/testcity-final-release/testcity-canonical-places-v1.jsonl",
+      "type": "JSONL",
+      "runtime_allowed": true,
+      "layer": "A",
+      "row_count": 100,
+      "filter_for_service": "service_status=SERVICE_ACTIVE",
+      "branch": "data/testcity-targeted-completion-v1",
+      "sha": "11b6220e1306e30329d3ec61c96adee387529646"
+    }
+  ],
+
+  "release_gate": {
+    "_ref": "§제14조 Release Gate G-01~G-15",
+    "G-01_universe_arithmetic": "FAIL",
+    "FINAL_FREEZE_READY": "NO"
+  },
+
+  "release": {
+    "reproducibility": "fixed_as_of=2026-08-22; sort=source_key_asc; deterministic=YES",
+    "known_issues": ["G-01 universe arithmetic 불일치 — 수정 필요"],
+    "targeted_qa_required": true,
+    "targeted_qa_items": ["universe counts 재산출"],
+    "safe_for_main_intake": "NO",
+    "main_intake_recommendation": "FINAL_ARTIFACT_INTAKE"
+  }
+}
