@@ -1,6 +1,6 @@
 /**
  * import-five-city-core-v1 — 5도시 core intake 의 ID-보존 importer (v1 = dry-run 전용)
- * (TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1)
+ * (TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → Gate A/B/C: TASK-FIVE-CITY-CORE-PREPROD-GATE-V1)
  *
  * Run:
  *   node --experimental-strip-types scripts/import-five-city-core-v1.ts --dry-run
@@ -22,9 +22,10 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { planImport, changeManifestRows, type CrosswalkRow, type ImageRow, type IntakeRow, type MainSnapshotRow, type SourceRow } from "../src/lib/main-intake/importer-core.ts";
+import { planImport, changeManifestRows, type CrosswalkRow, type ImageRow, type IntakeRow, type MainClassificationRow, type MainSnapshotRow, type SourceRow } from "../src/lib/main-intake/importer-core.ts";
 
-const EXPECTED_ACTIVE_TOTAL = 4826;
+const EXPECTED_ACTIVE_TOTAL = 4826;       // SOURCE_ACTIVE_RECORD_COUNT
+const EXPECTED_UNIQUE_PLACES = 4631;      // UNIQUE_SERVICE_PLACE_COUNT = ACTIVE − CONFIRMED_TWIN(195)
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(name);
@@ -73,12 +74,20 @@ const sources = readJsonl<SourceRow>(join(pkg, manifest.outputs.sources.path));
 const images = readJsonl<ImageRow>(join(pkg, manifest.outputs.images.path));
 const crosswalk = readJsonl<CrosswalkRow>(join(pkg, manifest.outputs.crosswalk.path));
 const main = readJsonl<MainSnapshotRow>(join(pkg, manifest.main_snapshot.path));
+const mainClassification = readJsonl<MainClassificationRow>(join(pkg, manifest.outputs.main_classification.path));
 
 // ── 4. 계획 ────────────────────────────────────────────────────────────────
-const plan = planImport({ intake, sources, images, crosswalk, main, expectedActiveTotal: EXPECTED_ACTIVE_TOTAL });
+const plan = planImport({ intake, sources, images, crosswalk, main, mainClassification, expectedActiveTotal: EXPECTED_ACTIVE_TOTAL });
 const projectedTotal = Object.values(plan.per_city).reduce((a, c) => a + c.projected_after, 0);
-const expectedUniverse = { active_total: EXPECTED_ACTIVE_TOTAL, writes: plan.counts.match_replace + plan.counts.new, skipped: plan.counts.ambiguous_skipped + plan.counts.excluded_skipped };
-const arithmeticOk = plan.counts.match_replace + plan.counts.new + plan.counts.ambiguous_skipped === plan.counts.active_input;
+const projectedVisible = Object.values(plan.per_city).reduce((a, c) => a + c.visible_after, 0);
+const projectedHidden = Object.values(plan.per_city).reduce((a, c) => a + c.hidden_after, 0);
+const expectedUniverse = { active_total: EXPECTED_ACTIVE_TOTAL, unique_places: EXPECTED_UNIQUE_PLACES, writes: plan.counts.match_replace + plan.counts.new,
+  skipped: plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped + plan.counts.excluded_skipped };
+// Gate A 산술: ACTIVE = MATCH + NEW + CONFIRMED_TWIN + TRUE_AMBIGUOUS · UNIQUE = MATCH + NEW + TRUE_AMBIGUOUS
+const arithmeticOk =
+  plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped === plan.counts.active_input
+  && plan.counts.unique_service_places === EXPECTED_UNIQUE_PLACES
+  && plan.counts.unique_service_places + plan.counts.confirmed_twin_skipped === plan.counts.active_input;
 
 // ── 5. 출력 (결정적: 시각 없음, 정렬 고정) ───────────────────────────────────
 const outDir = join(pkg, "dry-run");
@@ -94,13 +103,22 @@ writeFileSync(join(outDir, "five-city-core-id-mapping-v1.jsonl"), idMap.map(r =>
 writeFileSync(join(outDir, "five-city-core-skipped-v1.jsonl"), plan.skips.map(r => JSON.stringify(r)).join("\n") + "\n", "utf8");
 writeFileSync(join(outDir, "five-city-core-errors-v1.json"), JSON.stringify(plan.errors, null, 1) + "\n", "utf8");
 const summary = {
-  task: "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
+  task: "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
   mode: "dry-run",
   input_manifest_sha256: manifestHash,
   run_id: sha256(manifestHash + changeText).slice(0, 16),   // 입력+계획의 해시 — 같은 입력이면 같은 run id
   counts: plan.counts,
   arithmetic_ok: arithmeticOk,
   expected_universe: expectedUniverse,
+  gate_a: {
+    SOURCE_ACTIVE_RECORD_COUNT: plan.counts.active_input,
+    CONFIRMED_TWIN_RECORD_COUNT: plan.counts.confirmed_twin_skipped,
+    TRUE_AMBIGUOUS_COUNT: plan.counts.true_ambiguous_skipped,
+    UNIQUE_SERVICE_PLACE_COUNT: plan.counts.unique_service_places,
+    SKIP_TWIN: plan.counts.confirmed_twin_skipped, SKIP_TRUE_AMBIGUOUS: plan.counts.true_ambiguous_skipped,
+  },
+  gate_b_visibility: { ...plan.visibility, projected_visible_rows: projectedVisible, projected_hidden_rows: projectedHidden, gate_column: "is_published", migration: "056_city_spots_is_published.sql (created, NOT applied)" },
+  gate_c_category: { lossy_mapping_count: plan.counts.lossy_category },
   per_city: plan.per_city,
   projected_total_city_spots: projectedTotal,
   null_policy_counts: plan.null_policy_counts,

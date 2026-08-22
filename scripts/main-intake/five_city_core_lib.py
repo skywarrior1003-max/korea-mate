@@ -249,3 +249,109 @@ def twin_groups(rows: list[dict[str, Any]], *, name_keys: tuple[str, ...], lat_k
             if r[id_key] != rep:
                 out[r[id_key]] = rep
     return out
+
+
+# ── Pre-Production Gate A: 쌍둥이 최종 판정 (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1) ──────
+#
+# twin_groups 는 "같은 정규화 이름 + ≤150m" 로 후보 묶음만 만든다. 여기서는 묶음마다
+#   (1) 대표를 **근거 있는 규칙**으로 고르고 (배열/파일 순서 금지)
+#   (2) 구성원마다 관계를 확정한다: SAME_ENTITY_TWIN / DISTINCT_ENTITY / TRUE_AMBIGUOUS
+#
+# 대표 선택 규칙(순서대로, 앞이 같으면 다음 기준):
+#   1. provenance 등급 — entity 레코드(공식 API·시 카탈로그)가 page/article 레코드보다 앞 (부산 A<K<E<VB, 전주 OFF<KTO)
+#   2. 깨끗한 고유명 — 괄호·따옴표·작가/기사 접두가 없는 한글명이 앞 (예: '아미동 비석마을' > '정승빈작가-아미동비석마을(…)')
+#   3. 공개 가능 이미지 보유 수 많은 쪽
+#   4. 설명문 보유(CSS 잔재 제외) 쪽
+#   5. 공식 URL 보유 쪽
+#   6. 동률이면 canonical_id 오름차순 (안정 tie-break)
+#
+# 관계 자동 규칙:
+#   · 이름 동일 + 주소 동일(또는 포함) 또는 ≤30m → SAME_ENTITY_TWIN (HIGH)
+#   · 이름 동일이지만 주소가 다르고 >30m → 자동으로 같은 장소로 보지 않는다 → TRUE_AMBIGUOUS
+#     (explicit SAME 표에 근거가 적혀 있으면 SAME, DISTINCT 표에 있으면 DISTINCT_ENTITY)
+#   · DISTINCT 표의 쌍은 묶음에서 풀어 각자 독립 레코드로 돌려보낸다.
+NAME_NOISE_RE = re.compile(r"[()\[\]〈〉<>'‘’\"“”]|작가|추천|맛집|명소")
+
+
+def norm_addr(a: Any) -> str:
+    s = re.sub(r"\(.*?\)", "", str(a or ""))
+    s = re.sub(r"(특별자치도|광역시|특별시|자치도|도|시|구|군)\b", "", s)
+    return re.sub(r"\s+", "", s)
+
+
+def name_is_clean(name: Any) -> bool:
+    return bool(name) and not NAME_NOISE_RE.search(str(name))
+
+
+def resolve_twins(rows: list[dict[str, Any]], *, name_keys: tuple[str, ...], lat_key: str, lng_key: str, id_key: str,
+                  features: Any, addr_key: str, same_entity: dict[tuple[str, str], str], distinct: dict[tuple[str, str], str],
+                  true_ambiguous: dict[str, str], max_m: float = 150.0, city: str = "") -> tuple[dict[str, str], list[dict[str, Any]]]:
+    """returns (member → representative, resolution rows). resolution rows 는 대표 자신을 포함하지 않는다."""
+    groups = twin_groups(rows, name_keys=name_keys, lat_key=lat_key, lng_key=lng_key, id_key=id_key, max_m=max_m)
+    byid = {r[id_key]: r for r in rows}
+    members: dict[str, list[str]] = {}
+    for m, rep in groups.items():
+        members.setdefault(rep, []).append(m)
+
+    def rank(cid: str) -> tuple:
+        f = features(byid[cid])
+        return (int(f.get("prov", 9)), 0 if name_is_clean(f.get("name_ko")) else 1, -int(f.get("img", 0)),
+                -int(f.get("desc", 0)), -int(f.get("url", 0)), cid)
+
+    def pair_key(a: str, b: str) -> tuple[str, str]:
+        return (a, b) if a <= b else (b, a)
+
+    out_map: dict[str, str] = {}
+    resolution: list[dict[str, Any]] = []
+    for rep0, mem in sorted(members.items()):
+        group = sorted([rep0, *mem])
+        # DISTINCT 표에 있는 레코드는 묶음에서 분리한다
+        detached: list[str] = []
+        core: list[str] = []
+        for cid in group:
+            if any(pair_key(cid, o) in distinct for o in group if o != cid):
+                detached.append(cid)
+            else:
+                core.append(cid)
+        # 2건짜리 묶음이 통째로 DISTINCT 면 core 가 비고, 둘 다 독립 레코드로 돌아간다
+        rep = sorted(core, key=rank)[0] if core else None
+        for cid in detached:
+            other = next(o for o in group if o != cid and pair_key(cid, o) in distinct)
+            resolution.append({"city": city, "member_canonical_id": cid, "representative_canonical_id": None,
+                               "relation": "DISTINCT_ENTITY", "reason": distinct[pair_key(cid, other)],
+                               "evidence": _twin_evidence(byid[cid], byid[other], lat_key, lng_key, addr_key, name_keys),
+                               "source_type": str(features(byid[cid]).get("source_type")), "category": byid[cid].get("category"),
+                               "confidence": "HIGH", "deterministic_rule": "explicit_distinct_table", "runtime_write": True,
+                               "notes": f"twin candidate of {other} — 다른 entity 로 확정, 독립 레코드로 write"})
+        if rep is None:
+            continue
+        for cid in core:
+            if cid == rep:
+                continue
+            out_map[cid] = rep
+            ev = _twin_evidence(byid[cid], byid[rep], lat_key, lng_key, addr_key, name_keys)
+            key = pair_key(cid, rep)
+            if cid in true_ambiguous:
+                rel, reason, conf, rule = "TRUE_AMBIGUOUS", true_ambiguous[cid], "LOW", "explicit_true_ambiguous_table"
+            elif key in same_entity:
+                rel, reason, conf, rule = "SAME_ENTITY_TWIN", same_entity[key], "MEDIUM", "explicit_same_entity_table"
+            elif ev["address_same"] or ev["distance_m"] <= 30:
+                rel, reason, conf, rule = "SAME_ENTITY_TWIN", "same normalized name + same address(or ≤30m) + same category", "HIGH", "auto:name+address_or_30m"
+            else:
+                rel, reason, conf, rule = "TRUE_AMBIGUOUS", "same name but different registered address and >30m — artifact 만으로 같은 장소 확정 불가", "LOW", "auto:name_only_address_differs"
+            resolution.append({"city": city, "member_canonical_id": cid, "representative_canonical_id": rep, "relation": rel,
+                               "reason": reason, "evidence": ev, "source_type": str(features(byid[cid]).get("source_type")),
+                               "category": byid[cid].get("category"), "confidence": conf, "deterministic_rule": rule,
+                               "runtime_write": False,
+                               "notes": "대표만 write; 이 행은 SKIP" if rel == "SAME_ENTITY_TWIN" else "판정 전까지 SKIP(대표는 write) — 삭제·병합 아님"})
+    return out_map, resolution
+
+
+def _twin_evidence(a: dict[str, Any], b: dict[str, Any], lat_key: str, lng_key: str, addr_key: str, name_keys: tuple[str, ...]) -> dict[str, Any]:
+    d = km(a.get(lat_key), a.get(lng_key), b.get(lat_key), b.get(lng_key))
+    na, nb = norm_addr(a.get(addr_key)), norm_addr(b.get(addr_key))
+    same_addr = bool(na and nb and (na == nb or na in nb or nb in na))
+    return {"distance_m": round((d or 0) * 1000), "address_same": same_addr,
+            "member_address": a.get(addr_key), "representative_address": b.get(addr_key),
+            "member_name": {k: a.get(k) for k in name_keys}, "representative_name": {k: b.get(k) for k in name_keys},
+            "category_same": a.get("category") == b.get("category")}

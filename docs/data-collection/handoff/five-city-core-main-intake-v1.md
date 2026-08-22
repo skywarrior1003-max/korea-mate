@@ -1,6 +1,7 @@
 # Five-City Core Main Intake v1 — crosswalk · intake package · dry-run importer
 
 TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 · 2026-08-22 · Production write 0
+§10 Pre-Production Gate (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1 · 2026-08-22) — §3 의 '쌍둥이 197 = AMBIGUOUS' 과 §6·§7 의 게이트 권장은 §10 으로 **대체**된다.
 
 ## 1. 무엇인가
 
@@ -92,3 +93,71 @@ apply 가드: `--apply` + env `FIVE_CITY_CORE_APPLY=YES` + `--confirm-manifest-h
 ## 9. 다음 단계 전 Owner 승인 필요
 
 ① `is_published`(+인덱스) migration 적용 ② 런타임 3곳 필터 코드 릴리스 ③ importer apply 구현·실행(트랜잭션, change manifest 저장, rollback manifest) ④ 재빌드·배포 ⑤ legacy 231행·준중복 3쌍의 노출 여부 결정(삭제 아님).
+
+## 10. Pre-Production Gate (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1 · 2026-08-22) · DECIDED
+
+### 10-0. Owner Priority — 반드시 유지
+- **현재 최우선 = GoKoreaMate 오픈.** 이 문서의 범위는 "5도시 Core integration 을 안전하게 끝내기 위한 최소 작업" 이다.
+- **`City Package architecture = POST-LAUNCH FOUNDATION`** — Owner 가 승인한 방향이지만 지금 구현하지 않는다(범용 builder·전국 ingestion·도시 activation framework·관리 UI·data platform 일반화 금지).
+- **`Current priority = 5-city integration completion + launch UI/function/design`** — 통합이 Production 까지 끝나면 Main 개발은 즉시 Home·Search·Explore·Place Detail·Picks·My Trip 등 오픈 제품 surface 로 복귀한다.
+- 향후 확장을 막는 하드코딩은 피하되, 미래 플랫폼을 지금 만들지 않는다.
+
+### 10-1. Gate A — 쌍둥이 197건 최종 판정 (`five-city-core-twin-resolution-v1.jsonl`)
+| 용어 | 값 | 뜻 |
+|---|---|---|
+| SOURCE_ACTIVE_RECORD_COUNT | **4,826** | 보조컴퓨터 최종 artifact 의 ACTIVE 레코드 수 (레코드이지 장소 수가 아니다) |
+| CONFIRMED_TWIN_RECORD_COUNT | **195** | 같은 장소의 두 번째 레코드(SAME_ENTITY_TWIN) — 대표만 write, 이 행은 SKIP_TWIN |
+| TRUE_AMBIGUOUS_COUNT | **1** | `seoul-food-v1-0909` 사마르칸트시티 — 이름 동일·등록 주소 다름·92m. 판정 전 SKIP(삭제·병합 아님) |
+| UNIQUE_SERVICE_PLACE_COUNT | **4,631** | = MATCH_REPLACE 461 + NEW 4,169 + TRUE_AMBIGUOUS 1 = 4,826 − 195 |
+| DISTINCT_ENTITY | 1쌍(2행) | `OFF-9756`(국립전주박물관 경내 어린이박물관) ↔ `KTO-129786`(본관) — 복합시설 내부 별개 entity → 둘 다 NEW |
+
+도시별 구성원: busan SAME 169 · seoul SAME 16 + TRUE_AMBIGUOUS 1 · jeju SAME 1 · jeonju SAME 9 + DISTINCT 2 · gyeongju 0.
+관계 자동 규칙: 이름 동일 + (정규화 주소 동일/포함 또는 ≤30m) + 카테고리 동일 → SAME(HIGH). 주소가 다르고 >30m 이면 자동으로 같은 장소로 보지 않는다 → 명시 표(`TWIN_SAME_ENTITY`·`TWIN_DISTINCT`·`TWIN_TRUE_AMBIGUOUS`, 크로스워크 스크립트 상단)에 근거가 있을 때만 SAME/DISTINCT, 없으면 TRUE_AMBIGUOUS. 전주향교(106m, 같은 경내)는 명시 SAME.
+**대표 선택 규칙(`lib.resolve_twins`)** — 순서대로: ① provenance 등급(entity 레코드 < page/article: 부산 A<K<E<VB, 전주 OFF<KTO) ② 괄호·따옴표·작가/기사 접두가 없는 깨끗한 고유명 ③ 공개 가능 이미지 ④ 설명문(CSS 잔재 제외) ⑤ 공식 URL ⑥ canonical_id 오름차순. 배열/파일 순서는 쓰지 않는다. 이 규칙으로 bc70b35 대비 대표가 바뀐 묶음은 1개(슬립노모어 서울: 괄호 없는 `seoul-KOPtpyykt`), MATCH 대상 Main id 변경 0.
+crosswalk decision 은 `AMBIGUOUS` 를 폐기하고 `CONFIRMED_TWIN` / `TRUE_AMBIGUOUS` 로 쓴다.
+
+### 10-2. Gate B — 서비스 노출 게이트 (`is_published`)
+- 기존 계약 조사: 데이터계약 v1 §5 에 `is_published boolean NOT NULL DEFAULT false` + `(city, is_published)` 인덱스가 이미 DECIDED, §7 에 `is_published → catalog_ready/approved` 관계식. `place-source.ts` 가 "M1-A 이후 is_published=true" 를 예약. 런타임 구현은 0 이었다. → 새 개념을 만들지 않고 §5 의 첫 컬럼만 먼저 쓴다.
+- **migration `supabase/migrations/056_city_spots_is_published.sql`(파일만 생성, 미적용)**: additive 컬럼 + 기존 행 전부 `true` backfill + 인덱스. DELETE·id·RLS·GRANT 변경 0. §5 의 나머지 14컬럼·§7 CHECK 는 readiness 파이프라인과 함께 별도 migration(이 파일은 그 부분집합).
+- **런타임 `src/lib/city-spots-visibility.ts`**: `DISCOVERY_VISIBILITY_GATE_ENABLED=false`(기본) — 켜기 전에는 어떤 쿼리도 바뀌지 않으므로 migration 전 배포가 안전하다. 릴리스 커밋에서만 `true` 로 바꾼다(env 가 아닌 코드 상수: Functions ctx.env 와 Next process.env 가 달라 두 표면이 어긋나는 것을 막는다).
+- **discovery vs reference** (이 구분이 핵심):
+
+| 소비처 | scope | 동작 |
+|---|---|---|
+| Explore `fetchCitySpots`/`ByCategory` (ExploreCity) | discovery | 게이트 ON 이면 `is_published=true` 만 |
+| 플래너 자동 후보 `functions/api/trip/plan.ts` bbox 쿼리 · `near-me/candidate-generator` | discovery | 숨긴 legacy 는 자동 공급에서 제외 |
+| sitemap | discovery | 숨긴 legacy URL 미수록 |
+| itinerary/page.tsx · ItineraryDayMap 의 `fetchCitySpots(city, "reference")` | reference | 저장된 place_id hydration — 숨긴 legacy 도 과거 일정에서 그대로 |
+| 플래너 place_map(by id) · `src/app/api/trip/plan/route.ts` | reference | 필터 없음 |
+| Story `shared/[id]/story.ts` · trip-moments · user-spots from-canonical/enrich · admin | reference | 필터 없음(id 검증만) |
+| `/place/[id]` generateStaticParams | reference | 숨긴 legacy 도 페이지 생성(Saved/My Trip/Story 의 직접 링크 보존). `is_published=false` 면 `robots noindex,follow` |
+
+- importer: 모든 UPDATE/INSERT 에 `is_published=true`. Main 분류 `EXCLUDED_FROM_SERVICE_REVIEW`(231)·`DUPLICATE_REVIEW`(3) = **234행 → `VISIBILITY_UPDATE is_published=false`**(보존·숨김). `LEGACY_ONLY_VALID` 19행은 **노출 유지**(backfill true, NO_WRITE) — 오너가 달리 정하면 그때 목록으로 숨긴다.
+- 플래너 주의: Saved/This Trip 의 선호 id 는 후보 풀(bbox) 안에서 가점으로만 쓰인다. 숨긴 legacy 를 Saved 에 가진 사용자의 경우 자동 배치 후보에서 빠진다(이미 만든 일정 snapshot 은 영향 없음). This Trip hard-constraint 배치는 별도 미구현 과제.
+
+### 10-3. Gate C — Semantic Category Contract (`five-city-category-mapping-v1.json`)
+- `RUNTIME_COMPAT_CATEGORY` = `category`(Main CHECK 5종) · `SOURCE_SEMANTIC_CATEGORY` = 원본의 여행 의미 {attraction, restaurant, nature, event, accommodation, **shopping, culture, heritage, activity, specialty**}.
+- 보존 규칙: semantic ≠ runtime → `subcategory = semantic 토큰`(기계가 읽는 값), 원본 세부 분류는 deferred `content_meta.subcategory_raw`. semantic == runtime → `subcategory = raw`. 복원 규칙 `semanticOf(row)`(category-adapter.ts) 하나로 Search/Explore/AI 가 같은 값을 읽는다.
+- 원본 distinct 값: busan attraction/event/nature/restaurant · gyeongju attraction/restaurant · seoul attraction/nature/restaurant/**shopping(30)** · jeju attraction/event/**food(256)** · jeonju FOOD/PLACE_TOURISM/PLACE_TOURISM_REVIEW/PLACE_GENERAL/PLACE_CULTURAL(72)/PLACE_HERITAGE(25)/PLACE_NATURE/ACTIVITY_EXPERIENCE(1)/SPECIALTY_INTEREST(3, menu '쇼핑' → shopping)/ACCOMMODATION_HANOK_REVIEW.
+- 결과: 매핑 23종 — DIRECT 4,304행 · NORMALIZED 522행 · DEFERRED 0 · **LOSSY_MAPPING_COUNT = 0** (행 단위 검산, importer 가 lossy 를 오류로 센다). semantic 분포: attraction 2,713 · restaurant 1,879 · nature 84 · culture 72 · shopping 33 · heritage 25 · event 14 · accommodation 5 · activity 1.
+- UI(카테고리 필터·새 Explore/Search)는 이 TASK 범위 밖 — Product Surface 단계.
+
+### 10-4. Pre-Production dry-run (2회 동일)
+run_id `6218ce73e836f370` · 입력 manifest sha256 `eae3bfc8…29abb5` · change manifest sha256 `03a3f119…53acfa` · errors 0 · UPDATE 461 · INSERT 4,169 · SKIP_TWIN 195 · SKIP_TRUE_AMBIGUOUS 1 · EXCLUDED 3 · VISIBILITY_UPDATE(hide) 234 · NO_WRITE 19 · sources 5,595 · images 4,369 · DELETE 0 · apply = `APPLY_REFUSED`/`APPLY_DISABLED_IN_V1`.
+
+| 분류 | 수 |
+|---|---|
+| projected DB total rows | **4,883** = 714 + 4,169 |
+| service-visible unique rows | **4,649** = 461 + 4,169 + LEGACY_ONLY_VALID 19 |
+| preserved hidden legacy rows | **234** (busan 231 · gyeongju 3) |
+| direct-reference-only legacy rows | 234 (위와 같은 집합 — /place/<id>·Saved·Story 에서만 도달) |
+| TRUE_AMBIGUOUS (미write) | 1 |
+
+도시별 after(visible/hidden): busan 1,039(808/231) · gyeongju 302(299/3) · seoul 1,820 · jeju 1,495 · jeonju 227.
+
+### 10-5. Production rollout 권장 순서 (이 TASK 에서 실행하지 않음)
+1. Owner 승인 후 **migration 056** 을 Dashboard SQL Editor 에서 적용(기존 714 = true, 사용자 경험 불변).
+2. 릴리스 커밋: `DISCOVERY_VISIBILITY_GATE_ENABLED=true` + 이 브랜치 코드 → master → Cloudflare 빌드(이 시점 DB 는 전부 true 라 화면 불변).
+3. importer apply 구현(트랜잭션·change manifest 보관·rollback manifest) → **DB write**: UPDATE 461(is_published=true) · INSERT 4,169(true) · VISIBILITY_UPDATE 234(false) · sources/images upsert.
+4. **즉시 재빌드·배포** → `/place/<new id>` 4,169 페이지 생성(총 4,883). 3→4 사이가 유일한 404 창이므로 연속 실행.
+5. 사후: TRUE_AMBIGUOUS 1건·LEGACY_ONLY_VALID 19건 노출 여부·DUPLICATE_REVIEW 3쌍 처리(삭제 아님) Owner 결정.

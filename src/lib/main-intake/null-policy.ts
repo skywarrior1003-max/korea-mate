@@ -14,11 +14,13 @@ export type NullPolicy =
   | "INTENTIONALLY_CLEAR"
   | "NO_SOURCE_VALUE"
   | "PRESERVE_RUNTIME_FIELD"
-  | "MANUAL_REVIEW";
+  | "MANUAL_REVIEW" | "VISIBILITY_GATE";
 
 /** importer 가 UPDATE 로 쓸 수 있는 city_spots 컬럼과 소유 구분 */
-export const FIELD_OWNERSHIP: Record<string, "SOURCE" | "RUNTIME" | "MANUAL" | "REFERENCE"> = {
+export const FIELD_OWNERSHIP: Record<string, "SOURCE" | "RUNTIME" | "MANUAL" | "REFERENCE" | "VISIBILITY"> = {
   id: "REFERENCE",
+  // Gate B (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1): 서비스 노출 게이트. importer 가 ACTIVE 에 true, 승인된 legacy 에 false 를 준다.
+  is_published: "VISIBILITY",
   city: "REFERENCE",
   name: "SOURCE",
   name_l10n: "SOURCE",
@@ -88,6 +90,7 @@ export function decideField(field: string, sourceValue: unknown, oldValue: unkno
   if (owner === undefined) return { field, policy: "MANUAL_REVIEW", sourceState: state };
   if (owner === "RUNTIME" || owner === "REFERENCE") return { field, policy: "PRESERVE_RUNTIME_FIELD", sourceState: state };
   if (owner === "MANUAL") return { field, policy: "MANUAL_REVIEW", sourceState: state };
+  if (owner === "VISIBILITY") return { field, policy: "VISIBILITY_GATE", value: sourceValue === true, sourceState: state };
   if (state === "value") return { field, policy: "REPLACE_WITH_VALUE", value: sourceValue, sourceState: state };
   if (isLegacyClearCandidate(field, oldValue)) return { field, policy: "INTENTIONALLY_CLEAR", value: null, sourceState: state };
   return { field, policy: "NO_SOURCE_VALUE", sourceState: state };
@@ -95,5 +98,5 @@ export function decideField(field: string, sourceValue: unknown, oldValue: unkno
 
 /** 쓸 값이 실제로 있는 policy 만 UPDATE 에 싣는다 */
 export function isWritePolicy(p: NullPolicy): boolean {
-  return p === "REPLACE_WITH_VALUE" || p === "INTENTIONALLY_CLEAR";
+  return p === "REPLACE_WITH_VALUE" || p === "INTENTIONALLY_CLEAR" || p === "VISIBILITY_GATE";
 }

@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { applyVisibility, type VisibilityScope } from "@/lib/city-spots-visibility";
 import type { CitySpot, LocalizedText } from "@/data/cities/types";
 
 // ── 카테고리 타입 가드 ────────────────────────────────────────────────────────
@@ -14,6 +15,8 @@ function toCategory(raw: string): ValidCategory {
 // ── Supabase row 타입 ─────────────────────────────────────────────────────────
 
 export interface CitySpotRow {
+  /** Gate B(migration 056) — 컬럼이 아직 없으면 undefined. 발견 표면에서만 의미가 있다 */
+  is_published?: boolean | null;
   id: number;
   city: string;
   name: string;
@@ -165,13 +168,20 @@ export function rowToPublicCitySpot(row: PublicCitySpotRow): CitySpot {
 // 호출부는 전부 Trip-Flow 다 — ExploreCity · itinerary · ItineraryDayMap.
 // 따라서 별도 함수를 만들지 않고 이 함수들이 곧 Trip-Flow 조회다.
 // Editorial 표면은 city_spots 를 읽지 않는다.
+//
+// Gate B (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1) — scope 로 두 조회를 구분한다.
+//   "discovery"(기본) : Explore 목록처럼 사용자가 새 장소를 **발견**하는 경우 → 게이트가 켜지면 is_published=true 만
+//   "reference"       : itinerary / ItineraryDayMap 처럼 사용자가 **이미 가진 place_id** 를 다시 찾는 경우 →
+//                       숨긴 legacy 라도 과거 일정이 깨지지 않도록 필터하지 않는다
 
-export async function fetchCitySpots(city: string): Promise<CitySpot[]> {
-  const { data, error } = await supabase
-    .from("city_spots")
-    .select(EXPLORE_SELECT)
-    .eq("city", city)
-    .order("id");
+export async function fetchCitySpots(city: string, scope: VisibilityScope = "discovery"): Promise<CitySpot[]> {
+  const { data, error } = await applyVisibility(
+    supabase
+      .from("city_spots")
+      .select(EXPLORE_SELECT)
+      .eq("city", city),
+    scope,
+  ).order("id");
 
   if (error) {
     console.error("[city-spots] fetch error:", error.message);
@@ -183,14 +193,17 @@ export async function fetchCitySpots(city: string): Promise<CitySpot[]> {
 
 export async function fetchCitySpotsByCategory(
   city: string,
-  category: string
+  category: string,
+  scope: VisibilityScope = "discovery"
 ): Promise<CitySpot[]> {
-  const { data, error } = await supabase
-    .from("city_spots")
-    .select(EXPLORE_SELECT)
-    .eq("city", city)
-    .eq("category", category)
-    .order("id");
+  const { data, error } = await applyVisibility(
+    supabase
+      .from("city_spots")
+      .select(EXPLORE_SELECT)
+      .eq("city", city)
+      .eq("category", category),
+    scope,
+  ).order("id");
 
   if (error) {
     console.error("[city-spots] category fetch error:", error.message);

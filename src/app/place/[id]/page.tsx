@@ -27,7 +27,8 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const ids = await fetchPublicSpotIds();
+  // Gate B: reference — 숨긴 legacy 도 페이지를 만든다(사용자 Saved/My Trip/Story 링크 보존). sitemap 만 discovery.
+  const ids = await fetchPublicSpotIds("reference");
   return ids.map(id => ({ id: String(id) }));
 }
 
@@ -54,6 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${spot.name} — ${spot.city} | gokoreamate`,
     description: desc,
     alternates: { canonical: url },
+    // Gate B: 서비스에서 뺀 legacy(is_published=false)는 직접 링크로는 열리되 검색 색인에서는 뺀다
+    ...(spot.is_published === false ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: `${spot.name} — ${spot.city}`,
       description: desc,

@@ -27,10 +27,11 @@ test("L1: zh-CN → zh, 모르는 locale 은 버린다, 빈 값은 키를 만들
   assert.equal(pickName(null, "ko", "Haeundae"), "Haeundae");
 });
 
-test("C1: category 는 Main 5종으로만 — 의미는 subcategory 에, 모르는 값은 DEFER 표시", () => {
-  assert.deepEqual(mapCategory("food"), { category: "restaurant", subcategory: "food", kind: "NORMALIZE_MAP" });
-  assert.deepEqual(mapCategory("shopping", "department store"), { category: "attraction", subcategory: "department store", kind: "NORMALIZE_MAP" });
-  assert.deepEqual(mapCategory("nature"), { category: "nature", subcategory: null, kind: "DIRECT_MAP" });
+test("C1: category 는 Main 5종으로만 — semantic 은 subcategory 에(Gate C), 모르는 값은 DEFER 표시", () => {
+  // Gate C 이후: semantic == runtime 이면 subcategory 는 raw 그대로(없으면 null), semantic != runtime 이면 semantic 토큰
+  assert.deepEqual(mapCategory("food"), { category: "restaurant", subcategory: null, kind: "NORMALIZE_MAP", semantic: "restaurant", subcategoryRawDeferred: null });
+  assert.deepEqual(mapCategory("shopping", "department store"), { category: "attraction", subcategory: "shopping", kind: "NORMALIZE_MAP", semantic: "shopping", subcategoryRawDeferred: "department store" });
+  assert.deepEqual(mapCategory("nature"), { category: "nature", subcategory: null, kind: "DIRECT_MAP", semantic: "nature", subcategoryRawDeferred: null });
   assert.equal(mapCategory("theme_park").kind, "UNSUPPORTED_DEFER");
   assert.ok(isMainCategory("accommodation") && !isMainCategory("shopping"));
 });
@@ -49,7 +50,7 @@ test("N1: null 의미 — REPLACE / NO_SOURCE_VALUE / INTENTIONALLY_CLEAR(Unspla
   assert.ok(isLegacyClearCandidate("image_url", "https://images.unsplash.com/q"));
 });
 
-test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, AMBIGUOUS/EXCLUDED 는 SKIP, DELETE 없음", () => {
+test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, CONFIRMED_TWIN/EXCLUDED 는 SKIP, DELETE 없음", () => {
   const main: MainSnapshotRow[] = [
     { main_city_spot_id: 1, city: "busan", category: "attraction", canonical_title: "Haeundae Beach", legacy_image_url: "https://source.unsplash.com/a" },
     { main_city_spot_id: 2, city: "busan", category: "restaurant", canonical_title: "Old Legacy" },
@@ -62,7 +63,7 @@ test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, AMBIGUOU
   const crosswalk: CrosswalkRow[] = [
     { city: "busan", canonical_id: "busan-A-00070", service_status: "ACTIVE", main_city_spot_id: 1, decision: "MATCH_REPLACE", tier: "TIER2" },
     { city: "busan", canonical_id: "busan-A-00999", service_status: "ACTIVE", main_city_spot_id: null, decision: "NEW", tier: "NEW" },
-    { city: "busan", canonical_id: "busan-VB-1", service_status: "ACTIVE", main_city_spot_id: null, decision: "AMBIGUOUS", tier: "DUPLICATE_CANONICAL", twin_of: "busan-A-00070" },
+    { city: "busan", canonical_id: "busan-VB-1", service_status: "ACTIVE", main_city_spot_id: null, decision: "CONFIRMED_TWIN", tier: "SAME_ENTITY_TWIN", twin_of: "busan-A-00070" },
     { city: "gyeongju", canonical_id: "gyeongju-GJ01-0092", service_status: "EXCLUDED", main_city_spot_id: 5, decision: "EXCLUDED", tier: "TIER1" },
   ];
   const plan = planImport({ intake, sources: [] as SourceRow[], images: [] as ImageRow[], crosswalk, main, expectedActiveTotal: 3 });
@@ -85,7 +86,7 @@ test("P1: 소형 fixture — UPDATE 는 id 보존, NEW 는 placeholder, AMBIGUOU
 
 const pkgReady = existsSync(new URL(PKG + "five-city-core-input-manifest-v1.json", ROOT));
 
-test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 보존, historical 229 미쓰기, 쌍둥이 SKIP", { skip: !pkgReady }, () => {
+test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 보존, historical 228 미쓰기, 쌍둥이 SKIP", { skip: !pkgReady }, () => {
   const intake = readJsonl<IntakeRow>("five-city-core-active-v1.jsonl");
   const sources = readJsonl<SourceRow>("five-city-core-sources-v1.jsonl");
   const images = readJsonl<ImageRow>("five-city-core-images-v1.jsonl");
@@ -95,7 +96,7 @@ test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 
   const plan = planImport({ intake, sources, images, crosswalk, main, expectedActiveTotal: 4826 });
   assert.deepEqual(plan.errors, []);
   assert.equal(plan.counts.active_input, 4826);
-  assert.equal(plan.counts.match_replace + plan.counts.new + plan.counts.ambiguous_skipped, 4826);
+  assert.equal(plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.true_ambiguous_skipped, 4826);
   assert.equal(plan.counts.delete, 0);
   // 경주 ACTIVE 299 → 전부 기존 id UPDATE, EXCLUDED 3 은 SKIP
   assert.equal(plan.updates.filter(u => u.city === "gyeongju").length, 299);
@@ -108,10 +109,13 @@ test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 
   // historical busan-F 는 어떤 UPDATE/INSERT 에도 나타나지 않는다
   const historical = main.filter(m => m.city === "busan" && m.legacy_external_id && !plan.updates.some(u => u.main_city_spot_id === m.main_city_spot_id));
   assert.equal(historical.length, 228);
+  // Gate B: mainClassification 없이 계획하면 legacy 는 전부 NO_WRITE (숨김은 분류가 있을 때만)
   assert.ok(plan.no_write.filter(n => n.city === "busan").length >= 228);
-  // 쌍둥이는 SKIP, 대표는 쓰인다
-  const twins = plan.skips.filter(s => s.reason === "AMBIGUOUS:DUPLICATE_CANONICAL");
-  assert.equal(twins.length, 197);
+  assert.equal(plan.visibility_updates.length, 0);
+  // 쌍둥이는 SKIP, 대표는 쓰인다 (Gate A: 195 SAME + 1 TRUE_AMBIGUOUS)
+  const twins = plan.skips.filter(s => s.reason.startsWith("SKIP_TWIN"));
+  assert.equal(twins.length, 195);
+  assert.equal(plan.skips.filter(s => s.reason.startsWith("SKIP_TRUE_AMBIGUOUS")).length, 1);
   for (const t of twins.slice(0, 50)) assert.ok(plan.updates.some(u => u.canonical_id === t.twin_of) || plan.inserts.some(i => i.canonical_id === t.twin_of), `twin_of ${t.twin_of} 가 쓰이지 않음`);
   // 서울·제주·전주는 INSERT 만
   for (const city of ["seoul", "jeju", "jeonju"]) assert.equal(plan.updates.filter(u => u.city === city).length, 0);

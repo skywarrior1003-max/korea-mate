@@ -11,11 +11,26 @@
   "DIRECT_MAP": 4304,
   "NORMALIZE_MAP": 522
  },
+ "category_semantic": {
+  "lossy_mapping_count": 0,
+  "rows_by_semantic": {
+   "accommodation": 5,
+   "activity": 1,
+   "attraction": 2713,
+   "culture": 72,
+   "event": 14,
+   "heritage": 25,
+   "nature": 84,
+   "restaurant": 1879,
+   "shopping": 33
+  }
+ },
  "deferred_fields": [
   "eligibility",
   "guide_award",
   "opening_hours",
   "phone",
+  "subcategory_raw",
   "subway_access"
  ],
  "images": {
@@ -197,16 +212,20 @@
   "active": {
    "path": "five-city-core-active-v1.jsonl",
    "rows": 4826,
-   "sha256": "4bcfda43453de75d29417e316506ce9ac2108301cdcf4443cc405aec1c2c5d2e"
+   "sha256": "b3989f1ea90888a19d00fd2751874355410f860f7112bc7bbc73061ec46be596"
+  },
+  "category_mapping": {
+   "path": "five-city-category-mapping-v1.json",
+   "sha256": "6d7d0c24ea111c04d61e20d3c96182c144cfacee8509f35a2d58fc07bdaa670a"
   },
   "crosswalk": {
    "path": "five-city-core-crosswalk-v1.jsonl",
-   "sha256": "a7ae49a1702d70f60807fd0a58df2c8657b7793844c45f526932a0833a07620a"
+   "sha256": "52cdfe980ef52cc247f7f658c1de6499d37000450d62c5ef8e6ccc87e5d86823"
   },
   "deferred": {
    "path": "five-city-core-deferred-fields-v1.jsonl",
-   "rows": 10594,
-   "sha256": "abef6fbc4fc2fbdd244d4d51d9c178261567ab770233de3b62015f30a37b9a73"
+   "rows": 10725,
+   "sha256": "7b79cb2c0b91e4d5f686b7c8dae03473a575be31f54c08590fcecbe39f4f45d0"
   },
   "images": {
    "path": "five-city-core-images-v1.jsonl",
@@ -221,6 +240,10 @@
    "path": "five-city-core-sources-v1.jsonl",
    "rows": 6129,
    "sha256": "b34592aeffa8861368acc548e51e57a46ed53903d4521ecb8c63fe6e19ebdda6"
+  },
+  "twin_resolution": {
+   "path": "five-city-core-twin-resolution-v1.jsonl",
+   "sha256": "7b3b82903372467c4d37dfc719b7d2cab4e66ba70c404884af8934750c135a94"
   }
  },
  "package": "five-city-core-v1",
@@ -239,7 +262,7 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "schema_version": "intake-v1",
+ "schema_version": "intake-v1.1(preprod-gate)",
  "sources_by_type": {
   "busan-food-canonical": 194,
   "busan-nonfood-canonical": 764,
@@ -255,5 +278,5 @@
   "visitjeonju": 103,
   "visitseoul": 1837
  },
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1"
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → TASK-FIVE-CITY-CORE-PREPROD-GATE-V1"
 }

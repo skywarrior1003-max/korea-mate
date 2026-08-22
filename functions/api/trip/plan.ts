@@ -28,6 +28,7 @@ import { CATEGORY_MAP, ALL_PLACE_CATEGORIES, SUPPORTED_DB_CATEGORIES } from "../
 import { findRouteById } from "../../../src/lib/story-routes/index";
 import { queryAffiliateLinks, buildAffiliateMap } from "../../../src/lib/affiliates/index";
 import { validateProfile } from "../../../src/lib/scheduler/ai/personalization-profile";
+import { applyVisibility } from "../../../src/lib/city-spots-visibility";
 
 // ── Inline types ──────────────────────────────────────────────────────────────
 
@@ -145,16 +146,21 @@ async function runNearMeDirect(
       }
       const dbCategories = dbCats.length > 0 ? dbCats : SUPPORTED_DB_CATEGORIES;
 
-      const { data, error } = await client
-        .from("city_spots")
-        .select("id, category, lat, lng, district, tags")
-        .in("category", dbCategories)
-        .not("lat", "is", null)
-        .not("lng", "is", null)
-        .gte("lat", input.coordinate.lat - deltaLat)
-        .lte("lat", input.coordinate.lat + deltaLat)
-        .gte("lng", input.coordinate.lng - deltaLng)
-        .lte("lng", input.coordinate.lng + deltaLng);
+      // Gate B (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1): 자동 후보 공급은 discovery 조회 —
+      // 게이트가 켜지면 is_published=true 만. 아래 place_map(by id) 은 reference 라 필터하지 않는다.
+      const { data, error } = await applyVisibility(
+        client
+          .from("city_spots")
+          .select("id, category, lat, lng, district, tags")
+          .in("category", dbCategories)
+          .not("lat", "is", null)
+          .not("lng", "is", null)
+          .gte("lat", input.coordinate.lat - deltaLat)
+          .lte("lat", input.coordinate.lat + deltaLat)
+          .gte("lng", input.coordinate.lng - deltaLng)
+          .lte("lng", input.coordinate.lng + deltaLng),
+        "discovery",
+      );
 
       if (!error && Array.isArray(data)) {
         rawRows = (data as any[]).map(row => ({

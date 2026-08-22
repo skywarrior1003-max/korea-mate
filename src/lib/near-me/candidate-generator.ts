@@ -5,6 +5,7 @@
 // Supabase anon client only — service role key forbidden.
 
 import { supabase } from "../supabase";
+import { applyVisibility } from "@/lib/city-spots-visibility";
 import type { Coordinate, PlaceCategory } from "../scheduler/types";
 import type { NearMePlaceRow, NearMeInput } from "./types";
 import { SUPPORTED_DB_CATEGORIES, ALL_PLACE_CATEGORIES, CATEGORY_MAP } from "./types";
@@ -48,16 +49,20 @@ export async function queryPlacesByBoundingBox(
 
   try {
     // SSOT: city_spots 테이블 사용 (places 테이블 폐기)
-    const { data, error } = await supabase
-      .from("city_spots")
-      .select("id, category, lat, lng, district, tags")
-      .in("category", dbCategories)
-      .not("lat", "is", null)
-      .not("lng", "is", null)
-      .gte("lat", userCoord.lat - deltaLat)
-      .lte("lat", userCoord.lat + deltaLat)
-      .gte("lng", userCoord.lng - deltaLng)
-      .lte("lng", userCoord.lng + deltaLng);
+    // Gate B: 자동 후보 공급은 discovery — 게이트가 켜지면 is_published=true 만
+    const { data, error } = await applyVisibility(
+      supabase
+        .from("city_spots")
+        .select("id, category, lat, lng, district, tags")
+        .in("category", dbCategories)
+        .not("lat", "is", null)
+        .not("lng", "is", null)
+        .gte("lat", userCoord.lat - deltaLat)
+        .lte("lat", userCoord.lat + deltaLat)
+        .gte("lng", userCoord.lng - deltaLng)
+        .lte("lng", userCoord.lng + deltaLng),
+      "discovery",
+    );
 
     if (error) {
       console.error("[near-me] Supabase query error:", error.message);

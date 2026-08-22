@@ -1,66 +1,103 @@
 {
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
+ "task": "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
  "mode": "dry-run",
- "input_manifest_sha256": "eae9ebf8344a63c8fc7eae75f7e5d84222f867dfd169d2ca931921b8154855dc",
- "run_id": "35ae794b641cdef2",
+ "input_manifest_sha256": "eae3bfc8dff3e6d52ee661e35e4406285f32bee4b8bc928f6c0008708629abb5",
+ "run_id": "6218ce73e836f370",
  "counts": {
   "active_input": 4826,
   "match_replace": 461,
-  "new": 4168,
-  "ambiguous_skipped": 197,
+  "new": 4169,
+  "confirmed_twin_skipped": 195,
+  "true_ambiguous_skipped": 1,
   "excluded_skipped": 3,
+  "unique_service_places": 4631,
   "existing_id_preserved": 461,
+  "lossy_category": 0,
   "delete": 0
  },
  "arithmetic_ok": true,
  "expected_universe": {
   "active_total": 4826,
-  "writes": 4629,
-  "skipped": 200
+  "unique_places": 4631,
+  "writes": 4630,
+  "skipped": 199
+ },
+ "gate_a": {
+  "SOURCE_ACTIVE_RECORD_COUNT": 4826,
+  "CONFIRMED_TWIN_RECORD_COUNT": 195,
+  "TRUE_AMBIGUOUS_COUNT": 1,
+  "UNIQUE_SERVICE_PLACE_COUNT": 4631,
+  "SKIP_TWIN": 195,
+  "SKIP_TRUE_AMBIGUOUS": 1
+ },
+ "gate_b_visibility": {
+  "publish_updates": 461,
+  "publish_inserts": 4169,
+  "hide_legacy": 234,
+  "preserved_visible_legacy": 19,
+  "untouched_other": 0,
+  "projected_visible_rows": 4649,
+  "projected_hidden_rows": 234,
+  "gate_column": "is_published",
+  "migration": "056_city_spots_is_published.sql (created, NOT applied)"
+ },
+ "gate_c_category": {
+  "lossy_mapping_count": 0
  },
  "per_city": {
   "busan": {
    "before": 412,
    "updates": 162,
    "inserts": 627,
-   "projected_after": 1039
+   "projected_after": 1039,
+   "visible_after": 808,
+   "hidden_after": 231
   },
   "gyeongju": {
    "before": 302,
    "updates": 299,
    "inserts": 0,
-   "projected_after": 302
+   "projected_after": 302,
+   "visible_after": 299,
+   "hidden_after": 3
   },
   "jeju": {
    "before": 0,
    "updates": 0,
    "inserts": 1495,
-   "projected_after": 1495
+   "projected_after": 1495,
+   "visible_after": 1495,
+   "hidden_after": 0
   },
   "jeonju": {
    "before": 0,
    "updates": 0,
-   "inserts": 226,
-   "projected_after": 226
+   "inserts": 227,
+   "projected_after": 227,
+   "visible_after": 227,
+   "hidden_after": 0
   },
   "seoul": {
    "before": 0,
    "updates": 0,
    "inserts": 1820,
-   "projected_after": 1820
+   "projected_after": 1820,
+   "visible_after": 1820,
+   "hidden_after": 0
   }
  },
- "projected_total_city_spots": 4882,
+ "projected_total_city_spots": 4883,
  "null_policy_counts": {
   "REPLACE_WITH_VALUE": 4284,
   "INTENTIONALLY_CLEAR": 8,
   "NO_SOURCE_VALUE": 4006,
   "PRESERVE_RUNTIME_FIELD": 0,
-  "MANUAL_REVIEW": 0
+  "MANUAL_REVIEW": 0,
+  "VISIBILITY_GATE": 4630
  },
- "sources_upserts": 5594,
- "images_upserts": 4368,
- "change_manifest_sha256": "0671df99bbca1334e68c23057647f16f353f76f37629beac6e9c38b0e661a667",
+ "sources_upserts": 5595,
+ "images_upserts": 4369,
+ "change_manifest_sha256": "03a3f119026d1142f9fe20f65801fd47640cf5fb57e32854497adbca9153acfa",
  "errors": 0,
  "delete_actions": 0,
  "db_write_executed": false

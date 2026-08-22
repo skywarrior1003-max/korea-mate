@@ -1,13 +1,11 @@
 {
  "active_total": 4826,
- "ambiguous_breakdown": {
-  "DUPLICATE_CANONICAL": 197
- },
  "busan_food_tier1": 97,
  "decisions_total": {
-  "AMBIGUOUS": 197,
+  "CONFIRMED_TWIN": 195,
   "MATCH_REPLACE": 461,
-  "NEW": 4168
+  "NEW": 4169,
+  "TRUE_AMBIGUOUS": 1
  },
  "delete_decisions": 0,
  "existing_id_preserved": 461,
@@ -46,7 +44,7 @@
  },
  "per_city": {
   "busan": {
-   "AMBIGUOUS": 169,
+   "CONFIRMED_TWIN": 169,
    "MATCH_REPLACE": 162,
    "NEW": 627
   },
@@ -55,16 +53,17 @@
    "MATCH_REPLACE": 299
   },
   "jeju": {
-   "AMBIGUOUS": 1,
+   "CONFIRMED_TWIN": 1,
    "NEW": 1495
   },
   "jeonju": {
-   "AMBIGUOUS": 10,
-   "NEW": 226
+   "CONFIRMED_TWIN": 9,
+   "NEW": 227
   },
   "seoul": {
-   "AMBIGUOUS": 17,
-   "NEW": 1820
+   "CONFIRMED_TWIN": 16,
+   "NEW": 1820,
+   "TRUE_AMBIGUOUS": 1
   }
  },
  "pins": {
@@ -82,5 +81,32 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1"
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
+ "twin_resolution": {
+  "confirmed_twin_record_count": 195,
+  "per_city": {
+   "busan": {
+    "SAME_ENTITY_TWIN": 169
+   },
+   "jeju": {
+    "SAME_ENTITY_TWIN": 1
+   },
+   "jeonju": {
+    "DISTINCT_ENTITY": 2,
+    "SAME_ENTITY_TWIN": 9
+   },
+   "seoul": {
+    "SAME_ENTITY_TWIN": 16,
+    "TRUE_AMBIGUOUS": 1
+   }
+  },
+  "relations": {
+   "DISTINCT_ENTITY": 2,
+   "SAME_ENTITY_TWIN": 195,
+   "TRUE_AMBIGUOUS": 1
+  },
+  "source_active_record_count": 4826,
+  "true_ambiguous_count": 1,
+  "unique_service_place_count": 4631
+ }
 }

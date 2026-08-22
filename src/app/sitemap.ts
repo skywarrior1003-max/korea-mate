@@ -20,7 +20,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // /place/[id] 의 generateStaticParams 와 **같은 함수**를 써서 실제로 생성되는
   // 장소만 넣는다. 조회가 실패하면 양쪽 모두 0건이 되므로 불일치가 생기지 않는다.
   // M1-A 이후 place-source 에 is_published=true 조건이 들어가면 여기도 함께 좁혀진다.
-  const spotIds = await fetchPublicSpotIds();
+  // Gate B: sitemap 은 discovery — 숨긴 legacy 는 싣지 않는다(페이지 자체는 reference 로 남아 있다)
+  const spotIds = await fetchPublicSpotIds("discovery");
   const placePages = spotIds.map((id) => ({
     url: `${siteUrl}/place/${id}/`,
     lastModified: new Date(),

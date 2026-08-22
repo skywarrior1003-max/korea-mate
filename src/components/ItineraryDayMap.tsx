@@ -50,7 +50,8 @@ export default function ItineraryDayMap({ days, city, selectedDay, onSelectDay, 
   // base 레이어: city_spots (좌표 보유분만)
   useEffect(() => {
     let cancelled = false;
-    fetchCitySpots(city.toLowerCase())
+    // Gate B: 일정의 place_id hydration = reference 조회(필터 없음)
+    fetchCitySpots(city.toLowerCase(), "reference")
       .then(rows => { if (!cancelled) setCitySpots(dedupeByCanonical(rows)); })
       .catch(() => { /* base 레이어 없이도 trip 레이어는 동작 */ });
     return () => { cancelled = true; };

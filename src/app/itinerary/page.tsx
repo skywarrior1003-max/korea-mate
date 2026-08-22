@@ -1829,7 +1829,8 @@ function ItineraryResult() {
   // ── SSOT: city 확정 시 city_spots 로드 (PlaceModal 제휴 정보) ──
   useEffect(() => {
     if (!city) return;
-    fetchCitySpots(city.toLowerCase()).then(setCitySpots);
+    // Gate B: 저장된 place_id 를 되찾는 reference 조회 — 숨긴 legacy 도 과거 일정에서는 그대로 보여야 한다
+    fetchCitySpots(city.toLowerCase(), "reference").then(setCitySpots);
   }, [city]);
 
   // ── 플래너 메타 뱃지 읽기 (반응형) ────────────────────────

@@ -18,8 +18,9 @@ build-five-city-core-crosswalk-v1 — 5도시 ACTIVE canonical ↔ Main city_spo
   부산 NonFood : Main 85행을 한글명·좌표·주소·공식 URL·지역 정체성으로 Main 에서 직접 판정한
            표(BUSAN_NONFOOD_DECISIONS). 넓은 면적 entity 는 좌표 차이로 다른 장소로 보지 않는다.
   서울·제주·전주 : Main 0 → NEW.
-  아티팩트 내부 쌍둥이(같은 이름 ≤150m) : 대표 1건만 intake, 나머지는 AMBIGUOUS(DUPLICATE_CANONICAL)
-           로 두어 write 에서 자동 제외 — 같은 장소가 두 번 INSERT 되지 않게.
+  아티팩트 내부 쌍둥이(같은 이름 ≤150m) : Gate A(TASK-FIVE-CITY-CORE-PREPROD-GATE-V1) 에서 구성원마다 최종 판정 —
+           SAME_ENTITY_TWIN → CONFIRMED_TWIN(대표만 write) · DISTINCT_ENTITY → NEW · TRUE_AMBIGUOUS → 판정 전 SKIP.
+           대표는 lib.resolve_twins 의 근거 규칙(provenance 등급→깨끗한 고유명→이미지→설명→URL→id)으로 고른다.
 
 DB 접근 0 · 쓰기 0.
 """
@@ -33,12 +34,46 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_ACTIVE, EXPECTED_TOTAL, PINNED_INPUTS, REPO, km, ko_part, load_input, norm, twin_groups,
+    EXPECTED_ACTIVE, EXPECTED_TOTAL, PINNED_INPUTS, REPO, km, ko_part, load_input, norm, resolve_twins,
     verify_pins, write_json, write_jsonl,
 )
 
 OUT_DIR = os.path.join(REPO, "data", "main-intake", "five-city-core-v1")
 MAIN_SNAPSHOT = os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl")
+
+# ── Gate A (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1): 쌍둥이 최종 판정표 ─────────────────────
+# 자동 규칙(이름 동일 + 주소 동일/≤30m → 같은 장소)으로 못 정하는 쌍만 Main 에서 직접 보고 적는다.
+# 키는 (작은 id, 큰 id) 정렬 쌍. 근거는 artifact 값(이름·주소·좌표·설명)만 — 새 웹 조사 없음.
+TWIN_SAME_ENTITY: dict[tuple[str, str], str] = {
+    ("KTO-147684", "OFF-9751"): "전주향교 — 같은 향교 경내(향교길 119-6 / 139, 106m). KTO 좌표는 다른 출입구. 같은 entity",
+}
+TWIN_DISTINCT: dict[tuple[str, str], str] = {
+    ("KTO-129786", "OFF-9756"): "OFF-9756 는 국립전주박물관 경내의 어린이박물관(en 'Jeonju Children's Museum', 설명 'A Hands-On Museum Where Children…'), "
+                               "KTO-129786 는 국립전주박물관 본관 — 복합시설 내부의 별개 entity(125m)",
+}
+TWIN_TRUE_AMBIGUOUS: dict[str, str] = {
+    "seoul-food-v1-0909": "사마르칸트시티 — 이름은 같으나 등록 주소가 다름(마른내로 159-4 vs 을지로42길 16 성산빌딩, 92m). "
+                          "같은 식당의 주소 표기 차이인지 별도 지점인지 artifact 만으로 확정 불가 → 판정 전 SKIP",
+}
+BUSAN_PREFIX_PROV = {"A": 0, "K": 1, "E": 2, "VB": 3}   # entity API 레코드 < page 레코드
+
+
+def busan_features(r: dict) -> dict:
+    pre = r["canonical_id"].split("-")[1]
+    return {"prov": BUSAN_PREFIX_PROV.get(pre, 9), "name_ko": r.get("name_ko"), "img": 1 if r.get("image_url") else 0,
+            "desc": 1 if (r.get("description_ko") or r.get("description_en")) else 0,
+            "url": 1 if (r.get("official_url") or r.get("source_url")) else 0, "source_type": f"busan-{pre}"}
+
+
+def seoul_jeju_features(r: dict) -> dict:
+    return {"prov": 0, "name_ko": r.get("title_ko"), "img": 1 if (r.get("image_url") and r.get("image_display_eligible")) else 0,
+            "desc": 1 if (r.get("description_ko") and not str(r.get("description_ko")).startswith(".se-")) else 0,
+            "url": 1 if r.get("homepage") else 0, "source_type": r.get("source_tier")}
+
+
+def jeonju_features(r: dict) -> dict:
+    return {"prov": 0 if r.get("source") == "OFFICIAL" else 1, "name_ko": r.get("display_name"), "img": 0,
+            "desc": 1 if r.get("description_en") else 0, "url": 1 if r.get("source_url") else 0, "source_type": r.get("source")}
 
 # ── 부산 NonFood: Main 85행 직접 판정표 (canonical 의 name_ko·좌표·주소로 확인) ──────
 # decision: M = MATCH_REPLACE(canonical → 이 Main id 보존) · L = LEGACY_ONLY_VALID(대응 canonical 없음)
@@ -237,13 +272,29 @@ def main() -> None:
         main_cls[mid] = {"class": cls, "canonical_id": None,
                          "notes": "historical busan-F, final Food 미선발 — 삭제·부활 금지" if r["legacy_external_id"] else "수동 입력 legacy — 대응 canonical 없음"}
 
+    twin_resolution: list[dict] = []
+
+    def add_twin(city: str, cid: str, rel: dict) -> None:
+        rep = rel["representative_canonical_id"]
+        if rel["relation"] == "SAME_ENTITY_TWIN":
+            add(city, cid, "CONFIRMED_TWIN", tier="SAME_ENTITY_TWIN", confidence=rel["confidence"],
+                method=rel["deterministic_rule"], evidence=rel["reason"], twin_of=rep,
+                notes="같은 장소의 두 번째 레코드 — 대표(twin_of)만 write, 이 행은 SKIP_TWIN")
+        else:
+            add(city, cid, "TRUE_AMBIGUOUS", tier="TWIN_UNRESOLVED", confidence=rel["confidence"],
+                method=rel["deterministic_rule"], evidence=rel["reason"], twin_of=rep,
+                notes="같은 장소인지 확정 불가 — 판정 전까지 write 제외(SKIP_TRUE_AMBIGUOUS). 삭제·병합 아님")
+
     # ── 부산 NonFood ────────────────────────────────────────────────────────
     nf_all, sha = load_input("busan_nonfood")
     inputs_meta["busan_nonfood"] = {"rows": len(nf_all), "sha256": sha}
     nf = [r for r in nf_all if r.get("service_status") == "ACTIVE"]
     nf_by = {r["canonical_id"]: r for r in nf}
-    twins = twin_groups(nf, name_keys=("name_ko", "name_en"), lat_key="lat", lng_key="lng", id_key="canonical_id",
-                        richer=lambda r: (1 if r.get("image_url") else 0) + (1 if r.get("description_ko") else 0))
+    twins, res = resolve_twins(nf, name_keys=("name_ko", "name_en"), lat_key="lat", lng_key="lng", id_key="canonical_id",
+                               features=busan_features, addr_key="address_ko", same_entity=TWIN_SAME_ENTITY, distinct=TWIN_DISTINCT,
+                               true_ambiguous=TWIN_TRUE_AMBIGUOUS, city="busan")
+    twin_resolution.extend(res)
+    twin_rel = {r["member_canonical_id"]: r for r in res}
     matched_canon: dict[str, int] = {}
     for mid, (dec, cid, why) in sorted(BUSAN_NONFOOD_DECISIONS.items()):
         r = by_main[mid]
@@ -268,9 +319,7 @@ def main() -> None:
             add("busan", cid, "MATCH_REPLACE", main_id=mid, tier="TIER2", confidence="HIGH",
                 method="main_direct_resolution(name_ko+coord+address)", evidence=BUSAN_NONFOOD_DECISIONS[mid][2])
         elif cid in twins:
-            add("busan", cid, "AMBIGUOUS", tier="DUPLICATE_CANONICAL", confidence="HIGH",
-                method="artifact_internal_twin(name+<=150m)", evidence=f"twin_of={twins[cid]}", twin_of=twins[cid],
-                notes="같은 장소의 두 번째 레코드 — 대표(twin_of)만 intake, 이 행은 write 제외")
+            add_twin("busan", cid, twin_rel[cid])
         else:
             add("busan", cid, "NEW", tier="NEW", confidence="HIGH", method="no_main_counterpart",
                 evidence="Main nonfood 85 판정표에 대응 없음")
@@ -284,14 +333,19 @@ def main() -> None:
         rows, sha = load_input(key)
         inputs_meta[key] = {"rows": len(rows), "sha256": sha}
         act = [r for r in rows if active_pred(r)]
-        tw = twin_groups(act, name_keys=name_keys, lat_key=lat_key, lng_key=lng_key, id_key=id_key,
-                         richer=lambda r: (1 if (r.get("image_url") or r.get("kto_image")) else 0) + (1 if (r.get("description_ko") or r.get("source") == "OFFICIAL") else 0))
+        tw, res = resolve_twins(act, name_keys=name_keys, lat_key=lat_key, lng_key=lng_key, id_key=id_key,
+                                features=jeonju_features if city == "jeonju" else seoul_jeju_features,
+                                addr_key="kto_addr" if city == "jeonju" else "address", same_entity=TWIN_SAME_ENTITY,
+                                distinct=TWIN_DISTINCT, true_ambiguous=TWIN_TRUE_AMBIGUOUS, city=city)
+        twin_resolution.extend(res)
+        rel = {r["member_canonical_id"]: r for r in res}
         for r in sorted(act, key=lambda x: x[id_key]):
             cid = r[id_key]
             if cid in tw:
-                add(city, cid, "AMBIGUOUS", tier="DUPLICATE_CANONICAL", confidence="HIGH",
-                    method="artifact_internal_twin(name+<=150m)", evidence=f"twin_of={tw[cid]}", twin_of=tw[cid],
-                    notes="같은 장소의 두 번째 레코드 — 대표만 intake")
+                add_twin(city, cid, rel[cid])
+            elif cid in rel and rel[cid]["relation"] == "DISTINCT_ENTITY":
+                add(city, cid, "NEW", tier="NEW", confidence="HIGH", method="twin_candidate_resolved_distinct",
+                    evidence=rel[cid]["reason"], notes="쌍둥이 후보였으나 다른 entity 로 확정 — 독립 레코드")
             else:
                 add(city, cid, "NEW", tier="NEW", confidence="HIGH", method="main_has_no_rows", evidence="Main city_spots city=0")
 
@@ -327,12 +381,21 @@ def main() -> None:
 
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-crosswalk-v1.jsonl"), sorted(decisions, key=lambda d: (d["city"], d["canonical_id"])))
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"), main_out)
+    write_jsonl(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"),
+                sorted(twin_resolution, key=lambda r: (r["city"], r["member_canonical_id"])))
     summary = {
         "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
         "pins": pins, "inputs": inputs_meta,
         "active_total": len(active), "decisions_total": totals,
         "per_city": {c: dict(v) for c, v in sorted(per_city.items())},
-        "ambiguous_breakdown": dict(Counter(d["tier"] for d in active if d["decision"] == "AMBIGUOUS")),
+        "twin_resolution": {
+            "relations": dict(Counter(r["relation"] for r in twin_resolution)),
+            "per_city": {c: dict(Counter(r["relation"] for r in twin_resolution if r["city"] == c)) for c in sorted({r["city"] for r in twin_resolution})},
+            "source_active_record_count": len(active),
+            "confirmed_twin_record_count": totals.get("CONFIRMED_TWIN", 0),
+            "true_ambiguous_count": totals.get("TRUE_AMBIGUOUS", 0),
+            "unique_service_place_count": len(active) - totals.get("CONFIRMED_TWIN", 0),
+        },
         "existing_id_preserved": len(matched_ids),
         "id_change_required": 0, "delete_decisions": 0,
         "main_714_classification": dict(main_counts),

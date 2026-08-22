@@ -37,6 +37,23 @@ MAIN_CATEGORIES = {"attraction", "restaurant", "nature", "event", "accommodation
 LOCALE_MAP = {"ko": "ko", "en": "en", "ja": "ja", "zh-CN": "zh", "zh": "zh"}
 
 # ── category adapter (Main 5종 고정 · 의미는 subcategory 로) ───────────────────
+#
+# Gate C (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1) — Semantic Category Contract
+#   RUNTIME_COMPAT_CATEGORY : 앱이 지금 쓰는 Main CHECK 5종 (category 컬럼)
+#   SOURCE_SEMANTIC_CATEGORY: 원본이 실제로 뜻하는 여행 의미 (attraction·restaurant·nature·event·accommodation
+#                             + shopping·culture·heritage·activity)
+#   보존 규칙: semantic ≠ runtime 이면 subcategory 에 semantic 토큰을 **기계가 읽는 값**으로 넣고, 원본의 세부
+#             분류(raw)는 deferred(content_meta.subcategory_raw)로 보낸다. semantic == runtime 이면 subcategory = raw.
+#   → (category, subcategory) 만으로 semantic 이 항상 복원된다 (LOSSY_MAPPING_COUNT = 0 을 검산한다).
+SEMANTIC_RULES: dict[str, str] = {
+    "attraction": "attraction", "restaurant": "restaurant", "nature": "nature", "event": "event", "accommodation": "accommodation",
+    "food": "restaurant", "shopping": "shopping",
+    "FOOD": "restaurant", "PLACE_NATURE": "nature", "ACCOMMODATION_HANOK_REVIEW": "accommodation",
+    "PLACE_TOURISM": "attraction", "PLACE_TOURISM_REVIEW": "attraction", "PLACE_GENERAL": "attraction",
+    "PLACE_CULTURAL": "culture", "PLACE_HERITAGE": "heritage", "ACTIVITY_EXPERIENCE": "activity", "SPECIALTY_INTEREST": "specialty",
+}
+# 전주 SPECIALTY_INTEREST 는 menu 가 '쇼핑' 이면 shopping 이다(3건). 다른 menu 는 specialty 로 남긴다.
+SEMANTIC_SUB_OVERRIDE: dict[tuple[str, str], str] = {("SPECIALTY_INTEREST", "쇼핑"): "shopping"}
 CATEGORY_RULES: dict[str, tuple[str, str]] = {
     # source value → (main category, mapping kind)
     "attraction": ("attraction", "DIRECT_MAP"), "restaurant": ("restaurant", "DIRECT_MAP"),
@@ -51,13 +68,21 @@ CATEGORY_RULES: dict[str, tuple[str, str]] = {
 }
 
 
-def map_category(src: str | None, sub: str | None) -> tuple[str, str | None, str]:
+def map_category(src: str | None, sub: str | None) -> tuple[str, str | None, str, str, str | None]:
+    """→ (runtime category, subcategory, mapping kind, semantic category, raw sub deferred|None)"""
     key = (src or "").strip()
+    raw = (sub or "").strip() or None
     if key in CATEGORY_RULES:
         cat, kind = CATEGORY_RULES[key]
-        subcat = sub if sub else (key if kind == "NORMALIZE_MAP" and key.lower() != cat else None)
-        return cat, subcat, kind
-    return "attraction", sub or (key or None), "UNSUPPORTED_DEFER"
+        semantic = SEMANTIC_SUB_OVERRIDE.get((key, raw or ""), SEMANTIC_RULES[key])
+        if semantic != cat:
+            return cat, semantic, kind, semantic, raw          # 의미 토큰이 subcategory, raw 는 deferred
+        return cat, raw, kind, semantic, None
+    return "attraction", raw or (key or None), "UNSUPPORTED_DEFER", key or "unknown", None
+
+
+def category_recoverable(cat: str, sub: str | None, semantic: str) -> bool:
+    return semantic == cat or sub == semantic
 
 
 HHMM_RANGE = re.compile(r"^\s*(\d{1,2}):(\d{2})\s*[-~–—]\s*(\d{1,2}):(\d{2})\s*$")
@@ -103,6 +128,8 @@ def main() -> None:
     images: list[dict] = []
     deferred: list[dict] = []
     cat_kinds: Counter = Counter()
+    cat_map_rows: dict[tuple[str, str, str], int] = {}
+    lossy: list[dict] = []
     hours_policy: Counter = Counter()
 
     def defer(cid: str, field: str, value, source: str, reason: str, dest: str) -> None:
@@ -146,7 +173,12 @@ def main() -> None:
 
     def base_row(cid: str, city: str, cat_src, sub_src, *, name_en, name_ko, names: dict, descs: dict, address, district,
                  lat, lng, official_url, hours_raw, tags, why_ko=None, provenance=None) -> dict:
-        cat, sub, kind = map_category(cat_src, sub_src)
+        cat, sub, kind, semantic, sub_raw_deferred = map_category(cat_src, sub_src)
+        cat_map_rows[(city, (cat_src or "").strip(), semantic)] = cat_map_rows.get((city, (cat_src or "").strip(), semantic), 0) + 1
+        if sub_raw_deferred:
+            defer(cid, "subcategory_raw", sub_raw_deferred, "artifact", "semantic 토큰이 subcategory 를 차지 — 원본 세부 분류는 content_meta 로", "content_meta.subcategory_raw")
+        if not category_recoverable(cat, sub, semantic):
+            lossy.append({"canonical_id": cid, "source_category": cat_src, "runtime": cat, "subcategory": sub, "semantic": semantic})
         cat_kinds[kind] += 1
         oh, pol, raw = opening_hours(hours_raw)
         hours_policy[pol] += 1
@@ -158,6 +190,7 @@ def main() -> None:
             "canonical_id": cid, "city": city, "service_status": "ACTIVE",
             "decision": d["decision"], "main_city_spot_id": d["main_city_spot_id"], "tier": d["tier"],
             "category": cat, "subcategory": sub, "category_mapping": kind,
+            "source_category": (cat_src or "").strip() or None, "semantic_category": semantic,
             # Main `name` = 영문 대표명(계약 §4). 영문이 없으면 한글명을 name 에 두고 NO_SOURCE_VALUE 로 표시한다.
             "name": en_name or (name_ko or None), "name_en_status": "REPLACE_WITH_VALUE" if en_name else "NO_SOURCE_VALUE",
             "name_l10n": l10n(ko=name_ko, en=en_name, ja=names.get("ja"), zh=names.get("zh")),
@@ -344,10 +377,34 @@ def main() -> None:
     n_img = write_jsonl(os.path.join(OUT_DIR, "five-city-core-images-v1.jsonl"), sorted(images, key=lambda i: (i["canonical_id"], not i["is_primary"], i["image_url"])))
     n_def = write_jsonl(os.path.join(OUT_DIR, "five-city-core-deferred-fields-v1.jsonl"), sorted(deferred, key=lambda d: (d["canonical_id"], d["field"])))
 
+    # Gate C artifact — (city, source_category, semantic) 별 계약 표
+    mapping_rows = []
+    for (city, src, semantic), n in sorted(cat_map_rows.items()):
+        cat, kind = CATEGORY_RULES.get(src, ("attraction", "UNSUPPORTED_DEFER"))
+        mapping_rows.append({
+            "city": city, "source_category": src, "runtime_category": cat, "semantic_category": semantic,
+            "subcategory": semantic if semantic != cat else "<source raw subcategory as-is>",
+            "mapping_type": {"DIRECT_MAP": "DIRECT", "NORMALIZE_MAP": "NORMALIZED", "UNSUPPORTED_DEFER": "DEFERRED"}[kind],
+            "lossy": False, "rows": n,
+            "notes": ("semantic 토큰을 subcategory 에 보존, raw 세부 분류는 content_meta.subcategory_raw 로 deferred" if semantic != cat
+                      else ("runtime == semantic — subcategory 는 원본 세부 분류 그대로" if kind == "DIRECT_MAP" else "runtime == semantic(정규화만) — 의미 손실 없음")),
+        })
+    category_mapping = {
+        "task": "TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
+        "contract": {"runtime_compat_vocabulary": sorted(MAIN_CATEGORIES),
+                     "semantic_vocabulary": sorted(set(SEMANTIC_RULES.values()) | set(SEMANTIC_SUB_OVERRIDE.values())),
+                     "preservation_rule": "semantic != runtime → subcategory = semantic token; raw subcategory → deferred content_meta.subcategory_raw. semantic == runtime → subcategory = raw.",
+                     "recoverability": "semantic == category OR subcategory == semantic (row 단위 검산)"},
+        "mappings": mapping_rows,
+        "lossy_mapping_count": len(lossy), "lossy_rows": lossy[:50],
+        "schema_change_required": 0, "ui_scope": "data contract only — Search/Explore 카테고리 UI 는 Product Surface 단계",
+    }
+    write_json(os.path.join(OUT_DIR, "five-city-category-mapping-v1.json"), category_mapping)
+
     per_city = Counter(r["city"] for r in active)
     manifest = {
-        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1",
-        "package": "five-city-core-v1", "schema_version": "intake-v1",
+        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → TASK-FIVE-CITY-CORE-PREPROD-GATE-V1",
+        "package": "five-city-core-v1", "schema_version": "intake-v1.1(preprod-gate)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},
@@ -358,7 +415,10 @@ def main() -> None:
             "deferred": {"path": "five-city-core-deferred-fields-v1.jsonl", "rows": n_def, "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-deferred-fields-v1.jsonl"))},
             "crosswalk": {"path": "five-city-core-crosswalk-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-crosswalk-v1.jsonl"))},
             "main_classification": {"path": "five-city-core-main-classification-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"))},
+            "twin_resolution": {"path": "five-city-core-twin-resolution-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"))},
+            "category_mapping": {"path": "five-city-category-mapping-v1.json", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-category-mapping-v1.json"))},
         },
+        "category_semantic": {"lossy_mapping_count": len(lossy), "rows_by_semantic": dict(Counter(r["semantic_category"] for r in active))},
         "active_per_city": dict(per_city), "active_total": n_active,
         "category_mapping": dict(cat_kinds), "opening_hours_policy": dict(hours_policy),
         "locale_mapping": {"zh-CN": "zh", "join_keys_normalized": ["canonical_place_id", "canonical_id", "candidate_id"]},
@@ -369,7 +429,7 @@ def main() -> None:
         "sources_by_type": dict(Counter(s["source_type"] for s in sources)),
     }
     write_json(os.path.join(OUT_DIR, "five-city-core-input-manifest-v1.json"), manifest)
-    print(json.dumps({k: manifest[k] for k in ["active_per_city", "active_total", "category_mapping", "opening_hours_policy", "images", "sources_by_type", "deferred_fields"]}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: manifest[k] for k in ["active_per_city", "active_total", "category_mapping", "category_semantic", "opening_hours_policy", "images", "sources_by_type", "deferred_fields"]}, ensure_ascii=False, indent=1))
     print("rows:", n_active, n_src, n_img, n_def)
 
 
