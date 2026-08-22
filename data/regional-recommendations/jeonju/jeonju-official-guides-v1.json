@@ -1,0 +1,133 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEONJU-V1",
+  "section": "official_guides",
+  "generated_at": "2026-08-22",
+  "city": "jeonju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "locale_note": "KO/EN/JA/ZH-CN 공식 콘텐츠만 포함. 언어 버튼만 존재하고 실제 localized content 없는 경우 제외. Google Translate 결과는 official locale로 불인정. tour.jeonju.go.kr EN/JA/ZH-CN 3개 언어 콘텐츠는 jeonju-multilingual-v1 수집에서 각각 62/61/62건 실제 localized content 확인(VISITJEONJU_EN/JA/ZH 소스).",
+  "as_of": "2026-08-22",
+
+  "guides": [
+    {
+      "guide_id": "jeonju-G-001",
+      "title": "전주시 공식 관광 포털 (KO)",
+      "locale": "ko",
+      "type": "웹 가이드 / 공식 관광 정보 포털",
+      "provider": "전주시 (Jeonju Metropolitan City)",
+      "content_scope": "전주 관광명소·음식·숙박·교통·축제·체험·한옥마을 종합 정보",
+      "access_url": "https://tour.jeonju.go.kr/kor",
+      "download_available": false,
+      "format": "웹사이트",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "전주시 공식 한국어 관광 포털. 상시 업데이트. 이벤트·축제 정보는 캘린더 섹션 확인."
+    },
+    {
+      "guide_id": "jeonju-G-002",
+      "title": "Jeonju Official Tourism Portal (EN)",
+      "locale": "en",
+      "type": "Web Guide / Official Tourism Information Portal",
+      "provider": "Jeonju Metropolitan City",
+      "content_scope": "Jeonju attractions, food, accommodation, transportation, festivals, Hanok Village",
+      "access_url": "https://tour.jeonju.go.kr/eng",
+      "download_available": false,
+      "format": "Website (native EN content, 62 pages confirmed by project multilingual collection)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "tour.jeonju.go.kr/eng — native English content confirmed. Not Google Translate. 62 localized content pages verified in jeonju-multilingual-v1 collection."
+    },
+    {
+      "guide_id": "jeonju-G-003",
+      "title": "全州市 公式観光ポータル (JA)",
+      "locale": "ja",
+      "type": "ウェブガイド / 公式観光情報ポータル",
+      "provider": "全州市 (전주시)",
+      "content_scope": "全州の観光地・グルメ・宿泊・交通・イベント・韓屋マウル情報",
+      "access_url": "https://tour.jeonju.go.kr/jpn",
+      "download_available": false,
+      "format": "Website (native JA content, 61 pages confirmed)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "tour.jeonju.go.kr/jpn — 61건 일본어 로컬 콘텐츠 jeonju-multilingual-v1에서 확인."
+    },
+    {
+      "guide_id": "jeonju-G-004",
+      "title": "全州市官方旅游指南 (ZH-CN)",
+      "locale": "zh-CN",
+      "type": "网络指南 / 官方旅游信息门户",
+      "provider": "全州市 (전주시)",
+      "content_scope": "全州景点·美食·住宿·交通·节庆·韩屋村综合信息",
+      "access_url": "https://tour.jeonju.go.kr/chn",
+      "download_available": false,
+      "format": "Website (native ZH-CN content, 62 pages confirmed)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "tour.jeonju.go.kr/chn — 62건 중국어 간체 로컬 콘텐츠 jeonju-multilingual-v1에서 확인."
+    },
+    {
+      "guide_id": "jeonju-G-005",
+      "title": "전주 관광지도 (다국어 인쇄물)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en"],
+      "locale_coverage_note": "KO/EN 인쇄물 확인. JA/ZH 인쇄물 배포 여부는 현장 확인 필요.",
+      "type": "관광지도 (인쇄물/PDF)",
+      "provider": "전주시 관광과",
+      "content_scope": "전주 주요 관광명소 위치 지도, 한옥마을 상세 지도 포함",
+      "access_url": "https://tour.jeonju.go.kr/kor",
+      "distribution": "전주역 관광안내소·한옥마을 관광안내소·공항 무료 배포",
+      "download_available": true,
+      "format": "PDF / 인쇄물",
+      "as_of": "2026-08-22",
+      "review_by": "2027-03-01",
+      "freshness_note": "연 1~2회 개정. 최신판은 tour.jeonju.go.kr 또는 현장 관광안내소에서 확인."
+    },
+    {
+      "guide_id": "jeonju-G-006",
+      "title": "전주한옥마을 공식 방문자 가이드 (KO/EN)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en"],
+      "type": "한옥마을 방문자 가이드 / 브로셔",
+      "provider": "전주시 한옥마을 관리사무소",
+      "content_scope": "전주한옥마을 내 주요 시설·체험·음식·공예 안내. 한옥마을 지도 포함.",
+      "access_url": "https://hanok.jeonju.go.kr",
+      "distribution": "한옥마을 관광안내소 현장 무료 배포 / 온라인 다운로드",
+      "download_available": true,
+      "format": "PDF / 인쇄물",
+      "as_of": "2026-08-22",
+      "review_by": "2027-03-01",
+      "freshness_note": "한옥마을 입점 시설 변동 시 개정. 현장 최신판 확인 권장."
+    },
+    {
+      "guide_id": "jeonju-G-007",
+      "title": "전주 전통음식·미식 가이드 (KO/EN) — 비빔밥·막걸리",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en"],
+      "type": "음식 관광 가이드",
+      "provider": "전주시 관광 / UNESCO 창의도시 미식 (tour.jeonju.go.kr)",
+      "content_scope": "전주비빔밥·막걸리·전통음식 공식 가이드. UNESCO 창의도시 미식 선정(2012) 기반 콘텐츠. 공식 추천 식당 정보 포함.",
+      "access_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+      "download_available": false,
+      "format": "웹 + 배포 자료",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "식당 정보 변동 가능. 방문 전 영업 여부 현장 확인 권장."
+    }
+  ],
+
+  "locale_coverage_summary": {
+    "ko": "G-001(포털) + G-005(지도) + G-006(한옥마을) + G-007(음식) = 4",
+    "en": "G-002(포털EN) + G-005(지도) + G-006(한옥마을) + G-007(음식) = 4",
+    "ja": "G-003(포털JA) = 1",
+    "zh-CN": "G-004(포털ZH) = 1",
+    "ja_zh_note": "JA/ZH 전용 인쇄물·가이드는 tour.jeonju.go.kr 웹 콘텐츠가 주된 소스. 인쇄물 JA/ZH 버전은 현장 확인 필요."
+  },
+
+  "guide_count_summary": {
+    "total": 7,
+    "ko": 4,
+    "en": 4,
+    "ja": 1,
+    "zh_cn": 1,
+    "multi": 3
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEONJU-V1",
+  "section": "recommended_courses",
+  "generated_at": "2026-08-22",
+  "city": "jeonju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "canonical_id_note": "전주 canonical ID 형식: OFF-XXXXX (tour.jeonju.go.kr 공식 source) / KTO-XXXXXX (한국관광공사). 모두 data/jeonju-targeted-completion-v1 기준 ACTIVE_SERVICE 확인.",
+  "entity_decisions_applied": {
+    "JEONJU_ZOO": "canonical=OFF-9784(전주동물원), sub=OFF-16676(전주드림랜드)",
+    "JEONJU_NATIONAL_MUSEUM": "canonical=OFF-9756(국립전주박물관), sub=OFF-16104(어린이박물관)",
+    "NAMBU_MARKET": "FUTURE_MERGE_REQUIRED. 현재 OFF-16084(남부시장·청년몰)/OFF-16085(야시장) 별도 엔티티 유지",
+    "OMOKDAE": "canonical=OFF-9742(오목대·이목대), 전주천(OFF-9774)=area context"
+  },
+
+  "final_recommended_courses": [
+    {
+      "course_id": "jeonju-C-001",
+      "status": "FINAL",
+      "name_ko": "전주 한옥마을 핵심 도보 코스",
+      "name_en": "Jeonju Hanok Village Core Walking Route",
+      "theme": "역사·전통문화·도보",
+      "traveler_fit": "모든 여행자 / 전주 첫 방문자 필수코스",
+      "recommended_reason": "경기전(조선 태조 어진 봉안·국보 317호)→전동성당(전통과 근대 공존·국내 최초 석조성당)→풍남문(전주읍성 남문·국보 308호)→한옥마을 골목→청연루·남천교 5구간을 이어 전주의 역사·문화·건축 핵심을 2~3시간 안에 경험할 수 있는 전주시 공식 추천 대표 코스. VisitJeonju(tour.jeonju.go.kr) 및 KTO 공식 추천 1순위 동선.",
+      "duration_hours": "2~3",
+      "days": 0.5,
+      "best_season": ["spring", "autumn", "summer_evening"],
+      "difficulty": "easy",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "경기전",
+          "name_en": "Gyeonggijeon Shrine",
+          "role": "출발점·핵심 방문지",
+          "note": "조선 태조 이성계 어진 봉안. 보물·국보 다수 소재. 국가사적 제339호.",
+          "canonical_id": "OFF-10115",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 2,
+          "name_ko": "전동성당",
+          "name_en": "Jeondong Catholic Cathedral",
+          "role": "핵심 방문지",
+          "note": "1914년 완공. 국내 최초 서양식 석조성당. 전주읍성 성돌 사용. 경기전과 마주보며 전통·근대 대비가 인상적.",
+          "canonical_id": "OFF-9752",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 3,
+          "name_ko": "풍남문",
+          "name_en": "Pungnammun Gate",
+          "role": "핵심 방문지",
+          "note": "전주읍성 남문. 보물 제308호. 전주 구도심과 한옥마을 경계. 주변 광장이 도심 연결 허브.",
+          "canonical_id": "OFF-9746",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 4,
+          "name_ko": "전주한옥마을",
+          "name_en": "Jeonju Hanok Village",
+          "role": "체류·탐방 구역",
+          "note": "700여 채 한옥 밀집 지구. 한복 체험·공예·음식 등 복합. 태조로·은행로 골목 자유 탐방.",
+          "canonical_id": "OFF-16109",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 5,
+          "name_ko": "청연루·남천교",
+          "name_en": "Cheongyeonru Pavilion & Namcheon Bridge",
+          "role": "마무리 경유지",
+          "note": "전주천 남천교 위 누각. 한옥마을 서쪽 경계. 전주천 야경 조망 포인트.",
+          "canonical_id": "OFF-16086",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "review_by": "2027-03-01"
+    },
+
+    {
+      "course_id": "jeonju-C-002",
+      "status": "FINAL",
+      "name_ko": "전주천·오목대 역사 산책 코스",
+      "name_en": "Jeonjucheon Stream & Omokdae Historical Walk",
+      "theme": "역사·자연·도보",
+      "traveler_fit": "역사·산책 선호 여행자 / C-001 다음 날 또는 반나절 추가",
+      "recommended_reason": "전주천변 산책로를 따라 오목대·이목대(이성계 축연지, 전주한옥마을 최고 조망)와 한벽당(보물 제합격, 전주팔경 1경), 조경단(태조·조선 왕실 발상지 기념비)을 잇는 역사 탐방 코스. 전주천(OFF-9774) 생태하천을 걸으며 도시 조망이 가능. 전주시 공식 역사탐방 추천동선과 일치.",
+      "duration_hours": "2~3",
+      "days": 0.5,
+      "best_season": ["spring", "autumn", "summer_evening"],
+      "difficulty": "easy",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "전주천",
+          "name_en": "Jeonjucheon Stream",
+          "role": "출발·산책로",
+          "note": "한옥마을 인접 생태하천. 산책로 정비 완료. 전주 사계절 도보 명소. 오목대·이목대의 area context.",
+          "canonical_id": "OFF-9774",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "entity_note": "OFF-9774(전주천)은 오목대·이목대(OFF-9742) entity decision의 area context로 확인(OMOKDAE 결정). ACTIVE_SERVICE place로 독립 등록."
+        },
+        {
+          "order": 2,
+          "name_ko": "한벽당",
+          "name_en": "Hanbeoktang Pavilion",
+          "role": "핵심 방문지",
+          "note": "고려 말~조선 초 건립. 전주팔경 제1경. 전주천 절벽 위 정자. 전주 최고 정취 명소 중 하나.",
+          "canonical_id": "OFF-9741",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 3,
+          "name_ko": "오목대·이목대",
+          "name_en": "Omokdae & Imokdae Pavilions",
+          "role": "핵심 방문지·조망",
+          "note": "이성계가 황산대첩 후 귀환 축연을 연 장소. 이목대는 조선 왕실 발상지 추정. 한옥마을 전경 최고 조망대.",
+          "canonical_id": "OFF-9742",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "entity_note": "오목대·이목대 entity canonical = OFF-9742. KTO-126621(오목대와 이목대)은 별도 active 엔티티이나 OFF-9742가 official source canonical."
+        },
+        {
+          "order": 4,
+          "name_ko": "조경단",
+          "name_en": "Jogyeongdan Altar",
+          "role": "마무리 방문지",
+          "note": "조선 왕실 시조 이한(전주이씨 시조) 제단. 오목대 인근. 한국 전통 제단 건축. 사적 제339호 구역 인근.",
+          "canonical_id": "OFF-16087",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "review_by": "2027-03-01"
+    },
+
+    {
+      "course_id": "jeonju-C-003",
+      "status": "FINAL",
+      "name_ko": "전주 전통문화 체험 & 미식 1일 코스",
+      "name_en": "Jeonju Traditional Culture & Food Full-Day Route",
+      "theme": "음식·미식·전통공예·시장",
+      "traveler_fit": "음식·체험 선호 여행자 / 1박2일 여행자 두 번째 날",
+      "recommended_reason": "전주비빔밥 전문 거리·남부시장·청년몰·전통술박물관·한지박물관·야시장(주말)까지 전주의 음식·공예·시장 문화를 집중 경험하는 1일 코스. 전주 음식문화는 UNESCO 창의도시 네트워크 미식 분야 선정(2012). tour.jeonju.go.kr 공식 음식관광 추천동선과 일치.",
+      "duration_hours": "6~8",
+      "days": 1,
+      "best_season": ["all"],
+      "best_timing": "야시장 포함 시 금·토 방문 권장",
+      "difficulty": "easy",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "남부시장·청년몰",
+          "name_en": "Nambu Market & Youth Mall",
+          "role": "출발점·시장 탐방",
+          "note": "전주 전통 재래시장. 청년몰은 젊은 상인 로컬 음식·공예 집합. 전주비빔밥·쌀국수 등 먹거리 집중.",
+          "canonical_id": "OFF-16084",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "entity_note": "NAMBU_MARKET entity: FUTURE_MERGE_REQUIRED. OFF-16084(남부시장·청년몰)과 OFF-16085(야시장)은 현재 별도 엔티티 유지. canonical 수정 없이 각각 참조."
+        },
+        {
+          "order": 2,
+          "name_ko": "전주비빔밥 거리 (풍남동)",
+          "name_en": "Jeonju Bibimbap Restaurant Street (Pungnamdong)",
+          "role": "미식 핵심",
+          "note": "풍남문~경기전 인근 풍남동 일대에 전주비빔밥 전문 식당 밀집. 개별 식당은 canonical 미등록이나 해당 지구는 한옥마을 area 내 포함. tour.jeonju.go.kr 음식관광 추천 지구.",
+          "canonical_id": null,
+          "linkage_type": "RELATION_OR_AREA_ONLY",
+          "relation_note": "전주비빔밥 거리는 풍남동 지구 개념. 단일 canonical 엔티티 없음. 한옥마을(OFF-16109) area 내 포함되는 관계. 신규 place 생성 금지."
+        },
+        {
+          "order": 3,
+          "name_ko": "전주전통술박물관",
+          "name_en": "Jeonju Traditional Liquor Museum",
+          "role": "체험·관람",
+          "note": "전주 막걸리·소주 등 전통주 제조 과정 전시 및 시음 체험. 전주 3대 특산 전통주 문화 이해.",
+          "canonical_id": "OFF-9796",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 4,
+          "name_ko": "전주한지박물관",
+          "name_en": "Jeonju Hanji Museum",
+          "role": "체험·관람",
+          "note": "전통 한지(닥나무 종이) 제조 과정 전시 및 체험. 전주 한지는 세계기록문화유산에 조선왕조실록 보존지로 기여. 수공예 체험 프로그램 운영.",
+          "canonical_id": "OFF-9780",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 5,
+          "name_ko": "남부시장 한옥마을 야시장",
+          "name_en": "Nambu Market Hanok Village Night Market",
+          "role": "마무리·야간 체험",
+          "note": "매주 금·토 저녁 운영(4월~10월). 로컬 음식·공연·공예 야시장. 전주 야간관광 대표 프로그램.",
+          "canonical_id": "OFF-16085",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "timing_note": "금·토요일만 운영. 방문 전 tour.jeonju.go.kr 또는 남부시장 공식 채널 운영일 확인 필수."
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 / UNESCO 창의도시 미식 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor/board/list.jeonju?boardId=BBS_0000016&menuCd=DOM_000000201000000000",
+        "as_of": "2026-08-22"
+      },
+      "review_by": "2027-01-01"
+    }
+  ],
+
+  "reserve_courses": [
+    {
+      "course_id": "jeonju-C-R01",
+      "status": "RESERVE",
+      "name_ko": "덕진공원·전주향교 산책 코스",
+      "name_en": "Deokjin Park & Jeonju Hyanggyo Nature & History Walk",
+      "theme": "자연·역사·계절",
+      "reserve_reason": "덕진공원 연꽃(7~8월), 봄 벚꽃, 전주향교(고려~조선 교육기관)를 묶은 코스. 계절 한정성이 있어 reserve로 분류. 연꽃 시즌(7~8월) 또는 봄 시즌에 FINAL 승격 가능.",
+      "duration_hours": "2~3",
+      "days": 0.5,
+      "best_season": ["summer_lotus", "spring_cherry"],
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "덕진공원",
+          "name_en": "Deokjin Park",
+          "role": "출발·핵심",
+          "note": "전주 시민 공원. 대형 연못과 연꽃 단지. 7~8월 연꽃 절정. 덕진교·연꽃 포토존.",
+          "canonical_id": "OFF-9772",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 2,
+          "name_ko": "전주향교",
+          "name_en": "Jeonju Hyanggyo (Confucian Academy)",
+          "role": "역사 방문지",
+          "note": "고려 성종 시기 창건·조선 태종 대 현 위치 이전. 경기전 근처. 국가사적. 전통 유교 교육기관 건축 보존.",
+          "canonical_id": "OFF-9751",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK",
+          "entity_note": "전주향교 canonical = OFF-9751. KTO-147684도 ACTIVE_SERVICE이나 OFF-9751이 official source 우선."
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    },
+    {
+      "course_id": "jeonju-C-R02",
+      "status": "RESERVE",
+      "name_ko": "완산칠봉꽃동산·한벽당 계절 코스",
+      "name_en": "Wansanchilbong Flower Garden & Hanbeoktang Seasonal Route",
+      "theme": "자연·계절·역사",
+      "reserve_reason": "완산칠봉꽃동산은 봄(벚꽃·진달래)·가을(코스모스) 시즌에 절정. 기준일(2026-08-22) 한여름에는 비추천. 봄·가을 시즌에 FINAL 승격 가능.",
+      "duration_hours": "2~3",
+      "days": 0.5,
+      "best_season": ["spring", "autumn"],
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "완산꽃동산(완산칠봉꽃동산)",
+          "name_en": "Wansan Flower Garden (Wansanchilbong)",
+          "role": "핵심",
+          "note": "전주 시내 근교 야산. 봄 벚꽃·진달래, 가을 코스모스로 유명. 전주시 공식 계절 관광지.",
+          "canonical_id": "OFF-13964",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        },
+        {
+          "order": 2,
+          "name_ko": "한벽당",
+          "name_en": "Hanbeoktang Pavilion",
+          "role": "역사 방문지",
+          "note": "전주팔경 제1경. C-002에서도 등장하는 전주 핵심 명소. 완산칠봉에서 차로 15분.",
+          "canonical_id": "OFF-9741",
+          "canonical_status": "ACTIVE_SERVICE",
+          "linkage_type": "EXACT_CANONICAL_LINK"
+        }
+      ],
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    }
+  ],
+
+  "course_count_summary": {
+    "final": 3,
+    "reserve": 2,
+    "canonical_stops_total": 18,
+    "exact_links": 17,
+    "relation_links": 1,
+    "new_place_candidates": 0
+  }
+}

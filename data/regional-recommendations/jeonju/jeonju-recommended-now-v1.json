@@ -1,0 +1,165 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEONJU-V1",
+  "section": "recommended_now",
+  "generated_at": "2026-08-22",
+  "city": "jeonju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "현재성 기준일: 2026-08-22. tour.jeonju.go.kr 공식 이벤트·계절 콘텐츠 기준. 공식 source에서 현재 강조·운영 중인 항목만 포함. evergreen 유명 관광지는 시즌 특화 근거 없이 recommended_now에 넣지 않음.",
+
+  "stale_or_excluded": [
+    {
+      "name": "전주 국제영화제 (JIFF)",
+      "typical_period": "4~5월",
+      "reason": "봄 한정 행사. 기준일(2026-08-22) 비해당. canonical: KTO-2861680(제8회 전주국제단편영화제) EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 막걸리 축제",
+      "typical_period": "10월",
+      "reason": "가을 한정 행사. 기준일 비해당. canonical: KTO-3381612 EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 제야축제",
+      "typical_period": "12월 31일",
+      "reason": "연말 한정 행사. 기준일 비해당. canonical: KTO-2642299 EVENT_EXPIRED 확인."
+    },
+    {
+      "name": "전주 세계소리축제 (가을)",
+      "typical_period": "9~10월",
+      "reason": "기준일(8월) 아직 미개최. 9월 이후 추천 가능. RN-R02로 reserve 분류."
+    }
+  ],
+
+  "final_recommended_now": [
+    {
+      "item_id": "jeonju-RN-001",
+      "status": "FINAL",
+      "name_ko": "남부시장 한옥마을 야시장 (하계 주말 운영)",
+      "name_en": "Nambu Market Hanok Village Night Market — Summer Weekend",
+      "category": "야시장·시장 (계절 프로그램)",
+      "why_now": "전주 남부시장이 매주 금·토 저녁(18:00~23:00 내외) 야시장을 운영 중. 운영 기간 4월~10월 사이 기준일(2026-08-22) 하계 시즌 한창. 전주 로컬 음식(비빔밥·두부두루치기·초코파이 등 다양한 먹거리)·공예·공연을 동시에 체험 가능. tour.jeonju.go.kr 공식 야간관광 특집 추천 프로그램. 전주 방문자 사이 입소문이 높은 공식 인정 야간 프로그램.",
+      "official_evidence": "tour.jeonju.go.kr 야간관광·야시장 공식 소개. 전주시 남부시장 야시장 운영 지원(공식 시 지원 행사).",
+      "valid_from": "2026-04-01",
+      "valid_to": "2026-10-31",
+      "review_by": "2026-11-01",
+      "timing_note": "매주 금·토 운영. 정확 시간·운영 여부는 방문 전 tour.jeonju.go.kr 또는 남부시장 공식 SNS 확인 권장.",
+      "venue": "전주 남부시장 한옥마을 야시장",
+      "venue_note": "전북특별자치도 전주시 완산구 전주객사3길 22 (남부시장 내). 한옥마을에서 도보 5~10분.",
+      "existing_canonical_ids": [
+        {
+          "place": "남부시장 한옥마을 야시장",
+          "canonical_id": "OFF-16085",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. NAMBU_MARKET entity decision: FUTURE_MERGE_REQUIRED — OFF-16084(남부시장·청년몰)과 OFF-16085(야시장) 별도 엔티티 유지 중."
+        }
+      ],
+      "new_place_candidate": false,
+      "source": {
+        "provider": "전주시 / 남부시장 야시장 운영위",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    },
+    {
+      "item_id": "jeonju-RN-002",
+      "status": "FINAL",
+      "name_ko": "덕진공원 하계 연꽃 후기 시즌",
+      "name_en": "Deokjin Park Summer Lotus — Late Season",
+      "category": "자연·계절 (하계 연꽃 시즌)",
+      "why_now": "덕진공원 대형 연못의 연꽃이 7월 중순~8월 중순 절정을 지나 8월 하순 현재 후기 시즌 진행 중. 연꽃과 함께 수련(수면 위 연꽃)이 여전히 감상 가능. 덕진공원은 전주 시민 여름 나들이 명소로 tour.jeonju.go.kr 여름 추천 장소 등재. 2026-08-22 기준 후기 시즌으로 조기 방문 권장(8월 말까지).",
+      "official_evidence": "tour.jeonju.go.kr 여름 공원 추천 / 전주시 덕진공원 연꽃 시즌 공식 안내.",
+      "valid_from": "2026-07-15",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "timing_note": "기준일(2026-08-22) 현재 연꽃 후기 시즌. 8월 말로 갈수록 개화 감소. 조기 방문 또는 아침 시간 방문 권장.",
+      "venue": "덕진공원",
+      "venue_note": "전북특별자치도 전주시 덕진구 권삼득로 390. 전주역에서 차로 10분.",
+      "existing_canonical_ids": [
+        {
+          "place": "덕진공원",
+          "canonical_id": "OFF-9772",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. 덕진공원 내 OFF-11925(덕진공원 3층석탑)은 별도 ACTIVE_SERVICE 엔티티."
+        }
+      ],
+      "new_place_candidate": false,
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    },
+    {
+      "item_id": "jeonju-RN-003",
+      "status": "FINAL",
+      "name_ko": "경기전·한옥마을 하계 야간 개방",
+      "name_en": "Gyeonggijeon Shrine & Hanok Village — Summer Night Program",
+      "category": "야간관광 (하절기 특화)",
+      "why_now": "경기전은 하절기(6~8월) 야간 특별개방 프로그램(달빛 경기전)을 운영하여 일반 관람 시간 이후 야간 입장이 가능. 한옥마을 전체도 여름 저녁 방문객이 가장 많은 성수기로 야간 상점·공연·한복 체험이 활발히 운영 중. tour.jeonju.go.kr 하절기 야간관광 특집 추천.",
+      "official_evidence": "전주시 경기전 하계 야간 특별개방 (문화재청·전주시 공동 기획). 한옥마을 여름 야간관광 공식 프로그램.",
+      "valid_from": "2026-06-01",
+      "valid_to": "2026-08-31",
+      "review_by": "2026-09-01",
+      "timing_note": "경기전 야간 개방 시간·입장료는 방문 전 tour.jeonju.go.kr 또는 경기전 공식 안내 확인 필수. 한옥마을 야간 상점은 별도 운영시간 상이.",
+      "venue": "경기전 + 전주한옥마을",
+      "venue_note": "경기전(전북 전주시 완산구 태조로 44), 한옥마을 도보 권역 내.",
+      "existing_canonical_ids": [
+        {
+          "place": "경기전",
+          "canonical_id": "OFF-10115",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. 조선 태조 이성계 어진 봉안. 전주 대표 유적."
+        },
+        {
+          "place": "전주한옥마을",
+          "canonical_id": "OFF-16109",
+          "id_note": "canonical 확인: ACTIVE_SERVICE. 한옥마을 구역 개념 통합 엔티티."
+        }
+      ],
+      "new_place_candidate": false,
+      "source": {
+        "provider": "전주시 / 경기전 관리소 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    }
+  ],
+
+  "reserve_recommended_now": [
+    {
+      "item_id": "jeonju-RN-R01",
+      "status": "RESERVE",
+      "name_ko": "전주전통술박물관 막걸리 체험 (하절기 실내 대안)",
+      "name_en": "Jeonju Traditional Liquor Museum — Makgeolli Experience (Summer Indoor)",
+      "category": "체험·문화 (실내)",
+      "why_now": "8월 폭염 피해 전주 전통주(막걸리·소주) 제조 과정 관람 및 시음 체험 가능한 실내 시설. 전주는 전통주 문화로 유명하며 tour.jeonju.go.kr 음식·문화체험 특집 등재. 연중 운영이어서 계절 특화성이 낮아 RESERVE 분류.",
+      "official_evidence": "tour.jeonju.go.kr 체험관광 / 전주 전통주 문화 특집 등재.",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "reserve_reason": "연중 운영 evergreen 콘텐츠. 하절기 실내 대안으로 적합하나 계절 강조 근거가 약해 RESERVE.",
+      "venue": "전주전통술박물관",
+      "existing_canonical_id": "OFF-9796",
+      "id_note": "canonical 확인: ACTIVE_SERVICE. OFF-9796 전주전통술박물관.",
+      "source": {
+        "provider": "전주시 관광 (tour.jeonju.go.kr)",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    },
+    {
+      "item_id": "jeonju-RN-R02",
+      "status": "RESERVE",
+      "name_ko": "전주 세계소리축제 (가을 예고)",
+      "name_en": "Jeonju World Sound Festival — Autumn Preview",
+      "category": "음악·공연 축제",
+      "why_now": "전주 세계소리축제는 매년 9월 말~10월 초 국립민속국악원·한국소리문화의전당 등지에서 개최되는 국제 전통음악 축제. 세계 각국 전통음악·판소리·국악을 무료~저가로 즐길 수 있어 외국인 방문자에게 특히 유익. 기준일(2026-08-22) 아직 미개최이나 9월 방문 예정자에게 유용.",
+      "official_evidence": "전주세계소리축제 조직위원회 공식 홈페이지 및 tour.jeonju.go.kr 이벤트 등재 확인 필요.",
+      "valid_from": "2026-09 (exact date TBC)",
+      "reserve_reason": "2026년 정확 일정·장소가 기준일(2026-08-22) 현재 미확인. 일정 확인 시 FINAL 승격 가능. tour.jeonju.go.kr 이벤트 캘린더 확인 권장.",
+      "venue_note": "한국소리문화의전당·국립민속국악원 등 (확인 필요)",
+      "existing_canonical_id": null,
+      "id_note": "전주세계소리축제 venue(소리문화의전당 등)는 jeonju canonical 미포함. EVENT_OR_TEMPORARY_CONTENT 분류.",
+      "source": {
+        "provider": "전주세계소리축제 조직위원회",
+        "source_url": "https://tour.jeonju.go.kr/kor",
+        "as_of": "2026-08-22"
+      }
+    }
+  ]
+}

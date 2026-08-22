@@ -1,0 +1,197 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEONJU-V1",
+  "section": "travel_utility",
+  "generated_at": "2026-08-22",
+  "city": "jeonju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "utility_note": "공식 source에서 실제 제공하는 외국인 자유여행자 실용정보만 기록. 억지 채우기 금지. 요금·운영시간은 변동 가능 — freshness/review_by 필수.",
+  "as_of": "2026-08-22",
+
+  "utility_items": [
+    {
+      "utility_id": "jeonju-U-001",
+      "category": "광역 교통 → 전주",
+      "title": "KTX/SRT 전주역 도착 → 한옥마을·도심 이동",
+      "summary_ko": "전주역(KTX·SRT 정차)에서 한옥마을까지 버스 5-1번·119번 이용 약 15~20분, 택시 약 10분(요금 ~5,000~6,000원). 도보 약 25분. 전주역은 경기전·한옥마을에서 약 2km. 역 내 관광안내소 및 버스 안내 표지판 있음.",
+      "summary_en": "From Jeonju Station (KTX/SRT): take bus 5-1 or 119 (~15-20 min, T-money accepted) or taxi (~10 min, ~₩5,000-6,000) to reach Hanok Village. Walking distance ~25 min.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": false
+      },
+      "provider": "전주시 / 코레일",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "버스 노선·요금 변동 가능. 방문 전 전주 버스정보시스템(bis.jeonju.go.kr) 확인 권장."
+    },
+    {
+      "utility_id": "jeonju-U-002",
+      "category": "광역 교통 → 전주",
+      "title": "전주 고속/시외버스터미널 → 관광지 이동",
+      "summary_ko": "전주고속버스터미널·전주시외버스터미널은 전주 시내에 위치. 터미널에서 한옥마을까지 시내버스 또는 택시로 15~25분. 서울(센트럴시티·동서울) ↔ 전주 고속버스 약 2시간 30분~3시간. 버스터미널에서 전주역보다 한옥마을 방향 접근이 더 용이한 경우 있음.",
+      "summary_en": "Jeonju Intercity/Express Bus Terminal is centrally located. Express buses from Seoul (Central City, East Seoul) take ~2.5-3 hours. From terminal to Hanok Village: bus or taxi 15-25 min.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": false,
+        "zh-CN": false
+      },
+      "provider": "전주시 / 코버스 / 이지티켓",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "버스 요금·시간은 변동 가능. 고속버스 예매 www.kobus.co.kr 또는 앱."
+    },
+    {
+      "utility_id": "jeonju-U-003",
+      "category": "시내 교통",
+      "title": "전주 시내버스 (한옥마을·주요 관광지 노선)",
+      "summary_ko": "전주 시내버스 운영. 한옥마을 핵심 노선: 5-1번(전주역↔한옥마을), 119번(한옥마을 경유). 기본요금 ~1,500원(성인·카드). T-money 교통카드 사용 가능. 환승 할인 적용. 배차 간격 15~20분 내외. 버스 노선 정보: 전주 버스정보시스템(bis.jeonju.go.kr).",
+      "summary_en": "City buses connect major sights. Key routes for Hanok Village: bus 5-1 (Jeonju Station ↔ Hanok Village), bus 119. Fare ~₩1,500/adult (T-money card). Transfer discounts apply.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": false
+      },
+      "provider": "전주시 버스정보시스템",
+      "source_url": "http://bis.jeonju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "요금·노선 변동 가능. 방문 전 bis.jeonju.go.kr 또는 카카오맵 확인 권장."
+    },
+    {
+      "utility_id": "jeonju-U-004",
+      "category": "시내 교통",
+      "title": "전주 택시",
+      "summary_ko": "전주 택시 기본요금 ~4,000원대(2024년 기준·변동 가능). 한옥마을 내부는 차량 통행 제한 구역 있음 → 인근 주차장 하차 후 도보 이동 필요. 카카오T 앱 호출 가능. 심야 할증 적용. 전주역↔한옥마을 ~5,000~6,000원 예상.",
+      "summary_en": "Taxis available throughout Jeonju. Base fare ~₩4,000 (may change). Kakao T app works for hailing. Note: vehicle access restricted inside Hanok Village core — alight nearby and walk. Jeonju Station → Hanok Village: ~₩5,000-6,000.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": true
+      },
+      "provider": "전주시 / 카카오T",
+      "source_url": "https://www.kakaomobility.com",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "기본요금은 지자체 결정에 따라 변동 가능. 방문 전 카카오T 또는 현지 안내 확인."
+    },
+    {
+      "utility_id": "jeonju-U-005",
+      "category": "한옥마을 내부 이동",
+      "title": "전주한옥마을 내부 도보 특성 (차량통행 제한)",
+      "summary_ko": "전주한옥마을 핵심 구역(태조로·은행로 등)은 차량 통행 제한 구역. 대부분의 명소(경기전·전동성당·풍남문·골목)는 도보로 15~30분 이내 접근 가능. 전동 킥보드는 일부 구역 이용 제한. 돌바닥·한옥 진입로는 휠체어 접근에 일부 제한 있음.",
+      "summary_en": "The Hanok Village core is largely vehicle-restricted — most sights (Gyeonggijeon, Jeondong Cathedral, Pungnammun) are within 15-30 min walking distance of each other. Electric scooters restricted in some areas. Stone alleys may limit wheelchair access.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": true
+      },
+      "provider": "전주시 한옥마을 관리사무소",
+      "source_url": "https://hanok.jeonju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeonju-U-006",
+      "category": "교통카드",
+      "title": "T-money 교통카드",
+      "summary_ko": "전주 시내버스 T-money 카드 사용 가능. 전주역·버스터미널 인근 편의점(GS25·CU·세븐일레븐 등)에서 발급(~3,000원) 및 충전 가능. 후불 교통카드(국내 은행 체크·신용카드) 도 시내버스 사용 가능. 외국인 방문자는 선불 T-money 권장.",
+      "summary_en": "T-money cards work on Jeonju city buses. Purchase (~₩3,000) and top-up at convenience stores (GS25, CU, 7-Eleven) near Jeonju Station or bus terminal. Foreign visitors recommended to use prepaid T-money.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": true
+      },
+      "provider": "T-money (선불) / 각 카드사 (후불)",
+      "source_url": "https://www.t-money.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeonju-U-007",
+      "category": "관광안내소",
+      "title": "전주 관광안내소 (한옥마을·전주역·터미널)",
+      "summary_ko": "주요 안내소: (1) 한옥마을 관광안내소 (경기전 앞) — 지도·관광 정보·다국어 상담, (2) 전주역 관광안내소, (3) 전주고속버스터미널 안내소. 한국어·영어·일본어·중국어 대응 (수준 상이). 무료 관광지도 배포.",
+      "summary_en": "Key visitor centers: (1) Hanok Village Tourism Info Center (in front of Gyeonggijeon) — maps, multilingual info; (2) Jeonju Station; (3) Express Bus Terminal. KO/EN/JA/ZH support available (levels vary).",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": true
+      },
+      "provider": "전주시 관광과",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "운영시간은 계절·요일에 따라 상이. 방문 전 tour.jeonju.go.kr 확인."
+    },
+    {
+      "utility_id": "jeonju-U-008",
+      "category": "관광 안내 전화",
+      "title": "1330 관광안내전화 (한국관광공사)",
+      "summary_ko": "한국관광공사 운영 24시간 관광안내전화. 전화번호: 1330 (국내) / +82-2-1330 (해외). 한국어·영어·일본어·중국어 상담 가능. 전주 관광정보·교통·숙박 등 문의 가능.",
+      "summary_en": "KTO-operated tourism hotline, 24/7. Call 1330 (domestic) or +82-2-1330 (international). Available in KO/EN/JA/ZH. Can assist with Jeonju travel information, transport, and accommodation.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": true,
+        "zh-CN": true
+      },
+      "provider": "한국관광공사 (KTO)",
+      "source_url": "https://www.visitkorea.or.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeonju-U-009",
+      "category": "짐 보관",
+      "title": "전주역 코인로커 / 짐 보관",
+      "summary_ko": "전주역 내 코인로커 설치(소·중·대 크기, ~3,000~5,000원/회). 한옥마을 내부에는 별도 공식 짐보관소 없음(일부 게스트하우스·카페 유료 보관 가능). 당일치기 방문자는 전주역 코인로커 이용 후 도보·버스로 이동 권장.",
+      "summary_en": "Coin lockers at Jeonju Station (S/M/L sizes, ~₩3,000-5,000/use). No official luggage storage in Hanok Village core — some guesthouses/cafes may offer paid storage. Day-trippers recommended to use station lockers before heading to Hanok Village.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": false,
+        "zh-CN": false
+      },
+      "provider": "한국철도공사 (코레일) / 전주역",
+      "source_url": "https://www.letskorail.com",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "코인로커 수·요금 변동 가능. 성수기 만실 가능성 있음."
+    },
+    {
+      "utility_id": "jeonju-U-010",
+      "category": "환전·결제",
+      "title": "전주 환전 및 결제 정보",
+      "summary_ko": "한옥마을 인근 KB국민은행·신한은행·우리은행 지점에서 외화 환전 가능. ATM(Global/Mastercard 호환): 한옥마을 인근 및 편의점 ATM. 한옥마을 내 상점 대부분 카드결제 가능. 일부 소규모 노점·식당은 현금만 가능 — 소액 원화 현금 휴대 권장. 전주페이(지역화폐)는 외국인 이용 불가.",
+      "summary_en": "Currency exchange: bank branches near Hanok Village (KB, Shinhan, Woori). ATMs available at convenience stores and banks — Mastercard/Visa networks supported. Most shops in Hanok Village accept cards. Small vendors/stalls may be cash-only — carry some Korean won. Jeonjupay (local currency) not available to foreign visitors.",
+      "locale_availability": {
+        "ko": true,
+        "en": true,
+        "ja": false,
+        "zh-CN": false
+      },
+      "provider": "전주시 / 각 은행",
+      "source_url": "https://tour.jeonju.go.kr/kor",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "환율·수수료 변동. 방문 전 각 은행 확인."
+    }
+  ],
+
+  "utility_count_summary": {
+    "total": 10,
+    "locale_ko": 10,
+    "locale_en": 10,
+    "locale_ja": 6,
+    "locale_zh_cn": 5
+  }
+}
