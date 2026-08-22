@@ -15,6 +15,8 @@
  *
  * 기대값은 package 선언값(input manifest + crosswalk summary)에서 유도한다. 실제 write 는 (1) env FIVE_CITY_CORE_APPLY=YES (2) --confirm-manifest-hash
  * (3) env FIVE_CITY_CORE_TARGET_HOST == Supabase host (4) SUPABASE_SERVICE_ROLE_KEY (5) --expected-db-count == 사전 READ (6) is_published 컬럼 (7) dry-run OK
+ * (8) repo runtime contract DISCOVERY_VISIBILITY_GATE_ENABLED === true (9) pre-stage snapshot 은 STAGE 직전 항상 새로 생성(462 = MATCH 전체, stale 재사용 없음)
+ * 057/058(index 존재/부재)은 PostgREST 로 introspection 불가 → importer 가드가 아니라 runbook §6-1a 의 READ-ONLY PRECHECK(SQL Editor/Management API SELECT)로 STAGE 직전 사람이 확인한다.
  * (8) relation preflight 충돌 0 — 전부 맞아야 한다. DELETE 기능 없음. 사용자 테이블은 count 만 읽는다. secrets 출력 없음.
  */
 import { createHash } from "node:crypto";
@@ -26,7 +28,8 @@ import { buildStagePlan } from "../src/lib/main-intake/stage-plan.ts";
 import { buildPublishCutoverSql } from "../src/lib/main-intake/publish-sql.ts";
 import { stageInsertChunkSafe, stageUpdateRow, type FetchLike } from "../src/lib/main-intake/stage-rest-writer.ts";
 import { resolveRelationTargets, preflightRelations, syncSourcesChunk, syncImagesChunk } from "../src/lib/main-intake/stage-relations.ts";
-import { buildPreStageSnapshot, chunkReceipt, receiptsSha, readUserTableCounts, userCountsDiff, verifyNewUnpublished, type ChunkReceipt } from "../src/lib/main-intake/stage-safety.ts";
+import { buildPreStageSnapshot, assertSnapshotComplete, chunkReceipt, receiptsSha, readUserTableCounts, userCountsDiff, verifyNewUnpublished, type ChunkReceipt } from "../src/lib/main-intake/stage-safety.ts";
+import { DISCOVERY_VISIBILITY_GATE_ENABLED } from "../src/lib/city-spots-visibility.ts";
 import { chunk } from "../src/lib/city-spots-paging.ts";
 
 function arg(name: string): string | undefined { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : undefined; }
@@ -168,6 +171,7 @@ function productionTarget(requireApply: boolean): { url: string; serviceKey: str
   const refuse = (why: string): never => { console.error(`${requireApply ? "STAGE" : "SNAPSHOT"}_REFUSED: ${why}`); process.exit(4); };
   if (requireApply && process.env.FIVE_CITY_CORE_APPLY !== "YES") refuse("env FIVE_CITY_CORE_APPLY=YES required");
   if (requireApply && confirm !== manifestHash) refuse("--confirm-manifest-hash must equal sha256(input manifest)");
+  if (requireApply && DISCOVERY_VISIBILITY_GATE_ENABLED !== true) refuse("DISCOVERY_VISIBILITY_GATE_ENABLED must be true in the approved runtime contract (NEW rows would be discoverable)");
   if (!arithmeticOk || plan.errors.length > 0) refuse("plan arithmetic/errors/relation preflight");
   if (!url || !key) refuse("target url / service key missing");
   if (!host || new URL(url).host !== host) refuse("FIVE_CITY_CORE_TARGET_HOST must equal the Supabase host (explicit Production target)");
@@ -208,10 +212,13 @@ if (mode === "stage") {
     if (preCount !== expectedDb) { console.error(`STAGE_REFUSED: pre-stage count ${preCount} != expected ${expectedDb}`); process.exit(4); }
     const col = await fetch(`${t.url}/rest/v1/city_spots?select=is_published&limit=1`, { headers: { apikey: t.serviceKey, Authorization: `Bearer ${t.serviceKey}` } });
     if (col.status !== 200) { console.error("STAGE_REFUSED: is_published column absent — migration 056 not applied"); process.exit(4); }
-    // snapshot + user counts (pre) — 없으면 만든다
+    // snapshot + user counts (pre) — STAGE 직전 상태여야 하므로 기존 파일이 있어도 항상 새로 생성(stale 재사용 0). MATCH 전체(462)가 아니면 쓰기 전 거부.
     const snapPath = join(t.runDir, "pre-stage-match-snapshot-v1.jsonl");
-    if (!existsSync(snapPath)) { const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, now()); writeFileSync(snapPath, snap.text, "utf8"); }
+    const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, now());
+    assertSnapshotComplete(snap.rows, plan.updates.map(u => u.main_city_spot_id));
+    writeFileSync(snapPath, snap.text, "utf8");
     const userPre = await readUserTableCounts(fetchLike, t);
+    writeFileSync(join(t.runDir, "user-table-counts-pre-v1.json"), JSON.stringify({ run_id: runId, counts: userPre, captured_at: now() }, null, 1) + "\n", "utf8");
     // Phase A — MATCH UPDATE (기존 id · source-owned 필드만 · is_published/source_type/external_id 미전송)
     let updated = 0;
     for (const [ci, part] of chunk(plan.updates, 100).entries()) {
@@ -268,7 +275,7 @@ if (mode === "stage") {
     writeFileSync(join(t.runDir, "stage-chunk-receipts-v1.jsonl"), receipts.map(r => JSON.stringify(r)).join("\n") + "\n", "utf8");
     const receipt = {
       run_id: runId, production_source_commit: process.env.RELEASE_SHA ?? null, input_manifest_sha256: manifestHash, change_manifest_sha256: dryRunSummary.change_manifest_sha256, stage_plan_sha256: stagePlan.plan_sha256,
-      db_pre_count: preCount, db_post_count: postCount, match_planned: plan.updates.length, match_completed: updated, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
+      db_pre_count: preCount, db_post_count: postCount, pre_stage_snapshot: { rows: snap.rows.length, sha256: snap.sha256, fresh: true }, match_planned: plan.updates.length, match_completed: updated, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
       same_source_skipped: plan.counts.confirmed_twin_skipped, sources: srcTotals, images: imgTotals, mapping_rows: mapping.length,
       new_unpublished_check: unpub, user_table_counts: { pre: userPre, post: userPost, diff: userDiff }, delete_count: 0, error_count: unpub.published_true + unpub.missing + userDiff.length,
       id_mapping_sha256: sha256(mapping.join("\n") + "\n"), chunk_receipts_sha256: receiptsSha(receipts), legacy_newly_hidden: 0,

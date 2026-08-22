@@ -36,8 +36,16 @@ function fakeDb(seed: { city_spots?: Row[]; city_spot_sources?: Row[]; city_spot
   const fetchLike: FetchLike = async (url, init) => {
     const u = new URL(url); const table = u.pathname.split("/").pop()!; const qs = u.search.slice(1);
     log.push({ m: init.method, url, body: init.body ? JSON.parse(init.body) : undefined });
-    const headersOut = { get: (k: string) => (k === "content-range" && table in userCounts ? `0-0/${userCounts[table]}` : null) };
-    if (init.method === "GET") { if (table in userCounts) return { ok: true, status: 206, headers: headersOut, text: async () => "[]" } as never; const fs = parseFilters(qs); const rows = tables[table]!.filter(r => fs.every(f => f(r))); return { ok: true, status: 200, text: async () => JSON.stringify(rows) }; }
+    // 사용자 테이블: 실제 Production schema(trip_moments PK = moment_id). select 컬럼이 없으면 400 42703. limit=0 → `*/N` + body [] (row 내용 0).
+    const USER_PK: Record<string, string> = { itineraries: "id", trip_moments: "moment_id", user_spots: "id", place_reports: "id" };
+    if (init.method === "GET" && table in userCounts) {
+      const sel = new URLSearchParams(qs).get("select") ?? "*"; const limit = new URLSearchParams(qs).get("limit");
+      if (sel !== "*" && sel !== USER_PK[table]) return { ok: false, status: 400, headers: { get: () => null }, text: async () => JSON.stringify({ code: "42703", message: `column ${table}.${sel} does not exist` }) } as never;
+      const n = userCounts[table]!;
+      if (limit === "0") return { ok: true, status: n > 0 ? 206 : 200, headers: { get: (k: string) => (k === "content-range" ? `*/${n}` : null) }, text: async () => "[]" } as never;
+      return { ok: true, status: 206, headers: { get: (k: string) => (k === "content-range" ? `0-0/${n}` : null) }, text: async () => JSON.stringify([{ [USER_PK[table]!]: "row-body-should-not-be-read" }]) } as never;
+    }
+    if (init.method === "GET") { const fs = parseFilters(qs); const rows = tables[table]!.filter(r => fs.every(f => f(r))); return { ok: true, status: 200, text: async () => JSON.stringify(rows) }; }
     if (init.method === "POST") { const rows = JSON.parse(init.body!) as Row[]; for (const r of rows) { const c = uniq(table, r); if (c) return { ok: false, status: 409, text: async () => JSON.stringify({ code: "23505", message: `duplicate key value violates unique constraint "${c}"` }) }; } const out = rows.map(r => { const row = { ...r, id: next++ }; tables[table]!.push(row); return row; }); return { ok: true, status: 201, text: async () => JSON.stringify(out) }; }
     if (init.method === "PATCH") { const id = Number(new URLSearchParams(qs).get("id")!.slice(3)); const row = tables[table]!.find(r => r.id === id)!; const body = JSON.parse(init.body!) as Row; const merged = { ...row, ...body }; const c = uniq(table, merged, id); if (c) return { ok: false, status: 409, text: async () => c }; Object.assign(row, body); return { ok: true, status: 204, text: async () => "" }; }
     if (init.method === "DELETE") { deletes += 1; return { ok: false, status: 405, text: async () => "forbidden" }; }

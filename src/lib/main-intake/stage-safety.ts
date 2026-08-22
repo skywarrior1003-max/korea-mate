@@ -49,17 +49,37 @@ export function receiptsSha(receipts: ChunkReceipt[]): string { return sha(recei
 
 /** 사용자 테이블 행 수만(내용 0). pre == post 여야 STAGE CLOSED. */
 export const USER_TABLES = ["itineraries", "trip_moments", "user_spots", "place_reports"] as const;
+/**
+ * 테이블별 실제 PK 컬럼 (Production information_schema 실측 2026-08-22, TASK-FIVE-CITY-CORE-USER-COUNT-GUARD-FIX-V1).
+ * trip_moments 의 PK 는 `moment_id` — `select=id` 는 42703 (STAGE-V1-R1 HOLD 원인). 추측 금지: 여기 값은 실측에서만 바꾼다.
+ */
+export const USER_TABLE_PK: Record<(typeof USER_TABLES)[number], string> = { itineraries: "id", trip_moments: "moment_id", user_spots: "id", place_reports: "id" };
+/** `Content-Range: * /N` 또는 `a-b/N` 에서 N. 그 외 형태·누락·비정수는 null (조용한 0 fallback 금지). */
+export function parseContentRangeCount(cr: string | null | undefined): number | null {
+  if (typeof cr !== "string") return null;
+  const m = /^(?:\*|\d+-\d+)\/(\d+)$/.exec(cr.trim());
+  if (!m) return null;
+  const n = Number(m[1]);
+  return Number.isSafeInteger(n) && n >= 0 ? n : null;
+}
+/** count 전용 요청: `select=<pk>&limit=0` + `Prefer: count=exact` → body `[]`, 사용자 row 내용 0. */
+export function userCountRequestPath(table: (typeof USER_TABLES)[number]): string { return `${table}?select=${USER_TABLE_PK[table]}&limit=0`; }
 export async function readUserTableCounts(f: FetchLike, t: RestTarget): Promise<Record<string, number>> {
   const out: Record<string, number> = {};
   for (const table of USER_TABLES) {
-    const res = await f(`${t.url}/rest/v1/${table}?select=id&limit=1`, { method: "GET", headers: headers(t, { Prefer: "count=exact" }) });
+    const res = await f(`${t.url}/rest/v1/${userCountRequestPath(table)}`, { method: "GET", headers: headers(t, { Prefer: "count=exact" }) });
     if (!res.ok) throw new StageIdentityError(`user table count failed: ${table} HTTP ${res.status}`);
     const cr = (res as unknown as { headers?: { get(k: string): string | null } }).headers?.get?.("content-range") ?? null;
-    const total = cr ? Number(cr.split("/")[1]) : NaN;
-    if (!Number.isInteger(total)) throw new StageIdentityError(`user table count unreadable: ${table}`);
+    const total = parseContentRangeCount(cr);
+    if (total === null) throw new StageIdentityError(`user table count unreadable: ${table} (content-range=${cr ?? "missing"})`);
     out[table] = total;
   }
   return out;
+}
+/** pre-stage snapshot 은 MATCH 전체(462)를 담아야 한다. 부족/초과/중복이면 STAGE 금지. */
+export function assertSnapshotComplete(rows: ReadonlyArray<{ city_spot_id: number }>, expectedIds: ReadonlyArray<number>): void {
+  const got = new Set(rows.map(r => r.city_spot_id)); const exp = new Set(expectedIds);
+  if (rows.length !== exp.size || got.size !== exp.size || [...exp].some(id => !got.has(id))) throw new StageIdentityError(`pre-stage snapshot incomplete: rows=${rows.length} distinct=${got.size} expected=${exp.size}`);
 }
 export function userCountsDiff(pre: Record<string, number>, post: Record<string, number>): string[] {
   return USER_TABLES.filter(t => pre[t] !== post[t]).map(t => `${t}: ${pre[t]} → ${post[t]}`);

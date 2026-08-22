@@ -67,5 +67,10 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 ### 6-1b. 후속 locale supplement 계약 (`locale-supplement.ts`)
 경주 Final 공식 EN = 0. 후속 Owner 승인 English supplement 는 canonical_id → **기존 entity 의 en 필드만 UPDATE**(name/name_l10n.en/description/desc_l10n.en merge), 새 entity INSERT 0, identity 재매칭 0, ko 불변. 매핑 없는 canonical 은 unresolved(생성 금지). 번역 플랫폼 아님.
 
+### 6-1c. 사용자 테이블 count guard · snapshot freshness (USER-COUNT-GUARD-FIX-V1, STAGE-V1-R1 HOLD 후속)
+- `readUserTableCounts` 는 테이블별 실측 PK(`itineraries.id`·`trip_moments.moment_id`·`user_spots.id`·`place_reports.id`)로 `select=<pk>&limit=0` + `Prefer: count=exact` → `Content-Range: */N` 만 읽는다(body `[]`, 사용자 row 내용 0). non-2xx·Content-Range 누락·파싱 불가는 실패(0 fallback 없음). pre == post 아니면 STAGE CLOSED 금지.
+- `--stage` 는 `pre-stage-match-snapshot-v1.jsonl` 을 기존 파일이 있어도 **항상 새로 생성**(STAGE 직전 상태, MATCH 전체 462 와 정확히 일치해야 첫 write 진행) 하고 `user-table-counts-pre-v1.json` 을 Phase A 이전에 기록한다.
+- `--stage` 가드 (8) `DISCOVERY_VISIBILITY_GATE_ENABLED === true`(repo runtime contract import). 057/058 index 존재/부재는 PostgREST 로 introspection 불가 → importer 가드가 아니라 §6-1a PRECHECK(READ-ONLY SELECT)로 STAGE 직전 사람이 확인(Management API 토큰을 writer 프로세스에 두지 않는다).
+
 ### 6-2. 구현
 `stage-relations.ts`(resolveRelationTargets · preflightRelations · syncSourcesChunk · syncImagesChunk) · `stage-safety.ts`(buildPreStageSnapshot · chunkReceipt · readUserTableCounts/userCountsDiff · verifyNewUnpublished) · importer `--stage` Phase A(MATCH PATCH)→B(NEW lookup-before-insert, false)→C(sources, actual id)→D(images, Final source_id)→E(verify: DB count·NEW false 사후검증·사용자 테이블 count pre==post) + `stage-chunk-receipts-v1.jsonl` + `stage-receipt-v1.json` + `pre-stage-match-snapshot-v1.jsonl`(`--pre-stage-snapshot` READ-ONLY 모드). partial unique 는 lookup-first, full unique 는 conflict 재조회. 가드 8종 전부 통과해야 write.
