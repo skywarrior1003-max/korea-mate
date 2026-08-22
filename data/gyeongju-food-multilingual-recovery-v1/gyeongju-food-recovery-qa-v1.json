@@ -1,0 +1,210 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-MULTILINGUAL-LINKAGE-RECOVERY-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-22T11:41:00.028362+00:00",
+  "base_branch": "data/gyeongju-multilingual-v1",
+  "base_sha": "6ac3977",
+  "created_branch": "data/gyeongju-food-multilingual-recovery-v1",
+  "vg_raw_structure": {
+    "total_records": 105,
+    "locale_bundling": "SINGLE_RECORD_BUNDLES_KO_EN_JA_ZH",
+    "available_signals": [
+      "vg_id",
+      "ko.title",
+      "ko.phone",
+      "ko.address",
+      "en.title",
+      "ja.title",
+      "zh.title",
+      "area"
+    ],
+    "all_en_ok_true": true,
+    "all_ja_ok_true": true,
+    "all_zh_ok_true": true,
+    "is_fallback_false_all": true,
+    "area_distribution": {
+      "경주시내권": 40,
+      "보문관광단지": 36,
+      "황리단길": 16,
+      "불국사권": 13
+    }
+  },
+  "canonical_food": {
+    "total": 102,
+    "category_field_value": "restaurant",
+    "district_field": "None (not populated in food records)",
+    "phone_available": 100,
+    "phone_not_available": 2
+  },
+  "matching_passes": {
+    "pass1_phone_exact": {
+      "description": "Normalized phone digit string exact match + address/title cross-validation",
+      "result": 7,
+      "tier": "TIER_1_DETERMINISTIC",
+      "confirms_existing_7": true
+    },
+    "pass2_ko_title_exact_normalized": {
+      "description": "Exact normalized KO title + secondary signal",
+      "result": 0,
+      "explanation": "Only 2 raw exact title matches in full 102x105 space, both already in phone-matched set"
+    },
+    "pass3_suffix_stripped_title": {
+      "description": "Title with suffix removed (식당/카페/etc) + secondary signal",
+      "result": 0
+    },
+    "pass4_address_exact": {
+      "description": "Normalized address exact match + title cross-validation",
+      "result": 0,
+      "explanation": "VG address format differs from canonical (경주시 vs 경상북도 경주시 prefix, dong-level detail)"
+    }
+  },
+  "match_results": {
+    "TIER_1_DETERMINISTIC": 7,
+    "TIER_2_HIGH": 0,
+    "TIER_3_REVIEW": 1,
+    "NO_MATCH": 94,
+    "total_confirmed": 7,
+    "previously_matched": 7,
+    "net_new_confirmed": 0
+  },
+  "tier3_detail": {
+    "gyeongju-GJ08-6917": {
+      "canonical_title": "화수브루어리",
+      "vg_title": "화수브루어리",
+      "title_match_ratio": 1.0,
+      "canonical_phone": "0507-1391-8015",
+      "vg_phone": "010-9182-0060",
+      "reason": "Exact title match but phone numbers differ (0507 virtual vs 010 mobile). Bounded web check recommended.",
+      "vg_id": "535f4149060609450a4104474351404740",
+      "vg_area": "보문관광단지",
+      "auto_confirm": false
+    }
+  },
+  "unresolved_reason_breakdown": {
+    "PHONE_NOT_IN_VG": 93,
+    "NO_PHONE_IN_CANONICAL": 2,
+    "FUZZY_TITLE_CANDIDATES": {
+      "GJ08-112_황남맷돌순두부": "VG 맷돌순두부 (0.83) — different restaurants: different phone/address/district",
+      "GJ08-88_전통맷돌순두부": "VG 맷돌순두부 (0.83) — different restaurants: different phone/address",
+      "GJ08-412_소담": "VG 소담루 (0.80) — different restaurants: different address/phone",
+      "GJ08-85_보문호반오리": "VG 호반오리 (0.80) — different restaurants: 보문동 vs 불국사 area",
+      "GJ08-7124_올바릇_식당": "VG 올바릇식당_경주점 — canonical is base, VG is different branch location"
+    },
+    "structural_gap_explanation": "VG 105 curates tourist-recommended restaurants. Canonical 102 includes full city food service universe from official city data. Overlap is 7 confirmed by phone. The 95 NO_MATCH canonical records are local eateries, market stalls, and chain branches not in VG's curated tourist list."
+  },
+  "existing_7_revalidated": {
+    "result": "PASS",
+    "all_7_confirmed_tier1": true,
+    "method_reconfirmed": "PHONE + ADDR or PHONE + TITLE",
+    "cids": [
+      "gyeongju-GJ08-405",
+      "gyeongju-GJ08-7128",
+      "gyeongju-GJ08-732",
+      "gyeongju-GJ08-733",
+      "gyeongju-GJ08-7510",
+      "gyeongju-GJ08-760",
+      "gyeongju-GJ08-87"
+    ]
+  },
+  "actual_keys_previously_used": [
+    "phone (normalized)",
+    "address (normalized)"
+  ],
+  "available_but_previously_unused_keys": [
+    "ko.title",
+    "en.title",
+    "ja.title",
+    "zh.title",
+    "vg_id"
+  ],
+  "ko_title_bridge_tested": "YES — tested both exact-normalized and suffix-stripped; no new confirmed matches found",
+  "hexid_internal_bridge_tested": "YES — vg_id exists in VG raw but canonical has no vg_id field to link against; hexID bridge not viable without canonical-side hexID",
+  "multisignal_matching_completed": "YES — phone+addr, title+phone, title+addr, addr+title all tested",
+  "multilingual_recovery": {
+    "food_canonical_covered": 7,
+    "food_canonical_total": 102,
+    "coverage_pct": "6.9%",
+    "en_title_count": 7,
+    "en_description_count": 7,
+    "ja_title_count": 7,
+    "ja_description_count": 4,
+    "zh_cn_title_count": 7,
+    "zh_cn_description_count": 6,
+    "new_locale_records_added_vs_existing_17": 4,
+    "note": "VG raw bundles all locales per record. Recovery adds JA for GJ08-732, JA for GJ08-7510, JA/ZH for GJ08-405 where VG titles exist."
+  },
+  "vg_native_en_confirmed": true,
+  "vg_native_ja_confirmed": true,
+  "vg_native_zh_cn_confirmed": true,
+  "bounded_web_checks_executed": 0,
+  "bounded_web_checks_needed": 1,
+  "new_data_collected_from_web": 0,
+  "resolved_from_existing_raw": 7,
+  "duplicate_conflicts": 0,
+  "main_handoff": {
+    "description": "MAIN_HANDOFF_READY_MULTILINGUAL_ARTIFACT for Gyeongju Food",
+    "path": "data\\gyeongju-food-multilingual-recovery-v1\\gyeongju-food-multilingual-handoff-v1.jsonl",
+    "records": 21,
+    "canonical_ids_covered": [
+      "gyeongju-GJ08-405",
+      "gyeongju-GJ08-7128",
+      "gyeongju-GJ08-732",
+      "gyeongju-GJ08-733",
+      "gyeongju-GJ08-7510",
+      "gyeongju-GJ08-760",
+      "gyeongju-GJ08-87"
+    ],
+    "breaks_avoided": [
+      "1. Enrichment->Canonical write-back: artifact explicitly maps canonical_id->locale->title",
+      "2. city_spots import l10n fields: handoff has explicit name_l10n-ready structure",
+      "3. Main manifest: this file must be added to intake manifest for Main consumption"
+    ],
+    "intake_instructions": {
+      "name_l10n_mapping": "canonical_id -> {locale: title} from this artifact",
+      "desc_l10n_mapping": "canonical_id -> {locale: short_description} from this artifact (7 EN desc available; JA/ZH desc need bounded VG page fetch)",
+      "locale_key_note": "zh-CN in artifact maps to zh in DB (adapter required)"
+    }
+  },
+  "attraction_existing_en_36": {
+    "count": 36,
+    "changed": 0,
+    "artifact": "data/gyeongju-multilingual-v1/gyeongju-attraction-multilingual-enrichment-v1.jsonl"
+  },
+  "total_gyeongju_en_after_recovery": {
+    "food_en_titles": 7,
+    "attraction_en_titles": 36,
+    "total": 43,
+    "canonical_total": 299,
+    "coverage_pct": "14.4%"
+  },
+  "main_correction_required": {
+    "action": "Create l10n-capable city_spots import or adapter that reads this handoff artifact",
+    "name_l10n": {
+      "en": "title from handoff",
+      "ja": "title from handoff",
+      "zh-CN": "title from handoff"
+    },
+    "desc_l10n_en": "short_description from handoff (7 food + 36 attraction available)",
+    "main_intake_manifest_must_add": "data\\gyeongju-food-multilingual-recovery-v1\\gyeongju-food-multilingual-handoff-v1.jsonl",
+    "zh_cn_to_zh_adapter": true
+  },
+  "additional_food_work_needed": true,
+  "additional_food_work_description": "95 food canonical records NOT in VG coverage. Options: (1) accept as Korean-only; (2) bounded check of KTO EN food (currently 0); (3) additional source discovery",
+  "attraction_followup_needed": true,
+  "attraction_followup_description": "161 attraction records with no KTO EN content. Possible sources: gyeongju.go.kr EN pages, UNESCO sources.",
+  "invariants": {
+    "attraction_changed": 0,
+    "core_canonical_changed": 0,
+    "master_changed": 0,
+    "production_changed": 0,
+    "db_changed": 0,
+    "broad_recollection": false,
+    "translation_used": false
+  },
+  "artifacts": {
+    "crosswalk": "data/gyeongju-food-multilingual-recovery-v1/gyeongju-food-identity-crosswalk-v1.jsonl",
+    "recovery_enrichment": "data/gyeongju-food-multilingual-recovery-v1/gyeongju-food-multilingual-recovery-enrichment-v1.jsonl",
+    "handoff": "data\\gyeongju-food-multilingual-recovery-v1\\gyeongju-food-multilingual-handoff-v1.jsonl",
+    "nomatch_reason_analysis": "data/gyeongju-food-multilingual-recovery-v1/gyeongju-food-nomatch-reason-analysis-v1.jsonl"
+  }
+}
