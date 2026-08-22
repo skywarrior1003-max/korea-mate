@@ -81,7 +81,7 @@ test("UCG-10: --stage 는 기존 snapshot 파일을 재사용하지 않고 항�
   const src = readFileSync(new URL("scripts/import-five-city-core-v1.ts", ROOT), "utf8");
   const stage = src.slice(src.indexOf('if (mode === "stage")'));
   assert.ok(!/existsSync\(snapPath\)/.test(stage), "stale snapshot 재사용 분기 제거");
-  assert.ok(!/existsSync/.test(stage), "stage 블록에서 existsSync 사용 0 (manifest 검사의 existsSync 는 dry-run 공통, 무관)");
+  assert.deepEqual(stage.match(/existsSync\([^)]*\)/g) ?? [], ["existsSync(restorePlanPath)"], "stage 블록의 existsSync 는 Phase A3 restore plan 존재 확인 1곳뿐 — snapshot 재사용 분기 0");
   assert.match(stage, /const snap = await buildPreStageSnapshot\(fetchLike, t, plan\.updates, manifestHash, capturedAt\);\s*assertSnapshotComplete\(snap\.rows, plan\.updates\.map\(u => u\.main_city_spot_id\)\);\s*const snapPath = join\(t\.runDir, snapshotAttemptFilename\(attempt\)\);\s*writeImmutableFile\(snapPath, snap\.text\);/);
   assert.ok(stage.indexOf("assertSnapshotComplete(") < stage.indexOf("Phase A"), "snapshot 완전성 검사는 Phase A(첫 write) 이전");
   assert.ok(stage.indexOf("user-table-counts-pre-v1.") < stage.indexOf("Phase A"), "user pre counts 기록은 Phase A 이전");
