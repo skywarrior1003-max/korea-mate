@@ -1,0 +1,612 @@
+{
+ "task": "TASK-SEOUL-DESCRIPTION-LENGTH-AUDIT-V1",
+ "mode": "READ-ONLY",
+ "sources": {
+  "seoul": {
+   "branch": "data/seoul-multilingual-v1",
+   "city": "seoul",
+   "kind": "jsonl",
+   "path": "data/seoul-final-release/seoul-canonical-places-v1.jsonl",
+   "rows": 1838,
+   "sha": "e9e9967",
+   "sha256": "5ccc1cc070deab48051f05a75cc0d4fc63b3cac1c863c243ef2bb50b357f24b0"
+  },
+  "seoul_ml": {
+   "branch": "data/seoul-multilingual-v1",
+   "city": "seoul",
+   "kind": "jsonl",
+   "path": "data/seoul-multilingual-v1/seoul-multilingual-enrichment-v1.jsonl",
+   "rows": 5068,
+   "sha": "e9e9967",
+   "sha256": "d60df0140ef599e0f43989e54194625f1ac7200c9dbfddd08f16d4b842137713"
+  }
+ },
+ "seoul_final_rows": 1838,
+ "seoul_active_rows": 1837,
+ "seoul_intake_rows": 1837,
+ "ml_rows": 5068,
+ "ml_locales": {
+  "en": 1797,
+  "ja": 1638,
+  "zh-CN": 1633
+ },
+ "candidate_rule": {
+  "stripped_gt": 20000,
+  "raw_gt": 100000,
+  "or": "stripped>5000 and unique_block_ratio<0.6"
+ },
+ "per_locale": {
+  "ko": {
+   "source_field": "description_ko (canonical)",
+   "rows": 1837,
+   "non_null": 1837,
+   "html": 15,
+   "raw_buckets": {
+    "501-1,000": 58,
+    "1-500": 1763,
+    "1,001-2,000": 14,
+    "2,001-4,000": 2
+   },
+   "stripped_buckets": {
+    "501-1,000": 58,
+    "1-500": 1763,
+    "1,001-2,000": 14,
+    "2,001-4,000": 2
+   },
+   "raw_percentiles": {
+    "min": 10,
+    "median": 38,
+    "p75": 155,
+    "p90": 367,
+    "p95": 471,
+    "p99": 900,
+    "max": 4000
+   },
+   "stripped_percentiles": {
+    "min": 10,
+    "median": 38,
+    "p75": 155,
+    "p90": 367,
+    "p95": 471,
+    "p99": 900,
+    "max": 4000
+   },
+   "intake_percentiles": {
+    "min": 10,
+    "median": 38,
+    "p75": 155,
+    "p90": 367,
+    "p95": 471,
+    "p99": 900,
+    "max": 4000
+   },
+   "raw_gt": {
+    "5000": 0,
+    "10000": 0,
+    "20000": 0,
+    "50000": 0,
+    "100000": 0
+   },
+   "stripped_gt": {
+    "5000": 0,
+    "10000": 0,
+    "20000": 0,
+    "50000": 0,
+    "100000": 0
+   },
+   "intake_gt": {
+    "5000": 0,
+    "10000": 0,
+    "20000": 0,
+    "50000": 0,
+    "100000": 0
+   },
+   "stripped_eq_intake_len": 1837,
+   "compared": 1837,
+   "css_leak": {
+    "rows_with_style_block": 0,
+    "rows_stripped_text_starts_with_css": 0,
+    "css_chars_percentiles": {
+     "min": 0,
+     "median": 0,
+     "p75": 0,
+     "p90": 0,
+     "p95": 0,
+     "p99": 0,
+     "max": 0
+    },
+    "css_chars_total": 0
+   },
+   "rows_with_json_fragment": 0
+  },
+  "en": {
+   "source_field": "short_description (enrichment, locale=en)",
+   "rows": 1837,
+   "non_null": 1793,
+   "html": 1793,
+   "raw_buckets": {
+    "5,001-10,000": 51,
+    "1,001-2,000": 344,
+    "1-500": 394,
+    "501-1,000": 406,
+    "2,001-4,000": 321,
+    "10,001-20,000": 153,
+    "4,001-5,000": 32,
+    "20,001-50,000": 85,
+    "50,001-100,000": 6,
+    "100,001+": 1
+   },
+   "stripped_buckets": {
+    "2,001-4,000": 60,
+    "501-1,000": 222,
+    "1,001-2,000": 810,
+    "1-500": 695,
+    "5,001-10,000": 2,
+    "4,001-5,000": 2,
+    "100,001+": 1,
+    "10,001-20,000": 1
+   },
+   "raw_percentiles": {
+    "min": 226,
+    "median": 1556,
+    "p75": 2572,
+    "p90": 15150,
+    "p95": 20533,
+    "p99": 35921,
+    "max": 556047
+   },
+   "stripped_percentiles": {
+    "min": 74,
+    "median": 935,
+    "p75": 1321,
+    "p90": 1641,
+    "p95": 1897,
+    "p99": 2768,
+    "max": 468316
+   },
+   "intake_percentiles": {
+    "min": 74,
+    "median": 935,
+    "p75": 1321,
+    "p90": 1641,
+    "p95": 1897,
+    "p99": 2768,
+    "max": 468316
+   },
+   "raw_gt": {
+    "5000": 296,
+    "10000": 245,
+    "20000": 92,
+    "50000": 7,
+    "100000": 1
+   },
+   "stripped_gt": {
+    "5000": 4,
+    "10000": 2,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "intake_gt": {
+    "5000": 4,
+    "10000": 2,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "stripped_eq_intake_len": 1793,
+   "compared": 1793,
+   "css_leak": {
+    "rows_with_style_block": 913,
+    "rows_stripped_text_starts_with_css": 890,
+    "css_chars_percentiles": {
+     "min": 39,
+     "median": 778,
+     "p75": 780,
+     "p90": 780,
+     "p95": 780,
+     "p99": 780,
+     "max": 780
+    },
+    "css_chars_total": 694102
+   },
+   "rows_with_json_fragment": 138
+  },
+  "ja": {
+   "source_field": "short_description (enrichment, locale=ja)",
+   "rows": 1837,
+   "non_null": 1638,
+   "html": 1636,
+   "raw_buckets": {
+    "1-500": 777,
+    "1,001-2,000": 555,
+    "501-1,000": 78,
+    "10,001-20,000": 10,
+    "2,001-4,000": 173,
+    "5,001-10,000": 27,
+    "4,001-5,000": 15,
+    "100,001+": 1,
+    "20,001-50,000": 2
+   },
+   "stripped_buckets": {
+    "1-500": 876,
+    "501-1,000": 331,
+    "2,001-4,000": 3,
+    "1,001-2,000": 427,
+    "100,001+": 1
+   },
+   "raw_percentiles": {
+    "min": 120,
+    "median": 680,
+    "p75": 1688,
+    "p90": 2320,
+    "p95": 3157,
+    "p99": 7492,
+    "max": 335303
+   },
+   "stripped_percentiles": {
+    "min": 34,
+    "median": 294,
+    "p75": 1008,
+    "p90": 1130,
+    "p95": 1203,
+    "p99": 1475,
+    "max": 172339
+   },
+   "intake_percentiles": {
+    "min": 34,
+    "median": 294,
+    "p75": 1008,
+    "p90": 1130,
+    "p95": 1203,
+    "p99": 1475,
+    "max": 172339
+   },
+   "raw_gt": {
+    "5000": 40,
+    "10000": 13,
+    "20000": 3,
+    "50000": 1,
+    "100000": 1
+   },
+   "stripped_gt": {
+    "5000": 1,
+    "10000": 1,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "intake_gt": {
+    "5000": 1,
+    "10000": 1,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "stripped_eq_intake_len": 1638,
+   "compared": 1638,
+   "css_leak": {
+    "rows_with_style_block": 744,
+    "rows_stripped_text_starts_with_css": 744,
+    "css_chars_percentiles": {
+     "min": 778,
+     "median": 778,
+     "p75": 780,
+     "p90": 780,
+     "p95": 780,
+     "p99": 780,
+     "max": 780
+    },
+    "css_chars_total": 579500
+   },
+   "rows_with_json_fragment": 129
+  },
+  "zh": {
+   "source_field": "short_description (enrichment, locale=zh)",
+   "rows": 1837,
+   "non_null": 1630,
+   "html": 1630,
+   "raw_buckets": {
+    "1-500": 799,
+    "2,001-4,000": 176,
+    "1,001-2,000": 557,
+    "501-1,000": 52,
+    "4,001-5,000": 19,
+    "5,001-10,000": 21,
+    "10,001-20,000": 5,
+    "100,001+": 1
+   },
+   "stripped_buckets": {
+    "1-500": 880,
+    "501-1,000": 496,
+    "2,001-4,000": 2,
+    "1,001-2,000": 250,
+    "100,001+": 1,
+    "5,001-10,000": 1
+   },
+   "raw_percentiles": {
+    "min": 103,
+    "median": 598,
+    "p75": 1645,
+    "p90": 2272,
+    "p95": 3002,
+    "p99": 6263,
+    "max": 355505
+   },
+   "stripped_percentiles": {
+    "min": 21,
+    "median": 206,
+    "p75": 945,
+    "p90": 1038,
+    "p95": 1111,
+    "p99": 1379,
+    "max": 219181
+   },
+   "intake_percentiles": {
+    "min": 21,
+    "median": 206,
+    "p75": 945,
+    "p90": 1038,
+    "p95": 1111,
+    "p99": 1379,
+    "max": 219181
+   },
+   "raw_gt": {
+    "5000": 27,
+    "10000": 6,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "stripped_gt": {
+    "5000": 2,
+    "10000": 1,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "intake_gt": {
+    "5000": 2,
+    "10000": 1,
+    "20000": 1,
+    "50000": 1,
+    "100000": 1
+   },
+   "stripped_eq_intake_len": 1630,
+   "compared": 1630,
+   "css_leak": {
+    "rows_with_style_block": 735,
+    "rows_stripped_text_starts_with_css": 735,
+    "css_chars_percentiles": {
+     "min": 778,
+     "median": 778,
+     "p75": 780,
+     "p90": 780,
+     "p95": 780,
+     "p99": 780,
+     "max": 780
+    },
+    "css_chars_total": 572494
+   },
+   "rows_with_json_fragment": 116
+  }
+ },
+ "candidates": [
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "en",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=en].short_description",
+   "raw_len": 556047,
+   "stripped_len": 468316,
+   "intake_len": 468316,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "&quot;\\}",
+     "\\{&quot;",
+     "<[A-Z][a-zA-Z]+\\b"
+    ],
+    "headings": 0,
+    "label_lines": 4850,
+    "blocks": 9217,
+    "unique_blocks": 144,
+    "unique_ratio": 0.0156,
+    "unique_text_len": 8579,
+    "top_repeat_count": 1455
+   },
+   "head": "\\nPerformance Dates: October 6th (FRI) 7:30 pm, October 7th (SAT) 3:00 pm\\nVenue: Haerorum Grand The",
+   "tail": "dispNo=undefined\\n\"}\">https://www.globalinterpark.com/detail/edetail?prdNo=23010254&dispNo=undefined"
+  },
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "zh",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=zh].short_description",
+   "raw_len": 355505,
+   "stripped_len": 219181,
+   "intake_len": 219181,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "&quot;\\}",
+     "\\{&quot;",
+     "<[A-Z][a-zA-Z]+\\b"
+    ],
+    "headings": 0,
+    "label_lines": 0,
+    "blocks": 4979,
+    "unique_blocks": 124,
+    "unique_ratio": 0.0249,
+    "unique_text_len": 11182,
+    "top_repeat_count": 237
+   },
+   "head": "\\n公演日程 : 10.6.周五 7:30pm, 10.7.周六 3pm\\n公演场地 : 国立剧场日升\\n语言 : 提供英语剧本\\n预订方式 : \\nhttps://www.globalinterpa",
+   "tail": "4&dispNo=undefined\"}\">https://www.globalinterpark.com/detail/edetail?prdNo=23010254&dispNo=undefined"
+  },
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "ja",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=ja].short_description",
+   "raw_len": 335303,
+   "stripped_len": 172339,
+   "intake_len": 172339,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "\\\\r",
+     "&quot;\\}",
+     "\\{&quot;"
+    ],
+    "headings": 0,
+    "label_lines": 0,
+    "blocks": 4042,
+    "unique_blocks": 102,
+    "unique_ratio": 0.0252,
+    "unique_text_len": 10348,
+    "top_repeat_count": 564
+   },
+   "head": "_2.0』\\r\\n公演日程:10.12.(木)～10.13.(金) 8pm/10.14.(土)～10.15.(日) 4pm\\r\\n公演場所:ヨヘンジャ劇場\\r\\n言語:英語字幕 10.12(木) 8p",
+   "tail": "ispNo=undefined\"}\">予約:https://www.globalinterpark.com/detail/edetail?prdNo=23010254&dispNo=undefined"
+  },
+  {
+   "canonical_id": "seoul-KOPrfwk6e",
+   "name_ko": "2023 코리아빌드위크",
+   "locale": "en",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=en].short_description",
+   "raw_len": 29760,
+   "stripped_len": 19467,
+   "intake_len": 19467,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "&quot;\\}",
+     "\\{&quot;",
+     "<[A-Z][a-zA-Z]+\\b"
+    ],
+    "headings": 0,
+    "label_lines": 0,
+    "blocks": 146,
+    "unique_blocks": 16,
+    "unique_ratio": 0.1096,
+    "unique_text_len": 1728,
+    "top_repeat_count": 14
+   },
+   "head": "\\n1. Seoul Future DX-CON WORLD: A specialized exhibition showcasing smart information and communicat",
+   "tail": "bition: Featuring interior components such as fittings, flooring, and finishes that compose a space."
+  },
+  {
+   "canonical_id": "seoul-KOPpq0clc",
+   "name_ko": "정재일 콘서트 - Listen",
+   "locale": "en",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=en].short_description",
+   "raw_len": 8846,
+   "stripped_len": 6947,
+   "intake_len": 6947,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "&quot;\\}",
+     "\\{&quot;",
+     "<[A-Z][a-zA-Z]+\\b"
+    ],
+    "headings": 0,
+    "label_lines": 0,
+    "blocks": 35,
+    "unique_blocks": 12,
+    "unique_ratio": 0.3429,
+    "unique_text_len": 2955,
+    "top_repeat_count": 5
+   },
+   "head": ".se-contents .se-scrollbox{overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none;}.se-co",
+   "tail": "t the Sejong Center for the Performing Arts but also explore the surrounding tourist spots of Seoul."
+  },
+  {
+   "canonical_id": "seoul-KOPrfwk6e",
+   "name_ko": "2023 코리아빌드위크",
+   "locale": "zh",
+   "source_field": "seoul-multilingual-enrichment-v1[locale=zh].short_description",
+   "raw_len": 11837,
+   "stripped_len": 5477,
+   "intake_len": 5477,
+   "html": true,
+   "classification": "STRUCTURALLY_ABNORMAL",
+   "signals": {
+    "page_markers": [],
+    "struct_markers": [
+     "\\\\n",
+     "&quot;\\}",
+     "\\{&quot;"
+    ],
+    "headings": 0,
+    "label_lines": 0,
+    "blocks": 130,
+    "unique_blocks": 22,
+    "unique_ratio": 0.1692,
+    "unique_text_len": 1396,
+    "top_repeat_count": 13
+   },
+   "head": "\\n1.首尔未来DX-CON WORLD：智能信息通信未来技术特色展示会\\n2.NEXT-CON 2023：将介绍建筑及建筑中使用的AI、大数据、无人机、loT等尖端建筑技术的展览会\\n3.空间设计博",
+   "tail": "各种艺术作品的特别馆\\n5.室内装饰材料特别馆：展示构成空间的内饰材料、地板材料、装修材料等室内装修构成产品\"}\">5.室内装饰材料特别馆：展示构成空间的内饰材料、地板材料、装修材料等室内装修构成产品"
+  }
+ ],
+ "classification_counts": {
+  "STRUCTURALLY_ABNORMAL": 6
+ },
+ "abnormal_places": [
+  "seoul-KOPk4sx8q",
+  "seoul-KOPpq0clc",
+  "seoul-KOPrfwk6e"
+ ],
+ "abnormal_place_count": 3,
+ "candidate_cross_locale_stripped_len": {
+  "seoul-KOPk4sx8q": {
+   "ko": 4000,
+   "en": 468316,
+   "ja": 172339,
+   "zh": 219181
+  },
+  "seoul-KOPpq0clc": {
+   "ko": 537,
+   "en": 6947,
+   "ja": 1342,
+   "zh": 2459
+  },
+  "seoul-KOPrfwk6e": {
+   "ko": 718,
+   "en": 19467,
+   "ja": 620,
+   "zh": 5477
+  }
+ },
+ "normal_long_examples_4001_20000": {
+  "en": 2,
+  "ja": 0,
+  "zh": 0
+ },
+ "global_cap_4000_impact_on_en_description": {
+  "rows_over_4000": 6,
+  "rows_over_4000_not_abnormal": 3
+ },
+ "strip_html_behaviour": "tags → space, 6 entities unescaped, whitespace collapsed; no script/style/nav removal, no truncation",
+ "data_modified": false,
+ "web_recrawl": false,
+ "ai_summary": 0,
+ "machine_translation": 0
+}
