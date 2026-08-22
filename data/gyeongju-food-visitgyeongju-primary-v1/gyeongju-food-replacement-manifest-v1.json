@@ -1,0 +1,89 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-VISITGYEONGJU-REPLACEMENT-PACKAGE-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-22T12:08:28.290763+00:00",
+  "as_of": "2026-08-22",
+  "base_branch": "data/gyeongju-food-multilingual-recovery-v1",
+  "base_sha": "1c896c7",
+  "created_branch": "data/gyeongju-food-visitgyeongju-primary-v1",
+  "service_counts": {
+    "OLD_SERVICE_FOOD_COUNT": 102,
+    "NEW_SERVICE_FOOD_COUNT": 105,
+    "ATTRACTION_COUNT_UNCHANGED": 197,
+    "EXPECTED_TOTAL_AFTER_REPLACE": 302,
+    "NOTE": "302 is new service count. Prior Main 302 != this 302 (different Food set)."
+  },
+  "crosswalk_summary": {
+    "MATCH_EXISTING_COUNT": 7,
+    "REVIEW_COUNT": 1,
+    "NEW_VISITGYEONGJU_COUNT": 97,
+    "RETIRE_GJ08_COUNT": 94,
+    "arithmetic_vg105": "7+1+97=105",
+    "arithmetic_gj08_102": "7+1+94=102",
+    "arithmetic_vg105_valid": true,
+    "arithmetic_gj08_valid": true
+  },
+  "hwasu_brewery_check": {
+    "canonical_id": "gyeongju-GJ08-6917",
+    "vg_id": "535f4149060609450a4104474351404740",
+    "ko_title_match_ratio": 1.0,
+    "canonical_phone": "0507-1391-8015",
+    "vg_phone": "010-9182-0060",
+    "final_decision": "REVIEW_EXISTING",
+    "notes": "Exact KO title match. Both in 보문관광단지 area. Phone differs: canonical=0507-1391-8015 (virtual), VG=010-9182-0060 (mobile). Likely same restaurant with updated/dual phone, but unconfirmed. REVIEW required before confirming MATCH."
+  },
+  "multilingual_coverage": {
+    "EN_TITLE": "105/105",
+    "EN_DESC": "7/105",
+    "JA_TITLE": "105/105",
+    "JA_DESC": "4/105",
+    "ZH_TITLE": "105/105",
+    "ZH_DESC": "6/105",
+    "KO_TITLE": "105/105",
+    "KO_DESC": "8/105",
+    "NOTE_DESC_SOURCE": "EN/JA/ZH descriptions from enrichment (7 EN+4JA+6ZH). Remaining 105-7=98 EN, 101 JA, 99 ZH need VG page collection.",
+    "NOTE_JA_DESC_QUALITY": "4 JA descriptions sourced from prior enrichment may contain VG English placeholder text ('A place where every moment...'). Quality review required before production use."
+  },
+  "vg_data_quality": {
+    "total_records": 105,
+    "vg_id_unique": true,
+    "native_all": true,
+    "fallback_count": {},
+    "empty_title_count": {}
+  },
+  "coords_coverage": "8/105 (from matched canonicals only; 98 new records need geocoding)",
+  "artifacts": {
+    "A_new_food_service": "data\\gyeongju-food-visitgyeongju-primary-v1\\gyeongju-vg-food-service-v1.jsonl",
+    "B_replacement_crosswalk": "data\\gyeongju-food-visitgyeongju-primary-v1\\gyeongju-food-replacement-crosswalk-v1.jsonl",
+    "B2_retire_list": "data\\gyeongju-food-visitgyeongju-primary-v1\\gyeongju-food-retire-list-v1.jsonl",
+    "C_multilingual_handoff": "data\\gyeongju-food-visitgyeongju-primary-v1\\gyeongju-vg-food-multilingual-handoff-v1.jsonl",
+    "D_this_manifest": "data/gyeongju-food-visitgyeongju-primary-v1/gyeongju-food-replacement-manifest-v1.json"
+  },
+  "main_intake_instructions": {
+    "step_1_match_existing": "For 7 MATCH_EXISTING records: preserve existing canonical IDs. Update name_l10n/desc_l10n from multilingual handoff. Do NOT delete old IDs.",
+    "step_2_review": "For 1 REVIEW_EXISTING records (화수브루어리): manually confirm identity before treating as MATCH or NEW.",
+    "step_3_new": "For 97 NEW_VISITGYEONGJU records: create new city_spots entries. Geocoding required (98 records have no coords).",
+    "step_4_retire": "For 94 RETIRE_FROM_SERVICE records: do NOT blindly DELETE. Check city_spots usage in saved_trips/trip_moments/itineraries first. Set service_status=RETIRED or EXCLUDED, not hard-delete.",
+    "step_5_locale_adapter": "zh-CN field in handoff maps to zh in DB. Adapter required.",
+    "step_6_coords": "98 new records need geocoding before production. Use VG address data.",
+    "step_7_attraction": "Attraction 197 unchanged. No action needed."
+  },
+  "main_preserve_ids": [
+    "gyeongju-GJ08-733",
+    "gyeongju-GJ08-87",
+    "gyeongju-GJ08-732",
+    "gyeongju-GJ08-7128",
+    "gyeongju-GJ08-760",
+    "gyeongju-GJ08-405",
+    "gyeongju-GJ08-7510"
+  ],
+  "invariants": {
+    "attraction_changed": 0,
+    "core_existing_ids_deleted": 0,
+    "db_changed": 0,
+    "production_changed": 0,
+    "master_changed": 0,
+    "broad_recollection": false,
+    "ai_translation_used": false
+  }
+}

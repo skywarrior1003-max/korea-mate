@@ -1,0 +1,23 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-VISITGYEONGJU-REPLACEMENT-PACKAGE-V1",
+  "result": "PASS",
+  "generated_at": "2026-08-22T12:08:28.290763+00:00",
+  "checks": {
+    "vg_raw_count_105": true,
+    "vg_id_unique_105": true,
+    "canonical_food_102": true,
+    "vg105_arithmetic_valid": true,
+    "gj08_arithmetic_valid": true,
+    "en_105_native_confirmed": true,
+    "ja_105_native_confirmed": true,
+    "zh_105_native_confirmed": true,
+    "new_food_records_105": true,
+    "ml_records_420_max": true,
+    "no_duplicate_vg_in_crosswalk": true,
+    "no_dup_match_existing_canonical": true,
+    "service_status_all_active": true,
+    "attraction_changed_0": true,
+    "no_master_change": true
+  },
+  "overall_pass": true
+}
