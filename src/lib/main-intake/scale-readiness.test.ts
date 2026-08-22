@@ -118,7 +118,7 @@ test("S5: STAGE REST writer 계약 — on_conflict 미사용(partial unique inde
   const fakeFetch: FetchLike = async (url, init) => {
     calls.push({ url, method: init.method, body: init.body ? JSON.parse(init.body) : undefined });
     if (init.method === "GET") return { ok: true, status: 200, text: async () => "[]" };
-    if (init.method === "POST") { const rows = JSON.parse(init.body!) as Array<{ external_id: string }>; return { ok: true, status: 201, text: async () => JSON.stringify(rows.map((r, i) => ({ id: 5000 + i, external_id: r.external_id }))) }; }
+    if (init.method === "POST") { const rows = JSON.parse(init.body!) as Array<{ external_id: string }>; const __sigs = new Set(rows.map(r => Object.keys(r as object).sort().join(","))); if (__sigs.size > 1) return { ok: false, status: 400, text: async () => JSON.stringify({ code: "PGRST102", message: "All object keys must match", details: null, hint: null }) }; return { ok: true, status: 201, text: async () => JSON.stringify(rows.map((r, i) => ({ id: 5000 + i, external_id: r.external_id }))) }; }
     return { ok: true, status: 204, text: async () => "" };
   };
   const t = { url: "https://example.supabase.co", serviceKey: "k" };

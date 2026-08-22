@@ -46,7 +46,7 @@ function fakeDb(seed: { city_spots?: Row[]; city_spot_sources?: Row[]; city_spot
       return { ok: true, status: 206, headers: { get: (k: string) => (k === "content-range" ? `0-0/${n}` : null) }, text: async () => JSON.stringify([{ [USER_PK[table]!]: "row-body-should-not-be-read" }]) } as never;
     }
     if (init.method === "GET") { const fs = parseFilters(qs); const rows = tables[table]!.filter(r => fs.every(f => f(r))); return { ok: true, status: 200, text: async () => JSON.stringify(rows) }; }
-    if (init.method === "POST") { const rows = JSON.parse(init.body!) as Row[]; for (const r of rows) { const c = uniq(table, r); if (c) return { ok: false, status: 409, text: async () => JSON.stringify({ code: "23505", message: `duplicate key value violates unique constraint "${c}"` }) }; } const out = rows.map(r => { const row = { ...r, id: next++ }; tables[table]!.push(row); return row; }); return { ok: true, status: 201, text: async () => JSON.stringify(out) }; }
+    if (init.method === "POST") { const rows = JSON.parse(init.body!) as Row[]; const __sigs = new Set(rows.map(r => Object.keys(r as object).sort().join(","))); if (__sigs.size > 1) return { ok: false, status: 400, text: async () => JSON.stringify({ code: "PGRST102", message: "All object keys must match", details: null, hint: null }) }; for (const r of rows) { const c = uniq(table, r); if (c) return { ok: false, status: 409, text: async () => JSON.stringify({ code: "23505", message: `duplicate key value violates unique constraint "${c}"` }) }; } const out = rows.map(r => { const row = { ...r, id: next++ }; tables[table]!.push(row); return row; }); return { ok: true, status: 201, text: async () => JSON.stringify(out) }; }
     if (init.method === "PATCH") { const id = Number(new URLSearchParams(qs).get("id")!.slice(3)); const row = tables[table]!.find(r => r.id === id)!; const body = JSON.parse(init.body!) as Row; const merged = { ...row, ...body }; const c = uniq(table, merged, id); if (c) return { ok: false, status: 409, text: async () => c }; Object.assign(row, body); return { ok: true, status: 204, text: async () => "" }; }
     if (init.method === "DELETE") { deletes += 1; return { ok: false, status: 405, text: async () => "forbidden" }; }
     return { ok: false, status: 405, text: async () => "" };
@@ -142,7 +142,7 @@ test("T1/T3/T4/T5/T6: NEW false 사후검증 · mapping 유일성 · user-count 
 
 test("T9/T10: importer 스크립트 배선 — phases A~E · snapshot/receipt/count guard · DELETE 없음 · 테스트는 Production 명령을 호출하지 않음", () => {
   const s = readFileSync(new URL("scripts/import-five-city-core-v1.ts", ROOT), "utf8");
-  for (const g of ["stageInsertChunkSafe(", "syncSourcesChunk(", "syncImagesChunk(", "buildPreStageSnapshot(", "readUserTableCounts(", "verifyNewUnpublished(", "stage-chunk-receipts-v1.jsonl", "FIVE_CITY_CORE_APPLY", "FIVE_CITY_CORE_TARGET_HOST", "--expected-db-count", "STAGE_REFUSED"]) assert.ok(s.includes(g), g);
+  for (const g of ["stageInsertChunkSafe(", "syncSourcesChunk(", "syncImagesChunk(", "buildPreStageSnapshot(", "readUserTableCounts(", "verifyNewUnpublished(", "stage-chunk-receipts-v1.", "FIVE_CITY_CORE_APPLY", "FIVE_CITY_CORE_TARGET_HOST", "--expected-db-count", "STAGE_REFUSED"]) assert.ok(s.includes(g), g);
   assert.ok(!/method:\s*"DELETE"|\.delete\(/.test(s));
   assert.ok(!/on_conflict=/.test(readFileSync(new URL("src/lib/main-intake/stage-relations.ts", ROOT), "utf8")));
   assert.equal(process.env.FIVE_CITY_CORE_APPLY, undefined, "테스트 환경에서 apply env 없음");

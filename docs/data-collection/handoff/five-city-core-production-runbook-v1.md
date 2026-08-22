@@ -72,5 +72,13 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 - `--stage` 는 `pre-stage-match-snapshot-v1.jsonl` 을 기존 파일이 있어도 **항상 새로 생성**(STAGE 직전 상태, MATCH 전체 462 와 정확히 일치해야 첫 write 진행) 하고 `user-table-counts-pre-v1.json` 을 Phase A 이전에 기록한다.
 - `--stage` 가드 (8) `DISCOVERY_VISIBILITY_GATE_ENABLED === true`(repo runtime contract import). 057/058 index 존재/부재는 PostgREST 로 introspection 불가 → importer 가드가 아니라 §6-1a PRECHECK(READ-ONLY SELECT)로 STAGE 직전 사람이 확인(Management API 토큰을 writer 프로세스에 두지 않는다).
 
+### 6-1d. NEW bulk INSERT 계약 · receipt 즉시 기록 · 불변 snapshot (STAGE-INSERT-WRITER-FIX-V1, STAGE-V1-R2 partial HOLD 후속)
+- **R2 실측 결함**: PostgREST bulk INSERT 는 한 요청의 모든 객체 key-set 이 같아야 한다(`PGRST102 All object keys must match`). `planImport` 는 값 있는 필드만 row 에 넣으므로 21 INSERT chunk 중 19 가 heterogeneous → 첫 chunk 400, NEW INSERT 0(Phase A 462 는 완료·유지).
+- **fix**: `stageInsertChunkSafe` 가 lookup 후 없는 행을 `sorted(keys)` signature 별 subgroup 으로 나눠 각각 bulk INSERT(old plan 4,194 → 99 subgroup). 없는 키를 null 로 채우지 않는다(absent ≠ explicit null, DB default 보존, Final 값 변형 0). 값 불변·payload 컬럼 순서만 정렬(결정적). subgroup 마다 receipt 콜백(성공/실패 즉시). 한 subgroup 실패 시 이미 성공한 subgroup 은 남고 재실행은 lookup-first 로 재사용(중복 0).
+- **오류 관측**: `StageRestError{where: phase/chunk/subgroup/request_rows, info: http_status/code/message/details/hint(2KB clip) or snippet}` — payload·헤더·키·사용자 row 기록 0.
+- **receipt**: `stage-chunk-receipts-v1.<attempt>.jsonl` append-only(chunk/subgroup 직후), 실패 시 failure receipt + `stage-failure-v1.<attempt>.json`. 최종 `stage-receipt-v1.<attempt>.json`.
+- **snapshot 불변**: `--stage`/`--pre-stage-snapshot` 은 `pre-stage-match-snapshot-v1.<attempt>.jsonl` 을 `wx`(존재 시 EEXIST) 로만 쓴다. R2 before-Phase-A evidence `pre-stage-match-snapshot-v1.r2-before-phaseA-2026-08-22T115804Z.jsonl`(462행, sha256 10240f4f…, ops 브랜치 `ops/five-city-core-production-stage-v1-r2` 커밋)은 절대 덮어쓰지 않는다. R3 는 실행 직전 새 attempt snapshot 을 만든다(현재 DB = Phase A 반영 상태).
+- 경주 Food 교체 패키지 도착 전에는 stage plan 재생성·R3 실행 금지.
+
 ### 6-2. 구현
 `stage-relations.ts`(resolveRelationTargets · preflightRelations · syncSourcesChunk · syncImagesChunk) · `stage-safety.ts`(buildPreStageSnapshot · chunkReceipt · readUserTableCounts/userCountsDiff · verifyNewUnpublished) · importer `--stage` Phase A(MATCH PATCH)→B(NEW lookup-before-insert, false)→C(sources, actual id)→D(images, Final source_id)→E(verify: DB count·NEW false 사후검증·사용자 테이블 count pre==post) + `stage-chunk-receipts-v1.jsonl` + `stage-receipt-v1.json` + `pre-stage-match-snapshot-v1.jsonl`(`--pre-stage-snapshot` READ-ONLY 모드). partial unique 는 lookup-first, full unique 는 conflict 재조회. 가드 8종 전부 통과해야 write.

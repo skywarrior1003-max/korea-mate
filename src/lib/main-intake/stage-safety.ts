@@ -2,6 +2,7 @@
 // (TASK-FIVE-CITY-CORE-STAGE-WRITER-COMPLETION-V1) — fetch 주입, secrets/사용자 데이터 없음, DELETE 없음.
 
 import { createHash } from "node:crypto";
+import { appendFileSync, writeFileSync } from "node:fs";
 import type { FetchLike, RestTarget } from "./stage-rest-writer.ts";
 import { StageIdentityError } from "./stage-rest-writer.ts";
 import { SOURCE_FIELDS, type UpdateAction } from "./importer-core.ts";
@@ -41,7 +42,19 @@ export async function buildPreStageSnapshot(f: FetchLike, t: RestTarget, updates
 }
 
 /** chunk receipt — phase 별 결정적 기록(시각은 호출자가 준다) */
-export interface ChunkReceipt { phase: "MATCH_CITY_SPOTS" | "NEW_CITY_SPOTS" | "SOURCES" | "IMAGES" | "VERIFY"; chunk_index: number; expected: number; looked_up: number; reused: number; updated: number; inserted: number; unchanged: number; suppressed: number; failed: number; retry_count: number; content_sha256: string; timestamp: string; }
+export interface ChunkReceipt {
+  phase: "MATCH_CITY_SPOTS" | "NEW_CITY_SPOTS" | "SOURCES" | "IMAGES" | "VERIFY"; chunk_index: number; expected: number; looked_up: number; reused: number; updated: number; inserted: number; unchanged: number; suppressed: number; failed: number; retry_count: number; content_sha256: string; timestamp: string;
+  // STAGE-INSERT-WRITER-FIX-V1: attempt 식별 · subgroup 단위 · HTTP/PostgREST 오류(secret/payload 없음)
+  attempt?: string; subgroup_index?: number | null; key_signature_sha256?: string | null; request_rows?: number; http_status?: number | null; error_code?: string | null; error_message?: string | null;
+}
+/** receipt 를 즉시 append-only JSONL 로 남긴다(마지막에만 쓰지 않음 → partial failure 에도 progress 보존). */
+export function appendReceiptLine(path: string, r: ChunkReceipt): void { appendFileSync(path, JSON.stringify(r) + "\n", "utf8"); }
+/** ISO → attempt id (2026-08-22T11:58:04.707Z → 20260822T115804Z) */
+export function attemptId(iso: string): string { return iso.replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z"); }
+export function snapshotAttemptFilename(attempt: string): string { return `pre-stage-match-snapshot-v1.${attempt}.jsonl`; }
+/** 절대 덮어쓰지 않는 쓰기(flag wx: 존재하면 EEXIST). 과거 attempt 의 before-state(예: R2 before-Phase-A)는 불변 evidence 다. */
+export function writeImmutableFile(path: string, text: string): void { writeFileSync(path, text, { encoding: "utf8", flag: "wx" }); }
+export const R2_BEFORE_PHASE_A_SNAPSHOT = "pre-stage-match-snapshot-v1.r2-before-phaseA-2026-08-22T115804Z.jsonl";
 export function chunkReceipt(r: Omit<ChunkReceipt, "content_sha256">, contentKeys: ReadonlyArray<string | number>): ChunkReceipt {
   return { ...r, content_sha256: sha(`${r.phase}|${r.chunk_index}|${contentKeys.join(",")}`) };
 }

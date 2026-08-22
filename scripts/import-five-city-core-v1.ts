@@ -16,6 +16,8 @@
  * 기대값은 package 선언값(input manifest + crosswalk summary)에서 유도한다. 실제 write 는 (1) env FIVE_CITY_CORE_APPLY=YES (2) --confirm-manifest-hash
  * (3) env FIVE_CITY_CORE_TARGET_HOST == Supabase host (4) SUPABASE_SERVICE_ROLE_KEY (5) --expected-db-count == 사전 READ (6) is_published 컬럼 (7) dry-run OK
  * (8) repo runtime contract DISCOVERY_VISIBILITY_GATE_ENABLED === true (9) pre-stage snapshot 은 STAGE 직전 항상 새로 생성(462 = MATCH 전체, stale 재사용 없음)
+ *     — attempt 별 불변 파일명(pre-stage-match-snapshot-v1.<attempt>.jsonl, flag wx) 로 쓴다: 과거 attempt 의 before-state(R2 before-Phase-A 등)는 절대 덮어쓰지 않는다.
+ * (10) NEW bulk INSERT 는 key-set subgroup 별 요청(PGRST102 회피) · chunk/subgroup receipt 는 즉시 append-only JSONL(stage-chunk-receipts-v1.<attempt>.jsonl) · 실패 시 stage-failure-v1.<attempt>.json
  * 057/058(index 존재/부재)은 PostgREST 로 introspection 불가 → importer 가드가 아니라 runbook §6-1a 의 READ-ONLY PRECHECK(SQL Editor/Management API SELECT)로 STAGE 직전 사람이 확인한다.
  * (8) relation preflight 충돌 0 — 전부 맞아야 한다. DELETE 기능 없음. 사용자 테이블은 count 만 읽는다. secrets 출력 없음.
  */
@@ -26,9 +28,9 @@ import { planImport, changeManifestRows, HIDE_CLASSES, OWNER_OVERRIDE_CLASS, typ
 import { deriveExpectedCounts, assertPlanMatchesExpected, type CrosswalkSummary, type InputManifest } from "../src/lib/main-intake/manifest-expectations.ts";
 import { buildStagePlan } from "../src/lib/main-intake/stage-plan.ts";
 import { buildPublishCutoverSql } from "../src/lib/main-intake/publish-sql.ts";
-import { stageInsertChunkSafe, stageUpdateRow, type FetchLike } from "../src/lib/main-intake/stage-rest-writer.ts";
+import { stageInsertChunkSafe, stageUpdateRow, StageRestError, type FetchLike } from "../src/lib/main-intake/stage-rest-writer.ts";
 import { resolveRelationTargets, preflightRelations, syncSourcesChunk, syncImagesChunk } from "../src/lib/main-intake/stage-relations.ts";
-import { buildPreStageSnapshot, assertSnapshotComplete, chunkReceipt, receiptsSha, readUserTableCounts, userCountsDiff, verifyNewUnpublished, type ChunkReceipt } from "../src/lib/main-intake/stage-safety.ts";
+import { buildPreStageSnapshot, assertSnapshotComplete, chunkReceipt, receiptsSha, readUserTableCounts, userCountsDiff, verifyNewUnpublished, appendReceiptLine, attemptId, snapshotAttemptFilename, writeImmutableFile, type ChunkReceipt } from "../src/lib/main-intake/stage-safety.ts";
 import { DISCOVERY_VISIBILITY_GATE_ENABLED } from "../src/lib/city-spots-visibility.ts";
 import { chunk } from "../src/lib/city-spots-paging.ts";
 
@@ -192,11 +194,13 @@ if (mode === "pre-stage-snapshot") {
     const expectedDb = Number(arg("--expected-db-count") ?? "NaN");
     const pre = await readCount(t.url, t.serviceKey);
     if (Number.isInteger(expectedDb) && pre !== expectedDb) { console.error(`SNAPSHOT_REFUSED: db count ${pre} != expected ${expectedDb}`); process.exit(4); }
-    const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, new Date().toISOString());
-    writeFileSync(join(t.runDir, "pre-stage-match-snapshot-v1.jsonl"), snap.text, "utf8");
+    const capturedAt = new Date().toISOString(); const attempt = attemptId(capturedAt);
+    const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, capturedAt);
+    const snapPath = join(t.runDir, snapshotAttemptFilename(attempt));
+    writeImmutableFile(snapPath, snap.text);
     const userPre = await readUserTableCounts(fetchLike, t);
-    writeFileSync(join(t.runDir, "user-table-counts-pre-v1.json"), JSON.stringify({ run_id: runId, counts: userPre }, null, 1) + "\n", "utf8");
-    console.log(JSON.stringify({ mode, run_id: runId, db_count: pre, snapshot_rows: snap.rows.length, snapshot_sha256: snap.sha256, user_counts: userPre, db_write_executed: false }, null, 1));
+    writeImmutableFile(join(t.runDir, `user-table-counts-pre-v1.${attempt}.json`), JSON.stringify({ run_id: runId, attempt, counts: userPre, captured_at: capturedAt }, null, 1) + "\n");
+    console.log(JSON.stringify({ mode, run_id: runId, attempt, db_count: pre, snapshot_path: snapPath, snapshot_rows: snap.rows.length, snapshot_sha256: snap.sha256, user_counts: userPre, db_write_executed: false }, null, 1));
   })().catch(e => { console.error("SNAPSHOT_FAILED:", e instanceof Error ? e.message : String(e)); process.exit(1); });
 }
 
@@ -208,33 +212,44 @@ if (mode === "stage") {
   (async () => {
     const receipts: ChunkReceipt[] = [];
     const now = () => new Date().toISOString();
+    const capturedAt = now(); const attempt = attemptId(capturedAt);
+    const receiptPath = join(t.runDir, `stage-chunk-receipts-v1.${attempt}.jsonl`);
+    // receipt 는 만들자마자 append(durable) — partial failure 에도 완료 chunk/subgroup 이 남는다
+    const emit = (r: ChunkReceipt) => { const rr = { ...r, attempt }; receipts.push(rr); appendReceiptLine(receiptPath, rr); };
+    const failureReceipt = (phase: ChunkReceipt["phase"], chunk_index: number, expected: number, done: Partial<ChunkReceipt>, e: unknown) => {
+      const rest = e instanceof StageRestError ? { subgroup_index: e.where.subgroup_index, request_rows: e.where.request_rows, http_status: e.info.http_status, error_code: e.info.code, error_message: e.info.message ?? e.info.snippet } : { error_message: e instanceof Error ? e.message.slice(0, 2048) : String(e).slice(0, 2048) };
+      emit(chunkReceipt({ phase, chunk_index, expected, looked_up: 0, reused: 0, updated: 0, inserted: 0, unchanged: 0, suppressed: 0, failed: expected, retry_count: 0, timestamp: now(), ...done, ...rest }, [phase, chunk_index, "FAILED"]));
+    };
     const preCount = await readCount(t.url, t.serviceKey);
     if (preCount !== expectedDb) { console.error(`STAGE_REFUSED: pre-stage count ${preCount} != expected ${expectedDb}`); process.exit(4); }
     const col = await fetch(`${t.url}/rest/v1/city_spots?select=is_published&limit=1`, { headers: { apikey: t.serviceKey, Authorization: `Bearer ${t.serviceKey}` } });
     if (col.status !== 200) { console.error("STAGE_REFUSED: is_published column absent — migration 056 not applied"); process.exit(4); }
     // snapshot + user counts (pre) — STAGE 직전 상태여야 하므로 기존 파일이 있어도 항상 새로 생성(stale 재사용 0). MATCH 전체(462)가 아니면 쓰기 전 거부.
-    const snapPath = join(t.runDir, "pre-stage-match-snapshot-v1.jsonl");
-    const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, now());
+    //   attempt 별 불변 파일(wx) — 과거 attempt 의 before-state 는 절대 덮어쓰지 않는다(R2_BEFORE_PHASE_A_SNAPSHOT 등).
+    const snap = await buildPreStageSnapshot(fetchLike, t, plan.updates, manifestHash, capturedAt);
     assertSnapshotComplete(snap.rows, plan.updates.map(u => u.main_city_spot_id));
-    writeFileSync(snapPath, snap.text, "utf8");
+    const snapPath = join(t.runDir, snapshotAttemptFilename(attempt));
+    writeImmutableFile(snapPath, snap.text);
     const userPre = await readUserTableCounts(fetchLike, t);
-    writeFileSync(join(t.runDir, "user-table-counts-pre-v1.json"), JSON.stringify({ run_id: runId, counts: userPre, captured_at: now() }, null, 1) + "\n", "utf8");
+    writeImmutableFile(join(t.runDir, `user-table-counts-pre-v1.${attempt}.json`), JSON.stringify({ run_id: runId, attempt, counts: userPre, captured_at: capturedAt }, null, 1) + "\n");
     // Phase A — MATCH UPDATE (기존 id · source-owned 필드만 · is_published/source_type/external_id 미전송)
     let updated = 0;
     for (const [ci, part] of chunk(plan.updates, 100).entries()) {
-      for (const u of part) { await stageUpdateRow(fetchLike, t, u); updated += 1; }
-      receipts.push(chunkReceipt({ phase: "MATCH_CITY_SPOTS", chunk_index: ci, expected: part.length, looked_up: 0, reused: 0, updated: part.length, inserted: 0, unchanged: 0, suppressed: 0, failed: 0, retry_count: 0, timestamp: now() }, part.map(u => u.main_city_spot_id)));
+      let done = 0;
+      try { for (const u of part) { await stageUpdateRow(fetchLike, t, u); updated += 1; done += 1; } }
+      catch (e) { failureReceipt("MATCH_CITY_SPOTS", ci, part.length, { updated: done, failed: part.length - done }, e); throw e; }
+      emit(chunkReceipt({ phase: "MATCH_CITY_SPOTS", chunk_index: ci, expected: part.length, looked_up: 0, reused: 0, updated: part.length, inserted: 0, unchanged: 0, suppressed: 0, failed: 0, retry_count: 0, timestamp: now() }, part.map(u => u.main_city_spot_id)));
     }
     // Phase B — NEW lookup-before-insert (is_published=false)
     const mapping: string[] = []; const newIdByCanonical = new Map<string, number>(); let inserted = 0, reused = 0;
     const byExt = new Map(plan.inserts.map(i => [String(i.row.external_id), i]));
     for (const c of stagePlan.chunks.filter(c => c.kind === "INSERT")) {
       const rows = c.keys.map(k => { const i = byExt.get(String(k)); if (!i) throw new Error(`chunk key ${String(k)} not in plan`); return { ...i, row: { ...i.row, is_published: false } }; });
-      const res = await stageInsertChunkSafe(fetchLike, t, rows);
+      const res = await stageInsertChunkSafe(fetchLike, t, rows, { chunkIndex: c.index, onSubgroup: sg => emit(chunkReceipt({ phase: "NEW_CITY_SPOTS", chunk_index: c.index, expected: sg.request_rows, looked_up: 0, reused: sg.reused_after_conflict, updated: 0, inserted: sg.inserted, unchanged: 0, suppressed: 0, failed: sg.failed, retry_count: sg.retry_count, timestamp: now(), subgroup_index: sg.subgroup_index, key_signature_sha256: sg.key_signature_sha256, request_rows: sg.request_rows, http_status: sg.http_status, error_code: sg.error_code, error_message: sg.error_message }, [c.index, sg.subgroup_index, sg.key_signature])) });
       for (const r of res) { const i = byExt.get(r.external_id)!; newIdByCanonical.set(i.canonical_id, r.id); if (r.reused_existing) reused += 1; else inserted += 1;
         mapping.push(JSON.stringify({ run_id: runId, canonical_id: i.canonical_id, city: i.city, source_type: "canonical", external_id: r.external_id, actual_city_spot_id: r.id, operation: "INSERT", reused_existing: r.reused_existing, is_published: false, manifest_hash: manifestHash, staged_at: now() })); }
       writeFileSync(join(t.runDir, "production-id-mapping-v1.jsonl"), mapping.join("\n") + "\n", "utf8");
-      receipts.push(chunkReceipt({ phase: "NEW_CITY_SPOTS", chunk_index: c.index, expected: c.keys.length, looked_up: c.keys.length, reused: res.filter(x => x.reused_existing).length, updated: 0, inserted: res.filter(x => !x.reused_existing).length, unchanged: 0, suppressed: 0, failed: 0, retry_count: 0, timestamp: now() }, c.keys));
+      emit(chunkReceipt({ phase: "NEW_CITY_SPOTS", chunk_index: c.index, expected: c.keys.length, looked_up: c.keys.length, reused: res.filter(x => x.reused_existing).length, updated: 0, inserted: res.filter(x => !x.reused_existing).length, unchanged: 0, suppressed: 0, failed: 0, retry_count: 0, timestamp: now(), subgroup_index: null }, c.keys));
     }
     // Phase C/D — relations with actual ids
     const rel = resolveRelationTargets({ sources, images, crosswalk, newIdByCanonical });
@@ -246,10 +261,11 @@ if (mode === "stage") {
     for (const s of rel.sources) bySpot.set(s.city_spot_id, [...(bySpot.get(s.city_spot_id) ?? []), s]);
     for (const [ci, spots] of chunk([...bySpot.keys()].sort((a, b) => a - b), 50).entries()) {
       const finals = spots.flatMap(id => bySpot.get(id)!);
-      const r = await syncSourcesChunk(fetchLike, t, finals);
+      let r: Awaited<ReturnType<typeof syncSourcesChunk>>;
+      try { r = await syncSourcesChunk(fetchLike, t, finals); } catch (e) { failureReceipt("SOURCES", ci, finals.length, {}, e); throw e; }
       for (const k of ["reused_exact", "updated_to_final", "inserted", "unchanged", "legacy_demoted", "failed"] as const) srcTotals[k] += r[k];
       for (const [k, v] of r.sourceIdByKey) sourceIdByKey.set(k, v);
-      receipts.push(chunkReceipt({ phase: "SOURCES", chunk_index: ci, expected: finals.length, looked_up: finals.length, reused: r.reused_exact, updated: r.updated_to_final, inserted: r.inserted, unchanged: r.unchanged, suppressed: r.legacy_demoted, failed: r.failed, retry_count: 0, timestamp: now() }, finals.map(s => `${s.source_type}|${s.source_key}`)));
+      emit(chunkReceipt({ phase: "SOURCES", chunk_index: ci, expected: finals.length, looked_up: finals.length, reused: r.reused_exact, updated: r.updated_to_final, inserted: r.inserted, unchanged: r.unchanged, suppressed: r.legacy_demoted, failed: r.failed, retry_count: 0, timestamp: now() }, finals.map(s => `${s.source_type}|${s.source_key}`)));
     }
     const primarySourceKey = new Map<string, string>();
     for (const s of rel.sources) if (s.is_primary) primarySourceKey.set(s.canonical_id, `${s.source_type}|${s.source_key}`);
@@ -262,26 +278,32 @@ if (mode === "stage") {
     const imageScope = [...new Set([...imgBySpot.keys(), ...matchSpots])].sort((a, b) => a - b);
     for (const [ci, spots] of chunk(imageScope, 50).entries()) {
       const finals = spots.flatMap(id => imgBySpot.get(id) ?? []);
-      const r = await syncImagesChunk(fetchLike, t, finals, sourceIdForCanonical, spots);
+      let r: Awaited<ReturnType<typeof syncImagesChunk>>;
+      try { r = await syncImagesChunk(fetchLike, t, finals, sourceIdForCanonical, spots); } catch (e) { failureReceipt("IMAGES", ci, finals.length, {}, e); throw e; }
       for (const k of ["reused_exact", "updated_to_final", "inserted", "unchanged", "legacy_suppressed", "failed"] as const) imgTotals[k] += r[k];
-      receipts.push(chunkReceipt({ phase: "IMAGES", chunk_index: ci, expected: finals.length, looked_up: spots.length, reused: r.reused_exact, updated: r.updated_to_final, inserted: r.inserted, unchanged: r.unchanged, suppressed: r.legacy_suppressed, failed: r.failed, retry_count: 0, timestamp: now() }, finals.map(i => `${i.city_spot_id}|${i.image_url}`)));
+      emit(chunkReceipt({ phase: "IMAGES", chunk_index: ci, expected: finals.length, looked_up: spots.length, reused: r.reused_exact, updated: r.updated_to_final, inserted: r.inserted, unchanged: r.unchanged, suppressed: r.legacy_suppressed, failed: r.failed, retry_count: 0, timestamp: now() }, finals.map(i => `${i.city_spot_id}|${i.image_url}`)));
     }
     // Phase E — verify
     const postCount = await readCount(t.url, t.serviceKey);
     const unpub = await verifyNewUnpublished(fetchLike, t, [...newIdByCanonical.values()]);
     const userPost = await readUserTableCounts(fetchLike, t);
     const userDiff = userCountsDiff(userPre, userPost);
-    receipts.push(chunkReceipt({ phase: "VERIFY", chunk_index: 0, expected: plan.inserts.length, looked_up: unpub.checked, reused: 0, updated: 0, inserted: 0, unchanged: 0, suppressed: 0, failed: unpub.published_true + unpub.missing + userDiff.length, retry_count: 0, timestamp: now() }, [postCount, unpub.published_true, unpub.missing]));
-    writeFileSync(join(t.runDir, "stage-chunk-receipts-v1.jsonl"), receipts.map(r => JSON.stringify(r)).join("\n") + "\n", "utf8");
+    emit(chunkReceipt({ phase: "VERIFY", chunk_index: 0, expected: plan.inserts.length, looked_up: unpub.checked, reused: 0, updated: 0, inserted: 0, unchanged: 0, suppressed: 0, failed: unpub.published_true + unpub.missing + userDiff.length, retry_count: 0, timestamp: now() }, [postCount, unpub.published_true, unpub.missing]));
     const receipt = {
-      run_id: runId, production_source_commit: process.env.RELEASE_SHA ?? null, input_manifest_sha256: manifestHash, change_manifest_sha256: dryRunSummary.change_manifest_sha256, stage_plan_sha256: stagePlan.plan_sha256,
-      db_pre_count: preCount, db_post_count: postCount, pre_stage_snapshot: { rows: snap.rows.length, sha256: snap.sha256, fresh: true }, match_planned: plan.updates.length, match_completed: updated, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
+      run_id: runId, attempt, production_source_commit: process.env.RELEASE_SHA ?? null, input_manifest_sha256: manifestHash, change_manifest_sha256: dryRunSummary.change_manifest_sha256, stage_plan_sha256: stagePlan.plan_sha256,
+      db_pre_count: preCount, db_post_count: postCount, pre_stage_snapshot: { rows: snap.rows.length, sha256: snap.sha256, fresh: true, path: snapPath }, chunk_receipts_path: receiptPath, match_planned: plan.updates.length, match_completed: updated, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
       same_source_skipped: plan.counts.confirmed_twin_skipped, sources: srcTotals, images: imgTotals, mapping_rows: mapping.length,
       new_unpublished_check: unpub, user_table_counts: { pre: userPre, post: userPost, diff: userDiff }, delete_count: 0, error_count: unpub.published_true + unpub.missing + userDiff.length,
       id_mapping_sha256: sha256(mapping.join("\n") + "\n"), chunk_receipts_sha256: receiptsSha(receipts), legacy_newly_hidden: 0,
     };
-    writeFileSync(join(t.runDir, "stage-receipt-v1.json"), JSON.stringify(receipt, null, 1) + "\n", "utf8");
+    writeImmutableFile(join(t.runDir, `stage-receipt-v1.${attempt}.json`), JSON.stringify(receipt, null, 1) + "\n");
     console.log(JSON.stringify(receipt, null, 1));
     if (receipt.error_count > 0 || postCount !== preCount + inserted) process.exit(1);
-  })().catch(e => { console.error("STAGE_FAILED (PUBLISH forbidden; NEW rows stay unpublished; rerun resumes by lookup):", e instanceof Error ? e.message : String(e)); process.exit(1); });
+  })().catch(e => {
+    // 실패 evidence: 어디서(phase/chunk/subgroup)·무엇이(HTTP/PGRST code/message) — payload·헤더·키·사용자 row 없음. receipts 는 이미 append 됨.
+    const detail = e instanceof StageRestError ? { name: e.name, where: e.where, info: e.info } : { name: e instanceof Error ? e.name : "Error", message: e instanceof Error ? e.message.slice(0, 2048) : String(e).slice(0, 2048) };
+    try { writeFileSync(join(t.runDir, `stage-failure-v1.${attemptId(new Date().toISOString())}.json`), JSON.stringify({ run_id: runId, failed_at: new Date().toISOString(), error: detail, note: "PUBLISH forbidden; NEW rows stay unpublished; rerun resumes by lookup (no duplicates); completed chunks/subgroups are in stage-chunk-receipts-v1.<attempt>.jsonl" }, null, 1) + "\n", "utf8"); } catch { /* evidence best-effort */ }
+    console.error("STAGE_FAILED (PUBLISH forbidden; NEW rows stay unpublished; rerun resumes by lookup):", JSON.stringify(detail));
+    process.exit(1);
+  });
 }

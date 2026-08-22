@@ -29,6 +29,8 @@ function fakePostgrest(seed: Array<{ id: number; source_type: string; external_i
     }
     if (init.method === "POST") {
       const rows = JSON.parse(init.body!) as Array<{ source_type: string; external_id: string; name: string }>;
+      // 실제 PostgREST: bulk insert 의 모든 객체 key-set 이 같아야 한다(PGRST102) — R2 Production 실패 재현
+      const __sigs = new Set(rows.map(r => Object.keys(r as object).sort().join(","))); if (__sigs.size > 1) return { ok: false, status: 400, text: async () => JSON.stringify({ code: "PGRST102", message: "All object keys must match", details: null, hint: null }) };
       if (opts.alwaysConflict) return { ok: false, status: 409, text: async () => JSON.stringify({ code: "23505", message: "duplicate key value violates unique constraint" }) };
       // race 시뮬레이션: 요청 도착 직전에 다른 주체가 같은 identity 를 넣었다
       for (const r of rows) if (opts.raceOnInsert?.has(r.external_id) && !table.some(t => t.external_id === r.external_id)) table.push({ id: nextId++, source_type: "canonical", external_id: r.external_id, name: "raced" });
