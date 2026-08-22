@@ -67,11 +67,11 @@
 ## 핵심 답
 - **장소 수 문제가 아니라 description 내용 문제다.** 서울 ACTIVE 1,837 은 그대로. 장소 삭제 제안 0.
 - 비정상 장문은 **unique place 3 / locale row 6** 뿐: `seoul-KOPk4sx8q`(2023 서울국제공연예술제, en·ja·zh 전부), `seoul-KOPrfwk6e`(2023 코리아빌드위크, en·zh), `seoul-KOPpq0clc`(정재일 콘서트, en). 세 건 모두 VisitSeoul 에디터 본문이 **JSON 조각(`{&quot;…&quot;}`)·literal `\n`·알 수 없는 대문자 태그와 함께 같은 블록이 수십~수백 번 반복 직렬화**된 구조 결함(unique block 비율 1.6%~34%). 웹페이지 네비/푸터 혼입 흔적은 0 → 분류 `STRUCTURALLY_ABNORMAL`(반복 포함). "정상적인 긴 관광 설명" 이 아니다.
-- 정상 설명의 길이 분포는 매우 좁다: en stripped median 935 · p90 1,641 · p95 1,897 · p99 2,768; 2,001–4,000 자 60행, 4,001 자 초과인데 비정상이 아닌 행 3행(리움 미술관 7,168 · 천경자 전시 4,131 · 구홍과 윤기 4,114 — 반복/JSON 조각 없는 정상 설명). ja/zh 는 p99 1,475/1,379. ko 는 Final 에서 4,000 cap.
+- 정상 설명의 길이 분포는 매우 좁다: en stripped median 935 · p90 1,641 · p95 1,897 · p99 2,768; 2,001–4,000 자 60행, 4,001 자 초과인데 비정상이 아닌 행 3행(천경자 전시 4,131 · 구홍과 윤기 4,114 는 정상 설명; 리움 미술관 7,168 은 schema.org JSON-LD `<script>` 3블록 약 5.4k 가 strip_html 을 통과해 남은 것으로 실제 설명은 약 1.8k — 아래 script/CSS 누출 항목). ja/zh 는 p99 1,475/1,379. ko 는 Final 에서 4,000 cap.
 - **4,000 global cap 은 불필요**(4,000 초과 정상 행이 en 3건뿐이고, 비정상 3건은 4,000 으로 잘라도 반복 조각이 남아 품질이 해결되지 않음).
 
 ## 추가 발견 — CSS 누출 (PROPOSED_PARSER_FIX, 미적용)
-`strip_html` 은 태그만 지우므로 `<style>…</style>` 안의 CSS 텍스트(`.se-contents .se-scrollbox{overflow-x: auto; …}` 약 778자)가 본문 앞에 그대로 남는다. 영향: en 913행(890행은 stripped 텍스트가 CSS 로 시작) · ja 744 · zh 735 — 서울 설명의 약 절반이 CSS 조각으로 시작한다. 이것은 길이 문제와 별개의 **Main parser 결함**이며, 수정은 결정적(`<style>`·`<script>` 블록 제거 후 strip)이고 Final 값을 바꾸지 않는다(Final 은 HTML 그대로). 이번 TASK 에서는 수정하지 않고 제안만 한다.
+`strip_html` 은 태그만 지우므로 `<style>…</style>` 안의 CSS 텍스트(`.se-contents .se-scrollbox{overflow-x: auto; …}` 약 778자)가 본문 앞에 그대로 남는다. 영향: en 913행(890행은 stripped 텍스트가 CSS 로 시작) · ja 744 · zh 735 — 서울 설명의 약 절반이 CSS 조각으로 시작한다. 같은 이유로 `<script>`(schema.org JSON-LD 등) 본문도 남는다: en 12 · ja 4 · zh 4 행(리움 미술관 en 이 대표). 이것은 길이 문제와 별개의 **Main parser 결함**이며, 수정은 결정적(`<style>`·`<script>` 블록 제거 후 strip)이고 Final 값을 바꾸지 않는다(Final 은 HTML 그대로). 이번 TASK 에서는 수정하지 않고 제안만 한다.
 
 ## 옵션 비교
 | 옵션 | 내용 | 장점 | 단점 | 판단 |
