@@ -20,6 +20,7 @@ DB 접근 0 · 쓰기 0.
 """
 from __future__ import annotations
 
+import io
 import json
 import os
 import re
@@ -342,6 +343,18 @@ def main() -> None:
             add_image(cid, c["kto_image"], "KTO_TYPE_UNKNOWN", eligible=False, attribution=True, note="KTO cpyrhtDivCd 미확인 — 권리 확인 후 공개", as_of="2026-08-18")
         defer(cid, "phone", c.get("phone"), "jeonju-final-service-catalog-v1", "city_spots 에 phone 컬럼 없음", "content_meta.phone")
 
+    # ── 전주 관계/identity metadata → deferred content_meta.relation (Core schema 에 관계 컬럼 없음 — 평면화하지 않는다) ──
+    rel_path = os.path.join(OUT_DIR, "jeonju-relation-identity-metadata-v1.jsonl")
+    if os.path.exists(rel_path):
+        for line in io.open(rel_path, encoding="utf-8"):
+            if not line.strip():
+                continue
+            m = json.loads(line)
+            if m["canonical_id"] in active_ids:
+                defer(m["canonical_id"], "relation", {k: m[k] for k in ("artifact_identity_review", "artifact_match_type", "proximity_kto_cid", "proximity_kto_title",
+                                                                        "proximity_kto_is_identity_assertion", "artifact_resolution", "parent_child_markers_on_same_kto", "main_note") if k in m},
+                      "jeonju sidecar(crossmatch/identity-resolution)", "Core schema 에 관계 컬럼 없음 — 관계 판정 metadata 보존(identity 자동 변경 없음)", "content_meta.relation")
+
     # ── 검산 · primary 1개 · 이미지 캐시 ────────────────────────────────────
     if len(active) != EXPECTED_TOTAL:
         raise SystemExit(f"active rows {len(active)} != {EXPECTED_TOTAL}")
@@ -403,8 +416,8 @@ def main() -> None:
 
     per_city = Counter(r["city"] for r in active)
     manifest = {
-        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
-        "package": "five-city-core-v1", "schema_version": "intake-v1.2(artifact-trust)",
+        "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-V1 → FINAL-ARTIFACT-ALIGNMENT-V1",
+        "package": "five-city-core-v1", "schema_version": "intake-v1.3(final-artifact-alignment)",
         "pins_verified": pins, "inputs": manifest_inputs,
         "main_snapshot": {"path": "main-city-spots-snapshot-2026-08-22-v1.jsonl", "rows": 714, "user_data": False,
                           "sha256": file_sha256(os.path.join(OUT_DIR, "main-city-spots-snapshot-2026-08-22-v1.jsonl"))},
@@ -417,7 +430,7 @@ def main() -> None:
             "main_classification": {"path": "five-city-core-main-classification-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"))},
             "twin_resolution": {"path": "five-city-core-twin-resolution-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"))},
             "heuristic_twin_release": {"path": "five-city-core-heuristic-twin-release-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-core-heuristic-twin-release-v1.jsonl"))},
-            "jeonju_identity_review_handoff": {"path": "jeonju-identity-review-handoff-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "jeonju-identity-review-handoff-v1.jsonl"))},
+            "jeonju_relation_metadata": {"path": "jeonju-relation-identity-metadata-v1.jsonl", "sha256": file_sha256(os.path.join(OUT_DIR, "jeonju-relation-identity-metadata-v1.jsonl"))},
             "category_mapping": {"path": "five-city-category-mapping-v1.json", "sha256": file_sha256(os.path.join(OUT_DIR, "five-city-category-mapping-v1.json"))},
         },
         "category_semantic": {"lossy_mapping_count": len(lossy), "rows_by_semantic": dict(Counter(r["semantic_category"] for r in active))},

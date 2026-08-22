@@ -3,6 +3,7 @@
 TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 · 2026-08-22 · Production write 0
 §10 Pre-Production Gate (TASK-FIVE-CITY-CORE-PREPROD-GATE-V1 · 2026-08-22) — §3 의 '쌍둥이 197 = AMBIGUOUS' 과 §6·§7 의 게이트 권장은 §10 으로 **대체**된다.
 §11 ARTIFACT TRUST (TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1 · 2026-08-22) — **§10-1 의 Gate A 쌍둥이 판정(195/1/4,631)은 폐기**되고 §11 로 대체된다.
+§12 FINAL ARTIFACT ALIGNMENT (TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1 · 2026-08-22) — **§11 의 전주 REVIEW_REQUIRED 35·보조컴퓨터 handoff 요청(§11-4)은 철회**되고 §12 로 대체된다.
 
 ## 1. 무엇인가
 
@@ -208,3 +209,37 @@ TASK-JEONJU-IDENTITY-GATE-FINALIZATION-V1 (targeted · 재수집 아님)
 
 ### 11-5. Production rollout 계약(유지·미실행)
 MIGRATION(056·057, 순서는 Production TASK 에서 확정) → VISIBILITY CODE(게이트 ON) → **STAGE**(NEW 는 `is_published=false` 로 INSERT, MATCH 는 기존 id UPDATE, `INSERT … RETURNING id` 로 `canonical_id → city_spots.id` 매핑 artifact 저장) → **BUILD**(false 상태 신규 `/place` 정적 페이지 생성) → **PUBLISH**(매핑 id 목록만 true) → **REBUILD**(robots/sitemap/metadata 정상화). 404-free.
+
+## 12. FINAL ARTIFACT ALIGNMENT — 전주 field semantics 정정 (TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1 · 2026-08-22) · DECIDED
+
+### 12-0. MAIN DATA INTEGRATION FIELD SEMANTICS RULE
+- Main 은 도시 artifact 의 **field 이름만 보고 의미를 추측하지 않는다.** 각 도시 collection pipeline 에서 그 field 의 실제 의미·final status·resolution semantics·source lineage·service eligibility 를 **함께** 읽는다(final catalog + crossmatch + identity-resolution + curation-input).
+- `review` / `identity_review` / `match` / `candidate` 같은 이름이 있다고 해서 Production 보류나 동일 entity 를 자동으로 뜻하지 않는다.
+- **TRUST RULE:** final validated artifact 의 `ACTIVE_SERVICE` 판정은 Main 이 이름/주소/전화/좌표 heuristic 으로 뒤집지 않는다.
+- 도시별 규칙을 하나로 일반화하지 않는다(전주의 `phase1_bucket`/`_resolution_type` 같은 필드가 다른 도시에는 없다).
+
+### 12-1. 전주 semantics (artifact 재확인 결과)
+- `identity_review=True`(33건) = "좌표 근접 KTO 후보(`kto_cid`)와의 동일성을 확정하지 않아 **병합하지 않았다**" 는 carried flag. `entity_integration`: "AMBIGUOUS=93 coord-only proximity, identity unconfirmed. **Isolated, not merged**", `DUPLICATE=0`, `AMBIGUOUS_FORCED_MERGE=0`. 33건 전부 `phase1_bucket=SERVICE_ENTITY` · `final_status=ACTIVE_SERVICE`(artifact 자체의 REVIEW_REQUIRED bucket 25건과 겹치지 않음).
+- `kto_cid` = 좌표 기반 가장 가까운 KTO crossmatch 후보. identity equality 주장이 아니다(34건 중 26건은 제목이 다른 장소: 전주향교→장현식고택, 한옥마을도서관→전주 대사습청 …). `kto_cid` 만으로 merge 금지.
+- **explicit `parent_id` hierarchy column 은 없으며**, crossmatch/identity-resolution sidecar 에 관계 판정 metadata(`_resolution_type`/`classification`: PARENT_CHILD_OR_AREA_POI 19 · DISTINCT_ENTITY 36 · INSUFFICIENT_EVIDENCE 36 · SAME_ENTITY 2)가 존재한다. PARENT_CHILD 는 코스/추천 글(RELATION_CONTEXT) ↔ POI 에만 부여돼 있다.
+- 전주드림랜드: OFF-16676 의 phone/좌표/대표주소가 전주동물원 공식 페이지(OFF-9784)와 같은 것은 상위 시설 대표값 공유(수집 계약상 정상), `kto_cid=126626` 은 근접 후보. KTO-2790515 는 별도 KTO POI. → 동물원(OFF-9784·KTO-126626)·드림랜드(OFF-16676·KTO-2790515) **4 레코드 전부 보존, 병합 0**.
+
+### 12-2. Main 정정
+| | §11(583c51b) | §12 |
+|---|---|---|
+| 전주 identity_review 33 | REVIEW_REQUIRED(보류) | **NEW**(basis ARTIFACT_SERVICE_STATUS) |
+| 드림랜드 OFF-16676 · KTO-2790515 | REVIEW_REQUIRED(UNRESOLVED) | **NEW** |
+| `jeonju-identity-review-handoff-v1.jsonl`(보조컴퓨터 QA 요청) | 35행 | **삭제** → `jeonju-relation-identity-metadata-v1.jsonl`(35행, `status=RELATION_METADATA_REFERENCE_ONLY`, `secondary_qa_request=false`) |
+| 관계 metadata | — | sidecar + deferred `content_meta.relation` 35행(identity_review·proximity_kto_cid/title·artifact_resolution·parent_child_markers·main_note). Core schema 에 관계 컬럼 없음 → 새 schema 발명 없이 deferred 로 보존. identity 자동 변경 없음 |
+| TARGETED_SECONDARY_QA_REQUIRED | YES | **NO** — data collection 미완이 아니라 Main semantic 오독이었음 |
+MAIN_FLAT_MATCHING_MISCLASSIFICATION_COUNT=35 → 0.
+
+### 12-3. 최종 산술 (final)
+SOURCE_ACTIVE 4,826 = MATCH_REPLACE **462** + NEW **4,194** + ARTIFACT_SAME_ENTITY_SKIP **170** + REVIEW_REQUIRED **0** ✓ · ACTIVE_DISTINCT 4,656 · WRITEABLE_ACTIVE **4,656** · heuristic merge 0 · evidenceless skip 0 · rename 0.
+Main 714: ACTIVE_MATCHED 462 · EXCLUDED 230 · DUPLICATE_REVIEW 3 · LEGACY_ONLY_VALID 15(일괄 hide 없음) · OWNER_OVERRIDE 4(#7·#29 이기대 2행 유지, #28 오륙도 스카이워크, #42 더베이101 — published·플래너 후보·id 보존; `OWNER_OVERRIDE_IMAGE_REFRESH_BACKLOG`: 4행 legacy Unsplash 이미지, 숨김 근거 아님).
+Projected DB: **total 4,908**(714+4,194) · **discovery-visible 4,675**(462+4,194+15+4) · hidden 233. 도시별 after(visible/hidden): busan 1,037(807/230) · gyeongju 302(299/3) · seoul 1,837 · jeju 1,496 · jeonju 236.
+dry-run 2회 동일: run_id `28fe56dcfe1cc00e` · input manifest `b4b04991…004503` · change manifest `55e26b98…5f31ee` · errors 0 · sources 5,621 · images 4,394 · DELETE 0 · LOSSY 0.
+`(city,name)` 충돌 **13**(12 + 전주드림랜드 OFF/KTO) = migration 057 적용 전 schema blocker 일 뿐 identity blocker 아님(PROJECTED_CITY_NAME_CONFLICT_COUNT_BEFORE_057=13 / AFTER_057=0). 표시명 변경 0.
+
+### 12-4. Production rollout 계약(불변·미실행)
+MIGRATION 056+057 → VISIBILITY CODE RELEASE → STAGE(NEW `is_published=false` INSERT … RETURNING id → canonical_id↔id immutable mapping artifact; MATCH 는 기존 id UPDATE) → BUILD(reference scope 로 신규 /place 정적 페이지 선생성) → PUBLISH(mapping 의 승인 id 만 true; broad city update 금지) → REBUILD(robots/sitemap/metadata). invariant `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS=0`. importer apply 는 `APPLY_DISABLED_IN_V1` 유지.

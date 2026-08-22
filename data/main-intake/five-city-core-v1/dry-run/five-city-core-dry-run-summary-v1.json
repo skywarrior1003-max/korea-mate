@@ -1,17 +1,17 @@
 {
- "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
+ "task": "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1",
  "mode": "dry-run",
- "input_manifest_sha256": "fad19e68bb3546d31adb45bdc2cec657e39ceb295ce65bf61af1a6bca5a37d77",
- "run_id": "fcc0894262096c22",
+ "input_manifest_sha256": "b4b04991bedd7a6a794c0b43a1818df2e326f0dd8945d43a4072410088004503",
+ "run_id": "28fe56dcfe1cc00e",
  "counts": {
   "active_input": 4826,
   "match_replace": 462,
-  "new": 4159,
+  "new": 4194,
   "confirmed_twin_skipped": 170,
-  "review_required_skipped": 35,
+  "review_required_skipped": 0,
   "excluded_skipped": 3,
   "active_distinct": 4656,
-  "writeable_active": 4621,
+  "writeable_active": 4656,
   "existing_id_preserved": 462,
   "lossy_category": 0,
   "heuristic_twin_auto_merge": 0,
@@ -22,29 +22,27 @@
  "expected_universe": {
   "active_total": 4826,
   "active_distinct": 4656,
-  "writes": 4621,
-  "skipped": 208
+  "writes": 4656,
+  "skipped": 173
  },
  "artifact_trust": {
   "SOURCE_ACTIVE_RECORD_COUNT": 4826,
   "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
-  "REVIEW_REQUIRED_COUNT": 35,
+  "REVIEW_REQUIRED_COUNT": 0,
   "ACTIVE_DISTINCT_COUNT": 4656,
-  "WRITEABLE_ACTIVE_COUNT": 4621,
+  "WRITEABLE_ACTIVE_COUNT": 4656,
   "HEURISTIC_TWIN_AUTO_MERGE_COUNT": 0,
   "ARTIFACT_EVIDENCELESS_SKIP_COUNT": 0,
   "decision_basis": {
    "MAIN_EXPLICIT_DECISION_TABLE": 64,
-   "ARTIFACT_SERVICE_STATUS": 4159,
-   "ARTIFACT_SOURCE_LINEAGE": 568,
-   "UNRESOLVED_AFTER_ARTIFACT_INSPECTION": 2,
-   "ARTIFACT_IDENTITY_RESOLUTION": 33
+   "ARTIFACT_SERVICE_STATUS": 4194,
+   "ARTIFACT_SOURCE_LINEAGE": 568
   },
-  "provisional_until_review_gate": true
+  "provisional_until_review_gate": false
  },
  "constraint_blockers": {
   "current_schema": "uq_city_spots_city_name (013) — migration 057 적용 전까지 아래 충돌은 INSERT/UPDATE blocker",
-  "city_name_collision_count": 12,
+  "city_name_collision_count": 13,
   "city_name_collisions": [
    {
     "city": "busan",
@@ -52,6 +50,14 @@
     "members": [
      "main#208",
      "main#287(busan-G-00004)"
+    ]
+   },
+   {
+    "city": "jeonju",
+    "name": "전주드림랜드",
+    "members": [
+     "KTO-2790515",
+     "OFF-16676"
     ]
    },
    {
@@ -147,12 +153,12 @@
  },
  "gate_b_visibility": {
   "publish_updates": 462,
-  "publish_inserts": 4159,
+  "publish_inserts": 4194,
   "hide_legacy": 233,
   "preserved_visible_legacy": 15,
   "owner_override_published": 4,
   "untouched_other": 0,
-  "projected_visible_rows": 4640,
+  "projected_visible_rows": 4675,
   "projected_hidden_rows": 233,
   "gate_column": "is_published",
   "migration": "056_city_spots_is_published.sql (created, NOT applied)"
@@ -188,9 +194,9 @@
   "jeonju": {
    "before": 0,
    "updates": 0,
-   "inserts": 201,
-   "projected_after": 201,
-   "visible_after": 201,
+   "inserts": 236,
+   "projected_after": 236,
+   "visible_after": 236,
    "hidden_after": 0
   },
   "seoul": {
@@ -202,18 +208,18 @@
    "hidden_after": 0
   }
  },
- "projected_total_city_spots": 4873,
+ "projected_total_city_spots": 4908,
  "null_policy_counts": {
   "REPLACE_WITH_VALUE": 4296,
   "INTENTIONALLY_CLEAR": 8,
   "NO_SOURCE_VALUE": 4012,
   "PRESERVE_RUNTIME_FIELD": 0,
   "MANUAL_REVIEW": 0,
-  "VISIBILITY_GATE": 4621
+  "VISIBILITY_GATE": 4656
  },
- "sources_upserts": 5552,
- "images_upserts": 4360,
- "change_manifest_sha256": "584183132c06234b595726cbd9422eba735ee403cc4aed97f36c304c9b5a3613",
+ "sources_upserts": 5621,
+ "images_upserts": 4394,
+ "change_manifest_sha256": "55e26b9813017648a94365f98d37b727c2b2afed9dd254ba5169a2c5a15f31ee",
  "errors": 0,
  "delete_actions": 0,
  "db_write_executed": false

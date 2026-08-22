@@ -2651,6 +2651,7 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783379","canonical_id":"KTO-2783379","city":"jeonju","name":"씨플랫 송천에코점","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783390","canonical_id":"KTO-2783390","city":"jeonju","name":"물빛정원","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2783878","canonical_id":"KTO-2783878","city":"jeonju","name":"기지제·기지제 수변공원","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:KTO-2790515","canonical_id":"KTO-2790515","city":"jeonju","name":"전주드림랜드","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840189","canonical_id":"KTO-2840189","city":"jeonju","name":"한울밥상","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840235","canonical_id":"KTO-2840235","city":"jeonju","name":"호남각","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-2840571","canonical_id":"KTO-2840571","city":"jeonju","name":"전라도음식이야기","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":1}
@@ -2713,14 +2714,18 @@
 {"action":"INSERT","placeholder_id":"NEW:KTO-485691","canonical_id":"KTO-485691","city":"jeonju","name":"학소암(전주)","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:KTO-667442","canonical_id":"KTO-667442","city":"jeonju","name":"옛날팥죽집","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:KTO-843552","canonical_id":"KTO-843552","city":"jeonju","name":"노랑토랑","category":"restaurant","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-10076","canonical_id":"OFF-10076","city":"jeonju","name":"Jeonju Museum of History","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10114","canonical_id":"OFF-10114","city":"jeonju","name":"Jeolla Gamyeong","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10115","canonical_id":"OFF-10115","city":"jeonju","name":"Gyeonggijeon Shrine","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10116","canonical_id":"OFF-10116","city":"jeonju","name":"Namgosanseong Fortress · Namgosa Temple","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-10118","canonical_id":"OFF-10118","city":"jeonju","name":"Donggosanseong Fortress·Donggosa Temple","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11815","canonical_id":"OFF-11815","city":"jeonju","name":"Jeonju Gijeopnori Training Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11816","canonical_id":"OFF-11816","city":"jeonju","name":"Jeonju Millennium Hanji Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-11923","canonical_id":"OFF-11923","city":"jeonju","name":"만경대 암각서","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11924","canonical_id":"OFF-11924","city":"jeonju","name":"남고진 사적비","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11925","canonical_id":"OFF-11925","city":"jeonju","name":"덕진공원 3층석탑","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-11926","canonical_id":"OFF-11926","city":"jeonju","name":"전북대 석불입상","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-11927","canonical_id":"OFF-11927","city":"jeonju","name":"박진 효자비","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-11928","canonical_id":"OFF-11928","city":"jeonju","name":"시사재","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-12346","canonical_id":"OFF-12346","city":"jeonju","name":"Jeonju Ice Skating Stadium","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13042","canonical_id":"OFF-13042","city":"jeonju","name":"전주 기령당","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
@@ -2731,39 +2736,57 @@
 {"action":"INSERT","placeholder_id":"NEW:OFF-13622","canonical_id":"OFF-13622","city":"jeonju","name":"Baekseok Park","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13844","canonical_id":"OFF-13844","city":"jeonju","name":"Jeonju Garden Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-13964","canonical_id":"OFF-13964","city":"jeonju","name":"Wansanchilbong Peak (Wansan Park)","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-14617","canonical_id":"OFF-14617","city":"jeonju","name":"A fan museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-14711","canonical_id":"OFF-14711","city":"jeonju","name":"BUNKER THE SPACE","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-15637","canonical_id":"OFF-15637","city":"jeonju","name":"Jeonghyesa Temple","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16021","canonical_id":"OFF-16021","city":"jeonju","name":"Girinbong","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16022","canonical_id":"OFF-16022","city":"jeonju","name":"Jaman Mural Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16023","canonical_id":"OFF-16023","city":"jeonju","name":"Geonjisan Forest Tiny Library","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16024","canonical_id":"OFF-16024","city":"jeonju","name":"Daga Traveler’s Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16025","canonical_id":"OFF-16025","city":"jeonju","name":"Yeonhwajeong Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16084","canonical_id":"OFF-16084","city":"jeonju","name":"Nambu Market & Youth Mall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16085","canonical_id":"OFF-16085","city":"jeonju","name":"Nambu Market Hanok Village Night Market","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16086","canonical_id":"OFF-16086","city":"jeonju","name":"Cheongyeonru & Namcheongyo","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16087","canonical_id":"OFF-16087","city":"jeonju","name":"Jogyeongdan Shrine","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16088","canonical_id":"OFF-16088","city":"jeonju","name":"Dongmun Secondhand Book Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16089","canonical_id":"OFF-16089","city":"jeonju","name":"Donghak Peasant Revolution Memorial Hall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16091","canonical_id":"OFF-16091","city":"jeonju","name":"Jeonju World Cup Stadium","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16092","canonical_id":"OFF-16092","city":"jeonju","name":"Jeonju Cinema Studio & Jeonju Digital Independent Cinema","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16104","canonical_id":"OFF-16104","city":"jeonju","name":"어린이박물관","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16109","canonical_id":"OFF-16109","city":"jeonju","name":"Jeonju Hanok Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16133","canonical_id":"OFF-16133","city":"jeonju","name":"자매갈비전골","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16220","canonical_id":"OFF-16220","city":"jeonju","name":"White Western-style House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16310","canonical_id":"OFF-16310","city":"jeonju","name":"베테랑칼국수","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16357","canonical_id":"OFF-16357","city":"jeonju","name":"짜앤짬이야기","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16364","canonical_id":"OFF-16364","city":"jeonju","name":"Jeonju Jungang Cathedral","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16670","canonical_id":"OFF-16670","city":"jeonju","name":"Hanbyeokgul","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16671","canonical_id":"OFF-16671","city":"jeonju","name":"Jeonju Sago (History Repository)","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16672","canonical_id":"OFF-16672","city":"jeonju","name":"Saekjang Rice Mill","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16673","canonical_id":"OFF-16673","city":"jeonju","name":"Seohak-dong Art Village","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16674","canonical_id":"OFF-16674","city":"jeonju","name":"Palbok-dong Fringe Tree Railroad","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16675","canonical_id":"OFF-16675","city":"jeonju","name":"Seohak Art Village Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16676","canonical_id":"OFF-16676","city":"jeonju","name":"전주드림랜드","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16677","canonical_id":"OFF-16677","city":"jeonju","name":"Ajung Lake Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16678","canonical_id":"OFF-16678","city":"jeonju","name":"Hanok Village Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16679","canonical_id":"OFF-16679","city":"jeonju","name":"Yaho Saengtae Mamkkeot Forest Playground","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-16680","canonical_id":"OFF-16680","city":"jeonju","name":"Wansan Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-16681","canonical_id":"OFF-16681","city":"jeonju","name":"Jjokgureum Library","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-17128","canonical_id":"OFF-17128","city":"jeonju","name":"Tradi-Lounge","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-17295","canonical_id":"OFF-17295","city":"jeonju","name":"Jeonju Innovation City Complex Cultural Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-17463","canonical_id":"OFF-17463","city":"jeonju","name":"메르밀진미집 본점","category":"restaurant","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9736","canonical_id":"OFF-9736","city":"jeonju","name":"Seunggwangjae","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9737","canonical_id":"OFF-9737","city":"jeonju","name":"Pungpaejigwan (Jeonju Gaeksa)","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9738","canonical_id":"OFF-9738","city":"jeonju","name":"Chimyeongjasan Holy Ground","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9740","canonical_id":"OFF-9740","city":"jeonju","name":"Hakindang House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9741","canonical_id":"OFF-9741","city":"jeonju","name":"Hanbyeokdang Pavilion","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9742","canonical_id":"OFF-9742","city":"jeonju","name":"Jeonjucheon Stream","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9746","canonical_id":"OFF-9746","city":"jeonju","name":"Pungnammun Gate","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9747","canonical_id":"OFF-9747","city":"jeonju","name":"Cheonmajung-gil Tourist Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9749","canonical_id":"OFF-9749","city":"jeonju","name":"Haksan Forest Poem Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9750","canonical_id":"OFF-9750","city":"jeonju","name":"Kkotsim, Jeonju Municipal Library","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9751","canonical_id":"OFF-9751","city":"jeonju","name":"Jeonjuhyanggyo Local Confucian School","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9752","canonical_id":"OFF-9752","city":"jeonju","name":"Jeondong Catholic Cathedral","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9755","canonical_id":"OFF-9755","city":"jeonju","name":"Jeonbuk Arts Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9756","canonical_id":"OFF-9756","city":"jeonju","name":"Jeonju Children's Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9757","canonical_id":"OFF-9757","city":"jeonju","name":"Gijije Circular Trail","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9758","canonical_id":"OFF-9758","city":"jeonju","name":"Osongje Eco Park","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
@@ -2773,15 +2796,27 @@
 {"action":"INSERT","placeholder_id":"NEW:OFF-9766","canonical_id":"OFF-9766","city":"jeonju","name":"Korea Traditional Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9767","canonical_id":"OFF-9767","city":"jeonju","name":"Sori Arts Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9768","canonical_id":"OFF-9768","city":"jeonju","name":"Jeollabukdo Childrens Creativity Experience Center","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9769","canonical_id":"OFF-9769","city":"jeonju","name":"Palbok Art Factory","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9772","canonical_id":"OFF-9772","city":"jeonju","name":"Deokjin Park","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9774","canonical_id":"OFF-9774","city":"jeonju","name":"전주천","category":"nature","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9775","canonical_id":"OFF-9775","city":"jeonju","name":"Jeonju Arboretum","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9780","canonical_id":"OFF-9780","city":"jeonju","name":"Jeonju Hanji Museum","category":"attraction","has_image":false,"sources_upsert":1,"images_upsert":0}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9781","canonical_id":"OFF-9781","city":"jeonju","name":"Jeonju Eco Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9782","canonical_id":"OFF-9782","city":"jeonju","name":"Jeonju Daesaseupcheong","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9783","canonical_id":"OFF-9783","city":"jeonju","name":"Gyodong Art Gallery","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9784","canonical_id":"OFF-9784","city":"jeonju","name":"Jeonju Dreamland","category":"nature","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9785","canonical_id":"OFF-9785","city":"jeonju","name":"Our Playground— Marudal","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9789","canonical_id":"OFF-9789","city":"jeonju","name":"Eojin Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9790","canonical_id":"OFF-9790","city":"jeonju","name":"Jeonju Crafts Exhibition Hall","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":0}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9791","canonical_id":"OFF-9791","city":"jeonju","name":"Jeonju Hanbyeok Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:OFF-9793","canonical_id":"OFF-9793","city":"jeonju","name":"Wanpanbon Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9794","canonical_id":"OFF-9794","city":"jeonju","name":"Fan Culture Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9796","canonical_id":"OFF-9796","city":"jeonju","name":"Jeonju Traditional Liquor Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9797","canonical_id":"OFF-9797","city":"jeonju","name":"Choi Myeong-hui Literary House","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9798","canonical_id":"OFF-9798","city":"jeonju","name":"Jeonju Hanok Village Seonbi Culture Cente","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9800","canonical_id":"OFF-9800","city":"jeonju","name":"Gangam Museum of Calligraphy","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9810","canonical_id":"OFF-9810","city":"jeonju","name":"Jeonju Hanok Village History Museum","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
+{"action":"INSERT","placeholder_id":"NEW:OFF-9811","canonical_id":"OFF-9811","city":"jeonju","name":"Jeonju Traditional Culture Training Center","category":"attraction","has_image":false,"sources_upsert":2,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000034","canonical_id":"seoul-KOP000034","city":"seoul","name":"Cheonggyecheon Stream","category":"nature","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000217","canonical_id":"seoul-KOP000217","city":"seoul","name":"Lotte Duty Free Shop","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
 {"action":"INSERT","placeholder_id":"NEW:seoul-KOP000305","canonical_id":"seoul-KOP000305","city":"seoul","name":"Sejong Center for the Performing Arts","category":"attraction","has_image":true,"sources_upsert":1,"images_upsert":1}
@@ -4792,41 +4827,6 @@
 {"action":"SKIP","canonical_id":"gyeongju-GJ01-0092","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
 {"action":"SKIP","canonical_id":"gyeongju-KTO12-590997","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
 {"action":"SKIP","canonical_id":"gyeongju-KTO12-987844","city":"gyeongju","reason":"service_status=EXCLUDED","twin_of":null}
-{"action":"SKIP","canonical_id":"KTO-2790515","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:UNRESOLVED_AFTER_ARTIFACT_INSPECTION","twin_of":null}
-{"action":"SKIP","canonical_id":"OFF-10076","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-130445"}
-{"action":"SKIP","canonical_id":"OFF-11923","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-317526"}
-{"action":"SKIP","canonical_id":"OFF-11926","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065596"}
-{"action":"SKIP","canonical_id":"OFF-11927","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
-{"action":"SKIP","canonical_id":"OFF-14617","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594796"}
-{"action":"SKIP","canonical_id":"OFF-16025","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3350911"}
-{"action":"SKIP","canonical_id":"OFF-16089","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
-{"action":"SKIP","canonical_id":"OFF-16220","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-130357"}
-{"action":"SKIP","canonical_id":"OFF-16673","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606585"}
-{"action":"SKIP","canonical_id":"OFF-16675","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606585"}
-{"action":"SKIP","canonical_id":"OFF-16676","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:UNRESOLVED_AFTER_ARTIFACT_INSPECTION","twin_of":"KTO-126626"}
-{"action":"SKIP","canonical_id":"OFF-16677","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2750859"}
-{"action":"SKIP","canonical_id":"OFF-16678","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
-{"action":"SKIP","canonical_id":"OFF-16680","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1626068"}
-{"action":"SKIP","canonical_id":"OFF-17128","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
-{"action":"SKIP","canonical_id":"OFF-9736","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594374"}
-{"action":"SKIP","canonical_id":"OFF-9738","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-127611"}
-{"action":"SKIP","canonical_id":"OFF-9741","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2946402"}
-{"action":"SKIP","canonical_id":"OFF-9742","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-126621"}
-{"action":"SKIP","canonical_id":"OFF-9749","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2721624"}
-{"action":"SKIP","canonical_id":"OFF-9751","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
-{"action":"SKIP","canonical_id":"OFF-9755","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1626011"}
-{"action":"SKIP","canonical_id":"OFF-9769","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2605804"}
-{"action":"SKIP","canonical_id":"OFF-9781","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1586964"}
-{"action":"SKIP","canonical_id":"OFF-9782","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
-{"action":"SKIP","canonical_id":"OFF-9783","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
-{"action":"SKIP","canonical_id":"OFF-9785","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
-{"action":"SKIP","canonical_id":"OFF-9794","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
-{"action":"SKIP","canonical_id":"OFF-9796","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3065503"}
-{"action":"SKIP","canonical_id":"OFF-9797","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-2606578"}
-{"action":"SKIP","canonical_id":"OFF-9798","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594374"}
-{"action":"SKIP","canonical_id":"OFF-9800","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594796"}
-{"action":"SKIP","canonical_id":"OFF-9810","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-3066467"}
-{"action":"SKIP","canonical_id":"OFF-9811","city":"jeonju","reason":"SKIP_REVIEW_REQUIRED:ARTIFACT_IDENTITY_REVIEW","twin_of":"KTO-1594746"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":3,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":4,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}
 {"action":"VISIBILITY_UPDATE","main_city_spot_id":49,"city":"busan","main_class":"DUPLICATE_REVIEW","fields_changed":["is_published"],"new":{"is_published":false},"reason":"DUPLICATE_REVIEW — preserved, hidden from discovery (not deleted; direct references still resolve)"}

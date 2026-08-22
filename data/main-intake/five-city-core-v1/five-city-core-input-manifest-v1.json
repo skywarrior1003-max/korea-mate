@@ -30,6 +30,7 @@
   "guide_award",
   "opening_hours",
   "phone",
+  "relation",
   "subcategory_raw",
   "subway_access"
  ],
@@ -212,7 +213,7 @@
   "active": {
    "path": "five-city-core-active-v1.jsonl",
    "rows": 4826,
-   "sha256": "f6b7a0f3d104975df5e19a8bc223d9583a45c6f9e45823cbcd1fb75e15251188"
+   "sha256": "e4c27751dc6f0f9988aa9057df9497d598b744b126fdf30f41efc34fb1c0a372"
   },
   "category_mapping": {
    "path": "five-city-category-mapping-v1.json",
@@ -220,12 +221,12 @@
   },
   "crosswalk": {
    "path": "five-city-core-crosswalk-v1.jsonl",
-   "sha256": "9bd627751078203217a50b8484818ddbfdb3970b1dde205f82489abde808e11a"
+   "sha256": "f1911bf3b1fb9933ebaefc4d4dd1fc65b9d2b9626574922f8645d48a312f9891"
   },
   "deferred": {
    "path": "five-city-core-deferred-fields-v1.jsonl",
-   "rows": 10725,
-   "sha256": "7b79cb2c0b91e4d5f686b7c8dae03473a575be31f54c08590fcecbe39f4f45d0"
+   "rows": 10760,
+   "sha256": "69476a4c3814fa297f595d59d98696cfa274b5c60904083cc6cb38c2c0c38b8d"
   },
   "heuristic_twin_release": {
    "path": "five-city-core-heuristic-twin-release-v1.jsonl",
@@ -236,9 +237,9 @@
    "rows": 4564,
    "sha256": "319ccc6ab5c1af1ada1b32400c72464957d00d85e209e878861d0fd4d6a395c4"
   },
-  "jeonju_identity_review_handoff": {
-   "path": "jeonju-identity-review-handoff-v1.jsonl",
-   "sha256": "5dc637f0348291f5246172e1eb47e0a796916175be4fa16ac2d73b44b26389fa"
+  "jeonju_relation_metadata": {
+   "path": "jeonju-relation-identity-metadata-v1.jsonl",
+   "sha256": "d6d1a9991ea15ce4628b10d48bddff72169b366a115bd800f6d7c1b416f7d491"
   },
   "main_classification": {
    "path": "five-city-core-main-classification-v1.jsonl",
@@ -270,7 +271,7 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "schema_version": "intake-v1.2(artifact-trust)",
+ "schema_version": "intake-v1.3(final-artifact-alignment)",
  "sources_by_type": {
   "busan-food-canonical": 194,
   "busan-nonfood-canonical": 764,
@@ -286,5 +287,5 @@
   "visitjeonju": 103,
   "visitseoul": 1837
  },
- "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1"
+ "task": "TASK-MAIN-FIVE-CITY-CORE-INTEGRATION-PREP-AND-DRY-RUN-V1 → PREPROD-GATE-V1 → ARTIFACT-TRUST-V1 → FINAL-ARTIFACT-ALIGNMENT-V1"
 }

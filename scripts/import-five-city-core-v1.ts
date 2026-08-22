@@ -28,6 +28,8 @@ const EXPECTED_ACTIVE_TOTAL = 4826;       // SOURCE_ACTIVE_RECORD_COUNT
 // ARTIFACT TRUST: 같은 source entity skip 은 artifact 근거(부산 uc_seq)로만 — 170. ACTIVE_DISTINCT = 4,826 − 170 = 4,656
 const EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS = 170;
 const EXPECTED_ACTIVE_DISTINCT = EXPECTED_ACTIVE_TOTAL - EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS;
+// FINAL-ARTIFACT-ALIGNMENT: 전주 identity_review 는 보류가 아니다 → Main review hold 는 0 이어야 한다
+const EXPECTED_REVIEW_HOLD = 0;
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(name);
@@ -90,7 +92,8 @@ const arithmeticOk =
   plan.counts.match_replace + plan.counts.new + plan.counts.confirmed_twin_skipped + plan.counts.review_required_skipped === plan.counts.active_input
   && plan.counts.confirmed_twin_skipped === EXPECTED_ARTIFACT_SAME_ENTITY_SKIPS
   && plan.counts.active_distinct === EXPECTED_ACTIVE_DISTINCT
-  && plan.counts.heuristic_twin_auto_merge === 0 && plan.counts.evidenceless_skip === 0;
+  && plan.counts.heuristic_twin_auto_merge === 0 && plan.counts.evidenceless_skip === 0
+  && plan.counts.review_required_skipped === EXPECTED_REVIEW_HOLD;
 
 // ── 5. 출력 (결정적: 시각 없음, 정렬 고정) ───────────────────────────────────
 const outDir = join(pkg, "dry-run");
@@ -106,7 +109,7 @@ writeFileSync(join(outDir, "five-city-core-id-mapping-v1.jsonl"), idMap.map(r =>
 writeFileSync(join(outDir, "five-city-core-skipped-v1.jsonl"), plan.skips.map(r => JSON.stringify(r)).join("\n") + "\n", "utf8");
 writeFileSync(join(outDir, "five-city-core-errors-v1.json"), JSON.stringify(plan.errors, null, 1) + "\n", "utf8");
 const summary = {
-  task: "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
+  task: "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1",
   mode: "dry-run",
   input_manifest_sha256: manifestHash,
   run_id: sha256(manifestHash + changeText).slice(0, 16),   // 입력+계획의 해시 — 같은 입력이면 같은 run id

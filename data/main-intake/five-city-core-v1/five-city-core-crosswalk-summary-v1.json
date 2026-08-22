@@ -3,21 +3,20 @@
  "artifact_trust": {
   "ACTIVE_DISTINCT_COUNT": 4656,
   "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": 170,
-  "REVIEW_REQUIRED_COUNT": 35,
+  "REVIEW_REQUIRED_COUNT": 0,
   "SOURCE_ACTIVE_RECORD_COUNT": 4826,
-  "WRITEABLE_ACTIVE_COUNT": 4621,
+  "WRITEABLE_ACTIVE_COUNT": 4656,
   "artifact_evidenceless_skip_count": 0,
   "decision_basis": {
-   "ARTIFACT_IDENTITY_RESOLUTION": 33,
-   "ARTIFACT_SERVICE_STATUS": 4162,
+   "ARTIFACT_SERVICE_STATUS": 4197,
    "ARTIFACT_SOURCE_LINEAGE": 568,
-   "MAIN_EXPLICIT_DECISION_TABLE": 64,
-   "UNRESOLVED_AFTER_ARTIFACT_INSPECTION": 2
+   "MAIN_EXPLICIT_DECISION_TABLE": 64
   },
   "heuristic_twin_auto_merge_count": 0,
   "heuristic_twins_released": 29,
-  "jeonju_identity_review_count": 33,
-  "jeonju_main_added_unresolved": 2,
+  "jeonju_identity_review_flag_rows": 33,
+  "jeonju_main_review_hold": 0,
+  "jeonju_relation_metadata_rows": 35,
   "twin_relations": {
    "SAME_SOURCE_ENTITY": 170
   }
@@ -26,8 +25,7 @@
  "decisions_total": {
   "CONFIRMED_TWIN": 170,
   "MATCH_REPLACE": 462,
-  "NEW": 4159,
-  "REVIEW_REQUIRED": 35
+  "NEW": 4194
  },
  "delete_decisions": 0,
  "existing_id_preserved": 462,
@@ -85,8 +83,7 @@
    "NEW": 1496
   },
   "jeonju": {
-   "NEW": 201,
-   "REVIEW_REQUIRED": 35
+   "NEW": 236
   },
   "seoul": {
    "NEW": 1837
@@ -107,5 +104,5 @@
   "seoul": "e9e9967",
   "seoul_ml": "e9e9967"
  },
- "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1"
+ "task": "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1"
 }

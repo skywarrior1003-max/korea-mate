@@ -21,7 +21,8 @@ const pkgReady = existsSync(new URL(PKG + "five-city-core-twin-resolution-v1.jso
 interface TwinRow { city: string; member_canonical_id: string; representative_canonical_id: string | null; relation: string; decision_basis: string; reason: string; evidence: { shared_uc_seq: string[] }; deterministic_rule: string; runtime_write: boolean; }
 
 // 확정 수치 (ARTIFACT TRUST 이후)
-const SOURCE_ACTIVE = 4826, ARTIFACT_TWIN = 170, REVIEW_REQUIRED = 35, ACTIVE_DISTINCT = 4656, MATCH = 462, NEW = 4159, WRITEABLE = 4621;
+// FINAL-ARTIFACT-ALIGNMENT: 전주 identity_review 35 는 보류가 아니라 NEW → REVIEW_REQUIRED 0
+const SOURCE_ACTIVE = 4826, ARTIFACT_TWIN = 170, REVIEW_REQUIRED = 0, ACTIVE_DISTINCT = 4656, MATCH = 462, NEW = 4194, WRITEABLE = 4656;
 
 test("A1: twin resolution artifact — artifact 근거(부산 uc_seq)만 170, 전부 SAME_SOURCE_ENTITY, 휴리스틱 규칙 0", { skip: !pkgReady }, () => {
   const rows = readJsonl<TwinRow>("five-city-core-twin-resolution-v1.jsonl");
@@ -158,8 +159,8 @@ test("I2: 실제 package — dry-run 계획이 ARTIFACT TRUST 수치와 일치�
   const total = Object.values(plan.per_city).reduce((a, c) => a + c.projected_after, 0);
   const visible = Object.values(plan.per_city).reduce((a, c) => a + c.visible_after, 0);
   const hidden = Object.values(plan.per_city).reduce((a, c) => a + c.hidden_after, 0);
-  assert.equal(total, 714 + NEW);                 // 4,873 (provisional: REVIEW_REQUIRED 35 미반영)
-  assert.equal(visible, MATCH + NEW + 15 + 4);    // 4,640
+  assert.equal(total, 714 + NEW);                 // 4,908
+  assert.equal(visible, MATCH + NEW + 15 + 4);    // 4,675
   assert.equal(hidden, 233);
   assert.equal(visible + hidden, total);
   const h = (p: ReturnType<typeof planImport>) => createHash("sha256").update(changeManifestRows(p).map(r => JSON.stringify(r)).join("\n")).digest("hex");

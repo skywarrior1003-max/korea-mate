@@ -112,10 +112,10 @@ test("R1: 실제 package — ACTIVE 4,826 산술, 경주 299·부산 Food 97 id 
   // Gate B: mainClassification 없이 계획하면 legacy 는 전부 NO_WRITE (숨김은 분류가 있을 때만)
   assert.ok(plan.no_write.filter(n => n.city === "busan").length >= 228);
   assert.equal(plan.visibility_updates.length, 0);
-  // 쌍둥이는 SKIP, 대표는 쓰인다 (ARTIFACT TRUST: 부산 uc_seq 근거 170 · 전주 REVIEW_REQUIRED 35 보류)
+  // 쌍둥이는 SKIP, 대표는 쓰인다 (ARTIFACT TRUST: 부산 uc_seq 근거 170 · Main review hold 0)
   const twins = plan.skips.filter(s => s.reason.startsWith("SKIP_TWIN"));
   assert.equal(twins.length, 170);
-  assert.equal(plan.skips.filter(s => s.reason.startsWith("SKIP_REVIEW_REQUIRED")).length, 35);
+  assert.equal(plan.skips.filter(s => s.reason.startsWith("SKIP_REVIEW_REQUIRED")).length, 0);   // 전주 identity_review 는 보류가 아니다
   for (const t of twins.slice(0, 50)) assert.ok(plan.updates.some(u => u.canonical_id === t.twin_of) || plan.inserts.some(i => i.canonical_id === t.twin_of), `twin_of ${t.twin_of} 가 쓰이지 않음`);
   // 서울·제주·전주는 INSERT 만
   for (const city of ["seoul", "jeju", "jeonju"]) assert.equal(plan.updates.filter(u => u.city === city).length, 0);

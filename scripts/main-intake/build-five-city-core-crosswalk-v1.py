@@ -24,7 +24,8 @@ build-five-city-core-crosswalk-v1 — 5도시 ACTIVE canonical ↔ Main city_spo
              같은 uc_seq(AttractionService:N ↔ VisitBusanContent:attraction:N). 서울·제주·전주는 관계 필드가 없으므로 병합 0.
            · 부산 Food ↔ Main 은 artifact 가 기록한 lineage(discovery_candidate_ids·canonical_discovery_id·image_recovery_v1.disc_id·
              identity_removed_cids) 와 legacy external_id 의 일치만 인정. 이름/주소/좌표 bridge(옛 TIER2) 폐기.
-           · 전주 artifact 가 identity_review=True 로 남긴 레코드는 REVIEW_REQUIRED — 병합도 삭제도 하지 않고 write 에서 보류.
+           · 전주 identity_review=True 는 "근접 KTO 후보와 병합하지 않았다"(entity_integration: isolated, not merged)는 뜻이며
+             장소 자체는 SERVICE_ENTITY/ACTIVE_SERVICE 로 확정된 것 — Main 은 NEW 로 번역하고 관계 metadata 만 sidecar 에 보존(보류 0).
            · 모든 decision 에 decision_basis 를 남긴다(NAME/ADDRESS/COORDINATE_HEURISTIC 금지).
 
 DB 접근 0 · 쓰기 0.
@@ -57,10 +58,12 @@ BASIS_REVIEW_REQUIRED = "REVIEW_REQUIRED"
 BASIS_UNRESOLVED = "UNRESOLVED_AFTER_ARTIFACT_INSPECTION"
 FORBIDDEN_BASIS = {"NAME_HEURISTIC", "ADDRESS_HEURISTIC", "COORDINATE_HEURISTIC"}
 
-# Main 이 artifact 를 끝까지 읽고도 관계를 확정할 수 없어 보류하는 레코드(병합·삭제 아님). 근거는 보고서 §1-1.
-JEONJU_UNRESOLVED_AFTER_INSPECTION: dict[str, str] = {
-    "OFF-16676": "전주드림랜드(official 16676): crossmatch 는 kto_cid=126626(전주동물원)로, 복구된 표시명은 드림랜드로 — artifact 내부 충돌",
-    "KTO-2790515": "전주드림랜드(KTO 2790515): OFF-16676 과 같은 표시명이지만 artifact 가 연결하지 않음 — 판정 전 보류",
+# 전주 관계 metadata 보존용 메모 (TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1) — decision 이 아니라 sidecar 설명이다.
+# 전주드림랜드: OFF-16676 의 phone/좌표/대표주소는 전주동물원 공식 페이지(OFF-9784)와 같다 = 상위 시설의 대표 연락처·좌표를
+# 하위 시설이 공유하는 수집 계약상 정상. kto_cid=126626 은 근접 crossmatch 후보이지 동일성 주장이 아니다. 4 레코드 전부 보존.
+JEONJU_RELATION_NOTES: dict[str, str] = {
+    "OFF-16676": "전주드림랜드(official 16676): 전주동물원 공식 페이지와 phone/좌표/대표주소 공유(상위 시설 대표값) — duplicate 아님. kto_cid=126626 은 근접 후보",
+    "KTO-2790515": "전주드림랜드(KTO 2790515): 동물원(KTO 126626)과 별개로 분리된 KTO POI",
 }
 # Owner 가 유지하기로 확정한 부산 legacy(기존 id 보존 · is_published 유지 · 플래너 후보 포함). #7/#29 는 둘 다 '이기대' 행.
 OWNER_OVERRIDE_KEEP_PUBLISHED: dict[int, str] = {
@@ -380,8 +383,23 @@ def main() -> None:
 
     # ── 서울 · 제주 · 전주 (Main 0) ─────────────────────────────────────────
     # 쌍둥이 탐지 없음: 이 세 artifact 에는 관계/중복 필드가 없고, artifact 가 둘 다 ACTIVE 로 둔 레코드는 둘 다 service entity 다.
-    # 전주만 artifact 의 identity_review=True(REVIEW_REQUIRED 잔여) 를 그대로 보류한다.
-    jeonju_handoff: list[dict] = []
+    # 전주 FIELD SEMANTICS (TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1):
+    #   identity_review=True = 근접 KTO 후보(kto_cid)와의 동일성을 확정하지 않아 병합하지 않았다는 carried flag.
+    #   장소 자체는 phase1_bucket=SERVICE_ENTITY · final_status=ACTIVE_SERVICE 로 확정 → Main 은 NEW 로 번역(보류 0).
+    #   kto_cid 는 좌표 근접 crossmatch 후보이지 동일성 주장이 아니다(34건 중 26건은 제목이 다른 장소). merge 근거로 쓰지 않는다.
+    #   관계 판정(_resolution_type/classification: PARENT_CHILD_OR_AREA_POI·DISTINCT_ENTITY·INSUFFICIENT_EVIDENCE)은 평면화하지
+    #   않고 jeonju-relation-identity-metadata-v1.jsonl(sidecar) + deferred content_meta.relation 으로 보존한다.
+    jeonju_relation_meta: list[dict] = []
+    kto_title_by_cid: dict[str, str] = {}
+    pc_sids_by_kto: dict[str, set[str]] = defaultdict(set)
+    for line in git_show(PINNED_INPUTS["jeonju"]["sha"], "data/jeonju-raw-collection-v1/jeonju-kto-crossmatch-v1.jsonl").lstrip("\ufeff").splitlines():
+        if not line.strip():
+            continue
+        cm = json.loads(line)
+        if cm.get("kto_contentid"):
+            kto_title_by_cid[str(cm["kto_contentid"])] = cm.get("kto_title") or ""
+            if cm.get("_resolution_type") == "PARENT_CHILD_OR_AREA_POI" and cm.get("official_dataSid"):
+                pc_sids_by_kto[str(cm["kto_contentid"])].add(str(cm["official_dataSid"]))
     res_by_sid: dict[str, list[dict]] = defaultdict(list)
     res_by_kto: dict[str, list[dict]] = defaultdict(list)
     ident = json.loads(git_show(PINNED_INPUTS["jeonju"]["sha"], "data/jeonju-raw-collection-v1/jeonju-identity-resolution-v1.json").lstrip("\ufeff"))
@@ -399,33 +417,31 @@ def main() -> None:
         act_ids = {r[id_key] for r in act}
         for r in sorted(act, key=lambda x: x[id_key]):
             cid = r[id_key]
-            if city == "jeonju" and (r.get("identity_review") or cid in JEONJU_UNRESOLVED_AFTER_INSPECTION):
-                own = bool(r.get("identity_review"))
-                kto_cp = f"KTO-{r.get('kto_cid')}" if r.get("kto_cid") and cid.startswith("OFF-") else None
-                off_cp = next((o for o in act_ids if o.startswith("OFF-") and by_kto_of(rows, o) == cid.replace("KTO-", "")), None) if cid.startswith("KTO-") else None
-                verdicts = (res_by_sid.get(str(r.get("sid"))) if cid.startswith("OFF-") else res_by_kto.get(str(r.get("kto_cid")))) or []
-                verdict_txt = "; ".join(f"{v.get('official_sid')}↔{v.get('kto_contentid')}:{v.get('classification')}({v.get('reason')})" for v in verdicts) or "(identity-resolution 에 없음)"
-                reason = ("artifact identity_review=True · " + verdict_txt) if own else JEONJU_UNRESOLVED_AFTER_INSPECTION[cid]
-                add(city, cid, "REVIEW_REQUIRED", basis=BASIS_IDENTITY_RESOLUTION if own else BASIS_UNRESOLVED,
-                    tier="ARTIFACT_IDENTITY_REVIEW" if own else "UNRESOLVED_AFTER_ARTIFACT_INSPECTION", confidence="N/A",
-                    method="artifact.identity_review" if own else "main_artifact_inspection", evidence=reason,
-                    twin_of=kto_cp or off_cp,
-                    notes="artifact 의 identity gate 잔여 — Main 은 병합·삭제·판정하지 않고 write 보류(SKIP_REVIEW_REQUIRED)")
-                jeonju_handoff.append({
-                    "canonical_id": cid, "source": r.get("source"), "source_id": r.get("sid") or r.get("kto_cid"),
-                    "linked_counterpart_id": kto_cp or off_cp, "linked_kto_cid": r.get("kto_cid") or None,
+            if city == "jeonju" and (r.get("identity_review") or cid in JEONJU_RELATION_NOTES):
+                if r.get("phase1_bucket") != "SERVICE_ENTITY" or r.get("final_status") != "ACTIVE_SERVICE":
+                    raise SystemExit(f"{cid}: unexpected artifact status {r.get('phase1_bucket')}/{r.get('final_status')}")
+                kto = str(r.get("kto_cid") or "")
+                verdicts = (res_by_sid.get(str(r.get("sid"))) if cid.startswith("OFF-") else res_by_kto.get(kto)) or []
+                jeonju_relation_meta.append({
+                    "canonical_id": cid, "status": "RELATION_METADATA_REFERENCE_ONLY", "secondary_qa_request": False,
+                    "main_decision": "NEW", "main_decision_basis": BASIS_SERVICE_STATUS,
                     "artifact_identity_review": bool(r.get("identity_review")), "artifact_match_type": r.get("match_type"),
+                    "artifact_phase1_bucket": r.get("phase1_bucket"), "artifact_final_status": r.get("final_status"),
+                    "identity_review_semantics": "proximity KTO candidate not merged (entity_integration: isolated, not merged; AMBIGUOUS_FORCED_MERGE=0) — not a service hold",
+                    "proximity_kto_cid": r.get("kto_cid") or None, "proximity_kto_title": kto_title_by_cid.get(kto),
+                    "proximity_kto_is_identity_assertion": False,
                     "artifact_resolution": [{k: v.get(k) for k in ("official_sid", "kto_contentid", "classification", "reason", "dist_m")} for v in verdicts],
-                    "current_service_status": r.get("final_status"), "name": r.get("display_name"),
-                    "category": r.get("domain"), "subcategory": r.get("menu"), "phone": r.get("phone") or None,
-                    "address": r.get("kto_addr"), "lat": r.get("lat"), "lng": r.get("lng"),
-                    "source_url": r.get("source_url") or None, "provenance": {"artifact": "jeonju-final-service-catalog-v1", "sha": PINNED_INPUTS["jeonju"]["sha"], "coord_source": r.get("coord_source"), "name_source": r.get("name_source")},
-                    "current_crosswalk": "REVIEW_REQUIRED (Main write 보류)",
-                    "unresolved_reason": reason,
-                    "main_added_unresolved": not own,
-                    "required_final_verdict_enum": ["SAME_SOURCE_ENTITY", "DISTINCT_ENTITY", "DISTINCT_BRANCH", "CONTAINED_SUBENTITY", "KEEP_BOTH", "EXCLUDE_ONE", "OTHER_EXISTING_ARTIFACT_VERDICT"],
-                    "note": "재수집 아님 — 이미 수집된 artifact 근거로 identity gate 마감만 요청",
+                    "parent_child_markers_on_same_kto": sorted(pc_sids_by_kto.get(kto, set())),
+                    "name": r.get("display_name"), "source": r.get("source"), "source_id": r.get("sid") or r.get("kto_cid"),
+                    "category": r.get("domain"), "subcategory": r.get("menu"),
+                    "main_note": JEONJU_RELATION_NOTES.get(cid),
+                    "provenance": {"artifact": "jeonju-final-service-catalog-v1", "sha": PINNED_INPUTS["jeonju"]["sha"],
+                                   "sidecars": ["jeonju-kto-crossmatch-v1.jsonl", "jeonju-identity-resolution-v1.json", "jeonju-curation-input-v5-r2.json"]},
                 })
+                add(city, cid, "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH",
+                    method="artifact_active_no_main_rows",
+                    evidence=f"artifact phase1_bucket=SERVICE_ENTITY · final_status=ACTIVE_SERVICE · identity_review={bool(r.get('identity_review'))}(근접 KTO {kto or '-'} 미병합 flag, 보류 아님)",
+                    notes="관계/identity metadata 는 jeonju-relation-identity-metadata-v1.jsonl + deferred content_meta.relation 으로 보존")
                 continue
             add(city, cid, "NEW", basis=BASIS_SERVICE_STATUS, tier="NEW", confidence="HIGH",
                 method="artifact_active_no_main_rows", evidence="artifact ACTIVE · Main city_spots city=0 · 쌍둥이 탐지 없음(관계 필드 없음)")
@@ -471,7 +487,7 @@ def main() -> None:
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-main-classification-v1.jsonl"), main_out)
     write_jsonl(os.path.join(OUT_DIR, "five-city-core-twin-resolution-v1.jsonl"),
                 sorted(twin_resolution, key=lambda r: (r["city"], r["member_canonical_id"])))
-    write_jsonl(os.path.join(OUT_DIR, "jeonju-identity-review-handoff-v1.jsonl"), sorted(jeonju_handoff, key=lambda r: r["canonical_id"]))
+    write_jsonl(os.path.join(OUT_DIR, "jeonju-relation-identity-metadata-v1.jsonl"), sorted(jeonju_relation_meta, key=lambda r: r["canonical_id"]))
     # 해제한 Main 휴리스틱 쌍둥이 — 이전 twin-resolution(a14ba83) 과의 차이를 기록한다
     prev_path = os.path.join(OUT_DIR, "five-city-core-heuristic-twin-release-v1.jsonl")
     released = []
@@ -486,7 +502,7 @@ def main() -> None:
                          "release_reason": "artifact 에 명시적 identity/relation 근거 없음 — Main 휴리스틱(이름·주소·좌표) 판정 해제"})
     write_jsonl(prev_path, sorted(released, key=lambda r: (r["city"], r["canonical_id"])))
     summary = {
-        "task": "TASK-FIVE-CITY-CORE-ARTIFACT-TRUST-AND-IDENTITY-CORRECTION-V1",
+        "task": "TASK-FIVE-CITY-CORE-FINAL-ARTIFACT-ALIGNMENT-V1",
         "pins": pins, "inputs": inputs_meta,
         "active_total": len(active), "decisions_total": totals,
         "per_city": {c: dict(v) for c, v in sorted(per_city.items())},
@@ -499,8 +515,9 @@ def main() -> None:
             "SOURCE_ACTIVE_RECORD_COUNT": len(active),
             "ARTIFACT_CONFIRMED_SAME_ENTITY_SKIP_COUNT": totals.get("CONFIRMED_TWIN", 0),
             "REVIEW_REQUIRED_COUNT": totals.get("REVIEW_REQUIRED", 0),
-            "jeonju_identity_review_count": sum(1 for d in active if d["decision"] == "REVIEW_REQUIRED" and d["decision_basis"] == BASIS_IDENTITY_RESOLUTION),
-            "jeonju_main_added_unresolved": sum(1 for d in active if d["decision"] == "REVIEW_REQUIRED" and d["decision_basis"] == BASIS_UNRESOLVED),
+            "jeonju_identity_review_flag_rows": sum(1 for m in jeonju_relation_meta if m["artifact_identity_review"]),
+            "jeonju_relation_metadata_rows": len(jeonju_relation_meta),
+            "jeonju_main_review_hold": totals.get("REVIEW_REQUIRED", 0),
             "ACTIVE_DISTINCT_COUNT": len(active) - totals.get("CONFIRMED_TWIN", 0),
             "WRITEABLE_ACTIVE_COUNT": totals.get("MATCH_REPLACE", 0) + totals.get("NEW", 0),
         },
