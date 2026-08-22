@@ -1,0 +1,240 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEJU-V1",
+  "section": "travel_utility",
+  "generated_at": "2026-08-22",
+  "city": "jeju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "기준일: 2026-08-22. 요금·운항·노선·시간은 변동 가능. 각 항목 review_by 기준 공식 source 재확인 필요.",
+
+  "utility_items": [
+    {
+      "utility_id": "jeju-U-001",
+      "category": "공항 → 제주시내 버스",
+      "title": "제주공항 → 제주시내 급행버스 (100번·110번)",
+      "summary": "제주국제공항 1층 출국장 앞 버스정류장. 100번·110번 급행버스로 제주시 주요 지점 이동. 600번 버스는 서귀포 방면 직행.",
+      "key_info": {
+        "100번": "제주공항 → 중문 → 서귀포 (약 60~80분, 3,000원 내외)",
+        "600번": "제주공항 → 중문관광단지 → 서귀포 버스터미널 (약 80분, 3,000원 내외)",
+        "교통카드_할인": "T-money 사용 시 약 100원 할인 및 환승 할인 적용"
+      },
+      "foreign_traveler_note": "T-money 교통카드 또는 현금 이용 가능. 버스 내 소지품 주의.",
+      "locale_availability": ["ko", "en"],
+      "provider": "제주특별자치도 버스정보시스템",
+      "source_url": "https://bus.jeju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·노선번호 변동 가능. 출발 전 bus.jeju.go.kr 확인 권장."
+    },
+    {
+      "utility_id": "jeju-U-002",
+      "category": "렌터카",
+      "title": "제주 렌터카 (사실상 필수 교통수단)",
+      "summary": "제주는 대중교통만으로는 오름·중산간·해안 명소 접근이 제한적. 렌터카가 사실상 필수. 제주공항 인근 렌터카 업체 밀집. 사전 예약 강력 권장 (성수기 매진 빠름).",
+      "key_info": {
+        "국제면허": "국제운전면허증(IDP) 필수. 본국 면허증 동시 지참",
+        "예약": "한국 주요 렌터카(롯데, SK, 제주렌터카 등) 사전 예약",
+        "주의사항": "제주 도심·주요 관광지 성수기 주차 혼잡. 내비게이션 필수.",
+        "내비": "카카오내비·T맵 한국어/영어 모드 지원"
+      },
+      "foreign_traveler_note": "국제운전면허증(IDP)과 본국 면허증 반드시 소지. 한국은 좌측통행 아님 (우측 통행).",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "provider": "한국렌터카사업조합 / 제주렌터카협회",
+      "source_url": "https://www.visitjeju.net/en/map-brochure/rent-car",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-003",
+      "category": "시내·간선·순환버스",
+      "title": "제주 버스 노선 체계",
+      "summary": "제주 버스는 급행(100번대)·간선(200~300번대)·지선(400~500번대)·순환(800번대)으로 구성. 제주시↔서귀포 간선 및 주요 관광지 연결. 버스 이용 시 카카오버스 앱 추천.",
+      "key_info": {
+        "급행버스": "100, 110, 120번대 — 주요 간선 급행",
+        "간선버스": "200~370번대 — 제주시/서귀포 지역 연결",
+        "지선버스": "400~500번대 — 마을·소규모 관광지",
+        "관광순환": "810번 — 서귀포 관광지 순환 (중문관광단지 방면)",
+        "기본요금": "1,200원 (카드 기준, 2025년 기준, 변동 가능)",
+        "환승": "T-money 카드 30분 이내 1회 환승 할인"
+      },
+      "foreign_traveler_note": "제주버스 앱·카카오버스에서 영어 노선 확인 가능.",
+      "locale_availability": ["ko", "en"],
+      "provider": "제주특별자치도 버스정보시스템",
+      "source_url": "https://bus.jeju.go.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-004",
+      "category": "택시",
+      "title": "제주 택시 이용 안내",
+      "summary": "제주시·서귀포시 전역 일반 택시·콜택시 이용 가능. 카카오T 앱 호출 가능. 공항·주요 관광지 앞 택시 상시 대기.",
+      "key_info": {
+        "기본요금": "약 3,800원 (2025년 기준, 변동 가능)",
+        "공항→서귀포": "약 40,000~50,000원 (거리에 따라 상이)",
+        "카카오T": "앱 호출 — 외국인도 신용카드 결제 가능",
+        "관광택시": "외국어 가능 관광 택시 사전 예약 가능 (한국국제관광택시 intltaxi.co.kr)"
+      },
+      "foreign_traveler_note": "기사님과 한국어 소통 어려울 경우 목적지를 한국어로 쓴 메모 활용 또는 카카오T 앱 사용 권장.",
+      "locale_availability": ["ko"],
+      "provider": "제주특별자치도 / 한국국제관광택시",
+      "source_url": "https://www.intltaxi.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-005",
+      "category": "우도 여객선",
+      "title": "성산포항 → 우도 여객선",
+      "summary": "우도 방문은 성산포항 여객선 필수. 일 다수 편 운항. 우도 내 자전거·전동킥보드·전기차 대여 이용 가능.",
+      "key_info": {
+        "출발지": "성산포항 연안여객터미널",
+        "소요시간": "약 15분",
+        "왕복요금": "성인 약 6,500~7,000원 (우도 입도세 포함, 변동 가능)",
+        "운항횟수": "1일 다수 편 (첫 배~마지막 배 계절별 상이)",
+        "우도내_이동": "자전거·전동킥보드·전기차 대여 (섬 내 개인차량 반입 원칙적 금지)"
+      },
+      "foreign_traveler_note": "성수기 선착순 탑승 대기 있음. 이른 시간 출발 권장. 현장 발권 또는 온라인 예약.",
+      "locale_availability": ["ko"],
+      "provider": "우도 여객선 운항사 (성산항 여객선 터미널)",
+      "source_url": "https://www.udoferry.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·운항 편수·시간 계절별 변동. 출발 전 확인 필수."
+    },
+    {
+      "utility_id": "jeju-U-006",
+      "category": "마라도 여객선",
+      "title": "모슬포항 → 마라도 여객선",
+      "summary": "한국 최남단 마라도(천연기념물)는 모슬포항 출발 여객선 이용. 소규모 섬 방문 특수 경험.",
+      "key_info": {
+        "출발지": "대정읍 모슬포항",
+        "소요시간": "약 25~30분",
+        "왕복요금": "성인 약 27,000원 전후 (2025년 기준, 변동 가능)",
+        "주의사항": "기상 악화 시 결항. 방문 전 운항 여부 확인 필수."
+      },
+      "foreign_traveler_note": "현장 발권. 섬 내 체류 시간 제한(선박 일정에 따름).",
+      "locale_availability": ["ko"],
+      "provider": "마라도 여객선 운항사",
+      "source_url": "https://www.visitjeju.net/en/see-do/island-tour",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "요금·운항 시간 변동 가능. 출발 전 확인 필수."
+    },
+    {
+      "utility_id": "jeju-U-007",
+      "category": "교통카드",
+      "title": "T-money 교통카드",
+      "summary": "제주 버스·일부 택시에서 T-money 교통카드 사용 가능. 편의점(세븐일레븐·CU 등)에서 구매·충전. 환승 할인 적용.",
+      "key_info": {
+        "구매가": "카드 발급 3,000원 + 충전 잔액",
+        "사용처": "제주 시내버스·급행버스. 일부 택시.",
+        "충전": "제주공항 편의점·지하철역 무인단말기",
+        "환승할인": "버스 간 30분 이내 1회 환승 할인"
+      },
+      "foreign_traveler_note": "한국 전국 대중교통(서울·부산 등 모두) 공통 사용. 제주 방문 후 서울 등 타 도시 이동 시 계속 사용 가능.",
+      "locale_availability": ["ko", "en"],
+      "provider": "한국스마트카드 (T-money)",
+      "source_url": "https://www.t-money.co.kr",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-008",
+      "category": "관광안내소",
+      "title": "제주 관광안내소",
+      "summary": "제주국제공항 1층·제주시청·서귀포시청·중문관광단지 등 주요 거점에 관광안내소 운영. 한국어·영어·일본어·중국어 안내 가능.",
+      "key_info": {
+        "제주공항": "제주국제공항 1층 도착홀 내. 연중 운영.",
+        "제주시": "제주시 관음사 관광안내소 등",
+        "서귀포": "서귀포시 중심가 관광안내소",
+        "중문": "중문관광단지 안내소"
+      },
+      "foreign_traveler_note": "지도·가이드북 무료 배포. 숙소·관광지 정보 상담.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "provider": "제주관광공사 / 제주특별자치도",
+      "source_url": "https://www.visitjeju.net/en/plan/visitor-center",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-009",
+      "category": "관광 전화 안내",
+      "title": "1330 한국관광공사 관광안내전화",
+      "summary": "24시간 연중무휴 관광안내 전화. 한국어·영어·일본어·중국어 지원.",
+      "key_info": {
+        "번호": "1330 (국내 통화)",
+        "국제전화": "+82-2-1330",
+        "운영": "24시간 연중무휴",
+        "언어": "KO / EN / JA / ZH-CN"
+      },
+      "foreign_traveler_note": "긴급 관광 민원·통역 지원도 가능.",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "provider": "한국관광공사",
+      "source_url": "https://www.visitkorea.or.kr/intro/cs/cs_01_01.kto",
+      "as_of": "2026-08-22",
+      "review_by": "2028-01-01"
+    },
+    {
+      "utility_id": "jeju-U-010",
+      "category": "제주 올레 여권",
+      "title": "제주올레 여권 (Olle Passport)",
+      "summary": "제주올레 공식 운영 스탬프 수첩. 27개 코스 시작점·종착점 스탬프 보관함에서 날인. 올레 탐방 기념품으로 인기.",
+      "key_info": {
+        "구매처": "제주올레 여행자센터 (제주시·서귀포 등 올레 안내소)",
+        "가격": "약 3,000원 내외 (변동 가능)",
+        "스탬프": "각 코스 출발점·종착점 보관함에서 자유 날인",
+        "완주증": "전 코스 완주 시 완주 인증서 신청 가능"
+      },
+      "foreign_traveler_note": "외국인 올레 도전자에게 기념 아이템. 영어 설명 삽입.",
+      "locale_availability": ["ko", "en", "ja"],
+      "provider": "사단법인 제주올레",
+      "source_url": "https://www.jejuolle.org/en/jeju-olle-passport",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    },
+    {
+      "utility_id": "jeju-U-011",
+      "category": "세금환급 (Tax Refund)",
+      "title": "외국인 관광객 부가세 환급 (Tax Refund)",
+      "summary": "외국인 관광객은 사후 면세점(Tax Free) 표시 가게에서 구매 시 부가가치세(VAT 10%) 환급 가능. 출국 전 공항 세관 창구에서 처리.",
+      "key_info": {
+        "최소금액": "1회 구매 30,000원 이상",
+        "조건": "구매일로부터 3개월 이내 출국",
+        "환급처": "제주국제공항 출국장 세관 환급 창구",
+        "표시": "Tax Free 로고 매장에서만 가능"
+      },
+      "foreign_traveler_note": "여권 지참 필수. 환급 금액 제한 없음(금액에 따라 즉시 환급 또는 우편 환급).",
+      "locale_availability": ["ko", "en", "ja", "zh-CN"],
+      "provider": "한국 기획재정부 / 세관",
+      "source_url": "https://www.visitkorea.or.kr/intro/si/si_2_3_2.kto",
+      "as_of": "2026-08-22",
+      "review_by": "2028-01-01"
+    },
+    {
+      "utility_id": "jeju-U-012",
+      "category": "짐 보관·배송",
+      "title": "제주공항 수하물 보관 서비스",
+      "summary": "제주국제공항 내 코인로커 및 수하물 보관 서비스 운영. 당일 이동 중 짐 보관 가능.",
+      "key_info": {
+        "위치": "제주국제공항 1층 (입국홀·출발홀 인근)",
+        "요금": "코인로커 1,000~3,000원/시간 (크기별, 변동 가능)",
+        "운영시간": "공항 운영 시간 내 (연중)",
+        "배송서비스": "숙소↔공항 짐 배송 서비스 일부 업체 운영 (공항 내 안내 데스크 확인)"
+      },
+      "foreign_traveler_note": "짐 없이 제주 탐방 후 귀국 당일 짐 찾기 가능.",
+      "locale_availability": ["ko"],
+      "provider": "제주국제공항 (한국공항공사)",
+      "source_url": "https://www.airport.co.kr/jeju/main.do",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    }
+  ],
+
+  "utility_count": 12,
+  "locale_coverage_summary": {
+    "ko": "전 항목 (12/12)",
+    "en": "버스·렌터카·교통카드·관광안내소·1330·Tax Refund (6/12)",
+    "ja": "렌터카·관광안내소·1330·올레여권·Tax Refund (5/12)",
+    "zh-CN": "렌터카·관광안내소·1330·Tax Refund (4/12)"
+  }
+}

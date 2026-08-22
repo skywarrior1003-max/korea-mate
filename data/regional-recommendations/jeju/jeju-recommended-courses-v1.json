@@ -1,0 +1,313 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEJU-V1",
+  "section": "recommended_courses",
+  "generated_at": "2026-08-22",
+  "city": "jeju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "as_of_note": "기준일: 2026-08-22. 공식 source(VisitJeju·제주올레·한라산국립공원) 기준 추천코스. 현장 운영 일정·입산 통제 정보는 방문 전 각 공식 기관에서 재확인 필요.",
+
+  "final_recommended_courses": [
+    {
+      "course_id": "jeju-C-001",
+      "status": "FINAL",
+      "name_ko": "제주 올레 7코스 (외돌개~월평 포구)",
+      "name_en": "Jeju Olle Trail Course 7 (Oedolgae to Wollang Port)",
+      "theme": "서귀포 해안 절경 트레킹",
+      "traveler_fit": "트레킹 경험자, 해안 절벽·해안선 경관 선호, 장거리 도보 가능",
+      "recommended_reason": "제주올레 공식 운영 대표 해안 코스. 기암절벽 외돌개 출발, 서귀포 해안선을 따라 17.6km를 걷는 코스. 탁 트인 바다·절벽·포구를 지나는 제주 해안 트레킹의 정수. 공식 스탬프 보관함 운영. 제주올레길 27개 코스 중 인지도 최상위.",
+      "program_type": "제주올레 공식 운영 코스 (무료, 가이드 없음, 개인 자유 탐방)",
+      "duration": "약 5~6시간 (17.6km)",
+      "distance_km": 17.6,
+      "days": 1,
+      "difficulty": "중급 (해안 절벽 구간·일부 급경사 포함)",
+      "seasonality": "연중 가능 (봄·가을 최적. 여름 오전 이른 출발 권장. 태풍 시즌 주의)",
+      "access_from_jeju_city": "외돌개까지 시내버스 또는 택시 이용 (서귀포 방면)",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "외돌개 (출발점)",
+          "name_en": "Oedolgae Rock (start)",
+          "note": "화산 용암이 굳어 형성된 기암절벽. 코스 출발 지점. 주차장·화장실 완비.",
+          "existing_canonical_id": "jeju-CNTS_000000000018409",
+          "id_note": "외돌개 canonical 확인: jeju-CNTS_000000000018409 (attraction, ACTIVE)"
+        },
+        {
+          "order": 2,
+          "name_ko": "서귀포 해안선 (구간)",
+          "name_en": "Seogwipo Coastline (route section)",
+          "note": "서귀포 해안 절벽·포구를 따라 이동. 법환포구 포함.",
+          "existing_canonical_id": null,
+          "id_note": "서귀포 해안 구간 area 개념 — RELATION_OR_AREA_ONLY"
+        },
+        {
+          "order": 3,
+          "name_ko": "법환포구",
+          "name_en": "Beophwan Port",
+          "note": "코스 중간 포구. 쉬어가는 지점.",
+          "existing_canonical_id": null,
+          "id_note": "법환포구 별도 canonical 미확인"
+        },
+        {
+          "order": 4,
+          "name_ko": "월평 포구 (종착점)",
+          "name_en": "Wollang Port (end)",
+          "note": "올레 7코스 종착지. 이후 버스 또는 택시로 이동.",
+          "existing_canonical_id": null,
+          "id_note": "월평 포구 별도 canonical 미확인"
+        }
+      ],
+      "course_canonical_ref": {
+        "name_ko": "제주올레길7코스",
+        "existing_canonical_id": "jeju-CNTS_000000000020299",
+        "id_note": "제주올레길7코스 canonical 확인: jeju-CNTS_000000000020299 (attraction, ACTIVE)"
+      },
+      "id_linkage_summary": {
+        "total_stops": 4,
+        "linked": 1,
+        "course_level_linked": 1,
+        "unlinked_canonical_not_found": 3,
+        "new_place_candidates": 0,
+        "note": "외돌개(stop1) EXACT + 제주올레길7코스(course-level) EXACT. 해안 구간·법환·월평은 area/포구 개념으로 canonical 미포함."
+      },
+      "olle_info": {
+        "official_course_number": 7,
+        "passport_stamp": "올레 여권 스탬프 2개 (출발·종착 보관함)",
+        "route_grade": "보통",
+        "signage": "파란 화살표·간세(조랑말 모양 표지)",
+        "access_app": "제주올레 공식 앱"
+      },
+      "source": {
+        "provider": "제주올레 (Jeju Olle)",
+        "source_url": "https://www.jejuolle.org/course-info/course7",
+        "as_of": "2026-08-22",
+        "review_by": "2027-03-01",
+        "note": "코스 경로·거리·소요 시간은 jejuolle.org에서 재확인 권장"
+      }
+    },
+    {
+      "course_id": "jeju-C-002",
+      "status": "FINAL",
+      "name_ko": "한라산 영실 고산 트레킹",
+      "name_en": "Hallasan Yeongsil Alpine Trail",
+      "theme": "한라산 영실기암·고산식물·윗세오름",
+      "traveler_fit": "트레킹 경험자, 한라산 고산 풍경 선호, 백록담 정상보다 고산식물·기암 풍경 선호",
+      "recommended_reason": "한라산 국립공원 공식 탐방로. 영실기암(병풍바위·오백나한)을 지나 윗세오름 대피소까지 이어지는 3.7km 코스. 정상 백록담 미도달이나 고산식물 군락·전망대 조망 탁월. 성판악 정상 코스 대비 소요 시간 절반 이하로 접근성 우수.",
+      "program_type": "한라산 국립공원 공식 탐방코스 (무료 탐방, 입산 시간 제한 있음)",
+      "duration": "약 5~6시간 (왕복, 영실주차장 기준 7.4km)",
+      "distance_km": 7.4,
+      "days": 1,
+      "difficulty": "중급 (급경사 구간, 하강 시 주의)",
+      "seasonality": "연중 (봄 철쭉 4~5월, 여름 고산식물, 가을 단풍 최인기. 겨울 아이젠 필수)",
+      "access_from_jeju_city": "영실주차장까지 대중교통 매우 제한적 — 렌터카 또는 택시 강력 권장",
+      "important_notice": "입산 시간 엄수. 하절기(6~8월) 영실탐방로 당일 입산 마감 시간 공식 홈페이지 확인 필수. 기상 악화 시 통제.",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "영실탐방안내소 (출발점)",
+          "name_en": "Yeongsil Visitor Center (start)",
+          "note": "탐방 신고 및 출발. 화장실·매점 완비.",
+          "existing_canonical_id": "jeju-CNTS_000000000019973",
+          "id_note": "한라산국립공원영실탐방로 canonical 확인: jeju-CNTS_000000000019973 (attraction, ACTIVE)"
+        },
+        {
+          "order": 2,
+          "name_ko": "영실기암 (병풍바위·오백나한)",
+          "name_en": "Yeongsil Rocks (Byeongpung Bawi / Obaek Nahan)",
+          "note": "수직 화산암벽 절경. 제주 국가지정 명승 제91호.",
+          "existing_canonical_id": null,
+          "id_note": "영실기암 area 개념 — canonical 미포함. RELATION_OR_AREA_ONLY"
+        },
+        {
+          "order": 3,
+          "name_ko": "윗세오름 대피소 (종착·회귀점)",
+          "name_en": "Witseoreum Shelter (turnaround point)",
+          "note": "1,700m 고지 대피소. 전망 탁월. 간식 판매. 이후 영실 방향 하산.",
+          "existing_canonical_id": null,
+          "id_note": "윗세오름 대피소 별도 canonical 미확인"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 3,
+        "linked": 1,
+        "unlinked_canonical_not_found": 2,
+        "new_place_candidates": 0,
+        "note": "영실탐방로 EXACT 1. 영실기암(명승)·윗세오름대피소는 국립공원 내부 포인트로 canonical 미포함."
+      },
+      "source": {
+        "provider": "국립공원공단 한라산국립공원",
+        "source_url": "https://www.hallasan.go.kr/contents/info.php",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01",
+        "note": "입산 시간·통제 정보는 방문 전 hallasan.go.kr 공식 확인 필수"
+      }
+    },
+    {
+      "course_id": "jeju-C-003",
+      "status": "FINAL",
+      "name_ko": "제주 동부 유네스코 자연유산 1일 코스",
+      "name_en": "Jeju East — UNESCO World Natural Heritage Day Course",
+      "theme": "UNESCO 세계자연유산·용암동굴·일출봉·천연기념물 숲",
+      "traveler_fit": "일반 관광객, 세계자연유산 관심, 자유여행 렌터카",
+      "recommended_reason": "제주 대표 UNESCO 자연유산 3곳(성산일출봉·만장굴·비자림)을 1일에 묶는 VisitJeju 공식 추천 동부 투어. 성산일출봉(일출 명소·분화구 등반) → 섭지코지(해안 절경 옵션) → 만장굴(세계 최장 용암동굴 중 하나) → 비자림(국내 최대 비자나무 군락). 각 장소 이동 시 렌터카 필수.",
+      "program_type": "자유여행 렌터카 코스 (각 장소 개별 입장, 가이드 없음)",
+      "duration": "약 7~9시간 (렌터카 이동 포함)",
+      "days": 1,
+      "difficulty": "쉬움~보통 (성산일출봉 계단 포함)",
+      "seasonality": "연중 (성산일출봉 일출은 여름~가을 맑은 날 권장. 만장굴 연중 쾌적)",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "성산일출봉 (UNESCO 세계자연유산)",
+          "name_en": "Seongsan Ilchulbong (UNESCO World Natural Heritage)",
+          "note": "화산 분화구. 일출 명소. 정상 전망대 등반. 입장료 있음.",
+          "address": "제주 서귀포시 성산읍 성산리 1",
+          "admission": "성인 5,000원 (2025년 기준, 재확인 필요)",
+          "existing_canonical_id": "jeju-CONT_000000000500349",
+          "id_note": "성산일출봉 canonical 확인: jeju-CONT_000000000500349 (attraction, ACTIVE)"
+        },
+        {
+          "order": 2,
+          "name_ko": "섭지코지 (옵션)",
+          "name_en": "Seopjikoji (optional stop)",
+          "note": "성산 인근 해안 절경. 드라마 촬영지. 약 30~40분 산책. 이동 시 성산에서 차로 10분.",
+          "existing_canonical_id": "jeju-CONT_000000000500343",
+          "id_note": "섭지코지 canonical 확인: jeju-CONT_000000000500343 (attraction, ACTIVE)"
+        },
+        {
+          "order": 3,
+          "name_ko": "만장굴 (UNESCO 거문오름 용암동굴계)",
+          "name_en": "Manjanggul Cave (UNESCO Geomunoreum Lava Tube System)",
+          "note": "세계 최장급 용암동굴. 1km 공개 구간. 연중 쾌적(동굴 내부 15°C). 입장료 있음.",
+          "address": "제주 제주시 구좌읍 만장굴길 182",
+          "admission": "성인 4,000원 (2025년 기준, 재확인 필요)",
+          "existing_canonical_id": "jeju-CONT_000000000500182",
+          "id_note": "만장굴 canonical 확인: jeju-CONT_000000000500182 (attraction, ACTIVE)"
+        },
+        {
+          "order": 4,
+          "name_ko": "비자림 (천연기념물 제374호)",
+          "name_en": "Bijarim Forest (Natural Monument No. 374)",
+          "note": "국내 최대 비자나무 군락 숲길. 약 1~2시간 산책. 숲속 피톤치드. 입장료 있음.",
+          "address": "제주 제주시 구좌읍 비자숲길 62",
+          "admission": "성인 3,000원 (2025년 기준, 재확인 필요)",
+          "existing_canonical_id": "jeju-CONT_000000000500270",
+          "id_note": "비자림 canonical 확인: jeju-CONT_000000000500270 (attraction, ACTIVE)"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 4,
+        "linked": 4,
+        "unlinked_canonical_not_found": 0,
+        "new_place_candidates": 0,
+        "note": "4개 stop 모두 EXACT canonical 연결. 성산일출봉·만장굴·섭지코지·비자림 ACTIVE."
+      },
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/more/itinerary",
+        "as_of": "2026-08-22",
+        "review_by": "2027-03-01"
+      }
+    }
+  ],
+
+  "reserve_courses": [
+    {
+      "course_id": "jeju-C-R01",
+      "status": "RESERVE",
+      "name_ko": "사려니숲길 + 용눈이오름 동부 중산간 코스",
+      "name_en": "Saryeoni Forest + Yongnuni Oreum — East Midland Course",
+      "theme": "제주 중산간 숲길·오름 탐방",
+      "traveler_fit": "자연·숲 선호, 중급 트레커, 가족 단위",
+      "recommended_reason": "사려니숲길(제주 대표 삼나무숲)과 동부 오름 대표 용눈이오름(분화구 능선 조망)을 묶는 중산간 반나절 코스. 두 곳 모두 제주 공식 추천 명소.",
+      "program_type": "자유여행 렌터카 코스 (탐방로 공식 운영)",
+      "duration": "반나절~하루 (4~6시간)",
+      "days": 0.5,
+      "difficulty": "보통 (사려니숲 평탄, 용눈이오름 경사 있음)",
+      "seasonality": "연중 (봄·가을 최적. 사려니숲 여름 녹음 뛰어남)",
+      "reserve_reason": "FINAL 코스 3개(올레·한라산·동부 유산)와 성격 중복 최소화. FINAL 승격 가능.",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "사려니숲길",
+          "name_en": "Saryeoni Forest Road",
+          "note": "삼나무·편백 숲길 약 15km (전 구간 탐방 시), 단거리 코스도 가능. 무료.",
+          "existing_canonical_id": "jeju-CONT_000000000500281",
+          "id_note": "사려니숲길 canonical 확인: jeju-CONT_000000000500281 (attraction, ACTIVE)"
+        },
+        {
+          "order": 2,
+          "name_ko": "용눈이오름",
+          "name_en": "Yongnuni Oreum",
+          "note": "제주 동부 대표 오름. 분화구·능선 조망. 무료.",
+          "existing_canonical_id": "jeju-CONT_000000000500466",
+          "id_note": "용눈이오름 canonical 확인: jeju-CONT_000000000500466 (attraction, ACTIVE)"
+        }
+      ],
+      "id_linkage_summary": {
+        "total_stops": 2,
+        "linked": 2,
+        "unlinked_canonical_not_found": 0,
+        "new_place_candidates": 0
+      },
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/more/itinerary",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01"
+      }
+    },
+    {
+      "course_id": "jeju-C-R02",
+      "status": "RESERVE",
+      "name_ko": "우도 당일 섬 투어",
+      "name_en": "Udo Island Day Tour",
+      "theme": "제주 부속 섬·우도봉·홍조단괴해빈",
+      "traveler_fit": "섬 투어 선호, 자전거/전기차 체험, 독특한 경관",
+      "recommended_reason": "제주 성산포항 출발 여객선으로 약 15분 이동. 우도봉 등반·비양도 조망·홍조단괴해빈(독특한 분홍빛 백사장) 등 제주 부속 섬 특유의 경관. 섬 내 자전거·전동킥보드·전기차 대여 이용 가능.",
+      "program_type": "여객선 이동 후 자유탐방 (우도면, 독립 운영)",
+      "duration": "당일 (4~6시간, 여객선 포함)",
+      "days": 1,
+      "difficulty": "쉬움 (우도봉 등반 포함 시 보통)",
+      "seasonality": "연중 (여름 성수기 매우 혼잡. 이른 첫 배 권장)",
+      "reserve_reason": "성산일출봉 동부 코스(C-003)와 출발지 중복. 별도 일정 확보 필요. RESERVE.",
+      "stops": [
+        {
+          "order": 1,
+          "name_ko": "우도봉 (등반)",
+          "name_en": "Udong Peak (hike)",
+          "note": "우도 최고봉(132m). 비양도·한라산 조망. 이호이호 등대 포함.",
+          "existing_canonical_id": "jeju-CNTS_000000000022519",
+          "id_note": "우도봉 canonical 확인: jeju-CNTS_000000000022519 (attraction, ACTIVE)"
+        },
+        {
+          "order": 2,
+          "name_ko": "서빈백사해수욕장 (홍조단괴해빈)",
+          "name_en": "Seobinbaeksa Beach (coral sand beach)",
+          "note": "분홍빛 홍조단괴 백사장. 천연기념물 제438호.",
+          "existing_canonical_id": null,
+          "id_note": "서빈백사 별도 canonical 미확인 — RELATION_OR_AREA_ONLY"
+        }
+      ],
+      "ferry_info": {
+        "departure": "성산포항 여객선터미널",
+        "operator": "성산~우도 여객선 (운항사 확인 필요)",
+        "duration_min": "약 15분",
+        "review_by": "2027-01-01",
+        "source_url": "https://www.udoferry.co.kr"
+      },
+      "id_linkage_summary": {
+        "total_stops": 2,
+        "linked": 1,
+        "unlinked_canonical_not_found": 1,
+        "new_place_candidates": 0,
+        "note": "우도봉 EXACT. 서빈백사는 area/해수욕장 개념으로 canonical 미포함."
+      },
+      "source": {
+        "provider": "VisitJeju / 제주관광공사",
+        "source_url": "https://www.visitjeju.net/en/attractions/beaches",
+        "as_of": "2026-08-22",
+        "review_by": "2027-01-01"
+      }
+    }
+  ]
+}

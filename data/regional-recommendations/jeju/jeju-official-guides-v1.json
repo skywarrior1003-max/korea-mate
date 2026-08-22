@@ -1,0 +1,145 @@
+{
+  "task": "TASK-REGIONAL-RECOMMENDATIONS-JEJU-V1",
+  "section": "official_guides",
+  "generated_at": "2026-08-22",
+  "city": "jeju",
+  "policy": "OWNER_APPROVED_PUBLIC_SOURCE_USE_WITH_ATTRIBUTION_AND_TAKEDOWN",
+  "locale_note": "KO/EN/JA/ZH-CN 공식 콘텐츠만 포함. 언어 버튼만 존재하고 실제 localized content 없는 경우 제외. Google Translate 결과는 official locale로 불인정.",
+  "as_of": "2026-08-22",
+
+  "guides": [
+    {
+      "guide_id": "jeju-G-001",
+      "title": "VisitJeju 공식 관광 가이드 (KO)",
+      "locale": "ko",
+      "type": "웹 가이드 / 공식 관광 정보",
+      "provider": "제주관광공사 (Jeju Tourism Organization)",
+      "content_scope": "제주 관광명소·음식·숙박·교통·축제 종합 정보",
+      "access_url": "https://www.visitjeju.net/ko",
+      "download_available": false,
+      "format": "웹사이트",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "visitjeju.net 공식 한국어 홈페이지. 상시 업데이트."
+    },
+    {
+      "guide_id": "jeju-G-002",
+      "title": "VisitJeju Official Travel Guide (EN)",
+      "locale": "en",
+      "type": "Web Guide / Official Tourism Information",
+      "provider": "Jeju Tourism Organization (제주관광공사)",
+      "content_scope": "Jeju attractions, food, accommodation, transportation, festivals",
+      "access_url": "https://www.visitjeju.net/en",
+      "download_available": false,
+      "format": "Website (native EN content)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "visitjeju.net/en independent English content, not Google Translate."
+    },
+    {
+      "guide_id": "jeju-G-003",
+      "title": "VisitJeju 公式旅行ガイド (JA)",
+      "locale": "ja",
+      "type": "ウェブガイド / 公式観光情報",
+      "provider": "済州観光公社 (Jeju Tourism Organization)",
+      "content_scope": "済州の観光地・グルメ・交通・イベント情報",
+      "access_url": "https://www.visitjeju.net/jp",
+      "download_available": false,
+      "format": "Website (native JA content)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "visitjeju.net/jp 독립 일본어 콘텐츠."
+    },
+    {
+      "guide_id": "jeju-G-004",
+      "title": "VisitJeju 官方旅游指南 (ZH-CN)",
+      "locale": "zh-CN",
+      "type": "网络指南 / 官方旅游信息",
+      "provider": "济州旅游公社 (Jeju Tourism Organization)",
+      "content_scope": "济州景点·美食·交通·节庆综合信息",
+      "access_url": "https://www.visitjeju.net/zh-cn",
+      "download_available": false,
+      "format": "Website (native ZH-CN content)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01",
+      "freshness_note": "visitjeju.net/zh-cn 독립 중국어 간체 콘텐츠."
+    },
+    {
+      "guide_id": "jeju-G-005",
+      "title": "제주 관광지도 (다국어)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en", "ja", "zh-CN"],
+      "type": "관광지도 (PDF / 인쇄물)",
+      "provider": "제주관광공사",
+      "content_scope": "제주 주요 관광명소 위치 지도, 지역별 구분",
+      "access_url": "https://www.visitjeju.net/ko/bbs/list?id=BSSUBDEST0000000001",
+      "download_available": true,
+      "format": "PDF / 인쇄물 배부 (공항·관광안내소)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-03-01",
+      "freshness_note": "연 1~2회 개정. 최신판 확인 권장."
+    },
+    {
+      "guide_id": "jeju-G-006",
+      "title": "Jeju Olle 공식 코스 지도 (KO/EN/JA/ZH)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en", "ja", "zh-CN"],
+      "type": "트레킹 코스 지도",
+      "provider": "사단법인 제주올레 (Jeju Olle Inc.)",
+      "content_scope": "27개 올레 코스 상세 지도·거리·난이도·주요 포인트",
+      "access_url": "https://www.jejuolle.org/en/course",
+      "access_url_ko": "https://www.jejuolle.org/ko/course",
+      "access_url_ja": "https://www.jejuolle.org/jp/course",
+      "download_available": true,
+      "format": "PDF + 웹 + 현장 배부 (올레 안내소)",
+      "as_of": "2026-08-22",
+      "review_by": "2027-03-01",
+      "freshness_note": "코스별 PDF 개별 다운로드 가능. 경로 변경 시 업데이트."
+    },
+    {
+      "guide_id": "jeju-G-007",
+      "title": "한라산 국립공원 탐방 안내 (KO/EN)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en"],
+      "type": "국립공원 탐방 안내도",
+      "provider": "국립공원공단 한라산국립공원관리소",
+      "content_scope": "5개 탐방로 상세 안내 (거리·소요시간·입산시간·주의사항)",
+      "access_url": "https://www.hallasan.go.kr/contents/info.php",
+      "download_available": true,
+      "format": "PDF + 웹 안내",
+      "as_of": "2026-08-22",
+      "review_by": "2026-12-01",
+      "freshness_note": "계절별 입산 시간 변동. 방문 전 공식 홈페이지 반드시 확인.",
+      "ja_zh_note": "JA/ZH 공식 PDF 현재 미확인. 웹사이트 KO/EN 위주."
+    },
+    {
+      "guide_id": "jeju-G-008",
+      "title": "VisitJeju 테마 가이드 — 음식관광 (KO/EN)",
+      "locale": "multi",
+      "locale_coverage": ["ko", "en"],
+      "type": "테마 음식 가이드",
+      "provider": "제주관광공사",
+      "content_scope": "제주 향토음식·해산물·전통시장·맛집 공식 추천",
+      "access_url": "https://www.visitjeju.net/en/food",
+      "format": "웹 + 배포 자료",
+      "as_of": "2026-08-22",
+      "review_by": "2027-01-01"
+    }
+  ],
+
+  "locale_coverage_summary": {
+    "ko": "VisitJeju KO(G-001) + 관광지도(G-005) + 올레(G-006) + 한라산(G-007) + 음식(G-008) = 5",
+    "en": "VisitJeju EN(G-002) + 관광지도(G-005) + 올레(G-006) + 한라산(G-007) + 음식(G-008) = 5",
+    "ja": "VisitJeju JA(G-003) + 올레(G-006) = 2 (한라산 JA 미확인)",
+    "zh-CN": "VisitJeju ZH(G-004) + 올레(G-006) = 2 (한라산 ZH 미확인)"
+  },
+
+  "guide_count_summary": {
+    "total": 8,
+    "ko": 5,
+    "en": 5,
+    "ja": 2,
+    "zh_cn": 2,
+    "multi": 3
+  }
+}
