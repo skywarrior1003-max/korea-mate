@@ -1,0 +1,29 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-105-COORDINATES-OFFICIAL-IMAGES-COMPLETION-V1",
+  "generated_at": "2026-08-22T14:13:58.645607+00:00",
+  "branch": "data/gyeongju-food-105-media-nav-completion-v1",
+  "source_food_branch": "data/gyeongju-food-105-multilingual-full-content-v1",
+  "source_food_sha": "a90fbed",
+  "food_universe": 105,
+  "identity_key": "vg_id",
+  "image_coverage": "105/105",
+  "image_coverage_complete": true,
+  "coord_kakao_official": 71,
+  "coord_geocoded": 33,
+  "coord_ready": 104,
+  "nav_ready": 71,
+  "nav_unresolved": 1,
+  "artifacts": {
+    "A_images": "data\\gyeongju-food-105-media-nav-completion-v1\\gyeongju-vg-food-105-official-images-v1.jsonl",
+    "B_coordinates": "data\\gyeongju-food-105-media-nav-completion-v1\\gyeongju-vg-food-105-coordinates-v1.jsonl",
+    "C_qa": "data\\gyeongju-food-105-media-nav-completion-v1\\gyeongju-vg-food-105-media-nav-qa-v1.json",
+    "D_manifest": "data\\gyeongju-food-105-media-nav-completion-v1\\gyeongju-vg-food-105-media-nav-manifest-v1.json"
+  },
+  "main_join_key": "vg_id",
+  "food_identity_changed": 0,
+  "multilingual_changed": 0,
+  "attraction_changed": 0,
+  "db_changed": 0,
+  "production_changed": 0,
+  "qa_result": "PASS"
+}

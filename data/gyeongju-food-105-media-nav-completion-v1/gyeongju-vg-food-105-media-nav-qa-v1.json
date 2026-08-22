@@ -1,0 +1,38 @@
+{
+  "task": "TASK-GYEONGJU-FOOD-105-COORDINATES-OFFICIAL-IMAGES-COMPLETION-V1",
+  "generated_at": "2026-08-22T14:13:58.645607+00:00",
+  "images": {
+    "rows": 105,
+    "unique_vg_id": 105,
+    "primary_image_ready": 105,
+    "primary_image_missing": 0,
+    "visitgyeongju_official_source": 105,
+    "image_coverage_105": true
+  },
+  "coordinates": {
+    "rows": 105,
+    "unique_vg_id": 105,
+    "kakao_official_count": 71,
+    "geocoded_count": 33,
+    "unresolved_count": 1,
+    "coord_ready_count": 104,
+    "nav_ready_count": 71,
+    "review_required_count": 34,
+    "outside_gyeongju_count": 0,
+    "coord_coverage_105": false
+  },
+  "identity": {
+    "food_universe_changed": 0,
+    "vg_id_changed": 0,
+    "multilingual_changed": 0,
+    "attraction_changed": 0
+  },
+  "assertions": {
+    "img_rows_eq_105": true,
+    "img_unique_vg_id_eq_105": true,
+    "coord_rows_eq_105": true,
+    "coord_unique_vg_id_eq_105": true,
+    "no_outside_gyeongju": true
+  },
+  "qa_result": "PASS"
+}
