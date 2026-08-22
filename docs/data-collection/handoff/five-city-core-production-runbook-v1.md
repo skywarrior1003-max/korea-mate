@@ -80,5 +80,12 @@ invariant: `NEW_PLACE_VISIBLE_BEFORE_STATIC_PAGE_EXISTS = 0` · DELETE 0 · id �
 - **snapshot 불변**: `--stage`/`--pre-stage-snapshot` 은 `pre-stage-match-snapshot-v1.<attempt>.jsonl` 을 `wx`(존재 시 EEXIST) 로만 쓴다. R2 before-Phase-A evidence `pre-stage-match-snapshot-v1.r2-before-phaseA-2026-08-22T115804Z.jsonl`(462행, sha256 10240f4f…, ops 브랜치 `ops/five-city-core-production-stage-v1-r2` 커밋)은 절대 덮어쓰지 않는다. R3 는 실행 직전 새 attempt snapshot 을 만든다(현재 DB = Phase A 반영 상태).
 - 경주 Food 교체 패키지 도착 전에는 stage plan 재생성·R3 실행 금지.
 
+### 6-1e. Phase A3 RESTORE_PRE_R2 (R3-RESTORE-WRITER-SUPPORT-V1) — old GJ08 Food retire 94 복구 후 PUBLISH hide
+- 의미: R2 Phase A 가 old erroneous GJ08 Food Final 값을 기존 행 94에 써버렸다. 새 active Final 에서 제외된 이 행들을 PUBLISH 전까지 공개 상태로 두므로 **R2 가 실제 바꾼 필드만 R2 historical snapshot(ops `3622e26`, sha `10240f4f…`) 의 before 값으로 복구**한다. old Food 를 Final 로 보존하는 것이 아니다(restore now → PUBLISH hide).
+- 입력: `<pkg>/five-city-r2-restore-plan-v1.jsonl`(94행, before 값 내장, source sha 고정). R2 적용값 기대치 = `--r2-plan-package`(기본 v1) plan writes. 이번 attempt 의 fresh snapshot 은 restore source 가 아니다.
+- 순서: Phase A(MATCH 368 = A1 360 keep + A2 8 VisitGyeongju 교체) → **A3 restore 94** → B NEW → C/D/E. A2/A3 target overlap 0 검사. allowlist = plan restore_fields ∩ SOURCE_FIELDS(실측 12: address·category·desc_l10n·description·district·image_url·lat·lng·name·name_l10n·official_url·subcategory). id/source_type/external_id/is_published/runtime 필드 payload 금지.
+- 행 분류: 현재 값 == R2 적용값 → NEEDS_RESTORE(PATCH) · == snapshot before → ALREADY_RESTORED(no-op) · 그 외 → DRIFT_DETECTED(쓰기 0) · id/bridge(`gyeongju-city:<old canonical>`) 불일치 → IDENTITY_MISMATCH · R2 기대치 없음 → SNAPSHOT_MISSING. drift/mismatch/missing/failed 가 1이라도 있으면 Phase B 진입 금지.
+- per-row PATCH(return=representation 검증, is_published 불변) · receipt 즉시 append(phase RESTORE_PRE_R2, row id, payload sha, state) · 실패 시 failure receipt + StageRestError(id/HTTP/code) · 재실행 시 이미 복구된 행은 ALREADY_RESTORED.
+
 ### 6-2. 구현
 `stage-relations.ts`(resolveRelationTargets · preflightRelations · syncSourcesChunk · syncImagesChunk) · `stage-safety.ts`(buildPreStageSnapshot · chunkReceipt · readUserTableCounts/userCountsDiff · verifyNewUnpublished) · importer `--stage` Phase A(MATCH PATCH)→B(NEW lookup-before-insert, false)→C(sources, actual id)→D(images, Final source_id)→E(verify: DB count·NEW false 사후검증·사용자 테이블 count pre==post) + `stage-chunk-receipts-v1.jsonl` + `stage-receipt-v1.json` + `pre-stage-match-snapshot-v1.jsonl`(`--pre-stage-snapshot` READ-ONLY 모드). partial unique 는 lookup-first, full unique 는 conflict 재조회. 가드 8종 전부 통과해야 write.

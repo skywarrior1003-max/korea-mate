@@ -43,7 +43,7 @@ export async function buildPreStageSnapshot(f: FetchLike, t: RestTarget, updates
 
 /** chunk receipt — phase 별 결정적 기록(시각은 호출자가 준다) */
 export interface ChunkReceipt {
-  phase: "MATCH_CITY_SPOTS" | "NEW_CITY_SPOTS" | "SOURCES" | "IMAGES" | "VERIFY"; chunk_index: number; expected: number; looked_up: number; reused: number; updated: number; inserted: number; unchanged: number; suppressed: number; failed: number; retry_count: number; content_sha256: string; timestamp: string;
+  phase: "MATCH_CITY_SPOTS" | "RESTORE_PRE_R2" | "NEW_CITY_SPOTS" | "SOURCES" | "IMAGES" | "VERIFY"; chunk_index: number; expected: number; looked_up: number; reused: number; updated: number; inserted: number; unchanged: number; suppressed: number; failed: number; retry_count: number; content_sha256: string; timestamp: string;
   // STAGE-INSERT-WRITER-FIX-V1: attempt 식별 · subgroup 단위 · HTTP/PostgREST 오류(secret/payload 없음)
   attempt?: string; subgroup_index?: number | null; key_signature_sha256?: string | null; request_rows?: number; http_status?: number | null; error_code?: string | null; error_message?: string | null;
 }

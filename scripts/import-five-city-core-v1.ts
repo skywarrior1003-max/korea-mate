@@ -18,6 +18,9 @@
  * (8) repo runtime contract DISCOVERY_VISIBILITY_GATE_ENABLED === true (9) pre-stage snapshot 은 STAGE 직전 항상 새로 생성(462 = MATCH 전체, stale 재사용 없음)
  *     — attempt 별 불변 파일명(pre-stage-match-snapshot-v1.<attempt>.jsonl, flag wx) 로 쓴다: 과거 attempt 의 before-state(R2 before-Phase-A 등)는 절대 덮어쓰지 않는다.
  * (10) NEW bulk INSERT 는 key-set subgroup 별 요청(PGRST102 회피) · chunk/subgroup receipt 는 즉시 append-only JSONL(stage-chunk-receipts-v1.<attempt>.jsonl) · 실패 시 stage-failure-v1.<attempt>.json
+ * (11) Phase A3 RESTORE_PRE_R2 (R3-RESTORE-WRITER-SUPPORT-V1): <pkg>/five-city-r2-restore-plan-v1.jsonl 이 있으면 Phase A(MATCH) 뒤·Phase B(NEW) 앞에 실행.
+ *      restore source = R2 historical snapshot 값(plan 에 내장, ops 3622e26 sha 고정) — 이번 attempt 의 fresh snapshot 은 restore source 가 아니다.
+ *      R2 적용값 기대치는 --r2-plan-package(기본 five-city-core-v1)의 plan writes 에서 계산. drift/identity mismatch/failed 가 1이라도 있으면 Phase B 진입 금지.
  * 057/058(index 존재/부재)은 PostgREST 로 introspection 불가 → importer 가드가 아니라 runbook §6-1a 의 READ-ONLY PRECHECK(SQL Editor/Management API SELECT)로 STAGE 직전 사람이 확인한다.
  * (8) relation preflight 충돌 0 — 전부 맞아야 한다. DELETE 기능 없음. 사용자 테이블은 count 만 읽는다. secrets 출력 없음.
  */
@@ -32,6 +35,8 @@ import { stageInsertChunkSafe, stageUpdateRow, StageRestError, type FetchLike } 
 import { resolveRelationTargets, preflightRelations, syncSourcesChunk, syncImagesChunk } from "../src/lib/main-intake/stage-relations.ts";
 import { buildPreStageSnapshot, assertSnapshotComplete, chunkReceipt, receiptsSha, readUserTableCounts, userCountsDiff, verifyNewUnpublished, appendReceiptLine, attemptId, snapshotAttemptFilename, writeImmutableFile, type ChunkReceipt } from "../src/lib/main-intake/stage-safety.ts";
 import { DISCOVERY_VISIBILITY_GATE_ENABLED } from "../src/lib/city-spots-visibility.ts";
+import { stageRestoreChunk, validateRestorePlan, restoreAllowsNextPhase, type RestorePlanRow } from "../src/lib/main-intake/stage-restore.ts";
+import { StageIdentityError } from "../src/lib/main-intake/stage-rest-writer.ts";
 import { chunk } from "../src/lib/city-spots-paging.ts";
 
 function arg(name: string): string | undefined { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : undefined; }
@@ -182,6 +187,16 @@ function productionTarget(requireApply: boolean): { url: string; serviceKey: str
   return { url, serviceKey: key, runDir };
 }
 const fetchLike: FetchLike = (u, init) => fetch(u, init);
+/** R2 Phase A 가 각 MATCH 행에 실제 쓴 값 = R2 당시 plan(v1 package) 의 writes. drift guard 의 "R2 적용 상태" 기대치. DB 접근 0. */
+function r2AppliedExpectations(): Map<number, Record<string, unknown>> {
+  const r2pkg = resolve(arg("--r2-plan-package") ?? "data/main-intake/five-city-core-v1");
+  const m = JSON.parse(readFileSync(join(r2pkg, "five-city-core-input-manifest-v1.json"), "utf8")) as InputManifest;
+  const r2plan = planImport({
+    intake: readJsonl<IntakeRow>(join(r2pkg, m.outputs.active.path)), sources: readJsonl<SourceRow>(join(r2pkg, m.outputs.sources.path)), images: readJsonl<ImageRow>(join(r2pkg, m.outputs.images.path)),
+    crosswalk: readJsonl<CrosswalkRow>(join(r2pkg, m.outputs.crosswalk.path)), main: readJsonl<MainSnapshotRow>(join(r2pkg, m.main_snapshot.path)), mainClassification: [], expectedActiveTotal: m.active_total,
+  });
+  return new Map(r2plan.updates.map(u => [u.main_city_spot_id, u.writes as Record<string, unknown>]));
+}
 async function readCount(url: string, key: string, table = "city_spots"): Promise<number> {
   const res = await fetch(`${url}/rest/v1/${table}?select=id&limit=1`, { headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" } });
   return Number((res.headers.get("content-range") ?? "/NaN").split("/")[1]);
@@ -240,6 +255,26 @@ if (mode === "stage") {
       catch (e) { failureReceipt("MATCH_CITY_SPOTS", ci, part.length, { updated: done, failed: part.length - done }, e); throw e; }
       emit(chunkReceipt({ phase: "MATCH_CITY_SPOTS", chunk_index: ci, expected: part.length, looked_up: 0, reused: 0, updated: part.length, inserted: 0, unchanged: 0, suppressed: 0, failed: 0, retry_count: 0, timestamp: now() }, part.map(u => u.main_city_spot_id)));
     }
+    // Phase A3 — RESTORE_PRE_R2: old GJ08 Food retire rows(94) 를 R2 historical snapshot before 값으로 복구(is_published 불변). A2/A3 target overlap 은 0 이어야 한다.
+    const restorePlanPath = arg("--r2-restore-plan") ?? join(pkg, "five-city-r2-restore-plan-v1.jsonl");
+    const restoreSummary = { planned: 0, restored: 0, already_restored: 0, drift: 0, identity_mismatch: 0, snapshot_missing: 0, failed: 0, plan_path: restorePlanPath, source: "R2_IMMUTABLE_BEFORE_PHASE_A_SNAPSHOT" };
+    if (existsSync(restorePlanPath)) {
+      const restoreRows = readJsonl<RestorePlanRow>(restorePlanPath);
+      const rv = validateRestorePlan(restoreRows);
+      if (rv.errors.length) throw new StageIdentityError(`restore plan invalid: ${rv.errors.slice(0, 3).join("; ")}`);
+      const matchIds = new Set(plan.updates.map(u => u.main_city_spot_id));
+      const overlap = restoreRows.filter(r => matchIds.has(r.main_city_spot_id)).length;
+      if (overlap > 0) throw new StageIdentityError(`restore targets overlap MATCH targets: ${overlap}`);
+      const expectedR2 = r2AppliedExpectations();
+      for (const [ci, part] of chunk(restoreRows, 50).entries()) {
+        let r: Awaited<ReturnType<typeof stageRestoreChunk>>;
+        try {
+          r = await stageRestoreChunk(fetchLike, t, part, { expectedR2ByRow: expectedR2, onRow: row => emit(chunkReceipt({ phase: "RESTORE_PRE_R2", chunk_index: ci, expected: row.intended_fields, looked_up: 1, reused: 0, updated: row.updated, inserted: 0, unchanged: row.unchanged, suppressed: 0, failed: row.failed, retry_count: 0, timestamp: now(), subgroup_index: row.main_city_spot_id, key_signature_sha256: row.payload_sha256, request_rows: row.patched_fields, http_status: row.http_status, error_code: row.error_code, error_message: row.error_message ?? `${row.state}: ${row.detail}` }, [ci, row.main_city_spot_id, row.state])) });
+        } catch (e) { failureReceipt("RESTORE_PRE_R2", ci, part.length, {}, e); throw e; }
+        for (const k of ["planned", "restored", "already_restored", "drift", "identity_mismatch", "snapshot_missing", "failed"] as const) restoreSummary[k] += r[k];
+        if (!restoreAllowsNextPhase(r)) { failureReceipt("RESTORE_PRE_R2", ci, part.length, { failed: r.drift + r.identity_mismatch + r.snapshot_missing + r.failed }, new Error(`restore chunk ${ci}: drift=${r.drift} identity_mismatch=${r.identity_mismatch} snapshot_missing=${r.snapshot_missing} failed=${r.failed}`)); throw new StageIdentityError(`RESTORE_PRE_R2 blocked Phase B: drift=${r.drift} identity_mismatch=${r.identity_mismatch} snapshot_missing=${r.snapshot_missing} failed=${r.failed}`); }
+      }
+    }
     // Phase B — NEW lookup-before-insert (is_published=false)
     const mapping: string[] = []; const newIdByCanonical = new Map<string, number>(); let inserted = 0, reused = 0;
     const byExt = new Map(plan.inserts.map(i => [String(i.row.external_id), i]));
@@ -291,7 +326,7 @@ if (mode === "stage") {
     emit(chunkReceipt({ phase: "VERIFY", chunk_index: 0, expected: plan.inserts.length, looked_up: unpub.checked, reused: 0, updated: 0, inserted: 0, unchanged: 0, suppressed: 0, failed: unpub.published_true + unpub.missing + userDiff.length, retry_count: 0, timestamp: now() }, [postCount, unpub.published_true, unpub.missing]));
     const receipt = {
       run_id: runId, attempt, production_source_commit: process.env.RELEASE_SHA ?? null, input_manifest_sha256: manifestHash, change_manifest_sha256: dryRunSummary.change_manifest_sha256, stage_plan_sha256: stagePlan.plan_sha256,
-      db_pre_count: preCount, db_post_count: postCount, pre_stage_snapshot: { rows: snap.rows.length, sha256: snap.sha256, fresh: true, path: snapPath }, chunk_receipts_path: receiptPath, match_planned: plan.updates.length, match_completed: updated, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
+      db_pre_count: preCount, db_post_count: postCount, pre_stage_snapshot: { rows: snap.rows.length, sha256: snap.sha256, fresh: true, path: snapPath, restore_source: false }, chunk_receipts_path: receiptPath, match_planned: plan.updates.length, match_completed: updated, restore_pre_r2: restoreSummary, new_planned: plan.inserts.length, new_inserted: inserted, new_reused_existing: reused, new_staged_total: newIdByCanonical.size,
       same_source_skipped: plan.counts.confirmed_twin_skipped, sources: srcTotals, images: imgTotals, mapping_rows: mapping.length,
       new_unpublished_check: unpub, user_table_counts: { pre: userPre, post: userPost, diff: userDiff }, delete_count: 0, error_count: unpub.published_true + unpub.missing + userDiff.length,
       id_mapping_sha256: sha256(mapping.join("\n") + "\n"), chunk_receipts_sha256: receiptsSha(receipts), legacy_newly_hidden: 0,

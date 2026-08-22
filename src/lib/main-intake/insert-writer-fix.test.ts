@@ -169,7 +169,7 @@ test("IW-18: receipts — append-only JSONL 즉시 기록 · importer 는 chunk/
   rmSync(dir, { recursive: true, force: true });
   const src = readFileSync(new URL("scripts/import-five-city-core-v1.ts", ROOT), "utf8"); const stage = src.slice(src.indexOf('if (mode === "stage")'));
   assert.equal((stage.match(/receipts\.push\(/g) ?? []).length, 1, "receipts.push 는 emit(append) 안에서만 1회"); assert.ok((stage.match(/emit\(chunkReceipt\(/g) ?? []).length >= 6);
-  assert.match(stage, /onSubgroup: sg => emit\(/); assert.equal((stage.match(/failureReceipt\(/g) ?? []).length, 3, "MATCH/SOURCES/IMAGES 실패 receipt(NEW 은 writer 의 onSubgroup 이 실패 receipt 를 emit)");
+  assert.match(stage, /onSubgroup: sg => emit\(/); assert.equal((stage.match(/failureReceipt\(/g) ?? []).length, 5, "MATCH/RESTORE_PRE_R2(×2: throw·blocked)/SOURCES/IMAGES 실패 receipt(NEW 은 writer 의 onSubgroup 이 실패 receipt 를 emit)");
   assert.match(stage, /stage-chunk-receipts-v1\.\$\{attempt\}\.jsonl/); assert.match(stage, /stage-failure-v1\./); assert.match(stage, /e instanceof StageRestError \? \{ name: e\.name, where: e\.where, info: e\.info \}/);
   assert.ok(!/stage-chunk-receipts-v1\.jsonl"/.test(stage), "마지막에만 쓰는 단일 receipt 파일 0");
 });

@@ -85,7 +85,7 @@ test("UCG-10: --stage 는 기존 snapshot 파일을 재사용하지 않고 항�
   assert.match(stage, /const snap = await buildPreStageSnapshot\(fetchLike, t, plan\.updates, manifestHash, capturedAt\);\s*assertSnapshotComplete\(snap\.rows, plan\.updates\.map\(u => u\.main_city_spot_id\)\);\s*const snapPath = join\(t\.runDir, snapshotAttemptFilename\(attempt\)\);\s*writeImmutableFile\(snapPath, snap\.text\);/);
   assert.ok(stage.indexOf("assertSnapshotComplete(") < stage.indexOf("Phase A"), "snapshot 완전성 검사는 Phase A(첫 write) 이전");
   assert.ok(stage.indexOf("user-table-counts-pre-v1.") < stage.indexOf("Phase A"), "user pre counts 기록은 Phase A 이전");
-  assert.match(stage, /pre_stage_snapshot: \{ rows: snap\.rows\.length, sha256: snap\.sha256, fresh: true, path: snapPath \}/);
+  assert.match(stage, /pre_stage_snapshot: \{ rows: snap\.rows\.length, sha256: snap\.sha256, fresh: true, path: snapPath, restore_source: false \}/);
 });
 
 test("UCG-11: snapshot 완전성 계약 — MATCH 전체(예: 462)와 정확히 일치해야 통과, 부족/중복/초과는 실패", () => {
