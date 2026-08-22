@@ -184,9 +184,63 @@ def strip_code_blocks(s: Any) -> str:
     return _CODE_BLOCK_RE.sub(" ", str(s or ""))
 
 
+# ── non-HTML angle-bracket visible titles (FINAL-FREEZE-V1 §9~§14) ────────────────────────────────────────────
+# VisitSeoul 본문은 작품명을 `<Parasite>`·`<Corps>`·`<地上的女人们>` 처럼 꺾쇠로 쓴다. strip_html 의 `<[^>]+>` 가 이것을 태그로 지워
+# 공식 텍스트가 손실된다. 판정은 결정적 문법 규칙만: (1) 표준 HTML 태그명(아래 집합) 이면 태그 (2) 닫는/선언/처리 태그(`/`,`!`,`?`)이면
+# 태그 (3) attribute(`=`)가 있으면 태그 (4) 그 외 = visible token → sentinel 로 보호 후 원문 그대로 복원. AI/문맥 판단 0.
+HTML_TAG_NAMES = frozenset("""a abbr address area article aside audio b base bdi bdo big blockquote body br button canvas caption center cite code col
+colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure font footer form h1 h2 h3 h4 h5 h6 head header hgroup hr
+html i iframe img input ins kbd label legend li link main map mark meta nav noscript object ol optgroup option output p param picture pre progress q rb rp
+rt ruby s samp script section select small source span strike strong style sub summary sup svg path g table tbody td template textarea tfoot th thead
+time title tr track tt u ul var video wbr o:p""".split())
+_ANGLE_TOKEN_RE = re.compile(r"<[^<>]+>")
+_SENTINEL_OPEN, _SENTINEL_CLOSE = "", ""   # Unicode private-use: 입력에 존재하면 보호를 적용하지 않고 실패(충돌 0 보장)
+
+
+def is_html_tag_token(token: str) -> bool:
+    """`<…>` 토큰이 실제 HTML 마크업인가. 마크업 = 닫는/선언/처리 태그(`/`,`!`,`?`) · attribute(`=`) 포함 · 표준 태그명 단독(`<p>`, `<br/>`).
+    표준 태그명으로 시작해도 뒤가 attribute 문법이 아닌 단어들이면 제목이다(`<A Notional History>`, `<A Magical day>`) → visible 텍스트."""
+    inner = token[1:-1].strip()
+    if not inner or inner[0] in "/!?":
+        return True
+    if "=" in inner:
+        return True
+    name = re.split(r"[\s/]", inner, 1)[0].lower()
+    rest = inner[len(name):].strip()
+    return name in HTML_TAG_NAMES and rest in ("", "/")
+
+
+def protect_visible_angle_tokens(s: str) -> tuple[str, list[str]]:
+    """HTML 태그가 아닌 `<…>` 토큰을 sentinel 로 치환(원문 보존). 반환: (치환 텍스트, 토큰 목록)"""
+    if _SENTINEL_OPEN in s or _SENTINEL_CLOSE in s:
+        raise ValueError("sentinel characters present in source text")
+    tokens: list[str] = []
+
+    def repl(m: "re.Match[str]") -> str:
+        tok = m.group(0)
+        if is_html_tag_token(tok):
+            return tok
+        tokens.append(tok)
+        return f"{_SENTINEL_OPEN}{len(tokens) - 1}{_SENTINEL_CLOSE}"
+    # 제목 안에 제목이 중첩될 수 있다(`<打架的技术, <Lolling and Rolling>_2.0>`): 안쪽이 sentinel 이 된 뒤 바깥이 토큰으로 보이므로
+    # 더 바뀌지 않을 때까지 반복(결정적·유한: 매 회 '<' 가 줄어든다). 복원은 역순(바깥→안쪽)으로 중첩을 되돌린다.
+    prev = None
+    while prev != s:
+        prev, s = s, _ANGLE_TOKEN_RE.sub(repl, s)
+    return s, tokens
+
+
+def restore_visible_angle_tokens(s: str, tokens: list[str]) -> str:
+    pat = f"{_SENTINEL_OPEN}(\\d+){_SENTINEL_CLOSE}"
+    while re.search(pat, s):
+        s = re.sub(pat, lambda m: tokens[int(m.group(1))], s)
+    return s
+
+
 def visible_text(s: Any) -> str:
-    """VisitSeoul HTML → 사용자 설명 텍스트: code block 제거 후 기존 strip_html."""
-    return strip_html(strip_code_blocks(s))
+    """VisitSeoul HTML → 사용자 설명 텍스트 (순서 고정): <style>/<script> 제거 → non-HTML 꺾쇠 토큰 보호 → strip_html(태그 제거·entity·공백) → 토큰 복원."""
+    protected, tokens = protect_visible_angle_tokens(strip_code_blocks(s))
+    return restore_visible_angle_tokens(strip_html(protected), tokens)
 
 
 def split_blocks(text: str) -> list[str]:
@@ -210,10 +264,10 @@ def dedupe_blocks(blocks: list[str]) -> list[str]:
 def dedupe_exact_blocks(text: str) -> tuple[str, dict[str, int]]:
     """텍스트 → split_blocks → dedupe_blocks → 공백 1칸으로 재결합(strip_html 과 같은 공백 정규화). 단어/문장 변경 0.
     반환: (텍스트, {blocks, unique_blocks, duplicates_removed})  — 집계는 8자 이상 블록 기준(audit 와 동일)"""
+    # 집계는 단일 universe(split_blocks 의 모든 블록): blocks − unique_blocks == duplicates_removed, kept == unique_blocks (FINAL-FREEZE-V1 §5~§6)
     blocks = split_blocks(text)
     kept = dedupe_blocks(blocks)
-    counted = [b for b in blocks if len(b) >= BLOCK_DEDUPE_MIN_LEN]
-    return re.sub(r"\s+", " ", " ".join(kept)).strip(), {"blocks": len(counted), "unique_blocks": len(set(counted)), "duplicates_removed": len(blocks) - len(kept)}
+    return re.sub(r"\s+", " ", " ".join(kept)).strip(), {"blocks": len(blocks), "unique_blocks": len(set(blocks)), "duplicates_removed": len(blocks) - len(set(blocks)), "after_blocks": len(kept)}
 
 
 # Owner-approved exact-dedupe allowlist (audit 2026-08-22: STRUCTURALLY_ABNORMAL 3 places / 6 locale rows). 그 외 행은 dedupe 0.

@@ -1,0 +1,729 @@
+{
+ "seoul_final_rows": 1838,
+ "seoul_active_before": 1837,
+ "seoul_active_after": 1837,
+ "place_removed": 0,
+ "place_added": 0,
+ "canonical_identity_changed": 0,
+ "style_affected_rows": {
+  "en": 913,
+  "ja": 744,
+  "zh": 735
+ },
+ "script_affected_rows": {
+  "en": 12,
+  "ja": 4,
+  "zh": 4
+ },
+ "description_changed_rows": {
+  "en": 928,
+  "ja": 749,
+  "zh": 743
+ },
+ "description_changed_rows_total": 2420,
+ "dedupe_rows": [
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "en",
+   "before_chars_old_path": 468316,
+   "before_chars_after_code_removal": 5141,
+   "after_chars": 5141,
+   "before_blocks": 5,
+   "unique_blocks": 5,
+   "duplicates_removed": 0,
+   "after_blocks": 5,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "Experience the 2023 Seoul Performing Arts Festival (SPAF) alongside contemporary artists’ "
+  },
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "ja",
+   "before_chars_old_path": 172339,
+   "before_chars_after_code_removal": 2840,
+   "after_chars": 2840,
+   "before_blocks": 2,
+   "unique_blocks": 2,
+   "duplicates_removed": 0,
+   "after_blocks": 2,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "同時代の芸術家たちの「境界のない思考と質問」を届ける2023ソウル国際公演芸術祭(SPAF) 2023ソウル国際公演芸術祭(SPAF)では、同時代の芸術家たちの19の様々な視点を見"
+  },
+  {
+   "canonical_id": "seoul-KOPk4sx8q",
+   "name_ko": "2023 서울국제공연예술제(SPAF)",
+   "locale": "zh",
+   "before_chars_old_path": 219181,
+   "before_chars_after_code_removal": 3037,
+   "after_chars": 3037,
+   "before_blocks": 4,
+   "unique_blocks": 4,
+   "duplicates_removed": 0,
+   "after_blocks": 4,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "与同时代艺术家们的“没有界限的思考和提问”一起举行的2023首尔国际公演艺术节(SPAF) 在2023 首尔国际公演艺术节(SPAF)，可以看到同时代艺术家们的19个不同视角，请和"
+  },
+  {
+   "canonical_id": "seoul-KOPpq0clc",
+   "name_ko": "정재일 콘서트 - Listen",
+   "locale": "en",
+   "before_chars_old_path": 6947,
+   "before_chars_after_code_removal": 1298,
+   "after_chars": 1298,
+   "before_blocks": 7,
+   "unique_blocks": 7,
+   "duplicates_removed": 0,
+   "after_blocks": 7,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "The solo concert of Jung Jae-il, the music director of the Netflix series <Squid Game>, wh"
+  },
+  {
+   "canonical_id": "seoul-KOPrfwk6e",
+   "name_ko": "2023 코리아빌드위크",
+   "locale": "en",
+   "before_chars_old_path": 19467,
+   "before_chars_after_code_removal": 1761,
+   "after_chars": 1749,
+   "before_blocks": 24,
+   "unique_blocks": 20,
+   "duplicates_removed": 4,
+   "after_blocks": 20,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "From August 3rd (Thursday) to 6th (Sunday), Korea Build will be held at COEX in Seoul. Thi"
+  },
+  {
+   "canonical_id": "seoul-KOPrfwk6e",
+   "name_ko": "2023 코리아빌드위크",
+   "locale": "zh",
+   "before_chars_old_path": 5477,
+   "before_chars_after_code_removal": 498,
+   "after_chars": 498,
+   "before_blocks": 2,
+   "unique_blocks": 2,
+   "duplicates_removed": 0,
+   "after_blocks": 2,
+   "unique_block_loss": 0,
+   "invariant_pass": true,
+   "first_occurrence_order_preserved": true,
+   "deterministic": true,
+   "head": "8月3日(周四)至6日(周日)在COEX举办的\"KOREA BUILD\"，将与\"KOREA BUILD\"的五个活动同时举行。包括通过各个领域专业咨询官和1:1配对咨询官接受针对性咨"
+  }
+ ],
+ "dedupe_locale_rows": 6,
+ "dedupe_places": 3,
+ "unique_official_block_loss": 0,
+ "metric_invariant_pass": "6/6",
+ "angle_bracket": {
+  "affected_places": 11,
+  "affected_locale_rows": 15,
+  "unique_tokens": 42,
+  "token_occurrences_incl_attribute_copies": 1746,
+  "visible_token_occurrences": 0,
+  "visible_tokens_lost_in_old_derived": 0,
+  "tokens_lost_after_fix": 0,
+  "rows": [
+   {
+    "canonical_id": "seoul-KOP3pv6se",
+    "name_ko": "허상욱《분청산책 : Buncheong Stroll》",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<Buncheong Stroll>",
+      "source_occurrences_incl_attribute_copies": 12,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 0,
+      "new_derived_occurrences": 0,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 1143,
+    "new_visible_chars": 243,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPbtl4l5",
+    "name_ko": "유이치 히라코《여행》",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<旅行>",
+      "source_occurrences_incl_attribute_copies": 2,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 0,
+      "new_derived_occurrences": 0,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 800,
+    "new_visible_chars": 316,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPer9yef",
+    "name_ko": "갤러리에서 찾은 행복 Recipe",
+    "locale": "en",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<Happiness Recipe Found in a Gallery>",
+      "source_occurrences_incl_attribute_copies": 1,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 670,
+    "new_visible_chars": 631,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPjltxu8",
+    "name_ko": "2024 delight Seoul (딜라이트 서울)",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<delight exhibition>",
+      "source_occurrences_incl_attribute_copies": 8,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 2,
+      "new_derived_occurrences": 2,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 1205,
+    "new_visible_chars": 305,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPk4sx8q",
+    "name_ko": "2023 서울국제공연예술제(SPAF)",
+    "locale": "en",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "<Corps extremes>",
+      "source_occurrences_incl_attribute_copies": 97,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 468316,
+    "new_visible_chars": 5141,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPk4sx8q",
+    "name_ko": "2023 서울국제공연예술제(SPAF)",
+    "locale": "ja",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "<卒>",
+      "source_occurrences_incl_attribute_copies": 94,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 172339,
+    "new_visible_chars": 2840,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPk4sx8q",
+    "name_ko": "2023 서울국제공연예술제(SPAF)",
+    "locale": "zh",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "< Lolling and Rolling>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<A Notional History>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Beckett's Room>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Cuckoo>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<EXTREME BODY>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Flesh>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Hamartia3部:Lolling and Rolling,Cukoo,韩国话剧的历史>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<JODONG>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<他们只是存在>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<卒>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<地上的女人们>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<就像我把我自己‧‧‧>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<明天是现在今天是昨天>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<构造和意识>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<欢迎来到你的韩国>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<移葬>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<话剧练习3. 剧作练习-作为鱼类死亡>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<韩国话剧的历史, The History of Korean Western Theatre>",
+      "source_occurrences_incl_attribute_copies": 79,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 219181,
+    "new_visible_chars": 3037,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPmfskyu",
+    "name_ko": "기록으로 산책하기_서울의 공원",
+    "locale": "ja",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<記録で散策する_ソウルの公園>",
+      "source_occurrences_incl_attribute_copies": 2,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 1011,
+    "new_visible_chars": 343,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPpq0clc",
+    "name_ko": "정재일 콘서트 - Listen",
+    "locale": "en",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "<Parasite>",
+      "source_occurrences_incl_attribute_copies": 4,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Squid Game>",
+      "source_occurrences_incl_attribute_copies": 4,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 6166,
+    "new_visible_chars": 1298,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPpq0clc",
+    "name_ko": "정재일 콘서트 - Listen",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<Listen>",
+      "source_occurrences_incl_attribute_copies": 4,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<寄生虫>",
+      "source_occurrences_incl_attribute_copies": 8,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 2,
+      "new_derived_occurrences": 2,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<鱿鱼游戏>",
+      "source_occurrences_incl_attribute_copies": 8,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 2,
+      "new_derived_occurrences": 2,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 1678,
+    "new_visible_chars": 362,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPrfwk6e",
+    "name_ko": "2023 코리아빌드위크",
+    "locale": "en",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "<Simultaneous Events>",
+      "source_occurrences_incl_attribute_copies": 13,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<Special Exhibitions>",
+      "source_occurrences_incl_attribute_copies": 13,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 19467,
+    "new_visible_chars": 1761,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPrfwk6e",
+    "name_ko": "2023 코리아빌드위크",
+    "locale": "zh",
+    "dedupe_row": true,
+    "tokens": [
+     {
+      "token": "<同时举办>",
+      "source_occurrences_incl_attribute_copies": 13,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<特别馆>",
+      "source_occurrences_incl_attribute_copies": 13,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 5477,
+    "new_visible_chars": 498,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPsbarih",
+    "name_ko": "A Magical day",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<A Magical day>",
+      "source_occurrences_incl_attribute_copies": 2,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 297,
+    "new_visible_chars": 233,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPuf1clc",
+    "name_ko": "타카하타 이사오전",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<岁月的童话(1991)>",
+      "source_occurrences_incl_attribute_copies": 3,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<平成狸合战(1994)>",
+      "source_occurrences_incl_attribute_copies": 3,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<红发少女安妮(1979)>",
+      "source_occurrences_incl_attribute_copies": 6,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 2,
+      "new_derived_occurrences": 2,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<萤火虫之墓(1988)>",
+      "source_occurrences_incl_attribute_copies": 3,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<辉夜姬物语(2013)>",
+      "source_occurrences_incl_attribute_copies": 3,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     },
+     {
+      "token": "<阿尔卑斯山的少女 (1974)>",
+      "source_occurrences_incl_attribute_copies": 6,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 2,
+      "new_derived_occurrences": 2,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 702,
+    "new_visible_chars": 264,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   },
+   {
+    "canonical_id": "seoul-KOPx61vzb",
+    "name_ko": "박현성, 윤석원 <어저께의 나머지에 오늘을 붙여 : The rest of today going to tomorrow>",
+    "locale": "zh",
+    "dedupe_row": false,
+    "tokens": [
+     {
+      "token": "<昨天剩下的时间留给今天：The rest of today going to tomorrow>",
+      "source_occurrences_incl_attribute_copies": 2,
+      "visible_source_occurrences": 0,
+      "old_derived_occurrences": 1,
+      "new_derived_occurrences": 1,
+      "lost_after_fix": false
+     }
+    ],
+    "old_visible_chars": 592,
+    "new_visible_chars": 376,
+    "change_cause": "TAG_BOUNDARY_CORRECTED_ATTRIBUTE_COPY_REMOVED",
+    "data_sheets_value_attr": true
+   }
+  ]
+ },
+ "leakage_after_fix": {
+  "standard_html_tag_rows": 0,
+  "css_rows": 0,
+  "script_jsonld_rows": 0
+ },
+ "unapproved_description_diffs": [],
+ "global_cap_truncated_rows": 0,
+ "locale_non_null_before": {
+  "en": 1793,
+  "ja": 1638,
+  "zh": 1630
+ },
+ "locale_non_null_after": {
+  "en": 1793,
+  "ja": 1638,
+  "zh": 1630
+ },
+ "ko_non_null": 1837,
+ "length_before": {
+  "en": {
+   ">5000": 4,
+   ">10000": 2,
+   ">20000": 1,
+   ">50000": 1,
+   ">100000": 1,
+   "max": 468316
+  },
+  "ja": {
+   ">5000": 1,
+   ">10000": 1,
+   ">20000": 1,
+   ">50000": 1,
+   ">100000": 1,
+   "max": 172339
+  },
+  "zh": {
+   ">5000": 2,
+   ">10000": 1,
+   ">20000": 1,
+   ">50000": 1,
+   ">100000": 1,
+   "max": 219181
+  }
+ },
+ "length_after": {
+  "en": {
+   ">5000": 1,
+   ">10000": 0,
+   ">20000": 0,
+   ">50000": 0,
+   ">100000": 0,
+   "max": 5141
+  },
+  "ja": {
+   ">5000": 0,
+   ">10000": 0,
+   ">20000": 0,
+   ">50000": 0,
+   ">100000": 0,
+   "max": 2840
+  },
+  "zh": {
+   ">5000": 0,
+   ">10000": 0,
+   ">20000": 0,
+   ">50000": 0,
+   ">100000": 0,
+   "max": 3037
+  }
+ }
+}
