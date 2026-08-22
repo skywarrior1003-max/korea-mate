@@ -171,6 +171,65 @@ def strip_html(s: Any) -> str:
     return re.sub(r"\s+", " ", t).strip()
 
 
+# ── Seoul multilingual description correction (TASK-SEOUL-DESCRIPTION-CORRECTION-V1, Owner-approved) ──────────────
+# 처리 순서(고정): short_description → <style> 블록 제거 → <script> 블록 제거 → strip_html(태그→공백, entity 6종, 공백 정규화)
+# → 승인 allowlist(3 장소/6 locale) 에 한해 exact duplicate block 제거(첫 등장 유지, 순서 유지). AI/번역/요약/truncate 0.
+_CODE_BLOCK_RE = re.compile(r"<(style|script)\b[^>]*>.*?</\1\s*>", re.I | re.S)
+_BLOCK_SPLIT_RE = re.compile(r"(?:\\n|\\r|\r|\n)+|(?<=[.!?。！？])\s+")   # audit 와 동일한 block tokenizer
+BLOCK_DEDUPE_MIN_LEN = 8                                                # audit 와 동일: 8자 미만 조각은 block 으로 세지 않는다(제거 대상 아님)
+
+
+def strip_code_blocks(s: Any) -> str:
+    """`<style …>…</style>` · `<script …>…</script>` 블록(태그+내용) 제거. 대소문자/attribute/개행 무관. visible text 는 건드리지 않는다."""
+    return _CODE_BLOCK_RE.sub(" ", str(s or ""))
+
+
+def visible_text(s: Any) -> str:
+    """VisitSeoul HTML → 사용자 설명 텍스트: code block 제거 후 기존 strip_html."""
+    return strip_html(strip_code_blocks(s))
+
+
+def split_blocks(text: str) -> list[str]:
+    """deterministic block tokenizer: literal `\\n`/`\\r`, 실제 개행, 문장 종결 부호 뒤 공백에서 분리. 빈 조각 제거, 순서 유지."""
+    return [p.strip() for p in _BLOCK_SPLIT_RE.split(text or "") if p.strip()]
+
+
+def dedupe_blocks(blocks: list[str]) -> list[str]:
+    """블록 목록에서 exact duplicate 만 제거: 첫 등장 보존 · 원래 순서 유지(A→B→A→C→B ⇒ A→B→C). 길이 무관 exact 일치만.
+    fuzzy/semantic/정렬/요약 0. (BLOCK_DEDUPE_MIN_LEN 은 audit 집계용 기준일 뿐 제거 예외가 아니다 — 짧은 중복 조각 '1.'·'예매 :' 도 반복이면 제거)"""
+    seen: set[str] = set()
+    kept: list[str] = []
+    for b in blocks:
+        if b in seen:
+            continue
+        seen.add(b)
+        kept.append(b)
+    return kept
+
+
+def dedupe_exact_blocks(text: str) -> tuple[str, dict[str, int]]:
+    """텍스트 → split_blocks → dedupe_blocks → 공백 1칸으로 재결합(strip_html 과 같은 공백 정규화). 단어/문장 변경 0.
+    반환: (텍스트, {blocks, unique_blocks, duplicates_removed})  — 집계는 8자 이상 블록 기준(audit 와 동일)"""
+    blocks = split_blocks(text)
+    kept = dedupe_blocks(blocks)
+    counted = [b for b in blocks if len(b) >= BLOCK_DEDUPE_MIN_LEN]
+    return re.sub(r"\s+", " ", " ".join(kept)).strip(), {"blocks": len(counted), "unique_blocks": len(set(counted)), "duplicates_removed": len(blocks) - len(kept)}
+
+
+# Owner-approved exact-dedupe allowlist (audit 2026-08-22: STRUCTURALLY_ABNORMAL 3 places / 6 locale rows). 그 외 행은 dedupe 0.
+SEOUL_DEDUPE_ALLOWLIST: dict[str, tuple[str, ...]] = {"seoul-KOPk4sx8q": ("en", "ja", "zh"), "seoul-KOPrfwk6e": ("en", "zh"), "seoul-KOPpq0clc": ("en",)}
+
+
+def seoul_description(canonical_id: str, locale: str, raw_html: Any) -> str | None:
+    """서울 multilingual description 최종 변환(위 순서 고정). 같은 입력 → 같은 출력."""
+    t = visible_text(raw_html)
+    if not t:
+        return None
+    if locale in SEOUL_DEDUPE_ALLOWLIST.get(canonical_id, ()):
+        t, _ = dedupe_exact_blocks(t)
+    return t or None
+
+
 def write_jsonl(path: str, rows: Iterable[dict[str, Any]]) -> int:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     n = 0

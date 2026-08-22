@@ -29,7 +29,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
 from five_city_core_lib import (  # noqa: E402
-    EXPECTED_TOTAL, PINNED_INPUTS, REPO, file_sha256, load_input, strip_html, to_float, verify_pins,
+    EXPECTED_TOTAL, PINNED_INPUTS, REPO, file_sha256, load_input, seoul_description, strip_html, to_float, verify_pins,
     write_json, write_jsonl,
 )
 
@@ -337,8 +337,14 @@ def main() -> None:
                 continue
             m = ml.get(c.get("source_cid") or "", {})
             names = {k: v.get("title") for k, v in m.items()}
-            descs = {"ko": c.get("description_ko"), "en": strip_html((m.get("en") or {}).get("short_description")) or None,
-                     "ja": strip_html((m.get("ja") or {}).get("short_description")) or None, "zh": strip_html((m.get("zh") or {}).get("short_description")) or None}
+            # 서울(TASK-SEOUL-DESCRIPTION-CORRECTION-V1, Owner 승인): <style>/<script> 블록 제거 + allowlist 3 장소/6 locale exact dedupe.
+            # 제주는 동결(기존 strip_html 그대로). ko 는 Final description_ko 그대로(4,000 cap 은 Final 계약).
+            if city == "seoul":
+                descs = {"ko": c.get("description_ko"), "en": seoul_description(cid, "en", (m.get("en") or {}).get("short_description")),
+                         "ja": seoul_description(cid, "ja", (m.get("ja") or {}).get("short_description")), "zh": seoul_description(cid, "zh", (m.get("zh") or {}).get("short_description"))}
+            else:
+                descs = {"ko": c.get("description_ko"), "en": strip_html((m.get("en") or {}).get("short_description")) or None,
+                         "ja": strip_html((m.get("ja") or {}).get("short_description")) or None, "zh": strip_html((m.get("zh") or {}).get("short_description")) or None}
             r = base_row(cid, city, c.get("category"), c.get("sub_category_raw"), name_en=None, name_ko=c.get("title_ko"), names=names,
                          descs=descs, address=c.get("address"), district=None, lat=c.get("lat"), lng=c.get("lng"),
                          official_url=c.get("homepage"), hours_raw=c.get("opening_hours_raw"), tags=c.get("tags") if isinstance(c.get("tags"), list) else None,

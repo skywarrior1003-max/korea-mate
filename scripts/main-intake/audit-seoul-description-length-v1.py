@@ -24,7 +24,7 @@ from typing import Any
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, os.path.dirname(__file__))
-from five_city_core_lib import strip_html  # noqa: E402  (same transformation the intake builder applies)
+from five_city_core_lib import strip_html, split_blocks, BLOCK_DEDUPE_MIN_LEN  # noqa: E402  (same transformation/tokenizer the intake builder uses)
 
 MANIFEST = os.path.join(ROOT, "data", "main-intake", "five-city-core-v1", "five-city-core-input-manifest-v1.json")
 INTAKE = os.path.join(ROOT, "data", "main-intake", "five-city-core-v1", "five-city-core-active-v1.jsonl")
@@ -73,8 +73,7 @@ def has_html(s: str) -> bool:
 def blocks_of(stripped: str) -> list[str]:
     """Paragraph/sentence blocks: split on literal escaped newlines (\\n), real newlines, or sentence enders (strip_html collapses
     whitespace, so sentence boundaries are the unit that survives for normally-serialized text); drop tiny fragments."""
-    parts = re.split(r"(?:\\n|\r|\n)+|(?<=[.!?。！？])\s+", stripped)
-    return [p.strip() for p in parts if len(p.strip()) >= 8]
+    return [p for p in split_blocks(stripped) if len(p) >= BLOCK_DEDUPE_MIN_LEN]   # shared tokenizer (five_city_core_lib) — no drift
 
 
 def repetition(stripped: str) -> dict[str, Any]:
